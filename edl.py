@@ -60,16 +60,16 @@ v 0.3:
 same as above, but works for different chapters in a DVD.
 
 
-
 wishlist:
   you give it a directory, it auto-loads on DVD based on that
   muting available
   can save it to an mp4 file somewhere, or something burnable to CD. Oh baby. CD's are cheap. DVD is ok, too.
-  gui
-  
-  
-  
+  something of a gui
+  can overlay with youtube music/video et al.
+  can blank
+  you can specify levels /choose levels
   """
+  
 if __name__ == '__main__':
     try:
         from msvcrt import getch
