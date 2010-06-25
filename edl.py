@@ -68,6 +68,12 @@ wishlist:
   can overlay with youtube music/video et al.
   can blank
   you can specify levels /choose levels
+  you can control things playable online (pywinauto?)
+  
+  
+win32api.GetVolumeInformation("E:\\")[0]
+'BOBS_BIG_PLAN'  
+  
   """
   
 if __name__ == '__main__':
