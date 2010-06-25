@@ -74,6 +74,12 @@ wishlist:
 win32api.GetVolumeInformation("E:\\")[0]
 'BOBS_BIG_PLAN'  
   
+TODO supplement the wiki with some examples...
+
+streamer player (control external) wishlist:
+blank, mute, skip, overlay url
+
+
   """
   
 if __name__ == '__main__':
