@@ -1,42 +1,82 @@
 some thoughts in other?
 
 =begin
-roobee.net?
-
-other github
-auto-syncing
 
 
 
-v x
-  mute, coordinate by little buttons to increase by a tenth )
+v 0.0:
+  command line, keys that go + 0.1 or something, no screen capture, no GUI, can mute appropo...one mute command, one unmute
+  MRI for now...
+  
+  it can parse some kind of EDL file for skipping
 
-, overlay a black screenv, overlay a black screen, overlay a black screen whenever
+  
+backlog prioritized:
 
-an easy editor...
+  can blank appropo (overlay black screen)
+  
+  can screen grab to look for second changes as they occur [single line?]...
+    hard coded values for well known players...
+
+  OCR
+
+  jruby with a nice GUI...
+
+  can screen grab any "arbitrary" coordinates in a user intuitive way.
+
+
+
+After commercials resync automagically...
+
+Auto mute commercials?
+
+rruby.net rubyy.net
+
+new github username
+
+PIHS
+
+overlay a black screen
+
+an easy creator...
 
 increase volume
-"a mother of controlling the input devices to coerce the movie from one point to another" (drag)
+"a method of controlling the input devices to control the player and coerce the movie from one time point to another" (drag)
 
-"a mother of controlling the input devices to change volume"
+"a method of controlling the input devices to control the player and change volume"
 
-"a methof of applying OCR to the existing film to extrapolate position in the media"
+"a method of applying OCR to the existing film to extrapolate position in the media"
 
-replay certain parts?
+replay certain parts
 
 overlay with youtube
 overlay with youtube audio
-overlay/replac with specific url of audio/video
-increase volume on the player it self.
+overlay/replace with some url of audio or video
+control volume programmatically on the player it self.
 
 overlay alpha transparent pic
 
 grey out the screen...
 
-replay (loop style) certain sections
-drag and release for editing position, where possible (with VLC I guess we have best control).
+drag and release for editing position, where possible.
 
-Programmatically do all of the above, by driving using an external API.
+Use audio to auto synchronize across different players, or to re-synchronize...
 
-Using audio to auto synchronize across different players, or to re-synchronzie (?)
+Have a "list of all known movies" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
+Be able to have arbitrary user-programmable "do this recorded movement at this time"
+
+handle arbitrary seeks to the middle of a blank section :)
+
+user customizable levels...
+  maybe even "I don't like ones that are x, y, z", or "boring level x"
+
+auto-assignment of EDL's
+  web plugin?
+  DVD's
+    VLC
+
+can save to an mp4 file somewhere, or something burnable to CD. Oh baby. CD's are cheap. DVD is ok, too.
+
+Programmatically do all of the above, by driving using an internal API.
+=end

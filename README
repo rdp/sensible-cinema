@@ -1,1 +1,3 @@
-This requires VLC 1.1.0 installed to run.
+This aims to be an EDL (http://en.wikipedia.org/wiki/Edit_decision_list) player for any arbitrary player.
+
+An Edit Decision List overlay player that works with any arbitrary media player, for example hulu/netflix.

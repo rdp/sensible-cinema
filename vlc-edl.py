@@ -25,6 +25,10 @@
 """This module provides bindings for the
 U{libvlc<http://wiki.videolan.org/ExternalAPI>}.
 
+*outdated* movement progressed to the other one...
+
+
+
 Basically I think you can pass it some funky command line thing, if you want it to save the file away
 http://forum.videolan.org/viewtopic.php?f=16&t=28553&start=45
 
@@ -68,8 +72,7 @@ wishlist:
   can overlay with youtube music/video et al.
   can blank
   you can specify levels /choose levels
-  you can control things playable online (pywinauto?)
-  
+
   
 win32api.GetVolumeInformation("E:\\")[0]
 'BOBS_BIG_PLAN'  
