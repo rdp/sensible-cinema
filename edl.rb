@@ -79,4 +79,8 @@ auto-assignment of EDL's
 can save to an mp4 file somewhere, or something burnable to CD. Oh baby. CD's are cheap. DVD is ok, too.
 
 Programmatically do all of the above, by driving using an internal API.
+
+Also there is much more on the blogs.
+
+
 =end
