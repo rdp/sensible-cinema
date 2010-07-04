@@ -12,6 +12,13 @@ describe 'overlayer' do
     it 'should mute once' do
       Overlayer.overlay @yaml, 0
     end
+    
+    it 'should mute for 1s'
+  end
+  
+  context 'startup' do
+    it 'should allow you to hit keys and change the setup'
+    it 'should use the times to mute'
   end
   
   
