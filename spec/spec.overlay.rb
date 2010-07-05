@@ -14,6 +14,7 @@ describe OverLayer do
     end
     
     it 'should mute once' do
+      # you shouldn't hear a beep
       OverLayer.mute!
       system("sndrec32 /play /close beep.wav")
       sleep 3
