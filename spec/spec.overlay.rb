@@ -6,22 +6,28 @@ require_relative '../lib/overlayer'
 
 describe OverLayer do
   
+  def play file
+    system("sndrec32 /play /close #{file}.wav") # this fails at times?
+  end
+  
+  it 'should be able to mute' do
+    # you shouldn't hear a beep
+    OverLayer.mute!
+    play("bad")
+    sleep 2
+    OverLayer.unmute!
+  end
   
   context 'given you know when to start' do
     
-    before do
-      @yaml = [{:start => 1.0, :end => 2.0}]
-    end
-    
-    it 'should mute once' do
-      # you shouldn't hear a beep
-      OverLayer.mute!
-      system("sndrec32 /play /close beep.wav")
+    it 'should mute for 1s' do
+      yaml = [:mutes => {3.0 => 6.0}]
+      play("good") # sec's 0-3
       sleep 3
-      OverLayer.unmute!
+      play("bad") # sec's 3-6 muted
+      sleep 3
+      play("good") # sec's 6-9 open
     end
-    
-    it 'should mute for 1s'
   end
   
   context 'startup' do

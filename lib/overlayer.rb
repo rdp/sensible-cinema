@@ -7,10 +7,12 @@ module OverLayer
   end
   
   def mute!
+    puts 'muting'
     nir("mutesysvolume 1")
   end
   
   def unmute!
+    puts 'unmuting'
     nir("mutesysvolume 0")
   end
   
