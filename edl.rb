@@ -24,6 +24,7 @@ backlog prioritized:
 
   can screen grab any "arbitrary" coordinates in a user intuitive way.
 
+other backlog:
 
 
 After commercials resync automagically...
@@ -51,6 +52,8 @@ replay certain parts
 
 overlay with youtube
 overlay with youtube audio
+  replace
+  MST 3000
 overlay/replace with some url of audio or video
 control volume programmatically on the player it self.
 
@@ -68,19 +71,30 @@ Be able to have arbitrary user-programmable "do this recorded movement at this t
 
 handle arbitrary seeks to the middle of a blank section :)
 
+resync based on visual/audio (black/blank?)
+
+handle ads somehow
+
+magnify parts (?)
+
+
+resync based on OCR.
+  poll and "when there, use it"
+  pop it up every so often (?)
+    after commercials?
+
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
 
-auto-assignment of EDL's
+auto-assignment of EDL's to media:
   web plugin?
   DVD's
     VLC
+  directory>
 
-can save to an mp4 file somewhere, or something burnable to CD. Oh baby. CD's are cheap. DVD is ok, too.
-
-Programmatically do all of the above, by driving using an internal API.
-
-Also there is much more on the blogs.
-
+Programmatically do all of the above, by driving using an internal API.  Allow it to make mp4's somewhere.
+  auto start (?)
+  skip intros ?
+  insert deleted scenes
 
 =end
