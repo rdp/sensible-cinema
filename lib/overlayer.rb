@@ -80,21 +80,30 @@ class OverLayer
     end
   end
   
+  require 'timeout'
+  
   def continue_until_past_all_mutes # lodo shouldn't it basically continue forever?
     @mutex.synchronize {
       start, endy = get_next_mute
       return if start == DONE
       time_till_next_mute_starts = start - cur_time
       pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
-      sleep time_till_next_mute_starts
-        #@cv.wait()
+      
+
+      begin
+        Timeout::timeout(time_till_next_mute_starts) {
+          @cv.wait(@mutex)
+        }
+      rescue Timeout::Error
+        # normal
+      end
       pps 'woke up for next muting at', Time.now_f
-      something_has_probably_changed endy
+      something_has_possibly_changed endy
     }
     
   end
   
-  def something_has_probably_changed end_mute
+  def something_has_possibly_changed end_mute
       # may have been woken up early...
       mute!
       pps 'done starting mute at', Time.now_f
