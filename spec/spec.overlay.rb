@@ -10,7 +10,7 @@ describe OverLayer do
   
   after do
     # join all...
-    Thread.list.each{|t| t.join unless t == Thread.current}
+    Thread.join_others
   end
   
   def start_good

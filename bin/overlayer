@@ -1,4 +1,5 @@
 if File.exist? ARGV[0]
+
   require 'sane'
   require_relative '../lib/overlayer'
   require_relative '../lib/keyboard_input'
@@ -9,8 +10,9 @@ if File.exist? ARGV[0]
   overlay.start_thread
   key_input = KeyboardInput.new overlay
   key_input.start_thread
+  Thread.join_others
   
 else
- puts 'syntax: filename.yml'
+ puts 'syntax: filename.yml (run your player in the background)'
  exit 1
 end
