@@ -95,7 +95,19 @@ describe OverLayer do
         @o.keyboard_input 's'
       }
       assert @o.cur_time < 59 
+      600.times { 
+        @o.keyboard_input 'T' 
+      }
+      assert @o.cur_time > 59 
+      600.times { 
+        @o.keyboard_input 't' 
+      }
+      assert @o.cur_time < 59 
+    
     end
+    
+    it 'should not let you go below zero'
+    
     it 'should be able to "key" into and out of a muted section and it work...'
   end
 

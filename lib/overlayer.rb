@@ -47,6 +47,8 @@ class OverLayer
       when 'm' then -60
       when 'S' then 1
       when 's' then -1
+      when 'T' then 0.1
+      when 't' then -0.1
       else nil
      end
     if delta
@@ -60,7 +62,6 @@ class OverLayer
   def set_seconds seconds
     @mutex.synchronize {
       @start_time = Time.now_f - seconds
-      pp 'start time is', @start_time
       @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but just for two...
     }
   end
