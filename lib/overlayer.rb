@@ -88,7 +88,6 @@ class OverLayer
       return if start == DONE
       time_till_next_mute_starts = start - cur_time
       pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
-      
 
       begin
         Timeout::timeout(time_till_next_mute_starts) {
@@ -97,20 +96,31 @@ class OverLayer
       rescue Timeout::Error
         # normal
       end
-      pps 'woke up for next muting at', Time.now_f
-      something_has_possibly_changed endy
+      pps 'woke up at', Time.now_f
+      something_has_possibly_changed
     }
     
   end
   
-  def something_has_possibly_changed end_mute
-      # may have been woken up early...
+  def something_has_possibly_changed
+    current = cur_time
+    start, endy = get_next_mute
+    if(current >= start && current < endy)
       mute!
       pps 'done starting mute at', Time.now_f
-      duration = end_mute - cur_time
-      sleep duration if duration > 0
-      pps 'done sleeping muted which was duration', duration, 'unmuting now'
-      unmute!
+      duration_left = endy - current
+      if duration_left > 0
+        begin
+        Timeout::timeout(duration_left) {
+          @cv.wait(@mutex)
+        }
+        rescue Timeout::Error
+          # normal
+        end
+      end
+      pps 'done sleeping muted unmuting now'
+      unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...
+    end
   end
   
 end
