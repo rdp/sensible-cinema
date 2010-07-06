@@ -38,8 +38,8 @@ describe KeyboardInput do
   end
 
   it "should display minutes and seconds" do
-    @a.get_line_printout.should include("0:59")
-    @a.get_line_printout.should include("1:00")
+    @a.get_line_printout.should include("0:59.")
+    @a.get_line_printout.should include("1:00.")
   end
 
   it "should display whether muted or not" do

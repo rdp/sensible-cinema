@@ -46,7 +46,7 @@ class OverLayer
       "muted"
     else
       start, endy = get_next_mute
-      "next mute in %.1fs" % (start - cur_time)
+      "next mute in %.1fs" % (start - cur_time) unless start == :done
     end
   end
 
@@ -106,6 +106,7 @@ class OverLayer
       end
     end
     if @mutes[-1][1] <= cur
+      pps 'done @', cur if $VERBOSE
       :done
     else
       raise 'unexpected...'

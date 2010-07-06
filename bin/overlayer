@@ -1,5 +1,6 @@
 if File.exist? ARGV[0]
-
+  $VERBOSE = ARGV.find{|a| a == '-v'}
+  require 'rubygems'
   require 'sane'
   require_relative '../lib/overlayer'
   require_relative '../lib/keyboard_input'
@@ -10,9 +11,10 @@ if File.exist? ARGV[0]
   overlay.start_thread
   key_input = KeyboardInput.new overlay
   key_input.start_thread
-  Thread.join_others
+  key_input.handle_keystrokes_forever
+  Thread.join_all_others # just in case
   
 else
- puts 'syntax: filename.yml (run your player in the background)'
+ puts 'syntax: filename.yml [-v]  (run your player in the background)'
  exit 1
 end
