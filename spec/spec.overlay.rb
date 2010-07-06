@@ -24,12 +24,14 @@ describe OverLayer do
   
   def start_good
     assert !@o.am_muted?
-    play("good")
+    sleep 1
+    #play("good")
   end
   
   def start_bad
     assert @o.am_muted? # note this uses @o!
-    play("bad")
+    sleep 1
+    #play("bad")
   end
   
   it 'should be able to mute' do
@@ -44,9 +46,6 @@ describe OverLayer do
   end
   
   context 'given you know when to start' do
-    before do
-      @yaml = {:mutes => {2.0 => 4.0}}
-    end
     
     it 'should mute based on time' do   
       @o.start_thread
@@ -55,6 +54,16 @@ describe OverLayer do
       start_bad
       sleep 1
       start_good
+    end
+    
+    it 'should handle multiple mutes in a row' do
+      yaml = {:mutes => {2.0 => 4.0, 5.0 => 7.0}}
+      @o = OverLayer.new yaml
+      @o.start_thread
+      sleep 2.5
+      start_bad # 1s
+      sleep 2 # => 5.5
+      start_bad
     end
     
     it 'should be able to mute teeny sequences' do

@@ -19,12 +19,12 @@ class OverLayer
   
   def mute!
     @am_muted = true
-    nir("mutesysvolume 1")
+    #nir("mutesysvolume 1")
   end
   
   def unmute!
     @am_muted = false
-    nir("mutesysvolume 0")
+    #nir("mutesysvolume 0")
   end
   
   def initialize all_sequences#, start_time_seconds = 0
@@ -73,10 +73,10 @@ class OverLayer
         return [start, endy]
       end
     end
-    if @mutes[-1][1] < cur
+    if @mutes[-1][1] <= cur
       DONE
     else
-      nil
+      raise 'unexpected...'
     end
   end
   
@@ -84,20 +84,22 @@ class OverLayer
   
   def continue_until_past_all_mutes # lodo shouldn't it basically continue forever?
     @mutex.synchronize {
-      start, endy = get_next_mute
-      return if start == DONE
-      time_till_next_mute_starts = start - cur_time
-      pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
-
-      begin
-        Timeout::timeout(time_till_next_mute_starts) {
-          @cv.wait(@mutex)
-        }
-      rescue Timeout::Error
-        # normal
-      end
-      pps 'woke up at', Time.now_f
-      something_has_possibly_changed
+      loop {
+        start, endy = get_next_mute
+        return if start == DONE
+        time_till_next_mute_starts = start - cur_time
+        pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
+        
+        begin
+          Timeout::timeout(time_till_next_mute_starts) {
+            @cv.wait(@mutex)
+          }
+        rescue Timeout::Error
+          # normal
+        end
+        pps 'woke up at', Time.now_f
+        something_has_possibly_changed
+      }
     }
     
   end
