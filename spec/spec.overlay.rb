@@ -8,7 +8,8 @@ Thread.abort_on_exception = true
 describe OverLayer do
   
   before do
-    OverLayer.unmute!
+    @o = OverLayer.new( {:mutes => {}} )
+    @o.unmute!
   end
   
   after do
@@ -22,31 +23,33 @@ describe OverLayer do
   end
   
   def start_good
-    assert !OverLayer.am_muted?
+    assert !@o.am_muted?
     play("good")
   end
   
   def start_bad
-    assert OverLayer.am_muted?
+    assert @o.am_muted? # note this uses @o!
     play("bad")
   end
   
   it 'should be able to mute' do
     # you shouldn't hear a beep
-    assert !OverLayer.am_muted?
-    OverLayer.mute!
-    assert OverLayer.am_muted?
-    OverLayer.unmute!
-    assert !OverLayer.am_muted?
-    OverLayer.mute!
-    assert OverLayer.am_muted?
+    assert !@o.am_muted?
+    @o.mute!
+    assert @o.am_muted?
+    @o.unmute!
+    assert !@o.am_muted?
+    @o.mute!
+    assert @o.am_muted?
   end
   
   context 'given you know when to start' do
+    before do
+      @yaml = {:mutes => {2.0 => 4.0}}
+    end
     
-    it 'should mute based on time' do
-      yaml = {:mutes => {2.0 => 4.0}}
-      Thread.new { OverLayer.overlay yaml}
+    it 'should mute based on time' do      
+      Thread.new { @o = OverLayer.new @yaml; @o.continue 0}
       # make sure we enter the mute section
       sleep 2.25
       start_bad
@@ -54,14 +57,20 @@ describe OverLayer do
       start_good
     end
     
-    it 'should be able to mute teeny sequences ' do
+    it 'should be able to mute teeny sequences' do
       yaml = {:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}}
-      OverLayer.overlay yaml
+      o = OverLayer.new yaml
+      o.continue 0
     end
   end
   
   context 'startup' do
-    it 'should allow you to hit keys and change the setup'
+    it 'should allow you to hit keys and change the current time' do
+      #assert @o.cur_time > 0
+      #o.set_time 5
+      #assert o.cur_time > 5
+    end
+    
     it 'should use the times to mute'
     it 'should be able to land directly in or out of one'
   end
