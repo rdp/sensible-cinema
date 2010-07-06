@@ -20,7 +20,7 @@ class KeyboardInput
     seconds = time % 60
     minutes = time.to_i / 60
     "\b"*100 + "Current time: %d:%02d " % [minutes, seconds]
-  end
+ end
 
  def getch
   @getch ||= Win32API.new('crtdll', '_getch', [], 'L')

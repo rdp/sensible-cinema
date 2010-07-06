@@ -45,6 +45,8 @@ class OverLayer
     delta = case char
       when 'M' then 60
       when 'm' then -60
+      when 'S' then 1
+      when 's' then -1
       else nil
      end
     if delta
