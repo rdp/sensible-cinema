@@ -13,22 +13,16 @@ describe OverLayer do
     Thread.list.each{|t| t.join unless t == Thread.current}
   end
   
-  # play a wav file
-  # blocking until wav file ends
-  def play file
-    system("sndrec32 /play /close #{file}.wav") # lodo this fails at times?
-  end
-  
   def start_good
+    pps 'doing start_good', Time.now_f if $VERBOSE
     assert !@o.am_muted?
     sleep 1
-    #play("good")
   end
   
   def start_bad
+    pps 'doing start_bad', Time.now_f if $VERBOSE
     assert @o.am_muted? # note this uses @o!
     sleep 1
-    #play("bad")
   end
   
   it 'should be able to mute' do
@@ -109,24 +103,22 @@ describe OverLayer do
     it 'should not let you go below zero'
     
     it 'should be able to "key" into and out of a muted section and it work...'
-    it 'should use the times to mute once it reads them'
 
   end
 
-  it 'should allow for real yaml files somehow' do
+  it 'should allow for real yaml files somehow and use it' do
     settings = YAML.load File.read("test_yaml.yml")
-    # 2 - 3 should be muted
+    # 2 - 3 , 4-5 should be muted
     @o = OverLayer.new settings
     @o.start_thread
     start_good # takes 1s
     sleep 1.25
-    puts 'starting bad', Time.now_f
-    start_bad    
-    sleep 1
+    start_bad
+    start_good
     start_bad
     start_good
   end
   
-  # lodo: it continue forever when run from bin...never exit the thread...I guess...
+  # lodo: it continue forever when run from bin...never exit the watcher thread...I guess...
   
 end

@@ -38,17 +38,8 @@ class KeyboardInput
  end
 
  def handle_keystroke ch
-   @fella.keyboard_input("" << ch)
+   string = "" << ch
+   @fella.keyboard_input(string)
  end
 
-end
-
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-  require_relative 'overlayer.rb'
-  # TODO
-  a = KeyboardInput.new OverLayer.new( {:mutes => {}})
-  a.start_thread
-  a.handle_keystrokes_forever
 end

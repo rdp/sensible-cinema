@@ -111,7 +111,7 @@ class OverLayer
         start, endy = get_next_mute
         return if start == :done
         time_till_next_mute_starts = start - cur_time
-        pps 'sleeping till next mute:', time_till_next_mute_starts , 's from', Time.now_f
+        pps 'sleeping unmuted until next mute begins at', time_till_next_mute_starts , 's from', Time.now_f
         
         begin
           Timeout::timeout(time_till_next_mute_starts) {

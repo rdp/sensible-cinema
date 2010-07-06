@@ -22,12 +22,12 @@ describe KeyboardInput do
     @a = KeyboardInput.new Go
   end
   
-  it "should display some seconds" do
+  it "should display minutes and seconds" do
     @a.get_line_printout.should include("0:59")
     @a.get_line_printout.should include("1:00")    
   end
   
-  it "should translate some keys" do
+  it "should translate keys to characters" do
     @a.handle_keystroke 77
     Go.got.should == "M"
     @a.handle_keystroke 109
