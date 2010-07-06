@@ -80,7 +80,6 @@ describe OverLayer do
       assert @o.cur_time > 0
       @o.set_seconds 5
       sleep 0.1
-      cur = @o.cur_time
       assert @o.cur_time > 5
     end
     
