@@ -1,9 +1,5 @@
-require 'rubygems'
-require 'spec/autorun'
-require 'sane'
+require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
-require 'benchmark'
-Thread.abort_on_exception = true
 
 describe OverLayer do
   
