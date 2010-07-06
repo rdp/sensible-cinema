@@ -140,7 +140,6 @@ YAML
 :mutes:
   "0:02.0" : "0:03.0"
 YAML
-#require '_dbg'
      out = OverLayer.translate_yaml yaml
      out[:mutes].first.should == [2.0, 3.0]
      yaml = <<YAML
@@ -151,9 +150,25 @@ YAML
      out[:mutes].first.should == [62.11, 63.0]
   end
 
-  it "should disallow negative lengths"
+  it "should disallow negative length intervals"
 
-  it "should allow for 1:01:00.0 (double colon) style input"
+  it "should allow for 1:01:00.0 (double colon) style input" do
+    $VERBOSE = 1 
+    yaml = <<YAML
+:mutes:
+  "1:00.11" : "1:03.0"
+YAML
+    @o = OverLayer.new_yaml yaml
+    @o.start_thread
+    start_good
+    @o.set_seconds 61
+    sleep 0.1 # ruby rox again!
+    start_bad
+    sleep 2
+    start_good
+  end
+
+  it "should respond to keyboard input, like M"
 
   it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
   

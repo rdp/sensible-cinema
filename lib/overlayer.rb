@@ -183,8 +183,8 @@ class OverLayer
     return if start == :done
     if(current >= start && current < endy)
       mute!
-      pps 'just muted it at', Time.now_f if $VERBOSE
       duration_left = endy - current
+      pps 'just muted it at', Time.now_f, current, 'for interval:', start, '-', endy, 'which is', duration_left, 'more s' if $VERBOSE
       if duration_left > 0
         begin
         Timeout::timeout(duration_left) {
