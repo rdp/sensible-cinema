@@ -8,11 +8,11 @@ Thread.abort_on_exception = true
 describe OverLayer do
   
   before do
-    @o = OverLayer.new( {:mutes => {}} )
-    @o.unmute!
+    @o = OverLayer.new( {:mutes => {2.0 => 4.0}} )
   end
   
   after do
+    # join all...
     Thread.list.each{|t| t.join unless t == Thread.current}
   end
   
@@ -48,8 +48,8 @@ describe OverLayer do
       @yaml = {:mutes => {2.0 => 4.0}}
     end
     
-    it 'should mute based on time' do      
-      Thread.new { @o = OverLayer.new @yaml; @o.continue 0}
+    it 'should mute based on time' do   
+      @o.continue_thread 0
       # make sure we enter the mute section
       sleep 2.25
       start_bad
@@ -66,13 +66,16 @@ describe OverLayer do
   
   context 'startup' do
     it 'should allow you to hit keys and change the current time' do
-      #assert @o.cur_time > 0
+      @o.continue_thread 0
+      sleep 0.1 # wow ruby is slow...
+      assert @o.cur_time > 0
       #o.set_time 5
       #assert o.cur_time > 5
     end
     
     it 'should use the times to mute'
     it 'should be able to land directly in or out of one'
+    it 'should be able to "key" out of a muted section and it work...'
   end
 
   it 'should allow for real yaml files somehow'
