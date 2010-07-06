@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
+require 'yaml'
 
 describe OverLayer do
   
@@ -13,7 +14,7 @@ describe OverLayer do
   end
   
   # play a wav file
-  # blocking!
+  # blocking until wav file ends
   def play file
     system("sndrec32 /play /close #{file}.wav") # lodo this fails at times?
   end
@@ -79,7 +80,6 @@ describe OverLayer do
       assert @o.cur_time > 5
     end
     
-    it 'should use the times to mute'
     it 'should be able to land directly in or out of one'
     it 'should be able to hit keys to affect input' do
       @o.cur_time
@@ -109,8 +109,24 @@ describe OverLayer do
     it 'should not let you go below zero'
     
     it 'should be able to "key" into and out of a muted section and it work...'
+    it 'should use the times to mute once it reads them'
+
   end
 
-  it 'should allow for real yaml files somehow'
+  it 'should allow for real yaml files somehow' do
+    settings = YAML.load File.read("test_yaml.yml")
+    # 2 - 3 should be muted
+    @o = OverLayer.new settings
+    @o.start_thread
+    start_good # takes 1s
+    sleep 1.25
+    puts 'starting bad', Time.now_f
+    start_bad    
+    sleep 1
+    start_bad
+    start_good
+  end
+  
+  # lodo: it continue forever when run from bin...never exit the thread...I guess...
   
 end

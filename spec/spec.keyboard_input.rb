@@ -20,7 +20,6 @@ describe KeyboardInput do
 
   before do
     @a = KeyboardInput.new Go
-    
   end
   
   it "should display some seconds" do

@@ -111,7 +111,7 @@ class OverLayer
         start, endy = get_next_mute
         return if start == :done
         time_till_next_mute_starts = start - cur_time
-        pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
+        pps 'sleeping till next mute:', time_till_next_mute_starts , 's from', Time.now_f
         
         begin
           Timeout::timeout(time_till_next_mute_starts) {
@@ -133,7 +133,7 @@ class OverLayer
     return if start == :done
     if(current >= start && current < endy)
       mute!
-      pps 'done starting mute at', Time.now_f
+      pps 'just muted it at', Time.now_f
       duration_left = endy - current
       if duration_left > 0
         begin
@@ -144,7 +144,7 @@ class OverLayer
           # normal
         end
       end
-      pps 'done sleeping muted unmuting now'
+      pps 'done sleeping muted unmuting now', Time.now_f
       unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...
     end
   end

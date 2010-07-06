@@ -11,7 +11,7 @@ class KeyboardInput
  def start_thread
   Thread.new { loop { 
     print get_line_printout
-    sleep 1
+    sleep 0.1
    } }
  end
 
