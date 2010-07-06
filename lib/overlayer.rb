@@ -36,9 +36,18 @@ class OverLayer
     @start_time = Time.now_f # assume now...
   end
   
-  # returns seconds it's going...
+  # returns seconds it's at...
   def cur_time
     return Time.now_f - @start_time
+  end
+  
+  # sets it to a new set of seconds...
+  def set_seconds seconds
+    @mutex.synchronize {
+      @start_time = Time.now_f - seconds
+      pp 'start time is', @start_time
+      @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but just for two...
+    }
   end
     
   # I want two drivers...
@@ -62,8 +71,6 @@ class OverLayer
     Thread.new { continue_until_past_all_mutes }
   end
   
-  DONE = 'done'
-  
   # lodo: reject overlappings at all...
   
   def get_next_mute
@@ -74,7 +81,7 @@ class OverLayer
       end
     end
     if @mutes[-1][1] <= cur
-      DONE
+      :done
     else
       raise 'unexpected...'
     end
@@ -86,7 +93,7 @@ class OverLayer
     @mutex.synchronize {
       loop {
         start, endy = get_next_mute
-        return if start == DONE
+        return if start == :done
         time_till_next_mute_starts = start - cur_time
         pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
         
@@ -107,6 +114,7 @@ class OverLayer
   def something_has_possibly_changed
     current = cur_time
     start, endy = get_next_mute
+    return if start == :done
     if(current >= start && current < endy)
       mute!
       pps 'done starting mute at', Time.now_f

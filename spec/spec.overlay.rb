@@ -74,17 +74,20 @@ describe OverLayer do
   end
   
   context 'startup' do
-    it 'should allow you to hit keys and change the current time' do
+    it 'should allow you to change the current time' do
       @o.start_thread
       sleep 0.1 # wow ruby is slow...
       assert @o.cur_time > 0
-      #o.set_time 5
-      #assert o.cur_time > 5
+      @o.set_seconds 5
+      sleep 0.1
+      cur = @o.cur_time
+      assert @o.cur_time > 5
     end
     
     it 'should use the times to mute'
     it 'should be able to land directly in or out of one'
-    it 'should be able to "key" out of a muted section and it work...'
+    it 'should be able to hit keys to affect input'
+    it 'should be able to "key" into and out of a muted section and it work...'
   end
 
   it 'should allow for real yaml files somehow'
