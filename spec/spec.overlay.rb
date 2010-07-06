@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
 require 'yaml'
-
+$TEST = true
 describe OverLayer do
   
   before do
@@ -121,10 +121,46 @@ describe OverLayer do
     start_good
   end
   
-  it 'should allow for 1:00.0 minute style input'
-  
-  it 'should give you lightning timestamps when you hit space, in 1:00.0 style'
+  it 'should allow for 1:00.0 minute style input' do
+    yaml = <<YAML
+:mutes:
+  "0:02.0" : "0:03.0"
+YAML
+    @o = OverLayer.new_yaml yaml
+    @o.start_thread
+    start_good
+    start_good
+    sleep 0.25
+    start_bad
+    start_good
+  end
+
+  it "should translate yaml well" do
+    yaml = <<YAML
+:mutes:
+  "0:02.0" : "0:03.0"
+YAML
+#require '_dbg'
+     out = OverLayer.translate_yaml yaml
+     out[:mutes].first.should == [2.0, 3.0]
+     yaml = <<YAML
+:mutes:
+  "1:02.11" : "1:03.0"
+YAML
+     out = OverLayer.translate_yaml yaml
+     out[:mutes].first.should == [62.11, 63.0]
+  end
+
+  it "should disallow negative lengths"
+
+  it "should allow for 1:01:00.0 (double colon) style input"
+
+  it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
   
   it 'should be able to continue *past* the very end, then back into it, etc.'
   
+  it 'should have a user friendlier yaml syntax'
+
+  it 'should have a more descriptive yaml syntax'
+
 end

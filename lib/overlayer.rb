@@ -1,6 +1,7 @@
 require 'sane'
 require 'thread'
 require 'timeout'
+require 'yaml'
 
 class Time
   def self.now_f
@@ -20,12 +21,12 @@ class OverLayer
   
   def mute!
     @am_muted = true
-    nir("mutesysvolume 1")
+    nir("mutesysvolume 1") unless defined?($TEST)
   end
   
   def unmute!
     @am_muted = false
-    nir("mutesysvolume 0")
+    nir("mutesysvolume 0") unless defined?($TEST)
   end
   
   def initialize all_sequences#, start_time_seconds = 0
@@ -38,9 +39,38 @@ class OverLayer
   end
   
   def self.new_yaml yaml    
-    OverLayer.new YAML.load(yaml)
+    OverLayer.new translate_yaml(yaml)
   end
   
+  def self.translate_yaml yaml
+    all = YAML.load(yaml)
+    # now it's like {:mutes => {"1:2.0" => "1:3.0"}}
+    mutes = all[:mutes]
+    new_mutes = {}
+    mutes.each{|s,e|
+      # both are like 1:02.0
+      new_mutes[translate_string_to_seconds(s)] = translate_string_to_seconds(e)
+    }
+    all[:mutes] = new_mutes
+    all
+  end
+  
+  def self.translate_string_to_seconds s
+    # might actually already be a float...
+    if s.is_a? Float
+      return s
+    end
+    
+    # s is like 1:01:02.0
+    total = 0.0
+    seconds = s.split(":")[-1]
+    total += seconds.to_f
+    minutes = s.split(":")[-2] || "0"
+    total += 60 * minutes.to_i
+    hours = s.split(":")[-3] || "0"
+    total += 60* 60 * hours.to_i
+    total
+  end
   # returns seconds it's at...
   def cur_time
     return Time.now_f - @start_time
@@ -52,7 +82,7 @@ class OverLayer
     else
       start, endy = get_next_mute
       if start == :done
-        "no more"
+        "no more mutes"
       else
        "next mute in %.1fs" % (start - cur_time)
       end
