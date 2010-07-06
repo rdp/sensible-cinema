@@ -60,7 +60,7 @@ describe OverLayer do
     it 'should be able to mute teeny sequences' do
       yaml = {:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}}
       o = OverLayer.new yaml
-      o.continue 0
+      o.continue_until_past_all_mutes
     end
   end
   

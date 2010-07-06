@@ -27,12 +27,13 @@ class OverLayer
     nir("mutesysvolume 0")
   end
   
-  def initialize all_sequences
+  def initialize all_sequences#, start_time_seconds = 0
     mutes = all_sequences[:mutes]
     @mutes = mutes.to_a.sort!
-    @am_muted = false # lodo...be more accurate here?
+    @am_muted = false
     @mutex = Mutex.new
     @cv = ConditionVariable.new
+    @start_time = Time.now_f # assume now...
   end
   
   # returns seconds it's going...
@@ -58,28 +59,37 @@ class OverLayer
   # end
 
   def start_thread
-    Thread.new { continue 0 }
+    Thread.new { continue_until_past_all_mutes }
   end
   
-  def continue start_time_seconds
-    @mutex.synchronize {
-      @mutes_index = 0
-      @start_time = Time.now_f - start_time_seconds
-      while next_mute = @mutes[@mutes_index]
-        next_mute_absolute_start, next_mute_absolute_end = next_mute
-        cur_time = Time.now_f - @start_time
-        end_mute = @start_time + next_mute_absolute_end
-        # we should sleep until the next start...
-        time_till_next_mute = next_mute_absolute_start - cur_time
-        pps 'sleeping till next mute:', time_till_next_mute , 's', 'which would be till second', Time.now_f + time_till_next_mute
-        if time_till_next_mute > 0
-          #@cv.wait()
-          sleep time_till_next_mute
-        end
-        pps 'woke up for next muting at', Time.now_f
-        something_has_probably_changed end_mute
-        @mutes_index += 1
+  DONE = 'done'
+  
+  # lodo: reject overlappings at all...
+  
+  def get_next_mute
+    cur = cur_time
+    for start, endy in @mutes
+      if cur < endy
+        return [start, endy]
       end
+    end
+    if @mutes[-1][1] < cur
+      DONE
+    else
+      nil
+    end
+  end
+  
+  def continue_until_past_all_mutes # lodo shouldn't it basically continue forever?
+    @mutex.synchronize {
+      start, endy = get_next_mute
+      return if start == DONE
+      time_till_next_mute_starts = start - cur_time
+      pps 'sleeping till next mute:', time_till_next_mute_starts , 's'
+      sleep time_till_next_mute_starts
+        #@cv.wait()
+      pps 'woke up for next muting at', Time.now_f
+      something_has_probably_changed endy
     }
     
   end
@@ -88,7 +98,7 @@ class OverLayer
       # may have been woken up early...
       mute!
       pps 'done starting mute at', Time.now_f
-      duration = end_mute - Time.now_f
+      duration = end_mute - cur_time
       sleep duration if duration > 0
       pps 'done sleeping muted which was duration', duration, 'unmuting now'
       unmute!
