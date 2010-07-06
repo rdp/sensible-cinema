@@ -49,7 +49,7 @@ describe OverLayer do
     end
     
     it 'should mute based on time' do   
-      @o.continue_thread 0
+      @o.start_thread
       # make sure we enter the mute section
       sleep 2.25
       start_bad
@@ -66,7 +66,7 @@ describe OverLayer do
   
   context 'startup' do
     it 'should allow you to hit keys and change the current time' do
-      @o.continue_thread 0
+      @o.start_thread
       sleep 0.1 # wow ruby is slow...
       assert @o.cur_time > 0
       #o.set_time 5
