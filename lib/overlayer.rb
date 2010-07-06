@@ -40,6 +40,15 @@ class OverLayer
   def cur_time
     return Time.now_f - @start_time
   end
+  
+  def status
+    if @am_muted
+      "muted"
+    else
+      start, endy = get_next_mute
+      "next mute in %.1fs" % (start - cur_time)
+    end
+  end
 
   def keyboard_input char
     delta = case char
