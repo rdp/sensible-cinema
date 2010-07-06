@@ -40,6 +40,19 @@ class OverLayer
   def cur_time
     return Time.now_f - @start_time
   end
+
+  def keyboard_input char
+    delta = case char
+      when 'M' then 60
+      when 'm' then -60
+      else nil
+     end
+    if delta
+      set_seconds(cur_time + delta)
+    else
+      puts 'invalid char:' + char
+    end
+  end
   
   # sets it to a new set of seconds...
   def set_seconds seconds

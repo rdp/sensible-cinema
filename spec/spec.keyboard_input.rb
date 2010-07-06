@@ -8,16 +8,31 @@ describe KeyboardInput do
     def self.cur_time
       @time += 1
     end
+    
+    def self.got
+      @got
+    end
+    
+    def self.keyboard_input input
+      @got = input
+    end
   end
 
-  
-  it "should display some seconds" do
-
-    a = KeyboardInput.new Go
-    a.get_line_printout.should include("0:59")
-    a.get_line_printout.should include("1:00")
+  before do
+    @a = KeyboardInput.new Go
     
   end
   
+  it "should display some seconds" do
+    @a.get_line_printout.should include("0:59")
+    @a.get_line_printout.should include("1:00")    
+  end
+  
+  it "should translate some keys" do
+    @a.handle_keystroke 77
+    Go.got.should == "M"
+    @a.handle_keystroke 109
+    Go.got.should == "m"
+  end  
   
 end

@@ -81,7 +81,11 @@ describe OverLayer do
     
     it 'should use the times to mute'
     it 'should be able to land directly in or out of one'
-    it 'should be able to hit keys to affect input'
+    it 'should be able to hit keys to affect input' do
+      @o.cur_time
+      @o.keyboard_input 'M'
+      assert @o.cur_time > 59 
+    end
     it 'should be able to "key" into and out of a muted section and it work...'
   end
 
