@@ -19,12 +19,12 @@ class OverLayer
   
   def mute!
     @am_muted = true
-    #nir("mutesysvolume 1")
+    nir("mutesysvolume 1")
   end
   
   def unmute!
     @am_muted = false
-    #nir("mutesysvolume 0")
+    nir("mutesysvolume 0")
   end
   
   def initialize all_sequences#, start_time_seconds = 0

@@ -9,8 +9,7 @@ describe OverLayer do
   end
   
   after do
-    # join all...
-    Thread.join_others
+    Thread.join_all_others
   end
   
   def start_good

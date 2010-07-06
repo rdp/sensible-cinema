@@ -42,7 +42,7 @@ describe KeyboardInput do
     @a.get_line_printout.should include("1:00")
   end
 
-  it "should display muted or not" do
+  it "should display whether muted or not" do
     @a.get_line_printout.should include("unmuted")
     @a.get_line_printout.should_not include("unmuted")
   end
