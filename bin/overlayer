@@ -1,14 +1,12 @@
 if File.exist? ARGV[0]
-  $VERBOSE = ARGV.find{|a| a == '-v'}
   require 'rubygems'
   require 'sane'
+  $VERBOSE = ARGV.find{|a| a == '-v'}
   require_relative '../lib/overlayer'
   require_relative '../lib/keyboard_input'
-  require 'yaml'
   
-  settings = YAML.load(File.read(ARGV[0]))
-  overlay =  OverLayer.new(settings)
-  overlay.start_thread
+  overlay = OverLayer.new_yaml(File.read(ARGV[0]))
+  overlay.start_thread true
   key_input = KeyboardInput.new overlay
   key_input.start_thread
   key_input.handle_keystrokes_forever

@@ -1,5 +1,6 @@
 require 'sane'
 require 'thread'
+require 'timeout'
 
 class Time
   def self.now_f
@@ -36,6 +37,10 @@ class OverLayer
     @start_time = Time.now_f # assume now...
   end
   
+  def self.new_yaml yaml    
+    OverLayer.new YAML.load(yaml)
+  end
+  
   # returns seconds it's at...
   def cur_time
     return Time.now_f - @start_time
@@ -46,8 +51,12 @@ class OverLayer
       "muted"
     else
       start, endy = get_next_mute
-      "next mute in %.1fs" % (start - cur_time) unless start == :done
-    end
+      if start == :done
+        "no more"
+      else
+       "next mute in %.1fs" % (start - cur_time)
+      end
+    end + " (MmSsTt) " 
   end
 
   def keyboard_input char
@@ -92,8 +101,8 @@ class OverLayer
   #  broadcast
   # end
 
-  def start_thread
-    Thread.new { continue_until_past_all_mutes }
+  def start_thread continue_forever = false
+    Thread.new { continue_until_past_all_mutes continue_forever }
   end
   
   # lodo: reject overlappings at all...
@@ -106,22 +115,23 @@ class OverLayer
       end
     end
     if @mutes[-1][1] <= cur
-      pps 'done @', cur if $VERBOSE
       :done
     else
       raise 'unexpected...'
     end
   end
   
-  require 'timeout'
-  
-  def continue_until_past_all_mutes # lodo shouldn't it basically continue forever?
+  def continue_until_past_all_mutes continue_forever
     @mutex.synchronize {
       loop {
         start, endy = get_next_mute
-        return if start == :done
-        time_till_next_mute_starts = start - cur_time
-        pps 'sleeping unmuted until next mute begins at', time_till_next_mute_starts , 's from', Time.now_f if $VERBOSE
+        if start == :done
+          return unless continue_forever
+          time_till_next_mute_starts = 1_000_000
+        else
+          time_till_next_mute_starts = start - cur_time
+        end
+        pps 'sleeping unmuted until next mute begins in', time_till_next_mute_starts , 's from', Time.now_f if $VERBOSE
         
         begin
           Timeout::timeout(time_till_next_mute_starts) {

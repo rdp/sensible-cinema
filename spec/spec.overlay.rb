@@ -47,8 +47,8 @@ describe OverLayer do
     end
     
     it 'should handle multiple mutes in a row' do
-      yaml = {:mutes => {2.0 => 4.0, 5.0 => 7.0}}
-      @o = OverLayer.new yaml
+      settings = {:mutes => {2.0 => 4.0, 5.0 => 7.0}}
+      @o = OverLayer.new settings
       @o.start_thread
       sleep 2.5
       start_bad # 1s
@@ -57,9 +57,9 @@ describe OverLayer do
     end
     
     it 'should be able to mute teeny sequences' do
-      yaml = {:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}}
-      o = OverLayer.new yaml
-      o.continue_until_past_all_mutes
+      settings = {:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}}
+      o = OverLayer.new settings
+      o.continue_until_past_all_mutes false
     end
   end
   
@@ -74,6 +74,7 @@ describe OverLayer do
     end
     
     it 'should be able to land directly in or out of one'
+    
     it 'should be able to hit keys to affect input' do
       @o.cur_time
       @o.keyboard_input 'M'
@@ -99,16 +100,18 @@ describe OverLayer do
     
     end
     
-    it 'should not let you go below zero'
-    
     it 'should be able to "key" into and out of a muted section and it work...'
 
   end
 
+  it 'should have help output' do
+    @o.status.should include "MmSs"
+  end  
+
   it 'should allow for real yaml files somehow and use it' do
-    settings = YAML.load File.read("test_yaml.yml")
+    yaml = File.read("test_yaml.yml")
     # 2 - 3 , 4-5 should be muted
-    @o = OverLayer.new settings
+    @o = OverLayer.new_yaml yaml
     @o.start_thread
     start_good # takes 1s
     sleep 1.25
@@ -118,6 +121,10 @@ describe OverLayer do
     start_good
   end
   
-  # lodo: it continue forever when run from bin...never exit the watcher thread...I guess...
+  it 'should allow for 1:00.0 minute style input'
+  
+  it 'should give you lightning timestamps when you hit space, in 1:00.0 style'
+  
+  it 'should be able to continue *past* the very end, then back into it, etc.'
   
 end
