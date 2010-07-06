@@ -77,16 +77,16 @@ class OverLayer
   end
   
   def status
+    start, endy = get_next_mute
     if @am_muted
-      "muted"
+      "muted (%.1fs - %.1fs)" % [start, endy]
     else
-      start, endy = get_next_mute
       if start == :done
         "no more mutes"
       else
-       "next mute in %.1fs" % (start - cur_time)
+        "next mute in %.1fs (%.1fs - %.1fs)" % [(start - cur_time),start, endy]
       end
-    end + " (MmSsTt) " 
+    end + " (MmSsTt): "
   end
 
   def keyboard_input char

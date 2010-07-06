@@ -168,6 +168,8 @@ YAML
     start_good
   end
 
+  it "should have output that is colon delimited"
+
   it "should respond to keyboard input, like M"
 
   it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
