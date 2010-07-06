@@ -168,6 +168,8 @@ YAML
     start_good
   end
 
+  it "should reload the YAML file on the fly to allow for editing..."
+
   it "should have output that is colon delimited"
 
   it "should respond to keyboard input, like M"
