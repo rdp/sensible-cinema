@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sane'
-require 'win32api'
+require 'Win32API'
 
 class KeyboardInput
 

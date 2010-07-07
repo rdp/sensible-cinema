@@ -1,7 +1,9 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
-require 'yaml'
+
+# tell it not to actually mute during testing...
 $TEST = true
+
 describe OverLayer do
   
   before do
@@ -105,7 +107,7 @@ describe OverLayer do
   end
 
   it 'should have help output' do
-    @o.status.should include "MmSs"
+    @o.status.should include("MmSs")
   end  
 
   it 'should allow for real yaml files somehow and use it' do
@@ -141,13 +143,13 @@ YAML
   "0:02.0" : "0:03.0"
 YAML
      out = OverLayer.translate_yaml yaml
-     out[:mutes].first.should == [2.0, 3.0]
+     out[:mutes].to_a.first.should == [2.0, 3.0]
      yaml = <<YAML
 :mutes:
   "1:02.11" : "1:03.0"
 YAML
      out = OverLayer.translate_yaml yaml
-     out[:mutes].first.should == [62.11, 63.0]
+     out[:mutes].to_a.first.should == [62.11, 63.0]
   end
 
   it "should disallow negative length intervals"
