@@ -28,12 +28,16 @@ class OverLayer
     @am_muted = false
     nir("mutesysvolume 0") unless defined?($TEST)
   end
-  
-  def initialize filename, all_sequences = nil
-    @filename = filename
-    all_sequences ||= OverLayer.translate_yaml(File.read filename)
+
+  def reload_yaml!
+    all_sequences = OverLayer.translate_yaml(File.read(@filename))
     mutes = all_sequences[:mutes]
     @mutes = mutes.to_a.sort!
+  end
+  
+  def initialize filename
+    @filename = filename
+    reload_yaml!
     @am_muted = false
     @mutex = Mutex.new
     @cv = ConditionVariable.new
@@ -97,8 +101,9 @@ class OverLayer
       when 'T' then 0.1
       when 't' then -0.1
       else nil
-     end
+    end
     if delta
+      reload_yaml!
       set_seconds(cur_time + delta)
     else
       puts 'invalid char:' + char
@@ -112,19 +117,8 @@ class OverLayer
       @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but just for two...
     }
   end
-    
-  # I want two drivers...
-  # one a thread here, that can be woken up (?)
-  # I want the equivalent of EM, like...
-  # state and it gets called into by two things
-  # the key controller,
-  # and the pause driver.
-  # key controller -> pause driver...it needs mutex with 
-  # with EM it's like receiving a new packet
-  # condition variable...hmm...
-  # in reality we have a scheduler...hmm...
-  # maybe a sub-project...hmm...
-  # something like
+  # we have a single scheduler thread, that is notified when the time may have changed
+  # like 
   # def restart new_time
   #  @start_time = x
   #  broadcast

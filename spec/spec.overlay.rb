@@ -7,11 +7,13 @@ $TEST = true
 describe OverLayer do
   
   before do
-    @o = OverLayer.new(nil, {:mutes => {2.0 => 4.0}} )
+    File.write 'temp.yml', YAML.dump({:mutes => {2.0 => 4.0}} )
+    @o = OverLayer.new('temp.yml')
   end
   
   after do
     Thread.join_all_others
+    File.delete 'temp.yml'
   end
   
   def start_good
@@ -25,6 +27,8 @@ describe OverLayer do
     assert @o.am_muted? # note this uses @o!
     sleep 1
   end
+  
+  it 'should reject overlapping settings...I guess'
   
   it 'should be able to mute' do
     # you shouldn't hear a beep
@@ -49,8 +53,8 @@ describe OverLayer do
     end
     
     it 'should handle multiple mutes in a row' do
-      settings = {:mutes => {2.0 => 4.0, 5.0 => 7.0}}
-      @o = OverLayer.new nil, settings
+      File.write 'temp.yml', YAML.dump({:mutes => {2.0 => 4.0, 5.0 => 7.0}})
+      @o = OverLayer.new 'temp.yml'
       @o.start_thread
       sleep 2.5
       start_bad # 1s
@@ -59,8 +63,8 @@ describe OverLayer do
     end
     
     it 'should be able to mute teeny sequences' do
-      settings = {:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}}
-      o = OverLayer.new nil, settings
+      File.write 'temp.yml', YAML.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
+      o = OverLayer.new 'temp.yml'
       o.continue_until_past_all_mutes false
     end
   end
@@ -78,6 +82,7 @@ describe OverLayer do
     it 'should be able to land directly in or out of one'
     
     it 'should be able to hit keys to affect input' do
+      @o = OverLayer.new 'test_yaml.yml'
       @o.cur_time
       @o.keyboard_input 'M'
       assert @o.cur_time > 59 
@@ -141,14 +146,13 @@ YAML
   end
 
   it "should reload the YAML file on the fly to allow for editing it" do
-    # start it with none
+    # start it with one far later
     write_yaml <<YAML
 :mutes:
-  "0:00.0" : "0:00.1"
+  "0:11.0" : "0:12.0"
 YAML
     @o = OverLayer.new 'temp.yml'
     @o.start_thread
-    sleep 0.5
     start_good
     write_yaml <<YAML
 :mutes:
@@ -157,8 +161,8 @@ YAML
     # go forward a tenth
     # should reload it...
     @o.keyboard_input 't'
+    sleep 0.1 # blug
     start_bad
-    sleep 0.5
     start_good
   end
   
