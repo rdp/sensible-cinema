@@ -1,7 +1,8 @@
 if File.exist? ARGV[0]
   require 'rubygems'
   require 'sane'
-  $VERBOSE = ARGV.find{|a| a == '-v'}
+  $VERBOSE = 1 if ARGV.find{|a| a == '-v'}
+  $TEST = 1 if ARGV.find{|a| a == '-t'}
   require_relative '../lib/overlayer'
   require_relative '../lib/keyboard_input'
   
@@ -12,6 +13,6 @@ if File.exist? ARGV[0]
   key_input.handle_keystrokes_forever # when this method exits, we want to exit...
   
 else
- puts 'syntax: filename.yml [-v]  (run your player in the background)'
+ puts 'syntax: filename.yml [-v] [-t] (run your other player in the background, and set its priority low)'
  exit 1
 end 
