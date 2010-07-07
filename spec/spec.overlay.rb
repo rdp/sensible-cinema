@@ -84,24 +84,24 @@ describe OverLayer do
     it 'should be able to hit keys to affect input' do
       @o = OverLayer.new 'test_yaml.yml'
       @o.cur_time
-      @o.keyboard_input 'M'
-      assert @o.cur_time > 59 
       @o.keyboard_input 'm'
-      assert @o.cur_time < 59
-      60.times {
-        @o.keyboard_input 'S'
-      }
       assert @o.cur_time > 59 
+      @o.keyboard_input 'M'
+      assert @o.cur_time < 59
       60.times {
         @o.keyboard_input 's'
       }
+      assert @o.cur_time > 59 
+      60.times {
+        @o.keyboard_input 'S'
+      }
       assert @o.cur_time < 59 
       600.times { 
-        @o.keyboard_input 'T' 
+        @o.keyboard_input 't' 
       }
       assert @o.cur_time > 59 
       600.times { 
-        @o.keyboard_input 't' 
+        @o.keyboard_input 'T' 
       }
       assert @o.cur_time < 59 
     
@@ -160,7 +160,7 @@ YAML
 YAML
     # go forward a tenth
     # should reload it...
-    @o.keyboard_input 't'
+    @o.keyboard_input 'T'
     sleep 0.1 # blug
     start_bad
     start_good
