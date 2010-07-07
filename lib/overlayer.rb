@@ -29,7 +29,9 @@ class OverLayer
     nir("mutesysvolume 0") unless defined?($TEST)
   end
   
-  def initialize all_sequences#, start_time_seconds = 0
+  def initialize filename, all_sequences = nil
+    @filename = filename
+    all_sequences ||= OverLayer.translate_yaml(File.read filename)
     mutes = all_sequences[:mutes]
     @mutes = mutes.to_a.sort!
     @am_muted = false
@@ -38,12 +40,8 @@ class OverLayer
     @start_time = Time.now_f # assume now...
   end
   
-  def self.new_yaml yaml    
-    OverLayer.new translate_yaml(yaml)
-  end
-  
-  def self.translate_yaml yaml
-    all = YAML.load(yaml)
+  def self.translate_yaml raw_yaml
+    all = YAML.load(raw_yaml)
     # now it's like {:mutes => {"1:2.0" => "1:3.0"}}
     mutes = all[:mutes]
     new_mutes = {}
@@ -71,7 +69,8 @@ class OverLayer
     total += 60* 60 * hours.to_i
     total
   end
-  # returns seconds it's at...
+  
+  # returns seconds it's at currently...
   def cur_time
     return Time.now_f - @start_time
   end

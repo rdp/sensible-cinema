@@ -7,7 +7,7 @@ $TEST = true
 describe OverLayer do
   
   before do
-    @o = OverLayer.new( {:mutes => {2.0 => 4.0}} )
+    @o = OverLayer.new(nil, {:mutes => {2.0 => 4.0}} )
   end
   
   after do
@@ -50,7 +50,7 @@ describe OverLayer do
     
     it 'should handle multiple mutes in a row' do
       settings = {:mutes => {2.0 => 4.0, 5.0 => 7.0}}
-      @o = OverLayer.new settings
+      @o = OverLayer.new nil, settings
       @o.start_thread
       sleep 2.5
       start_bad # 1s
@@ -60,7 +60,7 @@ describe OverLayer do
     
     it 'should be able to mute teeny sequences' do
       settings = {:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}}
-      o = OverLayer.new settings
+      o = OverLayer.new nil, settings
       o.continue_until_past_all_mutes false
     end
   end
@@ -111,9 +111,8 @@ describe OverLayer do
   end  
 
   it 'should allow for real yaml files somehow and use it' do
-    yaml = File.read("test_yaml.yml")
     # 2 - 3 , 4-5 should be muted
-    @o = OverLayer.new_yaml yaml
+    @o = OverLayer.new 'test_yaml.yml'
     @o.start_thread
     start_good # takes 1s
     sleep 1.25
@@ -123,12 +122,16 @@ describe OverLayer do
     start_good
   end
   
+  def write_yaml yaml
+    File.write 'temp.yml', yaml
+  end
+  
   it 'should allow for 1:00.0 minute style input' do
-    yaml = <<YAML
+    write_yaml <<YAML
 :mutes:
   "0:02.0" : "0:03.0"
 YAML
-    @o = OverLayer.new_yaml yaml
+    @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good
     start_good
@@ -137,6 +140,28 @@ YAML
     start_good
   end
 
+  it "should reload the YAML file on the fly to allow for editing it" do
+    # start it with none
+    write_yaml <<YAML
+:mutes:
+  "0:00.0" : "0:00.1"
+YAML
+    @o = OverLayer.new 'temp.yml'
+    @o.start_thread
+    sleep 0.5
+    start_good
+    write_yaml <<YAML
+:mutes:
+  "0:00.0" : "0:01.5"
+YAML
+    # go forward a tenth
+    # should reload it...
+    @o.keyboard_input 't'
+    start_bad
+    sleep 0.5
+    start_good
+  end
+  
   it "should translate yaml well" do
     yaml = <<YAML
 :mutes:
@@ -156,11 +181,11 @@ YAML
 
   it "should allow for 1:01:00.0 (double colon) style input" do
     $VERBOSE = 1 
-    yaml = <<YAML
+    write_yaml <<YAML
 :mutes:
   "1:00.11" : "1:03.0"
 YAML
-    @o = OverLayer.new_yaml yaml
+    @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good
     @o.set_seconds 61
@@ -170,12 +195,14 @@ YAML
     start_good
   end
 
-  it "should reload the YAML file on the fly to allow for editing..."
+  it "should have pure ruby for muting et al--ffi inliner?"
+  
+  it "should allow for a static 'surround each' buffer"
 
   it "should have output that is colon delimited"
 
   it "should respond to keyboard input, like M"
-
+  
   it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
   
   it 'should be able to continue *past* the very end, then back into it, etc.'
