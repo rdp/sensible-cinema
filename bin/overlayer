@@ -5,14 +5,13 @@ if File.exist? ARGV[0]
   require_relative '../lib/overlayer'
   require_relative '../lib/keyboard_input'
   
-  overlay = OverLayer.new_yaml(File.read(ARGV[0]))
+  overlay = OverLayer.new(ARGV[0])
   overlay.start_thread true
   key_input = KeyboardInput.new overlay
-  key_input.start_thread
-  key_input.handle_keystrokes_forever
-  Thread.join_all_others # just in case
+  key_input.start_thread # status thread
+  key_input.handle_keystrokes_forever # when this method exits, we want to exit...
   
 else
  puts 'syntax: filename.yml [-v]  (run your player in the background)'
  exit 1
-end
+end 

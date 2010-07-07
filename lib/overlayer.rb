@@ -21,12 +21,16 @@ class OverLayer
   
   def mute!
     @am_muted = true
+    puts 'muting!' if $VERBOSE
     nir("mutesysvolume 1") unless defined?($TEST)
+    puts 'done muting!' if $VERBOSE
   end
   
   def unmute!
     @am_muted = false
+    puts 'unmuting!' if $VERBOSE
     nir("mutesysvolume 0") unless defined?($TEST)
+    puts 'done unmuting!' if $VERBOSE
   end
 
   def reload_yaml!
@@ -80,10 +84,10 @@ class OverLayer
   end
   
   def status
-    start, endy = get_next_mute
     if @am_muted
-      "muted (%.1fs - %.1fs)" % [start, endy]
+      "muted (%.1fs - %.1fs)" % [@start, @endy]
     else
+      start, endy = get_next_mute
       if start == :done
         "no more mutes"
       else
@@ -154,7 +158,7 @@ class OverLayer
         else
           time_till_next_mute_starts = start - cur_time
         end
-        pps 'sleeping unmuted until next mute begins in', time_till_next_mute_starts , 's from', Time.now_f if $VERBOSE
+        pps 'sleeping unmuted until next mute (%f - %f) begins in' % [start, endy], time_till_next_mute_starts , 's from', Time.now_f, cur_time if $VERBOSE
         
         begin
           Timeout::timeout(time_till_next_mute_starts) {
@@ -173,6 +177,8 @@ class OverLayer
   def something_has_possibly_changed
     current = cur_time
     start, endy = get_next_mute
+    @start = start
+    @endy = endy
     return if start == :done
     if(current >= start && current < endy)
       mute!
@@ -187,7 +193,7 @@ class OverLayer
           # normal
         end
       end
-      pps 'done sleeping muted unmuting now', Time.now_f if $VERBOSE
+      pps 'done sleeping',duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
       unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...
     end
   end

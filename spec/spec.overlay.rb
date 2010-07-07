@@ -215,4 +215,5 @@ YAML
 
   it 'should have a more descriptive yaml syntax'
 
+  it "should give itself high CPU...hmm...maybe? except not OCR?"
 end
