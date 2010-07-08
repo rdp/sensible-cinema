@@ -25,7 +25,9 @@ describe ScreenTracker do
   it "should parse yaml appropro"    
   
   after(:all) do
-    
+    # bring ourselves back to the foreground
+    # lodo why does this BSoD me?
+    Win32::Screenshot.window(/universal/, 0) rescue nil
   end
     
 end
