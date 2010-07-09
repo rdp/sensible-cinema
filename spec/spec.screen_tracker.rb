@@ -76,8 +76,8 @@ describe ScreenTracker do
       assert c.get_relative_coords != b.get_relative_coords
       cb = c.get_bmp
       bb = b.get_bmp
-      assert c.get_bmp != b.get_bmp
       c.get_bmp.length == b.get_bmp.length
+      assert c.get_bmp != b.get_bmp
     end
     
     it "should fail with out of bounds sizes" do
@@ -86,7 +86,7 @@ describe ScreenTracker do
     
   end
   
-  it "should parse yaml appropro"    
+  it "should parse yaml appropro"
   
   after(:all) do
     # bring ourselves back to the foreground
