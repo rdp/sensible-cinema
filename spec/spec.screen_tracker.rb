@@ -1,8 +1,17 @@
+require 'faster_rubygems'
 require 'sane'
 require_relative 'common'
 require_relative '../lib/screen_tracker'
 
 describe ScreenTracker do
+  
+  before(:all) do
+    begin
+      Win32::Screenshot.window(/VLC/, 0) {}
+    rescue
+      @pid = IO.popen("C:/program files/VideoLan/VLC/vlc.exe").pid
+    end
+  end
   
   before do
     @a = ScreenTracker.new("VLC",10,10,20,20)
@@ -26,8 +35,11 @@ describe ScreenTracker do
   
   after(:all) do
     # bring ourselves back to the foreground
-    # lodo why does this BSoD me?
-    Win32::Screenshot.window(/universal/, 0) rescue nil
-  end
+    # this seg faults on windows 7 for me for some reason
+    unless Socket.gethostname == "PACKRD-1GK7V"
+      Win32::Screenshot.window(/universal/, 0) rescue nil
+    end
     
+  end
+  
 end

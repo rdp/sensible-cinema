@@ -87,9 +87,10 @@ auto-assignment of EDL's to media:
   web plugin?
   DVD's
     VLC
-  directory>
+    directory of filters
 
 Programmatically do all of the above, by driving using an internal API.  Allow it to make mp4's somewhere.
+  WMP?
   auto start (?)
   skip intros ?
   insert deleted scenes
