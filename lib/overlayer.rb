@@ -34,9 +34,14 @@ class OverLayer
   end
 
   def reload_yaml!
-    all_sequences = OverLayer.translate_yaml(File.read(@filename))
-    mutes = all_sequences[:mutes]
-    @mutes = mutes.to_a.sort!
+    if @file_mtime != File.stat(@filename).mtime
+      all_sequences = OverLayer.translate_yaml(File.read(@filename))
+      puts '(re)loaded sequences as ' + all_sequences.inspect
+      mutes = all_sequences[:mutes]
+      @mutes = mutes.to_a.sort!
+      # File.stat takes 0.0002 so we're probably ok doing two of them.
+      @file_mtime = File.stat(@filename).mtime
+    end
   end
   
   def initialize filename
@@ -46,6 +51,7 @@ class OverLayer
     @mutex = Mutex.new
     @cv = ConditionVariable.new
     @start_time = Time.now_f # assume now...
+    @file_mtime = nil
   end
   
   def self.translate_yaml raw_yaml
