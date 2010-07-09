@@ -69,15 +69,15 @@ describe ScreenTracker do
     end
     
     it "should look different with negative than with positive" do
-      a = ScreenTracker.new("VLC",10,10,2,2)
-      b = ScreenTracker.new("VLC",10,10,2,2)
-      c = ScreenTracker.new("VLC",-100,-100,50,50)
-      require 'sane'
+      a = ScreenTracker.new("VLC",10,10,50,50)
+      b = ScreenTracker.new("VLC",10,10,50,50)
+      c = ScreenTracker.new("VLC",-99,-99,50,50)
       assert a.get_bmp == b.get_bmp
       assert c.get_relative_coords != b.get_relative_coords
-      File.binwrite 'c.bmp', c.get_bmp
-      File.binwrite 'b.bmp', b.get_bmp
+      cb = c.get_bmp
+      bb = b.get_bmp
       assert c.get_bmp != b.get_bmp
+      c.get_bmp.length == b.get_bmp.length
     end
     
     it "should fail with out of bounds sizes" do
