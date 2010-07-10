@@ -1,10 +1,10 @@
 require 'win32/screenshot'
 require 'sane'
+require 'yaml'
 
 class ScreenTracker
   
   def self.new_from_yaml yaml
-    require 'yaml'
     settings = YAML.load yaml
     return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"])
   end
@@ -50,13 +50,7 @@ class ScreenTracker
       if current != original
         return
       end
-      sleep 0.1
+      sleep 0.05
     }
   end
-end
-
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-  require_relative '../spec/spec.screen_tracker.rb'
 end
