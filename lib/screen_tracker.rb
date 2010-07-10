@@ -1,6 +1,13 @@
 require 'win32/screenshot'
 
 class ScreenTracker
+  
+  def self.new_from_yaml yaml
+    require 'yaml'
+    settings = YAML.load yaml
+    return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"])
+  end
+  
   def initialize name_or_regex, x,y,width,height
     @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex) # save us 0.00445136 per time
     raise 'bad name--perhaps not running yet?' unless @hwnd

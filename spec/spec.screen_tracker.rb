@@ -22,7 +22,7 @@ describe ScreenTracker do
     @a.get_bmp.should_not be_nil 
   end
   
-  it "should raise if unable to find" do
+  it "should raise if unable to find the right window" do
     proc { ScreenTracker.new("unknown window",10,10,20,20) }.should raise_exception(RuntimeError)
   end
   
@@ -86,7 +86,17 @@ describe ScreenTracker do
     
   end
   
-  it "should parse yaml appropro"
+  it "should parse yaml appropro" do
+    yaml = <<YAML
+name: VLC
+x: 32
+y: 34
+width: 100
+height: 20
+YAML
+    a = ScreenTracker.new_from_yaml(yaml)
+    a.get_relative_coords.should == [32,34,132,54]
+  end
   
   after(:all) do
     # bring ourselves back to the foreground
