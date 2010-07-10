@@ -7,9 +7,16 @@ describe ScreenTracker do
   
   before(:all) do
     begin
+      Win32::Screenshot.window(/silence.wav/, 0) {}
+    rescue
+      @pid1 = IO.popen("sndrec32 /play silence.wav").pid
+      sleep 1
+    end
+    
+    begin
       Win32::Screenshot.window(/VLC/, 0) {}
     rescue
-      @pid = IO.popen("C:/program files/VideoLan/VLC/vlc.exe").pid
+      IO.popen("C:/program files/VideoLan/VLC/vlc.exe")
       sleep 1
     end
   end
@@ -97,6 +104,20 @@ YAML
     a = ScreenTracker.new_from_yaml(yaml)
     a.get_relative_coords.should == [32,34,132,54]
   end
+
+  it "should be able to dump its contents" do
+    @a.dump_bmp
+    assert File.exist?('dump.bmp') && File.exist?('all.dump.bmp')
+  end
+
+  it "should be able to poll the screen to know when something changes" do
+    a = ScreenTracker.new("silence.wav", 17, 28, 22, 12)
+    a.wait_till_next_change
+    # it updates every 1/4 second...
+    Benchmark.realtime { a.wait_till_next_change }.should be > 0.2
+  end
+
+  # note: positions are relative to the window.
   
   after(:all) do
     # bring ourselves back to the foreground
@@ -104,7 +125,8 @@ YAML
     unless Socket.gethostname == "PACKRD-1GK7V"
       Win32::Screenshot.window(/universal/, 0) rescue nil
     end
-    
+    Process.kill 9, @pid1 # need this running each time or the screen won't change
+    FileUtils.rm_rf ['dump.bmp', 'all.dump.bmp']
   end
   
 end

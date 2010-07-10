@@ -1,4 +1,5 @@
 require 'win32/screenshot'
+require 'sane'
 
 class ScreenTracker
   
@@ -29,10 +30,29 @@ class ScreenTracker
     Win32::Screenshot.hwnd_area(@hwnd, @x,@y,@x2,@y2, 0) {|h,w,bmp| return bmp}
   end
   
+  def get_full_bmp
+    Win32::Screenshot.hwnd(@hwnd, 0) {|h,w,bmp| return bmp}
+  end
+  
+  def dump_bmp filename = 'dump.bmp'
+    File.binwrite filename, get_bmp
+    File.binwrite 'all.' + filename, get_full_bmp
+  end
+  
   def get_relative_coords
     [@x,@y,@x2,@y2]
   end
   
+  def wait_till_next_change
+    original = get_bmp
+    loop {
+      current = get_bmp
+      if current != original
+        return
+      end
+      sleep 0.1
+    }
+  end
 end
 
 if $0 == __FILE__
