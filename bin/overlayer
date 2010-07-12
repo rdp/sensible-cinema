@@ -1,18 +1,25 @@
-if File.exist? ARGV[0]
-  require 'rubygems'
-  require 'sane'
-  $VERBOSE = 1 if ARGV.find{|a| a == '-v'}
-  $TEST = 1 if ARGV.find{|a| a == '-t'}
-  require_relative '../lib/overlayer'
-  require_relative '../lib/keyboard_input'
-  
-  overlay = OverLayer.new(ARGV[0])
+require 'rubygems'
+require 'sane'
+require_relative '../lib/overlayer'
+require_relative '../lib/keyboard_input'
+require_relative '../lib/screen_tracker'  
+
+$VERBOSE = 1 if ARGV.delete('-v')
+$TEST = 1 if ARGV.delete('-t')  
+if ARGV.length == 2 && (File.exist? ARGV[0]) && (File.exist? ARGV[1])
+
+  overlay = OverLayer.new(ARGV[0])  
   overlay.start_thread true
+  
+  screen_tracker = ScreenTracker.new_from_yaml File.binread(ARGV[1]), overlay
+  screen_tracker.dump_bmp if $VERBOSE 
+  screen_tracker.process_forever_in_thread
+
   key_input = KeyboardInput.new overlay
   key_input.start_thread # status thread
-  key_input.handle_keystrokes_forever # when this method exits, we want to exit...
-  
+  key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
+
 else
- puts 'syntax: filename.yml [-v] [-t] (run your other player in the background, and set its priority low)'
+ puts 'syntax: mute_lists.yml [-v] [-t {no mute}] player_description.yml (run your other player in the background, and possibly set its priority low)'
  exit 1
 end 

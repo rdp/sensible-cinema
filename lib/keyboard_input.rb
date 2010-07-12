@@ -21,7 +21,7 @@ class KeyboardInput
     seconds = time - minutes*60
     status  = @fella.status
     # scary hard coded values here...
-    " " *50 + "\b"*150 + "Current time: %d:%04.1f %s" % [minutes, seconds, status]
+    " " *50 + "\b"*150 + "Current time: %d:%04f %s (%d:%04.1f)" % [minutes, seconds, status, minutes, seconds]
  end
 
  def getch

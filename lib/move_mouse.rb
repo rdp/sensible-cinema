@@ -41,4 +41,4 @@ in_evt[:flags] = Win::MOUSEEVENTF_MOVE
 in_evt[:time] = 0
 in_evt[:extra] = 0
 
-Win.SendInput(1, myinput, Win::Input.size)
+Win.SendInput(10, myinput, Win::Input.size)

@@ -11,7 +11,7 @@ describe ScreenTracker do
     rescue
       # this way we'll only have one up...
       @pid1 = IO.popen("C:/program files/VideoLan/VLC/vlc.exe silence.wav").pid
-      sleep 3
+      sleep 2
     end
     
   end
@@ -96,7 +96,7 @@ y: 34
 width: 100
 height: 20
 YAML
-    a = ScreenTracker.new_from_yaml(yaml)
+    a = ScreenTracker.new_from_yaml(yaml,nil)
     a.get_relative_coords.should == [32,34,132,54]
   end
 
@@ -112,37 +112,43 @@ YAML
     end
     
     it "should be able to poll the screen to know when something changes" do
-      @a.wait_till_next_change
+      @a.wait_till_next_change {}
       # it updates every 1 second...
-      Benchmark.realtime { @a.wait_till_next_change }.should be > 0.2
+      Benchmark.realtime { @a.wait_till_next_change {} }.should be > 0.2
       @a.dump_bmp # for debugging...
     end
     
     it "should use OCR against the changes appropriately" do
-      output = @a.wait_till_next_change
+      @a.wait_till_next_change {|cur_time|
+      
+      }
       output.should be_a Float
     end
     
-  end
-    
-  it "should be able to OCR all manner of tifs" do
-    
-  end
-
-  it "should not annoyingly force it to be in the foreground" do
-    it "should not require stuff to come to the foreground that doesn't need to, anyway!"
-  end
+  end  
   
-  # note: positions are relative to the window.
+  context "next version" do
+  
+    it "should stay on it with the mouse for the first 40 seconds after any drastic change"
+    
+    it "should be able to OCR all manner of single digits, colons, and non-those" 
+    
+    it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon"
+    
+    it "should work with hulu 'every so often polling' full screen"
+  end
+    
+  it "should not annoyingly force it to come to the foreground" do
+    it "should not require stuff to come to the foreground if it doesn't doesn't need to, anyway!"
+  end
   
   after(:all) do
-    # bring ourselves back to the foreground
-    # this seg faults on windows 7 for me for some reason
+    # bring redcar to the foreground
+    # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?
     unless Socket.gethostname == "PACKRD-1GK7V"
       Win32::Screenshot.window(/universal/, 0) rescue nil
     end
-    Process.kill 9, @pid1 # need this re-started each time or the screen won't change for the screen changing test
-    #FileUtils.rm_rf ['dump.bmp', 'all.dump.bmp']
+    Process.kill 9, @pid1 rescue nil # need this re-started each time or the screen won't change for the screen changing test
   end
   
 end

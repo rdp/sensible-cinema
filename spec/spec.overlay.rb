@@ -198,15 +198,30 @@ YAML
     sleep 2
     start_good
   end
-
+  
+  it "should be able to tell the player to sync to the closest second when the screen changes" do
+    @o.start_thread
+    start = Time.now
+    while((Time.now - start) < 3) do
+      @o.timestamp_changed
+      sleep 0.1
+    end
+    @o.cur_time.should be < 1
+    sleep 1
+    10.times { @o.timestamp_changed }
+    @o.cur_time.should be >= 1
+    sleep 0.6
+    @o.timestamp_changed
+    @o.cur_time.should be >= 2
+  end
+    
+  
   it "should have pure ruby for muting et al--ffi inliner?"
   
   it "should allow for a static 'surround each' buffer"
 
-  it "should have output that is colon delimited"
+  it "should have all output that is colon delimited"
 
-  it "should respond to keyboard input, like M"
-  
   it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
   
   it 'should be able to continue *past* the very end, then back into it, etc.'
@@ -215,5 +230,6 @@ YAML
 
   it 'should have a more descriptive yaml syntax'
 
-  it "should give itself high CPU...hmm...maybe? except not OCR?"
+  it "should work"
+
 end

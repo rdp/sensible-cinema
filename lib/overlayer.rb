@@ -67,6 +67,12 @@ class OverLayer
     all
   end
   
+  def timestamp_changed
+    # round cur_time to 
+    better_time = cur_time.round
+    set_seconds better_time
+  end
+  
   def self.translate_string_to_seconds s
     # might actually already be a float...
     if s.is_a? Float
@@ -173,7 +179,7 @@ class OverLayer
         rescue Timeout::Error
           # normal
         end
-        pps 'woke up at', Time.now_f if $VERBOSE
+        pps 'just woke up from mute at', Time.now_f if $VERBOSE
         something_has_possibly_changed
       }
     }
