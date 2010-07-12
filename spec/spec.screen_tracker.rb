@@ -104,15 +104,35 @@ YAML
     @a.dump_bmp
     assert File.exist?('dump.bmp') && File.exist?('all.dump.bmp')
   end
-
-  it "should be able to poll the screen to know when something changes" do
-    a = ScreenTracker.new("silence.wav", 15, 26, 26, 16)
-    a.wait_till_next_change
-    # it updates every 1/4 second...
-    Benchmark.realtime { a.wait_till_next_change }.should be > 0.2
-    a.dump_bmp # for debugging
+  
+  context "given a real player that is moving" do
+    
+    before do
+      @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13)  
+    end
+    
+    it "should be able to poll the screen to know when something changes" do
+      @a.wait_till_next_change
+      # it updates every 1 second...
+      Benchmark.realtime { @a.wait_till_next_change }.should be > 0.2
+      @a.dump_bmp # for debugging...
+    end
+    
+    it "should use OCR against the changes appropriately" do
+      output = @a.wait_till_next_change
+      output.should be_a Float
+    end
+    
+  end
+    
+  it "should be able to OCR all manner of tifs" do
+    
   end
 
+  it "should not annoyingly force it to be in the foreground" do
+    it "should not require stuff to come to the foreground that doesn't need to, anyway!"
+  end
+  
   # note: positions are relative to the window.
   
   after(:all) do
