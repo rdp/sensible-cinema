@@ -1,6 +1,14 @@
 require 'win32/screenshot'
+require 'sane'
+require 'yaml'
 
 class ScreenTracker
+  
+  def self.new_from_yaml yaml
+    settings = YAML.load yaml
+    return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"])
+  end
+  
   def initialize name_or_regex, x,y,width,height
     @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex) # save us 0.00445136 per time
     raise 'bad name--perhaps not running yet?' unless @hwnd
@@ -22,14 +30,27 @@ class ScreenTracker
     Win32::Screenshot.hwnd_area(@hwnd, @x,@y,@x2,@y2, 0) {|h,w,bmp| return bmp}
   end
   
+  def get_full_bmp
+    Win32::Screenshot.hwnd(@hwnd, 0) {|h,w,bmp| return bmp}
+  end
+  
+  def dump_bmp filename = 'dump.bmp'
+    File.binwrite filename, get_bmp
+    File.binwrite 'all.' + filename, get_full_bmp
+  end
+  
   def get_relative_coords
     [@x,@y,@x2,@y2]
   end
   
-end
-
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-  require_relative '../spec/spec.screen_tracker.rb'
+  def wait_till_next_change
+    original = get_bmp
+    loop {
+      current = get_bmp
+      if current != original
+        return
+      end
+      sleep 0.05
+    }
+  end
 end
