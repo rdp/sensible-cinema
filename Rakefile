@@ -7,5 +7,5 @@ require 'jeweler'
     s.authors = ["Roger Pack"]
     s.add_development_dependency 'rspec'
     s.add_dependency 'sane', '>= 0.22.0'
-    s.add_dependency 'win32screenshot', '>= 0.5.0'
+    s.add_dependency 'win32screenshot', '>= 0.6.0'
   end

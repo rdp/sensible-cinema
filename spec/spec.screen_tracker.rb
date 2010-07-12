@@ -17,7 +17,7 @@ describe ScreenTracker do
       Win32::Screenshot.window(/VLC/, 0) {}
     rescue
       IO.popen("C:/program files/VideoLan/VLC/vlc.exe")
-      sleep 1
+      sleep 4 # this one takes awhile
     end
   end
   
@@ -115,6 +115,7 @@ YAML
     a.wait_till_next_change
     # it updates every 1/4 second...
     Benchmark.realtime { a.wait_till_next_change }.should be > 0.2
+    a.dump_bmp
   end
 
   # note: positions are relative to the window.
@@ -125,8 +126,8 @@ YAML
     unless Socket.gethostname == "PACKRD-1GK7V"
       Win32::Screenshot.window(/universal/, 0) rescue nil
     end
-    Process.kill 9, @pid1 # need this running each time or the screen won't change
-    FileUtils.rm_rf ['dump.bmp', 'all.dump.bmp']
+    Process.kill 9, @pid1 # need this re-started each time or the screen won't change
+    #FileUtils.rm_rf ['dump.bmp', 'all.dump.bmp']
   end
   
 end
