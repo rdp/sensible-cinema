@@ -36,7 +36,7 @@ class OverLayer
   def reload_yaml!
     if @file_mtime != File.stat(@filename).mtime
       all_sequences = OverLayer.translate_yaml(File.read(@filename))
-      puts '(re)loaded sequences as ' + all_sequences.inspect
+      pp '(re)loaded sequences as ', all_sequences
       mutes = all_sequences[:mutes]
       @mutes = mutes.to_a.sort!
       # File.stat takes 0.0002 so we're probably ok doing two of them.
@@ -68,9 +68,11 @@ class OverLayer
   end
   
   def timestamp_changed
-    # round cur_time to 
-    better_time = cur_time.round
+    # round cur_time to
+    current_time = cur_time
+    better_time = current_time.round
     set_seconds better_time
+    puts 'timestamp delta was:' + (current_time - better_time).to_s if $VERBOSE
   end
   
   def self.translate_string_to_seconds s
@@ -179,7 +181,7 @@ class OverLayer
         rescue Timeout::Error
           # normal
         end
-        pps 'just woke up from mute at', Time.now_f if $VERBOSE
+        pps 'just woke up from pre-mute pause at', Time.now_f if $VERBOSE
         something_has_possibly_changed
       }
     }

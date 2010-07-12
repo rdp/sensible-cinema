@@ -138,10 +138,6 @@ YAML
     it "should work with hulu 'every so often polling' full screen"
   end
     
-  it "should not annoyingly force it to come to the foreground" do
-    it "should not require stuff to come to the foreground if it doesn't doesn't need to, anyway!"
-  end
-  
   after(:all) do
     # bring redcar to the foreground
     # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?

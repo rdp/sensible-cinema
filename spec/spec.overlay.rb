@@ -215,9 +215,12 @@ YAML
     @o.cur_time.should be >= 2
   end
     
-  
   it "should have pure ruby for muting et al--ffi inliner?"
   
+  # low prio
+  
+  it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
+
   it "should allow for a static 'surround each' buffer"
 
   it "should have all output that is colon delimited"

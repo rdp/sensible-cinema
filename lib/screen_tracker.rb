@@ -24,11 +24,12 @@ class ScreenTracker
       end
     end
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
-    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2
+    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2 if $VERBOSE
   end
   
   def get_bmp
-    Win32::Screenshot.hwnd_area(@hwnd, @x,@y,@x2,@y2, 0) {|h,w,bmp| return bmp}
+    # Note: we no longer bring the window to the front tho...which it needs to be
+    Win32::Screenshot::BitmapMaker.capture_area(@hwnd, @x,@y,@x2,@y2) {|h,w,bmp| return bmp}
   end
   
   def get_full_bmp
@@ -36,7 +37,7 @@ class ScreenTracker
   end
   
   def dump_bmp filename = 'dump.bmp'
-    p 'dumping', get_relative_coords
+    p 'dumping coords', get_relative_coords
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
   end
@@ -60,7 +61,7 @@ class ScreenTracker
     Thread.new {
       loop {
         wait_till_next_change
-        p 'got a change for change'
+        print 'got a screen timestamp change' if $VERBOSE
         @callback.timestamp_changed
       }
     }
