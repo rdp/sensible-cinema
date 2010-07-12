@@ -1,11 +1,11 @@
 require 'jeweler'
   Jeweler::Tasks.new do |s|
-    s.name = "universal-scene-skipper"
-    s.summary = "yep"
+    s.name = "scene-skipper"
+    s.summary = "universal media playback scene skipper"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
     s.add_development_dependency 'rspec'
     s.add_dependency 'sane', '>= 0.22.0'
-    s.add_dependency 'win32screenshot', '>= 0.5.0'
+    s.add_dependency 'win32screenshot', '> 0.5.0'
   end
