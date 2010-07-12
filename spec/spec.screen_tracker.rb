@@ -111,7 +111,7 @@ YAML
   end
 
   it "should be able to poll the screen to know when something changes" do
-    a = ScreenTracker.new("silence.wav", 17, 28, 22, 12)
+    a = ScreenTracker.new("silence.wav", 15, 26, 26, 16)
     a.wait_till_next_change
     # it updates every 1/4 second...
     Benchmark.realtime { a.wait_till_next_change }.should be > 0.2
