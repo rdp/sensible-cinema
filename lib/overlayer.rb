@@ -12,7 +12,7 @@ end
 class OverLayer
   
   def nir(command)
-    assert system(File.dirname(__FILE__) + "/../nircmd/nircmd " + command)
+    assert system(File.dirname(__FILE__) + "/../vendor/nircmd/nircmd " + command)
   end
   
   def am_muted?

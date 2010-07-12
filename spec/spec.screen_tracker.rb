@@ -9,16 +9,11 @@ describe ScreenTracker do
     begin
       Win32::Screenshot.window(/silence.wav/, 0) {}
     rescue
-      @pid1 = IO.popen("sndrec32 /play silence.wav").pid
-      sleep 1
+      # this way we'll only have one up...
+      @pid1 = IO.popen("C:/program files/VideoLan/VLC/vlc.exe silence.wav").pid
+      sleep 3
     end
     
-    begin
-      Win32::Screenshot.window(/VLC/, 0) {}
-    rescue
-      IO.popen("C:/program files/VideoLan/VLC/vlc.exe")
-      sleep 4 # this one takes awhile
-    end
   end
   
   before do
@@ -115,7 +110,7 @@ YAML
     a.wait_till_next_change
     # it updates every 1/4 second...
     Benchmark.realtime { a.wait_till_next_change }.should be > 0.2
-    a.dump_bmp
+    a.dump_bmp # for debugging
   end
 
   # note: positions are relative to the window.
@@ -126,7 +121,7 @@ YAML
     unless Socket.gethostname == "PACKRD-1GK7V"
       Win32::Screenshot.window(/universal/, 0) rescue nil
     end
-    Process.kill 9, @pid1 # need this re-started each time or the screen won't change
+    Process.kill 9, @pid1 # need this re-started each time or the screen won't change for the screen changing test
     #FileUtils.rm_rf ['dump.bmp', 'all.dump.bmp']
   end
   
