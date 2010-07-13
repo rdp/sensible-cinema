@@ -1,7 +1,6 @@
 #include <windows.h>
     #include <mmsystem.h>
-   
-int main() {
+int main(char **args) {
     MMRESULT rc;              // Return code.
     HMIXER hMixer;            // Mixer handle used in mixer API calls.
     MIXERCONTROL mxc;         // Holds the mixer control data.
@@ -15,53 +14,40 @@ int main() {
     rc = mixerOpen(&hMixer, 0,0,0,0);
     if (MMSYSERR_NOERROR != rc) {
         // Couldn't open the mixer.
-      printf("bad4");
     }
 
     // Initialize MIXERLINE structure.
     ZeroMemory(&mxl,sizeof(mxl));
-    mxl.cbStruct = sizeof(MIXERCONTROL);
+    mxl.cbStruct = sizeof(mxl);
 
     // Specify the line you want to get. You are getting the input line
     // here. If you want to get the output line, you need to use
     // MIXERLINE_COMPONENTTYPE_SRC_WAVEOUT.
-    // MIXERLINE_COMPONENTTYPE_DST_WAVEIN
-    // MIXERLINE_COMPONENTTYPE_DST_SPEAKERS
-    
-    mxl.dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
+    mxl.dwComponentType = MIXERLINE_COMPONENTTYPE_DST_WAVEIN;
 
     rc = mixerGetLineInfo((HMIXEROBJ)hMixer, &mxl,
-                           MIXER_OBJECTF_HMIXER |
-						   MIXER_GETLINEINFOF_COMPONENTTYPE);
-    if (MMSYSERR_NOERROR != rc) {
+                           MIXER_GETLINEINFOF_COMPONENTTYPE);
+    if (MMSYSERR_NOERROR == rc) {
         // Couldn't get the mixer line.
-      printf("bad3 got %d are %d %d %d %d %d", rc,MIXERR_INVALLINE,MMSYSERR_BADDEVICEID,MMSYSERR_INVALFLAG,MMSYSERR_INVALHANDLE,MMSYSERR_INVALPARAM);
     }
-    
-      // Get the control.
-      ZeroMemory(&mxlc, sizeof(mxlc));
-      mxlc.cbStruct = sizeof(MIXERCONTROL);
-      mxlc.dwLineID = mxl.dwLineID;
-      
-      // MIXERCONTROL_CONTROLTYPE_VOLUME
-      // MIXERCONTROL_CONTROLTYPE_PEAKMETER
-      // MIXERCONTROL_CONTROLTYPE_MUTE
-      mxlc.dwControlType = MIXERCONTROL_CONTROLTYPE_VOLUME;
-      mxlc.cControls = 1;
-      mxlc.cbmxctrl = sizeof(mxc);
-      mxlc.pamxctrl = &mxc;
-      ZeroMemory(&mxc, sizeof(mxc));
-      mxc.cbStruct = sizeof(MIXERCONTROL);
-      rc = mixerGetLineControls((HMIXEROBJ)hMixer,&mxlc,
-      MIXER_GETLINECONTROLSF_ONEBYTYPE);
-      if (MMSYSERR_NOERROR != rc) {
-          // Couldn't get the control.
-        printf("bad2 fatal");
-        return -1;
-      }
-      
-   
-  // After successfully getting the peakmeter control, the volume range
+
+    // Get the control.
+    ZeroMemory(&mxlc, sizeof(mxlc));
+    mxlc.cbStruct = sizeof(mxlc);
+    mxlc.dwLineID = mxl.dwLineID;
+    mxlc.dwControlType = MIXERCONTROL_CONTROLTYPE_PEAKMETER;
+    mxlc.cControls = 1;
+    mxlc.cbmxctrl = sizeof(mxc);
+    mxlc.pamxctrl = &mxc;
+    ZeroMemory(&mxc, sizeof(mxc));
+    mxc.cbStruct = sizeof(mxc);
+    rc = mixerGetLineControls((HMIXEROBJ)hMixer,&mxlc,
+                               MIXER_GETLINECONTROLSF_ONEBYTYPE);
+    if (MMSYSERR_NOERROR != rc) {
+        // Couldn't get the control.
+    }
+
+    // After successfully getting the peakmeter control, the volume range
     // will be specified by mxc.Bounds.lMinimum to mxc.Bounds.lMaximum.
 
     MIXERCONTROLDETAILS mxcd;             // Gets the control values.
@@ -70,8 +56,7 @@ int main() {
 
     // Initialize the MIXERCONTROLDETAILS structure
     ZeroMemory(&mxcd, sizeof(mxcd));
-    ZeroMemory(&volStruct, sizeof(volStruct));
-    mxcd.cbStruct = sizeof(MIXERCONTROL);
+    mxcd.cbStruct = sizeof(mxcd);
     mxcd.cbDetails = sizeof(volStruct);
     mxcd.dwControlID = mxc.dwControlID;
     mxcd.paDetails = &volStruct;
@@ -84,17 +69,12 @@ int main() {
                                  MIXER_GETCONTROLDETAILSF_VALUE);
     if (MMSYSERR_NOERROR == rc) {
         // Couldn't get the current volume.
-      printf("bad1");
-      return -1;
-        
     }
     volume = volStruct.lValue;
-    //volume =  mxc.Bounds.lMaximum;
 
     // Get the absolute value of the volume.
     if (volume < 0)
         volume = -volume;
-              
-      printf("it is %f", volume);
-      return 0;
-    }
+    
+    printf("got %f %d", volume, volume);
+  }
