@@ -119,15 +119,18 @@ YAML
     end
     
     it "should use OCR against the changes appropriately" do
-      @a.wait_till_next_change {|cur_time|
-      
-      }
-      output.should be_a Float
+      pending "OCR" do
+        output = nil
+        @a.wait_till_next_change {|cur_time|    
+          output = cur_time
+        }
+        output.should be_a Float
+      end
     end
     
-  end  
+  end
   
-  context "next version" do
+  pending "next versions" do
   
     it "should stay on it with the mouse for the first 40 seconds after any drastic change"
     
@@ -136,6 +139,7 @@ YAML
     it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon"
     
     it "should work with hulu 'every so often polling' full screen"
+  
   end
     
   after(:all) do
