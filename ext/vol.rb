@@ -1,7 +1,37 @@
-#include <windows.h>
+require 'rubygems'# jruby 1.8.6 default...
+require 'ffi-inliner'
+
+module MyCLib
+  extend Inliner
+  inline do |builder|
+    builder.library 'Winmm'
+    builder.c <<-CODE
+    #include <windows.h>
     #include <mmsystem.h>
-   
-int main() {
+    
+    long get_volume() {
+    
+            HMIXER hMixer;
+
+            MIXERCONTROL volCtrl;// = new MIXERCONTROL();
+
+            int currentVol;
+
+            mixerOpen(&mixer, 0, 0, 0, 0);
+
+            int type = MIXERCONTROL_CONTROLTYPE_VOLUME;
+
+            GetVolumeControl(mixer,
+
+                MIXERLINE_COMPONENTTYPE_DST_SPEAKERS, type, out volCtrl, out
+
+                        currentVol);
+
+            mixerClose(mixer);
+            return currentVol;
+    }
+    
+long func_1() {
     MMRESULT rc;              // Return code.
     HMIXER hMixer;            // Mixer handle used in mixer API calls.
     MIXERCONTROL mxc;         // Holds the mixer control data.
@@ -15,7 +45,6 @@ int main() {
     rc = mixerOpen(&hMixer, 0,0,0,0);
     if (MMSYSERR_NOERROR != rc) {
         // Couldn't open the mixer.
-      printf("bad4");
     }
 
     // Initialize MIXERLINE structure.
@@ -26,39 +55,32 @@ int main() {
     // here. If you want to get the output line, you need to use
     // MIXERLINE_COMPONENTTYPE_SRC_WAVEOUT.
     // MIXERLINE_COMPONENTTYPE_DST_WAVEIN
-    // MIXERLINE_COMPONENTTYPE_DST_SPEAKERS
+    
     mxl.dwComponentType = MIXERLINE_COMPONENTTYPE_SRC_WAVEOUT;
 
     rc = mixerGetLineInfo((HMIXEROBJ)hMixer, &mxl,
                            MIXER_GETLINEINFOF_COMPONENTTYPE);
     if (MMSYSERR_NOERROR == rc) {
         // Couldn't get the mixer line.
-      printf("bad3 ok");
-      
-
-      // Get the control.
-      ZeroMemory(&mxlc, sizeof(mxlc));
-      mxlc.cbStruct = sizeof(mxlc);
-      mxlc.dwLineID = mxl.dwLineID;
-      
-      // MIXERCONTROL_CONTROLTYPE_VOLUME
-      // MIXERCONTROL_CONTROLTYPE_PEAKMETER
-      mxlc.dwControlType = MIXERCONTROL_CONTROLTYPE_PEAKMETER;
-      mxlc.cControls = 1;
-      mxlc.cbmxctrl = sizeof(mxc);
-      mxlc.pamxctrl = &mxc;
-      ZeroMemory(&mxc, sizeof(mxc));
-      mxc.cbStruct = sizeof(mxc);
-      rc = mixerGetLineControls((HMIXEROBJ)hMixer,&mxlc,
-      MIXER_GETLINECONTROLSF_ONEBYTYPE);
-      if (MMSYSERR_NOERROR != rc) {
-          // Couldn't get the control.
-        printf("bad2 fatal");
-        return -1;
-      }
     }
-   
-  // After successfully getting the peakmeter control, the volume range
+
+    // Get the control.
+    ZeroMemory(&mxlc, sizeof(mxlc));
+    mxlc.cbStruct = sizeof(mxlc);
+    mxlc.dwLineID = mxl.dwLineID;
+    mxlc.dwControlType = MIXERCONTROL_CONTROLTYPE_PEAKMETER;
+    mxlc.cControls = 1;
+    mxlc.cbmxctrl = sizeof(mxc);
+    mxlc.pamxctrl = &mxc;
+    ZeroMemory(&mxc, sizeof(mxc));
+    mxc.cbStruct = sizeof(mxc);
+    rc = mixerGetLineControls((HMIXEROBJ)hMixer,&mxlc,
+                               MIXER_GETLINECONTROLSF_ONEBYTYPE);
+    if (MMSYSERR_NOERROR != rc) {
+        // Couldn't get the control.
+    }
+
+    // After successfully getting the peakmeter control, the volume range
     // will be specified by mxc.Bounds.lMinimum to mxc.Bounds.lMaximum.
 
     MIXERCONTROLDETAILS mxcd;             // Gets the control values.
@@ -80,18 +102,19 @@ int main() {
                                  MIXER_GETCONTROLDETAILSF_VALUE);
     if (MMSYSERR_NOERROR == rc) {
         // Couldn't get the current volume.
-      printf("bad1");
         return -1;
-        
     }
     volume = volStruct.lValue;
-    volume =  mxc.Bounds.lMaximum;
 
     // Get the absolute value of the volume.
     if (volume < 0)
         volume = -volume;
               
       //return volume;
-      printf("volume is %d", volume);
-      return 0;
+      return mxc.Bounds.lMaximum;
     }
+    CODE
+  end
+end
+
+puts MyCLib.func_1
