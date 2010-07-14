@@ -8,4 +8,5 @@ require 'jeweler'
     s.add_development_dependency 'rspec'
     s.add_dependency 'sane', '>= 0.22.0'
     s.add_dependency 'rdp-win32screenshot', '> 0.0.5'
+    s.extensions = ["ext/mkrf_conf.rb"]
   end

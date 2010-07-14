@@ -17,7 +17,7 @@ if ARGV.length >= 1 && (File.exist? ARGV[0])
     screen_tracker.dump_bmp if $VERBOSE 
     screen_tracker.process_forever_in_thread
   else
-    puts 'warning--not using screen tracking'
+    puts 'warning--not using any screen tracking...'
   end
 
   key_input = KeyboardInput.new overlay
@@ -25,7 +25,7 @@ if ARGV.length >= 1 && (File.exist? ARGV[0])
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
 
 else
- puts 'syntax: mute_lists.yml [player_descriptor.yml] [-v] (verbose) [-t] (no actual mute) (run your other player in the background, and possibly set priority to low on the player)'
+ puts '','syntax: mute_lists.yml [player_descriptor.yml] [-v] (verbose) [-t] (don\'t actually mute)', "\t(run your other player in the background, and possibly set priority to low on the player)"
  for file in Dir[__dir__ + '../zamples/*']
    puts "\n", "example file:", file + "\n\n", File.read(file)
  end
