@@ -1,24 +1,17 @@
 backlog prioritized:
 
-  jruby volume?
+ work with full screened VLC
 
- work with full screen
+other (backlog):
 
-other backlog:
-
-add to zample mutes "these are actually minutes!"
-  q to list
-  
-  {"title"=>"Forever Strong",
+{"title"=>"Forever Strong",
  :mutes=>
   {2.00000000000000000000=>3.00000000000000000000,
    4.00000000000000000000=>5.00000000000000000000,
    9.00000000000000000000=>13.00000000000000000000,
    44.00000000000000000000=>45.00000000000000000000,
    60.00000000000000000000=>61.50000000000000000000,
-   3660.50000000000000000000=>3661.50000000000000000000}}
-  
-  to english
+   3660.50000000000000000000=>3661.50000000000000000000}} => to friendly numbers
 
 OCR (higher prio if it becomes necessary...)
 

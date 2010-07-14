@@ -104,7 +104,7 @@ class OverLayer
       else
         "next mute in %.1fs (%.1fs - %.1fs)" % [(start - cur_time),start, endy]
       end
-    end + " (MmSsTt): "
+    end + " (MmSsTtq): "
   end
 
   def keyboard_input char
