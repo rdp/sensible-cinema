@@ -2,6 +2,7 @@ require 'sane'
 require 'thread'
 require 'timeout'
 require 'yaml'
+require_relative 'muter'
 
 class Time
   def self.now_f
@@ -11,10 +12,6 @@ end
 
 class OverLayer
   
-  def nir(command)
-    assert system(File.dirname(__FILE__) + "/../vendor/nircmd/nircmd " + command)
-  end
-  
   def am_muted?
     @am_muted
   end
@@ -22,21 +19,21 @@ class OverLayer
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
-    nir("mutesysvolume 1") unless defined?($TEST)
+    Muter.toggle_mute unless defined?($TEST)
     puts 'done muting!' if $VERBOSE
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
-    nir("mutesysvolume 0") unless defined?($TEST)
+    Muter.toggle_mute unless defined?($TEST)
     puts 'done unmuting!' if $VERBOSE
   end
 
   def reload_yaml!
     if @file_mtime != File.stat(@filename).mtime
       all_sequences = OverLayer.translate_yaml(File.read(@filename))
-      pp '(re)loaded sequences as ', all_sequences
+      pp '(re) loaded mute sequences as ', all_sequences
       mutes = all_sequences[:mutes]
       @mutes = mutes.to_a.sort!
       # File.stat takes 0.0002 so we're probably ok doing two of them.
