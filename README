@@ -2,6 +2,16 @@ This projects aims to allow users to "skip scenes" on media playback.  It aims t
 
 It aims to work with any arbitrary media player (VLC and online players, for example hulu/netflix).
 
+
+Creating a player description:
+
+  some tips:
+  
+    run with -v -- it will dump a screenshot of the window in question
+    use Paint.net to examine the
+    use AutoIt spy to see window names (install AutoHotKey to get it).
+
+
 Trouble Shooting:
 
 If you have poor performance, possibly set the process priority to low on the DVD player program.

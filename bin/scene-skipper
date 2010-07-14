@@ -6,15 +6,22 @@ require_relative '../lib/screen_tracker'
 
 $VERBOSE = 1 if ARGV.delete('-v')
 $TEST = 1 if ARGV.delete('-t')  
-if ARGV.length >= 1 && (File.exist? ARGV[0])
+first = ARGV[0]
+if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
 
-  overlay = OverLayer.new(ARGV[0])  
-  overlay.start_thread true
+  if File.exist? first
+    overlay = OverLayer.new(first)  
+    overlay.start_thread true
+  else
+    puts 'warning--not using any overlayer'
+    raise 'you want -v' unless $VERBOSE
+  end
   
   if ARGV[1] && File.exist?(ARGV[1])
     # this one doesn't use file updates, so pass it the string
     screen_tracker = ScreenTracker.new_from_yaml File.binread(ARGV[1]), overlay
     screen_tracker.dump_bmp if $VERBOSE
+    exit 1 unless overlay
     screen_tracker.process_forever_in_thread
   else
     puts 'warning--not using any screen tracking...'
@@ -30,6 +37,7 @@ else
 syntax: mute_lists.yml [player_description.yml] [-v] [-t]
     -v : verbose mode--dumps player_description picture, has more verbose output.  Start your player before running this for the picture dump to work.
     -t : test mode (don\'t actually mute)
+    you can specify "test" for mute_lists.yml to test just the player_description
     END
     
  for file in Dir[__dir__ + '../zamples/*']
