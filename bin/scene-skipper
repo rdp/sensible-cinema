@@ -11,6 +11,7 @@ if ARGV.length == 2 && (File.exist? ARGV[0]) && (File.exist? ARGV[1])
   overlay = OverLayer.new(ARGV[0])  
   overlay.start_thread true
   
+  # this one doesn't use file updates, so pass it the string
   screen_tracker = ScreenTracker.new_from_yaml File.binread(ARGV[1]), overlay
   screen_tracker.dump_bmp if $VERBOSE 
   screen_tracker.process_forever_in_thread
@@ -21,5 +22,8 @@ if ARGV.length == 2 && (File.exist? ARGV[0]) && (File.exist? ARGV[1])
 
 else
  puts 'syntax: mute_lists.yml [-v] [-t {no mute}] player_description.yml (run your other player in the background, and possibly set its priority low)'
+ for file in Dir[__dir__ + '/../zamples/*']
+   puts "\n", "example file: \n\n" + file + "\n\n", File.read(file)
+ end
  exit 1
 end 
