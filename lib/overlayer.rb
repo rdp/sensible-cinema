@@ -19,14 +19,14 @@ class OverLayer
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
-    Muter.toggle_mute unless defined?($TEST)
+    Muter.mute! unless defined?($TEST)
     puts 'done muting!' if $VERBOSE
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
-    Muter.toggle_mute unless defined?($TEST)
+    Muter.unmute! unless defined?($TEST)
     puts 'done unmuting!' if $VERBOSE
   end
 
