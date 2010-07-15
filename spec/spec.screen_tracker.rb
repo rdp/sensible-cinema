@@ -158,6 +158,7 @@ YAML
       Win32::Screenshot.window(/universal/, 0) rescue nil
     end
     Process.kill 9, @pid1 rescue nil # need this re-started each time or the screen won't change for the screen changing test
+    FileUtils.rm_rf Dir['*.bmp']
   end
   
 end

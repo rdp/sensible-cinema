@@ -12,7 +12,7 @@ class ScreenTracker
   def initialize name_or_regex,x,y,width,height,callback=nil
       # cache to save us 0.00445136 per time LOL
     @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
-    unless hwnd
+    unless @hwnd
       print 'perhaps not running yet? [%s] START IT QUICKLY' % name_or_regex
       until @hwnd
         sleep 2

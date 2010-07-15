@@ -1,16 +1,15 @@
 backlog prioritized:
 
   can blank appropo (overlay black screen)
-  hulu
   allow x2,y2
   space bar => output to the hundredth
-  "better" mute
+  hulu
 
 other (backlog):
 
-does --server help?
+netflix
 
-a one click windows releasable
+a one click windows releasable...
 
 release (after can blank) "Linux compat would be excellent"
 
@@ -26,13 +25,10 @@ overlay with an image from the web.
    3660.50000000000000000000=>3661.50000000000000000000}} => to friendly numbers
 
 
-OCR (higher prio if it becomes necessary...)
+OCR
 
 jruby with a nice GUI...
-
   
-user specificable coordinates for the time
-
 After commercials resync automagically...
 
 Auto mute commercials?
@@ -43,8 +39,6 @@ new github username
 
 PIHS
 
-an easy easy creator...
-
 increase volume
 "a method of controlling the input devices to control the player and coerce the movie from one time point to another" (drag)
 
@@ -54,24 +48,16 @@ increase volume
 
 replay certain parts
 
-overlay with youtube
+overlay with youtube video+audio
 overlay with youtube audio
   replace
-  MST 3000
+  MST 3000 
 overlay/replace with some url of audio or video
-control volume programmatically on the player it self.
+control volume programmatically (using mouse) on the player it self.
 
 overlay alpha transparent pic
 
-grey out the screen...
-
-drag and release for editing position, where possible.
-
-Use audio to auto synchronize across different players, or to re-synchronize...
-
-Have a "list of all known movies" and be able to open (IE et al) to the correct part, and start playing them, and they work...
-
-Be able to have arbitrary user-programmable "do this recorded movement at this time"
+Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
 handle arbitrary seeks to the middle of a blank section :)
 
@@ -103,3 +89,5 @@ Programmatically do all of the above, by driving using an internal API.  Allow i
   WMP?
   auto start (?)
   skip intros ?
+  
+does --server help?
