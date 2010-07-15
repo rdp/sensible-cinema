@@ -31,7 +31,9 @@ class ScreenTracker
       end
     end
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
-    raise 'poor height/width' if @x2 > max_x || @y2 > max_y
+    raise 'poor width' if @x2 > max_x  || @x2 == x
+    raise 'poor height' if @y2 > max_y || @y2 == y
+    
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2 if $VERBOSE
   end
   

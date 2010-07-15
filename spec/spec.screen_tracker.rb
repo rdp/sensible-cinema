@@ -88,12 +88,11 @@ describe ScreenTracker do
       assert c.get_bmp != b.get_bmp
     end
     
-    it "should fail with out of bounds sizes" do
-      proc { 
-        
-        a = ScreenTracker.new(/silence.*VLC/,-10,-10,20,20)
-        
-        }.should raise_exception
+    it "should fail with out of bounds or zero sizes" do
+      proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,20,20) }.should raise_exception 
+      proc { a = ScreenTracker.new(/silence.*VLC/,10,-10,20,20) }.should raise_exception
+      proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,0,2) }.should raise_exception
+      proc { a = ScreenTracker.new(/silence.*VLC/,10,10,2,0) }.should raise_exception
     end
     
   end
