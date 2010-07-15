@@ -12,7 +12,8 @@ class ScreenTracker
   def initialize name_or_regex,x,y,width,height,callback=nil
     until @hwnd
       @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex) # save us 0.00445136 per time
-      raise 'perhaps not running yet?' + name_or_regex unless @hwnd
+      print 'perhaps not running yet? [%s]' % name_or_regex.to_s unless @hwnd
+      sleep 0.1
     end
     p 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0

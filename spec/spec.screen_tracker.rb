@@ -17,15 +17,21 @@ describe ScreenTracker do
   end
   
   before do
-    @a = ScreenTracker.new("VLC",10,10,20,20)
+    @a = ScreenTracker.new(/silence.*VLC/,10,10,20,20)
   end
   
+  it "can take a regex or string" do
+    ScreenTracker.new(/silence.*VLC/,10,10,20,20)
+    ScreenTracker.new("silence",10,10,20,20)
+  end
   it "should be able to grab a picture from screen coords...probably from the current active window" do
     @a.get_bmp.should_not be_nil 
   end
   
-  it "should raise if unable to find the right window" do
-    proc { ScreenTracker.new("unknown window",10,10,20,20) }.should raise_exception(RuntimeError)
+  it "should loop if unable to find the right window" do
+    proc { 
+      Timeout::timeout(1) { ScreenTracker.new("unknown window",10,10,20,20) }
+          }.should raise_exception(Timeout::Error)
   end
   
   it "should be at least somewhat fast" do
@@ -83,7 +89,7 @@ describe ScreenTracker do
     end
     
     it "should fail with out of bounds sizes" do
-      proc { ScreenTracker.new("VLC",-10,-10,20,20).get_bmp }.should raise_exception
+      proc { ScreenTracker.new(/silence.*VLC/,-10,-10,20,20).get_bmp }.should raise_exception
     end
     
   end
@@ -124,22 +130,22 @@ YAML
         @a.wait_till_next_change {|cur_time|    
           output = cur_time
         }
-        output.should be_a Float
+        output.should be_a( Float)
       end
     end
     
   end
   
-  pending "next versions" do
-  
-    it "should stay on it with the mouse for the first 40 seconds after any drastic change"
-    
-    it "should be able to OCR all manner of single digits, colons, and non-those" 
-    
-    it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon"
-    
-    it "should work with hulu 'every so often polling' full screen"
-  
+  it "should have next versions" do
+    pending "next versions" do      
+      it "should stay on it with the mouse for the first 40 seconds after any drastic change"
+      
+      it "should be able to OCR all manner of single digits, colons, and non-those" 
+      
+      it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon"
+      
+      it "should work with hulu 'every so often polling' full screen"
+    end
   end
     
   after(:all) do
