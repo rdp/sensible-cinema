@@ -7,6 +7,6 @@ require 'jeweler'
     s.authors = ["Roger Pack"]
     s.add_development_dependency 'rspec'
     s.add_dependency 'sane', '>= 0.22.0'
-    s.add_dependency 'rdp-win32screenshot', '> 0.0.5'
+    s.add_dependency 'rdp-win32screenshot', '>= 0.0.6.2'
     s.extensions = ["ext/mkrf_conf.rb"]
   end
