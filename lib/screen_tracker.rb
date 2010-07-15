@@ -10,15 +10,19 @@ class ScreenTracker
   end
   
   def initialize name_or_regex,x,y,width,height,callback=nil
+      # cache to save us 0.00445136 per time LOL
+    @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+    print 'perhaps not running yet? [%s]' % name_or_regex unless @hwnd
     until @hwnd
-      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex) # save us 0.00445136 per time
-      print 'perhaps not running yet? [%s]' % name_or_regex.to_s unless @hwnd
       sleep 0.1
+      print '.'
+      STDOUT.flush
+      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
     end
     p 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
+    always_zero, always_zero, max_x, max_y = Win32::Screenshot::BitmapMaker.dimensions_for(@hwnd)
     if(x < 0 || y < 0)
-      always_zero, always_zero, max_x, max_y = Win32::Screenshot::BitmapMaker.dimensions_for(@hwnd)
       if x < 0
         x = max_x + x
       end
@@ -27,12 +31,13 @@ class ScreenTracker
       end
     end
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
+    raise 'poor height/width' if @x2 > max_x || @y2 > max_y
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2 if $VERBOSE
   end
   
   def get_bmp
     # Note: we no longer bring the window to the front tho...which it needs to be
-    Win32::Screenshot::BitmapMaker.capture_area(@hwnd, @x,@y,@x2,@y2) {|h,w,bmp| return bmp}
+    Win32::Screenshot::BitmapMaker.capture_area(@hwnd,@x,@y,@x2,@y2) {|h,w,bmp| return bmp}
   end
   
   def get_full_bmp
