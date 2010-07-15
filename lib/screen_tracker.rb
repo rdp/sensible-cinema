@@ -12,12 +12,15 @@ class ScreenTracker
   def initialize name_or_regex,x,y,width,height,callback=nil
       # cache to save us 0.00445136 per time LOL
     @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
-    print 'perhaps not running yet? [%s]' % name_or_regex unless @hwnd
-    until @hwnd
-      sleep 0.1
-      print '.'
-      STDOUT.flush
-      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+    unless hwnd
+      print 'perhaps not running yet? [%s] START IT QUICKLY' % name_or_regex
+      until @hwnd
+        sleep 2
+        print '.'
+        STDOUT.flush
+        @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+      end
+      puts 'found window'
     end
     p 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
@@ -31,9 +34,8 @@ class ScreenTracker
       end
     end
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
-    raise 'poor width' if @x2 > max_x  || @x2 == x
-    raise 'poor height' if @y2 > max_y || @y2 == y
-    
+    raise 'poor width or wrong window' if @x2 > max_x  || @x2 == x
+    raise 'poor height or wrong window' if @y2 > max_y || @y2 == y    
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2 if $VERBOSE
   end
   
