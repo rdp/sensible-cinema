@@ -10,8 +10,11 @@ class Blanker
     @fr = begin
       frame = JFrame.new("Random Points within a Circle")
       frame.default_close_operation = JFrame::EXIT_ON_CLOSE
-      frame.set_size(400, 400)
-      frame.show    
+      require 'ruby-debug'
+      #debugger
+      frame.set_location(0,0)
+      frame.set_size(4000, 4000)
+      frame.show
       
       fr = frame
       fr.set_resizable(false)
@@ -21,10 +24,12 @@ class Blanker
       # probably unnecessary
       panel = JPanel.new
       frame.add(panel)
+      # frame.set_background()
       panel.repaint
       panel.revalidate
-      gd = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-      gd.set_full_screen_window(fr)
+      # too heavy!
+      #gd = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+      #gd.set_full_screen_window(fr)
       fr.set_visible(true)
       fr
     end

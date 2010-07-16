@@ -20,7 +20,11 @@ describe Blanker do
   
   describe "future work", :pending => true do
     
-    it "should be able to blank certain sections"
+    it "should be able to blank certain coords"
+    
+    it "should have a color optionally"
+    
+    it "should have a picture optionally"
     
   end
   
