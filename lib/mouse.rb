@@ -55,5 +55,3 @@ module Mouse
   end
     
 end
-
-Mouse::jitter_forever_in_own_thread.join if $0 == __FILE__
