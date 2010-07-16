@@ -7,8 +7,15 @@ describe Blanker do
   
   it "should be able to blank then unblank" do
     Blanker.blank_full_screen!
-    sleep 1
+    sleep 3
     Blanker.unblank_full_screen!
+  end
+  
+  it "should be able to blank several times" do
+    3.times {
+      Blanker.blank_full_screen!
+      Blanker.unblank_full_screen!
+    }
   end
   
   describe "future work", :pending => true do
