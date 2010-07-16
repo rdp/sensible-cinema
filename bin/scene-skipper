@@ -8,6 +8,8 @@ end
 $VERBOSE = 1 if ARGV.delete('-v')
 $TEST = 1 if ARGV.delete('-t')  
 
+$stderr.puts 'warning: windows only for crucial parts currently' unless  ENV['OS'] == 'Windows_NT'
+
 first = ARGV[0]
 
 if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
@@ -42,6 +44,7 @@ syntax: mute_lists.yml [player_description.yml] [-v] [-t]
     -v : verbose mode--dumps player_description picture, has more verbose output.  Start your player before running this for the picture dump to work.
     -t : test mode (don\'t actually mute)
     you can specify "test" for mute_lists.yml to test just the player_description
+    See also http://wiki.github.com/rdp/scene-skipper
     END
     
  for file in Dir[__dir__ + '../zamples/*']
