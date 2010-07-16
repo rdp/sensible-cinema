@@ -170,9 +170,12 @@ YAML
     yaml = <<YAML
 :mutes:
   "0:02.0" : "0:03.0"
+:blank_outs:
+"0:02.0" : "0:03.0"  
 YAML
      out = OverLayer.translate_yaml yaml
      out[:mutes].to_a.first.should == [2.0, 3.0]
+     out[:blank_outs].to_a.first.should == [2.0, 3.0]
      yaml = <<YAML
 :mutes:
   "1:02.11" : "1:03.0"
@@ -215,7 +218,19 @@ YAML
     @o.cur_time.should be >= 2
   end
     
-  it "should have pure ruby for muting et al--ffi inliner?"
+  it "should have pure ruby for muting et al--ffi inliner?" do
+    assert defined?(Muter)
+  end
+  
+  it "should handle blanks, too" do
+    context "with a blank list" do
+      
+      File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
+      @o = OverLayer.new('temp.yml')
+  
+      
+    end
+  end
   
   # low prio
   
@@ -232,7 +247,5 @@ YAML
   it 'should have a user friendlier yaml syntax'
 
   it 'should have a more descriptive yaml syntax'
-
-  it "should work"
-
+  
 end

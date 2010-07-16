@@ -54,13 +54,15 @@ class OverLayer
   def self.translate_yaml raw_yaml
     all = YAML.load(raw_yaml)
     # now it's like {:mutes => {"1:2.0" => "1:3.0"}}
-    mutes = all[:mutes]
-    new_mutes = {}
-    mutes.each{|s,e|
-      # both are like 1:02.0
-      new_mutes[translate_string_to_seconds(s)] = translate_string_to_seconds(e)
-    }
-    all[:mutes] = new_mutes
+    for type in [:mutes, :blank_outs]
+      mutes = all[type] || {}
+      new = {}
+      mutes.each{|s,e|
+        # both are like 1:02.0
+        new[translate_string_to_seconds(s)] = translate_string_to_seconds(e)
+      }
+      all[type] = new
+    end
     all
   end
   
