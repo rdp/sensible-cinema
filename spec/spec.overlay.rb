@@ -11,7 +11,7 @@ describe OverLayer do
   end
   
   after do
-    Thread.join_on_others
+    Thread.join_all_others
     File.delete 'temp.yml'
   end
   
