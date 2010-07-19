@@ -6,17 +6,24 @@ high:
 medium:
   allow x2,y2
   space bar => output to the hundredth
-  hulu (Melissa?)
+  hulu
+
 
 other (backlog):
 
 netflix
 
-a one click windows releasable...rawr?
+make it into a real live full functional app...like fully fully functional and good.
 
-release (after can blank) "Linux compat would be excellent"
+a one click windows releasable or installable...rawr?
 
-overlay with an image from the web.
+a web install? Why not?
+  click here to watch your favorite film edited!
+
+release it (after it blank) "Linux compat anyone?"
+
+blank out with an image from the web.
+blank out with a user specifiable color (?)
 
 {"title"=>"Forever Strong",
  :mutes=>
@@ -29,10 +36,8 @@ overlay with an image from the web.
 
 OCR
 
-jruby with a nice GUI...
+jruby with a nice looking GUI for startup/perferences...
   
-After commercials resync automagically...
-
 Auto mute commercials?
 
 rruby.net rubyy.net
@@ -41,38 +46,27 @@ new github username
 
 PIHS
 
-increase volume
-"a method of controlling the input devices to control the player and coerce the movie from one time point to another" (drag)
-
-"a method of controlling the input devices to control the player and change volume"
-
-"a method of applying OCR to the existing film to extrapolate position in the media"
-
 replay certain parts
 
-overlay with youtube video+audio
-overlay with youtube audio
-  replace
-  MST 3000 
 overlay/replace with some url of audio or video
-control volume programmatically (using mouse) on the player it self.
+
+control volume programmatically (using mouse) on the player itself.
+control mute programmatically (using mouse) on the player itself.
 
 overlay alpha transparent pic
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
-handle arbitrary seeks to the middle of a blank section :)
+handle arbitrary seeks that land me in the middle of a bad section :)
+
+don't blip the mutes on and off every second...
 
 resync based on visual/audio (black/blank?)
 
-handle ads somehow
-
-magnify parts (?)
-
-a way to play it back just songs?
+magnify video parts (?)
 
 resync based on OCR.
-  poll and "when there, use it"
+  poll or "when there, use it"
   pop it up every so often (?)
     after commercials?
 
@@ -87,9 +81,23 @@ auto-assignment of EDL's to media:
     VLC
     directory of filters
 
-Programmatically do all of the above, by driving using an internal API.  Allow it to make mp4's somewhere.
-  WMP?
-  auto start (?)
-  skip intros ?
-  
-does --server help?
+Programmatically do all of the above, by driving using an internal API.
+  VLC
+    Allow it to make mp4's somewhere.
+    See if burnable to DVD.
+  auto start on DVD insertion (?)
+    and show appropriate filters available based on title/md5 of something?
+
+have some way to stream it to your PC easily/cheaply or what not
+  try it with xbmc/boxee/windows media whatever...I guess. Check the experience, anyway :)
+
+  xbox: you have to pay extra for streaming (from your pc)?
+  The XBOX plays all the standard file types (BT ones anyway...
+  roku seems uneditable
+  seems that overlaying "something on doze" is best...
+  an original xbox could probably be made to stream from your PC...maybe...I'd wager...hmm...now if it could browse your PC *and* the Internet (XBMC?) that might rock.
+  S-video seems popular...but that would cost a monitor...hmm...OK FOR ME...others can figure it out...
+  PS3 + tversity?
+  apparently there is a *lot* online these days:http://tversity.com/support/premium-websites
+  it seems that mine mostly just work on windows, then you'll want to save it off to mpeg (camtastic), then be able to stream it...so I only have to worry about live "on computer" playback for now.
+  it works "easier" on 'just play it from doze/linux' for me, for now...
