@@ -1,13 +1,5 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
-Thread.new {
-  loop {
-    sleep 1
-    pp Thread.list, Thread.list.map(&:backtrace)
-    }
-  
-  }
-  puts 'past it'
 # tell it not to actually mute during testing...
 $TEST = true
 
@@ -19,7 +11,7 @@ describe OverLayer do
   end
   
   after do
-    Thread.join_all_others
+    Thread.join_on_others
     File.delete 'temp.yml'
   end
   

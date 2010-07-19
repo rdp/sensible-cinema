@@ -10,6 +10,10 @@ class Time
   end
 end
 
+if RUBY_VERSION < '1.9.2'
+  raise 'need 1.9.2+ for MRI' unless RUBY_PLATFORM =~ /java/
+end
+
 class OverLayer
   
   def muted?
@@ -20,14 +24,12 @@ class OverLayer
     @am_muted = true
     puts 'muting!' if $VERBOSE
     Muter.mute! unless defined?($TEST)
-    puts 'done muting!' if $VERBOSE
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
     Muter.unmute! unless defined?($TEST)
-    puts 'done unmuting!' if $VERBOSE
   end
 
   def reload_yaml!
@@ -166,25 +168,20 @@ class OverLayer
       loop {
         start, endy = get_next_mute
         if start == :done
-          return unless continue_forever
+          unless continue_forever
+            return
+          end
           time_till_next_mute_starts = 1_000_000
         else
           time_till_next_mute_starts = start - cur_time
         end
         pps 'sleeping unmuted until next mute (%f - %f) begins in' % [start, endy], time_till_next_mute_starts , 's from', Time.now_f, cur_time if $VERBOSE
         
-        begin
-          Timeout::timeout(time_till_next_mute_starts) {
-            @cv.wait(@mutex)
-          }
-        rescue Timeout::Error
-          # normal
-        end
+        @cv.wait(@mutex, time_till_next_mute_starts)
         pps 'just woke up from pre-mute pause at', Time.now_f if $VERBOSE
         something_has_possibly_changed
       }
     }
-    
   end
   
   def something_has_possibly_changed
@@ -198,13 +195,7 @@ class OverLayer
       duration_left = endy - current
       pps 'just muted it at', Time.now_f, current, 'for interval:', start, '-', endy, 'which is', duration_left, 'more s' if $VERBOSE
       if duration_left > 0
-        begin
-        Timeout::timeout(duration_left) {
-          @cv.wait(@mutex)
-        }
-        rescue Timeout::Error
-          # normal
-        end
+        @cv.wait(@mutex, duration_left)
       end
       pps 'done sleeping',duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
       unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...
