@@ -12,7 +12,7 @@ end
 
 class OverLayer
   
-  def am_muted?
+  def muted?
     @am_muted
   end
   

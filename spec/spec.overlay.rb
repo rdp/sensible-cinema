@@ -1,6 +1,13 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
-
+Thread.new {
+  loop {
+    sleep 1
+    pp Thread.list, Thread.list.map(&:backtrace)
+    }
+  
+  }
+  puts 'past it'
 # tell it not to actually mute during testing...
 $TEST = true
 
@@ -18,13 +25,13 @@ describe OverLayer do
   
   def start_good
     pps 'doing start_good', Time.now_f if $VERBOSE
-    assert !@o.am_muted?
+    assert !@o.muted?
     sleep 1
   end
   
   def start_bad
     pps 'doing start_bad', Time.now_f if $VERBOSE
-    assert @o.am_muted? # note this uses @o!
+    assert @o.muted? # note this uses @o!
     sleep 1
   end
   
@@ -32,13 +39,13 @@ describe OverLayer do
   
   it 'should be able to mute' do
     # you shouldn't hear a beep
-    assert !@o.am_muted?
+    assert !@o.muted?
     @o.mute!
-    assert @o.am_muted?
+    assert @o.muted?
     @o.unmute!
-    assert !@o.am_muted?
+    assert !@o.muted?
     @o.mute!
-    assert @o.am_muted?
+    assert @o.muted?
   end
   
   context 'given you know when to start' do
