@@ -31,7 +31,7 @@ describe ScreenTracker do
   it "should loop if unable to find the right window" do
     proc { 
       Timeout::timeout(1) { ScreenTracker.new("unknown window",10,10,20,20) }
-          }.should raise_exception(Timeout::Error)
+    }.should raise_exception(Timeout::Error)
   end
   
   it "should be at least somewhat fast" do
