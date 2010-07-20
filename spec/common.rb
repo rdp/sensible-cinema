@@ -6,8 +6,9 @@ rescue LoadError
   require 'spec/autorun'
 end
 
+# some useful utilities...
+
 require 'sane'
-require_relative '../lib/overlayer'
 require 'benchmark'
 Thread.abort_on_exception = true
 require 'timeout'

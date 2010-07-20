@@ -21,6 +21,14 @@ describe OverLayer do
     sleep 1
   end
   
+  def start_good_blank
+    assert @o.blank?
+  end
+  
+  def start_bad_blank
+    assert @o.blank?
+  end
+  
   def start_bad
     pps 'doing start_bad', Time.now_f if $VERBOSE
     assert @o.muted? # note this uses @o!
@@ -226,7 +234,14 @@ YAML
       
       File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
       @o = OverLayer.new('temp.yml')
-  
+      
+      @o.start_thread
+      start_good_blank
+      sleep 1
+      start_good_blank
+      sleep 1
+      start_bad_blank
+      
       
     end
   end

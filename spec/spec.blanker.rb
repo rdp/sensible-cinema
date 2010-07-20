@@ -1,6 +1,4 @@
-require 'rubygems'
-require 'sane'
-require_relative 'common'
+require File.dirname(__FILE__) + '/common'
 require_relative '../lib/blanker.rb'
 
 describe Blanker do

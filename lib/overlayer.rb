@@ -20,6 +20,10 @@ class OverLayer
     @am_muted
   end
   
+  def blank?
+    @am_blanked
+  end
+  
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
@@ -31,12 +35,22 @@ class OverLayer
     puts 'unmuting!' if $VERBOSE
     Muter.unmute! unless defined?($TEST)
   end
-
+  
+  def blank!
+    @am_blanked = true
+    Blanker.blank_full_screen! unless $TEST
+  end
+  
+  def unblank!
+    @am_blanked = false
+    Blanker.unblank_full_screen! unless $TEST
+  end
+  
   def reload_yaml!
     if @file_mtime != (new_time = File.stat(@filename).mtime)
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
       # LTODO @all_sequences = @all_sequences.map{|k, v| v.sort!} 
-      pp '(re) loaded mute sequences as ', @all_sequences
+      print '(re) loaded mute sequences as ', @all_sequences, "\n"
       pp 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
     end
@@ -45,6 +59,7 @@ class OverLayer
   def initialize filename
     @filename = filename
     @am_muted = false
+    @am_blanked = false
     @mutex = Mutex.new
     @cv = ConditionVariable.new
     @file_mtime = nil
@@ -101,11 +116,11 @@ class OverLayer
     if @am_muted
       "muted (%.1fs - %.1fs)" % [@start, @endy]
     else
-      start, endy = get_next_mute
-      if start == :done
-        "no more mutes"
+      mute, blank, next_sig = get_current_state
+      if next_sig == :done
+        "no more actions "
       else
-        "next mute in %.1fs (%.1fs - %.1fs)" % [(start - cur_time),start, endy]
+        "next action in %.1fs (currently am muted: %s blanked %s)" % [next_sig, mute, blank]
       end
     end + " (MmSsTtq): "
   end
@@ -147,55 +162,76 @@ class OverLayer
     Thread.new { continue_until_past_all_mutes continue_forever }
   end
   
-  def get_next_mute
+  # returns [true, false, next_moment_of_importance]
+  def get_current_state
     cur = cur_time
     for start, endy in @all_sequences[:mutes]
       if cur < endy
-        return [start, endy]
+        if(cur >= start)
+          return [true, false, endy]
+        else
+          return [true, false, cur]
+        end
       end
     end
-    if @all_sequences[:mutes][-1][1] <= cur
-      :done
-    else
-      raise 'unexpected...'
-    end
+    
+    [false, false, :done]
   end
   
   def continue_until_past_all_mutes continue_forever
     @mutex.synchronize {
       loop {
-        start, endy = get_next_mute
-        if start == :done
+        muted, blanked, next_point = get_current_state
+        if next_point == :done
           unless continue_forever
-            return
+            return # done!
+          else
+            time_till_next_mute_starts = 1_000_000
           end
-          time_till_next_mute_starts = 1_000_000
         else
-          time_till_next_mute_starts = start - cur_time
+          time_till_next_mute_starts = next_point - cur_time
         end
-        pps 'sleeping unmuted until next mute (%f - %f) begins in' % [start, endy], time_till_next_mute_starts , 's from', Time.now_f, cur_time if $VERBOSE
+        
+        pps 'sleeping until next action (%f) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         
         @cv.wait(@mutex, time_till_next_mute_starts)
-        pps 'just woke up from pre-mute pause at', Time.now_f if $VERBOSE
+        pps 'just woke up from pre-mute wait at', Time.now_f if $VERBOSE
         something_has_possibly_changed
       }
     }
+  end  
+  
+  def set_states!
+    muted, blanked, next_point = get_current_state
+    if muted && !muted?
+      mute!
+    else
+      unmute!
+    end
+    
+    if blanked && !blanked?
+      blank!
+    else
+      unblank!
+    end
+    
   end
   
   def something_has_possibly_changed
     current = cur_time
-    start, endy = get_next_mute
-    @start = start
-    @endy = endy
-    return if start == :done
-    if(current >= start && current < endy)
-      mute!
-      duration_left = endy - current
-      pps 'just muted it at', Time.now_f, current, 'for interval:', start, '-', endy, 'which is', duration_left, 'more s' if $VERBOSE
+    muted, blanked, next_point = get_current_state
+    @muted = muted
+    @blanked = blanked
+    @endy = next_point
+    return if next_point == :done
+    if(current < next_point)
+      set_states!
+      duration_left = @endy - current
+      pps 'just muted it at', Time.now_f, current, 'for interval:', 'which is', duration_left, 'more s' if $VERBOSE
       if duration_left > 0
         @cv.wait(@mutex, duration_left)
       end
-      pps 'done sleeping',duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
+      pps 'done sleeping', duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
       unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...
     end
   end
