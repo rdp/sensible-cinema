@@ -3,6 +3,16 @@ require_relative '../lib/overlayer'
 # tell it not to actually mute during testing...
 $TEST = true
 
+
+def start_good_blank
+  assert @o.blank?
+end
+
+def start_bad_blank
+  assert @o.blank?
+end
+
+
 describe OverLayer do
   
   before do
@@ -19,14 +29,6 @@ describe OverLayer do
     pps 'doing start_good', Time.now_f if $VERBOSE
     assert !@o.muted?
     sleep 1
-  end
-  
-  def start_good_blank
-    assert @o.blank?
-  end
-  
-  def start_bad_blank
-    assert @o.blank?
   end
   
   def start_bad
@@ -114,7 +116,7 @@ describe OverLayer do
     
     end
     
-    it 'should be able to "key" into and out of a muted section and it work...'
+    it 'should be able to "key" into and out of a muted section and it work appropriately...'
 
   end
 
@@ -225,12 +227,14 @@ YAML
     @o.cur_time.should be >= 2
   end
     
-  it "should have pure ruby for muting et al--ffi inliner?" do
+  it "should have pure ruby for muting" do
     assert defined?(Muter)
+    assert Muter.respond_to? :mute!
   end
   
   it "should handle blanks, too" do
-    context "with a blank list" do
+
+    context "with a list that also includes" do
       
       File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
       @o = OverLayer.new('temp.yml')
@@ -241,9 +245,10 @@ YAML
       start_good_blank
       sleep 1
       start_bad_blank
-      
-      
+      sleep 2
+      start_good_blank
     end
+    
   end
   
   # low prio
@@ -254,8 +259,6 @@ YAML
 
   it "should have all output that is colon delimited"
 
-  it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
-  
   it 'should be able to continue *past* the very end, then back into it, etc.'
   
   it 'should have a user friendlier yaml syntax'

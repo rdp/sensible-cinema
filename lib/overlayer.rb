@@ -3,6 +3,7 @@ require 'thread'
 require 'timeout'
 require 'yaml'
 require_relative 'muter'
+require_relative 'blanker'
 
 class Time
   def self.now_f
@@ -50,8 +51,8 @@ class OverLayer
     if @file_mtime != (new_time = File.stat(@filename).mtime)
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
       # LTODO @all_sequences = @all_sequences.map{|k, v| v.sort!} 
-      print '(re) loaded mute sequences as ', @all_sequences, "\n"
-      pp 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
+      print '(re) loaded mute sequences as ', @all_sequences.inspect, "\n"
+      pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
     end
   end
@@ -133,13 +134,15 @@ class OverLayer
       when 'S' then -1
       when 't' then 0.1
       when 'T' then -0.1
+      when ' ' then
+        puts cur_time; return
       else nil
     end
     if delta
       reload_yaml!
       set_seconds(cur_time + delta)
     else
-      puts 'invalid char:' + char
+      puts 'invalid char: [' + char + ']'
     end
   end
   
@@ -170,7 +173,7 @@ class OverLayer
         if(cur >= start)
           return [true, false, endy]
         else
-          return [true, false, cur]
+          return [true, false, start]
         end
       end
     end
@@ -194,7 +197,7 @@ class OverLayer
         
         pps 'sleeping until next action (%f) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         
-        @cv.wait(@mutex, time_till_next_mute_starts)
+        @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         pps 'just woke up from pre-mute wait at', Time.now_f if $VERBOSE
         something_has_possibly_changed
       }
@@ -229,7 +232,7 @@ class OverLayer
       duration_left = @endy - current
       pps 'just muted it at', Time.now_f, current, 'for interval:', 'which is', duration_left, 'more s' if $VERBOSE
       if duration_left > 0
-        @cv.wait(@mutex, duration_left)
+        @cv.wait(@mutex, duration_left) if duration_left > 0
       end
       pps 'done sleeping', duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
       unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...

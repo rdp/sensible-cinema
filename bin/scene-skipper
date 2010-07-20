@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sane'
 
 for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse']
-  require_relative '/../lib/' + file
+  require_relative '../lib/' + file
 end
 
 $VERBOSE = 1 if ARGV.delete('-v')
