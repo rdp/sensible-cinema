@@ -166,19 +166,19 @@ YAML
   end
   
   it "should translate yaml well" do
-    yaml = <<YAML
+    yaml = <<-YAML
 :mutes:
   "0:02.0" : "0:03.0"
 :blank_outs:
-"0:02.0" : "0:03.0"  
-YAML
+  "0:02.0" : "0:03.0"  
+     YAML
      out = OverLayer.translate_yaml yaml
      out[:mutes].to_a.first.should == [2.0, 3.0]
      out[:blank_outs].to_a.first.should == [2.0, 3.0]
-     yaml = <<YAML
+     yaml = <<-YAML
 :mutes:
   "1:02.11" : "1:03.0"
-YAML
+     YAML
      out = OverLayer.translate_yaml yaml
      out[:mutes].to_a.first.should == [62.11, 63.0]
   end
@@ -187,10 +187,10 @@ YAML
 
   it "should allow for 1:01:00.0 (double colon) style input" do
     $VERBOSE = 1 
-    write_yaml <<YAML
+    write_yaml <<-YAML
 :mutes:
   "1:00.11" : "1:03.0"
-YAML
+    YAML
     @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good

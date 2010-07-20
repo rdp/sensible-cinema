@@ -33,6 +33,7 @@ class OverLayer
   end
 
   def reload_yaml!
+    p self.instance_variables, self
     if @file_mtime != File.stat(@filename).mtime
       all_sequences = OverLayer.translate_yaml(File.read(@filename))
       pp '(re) loaded mute sequences as ', all_sequences
@@ -51,6 +52,7 @@ class OverLayer
     @cv = ConditionVariable.new
     @start_time = Time.now_f # assume now...
     @file_mtime = nil
+    p self.instance_variables, self
   end
   
   def self.translate_yaml raw_yaml
