@@ -5,12 +5,14 @@ $TEST = true
 
 
 def start_good_blank
-  assert @o.blank?
+  assert !@o.blank?
 end
 
 def start_bad_blank
   assert @o.blank?
 end
+
+
 
 
 describe OverLayer do
@@ -235,34 +237,37 @@ YAML
   it "should handle blanks, too" do
 
     context "with a list that also includes" do
+    
+      it "should be cool" do
+        File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
+        @o = OverLayer.new('temp.yml')
       
-      File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
-      @o = OverLayer.new('temp.yml')
-      
-      @o.start_thread
-      start_good_blank
-      sleep 1
-      start_good_blank
-      sleep 1
-      start_bad_blank
-      sleep 2
-      start_good_blank
+        @o.start_thread
+        start_good_blank
+        sleep 1
+        start_good_blank
+        sleep 1
+        start_bad_blank
+        sleep 2
+        start_good_blank
+      end
     end
     
   end
   
-  # low prio
+  context "lower prio" do
+    it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
+
+    it "should allow for a static 'surround each' buffer"
+
+    it "should have all output that is colon delimited"
+
+    it 'should be able to continue *past* the very end, then back into it, etc.'
   
-  it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
+    it 'should have a user friendlier yaml syntax'
 
-  it "should allow for a static 'surround each' buffer"
-
-  it "should have all output that is colon delimited"
-
-  it 'should be able to continue *past* the very end, then back into it, etc.'
-  
-  it 'should have a user friendlier yaml syntax'
-
-  it 'should have a more descriptive yaml syntax'
+    it 'should have a more descriptive yaml syntax'
+    
+  end
   
 end
