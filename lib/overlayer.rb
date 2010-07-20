@@ -34,13 +34,11 @@ class OverLayer
 
   def reload_yaml!
     if @file_mtime != (new_time = File.stat(@filename).mtime)
-      all_sequences = OverLayer.translate_yaml(File.read(@filename))
-      pp '(re) loaded mute sequences as ', all_sequences
+      @all_sequences = OverLayer.translate_yaml(File.read(@filename))
+      # LTODO @all_sequences = @all_sequences.map{|k, v| v.sort!} 
+      pp '(re) loaded mute sequences as ', @all_sequences
       pp 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
-      mutes = all_sequences[:mutes]
-      @mutes = mutes.to_a.sort!
-      # File.stat takes 0.0002 so we're probably ok doing two of them.
-      @file_mtime = new_time
+      @file_mtime = new_time # save 0.0002!
     end
   end
   
@@ -58,13 +56,13 @@ class OverLayer
     all = YAML.load(raw_yaml)
     # now it's like {:mutes => {"1:2.0" => "1:3.0"}}
     for type in [:mutes, :blank_outs]
-      mutes = all[type] || {}
+      maps = all[type] || {}
       new = {}
-      mutes.each{|s,e|
+      maps.each{|s,e|
         # both are like 1:02.0
         new[translate_string_to_seconds(s)] = translate_string_to_seconds(e)
       }
-      all[type] = new
+      all[type] = new.sort
     end
     all
   end
@@ -134,30 +132,29 @@ class OverLayer
   def set_seconds seconds
     @mutex.synchronize {
       @start_time = Time.now_f - seconds
-      @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but just for two...
+      @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but good enough for having two contact each other...
     }
   end
+
   # we have a single scheduler thread, that is notified when the time may have changed
   # like 
   # def restart new_time
-  #  @start_time = x
-  #  broadcast
+  #  @current_time = xxx
+  #  broadcast # things have changed
   # end
 
   def start_thread continue_forever = false
     Thread.new { continue_until_past_all_mutes continue_forever }
   end
   
-  # lodo: reject overlappings at all...
-  
   def get_next_mute
     cur = cur_time
-    for start, endy in @mutes
+    for start, endy in @all_sequences[:mutes]
       if cur < endy
         return [start, endy]
       end
     end
-    if @mutes[-1][1] <= cur
+    if @all_sequences[:mutes][-1][1] <= cur
       :done
     else
       raise 'unexpected...'
