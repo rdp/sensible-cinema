@@ -1,19 +1,37 @@
 backlog prioritized:
 
-
 medium:
+
+  PISH
+  release
   hulu
+  some scene lists oh baby (hire out)
 
-other (backlog):
+low but actually want to do eventually (me) low prio:
 
+  with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
 
-with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
+  with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
 
-with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?] low prio
+  mutes:
+    # one hour one minute and a half second to one hour one minute and 1.5s
+    "poor quality song":
+      start : "01:33:25.0"
+      end : "01:33:40.0"
+      reason : "innuendo"
+      level : mild
 
-could use OCR. *needs* OCR to actually be useful.
+  make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
 
-GUI: pick your edit list, pick your player
+  GUI: pick your edit list, pick your player
+
+  netflix
+
+  could use OCR. *needs* OCR to actually be easy editing. Initial functionality only (maybe)
+  
+  release :)
+
+backlog ... based on user request...:
 
 inline editor? (redcar)
 
@@ -21,19 +39,7 @@ allow x2,y2 for player descriptions...
 
 Linux port (call that good enough for usability on TV's...) between that and a VLC version...
 
-mutes:
-  # one hour one minute and a half second to one hour one minute and 1.5s
-  "poor quality song":
-    start : "01:33:25.0"
-    end : "01:33:40.0"
-    reason : "innuendo"
-    level : mild
-
-netflix
-
-make it into a real live full functional app...like fully fully functional and good.
-
-a web install? Why not?
+a web runnable? Why not?
   click here to watch your favorite film edited!
 
 release it "Linux compat anyone?"
@@ -49,8 +55,6 @@ blank out with a user specifiable color (?)
    60.00000000000000000000=>61.50000000000000000000,
    3660.50000000000000000000=>3661.50000000000000000000}} => to friendly numbers
 
-jruby with a nice looking GUI for startup/perferences...
-  
 Auto mute commercials?
 
 rruby.net rubyy.net
@@ -59,7 +63,7 @@ new github username
 
 PIHS
 
-replay certain parts
+replay parts
 
 overlay/replace with some url of audio or video
 
@@ -70,14 +74,11 @@ overlay alpha transparent pic
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
-resync based on visual/audio (black/blank?)
-
 magnify video parts (?)
 overlay with transparent gif?
 
-resync based on OCR.
-  poll or "when there, use it"
-  pop it up every so often (?)
+OCR
+  pop it up only every so often (?)
     after commercials?
 
 user customizable levels...
@@ -86,10 +87,10 @@ user customizable levels...
 user-assignable "confidence" (how much time to 'wrap' the mutes, etc.)
 
 auto-assignment of EDL's to media:
-  web plugin?
   DVD's
     VLC
-    directory of filters
+    directory of scene-lists
+  web plugin?
 
 Programmatically do all of the above, by driving a player with its real API.
   VLC
@@ -97,4 +98,4 @@ Programmatically do all of the above, by driving a player with its real API.
     See if burnable to DVD.
     web interface?
   auto start on DVD insertion (?)
-    and show appropriate filters available based on title/md5 of something?
+    and show appropriate scene-lists available based on title/md5 of something?
