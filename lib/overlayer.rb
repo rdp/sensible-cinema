@@ -274,15 +274,20 @@ class OverLayer
   
   def set_states!
     should_be_muted, should_be_blank, next_point = get_current_state
+    
     if should_be_muted && !muted?
       mute!
-    else
-      unmute! # handle the case of coming *out* of a mute section
+    end
+    
+    if !should_be_muted && muted?
+      unmute!
     end
     
     if should_be_blank && !blank?
       blank!
-    else
+    end
+
+    if !should_be_blank && blank?
       unblank!
     end
     

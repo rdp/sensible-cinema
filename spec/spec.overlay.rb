@@ -310,10 +310,10 @@ mutes:
   end
   
   it "should be human readable" do  
-    OverLayer.translate_time_to_human_readable(3600).should == "1:00:00.0" 
-    OverLayer.translate_time_to_human_readable(3600.0).should == "1:00:00.0" 
-    OverLayer.translate_time_to_human_readable(3601).should == "1:00:01.0" 
-    OverLayer.translate_time_to_human_readable(3661).should == "1:01:01.0" 
+    @o.translate_time_to_human_readable(3600).should == "1:00:00.0" 
+    @o.translate_time_to_human_readable(3600.0).should == "1:00:00.0" 
+    @o.translate_time_to_human_readable(3601).should == "1:00:01.0" 
+    @o.translate_time_to_human_readable(3661).should == "1:01:01.0" 
   end
   
   context "lower prio" do
