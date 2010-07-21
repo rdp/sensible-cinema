@@ -150,14 +150,16 @@ class OverLayer
   end
   
   def status
+    time = "Current time: " + translate_time_to_human_readable(cur_time)
     begin
       mute, blank, next_sig = get_current_state
       if next_sig == :done
-        "no more actions "
+        state = " no more actions after this point..."
       else
-        "next action in %.1fs (#{mute ? "muted" : '' } #{blank ? "blanked" : '' })" % next_sig
+        state = " next action at #{translate_time_to_human_readable next_sig}s (#{mute ? "muted" : '' } #{blank ? "blanked" : '' })"
       end
-    end + " (HhMmSsTtq): "
+    end
+    time + state + " (HhMmSsTtq): "
   end
 
   def keyboard_input char
@@ -184,6 +186,7 @@ class OverLayer
   
   # sets it to a new set of seconds...
   def set_seconds seconds
+    seconds = [seconds, 0].max
     @mutex.synchronize {
       @start_time = Time.now_f - seconds
       @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but good enough for having two contact each other...

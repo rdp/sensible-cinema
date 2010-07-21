@@ -4,7 +4,7 @@ mutes:
   2.0 : 3.0
   4.0 : 5.0
   9.0 : 13.0
-  44.0 : 45.0
+  44.0 : 50.0 # mute for 6 seconds starting at second 44
   # This next actually means one minute to one minute one second
   "1:00.0" : "1:01.0"
   # one hour one minute and a half second to one hour one minute and 1.5s

@@ -42,7 +42,13 @@ class Blanker
   end
   
   def self.unblank_full_screen!
-    puts 'the screen is now...visible!'
+    if RUBY_PLATFORM =~ /java/
+      if @fr
+        @fr.dispose
+      end
+    else
+      puts 'the screen is now...visible!'
+    end
   end
   
 end
