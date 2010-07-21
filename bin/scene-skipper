@@ -18,7 +18,7 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
     overlay = OverLayer.new(first)  
     overlay.start_thread true
   else
-    puts 'warning--not using any overlayer'
+    puts 'warning--not using any overlayer [test mode]'
     $VERBOSE = 1 # that's what they want
   end
   
@@ -38,17 +38,22 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
 
 else
- puts <<-END
+  puts <<-END
 
 syntax: mute_lists.yml [player_description.yml] [-v] [-t]
     -v : verbose mode--dumps player_description picture, has more verbose output.  Start your player before running this for the picture dump to work.
     -t : test mode (don\'t actually mute)
     you can specify "test" for mute_lists.yml to test just the player_description
     See also http://wiki.github.com/rdp/scene-skipper
-    END
+  END
     
- for file in Dir[__dir__ + '../zamples/*']
-   puts "\n", "Example file:", file + "\n\n", File.read(file)
- end
- exit 1
+  for file in Dir[__dir__ + '../zamples/mute*']
+     puts "\n", "Example file:", file + "\n\n", File.read(file)
+  end
+  
+  puts '', 'Available files:'
+  for file in Dir[__dir__ + '../zamples/*/*']
+    puts File.expand_path(file)
+  end
+  exit 1
 end 
