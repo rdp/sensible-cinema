@@ -17,7 +17,10 @@ task 'spec' do
   success = true
   for file in Dir['spec/*spec*.rb'] do
     p file
-    success &= system('cd spec & ' + OS.ruby_bin + " ../" + file)
+    if !system('cd spec & ' + OS.ruby_bin + " ../" + file)
+      success = false
+      break
+    end
   end
-  p 'success? ' + success.to_s
+  p 'success!' if success
 end

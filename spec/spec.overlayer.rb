@@ -317,6 +317,7 @@ mutes:
   end
   
   context "lower prio" do
+    
     it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
 
     it "should allow for a static 'surround each' buffer"

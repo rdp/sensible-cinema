@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/common'
-require_relative '/../lib/keyboard_input'
+require_relative '../lib/keyboard_input'
 
 describe KeyboardInput do
 

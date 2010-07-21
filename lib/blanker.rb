@@ -34,31 +34,15 @@ class Blanker
         @fr.set_visible(true)
     end
   else
-    require 'tk'
-    Tk.root.iconify # start iconified
+    
     def self.blank_full_screen!
-      @fr ||= begin
-        root = Tk.root
-        #root.bind('1'){exit} # allow it to exit with left click
-        root.attributes(:fullscreen=>true)
-        root
-      end
-      @fr.attributes(:topmost => true)
+      puts 'the screen is now...blank!'      
     end
   
   end
   
   def self.unblank_full_screen!
-    if @fr
-      if RUBY_PLATFORM =~ /java/
-        @fr.set_visible(false)
-        @fr.dispose
-      else
-        @fr.attributes(:topmost => false)
-      end
-    end
+    puts 'the screen is now...visible!'
   end
-  
-  @fr = nil # avoid warnings
   
 end
