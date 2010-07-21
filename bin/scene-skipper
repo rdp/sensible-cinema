@@ -41,10 +41,10 @@ else
   puts <<-END
 
 syntax: mute_lists.yml [player_description.yml] [-v] [-t]
-    -v : verbose mode--dumps player_description picture, has more verbose output.  Start your player before running this for the picture dump to work.
+    -v : verbose (chatty) mode
     -t : test mode (don\'t actually mute)
-    you can specify "test" for mute_lists.yml to test just the player_description
-    See also http://wiki.github.com/rdp/scene-skipper
+
+    See the zamples/players/how_to file for more info on creating a player description.
   END
     
   for file in Dir[__dir__ + '../zamples/mute*']

@@ -1,0 +1,6 @@
+you can specify "test" for the "mutes_list.yml file" to test just the player_description.
+
+To just test it out, start your player, then run it with -v
+it will screen capture your segment to your current working directory.
+
+NB that segments can have negative start offset, which means "distance from the bottom right corner"
