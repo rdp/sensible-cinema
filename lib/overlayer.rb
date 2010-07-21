@@ -115,7 +115,7 @@ class OverLayer
     out << "%02d" % minutes
     seconds = seconds - minutes * 60
     out << ":"
-    out << "%02.1f" % seconds
+    out << "%04.1f" % seconds
   end
     
   
