@@ -12,6 +12,7 @@ require 'sane'
 require 'benchmark'
 Thread.abort_on_exception = true
 require 'timeout'
+require 'fileutils'
 
 begin
   require 'hitimes'
