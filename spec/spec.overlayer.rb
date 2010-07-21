@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
+
 # tell it not to actually mute during testing...
 $TEST = true
 
@@ -26,13 +27,11 @@ describe OverLayer do
   end
   
   def start_good
-    pps 'doing start_good', Time.now_f if $VERBOSE
     assert !@o.muted?
     sleep 1
   end
   
   def start_bad
-    pps 'doing start_bad', Time.now_f if $VERBOSE
     assert @o.muted? # note this uses @o!
     sleep 1
   end
@@ -88,8 +87,6 @@ describe OverLayer do
       assert @o.cur_time > 5
     end
     
-    it 'should be able to land directly in or out of one'
-    
     it 'should be able to hit keys to affect input' do
       @o = OverLayer.new 'test_yaml.yml'
       @o.cur_time
@@ -116,8 +113,6 @@ describe OverLayer do
     
     end
     
-    it 'should be able to "key" into and out of a muted section and it work appropriately...'
-
   end
 
   it 'should have help output' do
@@ -200,13 +195,11 @@ mutes:
      YAML
      out = OverLayer.translate_yaml yaml
     out[:mutes].to_a.first.should == [1, 3]    
-  end
-  
+  end  
 
   it "should disallow negative length intervals"
 
   it "should allow for 1:01:00.0 (double colon) style input" do
-    $VERBOSE = 1 
     write_yaml <<-YAML
 :mutes:
   "1:00.11" : "1:03.0"
@@ -258,8 +251,6 @@ mutes:
     context "with a list of blanks" do
     
       it "should blank" do
-        $VERBOSE = 1
-        $TEST = 1
         @o = OverLayer.new_raw({:blank_outs => {2.0 => 4.0}})
       
         @o.start_thread
@@ -328,12 +319,6 @@ mutes:
     it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
 
     it "should allow for a static 'surround each' buffer"
-
-    it "should have all output that is colon delimited"
-
-    it 'should be able to continue *past* the very end, then back into it, etc.'
-  
-    it 'should have a user friendlier yaml syntax'
 
     it 'should have a more descriptive yaml syntax'
     
