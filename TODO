@@ -1,8 +1,4 @@
 backlog prioritized:
-  it didn't re-read the file like I wanted it to, it displays
-  "current time 129:00:01.1" which is wrong.also display 00:00:1.1 which is wrong
-
-  with VLC it constantly moves the volume up with every mute
 
 
 medium:

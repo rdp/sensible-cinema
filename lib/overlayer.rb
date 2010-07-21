@@ -55,6 +55,8 @@ class OverLayer
       puts '(re) loaded mute sequences as', pretty_sequences.pretty_inspect, "" unless $TEST
       pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
+    else
+      p 'matching time:', new_time if $VERBOSE
     end
   end
   
@@ -266,7 +268,7 @@ class OverLayer
           time_till_next_mute_starts = next_point - cur_time
         end
         
-        pps 'sleeping until next action (%f) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
+        pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         pps 'just woke up from pre-mute wait at', Time.now_f if $VERBOSE

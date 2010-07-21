@@ -40,7 +40,7 @@ describe OverLayer do
   it 'should reject overlapping settings...I guess'
   
   it 'should be able to mute' do
-    # you shouldn't hear a beep
+    # several combinations...
     assert !@o.muted?
     @o.mute!
     assert @o.muted?
@@ -305,6 +305,13 @@ mutes:
         end
         
       end
+    end
+    
+    it "should not fail with verbose on, after it's past next states" do
+      at(500_000) do
+        @o.status.should == "Current time: 138:53:20.0 no more actions after this point... (HhMmSsTtq): "
+      end
+      
     end
     
   end

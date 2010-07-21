@@ -27,8 +27,8 @@ module Muter
   end
   
   def hit_volume_down_key
-    keybd_event(VK_VOLUME_UP, 0, 0, nil)
-    keybd_event(VK_VOLUME_UP, 0, KEYEVENTF_KEYUP, nil)
+    keybd_event(VK_VOLUME_DOWN, 0, 0, nil)
+    keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
   def mute!
@@ -37,7 +37,7 @@ module Muter
   end
   
   def unmute!
-    hit_volume_down_key # TODO fails in VLC
+    hit_volume_down_key
     hit_volume_up_key
   end
       
