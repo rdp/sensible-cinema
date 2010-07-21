@@ -51,10 +51,15 @@ class OverLayer
     if @file_mtime != (new_time = File.stat(@filename).mtime)
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
       # LTODO @all_sequences = @all_sequences.map{|k, v| v.sort!} 
-      print '(re) loaded mute sequences as ', @all_sequences.inspect, "\n"
+      print '(re) loaded mute sequences as ', @all_sequences.inspect, "\n" unless $TEST
       pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
     end
+  end
+  
+  def self.new_raw ruby_hash
+    File.write 'temp.yml', YAML.dump(ruby_hash)
+    OverLayer.new('temp.yml')
   end
   
   def initialize filename
@@ -72,7 +77,7 @@ class OverLayer
     all = YAML.load(raw_yaml)
     # now it's like {:mutes => {"1:2.0" => "1:3.0"}}
     for type in [:mutes, :blank_outs]
-      maps = all[type] || {}
+      maps = all[type] || all[type.to_s] || {}
       new = {}
       maps.each{|s,e|
         # both are like 1:02.0
@@ -88,7 +93,7 @@ class OverLayer
     current_time = cur_time
     better_time = current_time.round
     set_seconds better_time
-    puts 'timestamp delta was:' + (current_time - better_time).to_s if $VERBOSE
+    puts 'screen snapshot diff with time we thought it was was:' + (current_time - better_time).to_s if $VERBOSE
   end
   
   def self.translate_string_to_seconds s
@@ -162,26 +167,58 @@ class OverLayer
   # end
 
   def start_thread continue_forever = false
-    Thread.new { continue_until_past_all_mutes continue_forever }
+    Thread.new { continue_until_past_all continue_forever }
   end
   
-  # returns [true, false, next_moment_of_importance]
-  def get_current_state
-    cur = cur_time
-    for start, endy in @all_sequences[:mutes]
-      if cur < endy
-        if(cur >= start)
-          return [true, false, endy]
-        else
-          return [true, false, start]
+  # returns [start, end, active|:done]
+  def discover_state type, cur_time
+      for start, endy in @all_sequences[type]
+        if cur_time < endy
+          # first one that we haven't passed the *end* of yet
+          if(cur_time >= start)
+            return [start, endy, true]
+          else
+            return [start, endy, false]
+          end
         end
+        
       end
-    end
-    
-    [false, false, :done]
+      return [nil, nil, :done]
   end
   
-  def continue_until_past_all_mutes continue_forever
+  # returns [true, false, next_moment_of_importance|:done]
+  def get_current_state
+    all = []
+    time = cur_time
+    for type in [:mutes, :blank_outs] do
+      all << discover_state(type, time)
+    end
+    output = []
+    # all is [[start, end, active]...] or [:done, :done]
+    # so create [true, false, next_moment]
+    earliest_moment = 1_000_000
+    all.each{|start, endy, active|
+      if active == :done
+        output << false
+        next
+      else
+        output << active
+      end
+      if active
+        earliest_moment = [earliest_moment, endy].min
+      else
+        earliest_moment = [earliest_moment, start].min
+      end
+    }
+    if earliest_moment == 1_000_000
+      output << :done
+    else
+      output << earliest_moment
+    end
+    output
+  end
+  
+  def continue_until_past_all continue_forever
     @mutex.synchronize {
       loop {
         muted, blanked, next_point = get_current_state
@@ -205,14 +242,14 @@ class OverLayer
   end  
   
   def set_states!
-    muted, blanked, next_point = get_current_state
-    if muted && !muted?
+    should_be_muted, should_be_blank, next_point = get_current_state
+    if should_be_muted && !muted?
       mute!
     else
-      unmute!
+      unmute! # handle the case of coming *out* of a mute section
     end
     
-    if blanked && !blanked?
+    if should_be_blank && !blank?
       blank!
     else
       unblank!
@@ -235,7 +272,7 @@ class OverLayer
         @cv.wait(@mutex, duration_left) if duration_left > 0
       end
       pps 'done sleeping', duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
-      unmute! # lodo if they skip straight to another mute sequence, never unmute... hmm...
+      set_states!
     end
   end
   

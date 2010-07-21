@@ -10,7 +10,7 @@ describe ScreenTracker do
       Win32::Screenshot.window(/silence.wav/, 0) {}
     rescue
       # this way we'll only have one up...
-      @pid1 = IO.popen("C:/program files/VideoLan/VLC/vlc.exe silence.wav").pid
+      @pid1 = IO.popen('open.bat').pid # jruby can't open it directly yet
       sleep 2
     end
     
@@ -24,6 +24,7 @@ describe ScreenTracker do
     ScreenTracker.new(/silence.*VLC/,10,10,20,20)
     ScreenTracker.new("silence",10,10,20,20)
   end
+  
   it "should be able to grab a picture from screen coords...probably from the current active window" do
     @a.get_bmp.should_not be_nil 
   end
@@ -31,7 +32,7 @@ describe ScreenTracker do
   it "should loop if unable to find the right window" do
     proc { 
       Timeout::timeout(1) { ScreenTracker.new("unknown window",10,10,20,20) }
-    }.should raise_exception(Timeout::Error)
+    }.should raise_error(Timeout::Error)
   end
   
   it "should be at least somewhat fast" do
@@ -39,11 +40,11 @@ describe ScreenTracker do
   end
   
   it "should not allow for negative widths" do
-    proc {ScreenTracker.new("VLC",10,10,-20,20)}.should raise_exception
+    proc {ScreenTracker.new("VLC",10,10,-20,20)}.should raise_error
   end
   
   it "should disallow size 0 widths" do
-    proc {ScreenTracker.new("VLC",10,10,0,0)}.should raise_exception
+    proc {ScreenTracker.new("VLC",10,10,0,0)}.should raise_error
   end
   
   it "should have different bmp if sizes different" do
@@ -89,10 +90,10 @@ describe ScreenTracker do
     end
     
     it "should fail with out of bounds or zero sizes" do
-      proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,20,20) }.should raise_exception 
-      proc { a = ScreenTracker.new(/silence.*VLC/,10,-10,20,20) }.should raise_exception
-      proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,0,2) }.should raise_exception
-      proc { a = ScreenTracker.new(/silence.*VLC/,10,10,2,0) }.should raise_exception
+      proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,20,20) }.should raise_error
+      proc { a = ScreenTracker.new(/silence.*VLC/,10,-10,20,20) }.should raise_error
+      proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,0,2) }.should raise_error
+      proc { a = ScreenTracker.new(/silence.*VLC/,10,10,2,0) }.should raise_error
     end
     
   end
@@ -152,6 +153,7 @@ YAML
   end
     
   after(:all) do
+    begin
     # bring redcar to the foreground
     # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?
     unless Socket.gethostname == "PACKRD-1GK7V"
@@ -159,6 +161,9 @@ YAML
     end
     Process.kill 9, @pid1 rescue nil # need this re-started each time or the screen won't change for the screen changing test
     FileUtils.rm_rf Dir['*.bmp']
+  rescue Exception => e
+    p 'fail after(:all)!', e
+  end
   end
   
 end

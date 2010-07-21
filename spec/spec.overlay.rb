@@ -13,8 +13,6 @@ def start_bad_blank
 end
 
 
-
-
 describe OverLayer do
   
   before do
@@ -76,7 +74,7 @@ describe OverLayer do
     it 'should be able to mute teeny sequences' do
       File.write 'temp.yml', YAML.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
       o = OverLayer.new 'temp.yml'
-      o.continue_until_past_all_mutes false
+      o.continue_until_past_all false
     end
   end
   
@@ -195,6 +193,16 @@ YAML
      out[:mutes].to_a.first.should == [62.11, 63.0]
   end
 
+  it "should translate strings as well as symbols" do
+         yaml = <<-YAML
+mutes:
+  "1" : "3
+     YAML
+     out = OverLayer.translate_yaml yaml
+    out[:mutes].to_a.first.should == [1, 3]    
+  end
+  
+
   it "should disallow negative length intervals"
 
   it "should allow for 1:01:00.0 (double colon) style input" do
@@ -234,22 +242,68 @@ YAML
     assert Muter.respond_to? :mute!
   end
   
-  it "should handle blanks, too" do
+  context "should handle blanks, too" do
 
-    context "with a list that also includes" do
+    it "should be able to discover next states well" do
+      for type in [:blank_outs, :mutes] do
+        @o = OverLayer.new_raw({type => {2.0 => 4.0}})
+        @o.discover_state(type, 3).should == [2.0, 4.0, true]
+        @o.discover_state(type, 0.5).should == [2.0, 4.0, false]
+        @o.discover_state(type, 5).should == [nil, nil, :done]
+        @o.discover_state(type, 2.0).should == [2.0, 4.0, true]
+        @o.discover_state(type, 4.0).should == [nil, nil, :done]
+      end
+    end
     
-      it "should be cool" do
-        File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
-        @o = OverLayer.new('temp.yml')
+    context "with a list of blanks" do
+    
+      it "should blank" do
+        $VERBOSE = 1
+        $TEST = 1
+        @o = OverLayer.new_raw({:blank_outs => {2.0 => 4.0}})
       
         @o.start_thread
         start_good_blank
         sleep 1
         start_good_blank
-        sleep 1
+        sleep 1.1
         start_bad_blank
         sleep 2
         start_good_blank
+      end
+    end
+    
+    def at time
+       @o.stub!(:cur_time) {
+          time
+        }
+        yield
+    end
+    
+    context "mixed blanks and others" do
+      it "should allow for mixed" do
+        @o = OverLayer.new_raw({:mutes => {2.0 => 3.5}, :blank_outs => {3.0 => 4.0}})
+        at(1.5) do
+          @o.cur_time.should == 1.5
+          @o.get_current_state.should == [false, false, 2.0]
+        end
+        
+        at(2.0) do
+          @o.get_current_state.should == [true, false, 3.0]
+        end
+        
+        at(3.0) do
+          @o.get_current_state.should == [true, true, 3.5]
+        end
+        
+        at(3.75) do
+          @o.get_current_state.should == [false, true, 4.0]
+        end
+        
+        at(4) do
+          @o.get_current_state.should == [false, false, :done]
+        end
+        
       end
     end
     
