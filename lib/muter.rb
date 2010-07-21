@@ -37,7 +37,7 @@ module Muter
   end
   
   def unmute!
-    hit_volume_down_key
+    hit_volume_down_key # TODO fails in VLC
     hit_volume_up_key
   end
       

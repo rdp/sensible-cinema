@@ -16,6 +16,12 @@ describe Blanker do
     }
   end
   
+  it "should be able to unblank several times I suppose" do
+    3.times {
+      Blanker.unblank_full_screen!
+    }
+  end
+  
   describe "future work", :pending => true do
     
     it "should be able to blank certain coords"

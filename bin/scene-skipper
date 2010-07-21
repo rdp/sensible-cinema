@@ -51,7 +51,7 @@ syntax: mute_lists.yml [player_description.yml] [-v] [-t]
      puts "\n", "Example file:", file + "\n\n", File.read(file)
   end
   
-  puts '', 'Available files:'
+  puts '', 'Available player descriptions:'
   for file in Dir[__dir__ + '../zamples/*/*']
     puts File.expand_path(file)
   end

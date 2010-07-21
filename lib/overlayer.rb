@@ -4,6 +4,7 @@ require 'timeout'
 require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
+require 'pp'
 
 class Time
   def self.now_f
@@ -51,10 +52,24 @@ class OverLayer
     if @file_mtime != (new_time = File.stat(@filename).mtime)
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
       # LTODO @all_sequences = @all_sequences.map{|k, v| v.sort!} 
-      print '(re) loaded mute sequences as ', @all_sequences.inspect, "\n" unless $TEST
+      puts '(re) loaded mute sequences as', pretty_sequences.pretty_inspect, "" unless $TEST
       pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
     end
+  end
+  
+  def pretty_sequences
+    new_sequences = {}
+    @all_sequences.each{|type, values|
+      if values.is_a? Array
+        new_sequences[type] = values.map{|s, f|
+          [translate_time_to_human_readable(s), translate_time_to_human_readable(f)]
+        }
+      else
+        new_sequences[type] = values
+      end
+    }
+    new_sequences
   end
   
   def self.new_raw ruby_hash
@@ -83,10 +98,26 @@ class OverLayer
         # both are like 1:02.0
         new[translate_string_to_seconds(s)] = translate_string_to_seconds(e)
       }
+      all.delete(type.to_s)
       all[type] = new.sort
     end
     all
   end
+  
+  def translate_time_to_human_readable seconds
+    # 3600 => "1:00:00"
+    out = ''
+    hours = seconds.to_i / 3600
+    out << "%d" % hours 
+    out << ":"
+    seconds = seconds - hours*3600
+    minutes = seconds.to_i / 60
+    out << "%02d" % minutes
+    seconds = seconds - minutes * 60
+    out << ":"
+    out << "%02.1f" % seconds
+  end
+    
   
   def timestamp_changed
     # round cur_time to
@@ -119,20 +150,20 @@ class OverLayer
   end
   
   def status
-    if @am_muted
-      "muted (%.1fs - %.1fs)" % [@start, @endy]
-    else
+    begin
       mute, blank, next_sig = get_current_state
       if next_sig == :done
         "no more actions "
       else
-        "next action in %.1fs (currently am muted: %s blanked %s)" % [next_sig, mute, blank]
+        "next action in %.1fs (#{mute ? "muted" : '' } #{blank ? "blanked" : '' })" % next_sig
       end
-    end + " (MmSsTtq): "
+    end + " (HhMmSsTtq): "
   end
 
   def keyboard_input char
     delta = case char
+      when 'h' then 60*60
+      when 'H' then -60*60
       when 'm' then 60
       when 'M' then -60
       when 's' then 1

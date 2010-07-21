@@ -1,28 +1,51 @@
 backlog prioritized:
 
-high:
-  can blank appropo (overlay black screen)
-  
 medium:
-  allow x2,y2
   hulu
 
 other (backlog):
 
-Linux port (call that good enough for usability on TV's...)
+help verbose?
+remove description stuff
+
+during mutes it *unmutes* ever other second. oopsy.
+
+it didn't re-read the file like I wanted it to, it displays
+"current time 129:00:01.1" which is wrong.also display 00:00:1.1 which is wrong
+
+with VLC it constantly moves the volume up.
+
+with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
+
+with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?] low prio
+
+could use OCR. *needs* OCR to actually be useful.
+
+GUI: pick your edit list, pick your player
+
+inline editor? (redcar)
+
+allow x2,y2 for player descriptions...
+
+Linux port (call that good enough for usability on TV's...) between that and a VLC version...
+
+mutes:
+  # one hour one minute and a half second to one hour one minute and 1.5s
+  "poor quality song":
+    start : "01:33:25.0"
+    end : "01:33:40.0"
+    reason : "innuendo"
+    level : mild
 
 netflix
 
 make it into a real live full functional app...like fully fully functional and good.
 
-a one click windows releasable or installable...rawr?
-
 a web install? Why not?
   click here to watch your favorite film edited!
 
-release it (after it blank) "Linux compat anyone?"
+release it "Linux compat anyone?"
 
-blank out with an image from the web.
 blank out with a user specifiable color (?)
 
 {"title"=>"Forever Strong",
@@ -33,8 +56,6 @@ blank out with a user specifiable color (?)
    44.00000000000000000000=>45.00000000000000000000,
    60.00000000000000000000=>61.50000000000000000000,
    3660.50000000000000000000=>3661.50000000000000000000}} => to friendly numbers
-
-OCR
 
 jruby with a nice looking GUI for startup/perferences...
   
@@ -57,13 +78,10 @@ overlay alpha transparent pic
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
-handle arbitrary seeks that land me in the middle of a bad section :)
-
-don't blip the mutes on and off every second...
-
 resync based on visual/audio (black/blank?)
 
 magnify video parts (?)
+overlay with transparent gif?
 
 resync based on OCR.
   poll or "when there, use it"
@@ -81,23 +99,10 @@ auto-assignment of EDL's to media:
     VLC
     directory of filters
 
-Programmatically do all of the above, by driving using an internal API.
+Programmatically do all of the above, by driving a player with its real API.
   VLC
     Allow it to make mp4's somewhere.
     See if burnable to DVD.
+    web interface?
   auto start on DVD insertion (?)
     and show appropriate filters available based on title/md5 of something?
-
-have some way to stream it to your PC easily/cheaply or what not
-  try it with xbmc/boxee/windows media whatever...I guess. Check the experience, anyway :)
-
-  xbox: you have to pay extra for streaming (from your pc)?
-  The XBOX plays all the standard file types (BT ones anyway...
-  roku seems uneditable
-  seems that overlaying "something on doze" is best...
-  an original xbox could probably be made to stream from your PC...maybe...I'd wager...hmm...now if it could browse your PC *and* the Internet (XBMC?) that might rock.
-  S-video seems popular...but that would cost a monitor...hmm...OK FOR ME...others can figure it out...
-  PS3 + tversity?
-  apparently there is a *lot* online these days:http://tversity.com/support/premium-websites
-  it seems that mine mostly just work on windows, then you'll want to save it off to mpeg (camtastic), then be able to stream it...so I only have to worry about live "on computer" playback for now.
-  it works "easier" on 'just play it from doze/linux' for me, for now...
