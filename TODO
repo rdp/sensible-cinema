@@ -3,14 +3,13 @@ backlog prioritized:
 medium:
 
   hulu
+    update win32screenshot if necessary
   some scene lists oh baby (hire out)
  
 low but actually want to do eventually (me) low prio:
 
   PISH
-  release
-
-  with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
+  release ruby-y
 
   mutes:
     # one hour one minute and a half second to one hour one minute and 1.5s
@@ -20,17 +19,18 @@ low but actually want to do eventually (me) low prio:
       reason : "innuendo"
       level : mild
 
-  make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
-
-  GUI: pick your edit list, pick your player
+  GUI: pick your edit list and player
 
   netflix
 
   OCR initial functionality only (maybe). Needs it for easy playback, too, really it does.
-  
-  really release :)
+  with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
+
+  make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
 
 == backlog ... based on user request.. ==
+
+advertise
 
 with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
 
