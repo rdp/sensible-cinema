@@ -2,14 +2,13 @@ backlog prioritized:
 
 medium:
 
-  PISH
-  release
   hulu
   some scene lists oh baby (hire out)
-
+ 
 low but actually want to do eventually (me) low prio:
 
-  with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
+  PISH
+  release
 
   with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
 
@@ -27,11 +26,21 @@ low but actually want to do eventually (me) low prio:
 
   netflix
 
-  could use OCR. *needs* OCR to actually be easy editing. Initial functionality only (maybe)
+  OCR initial functionality only (maybe). Needs it for easy playback, too, really it does.
   
-  release :)
+  really release :)
 
-backlog ... based on user request...:
+== backlog ... based on user request.. ==
+
+with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
+
+youtube non full screened...hmmm
+
+skene-skipper
+
+yank old gem versions :)
+
+overlay with wav file (would work for VLC, could "learn to mute" for the others...)
 
 fix all pending tests...
 
