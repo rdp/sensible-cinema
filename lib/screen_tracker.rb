@@ -11,7 +11,12 @@ class ScreenTracker
   
   def initialize name_or_regex,x,y,width,height,callback=nil
     # cache to save us 0.00445136 per time LOL
-    @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+    if name_or_regex.to_s.downcase == 'desktop'
+      # full screen option
+      @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
+    else
+      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+    end
     unless @hwnd
       print 'perhaps not running yet? [%s] START IT QUICKLY' % name_or_regex
       until @hwnd

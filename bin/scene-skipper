@@ -18,8 +18,9 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
     overlay = OverLayer.new(first)  
     overlay.start_thread true
   else
-    puts 'warning--not using any overlayer [test mode]'
+    puts 'warning--not using any overlayer [player description test mode]'
     $VERBOSE = 1 # that's what they want
+    sleep 4
   end
   
   if ARGV[1] && File.exist?(ARGV[1])
@@ -53,7 +54,7 @@ syntax: mute_lists.yml [player_description.yml] [-v] [-t]
   
   puts '', 'Available player descriptions:'
   for file in Dir[__dir__ + '../zamples/*/*']
-    puts File.expand_path(file)
+    puts File.expand_path(file) unless File.directory?(file)
   end
   exit 1
 end 

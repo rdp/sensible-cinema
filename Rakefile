@@ -1,6 +1,6 @@
 require 'jeweler'
 require 'os'
-  Jeweler::Tasks.new do |s|
+Jeweler::Tasks.new do |s|
     s.name = "scene-skipper"
     s.summary = "universal scene skipper (for skipping or muting portions of movie's, basically"
     s.email = "rogerdpack@gmail.com"

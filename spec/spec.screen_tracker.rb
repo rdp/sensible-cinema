@@ -1,6 +1,5 @@
-require 'faster_rubygems'
-require 'sane'
-require_relative 'common'
+require File.dirname(__FILE__) + '/common'
+require_relative '../lib/overlayer'
 require_relative '../lib/screen_tracker'
 
 describe ScreenTracker do
@@ -57,6 +56,10 @@ describe ScreenTracker do
       b = ScreenTracker.new("VLC",10,10,50,50)
       assert a.get_bmp != b.get_bmp
     end  
+    
+    it "should allow for straight desktop if they specify Desktop or desktop" do
+      a = ScreenTracker.new("desktop",0,0,100,100)
+    end
     
     context "negative numbers should result in an offset" do
       
