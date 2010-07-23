@@ -32,11 +32,12 @@ module Muter
   end
   
   def mute!
-    unmute! # just in case
+    #unmute! # just in case
     hit_mute_key
   end
-  
+  # TODO better for 7...
   def unmute!
+    hit_mute_key # Windows XP...
     hit_volume_down_key
     hit_volume_up_key
   end
