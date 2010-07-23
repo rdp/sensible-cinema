@@ -70,7 +70,7 @@ class ScreenTracker
         puts 'screen snapshot changed!' if $VERBOSE
         return
       end
-      sleep 0.05
+      sleep 0.02
     }
   end
   
