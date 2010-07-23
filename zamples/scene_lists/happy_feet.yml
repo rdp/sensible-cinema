@@ -1,0 +1,7 @@
+title: Happy Feet
+source: VLC
+mutes:
+  # one hour one minute and a half second to one hour one minute and 1.5s
+  "01:33:25.0" : "01:33:50.0"
+blank_outs:
+  "55:35" : "55:42.0"  # blank from one minute one second to one minute two seconds
