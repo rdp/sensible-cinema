@@ -27,16 +27,17 @@ module Muter
   end
   
   def hit_volume_down_key
-    keybd_event(VK_VOLUME_UP, 0, 0, nil)
-    keybd_event(VK_VOLUME_UP, 0, KEYEVENTF_KEYUP, nil)
+    keybd_event(VK_VOLUME_DOWN, 0, 0, nil)
+    keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
   def mute!
-    unmute! # just in case
+    #unmute! # just in case
     hit_mute_key
   end
-  
+  # TODO better for 7...
   def unmute!
+    hit_mute_key # Windows XP...
     hit_volume_down_key
     hit_volume_up_key
   end

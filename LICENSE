@@ -1,4 +1,5 @@
-All files released under the LGPL [1] unless otherwise specified.
-Contains some 3rd party codes that are licensed under their own license.
+All files released under the MIT license [1] unless otherwise specified.
 
-[1] http://www.gnu.org/licenses/lgpl.html
+May contains 3rd party code that is licensed under other licenses.
+
+[1] http://www.opensource.org/licenses/mit-license.php

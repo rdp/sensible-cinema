@@ -10,13 +10,18 @@ class ScreenTracker
   end
   
   def initialize name_or_regex,x,y,width,height,callback=nil
-      # cache to save us 0.00445136 per time LOL
-    @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+    # cache to save us 0.00445136 per time LOL
+    if name_or_regex.to_s.downcase == 'desktop'
+      # full screen option
+      @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
+    else
+      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
+    end
     unless @hwnd
       print 'perhaps not running yet? [%s] START IT QUICKLY' % name_or_regex
       until @hwnd
         sleep 2
-        print '.'
+        print ' trying again .'
         STDOUT.flush
         @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
       end
@@ -49,7 +54,6 @@ class ScreenTracker
   end
   
   def dump_bmp filename = 'dump.bmp'
-    p 'dumping coords', get_relative_coords
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
   end
@@ -63,9 +67,10 @@ class ScreenTracker
     loop {
       current = get_bmp
       if current != original
+        puts 'screen snapshot changed!' if $VERBOSE
         return
       end
-      sleep 0.05
+      sleep 0.02
     }
   end
   

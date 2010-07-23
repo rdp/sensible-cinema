@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sane'
 
 for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse']
-  require_relative '/../lib/' + file
+  require_relative '../lib/' + file
 end
 
 $VERBOSE = 1 if ARGV.delete('-v')
@@ -18,8 +18,9 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
     overlay = OverLayer.new(first)  
     overlay.start_thread true
   else
-    puts 'warning--not using any overlayer'
-    $VERBOSE = 1 # that's what they want
+    puts 'warning--not using any overlayer [player description test mode]'
+    $VERBOSE = 1 # that's what they wanted...
+    sleep 4
   end
   
   if ARGV[1] && File.exist?(ARGV[1])
@@ -38,17 +39,22 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
 
 else
- puts <<-END
+  puts <<-END
 
 syntax: mute_lists.yml [player_description.yml] [-v] [-t]
-    -v : verbose mode--dumps player_description picture, has more verbose output.  Start your player before running this for the picture dump to work.
+    -v : verbose (chatty) mode
     -t : test mode (don\'t actually mute)
-    you can specify "test" for mute_lists.yml to test just the player_description
-    See also http://wiki.github.com/rdp/scene-skipper
-    END
+
+    See the zamples/players/how_to file for more info on creating a player description.
+  END
     
- for file in Dir[__dir__ + '../zamples/*']
-   puts "\n", "Example file:", file + "\n\n", File.read(file)
- end
- exit 1
+  for file in Dir[__dir__ + '../zamples/mute*']
+     puts "\n", "Example file:", file + "\n\n", File.read(file)
+  end
+  
+  puts '', 'Available player descriptions:'
+  for file in Dir[__dir__ + '../zamples/*/*']
+    puts File.expand_path(file) unless File.directory?(file)
+  end
+  exit 1
 end 

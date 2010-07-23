@@ -1,7 +1,18 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
+
 # tell it not to actually mute during testing...
 $TEST = true
+
+
+def start_good_blank
+  assert !@o.blank?
+end
+
+def start_bad_blank
+  assert @o.blank?
+end
+
 
 describe OverLayer do
   
@@ -16,13 +27,11 @@ describe OverLayer do
   end
   
   def start_good
-    pps 'doing start_good', Time.now_f if $VERBOSE
     assert !@o.muted?
     sleep 1
   end
   
   def start_bad
-    pps 'doing start_bad', Time.now_f if $VERBOSE
     assert @o.muted? # note this uses @o!
     sleep 1
   end
@@ -30,7 +39,7 @@ describe OverLayer do
   it 'should reject overlapping settings...I guess'
   
   it 'should be able to mute' do
-    # you shouldn't hear a beep
+    # several combinations...
     assert !@o.muted?
     @o.mute!
     assert @o.muted?
@@ -64,7 +73,7 @@ describe OverLayer do
     it 'should be able to mute teeny sequences' do
       File.write 'temp.yml', YAML.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
       o = OverLayer.new 'temp.yml'
-      o.continue_until_past_all_mutes false
+      o.continue_until_past_all false
     end
   end
   
@@ -77,8 +86,6 @@ describe OverLayer do
       sleep 0.1
       assert @o.cur_time > 5
     end
-    
-    it 'should be able to land directly in or out of one'
     
     it 'should be able to hit keys to affect input' do
       @o = OverLayer.new 'test_yaml.yml'
@@ -106,8 +113,6 @@ describe OverLayer do
     
     end
     
-    it 'should be able to "key" into and out of a muted section and it work...'
-
   end
 
   it 'should have help output' do
@@ -183,10 +188,18 @@ YAML
      out[:mutes].to_a.first.should == [62.11, 63.0]
   end
 
+  it "should translate strings as well as symbols" do
+         yaml = <<-YAML
+mutes:
+  "1" : "3
+     YAML
+     out = OverLayer.translate_yaml yaml
+    out[:mutes].to_a.first.should == [1, 3]    
+  end  
+
   it "should disallow negative length intervals"
 
   it "should allow for 1:01:00.0 (double colon) style input" do
-    $VERBOSE = 1 
     write_yaml <<-YAML
 :mutes:
   "1:00.11" : "1:03.0"
@@ -217,34 +230,98 @@ YAML
     @o.cur_time.should be >= 2
   end
     
-  it "should have pure ruby for muting et al--ffi inliner?" do
+  it "should have pure ruby for muting" do
     assert defined?(Muter)
+    assert Muter.respond_to? :mute!
   end
   
-  it "should handle blanks, too" do
-    context "with a blank list" do
+  context "should handle blanks, too" do
+
+    it "should be able to discover next states well" do
+      for type in [:blank_outs, :mutes] do
+        @o = OverLayer.new_raw({type => {2.0 => 4.0}})
+        @o.discover_state(type, 3).should == [2.0, 4.0, true]
+        @o.discover_state(type, 0.5).should == [2.0, 4.0, false]
+        @o.discover_state(type, 5).should == [nil, nil, :done]
+        @o.discover_state(type, 2.0).should == [2.0, 4.0, true]
+        @o.discover_state(type, 4.0).should == [nil, nil, :done]
+      end
+    end
+    
+    context "with a list of blanks" do
+    
+      it "should blank" do
+        @o = OverLayer.new_raw({:blank_outs => {2.0 => 4.0}})
       
-      File.write 'temp.yml', YAML.dump({:blank_outs => {2.0 => 4.0}} )
-      @o = OverLayer.new('temp.yml')
-  
+        @o.start_thread
+        start_good_blank
+        sleep 1
+        start_good_blank
+        sleep 1.1
+        start_bad_blank
+        sleep 2
+        start_good_blank
+      end
+    end
+    
+    def at time
+       @o.stub!(:cur_time) {
+          time
+        }
+        yield
+    end
+    
+    context "mixed blanks and others" do
+      it "should allow for mixed" do
+        @o = OverLayer.new_raw({:mutes => {2.0 => 3.5}, :blank_outs => {3.0 => 4.0}})
+        at(1.5) do
+          @o.cur_time.should == 1.5
+          @o.get_current_state.should == [false, false, 2.0]
+        end
+        
+        at(2.0) do
+          @o.get_current_state.should == [true, false, 3.0]
+        end
+        
+        at(3.0) do
+          @o.get_current_state.should == [true, true, 3.5]
+        end
+        
+        at(3.75) do
+          @o.get_current_state.should == [false, true, 4.0]
+        end
+        
+        at(4) do
+          @o.get_current_state.should == [false, false, :done]
+        end
+        
+      end
+    end
+    
+    it "should not fail with verbose on, after it's past next states" do
+      at(500_000) do
+        @o.status.should == "Current time: 138:53:20.0 no more actions after this point... (HhMmSsTtq): "
+      end
       
     end
+    
   end
   
-  # low prio
+  it "should be human readable" do  
+    @o.translate_time_to_human_readable(3600).should == "1:00:00.0" 
+    @o.translate_time_to_human_readable(3600.0).should == "1:00:00.0" 
+    @o.translate_time_to_human_readable(3601).should == "1:00:01.0" 
+    @o.translate_time_to_human_readable(3661).should == "1:01:01.0" 
+  end
   
-  it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
+  context "lower prio" do
+    
+    it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
 
-  it "should allow for a static 'surround each' buffer"
+    it "should allow for a static 'surround each' buffer"
 
-  it "should have all output that is colon delimited"
-
-  it 'should give you lightning accurate timestamps when you hit space, in 1:00.0 style'
-  
-  it 'should be able to continue *past* the very end, then back into it, etc.'
-  
-  it 'should have a user friendlier yaml syntax'
-
-  it 'should have a more descriptive yaml syntax'
+    it 'should have a more descriptive yaml syntax'
+    
+  end
   
 end

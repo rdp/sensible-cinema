@@ -42,13 +42,16 @@ module Mouse
     in_evt[:time] = 0
     in_evt[:extra] = 0
     in_evt[:dx] = 0
-    in_evt[:dy] = 8 # just enough for VLC
+    in_evt[:dy] = 8 # just enough for VLC full screen...
 
     Thread.new {
       loop {
         in_evt[:dy] *= -1
         Mouse.SendInput(1, myinput, Mouse::Input.size)
-        sleep 0.5
+        in_evt[:dy] *= -1
+        sleep 0.05
+        Mouse.SendInput(1, myinput, Mouse::Input.size)
+        sleep 0.75
       }
     }
     

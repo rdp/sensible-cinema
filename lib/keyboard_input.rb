@@ -16,12 +16,9 @@ class KeyboardInput
  end
 
  def get_line_printout
-    time    = @fella.cur_time
-    minutes = time.to_i / 60
-    seconds = time - minutes*60
     status  = @fella.status
     # scary hard coded values here...
-    " " *50 + "\b"*150 + "Current time: %d:%04.1f %s " % [minutes, seconds, status] # lodo: no decimals + yes decimals...
+    " " * 20 + "\b"*150 + status
  end
 
  def getch

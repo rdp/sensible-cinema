@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/common'
-require_relative '/../lib/keyboard_input'
+require_relative '../lib/keyboard_input'
 
 describe KeyboardInput do
 
@@ -37,9 +37,8 @@ describe KeyboardInput do
     Go.muted = true
   end
 
-  it "should display minutes and seconds" do
-    @a.get_line_printout.should include("0:59.")
-    @a.get_line_printout.should include("1:00.")
+  it "should display on one line" do
+    @a.get_line_printout.should include("\b\b\b")
   end
 
   it "should display whether muted or not" do
