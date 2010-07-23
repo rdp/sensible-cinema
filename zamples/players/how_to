@@ -11,4 +11,6 @@ it will screen capture your segment to your current working directory.
 
 NB that the clock coords can have negative start offsets, which mean "distance from the bottom right corner"
 
-Post back with difficulties.
+NB that you can specify "desktop" for the window name meaning full screen.
+
+Post back with difficulties or questions.

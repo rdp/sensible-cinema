@@ -1,7 +1,5 @@
-require 'rubygems'
-require 'sane'
+require File.dirname(__FILE__) + "/common"
 require_relative '../lib/muter'
-require_relative 'common'
 
 describe 'manual muter' do
   # functional test

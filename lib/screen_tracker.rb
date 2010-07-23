@@ -67,6 +67,7 @@ class ScreenTracker
     loop {
       current = get_bmp
       if current != original
+        puts 'screen snapshot changed!' if $VERBOSE
         return
       end
       sleep 0.05

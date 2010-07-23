@@ -18,7 +18,7 @@ class KeyboardInput
  def get_line_printout
     status  = @fella.status
     # scary hard coded values here...
-    " " *50 + "\b"*150 + status
+    " " * 20 + "\b"*150 + status
  end
 
  def getch
