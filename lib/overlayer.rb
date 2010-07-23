@@ -56,7 +56,8 @@ class OverLayer
   
   def self.translate_yaml raw_yaml
     all = YAML.load(raw_yaml)
-    # now it's like {:mutes => {"1:2.0" => "1:3.0"}}
+    # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
+    # translate to floats like 62.0 => 63.0
     for type in [:mutes, :blank_outs]
       mutes = all[type] || {}
       new = {}
