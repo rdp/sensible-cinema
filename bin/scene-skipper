@@ -18,7 +18,8 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
     overlay = OverLayer.new(first)  
     overlay.start_thread true
   else
-    puts 'warning--not using any overlayer [player description test mode]'
+    puts 'warning--only doing screen dump in 4s...'
+    overlay = nil
     $VERBOSE = 1 # that's what they wanted...
     sleep 4
   end
