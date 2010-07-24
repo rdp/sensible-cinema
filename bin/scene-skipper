@@ -41,18 +41,15 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
 else
   puts <<-END
 
-syntax: mute_lists.yml [player_description.yml] [-v] [-t]
-    -v : verbose (chatty) mode
-    -t : test mode (don\'t actually mute)
-
-    See the zamples/players/how_to file for more info on creating a player description.
+  syntax: mute_lists.yml [player_description.yml] [-v (verbose [chatty] mode)] [-t (test mode)]
+    See the #{File.expand_path(File.dirname(__FILE__), "..")}/zamples for more info on creating files.
   END
     
-  for file in Dir[__dir__ + '../zamples/mute*']
+  for file in Dir[__dir__ + '../zamples/mute*/*']
      puts "\n", "Example file:", file + "\n\n", File.read(file)
   end
   
-  puts '', 'Available player descriptions:'
+  puts '', 'Available files:'
   for file in Dir[__dir__ + '../zamples/*/*']
     puts File.expand_path(file) unless File.directory?(file)
   end

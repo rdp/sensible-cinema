@@ -1,6 +1,6 @@
 
 
-class Blanker
+class Blanker 
   
   if RUBY_PLATFORM =~ /java/
     require 'java'
