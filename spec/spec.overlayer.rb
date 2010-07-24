@@ -314,6 +314,12 @@ mutes:
     @o.translate_time_to_human_readable(3661).should == "1:01:01.0" 
   end
   
+  it "should accept human readable input" do
+    o = OverLayer.new 'temp.yml', "01:01.5"
+    o.cur_time.should be == 61.5
+    
+  end
+  
   context "lower prio" do
     
     it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"

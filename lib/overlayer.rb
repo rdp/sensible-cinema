@@ -79,7 +79,7 @@ class OverLayer
     OverLayer.new('temp.yml')
   end
   
-  def initialize filename
+  def initialize filename, minutes = nil 
     @filename = filename
     @am_muted = false
     @am_blanked = false
@@ -88,6 +88,9 @@ class OverLayer
     @file_mtime = nil
     reload_yaml!
     @start_time = Time.now_f # assume they want to start immediately...
+    if minutes
+      self.set_seconds self.class.translate_string_to_seconds(minutes)
+    end
   end
   
   def self.translate_yaml raw_yaml

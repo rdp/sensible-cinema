@@ -11,4 +11,5 @@ mutes:
   # one hour one minute and a half second to one hour one minute and 1.5s
   "01:01:00.5" : "01:01:01.5"
 blank_outs:
+  "00:15" : "00:18"
   "01:01" : "01:02.0"  # blank from one minute one second to one minute two seconds
