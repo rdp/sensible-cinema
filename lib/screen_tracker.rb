@@ -27,7 +27,7 @@ class ScreenTracker
       end
       puts 'found window'
     end
-    p 'height', height, 'width', width if $VERBOSE
+    pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
     always_zero, always_zero, max_x, max_y = Win32::Screenshot::BitmapMaker.dimensions_for(@hwnd)
     if(x < 0 || y < 0)
