@@ -1,5 +1,5 @@
 title: Happy Feet
-source: VLC
+source: VLC DVD
 mutes:
   # one hour one minute and a half second to one hour one minute and 1.5s
   "01:33:25.0" : "01:33:50.0"

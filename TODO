@@ -2,13 +2,11 @@ backlog prioritized:
 
 medium:
 
-  accept a time from the command line
-
   OCR initial functionality only (maybe). Needs it for easy playback, too, really it does.
+
+== low but actually want to do eventually (me) low prio: ==
+
   with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
-
-low but actually want to do eventually (me) low prio:
-
   PISH
   release ruby-y
   add my own stuff to imdb?
@@ -20,6 +18,8 @@ low but actually want to do eventually (me) low prio:
   make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
 
 == backlog ... based on user request.. ==
+
+can overlay with a "fuzzer-outer" for specific coordinates somehow or other...
 
   mutes:
     # one hour one minute and a half second to one hour one minute and 1.5s
