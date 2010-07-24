@@ -2,13 +2,24 @@ backlog prioritized:
 
 medium:
 
-  OCR
   accept a time from the command line
- 
+
+  OCR initial functionality only (maybe). Needs it for easy playback, too, really it does.
+  with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
+
 low but actually want to do eventually (me) low prio:
 
   PISH
   release ruby-y
+  add my own stuff to imdb?
+
+  GUI: paste edit list and choose player
+
+  netflix
+
+  make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
+
+== backlog ... based on user request.. ==
 
   mutes:
     # one hour one minute and a half second to one hour one minute and 1.5s
@@ -18,27 +29,18 @@ low but actually want to do eventually (me) low prio:
       reason : "innuendo"
       level : mild
 
-  GUI: pick your edit list and player
-  some scene lists oh baby (hire out?)
 
-  netflix
+advertise like to lay men
 
-  OCR initial functionality only (maybe). Needs it for easy playback, too, really it does.
-  with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
+with VLC non full screen, it does the annoying mouse thing.
 
-  make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
-
-== backlog ... based on user request.. ==
-
-advertise
-
-with VLC non full screen, it does the annoying mouse thing.  This is actually quite annoying.
+hire out scene lists
 
 youtube non full screened...hmmm
 
-skene-skipper
+bleeper name
 
-yank old gem versions :)
+yank old gem versions (?) :)
 
 overlay with wav file (would work for VLC, could "learn to mute" for the others...)
 
@@ -59,22 +61,11 @@ release it "Linux compat anyone?"
 
 blank out with a user specifiable color (?)
 
-{"title"=>"Forever Strong",
- :mutes=>
-  {2.00000000000000000000=>3.00000000000000000000,
-   4.00000000000000000000=>5.00000000000000000000,
-   9.00000000000000000000=>13.00000000000000000000,
-   44.00000000000000000000=>45.00000000000000000000,
-   60.00000000000000000000=>61.50000000000000000000,
-   3660.50000000000000000000=>3661.50000000000000000000}} => to friendly numbers
-
 Auto mute commercials?
 
 rruby.net rubyy.net
 
 new github username
-
-PIHS
 
 replay parts
 
