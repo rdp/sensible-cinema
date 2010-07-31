@@ -1,5 +1,5 @@
-All files released under the MIT license [1] unless otherwise specified.
+All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want this changed.
 
-May contains 3rd party code that is licensed under other licenses.
+May contains 3rd party libraries under their own license.
 
-[1] http://www.opensource.org/licenses/mit-license.php
+[1] http://www.gnu.org/licenses/gpl.html
