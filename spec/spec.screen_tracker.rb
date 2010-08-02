@@ -136,6 +136,11 @@ describe ScreenTracker do
       end
       
       context "using OCR" do
+
+        it "should be able to OCR all manner of single digits, colons, and non-those" do
+          fail
+        end
+        
         it "should use OCR against the changes appropriately" do
           output = nil
           @a.wait_till_next_change {|cur_time|    
@@ -144,12 +149,8 @@ describe ScreenTracker do
             output.should be_a(Float)
         end
         
-        it "should be able to OCR all manner of single digits, colons, and non-those" do
-          fail
-        end
 
-        it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" do
-        
+        it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" do        
           fail
         end
         
