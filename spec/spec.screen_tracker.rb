@@ -5,7 +5,7 @@ require_relative '../lib/screen_tracker'
 describe ScreenTracker do
   
   if RUBY_PLATFORM =~ /java/
-    it "is pending a java bug"
+    it "is pending a java bug..."
   else
     before(:all) do
       begin
@@ -135,28 +135,30 @@ describe ScreenTracker do
         @a.dump_bmp # for debugging...
       end
       
-      it "should use OCR against the changes appropriately" do
-        pending "OCR" do
+      context "using OCR" do
+        it "should use OCR against the changes appropriately" do
           output = nil
           @a.wait_till_next_change {|cur_time|    
-            output = cur_time
-          }
-          output.should be_a( Float)
+              output = cur_time
+            }
+            output.should be_a(Float)
         end
-      end
-      
+        
+        it "should be able to OCR all manner of single digits, colons, and non-those" do
+          fail
+        end
+
+        it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" do
+        
+          fail
+        end
+        
+        it "should OCR work with hulu too, because of ads" do
+          fail
+        end
+        
     end
-    
-    it "should have next versions" do
-      pending "next versions" do      
-        it "should stay on it with the mouse for the first 40 seconds after any drastic change"
-        
-        it "should be able to OCR all manner of single digits, colons, and non-those" 
-        
-        it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon"
-        
-        it "should work with hulu 'every so often polling' full screen"
-      end
+      
     end
     
     after(:all) do
@@ -169,7 +171,7 @@ describe ScreenTracker do
         Process.kill 9, @pid1 rescue nil # need this re-started each time or the screen won't change for the screen changing test
         FileUtils.rm_rf Dir['*.bmp']
       rescue => e
-        puts 'got after bug:', e
+        puts 'got after bug:', e # until this bug is fixed... http://github.com/rspec/rspec-core/issues#issue/21
         throw e
       end
     end

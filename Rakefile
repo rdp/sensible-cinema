@@ -25,5 +25,5 @@ task 'spec' do
       break
     end
   end
-  p 'success!' if success
+  p 'all specs passed!' if success
 end
