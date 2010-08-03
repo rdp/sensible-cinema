@@ -8,12 +8,22 @@ describe OCR do
   end
   
   it "should be able to grab some digits" do
-    OCR.identify_digit(File.binread "images/4.bmp").should == "4"    
+    for file in Dir['images/*.bmp']
+      options = {}
+      options[:should_invert] = true if file =~ /hulu/
+      file =~ /(.)\.bmp/
+      expected_digit = $1
+      if file =~ /colon/
+        options[:might_be_colon] = true 
+        expected_digit = ":"
+      end
+      p file, options
+      OCR.identify_digit(File.binread(file), options).should == expected_digit
+    end
   end
   
   it "should be able to grab a colon" do
-    OCR.identify_digit(File.binread("images/colon.bmp"), true).should == ":"
+    OCR.identify_digit(File.binread("images/colon.bmp"), :might_be_colon => true).should == ":"
   end
-  
   
 end
