@@ -81,8 +81,6 @@ class ScreenTracker
         if(x < 0)
           x = @max_x + x
         end
-        require 'ruby-debug'
-        #debugger
         out[type] = Win32::Screenshot::BitmapMaker.capture_area(@hwnd, x, @y, x+w, @y2) {|h,w,bmp| bmp}
       else
         out[type] = nil

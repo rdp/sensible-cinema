@@ -141,7 +141,9 @@ describe ScreenTracker do
         
         before do
           @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13, 
-            {:hours => nil, :minute_tens => [-69,7], :minute_ones => [-41, 7], :second_ones => [-46, 7], :second_tens => [-52, 7]} )  
+            # VLC window, 10's only..
+            {:hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_ones => [-72, 7], :second_tens => [-66, 7]} )  
+            # VLC full screen: {:hours => nil, :minute_tens => [-69,7], :minute_ones => [-41, 7], :second_ones => [-46, 7], :second_tens => [-52, 7]} )  
         end
         
         it "should be able to snapshot digits" do
