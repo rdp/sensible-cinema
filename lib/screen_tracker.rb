@@ -1,6 +1,7 @@
 require 'win32/screenshot'
 require 'sane'
 require 'yaml'
+require_relative 'ocr'
 
 class ScreenTracker
   
@@ -65,16 +66,17 @@ class ScreenTracker
     File.binwrite 'all.' + filename, get_full_bmp
     if @digits
       for type, bitmap in get_digits_as_bitmaps
-        File.binwrite type.to_s + '.bmp', bitmap if bitmap
+        File.binwrite type.to_s + '.bmp', bitmap
       end
     end
   end
   
-  # returns like raw bitmaps for ["0", "1", "0" , "1"] for 1 minute, one second
+  DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
+  # returns like {:hours => nil, :minutes_tens => raw_bmp, ...
   def get_digits_as_bitmaps
-    # @digits like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
+    # @digits are like {:hours => [100,5], :minute_tens => [x, width], :minute_ones, :second_tens, :second_ones}
     out = {}
-    for type in [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
+    for type in DIGIT_TYPES
       assert @digits.key?(type)
       if @digits[type]
         x,w = @digits[type]
@@ -82,8 +84,6 @@ class ScreenTracker
           x = @max_x + x
         end
         out[type] = Win32::Screenshot::BitmapMaker.capture_area(@hwnd, x, @y, x+w, @y2) {|h,w,bmp| bmp}
-      else
-        out[type] = nil
       end
     end
     out
@@ -100,6 +100,20 @@ class ScreenTracker
       current = get_bmp
       if current != original
         puts 'screen snapshot changed!' if $VERBOSE
+        
+        
+        if @digits
+          out = {}
+          digits = get_digits_as_bitmaps
+          DIGIT_TYPES.each{|type|
+            if digits[type]
+              out[type] = OCR.identify_digit(digits[type])
+            else
+              out[type] = 0
+            end
+          }
+          return "%d:%d%d:%d%d" % DIGIT_TYPES.map{|type| out[type]}
+        end
         return
       end
       sleep 0.02

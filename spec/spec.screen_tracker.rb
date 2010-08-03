@@ -154,11 +154,9 @@ describe ScreenTracker do
         end
 
         it "should use OCR against the changes appropriately" do
-          output = nil
-          @a.wait_till_next_change {|new_time|    
-            output = new_time
-          }
-          output.should be_a(Float)
+          output = @a.wait_till_next_change
+          output.should be_a(String)
+          output.should include "0:"
         end
         
         context "with an OCR that can change willy-nilly from hour to second" do

@@ -16,8 +16,9 @@ describe OCR do
       if file =~ /colon/
         options[:might_be_colon] = true 
         expected_digit = ":"
+      else
+        expected_digit = expected_digit.to_i
       end
-      p file, options
       OCR.identify_digit(File.binread(file), options).should == expected_digit
     end
   end

@@ -6,7 +6,7 @@ module OCR
   
   GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ -l 120")
   
-  # options: :might_be_colon, :should_invert
+  # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
     might_be_colon = options[:might_be_colon]
     should_invert = options[:should_invert]
@@ -29,7 +29,7 @@ module OCR
     a = output.read
     output.close
     a.strip!
-    a
+    a.to_i
   end
   
   def version
