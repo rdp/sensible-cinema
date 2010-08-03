@@ -11,7 +11,8 @@ class ScreenTracker
     return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"], callback)
   end
   
-  # digits like {:hours => [100,100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
+  # digits like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
+  # digits share the height...
   def initialize name_or_regex,x,y,width,height,digits=nil,callback=nil
     # cache to save us 0.00445136 per time LOL
     if name_or_regex.to_s.downcase == 'desktop'
@@ -41,7 +42,9 @@ class ScreenTracker
         y = max_y + y
       end
     end
+    @height = height
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
+    @max_x = max_x
     raise 'poor width or wrong window' if @x2 > max_x  || @x2 == x
     raise 'poor height or wrong window' if @y2 > max_y || @y2 == y
     @digits = digits
@@ -60,6 +63,33 @@ class ScreenTracker
   def dump_bmp filename = 'dump.bmp'
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
+    if @digits
+      for type, bitmap in get_digits_as_bitmaps
+        File.binwrite type.to_s + '.bmp', bitmap if bitmap
+      end
+    end
+  end
+  
+  # returns like raw bitmaps for ["0", "1", "0" , "1"] for 1 minute, one second
+  def get_digits_as_bitmaps
+    # @digits like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
+    out = {}
+    for type in [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
+      assert @digits.key?(type)
+      if @digits[type]
+        x,w = @digits[type]
+        if(x < 0)
+          x = @max_x + x
+        end
+        require 'ruby-debug'
+        #debugger
+        out[type] = Win32::Screenshot::BitmapMaker.capture_area(@hwnd, x, @y, x+w, @y2) {|h,w,bmp| bmp}
+      else
+        out[type] = nil
+      end
+    end
+    out
+    
   end
   
   def get_relative_coords

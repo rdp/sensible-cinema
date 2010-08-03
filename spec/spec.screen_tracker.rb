@@ -140,13 +140,15 @@ describe ScreenTracker do
       context "using OCR" do
         
         before do
-          #@a = ScreenTracker.new("silence.wav", -111, -16, 86, 13, {:hours => [-69,7], :minute_tens =>, :minute_ones, :second_tens, :second_ones}})  
+          @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13, 
+            {:hours => nil, :minute_tens => [-69,7], :minute_ones => [-41, 7], :second_ones => [-46, 7], :second_tens => [-52, 7]} )  
         end
         
         it "should be able to snapshot digits" do
           @a.dump_bmp
-          Pathname.new('minute_tens.bmp').should exist
-          
+          Pathname.new('minute_tens.bmp').should exist          
+          Pathname.new('minute_tens.bmp').size.should be > 0
+          Pathname.new('hours.bmp').should_not exist          
         end
 
         it "should use OCR against the changes appropriately" do
@@ -175,7 +177,7 @@ describe ScreenTracker do
           Win32::Screenshot.window(/universal/, 0) rescue nil
         end
         Process.kill 9, @pid1 rescue nil # need this re-started each time or the screen won't change for the screen changing test
-        FileUtils.rm_rf Dir['*.bmp']
+        FileUtils.rm_rf Dir['*.bmp'] unless $DEBUG
       rescue => e
         puts 'got after bug:', e # until this bug is fixed... http://github.com/rspec/rspec-core/issues#issue/21
         throw e
