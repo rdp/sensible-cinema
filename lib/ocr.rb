@@ -1,9 +1,10 @@
 require 'mini_magick'
 require 'open3'
 
+# helper for OCR'ing single digits that were screen captured
 module OCR
   
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9: -l 120")
+  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ -l 120")
   
   # options: :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
@@ -21,7 +22,6 @@ module OCR
     image.format(:pnm) # expensive, requires convert.exe in path...
     if should_invert # mogrify calls it negate...
       image.negate 
-      p 'negating'
     end
     input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -"
     input.write image.to_blob
@@ -29,7 +29,6 @@ module OCR
     a = output.read
     output.close
     a.strip!
-    a = "0" if a == ""
     a
   end
   

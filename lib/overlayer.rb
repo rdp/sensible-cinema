@@ -12,10 +12,6 @@ class Time
   end
 end
 
-if RUBY_VERSION < '1.9.2'
-  raise 'need 1.9.2+ for MRI' unless RUBY_PLATFORM =~ /java/
-end
-
 class OverLayer
   
   def muted?

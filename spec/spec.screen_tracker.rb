@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/common'
 require_relative '../lib/overlayer'
 require_relative '../lib/screen_tracker'
+require 'pathname'
 
 describe ScreenTracker do
   
@@ -112,6 +113,7 @@ describe ScreenTracker do
       y: 34
       width: 100
       height: 20
+      
       YAML
       a = ScreenTracker.new_from_yaml(yaml,nil)
       a.get_relative_coords.should == [32,34,132,54]
@@ -136,26 +138,29 @@ describe ScreenTracker do
       end
       
       context "using OCR" do
-
-        it "should be able to OCR all manner of single digits, colons, and non-those" do
-          fail
+        
+        before do
+          #@a = ScreenTracker.new("silence.wav", -111, -16, 86, 13, {:hours => [-69,7], :minute_tens =>, :minute_ones, :second_tens, :second_ones}})  
         end
         
+        it "should be able to snapshot digits" do
+          @a.dump_bmp
+          Pathname.new('minute_tens.bmp').should exist
+          
+        end
+
         it "should use OCR against the changes appropriately" do
           output = nil
-          @a.wait_till_next_change {|cur_time|    
-              output = cur_time
-            }
-            output.should be_a(Float)
+          @a.wait_till_next_change {|new_time|    
+            output = new_time
+          }
+          output.should be_a(Float)
         end
         
-
-        it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" do        
-          fail
-        end
-        
-        it "should OCR work with hulu too, because of ads" do
-          fail
+        context "with an OCR that can change willy-nilly from hour to second" do
+          it "should ocr slash...[in other]"
+          it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon"
+          it "should OCR work with hulu too, because of ads"
         end
         
     end

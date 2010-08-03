@@ -2,6 +2,10 @@ require 'rubygems'
 require 'sane'
 require 'Win32API'
 
+if RUBY_VERSION < '1.9.2'
+  raise 'need 1.9.2+ for MRI' unless RUBY_PLATFORM =~ /java/
+end
+
 class KeyboardInput
 
  def initialize fella
