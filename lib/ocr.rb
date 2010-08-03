@@ -3,7 +3,7 @@ require 'open3'
 
 module OCR
   
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:")
+  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9: -l 120")
   
   # options: :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
@@ -18,12 +18,10 @@ module OCR
       return ":"
     end
     image = MiniMagick::Image.from_blob(memory_bitmap)
-#    require 'ruby-debug'
-#    debugger
     image.format(:pnm) # expensive, requires convert.exe in path...
     if should_invert # mogrify calls it negate...
-      p 'inverting'
       image.negate 
+      p 'negating'
     end
     input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -"
     input.write image.to_blob
