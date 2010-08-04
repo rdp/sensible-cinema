@@ -217,29 +217,32 @@ mutes:
     @o.start_thread
     start = Time.now
     while((Time.now - start) < 3) do
-      @o.timestamp_changed
+      @o.timestamp_changed nil, nil
       sleep 0.1
     end
     @o.cur_time.should be < 1
     sleep 1
-    10.times { @o.timestamp_changed }
+    10.times { @o.timestamp_changed(nil, nil) }
     @o.cur_time.should be >= 1
     sleep 0.6
-    @o.timestamp_changed
+    @o.timestamp_changed nil, nil
     @o.cur_time.should be >= 2
   end
   
   it "should be able to handle it when the sync message includes a new timestamp" do
     @o.start_thread
-    @o.timestamp_changed "1:00:01"
+    @o.timestamp_changed "1:00:01", 0
     @o.cur_time.should be > 60*60
-  end
-    
-  it "should have pure ruby method for muting" do
-    assert defined?(Muter)
-    assert Muter.respond_to? :mute!
+    @o.timestamp_changed "0:00:01", 0
+    @o.cur_time.should be < 60*60
   end
   
+  it "should handle deltas to created timestamps" do
+    @o.start_thread
+    @o.timestamp_changed "1:00:00", 1
+    @o.cur_time.should be >= 60*60 + 1
+  end
+    
   context "should handle blanks, too" do
 
     it "should be able to discover next states well" do
@@ -305,7 +308,7 @@ mutes:
     
     it "should not fail with verbose on, after it's past next states" do
       at(500_000) do
-        @o.status.should == "Current time: 138:53:20.0 no more actions after this point... (HhMmSsTtq): "
+        @o.status.should == "Current time: 138:53:20.0 no more actions after this point... (HhMmSsTtdvq): "
       end
       
     end

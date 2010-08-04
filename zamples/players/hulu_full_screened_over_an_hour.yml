@@ -1,7 +1,7 @@
 name: desktop
 x: 8
 y: -17
-width: 42
+width: 45
 height: 13
 digits:
       :hours:
@@ -14,8 +14,8 @@ digits:
       - 31
       - 7
       :second_tens:
-      - 39
+      - 40
       - 6
       :second_ones:
-      - 45
+      - 46
       - 6
