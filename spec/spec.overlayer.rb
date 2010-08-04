@@ -164,7 +164,7 @@ YAML
     # go forward a tenth
     # should reload it...
     @o.keyboard_input 'T'
-    sleep 0.1 # blug
+    sleep 0.1 # blugh
     start_bad
     start_good
   end

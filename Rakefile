@@ -1,8 +1,8 @@
 require 'jeweler'
 require 'os'
 Jeweler::Tasks.new do |s|
-    s.name = "scene-skipper"
-    s.summary = "universal scene skipper (for skipping or muting portions of movie's, basically"
+    s.name = "sensible-cinema"
+    s.summary = "an EDL scene-selector/bleeper that works with online players like hulu"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
@@ -23,8 +23,12 @@ task 'spec' do
     p file
     if !system('cd spec & ' + OS.ruby_bin + " ../" + file)
       success = false
-      break
     end
   end
-  p 'all specs passed!' if success
+  if success
+    p 'all specs passed!' 
+  else
+    p 'at least one spec failed!'
+  end
+    
 end
