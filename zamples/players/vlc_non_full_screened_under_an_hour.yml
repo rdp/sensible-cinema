@@ -6,10 +6,10 @@ height: 11
 digits:
       :hours:
       :minute_tens:
-      - -89
+      - -88
       - 7
       :minute_ones:
-      - -82
+      - -81
       - 7
       :second_tens:
       - -72

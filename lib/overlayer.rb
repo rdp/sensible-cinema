@@ -121,9 +121,9 @@ class OverLayer
   end
   
   # make it optional...for now muhaha [lodo take out if never useful]
-  def timestamp_changed to_this_exact_string = nil
+  def timestamp_changed to_this_exact_string, delta
     if to_this_exact_string
-      set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string)
+      set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string) + delta
     else
       round_current_time_to_nearest_second
     end
@@ -168,7 +168,7 @@ class OverLayer
         state = " next action at #{translate_time_to_human_readable next_sig}s (#{mute ? "muted" : '' } #{blank ? "blanked" : '' })"
       end
     end
-    time + state + " (HhMmSsTtvq): "
+    time + state + " (HhMmSsTtdvq): "
   end
 
   def keyboard_input char
@@ -183,9 +183,11 @@ class OverLayer
       when 'T' then -0.1
       when 'v' then
         $VERBOSE = !$VERBOSE
+        p 'set verbose to ', $VERBOSE
         return
       when 'd'
         $DEBUG = !$DEBUG
+        p 'set debug to', $DEBUG
         return
       when ' ' then
         puts cur_time

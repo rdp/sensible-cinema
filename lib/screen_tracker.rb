@@ -54,7 +54,7 @@ class ScreenTracker
   end
   
   def get_bmp
-    # Note: we no longer bring the window to the front tho...which it needs to be
+    # Note: we no longer bring the window to the front tho...which it needs to be in both XP and Vista to work...sigh.
     Win32::Screenshot::BitmapMaker.capture_area(@hwnd,@x,@y,@x2,@y2) {|h,w,bmp| return bmp}
   end
   
@@ -88,7 +88,6 @@ class ScreenTracker
       end
     end
     out
-    
   end
   
   def get_relative_coords
@@ -100,7 +99,7 @@ class ScreenTracker
     loop {
       current = get_bmp
       if current != original
-        
+        start = Time.now
         if @digits
           out = {}
           dump_bmp if $DEBUG            
@@ -113,8 +112,10 @@ class ScreenTracker
             end
           }
           out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{|type| out[type]}
-          p 'got new screen time ' + out if $VERBOSE
-          return out
+          p 'got new screen time ' + out + " delta:" + (Time.now - start).to_s if $VERBOSE
+          # if the window was in the background it will be all zeroes, so nil it out
+          out = nil unless out =~ /[1-9]/
+          return out, Time.now - start
         else
           puts 'screen time change only detected...' if $VERBOSE
         end
@@ -127,8 +128,8 @@ class ScreenTracker
   def process_forever_in_thread
     Thread.new {
       loop {
-        out_time = wait_till_next_change
-        @callback.timestamp_changed out_time
+        out_time, delta = wait_till_next_change
+        @callback.timestamp_changed out_time, delta
       }
     }
   end

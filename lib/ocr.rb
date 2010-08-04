@@ -4,13 +4,14 @@ require 'open3'
 # helper for OCR'ing single digits that were screen captured
 module OCR
   
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ -l 120")
+  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ -l 130") # this is *way* too sensitive...
   
   CACHE = {}
   
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
     if CACHE[memory_bitmap]
+      p 'ocr cache hit' if $DEBUG
       return CACHE[memory_bitmap]
     else
       p 'ocr cache miss' if $DEBUG
