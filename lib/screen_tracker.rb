@@ -99,11 +99,11 @@ class ScreenTracker
     loop {
       current = get_bmp
       if current != original
-        start = Time.now
         if @digits
           out = {}
           dump_bmp if $DEBUG            
-          digits = get_digits_as_bitmaps
+          digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
+          start = Time.now
           DIGIT_TYPES.each{|type|
             if digits[type]
               out[type] = OCR.identify_digit(digits[type])
