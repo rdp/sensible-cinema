@@ -24,9 +24,9 @@ class ScreenTracker
       @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
     end
     unless @hwnd
-      print 'perhaps not running yet? [%s] START IT QUICKLY' % name_or_regex
+      print 'perhaps not running yet? [%s] START IT FAST' % name_or_regex
       until @hwnd
-        sleep 2
+        sleep 4
         print ' trying again .'
         STDOUT.flush
         @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
