@@ -31,7 +31,7 @@ module OCR
     if should_invert # mogrify calls it negate...
       image.negate 
     end
-    for level in [130] # 100
+    for level in [130, 100] # 100 for hulu...
       input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -l #{level} -"
       input.write image.to_blob
       input.close
