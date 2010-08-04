@@ -30,6 +30,7 @@ module OCR
     image = MiniMagick::Image.from_blob(memory_bitmap)
     image.format(:pnm) # expensive, requires convert.exe in path...
     if should_invert # mogrify calls it negate...
+      p 'inverting' if $DEBUG
       image.negate 
     end
     input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -"

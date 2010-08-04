@@ -94,6 +94,11 @@ class ScreenTracker
     [@x,@y,@x2,@y2]
   end
   
+  # split out for unit testing purposes
+  def identify_digit bitmap
+    OCR.identify_digit(bitmap, @digits)
+  end
+  
   def wait_till_next_change
     original = get_bmp
     loop {
@@ -106,7 +111,7 @@ class ScreenTracker
           start = Time.now
           DIGIT_TYPES.each{|type|
             if digits[type]
-              out[type] = OCR.identify_digit(digits[type])
+              out[type] = identify_digit(digits[type])
             else
               out[type] = 0
             end

@@ -19,3 +19,5 @@ digits:
       :second_ones:
       - 46
       - 6
+      :should_invert: true
+    
