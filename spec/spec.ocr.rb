@@ -8,17 +8,12 @@ describe OCR do
   end
   
   it "should be able to grab some digits" do
-    for file in Dir['images/*.bmp']
+    for file in Dir['images/*[0-9].bmp']
+      p file
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       file =~ /(.)\.bmp/
-      expected_digit = $1
-      if file =~ /colon/
-        options[:might_be_colon] = true 
-        expected_digit = ":"
-      else
-        expected_digit = expected_digit.to_i
-      end
+      expected_digit = $1.to_i
       OCR.identify_digit(File.binread(file), options).should == expected_digit
     end
   end

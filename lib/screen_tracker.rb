@@ -65,6 +65,10 @@ class ScreenTracker
   def dump_bmp filename = 'dump.bmp'
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
+    dump_digits
+  end
+  
+  def dump_digits
     if @digits
       for type, bitmap in get_digits_as_bitmaps
         File.binwrite type.to_s + '.bmp', bitmap
@@ -108,7 +112,7 @@ class ScreenTracker
       if current != original
         if @digits
           out = {}
-          dump_bmp if $DEBUG            
+          dump_digits if $DEBUG            
           digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
           start = Time.now
           DIGIT_TYPES.each{|type|
