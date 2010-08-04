@@ -1,0 +1,19 @@
+name: VLC media
+x: -109
+y : -17
+width: 44
+height: 11
+digits:
+      :hours:
+      :minute_tens:
+      - -90
+      - 7
+      :minute_ones:
+      - -82
+      - 7
+      :second_tens:
+      - -72
+      - 7
+      :second_ones:
+      - -66
+      - 7      
