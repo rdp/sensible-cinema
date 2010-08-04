@@ -120,8 +120,10 @@ class ScreenTracker
               digit = identify_digit(digits[type])
               unless digit
                 if $DEBUG || $VERBOSE
-                  p 'unable to identify digit!'
-                  File.binwrite('bad_digit.bmp', digits[type])
+                  p 'unable to identify digit!' + type.to_s
+                  @a ||= 1
+                  @a += 1
+                  File.binwrite("bad_digit#{@a}.bmp", digits[type])
                 end
                 # early return
                 return

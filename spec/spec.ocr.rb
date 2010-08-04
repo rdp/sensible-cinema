@@ -8,14 +8,18 @@ describe OCR do
   end
   
   it "should be able to grab some digits" do
+    success = true
     for file in Dir['images/*[0-9].bmp']
-      p file
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       file =~ /(.)\.bmp/
       expected_digit = $1.to_i
-      OCR.identify_digit(File.binread(file), options).should == expected_digit
+      if OCR.identify_digit(File.binread(file), options) != expected_digit
+        p "fail:" + file
+        success = false
+      end
     end
+    fail unless success
   end
   
   it "should be able to grab a colon" do

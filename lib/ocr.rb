@@ -4,7 +4,7 @@ require 'open3'
 # helper for OCR'ing single digits that were screen captured
 module OCR
   
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ -l 130") # this is *way* too sensitive...
+  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ ")
   
   CACHE = {}
   
@@ -31,16 +31,20 @@ module OCR
     if should_invert # mogrify calls it negate...
       image.negate 
     end
-    input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -"
-    input.write image.to_blob
-    input.close
-    a = output.read
-    output.close
-    a.strip!
-    return nil unless a =~ /[0-9]/
-    a = a.to_i
-    CACHE[memory_bitmap] = a
-    a
+    for level in [130] # 100
+      input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -l #{level} -"
+      input.write image.to_blob
+      input.close
+      a = output.read
+      output.close
+      a.strip!
+      if a =~ /[0-9]/
+        a = a.to_i
+        CACHE[memory_bitmap] = a
+        return a
+      end
+    end
+    nil
   end
   
   def version
