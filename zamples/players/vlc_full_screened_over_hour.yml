@@ -1,0 +1,23 @@
+# name:  !ruby/regexp /VLC/
+name: !ruby/regexp /^vlc$/
+x: 522
+y: 47
+width: 35
+height: 14
+digits:
+      :hours:
+      - -89
+      - 8
+      :minute_tens:
+      - -78
+      - 7
+      :minute_ones:
+      - -71
+      - 7
+      :second_tens:
+      - -62
+      - 6
+      :second_ones:
+      - -55
+      - 6      
+

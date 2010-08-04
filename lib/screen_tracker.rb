@@ -50,7 +50,7 @@ class ScreenTracker
     raise 'poor width or wrong window' if @x2 > max_x  || @x2 == x
     raise 'poor height or wrong window' if @y2 > max_y || @y2 == y
     @digits = digits
-    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2 if $VERBOSE
+    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
   end
   
   def get_bmp
