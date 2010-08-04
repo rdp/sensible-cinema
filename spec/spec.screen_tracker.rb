@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/common'
+require File.expand_path(File.dirname(__FILE__) + '/common')
+require 'pathname'
 require_relative '../lib/overlayer'
 require_relative '../lib/screen_tracker'
-require 'pathname'
 
 describe ScreenTracker do
   
@@ -106,6 +106,7 @@ describe ScreenTracker do
       
     end
     
+    # lodo: this 7 looks rather redundant...
     it "should parse yaml appropro" do
       yaml = <<-YAML
       name: VLC
@@ -113,7 +114,20 @@ describe ScreenTracker do
       y: 34
       width: 100
       height: 20
-      
+      digits:
+        :hours:
+        :minute_tens:
+        - -90
+        - 7
+        :minute_ones:
+        - -82
+        - 7
+        :second_tens:
+        - -72
+        - 7
+        :second_ones:
+        - -66
+        - 7      
       YAML
       a = ScreenTracker.new_from_yaml(yaml,nil)
       a.get_relative_coords.should == [32,34,132,54]
@@ -131,9 +145,9 @@ describe ScreenTracker do
       end
       
       it "should be able to poll the screen to know when something changes" do
-        @a.wait_till_next_change {}
+        @a.wait_till_next_change
         # it updates every 1 second...
-        Benchmark.realtime { @a.wait_till_next_change {} }.should be > 0.2
+        Benchmark.realtime { @a.wait_till_next_change }.should be > 0.2
         @a.dump_bmp # for debugging...
       end
       
@@ -142,13 +156,13 @@ describe ScreenTracker do
         before do
           @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13, 
             # VLC window, 10's only..
-            {:hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_ones => [-72, 7], :second_tens => [-66, 7]} )  
+            {:hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_tens => [-72, 7], :second_ones => [-66, 7]} )  
             # VLC full screen: {:hours => nil, :minute_tens => [-69,7], :minute_ones => [-41, 7], :second_ones => [-46, 7], :second_tens => [-52, 7]} )  
         end
         
         it "should be able to snapshot digits" do
           @a.dump_bmp
-          Pathname.new('minute_tens.bmp').should exist          
+          Pathname.new('minute_tens.bmp').should exist
           Pathname.new('minute_tens.bmp').size.should be > 0
           Pathname.new('hours.bmp').should_not exist          
         end
@@ -156,8 +170,12 @@ describe ScreenTracker do
         it "should use OCR against the changes appropriately" do
           output = @a.wait_till_next_change
           output.should be_a(String)
-          output.should include "0:"
+          output.should include("00:0")# let's hope it gets run quickly...
+          p output
         end
+        
+        it "should be able to use YAML well" do
+          
         
         context "with an OCR that can change willy-nilly from hour to second" do
           it "should ocr slash...[in other]"

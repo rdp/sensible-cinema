@@ -9,7 +9,8 @@ class ScreenTracker
     settings = YAML.load yaml
     # heigth is shared...
     height = settings["height"]
-    return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"], callback)
+    digits = settings["digits"]
+    return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"], digits, callback)
   end
   
   # digits like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
@@ -99,11 +100,10 @@ class ScreenTracker
     loop {
       current = get_bmp
       if current != original
-        puts 'screen snapshot changed!' if $VERBOSE
-        
         
         if @digits
           out = {}
+          dump_bmp if $DEBUG            
           digits = get_digits_as_bitmaps
           DIGIT_TYPES.each{|type|
             if digits[type]
@@ -112,9 +112,13 @@ class ScreenTracker
               out[type] = 0
             end
           }
-          return "%d:%d%d:%d%d" % DIGIT_TYPES.map{|type| out[type]}
+          out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{|type| out[type]}
+          p 'got new screen time ' + out if $VERBOSE
+          return out
+        else
+          puts 'screen time change only detected...' if $VERBOSE
         end
-        return
+        return nil
       end
       sleep 0.02
     }
@@ -123,9 +127,8 @@ class ScreenTracker
   def process_forever_in_thread
     Thread.new {
       loop {
-        wait_till_next_change
-        print 'got a screen timestamp change' if $VERBOSE
-        @callback.timestamp_changed
+        out_time = wait_till_next_change
+        @callback.timestamp_changed out_time
       }
     }
   end

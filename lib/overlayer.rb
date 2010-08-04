@@ -4,7 +4,7 @@ require 'timeout'
 require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
-require 'pp'
+require 'pp' # pretty_inspect
 
 class Time
   def self.now_f
@@ -25,30 +25,30 @@ class OverLayer
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
-    Muter.mute! unless defined?($TEST)
+    Muter.mute! unless $DEBUG
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
-    Muter.unmute! unless defined?($TEST)
+    Muter.unmute! unless $DEBUG
   end
   
   def blank!
     @am_blanked = true
-    Blanker.blank_full_screen! unless $TEST
+    Blanker.blank_full_screen! unless $DEBUG
   end
   
   def unblank!
     @am_blanked = false
-    Blanker.unblank_full_screen! unless $TEST
+    Blanker.unblank_full_screen! unless $DEBUG
   end
   
   def reload_yaml!
     if @file_mtime != (new_time = File.stat(@filename).mtime)
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
-      # LTODO @all_sequences = @all_sequences.map{|k, v| v.sort!} 
-      puts '(re) loaded mute sequences as', pretty_sequences.pretty_inspect, "" unless $TEST
+      # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc.
+      puts '(re) loaded mute sequences as', pretty_sequences.pretty_inspect, ""
       pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
     else
@@ -119,16 +119,23 @@ class OverLayer
     out << ":"
     out << "%04.1f" % seconds
   end
-    
   
-  def timestamp_changed
-    # round cur_time to
+  # make it optional...for now muhaha [lodo take out if never useful]
+  def timestamp_changed to_this_exact_string = nil
+    if to_this_exact_string
+      set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string)
+    else
+      round_current_time_to_nearest_second
+    end
+  end
+  
+  def round_current_time_to_nearest_second
     current_time = cur_time
     better_time = current_time.round
     set_seconds better_time
     puts 'screen snapshot diff with time we thought it was was:' + (current_time - better_time).to_s if $VERBOSE
   end
-  
+      
   def self.translate_string_to_seconds s
     # might actually already be a float...
     if s.is_a? Float
@@ -161,7 +168,7 @@ class OverLayer
         state = " next action at #{translate_time_to_human_readable next_sig}s (#{mute ? "muted" : '' } #{blank ? "blanked" : '' })"
       end
     end
-    time + state + " (HhMmSsTtq): "
+    time + state + " (HhMmSsTtvq): "
   end
 
   def keyboard_input char
@@ -174,8 +181,15 @@ class OverLayer
       when 'S' then -1
       when 't' then 0.1
       when 'T' then -0.1
+      when 'v' then
+        $VERBOSE = !$VERBOSE
+        return
+      when 'd'
+        $DEBUG = !$DEBUG
+        return
       when ' ' then
-        puts cur_time; return
+        puts cur_time
+        return
       else nil
     end
     if delta
@@ -191,7 +205,8 @@ class OverLayer
     seconds = [seconds, 0].max
     @mutex.synchronize {
       @start_time = Time.now_f - seconds
-      @cv.signal # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but good enough for having two contact each other...
+      # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but good enough for having two contact each other...
+      @cv.signal
     }
   end
 
@@ -255,6 +270,10 @@ class OverLayer
   end
   
   def continue_until_past_all continue_forever
+    if RUBY_VERSION < '1.9.2'
+      raise 'need 1.9.2+ for MRI' unless RUBY_PLATFORM =~ /java/
+    end
+
     @mutex.synchronize {
       loop {
         muted, blanked, next_point = get_current_state

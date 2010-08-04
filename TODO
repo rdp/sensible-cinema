@@ -1,38 +1,33 @@
-backlog prioritized:
+== medium ==
 
-medium:
+make work with VLC and hulu with hours...
 
-  OCR initial functionality only (maybe). Needs it for easy playback, too, really it does.
+== low but actually want to do eventually (me) low prio: just do these...==
 
-== low but actually want to do eventually (me) low prio: ==
+  release ruby-y-y why not, it's interesting
+    release it "Linux compat anyone?"
 
-  with VLC it seemed to barely pick up the wrong picture--it was too low and to the right [?]
-  PISH
-  release ruby-y
-  add my own stuff to imdb?
+  just local files for my own edits...
 
-  GUI: paste edit list and choose player
+== raw backlog ... based on user request.. ==
 
-  netflix
+netflix
+  
+add my own stuff to imdb...
 
-  make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
+imdb parser
 
-== backlog ... based on user request.. ==
+make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
+
+GUI: paste edit list, choose player
+
+PISH
 
 can overlay with a "fuzzer-outer" for specific coordinates somehow or other...
 
-  mutes:
-    # one hour one minute and a half second to one hour one minute and 1.5s
-    "poor quality song":
-      start : "01:33:25.0"
-      end : "01:33:40.0"
-      reason : "innuendo"
-      level : mild
-
-
 advertise like to lay men
 
-with VLC non full screen, it does the annoying mouse thing.
+with VLC non full screen, it does the annoying mouse thing needlessly.
 
 hire out scene lists
 
@@ -42,13 +37,11 @@ bleeper name
 
 yank old gem versions (?) :)
 
-overlay with wav file (would work for VLC, could "learn to mute" for the others...)
+overlay with wav file (would work for VLC, could also "click to mute" for the others...)
 
-fix all pending tests...
+fix pending tests...
 
-can blank out certain coords to keep things pretty...
-
-inline editor? (redcar)
+can black out certain coords to keep things pretty...
 
 allow x2,y2 for player descriptions...
 
@@ -56,8 +49,6 @@ Linux port (call that good enough for usability on TV's...) between that and a V
 
 a web runnable? Why not?
   click here to watch your favorite film edited!
-
-release it "Linux compat anyone?"
 
 blank out with a user specifiable color (?)
 
@@ -88,7 +79,7 @@ OCR
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
 
-user-assignable "confidence" (how much time to 'wrap' the mutes, etc.)
+user-assignable "confidence" (how much time to 'wrap' surround the mutes, etc. to accomodate for slow computers/laggy internet/different players/poor input)
 
 auto-assignment of EDL's to media:
   DVD's
@@ -104,6 +95,7 @@ Programmatically do all of the above, by driving a player with its real API.
   auto start on DVD insertion (?)
     and show appropriate scene-lists available based on title/md5 of something?
     
+could have an easy 
     
 never do unless paid:
 

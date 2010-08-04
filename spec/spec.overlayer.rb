@@ -1,9 +1,8 @@
-require File.dirname(__FILE__) + '/common'
+require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/overlayer'
 
 # tell it not to actually mute during testing...
-$TEST = true
-
+$DEBUG = true
 
 def start_good_blank
   assert !@o.blank?
@@ -214,7 +213,7 @@ mutes:
     start_good
   end
   
-  it "should be able to tell the player to sync to the closest second when the screen changes" do
+  it "should be able to tell the player to sync to the closest second when the screen only changes" do
     @o.start_thread
     start = Time.now
     while((Time.now - start) < 3) do
@@ -229,8 +228,14 @@ mutes:
     @o.timestamp_changed
     @o.cur_time.should be >= 2
   end
+  
+  it "should be able to handle it when the sync message includes a new timestamp" do
+    @o.start_thread
+    @o.timestamp_changed "1:00:01"
+    @o.cur_time.should be > 60*60
+  end
     
-  it "should have pure ruby for muting" do
+  it "should have pure ruby method for muting" do
     assert defined?(Muter)
     assert Muter.respond_to? :mute!
   end
@@ -317,16 +322,6 @@ mutes:
   it "should accept human readable input" do
     o = OverLayer.new 'temp.yml', "01:01.5"
     o.cur_time.should be == 61.5
-    
-  end
-  
-  context "lower prio" do
-    
-    it "could calculate the average delta of real seconds to seen on the player, and start to accomodate somehow, to stay lock on target"
-
-    it "should allow for a static 'surround each' buffer"
-
-    it 'should have a more descriptive yaml syntax'
     
   end
   
