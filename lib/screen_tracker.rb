@@ -96,6 +96,8 @@ class ScreenTracker
   
   # split out for unit testing purposes
   def identify_digit bitmap
+    require 'ruby-debug'
+   # debugger
     OCR.identify_digit(bitmap, @digits)
   end
   
@@ -111,8 +113,18 @@ class ScreenTracker
           start = Time.now
           DIGIT_TYPES.each{|type|
             if digits[type]
-              out[type] = identify_digit(digits[type])
+              digit = identify_digit(digits[type])
+              unless digit
+                if $DEBUG || $VERBOSE
+                  p 'unable to identify digit!'
+                  File.binwrite('bad_digit.bmp', digits[type])
+                end
+                # early return
+                return
+              end
+              out[type] = digit
             else
+              # there isn't one on screen, so probably zero...
               out[type] = 0
             end
           }
@@ -124,7 +136,7 @@ class ScreenTracker
         else
           puts 'screen time change only detected...' if $VERBOSE
         end
-        return nil
+        return
       end
       sleep 0.02
     }

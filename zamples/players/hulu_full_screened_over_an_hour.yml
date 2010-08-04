@@ -9,15 +9,15 @@ digits:
       - 7
       :minute_tens:
       - 24
-      - 7
+      - 6
       :minute_ones:
-      - 31
+      - 30
       - 7
       :second_tens:
       - 40
       - 6
       :second_ones:
-      - 46
+      - 45
       - 6
       :should_invert: true
     

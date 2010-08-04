@@ -27,4 +27,8 @@ describe OCR do
     OCR.identify_digit(File.binread("images/colon.bmp"), :might_be_colon => true).should == ":"
   end
   
+  it "should return nil if it can't identify a digit" do
+    OCR.identify_digit(File.binread("images/black.bmp")).should be_nil
+  end
+  
 end

@@ -11,7 +11,6 @@ module OCR
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
     if CACHE[memory_bitmap]
-      p 'ocr cache hit' if $DEBUG
       return CACHE[memory_bitmap]
     else
       p 'ocr cache miss' if $DEBUG
@@ -30,7 +29,6 @@ module OCR
     image = MiniMagick::Image.from_blob(memory_bitmap)
     image.format(:pnm) # expensive, requires convert.exe in path...
     if should_invert # mogrify calls it negate...
-      p 'inverting' if $DEBUG
       image.negate 
     end
     input, output, error, thread_if_on_19 = Open3.popen3 GOCR + " -"
@@ -39,6 +37,7 @@ module OCR
     a = output.read
     output.close
     a.strip!
+    return nil unless a =~ /[0-9]/
     a = a.to_i
     CACHE[memory_bitmap] = a
     a
