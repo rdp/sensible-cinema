@@ -45,7 +45,6 @@ else
   puts <<-END
 
   syntax: mute_lists.yml [player_description.yml]
-    
   END
     
   for file in Dir[__dir__ + '../zamples/mute*/*']
