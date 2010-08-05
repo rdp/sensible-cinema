@@ -1,7 +1,10 @@
-This projects aims to allow users to "skip scenes" on media playback.  It aims to be be an EDL (http://en.wikipedia.org/wiki/Edit_decision_list) player for any arbitrary player.
+This projects aims to allow users to "skip scenes" on media playback.
 
-(VLC and online players, for example hulu/netflix).
+It aims to be be an EDL (http://en.wikipedia.org/wiki/Edit_decision_list) player for any arbitrary windows-based software player, including
+online ones.  (VLC and online players, for example hulu/netflix).
 
 Trouble Shooting:
 
 If you have poor performance, possibly set the process priority to low on the DVD player program.  Also report back.
+
+See the LICENSE for licensing, usage terms (gplv3).
