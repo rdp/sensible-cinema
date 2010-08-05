@@ -1,10 +1,11 @@
 All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you need this changed.
 
-May contains 3rd party libraries under their own (open source) licenses.
+May contain some 3rd party libraries under their own (separate, open source) licenses.
 
-Note that this software should be legal in the EU, as it is only software and therefore theoretically not subject to patents (see "What about patent licenses?" in [2]).
+Note that this software should be legal at least in the EU, 
+as it is only software and therefore theoretically not subject to patents (see "What about patent licenses?" in [2]).
 
-If it's not legal in your country, then don't use it!
+If it's not legal in your country, don't use it!
 
 [1] http://www.gnu.org/licenses/gpl.html, also gplv3 file.
 [2] http://www.videolan.org/support/faq.html

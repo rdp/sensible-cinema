@@ -2,11 +2,17 @@ FAQ
 
 Q. How can I easily watch this on my TV, not on my computer, silly!
 
-A. Currently you'll either need to attach your computer to your TV (buy some long cables, or a new graphics card
-   or an adapter cable and some long cords, or get a laptop somehow (ex: buy a used older one) and plug that into your TV.
+A. Currently you'll either need to attach your computer to your TV (buy some long cables, or a new graphics card, etc.
+   or get a laptop you can use as an HTPC (ex: buy a used older one).
 
   There is also some work working toward getting the stuff playing on your computer to stream live to your wii/ps3/xbox:
-    http://betterlogic.com/roger/?p=3023 has the beginnings of said work, though it doesn't work yet, as I have no demo hardware to 
-    test it out with.
+    E-mail me if you're interested in trying it out.
     
+Trouble Shooting:
+
+If you have poor performance, please report back via github message.
+
+
+== History ==
+
 A history of thoughts leading up to this can be found here: http://betterlogic.com/roger/?p=2618
