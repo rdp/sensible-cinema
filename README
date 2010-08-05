@@ -1,3 +1,5 @@
+It's a little rough UI-wise as yet, but here's the first release, in case anybody out there is interested and wants to help out.
+
 This is a program that allows you to "mute out" or "bleep out" arbitrary scenes during movie playback.
 It aims to allow this on any arbitrary player, including online movie players.
 
@@ -20,7 +22,7 @@ It is presumed that you'll minimize the console window and enjoy the movie.
 
 Here's an example would be watching the "cars" DVD using VLC full-screened:
 
-C:\> jruby -S sensible-cinema disney_cars.yml D:/installs/jruby-1.5.1/lib/ruby/gems/1.8/gems/sensible-cinema-0.6.0/zamples/players/vlc_full_screened_over_hour.yml
+C:\> jruby -S sensible-cinema disney_cars.yml D:/installs/jruby-1.5.1/lib/ruby/gems/1.8/gems/sensible-cinema-0.6.0/zamples/players/vlc_full_screened_length_over_an_hour.yml
 
 (Run --help to see available player list)
 
