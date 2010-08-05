@@ -27,10 +27,12 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
   if ARGV[1] && File.exist?(ARGV[1])
     # this one doesn't use file updates, so pass it the string
     screen_tracker = ScreenTracker.new_from_yaml File.binread(ARGV[1]), overlay
+    
     screen_tracker.dump_bmp if $VERBOSE
+    # only screen dump? exit early
     exit 1 unless overlay
-    screen_tracker.process_forever_in_thread
     Mouse.jitter_forever_in_own_thread
+    screen_tracker.process_forever_in_thread
   else
     puts 'warning--not using any screen tracking...'
   end
@@ -42,8 +44,8 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
 else
   puts <<-END
 
-  syntax: mute_lists.yml [player_description.yml] [-v (verbose [chatty] mode)] [-t (test mode)]
-    See the #{File.expand_path(File.dirname(__FILE__), "..")}/zamples for more info on creating files.
+  syntax: mute_lists.yml [player_description.yml]
+    
   END
     
   for file in Dir[__dir__ + '../zamples/mute*/*']
