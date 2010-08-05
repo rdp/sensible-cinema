@@ -1,6 +1,0 @@
-# name:  !ruby/regexp /VLC/
-name: !ruby/regexp /^vlc$/
-x: 525
-y: 47
-width: 35
-height: 14

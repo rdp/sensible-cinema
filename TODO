@@ -5,9 +5,11 @@
   release ruby-y-y why not, it's interesting
     "Linux compat anyone?"
 
-  just local files for my own needs...
-
 == raw backlog ... based on user request.. ==
+
+remember:  just local files for my own needs...
+
+bundle less imagemagick binaries
 
 finish happy feet scene list
 
@@ -21,27 +23,19 @@ imdb parser
 
 make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
 
-GUI: paste edit list, choose player
-
 PISH
 
 can overlay with a "fuzzer-outer" for specific coordinates somehow or other...
 
 advertise like to lay men
 
-with VLC non full screen, it does the annoying mouse thing needlessly.
-
-hire out scene lists
+with VLC non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
 
 youtube non full screened...hmmm
 
-bleeper name
-
-yank old gem versions (?) :)
-
 overlay with wav file (would work for VLC, could also "click to mute" for the others...)
 
-fix pending tests...
+fix any pending tests...
 
 can black out certain coords to keep things pretty...
 
