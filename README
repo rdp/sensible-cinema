@@ -7,21 +7,19 @@ tracks the player as it is playing, then mutes or blanks out the system screen a
 Currently it works for hulu, VLC on windows.  It also isn't hard to add new players, and probably isn't super hard to add
 more operating systems.
 
-
 == How to use ==
 
 Start playing your movie, then
 
-C:\>jruby -S sensible-cinema mute_list.yml player_description.yml
+C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
 
 run it with --help to see available players:
 
-C:\>jruby -S sensible-cinema --help
+C:\> jruby -S sensible-cinema --help
 
 an example would be
 
-C:\>jruby -S sensible-cinema disney_cars.yml hulu_full_screened_over_an_hour.yml
-
+C:\> jruby -S sensible-cinema disney_cars.yml 
 
 You can find a list of example files at http://github.com/rdp/sensible-cinema/tree/master/zamples
 
@@ -30,8 +28,6 @@ You can find a list of example files at http://github.com/rdp/sensible-cinema/tr
 $ jruby -S gem install sensible-cinema 
 
 (jruby only for now [since it allows for proper thread concurrency], get it from http://jruby.org)
-
-
 
 
 See the LICENSE for licensing, usage terms (gplv3).

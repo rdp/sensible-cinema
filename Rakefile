@@ -18,17 +18,18 @@ end
 
 desc 'run all specs'
 task 'spec' do
-  success = true
-  for file in Dir['spec/*spec*.rb'] do
-    p file
-    if !system('cd spec & ' + OS.ruby_bin + " ../" + file)
-      success = false
+  failed = []
+  Dir.chdir 'spec' do
+    for file in Dir['*spec*.rb'] do
+      if !system(OS.ruby_bin + " " + file)
+        failed << file
+      end
     end
   end
-  if success
+  if failed.length == 0
     p 'all specs passed!' 
   else
-    p 'at least one spec failed!'
+    p 'at least one spec failed!', failed
   end
     
 end
