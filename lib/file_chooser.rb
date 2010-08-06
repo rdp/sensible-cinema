@@ -6,10 +6,9 @@ module FileChooser
     fc.setCurrentDirectory(java.io.File.new(use_this_dir))
     success = fc.show_open_dialog(nil)
     if success == Java::javax::swing::JFileChooser::APPROVE_OPTION
-      p 'success'
-      return fc.get_selected_file.get_name
+      File.expand_path(use_this_dir + '/' + fc.get_selected_file.get_name)
     else
-     p 'cancel'
+     nil
     end
   end
   extend self
