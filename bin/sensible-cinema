@@ -39,7 +39,7 @@ else
     sleep 4
   else
     if !File.exist? scene_list.to_s
-      scene_list = FileChooser.choose_file("Please select your scene list")
+      scene_list = FileChooser.choose_file("Please select your scene list", "../zamples/scene_lists")
     end
     overlay = OverLayer.new(scene_list)  
     overlay.start_thread true
