@@ -40,7 +40,9 @@ C:\> jruby -S gem install sensible-cinema
   It could theoretically be ported to MRI 1.9.x, if anybody else wanted to.
   It's also currently windows only, though it shouldn't be too much work to support other OS's, and I'd be happy to do it myself if interest
   developed.  I'm somewhat targeting Netflix' "play now", hence focusing thus far on windows.
-  
+
+You can test that it's working by selecting the "example scene list" and choosing the hulu player.  It will do a few "demo" mutes and blank outs.
+
 == FAQ ==
 
 Q. Can I watch these movies on my TV, not on my computer?
