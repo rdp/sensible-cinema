@@ -21,31 +21,25 @@ Start playing your movie in its player, then startup sensible-cinema thus:
 
 It then prompts you for a scene list, then for a player description.
 
-Alternately you could specify them on the command-line, like
+Alternatively you could specify the files on the command-line, like
 
      C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
 
-It runs sensible-cinema's tracker within your console window, using screen tracking of the player to monitor the playback position.
-It is presumed that you'll minimize the console window and proceed to enjoy the movie :)
-
-Run --help to see the available player lists, like
-
-     C:\> jruby -S sensible-cinema --help
-
-You can also find a list of available files at http://github.com/rdp/sensible-cinema/tree/master/zamples
+Sensible-cinema's tracker will now run within your console window, using screen tracking of the player to monitor the playback position.
+It is presumed that you'll minimize the console window and proceed to enjoy the movie. :)
 
 == How to install ==
 
 First install jruby (in case you haven't already), from http://www.jruby.org
 
-Now install the gem:
+Next install the gem:
 
 C:\> jruby -S gem install sensible-cinema 
 
   it's jruby only currently (since jruby allows for proper thread concurrency, has easy GUI, and feels like the only sane ruby for windows).
   It could theoretically be ported to MRI 1.9.x, if anybody else wanted to.
   It's also currently windows only, though it shouldn't be too much work to support other OS's, and I'd be happy to do it myself if interest
-  developed.  I'm somewhat targeting Netflix "play now", hence the focus being on windows thus far.
+  developed.  I'm somewhat targeting Netflix' "play now", hence focusing thus far on windows.
   
 == FAQ ==
 
@@ -60,7 +54,7 @@ A. Not yet. Currently you'll either need to attach your computer to your TV (buy
 
 == Thanks ==
 
-Thanks to Jarmo for the win32-screenshot gem, and mini_magick gem authors, jruby guys, etc.  Made programming this pleasurable.
+Thanks to Jarmo for the win32-screenshot gem, and mini_magick gem authors, jruby guys, etc.  Made programming this actually somewhat easy.
 
 == License ==
 
@@ -68,5 +62,6 @@ See the LICENSE for licensing, usage terms (gplv3).
 
 == Feedback ==
 
+Feedback welcome.
 http://github.com/rdp/sensible-cinema
-http://github.com/rdp
+http://github.com/rdp to message me
