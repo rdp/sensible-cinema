@@ -1,50 +1,58 @@
 It's a little rough UI-wise as yet, but here's the first release, in case anybody out there is interested and wants to help out.
 
-This is a program that allows you to "mute out" or "bleep out" arbitrary scenes during movie playback.
-It aims to allow this on any arbitrary player, including online movie players.
+Linux...
 
-It takes as input a list of known "skip-worthy" scenes (profanity, et al), 
-tracks the player as it is playing, then mutes or blanks out the system screen appropriately, during those scenes.
+This is a program that aims to allow you to do arbitrary scene selection (i.e. "mute out" or "bleep out" arbitrary scenes) during movie playback.
+It does this by leveraging existing players and controlling the system-wide volume, etc.
 
-Currently it works for hulu and VLC on windows.  It also isn't hard to add new player specs (thanks Ruby!), 
+Currently it takes as input a list of known "skip-worthy" scenes (profanity, violence, whatever), 
+and tracks the player as it is playing, then mutes or blanks out the system screen appropriately, during those scenes.
+
+Currently it works for hulu and VLC on windows.  It also isn't hard to add new players (thanks Ruby and yaml!), 
 and probably wouldn't be super hard to add more operating systems.
 
-See also http://en.wikipedia.org/wiki/Edit_decision_list
+Related: http://en.wikipedia.org/wiki/Edit_decision_list
 
 == How to use ==
 
 Start playing your movie in its player, then startup sensible-cinema thus:
 
-C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
+     C:\> jruby -S sensible-cinema
 
-It then runs sensible-cinema within your console window, using screen tracking to monitor the playback position.
-It is presumed that you'll minimize the console window and enjoy the movie.
+It then prompts you for a scene list, then for a player description.
 
-Here's an example would be watching the "cars" DVD using VLC full-screened:
+Alternately you could specify them on the command-line, like
 
-C:\> jruby -S sensible-cinema disney_cars.yml D:/installs/jruby-1.5.1/lib/ruby/gems/1.8/gems/sensible-cinema-0.6.0/zamples/players/vlc_full_screened_length_over_an_hour.yml
+     C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
 
-(Run --help to see available player list)
+It runs sensible-cinema's tracker within your console window, using screen tracking of the player to monitor the playback position.
+It is presumed that you'll minimize the console window and proceed to enjoy the movie :)
 
-C:\> jruby -S sensible-cinema --help
+Run --help to see the available player lists, like
 
-You can also find a list of useful files at http://github.com/rdp/sensible-cinema/tree/master/zamples
+     C:\> jruby -S sensible-cinema --help
+
+You can also find a list of available files at http://github.com/rdp/sensible-cinema/tree/master/zamples
 
 == How to install ==
 
-$ jruby -S gem install sensible-cinema 
+First install jruby (in case you haven't already), from http://www.jruby.org
 
-  it's jruby only currently (since jruby allows for proper thread concurrency, and feels like the only sane ruby for windows).
-  Get it first from http://jruby.org.  It could theoretically be ported to MRI 1.9.x, if anybody wants to.
-  It's also currently windows only, though it shouldn't be too much work to support other OS's, and I'd be happy to if interest
-  developed.  I'm somewhat targeting Netflix online streaming, hence the focus being on windows thus far.
+Now install the gem:
+
+C:\> jruby -S gem install sensible-cinema 
+
+  it's jruby only currently (since jruby allows for proper thread concurrency, has easy GUI, and feels like the only sane ruby for windows).
+  It could theoretically be ported to MRI 1.9.x, if anybody else wanted to.
+  It's also currently windows only, though it shouldn't be too much work to support other OS's, and I'd be happy to do it myself if interest
+  developed.  I'm somewhat targeting Netflix "play now", hence the focus being on windows thus far.
   
 == FAQ ==
 
 Q. Can I watch these movies on my TV, not on my computer?
 
 A. Not yet. Currently you'll either need to attach your computer to your TV (buy some long cables, or a new graphics card, etc.)
-   or get a laptop you can then use as an HTPC (ex: buy a used older one), and/or request I do a linux port if you laptop doesn't come
+   or get a laptop that you can use as a dedicated HTPC (ex: buy a used older one), and/or request I do a linux port if you laptop doesn't come
    with windows pre-installed.
 
    There is also some work developing toward getting the stuff to stream live to your wii/ps3/xbox from windows.
@@ -52,12 +60,13 @@ A. Not yet. Currently you'll either need to attach your computer to your TV (buy
 
 == Thanks ==
 
-Thanks to Jarmo for the win32-screenshot gem, and mini_magick gem authors, et al.
+Thanks to Jarmo for the win32-screenshot gem, and mini_magick gem authors, jruby guys, etc.  Made programming this pleasurable.
 
 == License ==
 
 See the LICENSE for licensing, usage terms (gplv3).
 
 == Feedback ==
-  http://github.com/rdp/sensible-cinema
-  http://github.com/rdp
+
+http://github.com/rdp/sensible-cinema
+http://github.com/rdp
