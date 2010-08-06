@@ -3,7 +3,7 @@ module FileChooser
   def choose_file(title, use_this_dir)
     fc = Java::javax::swing::JFileChooser.new("JRuby panel")
     fc.set_dialog_title(title)
-    #fc.setCurrentDirectory(
+    fc.setCurrentDirectory(java.io.File.new(use_this_dir))
     success = fc.show_open_dialog(nil)
     if success == Java::javax::swing::JFileChooser::APPROVE_OPTION
       p 'success'
@@ -17,6 +17,6 @@ module FileChooser
 end
 
 if __FILE__ == $0
-  p FileChooser.choose_file("test1")
+  p FileChooser.choose_file("test1", '..')
 
 end
