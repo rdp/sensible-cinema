@@ -1,12 +1,12 @@
 module FileChooser
 
-  def choose_file(title, use_this_dir)
+  def choose_file(title, use_this_dir = nil)
     fc = Java::javax::swing::JFileChooser.new("JRuby panel")
     fc.set_dialog_title(title)
-    fc.setCurrentDirectory(java.io.File.new(use_this_dir))
+    fc.setCurrentDirectory(java.io.File.new(use_this_dir)) if use_this_dir
     success = fc.show_open_dialog(nil)
     if success == Java::javax::swing::JFileChooser::APPROVE_OPTION
-      File.expand_path(use_this_dir + '/' + fc.get_selected_file.get_name)
+      fc.get_selected_file.get_absolute_path
     else
      nil
     end

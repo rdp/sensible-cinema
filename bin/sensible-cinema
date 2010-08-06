@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'sane'
 Thread.abort_on_exception=true
-for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse']
+for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser']
   require_relative '../lib/' + file
 end
 
@@ -10,21 +10,45 @@ $TEST = 1 if ARGV.delete('-t')
 
 $stderr.puts 'warning: windows only for crucial parts currently' unless  ENV['OS'] == 'Windows_NT'
 
-first = ARGV[0]
+if ARGV.detect{|arg| arg == '-h' || arg == '--help'}
+  puts <<-END
 
-if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
+  syntax: mute_lists.yml [player_description.yml]
+  END
+    
+  for file in Dir[__dir__ + '../zamples/mute*/*']
+     puts "\n", "Example file:", file + "\n\n", File.read(file)
+  end
+  
+  puts '', 'Available files:'
+  for file in Dir[__dir__ + '../zamples/*/*']
+    puts File.expand_path(file) unless File.directory?(file)
+  end
+  exit 1
+  
+else
+ 
+  # do something...
+  # allow for command line options...
+  scene_list = ARGV.shift
 
-  if File.exist? first
-    overlay = OverLayer.new(first, ARGV[2])  
-    overlay.start_thread true
-  else
+  if scene_list == 'test'
     puts 'warning--only doing screen dump in 4s...'
     overlay = nil
     $VERBOSE = 1 # that's what they wanted...
     sleep 4
+  else
+    if !File.exist? scene_list.to_s
+      scene_list = FileChooser.choose_file("Please select your scene list")
+    end
+    overlay = OverLayer.new(scene_list)  
+    overlay.start_thread true
   end
   
-  if ARGV[1] && File.exist?(ARGV[1])
+  player_description = ARGV.shift
+  player_description = FileChooser.choose_file("Please select your Player description (optional)") unless File.exist?(player_description)
+  
+  if File.exist? player_description
     # this one doesn't use file updates, so pass it the string
     screen_tracker = ScreenTracker.new_from_yaml File.binread(ARGV[1]), overlay
     
@@ -41,19 +65,4 @@ if ARGV.length >= 1 && (File.exist?(first) || first == 'test')
   key_input.start_thread # status thread
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
 
-else
-  puts <<-END
-
-  syntax: mute_lists.yml [player_description.yml]
-  END
-    
-  for file in Dir[__dir__ + '../zamples/mute*/*']
-     puts "\n", "Example file:", file + "\n\n", File.read(file)
-  end
-  
-  puts '', 'Available files:'
-  for file in Dir[__dir__ + '../zamples/*/*']
-    puts File.expand_path(file) unless File.directory?(file)
-  end
-  exit 1
-end 
+end
