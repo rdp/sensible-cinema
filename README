@@ -28,6 +28,9 @@ Alternatively you could specify the files on the command-line, like
 Sensible-cinema's tracker will now run within your console window, using screen tracking of the player to monitor the playback position.
 It is presumed that you'll minimize the console window and proceed to enjoy the movie. :)
 
+You'll know that it's working if, when you change the time of your player (ex: dragging it to a new position), the screen output
+in sensible-cinema's console changes to match.
+
 == How to install ==
 
 First install jruby (in case you haven't already), from http://www.jruby.org
