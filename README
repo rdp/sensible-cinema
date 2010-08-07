@@ -48,9 +48,9 @@ choosing the hulu player.
 
 It will proceed do a few "demo" mutes and blank outs.
 
-== How to use ==
+== How to Program ==
 
-To use it, first watch an DVD/online movie you'd like to create a scene-list for.  
+To program sensible-cinema to play what you'd like, first "preview" the on-computer movie you'd like to create a scene-list for.  
 As questionable scenes occur, jot down their start and end times somewhere.
 Then create an Edit Decision List (EDL) file that looks like this:
 
@@ -95,7 +95,7 @@ A. Not yet. Well maybe.  Currently you'll either need to attach your computer to
 Q. What movies are available to watch online?
 
 A. Not many are available free (hulu, youtube have a few), but Netflix has quite a few.  Plus you can watch your DVD's
-   on your computer monitor.
+   on your computer monitor, or rent or borrow them.
 
 Q. Why does my mouse bounce up and down while this thing is playing?
 
