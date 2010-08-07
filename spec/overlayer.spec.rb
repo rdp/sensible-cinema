@@ -355,7 +355,7 @@ describe OverLayer do
 
     it "should not fail with verbose on, after it's past next states" do
       at(500_000) do
-        @o.status.should == "Current time: 138:53:20.0 no more actions after this point...(r,d,v,q to quit):"
+        @o.status.should == "Current time: 138:53:20.0 no more actions after this point...(r,d,v,q to quit): "
       end
     end
 
