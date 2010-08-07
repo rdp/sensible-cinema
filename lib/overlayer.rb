@@ -174,13 +174,14 @@ class OverLayer
       if next_sig == :done
         state = " no more actions after this point..."
       else
-        state = " next action at #{translate_time_to_human_readable next_sig}s "
+        state = " next action will be at #{translate_time_to_human_readable next_sig}s "
       end
-      
-      state += "(" + [muted? ? "muted" : '', blank? ? "blanked" : '' ].join(' ') + ")"
+      if blank? or muted?
+        state += "(" + [muted? ? "muted" : nil, blank? ? "blanked" : nil ].compact.join(' ') + ") "
+      end
     end
     check_reload_yaml
-    time + state + " (r,d,v or q to quit): "
+    time + state + "(r,d,v,q to quit): "
   end
 
   def keyboard_input char

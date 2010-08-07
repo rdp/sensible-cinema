@@ -14,10 +14,8 @@ module OCR
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
     if CACHE[memory_bitmap]
-      print 'h' if $DEBUG
       return CACHE[memory_bitmap]
     else
-      p 'ocr cache miss' if $DEBUG
     end
     might_be_colon = options[:might_be_colon]
     should_invert = options[:should_invert]
