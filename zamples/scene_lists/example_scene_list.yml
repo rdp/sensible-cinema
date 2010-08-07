@@ -2,7 +2,7 @@ title: Forever Strong
 source: Hulu
 version: 0.4.8
 mutes:
-  2.0 : 3.0
+  2.0 : 3.0 # comments can go after the # on each line
   4.0 : 5.0
   9.0 : 13.0
   44.0 : 50.0 # mute for 6 seconds starting at second 44

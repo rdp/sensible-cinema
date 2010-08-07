@@ -56,6 +56,7 @@ describe OverLayer do
   end
   
   it 'should unmute after the ending scene' do
+    $VERBOSE=1
     File.write 'temp.yml', YAML.dump({:mutes => {0.5 => 1.0}})
     @o = OverLayer.new 'temp.yml'
     @o.start_thread true
@@ -77,7 +78,10 @@ describe OverLayer do
     sleep 2.5
     start_bad # 1s
     sleep 2 # => 5.5
-    start_bad    
+    start_bad    # unfortunately this doesn't actually reproduce the bug,
+    # which is that it actually needs to barely "over sleep" or there is the race condition of
+    # wake up oh nothing to do *just* yet
+    # but by the time you check again, you just passed it, so you wait till the next one in an errant state
   end
 
   it 'should be able to mute teeny sequences' do

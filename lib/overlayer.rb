@@ -172,7 +172,8 @@ class OverLayer
       else
         state = " next action at #{translate_time_to_human_readable next_sig}s "
       end
-      state += "(#{mute ? "muted" : '' } #{blank ? "blanked" : '' })"
+      
+      state += "(" + [muted? ? "muted" : '', blank? ? "blanked" : '' ].join(' ') + ")"
     end
     reload_yaml!
     time + state + " (HhMmSsTtdvq): "
@@ -300,6 +301,7 @@ class OverLayer
           if continue_forever
             time_till_next_mute_starts = 1_000_000
           else
+            #set_states! # for the unit tests' sake
             return
           end
         else
@@ -310,49 +312,40 @@ class OverLayer
         
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         pps 'just woke up from pre-mute wait at', Time.now_f if $VERBOSE
-        something_has_possibly_changed
+        set_states!
       }
     }
   end  
+  
+  def display_change change
+    puts ''
+    puts change + ' at ' + cur_english_time if $VERBOSE unless $DEBUG # too chatty for unit tests
+  end
   
   def set_states!
     should_be_muted, should_be_blank, next_point = get_current_state
     
     if should_be_muted && !muted?
       mute!
-      puts '','muted at ' + cur_english_time unless $DEBUG # too chatty
+      puts ''
+      display_change 'muted'
     end
     
     if !should_be_muted && muted?
-      unmute!
-      puts '','unmuted at ' + cur_english_time unless $DEBUG
+      unmute!      
+      display_change 'unmuted'
     end
     
     if should_be_blank && !blank?
       blank!
-      puts '','blanked at ' + cur_english_time
+      display_change 'blanked'
     end
 
     if !should_be_blank && blank?
       unblank!
-      puts '','unblanked at ' + cur_english_time
+      display_change 'unblanked'
     end
     
-  end
-  
-  def something_has_possibly_changed
-    current = cur_time
-    muted, blanked, next_point = get_current_state
-    endy = next_point
-    return if next_point == :done
-    set_states!
-    duration_left = endy - current
-    pps 'just muted it at', Time.now_f, current, 'for interval:', 'which is', duration_left, 'more s' if $VERBOSE
-    if duration_left > 0
-      @cv.wait(@mutex, duration_left) if duration_left > 0
-    end
-    pps 'done sleeping', duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
-    set_states!
   end
   
 end
