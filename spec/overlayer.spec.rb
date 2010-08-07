@@ -157,7 +157,7 @@ describe OverLayer do
     @o.start_thread
     start_good
     write_yaml <<-YAML
-:mutes:
+    :mutes:
       "0:00.0001" : "0:01.5"
     YAML
     @o.status # cause it to refresh from the file
@@ -223,8 +223,8 @@ describe OverLayer do
 
   it "should accept fixnum 56 => 57 style input" do
     yaml = <<-YAML
-:mutes:
-  "0:02" : "0:03"
+    :mutes:
+      "0:02" : "0:03"
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].first.should == [2.0, 3.0]
