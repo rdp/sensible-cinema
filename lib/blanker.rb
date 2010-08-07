@@ -9,7 +9,7 @@ class Blanker
   
     def self.blank_full_screen!
         # a new screen each time as other jruby doesn't terminate as gracefully as we would like...
-        frame = JFrame.new("blanked out") # ltodo pass in param
+        frame = JFrame.new("blanked section") # ltodo pass in param
         frame.default_close_operation = JFrame::EXIT_ON_CLOSE
         frame.set_location(0,0)
         frame.set_size(2000, 2000) # ltodo better coords...

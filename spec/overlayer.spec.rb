@@ -54,6 +54,21 @@ describe OverLayer do
     sleep 1.0
     start_good
   end
+  
+  it 'should unmute after the ending scene' do
+    File.write 'temp.yml', YAML.dump({:mutes => {0.5 => 1.0}})
+    @o = OverLayer.new 'temp.yml'
+    @o.start_thread true
+    begin
+      # make sure we enter the mute section
+      sleep 0.75
+      start_bad # sleeps 1
+      start_good
+      start_good
+    ensure
+      @o.kill_thread!
+    end
+  end
 
   it 'should handle multiple mutes in a row' do
     File.write 'temp.yml', YAML.dump({:mutes => {2.0 => 4.0, 5.0 => 7.0}})
@@ -62,7 +77,7 @@ describe OverLayer do
     sleep 2.5
     start_bad # 1s
     sleep 2 # => 5.5
-    start_bad
+    start_bad    
   end
 
   it 'should be able to mute teeny sequences' do
@@ -146,11 +161,9 @@ describe OverLayer do
   end
 
   it "should reload the YAML file on the fly to allow for editing it" do
-  $VERBOSE = 1
-  $TEST = 1
     # start it with one set to mute far later
     write_yaml <<-YAML
-:mutes:
+    :mutes:   
       "0:11.0" : "0:12.0"
     YAML
     @o = OverLayer.new 'temp.yml'
@@ -178,22 +191,19 @@ describe OverLayer do
   it "should not accept zero start input" do
     yaml = <<-YAML
     :mutes:
-       0 : 1 # we don't like zeroes...for now ta least
+       0 : 1 # we don't like zeroes...for now at least
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].should be_blank        
   end
   
-  it "should handle non quoted numbers in yaml" do
+  it "should handle non quoted style numbers in yaml" do
     yaml = <<-YAML
     :mutes:
        08:55 : 08:56.0 # valid, will return large Fixnum's
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].should == [[535, 536]]
-  end
-
-  it "should handle non quoted numbers in yaml" do
     yaml = <<-YAML
     :mutes:
        01:08:55 : 01:09:55 # actually valid
@@ -202,8 +212,7 @@ describe OverLayer do
     out[:mutes].should == [[4135, 4195]]
   end
 
-
-  it "should translate yaml well" do
+  it "should translate yaml with the two different types in it" do
     yaml = <<-YAML
     :mutes:
        "0:02.0" : "0:03.0"
@@ -211,8 +220,8 @@ describe OverLayer do
        "0:02.0" : "0:03.0"  
     YAML
     out = OverLayer.translate_yaml yaml
-    out[:mutes].first.should == [2.0, 3.0]
-    out[:blank_outs].first.should == [2.0, 3.0]
+    out[:mutes].should == [[2.0, 3.0]]
+    out[:blank_outs].should == [[2.0, 3.0]]
     yaml = <<-YAML
     :mutes:
        "1:02.11" : "1:03.0"
@@ -225,13 +234,15 @@ describe OverLayer do
     yaml = <<-YAML
     :mutes:
       "0:02" : "0:03"
+      3 : 4
     YAML
     out = OverLayer.translate_yaml yaml
-    out[:mutes].first.should == [2.0, 3.0]
+    out[:mutes].should == [[2.0, 3.0], [3, 4]]
   end
   
   it "should accept blank yaml" do
-    OverLayer.translate_yaml ""
+    out = OverLayer.translate_yaml ""
+    out[:mutes].should be_blank
   end
 
   it "should translate strings as well as symbols" do
@@ -240,7 +251,7 @@ describe OverLayer do
       "1" : "3"
     YAML
     out = OverLayer.translate_yaml yaml
-    out[:mutes].first.should == [1, 3]
+    out[:mutes].should == [[1, 3]]
   end
 
   it "should disallow zero or less length intervals"

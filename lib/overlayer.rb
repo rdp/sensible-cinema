@@ -106,7 +106,7 @@ class OverLayer
         start = translate_string_to_seconds(start)
         endy = translate_string_to_seconds(endy)
         if start == 0 || endy == 0
-          p 'warning--possible error in the scene list someline not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy
+          p 'warning--possible error in the scene list someline not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $DEBUG
           # drop it in bitbucket...
         else
           new[start] = endy
@@ -233,7 +233,11 @@ class OverLayer
   # end
 
   def start_thread continue_forever = false
-    Thread.new { continue_until_past_all continue_forever }
+    @thread = Thread.new { continue_until_past_all continue_forever }
+  end
+  
+  def kill_thread!
+    @thread.kill
   end
   
   # returns [start, end, active|:done]
@@ -286,17 +290,17 @@ class OverLayer
   
   def continue_until_past_all continue_forever
     if RUBY_VERSION < '1.9.2'
-      raise 'need 1.9.2+ for MRI' unless RUBY_PLATFORM =~ /java/
+      raise 'need 1.9.2+ for MRI for the mutex stuff' unless RUBY_PLATFORM =~ /java/
     end
 
     @mutex.synchronize {
       loop {
         muted, blanked, next_point = get_current_state
         if next_point == :done
-          unless continue_forever
-            return # done!
-          else
+          if continue_forever
             time_till_next_mute_starts = 1_000_000
+          else
+            return
           end
         else
           time_till_next_mute_starts = next_point - cur_time
@@ -339,20 +343,16 @@ class OverLayer
   def something_has_possibly_changed
     current = cur_time
     muted, blanked, next_point = get_current_state
-    @muted = muted
-    @blanked = blanked
-    @endy = next_point
+    endy = next_point
     return if next_point == :done
-    if(current < next_point)
-      set_states!
-      duration_left = @endy - current
-      pps 'just muted it at', Time.now_f, current, 'for interval:', 'which is', duration_left, 'more s' if $VERBOSE
-      if duration_left > 0
-        @cv.wait(@mutex, duration_left) if duration_left > 0
-      end
-      pps 'done sleeping', duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
-      set_states!
+    set_states!
+    duration_left = endy - current
+    pps 'just muted it at', Time.now_f, current, 'for interval:', 'which is', duration_left, 'more s' if $VERBOSE
+    if duration_left > 0
+      @cv.wait(@mutex, duration_left) if duration_left > 0
     end
+    pps 'done sleeping', duration_left, 'was muted unmuting now', Time.now_f if $VERBOSE
+    set_states!
   end
   
 end
