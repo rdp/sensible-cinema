@@ -1,3 +1,9 @@
+# avoid full loading if testing impossible
+if RUBY_VERSION < '1.9.2' && RUBY_PLATFORM !~ /java/
+  puts 'not compatible to MRI < 1.9.2'
+  exit 0 # this isn't a real error...
+end
+
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/overlayer'
 
@@ -128,7 +134,7 @@ describe OverLayer do
   end
 
   it 'should have key list output on screen' do
-    @o.status.should include("MmSs")
+    @o.status.should include("r,d,v,q to quit")
   end
 
   it 'should accept h for console help'

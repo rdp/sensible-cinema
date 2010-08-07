@@ -2,7 +2,6 @@ im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/imagemagick") # 
 ENV['PATH'] = im_path + ';' + ENV['PATH']
 
 require 'mini_magick'
-require 'open3'
 
 # helper for OCR'ing single digits that were screen captured
 module OCR

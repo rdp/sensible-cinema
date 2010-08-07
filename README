@@ -40,7 +40,7 @@ Next install the gem by either opening up the command window or hitting windows+
        C:\> jruby -S gem install sensible-cinema 
 
   it's jruby only currently (since jruby allows for proper thread concurrency, has an easy GUI, and feels actually sane on windows).
-  It could theoretically be ported to MRI 1.9.x, if anybody wanted to do so.
+  It could theoretically be ported to MRI 1.9.2, if anybody wanted to do so.
   Also if anybody would be interested in porting this to Linux I'd be happy to collaborate.
   
 You can test that it's installed by running it (see above) and selecting the "example_scene_list.yml", and 
@@ -101,6 +101,10 @@ Q. Why does my mouse bounce up and down while this thing is playing?
 
 A. This enables you to keep your on screen tracker visible, which allows sensible-cinema to track where you're at.
    Message me if this bugs you too much and we'll see what we can do for it.
+
+Q. Why does it seem really laggy at screen detection at the beginning?
+
+A. It takes it awhile to warm up.  Ping me if you want this fixed.
 
 == Thanks ==
 
