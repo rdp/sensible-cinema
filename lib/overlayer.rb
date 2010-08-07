@@ -48,7 +48,7 @@ class OverLayer
     if @file_mtime != (new_time = File.stat(@filename).mtime)
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
       # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc.
-      puts '(re) loaded mute sequences as', pretty_sequences.pretty_inspect, "" unless $DEBUG # I hate these during unit tests...
+      puts '(re) loaded mute sequences from ' + @filename + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG # I hate these during unit tests...
       pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
       @file_mtime = new_time # save 0.0002!
     else

@@ -52,6 +52,7 @@ else
   
   player_description = ARGV.shift
   if !File.exist?(player_description.to_s)
+    
     player_description = FileChooser.choose_file("Please select your Player description (optional)", __dir__ + "/../zamples/players")
   end
   
