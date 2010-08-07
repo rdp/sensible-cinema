@@ -15,7 +15,7 @@ module FileChooser
     # lodo allow for a FileFilter, too...
     fc.show
     
-    out = fc.get_file
+    out = fc.get_directory + '/' + fc.get_file
     fc.remove_notify # allow out app to exit
     out
   end

@@ -186,6 +186,10 @@ YAML
      out = OverLayer.translate_yaml yaml
      out[:mutes].to_a.first.should == [62.11, 63.0]
   end
+  
+  it "should accept blank yaml" do
+    OverLayer.translate_yaml ""
+  end
 
   it "should translate strings as well as symbols" do
          yaml = <<-YAML
@@ -324,8 +328,9 @@ mutes:
   
   it "should accept human readable input" do
     o = OverLayer.new 'temp.yml', "01:01.5"
-    o.cur_time.should be == 61.5
-    
+    o.cur_time.should be >= 61.5
+    # somewhere in there
+    o.cur_time.should be <= 62
   end
   
 end
