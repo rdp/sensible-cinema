@@ -46,7 +46,7 @@ else
         puts "error: have to specify a scene list\n    or specify \"test\" on the command line if you just want to snapshot your player"
         exit 1
     end
-    puts 'Selected scene list ' + File.basename(scene_list), ''
+    puts 'Selected scene list ' + File.basename(scene_list) + " (#{scene_list})", ''
     overlay = OverLayer.new(scene_list)  
     
   end
@@ -59,7 +59,7 @@ else
   if File.exist? player_description.to_s
     # this one doesn't use file updates, so pass it the string
     Mouse.jitter_forever_in_own_thread
-    puts 'Selected player ' + File.basename(player_description), ''
+    puts 'Selected player ' + File.basename(player_description) + " (#{player_description})", ''
     screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
     screen_tracker.dump_bmp if $VERBOSE
     # exit early if we just wanted a screen dump...a little kludgey...
