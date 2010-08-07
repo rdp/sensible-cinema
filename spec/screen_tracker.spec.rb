@@ -34,7 +34,7 @@ describe ScreenTracker do
     it "should loop if unable to find the right window" do
       proc {
         Timeout::timeout(1) do
-          ScreenTracker.new("unknown window",10,10,20,20)
+          ScreenTracker.new("this is supposed to be not running",10,10,20,20)
         end
       }.should raise_error(Timeout::Error)
     end
@@ -154,12 +154,10 @@ describe ScreenTracker do
       context "using OCR" do
 
         before do
-          # vlc_non_full_screened_under_an_hour.yml
-          @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13,
-          {:hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_tens => [-72, 7], :second_ones => [-66, 7]} )
+          @a = ScreenTracker.new_from_yaml File.read("../zamples/players/vlc_non_full_screened_and_total_length_under_an_hour.yml"), nil
         end
 
-        it "should be able to snapshot digits" do
+        it "should be able to disk dump snapshotted digits" do
           @a.dump_bmp
           Pathname.new('minute_tens.bmp').should exist
           Pathname.new('minute_tens.bmp').size.should be > 0
