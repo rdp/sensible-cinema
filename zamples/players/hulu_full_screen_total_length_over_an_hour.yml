@@ -15,9 +15,9 @@ digits:
       - 7
       :second_tens:
       - 40
-      - 5
+      - 6
       :second_ones:
       - 46
-      - 6
+      - 7
       :should_invert: true
     
