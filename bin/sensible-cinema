@@ -43,7 +43,7 @@ else
       scene_list = FileChooser.choose_file("Please select your scene list", __dir__  + "/../zamples/scene_lists")
     end
     unless scene_list
-        puts 'error: have to specify scene list, or specify "test" on the command line if you just want to snapshot your player'
+        puts "error: have to specify a scene list\n    or specify \"test\" on the command line if you just want to snapshot your player"
         exit 1
     end
     overlay = OverLayer.new(scene_list)  

@@ -1,17 +1,13 @@
-It's a little rough UI-wise as yet, but here's the first release, in case anybody out there is interested and wants to help out.
+Sensible-cinema is a program that aims to allow you to do arbitrary scene selection (i.e. "mute out" or "bleep out" bad scenes).
 
-Linux...
+Currently it takes as input a list of known "skip-worthy" scenes (profanity, violence, annoying songs, whatever you don't like). 
+It then tracks the player you are using, as it is playing, and mutes or blanks out the system screen appropriately, during the scenes
+specified.
 
-This is a program that aims to allow you to do arbitrary scene selection (i.e. "mute out" or "bleep out" arbitrary scenes) during movie playback.
-It does this by leveraging existing players and controlling the system-wide volume, etc.
-
-Currently it takes as input a list of known "skip-worthy" scenes (profanity, violence, whatever), 
-and tracks the player as it is playing, then mutes or blanks out the system screen appropriately, during those scenes.
-
-Currently it works for hulu and VLC on windows.  It also isn't hard to add new players (thanks Ruby and yaml!), 
+Currently it is known to work for for hulu and VLC playback on windows.  It also isn't hard to add new players, 
 and probably wouldn't be super hard to add more operating systems.
 
-Related: http://en.wikipedia.org/wiki/Edit_decision_list
+The concept isn't new: http://en.wikipedia.org/wiki/Edit_decision_list
 
 == How to use ==
 
@@ -19,47 +15,94 @@ Start playing your movie in its player, then startup sensible-cinema thus:
 
      C:\> jruby -S sensible-cinema
 
-It then prompts you for a scene list, then for a player description.
+It then prompts you for a scene list, and then for a player description.
 
 Alternatively you could specify the files on the command-line, like
 
      C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
 
-Sensible-cinema's tracker will now run within your console window, using screen tracking of the player to monitor the playback position.
-It is presumed that you'll minimize the console window and proceed to enjoy the movie. :)
+Sensible-cinema's tracker will now run in your console window, screen tracking the player's timer to monitor the playback position.
 
-You'll know that it's working if, when you change the time of your player (ex: dragging it to a new position), the screen output
+You'll know that it's working if, when you change the time of your player (ex: dragging it to a new position), and the screen output
 in sensible-cinema's console changes to match.
+
+It is presumed that you'll minimize the console window and enjoy the movie. :)
 
 == How to install ==
 
-First install jruby (in case you haven't already), from http://www.jruby.org
+First you'll need to install jruby (in case you haven't already), from http://www.jruby.org
+Make sure you check the box "add it to my path" or something similar to that.
 
-Next install the gem:
+Next install the gem by either opening up the command window or hitting windows+r (run) and typing
 
-C:\> jruby -S gem install sensible-cinema 
+       C:\> jruby -S gem install sensible-cinema 
 
-  it's jruby only currently (since jruby allows for proper thread concurrency, has easy GUI, and feels like the only sane ruby for windows).
-  It could theoretically be ported to MRI 1.9.x, if anybody else wanted to.
-  It's also currently windows only, though it shouldn't be too much work to support other OS's, and I'd be happy to do it myself if interest
-  developed.  I'm somewhat targeting Netflix' "play now", hence focusing thus far on windows.
+  it's jruby only currently (since jruby allows for proper thread concurrency, has an easy GUI, and feels actually sane on windows).
+  It could theoretically be ported to MRI 1.9.x, if anybody wanted to do so.
+  Also if anybody would be interested in porting this to Linux I'd be happy to collaborate.
+  
+You can test that it's installed by running it (see above) and selecting the "example_scene_list.yml", and 
+choosing the hulu player.
 
-You can test that it's working by selecting the "example scene list" and choosing the hulu player.  It will do a few "demo" mutes and blank outs.
+It will proceed do a few "demo" mutes and blank outs.
+
+== How to use ==
+
+To use it, first watch an DVD/online movie you'd like to create a scene-list for.  
+As questionable scenes occur, jot down their start and end times somewhere.
+Then create an Edit Decision List (EDL) file that looks like this:
+
+mutes:
+  "00:01:01.5" : "00:01:02.5" # bad joke from one minute, one second and a half to one minute, two seconds and a half  "01:00:00" : "01:01:02.5" # bad music from exactly one hour to one hour, one minute, two seconds and a half will be muted.
+blank_outs:
+  "00:15" : "00:18" # sultry scene from seconds 15 to 18 will be blanked out.
+  "01:00:00" : "01:01:02.5" # also blank out the "bad music" scene.
+...
+
+Here's an example with more detail
+http://github.com/rdp/sensible-cinema/blob/master/zamples/scene_lists/example_scene_list.yml
+
+Now save that file somewhere (I tend to save it with a .yml extension--you don't have to--.txt will do) 
+and remember where you saved it.
+
+Now start sensible-cinema, see above, and browse to wherever you file is (the "home" icon might be useful to you), and
+select it for your scene list.  Also restart the movie.
+
+Sensible-cinema will now use it as the edit decision list for the movie
+as it plays it back.  You could probably re-watch the movie and see if you got the timings right.  A good excuse to
+watch movies, what could be better?
+
+Note also that don't have to watch the whole movie twice.  You can create and test the scene list file on the fly.
+To do so, first create a blank file, and choose it in sensible-cinema (even though it's blank).
+Now "as you watch" the movie, you can edit the file, and any new changes should be picked up automatically.
+So you could basically notice something you want to add to the list, add it to the file, then go back a few seconds in your
+media player, and it should now be muted/blanked out automatically.
 
 == FAQ ==
 
-Q. Can I watch these movies on my TV, not on my computer?
+Q. Can I watch movies this way on my TV, not just on my computer?
 
-A. Not yet. Currently you'll either need to attach your computer to your TV (buy some long cables, or a new graphics card, etc.)
-   or get a laptop that you can use as a dedicated HTPC (ex: buy a used older one), and/or request I do a linux port if you laptop doesn't come
-   with windows pre-installed.
-
-   There is also some work developing toward getting the stuff to stream live to your wii/ps3/xbox from windows.
+A. Not yet. Well maybe.  Currently you'll either need to attach your computer to your TV
+   (buy some long cables, or a new graphics card, etc.)
+   or get some other computer that you can move closer to the TV and do the same (ex: buy a used older laptop with s-video out).
+   I'd be happy to do a linux port of sensible-cinema if anybody needs that for their dedicated TV computer.
+   There has also been some work toward getting your computer to stream what it plays "live" to your wii/ps3/xbox.
    github message me if you're interested in trying it out.
+
+Q. What movies are available to watch online?
+
+A. Not many are available free (hulu, youtube have a few), but Netflix has quite a few.  Plus you can watch your DVD's
+   on your computer monitor.
+
+Q. Why does my mouse bounce up and down while this thing is playing?
+
+A. This enables you to keep your on screen tracker visible, which allows sensible-cinema to track where you're at.
+   Message me if this bugs you too much and we'll see what we can do for it.
 
 == Thanks ==
 
-Thanks to Jarmo for the win32-screenshot gem, and mini_magick gem authors, jruby guys, etc.  Made programming this actually somewhat easy.
+Thanks to Jarmo for the win32-screenshot gem, and the mini_magick gem authors, jruby guys, etc.  
+Made programming this actually somewhat a pleasure.
 
 == License ==
 
@@ -69,4 +112,4 @@ See the LICENSE for licensing, usage terms (gplv3).
 
 Feedback welcome.
 http://github.com/rdp/sensible-cinema
-http://github.com/rdp to message me
+http://github.com/rdp me
