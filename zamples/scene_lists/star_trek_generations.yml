@@ -1,7 +1,8 @@
 source: "hulu"
 mutes:
-  08:55 : "08:56.0" # ??
-  10:50 : "10:51" # durn
-  11:23 : "11:24" # what the he...
-  "01:15:39.5" : "01:15:41.5" # Data "oh sh...."
-  # several onyx at beginning
+  # these aren't actually accurate yet, except for Data's one
+  08:55 : 08:56 # what the he...
+  10:50 : 10:51 # durn
+  11:23 : "11:24" # ?
+  "01:15:39.5" : "01:15:41.5" # Data "oh s...."
+  # two onyx at beginning

@@ -3,16 +3,17 @@ source: Hulu
 version: 0.4.8
 mutes:
   2.0 : 3.0 # comments can go after the # on each line
-  4.0 : 5.0
-  9.0 : 13.0
+  4.0 : 5.0 # mute from second 4 to second 5
+  9.0 : 13.0 # mute from second 9 to second 13
   44.0 : 50.0 # mute for 6 seconds starting at second 44
-  # This next actually means one minute to one minute one second
-  "1:00.0" : "1:01.0"
-  # one hour one minute and a half second to one hour one minute and 1.5s
-  "01:01:00.5" : "01:01:01.5"
-  # NB that if you want to use minutes with decimals, you'll need to put them in quotes
-  # 01:01:01.05 does not work
+  # This next means mute from one minute to one minute one second
+  1:00 : 1:01
+  10:01 : 10:02 # mute from ten minutes, one second to ten minutes, 2 seconds
+  # if you use decimals, you'll have to put them in quotes
+  # 01:01:01.05 (for one hour, one minute, one second and a half) does not work
   # "01:01:01.05" does
+  "01:01:00.5" : "01:01:01.5" # mute from one hour one minute and a half second to one hour one minute and 1.5s
+  
 blank_outs:
-  "00:15" : "00:18"
-  "01:01" : "01:02.0"  # blank from one minute one second to one minute two seconds
+  "00:15" : "00:18" # blank from second 15 to 18
+  01:01 : "01:02.0" # blank from one minute one second to one minute two seconds, etc.
