@@ -70,6 +70,7 @@ describe OverLayer do
     end
     
     it 'should be able to mute teeny sequences' do
+      # it once failed on this...
       File.write 'temp.yml', YAML.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
       o = OverLayer.new 'temp.yml'
       o.continue_until_past_all false
@@ -86,7 +87,7 @@ describe OverLayer do
       assert @o.cur_time > 5
     end
     
-    it 'should be able to hit keys to affect input' do
+    it 'should be able to accept keyboard input do adjust time' do
       @o = OverLayer.new 'test_yaml.yml'
       @o.cur_time
       @o.keyboard_input 'm'
@@ -149,7 +150,7 @@ YAML
   end
 
   it "should reload the YAML file on the fly to allow for editing it" do
-    # start it with one far later
+    # start it with one set to mute far later
     write_yaml <<YAML
 :mutes:
   "0:11.0" : "0:12.0"
@@ -161,10 +162,8 @@ YAML
 :mutes:
   "0:00.0" : "0:01.5"
 YAML
-    # go forward a tenth
-    # should reload it...
-    @o.keyboard_input 'T'
-    sleep 0.1 # blugh
+    @o.status # cause it to refresh...
+    sleep 0.1 # blugh avoid race condition since we use notify...
     start_bad
     start_good
   end

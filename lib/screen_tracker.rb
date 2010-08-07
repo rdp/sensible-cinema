@@ -100,8 +100,6 @@ class ScreenTracker
   
   # split out for unit testing purposes
   def identify_digit bitmap
-    require 'ruby-debug'
-   # debugger
     OCR.identify_digit(bitmap, @digits)
   end
   

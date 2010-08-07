@@ -45,14 +45,13 @@ class OverLayer
   end
   
   def reload_yaml!
-    if @file_mtime != (new_time = File.stat(@filename).mtime)
+    current_mtime = File.stat(@filename).mtime # save 0.0002!
+    if @file_mtime != current_mtime
       @all_sequences = OverLayer.translate_yaml(File.read(@filename))
-      # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc.
-      puts '(re) loaded mute sequences from ' + @filename + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG # I hate these during unit tests...
-      pps 'because old time', @file_mtime.to_f, '!= new time', new_time.to_f if $VERBOSE
-      @file_mtime = new_time # save 0.0002!
-    else
-      p 'matching time:', new_time if $VERBOSE
+      # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc. and validate...
+      puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG # I hate these during unit tests...
+      @file_mtime = current_mtime 
+      signal_change
     end
   end
   
@@ -155,19 +154,25 @@ class OverLayer
   
   # returns seconds it's at currently...
   def cur_time
-    return Time.now_f - @start_time
+    Time.now_f - @start_time
+  end
+  
+  def cur_english_time
+    translate_time_to_human_readable(cur_time)
   end
   
   def status
-    time = "Current time: " + translate_time_to_human_readable(cur_time)
+    time = "Current time: " + cur_english_time
     begin
       mute, blank, next_sig = get_current_state
       if next_sig == :done
         state = " no more actions after this point..."
       else
-        state = " next action at #{translate_time_to_human_readable next_sig}s (#{mute ? "muted" : '' } #{blank ? "blanked" : '' })"
+        state = " next action at #{translate_time_to_human_readable next_sig}s "
       end
+      state += "(#{mute ? "muted" : '' } #{blank ? "blanked" : '' })"
     end
+    reload_yaml!
     time + state + " (HhMmSsTtdvq): "
   end
 
@@ -195,7 +200,6 @@ class OverLayer
       else nil
     end
     if delta
-      reload_yaml!
       set_seconds(cur_time + delta)
     else
       puts 'invalid char: [' + char + ']'
@@ -205,9 +209,14 @@ class OverLayer
   # sets it to a new set of seconds...
   def set_seconds seconds
     seconds = [seconds, 0].max
+    @start_time = Time.now_f - seconds
+    signal_change
+  end
+  
+  def signal_change
     @mutex.synchronize {
-      @start_time = Time.now_f - seconds
-      # tell the driver thread to continue onward. Cheery-o. We're not super thread friendly but good enough for having two contact each other...
+      # tell the driver thread to wake up and re-check state. 
+      # We're not super thread friendly but good enough for having two contact each other...
       @cv.signal
     }
   end
@@ -303,18 +312,22 @@ class OverLayer
     
     if should_be_muted && !muted?
       mute!
+      puts 'muted at ' + cur_english_time
     end
     
     if !should_be_muted && muted?
       unmute!
+      puts 'unmuted at ' + cur_english_time
     end
     
     if should_be_blank && !blank?
       blank!
+      puts 'blanked at ' + cur_english_time
     end
 
     if !should_be_blank && blank?
       unblank!
+      puts 'unblanked at ' + cur_english_time
     end
     
   end

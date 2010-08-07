@@ -13,9 +13,10 @@ module FileChooser
       fc.setDirectory(dir) 
     end
     # lodo allow for a FileFilter, too...
+    Thread.new { sleep 2; fc.to_front } # it gets hidden, unfortunately
     fc.show
     if fc.get_file
-      out = fc.get_directory + '/' + fc.get_file
+      out = fc.get_directory + '\\' + fc.get_file
     end
     fc.remove_notify # allow out app to exit
     out

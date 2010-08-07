@@ -15,18 +15,20 @@ Start playing your movie in its player, then startup sensible-cinema thus:
 
      C:\> jruby -S sensible-cinema
 
-It then prompts you for a scene list, and then for a player description.
+It then prompts you for a scene list file (ex: bambi.yml), 
+and then subsequently for a player description file (ex: hulu_full_screen_with_total_length_over_an_hour.yml).
 
-Alternatively you could specify the files on the command-line, like
+You could also specify those two filenames on the command-line, if desired, like
 
      C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
 
-Sensible-cinema's tracker will now run in your console window, screen tracking the player's timer to monitor the playback position.
+Sensible-cinema will now run in your console window, screen tracking the player's timer to monitor the playback position
+and react appropriately.
 
-You'll know that it's working if, when you change the time of your player (ex: dragging it to a new position), and the screen output
-in sensible-cinema's console changes to match.
+You'll know that it's working if, when you change the time of your player (ex: dragging it to a new spot in the playback), 
+the screen output in sensible-cinema's console should change to match the new time.
 
-It is presumed that you'll minimize the console window and enjoy the movie. :)
+It is presumed that you'll then minimize the console window and enjoy the movie.
 
 == How to install ==
 
@@ -53,10 +55,11 @@ As questionable scenes occur, jot down their start and end times somewhere.
 Then create an Edit Decision List (EDL) file that looks like this:
 
 mutes:
-  "00:01:01.5" : "00:01:02.5" # bad joke from one minute, one second and a half to one minute, two seconds and a half  "01:00:00" : "01:01:02.5" # bad music from exactly one hour to one hour, one minute, two seconds and a half will be muted.
+  "00:01:01.5" : "00:01:02.5" # mute from one minute, one second and a half to one minute, two seconds and a half  "01:00:00" : "01:01:02.5" # mute from exactly one hour to one hour, one minute, two seconds and a half will be muted.
 blank_outs:
   "00:15" : "00:18" # sultry scene from seconds 15 to 18 will be blanked out.
-  "01:00:00" : "01:01:02.5" # also blank out the "bad music" scene.
+  "01:00:00" : "01:01:02.5" # also blank out on of the muted scenes.
+
 ...
 
 Here's an example with more detail
