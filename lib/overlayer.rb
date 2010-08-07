@@ -119,22 +119,10 @@ class OverLayer
     out << "%04.1f" % seconds
   end
   
-  # make it optional...for now muhaha [lodo take out if never useful]
   def timestamp_changed to_this_exact_string, delta
-    if to_this_exact_string
-      set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string) + delta
-    else
-      round_current_time_to_nearest_second
-    end
+    set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string) + delta
   end
   
-  def round_current_time_to_nearest_second
-    current_time = cur_time
-    better_time = current_time.round
-    set_seconds better_time
-    puts 'screen snapshot diff with time we thought it was was:' + (current_time - better_time).to_s if $VERBOSE
-  end
-      
   def self.translate_string_to_seconds s
     # might actually already be a float...
     if s.is_a? Float
@@ -209,7 +197,9 @@ class OverLayer
   # sets it to a new set of seconds...
   def set_seconds seconds
     seconds = [seconds, 0].max
-    @start_time = Time.now_f - seconds
+    @mutex.synchronize {
+      @start_time = Time.now_f - seconds
+    }
     signal_change
   end
   
@@ -312,22 +302,22 @@ class OverLayer
     
     if should_be_muted && !muted?
       mute!
-      puts 'muted at ' + cur_english_time
+      puts '','muted at ' + cur_english_time
     end
     
     if !should_be_muted && muted?
       unmute!
-      puts 'unmuted at ' + cur_english_time
+      puts '','unmuted at ' + cur_english_time
     end
     
     if should_be_blank && !blank?
       blank!
-      puts 'blanked at ' + cur_english_time
+      puts '','blanked at ' + cur_english_time
     end
 
     if !should_be_blank && blank?
       unblank!
-      puts 'unblanked at ' + cur_english_time
+      puts '','unblanked at ' + cur_english_time
     end
     
   end

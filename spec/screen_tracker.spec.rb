@@ -173,10 +173,9 @@ describe ScreenTracker do
           output[0].should match(/[1-9]/)
         end
 
-        context "with an OCR that can change willy-nilly from hour to second" do
+        context "with an OCR that can change from hour to minutes during ads" do
           it "should ocr slash...[in other]"
           it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" # might already do this
-          it "should work with hulu too, because of ads"
         end
 
         it "should be able to use invert on images" do

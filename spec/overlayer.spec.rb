@@ -115,11 +115,13 @@ describe OverLayer do
     
   end
 
-  it 'should have help output' do
+  it 'should have key list output on screen' do
     @o.status.should include("MmSs")
   end  
+  
+  it 'should accept h for console help'
 
-  it 'should allow for real yaml files somehow and use it' do
+  it 'should allow for yaml input and parse it well' do
     # 2 - 3 , 4-5 should be muted
     @o = OverLayer.new 'test_yaml.yml'
     @o.start_thread
@@ -199,9 +201,10 @@ mutes:
     out[:mutes].to_a.first.should == [1, 3]    
   end  
 
-  it "should disallow negative length intervals"
+  it "should disallow zero or less length intervals"
+  it "should disallow non-sorted intervals"
 
-  it "should allow for 1:01:00.0 (double colon) style input" do
+  it "should allow for 1:01:00.0 (double colon) style yaml input" do
     write_yaml <<-YAML
 :mutes:
   "1:00.11" : "1:03.0"
@@ -216,22 +219,6 @@ mutes:
     start_good
   end
   
-  it "should be able to tell the player to sync to the closest second when the screen only changes" do
-    @o.start_thread
-    start = Time.now
-    while((Time.now - start) < 3) do
-      @o.timestamp_changed nil, nil
-      sleep 0.1
-    end
-    @o.cur_time.should be < 1
-    sleep 1
-    10.times { @o.timestamp_changed(nil, nil) }
-    @o.cur_time.should be >= 1
-    sleep 0.6
-    @o.timestamp_changed nil, nil
-    @o.cur_time.should be >= 2
-  end
-  
   it "should be able to handle it when the sync message includes a new timestamp" do
     @o.start_thread
     @o.timestamp_changed "1:00:01", 0
@@ -240,7 +227,7 @@ mutes:
     @o.cur_time.should be < 60*60
   end
   
-  it "should handle deltas to created timestamps" do
+  it "should handle deltas to input timestamps" do
     @o.start_thread
     @o.timestamp_changed "1:00:00", 1
     @o.cur_time.should be >= 60*60 + 1
@@ -311,21 +298,20 @@ mutes:
     
     it "should not fail with verbose on, after it's past next states" do
       at(500_000) do
-        @o.status.should == "Current time: 138:53:20.0 no more actions after this point... (HhMmSsTtdvq): "
-      end
-      
+        @o.status.should == "Current time: 138:53:20.0 no more actions after this point...( ) (HhMmSsTtdvq): "
+      end      
     end
     
   end
   
-  it "should be human readable" do  
+  it "should have human readable output" do  
     @o.translate_time_to_human_readable(3600).should == "1:00:00.0" 
     @o.translate_time_to_human_readable(3600.0).should == "1:00:00.0" 
     @o.translate_time_to_human_readable(3601).should == "1:00:01.0" 
     @o.translate_time_to_human_readable(3661).should == "1:01:01.0" 
   end
   
-  it "should accept human readable input" do
+  it "should accept human readable style as input" do
     o = OverLayer.new 'temp.yml', "01:01.5"
     o.cur_time.should be >= 61.5
     # somewhere in there

@@ -8,8 +8,8 @@ class Blanker
     JPanel = javax.swing.JPanel
   
     def self.blank_full_screen!
-      # a new screen each time as other jruby doesn't terminate as gracefully as we would like...
-        frame = JFrame.new("Edited!") # ltodo take out...
+        # a new screen each time as other jruby doesn't terminate as gracefully as we would like...
+        frame = JFrame.new("blanked out") # ltodo pass in param
         frame.default_close_operation = JFrame::EXIT_ON_CLOSE
         frame.set_location(0,0)
         frame.set_size(2000, 2000) # ltodo better coords...
@@ -34,7 +34,7 @@ class Blanker
         @fr.set_visible(true)
     end
   else
-    
+    # MRI fake blanker :)
     def self.blank_full_screen!
       puts 'the screen is now...blank!'      
     end
