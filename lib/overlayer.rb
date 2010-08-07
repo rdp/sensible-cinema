@@ -89,15 +89,28 @@ class OverLayer
   end
   
   def self.translate_yaml raw_yaml
-    all = YAML.load(raw_yaml) || {}
+    begin
+      all = YAML.load(raw_yaml) || {}
+      
+    rescue NoMethodError
+      p 'appears your file has a syntax error in it--perhaps missing quotation marks'
+      return
+    end
     # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
     # translate to floats like 62.0 => 63.0
     for type in [:mutes, :blank_outs]
       maps = all[type] || all[type.to_s] || {}
       new = {}
-      maps.each{|s,e|
+      maps.each{|start,endy|
         # both are like 1:02.0
-        new[translate_string_to_seconds(s)] = translate_string_to_seconds(e)
+        start = translate_string_to_seconds(start)
+        endy = translate_string_to_seconds(endy)
+        if start == 0 || endy == 0
+          p 'warning--possible error in the scene list someline not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy
+          # drop it in bitbucket...
+        else
+          new[start] = endy
+        end
       }
       all.delete(type.to_s)
       all[type] = new.sort
@@ -119,14 +132,15 @@ class OverLayer
     out << "%04.1f" % seconds
   end
   
-  def timestamp_changed to_this_exact_string, delta
-    set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string) + delta
+  def timestamp_changed to_this_exact_string_might_be_nil, delta
+    set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string_might_be_nil) + delta if to_this_exact_string_might_be_nil
   end
   
   def self.translate_string_to_seconds s
-    # might actually already be a float...
-    if s.is_a? Float
-      return s
+    # might actually already be a float, or int, depending on the yaml
+    # int for 8 => 9 and also for 1:09 => 1:10
+    if s.is_a? Numeric
+      return s.to_f
     end
     
     # s is like 1:01:02.0
@@ -302,12 +316,12 @@ class OverLayer
     
     if should_be_muted && !muted?
       mute!
-      puts '','muted at ' + cur_english_time
+      puts '','muted at ' + cur_english_time unless $DEBUG # too chatty
     end
     
     if !should_be_muted && muted?
       unmute!
-      puts '','unmuted at ' + cur_english_time
+      puts '','unmuted at ' + cur_english_time unless $DEBUG
     end
     
     if should_be_blank && !blank?
