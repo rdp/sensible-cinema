@@ -11,8 +11,8 @@ digits:
       - 24
       - 7
       :minute_ones:
-      - 30
-      - 7
+      - 31
+      - 6
       :second_tens:
       - 40
       - 6
