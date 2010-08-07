@@ -56,7 +56,6 @@ describe OverLayer do
   end
   
   it 'should unmute after the ending scene' do
-    $VERBOSE=1
     File.write 'temp.yml', YAML.dump({:mutes => {0.5 => 1.0}})
     @o = OverLayer.new 'temp.yml'
     @o.start_thread true
@@ -356,10 +355,9 @@ describe OverLayer do
 
     it "should not fail with verbose on, after it's past next states" do
       at(500_000) do
-        @o.status.should == "Current time: 138:53:20.0 no more actions after this point...( ) (HhMmSsTtdvq): "
+        @o.status.should == "Current time: 138:53:20.0 no more actions after this point...(r,d,v,q to quit):"
       end
     end
-
 
     it "should have human readable output" do
       @o.translate_time_to_human_readable(3600).should == "1:00:00.0"
