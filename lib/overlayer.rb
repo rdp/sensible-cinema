@@ -44,16 +44,20 @@ class OverLayer
     Blanker.unblank_full_screen! unless $DEBUG
   end
   
-  def reload_yaml!
+  def check_reload_yaml
     current_mtime = File.stat(@filename).mtime # save 0.0002!
     if @file_mtime != current_mtime
-      @all_sequences = OverLayer.translate_yaml(File.read(@filename))
-      # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc. and validate...
-      puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG # I hate these during unit tests...
+      reload_yaml!
       @file_mtime = current_mtime 
-      signal_change
     end
   end
+  
+  def reload_yaml!
+    @all_sequences = OverLayer.translate_yaml(File.read(@filename))
+    # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc. and validate...
+    puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG && !$VERBOSE # I hate these during unit tests...      
+    signal_change
+  end  
   
   def pretty_sequences
     new_sequences = {}
@@ -175,8 +179,8 @@ class OverLayer
       
       state += "(" + [muted? ? "muted" : '', blank? ? "blanked" : '' ].join(' ') + ")"
     end
-    reload_yaml!
-    time + state + " (HhMmSsTtdvq): "
+    check_reload_yaml
+    time + state + " (r,d,v or q to quit): "
   end
 
   def keyboard_input char
@@ -199,6 +203,10 @@ class OverLayer
         return
       when ' ' then
         puts cur_time
+        return
+      when 'r' then
+        reload_yaml!
+        puts
         return
       else nil
     end
