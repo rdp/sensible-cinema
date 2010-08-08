@@ -25,30 +25,32 @@ class OverLayer
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
-    Muter.mute! unless $DEBUG
+    Muter.mute!
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
-    Muter.unmute! unless $DEBUG
+    Muter.unmute!
   end
   
   def blank!
     @am_blanked = true
-    Blanker.blank_full_screen! unless $DEBUG
+    Blanker.blank_full_screen!
   end
   
   def unblank!
     @am_blanked = false
-    Blanker.unblank_full_screen! unless $DEBUG
+    Blanker.unblank_full_screen!
   end
   
   def check_reload_yaml
-    current_mtime = File.stat(@filename).mtime # save 0.0002!
+    current_mtime = File.stat(@filename).mtime
     if @file_mtime != current_mtime
       reload_yaml!
       @file_mtime = current_mtime 
+    else
+      #p 'same mtime:', @file_mtime if $DEBUG && $VERBOSE
     end
   end
   
@@ -320,7 +322,6 @@ class OverLayer
         pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
-        pps 'just woke up from pre-mute wait at', Time.now_f if $VERBOSE
         set_states!
       }
     }

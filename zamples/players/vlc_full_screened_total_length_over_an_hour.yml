@@ -4,6 +4,7 @@ x: 522
 y: 47
 width: 35
 height: 14
+note: this does not work for a maximized window, but does for full screen (double click)
 digits:
       :hours:
       - -89

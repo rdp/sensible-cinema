@@ -48,11 +48,11 @@ choosing the hulu player.
 
 It will proceed do a few "demo" mutes and blank outs.
 
-== How to Program ==
+== Programming Scenes ==
 
-To program sensible-cinema to play what you'd like, first "preview" the on-computer movie you'd like to create a scene-list for.  
-As questionable scenes occur, jot down their start and end times somewhere.
-Then create an Edit Decision List (EDL) file that looks like this:
+To program sensible-cinema to play as you'd like, create an edit decision list for it.
+
+An Edit Decision List (EDL) looks like this:
 
 mutes:
   "00:01:01.5" : "00:01:02.5" # mute from one minute, one second and a half to one minute, two seconds and a half  "01:00:00" : "01:01:02.5" # mute from exactly one hour to one hour, one minute, two seconds and a half will be muted.
