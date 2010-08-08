@@ -1,3 +1,7 @@
+readme
+utube nuki
+gen prof.
+
 Sensible-cinema is a program that aims to allow you to do arbitrary scene selection (i.e. "mute out" or "bleep out" bad scenes).
 
 Currently it takes as input a list of known "skip-worthy" scenes (profanity, violence, annoying songs, whatever you don't like). 
