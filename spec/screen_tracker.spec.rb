@@ -165,13 +165,23 @@ describe ScreenTracker do
         end
 
         it "should use OCR against the changes appropriately" do
-          output = @a.wait_till_next_change
+          output = @a.wait_till_next_change # grab a real change
           output[0].should be_a(String)
-          output[0].should include("00:0")# let's hope it runs quickly...
+          output[0].should include("00:0") # let's hope it runs quickly...
           output[0].should match(/[1-9]/)
+          output[1].should be_a Float
         end
-
-        context "with an OCR that can change from hour to minutes during ads" do
+        
+        it "should be ok with a failed hours read" do
+          @a.stub!(:get_digits_as_bitmaps) do
+            four = File.binread('images/4.bmp')
+            {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
+              :hours => File.binread('images/black.bmp')}
+          end
+          @a.attempt_to_get_time_from_screen[0].should == "0:44:44"
+        end
+        
+      context "with an OCR that can change from hour to minutes during ads" do
           it "should ocr slash...[in other]"
           it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" # might already do this
         end

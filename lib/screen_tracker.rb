@@ -109,6 +109,17 @@ class ScreenTracker
       current = get_bmp
       if current != original
         if @digits
+          return attempt_to_get_time_from_screen
+        else
+          puts 'screen time change only detected...' if $VERBOSE
+        end
+        return
+      end
+      sleep 0.02
+    }
+  end
+  
+  def attempt_to_get_time_from_screen
           out = {}
           dump_digits if $DEBUG            
           digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
@@ -123,8 +134,12 @@ class ScreenTracker
                   p 'unable to identify digit!' + type.to_s + @a.to_s
                   File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type])
                 end
-                # early return
-                return
+                if type == :hours
+                  digit = 0 # this one can fail in VLC
+                else
+                  # early return
+                  return
+                end
               end
               out[type] = digit
             else
@@ -136,15 +151,8 @@ class ScreenTracker
           p 'got new screen time ' + out + " delta:" + (Time.now - start).to_s if $VERBOSE
           # if the window was in the background it will be all zeroes, so nil it out
           out = nil unless out =~ /[1-9]/
-          return out, Time.now - start
-        else
-          puts 'screen time change only detected...' if $VERBOSE
+          return out, Time.now-start
         end
-        return
-      end
-      sleep 0.02
-    }
-  end
   
   def process_forever_in_thread
     Thread.new {
