@@ -205,7 +205,7 @@ class OverLayer
         p 'set debug to', $DEBUG
         return
       when ' ' then
-        puts cur_time
+        puts cur_english_time
         return
       when 'r' then
         reload_yaml!
