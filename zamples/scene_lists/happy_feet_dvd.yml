@@ -1,7 +1,12 @@
 title: Happy Feet
 source: VLC DVD
 mutes:
-  # one hour one minute and a half second to one hour one minute and 1.5s
-  "01:33:25.0" : "01:33:50.0"
+  1:45 : 2:25   # sensuality: let's talk about eggs, baby...
+  46:36 : 46:41 # sensuality: my couch of perpetual indulgence
+  "01:33:25.0" : "01:33:50.0" # sensuality: a few sensual lyrics
 blank_outs:
-  "55:35" : "55:42.0"  # blank from one minute one second to one minute two seconds
+  "55:35" : "55:42.0" # sensuality: some "questionable" dancing
+
+overall: "feels somewhat odd, makers definitely have an agenda,
+which appears to be environmentalism, a bit of sensualism, and anti-religion/authority.
+It has lots of varied, fun music.  Something of an agenda."
