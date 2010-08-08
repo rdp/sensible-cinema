@@ -50,7 +50,7 @@ class OverLayer
       reload_yaml!
       @file_mtime = current_mtime 
     else
-      #p 'same mtime:', @file_mtime if $DEBUG && $VERBOSE
+      p 'same mtime:', @file_mtime if $DEBUG && $VERBOSE
     end
   end
   
