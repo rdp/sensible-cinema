@@ -64,13 +64,14 @@ Here's one with more detail
 
 http://github.com/rdp/sensible-cinema/blob/master/zamples/scene_lists/example_scene_list.yml
 
-Basically your job is to save a file like that somewhere, then start sensible-cinema and instruct it to use your new file.
+Basically your job is to save an appropriate file like that somewhere, 
+then start sensible-cinema and instruct it to use your new file.
 
-Once you have created a new file for a common media, you can submit it back [1] to have it incorporated 
-with sensible-cinema for others to use, as well.
+To create it, basically you notice something you want to add to the list, add it, then go back a few seconds 
+in your media player, and it should now be muted/blanked out automatically.
 
 So here is a way to create your scene list.
-First create a blank file [2], and select it in sensible-cinema (even though it's still blank).
+First create a new file [2], and select it in sensible-cinema (even though it's still blank).
 Now select the new file you just created as your scene list.
 Now "preview" the movie, and as we do, we're going to add to the file, and test our additions.
 As you watch and hit a questionable scene, go back to several seconds before it using your player's 
@@ -81,8 +82,6 @@ If they look reasonable, add them to your scene list (changes will be automatica
 then review your additions by rewinding your player and letting it play through the scene in question again.
 It should now skip it appropriately.  If not, adjust your timestamps and try again.
 
-So you basically notice something you want to add to the list, add it to the file, then go back a few seconds 
-in your media player, and it should now be muted/blanked out automatically.
 
 Once you're done then you can contribute your scene list if desired, to the project [1].
 
@@ -90,6 +89,7 @@ Once you're done then you can contribute your scene list if desired, to the proj
 [2] The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
 right click and choose "New -> Text Document" Now rename it (leaving it as .txt).
 "Right click -> Open" to open it in an editor.  Now also select that same file in sensible-cinema.
+Another easy way is to "right drag" an existing file then rename it and edit that one.
 
 == FAQ ==
 
