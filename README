@@ -49,16 +49,16 @@ choosing the hulu player.
 
 It will proceed do a few "demo" mutes and blank outs.
 
-== Programming Scenes ==
+== Programming Your Own Scene List ==
 
-To program sensible-cinema to play as you'd like, create an edit decision list for it.
+To program sensible-cinema, your job is to create an edit decision list it can use.
 
-An Edit Decision List (EDL) looks something likelike this:
+An Edit Decision List (EDL) looks something like this trivial example:
 
 mutes:
   "01:00:00" : "01:01:02.5" # mute from exactly one hour to one hour, one minute, two seconds and a half will be muted.
 blank_outs:
-  "01:00:00" : "01:01:02.5" # also blank out (overlay with blank window) the abve muted scene.
+  "01:00:00" : "01:01:02.5" # also blank out (overlay with blank window) the same.
 
 Here's one with more detail
 
@@ -69,19 +69,22 @@ Basically your job is to save a file like that somewhere, then start sensible-ci
 Once you have created a new file for a common media, you can submit it back [1] to have it incorporated 
 with sensible-cinema for others to use, as well.
 
-So here is the current easiest way to create you scene list.
-First create a blank file, and select it as startup time in sensible-cinema (even though it's still blank). [2]
+So here is a way to create your scene list.
+First create a blank file [2], and select it in sensible-cinema (even though it's still blank).
 Now select the new file you just created as your scene list.
-Now "as you watch" the movie, we're going to edit and test that file.
-As you watch and a questionable section is discovered, go back in your player, then just before and just after 
-the scene, hit the space bar *in the sensible-cinema window*.
-This will output the current time each time you hit the space bar. If your timestamps look reasonable, add them to you
-scene list (changes will be automatically picked up), then review your edited scene by rewinding your player
-and letting it play through the scene in question.  It should now skip it appropriately.  If not, 
-adjust your timestamps and try again.
+Now "preview" the movie, and as we do, we're going to add to the file, and test our additions.
+As you watch and hit a questionable scene, go back to several seconds before it using your player's 
+controls.  When you run into it again, just before and just after the scene, 
+hit the space bar *in the sensible-cinema window*.  Hitting the space bar outputs the current playback time.
+You should now have two reasonably accurate "timestamps" displayed.
+If they look reasonable, add them to your scene list (changes will be automatically picked up), 
+then review your additions by rewinding your player and letting it play through the scene in question again.
+It should now skip it appropriately.  If not, adjust your timestamps and try again.
 
-So you could basically notice something you want to add to the list, add it to the file, then go back a few seconds 
+So you basically notice something you want to add to the list, add it to the file, then go back a few seconds 
 in your media player, and it should now be muted/blanked out automatically.
+
+Once you're done then you can contribute your scene list if desired, to the project [1].
 
 [1] http://github.com/rdp/sensible-cinema/issues
 [2] The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
