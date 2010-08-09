@@ -112,7 +112,7 @@ class OverLayer
         start = translate_string_to_seconds(start)
         endy = translate_string_to_seconds(endy)
         if start == 0 || endy == 0
-          p 'warning--possible error in the scene list someline not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $DEBUG
+          p 'warning--possible error in the scene descriptions file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $DEBUG
           # drop it in bitbucket...
         else
           new[start] = endy

@@ -1,21 +1,17 @@
-Basically to create a player description you tell it the window title and the coordinates of the "clock" as it plays, including the digits
+Basically to create a player description you tell it the window title and the coordinates 
+of the "clock" as it plays, including the digits
 
+Use the others are examples
 
-  some tips:
+  Some tips:
   
-    use WinCheat to see window names (under "Text")
-    run scene-skipper with -v -- it will dump a screenshot of the window in question
-    use Paint.net to examine the dumped graphic and get coords
-
-you can specify "test" in place of the "mutes_list.yml" to have it just the player_description.yml and exit
-it will screen capture your segment to your current working directory.
-
-Paint.net is quite handy.
+    use WinCheat to help with window names (under "Text") (alt+tab helps, too, since it displays titles).
+    run scene-skipper with 'test' for the scene description filename: it will dump a screenshot using the player description
+    use Paint.net to examine the dumped graphic and get coords (invert it to get easy negative coords).
 
 NB that the clock coords can have negative start offsets, which mean "distance from the bottom right corner"
 
-Also you can "invert" the image to more easily get the offsets if you have to use negative offsets.
+NB that you can specify "desktop" for the window name, meaning full screen.  This is easier, though not necessarily better,
+than finding out the real way.
 
-NB that you can specify "desktop" for the window name meaning full screen.
-
-Post back with difficulties or questions.
+Post back with difficulties and/or questions.

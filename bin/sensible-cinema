@@ -40,13 +40,13 @@ else
     sleep 4
   else
     if !File.exist? scene_list.to_s
-      scene_list = FileChooser.choose_file("SELECT SCENE LIST", __dir__  + "/../zamples/scene_lists")
+      scene_list = FileChooser.choose_file("SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists")
     end
     unless scene_list
-        puts "error: have to specify a scene list\n    or specify \"test\" on the command line if you just want to snapshot your player"
+        puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
         exit 1
     end
-    puts 'Selected scene list ' + File.basename(scene_list) + " (#{scene_list})", ''
+    puts 'Selected scene descriptions file ' + File.basename(scene_list) + " (#{scene_list})", ''
     overlay = OverLayer.new(scene_list)  
     
   end
