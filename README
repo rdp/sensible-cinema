@@ -107,7 +107,7 @@ Q. What movies are available to watch online?
 A. Not many are available free (hulu, youtube have a few), but Netflix has quite a few for its default subscription.  
    Plus you can watch your existing DVD's on your computer, or rent or borrow them and watch them there.
 
-Q. Why does my mouse bounce up and down while this thing is playing?
+Q. Why does my mouse bounce up and down while sensible-cinema is going?
 
 A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where 
    you're at.  Message me if this bugs you too much and we'll see what we can do for it.
@@ -127,8 +127,10 @@ See the LICENSE file for licensing, usage terms (gplv3).
 
 == Related ==
 
-http://imdb.com (click on "parent's guide") and http://kids-in-mind.com are two sites that tend to have
-reasonably good lists of what all goes on in a movie
+http://imdb.com tends to have
+reasonably good lists of what all goes on in a movie (find a movie, click on "parent's guide").
+Sometimes it even lists the time signatures that events occur (ex: "Labyrinth" http://www.imdb.com/title/tt0047673/parentalguide)
+which you could use to translate into a sensible-cinema compatible scene list.
 
 == Feedback ==
 
