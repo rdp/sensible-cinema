@@ -5,29 +5,25 @@
   release ruby-y-y why not, it's interesting
     "Linux compat anyone?"
   
-== raw backlog ... based on user request.. ==
+== random backlog ... based on user request..remember:  just local files for my own needs...==
 
-remember:  just local files for my own needs...
 utube nuki
-generations profanidade
+generations first profani
 
-screencast
+screencast of something helpful.
+
+optimize imdb: http://www.imdb.com/board/bd0000042/thread/58361958?d=58361958, english friendlier url's
+
 bundle fewer imagemagick binaries
-
-"do" star trek generations hulu scene list
-  "**g" (Hulu near beginning)
-  "may g** have mercy on your soul"
-  Data when they crash into the earth
-
-finish happy feet scene list
 
 just plow forward, to "grab" available ideas...
 
 netflix
   
 add my own stuff to imdb...
+antz to imdb...
 
-imdb parser
+imdb parser...somehow
 
 make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
 
@@ -39,7 +35,7 @@ advertise like to lay men, to try to popularize
 
 with VLC non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
 
-youtube non full screened...hmmm
+youtube/hulu non full screened...hmmm
 
 overlay with wav file (would work for VLC, could also "click to mute" for the others...)
 
@@ -56,9 +52,7 @@ a web runnable? Why not?
 
 blank out with a user specifiable color (?)
 
-Auto mute commercials?
-
-rruby.net rubyy.net
+Auto mute/blank commercials?
 
 new github username
 
@@ -74,11 +68,6 @@ overlay alpha transparent pic
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
 magnify video parts (?)
-overlay with transparent gif?
-
-OCR
-  pop it up only every so often (?)
-    after commercials?
 
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
@@ -86,18 +75,16 @@ user customizable levels...
 user-assignable "confidence" (how much time to 'wrap' surround the mutes, etc. to accomodate for slow computers/laggy internet/different players/poor input)
 
 auto-assignment of EDL's to media:
-  DVD's
-    VLC
-    directory of scene-lists
-  web plugin?
+  DVD's (right click...)
+  web browser plugin?
+  auto start on DVD insertion (?)
+    and show appropriate scene-lists available based on title/md5 of something?
 
 Programmatically do all of the above, by driving a player with its real API.
   VLC
-    Allow it to make mp4's somewhere.
-    See if burnable to DVD.
-    web interface?
-  auto start on DVD insertion (?)
-    and show appropriate scene-lists available based on title/md5 of something?
+    Allow it to record to mp4's somewhere.
+    See if burnable to DVD/CD ...
+    (use web interface?)
     
 never do unless paid:
 
