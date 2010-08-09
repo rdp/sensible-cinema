@@ -87,7 +87,7 @@ class OverLayer
     @mutex = Mutex.new
     @cv = ConditionVariable.new
     @file_mtime = nil
-    reload_yaml!
+    check_reload_yaml
     @start_time = Time.now_f # assume they want to start immediately...
     if minutes
       self.set_seconds self.class.translate_string_to_seconds(minutes)
