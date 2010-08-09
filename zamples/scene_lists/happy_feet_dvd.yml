@@ -1,5 +1,5 @@
 title: Happy Feet
-source: VLC DVD
+source: DVD (VLC)
 mutes:
   1:45 : 2:25   # sensuality: let's talk about eggs, baby...
   34:44 : 34:47 # "kiss our bums"
@@ -8,6 +8,5 @@ mutes:
 blank_outs:
   "55:35" : "55:42.0" # sensuality: some "questionable" dancing
 
-overall: "feels somewhat odd, makers definitely have an agenda,
-which appears to be environmentalism, a bit of sensualism, and anti-religion/authority.
-It has lots of varied, fun music.  Something of an agenda."
+the good: "fun graphics, lots of varied, fun music"
+the bad: bit of a liberal agenda
