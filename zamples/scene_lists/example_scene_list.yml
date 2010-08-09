@@ -1,8 +1,8 @@
-title: Forever Strong
-source: Hulu
-version: 0.4.8
+# comments can go after the # on each line
+title: Forever Strong 
+source: Hulu # these aren't required fields -- mutes and blank_outs are
 mutes:
-  2.0 : 3.0 # comments can go after the # on each line
+  2.0 : 3.0 
   4.0 : 5.0 # mute from second 4 to second 5
   9.0 : 13.0 # mute from second 9 to second 13
   44.0 : 50.0 # mute for 6 seconds starting at second 44
@@ -17,3 +17,4 @@ mutes:
 blank_outs:
   "00:15" : "00:18" # blank from second 15 to 18
   01:01 : "01:02.0" # blank from one minute one second to one minute two seconds, etc.
+  1:00:00 : 1:00:30 # note also that if you blank something out it isn't muted unless you *also* add it to the mute list, above. Message me if you want that changed.
