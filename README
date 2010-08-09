@@ -1,12 +1,12 @@
-Sensible-cinema is a program that aims to allow you to do edit-decision-list scene selection (i.e. "mute out" or "bleep out" bad scenes)
-on any arbitrary media player.
+Sensible-cinema is a program that allows you to do edit-decision-list scene selection (i.e. "mute out" 
+or "bleep out" bad scenes) on arbitrary players like netflix online, vlc.
 
 Currently it takes as input a list of known "skip-worthy" scenes (profanity, violence, annoying songs, whatever you don't like). 
 It then tracks the player you are using, as it is playing, and mutes or blanks out the system screen appropriately, 
 during the scenes specified.
 
-Currently it is programmed out of the box to work with hulu and VLC player on windows.  It isn't hard to add new players, 
-and probably wouldn't be super hard to add more operating systems.
+Currently it is programmed out of the box to work with hulu and VLC player on windows.  It isn't hard to 
+add new players,and probably wouldn't be super hard to add more operating systems.
 
 The concept isn't all that novel: http://en.wikipedia.org/wiki/Edit_decision_list
 
@@ -26,8 +26,8 @@ You could also specify those two filenames on the command-line, if desired, like
 Sensible-cinema will now run in your console window, screen tracking the player's timer to monitor the playback position
 and react appropriately.
 
-You'll know that it's working if, when you change the time of your player (ex: dragging it to a new spot in the playback), 
-the screen output in sensible-cinema's console should change to match the new time.
+You'll know that it's working if, when you change the time of your player (ex: dragging it to a new spot 
+in the playback), the screen output in sensible-cinema's console should change to match the new time.
 
 It is presumed that you'll then minimize the console window and enjoy the movie.
 
@@ -79,8 +79,8 @@ scene list (changes will be automatically picked up), then review your edited sc
 and letting it play through the scene in question.  It should now skip it appropriately.  If not, 
 adjust your timestamps and try again.
 
-So you could basically notice something you want to add to the list, add it to the file, then go back a few seconds in your
-media player, and it should now be muted/blanked out automatically.
+So you could basically notice something you want to add to the list, add it to the file, then go back a few seconds 
+in your media player, and it should now be muted/blanked out automatically.
 
 [1] http://github.com/rdp/sensible-cinema/issues
 
@@ -102,8 +102,8 @@ A. Not many are available free (hulu, youtube have a few), but Netflix has quite
 
 Q. Why does my mouse bounce up and down while this thing is playing?
 
-A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where you're at.
-   Message me if this bugs you too much and we'll see what we can do for it.
+A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where 
+   you're at.  Message me if this bugs you too much and we'll see what we can do for it.
 
 Q. Why does it seem really laggy at screen detection at the beginning?
 
