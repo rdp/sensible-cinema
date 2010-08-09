@@ -1,13 +1,14 @@
-Sensible-cinema is a program that aims to allow you to do arbitrary scene selection (i.e. "mute out" or "bleep out" bad scenes).
+Sensible-cinema is a program that aims to allow you to do edit-decision-list scene selection (i.e. "mute out" or "bleep out" bad scenes)
+on any arbitrary media player.
 
 Currently it takes as input a list of known "skip-worthy" scenes (profanity, violence, annoying songs, whatever you don't like). 
-It then tracks the player you are using, as it is playing, and mutes or blanks out the system screen appropriately, during the scenes
-specified.
+It then tracks the player you are using, as it is playing, and mutes or blanks out the system screen appropriately, 
+during the scenes specified.
 
-Currently it is known to work for for hulu and VLC playback on windows.  It also isn't hard to add new players, 
+Currently it is programmed out of the box to work with hulu and VLC player on windows.  It isn't hard to add new players, 
 and probably wouldn't be super hard to add more operating systems.
 
-The concept isn't new: http://en.wikipedia.org/wiki/Edit_decision_list
+The concept isn't all that novel: http://en.wikipedia.org/wiki/Edit_decision_list
 
 == How to use ==
 
@@ -59,24 +60,24 @@ mutes:
 blank_outs:
   "01:00:00" : "01:01:02.5" # also blank out (overlay with blank window) the abve muted scene.
 
-Here's more detail
+Here's one with more detail
 
 http://github.com/rdp/sensible-cinema/blob/master/zamples/scene_lists/example_scene_list.yml
 
 Basically your job is to save a file like that somewhere, then start sensible-cinema and instruct it to use your new file.
 
-Once you have created a new file for a common media, you can submit it back [1] to have it incorporated with sensible-cinema
-for others to use, as well.
+Once you have created a new file for a common media, you can submit it back [1] to have it incorporated 
+with sensible-cinema for others to use, as well.
 
 So here is the current easiest way to create you scene list.
 First create a blank file, and select it as startup time in sensible-cinema (even though it's still blank).
 Now "as you watch" the movie, we're going to edit and test that file.
 As you watch and a questionable section is discovered, go back in your player, then just before and just after 
-the scene, hit the space bar *in the sensible-cinema window*
+the scene, hit the space bar *in the sensible-cinema window*.
 This will output the current time each time you hit the space bar. If your timestamps look reasonable, add them to you
 scene list (changes will be automatically picked up), then review your edited scene by rewinding your player
-and letting it play through the scene in question.  It should now skip it appropriately.  If not, adjust your timestamps
-and try again.
+and letting it play through the scene in question.  It should now skip it appropriately.  If not, 
+adjust your timestamps and try again.
 
 So you could basically notice something you want to add to the list, add it to the file, then go back a few seconds in your
 media player, and it should now be muted/blanked out automatically.
@@ -87,21 +88,21 @@ media player, and it should now be muted/blanked out automatically.
 
 Q. Can I watch movies this way on my TV, not just on my computer?
 
-A. Not yet. Well maybe.  Currently you'll either need to attach your computer to your TV
-   (buy some long cables, or a new graphics card, etc.)
-   or get some other computer that you can move closer to the TV and do the same (ex: buy a used older laptop with s-video out).
-   I'd be happy to do a linux port of sensible-cinema if anybody needs that for their dedicated TV computer.
-   There has also been some work toward getting your computer to stream what it plays "live" to your wii/ps3/xbox.
-   github message me if you're interested in trying it out.
+A. Not yet. And maybe.  Currently you'll either need to attach your computer to your TV
+   (buy some long cables, or a new graphics card, etc.) or get some computer that you can move closer to the TV and do the same 
+   (ex: buy a used older laptop with s-video out, use that).
+   I'd be happy to do a linux port of sensible-cinema if anybody requests it for their dedicated TV computer.
+   There has also been some work toward getting your computer to stream "live" to your wii/ps3/xbox.
+   github message me if you're interested in trying it out!
 
 Q. What movies are available to watch online?
 
-A. Not many are available free (hulu, youtube have a few), but Netflix has quite a few.  Plus you can watch your DVD's
-   on your computer monitor, or rent or borrow them.
+A. Not many are available free (hulu, youtube have a few), but Netflix has quite a few for its default subscription.  
+   Plus you can watch your existing DVD's on your computer, or rent or borrow them and watch them there.
 
 Q. Why does my mouse bounce up and down while this thing is playing?
 
-A. This enables you to keep your on screen tracker visible, which allows sensible-cinema to track where you're at.
+A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where you're at.
    Message me if this bugs you too much and we'll see what we can do for it.
 
 Q. Why does it seem really laggy at screen detection at the beginning?
@@ -115,10 +116,11 @@ Made programming this actually somewhat a pleasure.
 
 == License ==
 
-See the LICENSE for licensing, usage terms (gplv3).
+See the LICENSE file for licensing, usage terms (gplv3).
 
 == Feedback ==
 
 Feedback, including feature requests, welcome.
+
 http://github.com/rdp/sensible-cinema
 http://github.com/rdp me
