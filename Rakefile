@@ -12,7 +12,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'mini_magick' # ocr
     s.add_development_dependency 'hitimes' # now jruby compat. yea!
     s.add_dependency 'sane', '>= 0.22.0'
-    s.add_dependency 'rdp-win32screenshot', '>= 0.0.6.2'
+    s.add_dependency 'win32screenshot', '>= 0.0.6'
     s.extensions = ["ext/mkrf_conf.rb"]
 end
 

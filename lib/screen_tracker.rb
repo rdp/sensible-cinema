@@ -15,15 +15,15 @@ class ScreenTracker
   
   attr_accessor :hwnd
   
-  # digits like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
-  # digits share the height...
+  # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
+  # digits share the height start point, have their own x and width...
   def initialize name_or_regex,x,y,width,height,digits=nil,callback=nil
     # cache to save us 0.00445136 per time LOL
     @name_or_regex = name_or_regex
     get_hwnd
     pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
-    always_zero, always_zero, max_x, max_y = Win32::Screenshot::BitmapMaker.dimensions_for(@hwnd)
+    max_x, max_y = Win32::Screenshot::Util.dimensions_for(@hwnd)
     if(x < 0 || y < 0)
       if x < 0
         x = max_x + x
@@ -112,10 +112,10 @@ class ScreenTracker
   end
   
   def wait_till_next_change
-    get_hwnd # reget it, just in case...
+    # dies in jruby currently...sigh...get_hwnd # reget it, just in case...
     original = get_bmp
+    time_since_last = Time.now
     loop {
-      p 'in loop' if $VERBOSE
       current = get_bmp
       if current != original
         if @digits
@@ -126,11 +126,14 @@ class ScreenTracker
         return
       end
       sleep 0.02
+      if(Time.now - time_since_last > 5)
+        p 'warning--unable to track for some reason--may need to restart sensible-cinema'
+        time_since_last = Time.now
+      end
     }
   end
   
   def attempt_to_get_time_from_screen
-          p 'attempting screen track' if $VERBOSE
           out = {}
           dump_digits if $DEBUG            
           digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...

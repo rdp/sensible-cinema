@@ -13,13 +13,10 @@ describe ScreenTracker do
       unless $pid1
         begin
           Win32::Screenshot.window(/silence.wav/, 0) {}
-          require 'ruby-debug'
-          debugger
           raise Exception.new('must kill old vlcs first')
         rescue
           # this way we'll only have one up...
-          $pid1 = IO.popen('"/program files/VideoLan/VLC/vlc.exe" silence.wav').pid # jruby can't open it directly yet
-          p 'set pid1 as', $pid1
+          $pid1 = IO.popen('"/program files/VideoLan/VLC/vlc.exe" silence.wav').pid # jruby can't open it directly yet, too...
           sleep 2
         end
       end
@@ -89,7 +86,7 @@ describe ScreenTracker do
         a.get_bmp
         x,y,x2,y2=a.get_relative_coords
         hwnd = Win32::Screenshot::BitmapMaker.hwnd("VLC")
-        always_zero, always_zero, max_x, max_y = Win32::Screenshot::BitmapMaker.dimensions_for(hwnd)
+        max_x, max_y = Win32::Screenshot::Util.dimensions_for(hwnd)
         x.should == max_x-10
         y.should == max_y-10
         x2.should == x+5
@@ -208,6 +205,7 @@ describe ScreenTracker do
         end
         
         it "should be able to scan for/identify new windows, since VLC changes signatures" do
+          fail "not possible yet, so hangs"
           output = @a.wait_till_next_change 
           output[0].should_not be_nil
           old_handle = @a.hwnd
@@ -221,21 +219,15 @@ describe ScreenTracker do
       end
 
       def kill_vlc
-      begin
         assert $pid1
         # bring redcar to the foreground
         # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?
         unless Socket.gethostname == "PACKRD-1GK7V"
           Win32::Screenshot.window(/universal/, 0) rescue nil
         end
-        p 'killing', $pid1
         Process.kill 9, $pid1 # need this process re-started each time or the screen won't change for the screen changing test
         FileUtils.rm_rf Dir['*.bmp']
         $pid1 = nil
-      rescue Exception => e
-        p 'got ending exception', e
-        raise e
-      end
       end
       
       after(:all) do
