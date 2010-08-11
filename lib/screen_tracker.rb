@@ -13,26 +13,14 @@ class ScreenTracker
     return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"], digits, callback)
   end
   
+  attr_accessor :hwnd
+  
   # digits like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height...
   def initialize name_or_regex,x,y,width,height,digits=nil,callback=nil
     # cache to save us 0.00445136 per time LOL
-    if name_or_regex.to_s.downcase == 'desktop'
-      # full screen option
-      @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
-    else
-      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
-    end
-    unless @hwnd
-      print 'perhaps not running yet? [%s] START IT FAST' % name_or_regex
-      until @hwnd
-        sleep 4
-        print ' trying again .'
-        STDOUT.flush
-        @hwnd = Win32::Screenshot::BitmapMaker.hwnd(name_or_regex)
-      end
-      puts 'found window'
-    end
+    @name_or_regex = name_or_regex
+    get_hwnd
     pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
     always_zero, always_zero, max_x, max_y = Win32::Screenshot::BitmapMaker.dimensions_for(@hwnd)
@@ -51,6 +39,26 @@ class ScreenTracker
     raise 'poor height or wrong window' if @y2 > max_y || @y2 == y
     @digits = digits
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
+  end
+  
+  def get_hwnd
+    if @name_or_regex.to_s.downcase == 'desktop'
+      # full screen option
+      @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
+    else
+      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex)
+    end
+    unless @hwnd
+      print 'perhaps not running yet? [%s] START IT FAST' % @name_or_regex
+      until @hwnd
+        sleep 4
+        print ' trying again .'
+        STDOUT.flush
+        @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex)
+      end
+      puts 'found window'
+    end
+
   end
   
   def get_bmp
@@ -104,14 +112,16 @@ class ScreenTracker
   end
   
   def wait_till_next_change
+    get_hwnd # reget it, just in case...
     original = get_bmp
     loop {
+      p 'in loop' if $VERBOSE
       current = get_bmp
       if current != original
         if @digits
           return attempt_to_get_time_from_screen
         else
-          puts 'screen time change only detected...' if $VERBOSE
+          puts 'screen time change only detected...'
         end
         return
       end
@@ -120,6 +130,7 @@ class ScreenTracker
   end
   
   def attempt_to_get_time_from_screen
+          p 'attempting screen track' if $VERBOSE
           out = {}
           dump_digits if $DEBUG            
           digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
@@ -132,12 +143,13 @@ class ScreenTracker
                   @a ||= 1
                   @a += 1
                   p 'unable to identify digit!' + type.to_s + @a.to_s
-                  File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type])
+                  File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
                 end
                 if type == :hours
                   digit = 0 # this one can fail in VLC
                 else
                   # early return
+                  p 'identity failure' if $VERBOSE
                   return
                 end
               end

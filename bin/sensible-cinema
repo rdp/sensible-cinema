@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'sane'
 
+Thread.abort_on_exception=true #gah
+
 for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser']
   require_relative '../lib/' + file
 end

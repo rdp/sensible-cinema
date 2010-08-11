@@ -6,16 +6,27 @@ require 'pathname'
 describe ScreenTracker do
 
   if RUBY_PLATFORM =~ /java/
-    it "is pending a java bug..."
+    it "is pending several java bugs..." # ffi, AND popen#pid...
   else
-    before(:all) do
-      begin
-        Win32::Screenshot.window(/silence.wav/, 0) {}
-      rescue
-        # this way we'll only have one up...
-        @pid1 = IO.popen('open.bat').pid # jruby can't open it directly yet
-        sleep 2
+    
+    def start_vlc
+      unless $pid1
+        begin
+          Win32::Screenshot.window(/silence.wav/, 0) {}
+          require 'ruby-debug'
+          debugger
+          raise Exception.new('must kill old vlcs first')
+        rescue
+          # this way we'll only have one up...
+          $pid1 = IO.popen('"/program files/VideoLan/VLC/vlc.exe" silence.wav').pid # jruby can't open it directly yet
+          p 'set pid1 as', $pid1
+          sleep 2
+        end
       end
+    end
+    
+    before(:all) do
+      start_vlc
     end
 
     before do
@@ -167,12 +178,12 @@ describe ScreenTracker do
         it "should use OCR against the changes appropriately" do
           output = @a.wait_till_next_change # grab a real change
           output[0].should be_a(String)
-          output[0].should include("00:0") # let's hope it runs quickly...
+          output[0].should include("00:") # like 00:09 or what not...
           output[0].should match(/[1-9]/)
           output[1].should be_a Float
         end
         
-        it "should be ok with a failed hours read" do
+        it "should be ok with a failed hours image" do
           @a.stub!(:get_digits_as_bitmaps) do
             four = File.binread('images/4.bmp')
             {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
@@ -181,14 +192,13 @@ describe ScreenTracker do
           @a.attempt_to_get_time_from_screen[0].should == "0:44:44"
         end
         
-      context "with an OCR that can change from hour to minutes during ads" do
-          it "should ocr slash...[in other]"
-          it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" # might already do this
+        context "with an OCR that can change from hour to minutes during ads" do
+          it "should detect"
         end
 
         it "should be able to use invert on images" do
           @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13,
-          {:should_invert => true, :hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_tens => [-72, 7], :second_ones => [-66, 7]} )
+            {:should_invert => true, :hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_tens => [-72, 7], :second_ones => [-66, 7]} )
           got_it = nil
           OCR.stub!(:identify_digit) {|*args|
             got_it = args
@@ -196,22 +206,40 @@ describe ScreenTracker do
           @a.identify_digit('some binary bitmap data')
           got_it[1][:should_invert].should be_true
         end
+        
+        it "should be able to scan for/identify new windows, since VLC changes signatures" do
+          output = @a.wait_till_next_change 
+          output[0].should_not be_nil
+          old_handle = @a.hwnd
+          kill_vlc
+          start_vlc
+          output = @a.wait_till_next_change 
+          output[0].should_not be_nil
+          old_handle.should_not == @a.hwnd
+        end
 
       end
 
-      after(:all) do
-        begin
-          # bring redcar to the foreground
-          # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?
-          unless Socket.gethostname == "PACKRD-1GK7V"
-            Win32::Screenshot.window(/universal/, 0) rescue nil
-          end
-          Process.kill 9, @pid1 rescue nil # need this re-started each time or the screen won't change for the screen changing test
-          FileUtils.rm_rf Dir['*.bmp'] unless $DEBUG
-        rescue => e
-          puts 'got after bug:', e # until this bug is fixed... http://github.com/rspec/rspec-core/issues#issue/21
-          throw e
+      def kill_vlc
+      begin
+        assert $pid1
+        # bring redcar to the foreground
+        # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?
+        unless Socket.gethostname == "PACKRD-1GK7V"
+          Win32::Screenshot.window(/universal/, 0) rescue nil
         end
+        p 'killing', $pid1
+        Process.kill 9, $pid1 # need this process re-started each time or the screen won't change for the screen changing test
+        FileUtils.rm_rf Dir['*.bmp']
+        $pid1 = nil
+      rescue Exception => e
+        p 'got ending exception', e
+        raise e
+      end
+      end
+      
+      after(:all) do
+        kill_vlc
       end
     end
   end

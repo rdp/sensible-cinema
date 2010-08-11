@@ -100,14 +100,15 @@ Q. Can I watch movies this way on my TV, not just on my computer?
 
 A. Not yet. And maybe.  Currently you'll either need to attach your computer to your TV
    (buy some long cables, or a new graphics card, etc.) or get some computer that you can move closer to the TV and do the same 
-   (ex: buy a used older laptop with s-video out, use that).
+   (ex: buy a used older laptop with s-video out, use that).  If you're really aggressive you
+   could run an ethernet cable from your computer, as well [1].
    I'd be happy to do a linux port of sensible-cinema if anybody requests it for their dedicated TV computer.
    There has also been some work toward getting your computer to stream "live" to your wii/ps3/xbox.
    github message me if you're interested in trying it out!
 
 Q. What movies does this work with?
 
-A. Any that you program it for  :) Assuming the player is compatible, which most probably are.
+A. Any that you program it for :) (Assuming the player is compatible, which most probably are.)
 
 Q. What movies are freely available to watch online?
 
@@ -119,13 +120,15 @@ Q. Why does my mouse bounce up and down while sensible-cinema is going?
 A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where 
    you're at.  Message me if this bugs you too much and we'll see what we can do for it.
 
-Q. Why does it seem really laggy at screen detection at the beginning?
+Q. Why does it seem really laggy at time detection at the beginning?
 
 A. It takes it awhile to warm up its digit detection.  Ping me if you would like to see this improved speed-wise.
 
+[1] http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
+
 == Thanks ==
 
-Thanks to Jarmo for the win32-screenshot gem, and the mini_magick gem authors, jruby guys, etc.  
+Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
 Made programming this actually somewhat a pleasure.
 
 == License ==
@@ -135,7 +138,7 @@ See the LICENSE file for licensing, usage terms (gplv3).
 == Related ==
 
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).
-Sometimes it even lists the time signatures for events occur (ex: "Labyrinth" http://www.imdb.com/title/tt0047673/parentalguide)
+Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0047673/parentalguide)
 which you could use to translate into a sensible-cinema compatible list.
 
 == Feedback ==
