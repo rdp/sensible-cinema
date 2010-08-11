@@ -17,6 +17,8 @@ optimize imdb: http://www.imdb.com/board/bd0000042/thread/58361958?d=58361958, e
 
 bundle fewer imagemagick binaries
 
+TSR that monitors "oh you're opening VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu?"
+
 just plow forward, to "grab" available ideas...
 
 netflix
@@ -59,10 +61,11 @@ new github username
 
 replay parts
 
-overlay/replace with some url of audio or video
+overlay/replace current playback with some url of audio or video
 
 control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
+control location programmatically (using mouse) on the player itself.
 
 overlay alpha transparent pic
 
