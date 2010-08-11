@@ -111,7 +111,7 @@ class ScreenTracker
         if @digits
           return attempt_to_get_time_from_screen
         else
-          puts 'screen time change only detected...' if $VERBOSE
+          puts 'screen time change only detected...'
         end
         return
       end
@@ -120,6 +120,7 @@ class ScreenTracker
   end
   
   def attempt_to_get_time_from_screen
+    p 'attempting screen track' if $VERBOSE
           out = {}
           dump_digits if $DEBUG            
           digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
@@ -138,6 +139,7 @@ class ScreenTracker
                   digit = 0 # this one can fail in VLC
                 else
                   # early return
+                  p 'identity failure' if $VERBOSE
                   return
                 end
               end
@@ -158,7 +160,9 @@ class ScreenTracker
     Thread.new {
       loop {
         out_time, delta = wait_till_next_change
+        p 'calling back' if $VERBOSE
         @callback.timestamp_changed out_time, delta
+        p 'done callback' if $VERBOSE
       }
     }
   end

@@ -181,9 +181,8 @@ describe ScreenTracker do
           @a.attempt_to_get_time_from_screen[0].should == "0:44:44"
         end
         
-      context "with an OCR that can change from hour to minutes during ads" do
-          it "should ocr slash...[in other]"
-          it "with VLC should be able to recognize when it goes past an hour somehow...probably by presence of hourly colon" # might already do this
+        context "with an OCR that can change from hour to minutes during ads" do
+          it "should detect"
         end
 
         it "should be able to use invert on images" do

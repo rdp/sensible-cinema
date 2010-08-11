@@ -96,7 +96,7 @@ describe OverLayer do
     o.continue_until_past_all false
   end
 
-  it 'should be able to go past the end'
+  it 'should be able to go past the end' # ??
 
   it 'should allow you to change the current time' do
     @o.start_thread
@@ -189,12 +189,24 @@ describe OverLayer do
   end
   
   it "should not accept the input when you pass it poor yaml" do
-    yaml = <<-YAML
+    write_yaml  <<-YAML
     :mutes:
        a : 08:56.0 # first one there is invalid
     YAML
-    out = OverLayer.translate_yaml yaml
-    out[:mutes].should be_blank    
+    out = OverLayer.new 'temp.yml'
+    out.all_sequences[:mutes].should be_blank    
+    write_yaml <<-YAML
+    :mutes:
+       01 : 02
+    YAML
+    out.reload_yaml!
+    out.all_sequences[:mutes].should_not be_blank    
+    write_yaml <<-YAML
+    :mutes:
+       01 : # failure
+    YAML
+    # should have kept the old
+    out.all_sequences[:mutes].should_not be_blank
   end
   
   it "should not accept zero start input" do
@@ -253,7 +265,8 @@ describe OverLayer do
     out = OverLayer.translate_yaml ""
     out[:mutes].should be_blank
   end
-
+  
+  
   it "should translate strings as well as symbols" do
     yaml = <<-YAML
     mutes:
@@ -261,13 +274,13 @@ describe OverLayer do
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].should == [[1, 3]]
+
   end
 
   it "should disallow zero or less length intervals"
   it "should disallow non-sorted intervals"
   it 'should reject overlapping settings...I guess'
-  it 'should not die if yaml errors are introduced at runtime'
-
+  
   it "should allow for 1:01:00.0 (double colon) style yaml input" do
     write_yaml <<-YAML
     :mutes:

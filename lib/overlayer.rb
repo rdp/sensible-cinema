@@ -50,9 +50,11 @@ class OverLayer
       reload_yaml!
       @file_mtime = current_mtime 
     else
-      p 'same mtime:', @file_mtime if $DEBUG && $VERBOSE
+      #p 'same mtime:', @file_mtime if $DEBUG && $VERBOSE
     end
   end
+  
+  attr_accessor :all_sequences
   
   def reload_yaml!
     @all_sequences = OverLayer.translate_yaml(File.read(@filename))
@@ -319,7 +321,7 @@ class OverLayer
           time_till_next_mute_starts = next_point - cur_time
         end
         
-        pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
+       # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         set_states!
