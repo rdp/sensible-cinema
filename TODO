@@ -5,15 +5,23 @@
   release ruby-y-y why not, it's interesting
     "Linux compat anyone?"
   utube nuki (xp?)
-  generations first profanidade...
+  generations the first profanidade...
+  compare labyrinth timings with a real DVD player...
   
 == random backlog ... based on user request..remember:  just local files for my own needs...==
 
+make it "quieter" at parts.
+
+release a zip file that they can just click on something to run it...self-extractor yeah.
+
+reorganize the players...
+make it able to use multiple players so I can maximize VLC...
+
+make it "track" new VLC windows (grr jruby...ffi-inliner?)...
+
 blank overlay "and you are one awesome klingon"
 
-bump win32-screenshot version
-
-screencast of something helpful.
+screencast of something helpful (use, creation).
 
 optimize imdb: http://www.imdb.com/board/bd0000042/thread/58361958?d=58361958, english friendlier url's
 
