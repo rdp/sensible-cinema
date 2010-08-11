@@ -60,6 +60,7 @@ new github username
 replay parts
 
 overlay/replace with some url of audio or video
+  user editable overlays (like a wiki...)
 
 control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
@@ -74,6 +75,8 @@ user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
 
 user-assignable "confidence" (how much time to 'wrap' surround the mutes, etc. to accomodate for slow computers/laggy internet/different players/poor input)
+
+
 
 auto-assignment of EDL's to media:
   DVD's (right click...)
