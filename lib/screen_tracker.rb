@@ -133,7 +133,7 @@ class ScreenTracker
                   @a ||= 1
                   @a += 1
                   p 'unable to identify digit!' + type.to_s + @a.to_s
-                  File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type])
+                  File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
                 end
                 if type == :hours
                   digit = 0 # this one can fail in VLC
