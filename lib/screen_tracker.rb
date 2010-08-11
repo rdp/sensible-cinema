@@ -120,7 +120,7 @@ class ScreenTracker
   end
   
   def attempt_to_get_time_from_screen
-    p 'attempting screen track' if $VERBOSE
+          p 'attempting screen track' if $VERBOSE
           out = {}
           dump_digits if $DEBUG            
           digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
