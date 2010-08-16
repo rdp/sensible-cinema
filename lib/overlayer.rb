@@ -4,7 +4,7 @@ require 'timeout'
 require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
-require 'pp' # pretty_inspect
+require 'pp' # for pretty_inspect
 
 class Time
   def self.now_f
@@ -97,8 +97,7 @@ class OverLayer
   
   def self.translate_yaml raw_yaml
     begin
-      all = YAML.load(raw_yaml) || {}
-      
+      all = YAML.load(raw_yaml) || {}      
     rescue NoMethodError
       p 'appears your file has a syntax error in it--perhaps missing quotation marks'
       return
@@ -111,17 +110,21 @@ class OverLayer
       new = {}
       maps.each{|start,endy|
         # both are like 1:02.0
-        return unless start && endy # accomodate for poor YAML 3 => nil
-        start = translate_string_to_seconds(start)
-        endy = translate_string_to_seconds(endy)
-        if start == 0 || endy == 0
-          p 'warning--possible error in the scene descriptions file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $DEBUG
-          # drop it in bitbucket...
-        else
-          new[start] = endy
+        start = translate_string_to_seconds(start) if start
+        endy = translate_string_to_seconds(endy) if endy
+        if start == 0 || endy == 0 || start == nil || endy == nil
+          p 'warning--possible error in the scene descriptions file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
+          # drop this line into the bitbucket...
+          next
         end
+        
+        if start == endy || endy < start
+          p 'warning--found a line that had poor interval', start, endy unless $AM_IN_UNIT_TEST
+          next
+        end
+        new[start] = endy
       }
-      all.delete(type.to_s)
+      all.delete(type.to_s) # cleanup
       all[type] = new.sort
     end
     all

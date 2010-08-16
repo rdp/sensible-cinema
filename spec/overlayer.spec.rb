@@ -1,7 +1,7 @@
 # avoid full loading if testing impossible
 if RUBY_VERSION < '1.9.2' && RUBY_PLATFORM !~ /java/
   puts 'not compatible to MRI < 1.9.2'
-  exit 0 # this isn't a true failure...
+  exit 0 # this isn't a really real failure...
 end
 
 require File.expand_path(File.dirname(__FILE__) + '/common')
@@ -203,15 +203,25 @@ describe OverLayer do
     out.all_sequences[:mutes].should == [[1,2]]
   end
   
-  it "should not accept zero start input" do
+  it "should not accept any zero start input" do
     yaml = <<-YAML
     mutes:
        0 : 1 # we don't like zeroes...for now at least, as they can mean parsing failure...
        3 : 4
     YAML
     out = OverLayer.translate_yaml yaml
-    out[:mutes].should be_blank
+    out[:mutes].should == [[3,4]]
   end
+  
+  it "should disallow zero or less length intervals" do
+    yaml = <<-YAML
+    mutes:
+       1 : 1
+    YAML
+    out = OverLayer.translate_yaml yaml
+    out[:mutes].should == []  
+  end
+
   
   it "should sort yaml input" do
     yaml = <<-YAML
@@ -282,7 +292,6 @@ describe OverLayer do
 
   end  
 
-  it "should disallow zero or less length intervals"
   it 'should reject overlapping settings...I guess'
   
   it "should allow for 1:01:00.0 (double colon) style yaml input" do
