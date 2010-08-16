@@ -40,4 +40,63 @@ end
 #for file in Dir[File.dirname(__FILE__) + "/../lib/*"] do
   # don't load them here in case one or other fails...
   # require file
-  #end
+#end
+
+require 'ffi'
+require 'ffi-inliner'
+
+module GetPid
+  extend FFI::Library
+  extend Inliner
+  ffi_lib 'kernel32'
+  ffi_convention :stdcall
+  attach_function :get_process_id, :GetProcessId, [ :ulong ], :uint
+  
+  #
+  attach_function :get_window_thread_process_id, [:ulong, :pointer], :uint
+  
+  inline <<-CODE
+  #include <windows.h>
+  //#include <strsafe.h> // not available in mingw...
+
+  void ErrorExit() 
+  { 
+    // Retrieve the system error message for the last-error code
+    LPTSTR lpszFunction = "abcdef"; 
+    LPVOID lpMsgBuf;
+    LPVOID lpDisplayBuf;
+    DWORD dw = GetLastError(); 
+
+    FormatMessage(
+        FORMAT_MESSAGE_ALLOCATE_BUFFER | 
+        FORMAT_MESSAGE_FROM_SYSTEM |
+        FORMAT_MESSAGE_IGNORE_INSERTS,
+        NULL,
+        dw,
+        MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+        (LPTSTR) &lpMsgBuf,
+        0, NULL );
+
+    // Display the error message and exit the process
+    printf("here1");
+    lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT, 
+        (lstrlen((LPCTSTR)lpMsgBuf) + lstrlen((LPCTSTR)lpszFunction) + 40) * sizeof(TCHAR)); 
+    printf("here2");
+    snprintf((LPTSTR)lpDisplayBuf, 
+        LocalSize(lpDisplayBuf) / sizeof(TCHAR),
+        TEXT("%s failed with error %d: %s"), 
+        lpszFunction, dw, lpMsgBuf); 
+            printf("here3");
+            MessageBox(NULL, (LPCTSTR)lpDisplayBuf, TEXT("Error"), MB_OK); 
+    printf("here4 ");
+
+    LocalFree(lpMsgBuf);
+    LocalFree(lpDisplayBuf);
+  //  ExitProcess(dw); 
+  }
+  
+  GetWindowThreadProcessId
+  
+  CODE
+  
+end

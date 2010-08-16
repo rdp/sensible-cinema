@@ -5,16 +5,25 @@ require 'pathname'
 
 describe ScreenTracker do
 
+    SILENCE = /silence.*VLC/
+
     def start_vlc
+      # enforce we only have at most one running at a time...
       unless $pid1
         begin
-          Win32::Screenshot.window(/silence.wav/, 0) {}
-          raise Exception.new('must kill old vlcs first')  unless OS.java? # unexpected, even on jruby <sigh>
+          Win32::Screenshot.window(SILENCE, 0) {}
+          raise Exception.new('must kill old vlcs first') # unexpected, even on jruby <sigh>
         rescue
-          # this way we'll only have one up...
           silence = File.expand_path("./silence.wav").gsub("/", "\\")
-          $pid1 = Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # work around for jruby
+          Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # work around for jruby...
           sleep 2
+          
+          $pid1 = GetPid.get_process_id(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
+          p $pid1
+          require 'ruby-debug'
+          debugger
+          GetPid.ErrorExit
+          33
         end
       end
     end
@@ -24,11 +33,11 @@ describe ScreenTracker do
     end
 
     before do
-      @a = ScreenTracker.new(/silence.*VLC/,10,10,20,20)
+      @a = ScreenTracker.new(SILENCE,10,10,20,20)
     end
 
     it "can take a regex or string" do
-      ScreenTracker.new(/silence.*VLC/,10,10,20,20)
+      ScreenTracker.new(SILENCE,10,10,20,20)
       ScreenTracker.new("silence",10,10,20,20)
     end
 
@@ -103,10 +112,10 @@ describe ScreenTracker do
       end
 
       it "should fail with out of bounds or zero sizes" do
-        proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,20,20) }.should raise_error
-        proc { a = ScreenTracker.new(/silence.*VLC/,10,-10,20,20) }.should raise_error
-        proc { a = ScreenTracker.new(/silence.*VLC/,-10,10,0,2) }.should raise_error
-        proc { a = ScreenTracker.new(/silence.*VLC/,10,10,2,0) }.should raise_error
+        proc { a = ScreenTracker.new(SILENCE,-10,10,20,20) }.should raise_error
+        proc { a = ScreenTracker.new(SILENCE,10,-10,20,20) }.should raise_error
+        proc { a = ScreenTracker.new(SILENCE,-10,10,0,2) }.should raise_error
+        proc { a = ScreenTracker.new(SILENCE,10,10,2,0) }.should raise_error
       end
 
     end
@@ -146,7 +155,7 @@ describe ScreenTracker do
     context "given a real player that is moving" do
 
       before do
-        @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13)
+        @a = ScreenTracker.new(SILENCE, -111, -16, 86, 13)
       end
 
       it "should be able to poll the screen to know when something changes" do
@@ -187,11 +196,11 @@ describe ScreenTracker do
         end
         
         context "with an OCR that can change from hour to minutes during ads" do
-          it "should detect"
+          it "should detect this change"
         end
 
         it "should be able to use invert on images" do
-          @a = ScreenTracker.new("silence.wav", -111, -16, 86, 13,
+          @a = ScreenTracker.new(SILENCE, -111, -16, 86, 13,
             {:should_invert => true, :hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_tens => [-72, 7], :second_ones => [-66, 7]} )
           got_it = nil
           OCR.stub!(:identify_digit) {|*args|
@@ -202,7 +211,6 @@ describe ScreenTracker do
         end
         
         it "should be able to scan for/identify new windows, since VLC changes signatures" do
-          #fail "not possible yet in jruby, so hangs"
           output = @a.wait_till_next_change 
           output[0].should_not be_nil
           old_handle = @a.hwnd
@@ -216,14 +224,13 @@ describe ScreenTracker do
       end
 
       def kill_vlc
+        
         assert $pid1
-        # bring redcar to the foreground
-        # this seg faults on windows 7 for me for some reason when run inside the editor itself...swt bug?
-        unless Socket.gethostname == "PACKRD-1GK7V"
-          Win32::Screenshot.window(/universal/, 0) rescue nil
-        end
         Process.kill 9, $pid1 # need this process re-started each time or the screen won't change for the screen changing test
         FileUtils.rm_rf Dir['*.bmp']
+        require 'ruby-debug'
+        debugger
+        33
         $pid1 = nil
       end
       
