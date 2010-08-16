@@ -5,18 +5,15 @@ require 'pathname'
 
 describe ScreenTracker do
 
-  if RUBY_PLATFORM =~ /java/
-    it "is pending several java bugs..." # ffi, AND popen#pid...
-  else
-    
     def start_vlc
       unless $pid1
         begin
           Win32::Screenshot.window(/silence.wav/, 0) {}
-          raise Exception.new('must kill old vlcs first')
+          raise Exception.new('must kill old vlcs first')  unless OS.java? # unexpected, even on jruby <sigh>
         rescue
           # this way we'll only have one up...
-          $pid1 = IO.popen('"/program files/VideoLan/VLC/vlc.exe" silence.wav').pid # jruby can't open it directly yet, too...
+          silence = File.expand_path("./silence.wav").gsub("/", "\\")
+          $pid1 = Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # work around for jruby
           sleep 2
         end
       end
@@ -162,7 +159,7 @@ describe ScreenTracker do
       context "using OCR" do
 
         before do
-          @a = ScreenTracker.new_from_yaml File.read("../zamples/players/vlc_non_full_screened_and_total_length_under_an_hour.yml"), nil
+          @a = ScreenTracker.new_from_yaml File.read("../zamples/players/total_length_under_an_hour/vlc_non_full_screened.yml"), nil
         end
 
         it "should be able to disk dump snapshotted digits" do
@@ -205,7 +202,7 @@ describe ScreenTracker do
         end
         
         it "should be able to scan for/identify new windows, since VLC changes signatures" do
-          fail "not possible yet, so hangs"
+          #fail "not possible yet in jruby, so hangs"
           output = @a.wait_till_next_change 
           output[0].should_not be_nil
           old_handle = @a.hwnd
@@ -235,4 +232,3 @@ describe ScreenTracker do
       end
     end
   end
-end

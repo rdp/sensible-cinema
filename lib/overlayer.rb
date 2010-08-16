@@ -81,7 +81,7 @@ class OverLayer
     OverLayer.new('temp.yml')
   end
   
-  def initialize filename, minutes = nil 
+  def initialize filename
     @filename = filename
     @am_muted = false
     @am_blanked = false
@@ -90,9 +90,6 @@ class OverLayer
     @file_mtime = nil
     check_reload_yaml
     @start_time = Time.now_f # assume they want to start immediately...
-    if minutes
-      self.set_seconds self.class.translate_string_to_seconds(minutes)
-    end
   end
   
   def self.translate_yaml raw_yaml
@@ -121,6 +118,9 @@ class OverLayer
         if start2 == endy2 || endy2 < start2
           p 'warning--found a line that had poor interval', start, endy, type unless $AM_IN_UNIT_TEST
           next
+        end
+        if(endy2 > 60*60*3)
+          p 'warning--found setting past 3 hours [?]', start, endy, type unless $AM_IN_UNIT_TEST
         end
         new[start2] = endy2
       }

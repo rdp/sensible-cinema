@@ -276,10 +276,21 @@ describe OverLayer do
     out[:mutes].should == [[2.0, 3.0], [3, 4]]
   end
   
+  it "should accept numbers that are unreasonably large" do
+    yaml = <<-YAML
+    mutes:
+      1000000 : 1000001
+    YAML
+    out = OverLayer.translate_yaml yaml
+    out[:mutes].should == [[1_000_000, 1_000_001]]
+  end
+  
   it "should accept blank yaml" do
     out = OverLayer.translate_yaml ""
     out[:mutes].should be_blank
   end  
+  
+  it "should not translate symbols"
   
   it "should translate strings as well as symbols" do
     yaml = <<-YAML
@@ -288,10 +299,9 @@ describe OverLayer do
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].should == [[1, 3]]
-
   end  
 
-  it 'should reject overlapping settings...I guess'
+  it 'should reject overlapping settings...maybe?'
   
   it "should allow for 1:01:00.0 (double colon) style yaml input" do
     write_yaml <<-YAML
@@ -408,11 +418,8 @@ describe OverLayer do
       @o.translate_time_to_human_readable(3661).should == "1:01:01.0"
     end
 
-    it "should accept human readable style as input" do
-      o = OverLayer.new 'temp.yml', "01:01.5"
-      o.cur_time.should be >= 61.5
-      # somewhere in there
-      o.cur_time.should be <= 62
+    it "should no longer accept human readable style as starting seconds" do
+      proc { OverLayer.new 'temp.yml', "01:01.5" }.should raise_error(ArgumentError)
     end
 
   end
