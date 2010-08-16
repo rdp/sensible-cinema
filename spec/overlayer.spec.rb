@@ -279,8 +279,7 @@ describe OverLayer do
   it "should accept blank yaml" do
     out = OverLayer.translate_yaml ""
     out[:mutes].should be_blank
-  end
-  
+  end  
   
   it "should translate strings as well as symbols" do
     yaml = <<-YAML
@@ -373,11 +372,23 @@ describe OverLayer do
           @o.get_current_state.should == [true, true, 3.5]
         end
 
+        at(4) do
+          @o.get_current_state.should == [false, false, :done]
+        end
+        
+        # now a bit more complex...
+        
+        @o = OverLayer.new_raw({:mutes => {2.0 => 3.5, 5 => 6}, :blank_outs => {3.0 => 4.0}})
+        
         at(3.75) do
           @o.get_current_state.should == [false, true, 4.0]
         end
-
-        at(4) do
+        
+        at(5) do
+          @o.get_current_state.should == [true, false, 6]
+        end
+        
+        at(6) do
           @o.get_current_state.should == [false, false, :done]
         end
 

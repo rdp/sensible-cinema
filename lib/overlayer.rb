@@ -274,7 +274,9 @@ class OverLayer
       return [nil, nil, :done]
   end
   
-  # returns [true, false, next_moment_of_importance|:done]
+  #
+  # returns [true, false, next_moment_of_importance|:done] ( true, false for if it should be currently muted, blanked )
+  #
   def get_current_state
     all = []
     time = cur_time
@@ -283,7 +285,6 @@ class OverLayer
     end
     output = []
     # all is [[start, end, active]...] or [:done, :done]
-    # so create [true, false, next_moment]
     earliest_moment = 1_000_000
     all.each{|start, endy, active|
       if active == :done
