@@ -152,7 +152,7 @@ describe OverLayer do
 
   it 'should allow for 1:00.0 minute style input' do
     write_yaml <<-YAML
-    :mutes:
+    mutes
       "0:02.0" : "0:03.0"
     YAML
     @o = OverLayer.new 'temp.yml'
@@ -167,14 +167,14 @@ describe OverLayer do
   it "should reload the YAML file on the fly to allow for editing it" do
     # start it with one set to mute far later
     write_yaml <<-YAML
-    :mutes:   
+    mutes   
       "0:11.0" : "0:12.0"
     YAML
     @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good
     write_yaml <<-YAML
-    :mutes:
+    mutes
       "0:00.0001" : "0:01.5"
     YAML
     @o.status # cause it to refresh from the file
@@ -185,19 +185,19 @@ describe OverLayer do
   
   it "should not accept the input when you pass it poor yaml" do
     write_yaml  <<-YAML
-    :mutes:
+    mutes
        a : 08:56.0 # first one there is invalid
     YAML
     out = OverLayer.new 'temp.yml'
     out.all_sequences[:mutes].should be_blank    
     write_yaml <<-YAML
-    :mutes:
+    mutes
        01 : 02
     YAML
     out.reload_yaml!
     out.all_sequences[:mutes].should_not be_blank    
     write_yaml <<-YAML
-    :mutes:
+    mutes
        01 : # failure
     YAML
     # should have kept the old
@@ -206,7 +206,7 @@ describe OverLayer do
   
   it "should not accept zero start input" do
     yaml = <<-YAML
-    :mutes:
+    mutes:
        0 : 1 # we don't like zeroes...for now at least
     YAML
     out = OverLayer.translate_yaml yaml
@@ -215,7 +215,7 @@ describe OverLayer do
   
   it "should sort input" do
     yaml = <<-YAML
-    :mutes:
+    mutes:
       3 : 4
       1 : 2
     YAML
@@ -225,13 +225,13 @@ describe OverLayer do
   
   it "should handle non quoted style numbers in yaml" do
     yaml = <<-YAML
-    :mutes:
+    mutes:
        08:55 : 08:56.0 # valid, will return large Fixnum's
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].should == [[535, 536]]
     yaml = <<-YAML
-    :mutes:
+    mutes:
        01:08:55 : 01:09:55 # actually valid
     YAML
     out = OverLayer.translate_yaml yaml
@@ -240,16 +240,16 @@ describe OverLayer do
 
   it "should translate yaml with the two different types in it" do
     yaml = <<-YAML
-    :mutes:
+    mutes:
        "0:02.0" : "0:03.0"
-    :blank_outs:
+    blank_outs:
        "0:02.0" : "0:03.0"  
     YAML
     out = OverLayer.translate_yaml yaml
     out[:mutes].should == [[2.0, 3.0]]
     out[:blank_outs].should == [[2.0, 3.0]]
     yaml = <<-YAML
-    :mutes:
+    mutes:
        "1:02.11" : "1:03.0"
     YAML
     out = OverLayer.translate_yaml yaml
@@ -258,7 +258,7 @@ describe OverLayer do
 
   it "should accept fixnum 56 => 57 style input" do
     yaml = <<-YAML
-    :mutes:
+    mutes:
       "0:02" : "0:03"
       3 : 4
     YAML
@@ -288,7 +288,7 @@ describe OverLayer do
   
   it "should allow for 1:01:00.0 (double colon) style yaml input" do
     write_yaml <<-YAML
-    :mutes:
+    mutes:
       "1:00.11" : "1:03.0"
     YAML
     @o = OverLayer.new 'temp.yml'
