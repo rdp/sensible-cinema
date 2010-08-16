@@ -25,13 +25,13 @@ class OverLayer
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
-    Muter.mute!
+    Muter.mute! unless defined?($DO_NOT_ACTUALLY_MUTE)
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
-    Muter.unmute!
+    Muter.unmute! unless defined?($DO_NOT_ACTUALLY_MUTE)
   end
   
   def blank!
@@ -58,7 +58,6 @@ class OverLayer
   
   def reload_yaml!
     @all_sequences = OverLayer.translate_yaml(File.read(@filename))
-    # LTODO... @all_sequences = @all_sequences.map{|k, v| v.sort!} etc. and validate...
     puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG && !$VERBOSE # I hate these during unit tests...      
     signal_change
   end  
@@ -106,6 +105,7 @@ class OverLayer
     end
     # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
     # translate to floats like 62.0 => 63.0
+
     for type in [:mutes, :blank_outs]
       maps = all[type] || all[type.to_s] || {}
       new = {}

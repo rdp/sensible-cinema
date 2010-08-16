@@ -35,7 +35,8 @@ module Muter
     #unmute! # just in case
     hit_mute_key
   end
-  # TODO better for 7...
+
+  # TODO better for doze 7...
   def unmute!
     hit_mute_key # Windows XP...
     hit_volume_down_key

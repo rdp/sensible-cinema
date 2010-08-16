@@ -1,14 +1,13 @@
 # avoid full loading if testing impossible
 if RUBY_VERSION < '1.9.2' && RUBY_PLATFORM !~ /java/
   puts 'not compatible to MRI < 1.9.2'
-  exit 0 # this isn't a real error...
+  exit 0 # this isn't a true failure...
 end
 
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/overlayer'
 
-# tell it not to actually mute during testing...
-$DEBUG = true
+$DO_NOT_ACTUALLY_MUTE = true
 
 def start_good_blank
   assert !@o.blank?
@@ -17,7 +16,6 @@ end
 def start_bad_blank
   assert @o.blank?
 end
-
 
 describe OverLayer do
 
@@ -218,6 +216,16 @@ describe OverLayer do
     out[:mutes].should be_blank        
   end
   
+  it "should sort input" do
+    yaml = <<-YAML
+    :mutes:
+      3 : 4
+      1 : 2
+    YAML
+    out = OverLayer.translate_yaml yaml
+    out[:mutes].should == [[1,2], [3,4]]
+  end
+  
   it "should handle non quoted style numbers in yaml" do
     yaml = <<-YAML
     :mutes:
@@ -276,9 +284,9 @@ describe OverLayer do
     out[:mutes].should == [[1, 3]]
 
   end
+  
 
   it "should disallow zero or less length intervals"
-  it "should disallow non-sorted intervals"
   it 'should reject overlapping settings...I guess'
   
   it "should allow for 1:01:00.0 (double colon) style yaml input" do
