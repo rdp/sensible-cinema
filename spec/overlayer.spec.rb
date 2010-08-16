@@ -59,7 +59,7 @@ describe OverLayer do
     start_good
   end
   
-  it 'should unmute after the ending scene' do
+  it 'should unmute after the ending scene, and also be able to go past the end of scenes at all' do
     File.write 'temp.yml', YAML.dump({:mutes => {0.5 => 1.0}})
     @o = OverLayer.new 'temp.yml'
     @o.start_thread true
@@ -87,14 +87,13 @@ describe OverLayer do
     # but by the time you check again, you just passed it, so you wait till the next one in an errant state
   end
 
-  it 'should be able to mute teeny sequences' do
+  it 'should be able to mute teeny timed sequences' do
     # it once failed on this...
     File.write 'temp.yml', YAML.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
     o = OverLayer.new 'temp.yml'
     o.continue_until_past_all false
   end
 
-  it 'should be able to go past the end' # ??
 
   it 'should allow you to change the current time' do
     @o.start_thread
@@ -135,9 +134,7 @@ describe OverLayer do
     @o.status.should include("r,d,v,q to quit")
   end
 
-  it 'should accept h for console help'
-
-  it 'should allow for yaml input and parse it well' do
+  it 'should allow for yaml input and parse it appropo' do
     # 2 - 3 , 4-5 should be muted
     @o = OverLayer.new 'test_yaml.yml'
     @o.start_thread
