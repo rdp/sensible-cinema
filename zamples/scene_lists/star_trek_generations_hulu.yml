@@ -1,9 +1,9 @@
 source: "hulu"
 mutes:
-  # these aren't actually accurate yet, except for Data's one
   # oh my ... at beginning
   08:54.5 : 08:56 # what the he...
   10:46.5 : 10:48 # durn
-  11:21 : 11:24.5 # the he...
-  19:45 : 19:50 # religious "...have mercy"
-  "01:15:38.5" : "01:15:41.5" # Data "oh s...."
+  11:21 : 11:24.5 # re
+  19:45 : 19:50 # religious exclamation weak
+  "01:15:38.5" : "01:15:41.5" # Data "scatalogical" when they are about to plummet to earth
+missing: "religious exclamation strong near beginning"

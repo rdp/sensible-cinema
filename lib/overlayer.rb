@@ -110,19 +110,19 @@ class OverLayer
       new = {}
       maps.each{|start,endy|
         # both are like 1:02.0
-        start = translate_string_to_seconds(start) if start
-        endy = translate_string_to_seconds(endy) if endy
-        if start == 0 || endy == 0 || start == nil || endy == nil
+        start2 = translate_string_to_seconds(start) if start
+        endy2 = translate_string_to_seconds(endy) if endy
+        if start2 == 0 || endy2 == 0 || start == nil || endy == nil
           p 'warning--possible error in the scene descriptions file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
           # drop this line into the bitbucket...
           next
         end
         
-        if start == endy || endy < start
-          p 'warning--found a line that had poor interval', start, endy unless $AM_IN_UNIT_TEST
+        if start2 == endy2 || endy2 < start2
+          p 'warning--found a line that had poor interval', start, endy, type unless $AM_IN_UNIT_TEST
           next
         end
-        new[start] = endy
+        new[start2] = endy2
       }
       all.delete(type.to_s) # cleanup
       all[type] = new.sort
