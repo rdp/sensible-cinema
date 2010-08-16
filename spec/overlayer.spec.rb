@@ -7,7 +7,7 @@ end
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/overlayer'
 
-$DO_NOT_ACTUALLY_MUTE = true
+$AM_IN_UNIT_TEST = true
 
 def start_good_blank
   assert !@o.blank?
@@ -147,15 +147,15 @@ describe OverLayer do
   end
 
   def write_yaml yaml
-    File.write 'temp.yml', yaml
+   File.write 'temp.yml', yaml
+   @o = OverLayer.new 'temp.yml'
   end
 
   it 'should allow for 1:00.0 minute style input' do
     write_yaml <<-YAML
-    mutes
+    mutes:
       "0:02.0" : "0:03.0"
     YAML
-    @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good
     start_good
@@ -167,14 +167,13 @@ describe OverLayer do
   it "should reload the YAML file on the fly to allow for editing it" do
     # start it with one set to mute far later
     write_yaml <<-YAML
-    mutes   
+    mutes: 
       "0:11.0" : "0:12.0"
     YAML
-    @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good
-    write_yaml <<-YAML
-    mutes
+    File.write 'temp.yml',  <<-YAML
+    mutes:
       "0:00.0001" : "0:01.5"
     YAML
     @o.status # cause it to refresh from the file
@@ -183,37 +182,38 @@ describe OverLayer do
     start_good
   end
   
-  it "should not accept the input when you pass it poor yaml" do
-    write_yaml  <<-YAML
-    mutes
+  it "should not accept any of the input when you pass it any poor yaml" do
+    write_yaml <<-YAML
+    mutes:
        a : 08:56.0 # first one there is invalid
     YAML
     out = OverLayer.new 'temp.yml'
     out.all_sequences[:mutes].should be_blank    
     write_yaml <<-YAML
-    mutes
+    mutes:
        01 : 02
     YAML
     out.reload_yaml!
-    out.all_sequences[:mutes].should_not be_blank    
+    out.all_sequences[:mutes].should == [[1,2]]
     write_yaml <<-YAML
-    mutes
-       01 : # failure
+    mutes:
+       05 : # failure
     YAML
     # should have kept the old
-    out.all_sequences[:mutes].should_not be_blank
+    out.all_sequences[:mutes].should == [[1,2]]
   end
   
   it "should not accept zero start input" do
     yaml = <<-YAML
     mutes:
-       0 : 1 # we don't like zeroes...for now at least
+       0 : 1 # we don't like zeroes...for now at least, as they can mean parsing failure...
+       3 : 4
     YAML
     out = OverLayer.translate_yaml yaml
-    out[:mutes].should be_blank        
+    out[:mutes].should be_blank
   end
   
-  it "should sort input" do
+  it "should sort yaml input" do
     yaml = <<-YAML
     mutes:
       3 : 4
@@ -280,8 +280,7 @@ describe OverLayer do
     out = OverLayer.translate_yaml yaml
     out[:mutes].should == [[1, 3]]
 
-  end
-  
+  end  
 
   it "should disallow zero or less length intervals"
   it 'should reject overlapping settings...I guess'
@@ -291,7 +290,6 @@ describe OverLayer do
     mutes:
       "1:00.11" : "1:03.0"
     YAML
-    @o = OverLayer.new 'temp.yml'
     @o.start_thread
     start_good
     @o.set_seconds 61

@@ -25,13 +25,13 @@ class OverLayer
   def mute!
     @am_muted = true
     puts 'muting!' if $VERBOSE
-    Muter.mute! unless defined?($DO_NOT_ACTUALLY_MUTE)
+    Muter.mute! unless defined?($AM_IN_UNIT_TEST)
   end
   
   def unmute!
     @am_muted = false
     puts 'unmuting!' if $VERBOSE
-    Muter.unmute! unless defined?($DO_NOT_ACTUALLY_MUTE)
+    Muter.unmute! unless defined?($AM_IN_UNIT_TEST)
   end
   
   def blank!
@@ -58,7 +58,7 @@ class OverLayer
   
   def reload_yaml!
     @all_sequences = OverLayer.translate_yaml(File.read(@filename))
-    puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $DEBUG && !$VERBOSE # I hate these during unit tests...      
+    puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $AM_IN_UNIT_TEST
     signal_change
   end  
   
@@ -111,6 +111,7 @@ class OverLayer
       new = {}
       maps.each{|start,endy|
         # both are like 1:02.0
+        return unless start && endy # accomodate for poor YAML 3 => nil
         start = translate_string_to_seconds(start)
         endy = translate_string_to_seconds(endy)
         if start == 0 || endy == 0
