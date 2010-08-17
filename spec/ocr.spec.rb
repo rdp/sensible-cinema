@@ -10,6 +10,7 @@ describe OCR do
   it "should be able to grab some digits" do
     success = true
     for file in Dir['images/*[0-9].bmp']
+      print file, ' '
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       file =~ /(.)\.bmp/
@@ -20,6 +21,8 @@ describe OCR do
         debugger
         OCR.identify_digit(File.binread(file), options)
         success = false
+      else
+        puts 'success'
       end
     end
     fail unless success

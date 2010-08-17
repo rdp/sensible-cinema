@@ -30,7 +30,7 @@ module OCR
       # mogrify calls it negate...
       image.negate 
     end
-    for level in [130, 100] # 100 for hulu...
+    for level in [130, 100, 0] # 130 for vlc, 100 for hulu, 0 for youtube
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       a.strip!
       a = '3' if a == 'S' # sigh

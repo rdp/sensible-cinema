@@ -2,44 +2,45 @@
 
 == low but actually want to do eventually (me) low prio: just do these...==
 
-  utube nuki (somewhere with a real sound card...which would be the home comp)
   generations the first profanidade...
-  
+  youtube player
+  utube nuki (record camstudio? vlc? somewhere with a real sound card...which would be the home comp non full-screened but well coordinated by hand for now
+    but create the scene descriptions list with it full screen...hmm...)
+
 == random backlog ... based on user request..remember:  just local files for my own needs...==
 
-just plow forward, to "grab" available ideas...
-  except for now, just what *I* plan on needing for myself.
-  
-make it "quieter" at certain parts, arbitrarily...
 
-release a zip file that they can just click on something to run it...self-extractor yeah.
+note: just plow forward, to "grab" available ideas...
+  except that for now, just what *I* plan on needing for myself.
 
-snag the close captioning for a profanity filter?
+auto-play on youtube when it comes up...hmm...
+
+able to make it "quieter" at certain parts, arbitrarily...
+
+easier installer for windows: release a zip file that they can just click on a .bat file to run it
+  later: it installs/uninstalls appropo
+    suggestion: self-extractor
+
+snag the close captioning as a profanity filter?
 
 make it able to use multiple players so I can maximize VLC...
 
-blank overlay "and you are one awesome klingon"
+blank overlay text like "and you are one awesome klingon"
 
-screencast of something helpful (use, creation).
-
-optimize (tell them) imdb: http://www.imdb.com/board/bd0000042/thread/58361958?d=58361958, english friendlier url's
-
-bundle fewer imagemagick binaries
+screencast of things helpful (use, creation).
 
 TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu?"
 
-netflix player
+a netflix online player description
   
-add my own stuff to imdb...
-antz to imdb...
+add my stuff to imdb...
 
-imdb parser...somehow
+an imdb parser?
 
-make it into a real live full functional app...like fully fully functional and good (for use, not editing), mostly with the drop down lists uh guess.
+user customizable levels...
+  maybe even "I don't like ones that are x, y, z", or "boring level x"
 
 make a redcar installer for their use...
-
-PISH
 
 can overlay with a "fuzzer-outer" for specific coordinates somehow or other...
 
@@ -53,16 +54,17 @@ overlay with wav file (would work for VLC, could also "click to mute" for the ot
 
 fix any pending tests...
 
-can black out certain coords to keep things pretty...
+can black out certain coords to keep things prettier...
 
 allow x2,y2 for player descriptions...
 
 Linux port (call that good enough for usability on TV's...) between that and a VLC version...
 
 a web runnable? Why not?
-  click here to watch your favorite film edited!
+  click here to watch your favorite film edited! Just click!
 
-blank out with a user specifiable color (?)
+blank out with specifiable color
+  better default color?
 
 Auto mute/blank commercials?
 
@@ -77,38 +79,32 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare labyrinth timings with a real DVD player...
+compare timings with a real DVD player...
 
-overlay with alpha transparent pic
+overlay with an alpha transparent pic
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
-
-magnify video parts (?)
-
-user customizable levels...
-  maybe even "I don't like ones that are x, y, z", or "boring level x"
 
 user-assignable "confidence" (how much time to 'wrap' surround the mutes, etc. to accomodate for slow computers/laggy internet/different players/poor input)
 
 does my sweet heart have any suggestions?
 
 auto-assignment of EDL's to media:
-  DVD's (right click...)
+  DVD's (right click on DVD player, play with scene-skipper?)
   web browser plugin?
   auto start on DVD insertion (?)
     and show appropriate scene-lists available based on title/md5 of something?
 
 Programmatically do all of the above, by driving a player with its real API.
   VLC
-    Allow it to record to mp4's somewhere.
-    See if burnable to DVD/CD ...
-    (use web interface?)
+    Allow it to record to mp4's somewhere (recordable)
+     burnable to DVD/CD ...
+     (use VLC's web interface?)
     
-never do unless paid:
-
 super easy streamer windows -> {XBOX360, wii, etc..} basically like playon, which appears to have no free equivalent, I guess, though you can 
   save the files somewhere and stream them (and stream DVD's [?]) using tversity...maybe some other things...hmm...but no netflix!
   so currently they basically need to run a cable from laptop to PC, for me.  windows laptop, for netflix, though a dedicated box could run things like boxee.
   so I could create something that's basically windows -> ??? (ushare).  
   For now it's either a cable, a computer (with its cable), or pay.
-  plus work awesome on doze 7 :)
+  todo: make a VLC wrapper so it works *if your soundcard supports it*
+    after: make the same work awesome on doze 7 without soundcard support :)
