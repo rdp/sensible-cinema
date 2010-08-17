@@ -1,3 +1,4 @@
+p 'loading...'
 require 'rubygems'
 require 'sane'
 

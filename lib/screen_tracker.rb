@@ -157,8 +157,12 @@ class ScreenTracker
                 if $DEBUG || $VERBOSE
                   @a ||= 1
                   @a += 1
-                  p 'unable to identify digit!' + type.to_s + @a.to_s
-                  File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
+                  @already_wrote ||= {}
+                  unless @already_wrote[digits[type]]
+                    p 'unable to identify capture!' + type.to_s + @a.to_s
+                    File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
+                    @already_wrote[digits[type]] = true
+                  end
                 end
                 if type == :hours
                   digit = 0 # this one can fail in VLC
