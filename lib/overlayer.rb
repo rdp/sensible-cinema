@@ -58,7 +58,7 @@ class OverLayer
   
   def reload_yaml!
     @all_sequences = OverLayer.translate_yaml(File.read(@filename))
-    puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless $AM_IN_UNIT_TEST
+    puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless defined?($AM_IN_UNIT_TEST)
     signal_change
   end  
   
@@ -211,7 +211,7 @@ class OverLayer
         p 'set debug to', $DEBUG
         return
       when ' ' then
-        puts cur_english_time
+        puts 'timestamp:' + cur_english_time
         return
       when 'r' then
         reload_yaml!

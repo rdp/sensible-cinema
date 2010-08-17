@@ -67,11 +67,11 @@ To create it, basically you notice something you want to add to the list, add it
 in your media player, and it should now be muted/blanked out automatically.
 
 So here is a way to create your scene descriptions file.
-First create a new file [2], and select it in sensible-cinema (even though it's still blank).
-Now use sensible-cinema and select the new file you just created.
-Now "preview" the movie, and as you do, you're going scenes to the file, and then test your additions.
-As you watch and hit a questionable scene, go back to several seconds before it using your player's 
-controls.  When you encounter the scene again, track its beginning and ending time.  One way to do this
+First create a new file [2], and now select it for use in sensible-cinema (even though it's still blank).
+Now "preview" your movie.  As you do, you're going to add scenes to that file, and then test your additions.
+
+So as you watch when you encounter a questionable scene, go back several seconds using your player's 
+controls.  When you encounter it again, track its beginning and ending time.  One way to do this
 is to, just before and just after the scene, hit the space bar *in the sensible-cinema window*.  
 Hitting the space bar outputs the current time.  If you hit it twice, once before and once after, 
 you should now have two reasonably accurate "timestamps" displayed.
@@ -83,9 +83,11 @@ Once you're done then you can contribute your scene descriptions file if desired
 
 [1] http://github.com/rdp/sensible-cinema/issues
 [2] The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
-right click and choose "New -> Text Document" Now rename it (leaving it as .txt).
-"Right click -> Open" to open it in an editor.  Now also select that same file in sensible-cinema.
-Another easy way is to "right drag" an existing file then rename it and edit that one.
+"right click" on the existing file "example_scene_list.yml" and choose "Copy"
+now right click below the list of files and choose "paste"
+This will create the file "example_scene_list Copy.yml"
+Right click on it, choose rename, and give it a better name.
+Now "right click -> Open" to open it in an editor (recommend installing notepad++ and using that).  
 
 == FAQ ==
 

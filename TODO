@@ -3,9 +3,9 @@
 == low but actually want to do eventually (me) low prio: just do these...==
 
   generations the first profanidade...
-  youtube full screen player
-  utube nuki (record camstudio? vlc? somewhere with a real sound card...which would be the home comp non full-screened but well coordinated by hand for now
-    but create the scene descriptions list with it full screen...hmm...)
+  utube nuki filter
+    record:
+      camstudio? vlc? somewhere with a real sound card...which would be the home comp non full-screened but well coordinated for now
 
 == random backlog ... based on user request..remember:  just local files for my own needs...==
 
@@ -26,6 +26,7 @@ snag the close captioning as a profanity filter?
 make it able to use multiple players so I can maximize VLC...
 
 blank overlay text like "and you are one awesome klingon"
+
 
 screencast of things helpful (use, creation).
 
@@ -100,6 +101,8 @@ Programmatically do all of the above, by driving a player with its real API.
     Allow it to record to mp4's somewhere (recordable)
      burnable to DVD/CD ...
      (use VLC's web interface?)
+    
+use spiffy differentiation for DVD's on windows
     
 super easy streamer windows -> {XBOX360, wii, etc..} basically like playon, which appears to have no free equivalent, I guess, though you can 
   save the files somewhere and stream them (and stream DVD's [?]) using tversity...maybe some other things...hmm...but no netflix!
