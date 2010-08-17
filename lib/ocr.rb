@@ -6,7 +6,7 @@ require 'mini_magick'
 # helper for OCR'ing single digits that were screen captured
 module OCR
   
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C C0-9:/S ")
+  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C lC0-9:/S ")
   
   CACHE = {}
   
@@ -30,11 +30,12 @@ module OCR
       # mogrify calls it negate...
       image.negate 
     end
-    for level in [130, 100, 0] # 130 for vlc, 100 for hulu, 0 for youtube
+    for level in [130, 100, 0, 200] # 130 for vlc, 100 for hulu, 0, 200 for youtube yikes
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       a.strip!
       a = '3' if a == 'S' # sigh
       a = '0' if a =~ /C/ # sigh again
+      a = '4' if a =~ /l/ # sigh
       if a =~ /[0-9]/
         a = a.to_i
         CACHE[memory_bitmap] = a
