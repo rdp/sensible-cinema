@@ -61,15 +61,18 @@ class ScreenTracker
 
   end
   
+  # gets the snapshot of "all the digits together"
   def get_bmp
     # Note: we no longer bring the window to the front tho...which it needs to be in both XP and Vista to work...sigh.
     Win32::Screenshot::BitmapMaker.capture_area(@hwnd,@x,@y,@x2,@y2) {|h,w,bmp| return bmp}
   end
   
+  # gets snapshot of the full window
   def get_full_bmp
-    Win32::Screenshot.hwnd(@hwnd, 0) {|h,w,bmp| return bmp}
+     Win32::Screenshot::BitmapMaker.capture_all(@hwnd) {|h,w,bmp| return bmp}
   end
-  
+
+  # writes out all screen tracking info to various files in the current pwd
   def dump_bmp filename = 'dump.bmp'
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp

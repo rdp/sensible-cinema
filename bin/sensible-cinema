@@ -36,17 +36,17 @@ else
   scene_list = ARGV.shift
 
   if scene_list == 'test'
-    puts 'warning--only doing screen dump in 4s...'
     overlay = nil
-    $VERBOSE = 1 # that's what they wanted...
-    sleep 4
+    p 'got test...just doing screen dump'
+    $VERBOSE=true # some extra output
   else
     if !File.exist? scene_list.to_s
       scene_list = FileChooser.choose_file("SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists")
     end
+    
     unless scene_list
-        puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
-        exit 1
+      puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
+      exit 1
     end
     puts 'Selected scene descriptions file ' + File.basename(scene_list) + " (#{scene_list})", ''
     overlay = OverLayer.new(scene_list)    
@@ -62,9 +62,14 @@ else
     Mouse.jitter_forever_in_own_thread
     puts 'Selected player ' + File.basename(player_description) + " (#{player_description})", ''
     screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
-    screen_tracker.dump_bmp if $VERBOSE
+    
     # exit early if we just wanted a screen dump...a little kludgey...
-    exit 1 unless overlay
+    unless overlay
+      puts 'warning--only doing screen dump in T-minus 4s...'      
+      sleep 4
+      screen_tracker.dump_bmp
+      exit 1
+    end
     screen_tracker.process_forever_in_thread
   else
     puts 'warning--not using any screen tracking...'
