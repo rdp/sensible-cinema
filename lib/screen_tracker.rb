@@ -38,6 +38,7 @@ class ScreenTracker
     raise 'poor width or wrong window' if @x2 > max_x  || @x2 == x
     raise 'poor height or wrong window' if @y2 > max_y || @y2 == y
     @digits = digits
+    @displayed_warning = false
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
   end
   
@@ -117,13 +118,16 @@ class ScreenTracker
   def wait_till_next_change
     original = get_bmp
     time_since_last = Time.now
-    displayed_warning = false
     loop {
       current = get_bmp
       if current != original
         if @digits
           got = attempt_to_get_time_from_screen
-          p 'tracked it successfully again' if displayed_warning && got
+          if @displayed_warning && got
+            # reassure user :)
+            p 'tracking it successfully again' 
+            @displayed_warning = false
+          end
           return got
         else
           puts 'screen time change only detected...'
@@ -132,8 +136,8 @@ class ScreenTracker
       end
       sleep 0.02
       if(Time.now - time_since_last > 5)
-        p 'warning--unable to track screen time for some reason'
-        displayed_warning = true
+        p 'warning--unable to track screen time for some reason'        
+        @displayed_warning = true
         time_since_last = Time.now
         # reget window, just in case...
         get_hwnd
