@@ -2,11 +2,11 @@ Sensible-cinema is a program that allows you to do pre-programmed scene selectio
 or "bleep out" scenes) on arbitrary media players like netflix online, vlc, etc.
 
 Currently it takes as input a list of known "skip-worthy" scenes.
-It then tracks the player you are using, and mutes or blanks out the system screen appropriately, 
+It then tracks whichever player you are using, and mutes or blanks out the system appropriately, 
 during the scenes specified.
 
-Currently it works out of the box with the hulu and VLC players on windows.  It isn't hard to 
-add new players,and probably wouldn't be too hard to add more operating systems.
+It works out of the box with the hulu and VLC players on windows.  It isn't hard to 
+add new players, and probably wouldn't be too hard to add more operating systems.
 
 == How to use ==
 
@@ -15,7 +15,7 @@ the command line thus:
 
      C:\> jruby -S sensible-cinema
 
-It then prompts you for a scene descriptions file (ex: bambi.yml), 
+It prompts you for a scene descriptions file (ex: bambi.yml), 
 and then for a player description file (ex: hulu_full_screen.yml).
 
 Sensible-cinema will now run in a console window, screen tracking the player to monitor its position,
