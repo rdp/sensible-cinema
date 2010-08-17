@@ -7,23 +7,22 @@ describe ScreenTracker do
 
     SILENCE = /silence.*VLC/
 
+
+   
     def start_vlc
-      # enforce we only have at most one running at a time...
+      # unfortunately this is run before every context with rspec 1.3...
       unless $pid1
+        assert !$pid1
+        # enforce we only have at most one running at a time...
         begin
           Win32::Screenshot.window(SILENCE, 0) {}
-          raise Exception.new('must kill old vlcs first') # unexpected, even on jruby <sigh>
+          raise Exception.new('must kill old vlcs first')
         rescue
           silence = File.expand_path("./silence.wav").gsub("/", "\\")
           Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # work around for jruby...
           sleep 2
           
-          $pid1 = GetPid.get_process_id(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
-          p $pid1
-          require 'ruby-debug'
-          debugger
-          GetPid.ErrorExit
-          33
+          $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
         end
       end
     end
@@ -211,6 +210,7 @@ describe ScreenTracker do
         end
         
         it "should be able to scan for/identify new windows, since VLC changes signatures" do
+        fail 'maybe'
           output = @a.wait_till_next_change 
           output[0].should_not be_nil
           old_handle = @a.hwnd
@@ -224,13 +224,11 @@ describe ScreenTracker do
       end
 
       def kill_vlc
-        
         assert $pid1
-        Process.kill 9, $pid1 # need this process re-started each time or the screen won't change for the screen changing test
+        # jruby...
+        system("taskkill /pid #{$pid1}")
+        Process.kill 9, $pid1 # MRI...sigh.
         FileUtils.rm_rf Dir['*.bmp']
-        require 'ruby-debug'
-        debugger
-        33
         $pid1 = nil
       end
       

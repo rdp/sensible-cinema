@@ -48,12 +48,18 @@ require 'ffi-inliner'
 module GetPid
   extend FFI::Library
   extend Inliner
-  ffi_lib 'kernel32'
+  ffi_lib 'user32', 'kernel32'
   ffi_convention :stdcall
-  attach_function :get_process_id, :GetProcessId, [ :ulong ], :uint
+  attach_function :get_process_id_old, :GetProcessId, [ :ulong ], :uint
   
-  #
-  attach_function :get_window_thread_process_id, [:ulong, :pointer], :uint
+  attach_function :GetWindowThreadProcessId, [:ulong, :pointer], :uint
+
+
+  def self.get_process_id_from_window hwnd
+    out = FFI::MemoryPointer.new(:uint)
+    GetWindowThreadProcessId(hwnd, out) # does translation automatically to ptr for us
+    out.get_uint32(0) # read_uint
+  end
   
   inline <<-CODE
   #include <windows.h>
@@ -95,7 +101,6 @@ module GetPid
   //  ExitProcess(dw); 
   }
   
-  GetWindowThreadProcessId
   
   CODE
   
