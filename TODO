@@ -4,20 +4,18 @@
 
   release ruby-y-y why not, it's interesting
     "Linux compat anyone?"
-  utube nuki (xp?)
+  utube nuki (somewhere with a real sound card...which would be the home comp)
   generations the first profanidade...
-  compare labyrinth timings with a real DVD player...
   
 == random backlog ... based on user request..remember:  just local files for my own needs...==
 
-make it "quieter" at parts.
+just plow forward, to "grab" available ideas...
+
+make it "quieter" at certain parts, arbitrarily...
 
 release a zip file that they can just click on something to run it...self-extractor yeah.
 
-reorganize the players...
 make it able to use multiple players so I can maximize VLC...
-
-make it "track" new VLC windows (grr jruby...ffi-inliner?)...
 
 blank overlay "and you are one awesome klingon"
 
@@ -27,9 +25,7 @@ optimize imdb: http://www.imdb.com/board/bd0000042/thread/58361958?d=58361958, e
 
 bundle fewer imagemagick binaries
 
-TSR that monitors "oh you're opening VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu?"
-
-just plow forward, to "grab" available ideas...
+TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu?"
 
 netflix
   
@@ -78,7 +74,9 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-overlay alpha transparent pic
+compare labyrinth timings with a real DVD player...
+
+overlay with alpha transparent pic
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
