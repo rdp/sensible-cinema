@@ -48,11 +48,11 @@ class ScreenTracker
     else
       @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex)
     end
+
     unless @hwnd
-      print 'perhaps not running yet? [%s] START IT FAST' % @name_or_regex
       until @hwnd
-        sleep 4
-        print ' trying again .'
+        print 'perhaps not running yet? [%s]' % @name_or_regex
+        sleep 1
         STDOUT.flush
         @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex)
       end
@@ -112,7 +112,6 @@ class ScreenTracker
   end
   
   def wait_till_next_change
-    # dies in jruby currently...sigh...get_hwnd # reget it, just in case...
     original = get_bmp
     time_since_last = Time.now
     loop {
@@ -129,6 +128,8 @@ class ScreenTracker
       if(Time.now - time_since_last > 5)
         p 'warning--unable to track for some reason--may need to restart sensible-cinema'
         time_since_last = Time.now
+        # reget it, just in case...
+        get_hwnd
       end
     }
   end

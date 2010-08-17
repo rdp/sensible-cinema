@@ -6,8 +6,6 @@ require 'pathname'
 describe ScreenTracker do
 
     SILENCE = /silence.*VLC/
-
-
    
     def start_vlc
       # unfortunately this is run before every context with rspec 1.3...
@@ -20,7 +18,7 @@ describe ScreenTracker do
         rescue
           silence = File.expand_path("./silence.wav").gsub("/", "\\")
           Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # work around for jruby...
-          sleep 2
+          sleep 4
           
           $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
         end
@@ -210,7 +208,6 @@ describe ScreenTracker do
         end
         
         it "should be able to scan for/identify new windows, since VLC changes signatures" do
-        fail 'maybe'
           output = @a.wait_till_next_change 
           output[0].should_not be_nil
           old_handle = @a.hwnd
