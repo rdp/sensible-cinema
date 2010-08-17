@@ -1,0 +1,17 @@
+name: desktop
+x: 85
+y : 839
+width: 31
+height: 17
+digits:
+      :hours:
+      :minute_tens:
+      :minute_ones:
+      - 86
+      - 11
+      :second_tens:
+      - 99
+      - 9
+      :second_ones:
+      - 108
+      - 9 
