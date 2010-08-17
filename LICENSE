@@ -1,11 +1,14 @@
 All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you need this changed.
 
-May contain some 3rd party libraries under their own (separate, open source) licenses.
+May contain some 3rd party libraries under their own (separate, open source) license.
 
-Note that this software should be legal at least in the EU, 
+Note that this software should be legal in the EU, 
 as it is only software and therefore theoretically not subject to patents (see "What about patent licenses?" in [2]).
 
 If it's not legal in your country, don't use it!
+
+http://en.wikipedia.org/wiki/Family_Entertainment_and_Copyright_Act describes a recent US law that appears related, 
+in its favor.
 
 A history of various related thoughts can be found here: http://betterlogic.com/roger/?p=2618
 

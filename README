@@ -131,7 +131,7 @@ You can also specify -v or -t if you want to enable more verbose (chatty) output
 == Thanks ==
 
 Thanks to Jarmo for the win32-screenshot gem, mini_magick gem authors, jruby guys, etc.  
-The combination nade programming this actually somewhat of a pleasure.
+The combination made programming this actually somewhat of a pleasure.
 
 == License ==
 
