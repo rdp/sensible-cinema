@@ -8,28 +8,20 @@ during the scenes specified.
 Currently it works out of the box with the hulu and VLC players on windows.  It isn't hard to 
 add new players,and probably wouldn't be too hard to add more operating systems.
 
-The concept isn't novel:
-
-http://www.imdb.com/swiki/special?ParentalGuideHelp "scene description"
-http://en.wikipedia.org/wiki/Edit_decision_list
-
 == How to use ==
 
-Start playing your movie in its player, then startup sensible-cinema thus:
+Start playing your movie in its respective player, then startup sensible-cinema from
+the command line thus:
 
      C:\> jruby -S sensible-cinema
 
-It prompts you for a scene description file (ex: bambi.yml), 
-and also for a player description file (ex: hulu_full_screen_with_total_length_over_an_hour.yml).
+It then prompts you for a scene descriptions file (ex: bambi.yml), 
+and then for a player description file (ex: hulu_full_screen.yml).
 
 Sensible-cinema will now run in a console window, screen tracking the player to monitor its position,
 and react appropriately.
 
 It is presumed that you'll then minimize the console window and proceed to enjoy the movie.
-
-You could also specify those same two filenames on the command-line, if desired, ex:
-
-     C:\> jruby -S sensible-cinema mute_list.yml player_description.yml
 
 You'll know that it's working if, when you change the time of your player (ex: dragging it to a new spot 
 in the playback), the screen output in sensible-cinema's console should change to match the new time.
@@ -52,7 +44,7 @@ choosing the hulu player.
 
 It will proceed do a few "demo" mutes and blank outs.
 
-== Programming Your Own Scene Description File ==
+== Programming Your Own Scene Descriptions File ==
 
 To program sensible-cinema, you create a scene description list it can use.
 
@@ -73,7 +65,7 @@ then start sensible-cinema and instruct it to use your new file.
 To create it, basically you notice something you want to add to the list, add it, then go back a few seconds 
 in your media player, and it should now be muted/blanked out automatically.
 
-So here is a way to create your scene description file.
+So here is a way to create your scene descriptions file.
 First create a new file [2], and select it in sensible-cinema (even though it's still blank).
 Now use sensible-cinema and select the new file you just created.
 Now "preview" the movie, and as you do, you're going scenes to the file, and then test your additions.
@@ -82,11 +74,11 @@ controls.  When you encounter the scene again, track its beginning and ending ti
 is to, just before and just after the scene, hit the space bar *in the sensible-cinema window*.  
 Hitting the space bar outputs the current time.  If you hit it twice, once before and once after, 
 you should now have two reasonably accurate "timestamps" displayed.
-Add the beginning and ending times to your scene description file (changes will be automatically picked up), 
+Add the beginning and ending times to your scene descriptions file (changes will be automatically picked up), 
 then review your additions by rewinding your player and letting it play through the scene in question again.
 It should now skip it appropriately.  If not, adjust your timestamps and try again.
 
-Once you're done then you can contribute your scene description file if desired, back to the project [1].
+Once you're done then you can contribute your scene descriptions file if desired, back to the project [1].
 
 [1] http://github.com/rdp/sensible-cinema/issues
 [2] The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
@@ -126,16 +118,32 @@ A. It takes it awhile to warm up its digit detection.  Ping me if you would like
 
 [1] http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
 
+== Advanced Usage ==
+
+You could specify the scene descriptions list and player list on the command-line, if you don't want to have
+to pick them each time, like:
+
+     C:\> jruby -S sensible-cinema scene_descriptions_list.yml player_description.yml
+
+Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
+You can also specify -v or -t if you want to enable more verbose (chatty) output.
+
 == Thanks ==
 
-Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
-Made programming this actually somewhat a pleasure.
+Thanks to Jarmo for the win32-screenshot gem, mini_magick gem authors, jruby guys, etc.  
+The combination nade programming this actually somewhat of a pleasure.
 
 == License ==
 
-See the LICENSE file for licensing, usage terms (gplv3).
+See the LICENSE file for licensing, usage terms (basically gplv3).
 
 == Related ==
+
+The concept isn't too novel:
+
+http://en.wikipedia.org/wiki/Edit_decision_list
+http://www.imdb.com/swiki/special?ParentalGuideHelp search for "scene description"
+http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html
 
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).
 Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0047673/parentalguide)
@@ -146,4 +154,3 @@ which you could use to translate into a sensible-cinema compatible list.
 Feedback, including feature requests, welcome.
 
 http://github.com/rdp/sensible-cinema
-http://github.com/rdp me
