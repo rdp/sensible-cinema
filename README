@@ -1,14 +1,15 @@
 Sensible-cinema is a program that allows you to do pre-programmed scene selection (i.e. "mute out" 
 or "bleep out" scenes) on arbitrary media players like netflix online, vlc, etc.
 
-Currently it takes as input a list of known "skip-worthy" scenes.
+  
+Currently it takes as input a list of "skippable" scenes, and a player description.
 It then tracks whichever player you are using, and mutes or blanks out the system appropriately, 
 during the scenes specified.
 
 It works out of the box with the hulu and VLC players on windows.  It isn't hard to 
 add new players, and probably wouldn't be too hard to add more operating systems.
 
-== How to use ==
+== How to Use ==
 
 Start playing your movie in its respective player, then startup sensible-cinema from
 the command line thus:
