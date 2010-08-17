@@ -129,7 +129,7 @@ class ScreenTracker
       end
       sleep 0.02
       if(Time.now - time_since_last > 5)
-        p 'warning--unable to track for some reason--may need to restart sensible-cinema'
+        p 'warning--unable to track screen time for some reason'
         time_since_last = Time.now
         # reget it, just in case...
         get_hwnd
