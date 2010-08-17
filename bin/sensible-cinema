@@ -58,10 +58,10 @@ else
   end
   
   if File.exist? player_description.to_s
-    # this one doesn't use file updates, so pass it the string
-    Mouse.jitter_forever_in_own_thread
     puts 'Selected player ' + File.basename(player_description) + " (#{player_description})", ''
+    # this one doesn't use any updates, so just pass in file contents, not filename
     screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
+    Mouse.jitter_forever_in_own_thread
     
     # exit early if we just wanted a screen dump...a little kludgey...
     unless overlay
