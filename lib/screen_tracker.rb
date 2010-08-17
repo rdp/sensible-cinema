@@ -117,21 +117,25 @@ class ScreenTracker
   def wait_till_next_change
     original = get_bmp
     time_since_last = Time.now
+    displayed_warning = false
     loop {
       current = get_bmp
       if current != original
         if @digits
-          return attempt_to_get_time_from_screen
+          got = attempt_to_get_time_from_screen
+          p 'tracked it successfully again' if displayed_warning && got
+          return got
         else
           puts 'screen time change only detected...'
+          return
         end
-        return
       end
       sleep 0.02
       if(Time.now - time_since_last > 5)
         p 'warning--unable to track screen time for some reason'
+        displayed_warning = true
         time_since_last = Time.now
-        # reget it, just in case...
+        # reget window, just in case...
         get_hwnd
       end
     }
