@@ -25,25 +25,29 @@ module OCR
       end
     end
     image = MiniMagick::Image.from_blob(memory_bitmap)
+    # any operation on image is expensive, requires convert.exe in path...
     if options[:should_invert] 
+      # hulu wants negate
+      # but doesn't want sharpen, for whatever reason...
       # mogrify calls it negate...
       image.negate 
+    else
+      # youtube wants sharpen...
+      image.sharpen(2)
     end
-    image.format(:pnm) # expensive, requires convert.exe in path...
-    2.times {
-      for level in [0, 130, 100, 200] # 130 for vlc, 100 for hulu, 0, 200 for youtube yikes
-        a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
-        # a can be like "_1_\n"
-        if a =~ /[0-9]/
-          a.strip!
-          a.gsub!('_', '')
-          a = a.to_i
-          CACHE[memory_bitmap] = a
-          return a
-        end
+
+    image.format(:pnm)
+    for level in [130, 100, 0] # 130 for vlc, 100 for hulu, 0 for some youtube
+      a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
+      # a can be like "_1_\n"
+      if a =~ /[0-9]/
+        a.strip!
+        a.gsub!('_', '')
+        a = a.to_i
+        CACHE[memory_bitmap] = a
+        return a
       end
-      image.sharpen(2) # sharpen second time through, if necessary...
-    }
+    end
     nil
   end
   
