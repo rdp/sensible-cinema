@@ -34,7 +34,7 @@ describe Blanker do
     
     it "should be able to blank certain coords"
     
-    it "should have a color optionally"
+    it "should have a background color optionally"
     
     it "should have a picture optionally"
     
