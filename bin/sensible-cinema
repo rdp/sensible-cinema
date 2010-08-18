@@ -1,4 +1,4 @@
-puts 'Welcome to Sensible Cinema...', "Opening the curtains..."
+puts 'Welcome to Sensible Cinema...', "opening the curtains..."
 require 'rubygems'
 require 'sane'
 

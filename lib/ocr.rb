@@ -30,6 +30,7 @@ module OCR
       # mogrify calls it negate...
       image.negate 
     end
+    image.sharpen(2)
     for level in [130, 100, 0, 200] # 130 for vlc, 100 for hulu, 0, 200 for youtube yikes
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       # a is now "_1_\n"

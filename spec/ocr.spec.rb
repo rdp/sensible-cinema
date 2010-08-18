@@ -19,8 +19,12 @@ describe OCR do
       expected_digit = $1.to_i
       if OCR.identify_digit(File.binread(file), options) != expected_digit
         p "fail:" + file
-        require 'ruby-debug'
-        debugger
+        begin
+          require 'ruby-debug'
+          debugger
+        rescue LoadError
+          puts 'unable to load ruby-debug'
+        end
         OCR.identify_digit(File.binread(file), options)
         success = false
       else
