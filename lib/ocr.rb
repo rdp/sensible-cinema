@@ -58,7 +58,25 @@ module OCR
   
   def clear_cache!
     CACHE.clear
+    File.delete CACHE_FILE if File.exist?(CACHE_FILE)
   end
+  
+  CACHE_FILE = File.expand_path('~/.sensible-cinema-ocr.marshal')
+  
+  def serialize_cache_to_disk
+    File.binwrite(CACHE_FILE, Marshal.dump(CACHE))
+  end
+  
+  def unserialize_cache_from_disk  
+    if File.exist? CACHE_FILE
+      CACHE.merge!(Marshal.load File.binread(CACHE_FILE))
+    end
+    
+  end
+  
+  at_exit {
+    serialize_cache_to_disk
+  }
   
   extend self
   

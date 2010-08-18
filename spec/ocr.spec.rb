@@ -41,6 +41,7 @@ describe OCR do
   end
   
   context "cache" do
+  
    before do
      OCR.clear_cache!
      $OCR_NO_CACHE = false
@@ -55,6 +56,26 @@ describe OCR do
       new_time = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp"))} }
       new_time.should be < original_time
     end
+    
+    it "should serialize to a cache file" do
+      Pathname.new(OCR::CACHE_FILE).should_not exist
+      OCR.serialize_cache_to_disk
+      Pathname.new(OCR::CACHE_FILE).should exist
+    end
+    
+    it "should use the cache file and speed things up on startup" do
+      long = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
+      OCR.serialize_cache_to_disk
+      OCR::CACHE.clear
+      long2 = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
+      OCR.unserialize_cache_from_disk
+      require 'ruby-debug'
+      debugger
+      short = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp")) } }
+      long.should be > short
+      long2.should be > short
+    end
+    
   end
   
 end
