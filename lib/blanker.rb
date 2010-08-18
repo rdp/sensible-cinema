@@ -22,7 +22,8 @@ else
       @label.revalidate
       
       @fr.set_resizable(false)
-      @fr.set_visible(false) # display it later
+      @fr.set_visible(true)
+      unblank_full_screen! # hide it
     end
 
     def self.blank_full_screen! seconds
@@ -31,11 +32,11 @@ else
       else
         @label.set_text "  Blank section"
       end
-      @fr.set_visible(true)
+      @fr.setAlwaysOnTop(true)
     end
     
     def self.unblank_full_screen!
-      @fr.set_visible(false)
+      @fr.setAlwaysOnTop(false)
     end
     
     def self.shutdown

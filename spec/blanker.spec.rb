@@ -12,7 +12,7 @@ describe Blanker do
   end
 
   it "should be able to blank then unblank" do
-    Blanker.blank_full_screen! 23
+    Blanker.blank_full_screen! "2.000"
     sleep 2
     Blanker.unblank_full_screen!
   end
