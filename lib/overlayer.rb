@@ -189,7 +189,7 @@ class OverLayer
       end
     end
     check_reload_yaml
-    time + state + "(r,d,v,q to quit): "
+    time + state + "(r,d,v, or q to quit): "
   end
 
   def keyboard_input char

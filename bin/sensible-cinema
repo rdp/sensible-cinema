@@ -42,6 +42,7 @@ else
     $VERBOSE=true # some extra output
   else
     if !File.exist? scene_list.to_s
+      puts 'Select Scene Descriptions file'
       scene_list = FileChooser.choose_file("SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists")
     end
     
@@ -49,18 +50,19 @@ else
       puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
       exit 1
     end
-    puts 'Selected scene descriptions file ' + File.basename(scene_list) + " (#{scene_list})", ''
+    puts 'Selected scene descriptions file ' + File.basename(scene_list) + "\n\t(#{scene_list})"
     Blanker.startup
     overlay = OverLayer.new(scene_list)    
   end
   
   player_description = ARGV.shift.to_s
   if !File.exist?(player_description)    
-    player_description = FileChooser.choose_file("SELECT PLAYER", __dir__ + "/../zamples/players")
+    puts 'Please Select Computer Player'
+    player_description = FileChooser.choose_file("SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
   end
   
   if File.exist? player_description.to_s
-    puts 'Selected player ' + File.basename(player_description) + " (#{player_description})", ''
+    puts 'Selected player ' + File.basename(player_description) + "\n\t(#{player_description})"
     # this one doesn't use any updates, so just pass in file contents, not filename
     screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
     Mouse.jitter_forever_in_own_thread # when this ends you know the snapshot was taken...
@@ -77,10 +79,10 @@ else
     puts 'warning--not using any screen tracking...'
   end
 
+  puts "Opening the curtains... (please play in player now)"
   overlay.start_thread true
   key_input = KeyboardInput.new overlay
   key_input.start_thread # status thread
-  puts "opening the curtains..."
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
   Blanker.shutdown # lodo move this and the 'q' key to within overlayer
   
