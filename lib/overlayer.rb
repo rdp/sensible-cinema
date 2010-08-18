@@ -116,11 +116,11 @@ class OverLayer
         end
         
         if start2 == endy2 || endy2 < start2
-          p 'warning--found a line that had poor interval', start, endy, type unless $AM_IN_UNIT_TEST
+          p 'warning--found a line that had poor interval', start, endy, type unless defined?($AM_IN_UNIT_TEST)
           next
         end
         if(endy2 > 60*60*3)
-          p 'warning--found setting past 3 hours [?]', start, endy, type unless $AM_IN_UNIT_TEST
+          p 'warning--found setting past 3 hours [?]', start, endy, type unless defined?($AM_IN_UNIT_TEST)
         end
         new[start2] = endy2
       }
@@ -335,8 +335,8 @@ class OverLayer
   end  
   
   def display_change change
-    if $VERBOSE && !$DEBUG# too chatty for unit tests
-      puts ''
+    puts '' unless defined?($AM_IN_UNIT_TEST)
+    if $VERBOSE
       puts change + ' at ' + cur_english_time
     end    
   end
@@ -346,7 +346,6 @@ class OverLayer
     
     if should_be_muted && !muted?
       mute!
-      puts ''
       display_change 'muted'
     end
     

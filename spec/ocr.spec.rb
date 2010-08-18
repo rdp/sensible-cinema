@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/common'
 require_relative "../lib/ocr"
+require 'benchmark'
 
 $OCR_NO_CACHE = true
 
@@ -37,6 +38,23 @@ describe OCR do
   
   it "should return nil if it can't identify a digit" do
     OCR.identify_digit(File.binread("images/black.bmp")).should be_nil
+  end
+  
+  context "cache" do
+   before do
+     OCR.clear_cache!
+     $OCR_NO_CACHE = false
+   end
+  
+   after do
+     $OCR_NO_CACHE = true
+   end
+  
+    it "should cache results from one time to the next" do
+      original_time = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
+      new_time = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp"))} }
+      new_time.should be < original_time
+    end
   end
   
 end

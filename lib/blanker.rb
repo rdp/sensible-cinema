@@ -11,10 +11,7 @@ else
     def self.startup
       @fr = JFrame.new("blanked section")
       @fr.default_close_operation = JFrame::EXIT_ON_CLOSE
-      @fr.set_location(0,0)
-      @fr.set_size(2000, 2000) # ltodo better coords...
-      # ltodo: disable people being able to get past it?
-      # lodo set on top, for hulu' sake?
+      @fr.set_size(2000, 2000) # ltodo better size coords ?
       
       @label = JLabel.new("  Blank section")
       @fr.add(@label)
@@ -22,7 +19,8 @@ else
       @label.revalidate
       
       @fr.set_resizable(false)
-      @fr.set_visible(true)
+      @fr.set_visible(true) # have to do this once, to ever see the thing
+      @fr.setAlwaysOnTop(true)
       unblank_full_screen! # hide it
     end
 
@@ -32,11 +30,12 @@ else
       else
         @label.set_text "  Blank section"
       end
-      @fr.setAlwaysOnTop(true)
+      @fr.set_location(0,0)
     end
     
     def self.unblank_full_screen!
-      @fr.setAlwaysOnTop(false)
+      # off screen...I hope.
+      @fr.set_location(-2100, -2100)
     end
     
     def self.shutdown

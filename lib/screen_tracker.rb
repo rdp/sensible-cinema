@@ -151,7 +151,7 @@ class ScreenTracker
   def attempt_to_get_time_from_screen
     out = {}
     dump_digits if $DEBUG            
-    digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
+    digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...ltodo
     start = Time.now
     DIGIT_TYPES.each{|type|
       if digits[type]
@@ -182,7 +182,7 @@ class ScreenTracker
       end
     }
     out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{ |type| out[type] }
-    p 'got new screen time ' + out + " tracking delta:" + (Time.now - start).to_s if $VERBOSE
+    puts '', 'got new screen time ' + out + " tracking delta:" + (Time.now - start).to_s if $VERBOSE
     return out, Time.now-start
   end
   

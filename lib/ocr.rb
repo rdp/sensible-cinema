@@ -12,8 +12,8 @@ module OCR
   
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
-    if CACHE[memory_bitmap]
-      return CACHE[memory_bitmap] unless defined?($OCR_NO_CACHE)
+    if CACHE.has_key?(memory_bitmap)
+      return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
     end
     if options[:might_be_colon]
       # do processing in-line <sigh>
@@ -48,11 +48,16 @@ module OCR
         return a
       end
     end
+    CACHE[memory_bitmap] = nil
     nil
   end
   
   def version
     `#{GOCR} -h 2>&1`
+  end
+  
+  def clear_cache!
+    CACHE.clear
   end
   
   extend self
