@@ -48,7 +48,7 @@ module OCR
         return a
       end
     end
-    CACHE[memory_bitmap] = nil
+    # don't cache it...could use up too much space on accident.
     nil
   end
   

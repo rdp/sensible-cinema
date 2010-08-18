@@ -36,6 +36,10 @@ describe OCR do
     end
   end
   
+  def read_digit
+    OCR.identify_digit(File.binread("images/youtube_3_0.bmp"))
+  end
+  
   it "should return nil if it can't identify a digit" do
     OCR.identify_digit(File.binread("images/black.bmp")).should be_nil
   end
@@ -52,25 +56,29 @@ describe OCR do
    end
   
     it "should cache results from one time to the next" do
-      original_time = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
-      new_time = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp"))} }
+      original_time = Benchmark.realtime { read_digit }
+      new_time = Benchmark.realtime { 3.times { read_digit } }
       new_time.should be < original_time
     end
     
-    it "should serialize to a cache file" do
+    it "should not cache results for failed reads" do
+      original_time = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
+      new_time = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp"))} }
+      new_time.should be > original_time
+    end    
+    
+    it "should serialize creating a cache file" do
       Pathname.new(OCR::CACHE_FILE).should_not exist
       OCR.serialize_cache_to_disk
       Pathname.new(OCR::CACHE_FILE).should exist
     end
     
-    it "should use the cache file and speed things up on startup" do
+    it "should use the cache file to speed things up on startup" do
       long = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
       OCR.serialize_cache_to_disk
       OCR::CACHE.clear
       long2 = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
       OCR.unserialize_cache_from_disk
-      require 'ruby-debug'
-      debugger
       short = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp")) } }
       long.should be > short
       long2.should be > short
