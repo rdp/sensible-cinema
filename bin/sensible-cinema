@@ -1,4 +1,4 @@
-p 'loading...'
+puts 'Welcome to Sensible Cinema...'
 require 'rubygems'
 require 'sane'
 
@@ -50,6 +50,7 @@ else
       exit 1
     end
     puts 'Selected scene descriptions file ' + File.basename(scene_list) + " (#{scene_list})", ''
+    Blanker.startup
     overlay = OverLayer.new(scene_list)    
   end
   
@@ -80,5 +81,6 @@ else
   key_input = KeyboardInput.new overlay
   key_input.start_thread # status thread
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
-
+  Blanker.shutdown # lodo move this and the 'q' key to within overlayer
+  
 end

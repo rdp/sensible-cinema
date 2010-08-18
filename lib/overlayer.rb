@@ -34,9 +34,9 @@ class OverLayer
     Muter.unmute! unless defined?($AM_IN_UNIT_TEST)
   end
   
-  def blank!
+  def blank! seconds
     @am_blanked = true
-    Blanker.blank_full_screen!
+    Blanker.blank_full_screen! seconds
   end
   
   def unblank!
@@ -335,8 +335,10 @@ class OverLayer
   end  
   
   def display_change change
-    puts ''
-    puts change + ' at ' + cur_english_time if $VERBOSE unless $DEBUG # too chatty for unit tests
+    if $VERBOSE && !$DEBUG# too chatty for unit tests
+      puts ''
+      puts change + ' at ' + cur_english_time
+    end    
   end
   
   def set_states!
@@ -354,7 +356,7 @@ class OverLayer
     end
     
     if should_be_blank && !blank?
-      blank!
+      blank! "%.02f" % (next_point - cur_time)
       display_change 'blanked'
     end
 

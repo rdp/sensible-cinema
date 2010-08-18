@@ -6,26 +6,40 @@ else
   
   class Blanker 
     JFrame = javax.swing.JFrame
-    JPanel = javax.swing.JPanel
-    
-    def self.blank_full_screen!
-      # a new screen each time as other jruby doesn't terminate as gracefully as we would like...
-      @fr = JFrame.new("blanked section") # ltodo pass in param
+    JLabel = javax.swing.JLabel
+
+    def self.startup
+      @fr = JFrame.new("blanked section")
       @fr.default_close_operation = JFrame::EXIT_ON_CLOSE
       @fr.set_location(0,0)
       @fr.set_size(2000, 2000) # ltodo better coords...
-      # how to turn off title bar:
-      # @fr.set_undecorated(true)
-      # lodo on top?
+      # ltodo: disable people being able to get past it?
+      # lodo set on top, for hulu' sake?
+      
+      @label = JLabel.new("  Blank section")
+      @fr.add(@label)
+      @label.repaint
+      @label.revalidate
       
       @fr.set_resizable(false)
+      @fr.set_visible(false) # display it later
+    end
+
+    def self.blank_full_screen! seconds
+      if seconds
+        @label.set_text "   #{seconds} s" 
+      else
+        @label.set_text "  Blank section"
+      end
       @fr.set_visible(true)
     end
     
     def self.unblank_full_screen!
-      if @fr
-        @fr.dispose
-      end
+      @fr.set_visible(false)
+    end
+    
+    def self.shutdown
+      @fr.dispose    
     end
     
   end

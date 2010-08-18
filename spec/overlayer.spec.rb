@@ -22,11 +22,13 @@ describe OverLayer do
   before do
     File.write 'temp.yml', YAML.dump({:mutes => {2.0 => 4.0}} )
     @o = OverLayer.new('temp.yml')
+    Blanker.startup
   end
 
   after do
     Thread.join_all_others
     File.delete 'temp.yml'
+    Blanker.shutdown
   end
 
   def start_good
