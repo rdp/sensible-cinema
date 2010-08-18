@@ -74,12 +74,12 @@ describe OCR do
     end
     
     it "should use the cache file to speed things up on startup" do
-      long = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
+      long = Benchmark.realtime { read_digit }
       OCR.serialize_cache_to_disk
       OCR::CACHE.clear
-      long2 = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
+      long2 = Benchmark.realtime { read_digit }
       OCR.unserialize_cache_from_disk
-      short = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp")) } }
+      short = Benchmark.realtime { 3.times { read_digit } }
       long.should be > short
       long2.should be > short
     end

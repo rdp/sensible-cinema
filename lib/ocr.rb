@@ -74,10 +74,6 @@ module OCR
     
   end
   
-  at_exit {
-    serialize_cache_to_disk
-  }
-  
   extend self
   
 end
