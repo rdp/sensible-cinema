@@ -141,8 +141,7 @@ class ScreenTracker
       if(Time.now - time_since_last > 5)
         p 'warning--unable to track screen time for some reason'        
         @displayed_warning = true
-        time_since_last = Time.now
-        # reget window, just in case...
+        # reget window, just in case that's the problem...
         get_hwnd
       end
     }
