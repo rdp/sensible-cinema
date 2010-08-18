@@ -56,7 +56,7 @@ else
   
   player_description = ARGV.shift.to_s
   if !File.exist?(player_description)    
-    player_description = FileChooser.choose_file("SELECT PLAYER (optional)", __dir__ + "/../zamples/players")
+    player_description = FileChooser.choose_file("SELECT PLAYER", __dir__ + "/../zamples/players")
   end
   
   if File.exist? player_description.to_s
