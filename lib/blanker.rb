@@ -20,7 +20,8 @@ else
       
       @fr.set_resizable(false)
       @fr.set_visible(true) # have to do this once, to ever see the thing
-      unblank_full_screen! # hide it
+      # lodo does this really speed things up to pre-create it? that icon is a bit ugly...
+      unblank_full_screen! # and hide it to start
     end
 
     def self.blank_full_screen! seconds
@@ -36,13 +37,14 @@ else
     end
     
     def self.unblank_full_screen!
-      # off screen...I hope.
+      # off screen...
       @fr.set_location(-2100, -2100)
     end
     
     def self.shutdown
-      @fr.dispose    
+      @fr.dispose
     end
     
   end
+  
 end
