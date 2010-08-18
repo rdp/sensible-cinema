@@ -23,14 +23,11 @@ class Blanker
     fr.set_undecorated(true) unless fr.is_displayable
     
     # probably unnecessary
-    panel = JPanel.new
-    frame.add(panel)
-    # frame.set_background()
-    panel.repaint
-    panel.revalidate
-    # too heavy--causes monitor resolution change!
-    # gd = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice()
-    # gd.set_full_screen_window(fr)
+    #panel = JPanel.new
+    #frame.add(panel)
+    # frame.set_background() # set background color
+    #panel.repaint
+    #panel.revalidate
     @fr = fr
     @fr.set_visible(true)
   end
