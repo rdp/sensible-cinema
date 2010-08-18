@@ -20,7 +20,6 @@ else
       
       @fr.set_resizable(false)
       @fr.set_visible(true) # have to do this once, to ever see the thing
-      @fr.setAlwaysOnTop(true)
       unblank_full_screen! # hide it
     end
 
@@ -30,6 +29,9 @@ else
       else
         @label.set_text "  Blank section"
       end
+      # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
+      @fr.setAlwaysOnTop(false) 
+      @fr.setAlwaysOnTop(true)
       @fr.set_location(0,0)
     end
     
