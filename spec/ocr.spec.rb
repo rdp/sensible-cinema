@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/common'
 require_relative "../lib/ocr"
 
+$OCR_NO_CACHE = true
+
 describe OCR do
   
   it "should be able to output help output" do
