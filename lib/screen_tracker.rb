@@ -82,9 +82,12 @@ class ScreenTracker
   
   def dump_digits
     if @digits
+      @digit_count ||= 1
+      @digit_count += 1
       for type, bitmap in get_digits_as_bitmaps
-        File.binwrite type.to_s + '.bmp', bitmap
+        File.binwrite type.to_s + '.' + @digit_count.to_s + '.bmp', bitmap
       end
+      print 'wrote digits:', @digit_count, "\n"
     end
   end
   
@@ -146,44 +149,42 @@ class ScreenTracker
   end
   
   def attempt_to_get_time_from_screen
-          out = {}
-          dump_digits if $DEBUG            
-          digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
-          start = Time.now
-          DIGIT_TYPES.each{|type|
-            if digits[type]
-              digit = identify_digit(digits[type])
-              unless digit
-                if $DEBUG || $VERBOSE
-                  @a ||= 1
-                  @a += 1
-                  @already_wrote ||= {}
-                  unless @already_wrote[digits[type]]
-                    p 'unable to identify capture!' + type.to_s + @a.to_s
-                    File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
-                    @already_wrote[digits[type]] = true
-                  end
-                end
-                if type == :hours
-                  digit = 0 # this one can fail in VLC
-                else
-                  # early return
-                  p 'identity failure' if $VERBOSE
-                  return
-                end
-              end
-              out[type] = digit
-            else
-              # there isn't one on screen, so probably zero...
-              out[type] = 0
+    out = {}
+    dump_digits if $DEBUG            
+    digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...
+    start = Time.now
+    DIGIT_TYPES.each{|type|
+      if digits[type]
+        digit = identify_digit(digits[type])
+        unless digit
+          if $DEBUG || $VERBOSE
+            @a ||= 1
+            @a += 1
+            @already_wrote ||= {}
+            unless @already_wrote[digits[type]]
+              p 'unable to identify capture!' + type.to_s + @a.to_s
+              File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
+              @already_wrote[digits[type]] = true
             end
-          }
-          out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{|type| out[type]}
-          p 'got new screen time ' + out + " delta:" + (Time.now - start).to_s if $VERBOSE
-          # if the window was in the background it will be all zeroes, so nil it out
-          out = nil unless out =~ /[1-9]/
-          return out, Time.now-start
+          end
+          if type == :hours
+            digit = 0 # this one can fail in VLC
+          else
+            # early return
+            p 'identity failure ' + type.to_s if $VERBOSE
+            return
+          end
         end
+        out[type] = digit
+      else
+        # there isn't one specified as being on screen, so assume it is always zero (like youtube hour)...
+        out[type] = 0
+      end
+    }
+    out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{ |type| out[type] }
+    p 'got new screen time ' + out + " tracking delta:" + (Time.now - start).to_s if $VERBOSE
+    return out, Time.now-start
+  end
   
   def process_forever_in_thread
     Thread.new {

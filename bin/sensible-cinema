@@ -1,4 +1,4 @@
-puts 'Welcome to Sensible Cinema...', "opening the curtains..."
+puts 'Welcome to Sensible Cinema...'
 require 'rubygems'
 require 'sane'
 
@@ -80,6 +80,7 @@ else
   overlay.start_thread true
   key_input = KeyboardInput.new overlay
   key_input.start_thread # status thread
+  puts "opening the curtains..."
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
   Blanker.shutdown # lodo move this and the 'q' key to within overlayer
   

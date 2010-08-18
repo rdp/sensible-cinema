@@ -9,10 +9,8 @@ describe OCR do
     OCR.version.should_not be_blank
   end
   
-  it "should be able to grab some digits" do
-    success = true
-    for file in Dir['images/*[0-9].bmp']
-      print file, ' '
+  Dir['images/*[0-9].bmp'].each{ |file|
+    it "should be able to OCR #{file}" do
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       file =~ /(.)\.bmp/
@@ -22,21 +20,19 @@ describe OCR do
         begin
           require 'ruby-debug'
           debugger
+          OCR.identify_digit(File.binread(file), options)
         rescue LoadError
           puts 'unable to load ruby-debug'
         end
-        OCR.identify_digit(File.binread(file), options)
-        success = false
-      else
-        puts 'success'
+        fail
       end
     end
-    fail unless success
-  end
+  }
   
   it "should be able to grab a colon" do
-    pending "caring about colons"
-    OCR.identify_digit(File.binread("images/colon.bmp"), :might_be_colon => true).should == ":"
+    pending "caring about colons" do
+      OCR.identify_digit(File.binread("images/colon.bmp"), :might_be_colon => true).should == ":"
+    end
   end
   
   it "should return nil if it can't identify a digit" do
