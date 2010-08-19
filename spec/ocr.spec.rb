@@ -12,7 +12,7 @@ describe OCR do
   
   Dir['images/*[0-9].bmp'].sort_by{|f| File.stat(f).mtime}.reverse.each{ |file|
     it "should be able to OCR #{file}" do
-      p file if $VERBOSE
+      p file if $DEBUG
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       options[:sharpen] = true if file =~ /youtube/

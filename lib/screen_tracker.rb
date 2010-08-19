@@ -154,13 +154,15 @@ class ScreenTracker
     out = {}
     # force it to have two matching in a row, to avoid race conditions grabbing the digits...
     previous = nil # 0.08s [!] not too accurate...ltodo
+    start = Time.now
     until previous == (temp = get_digits_as_bitmaps)
       previous = temp
+      sleep 0.05 # allow youtube to update (sigh)
+      # lodo it should probably poll *before* this, not here...maybe?
     end
     digits = previous
     
     dump_digits(digits) if $DEBUG            
-    start = Time.now
     DIGIT_TYPES.each{|type|
       if digits[type]
         digit = identify_digit(digits[type])

@@ -88,8 +88,10 @@ else
   overlay.start_thread true
   key_input = KeyboardInput.new overlay
   key_input.start_thread # status thread
+  at_exit {
+    Blanker.shutdown # lodo move this and the 'q' key to within overlayer
+    OCR.serialize_cache_to_disk
+  }
   key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
-  Blanker.shutdown # lodo move this and the 'q' key to within overlayer
-  OCR.serialize_cache_to_disk
   
 end
