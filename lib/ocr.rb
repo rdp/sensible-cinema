@@ -1,8 +1,6 @@
 im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/imagemagick") # convert.exe wants to only be chosen from here...
 ENV['PATH'] = im_path + ';' + ENV['PATH']
 
-require 'mini_magick'
-
 # helper for OCR'ing single digits that were screen captured
 module OCR
   
@@ -12,6 +10,8 @@ module OCR
   
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
+    require 'mini_magick' # installation woe, but actually pretty fast
+
     if CACHE.has_key?(memory_bitmap)
       return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
     end
