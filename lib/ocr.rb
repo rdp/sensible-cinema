@@ -40,7 +40,7 @@ module OCR
     
     # 130 for vlc, 100 for hulu, 0 for some youtube, 200, 250 for youtube "light"
     # this is getting *way* too delicate...
-    for level in [0, 130, 100, 250] 
+    for level in [250,0, 130, 100, 200] 
       
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       if a =~ /[0-9]/
