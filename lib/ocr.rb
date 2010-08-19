@@ -17,7 +17,7 @@ module OCR
     end
     if options[:might_be_colon]
       # do processing in-line <sigh>
-      total = (memory_bitmap.scan /\x00{5}+/).length
+      total = (memory_bitmap.scan(/\x00{5}+/)).length
       if total >= 3 # really should be 4 for VLC
         # it had some darkness...therefore have been a colon!
         CACHE[memory_bitmap] = ":"
