@@ -33,14 +33,14 @@ module OCR
       image.negate 
     else
       # youtube wants sharpen...
-      image.sharpen(2)
+      #image.sharpen(2)
     end
 
     image.format(:pnm)
+    image.sharpen(2) if options[:sharpen]
     
-    # 130 for vlc, 100 for hulu, 0 for some youtube, 200, 250 for youtube "light"
-    # this is getting *way* too delicate...
-    for level in [250,0, 130, 100, 200] 
+    previous = nil
+    for level in (options[:levels] || [0])
       
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       if a =~ /[0-9]/
@@ -48,12 +48,17 @@ module OCR
         a.strip!
         a.gsub!('_', '')
         a = a.to_i
-        CACHE[memory_bitmap] = a
-        return a
+        if previous && a != previous
+          require '_dbg'
+          p 'ambiguous!'
+          return nil
+        end
+        previous = a
       end
     end
     # don't cache failure here...might could use up too much space on accident...
-    nil
+    CACHE[memory_bitmap] = previous if previous
+    previous
   end
   
   def version
