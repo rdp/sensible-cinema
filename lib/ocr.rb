@@ -31,34 +31,24 @@ module OCR
       # but doesn't want sharpen, for whatever reason...
       # mogrify calls it negate...
       image.negate 
-    else
-      # youtube wants sharpen...
-      #image.sharpen(2)
     end
 
     image.format(:pnm)
     image.sharpen(2) if options[:sharpen]
     
     previous = nil
-    for level in (options[:levels] || [0])
-      
+    for level in (options[:levels] || [0])      
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       if a =~ /[0-9]/
         # a can be like "_1_\n"
         a.strip!
         a.gsub!('_', '')
         a = a.to_i
-        if previous && a != previous
-          require '_dbg'
-          p 'ambiguous!'
-          return nil
-        end
-        previous = a
+        return CACHE[memory_bitmap] = a
       end
     end
     # don't cache failure here...might could use up too much space on accident...
-    CACHE[memory_bitmap] = previous if previous
-    previous
+    nil
   end
   
   def version
