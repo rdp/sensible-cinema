@@ -201,6 +201,9 @@ class OverLayer
       when 's' then 1
       when 'S' then -1
       when 't' then 0.1
+      when 'q' then
+        puts '','quitting'
+        exit(1)        
       when 'T' then -0.1
       when 'v' then
         $VERBOSE = !$VERBOSE

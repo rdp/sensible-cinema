@@ -7,19 +7,18 @@ class ScreenTracker
   
   def self.new_from_yaml yaml, callback
     settings = YAML.load yaml
-    # heigth is shared...
-    height = settings["height"]
-    digits = settings["digits"]
-    return new(settings["name"], settings["x"], settings["y"], settings["width"], settings["height"], digits, callback)
+    return new(settings["name"], settings["x"], settings["y"], settings["width"], 
+        settings["height"], settings["use_class_name"], settings["digits"], callback)
   end
   
   attr_accessor :hwnd
   
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
-  def initialize name_or_regex,x,y,width,height,digits=nil,callback=nil
+  def initialize name_or_regex,x,y,width,height,use_class_name=nil,digits=nil,callback=nil
     # cache to save us 0.00445136 per time LOL
     @name_or_regex = name_or_regex
+    @use_class_name = use_class_name
     get_hwnd
     pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
@@ -36,7 +35,9 @@ class ScreenTracker
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
     @max_x = max_x
     raise 'poor width or wrong window' if @x2 > max_x  || @x2 == x
-    raise 'poor height or wrong window' if @y2 > max_y || @y2 == y
+    if @y2 > max_y || @y2 == y
+      raise 'poor height or wrong window' 
+    end
     @digits = digits
     @displayed_warning = false
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
@@ -45,19 +46,22 @@ class ScreenTracker
   def get_hwnd
     if @name_or_regex.to_s.downcase == 'desktop'
       # full screen option
+      assert !@use_class_name # not an option
       @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
+      return
     else
-      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex)
+      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
     end
 
+    # allow ourselves the 'found it message' selectively
     unless @hwnd
       until @hwnd
         print 'perhaps not running yet? [%s]' % @name_or_regex
         sleep 1
         STDOUT.flush
-        @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex)
+        @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
       end
-      puts 'found window'
+      puts 're-found window'
     end
 
   end
@@ -83,11 +87,11 @@ class ScreenTracker
   def dump_digits
     if @digits
       @digit_count ||= 1
-      @digit_count += 1
       for type, bitmap in get_digits_as_bitmaps
         File.binwrite type.to_s + '.' + @digit_count.to_s + '.bmp', bitmap
       end
-      print 'wrote digits:', @digit_count, "\n"
+      print 'debug wrote digits:', @digit_count, "\n"
+      @digit_count += 1
     end
   end
   
@@ -168,10 +172,10 @@ class ScreenTracker
             end
           end
           if type == :hours
-            digit = 0 # this one can fail in VLC
+            digit = 0 # this one can fail and that's ok in VLC bottom right
           else
             # early return
-            p 'identity failure ' + type.to_s if $VERBOSE
+            p 'overall identity failure ' + type.to_s if $VERBOSE
             return
           end
         end

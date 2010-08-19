@@ -10,7 +10,7 @@ module OCR
   
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
-    require 'mini_magick' # installation woe, but actually pretty fast
+    require 'mini_magick' # here because of installation woe, but actually not a big slowdown
 
     if CACHE.has_key?(memory_bitmap)
       return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
@@ -37,10 +37,14 @@ module OCR
     end
 
     image.format(:pnm)
-    for level in [130, 100, 0] # 130 for vlc, 100 for hulu, 0 for some youtube
+    
+    # 130 for vlc, 100 for hulu, 0 for some youtube, 200, 250 for youtube "light"
+    # this is getting *way* too delicate...
+    for level in [0, 130, 100, 250] 
+      
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
-      # a can be like "_1_\n"
       if a =~ /[0-9]/
+        # a can be like "_1_\n"
         a.strip!
         a.gsub!('_', '')
         a = a.to_i
@@ -48,7 +52,7 @@ module OCR
         return a
       end
     end
-    # don't cache it...could use up too much space on accident.
+    # don't cache failure here...might could use up too much space on accident...
     nil
   end
   

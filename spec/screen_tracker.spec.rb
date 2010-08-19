@@ -8,17 +8,17 @@ describe ScreenTracker do
     SILENCE = /silence.*VLC/
    
     def start_vlc
-      # unfortunately this is run before every context with rspec 1.3...
+      # unfortunately this is run before every context [bug] with rspec 1.3...
       unless $pid1
         assert !$pid1
-        # enforce we only have at most one running at a time...
+        # enforce we only have at most one running...
         begin
           Win32::Screenshot.window(SILENCE, 0) {}
-          raise Exception.new('must kill old vlcs first')
+          raise Exception.new('must close existing vlcs first')
         rescue
           silence = File.expand_path("./silence.wav").gsub("/", "\\")
-          Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # work around for jruby...
-          sleep 4          
+          Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for jruby...
+          sleep 4
           $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
         end
       end
@@ -169,9 +169,10 @@ describe ScreenTracker do
 
         it "should be able to disk dump snapshotted digits" do
           @a.dump_bmp
-          Pathname.new('minute_tens.bmp').should exist
-          Pathname.new('minute_tens.bmp').size.should be > 0
-          Pathname.new('hours.bmp').should_not exist
+          # what is the right number here?
+          Pathname.new('minute_tens.1.bmp').should exist
+          Pathname.new('minute_tens.1.bmp').size.should be > 0
+          Pathname.new('hours.1.bmp').should_not exist
         end
 
         it "should use OCR against the changes appropriately" do
@@ -182,7 +183,7 @@ describe ScreenTracker do
           output[1].should be_a Float
         end
         
-        it "should be ok with a failed hours image" do
+        it "should be ok with a non-existent hours image" do
           @a.stub!(:get_digits_as_bitmaps) do
             four = File.binread('images/4.bmp')
             {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
@@ -195,9 +196,9 @@ describe ScreenTracker do
           it "should detect this change"
         end
 
-        it "should be able to use invert on images" do
-          @a = ScreenTracker.new(SILENCE, -111, -16, 86, 13,
-            {:should_invert => true, :hours => nil, :minute_tens => [-90,7], :minute_ones => [-82, 7], :second_tens => [-72, 7], :second_ones => [-66, 7]} )
+        it "should be able to use invert on captured images" do
+          @a = ScreenTracker.new(SILENCE, 100, 100, 10, 10, false,
+            {:should_invert => true, :second_ones => [-66, 7]} )
           got_it = nil
           OCR.stub!(:identify_digit) {|*args|
             got_it = args
@@ -215,6 +216,12 @@ describe ScreenTracker do
           output = @a.wait_till_next_change 
           output[0].should_not be_nil
           old_handle.should_not == @a.hwnd
+        end
+        
+        it "should be able to track via class_name" do
+            a = ScreenTracker.new(SILENCE,10,10,20,20)
+            b = ScreenTracker.new(/qwidget/i,10,10,20,20, true, {:second_ones => [-66, 7]})
+            a.hwnd.should == b.hwnd
         end
         
       end

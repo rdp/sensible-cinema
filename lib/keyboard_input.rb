@@ -31,7 +31,7 @@ class KeyboardInput
  def handle_keystrokes_forever
    raise 'only jruby supported, as it looks just too messy in normal ruby' unless OS.java?
    while(ch = getch)
-     return if ch.in? [3, 113] # ctrl+c, q -> exit
+     exit if ch == 3 # ctrl+c
      # lodo handle arrow keys, too, which is a bit more complicated...
      handle_keystroke ch
    end

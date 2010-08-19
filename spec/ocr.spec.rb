@@ -10,13 +10,14 @@ describe OCR do
     OCR.version.should_not be_blank
   end
   
-  Dir['images/*[0-9].bmp'].each{ |file|
+  Dir['images/*[0-9].bmp'].sort_by{|f| File.stat(f).mtime}.reverse.each{ |file|
     it "should be able to OCR #{file}" do
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       file =~ /(.)\.bmp/
       expected_digit = $1.to_i
-      if OCR.identify_digit(File.binread(file), options) != expected_digit
+      got_digit = OCR.identify_digit(File.binread(file), options)
+      if got_digit != expected_digit
         p "fail:" + file
         begin
           require 'ruby-debug'
@@ -25,7 +26,7 @@ describe OCR do
         rescue LoadError
           puts 'unable to load ruby-debug'
         end
-        fail
+        got_digit.should == expected_digit
       end
     end
   }

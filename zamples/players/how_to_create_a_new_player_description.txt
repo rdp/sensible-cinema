@@ -14,4 +14,11 @@ NB that the clock coords can have negative start offsets, which mean "distance f
 NB that you can specify "desktop" for the window name, meaning full screen.  This is easier, though not necessarily better,
 than finding out the real way.
 
+Here is how to specify a regex anywhere:
+
+!ruby/regexp /abc/
+
+like
+key_name: !ruby/regexp /abc/
+
 Post back with difficulties and/or questions.

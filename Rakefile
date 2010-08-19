@@ -7,7 +7,7 @@ Jeweler::Tasks.new do |s|
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
     s.add_dependency 'sane', '>= 0.22.0'
-    s.add_dependency 'rdp-win32screenshot', '>= 0.0.6.3'
+    s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3'
     s.add_dependency 'mini_magick' # for ocr...
     s.add_development_dependency 'rspec' # prefer rspec 2 I guess...
     s.add_development_dependency 'jeweler'
