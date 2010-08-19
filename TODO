@@ -8,15 +8,9 @@
 note: just plow forward, to "grab" available ideas...
   except that for now, just what *I* plan on needing for myself.
 
-youtube: it should work
-youtube: it should unminimize when I open up my window...hmm...
+refactor: "screen time change", order should be swapped in bin/x
 
-refactor: screen time change, order should be swapped
-
-record gummibar ?:
-  camstudio? vlc? somewhere with a real sound card...which would be the home comp non full-screened but well coordinated for now
-
-auto-play on youtube when it comes up...hmm...
+auto-play on youtube when it comes up...hmm... (detect)
 
 able to make it "quieter" at certain parts, arbitrarily...
 
@@ -29,7 +23,6 @@ snag the close captioning as a profanity filter?
 make it able to use multiple players so I can maximize VLC...
 
 blank overlay text like "and you are one awesome klingon"
-
 
 screencast of things helpful (use, creation).
 
@@ -106,7 +99,7 @@ Programmatically do all of the above, by driving a player with its real API.
      (use VLC's web interface?)
     
 use spiffy differentiation for DVD's on windows
-    
+
 super easy streamer windows -> {XBOX360, wii, etc..} basically like playon, which appears to have no free equivalent, I guess, though you can 
   save the files somewhere and stream them (and stream DVD's [?]) using tversity...maybe some other things...hmm...but no netflix!
   so currently they basically need to run a cable from laptop to PC, for me.  windows laptop, for netflix, though a dedicated box could run things like boxee.
