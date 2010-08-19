@@ -10,8 +10,10 @@ end
 
 $VERBOSE = 1 if ARGV.delete('-v')
 $TEST = 1 if ARGV.delete('-t')  
-
-OCR.clear_cache! if ARGV.delete('--clear-cache')
+if ARGV.delete('--clear-cache')
+  OCR.clear_cache! 
+  puts 'cleared cache'
+end
 
 $stderr.puts 'warning: currently windows only for certain parts currently' unless  ENV['OS'] == 'Windows_NT'
 

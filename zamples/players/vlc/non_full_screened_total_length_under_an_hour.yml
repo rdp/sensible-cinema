@@ -16,4 +16,6 @@ digits:
       - 7
       :second_ones:
       - -66
-      - 7      
+      - 7
+      :levels:
+      - 130

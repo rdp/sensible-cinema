@@ -13,7 +13,7 @@ module OCR
     require 'mini_magick' # here because of installation woe, but actually not a big slowdown
 
     if CACHE.has_key?(memory_bitmap)
-      return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
+      #return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
     end
     if options[:might_be_colon]
       # do processing in-line <sigh>
@@ -34,20 +34,23 @@ module OCR
     end
 
     image.format(:pnm)
-    image.sharpen(2) if options[:sharpen]
+    image.sharpen(2) if options[:sharpen] # hulu does *not* want sharpen, though I haven't checked it too closely...
     
     previous = nil
-    for level in (options[:levels] || [0])      
+    p options[:levels]
+    for level in options[:levels]
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       if a =~ /[0-9]/
-        # a can be like "_1_\n"
+        # it can be like "_1_\n"
         a.strip!
         a.gsub!('_', '')
         a = a.to_i
+        require 'ruby-debug'
+        #debugger if a == 9
         return CACHE[memory_bitmap] = a
       end
     end
-    # don't cache failure here...might could use up too much space on accident...
+    # don't cache failures here...might could use up too much space...
     nil
   end
   

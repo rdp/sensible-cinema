@@ -18,7 +18,7 @@ describe ScreenTracker do
         rescue
           silence = File.expand_path("./silence.wav").gsub("/", "\\")
           Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for jruby...
-          sleep 4
+          sleep 2
           $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
         end
       end
@@ -185,11 +185,35 @@ describe ScreenTracker do
         
         it "should be ok with a non-existent hours image" do
           @a.stub!(:get_digits_as_bitmaps) do
-            four = File.binread('images/4.bmp')
+            four = File.binread('images/vlc_4.bmp')
+            black = File.binread('images/black.bmp')
             {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
-              :hours => File.binread('images/black.bmp')}
+              :hours => black}
           end
           @a.attempt_to_get_time_from_screen[0].should == "0:44:44"
+        end
+        
+        it "should track the screen until it stabilizes" do
+          time_through = 0
+          four = File.binread('images/vlc_4.bmp')
+          black = File.binread('images/black.bmp')
+          times_read=0
+          @a.stub!(:get_digits_as_bitmaps) do
+            time_through += 1
+            if time_through == 1
+              {:minute_tens=>four}
+            elsif time_through == 2
+              {:minute_tens=>black}
+            else
+             times_read += 1
+              {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
+                :hours => four}              
+            end
+          end
+          
+          @a.attempt_to_get_time_from_screen[0].should == "4:44:44"
+          times_read.should == 2
+        
         end
         
         context "with an OCR that can change from hour to minutes during ads" do

@@ -81,18 +81,16 @@ class ScreenTracker
   def dump_bmp filename = 'dump.bmp'
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
-    dump_digits
+    dump_digits get_digits_as_bitmaps if @digits
   end
   
-  def dump_digits
-    if @digits
+  def dump_digits digits
       @digit_count ||= 1
       for type, bitmap in get_digits_as_bitmaps
         File.binwrite type.to_s + '.' + @digit_count.to_s + '.bmp', bitmap
       end
-      print 'debug wrote digits:', @digit_count, "\n"
+      print 'debug dumped digits that Im about to parse:', @digit_count, "\n"
       @digit_count += 1
-    end
   end
   
   DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
@@ -154,8 +152,14 @@ class ScreenTracker
   
   def attempt_to_get_time_from_screen
     out = {}
-    dump_digits if $DEBUG            
-    digits = get_digits_as_bitmaps # 0.08s [!] not too accurate...ltodo
+    # force it to have two matching in a row, to avoid race conditions grabbing the digits...
+    previous = nil # 0.08s [!] not too accurate...ltodo
+    until previous == (temp = get_digits_as_bitmaps)
+      previous = temp
+    end
+    digits = previous
+    
+    dump_digits(digits) if $DEBUG            
     start = Time.now
     DIGIT_TYPES.each{|type|
       if digits[type]
@@ -166,7 +170,7 @@ class ScreenTracker
             @a += 1
             @already_wrote ||= {}
             unless @already_wrote[digits[type]]
-              p 'unable to identify capture!' + type.to_s + @a.to_s
+              p 'unable to identify capture!' + type.to_s + @a.to_s + ' capture no:' + @digit_count.to_s
               File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
               @already_wrote[digits[type]] = true
             end
@@ -174,10 +178,11 @@ class ScreenTracker
           if type == :hours
             digit = 0 # this one can fail and that's ok in VLC bottom right
           else
-            # early return
-            p 'overall identity failure ' + type.to_s if $VERBOSE
+            # early failure return
             return
           end
+        else
+          p " got digit #{type} as #{digit} which was captured as #{@digit_count} " if $DEBUG
         end
         out[type] = digit
       else

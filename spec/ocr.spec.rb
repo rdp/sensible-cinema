@@ -12,6 +12,7 @@ describe OCR do
   
   Dir['images/*[0-9].bmp'].sort_by{|f| File.stat(f).mtime}.reverse.each{ |file|
     it "should be able to OCR #{file}" do
+      p file if $VERBOSE
       options = {}
       options[:should_invert] = true if file =~ /hulu/
       options[:sharpen] = true if file =~ /youtube/
@@ -28,7 +29,7 @@ describe OCR do
       if got_digit != expected_digit
         p "fail:" + file
         begin
-          require 'ruby-debug'
+          #require 'ruby-debug'
           #debugger
           OCR.identify_digit(File.binread(file), options)
         rescue LoadError
@@ -41,15 +42,19 @@ describe OCR do
   
   it "should be able to grab a colon" do
     pending "caring about colons"
-    OCR.identify_digit(File.binread("images/colon.bmp"), :might_be_colon => true).should == ":"    
+    OCR.identify_digit(File.binread("images/colon.bmp"), :might_be_colon => true, :levels => [130]).should == ":"    
   end
   
   def read_digit
-     OCR.identify_digit(File.binread("images/youtube_3_0.bmp"), :sharpen => true)
+     OCR.identify_digit(File.binread("images/youtube_3_0.bmp"), :sharpen => true, :levels => [130])
   end
   
   it "should return nil if it can't identify a digit" do
-    OCR.identify_digit(File.binread("images/black.bmp")).should be_nil
+    read_all_black.should be_nil
+  end
+  
+  def read_all_black
+    OCR.identify_digit(File.binread("images/black.bmp"),:levels => [130])
   end
   
   context "cache" do
@@ -70,8 +75,8 @@ describe OCR do
     end
     
     it "should not cache results for failed reads" do
-      original_time = Benchmark.realtime { OCR.identify_digit(File.binread("images/black.bmp")) }
-      new_time = Benchmark.realtime { 3.times { OCR.identify_digit(File.binread("images/black.bmp"))} }
+      original_time = Benchmark.realtime { read_all_black }
+      new_time = Benchmark.realtime { 3.times { read_all_black} }
       new_time.should be > original_time
     end    
     
