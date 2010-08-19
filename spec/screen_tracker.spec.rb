@@ -18,8 +18,9 @@ describe ScreenTracker do
         rescue
           silence = File.expand_path("./silence.wav").gsub("/", "\\")
           Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for jruby...
-          sleep 2
-          $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) # more jruby work-arounds...
+          until $pid1
+            $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) rescue nil
+          end
         end
       end
     end
