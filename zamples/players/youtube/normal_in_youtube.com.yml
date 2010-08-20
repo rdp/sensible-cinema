@@ -1,0 +1,22 @@
+name: !ruby/regexp /nativewindowclass/i
+use_class_name: true
+x: 71
+y : -18
+width: 23
+height: 11
+digits:
+      :hours:
+      :minute_tens:
+      :minute_ones:
+      - 72
+      - 8
+      :second_tens:
+      - 82
+      - 6
+      :second_ones:
+      - 88
+      - 6
+      :levels:
+      - 200
+      - 250
+      :sharpen: true
