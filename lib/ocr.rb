@@ -14,6 +14,8 @@ module OCR
 
     if CACHE.has_key?(memory_bitmap)
       return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
+    else
+      puts 'cache miss' if $DEBUG && $VERBOSE
     end
     if options[:might_be_colon]
       # do processing in-line <sigh>
@@ -48,7 +50,8 @@ module OCR
         return CACHE[memory_bitmap] = a
       end
     end
-    # don't cache failures here...might could use up too much space...
+    # cache failures here, for VLC's hour clock' sake
+    CACHE[memory_bitmap] = nil
     nil
   end
   
