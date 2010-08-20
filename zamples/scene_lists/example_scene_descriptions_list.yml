@@ -1,0 +1,26 @@
+# comments can go after the # on each line
+mutes:
+  2.0 : 3.0 
+  4.0 : 5.0 # mute from second 4 to second 5
+  9.0 : 13.0 # mute from second 9 to second 13
+  44.0 : 50.0 # mute for 6 seconds starting at second 44
+  # This next means mute from one minute to one minute one second
+  1:00 : 1:01
+  10:01 : 10:02 # mute from ten minutes, one second to ten minutes, 2 seconds
+  # if you use decimals, you'll have to put them in quotes
+  # 01:01:01.05 (for one hour, one minute, one second and a half) does not work
+  # "01:01:01.05" does
+  "01:01:00.5" : "01:01:01.5" # mute from one hour one minute and a half second to one hour one minute and 1.5s
+  # items can be out of chronological order
+  2.0 : 3.0 
+
+blank_outs:
+  "00:15" : "00:18" # blank from second 15 to 18
+  01:01 : "01:02.0" # blank from one minute one second to one minute two seconds, etc.
+  1:00:00 : 1:00:30 # note also that if you blank something out it isn't muted unless you *also* add it to the mute list, above. Message me if you want that changed.
+  
+title: Forever Strong 
+source: Hulu # these aren't required fields -- mutes and blank_outs are
+something_else: "for now you can add whatever categories you want, like what_it_would_now_be_rated 
+what_aspects_were_not_able_to_be_removed, url, DVD label, etc, though in reality the only required ones are mutes and blank_outs"
+
