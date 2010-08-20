@@ -2,7 +2,7 @@ mutes:
   # none
 blank_outs:
   # bum wigglin'
-  "00:46.5" : "00:48.5" 
+  "00:46.5" : "00:49" 
   "02:18.5" : "02:20"
 title: Nuki Song
 source: youtube
