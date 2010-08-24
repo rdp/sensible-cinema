@@ -2,73 +2,65 @@
 
 == low but actually want to do eventually (me) low prio: just do these...==
 
-  generations the first profanidade...
-  youtube non full screen...
+  youtube non full screen: work with other browsers
+  make other players actually play again
+  slightly more accurate timestamp...
+  a chrome plugin with imdb/community backing :)
 
 == random backlog ... based on user request..remember:  just local files for my own needs...==
-note: just plow forward, to "grab" available ideas...
-  except that for now, just what *I* plan on needing for myself.
+note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself.
 
-code refactors: "screen time change", order should be swapped in bin/x
+an online applet web runnable? Why not?
+  click here to watch your favorite film edited! Just click! [* yea!]
 
-auto-play on youtube...hmm... (detect)
+code refactors: "screen time change", order should be swapped in bin/x output
 
-able to make it "quieter" at certain parts, arbitrarily...
+auto-play on detect youtube url...
 
 easier installer for windows: release a zip file that they can just click on a .bat file to run it
   later: it installs/uninstalls appropo
     suggestion: self-extractor
 
-snag the close captioning as a profanity filter?
+make it able to use both windows and maximized VLC (and full screen)
 
-make it able to use multiple players so I can maximize VLC...
-
-blank overlay text like "and you are one awesome klingon"
+can blank overlay text like "and you are one awesome klingon"
 
 screencast of things helpful (use, creation).
 
-TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu?"
+TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu? y on youtube?"
 
-a netflix online player description
+a netflix online player descriptor
   
-add my stuff to imdb...
+add my stuff to imdb...?
 
 an imdb parser?
 
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
 
-make a redcar installer for their use...
-
-can overlay with a "fuzzer-outer" for specific coordinates somehow or other...
-
 advertise like to lay men, to try to popularize
 
-with VLC non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
+with VLC/youtube non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
 
-youtube/hulu non full screened...hmmm
+hulu non full screened descriptor
 
-overlay with wav file (would work for VLC, could also "click to mute" for the others...)
+can overlay with wav file (would work already for VLC [?], could also "click to mute" for others...hmm...)
 
-fix any pending tests...
+fix any/all pending tests...
 
-can black out certain coords to keep things prettier...
+can permanently black out certain coords to keep things prettier...
 
-allow x2,y2 for player descriptions...
-
-Linux port (call that good enough for usability on TV's...) between that and a VLC version...
-
-a web runnable? Why not?
-  click here to watch your favorite film edited! Just click!
+Linux port (call that good enough for usability on TV's...), should be...
 
 blank out with specifiable color
   better default color?
 
 Auto mute/blank commercials?
 
-new github username
+transfer ownership to an LLC
+  new github username
 
-replay parts
+replay certain film sections :P
 
 overlay/replace current playback with some url of audio or video
   user editable overlays (like a wiki...)
@@ -77,34 +69,28 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare timings with a real DVD player...
+compare VLC timings with a real DVD player...
 
 overlay with an alpha transparent pic
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
 
-user-assignable "confidence" (how much time to 'wrap' surround the mutes, etc. to accomodate for slow computers/laggy internet/different players/poor input)
+does my sweet heart have any suggestions? (make it work well for laymen)
 
-does my sweet heart have any suggestions?
+
+some type of installer that can setup the registry...
 
 auto-assignment of EDL's to media:
+  auto-play option for DVD's (auto-start?)
+    use normal differentiation
+    use spiffy differentiation for DVD's on windows
   DVD's (right click on DVD player, play with scene-skipper?)
   web browser plugin?
-  auto start on DVD insertion (?)
-    and show appropriate scene-lists available based on title/md5 of something?
 
-Programmatically do all of the above, by driving a player with its real API.
+Programmatically do all of the above, by driving VLC with its real API.
   VLC
-    Allow it to record to mp4's somewhere (recordable)
+    Allow it to record somehow (recordable)
      burnable to DVD/CD ...
-     (use VLC's web interface?)
-    
-use spiffy differentiation for DVD's on windows
+    use VLC's web interface? telnet?
 
-super easy streamer windows -> {XBOX360, wii, etc..} basically like playon, which appears to have no free equivalent, I guess, though you can 
-  save the files somewhere and stream them (and stream DVD's [?]) using tversity...maybe some other things...hmm...but no netflix!
-  so currently they basically need to run a cable from laptop to PC, for me.  windows laptop, for netflix, though a dedicated box could run things like boxee.
-  so I could create something that's basically windows -> ??? (ushare).  
-  For now it's either a cable, a computer (with its cable), or pay.
-  todo: make a VLC wrapper so it works *if your soundcard supports it*
-    after: make the same work awesome on doze 7 without soundcard support :)
+star trek: generations the first profanidade...
