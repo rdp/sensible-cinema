@@ -1,14 +1,16 @@
 == medium ==
+  make other players actually play again
+  a chrome plugin with imdb/community backing :)
 
 == low but actually want to do eventually (me) low prio: just do these...==
 
   youtube non full screen: work with other browsers
-  make other players actually play again
   slightly more accurate timestamp...
-  a chrome plugin with imdb/community backing :)
+  can parse IMDB
 
 == random backlog ... based on user request..remember:  just local files for my own needs...==
-note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself.
+note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
+  plan on needing for myself (filters for what I need/want).
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited! Just click! [* yea!]
@@ -21,9 +23,9 @@ easier installer for windows: release a zip file that they can just click on a .
   later: it installs/uninstalls appropo
     suggestion: self-extractor
 
-make it able to use both windows and maximized VLC (and full screen)
+make it able to use both windowed and maximized VLC (and full screen) seamlessly
 
-can blank overlay text like "and you are one awesome klingon"
+can blank overlay with text like "and you are one awesome klingon"
 
 screencast of things helpful (use, creation).
 
@@ -33,12 +35,8 @@ a netflix online player descriptor
   
 add my stuff to imdb...?
 
-an imdb parser?
-
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
-
-advertise like to lay men, to try to popularize
 
 with VLC/youtube non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
 
@@ -69,7 +67,7 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare VLC timings with a real DVD player...
+compare VLC (and other) timings with a real DVD player...
 
 overlay with an alpha transparent pic
 
@@ -94,3 +92,7 @@ Programmatically do all of the above, by driving VLC with its real API.
     use VLC's web interface? telnet?
 
 star trek: generations the first profanidade...
+
+optimize it with appropriate iframes (LOL)
+
+Showing EDL Information During Playback
