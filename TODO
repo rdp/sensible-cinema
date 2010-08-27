@@ -75,7 +75,6 @@ Have a "list of all known movies (url's)" and be able to open (IE et al) to the 
 
 does my sweet heart have any suggestions? (make it work well for laymen)
 
-
 some type of installer that can setup the registry...
 
 auto-assignment of EDL's to media:
@@ -90,9 +89,8 @@ Programmatically do all of the above, by driving VLC with its real API.
     Allow it to record somehow (recordable)
      burnable to DVD/CD ...
     use VLC's web interface? telnet?
+    optimize it with best appropriate iframes (LOL)
 
-star trek: generations the first profanidade...
+star trek: generations first profanidade...
 
-optimize it with appropriate iframes (LOL)
-
-Showing EDL Information During Playback
+"Showing EDL Information During Playback"
