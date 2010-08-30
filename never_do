@@ -20,6 +20,7 @@ super easy streamer windows -> {XBOX360, wii, etc..} basically playon.tv competi
     make it work seamlessly with all (XBOX360, wii x2, PS3, bravia)
     also make it into a low quality "skype recorder"
     also can I use a "lesser, faster encoder" to get higher resolution?
+      is it faster with ffdshow? mencoder?
     blu-ray
       over wired (?)
         LAN?
