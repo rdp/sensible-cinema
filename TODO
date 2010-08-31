@@ -1,21 +1,23 @@
 == medium ==
 
   make all other players actually play again
-  a chrome plugin with imdb/community backing :)
 
 == low but actually want to do eventually (me) low prio: just do these...==
 
   youtube non full screen: work with other browsers
   slightly more accurate timestamp...
   can parse IMDB
+  try the new GOCR sources...
 
 == random backlog ... based on user request..remember:  just local files for my own needs...==
 
 note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
   plan on needing for myself (filters for what I need/want).
 
+
 an online applet web runnable? Why not?
   click here to watch your favorite film edited! Just click! [* yea!]
+  a chrome plugin with imdb/community backing :)
 
 code refactors: "screen time change", order should be swapped in bin/x output
 
