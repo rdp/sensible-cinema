@@ -185,20 +185,20 @@ class OverLayer
   end
   
   def status
-    time = "Current time: " + cur_english_time
+    time = cur_english_time
     begin
       mute, blank, next_sig = get_current_state
       if next_sig == :done
-        state = " no more actions after this point..."
+        state = " no more after this point..."
       else
-        state = " next action will be at #{translate_time_to_human_readable next_sig}s "
+        state = " next will be at #{translate_time_to_human_readable next_sig}s "
       end
       if blank? or muted?
         state += "(" + [muted? ? "muted" : nil, blank? ? "blanked" : nil ].compact.join(' ') + ") "
       end
     end
     check_reload_yaml
-    time + state + "(r,d,v, or q to quit): "
+    time + state + "(r [or q to quit]): "
   end
 
   def keyboard_input char
