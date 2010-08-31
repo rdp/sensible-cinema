@@ -56,7 +56,7 @@ class ScreenTracker
     # allow ourselves the 'found it message' selectively
     unless @hwnd
       until @hwnd
-        print 'perhaps not running yet? [%s]' % @name_or_regex
+        print 'perhaps not running yet? [%s]' % @name_or_regex.inspect
         sleep 1
         STDOUT.flush
         @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)

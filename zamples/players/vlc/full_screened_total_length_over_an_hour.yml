@@ -21,5 +21,7 @@ digits:
       :second_ones:
       - -55
       - 6      
-      :sharpen: true
+      :levels:
+      - 130
+
 
