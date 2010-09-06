@@ -1,6 +1,6 @@
 == medium ==
 
-  make all other players actually play again
+  make all players actually play again
 
 == low but actually want to do eventually (me) low prio: just do these...==
 
@@ -8,12 +8,17 @@
   slightly more accurate timestamp...
   can parse IMDB (require they put in the URL by hand)
   try the new GOCR sources...
+  PISH
+    add stuffs to imdb
 
 == random backlog ... based on user request..remember:  just local files for my own needs...==
 
 note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
   plan on needing for myself (filters for what I need/want).
 
+re-advertise on ruby talk
+
+no money making for now...all volunteer...
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited! Just click! [* yea!]
@@ -21,7 +26,7 @@ an online applet web runnable? Why not?
 
 code refactors: "screen time change", order should be swapped in bin/x output
 
-auto-play on detect youtube url...
+auto-play on detect youtube url access...
 
 easier installer for windows: release a zip file that they can just click on a .bat file to run it
   later: it installs/uninstalls appropo
@@ -38,6 +43,8 @@ TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's b
 a netflix online player descriptor
   
 add my stuff to imdb...?
+
+make youtube work if you have *several* open
 
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
