@@ -4,13 +4,16 @@ May contain some 3rd party libraries under their own (separate, open source) lic
 
 Note that this software should be legal in the EU, 
 as it is only software and therefore theoretically not subject to patents (see "What about patent licenses?" in [2]).
-
+It's basically for use in the EU.
 If it's not legal in your country, don't use it!
 
-http://en.wikipedia.org/wiki/Family_Entertainment_and_Copyright_Act describes a recent US law that appears related, 
-in its favor.
+The http://en.wikipedia.org/wiki/Family_Entertainment_and_Copyright_Act describes a recent 
+US law that appears related (and is in its favor).
 
-A history of various related thoughts can be found here: http://betterlogic.com/roger/?p=2618
+A history of various related thoughts was described here:
+http://betterlogic.com/roger/?p=2618
+
+Enjoy!
 
 [1] http://www.gnu.org/licenses/gpl.html, also gplv3 file.
 [2] http://www.videolan.org/support/faq.html

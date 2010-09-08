@@ -1,7 +1,6 @@
 Sensible-cinema is a program that allows you to do pre-programmed scene selection (i.e. "mute out" 
 or "bleep out" scenes) on arbitrary media players like netflix online, vlc, etc.
 
-  
 Currently it takes as input a list of "skippable" scenes, and a player description.
 It then tracks whichever player you are using, and mutes or blanks out the system appropriately, 
 during the scenes specified.
@@ -93,31 +92,30 @@ Now "right click -> Open" to open it in an editor (recommend installing notepad+
 
 Q. Can I watch movies this way on my TV, not just on my computer?
 
-A. Not yet. And maybe.  Currently you'll either need to attach your computer to your TV
-   (buy some long cables, or a new graphics card, etc.) or get some computer that you can move closer to the TV and do the same 
-   (ex: buy a used older laptop with s-video out, use that).  If you're really aggressive you
-   could run an ethernet cable from your computer, as well [1].
-   I'd be happy to do a linux port of sensible-cinema if anybody requests it for their dedicated TV computer.
-   There has also been some work toward getting your computer to stream "live" to your wii/ps3/xbox.
-   github message me if you're interested in trying it out (testers wanted)!   
+A. Maybe.  Or possible not yet, depending on your current hardware.
+   Currently you'll either need to attach your computer to your TV
+   (buy some long cables, or a new graphics card that matches your cables, etc.) 
+   or get some computer that you can move closer to the TV to do the same 
+   (ex: buy a used older laptop with s-video out, use that, or a laptop with DVI/HDMI would
+   work with an HDMI TV).  If you're really aggressive you could run an ethernet cable from your computer, as well [1].
+   I'd be happy to do a linux port of sensible-cinema if anybody requests it, for use with 
+   their dedicated TV computer.
+   There has also been some work toward getting ones computer to stream "live" to your existing wii/ps3/xbox.
+   Message me if you're interested in trying it out (testers wanted--plus I'll only work on it if there's demand)!   
 
 Q. What movies does this work with?
 
-A. Any that you program it for :) (Assuming the player is compatible, which most probably are.)
+A. Any that you program it for :) (Assuming the computer player is compatible, which most probably are.)
 
 Q. What movies are freely available to watch online?
 
-A. Not many are available free (hulu, youtube have a few), though Netflix has quite a few with its default subscription.  
-   Plus you can watch your existing DVD's, or rent or borrow DVD's and watch them using sensible-cinema.
+A. Not many are available free (hulu, youtube have a few). Netflix has quite a few with its default subscription.  
+   You can of course use it with any existing DVD, or rent or borrow DVD's and watch them using sensible-cinema.
 
 Q. Why does my mouse bounce up and down while sensible-cinema is going?
 
 A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where 
-   you're at.  Message me if this bugs you too much and we'll see what we can do for it.
-
-Q. Why does it seem really laggy at time detection at the beginning?
-
-A. It takes it awhile to warm up its digit detection.  Ping me if you would like to see this improved speed-wise.
+   you're at.  Message me if this bugs you too much and we'll see what we can do about it.
 
 [1] http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
 
@@ -130,6 +128,15 @@ to pick them each time, like:
 
 Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
 You can also specify -v or -t if you want to enable more verbose (chatty) output.
+
+== Caveats ==
+
+NB that "someone" will have to create a scene descriptions list, per DVD/online movie.
+Unless it already exists, then "someone" already did.
+
+Also note that it takes a bit to get "warmed" up when you first start using it (it uses OCR
+to track the screen time), so it might be a tidge laggy at time tracking when first used.
+Ping me if you want this improved.
 
 == Thanks ==
 
@@ -155,6 +162,7 @@ http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-pla
 http://www.inmatrix.com/ "scene cut editor" of the zoom player
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also links to more others)
 http://code.google.com/p/movie-content-editor (same thing, but in Python and only for VLC)
+http://clearplay.com similar, but commercial (closed), and only for DVD's (has its own DVD-player)
 
 though none of them are universal like this one is :)
 
