@@ -9,11 +9,11 @@ else
     JLabel = javax.swing.JLabel
 
     def self.startup
-      @fr = JFrame.new("blanked section")
+      @fr = JFrame.new("Sensible Cinema blanker-outer overlay window")
       @fr.default_close_operation = JFrame::EXIT_ON_CLOSE
-      @fr.set_size(2000, 2000) # ltodo better size coords ?
+      @fr.set_size(2000, 2000) # ltodo better size ?
       
-      @label = JLabel.new("  Blank section")
+      @label = JLabel.new
       @fr.add(@label)
       @label.repaint
       @label.revalidate
