@@ -6,7 +6,7 @@ It then tracks whichever player you are using, and mutes or blanks out the syste
 during the scenes specified.
 
 It works out of the box with the hulu and VLC players on windows.  It isn't hard to 
-add new players, and probably wouldn't be too hard to add more operating systems.
+add new players, and probably wouldn't be too hard to add more operating systems etc.
 
 == How to Use ==
 
@@ -48,7 +48,7 @@ It will proceed do a few "demo" mutes and blank outs.
 
 To program sensible-cinema, you create a scene description list it can use.
 
-An Edit Decision List (EDL) looks something like this trivial example:
+A Program Description List (Edit Decision List--EDL) looks something like this example:
 
 mutes:
   "01:00:00" : "01:01:02.5" # mute from exactly one hour to one hour, one minute, two seconds and a half will be muted.
@@ -66,27 +66,34 @@ To create it, basically you notice something you want to add to the list, add it
 in your media player, and it should now be muted/blanked out automatically.
 
 So here is a way to create your scene descriptions file.
-First create a new file [2], and now select it for use in sensible-cinema (even though it's still blank).
-Now "preview" your movie.  As you do, you're going to add scenes to that file, and then test your additions.
 
-So as you watch when you encounter a questionable scene, go back several seconds using your player's 
-controls.  When you encounter it again, track its beginning and ending time.  One way to do this
-is to, just before and just after the scene, hit the space bar *in the sensible-cinema window*.  
-Hitting the space bar outputs the current time.  If you hit it twice, once before and once after, 
-you should now have two reasonably accurate "timestamps" displayed.
-Add the beginning and ending times to your scene descriptions file (changes will be automatically picked up), 
-then review your additions by rewinding your player and letting it play through the scene in question again.
-It should now skip it appropriately.  If not, adjust your timestamps and try again.
+First create a new file 
 
-Once you're done then you can contribute your scene descriptions file if desired, back to the project [1].
-
-[1] http://github.com/rdp/sensible-cinema/issues
-[2] The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
+The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
 "right click" on the existing file "example_scene_list.yml" and choose "Copy"
 now right click below the list of files and choose "paste"
 This will create the file "example_scene_list Copy.yml"
 Right click on it, choose rename, and give it a better name.
-Now "right click -> Open" to open it in an editor (recommend installing notepad++ and using that).  
+Now "right click -> Open" to open it in an editor (recommend installing notepad++ and using that).
+Note that you can edit this file *on the fly* while the player is editing.  It will catch 
+changes as the file is saved and apply them.
+
+Now select it for use in sensible-cinema (even though it's still blank).
+Now "screen" your movie.  As you watch it, you're going to add scenes to 
+that file, and then re-watch the scene to test your additions.
+
+As you watch when you encounter a questionable scene, go back several seconds using your player's 
+controls.  When you encounter it once again, track its beginning and ending time.  One way to do this
+is to, just before and just after the scene, hit the space bar *in the sensible-cinema window*.  
+Hitting the space bar outputs the current time.  If you hit it twice, once before and once after, 
+you should now have two reasonably accurate "timestamps" displayed.
+Add the beginning and end times to your scene description file (changes will be automatically picked up), 
+then review your additions by rewinding your player and letting it play through the scene again.
+It should now skip it (play it "sensibly").  If not, adjust your timestamps and try again.
+
+Once you're done then you can contribute your scene descriptions file if desired, back to the project itself [1].
+
+[1] http://github.com/rdp/sensible-cinema/issues
 
 == FAQ ==
 
