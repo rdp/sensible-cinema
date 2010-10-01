@@ -46,7 +46,7 @@ TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's b
 
 a netflix online player descriptor
   
-add my stuff to imdb...?
+add my stuff to imdb...? wiki ?
 
 make youtube work if you have *several* open
 
@@ -77,6 +77,7 @@ replay certain film sections :P
 
 overlay/replace current playback with some url of audio or video
   user editable overlays (like a wiki...)
+  realtime overlays (like group chat for those watching the film...)
 
 control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
