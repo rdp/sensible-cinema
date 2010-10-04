@@ -1,4 +1,4 @@
-# comments can go after a # on each line.  See http://github.com/rdp/sensible-cinema for complete creation instructions
+# comment and descriptions can go after a # on each line.  See http://github.com/rdp/sensible-cinema for complete creation instructions
 mutes:
   "00:00:01" : "00:00:02" # mute from second 1 to second 2
   # so an example would be:  
