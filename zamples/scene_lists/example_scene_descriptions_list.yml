@@ -1,22 +1,30 @@
-# comments can go after a # on each line
-# see http://github.com/rdp/sensible-cinema
+# comments can go after a # on each line.  See http://github.com/rdp/sensible-cinema for complete creation instructions
 mutes:
   "00:00:01" : "00:00:02" # mute from second 1 to second 2
-  # so an example would be
+  # so an example would be:  
   "00:00:01" : "00:00:02" # profanity: dang
   "01:01:00" : "01:02:00" # mute from one hour one minute to one hour two minutes
-  # items can be out of chronological order
+  # note: items can be out of chronological order
 
 blank_outs:
-  # this first one blanks (by overlaying *over* the video a black window) 
-  # from one hour one minute to one hour two minutes
-  # an example would be
-  "01:01:00" : "01:02:00" # sex scene
+  # this first one blanks (by overlaying *over* the video, a black window)
+  # from one hour one minute to one hour two minutes, like:
+  "01:01:00" : "01:02:00" # "sex scene"
+  # you can also use fractions, like 3 minutes 3 seconds and a half to 3 minutes 4 seconds and a half:
+  "00:03:03.5" : "00:03:04.5"
+  # if you don't want to be explicit, you can reference a *number*
+  # from the category descriptions.yml file, like
+  "01:01:00" : "01:02:00" # "bodily function strong # 1"
+  # instead of
+  "01:01:00" : "01:02:00" # s***
   
-# you can also add other things after, here, like title, source, whatever you want
-# these are basically free form and not actually used yet
-something_else: "this film is too boring"
+  # (if it's not there then just write it in your file and I'll add it later, or notify me)
+  
+# you can also add other notes, too, like title, source, whatever you want
+# these are basically free form and not used for anything else yet
+missing_content: "this doesn't list some mild name calling"
 title: Forever Strong
 source: Hulu
 url: http://www.byutv.org/watch/1790-100
-missing_scenes: "this list doesn't include some mild name calling"
+possible_new_rating: PG
+whatever_else_you_want: "this is the old version of the film"
