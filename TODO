@@ -11,16 +11,14 @@
   PISH
     add stuffs to imdb hmmm
   more often yell at them "not working"
+  "just choose VLCx55" LOL
+    beep at them when not tracking [?]
 
 == random backlog ... based on user request..remember:  just local files for my own needs...==
-
-"just choose VLCx55" LOL
 
 itunes video on demand
 
 blockbuster "rent" on demand, online
-
-beep at them when not tracking [?]
 
 note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
   plan on needing for myself (filters for what I need/want).
@@ -39,13 +37,17 @@ integrate with librivox' audio so you can avoid profanity in classics.  Somehow.
 
 itunes player for profanity (music)?
 
+make a list of "known clean" movies or what not...hmm...
+
 an "online anybody can chat while watching this movie" (or anybody can edit this wav and listen to it as overlay...) prefer the latter.
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
   a chrome plugin with imdb/community backing :)
+  
+a known list of "compatible" imdb oners...
 
-code refactors: "screen time change", order should be swapped in bin/x output
+code refactors: "screen time change", order should be swapped in bin/x output (just cleanup)
 
 auto-play on detect youtube url access...
 
