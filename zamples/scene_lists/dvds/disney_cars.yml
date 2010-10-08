@@ -1,0 +1,15 @@
+name: cars widescreen 2006
+player: VLC
+mutes:
+  # one hour one minute and a half second to one hour one minute and 1.5s
+  "0:34:35" : "0:34:35" # "may doc have mercy on your soul"
+  "36:09" : "36:11" # she just likes me for muh body
+  "37:05" : "37:06" # Mater makes a fart noise when discussing gas
+  "40:16" : "40:18" # ...good look at that sexy hot-rod
+  "44:24" : "44:46" # hill billy hxxx
+  "54:25" : "54:30" # crazy grandpa car what an idiot
+  "55:24" : "55:25" # mater "oh L....."
+  "57:06" : "57:07" # hill billy hxxx
+  "57:12" : "57:18" # sally: wait not spend the night "with me"...
+  "1:55:39" : "1:55:40" # for the "love of Chrysler" please....
+  
