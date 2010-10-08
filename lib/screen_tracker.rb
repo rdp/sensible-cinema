@@ -135,7 +135,7 @@ class ScreenTracker
           end
           return got
         else
-          puts 'screen time change only detected...'
+          puts 'screen time change only detected... [unexpected]'
           return
         end
       end
