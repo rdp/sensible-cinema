@@ -1,4 +1,4 @@
-require 'rubygems'
+by -vrequire 'rubygems'
 begin
   require 'rspec' # rspec2
 rescue LoadError
@@ -14,7 +14,7 @@ Thread.abort_on_exception = true
 require 'timeout'
 require 'fileutils'
 
-Dir.chdir(File.dirname(__FILE__)) # allow specs to be started from anywhere...
+Dir.chdir File.dirname(__FILE__) # always run from the right dir...
 
 begin
   require 'hitimes'

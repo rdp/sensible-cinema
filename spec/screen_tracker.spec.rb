@@ -165,7 +165,7 @@ describe ScreenTracker do
       context "using OCR" do
 
         before do
-          @a = ScreenTracker.new_from_yaml File.read("../zamples/players/vlc/non_full_screened_total_length_under_an_hour.yml"), nil
+          @a = ScreenTracker.new_from_yaml File.read("../zamples/players/vlc/windowed_total_length_under_an_hour.yml"), nil
         end
 
         it "should be able to disk dump snapshotted digits" do
