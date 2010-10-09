@@ -56,7 +56,7 @@ class ScreenTracker
     # allow ourselves the 'found it message' selectively
     unless @hwnd
       until @hwnd
-        print 'perhaps not running yet? [%s]' % @name_or_regex.inspect
+        print 'unable to find the player window currently [%s] (maybe need to start program or move mouse over it)' % @name_or_regex.inspect
         sleep 1
         STDOUT.flush
         @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
@@ -120,14 +120,17 @@ class ScreenTracker
     OCR.identify_digit(bitmap, @digits)
   end
   
+  # lodo do we need to back off, even, with this, though? Why not just constantly track?
+  # hmm
   def wait_till_next_change
     original = get_bmp
-    time_since_last = Time.now
+    time_since_last_warning = Time.now
     loop {
+      time_before_check = Time.now
       current = get_bmp
       if current != original
         if @digits
-          got = attempt_to_get_time_from_screen
+          got = attempt_to_get_time_from_screen time_before_check
           if @displayed_warning && got
             # reassure user :)
             p 'tracking it successfully again' 
@@ -140,25 +143,24 @@ class ScreenTracker
         end
       end
       sleep 0.02
-      if(Time.now - time_since_last > 5)
+      if(Time.now - time_since_last_warning > 5)
         p 'warning--unable to track screen time for some reason' unless @displayed_warning
-        time_since_last = Time.now
+        time_since_last_warning = Time.now
         @displayed_warning = true
-        # reget window, just in case that's the problem...
+        # reget window hwnd, just in case that's the problem...(can be with VLC)
         get_hwnd
       end
     }
   end
   
-  def attempt_to_get_time_from_screen
+  def attempt_to_get_time_from_screen start
     out = {}
     # force it to have two matching in a row, to avoid race conditions grabbing the digits...
     previous = nil # 0.08s [!] not too accurate...ltodo
-    start = Time.now
     until previous == (temp = get_digits_as_bitmaps)
       previous = temp
-      sleep 0.05 # allow youtube to update (sigh)
-      # lodo it should probably poll *before* this, not here...maybe?
+      sleep 0.05 # allow youtube to update (sigh) lodo just for utube
+      # lodo it should probably poll *before* calling this, not here...maybe?
     end
     digits = previous
     

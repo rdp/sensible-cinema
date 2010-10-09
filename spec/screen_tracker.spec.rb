@@ -191,7 +191,7 @@ describe ScreenTracker do
             {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
               :hours => black}
           end
-          @a.attempt_to_get_time_from_screen[0].should == "0:44:44"
+          @a.attempt_to_get_time_from_screen(Time.now)[0].should == "0:44:44"
         end
         
         it "should track the screen until it stabilizes" do
@@ -212,7 +212,7 @@ describe ScreenTracker do
             end
           end
           
-          @a.attempt_to_get_time_from_screen[0].should == "4:44:44"
+          @a.attempt_to_get_time_from_screen(Time.now)[0].should == "4:44:44"
           times_read.should == 2
         
         end

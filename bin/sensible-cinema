@@ -39,7 +39,7 @@ else
   player_description = ARGV.shift.to_s
   if !File.exist?(player_description)    
     puts 'Please Select Computer Player'
-    player_description = FileChooser.choose_file("    SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
+    player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
   end
 
   scene_list = ARGV.shift.to_s
@@ -51,7 +51,7 @@ else
   else
     if !File.exist? scene_list
       puts 'Select Scene Descriptions file'
-      scene_list = FileChooser.choose_file("    SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists/dvds")
+      scene_list = FileChooser.choose_file("     SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists/dvds")
     end
     
     if !scene_list
