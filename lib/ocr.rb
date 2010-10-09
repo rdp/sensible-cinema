@@ -40,6 +40,7 @@ module OCR
 
     previous = nil
     p options if $DEBUG
+    raise 'you must pass in OCR levels in the player description' unless options[:levels]
     for level in options[:levels]
       a = `#{GOCR} -l #{level} #{image.path} 2>NUL`
       if a =~ /[0-9]/

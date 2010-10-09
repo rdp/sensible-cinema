@@ -145,7 +145,7 @@ class ScreenTracker
       end
       sleep 0.02
       if(Time.now - time_since_last_warning > 5)
-        p 'warning--unable to track screen time for some reason' unless @displayed_warning
+        p 'warning--unable to track screen time for some reason'
         time_since_last_warning = Time.now
         @displayed_warning = true
         # reget window hwnd, just in case that's the problem...(can be with VLC)
