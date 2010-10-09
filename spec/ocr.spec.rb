@@ -74,10 +74,10 @@ describe OCR do
       new_time.should be < original_time
     end
     
-    it "should not cache results for failed reads" do
+    it "should not results for failed reads (at least for now)" do
       original_time = Benchmark.realtime { read_all_black }
       new_time = Benchmark.realtime { 3.times { read_all_black} }
-      new_time.should be > original_time
+      new_time.should be < original_time
     end    
     
     it "should serialize creating a cache file" do

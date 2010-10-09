@@ -12,9 +12,13 @@ else
       @fr = JFrame.new("Sensible Cinema blanker-outer overlay window")
       @fr.default_close_operation = JFrame::EXIT_ON_CLOSE
       @fr.set_size(2000, 2000) # ltodo better size ?
+      cp = @fr.getContentPane
+      cp.setBackground(java.awt.Color.black);
+      
       
       @label = JLabel.new
       @fr.add(@label)
+      @label.setForeground(java.awt.Color.white);
       @label.repaint
       @label.revalidate
       

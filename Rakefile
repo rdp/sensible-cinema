@@ -21,6 +21,7 @@ task 'spec' do
   failed = []
   Dir.chdir 'spec' do
     for file in Dir['*spec*.rb'] do
+      puts "Running " + file
       if !system(OS.ruby_bin + " " + file)
         failed << file
       end
