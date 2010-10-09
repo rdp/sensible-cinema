@@ -18,7 +18,7 @@ describe OCR do
       options[:sharpen] = true if file =~ /youtube/
       
       # 130 for vlc, 100 for hulu, 0 for some youtube full screen
-      # 200, 250 for youtube "light"
+      # 200, 250 for youtube "light" (windowed after awhile)
       degrees = {'vlc' => [130], 'hulu' => [100], 'youtube' => [0], 'youtube_light' => [200, 250]}
       file =~ /(vlc|hulu|youtube_light|youtube)/
       options[:levels] = degrees[$1]

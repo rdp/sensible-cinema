@@ -40,6 +40,7 @@ class ScreenTracker
     end
     @digits = digits
     @displayed_warning = false
+    @dump_digit_count = 1
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
   end
   
@@ -85,12 +86,11 @@ class ScreenTracker
   end
   
   def dump_digits digits
-      @digit_count ||= 1
       for type, bitmap in get_digits_as_bitmaps
-        File.binwrite type.to_s + '.' + @digit_count.to_s + '.bmp', bitmap
+        File.binwrite type.to_s + '.' + @dump_digit_count.to_s + '.bmp', bitmap
       end
-      print 'debug dumped digits that Im about to parse:', @digit_count, "\n"
-      @digit_count += 1
+      print 'debug dumped digits that Im about to parse:', @dump_digit_count, "\n"
+      @dump_digit_count += 1
   end
   
   DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
@@ -124,14 +124,14 @@ class ScreenTracker
   # the current second...
   def wait_till_next_change
     original = get_bmp
-    time_since_last_warning = Time.now
+    time_since_last_screen_change = Time.now
     loop {
       # save away the current time to try and be most accurate...
-      time_before_check = Time.now
+      time_before_scan = Time.now
       current = get_bmp
       if current != original
         if @digits
-          got = attempt_to_get_time_from_screen time_before_check
+          got = attempt_to_get_time_from_screen time_before_scan
           if @displayed_warning && got
             # reassure user :)
             p 'tracking it successfully again' 
@@ -142,14 +142,17 @@ class ScreenTracker
           puts 'screen time change only detected... [unexpected]'
           return
         end
-      end
-      sleep 0.02
-      if(Time.now - time_since_last_warning > 5)
-        p 'warning--unable to track screen time for some reason'
-        time_since_last_warning = Time.now
-        @displayed_warning = true
-        # reget window hwnd, just in case that's the problem...(can be with VLC)
-        get_hwnd
+      else
+        # no screen change detected ...
+        sleep 0.02
+        if(Time.now - time_since_last_screen_change > 2)
+          # display a warning
+          p 'warning--unable to track screen time for some reason'
+          @displayed_warning = true
+          time_since_last_screen_change = Time.now        
+          # also reget window hwnd, just in case that's the problem...(can be with VLC)
+          get_hwnd
+        end
       end
     }
   end
@@ -176,7 +179,7 @@ class ScreenTracker
             @a += 1
             @already_wrote ||= {}
             unless @already_wrote[digits[type]]
-              p 'unable to identify capture!' + type.to_s + @a.to_s + ' capture no:' + @digit_count.to_s
+              p 'unable to identify capture!' + type.to_s + @a.to_s + ' capture no:' + @dump_digit_count.to_s
               File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
               @already_wrote[digits[type]] = true
             end
@@ -188,7 +191,7 @@ class ScreenTracker
             return
           end
         else
-          p " got digit #{type} as #{digit} which was captured as #{@digit_count} " if $DEBUG
+          p " got digit #{type} as #{digit} which was captured as #{@dump_digit_count} " if $DEBUG
         end
         out[type] = digit
       else

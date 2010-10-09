@@ -1,9 +1,10 @@
 == medium ==
 
-  back off on mouse jerking if they're movin' it
+  check that youtube work well again
 
 == probably next up/low prio ==
 
+  back off on mouse jerking if they're movin' it
   screencast of things helpful (use, creation).
   youtube non full screen: work with other browsers
   speed up unit tests
@@ -18,10 +19,15 @@
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+easier "here's how on the command line, BTW"
+
+DRY up the levels--it's in the ocr spec as well as the others...
+
 unit tests pass with normal ruby
 
-add unit tests for each player for "make all players actually play again"
+test every player with different screen resolutions...
 
+add unit tests for each player for "make all players actually play again"
 
 screen time change only detected... [unexpected] [rid myself of it]
 

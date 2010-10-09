@@ -51,7 +51,7 @@ else
   else
     if !File.exist? scene_list
       puts 'Select Scene Descriptions file'
-      scene_list = FileChooser.choose_file("     SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists/dvds")
+      scene_list = FileChooser.choose_file("     SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists")
     end
     
     if !scene_list

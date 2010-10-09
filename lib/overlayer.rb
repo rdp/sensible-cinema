@@ -151,7 +151,7 @@ class OverLayer
       # ignore it, since it was probably just caused by the screen blipping
       # at worse this will put us 1s behind...hmm.
       @just_unblanked = false
-      p 'ignoring timestamp update ' + to_this_exact_string_might_be_nil if $VERBOSE
+      p 'ignoring timestamp update ' + to_this_exact_string_might_be_nil.to_s if $VERBOSE
     else
       set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string_might_be_nil) + delta if to_this_exact_string_might_be_nil
     end

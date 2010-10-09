@@ -1,0 +1,2 @@
+These players all require that the youtube you're watching be less than 10 minutes total length, otherwise it 
+might not catch the digits right.  Ping me if you're interested in this being fixed.

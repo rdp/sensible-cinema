@@ -19,4 +19,5 @@ digits:
       :levels:
       - 200
       - 250
+      - 0
       :sharpen: true

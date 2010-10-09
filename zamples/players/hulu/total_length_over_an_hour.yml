@@ -20,4 +20,6 @@ digits:
       - 46
       - 7
       :should_invert: true
+      :levels:
+      - 100
     
