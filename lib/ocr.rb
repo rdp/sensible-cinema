@@ -72,7 +72,7 @@ module OCR
   
   def unserialize_cache_from_disk  
     if File.exist? CACHE_FILE
-      CACHE.merge!(Marshal.load File.binread(CACHE_FILE))
+      CACHE.merge!(Marshal.load(File.binread(CACHE_FILE)))
     end
     
   end
