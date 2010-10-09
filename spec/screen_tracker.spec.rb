@@ -170,6 +170,18 @@ describe ScreenTracker do
 
   end
 
+  context "using hulu" do
+    it "should be able to parse all digits" do
+      pending "completion"
+      a = ScreenTracker.new_from_yaml File.read("../zamples/players/hulu/total_length_over_an_hour.yml"), nil
+    end
+    
+  end
+  
+  context "using youtube" do
+    it "should be able to parse"
+  end
+  
   context "using a digit capable setting" do
 
     before do
@@ -256,6 +268,7 @@ describe ScreenTracker do
       got_it[1][:should_invert].should be_true
     end
   end
+  
 
   def kill_vlc
     assert $pid1

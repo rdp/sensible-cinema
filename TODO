@@ -1,6 +1,5 @@
 == medium ==
 
-  make all players actually play again
   back off on mouse jerking if they're movin' it
 
 == probably next up/low prio ==
@@ -17,14 +16,18 @@
     beep at them when not tracking [?]
       default on...hmm
 
-== random backlog ...==
+== random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
-note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
-  plan on needing for myself (filters for what I need/want).
+unit tests pass with normal ruby
+
+add unit tests for each player for "make all players actually play again"
+
 
 screen time change only detected... [unexpected] [rid myself of it]
 
 stabilization on seconds -> 00 -> minutes++: make optional [?]
+
+when polling for bmp changes, just use two lines (?)
 
 try new GOCR version...
 

@@ -120,12 +120,13 @@ class ScreenTracker
     OCR.identify_digit(bitmap, @digits)
   end
   
-  # lodo do we need to back off, even, with this, though? Why not just constantly track?
-  # hmm
+  # we have to wait until the next change, because when we start, it might be half-way through
+  # the current second...
   def wait_till_next_change
     original = get_bmp
     time_since_last_warning = Time.now
     loop {
+      # save away the current time to try and be most accurate...
       time_before_check = Time.now
       current = get_bmp
       if current != original
@@ -155,14 +156,15 @@ class ScreenTracker
   
   def attempt_to_get_time_from_screen start
     out = {}
-    # force it to have two matching in a row, to avoid race conditions grabbing the digits...
+    # force it to have two matching snapshots in a row, to avoid race conditions grabbing the digits...
     previous = nil # 0.08s [!] not too accurate...ltodo
     until previous == (temp = get_digits_as_bitmaps)
       previous = temp
       sleep 0.05 # allow youtube to update (sigh) lodo just for utube
       # lodo it should probably poll *before* calling this, not here...maybe?
     end
-    digits = previous
+    assert previous == temp
+    digits = temp
     
     dump_digits(digits) if $DEBUG            
     DIGIT_TYPES.each{|type|
