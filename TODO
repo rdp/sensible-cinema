@@ -3,21 +3,19 @@
   make all players actually play again
   back off on mouse jerking if they're movin' it
 
-== very low but actually want to do eventually (me) low prio: just do these...==
+== probably next up/low prio ==
 
   screencast of things helpful (use, creation).
-  can parse IMDB (require they put in the URL by hand fer now)
-  PISH
-    add stuffs to imdb hmmm
   youtube non full screen: work with other browsers
+  speed up unit tests
+  can parse IMDB (require they put in the URL by hand fer now)
+  PISH, then
+    add stuffs to imdb hmmm
+  a netflix player descriptor
+  advertise on ruby flow
   "just choose VLCx55" LOL
     beep at them when not tracking [?]
       default on...hmm
-
-== probably next up ==
-
-a netflix online player descriptor
-advertise on ruby flow
 
 == random backlog ...==
 
@@ -25,6 +23,8 @@ note: just plow forward, to "grab" available ideas...except that for now, just w
   plan on needing for myself (filters for what I need/want).
 
 try new GOCR version...
+
+Do I *need* that other window always up or not? (Get rid of it...only do this after have a real window of my own though, that's always up)
 
 preference for beeping at them, et al
 

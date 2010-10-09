@@ -1,7 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/overlayer'
 require_relative '../lib/screen_tracker'
-require 'pathname'
 
 describe ScreenTracker do
 
@@ -177,6 +176,7 @@ describe ScreenTracker do
         end
 
         it "should use OCR against the changes appropriately" do
+          sleep 1.1
           output = @a.wait_till_next_change # grab a real change
           output[0].should be_a(String)
           output[0].should include("00:") # like 00:09 or what not...
