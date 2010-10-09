@@ -1,45 +1,47 @@
 == medium ==
 
   make all players actually play again
+  back off on mouse jerking if they're movin' it
 
-== low but actually want to do eventually (me) low prio: just do these...==
+== very low but actually want to do eventually (me) low prio: just do these...==
 
-  youtube non full screen: work with other browsers
-  slightly more accurate timestamp...
-  can parse IMDB (require they put in the URL by hand)
+  screencast of things helpful (use, creation).
+  can parse IMDB (require they put in the URL by hand fer now)
   PISH
     add stuffs to imdb hmmm
-  more often yell at them "not working"
+  youtube non full screen: work with other browsers
   "just choose VLCx55" LOL
     beep at them when not tracking [?]
       default on...hmm
 
-== random backlog ... based on user request..remember:  just local files for my own needs...==
+== probably next up ==
 
-back off on mouse jerking if they're movin' it
+a netflix online player descriptor
+advertise on ruby flow
 
-try the new GOCR sources...
---server?
+== random backlog ...==
+
+note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
+  plan on needing for myself (filters for what I need/want).
+
+try new GOCR version...
+
 preference for beeping at them, et al
 
 itunes video on demand
 
 blockbuster "rent" on demand, online
 
-note: just plow forward, to "grab" available ideas...except that for now, just what *I* 
-  plan on needing for myself (filters for what I need/want).
-
-re-advertise on ruby talk
-
 a real website
-
-advertise on ruby flow
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
     probably only possible after creating the desktop streamer hmm
 
 integrate with librivox' audio so you can avoid profanity in classics.  Somehow.  This would be nice for portable players.
+  You know, for static things like this, a 'pre-cutter' would sure be convenient...
+  
+some type of static 'ok grab it using x, then apply y' oh yeah.  That would rock for the DVD market, really.  Just not the online market.
 
 itunes player for profanity (music)?
 
@@ -61,17 +63,13 @@ easier installer for windows: release a zip file that they can just click on a .
   later: it installs/uninstalls appropo
     suggestion: self-extractor
 
-make it able to use both windowed and maximized VLC (and full screen) seamlessly
+can blank overlay with added text like "and you are one awesome klingon"
 
-can blank overlay with text like "and you are one awesome klingon"
-
-screencast of things helpful (use, creation).
+ability to record it from online/live, then apply edits.
 
 TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu? y on youtube?"
 
-a netflix online player descriptor
-  
-add my stuff to imdb...? wiki ?
+add my stuff to imdb...? wiki?
 
 make youtube work if you have *several* open
 
@@ -84,13 +82,16 @@ hulu non full screened descriptor
 
 can overlay with wav file (would work already for VLC [?], could also "click to mute" for others...hmm...)
 
+the muting currently is so togglesy...if VLC ever fixes itself, fix this! 
+
 fix any/all pending tests...
 
-can permanently black out certain coords to keep things prettier...
+can permanently black out certain coords to keep things prettier...et al
+  remove black when they really move the mouse?
 
 Linux port (call that good enough for usability on TV's...), should be...
 
-blank out with specifiable color
+blanker outer with user specifiable color
   better default color?
 
 Auto mute/blank commercials?
@@ -98,25 +99,24 @@ Auto mute/blank commercials?
 transfer ownership to an LLC
   new github username
 
-replay certain film sections :P
-
 overlay/replace current playback with some url of audio or video
-  user editable overlays (like a wiki...)
+  user editable joke overlays (like a wiki...)
   realtime overlays (like group chat for those watching the film...)
 
 control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare VLC (and other) timings with a real DVD player...
+compare VLC (and other) timings with a real DVD player, and with netflix online, etc.
 
-overlay with an alpha transparent pic
+overlay with an alpha transparent pic (?)
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
+  or known parseable imdb's
 
 does my sweet heart have any suggestions? (make it work well for laymen)
 
-some type of installer that can setup the registry...
+some type of one click installer that can setup the registry...
 
 auto-assignment of EDL's to media:
   auto-play option for DVD's (auto-start?)
@@ -134,14 +134,13 @@ Programmatically do all of the above, by driving VLC with its real API.
 
 star trek: generations first profanidade...
 
-"Showing EDL Information During Playback"
-
-integrate with google TV/bravia...maybe...somehow...boxxee?
-  itunes TV, too?
+integrate with google TV/bravia...maybe...somehow...boxxee? roku?
+  itunes TV? apple tv?
 
 OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does..
-  what else does python do that we can learn from? can we combine projects somehow, perhaps? 
 
 make an index of watchable on imdb based on stars (?)
 
-http://en.wikipedia.org/wiki/RiffTrax
+--server?  optionally higher prio?
+
+http://en.wikipedia.org/wiki/RiffTrax (possible?)

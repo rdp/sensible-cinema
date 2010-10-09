@@ -162,16 +162,17 @@ which you could use to translate into a sensible-cinema compatible list.
 
 The concept isn't too novel:
 
+Edited "for airplane" movies are a big inspiration.
 http://en.wikipedia.org/wiki/Edit_decision_list (it's linear editing tool)
 http://www.imdb.com/swiki/special?ParentalGuideHelp and search for "scene description"
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com/ "scene cut editor" of the zoom player
-http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also links to more others)
+http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to others)
 http://code.google.com/p/movie-content-editor (same thing, but in Python and only for VLC)
 http://clearplay.com similar, but commercial (closed source, costs money, no user contribution), and only for DVD's (uses its own DVD-player).
 
-though none of them are universal like this one is :)
+None of these are as universal as this one :)
 
 == Feedback ==
 
