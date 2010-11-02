@@ -139,16 +139,13 @@ You can also specify -v or -t if you want to enable more verbose (chatty) output
 == Caveats ==
 
 NB that "someone" will have to create a scene descriptions list, per DVD/online movie.
-Unless it already exists, then "someone" already did.
-
-Also note that it takes a bit to get "warmed" up when you first start using it (it uses OCR
-to track the screen time), so it might be a tidge laggy at time tracking when first used.
-Ping me if you want this improved.
+Unless it already exists, then "someone" already has, so you don't have to.  Fortunately
+only one person has to do it, once, for everybody to benefit, and the editing process is fairly easy.
 
 == Thanks ==
 
 Thanks to Jarmo for the win32-screenshot gem, mini_magick gem authors, jruby guys, etc.  
-The combination made programming this actually somewhat of a pleasure.
+The combination made programming this actually something of a pleasure.
 
 == License ==
 
@@ -156,21 +153,20 @@ See the LICENSE file for licensing, usage terms (basically gplv3).
 
 == Related ==
 
-http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).
-Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0047673/parentalguide)
-which you could use to translate into a sensible-cinema compatible list.
-
 The concept isn't too novel:
 
-Edited "for airplane" movies
+http://en.wikipedia.org/wiki/Linear_video_editing
+http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth"  http://www.imdb.com/title/tt0047673/parentalguide) which you could use to translate into a sensible-cinema compatible list.
+Edited "for airplane" movies.
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all)
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html mplayer has had this ability for awhile.
+http://clearplay.com commercial (closed source, costs money, no user contributions possible), and only for DVD's (uses its own DVD-player in its current incantation).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com/ "scene cut editor" of the zoom player
-http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some others)
-http://code.google.com/p/movie-content-editor (same thing, but in Python and only for VLC)
-http://www.imdb.com/swiki/special?ParentalGuideHelp and search for "scene description"
-http://clearplay.com similar, but commercial (closed source, costs money, no user contribution), and only for DVD's (uses its own DVD-player in its current incantation).
+http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
+http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions)
+http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
+http://www.mythtv.org/wiki/Creating_a_cutlist
 
 == Feedback ==
 

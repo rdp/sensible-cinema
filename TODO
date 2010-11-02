@@ -3,40 +3,61 @@
 
 == probably next up/low prio ==
 
+  byu.tv descriptor
   back off on mouse jerking if they're movin' it
   screencast of things helpful (use, creation).
   youtube non full screen: work with other browsers
   speed up unit tests
-  can parse IMDB (require they put in the URL by hand fer now)
-  PISH, then
-    add stuffs to imdb hmmm
   a netflix player descriptor
-  advertise on ruby flow
   "just choose VLCx55" LOL
     beep at them when not tracking [?]
       default on...hmm
+  easier "here's how on the command line, BTW"
+
+== slightly lower than that ==
+
+  can parse IMDB (require they put in the URL by hand fer now)
+    add stuffs to imdb hmmm
+  can "overplay" (for VLC only on special computers for now :P)
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
-run it off a normal person (hulu, DVD). rinse and repeat
+"ripperzy-ize"
+  can rip from DVD
+    and edit that
+      mplayer?
+  can rip from screen
+    windows 7 only for now (?)
+    VLC to rip?
+      raw?  SSD? cpu? huh?  (assume quality audio card, even with windows 7, fer now...these people can chip in a few bucks)
+    mencoder?
+    research this "record netflix" et al
+    and track it as ripping, I guess (time -> time...)
+    and then able to edit that...
+      remove commercials?
+
+PISH
+  release it with both until scared (?)
+  split projects when scared (editor versus normal)/make projects work with direct editing, et al...
+    split online from DVD, et al
 
 check that youtube is working well again for all...
 
-easier "here's how on the command line, BTW"
+run it off a normal person (hulu, DVD). rinse and repeat
+
+advertise on ruby flow
 
 DRY up the levels--it's in the ocr spec as well as the others...
 
 unit tests pass with normal ruby
 
-test every player with different screen resolutions...
-
 add unit tests for each player for "make all players actually play again"
 
 screen time change only detected... [unexpected] [rid myself of it]
 
-stabilization on seconds -> 00 -> minutes++: make optional [?]
+the stabilization on seconds -> 00 -> minutes++: make optional [?]
 
-when polling for bmp changes, just use two lines (?)
+when polling for bmp changes, just use two lines ( helpful speed-wise?) 
 
 try new GOCR version...
 
@@ -67,6 +88,8 @@ itunes player for profanity (music)?
 make a list of "known clean" movies or what not...hmm...
 
 an "online anybody can chat while watching this movie" (or anybody can edit this wav and listen to it as overlay...) prefer the latter.
+
+blu-ray support somehow (real-time, rip?)
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
