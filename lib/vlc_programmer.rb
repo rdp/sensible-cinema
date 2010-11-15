@@ -16,14 +16,14 @@ class VLCProgrammer
 
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    
-    sorted_mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}.sort
-    
+    mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}
+    blanks = blanks.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :blanks]}
+
+    combined = (mutes+blanks).sort
 
     previous_end = 0
     idx = 0
-    sorted_mutes.each{|start, endy, type|
-  p type
+    combined.each{|start, endy, type|
       # play up to here
       out += "<track>
           <title>#{to_english previous_end} to #{to_english start}</title>

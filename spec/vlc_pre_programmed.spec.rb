@@ -55,9 +55,11 @@ describe 'VLC Programmer' do
   end
 
   it "should handle blank outs, too" do
+    # shouldn't have as many in the case of blanks...
     a = VLCProgrammer.convert_to_full_xspf({ "blank_outs" => {63=>64} } )
     a.should include("63")
-    a.should include("64")    
+    a.should include("64")
+    a.scan(/ to /).length.should == 2
   end
 
   it "should be able to save it all to a file..."
