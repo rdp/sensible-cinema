@@ -34,8 +34,9 @@ class VLCProgrammer
           </extension>
           <location>dvd://e:\@1</location>
           </track>"
-      # now mute
-      out += "<track>
+      # now play through the muted section...
+      if type == :mute
+        out += "<track>
           <title>#{to_english start}s to #{to_english endy}s muted</title>
           <extension application=\"http://www.videolan.org/vlc/playlist/0\">
             <vlc:id>#{idx += 1}</vlc:id>
@@ -45,6 +46,7 @@ class VLCProgrammer
           </extension>
           <location>dvd://e:\@1</location>
           </track>"
+      end
       previous_end = endy
     }
 
