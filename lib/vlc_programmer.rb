@@ -23,6 +23,7 @@ class VLCProgrammer
     previous_end = 0
     idx = 0
     sorted_mutes.each{|start, endy, type|
+  p type
       # play up to here
       out += "<track>
           <title>#{to_english previous_end} to #{to_english start}</title>
