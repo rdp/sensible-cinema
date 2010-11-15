@@ -25,10 +25,13 @@
 
 some real GUI...then I can have an 'edit preferences' button et al.
 
+"sav-ize"
+VLC can play from a playlist or batch file or multiples on command line or what not.
+  VLC can save from said playlist to a single edited file.
+
 "ripperzy-ize"
-  can rip from DVD
-    and edit that
-      mplayer?
+  can rip from DVD and then edit that
+     mplayer?
   can rip from screen
     windows 7 only for now (?)
     VLC to rip?
