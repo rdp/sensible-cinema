@@ -29,21 +29,40 @@ class VLCProgrammer
     # should mute 5-6, skip 6-7
     combined.each_with_index{|(start, endy, type), index|
       next if index == 0 # nothing to do there..
+      previous = combined[index-1]
+      previous_end = previous[1]
+      previous_type = previous[2]
+      previous_start = previous[0]
       if type == :blank
-        previous = combined[index-1]
-        previous_end = previous[1]
-        previous_type = previous[2]
         raise 'no overlap like that allowed as of yet' unless previous_end <= endy
         if previous_type == :mute && previous_end > start
           previous[1] = start # make it end when we start...
         end
+      elsif type == :mute
+        if previous_end > start
+          
+          if previous_end >= endy
+            combined[index] = [nil] # null it out...it's a mute subsumed by a blank apparently...
+            if previous_type == :mute
+               raise 'overlapping mute?'
+            end
+          else
+             # start mine when the last one ended...
+             combined[index] = [previous_end, endy, type]
+          end
+
+        end
+     
+      else
+        raise 'unexpected'
       end
     }
 
     previous_end = 0
     idx = 0
-    combined.each{|start, endy, type|
 
+    combined.each{|start, endy, type|
+      next unless start
       next if endy <= start # ignore mutes wholly contained within blanks
 
       if previous_end != start

@@ -66,20 +66,29 @@ describe 'VLC Programmer' do
     # currently it handles blanks as skips...
     # possibly someday we should allow for blanks as...blanks?  blank-time somehow, with the right audio?
     # for now, skip for blanks, mute for mutes...
+
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
     # should mute 5-6, skip 6-7
-print a
     a.scan(/no-audio/).length.should == 1
     a.scan(/ to /).length.should == 3 # 0->5, 5->6, 7-> end
     a.scan(/=5/).length.should == 2
     a.scan(/=6/).length.should == 1
     a.scan(/=7/).length.should == 1
-
+    
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {5=>7} } )
-    # should skip 5->7
+    a.scan(/=6/).length.should == 0
+    a.scan(/no-audio/).length.should == 0
+    a.scan(/ to /).length.should == 2 # 0->5, 7-> end
 
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {5=>6.5} } )
-    # should skill 5 => 6.5, mute 6.5 => 7
+    # should skip 5 => 6.5, mute 6.5 => 7
+
+    a.scan(/no-audio/).length.should == 1
+    a.scan(/ to /).length.should == 3 # 0->5, 6.5 => 7, 7 -> end
+    a.scan(/=5/).length.should == 1
+    a.scan(/=6.5/).length.should == 1
+    a.scan(/=7/).length.should == 2
+
 
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {6=>7} } )
     # should ignore mutes here
