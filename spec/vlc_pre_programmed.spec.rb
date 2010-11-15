@@ -10,7 +10,7 @@ describe 'VLC Programmer' do
     out = VLCProgrammer.convert_to_full_xspf(a)
     out.length.should_not == 0
     out.should include("playlist")
-    out.scan(/vlc:id/).length.should be > 3
+    out.scan(/vlc:id/).length.should be > 0
     
 =begin
 <?xml version=”1.0″ encoding=”UTF-8″?>
@@ -34,11 +34,24 @@ describe 'VLC Programmer' do
     
   end
 
+  before do
+   @a = VLCProgrammer.convert_to_full_xspf({ "mutes"=>{105=>145, "46:33.5"=>2801} } )
+  end
+
   it "should convert mutes and blanks apropo" do
-    a = VLCProgrammer.convert_to_full_xspf({ "mutes"=>{105=>145, 2084=>2087, "46:33.5"=>2801, "01:33:21.0"=>"01:33:50.0"}, "blank_outs"=>{"55:35"=>"55:42.0"}})
-    a.scan(/<vlc:id>/).length.should == 4*2+1 # should mute and play each time...
-    a.scan(/start-time=0/).length.should == 1 # should start
-    a.scan(/stop-time=1000000/).length.should == 1 # should complete the movie
+    
+    @a.scan(/<vlc:id>/).length.should == 2*2+1 # should mute and play each time...
+    @a.scan(/start-time=0/).length.should == 1 # should start
+    @a.scan(/stop-time=1000000/).length.should == 1 # should complete the movie
+    @a.scan(/<\/playlist/).length.should == 1
+
+    File.write('test.xspf', @a)
+  end
+
+  it "should have pretty english titles" do
+    @a.scan(/ to /).length.should == 2*2+1
+    @a.scan(/2:25/).length.should == 2
+    @a.scan(/no-audio/).length.should be > 0
   end
 
   it "should convert overlaps apropo"

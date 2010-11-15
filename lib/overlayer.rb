@@ -6,12 +6,6 @@ require_relative 'muter'
 require_relative 'blanker'
 require 'pp' # for pretty_inspect
 
-class Time
-  def self.now_f
-    now.to_f
-  end
-end
-
 class OverLayer
   
   def muted?
@@ -136,7 +130,7 @@ class OverLayer
     # 3600 => "1:00:00"
     out = ''
     hours = seconds.to_i / 3600
-    out << "%d" % hours 
+    out << "%d" % hours
     out << ":"
     seconds = seconds - hours*3600
     minutes = seconds.to_i / 60
@@ -378,4 +372,10 @@ class OverLayer
     
   end
   
+end
+
+class Time
+  def self.now_f
+    now.to_f
+  end
 end
