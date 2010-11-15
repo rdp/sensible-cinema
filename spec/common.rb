@@ -16,6 +16,7 @@ require 'fileutils'
 require 'pathname'
 
 Dir.chdir File.dirname(__FILE__) # always run from the right dir...
+autoload :YAML, 'yaml'
 
 begin
   require 'hitimes'
