@@ -92,9 +92,11 @@ describe 'VLC Programmer' do
 
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {6=>7} } )
     # should ignore mutes here
+    a.scan(/ to /).length.should == 2 # 0->6, 7 -> end
 
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6.5=> 7}, "blank_outs" => {6=>7} } )
     # should ignore mutes here
+    a.scan(/ to /).length.should == 2 # 0->6, 7 -> end
 
   end
 
