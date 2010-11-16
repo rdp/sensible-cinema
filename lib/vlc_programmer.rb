@@ -7,8 +7,8 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
 
-  def self.convert_to_full_xspf incoming
-
+  def self.convert_to_full_xspf incoming, filename = nil
+    @filename = filename
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}
@@ -53,11 +53,7 @@ class VLCProgrammer
       end
     }
 
-    out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-    <playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\" xmlns:vlc=\"http://www.videolan.org/vlc/playlist/ns/0/\">
-    <title>Playlist</title>
-    <!--location>c:\\installs\\test.xspf</location--> 
-    <trackList>"
+    out = get_header
 
     previous_end = 0
     idx = 0
@@ -72,35 +68,60 @@ class VLCProgrammer
       end
       # now play through the muted section...
       if type == :mute
-        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, "no-audio"
+        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, "noaudio"
       end
       previous_end = endy
     }
 
     # now play the rest of the movie...
     out += get_section to_english(previous_end) + " to end of film", previous_end, 1_000_000, idx += 1
-    out += get_section("Done", 0, 0, idx += 1, "", "vlc://quit")
     # and close the xml...
-    out += "</trackList></playlist>"
+    out += get_footer
   
   end
-
-  def self.get_section title, start, stop, idx, extra_setting = "", location = nil
-          "<track>
-          <title>#{title}</title>
-          <extension application=\"http://www.videolan.org/vlc/playlist/0\">
-            <vlc:id>#{idx}</vlc:id>
-            <vlc:option>start-time=#{start}</vlc:option>
-            <vlc:option>#{extra_setting}</vlc:option>
-            <vlc:option>stop-time=#{stop}</vlc:option>
-          </extension>
-          <location>#{location ? location : "dvd://e:\@1"}</location>
-          </track>"
+  
+  def self.get_header
+    if !@filename
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+      <playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\" xmlns:vlc=\"http://www.videolan.org/vlc/playlist/ns/0/\">
+      <title>Playlist</title>
+      <!--location>c:\\installs\\test.xspf</location--> 
+      <trackList>"
+    else
+      ""
+    end
+  end
+  
+  def self.get_footer
+   if !@filename
+    "</trackList></playlist>"
+   else
+    ''
+   end
+    
+  end
+  
+  def self.get_section title, start, stop, idx, extra_setting = nil
+    loc = "dvd://e:\@1"
+    if !@filename
+      "<track>
+      <title>#{title}</title>
+      <extension application=\"http://www.videolan.org/vlc/playlist/0\">
+        <vlc:id>#{idx}</vlc:id>
+        <vlc:option>start-time=#{start}</vlc:option>
+        <vlc:option>#{extra_setting}</vlc:option>
+        <vlc:option>stop-time=#{stop}</vlc:option>
+      </extension>
+      <location>#{loc}</location>
+      </track>"
+    else
+    # puts 'run it like $ rm go.mpg && vlc mute5-10.xspf --sout=file/ps:go.mpg --sout-file-append vlc://quit' # needs append so each playlist segment will append.
+      "vlc #{loc} start-time=#{start} stop-time=#{stop} --sout=file/ps:#{@filename}-#{idx}.ps #{"--" + extra_setting if extra_setting} vlc://quit\n"
+    end
   end
 end
 
-# 1.8.7 compat...
-
+# <= 1.8.7 compat...
 class Symbol
   # Standard in ruby 1.9. See official documentation[http://ruby-doc.org/core-1.9/classes/Symbol.html]
   def <=>(with)

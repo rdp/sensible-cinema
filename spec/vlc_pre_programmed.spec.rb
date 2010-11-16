@@ -49,7 +49,7 @@ describe 'VLC Programmer' do
     @a.scan(/ to /).length.should == 2*2+1
     @a.scan(/clean/).length.should be > 0
     @a.scan(/2:25/).length.should == 2
-    @a.scan(/no-audio/).length.should be > 0
+    @a.scan(/noaudio/).length.should be > 0
   end
 
   it "should handle blank outs, too" do
@@ -67,7 +67,7 @@ describe 'VLC Programmer' do
 
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
     # should mute 5-6, skip 6-7
-    a.scan(/no-audio/).length.should == 1
+    a.scan(/noaudio/).length.should == 1
     a.scan(/ to /).length.should == 3 # 0->5, 5->6, 7-> end
     a.scan(/=5/).length.should == 2
     a.scan(/=6/).length.should == 1
@@ -75,13 +75,13 @@ describe 'VLC Programmer' do
     
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {5=>7} } )
     a.scan(/=6/).length.should == 0
-    a.scan(/no-audio/).length.should == 0
+    a.scan(/noaudio/).length.should == 0
     a.scan(/ to /).length.should == 2 # 0->5, 7-> end
 
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {5=>6.5} } )
     # should skip 5 => 6.5, mute 6.5 => 7
 
-    a.scan(/no-audio/).length.should == 1
+    a.scan(/noaudio/).length.should == 1
     a.scan(/ to /).length.should == 3 # 0->5, 6.5 => 7, 7 -> end
     a.scan(/=5/).length.should == 1
     a.scan(/=6.5/).length.should == 1
@@ -99,15 +99,27 @@ describe 'VLC Programmer' do
   end
 
   it "should not try to save it to a file from within the xml" do
-    a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7} } )
+    a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=>10} } )
     a.scan(/sout=.*/).length.should  == 0
+    bat_file = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=>10} }, 'go' )
+    bat_file.scan(/sout=.*/).length.should be > 0
+    bat_file.scan(/playlist/i).length.should == 0
+    bat_file.scan(/--noaudio/).length.should == 1
+    bat_file.scan(/\n/).length.should be > 2
+    File.write('mute5-10.bat', bat_file)
+    puts 'run it like $ mute5-10.bat' # needs append so each playlist segment will append.
+    # should combine them, too...
+    bat_file.scan(/go.ps.1.* go.ps.2/).length.should == 1
   end
 
   it "should have a workable usable VLC file" do
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 10} } )
-    a.scan(/vlc:\/\/quit/).length.should == 1
-    File.write('mute5-10.xspf', a)
-    puts 'run it like $ vlc mute5-10.xspf --sout=file/ps:go.mpg --sout-file-append vlc://quit'
+    a.scan(/vlc:\/\/quit/).length.should == 0 # can't do this in the xspf these days...
+  end
+  
+  it "should experiment with mencoder to merge" do
+      #  how to merge avi's:
+      #mencoder -oac copy -ovc copy part1.avi part2.avi part3.avi -o WHOLE-THING.avi
   end
   
 end
