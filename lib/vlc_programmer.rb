@@ -8,11 +8,6 @@ class VLCProgrammer
   end
 
   def self.convert_to_full_xspf incoming
-    out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-    <playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\" xmlns:vlc=\"http://www.videolan.org/vlc/playlist/ns/0/\">
-    <title>Playlist</title>
-    <!--location>c:\\installs\\test.xspf</location--> 
-    <trackList>"
 
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
@@ -58,6 +53,12 @@ class VLCProgrammer
       end
     }
 
+    out = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+    <playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\" xmlns:vlc=\"http://www.videolan.org/vlc/playlist/ns/0/\">
+    <title>Playlist</title>
+    <!--location>c:\\installs\\test.xspf</location--> 
+    <trackList>"
+
     previous_end = 0
     idx = 0
 
@@ -67,47 +68,35 @@ class VLCProgrammer
 
       if previous_end != start
         # play up to next "questionable section"
-        out += "<track>
-          <title>#{to_english previous_end} to #{to_english start}</title>
-          <extension application=\"http://www.videolan.org/vlc/playlist/0\">
-            <vlc:id>#{idx += 1}</vlc:id>
-            <vlc:option>start-time=#{previous_end}</vlc:option>
-            <vlc:option>stop-time=#{start}</vlc:option>
-          </extension>
-          <location>dvd://e:\@1</location>
-          </track>"
+        out += get_section("#{to_english previous_end} to #{to_english start} (clean)", previous_end, start, idx += 1)
       end
       # now play through the muted section...
       if type == :mute
-        out += "<track>
-          <title>#{to_english start}s to #{to_english endy}s muted</title>
-          <extension application=\"http://www.videolan.org/vlc/playlist/0\">
-            <vlc:id>#{idx += 1}</vlc:id>
-            <vlc:option>start-time=#{start}</vlc:option>
-            <vlc:option>stop-time=#{endy}</vlc:option>
-            <vlc:option>no-audio</vlc:option>
-          </extension>
-          <location>dvd://e:\@1</location>
-          </track>"
+        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, "no-audio"
       end
       previous_end = endy
     }
 
     # now play the rest of the movie...
-    out += "<track>
-          <title>#{to_english previous_end} to end of film</title>
-          <extension application=\"http://www.videolan.org/vlc/playlist/0\">
-            <vlc:id>#{idx += 1}</vlc:id>
-            <vlc:option>start-time=#{previous_end}</vlc:option>
-            <vlc:option>stop-time=#{1_000_000}</vlc:option>
-          </extension>
-          <location>dvd://e:\@1</location>
-          </track>"
+    out += get_section to_english(previous_end) + " to end of film", previous_end, 1_000_000, idx += 1
+    out += get_section("Done", 0, 0, idx += 1, "", "vlc://quit")
     # and close the xml...
     out += "</trackList></playlist>"
   
   end
 
+  def self.get_section title, start, stop, idx, extra_setting = "", location = nil
+          "<track>
+          <title>#{title}</title>
+          <extension application=\"http://www.videolan.org/vlc/playlist/0\">
+            <vlc:id>#{idx}</vlc:id>
+            <vlc:option>start-time=#{start}</vlc:option>
+            <vlc:option>#{extra_setting}</vlc:option>
+            <vlc:option>stop-time=#{stop}</vlc:option>
+          </extension>
+          <location>#{location ? location : "dvd://e:\@1"}</location>
+          </track>"
+  end
 end
 
 # 1.8.7 compat...

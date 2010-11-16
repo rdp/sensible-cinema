@@ -39,17 +39,15 @@ describe 'VLC Programmer' do
   end
 
   it "should convert mutes and blanks apropo" do
-    
-    @a.scan(/<vlc:id>/).length.should == 2*2+1 # should mute and play each time...
+    @a.scan(/<vlc:id>/).length.should == 5 # should mute and play each time...
     @a.scan(/start-time=0/).length.should == 1 # should start
-    @a.scan(/stop-time=1000000/).length.should == 1 # should complete the movie
+    @a.scan(/stop-time=1000000/).length.should == 1 # should have one to "finish" the DVD
     @a.scan(/<\/playlist/).length.should == 1
-
-    File.write('test.xspf', @a)
   end
 
   it "should have pretty english titles" do
     @a.scan(/ to /).length.should == 2*2+1
+    @a.scan(/clean/).length.should be > 0
     @a.scan(/2:25/).length.should == 2
     @a.scan(/no-audio/).length.should be > 0
   end
@@ -100,6 +98,16 @@ describe 'VLC Programmer' do
 
   end
 
-  it "should be able to save it all to a file..."
+  it "should not try to save it to a file from within the xml" do
+    a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7} } )
+    a.scan(/sout=.*/).length.should  == 0
+  end
+
+  it "should have a workable usable VLC file" do
+    a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 10} } )
+    a.scan(/vlc:\/\/quit/).length.should == 1
+    File.write('mute5-10.xspf', a)
+    puts 'run it like $ vlc mute5-10.xspf --sout=file/ps:go.mpg --sout-file-append vlc://quit'
+  end
   
 end
