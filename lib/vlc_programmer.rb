@@ -68,7 +68,7 @@ class VLCProgrammer
       end
       # now play through the muted section...
       if type == :mute
-        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, "noaudio"
+        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, true
       end
       previous_end = endy
     }
@@ -76,7 +76,7 @@ class VLCProgrammer
     # now play the rest of the movie...
     out += get_section to_english(previous_end) + " to end of film", previous_end, 1_000_000, idx += 1
     # and close the xml...
-    out += get_footer
+    out += get_footer idx
   
   end
   
@@ -92,16 +92,7 @@ class VLCProgrammer
     end
   end
   
-  def self.get_footer
-   if !@filename
-    "</trackList></playlist>"
-   else
-    ''
-   end
-    
-  end
-  
-  def self.get_section title, start, stop, idx, extra_setting = nil
+  def self.get_section title, start, stop, idx, no_audio = false
     loc = "dvd://e:\@1"
     if !@filename
       "<track>
@@ -109,16 +100,33 @@ class VLCProgrammer
       <extension application=\"http://www.videolan.org/vlc/playlist/0\">
         <vlc:id>#{idx}</vlc:id>
         <vlc:option>start-time=#{start}</vlc:option>
-        <vlc:option>#{extra_setting}</vlc:option>
+        #{"<vlc:option>noaudio</vlc:option>" if no_audio}
         <vlc:option>stop-time=#{stop}</vlc:option>
       </extension>
       <location>#{loc}</location>
       </track>"
     else
-    # puts 'run it like $ rm go.mpg && vlc mute5-10.xspf --sout=file/ps:go.mpg --sout-file-append vlc://quit' # needs append so each playlist segment will append.
-      "vlc #{loc} start-time=#{start} stop-time=#{stop} --sout=file/ps:#{@filename}-#{idx}.ps #{"--" + extra_setting if extra_setting} vlc://quit\n"
+      "call vlc -I dummy #{loc} --start-time=#{start} --stop-time=#{stop} --sout=file/ps:#{@filename}.ps.#{idx} #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
+      #"call vlc #{@filename}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end
+  
+  def self.get_footer idx
+   if !@filename
+    "</trackList></playlist>"
+   else
+    files = (1..idx).map{|n| "#{@filename}.ps.#{n}"}
+    # concat
+    line = 'type ' + files.join(' ')
+    line += " > #{@filename}.all.ps\n"
+    
+    line += "rm " + files.join(' ') + "\n"
+    line += "echo Done--you may now watch file #{@filename}.all.ps in VLC player"
+   end
+    
+  end
+  
+
 end
 
 # <= 1.8.7 compat...
