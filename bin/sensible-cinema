@@ -45,29 +45,37 @@ module SensibleSwing
       save_to = fc.execute
       p [drive, descriptor, save_to]
       descriptors = YAML.load_file descriptor
+      dvd_title_track = descriptors["dvd_title_track"]
       bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive)
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
-      if system(temp_file)
+      if !ARGV.find{|a| a == '--test'} && system(temp_file)
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
         system("explorer /e,/select,\"#{File.expand_path save_to}\"")
+        File.delete temp_file
         self.close
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
-      end      
+      end
      }
     
      c.set_bounds(44,180,200,23)
      panel.add c
+    
+     exit = JButton.new("Exit").on_clicked {
+       self.close
+     }
+     exit.set_bounds(44,320,200,23)
+     panel.add exit
     
      reload = JButton.new( "reload code" ).on_clicked {
       eval File.read(__FILE__), nil, __FILE__
       p 're-evaled it'
      }
      reload.set_bounds(44,280,200,23)
-     panel.add reload # if ARGV.find{|a| a == '--test'}
+     panel.add reload if ARGV.find{|a| a == '--test'}
     
    end
   
