@@ -3,7 +3,7 @@ puts 'Welcome to Sensible Cinema...'
 
 require 'rubygems'
 require 'sane'
-require_relative 'swing_helpers'
+require File.dirname(__FILE__) + '/swing_helpers'
 load File.dirname(__FILE__) +  '/sensible-cinema-cli'
 require 'tmpdir'
 require 'ruby-wmi'
@@ -32,7 +32,7 @@ module SensibleSwing
     
      c=JButton.new( "Save local copy of an edited DVD" )
      c.on_clicked {
-      drive = get_disk_name
+      drive = choose_disk_name
       fc = JFileChooser.new 
       fc.setFileSelectionMode(nil)
       fc.set_dialog_title "Please pick a DVD descriptor file"
@@ -50,12 +50,24 @@ module SensibleSwing
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
-      p 'got', system(temp_file)
-      JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
+      if false #system(temp_file)
+        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
+        system("explorer /e,/select,\"#{File.expand_path save_to}\"")
+      else
+        JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
+      end
       self.close
      }
      c.set_bounds(44,180,200,23)
-     panel.add c     
+     panel.add c
+    
+     reload = JButton.new( "reload code" ).on_clicked {
+      eval File.read(__FILE__), nil, __FILE__
+      p 're-evaled it'
+     }
+     reload.set_bounds(44,280,200,23)
+     panel.add reload # if ARGV.find{|a| a == '--test'}
+    
    end
   
    def exit_and_close
@@ -64,22 +76,47 @@ module SensibleSwing
     exit
    end
   
-   def get_disk_name
+   def choose_disk_name
     disks = WMI::Win32_LogicalDisk.find(:all)
+    opticals = disks.select{|d| d.Description =~ /CD-ROM/} # hope this works...
 
-    opticals = disks.select{|d| d.Description =~ /CD-ROM/}
-
-    opticals.map!{|d| [d.Name + "\\", d.VolumeName]}
-    p opticals
-    return opticals[0][0]
+    opticals.map!{|d| d.Name + "\\" + " (" +  d.VolumeName + ")"}
+    
+    if opticals.length != 1
+      dialog = GetDisk.new(self, opticals)
+      dialog.show
+      selected = dialog.selected
+    else
+      selected = opticals[0]
+    end
+    return selected[0..2]
    end
-
   
  end
 
-
+ class GetDisk < JDialog
+   attr_reader :selected
+   def initialize parent, options_array
+     super parent, true
+     
+     box = JComboBox.new
+     box.add_action_listener do |e|
+       idx = box.get_selected_index
+       if idx != 0
+        @selected = box.get_selected_item
+        dispose 
+       end
+     end
+    
+     box.add_item "Select DVD drive" # put something in index 0
+     options_array.each{|drive|
+       box.add_item drive
+     }     
+     add box
+     pack
+    end
+ end
  
-
 end
 
 SensibleSwing::MainWindow.new.set_visible true

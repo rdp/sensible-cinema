@@ -2,7 +2,7 @@ require 'java'
 module SensibleSwing 
  include_package 'javax.swing'
  [JButton, JFrame, JLabel, JPanel, JOptionPane,
-   JFileChooser, JComboBox] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
+   JFileChooser, JComboBox, JDialog] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
  include_package 'java.awt'
  [FlowLayout, Font]
  include_class 'java.awt.event.ActionListener'
@@ -34,7 +34,7 @@ module SensibleSwing
     # returns nil on failure...
     def execute
       success = show_open_dialog nil
-      raise nil unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
+      raise "did not choose one" unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
       get_selected_file.get_absolute_path
     end
   end
