@@ -32,9 +32,12 @@ module SensibleSwing
   
   class JFileChooser
     # returns nil on failure...
-    def execute
+    def go
       success = show_open_dialog nil
-      raise "did not choose one" unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
+      unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
+        puts "did not choose one" 
+        java.lang.System.exit 1
+      end
       get_selected_file.get_absolute_path
     end
   end

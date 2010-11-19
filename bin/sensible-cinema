@@ -37,29 +37,34 @@ module SensibleSwing
       fc.setFileSelectionMode(nil)
       fc.set_dialog_title "Please pick a DVD descriptor file"
       fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
-      descriptor = fc.execute
+      descriptor_path = fc.go
+      descriptors = YAML.load_file descriptor_path
+      
       fc = JFileChooser.new 
-      # TODO allow for spaces in save to file
+      # LODO allow for spaces in save to file
       fc.set_dialog_title "Pick a location to save it to (like 'my_dvd')"
-      fc.setCurrentDirectory(JFile.new(get_drive_with_most_space))
-      save_to = fc.execute
+      save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+      fc.setSelectedFile(JFile.new(get_drive_with_most_space + save_to_file_name)) 
+      save_to = fc.go
       # TODO don't pop up those annoying windows
-      # TODO add vlc.exe to the path
-      descriptors = YAML.load_file descriptor
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive)
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
+      # TODO change title to "running" or something, while it runs...
       if !ARGV.find{|a| a == '--test'} && system(temp_file)
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
-        system("explorer /e,/select,\"#{File.expand_path save_to}\"")
+        command = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
+        system command
         File.delete temp_file
         self.close
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
+      # TODO warn if they don't have VLC installed...
+      # LODO warn if they will overwrite a file 
      }
     
      c.set_bounds(44,180,200,23)
@@ -144,4 +149,4 @@ end
 
 SensibleSwing::MainWindow.new.set_visible true
 
-puts 'Please see the Sensible Cinema window'
+puts 'Please use the Sensible Cinema GUI window'

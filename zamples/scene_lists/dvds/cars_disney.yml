@@ -1,4 +1,4 @@
-name: cars widescreen 2006
+title: cars widescreen 2006
 player: VLC
 mutes:
   "0:17:22" : "0:17:23.5" # you could see his [rusty] undercarriage
