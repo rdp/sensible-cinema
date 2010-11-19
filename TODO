@@ -4,31 +4,40 @@
 
 == probably next up/low prio ==
 
-  better timing for the saving thing...
+  better timing for the saver-er...
+    match better
+    merge better
   byu.tv descriptor
   back off on mouse jerking if they're movin' it
   speed up unit tests
   a netflix player descriptor
-  "just choose VLCx55" LOL
-    beep at them when not tracking [?]
-      default on...hmm
-  popup: "processing in annoying popup windows--this could take a long time"
-  drop down needs to be more visible
+  popup: "processing in annoying popup windows--this could take a very long time"
 
 == slightly lower than that ==
 
+  "just choose VLCx55" LOL
+    beep at them when not tracking [?]
+      default on...hmm
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
   screencast of things helpful (use, creation...).
-  can "overplay" (for VLC only on special computers for now :P)
   youtube non full screen: work with other browsers
   easier "here's how on the command line, BTW"
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
-a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
+better icons for modals (
 
-leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
+another descriptor for a commercial player...
+
+when saving to hard drive, you can "insert" streams where desired
+
+can "overplay" (for VLC only on special computers for now :P)
+
+can save stuff "for review later" as they watch it, like hulu
+
+a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
+  leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
 
 GUI:
  preferences for levels, etc.
@@ -76,7 +85,7 @@ itunes video on demand
 
 blockbuster "rent" on demand, online
 
-a real website
+a real website (github-y?)
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
@@ -96,17 +105,15 @@ make a list of "known clean" movies or what not...hmm...
 
 an "online anybody can chat while watching this movie" (or anybody can edit this wav and listen to it as overlay...) prefer the latter.
 
-blu-ray support somehow (real-time, rip?)
+blu-ray support somehow (real-time? rip?)
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
   a chrome plugin with imdb/community backing :)
   
-a known list of "compatible" imdb oners...
+a known list of "compatible" imdb'ers...
 
 code refactors: "screen time change", order should be swapped in bin/x output (just cleanup)
-
-auto-play on detect youtube url access...
 
 easier installer for windows: release a zip file that they can just click on a .bat file to run it
   later: it installs/uninstalls appropo
@@ -127,8 +134,6 @@ user customizable levels...
 
 with VLC/youtube non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
 
-hulu non full screened descriptor
-
 can overlay with wav file (would work already for VLC [?], could also "click to mute" for others...hmm...)
 
 the muting currently is so togglesy...if VLC ever fixes itself, fix this! 
@@ -139,6 +144,7 @@ can permanently black out certain coords to keep things prettier...et al
   remove black when they really move the mouse?
 
 Linux port (call that good enough for usability on TV's...), should be...
+  OS X port
 
 blanker outer with user specifiable color
   better default color?
@@ -193,3 +199,6 @@ make an index of watchable on imdb based on stars (?)
 --server?  optionally higher prio?
 
 http://en.wikipedia.org/wiki/RiffTrax (possible?)
+  community rifftrax?
+    realtime
+      editable

@@ -41,7 +41,29 @@ module SensibleSwing
       get_selected_file.get_absolute_path
     end
   end
+  #showMessageDialog JOptionPane
+  class ModeLessDialog < JDialog
+    attr_accessor :close_button
+    def initialize title_and_display_text
+      super
+      set_title title_and_display_text
+      jlabel = JLabel.new title_and_display_text
+      jlabel.set_bounds(10, 10,136,14)
+      add jlabel
+    
+      close = JButton.new( "Close" ).on_clicked {
+        self.dispose
+      }
+      close.set_bounds(50,50,50,75)
+      add close
+      set_size 150,100
+      @close_button = close
 
+      #textdialog.getContentPane().add(child);
+    end
+  end
+  
+  
 end
 
 # code examples

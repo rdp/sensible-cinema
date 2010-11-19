@@ -1,9 +1,10 @@
-#!/usr/bin/ruby
-puts 'Welcome to Sensible Cinema...'
+#!/usr/bin/ruby # so my editor will like it...
+
+puts 'Loading Sensible Cinema...'
 
 require 'rubygems'
-require 'sane'
-require File.dirname(__FILE__) + '/swing_helpers'
+require 'sane' # File.write
+require File.dirname(__FILE__) + '/../lib/swing_helpers'
 load File.dirname(__FILE__) +  '/sensible-cinema-cli'
 require 'tmpdir'
 require 'ruby-wmi'
@@ -32,40 +33,7 @@ module SensibleSwing
     
      c=JButton.new( "Copy edited DVD to Hard Drive" )
      c.on_clicked {
-      drive = choose_dvd_drive
-      fc = JFileChooser.new 
-      fc.setFileSelectionMode(nil)
-      fc.set_dialog_title "Please pick a DVD descriptor file"
-      fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
-      descriptor_path = fc.go
-      descriptors = YAML.load_file descriptor_path
-      
-      fc = JFileChooser.new 
-      # LODO allow for spaces in save to file
-      fc.set_dialog_title "Pick a location to save file to"
-      save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-      fc.setSelectedFile(JFile.new(get_drive_with_most_space + save_to_file_name)) 
-      save_to = fc.go
-      # LODO don't pop up those annoying windows
-      dvd_title_track = descriptors["dvd_title_track"]
-      bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
-      temp_dir = Dir.tmpdir
-      temp_file = temp_dir + '/' + 'convert_it.bat'
-      File.write(temp_file, bat_file)
-      p 'running', temp_file
-      # TODO change title to "running" or something, while it runs...
-      #JDialog.new(self, "hello there")
-      if !ARGV.find{|a| a == '--test'} && system(temp_file)
-        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
-        command = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
-        system command
-        File.delete temp_file
-        self.close
-      else
-        JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
-      end
-      # TODO warn if they don't have VLC installed...
-      # LODO warn if they will overwrite a file 
+       do_copy_dvd_to_hard_drive
      }
     
      c.set_bounds(44,180,200,23)
@@ -92,19 +60,61 @@ module SensibleSwing
     exit
    end
   
-   
+   def do_copy_dvd_to_hard_drive
+      drive = choose_dvd_drive
+      fc = JFileChooser.new 
+      fc.setFileSelectionMode(nil)
+      fc.set_dialog_title "Please pick a DVD descriptor file"
+      fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
+      descriptor_path = fc.go
+      descriptors = YAML.load_file descriptor_path
+      
+      fc = JFileChooser.new 
+      # LODO allow for spaces in save to file
+      fc.set_dialog_title "Pick a location to save file to"
+      save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+      fc.setSelectedFile(JFile.new(get_drive_with_most_space + save_to_file_name)) 
+      save_to = fc.go
+      # LODO don't pop up those annoying windows
+      dvd_title_track = descriptors["dvd_title_track"]
+      bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
+      temp_dir = Dir.tmpdir
+      temp_file = temp_dir + '/' + 'convert_it.bat'
+      File.write(temp_file, bat_file)
+      p 'running', temp_file
+      # TODO change title to "running" or something, while it runs...
+      showMessageDialog
+      if !ARGV.find{|a| a == '--test'} && system(temp_file)
+        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
+        command = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
+        system command
+        File.delete temp_file
+        self.close
+      else
+        JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
+      end
+      # TODO warn if they don't have VLC installed...
+      # LODO warn if they will overwrite a file 
+   end
+  
    def choose_dvd_drive
     opticals = get_dvd_drives
     opticals.map!{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
     
     if opticals.length != 1
       dialog = GetDisk.new(self, opticals)
+      dialog.setSize 200,125
       dialog.show
       selected = dialog.selected
     else
       selected = opticals[0]
     end
-    return selected[0..2]
+    if selected
+      return selected[0..2] 
+    else
+      puts 'did not select drive'
+      java.lang.System.exit 1      
+    end
    end
   
   def get_drive_with_most_space
@@ -112,7 +122,6 @@ module SensibleSwing
     out = disks.sort_by{|d| d.FreeSpace.to_i}[-1].Name + "\\"
     out
   end
-    
     
   private
   def get_dvd_drives
@@ -137,10 +146,10 @@ module SensibleSwing
        end
      end
     
-     box.add_item "Select DVD drive" # put something in index 0
+     box.add_item "Click to select DVD drive" # put something in index 0
      options_array.each{|drive|
        box.add_item drive
-     }     
+     }
      add box
      pack
     end
@@ -151,4 +160,4 @@ end
 
 SensibleSwing::MainWindow.new.set_visible true
 
-puts 'Please use the Sensible Cinema GUI window'
+puts 'Please use the Sensible Cinema GUI window popup'
