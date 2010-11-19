@@ -1,0 +1,107 @@
+#!/usr/bin/ruby
+
+puts 'Welcome to Sensible Cinema...'
+require 'rubygems'
+require 'sane'
+
+Thread.abort_on_exception=true #gah
+
+for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser', 'ocr']
+  require_relative '../lib/' + file
+end
+
+
+def go_sc(args=ARGV)
+  
+  $VERBOSE = 1 if args.delete('-v')
+  $TEST = 1 if args.delete('-t')  
+  if args.delete('--clear-cache')
+    OCR.clear_cache! 
+    puts 'cleared cache'
+  end
+  
+  $stderr.puts 'warning: currently windows only for certain parts currently' unless  ENV['OS'] == 'Windows_NT'
+  
+  if args.detect{|arg| arg == '-h' || arg == '--help'}
+  
+    puts <<-END
+  
+    syntax: player_description.yml|test scene_descriptions_list.yml [-t -v --clear-cache] (or nothing to prompt for files)
+    END
+      
+    for file in Dir[__dir__ + '../zamples/mute*/*']
+       puts "\n", "Example file:", file + "\n\n", File.read(file)
+    end
+    
+    exit 1
+    
+  else
+   
+    # allow for command line filenames
+  
+    player_description = args.shift.to_s
+    if !File.exist?(player_description)    
+      puts 'Please Select Computer Player'
+      player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
+    end
+  
+    scene_list = args.shift.to_s
+  
+    if scene_list == 'test'
+      overlay = nil
+      p 'got test...just doing screen dump'
+      $VERBOSE=true # adds some extra output
+    else
+      if !File.exist? scene_list
+        puts 'Select Scene Descriptions file'
+        scene_list = FileChooser.choose_file("     SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists")
+      end
+      
+      if !scene_list
+        puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
+        exit 1
+      end
+      
+      puts 'Selected scene descriptions file ' + File.basename(scene_list) + "\n\t(full path: #{scene_list})"
+      Blanker.startup
+      # todo start it late as it has an annoying startup blip
+      overlay = OverLayer.new(scene_list)    
+    end  
+    
+    if File.exist? player_description.to_s
+      puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
+      # this one doesn't use any updates, so just pass in file contents, not filename
+      screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
+      Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
+      
+      # exit early if we just wanted a screen dump...a little kludgey...
+      unless overlay
+        puts 'warning--only doing screen dump in t-minus 4s...'      
+        sleep 4
+        puts 'snap!'
+        screen_tracker.dump_bmp
+        exit 1
+      end
+      screen_tracker.process_forever_in_thread
+    else
+      puts 'warning--not using any screen tracking...'
+    end
+    
+    OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
+  
+    puts "Opening the curtains... (please play in player now)"
+    overlay.start_thread true
+    key_input = KeyboardInput.new overlay
+    key_input.start_thread # status thread
+    at_exit {
+      Blanker.shutdown # lodo move this and the 'q' key to within overlayer
+      OCR.serialize_cache_to_disk
+    }
+    key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
+    
+  end
+end
+
+if __FILE__ == $0
+ go_sc
+end
