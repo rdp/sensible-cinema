@@ -1,5 +1,5 @@
 require_relative 'overlayer'
-
+ENV['PATH'] += ";c:\program files\videolan\vlc"
 class VLCProgrammer
 
   def self.to_english s

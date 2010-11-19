@@ -60,9 +60,8 @@ module SensibleSwing
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
-      JOptionPane.showMessageDialog(nil, "Processing", " Processing DVD to disk...this could take awhile", nil)
       system(temp_file)
-      JOptionPane.showMessageDialog(nil, "Done!", " Done--you may now watch file #{save_to}.ps in VLC player", nil)
+      JOptionPane.showMessageDialog(nil, "Done!", " Done--you may now watch file #{save_to}.ps in VLC player", JOptionPane::ERROR_MESSAGE)
       self.close
      }
      c.set_bounds(44,180,200,23)
