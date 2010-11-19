@@ -94,7 +94,7 @@ module SensibleSwing
    
    def choose_dvd_drive
     opticals = get_dvd_drives
-    opticals.map!{|d| d.Name + "\\" + " (" +  d.VolumeName + ")"}
+    opticals.map!{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
     
     if opticals.length != 1
       dialog = GetDisk.new(self, opticals)
