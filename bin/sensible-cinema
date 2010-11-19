@@ -42,11 +42,11 @@ module SensibleSwing
       
       fc = JFileChooser.new 
       # LODO allow for spaces in save to file
-      fc.set_dialog_title "Pick a location to save it to (like 'my_dvd')"
+      fc.set_dialog_title "Pick a location to save file to"
       save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.setSelectedFile(JFile.new(get_drive_with_most_space + save_to_file_name)) 
       save_to = fc.go
-      # TODO don't pop up those annoying windows
+      # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive)
       temp_dir = Dir.tmpdir
@@ -108,7 +108,7 @@ module SensibleSwing
   
   def get_drive_with_most_space
     disks = WMI::Win32_LogicalDisk.find(:all)
-    out = disks.sort_by{|d| d.FreeSpace}[-1].Name + "\\"
+    out = disks.sort_by{|d| d.FreeSpace.to_i}[-1].Name + "\\"
     out
   end
     

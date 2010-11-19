@@ -4,6 +4,7 @@
 
 == probably next up/low prio ==
 
+  better timing for the saving thing...
   byu.tv descriptor
   back off on mouse jerking if they're movin' it
   speed up unit tests
@@ -27,7 +28,6 @@ leaner gem (size-wise...) but I guess some ability to have a zip downloader...hm
 
 GUI:
  preferences for levels, etc.
-
 
 blanker: allow for one side of the screen or another...
 
