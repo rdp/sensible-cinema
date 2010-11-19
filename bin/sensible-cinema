@@ -39,11 +39,11 @@ module SensibleSwing
      c.set_bounds(44,180,200,23)
      panel.add c
     
-     exit = JButton.new("Exit").on_clicked {
+     @exit = JButton.new("Exit").on_clicked {
        self.close
      }
-     exit.set_bounds(44,320,200,23)
-     panel.add exit
+     @exit.set_bounds(44,320,200,23)
+     panel.add @exit
     
      reload = JButton.new( "reload code" ).on_clicked {
       eval File.read(__FILE__), nil, __FILE__
@@ -52,12 +52,6 @@ module SensibleSwing
      reload.set_bounds(44,280,200,23)
      panel.add reload if ARGV.find{|a| a == '--test'}
     
-   end
-  
-   def exit_and_close
-    JOptionPane.showMessageDialog(nil, "exiting", "exiting", JOptionPane::ERROR_MESSAGE)
-    close
-    exit
    end
   
    def do_copy_dvd_to_hard_drive
@@ -71,9 +65,9 @@ module SensibleSwing
       
       fc = JFileChooser.new 
       # LODO allow for spaces in save to file
-      fc.set_dialog_title "Pick a location to save file to"
+      fc.set_dialog_title "Pick where to save the file to"
       save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-      fc.setSelectedFile(JFile.new(get_drive_with_most_space + save_to_file_name)) 
+      fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
       save_to = fc.go
       # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
@@ -81,20 +75,32 @@ module SensibleSwing
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
-      p 'running', temp_file
-      # TODO change title to "running" or something, while it runs...
-      showMessageDialog
-      if !ARGV.find{|a| a == '--test'} && system(temp_file)
-        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
-        command = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
-        system command
+      # allow our popups to still be serviced while it is running
+      Thread.new {
+        run_copy_commands temp_file, save_to
+      }
+      # TODO warn if they don't have VLC installed...
+      # LODO warn if they will overwrite a file 
+   end
+  
+   def run_copy_commands temp_file, save_to
+      popup = ModeLessDialog.new("Running the encoding in the background...\n" +
+        "This could take quite awhile, and will prompt you when it is done.\n" +
+        "It may also cause small popup ballon dialogs to appear.")
+      p 'running', temp_file, 'to ' + save_to + '.ps'
+      @exit.set_enabled false
+      success = system(temp_file) unless ARGV.find{|a| a == '--test'} 
+      @exit.set_enabled true
+      popup.dispose
+      if success
+        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
+        show_file = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
+        system show_file
         File.delete temp_file
         self.close
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
-      # TODO warn if they don't have VLC installed...
-      # LODO warn if they will overwrite a file 
    end
   
    def choose_dvd_drive
@@ -117,7 +123,7 @@ module SensibleSwing
     end
    end
   
-  def get_drive_with_most_space
+  def get_drive_with_most_space_with_slash
     disks = WMI::Win32_LogicalDisk.find(:all)
     out = disks.sort_by{|d| d.FreeSpace.to_i}[-1].Name + "\\"
     out

@@ -111,7 +111,7 @@ class VLCProgrammer
       <location>#{loc}</location>
       </track>"
     else
-      "call vlc -I dummy #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
+      "call vlc --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
       #"call vlc #{@filename}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end

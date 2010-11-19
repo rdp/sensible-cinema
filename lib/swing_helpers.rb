@@ -2,7 +2,7 @@ require 'java'
 module SensibleSwing 
  include_package 'javax.swing'
  [JButton, JFrame, JLabel, JPanel, JOptionPane,
-   JFileChooser, JComboBox, JDialog] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
+   JFileChooser, JComboBox, JDialog, SwingUtilities] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
  include_package 'java.awt'
  [FlowLayout, Font]
  include_class 'java.awt.event.ActionListener'
@@ -43,27 +43,26 @@ module SensibleSwing
   end
   #showMessageDialog JOptionPane
   class ModeLessDialog < JDialog
-    attr_accessor :close_button
-    def initialize title_and_display_text
-      super
-      set_title title_and_display_text
-      jlabel = JLabel.new title_and_display_text
-      jlabel.set_bounds(10, 10,136,14)
-      add jlabel
-    
-      close = JButton.new( "Close" ).on_clicked {
+    def initialize title_and_display_text, close_button_text= 'Close'
+      super nil
+      set_title title_and_display_text.split("\n")[0]
+      get_content_pane.set_layout nil
+      title_and_display_text.split("\n").each_with_index{|line, idx|
+        jlabel = JLabel.new line
+        jlabel.set_bounds(10, 15*idx, 400, 24)
+        get_content_pane.add jlabel
+      }
+      close = JButton.new( close_button_text ).on_clicked {
         self.dispose
       }
-      close.set_bounds(50,50,50,75)
-      add close
-      set_size 150,100
-      @close_button = close
-
-      #textdialog.getContentPane().add(child);
+      close.set_bounds(125,50,70,25)
+      get_content_pane.add close
+      set_size 400,125   
+      set_visible true
+      setDefaultCloseOperation JFrame::DISPOSE_ON_CLOSE
+      setLocationRelativeTo nil # center it on the screen
     end
   end
-  
-  
 end
 
 # code examples
