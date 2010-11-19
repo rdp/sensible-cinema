@@ -43,7 +43,8 @@ module SensibleSwing
       fc.set_dialog_title "Pick a location to save it to (like 'my_dvd')"
       fc.setCurrentDirectory(JFile.new(get_drive_with_most_space))
       save_to = fc.execute
-      p [drive, descriptor, save_to]
+      # TODO don't pop up those annoying windows
+      # TODO add vlc.exe to the path
       descriptors = YAML.load_file descriptor
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive)
@@ -103,7 +104,6 @@ module SensibleSwing
   def get_drive_with_most_space
     disks = WMI::Win32_LogicalDisk.find(:all)
     out = disks.sort_by{|d| d.FreeSpace}[-1].Name + "\\"
-    p 'returning disk', out
     out
   end
     

@@ -1,5 +1,8 @@
 require_relative 'overlayer'
-ENV['PATH'] += ";c:\program files\videolan\vlc"
+
+# add some common locations for vlc.exe to the path...
+ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
+
 class VLCProgrammer
 
   def self.to_english s

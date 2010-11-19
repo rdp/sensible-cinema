@@ -95,7 +95,11 @@ describe 'VLC Programmer' do
     File.write('mute5-10.bat', bat_file)
     puts 'run it like $ mute5-10.bat'
   end
-
+  
+  it "should modify path to have VLC available" do
+    ENV['PATH'].should include("VideoLAN")
+  end
+  
   it "should produce a workable non VLC playable file"
   
 end
