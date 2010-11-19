@@ -6,6 +6,7 @@ require 'sane'
 require_relative 'swing_helpers'
 load File.dirname(__FILE__) +  '/sensible-cinema-cli'
 require 'tmpdir'
+require 'ruby-wmi'
 
 module SensibleSwing
  class MainWindow < JFrame
@@ -31,28 +32,17 @@ module SensibleSwing
     
      c=JButton.new( "Save local copy of an edited DVD" )
      c.on_clicked {
+      drive = get_disk_name
       fc = JFileChooser.new 
-      fc.set_dialog_title "Please pick a directory within your DVD drive, like AUDIO_TS"
-       
-      fc.setCurrentDirectory(JFile.new("d:\\")) # it has a sensible default if you don't do this
-      fc.setFileSelectionMode(JFileChooser::DIRECTORIES_ONLY)
-
-      success = fc.show_open_dialog(nil)
-      exit_and_close unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
-      drive = fc.get_selected_file.get_absolute_path[0..2]
       fc.setFileSelectionMode(nil)
       fc.set_dialog_title "Please pick a DVD descriptor file"
       fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
-      success = fc.show_open_dialog nil
-      exit_and_close unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
-      descriptor = fc.get_selected_file.get_absolute_path
+      descriptor = fc.execute
       fc = JFileChooser.new 
+      # TODO allow for spaces in save to file
       fc.set_dialog_title "Pick a location to save it to (like 'my_dvd')"
-      # TODO allow for spaces
       fc.setCurrentDirectory(JFile.new("c:\\"))
-      success = fc.show_save_dialog nil
-      exit_and_close unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
-      save_to = fc.get_selected_file.get_absolute_path
+      save_to = fc.execute
       p [drive, descriptor, save_to]
       descriptors = YAML.load_file descriptor
       bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive)
@@ -60,8 +50,8 @@ module SensibleSwing
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
-      system(temp_file)
-      JOptionPane.showMessageDialog(nil, "Done!", " Done--you may now watch file #{save_to}.ps in VLC player", JOptionPane::ERROR_MESSAGE)
+      p 'got', system(temp_file)
+      JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
       self.close
      }
      c.set_bounds(44,180,200,23)
@@ -73,7 +63,23 @@ module SensibleSwing
     close
     exit
    end
+  
+   def get_disk_name
+    disks = WMI::Win32_LogicalDisk.find(:all)
+
+    opticals = disks.select{|d| d.Description =~ /CD-ROM/}
+
+    opticals.map!{|d| [d.Name + "\\", d.VolumeName]}
+    p opticals
+    return opticals[0][0]
+   end
+
+  
  end
+
+
+ 
+
 end
 
 SensibleSwing::MainWindow.new.set_visible true
