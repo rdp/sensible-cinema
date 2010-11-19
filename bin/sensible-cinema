@@ -30,9 +30,9 @@ module SensibleSwing
      b.set_bounds(44,120,200,23)
      panel.add b
     
-     c=JButton.new( "Save local copy of an edited DVD" )
+     c=JButton.new( "Copy edited DVD to Hard Drive" )
      c.on_clicked {
-      drive = choose_disk_name
+      drive = choose_dvd_drive
       fc = JFileChooser.new 
       fc.setFileSelectionMode(nil)
       fc.set_dialog_title "Please pick a DVD descriptor file"
@@ -41,7 +41,7 @@ module SensibleSwing
       fc = JFileChooser.new 
       # TODO allow for spaces in save to file
       fc.set_dialog_title "Pick a location to save it to (like 'my_dvd')"
-      fc.setCurrentDirectory(JFile.new("c:\\"))
+      fc.setCurrentDirectory(JFile.new(get_drive_with_most_space))
       save_to = fc.execute
       p [drive, descriptor, save_to]
       descriptors = YAML.load_file descriptor
@@ -50,14 +50,15 @@ module SensibleSwing
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
-      if false #system(temp_file)
+      if system(temp_file)
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
         system("explorer /e,/select,\"#{File.expand_path save_to}\"")
+        self.close
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
-      end
-      self.close
+      end      
      }
+    
      c.set_bounds(44,180,200,23)
      panel.add c
     
@@ -76,10 +77,9 @@ module SensibleSwing
     exit
    end
   
-   def choose_disk_name
-    disks = WMI::Win32_LogicalDisk.find(:all)
-    opticals = disks.select{|d| d.Description =~ /CD-ROM/} # hope this works...
-
+   
+   def choose_dvd_drive
+    opticals = get_dvd_drives
     opticals.map!{|d| d.Name + "\\" + " (" +  d.VolumeName + ")"}
     
     if opticals.length != 1
@@ -92,6 +92,20 @@ module SensibleSwing
     return selected[0..2]
    end
   
+  def get_drive_with_most_space
+    disks = WMI::Win32_LogicalDisk.find(:all)
+    out = disks.sort_by{|d| d.FreeSpace}[-1].Name + "\\"
+    p 'returning disk', out
+    out
+  end
+    
+    
+  private
+  def get_dvd_drives
+    disks = WMI::Win32_LogicalDisk.find(:all)
+    disks.select{|d| d.Description =~ /CD-ROM/} # hope this works...
+  end
+
  end
 
  class GetDisk < JDialog
@@ -115,6 +129,7 @@ module SensibleSwing
      add box
      pack
     end
+   
  end
  
 end

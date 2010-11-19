@@ -19,7 +19,7 @@ class VLCProgrammer
 
     combined.each{|s, e, t|
       puts 'warning--detected an end before a start' if e < s
-}
+    }
 
     # a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
     # should mute 5-6, skip 6-7
