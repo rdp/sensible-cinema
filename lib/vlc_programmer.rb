@@ -119,7 +119,7 @@ class VLCProgrammer
     files = (1..idx).map{|n| "#{@filename}.ps.#{n}"}
     # concat
     line = 'type ' + files.join(' ')
-    line += " > #{@filename}.all.ps\n"
+    line += " > #{@filename}.ps\n"
     
     line += "rm " + files.join(' ') + "\n"
     line += "echo Done--you may now watch file #{@filename}.ps in VLC player"
