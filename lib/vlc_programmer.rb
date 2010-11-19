@@ -125,7 +125,6 @@ class VLCProgrammer
    end
     
   end
-  
 
 end
 

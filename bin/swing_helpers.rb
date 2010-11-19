@@ -1,10 +1,12 @@
 require 'java'
 module SensibleSwing 
  include_package 'javax.swing'
- [JButton, JFrame, JLabel, JPanel, JOptionPane] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
+ [JButton, JFrame, JLabel, JPanel, JOptionPane,
+   JFileChooser] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
  include_package 'java.awt'
  [FlowLayout, Font]
  include_class 'java.awt.event.ActionListener'
+ JFile = java.io.File
  
  class ClickAction
   
@@ -41,3 +43,6 @@ module SensibleSwing
   end
 
 end
+
+
+# JOptionPane.showInputDialog(nil, "not implemented yet", "not implemented yet", JOptionPane::ERROR_MESSAGE)
