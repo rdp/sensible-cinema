@@ -48,12 +48,13 @@ module SensibleSwing
       save_to = fc.go
       # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
-      bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive)
+      bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/' + 'convert_it.bat'
       File.write(temp_file, bat_file)
       p 'running', temp_file
       # TODO change title to "running" or something, while it runs...
+      #JDialog.new(self, "hello there")
       if !ARGV.find{|a| a == '--test'} && system(temp_file)
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::ERROR_MESSAGE)
         command = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
@@ -120,6 +121,7 @@ module SensibleSwing
   end
 
  end
+
 
  class GetDisk < JDialog
    attr_reader :selected
