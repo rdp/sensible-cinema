@@ -7,7 +7,8 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
 
-  def self.convert_to_full_xspf incoming, filename = nil
+  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil
+    @drive = drive_with_slash || "e:\\"
     @filename = filename
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
@@ -93,7 +94,7 @@ class VLCProgrammer
   end
   
   def self.get_section title, start, stop, idx, no_audio = false
-    loc = "dvd://e:\@1"
+    loc = "dvd://#{@drive}@1"
     if !@filename
       "<track>
       <title>#{title}</title>
@@ -106,7 +107,7 @@ class VLCProgrammer
       <location>#{loc}</location>
       </track>"
     else
-      "call vlc -I dummy #{loc} --start-time=#{start} --stop-time=#{stop} --sout=file/ps:#{@filename}.ps.#{idx} #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
+      "call vlc -I dummy #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
       #"call vlc #{@filename}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end
@@ -121,7 +122,7 @@ class VLCProgrammer
     line += " > #{@filename}.all.ps\n"
     
     line += "rm " + files.join(' ') + "\n"
-    line += "echo Done--you may now watch file #{@filename}.all.ps in VLC player"
+    line += "echo Done--you may now watch file #{@filename}.ps in VLC player"
    end
     
   end

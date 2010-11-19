@@ -1,6 +1,5 @@
 #!/usr/bin/ruby
 
-puts 'Welcome to Sensible Cinema...'
 require 'rubygems'
 require 'sane'
 
@@ -103,5 +102,6 @@ def go_sc(args=ARGV)
 end
 
 if __FILE__ == $0
+ puts 'Welcome to Sensible Cinema...'
  go_sc
 end
