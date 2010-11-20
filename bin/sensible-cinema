@@ -51,6 +51,7 @@ module SensibleSwing
      }
      reload.set_bounds(44,280,200,23)
      panel.add reload if ARGV.find{|a| a == '--test'}
+     @buttons = [b,c,@exit]
     
    end
   
@@ -88,9 +89,9 @@ module SensibleSwing
         "This could take quite awhile, and will prompt you when it is done.\n" +
         "It may also cause small popup ballon dialogs to appear.")
       p 'running', temp_file, 'to ' + save_to + '.ps'
-      @exit.set_enabled false
+      @buttons.each{|b| b.set_enabled false}
       success = system(temp_file) unless ARGV.find{|a| a == '--test'} 
-      @exit.set_enabled true
+      @buttons.each{|b| b.set_enabled true}
       popup.dispose
       if success
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)

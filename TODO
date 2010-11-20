@@ -10,11 +10,10 @@
   byu.tv descriptor
   back off on mouse jerking if they're movin' it
   speed up unit tests
-  a netflix player descriptor
-  popup: "processing in annoying popup windows--this could take a very long time"
 
 == slightly lower than that ==
 
+  a netflix player descriptor
   "just choose VLCx55" LOL
     beep at them when not tracking [?]
       default on...hmm
@@ -26,18 +25,21 @@
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
-better icons for modals (
-
-another descriptor for a commercial player...
+another descriptor for a close source app player...
 
 when saving to hard drive, you can "insert" streams where desired
 
-can "overplay" (for VLC only on special computers for now :P)
+can "watch as it is streamed"
+
+add a progress bar for encoding
 
 can save stuff "for review later" as they watch it, like hulu
 
 a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
   leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
+
+can "overlay-audio/video"
+
 
 GUI:
  preferences for levels, etc.
