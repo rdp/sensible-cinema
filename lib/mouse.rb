@@ -61,15 +61,17 @@ module Mouse
             Mouse.SendInput(1, myinput, Mouse::Input.size)
             old_x = get_mouse.x
             old_y = get_mouse.y            
+            sleep 0.75
           else
             old_x = get_mouse.x
             old_y = get_mouse.y
+            sleep 3
           end
-          sleep 0.75
         }
       }
       
     end
+
     def get_mouse
       MouseInfo.getPointerInfo.getLocation
     end

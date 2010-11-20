@@ -24,7 +24,7 @@ describe Mouse do
     }
     rescue Timeout::Error
     end
-    Mouse.total_movements.should == old
+    Mouse.total_movements.should == old + 1
   
   end
   

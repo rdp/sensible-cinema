@@ -1,8 +1,7 @@
 == medium ==
 
-  amazon player
 
-== probably next up/low prio ==
+== probably next up+low prio ==
 
   better timing for the saver-er...
     match better
@@ -10,8 +9,9 @@
   byu.tv descriptor
   speed up unit tests
 
-== slightly lower than that ==
+== slightly lower than that even ==
 
+  amazon player
   a netflix player descriptor
   "just choose VLCx55" LOL
     beep at them when not tracking [?]
@@ -19,7 +19,7 @@
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
   screencast of things helpful (use, creation...).
-  youtube non full screen: work with other browsers
+  youtube non full screen: work with all browsers
   easier "here's how on the command line, BTW"
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
