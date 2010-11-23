@@ -1,0 +1,19 @@
+== 0.14.0 ==
+
+Now it offers you a button to either play it on your computer, using VLC, or rip it to a file
+(possibly write that to some other media, then play it say on your DVD player), or play it using screen tracking.
+
+== From various previous releases ==
+It now provides for screen tracking of DVD's, youtube, hulu, and anything else you want to play on VLC, and has
+automatic detection of CD-Drives for ripping/playing back.  It can handle full screen or windows playback.
+It can rip from user specified "title tracks" now.  It has a nice GUI.  The GUI can tell you which DVD is in which 
+drive so you know more easily which one to choose.
+
+When screen tracking, it employs a "mouse moving" (feedback to computer) in order to keep the screen timestamp visible.
+It allows for both "instant playback" watching a DVD, as well as "ripping a stream to a single file on your computer" in order to view
+it from there (which is arguably easier to view).  The single file can be put on a flash drive and played
+via some console or other player, or can be copied to a disc and played in a DVD/blu-ray player.
+
+When screen tracking, it uses input to the system (simulated keystrokes) to simulate a user "mute"
+It overlays the playing screen (movie) with a separate window in order to simulate a "blank out" or 
+"skip this scene" which can be used with or without the mutes, as well.
