@@ -11,16 +11,18 @@
 
 == slightly lower than that even ==
 
+auto-select EDL
 
 == slightly lower than that ==
 
-  auto-select EDL
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
+    IMDB easy mapping
   screencast of things helpful (use, creation...).
   unit test the GUI
   can have collaborators re-selling EL's
-    good license like "public domain" or what not :P
+    good license for their stuff like "public domain" or what not :P
+    80/20
   can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
   a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
     leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
@@ -33,13 +35,10 @@
   split the two projects cleanly (project, distribution)
   partner (Jon, Karlie if interested...give beta)
   survey/beta release
-  IMDB mapping
-  a clean list (?)
-  80/20
-
+  a certified clean list (?)
 == DVD backlog ==
 
-some way to choose between x,y,z
+some way to choose between x,y,z when auto-select sees several
 careful phrasing "if you can't afford it..."
 authorize instead of paypal?
 honest about DMCA (we don't distribute the cracker, we don't redistribute, don't perform any acts, etc.)
@@ -59,6 +58,7 @@ auto-assignment of EDL's to media:
     use spiffy differentiation for DVD's on windows
   DVD's (right click on DVD player, play with SC?)
 a real website (github-y?)
+instructions on how to do their own (private) or do one and submit it (public), or email their friends :P
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 

@@ -157,10 +157,10 @@ The concept isn't too novel.  Some examples:
 
 Clean Flicks
 http://en.wikipedia.org/wiki/Linear_video_editing
-http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth"  http://www.imdb.com/title/tt0047673/parentalguide) which you could use to translate into a sensible-cinema compatible list.
+http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
 Edited "on airplane" style movies.
-http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all)
-http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html mplayer has had this ability for awhile.
+http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
+http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile).
 http://clearplay.com commercial (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com/ "scene cut editor" of the zoom player
@@ -168,6 +168,8 @@ http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (X
 http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and scene lists)
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
+The remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
+The scissors and old VHS tapes (Clean Flicks' origin, BTW).
 
 == Feedback ==
 
