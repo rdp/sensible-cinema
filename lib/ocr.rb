@@ -4,7 +4,7 @@ ENV['PATH'] = im_path + ';' + ENV['PATH']
 # helper for OCR'ing single digits that were screen captured
 module OCR
   
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr048.exe -C 0-9:/ ")
+  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr049.exe -C 0-9:/ ")
   
   CACHE = {}
   
