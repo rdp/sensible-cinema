@@ -241,16 +241,17 @@ describe ScreenTracker do
         elsif time_through == 2
           {:minute_tens=>black}
         else
+          # just return the same thing
           times_read += 1
           {:minute_tens=>four,:second_tens => four, :second_ones => four, :minute_ones => four,
           :hours => four}
         end
       end
 
-      # these assert the same thing
-      @a.attempt_to_get_time_from_screen(Time.now)[0].should == "4:44:44"
+      got = @a.attempt_to_get_time_from_screen(Time.now)
+      time_through.should == 4
       times_read.should == 2
-
+      got[0].should == "4:44:44"
     end
 
     context "with an OCR that can change from hour to minutes during ads" do
@@ -277,6 +278,7 @@ describe ScreenTracker do
     Process.kill 9, $pid1 # MRI...sigh.
     FileUtils.rm_rf Dir['*.bmp']
     $pid1 = nil
+    sleep 1
   end
 
   after(:all) do

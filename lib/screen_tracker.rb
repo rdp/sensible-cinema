@@ -39,7 +39,7 @@ class ScreenTracker
       raise 'poor height or wrong window' 
     end
     @digits = digits
-    @displayed_warning = false
+    @previously_displayed_warning = false
     @dump_digit_count = 1
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
   end
@@ -82,18 +82,20 @@ class ScreenTracker
   def dump_bmp filename = 'dump.bmp'
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
-    dump_digits get_digits_as_bitmaps if @digits
+    dump_digits(get_digits_as_bitmaps, 'dump_bmp') if @digits
   end
   
-  def dump_digits digits
-      for type, bitmap in get_digits_as_bitmaps
-        File.binwrite type.to_s + '.' + @dump_digit_count.to_s + '.bmp', bitmap
-      end
-      print 'debug dumped digits that Im about to parse:', @dump_digit_count, "\n"
-      @dump_digit_count += 1
+  def dump_digits digits, message
+    p "#{message} dumping digits to dump no: #{@dump_digit_count} #{Time.now.to_f}"
+    for type, bitmap in digits
+      File.binwrite type.to_s + '.' + @dump_digit_count.to_s + '.bmp', bitmap    
+    end
+    File.binwrite @dump_digit_count.to_s + '.mrsh', Marshal.dump(digits)
+    @dump_digit_count += 1
   end
   
   DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
+  
   # returns like {:hours => nil, :minutes_tens => raw_bmp, ...
   def get_digits_as_bitmaps
     # @digits are like {:hours => [100,5], :minute_tens => [x, width], :minute_ones, :second_tens, :second_ones}
@@ -115,7 +117,6 @@ class ScreenTracker
     [@x,@y,@x2,@y2]
   end
   
-  # split out for unit testing purposes
   def identify_digit bitmap
     OCR.identify_digit(bitmap, @digits)
   end
@@ -132,66 +133,76 @@ class ScreenTracker
       if current != original
         if @digits
           got = attempt_to_get_time_from_screen time_before_scan
-          if @displayed_warning && got
+          if @previously_displayed_warning && got
             # reassure user :)
             p 'tracking it successfully again' 
-            @displayed_warning = false
+            @previously_displayed_warning = false
           end
           return got
         else
-          puts 'screen time change only detected... [unexpected]'
+          puts 'screen time change only detected... [unexpected]' # unit tests do this still
           return
         end
       else
         # no screen change detected ...
         sleep 0.02
-        if(Time.now - time_since_last_screen_change > 2)
+        if(Time.now - time_since_last_screen_change > 2.0)
           # display a warning
-          p 'warning--unable to track screen time for some reason'
-          @displayed_warning = true
-          time_since_last_screen_change = Time.now        
-          # also reget window hwnd, just in case that's the problem...(can be with VLC)
+          p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?]'
+          @previously_displayed_warning = true
+          time_since_last_screen_change = Time.now
+          # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
           get_hwnd
         end
       end
     }
   end
   
-  def attempt_to_get_time_from_screen start
+  def attempt_to_get_time_from_screen start_time
     out = {}
+    start = get_digits_as_bitmaps
+    dump_digits(start, 'started_as')
     # force it to have two matching snapshots in a row, to avoid race conditions grabbing the digits...
-    previous = nil # 0.08s [!] not too accurate...ltodo
-    until previous == (temp = get_digits_as_bitmaps)
-      previous = temp
-      sleep 0.05 # allow youtube to update (sigh) lodo just for utube
+    previous = nil 
+    current = start
+    until previous == (current)
+      previous = current
+      sleep 0.25 # allow youtube to update (sigh) lodo just for utube
+      current = get_digits_as_bitmaps
+      p previous == current
+      dump_digits(current, 'current is')
       # lodo it should probably poll *before* calling this, not here...maybe?
     end
-    assert previous == temp
-    digits = temp
+    assert previous == current
+    digits = current = previous
     
-    dump_digits(digits) if $DEBUG            
+    if $DEBUG         
+      dump_digits(digits, 'using digits')
+    end
     DIGIT_TYPES.each{|type|
       if digits[type]
         digit = identify_digit(digits[type])
         unless digit
-          if $DEBUG || $VERBOSE
+          bitmap = digits[type]
+          # unable to identify a digit?
+          if $DEBUG || $VERBOSE && (type != :hours)
             @a ||= 1
             @a += 1
             @already_wrote ||= {}
-            unless @already_wrote[digits[type]]
-              p 'unable to identify capture!' + type.to_s + @a.to_s + ' capture no:' + @dump_digit_count.to_s
-              File.binwrite("bad_digit#{@a}#{type}.bmp", digits[type]) unless type == :hours
-              @already_wrote[digits[type]] = true
+            unless @already_wrote[bitmap]
+              p 'unable to identify capture!' + type.to_s + @a.to_s + ' dump:' + @dump_digit_count.to_s
+              File.binwrite("bad_digit#{@a}#{type}.bmp", bitmap)
+              @already_wrote[bitmap] = true
             end
           end
           if type == :hours
             digit = 0 # this one can fail and that's ok in VLC bottom right
           else
-            # early failure return
-            return
+            # early (failure) return
+            return nil
           end
         else
-          p " got digit #{type} as #{digit} which was captured as #{@dump_digit_count} " if $DEBUG
+          p " got digit #{type} OCR as #{digit} which was captured to dump #{@dump_digit_count - 1} #{Time.now_f}" if $DEBUG
         end
         out[type] = digit
       else
@@ -200,8 +211,8 @@ class ScreenTracker
       end
     }
     out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{ |type| out[type] }
-    puts '', 'got new screen time ' + out + " tracking delta:" + (Time.now - start).to_s if $VERBOSE
-    return out, Time.now-start
+    puts '', 'got new screen time ' + out + " tracking delta:" + (Time.now - start_time).to_s if $VERBOSE
+    return out, Time.now-start_time
   end
   
   def process_forever_in_thread

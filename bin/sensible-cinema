@@ -25,8 +25,9 @@ module SensibleSwing
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
      b = JButton.new( "Play Hulu, Youtube, or a DVD (Tracking)" ).on_clicked {
+      Thread.new { go_sc } # needs to be in its own thread becuase it blocks,
+      # so "this thread" is the uni-swing thread, gets blocked, and the overlayer can't repaint
       self.close
-      go_sc
      }
      button_width = 230
      b.set_bounds(44,120,button_width,23)

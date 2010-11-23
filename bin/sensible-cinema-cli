@@ -10,10 +10,10 @@ for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_cho
 end
 
 
-def go_sc(args=ARGV)
+def go_sc(args)
   
   $VERBOSE = 1 if args.delete('-v')
-  $TEST = 1 if args.delete('-t')  
+  $DEBUG = 1 if args.delete('-d')
   if args.delete('--clear-cache')
     OCR.clear_cache! 
     puts 'cleared cache'
@@ -96,12 +96,13 @@ def go_sc(args=ARGV)
       Blanker.shutdown # lodo move this and the 'q' key to within overlayer
       OCR.serialize_cache_to_disk
     }
-    key_input.handle_keystrokes_forever # when this method exits, we want to exit fully...
+    puts 'syntax from command line: ' + player_description + ' ' + scene_list
+    key_input.handle_keystrokes_forever # blocking...
     
   end
 end
 
 if __FILE__ == $0
  puts 'Welcome to Sensible Cinema...'
- go_sc
+ go_sc ARGV
 end

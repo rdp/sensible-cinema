@@ -26,7 +26,7 @@ module OCR
         return ":"
       end
     end
-    image = MiniMagick::Image.from_blob(memory_bitmap)
+    image = MiniMagick::Image.read(memory_bitmap)
     # any operation on image is expensive, requires convert.exe in path...
     if options[:should_invert] 
       # hulu wants negate
@@ -74,8 +74,7 @@ module OCR
   def unserialize_cache_from_disk  
     if File.exist? CACHE_FILE
       CACHE.merge!(Marshal.load(File.binread(CACHE_FILE)))
-    end
-    
+    end    
   end
   
   extend self

@@ -133,7 +133,7 @@ describe OverLayer do
   end
 
   it 'should have key list output on screen' do
-    @o.status.should include("q to quit")
+    @o.status.should include("ctrl+c to quit")
   end
 
   it 'should allow for yaml input and parse it appropo' do
