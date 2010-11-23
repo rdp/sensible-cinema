@@ -19,7 +19,7 @@ describe OCR do
       
       # 130 for vlc, 100 for hulu, 0 for some youtube full screen
       # 200, 250 for youtube "light" (windowed after awhile)
-      degrees = {'vlc' => [130], 'hulu' => [100], 'youtube' => [0], 'youtube_light' => [200, 250]}
+      degrees = {'vlc' => [130], 'hulu' => [100], 'youtube' => [0], 'youtube_light' => [250, 200]} # youtube_light must be in just that order...
       file =~ /(vlc|hulu|youtube_light|youtube)/
       options[:levels] = degrees[$1]
       assert options[:levels]
@@ -29,8 +29,9 @@ describe OCR do
       if got_digit != expected_digit
         p "fail:" + file
         begin
-          #require 'ruby-debug'
-          #debugger
+          require 'ruby-debug'
+          OCR::CACHE.clear
+          debugger # step into the next call...
           OCR.identify_digit(File.binread(file), options)
         rescue LoadError
           puts 'unable to load ruby-debug'
