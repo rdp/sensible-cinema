@@ -11,15 +11,15 @@ describe OCR do
   end
   
   Dir['images/*[0-9].bmp'].sort_by{|f| File.stat(f).mtime}.reverse.each{ |file|
-    it "should be able to OCR #{file}" do
-      p file if $DEBUG
+    it "should be able to OCR #{file}" do      
       options = {}
       options[:should_invert] = true if file =~ /hulu/
-      options[:sharpen] = true if file =~ /youtube/
+      options[:sharpen] = true if file =~ /youtube/ && file !~ /light/
       
       # 130 for vlc, 100 for hulu, 0 for some youtube full screen
       # 200, 250 for youtube "light" (windowed after awhile)
-      degrees = {'vlc' => [130], 'hulu' => [100], 'youtube' => [0], 'youtube_light' => [250, 200]} # youtube_light must be in just that order...
+      degrees = {'vlc' => [130], 'hulu' => [100], 'youtube_light' => [250,200], 'youtube' => [0]} 
+      # youtube_light must be in just that order...
       file =~ /(vlc|hulu|youtube_light|youtube)/
       options[:levels] = degrees[$1]
       assert options[:levels]
@@ -27,14 +27,13 @@ describe OCR do
       expected_digit = $1.to_i
       got_digit = OCR.identify_digit(File.binread(file), options)
       if got_digit != expected_digit
-        p "fail:" + file
         begin
-          require 'ruby-debug'
           OCR::CACHE.clear
-          debugger # step into the next call...
+          require 'ruby-debug'
+          debugger # now step into the next call...
           OCR.identify_digit(File.binread(file), options)
         rescue LoadError
-          puts 'unable to load ruby-debug'
+          puts 'unable to load ruby-debug...' # until I can get 1.9.2 to compile it...
         end
         got_digit.should == expected_digit
       end

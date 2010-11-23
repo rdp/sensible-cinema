@@ -17,3 +17,4 @@ digits:
       - 9 
       :levels:
       - 0
+      :sharpen: true

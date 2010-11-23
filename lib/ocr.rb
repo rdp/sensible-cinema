@@ -1,3 +1,4 @@
+vendor_path = 
 im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/imagemagick") # convert.exe wants to only be chosen from here...
 ENV['PATH'] = im_path + ';' + ENV['PATH']
 
@@ -36,6 +37,7 @@ module OCR
     end
 
     image.format(:pnm)
+    # I think it's VLC full screen that wants sharpening...
     image.sharpen(2) if options[:sharpen] # hulu does *not* want sharpen, though I haven't checked it too closely...
 
     previous = nil
