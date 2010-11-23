@@ -12,7 +12,7 @@ class VLCProgrammer
 
   def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil
     @drive = drive_with_slash || "e:\\"
-    @filename = filename
+    @filename_or_playlist_if_nil = filename
     @dvd_title_track = dvd_title_track || "1"
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
@@ -86,7 +86,7 @@ class VLCProgrammer
   end
   
   def self.get_header
-    if !@filename
+    if @filename_or_playlist_if_nil == nil
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
       <playlist version=\"1\" xmlns=\"http://xspf.org/ns/0/\" xmlns:vlc=\"http://www.videolan.org/vlc/playlist/ns/0/\">
       <title>Playlist</title>
@@ -99,7 +99,7 @@ class VLCProgrammer
   
   def self.get_section title, start, stop, idx, no_audio = false
     loc = "dvd://#{@drive}@#{@dvd_title_track}"
-    if !@filename
+    if @filename_or_playlist_if_nil == nil
       "<track>
       <title>#{title}</title>
       <extension application=\"http://www.videolan.org/vlc/playlist/0\">
@@ -111,22 +111,22 @@ class VLCProgrammer
       <location>#{loc}</location>
       </track>"
     else
-      "call vlc --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
-      #"call vlc #{@filename}.ps.#{idx}.tmp  --sout=file/ps:go.ps
+      "call vlc --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename_or_playlist_if_nil}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
+      #"call vlc #{@filename_or_playlist_if_nil}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end
   
   def self.get_footer idx
-   if !@filename
+   if @filename_or_playlist_if_nil == nil
     "</trackList></playlist>"
    else
-    files = (1..idx).map{|n| "#{@filename}.ps.#{n}"}
+    filename = @filename_or_playlist_if_nil
+    files = (1..idx).map{|n| "#{filename}.ps.#{n}"}
     # concat
     line = 'type ' + files.join(' ')
-    line += " > #{@filename}.ps\n"
-    
+    line += " > #{@filename_or_playlist_if_nil}.ps\n"    
     line += "rm " + files.join(' ') + "\n"
-    line += "echo Done--you may now watch file #{@filename}.ps in VLC player"
+    line += "echo Done--you may now watch file #{filename}.ps in VLC player"
    end
     
   end

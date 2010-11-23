@@ -19,7 +19,7 @@ def go_sc(args=ARGV)
     puts 'cleared cache'
   end
   
-  $stderr.puts 'warning: currently windows only for certain parts currently' unless  ENV['OS'] == 'Windows_NT'
+  $stderr.puts 'warning: currently windows only for certain parts currently' unless ENV['OS'] == 'Windows_NT'
   
   if args.detect{|arg| arg == '-h' || arg == '--help'}
   

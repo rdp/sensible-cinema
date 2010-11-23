@@ -24,25 +24,33 @@ module SensibleSwing
      jlabel.setFont(happy)
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
-     b = JButton.new( "Play Hulu, Youtube, or a DVD" ).on_clicked {
+     b = JButton.new( "Play Hulu, Youtube, or a DVD (Tracking)" ).on_clicked {
       self.close
       go_sc
      }
-     b.set_bounds(44,120,200,23)
+     button_width = 230
+     b.set_bounds(44,120,button_width,23)
      panel.add b
     
      c=JButton.new( "Copy edited DVD to Hard Drive" )
      c.on_clicked {
-       do_copy_dvd_to_hard_drive
+       do_copy_dvd_to_hard_drive true
+     }
+     c.set_bounds(44,220,button_width,23)
+     panel.add c    
+    
+     d=JButton.new( "Play edited DVD with VLC" )
+     d.on_clicked {
+       do_copy_dvd_to_hard_drive false
      }
     
-     c.set_bounds(44,180,200,23)
-     panel.add c
+     d.set_bounds(44,180,button_width,23)
+     panel.add d
     
      @exit = JButton.new("Exit").on_clicked {
        self.close
      }
-     @exit.set_bounds(44,320,200,23)
+     @exit.set_bounds(44,320,button_width,23)
      panel.add @exit
     
      reload = JButton.new( "reload code" ).on_clicked {
@@ -51,37 +59,49 @@ module SensibleSwing
      }
      reload.set_bounds(44,280,200,23)
      panel.add reload if ARGV.find{|a| a == '--test'}
-     @buttons = [b,c,@exit]
+     @buttons = [b,c,d,@exit]
     
    end
   
-   def do_copy_dvd_to_hard_drive
+   def do_copy_dvd_to_hard_drive should_save_file
       drive = choose_dvd_drive
       fc = JFileChooser.new 
       fc.setFileSelectionMode(nil)
-      fc.set_dialog_title "Please pick a DVD descriptor file"
+      fc.set_dialog_title "Please pick a DVD Edit List File"
       fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
-      descriptor_path = fc.go
-      descriptors = YAML.load_file descriptor_path
+      edit_list_path = fc.go
+      descriptors = YAML.load_file edit_list_path
       
-      fc = JFileChooser.new 
-      # LODO allow for spaces in save to file
-      fc.set_dialog_title "Pick where to save the file to"
-      save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-      fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
-      save_to = fc.go
+      if should_save_file
+        fc = JFileChooser.new 
+        # LODO allow for spaces in save to file
+        fc.set_dialog_title "Pick where to save the file to"
+        save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+        fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
+        save_to = fc.go
+      else
+        save_to = nil
+      end
       # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
-      bat_file = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
+      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
       temp_dir = Dir.tmpdir
-      temp_file = temp_dir + '/' + 'convert_it.bat'
-      File.write(temp_file, bat_file)
-      # allow our popups to still be serviced while it is running
-      Thread.new {
-        run_copy_commands temp_file, save_to
-      }
-      # TODO warn if they don't have VLC installed...
-      # LODO warn if they will overwrite a file 
+      if should_save_file
+        temp_file = temp_dir + '/' + 'convert_it.bat'
+        File.write(temp_file, bat_file_or_xspf)
+        # allow our popups to still be serviced while it is running
+        Thread.new {
+          run_copy_commands temp_file, save_to
+        }
+      else
+        temp_file = temp_dir + '/' + 'vlc.xspf'
+        File.write(temp_file, bat_file_or_xspf)
+        command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
+        p 'running', command
+        system(c) # blocks the current window while running...
+      end
+      # TODO warn if they don't have VLC installed, with instructions...
+      # LODO warn if they will overwrite a file in the end
    end
   
    def run_copy_commands temp_file, save_to
@@ -95,7 +115,7 @@ module SensibleSwing
       popup.dispose
       if success
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
-        show_file = "explorer /e,/select,\"#{File.expand_path(save_to).gsub('/', '\\')}.ps\""
+        show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}.ps\""
         system show_file
         File.delete temp_file
         self.close
@@ -163,6 +183,17 @@ module SensibleSwing
    
  end
  
+end
+
+require 'os'
+class String
+ def to_filename
+   if OS.windows?
+     self.gsub('/', "\\")
+   else
+    self
+  end
+ end
 end
 
 SensibleSwing::MainWindow.new.set_visible true
