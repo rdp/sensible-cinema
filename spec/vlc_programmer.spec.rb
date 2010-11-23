@@ -5,7 +5,7 @@ require_relative '../lib/vlc_programmer'
 describe 'VLC Programmer' do
 
   it "should be able to convert" do  
-    a = YAML.load_file "../zamples/scene_lists/dvds/happy_feet_dvd.yml"
+    a = YAML.load_file "../zamples/scene_lists/dvds/happy_feet_dvd.txt"
     out = VLCProgrammer.convert_to_full_xspf(a)
     out.length.should_not == 0
     out.should include("<title>Playlist</title>")

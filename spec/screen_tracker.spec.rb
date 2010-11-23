@@ -173,7 +173,7 @@ describe ScreenTracker do
   context "using hulu" do
     it "should be able to parse all digits" do
       pending "completion"
-      a = ScreenTracker.new_from_yaml File.read("../zamples/players/hulu/total_length_over_an_hour.yml"), nil
+      a = ScreenTracker.new_from_yaml File.read("../zamples/players/hulu/total_length_over_an_hour.txt"), nil
     end
     
   end
@@ -185,7 +185,7 @@ describe ScreenTracker do
   context "using a digit capable setting" do
 
     before do
-      @a = ScreenTracker.new_from_yaml File.read("../zamples/players/vlc/windowed_total_length_under_an_hour.yml"), nil
+      @a = ScreenTracker.new_from_yaml File.read("../zamples/players/vlc/windowed_total_length_under_an_hour.txt"), nil
     end
 
     it "should use OCR against the changes appropriately" do
