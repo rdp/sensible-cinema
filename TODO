@@ -7,42 +7,49 @@
     match better
     merge better
   speed up unit tests
+  add a progress bar for encoding
 
 == slightly lower than that even ==
 
-  auto-select EDL
 
 == slightly lower than that ==
 
+  auto-select EDL
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
   screencast of things helpful (use, creation...).
   unit test the GUI
-  can have collaboration for selling EL's
+  can have collaborators re-selling EL's
+    good license like "public domain" or what not :P
   offer jerky VLC playback
   can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
-  add a progress bar for encoding
   a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
     leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
   burnable to DVD/CD multi DVD, etc.
     easily
-  easy editor for this style of edit.
-  split the two projects cleanly
-  partner
+      automagically... (call into iso blah blah blah?)
+    can lop off sections to save space (?)
+    can burn the extra sections, too?
+  easy editor for this style of edit
+  split the two projects cleanly (project, distribution)
+  partner (Jon, Karlie if interested...give beta)
   survey/beta release
   IMDB mapping
-  clean list (?)
+  a clean list (?)
   80/20
 
-== random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+== DVD backlog ==
 
 some way to choose between x,y,z
+careful phrasing "if you can't afford it..."
 authorize instead of paypal?
 honest about DMCA (we don't distribute the cracker, we don't redistribute, don't perform any acts, etc.)
-if you burn you'll be using a DMCA friendly player :P
+if you burn you'll eventually be using a DMCA compatible player :P
+long list of players...we're not alone :)
 one part is probably not against copyright
 the authors of the program might not be liable for damages.  We don't feel dishonest about it, as long as 
 we own the DVD and have it with us when we watch the edited version.
+blu-ray support somehow (real-time? rip?)
 
 prototypes of the experimental stuff.
 
@@ -54,7 +61,7 @@ auto-assignment of EDL's to media:
   DVD's (right click on DVD player, play with SC?)
 a real website (github-y?)
 
-== non DVD ==
+== random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
 byu.tv descriptor
 youtube non full screen: work with all browsers
@@ -146,8 +153,6 @@ itunes player for profanity (music)?
 make a list of "known clean" movies or what not...hmm...
 
 an "online anybody can chat while watching this movie" (or anybody can edit this wav and listen to it as overlay...) prefer the latter.
-
-blu-ray support somehow (real-time? rip?)
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
