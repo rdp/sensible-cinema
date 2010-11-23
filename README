@@ -15,13 +15,13 @@ the command line thus:
 
      C:\> jruby -S sensible-cinema
 
-It prompts you for a scene descriptions file (ex: bambi.yml), 
-and then for a player description file (ex: hulu_full_screen.yml).
+It prompts you for an EL (Edit decision List) file (ex: bambi.txt), 
+and then for a player file (ex: hulu_full_screen.txt).
 
 Sensible-cinema will now run in a console window, screen tracking the player to monitor its position,
-and react appropriately.
+and react'ing appropriately.
 
-It is presumed that you'll then minimize the console window and proceed to enjoy the movie.
+It is presumed that you'll then minimize sensible-cinema and proceed to enjoy the movie.
 
 You'll know that it's working if, when you change the time of your player (ex: dragging it to a new spot 
 in the playback), the screen output in sensible-cinema's console should change to match the new time.
@@ -44,11 +44,11 @@ choosing the hulu player.
 
 It will proceed do a few "demo" mutes and blank outs.
 
-== Programming Your Own Scene Descriptions File ==
+== Programming Your Own Edit List ==
 
 To program sensible-cinema, you create a scene description list it can use.
 
-A Program Description List (Edit Decision List--EDL) looks something like this example:
+An Edit List looks something like this example:
 
 mutes:
   "01:00:00" : "01:01:02.5" # mute from exactly one hour to one hour, one minute, two seconds and a half will be muted.
@@ -74,8 +74,8 @@ The easiest way to do this is to start sensible-cinema, then instead of choosing
 now right click below the list of files and choose "paste"
 This will create the file "example_scene_list Copy.yml"
 Right click on it, choose rename, and give it a better name.
-Now "right click -> Open" to open it in an editor (recommend installing notepad++ and using that).
-Note that you can edit this file *on the fly* while the player is editing.  It will catch 
+Now open it.
+You can make changes to this file *on the fly* while the player is still playing.  It will notice 
 changes as the file is saved and apply them.
 
 Now select it for use in sensible-cinema (even though it's still blank).
@@ -153,20 +153,21 @@ See the LICENSE file for licensing, usage terms (basically gplv3).
 
 == Related ==
 
-The concept isn't too novel:
+The concept isn't too novel.  Some examples:
 
+Clean Flicks
 http://en.wikipedia.org/wiki/Linear_video_editing
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth"  http://www.imdb.com/title/tt0047673/parentalguide) which you could use to translate into a sensible-cinema compatible list.
-Edited "for airplane" movies.
+Edited "on airplane" style movies.
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all)
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html mplayer has had this ability for awhile.
-http://clearplay.com commercial (closed source, costs money, no user contributions possible), and only for DVD's (uses its own DVD-player in its current incantation).
+http://clearplay.com commercial (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com/ "scene cut editor" of the zoom player
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
-http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions)
+http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and scene lists)
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
-http://www.mythtv.org/wiki/Creating_a_cutlist
+http://www.mythtv.org/wiki/Removing_Commercials
 
 == Feedback ==
 

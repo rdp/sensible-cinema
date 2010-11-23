@@ -20,8 +20,25 @@
   unit test the GUI
   can have collaboration for selling EL's
   offer jerky VLC playback
-
+  can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
+  add a progress bar for encoding
+  a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
+    leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
+  burnable to DVD/CD multi DVD, etc.
+    easily
+  easy editor for this style of edit.
+    
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+some type of one click installer that can setup the registry...
+auto-assignment of EDL's to media:
+  auto-play option for DVD's (auto-start?)
+    use volume label differentiation
+    use spiffy differentiation for DVD's on windows
+  DVD's (right click on DVD player, play with SC?)
+a real website (github-y?)
+
+== non DVD ==
 
 byu.tv descriptor
 youtube non full screen: work with all browsers
@@ -32,32 +49,25 @@ a netflix player descriptor
 beep at them when not tracking [?]
   default on...hmm
 
-
 note that you are watching it using only bits and pieces of the original, similar to said bill.  And the
 authors of the program might not be cupable of copyright infringement themselves, since they distribute no infringed materials.
 
 Not responsible for your actions. Don't redistribute. "You run the risk on your own"
 "should the courts someday rule..."  If DVD next to me...
 
-todo: install VLC from .msi where needed.  Pretty low prio...
+install VLC from .msi where needed.  Pretty low prio...
 
 An 'edit preferences' button et al.
 
 Just fold if s....
 
-For the monetized version: nothing but cut and paste.
+For the monetized version: nothing but cut and paste, no merging et al
 
 a descriptor for some closed source app player...
 
 when saving to hard drive, you can "insert" streams where desired (experimental version only)
 
-can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
-add a progress bar for encoding
-
 can save stuff "for review later" as they watch it,
-
-a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
-  leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
 
 can "overlay-audio/video"
 
@@ -102,9 +112,8 @@ preference for beeping at them, et al
 
 itunes video on demand
 
-blockbuster "rent" on demand, online
+blockbuster "rent" on demand player
 
-a real website (github-y?)
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
@@ -116,8 +125,6 @@ integrate with librivox' audio so you can avoid profanity in classics.  Somehow.
   You know, for static things like this, a 'pre-cutter' would sure be convenient...
   provide download of edited mp3's for people.  ahhh.
   
-some type of static 'ok grab it using x, then apply y' oh yeah.  That would rock for the DVD market, really.  Just not the online market.
-
 itunes player for profanity (music)?
 
 make a list of "known clean" movies or what not...hmm...
@@ -190,34 +197,17 @@ Have a "list of all known movies (url's)" and be able to open (IE et al) to the 
 
 does my sweet heart have any suggestions? (make it work well for laymen)
 
-some type of one click installer that can setup the registry...
-
-auto-assignment of EDL's to media:
-  auto-play option for DVD's (auto-start?)
-    use normal differentiation
-    use spiffy differentiation for DVD's on windows
-  DVD's (right click on DVD player, play with scene-skipper?)
-  web browser plugin?
+web browser plugin?
 
 Programmatically do all of the above, by driving VLC with its real API.
   VLC
     Allow it to record somehow (recordable)
-     burnable to DVD/CD ...
     use VLC's web interface? telnet?
     optimize it with best appropriate iframes (LOL)
-
-star trek: generations first profanidade...
 
 integrate with google TV/bravia...maybe...somehow...boxxee? roku?
   itunes TV? apple tv?
 
 OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does..
 
-make an index of watchable on imdb based on stars (?)
-
 --server?  optionally higher prio?
-
-http://en.wikipedia.org/wiki/RiffTrax (possible?)
-  community rifftrax?
-    realtime
-      editable
