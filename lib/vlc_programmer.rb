@@ -1,5 +1,8 @@
 require_relative 'overlayer'
 
+# add some common locations for vlc.exe to the path...
+ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
+
 class VLCProgrammer
 
   def self.to_english s
@@ -7,8 +10,10 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
 
-  def self.convert_to_full_xspf incoming, filename = nil
+  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil
+    @drive = drive_with_slash || "e:\\"
     @filename = filename
+    @dvd_title_track = dvd_title_track || "1"
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}
@@ -93,7 +98,7 @@ class VLCProgrammer
   end
   
   def self.get_section title, start, stop, idx, no_audio = false
-    loc = "dvd://e:\@1"
+    loc = "dvd://#{@drive}@#{@dvd_title_track}"
     if !@filename
       "<track>
       <title>#{title}</title>
@@ -106,7 +111,7 @@ class VLCProgrammer
       <location>#{loc}</location>
       </track>"
     else
-      "call vlc -I dummy #{loc} --start-time=#{start} --stop-time=#{stop} --sout=file/ps:#{@filename}.ps.#{idx} #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
+      "call vlc --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
       #"call vlc #{@filename}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end
@@ -118,14 +123,13 @@ class VLCProgrammer
     files = (1..idx).map{|n| "#{@filename}.ps.#{n}"}
     # concat
     line = 'type ' + files.join(' ')
-    line += " > #{@filename}.all.ps\n"
+    line += " > #{@filename}.ps\n"
     
     line += "rm " + files.join(' ') + "\n"
-    line += "echo Done--you may now watch file #{@filename}.all.ps in VLC player"
+    line += "echo Done--you may now watch file #{@filename}.ps in VLC player"
    end
     
   end
-  
 
 end
 

@@ -3,6 +3,7 @@ require 'ffi'
 
 module Mouse
   extend FFI::Library
+  MouseInfo =  java.awt.MouseInfo
 
   ffi_lib 'user32'
   ffi_convention :stdcall
@@ -29,32 +30,54 @@ module Mouse
   
   # UINT SendInput(UINT nInputs, LPINPUT pInputs, int cbSize);
   attach_function :SendInput, [ :uint, :pointer, :int ], :uint
+  class << self
+    
+    def jitter_forever_in_own_thread
+      
+      myinput = Mouse::Input.new
+      myinput[:type] = Mouse::INPUT_MOUSE
   
-  def self.jitter_forever_in_own_thread
-    
-    myinput = Mouse::Input.new
-    myinput[:type] = Mouse::INPUT_MOUSE
-
-    in_evt = myinput[:evt][:mi]
-
-    in_evt[:mouse_data] = 0
-    in_evt[:flags] = Mouse::MOUSEEVENTF_MOVE # | Mouse::MOUSEEVENTF_ABSOLUTE
-    in_evt[:time] = 0
-    in_evt[:extra] = 0
-    in_evt[:dx] = 0
-    in_evt[:dy] = 8 # just enough for VLC full screen...
-
-    Thread.new {
-      loop {
-        in_evt[:dy] *= -1
-        Mouse.SendInput(1, myinput, Mouse::Input.size)
-        in_evt[:dy] *= -1
-        sleep 0.05
-        Mouse.SendInput(1, myinput, Mouse::Input.size)
-        sleep 0.75
+      in_evt = myinput[:evt][:mi]
+  
+      in_evt[:mouse_data] = 0
+      in_evt[:flags] = Mouse::MOUSEEVENTF_MOVE # | Mouse::MOUSEEVENTF_ABSOLUTE
+      in_evt[:time] = 0
+      in_evt[:extra] = 0
+      in_evt[:dx] = 0
+      in_evt[:dy] = 8 # just enough for VLC full screen...
+  
+      old_x = get_mouse.x
+      old_y = get_mouse.y
+      Thread.new {
+        loop {
+          cur_x = get_mouse.x
+          cur_y = get_mouse.y
+          if(cur_x == old_x && cur_y == old_y)
+            @total_movements += 1
+            in_evt[:dy] *= -1
+            Mouse.SendInput(1, myinput, Mouse::Input.size)
+            in_evt[:dy] *= -1
+            sleep 0.05
+            Mouse.SendInput(1, myinput, Mouse::Input.size)
+            old_x = get_mouse.x
+            old_y = get_mouse.y            
+            sleep 0.75
+          else
+            old_x = get_mouse.x
+            old_y = get_mouse.y
+            sleep 3
+          end
+        }
       }
-    }
+      
+    end
+
+    def get_mouse
+      MouseInfo.getPointerInfo.getLocation
+    end
     
+    attr_accessor :total_movements
   end
     
 end
+Mouse.total_movements = 0
