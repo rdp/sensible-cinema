@@ -1,7 +1,7 @@
 require 'java'
 module SensibleSwing 
  include_package 'javax.swing'
- [JButton, JFrame, JLabel, JPanel, JOptionPane,
+ [JProgressBar, JButton, JFrame, JLabel, JPanel, JOptionPane,
    JFileChooser, JComboBox, JDialog, SwingUtilities] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
  include_package 'java.awt'
  [FlowLayout, Font]

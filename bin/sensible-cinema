@@ -58,8 +58,12 @@ module SensibleSwing
       eval File.read(__FILE__), nil, __FILE__
       p 're-evaled it'
      }
-     reload.set_bounds(44,280,200,23)
+     reload.set_bounds(44,300,200,23)
      panel.add reload if ARGV.find{|a| a == '--test'}
+     @p = JProgressBar.new(0, 100)
+     @p.set_value 0
+     @p.set_bounds(44,280,button_width,23)
+     panel.add @p
      @buttons = [b,c,d,@exit]
     
    end
@@ -88,37 +92,45 @@ module SensibleSwing
       bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
       temp_dir = Dir.tmpdir
       if should_save_file
-        temp_file = temp_dir + '/' + 'convert_it.bat'
-        File.write(temp_file, bat_file_or_xspf)
         # allow our popups to still be serviced while it is running
         Thread.new {
-          run_copy_commands temp_file, save_to
+          run_copy_commands bat_file_or_xspf, save_to
         }
       else
         temp_file = temp_dir + '/' + 'vlc.xspf'
         File.write(temp_file, bat_file_or_xspf)
         command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
         p 'running', command
-        system(c) # blocks the current window while running...
+        system(commands) # blocks the current window while running...
       end
       # TODO warn if they don't have VLC installed, with instructions...
       # LODO warn if they will overwrite a file in the end
    end
   
-   def run_copy_commands temp_file, save_to
+   def run_copy_commands batch_file, save_to
       popup = ModeLessDialog.new("Running the encoding in the background...\n" +
         "This could take quite awhile, and will prompt you when it is done.\n" +
         "It may also cause small popup ballon dialogs to appear.")
-      p 'running', temp_file, 'to ' + save_to + '.ps'
+      p 'saving to ' +  save_to + '.ps'
       @buttons.each{|b| b.set_enabled false}
-      success = system(temp_file) unless ARGV.find{|a| a == '--test'} 
+      success = true
+      lines = batch_file.lines.to_a
+      total_size = lines.length.to_f
+      lines.each_with_index{|l, idx|
+        if success
+          p 'running', l, 'percent', idx/total_size
+          success = system(l) unless ARGV.find{|a| a == '--test'} # doesn't seem to cancel out early for some reason..
+          @p.set_value(idx/total_size*100)
+          sleep 1
+        end
+      }
+      @p.set_value(0)
       @buttons.each{|b| b.set_enabled true}
       popup.dispose
       if success
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
         show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}.ps\""
         system show_file
-        File.delete temp_file
         self.close
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
