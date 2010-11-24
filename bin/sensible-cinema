@@ -15,6 +15,7 @@ add_any_bundled_gems
 require 'sane' # File.write
 require 'ruby-wmi'
 require_relative '../lib/swing_helpers'
+require_relative '../lib/drive_info'
 load File.dirname(__FILE__) +  '/sensible-cinema-cli'
 require 'tmpdir'
 
@@ -104,7 +105,7 @@ module SensibleSwing
         # LODO allow for spaces in the save to file
         fc.set_dialog_title "Pick where to save the file to"
         save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-        fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
+        fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
         save_to = fc.go
       else
         save_to = nil
@@ -162,7 +163,7 @@ module SensibleSwing
    end
   
    def choose_dvd_drive
-    opticals = get_dvd_drives
+    opticals = DriveInfo.get_dvd_drives_as_win32ole
     opticals.map!{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
     
     if opticals.length != 1
@@ -174,19 +175,13 @@ module SensibleSwing
       selected = opticals[0]
     end
     if selected
-      return selected[0..2] 
+      return selected[0..2] # like E:\
     else
       puts 'did not select a drive'
       java.lang.System.exit 1      
     end
   end
-  
-  def get_drive_with_most_space_with_slash
-    disks = WMI::Win32_LogicalDisk.find(:all)
-    out = disks.sort_by{|d| d.FreeSpace.to_i}[-1].Name + "\\"
-    out
-  end
-    
+
  end
 
  class GetDisk < JDialog
