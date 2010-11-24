@@ -184,7 +184,6 @@ module SensibleSwing
 
  end
 
-
  class GetDisk < JDialog
    attr_reader :selected
    def initialize parent, options_array
@@ -211,16 +210,6 @@ module SensibleSwing
  
 end
 
-require 'os'
-class String
- def to_filename
-   if OS.windows?
-     self.gsub('/', "\\")
-   else
-    self
-  end
- end
-end
 
 SensibleSwing::MainWindow.new.set_visible true
 

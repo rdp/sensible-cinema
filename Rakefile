@@ -9,12 +9,13 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'sane', '>= 0.22.0'
     s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
+    s.add_dependency 'whichr'
     s.add_dependency 'jruby-win32ole'
     s.add_dependency 'rdp-ruby-wmi'
     s.add_dependency 'ffi' # mouse, etc.
     s.add_development_dependency 'rspec' # prefer rspec 2 I guess...
     s.add_development_dependency 'jeweler'
-    s.add_development_dependency 'hitimes' # now jruby compat. yea!
+    s.add_development_dependency 'hitimes' # now jruby compat!
     s.extensions = ["ext/mkrf_conf.rb"]
 end
 

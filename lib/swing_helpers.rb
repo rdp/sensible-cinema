@@ -64,5 +64,16 @@ module SensibleSwing
   end
 end
 
+require 'os'
+class String
+ def to_filename
+   if OS.windows?
+     self.gsub('/', "\\")
+   else
+    self
+  end
+ end
+end
+
 # code examples
 # JOptionPane.showInputDialog(nil, "not implemented yet", "not implemented yet", JOptionPane::ERROR_MESSAGE)

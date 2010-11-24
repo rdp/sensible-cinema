@@ -1,5 +1,13 @@
-im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/imagemagick") # convert.exe wants to only be chosen from here...
-#ENV['PATH'] = im_path + ';' + ENV['PATH']
+require 'sane' # gem
+require 'whichr' # gem
+require_relative 'swing_helpers' # to_filename lodo not have it there
+im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/bundled/imagemagick") # convert.exe wants to only be chosen from here...
+ENV['PATH'] = im_path.to_filename + ';' + ENV['PATH']
+
+if RubyWhich.new.which('identify').length == 0 || RubyWhich.new.which('convert').length == 0
+ # for gem users, so I don't have to bundle it :P
+ raise 'appears you do not have imagemagick installed (or not on your path) -- please install it! http://www.imagemagick.org/script/binary-releases.php'
+end
 
 # helper for OCR'ing single digits that were screen captured
 module OCR
