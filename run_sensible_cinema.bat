@@ -1,0 +1,1 @@
+@cd sensible-cinema && java -cp "./vendor/cache/jruby-complete-1.5.5.jar" org.jruby.Main bin\sensible-cinema || echo you need to install java first!
