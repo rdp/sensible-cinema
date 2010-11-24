@@ -104,6 +104,7 @@ Gem::Specification.new do |s|
     "spec/swing_helpers.spec.rb",
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
+    "todo_if_need_speed",
     "vendor/gocr049.exe",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/White Christmas.txt",
@@ -141,7 +142,6 @@ Gem::Specification.new do |s|
     "spec/muter.spec.rb",
     "spec/ocr.spec.rb",
     "spec/overlayer.spec.rb",
-    "spec/recreate_odd.rb",
     "spec/screen_tracker.spec.rb",
     "spec/swing_helpers.spec.rb",
     "spec/vlc_programmer.spec.rb"

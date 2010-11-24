@@ -90,7 +90,7 @@ end
 
 desc 'create distro zippable file'
 task 'create_distro_dir' do
-  raise 'need cache first' unless File.directory? 'vendor/cache'
+  raise 'need  bundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   require 'ruby-debug'
