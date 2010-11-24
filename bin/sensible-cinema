@@ -25,7 +25,7 @@ module SensibleSwing
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
      b = JButton.new( "Play Hulu, Youtube, or a DVD (Tracking)" ).on_clicked {
-      Thread.new { go_sc } # needs to be in its own thread becuase it blocks,
+      Thread.new { go_sc([]) } # needs to be in its own thread becuase it blocks,
       # so "this thread" is the uni-swing thread, gets blocked, and the overlayer can't repaint
       self.close
      }
@@ -70,8 +70,8 @@ module SensibleSwing
      @buttons = [b,c,d,@exit]    
    end
   
-   def assert_have_vlc
-     if !system("vlc2 vlc://quit")
+   def vlc_currently_installed?
+     if !system("vlc  --qt-start-minimized vlc://quit")
        JOptionPane.showMessageDialog(nil, "Appears you do not yet have VLC Media Player installed. Click ok to download it.", "VLC Player not found", JOptionPane::ERROR_MESSAGE)
        system("start http://www.videolan.org/")
        false
@@ -81,12 +81,12 @@ module SensibleSwing
    end
   
    def do_copy_dvd_to_hard_drive should_save_file
-      return unless assert_have_vlc
+      return unless vlc_currently_installed?
       drive = choose_dvd_drive
       fc = JFileChooser.new 
       fc.setFileSelectionMode(nil)
       fc.set_dialog_title "Please pick a DVD Edit List File"
-      fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
+      fc.set_current_directory(JFile.new( __dir__  + "/../zamples/edit_decision_lists/dvds"))
       edit_list_path = fc.go
       descriptors = YAML.load_file edit_list_path
       
@@ -113,8 +113,8 @@ module SensibleSwing
         temp_file = temp_dir + '/' + 'vlc.xspf'
         File.write(temp_file, bat_file_or_xspf)
         command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
-        p 'running', command
-        system(commands) # blocks the current window while running...
+        p 'running playlist: ', command
+        system(command) # blocks the current window while running...
       end
       # TODO warn if they don't have VLC installed, with instructions...
       # LODO warn if they will overwrite a file in the end

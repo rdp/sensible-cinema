@@ -1,5 +1,10 @@
-Sensible-cinema is a program that allows you to do pre-programmed scene selection (i.e. "mute out" 
-or "bleep out" scenes) on arbitrary media players like netflix online, vlc (for DVD's), etc.
+Sensible-cinema is a program that allows you to do pre-programmed edit decision lists (i.e. "mute out" 
+or "bleep out" scenes) for DVD's.
+An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc.
+
+Note that this README is outdated.  Currently just run sensible-cinema in jruby and the GUI will guide you :)
+
+== old Readme ==
 
 Currently it takes as input a list of "skippable" scenes, and a player description.
 It then tracks whichever player you are using, and mutes or blanks out the system appropriately, 
@@ -39,7 +44,7 @@ Next install the gem by either opening up the command window or hitting windows+
   It could theoretically be ported to MRI 1.9.2, if anybody wanted to do so.
   Also if anybody would be interested in porting this to Linux I'd be happy to collaborate.
   
-You can test that it's installed by running it (see above) and selecting the "example_scene_list.yml", and 
+You can test that it's installed by running it (see above) and selecting the "example_edit_decision_list.txt", and 
 choosing the hulu player.
 
 It will proceed do a few "demo" mutes and blank outs.
@@ -57,7 +62,7 @@ blank_outs:
 
 Here's one with more detail
 
-http://github.com/rdp/sensible-cinema/blob/master/zamples/scene_lists/example_scene_list.yml
+http://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.yml
 
 Basically your job is to save an appropriate file like that somewhere, 
 then start sensible-cinema and instruct it to use your new file.
@@ -70,9 +75,9 @@ So here is a way to create your scene descriptions file.
 First create a new file 
 
 The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
-"right click" on the existing file "example_scene_list.yml" and choose "Copy"
+"right click" on the existing file "example_edit_decision_list.txt" and choose "Copy"
 now right click below the list of files and choose "paste"
-This will create the file "example_scene_list Copy.yml"
+This will create the file "example_edit_decision_list Copy.txt"
 Right click on it, choose rename, and give it a better name.
 Now open it.
 You can make changes to this file *on the fly* while the player is still playing.  It will notice 
@@ -131,7 +136,7 @@ A. This enables your player to keep its on-screen time tracker, which in turn al
 You could specify the scene descriptions list and player list on the command-line, if you don't want to have
 to pick them each time, like:
 
-     C:\> jruby -S sensible-cinema scene_descriptions_list.yml player_description.yml
+     C:\> jruby -S sensible-cinema edit_decision_list.yml player_description.yml
 
 Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
 You can also specify -v or -t if you want to enable more verbose (chatty) output.
@@ -158,18 +163,23 @@ The concept isn't too novel.  Some examples:
 Clean Flicks
 http://en.wikipedia.org/wiki/Linear_video_editing
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
-Edited "on airplane" style movies.
+Edited "airplane edit" style movies.
+Normal movies versus "directors cut unedited" movies (one is sometimes preferable)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile).
 http://clearplay.com commercial (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
-http://www.inmatrix.com/ "scene cut editor" of the zoom player
+http://www.inmatrix.com "scene cut editor" of the zoom player
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
+htp://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has always had the ability to "crop or cut parts of a title" etc.
+The VCR and the record button, coupled with the pause+rewind button (to edit out unwanted content).
 http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and scene lists)
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
 The remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
 The scissors and old VHS tapes (Clean Flicks' origin, BTW).
+Windows Movie Maker allows for users to cut and copy scenes of movies to their heart's content.
+http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player can do it with playlists for quite awhile
 
 == Feedback ==
 

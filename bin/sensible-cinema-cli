@@ -25,7 +25,7 @@ def go_sc(args)
   
     puts <<-END
   
-    syntax: player_description.yml|test scene_descriptions_list.yml [-t -v --clear-cache] (or nothing to prompt for files)
+    syntax: [player_description.yml|test] edit_decision_list.txt [-t -v --clear-cache] (or nothing at all--it will prompt)
     END
       
     for file in Dir[__dir__ + '../zamples/mute*/*']
@@ -44,27 +44,27 @@ def go_sc(args)
       player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
     end
   
-    scene_list = args.shift.to_s
+    edit_decision_list	 = args.shift.to_s
   
-    if scene_list == 'test'
+    if edit_decision_list	 == 'test'
       overlay = nil
       p 'got test...just doing screen dump'
       $VERBOSE=true # adds some extra output
     else
-      if !File.exist? scene_list
-        puts 'Select Scene Descriptions file'
-        scene_list = FileChooser.choose_file("     SELECT SCENE DESCRIPTIONS FILE", __dir__  + "/../zamples/scene_lists")
+      if !File.exist? edit_decision_list	
+        puts 'Select Edit Decision List'
+        edit_decision_list	 = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __dir__  + "/../zamples/edit_decision_lists")
       end
       
-      if !scene_list
+      if !edit_decision_list	
         puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
         exit 1
       end
       
-      puts 'Selected scene descriptions file ' + File.basename(scene_list) + "\n\t(full path: #{scene_list})"
+      puts 'Selected scene descriptions file ' + File.basename(edit_decision_list) + "\n\t(full path: #{edit_decision_list})"
       Blanker.startup
       # todo start it late as it has an annoying startup blip
-      overlay = OverLayer.new(scene_list)    
+      overlay = OverLayer.new(edit_decision_list	)    
     end  
     
     if File.exist? player_description.to_s
@@ -88,7 +88,7 @@ def go_sc(args)
     
     OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
   
-    puts "Opening the curtains... (please play in player now)"
+    puts "Opening the curtains... (please play in your other player now)"
     overlay.start_thread true
     key_input = KeyboardInput.new overlay
     key_input.start_thread # status thread
@@ -96,7 +96,7 @@ def go_sc(args)
       Blanker.shutdown # lodo move this and the 'q' key to within overlayer
       OCR.serialize_cache_to_disk
     }
-    puts 'syntax from command line: ' + player_description + ' ' + scene_list
+    puts "syntax from command line: #{player_description} #{edit_decision_list}"
     key_input.handle_keystrokes_forever # blocking...
     
   end

@@ -160,25 +160,19 @@ class ScreenTracker
   
   def attempt_to_get_time_from_screen start_time
     out = {}
-    start = get_digits_as_bitmaps
-    dump_digits(start, 'started_as')
     # force it to have two matching snapshots in a row, to avoid race conditions grabbing the digits...
+    # allow youtube to update (sigh) lodo just for utube
     previous = nil 
-    current = start
-    until previous == (current)
+    sleep 0.05
+    current = get_digits_as_bitmaps
+    while previous != current
       previous = current
-      sleep 0.25 # allow youtube to update (sigh) lodo just for utube
+      sleep 0.05
       current = get_digits_as_bitmaps
-      p previous == current
-      dump_digits(current, 'current is')
       # lodo it should probably poll *before* calling this, not here...maybe?
     end
     assert previous == current
-    digits = current = previous
-    
-    if $DEBUG         
-      dump_digits(digits, 'using digits')
-    end
+    digits = current = previous    
     DIGIT_TYPES.each{|type|
       if digits[type]
         digit = identify_digit(digits[type])
@@ -211,7 +205,7 @@ class ScreenTracker
       end
     }
     out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{ |type| out[type] }
-    puts '', 'got new screen time ' + out + " tracking delta:" + (Time.now - start_time).to_s if $VERBOSE
+    puts '', 'got new screen time ' + out + " (+ tracking delta:" + (Time.now - start_time).to_s  + ")" if $VERBOSE
     return out, Time.now-start_time
   end
   
