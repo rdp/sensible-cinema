@@ -54,21 +54,34 @@ module SensibleSwing
      @exit.set_bounds(44,320,button_width,23)
      panel.add @exit
     
-     reload = JButton.new( "reload code" ).on_clicked {
-      eval File.read(__FILE__), nil, __FILE__
-      p 're-evaled it'
-     }
-     reload.set_bounds(44,300,200,23)
-     panel.add reload if ARGV.find{|a| a == '--test'}
-     @p = JProgressBar.new(0, 100)
-     @p.set_value 0
-     @p.set_bounds(44,280,button_width,23)
-     panel.add @p
-     @buttons = [b,c,d,@exit]
-    
+     if ARGV.find{|a| a == '--test'}
+       reload = JButton.new( "reload code" ).on_clicked {
+        eval File.read(__FILE__), nil, __FILE__
+        p 're-evaled the code ...'
+       }
+       reload.set_bounds(20,300,20,20)
+       panel.add reload 
+     end
+     
+     @progress_bar = JProgressBar.new(0, 100)
+     @progress_bar.set_bounds(44,280,button_width,23)
+     @progress_bar.visible=false
+     panel.add @progress_bar
+     @buttons = [b,c,d,@exit]    
+   end
+  
+   def assert_have_vlc
+     if !system("vlc2 vlc://quit")
+       JOptionPane.showMessageDialog(nil, "Appears you do not yet have VLC Media Player installed. Click ok to download it.", "VLC Player not found", JOptionPane::ERROR_MESSAGE)
+       system("start http://www.videolan.org/")
+       false
+     else
+      true
+     end
    end
   
    def do_copy_dvd_to_hard_drive should_save_file
+      return unless assert_have_vlc
       drive = choose_dvd_drive
       fc = JFileChooser.new 
       fc.setFileSelectionMode(nil)
@@ -116,14 +129,15 @@ module SensibleSwing
       success = true
       lines = batch_file.lines.to_a
       total_size = lines.length.to_f
+      @progress_bar.visible=true
+      @progress_bar.set_value(0)
       lines.each_with_index{|l, idx|
         if success
-          p 'running', l, 'percent', idx/total_size
-          success = system(l) unless ARGV.find{|a| a == '--test'} # doesn't seem to cancel out early for some reason..
-          @p.set_value(idx/total_size*100)
+          success = system(l) unless ARGV.find{|a| a == '--test'} # this doesn't seem to cancel out early for some reason..
+          @progress_bar.set_value(idx/total_size*100)
         end
-      }
-      @p.set_value(0)
+      }      
+      @progress_var.visible=false
       @buttons.each{|b| b.set_enabled true}
       popup.dispose
       if success
