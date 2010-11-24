@@ -80,7 +80,7 @@ module SensibleSwing
    end
   
    def vlc_currently_installed?
-     if !system("vlc  --qt-start-minimized vlc://quit")
+     if !system("vlc  --qt-start-minimized vlc://quit 2>NUL")
        JOptionPane.showMessageDialog(nil, "Appears you do not yet have VLC Media Player installed. Click ok to download it.", "VLC Player not found", JOptionPane::ERROR_MESSAGE)
        system("start http://www.videolan.org/")
        false
@@ -114,7 +114,7 @@ module SensibleSwing
       bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
       temp_dir = Dir.tmpdir
       if should_save_file
-        # allow our popups to still be serviced while it is running
+        # this allows our popups to still be serviced while it is running
         Thread.new {
           run_copy_commands bat_file_or_xspf, save_to
         }
@@ -126,28 +126,29 @@ module SensibleSwing
         system(command) # blocks the current window while running...
         p 'done running playlist'
       end
-      # TODO warn if they don't have VLC installed, with instructions...
       # LODO warn if they will overwrite a file in the end
    end
   
    def run_copy_commands batch_file, save_to
-      popup = ModeLessDialog.new("Running the encoding in the background...\n" +
+      popup = ModeLessDialog.new("Running the edit listing in the background...\n" +
         "This could take quite awhile, and will prompt you when it is done.\n" +
-        "It may also cause small popup ballon dialogs to appear.")
+        "It may also cause small popup ballon dialogs to appear.\n" +
+        "You can close this window and continue working while it runs.",
+        "OK")
       p 'saving to ' +  save_to + '.ps'
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_file.lines.to_a
       total_size = lines.length.to_f
       @progress_bar.visible=true
-      @progress_bar.set_value(0)
+      @progress_bar.set_value(10) # start at 10% always, so they can see something.
       lines.each_with_index{|l, idx|
         if success
           success = system(l) unless ARGV.find{|a| a == '--test'} # this doesn't seem to cancel out early for some reason..
-          @progress_bar.set_value(idx/total_size*100)
+          @progress_bar.set_value(10 + idx/total_size*90)
         end
       }      
-      @progress_var.visible=false
+      @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       popup.dispose
       if success
@@ -175,7 +176,7 @@ module SensibleSwing
     if selected
       return selected[0..2] 
     else
-      puts 'did not select drive'
+      puts 'did not select a drive'
       java.lang.System.exit 1      
     end
    end

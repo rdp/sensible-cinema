@@ -35,18 +35,19 @@ module SensibleSwing
     def go
       success = show_open_dialog nil
       unless success == Java::javax::swing::JFileChooser::APPROVE_OPTION
-        raise 'did not choose one' # don't kill background proc...
+        java.lang.System.exit 1 # kills background proc...but we shouldn't let them do stuff while a background proc is running, anyway
       end
       get_selected_file.get_absolute_path
     end
   end
-  #showMessageDialog JOptionPane
+  
   class ModeLessDialog < JDialog
     def initialize title_and_display_text, close_button_text= 'Close'
       super nil
-      set_title title_and_display_text.split("\n")[0]
+      lines = title_and_display_text.split("\n")
+      set_title lines[0]
       get_content_pane.set_layout nil
-      title_and_display_text.split("\n").each_with_index{|line, idx|
+      lines.each_with_index{|line, idx|
         jlabel = JLabel.new line
         jlabel.set_bounds(10, 15*idx, 400, 24)
         get_content_pane.add jlabel
@@ -54,9 +55,9 @@ module SensibleSwing
       close = JButton.new( close_button_text ).on_clicked {
         self.dispose
       }
-      close.set_bounds(125,50,70,25)
+      close.set_bounds(125,30+15*lines.length,70,25)
       get_content_pane.add close
-      set_size 400,125   
+      set_size 400, 100+15*lines.length
       set_visible true
       setDefaultCloseOperation JFrame::DISPOSE_ON_CLOSE
       setLocationRelativeTo nil # center it on the screen
@@ -65,6 +66,7 @@ module SensibleSwing
 end
 
 require 'os'
+
 class String
  def to_filename
    if OS.windows?

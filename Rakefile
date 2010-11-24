@@ -93,8 +93,6 @@ task 'create_distro_dir' do
   raise 'need  bundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
-  require 'ruby-debug'
-  #debugger
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
   FileUtils.rm_rf dir_out + '/..' # in case it exists
   existing = Dir['*']
