@@ -33,7 +33,7 @@ module SensibleSwing
      b.set_bounds(44,120,button_width,23)
      panel.add b
     
-     c=JButton.new( "Copy edited DVD to Hard Drive" )
+     c=JButton.new( "Copy edited copy of DVD to Hard Drive" )
      c.on_clicked {
        do_copy_dvd_to_hard_drive true
      }
@@ -94,7 +94,7 @@ module SensibleSwing
         fc = JFileChooser.new 
         # LODO allow for spaces in save to file
         fc.set_dialog_title "Pick where to save the file to"
-        save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+        save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
         fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
         save_to = fc.go
       else
