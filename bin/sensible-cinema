@@ -101,7 +101,7 @@ module SensibleSwing
       dvd_title = descriptors['title']
       if should_save_file
         fc = JFileChooser.new 
-        # LODO allow for spaces in save to file
+        # LODO allow for spaces in the save to file
         fc.set_dialog_title "Pick where to save the file to"
         save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
         fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
