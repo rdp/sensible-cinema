@@ -98,12 +98,12 @@ module SensibleSwing
       fc.set_current_directory(JFile.new( __dir__  + "/../zamples/edit_decision_lists/dvds"))
       edit_list_path = fc.go
       descriptors = YAML.load_file edit_list_path
-      
+      dvd_title = descriptors['title']
       if should_save_file
         fc = JFileChooser.new 
         # LODO allow for spaces in save to file
         fc.set_dialog_title "Pick where to save the file to"
-        save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+        save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
         fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
         save_to = fc.go
       else
@@ -111,34 +111,34 @@ module SensibleSwing
       end
       # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
-      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
-      temp_dir = Dir.tmpdir
+      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
       if should_save_file
         # this allows our popups to still be serviced while it is running
         Thread.new {
           run_copy_commands bat_file_or_xspf, save_to
         }
       else
-        temp_file = temp_dir + '/' + 'vlc.xspf'
+       temp_dir = Dir.tmpdir
+        temp_file = temp_dir + '/' + 'vlc.temp.xspf'
         File.write(temp_file, bat_file_or_xspf)
         command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
-        p 'running playlist: ', command
+        p 'running playlist for DVD: ', command
         system(command) # blocks the current window while running...
-        p 'done running playlist'
+        p 'done playing DVD'
       end
       # LODO warn if they will overwrite a file in the end
    end
   
-   def run_copy_commands batch_file, save_to
+   def run_copy_commands batch_commands, save_to
       popup = ModeLessDialog.new("Running the edit listing in the background...\n" +
         "This could take quite awhile, and will prompt you when it is done.\n" +
         "It may also cause small popup ballon dialogs to appear.\n" +
         "You can close this window and continue working while it runs.",
         "OK")
-      p 'saving to ' +  save_to + '.ps'
+      p 'saving to ' +  save_to + '.ps' # lodo cleanup the .ps here...
       @buttons.each{|b| b.set_enabled false}
       success = true
-      lines = batch_file.lines.to_a
+      lines = batch_commands.lines.to_a
       total_size = lines.length.to_f
       @progress_bar.visible=true
       @progress_bar.set_value(10) # start at 10% always, so they can see something.
@@ -179,7 +179,7 @@ module SensibleSwing
       puts 'did not select a drive'
       java.lang.System.exit 1      
     end
-   end
+  end
   
   def get_drive_with_most_space_with_slash
     disks = WMI::Win32_LogicalDisk.find(:all)

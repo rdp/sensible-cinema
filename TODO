@@ -9,6 +9,8 @@
 
 == slightly lower than that even ==
 
+  pass unit tests jruby
+  
 == slightly lower than that ==
 
   auto-select EDL
@@ -19,7 +21,7 @@
     IMDB easy mapping
   unit test the GUI
   can have collaborators re-selling EL's
-    good license for their stuff like "public domain" or what not :P
+    good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
     80/20
   can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
   a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
@@ -28,7 +30,7 @@
     easily
       automagically... (call into iso blah blah blah?)
     can lop off sections to save space (?)
-    can burn the extra sections, too?
+    can burn the extras from the DVD, too?
   easy editor for this style of edit
   split the two projects loosely, then cleanly (project, distribution)
   partner (Jon, Karlie if interested...give beta)

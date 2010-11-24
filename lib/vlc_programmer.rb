@@ -10,10 +10,12 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
 
-  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil
+  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil, dvd_title_name = nil
+  
     @drive = drive_with_slash || "e:\\"
     @filename_or_playlist_if_nil = filename
     @dvd_title_track = dvd_title_track || "1"
+    @dvd_title_name = dvd_title_name
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}
@@ -69,11 +71,11 @@ class VLCProgrammer
 
       if previous_end != start
         # play up to next "questionable section"
-        out += get_section("#{to_english previous_end} to #{to_english start} (clean)", previous_end, start, idx += 1)
+        out += get_section("#{@dvd_title_name} : #{to_english previous_end} to #{to_english start} (clean)", previous_end, start, idx += 1)
       end
       # now play through the muted section...
       if type == :mute
-        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, true
+        out += get_section "#{@dvd_title_name} : #{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, true
       end
       previous_end = endy
     }
