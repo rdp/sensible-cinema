@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-11-23}
+  s.date = %q{2010-11-24}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -105,29 +105,18 @@ Gem::Specification.new do |s|
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
     "vendor/gocr049.exe",
-    "vendor/imagemagick/CORE_RL_Magick++_.dll",
-    "vendor/imagemagick/CORE_RL_bzlib_.dll",
-    "vendor/imagemagick/CORE_RL_jbig_.dll",
-    "vendor/imagemagick/CORE_RL_jp2_.dll",
-    "vendor/imagemagick/CORE_RL_jpeg_.dll",
-    "vendor/imagemagick/CORE_RL_lcms_.dll",
-    "vendor/imagemagick/CORE_RL_libxml_.dll",
-    "vendor/imagemagick/CORE_RL_magick_.dll",
-    "vendor/imagemagick/CORE_RL_png_.dll",
-    "vendor/imagemagick/CORE_RL_tiff_.dll",
-    "vendor/imagemagick/CORE_RL_ttf_.dll",
-    "vendor/imagemagick/CORE_RL_wand_.dll",
-    "vendor/imagemagick/CORE_RL_xlib_.dll",
-    "vendor/imagemagick/CORE_RL_zlib_.dll",
-    "vendor/imagemagick/X11.dll",
-    "vendor/imagemagick/Xext.dll",
-    "vendor/imagemagick/atl90.dll",
-    "vendor/imagemagick/convert.exe",
-    "vendor/imagemagick/identify.exe",
-    "vendor/imagemagick/mfc90.dll",
-    "vendor/imagemagick/msvcp90.dll",
-    "vendor/imagemagick/msvcr90.dll",
-    "vendor/imagemagick/vcomp90.dll",
+    "zamples/edit_decision_lists/category descriptions.txt",
+    "zamples/edit_decision_lists/dvds/White Christmas.txt",
+    "zamples/edit_decision_lists/dvds/all_dogs_go_to_heaven_dvd.txt",
+    "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
+    "zamples/edit_decision_lists/dvds/cars_disney.txt",
+    "zamples/edit_decision_lists/dvds/happy_feet_dvd.txt",
+    "zamples/edit_decision_lists/dvds/labyrinth.txt",
+    "zamples/edit_decision_lists/dvds/making marriage work.txt",
+    "zamples/edit_decision_lists/example_edit_decision_list.txt",
+    "zamples/edit_decision_lists/star_trek_generations_hulu.txt",
+    "zamples/edit_decision_lists/youtube/gummy_bear_song_youtube.txt",
+    "zamples/edit_decision_lists/youtube/nuki_song_youtube.txt",
     "zamples/players/how_to_create_more_players.txt",
     "zamples/players/hulu/total_length_over_an_hour.txt",
     "zamples/players/vlc/full_screened_total_length_over_an_hour.txt",
@@ -137,19 +126,7 @@ Gem::Specification.new do |s|
     "zamples/players/youtube/full_screened_1152x864.txt",
     "zamples/players/youtube/full_screened_1680x1050.txt",
     "zamples/players/youtube/normal_in_youtube.com.chrome.txt",
-    "zamples/players/youtube/note_these_assume_less_than_10_minutes_length.txt",
-    "zamples/scene_lists/category descriptions.txt",
-    "zamples/scene_lists/dvds/White Christmas.txt",
-    "zamples/scene_lists/dvds/all_dogs_go_to_heaven_dvd.txt",
-    "zamples/scene_lists/dvds/bobs_big_plan.txt",
-    "zamples/scene_lists/dvds/cars_disney.txt",
-    "zamples/scene_lists/dvds/happy_feet_dvd.txt",
-    "zamples/scene_lists/dvds/labyrinth.txt",
-    "zamples/scene_lists/dvds/making marriage work.txt",
-    "zamples/scene_lists/example_scene_descriptions_list.txt",
-    "zamples/scene_lists/star_trek_generations_hulu.txt",
-    "zamples/scene_lists/youtube/gummy_bear_song_youtube.txt",
-    "zamples/scene_lists/youtube/nuki_song_youtube.txt"
+    "zamples/players/youtube/note_these_assume_less_than_10_minutes_length.txt"
   ]
   s.homepage = %q{http://github.com/rdp}
   s.require_paths = ["lib"]
@@ -164,8 +141,10 @@ Gem::Specification.new do |s|
     "spec/muter.spec.rb",
     "spec/ocr.spec.rb",
     "spec/overlayer.spec.rb",
+    "spec/recreate_odd.rb",
     "spec/screen_tracker.spec.rb",
     "spec/swing_helpers.spec.rb",
+    "spec/test10.rb",
     "spec/vlc_programmer.spec.rb"
   ]
 
@@ -177,6 +156,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sane>, [">= 0.22.0"])
       s.add_runtime_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_runtime_dependency(%q<mini_magick>, [">= 3.1"])
+      s.add_runtime_dependency(%q<whichr>, [">= 0"])
       s.add_runtime_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_runtime_dependency(%q<rdp-ruby-wmi>, [">= 0"])
       s.add_runtime_dependency(%q<ffi>, [">= 0"])
@@ -187,6 +167,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<sane>, [">= 0.22.0"])
       s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_dependency(%q<mini_magick>, [">= 3.1"])
+      s.add_dependency(%q<whichr>, [">= 0"])
       s.add_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
       s.add_dependency(%q<ffi>, [">= 0"])
@@ -198,6 +179,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<sane>, [">= 0.22.0"])
     s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
     s.add_dependency(%q<mini_magick>, [">= 3.1"])
+    s.add_dependency(%q<whichr>, [">= 0"])
     s.add_dependency(%q<jruby-win32ole>, [">= 0"])
     s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
     s.add_dependency(%q<ffi>, [">= 0"])

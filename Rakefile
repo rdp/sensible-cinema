@@ -38,7 +38,36 @@ task 'spec' do
     
 end
 
-desc 'collect gem deps for distribution zip'
+desc 'collect binary and gem deps for distribution'
 task 'bundle_dependencies' => 'gemspec' do
+   require 'whichr'
+   require 'fileutils'
+   require 'net/http'
+  
    spec = eval File.read('sensible-cinema.gemspec')
+   Dir.mkdir 'vendor/cache' rescue nil
+   Dir.chdir 'vendor/cache' do
+     spec.dependencies.each{|d|
+       #system("gem unpack #{d.name}")
+      }
+     # imagemagick
+     Dir.mkdir 'imagemagick' rescue nil
+     im_dir = RubyWhich.new.which('identify').select{|dir| dir =~ /ImageMagick/}[0]
+     #  "d:\\installs\\ImageMagick-6.6.2-Q16\\identify.EXE",
+     Dir["#{File.dirname im_dir}/*"].each{|file|
+       FileUtils.cp(file, 'imagemagick') rescue nil
+      }
+      Dir.mkdir 'jruby' rescue nil
+      jruby_dir = RubyWhich.new.which('identify').select{|dir| dir =~ /ImageMagick/}[0]
+    
+     # jruby.jar file
+     Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
+       resp = http.get("/downloads/1.5.5/jruby-complete-1.5.5.jar")
+       open("jruby-complete-1.5.5.jar", "wb") { |file|
+         file.write(resp.body)
+       }
+     }
+     
+   "/../vendor/cache/imagemagick"
+ end
 end
