@@ -1,24 +1,21 @@
 == medium ==
 
-
 == probably next up+low prio ==
 
   better timing for the saver-er...
     match better
     merge better
   speed up unit tests
-  add a progress bar for encoding
 
 == slightly lower than that even ==
 
-auto-select EDL
-
 == slightly lower than that ==
+
+  auto-select EDL
 
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
-  screencast of things helpful (use, creation...).
   unit test the GUI
   can have collaborators re-selling EL's
     good license for their stuff like "public domain" or what not :P
@@ -36,7 +33,8 @@ auto-select EDL
   partner (Jon, Karlie if interested...give beta)
   survey/beta release
   a certified clean list (?)
-== DVD backlog ==
+
+== DVD backlog (unordered) ==
 
 some way to choose between x,y,z when auto-select sees several
 careful phrasing "if you can't afford it..."
@@ -49,8 +47,6 @@ the authors of the program might not be liable for damages.  We don't feel disho
 we own the DVD and have it with us when we watch the edited version.
 blu-ray support somehow (real-time? rip?)
 
-prototypes of the experimental stuff.
-
 some type of one click installer that can setup the registry...
 auto-assignment of EDL's to media:
   auto-play option for DVD's (auto-start?)
@@ -61,6 +57,10 @@ a real website (github-y?)
 instructions on how to do their own (private) or do one and submit it (public), or email their friends :P
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+screencast of things helpful (use, creation...).
+tune up the levels...
+prototypes of the experimental stuff (overlay, track time while recording -> map file, specifiable levels, more?)
 
 the overlayer "freeze frames" in vista
 
