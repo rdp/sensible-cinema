@@ -144,7 +144,6 @@ Gem::Specification.new do |s|
     "spec/recreate_odd.rb",
     "spec/screen_tracker.spec.rb",
     "spec/swing_helpers.spec.rb",
-    "spec/test10.rb",
     "spec/vlc_programmer.spec.rb"
   ]
 
@@ -156,7 +155,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<sane>, [">= 0.22.0"])
       s.add_runtime_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_runtime_dependency(%q<mini_magick>, [">= 3.1"])
-      s.add_runtime_dependency(%q<whichr>, [">= 0"])
+      s.add_runtime_dependency(%q<whichr>, [">= 0.3.6"])
       s.add_runtime_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_runtime_dependency(%q<rdp-ruby-wmi>, [">= 0"])
       s.add_runtime_dependency(%q<ffi>, [">= 0"])
@@ -167,7 +166,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<sane>, [">= 0.22.0"])
       s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_dependency(%q<mini_magick>, [">= 3.1"])
-      s.add_dependency(%q<whichr>, [">= 0"])
+      s.add_dependency(%q<whichr>, [">= 0.3.6"])
       s.add_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
       s.add_dependency(%q<ffi>, [">= 0"])
@@ -179,7 +178,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<sane>, [">= 0.22.0"])
     s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
     s.add_dependency(%q<mini_magick>, [">= 3.1"])
-    s.add_dependency(%q<whichr>, [">= 0"])
+    s.add_dependency(%q<whichr>, [">= 0.3.6"])
     s.add_dependency(%q<jruby-win32ole>, [">= 0"])
     s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
     s.add_dependency(%q<ffi>, [">= 0"])

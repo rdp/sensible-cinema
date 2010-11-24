@@ -9,7 +9,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'sane', '>= 0.22.0'
     s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
-    s.add_dependency 'whichr'
+    s.add_dependency 'whichr', '>= 0.3.6'
     s.add_dependency 'jruby-win32ole'
     s.add_dependency 'rdp-ruby-wmi'
     s.add_dependency 'ffi' # mouse, etc.
@@ -38,6 +38,17 @@ task 'spec' do
     
 end
 
+def get_transitive_dependencies dependencies
+  new_dependencies = []
+  dependencies.each{|d|
+   gem d.name # make sure it's loaded so that it'll be in Gem.loaded_specs
+   dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[0][1]
+   transitive_deps = dependency_spec.runtime_dependencies
+   new_dependencies << transitive_deps
+  }
+  new_dependencies.flatten
+end
+
 desc 'collect binary and gem deps for distribution'
 task 'bundle_dependencies' => 'gemspec' do
    require 'whichr'
@@ -45,29 +56,51 @@ task 'bundle_dependencies' => 'gemspec' do
    require 'net/http'
   
    spec = eval File.read('sensible-cinema.gemspec')
-   Dir.mkdir 'vendor/cache' rescue nil
+   dependencies = spec.runtime_dependencies
+   dependencies = dependencies + get_transitive_dependencies(dependencies)
+   Gem.loaded_specs.select{|name, spec| name == 'os'}
+   FileUtils.rm_rf 'vendor/cache'
+   Dir.mkdir 'vendor/cache'
    Dir.chdir 'vendor/cache' do
-     spec.dependencies.each{|d|
-       #system("gem unpack #{d.name}")
-      }
-     # imagemagick
-     Dir.mkdir 'imagemagick' rescue nil
+     dependencies.each{|d|
+       system("gem unpack #{d.name}")
+     }
+     # add imagemagick
+     Dir.mkdir 'imagemagick'
      im_dir = RubyWhich.new.which('identify').select{|dir| dir =~ /ImageMagick/}[0]
      #  "d:\\installs\\ImageMagick-6.6.2-Q16\\identify.EXE",
      Dir["#{File.dirname im_dir}/*"].each{|file|
-       FileUtils.cp(file, 'imagemagick') rescue nil
-      }
-      Dir.mkdir 'jruby' rescue nil
-      jruby_dir = RubyWhich.new.which('identify').select{|dir| dir =~ /ImageMagick/}[0]
-    
-     # jruby.jar file
+       FileUtils.cp(file, 'imagemagick') rescue nil # some fail for some odd reason
+     }
+      
+     # jruby complete .jar file
      Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
        resp = http.get("/downloads/1.5.5/jruby-complete-1.5.5.jar")
        open("jruby-complete-1.5.5.jar", "wb") { |file|
          file.write(resp.body)
        }
      }
-     
-   "/../vendor/cache/imagemagick"
- end
+     # create a shunt win32ole file, so that require 'win32ole' will work.
+     Dir.mkdir 'lib'
+     File.write('lib/win32ole.rb', 'require "jruby-win32ole"')
+  
+   end # chdir
+  
+end
+
+desc 'create distro zippable file'
+task 'create_distro_dir' do
+  raise 'need cache first' unless File.directory? 'vendor/cache'
+  require 'fileutils'
+  spec = eval File.read('sensible-cinema.gemspec')
+  require 'ruby-debug'
+  #debugger
+  dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
+  FileUtils.rm_rf dir_out + '/..' # in case it exists
+  existing = Dir['*']
+  FileUtils.mkdir_p dir_out
+  FileUtils.cp_r(existing, dir_out)
+  # this one belongs in the trunk
+  FileUtils.cp("#{dir_out}/run_sensible_cinema.bat", "#{dir_out}/..")
+  p 'created ' + dir_out
 end
