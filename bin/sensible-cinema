@@ -121,7 +121,6 @@ module SensibleSwing
           p 'running', l, 'percent', idx/total_size
           success = system(l) unless ARGV.find{|a| a == '--test'} # doesn't seem to cancel out early for some reason..
           @p.set_value(idx/total_size*100)
-          sleep 1
         end
       }
       @p.set_value(0)
