@@ -34,19 +34,13 @@
   survey/beta release
   a certified clean list (?)
 
-== DVD backlog (unordered) ==
+== DVD monetary backlog (unordered) ==
 
 some way to choose between x,y,z when auto-select sees several
 careful phrasing "if you can't afford it..."
 authorize instead of paypal?
-honest about DMCA (we don't distribute the cracker, we don't redistribute, don't perform any acts, etc.)
-if you burn you'll eventually be using a DMCA compatible player :P
-long list of players...we're not alone :)
-one part is probably not against copyright
-the authors of the program might not be liable for damages.  We don't feel dishonest about it, as long as 
-we own the DVD and have it with us when we watch the edited version.
 blu-ray support somehow (real-time? rip?)
-
+legal shtuff (LICENSE)
 some type of one click installer that can setup the registry...
 auto-assignment of EDL's to media:
   auto-play option for DVD's (auto-start?)
@@ -57,6 +51,9 @@ a real website (github-y?)
 instructions on how to do their own (private) or do one and submit it (public), or email their friends :P
 double buffering hard drive/copying might speed things, if your HD is fast.
 personalized copier might be faster than the "type" command.
+merge with preferences
+install VLC from .msi where needed.  Pretty low prio...
+For the monetized version: nothing but cut and paste, no merging et al
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
@@ -64,10 +61,9 @@ screencast of things helpful (use, creation...).
 tune up the levels...
 prototypes of the experimental stuff (overlay, track time while recording -> map file, specifiable levels, more?)
 
-the overlayer "freeze frames" in vista
-
-0:01:01.9 next will be at 0:01:02.0s (r [or q to quit]):
-0:01:04.0 next will be at 0:01:06.5s (blanked) (r [or q to quit]): "warning--unable to track screen time for some reason" # *of course you can't track it now!*
+fix:
+  0:01:01.9 next will be at 0:01:02.0s (r [or q to quit]):
+  0:01:04.0 next will be at 0:01:06.5s (blanked) (r [or q to quit]): "warning--unable to track screen time for some reason" # *of course you can't track it now!*
 
 byu.tv descriptor
 youtube non full screen: work with all browsers
@@ -78,19 +74,9 @@ a netflix player descriptor
 beep at them when not tracking [?]
   default on...hmm
 
-note that you are watching it using only bits and pieces of the original, similar to said bill.  And the
-authors of the program might not be cupable of copyright infringement themselves, since they distribute no infringed materials.
-
-Not responsible for your actions. Don't redistribute. "You run the risk on your own"
-"should the courts someday rule..."  If DVD next to me...
-
-install VLC from .msi where needed.  Pretty low prio...
-
 An 'edit preferences' button et al.
 
 Just fold if s....
-
-For the monetized version: nothing but cut and paste, no merging et al
 
 a descriptor for some closed source app player...
 
@@ -125,24 +111,20 @@ advertise on ruby flow
 
 DRY up :levels--it's in the ocr spec as well as the others...
 
-unit tests pass with normal ruby
+unit tests run with normal ruby
+
+back off on mouse jerking...only every so often?
+  maybe increase timings as you get farther along, to accomodate for drift?
 
 screen time change only detected... [unexpected] [rid myself of it]
 
-when polling for bmp changes, just use two lines (if needed speed-wise?)
-
-super duper VLC
-
-try new GOCR version...
-
-Do I *need* that other window always up or not? (Get rid of it...only do this after have a real window of my own though, that's always up)
+Do I *need* that other window always up or not? (Get rid of it?...only do this after have a real window of my own though, that's always up)
 
 preference for beeping at them, et al
 
-itunes video on demand
+itunes video on demand player
 
 blockbuster "rent" on demand player
-
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
@@ -162,25 +144,17 @@ an "online anybody can chat while watching this movie" (or anybody can edit this
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
-  a chrome plugin with imdb/community backing :)
   
-a known list of "compatible" imdb'ers...
-
 code refactors: "screen time change", order should be swapped in bin/x output (just cleanup)
 
-easier installer for windows: release a zip file that they can just click on a .bat file to run it
-  later: it installs/uninstalls appropo
-    suggestion: self-extractor
+easier installation for windows: release a zip file that they can just click on a .bat file to run it
+  later: .msi?
 
 can blank overlay with added text like "and you are one awesome klingon"
 
 ability to record it from online/live, then apply edits.
 
-TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu? y on youtube?"
-
-add my stuff to imdb...? wiki?
-
-make youtube work if you have *several* open
+add my stuff to imdb...? make a wiki?
 
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
@@ -217,8 +191,6 @@ control location programmatically (using mouse) on the player itself.
 
 compare VLC (and other) timings with a real DVD player, and with netflix online, etc.
 
-overlay with an alpha transparent pic (?)
-
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
   or known parseable imdb's
 
@@ -226,15 +198,15 @@ does my sweet heart have any suggestions? (make it work well for laymen)
 
 web browser plugin?
 
-Programmatically do all of the above, by driving VLC with its real API.
+Programmatically do all of the above, by driving VLC with libvlc (its API).
+  So this would be basically tracking VLC using its libvlc callbacks, instead of screen times
+  fork the Python project?
   VLC
     Allow it to record somehow (recordable)
     use VLC's web interface? telnet?
     optimize it with best appropriate iframes (LOL)
 
-integrate with google TV/bravia...maybe...somehow...boxxee? roku?
-  itunes TV? apple tv?
+integrate with google TV...bravia...maybe...somehow...boxxee? roku?
+  itunes TV? apple tv? ps3?
 
-OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does..
-
---server?  optionally higher prio?
+OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does.
