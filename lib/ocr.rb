@@ -1,6 +1,5 @@
-vendor_path = 
 im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/imagemagick") # convert.exe wants to only be chosen from here...
-ENV['PATH'] = im_path + ';' + ENV['PATH']
+#ENV['PATH'] = im_path + ';' + ENV['PATH']
 
 # helper for OCR'ing single digits that were screen captured
 module OCR
