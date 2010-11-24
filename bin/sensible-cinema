@@ -187,12 +187,6 @@ module SensibleSwing
     out
   end
     
-  private
-  def get_dvd_drives
-    disks = WMI::Win32_LogicalDisk.find(:all)
-    disks.select{|d| d.Description =~ /CD-ROM/} # hope this works...
-  end
-
  end
 
  class GetDisk < JDialog

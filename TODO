@@ -9,13 +9,12 @@
 
 == slightly lower than that even ==
 
-  pass unit tests jruby
   
 == slightly lower than that ==
 
+  pass unit tests jruby
   auto-select EDL
     can even tell them a button "play movie x" or what not, has been detected
-
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
@@ -38,6 +37,8 @@
 
 == DVD monetary backlog (unordered) ==
 
+use DVD navigator ?
+  http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
 some way to choose between x,y,z when auto-select sees several
 careful phrasing "if you can't afford it..."
 authorize instead of paypal?
