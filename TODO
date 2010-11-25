@@ -35,6 +35,7 @@
 
 == DVD monetary backlog (unordered) ==
 
+ensure file exists after we created it...
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
 some way to choose between x,y,z when auto-select sees several

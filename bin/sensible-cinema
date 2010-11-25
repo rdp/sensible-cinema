@@ -129,17 +129,17 @@ module SensibleSwing
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
       if should_save_file
-        
         popup = ModeLessDialog.new("Running edit list #{File.basename edit_list_path} against #{drive} (#{dvd_title})...\n" +
           "Copying to #{save_to}.\n" + 
           "This could take quite awhile, and will prompt you when it is done.\n" +
           "It may also cause small popup ballon dialogs to appear.\n" +
           "You can close this window and continue working while it runs.",
-          "OK")
+          "OK")      
         
         # this allows our popups to still be serviced while it is running
         Thread.new {
           run_copy_commands bat_file_or_xspf, save_to
+          popup.dispose
         }
       else
        temp_dir = Dir.tmpdir
@@ -169,7 +169,6 @@ module SensibleSwing
       }
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
-      popup.dispose
       if success
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
         show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}.ps\""

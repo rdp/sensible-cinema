@@ -1,7 +1,7 @@
 require 'win32/screenshot'
 require 'sane'
 require 'yaml'
-require_relative 'ocr'
+require File.dirname(__FILE__)+ '/ocr'
 
 class ScreenTracker
   

@@ -1,6 +1,7 @@
 raise 'must be using jruby to be able to run this...at least for now' unless RUBY_PLATFORM =~ /java/
 
 # reset the OCR cache...
+require 'rubygems'
 require File.dirname(__FILE__) +  '/../lib/ocr'
 OCR.clear_cache!
 
