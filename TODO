@@ -13,8 +13,6 @@
 == slightly lower than that ==
 
   pass unit tests jruby
-  auto-select EDL
-    can even tell them a button "play movie x" or what not, has been detected
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping

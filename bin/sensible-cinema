@@ -129,6 +129,14 @@ module SensibleSwing
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
       if should_save_file
+        
+        popup = ModeLessDialog.new("Running edit list #{File.basename edit_list_path} against #{drive} (#{dvd_title})...\n" +
+          "Copying to #{save_to}.\n" + 
+          "This could take quite awhile, and will prompt you when it is done.\n" +
+          "It may also cause small popup ballon dialogs to appear.\n" +
+          "You can close this window and continue working while it runs.",
+          "OK")
+        
         # this allows our popups to still be serviced while it is running
         Thread.new {
           run_copy_commands bat_file_or_xspf, save_to
@@ -146,11 +154,6 @@ module SensibleSwing
    end
   
    def run_copy_commands batch_commands, save_to
-      popup = ModeLessDialog.new("Running the edit listing in the background...\n" +
-        "This could take quite awhile, and will prompt you when it is done.\n" +
-        "It may also cause small popup ballon dialogs to appear.\n" +
-        "You can close this window and continue working while it runs.",
-        "OK")
       p 'saving to ' +  save_to + '.ps' # lodo cleanup the .ps here...
       @buttons.each{|b| b.set_enabled false}
       success = true
