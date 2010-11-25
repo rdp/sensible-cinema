@@ -1,8 +1,5 @@
 require_relative 'overlayer'
 
-# add some common locations for vlc.exe to the path...
-ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
-
 class VLCProgrammer
 
   def self.to_english s
@@ -68,11 +65,14 @@ class VLCProgrammer
     combined.each{|start, endy, type|
       next unless start
       next if endy <= start # ignore mutes wholly contained within blanks
-
+      start = start + 0.23 # current guess as to how to get VLC to play back chunks that match...
       if previous_end != start
-        # play up to next "questionable section"
+        # play 'uncut' up to next "questionable section"
         out += get_section("#{@dvd_title_name} : #{to_english previous_end} to #{to_english start} (clean)", previous_end, start, idx += 1)
+      else
+        # immediately let it do the next action
       end
+      
       # now play through the muted section...
       if type == :mute
         out += get_section "#{@dvd_title_name} : #{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, true

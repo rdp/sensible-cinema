@@ -14,6 +14,10 @@ require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
 
+# add some common locations for vlc.exe to the path...
+# lodo use the registry to pull out the 'right' path...
+ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
+
 module SensibleSwing
  class MainWindow < JFrame
    def initialize
@@ -124,6 +128,11 @@ module SensibleSwing
       end
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
+ 
+      temp_dir = Dir.tmpdir
+      temp_file = temp_dir + '/' + 'vlc.temp.xspf'
+      File.write(temp_file, bat_file_or_xspf)
+      puts bat_file_or_xspf
       if should_save_file
         popup = ModeLessDialog.new("Running edit list #{File.basename edit_list_path} against #{drive} (#{dvd_title})...\n" +
           "Copying to #{save_to}.\n" + 
@@ -138,11 +147,8 @@ module SensibleSwing
           popup.dispose
         }
       else
-       temp_dir = Dir.tmpdir
-        temp_file = temp_dir + '/' + 'vlc.temp.xspf'
-        File.write(temp_file, bat_file_or_xspf)
         command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
-        p 'running playlist for DVD: ', command
+        puts 'running playlist for DVD: ', command
         system(command) # blocks the current window while running...
         p 'done playing DVD'
       end

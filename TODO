@@ -2,13 +2,11 @@
 
 == probably next up+low prio ==
 
-  better timing for the saver-er...
+ preferences merger...hmm...
+ better timing for the saver-er...
     match better
     merge better
-  speed up unit tests
-
-== slightly lower than that even ==
-
+      try with a DVD...
   
 == slightly lower than that ==
 
@@ -20,30 +18,28 @@
   can have collaborators re-selling EL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
     80/20
-  can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
   a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
     leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
   burnable to DVD/CD multi DVD, etc.
     easily
       automagically... (call into iso blah blah blah?)
     can lop off sections to save space (?)
-    can burn the extras from the DVD, too?
+    can burn extras from the DVD, too?
   easy editor for this style of edit
-  split the two projects loosely, then cleanly (project, distribution)
+  split the two projects somehow (project + distribution)
   partner (Jon, Karlie if interested...give beta)
   survey/beta release
 
 == DVD monetary backlog (unordered) ==
 
-ensure file exists after we created it...
+ensure file exists after we created it...and has a reasonable size
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
-some way to choose between x,y,z when auto-select sees several
 careful phrasing "if you can't afford it..."
-authorize instead of paypal?
+authorize.net instead of paypal?
 blu-ray support somehow (real-time? rip?)
 legal shtuff (LICENSE)
-some type of one click installer that can setup the registry...
+some type of installer that can setup the registry...
 auto-assignment of EDL's to media:
   auto-play option for DVD's (auto-start?)
     use volume label differentiation
@@ -57,9 +53,13 @@ merge with preferences
 install VLC from .msi where needed.  Pretty low prio...
 For the monetized version: nothing but cut and paste, no merging et al
 mplayer EDL's
+add option to "just rip a DVD of your own straight"
+avisynth?
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+speed up slow unit tests
+can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
 make the overlay window uncloseable (?)
 note that youtube "can" be downloaded then a local edited copy created, from that download. (mb add downloading ability?)
 a "certified clean" list (?)
