@@ -90,14 +90,30 @@ module SensibleSwing
      end
    end
   
-   def do_copy_dvd_to_hard_drive should_save_file
+  def single_edit_list_matches_dvd volume_name
+    matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
+      YAML.load_file(file)["dvd_drive_label"] == volume_name      
+    }
+    if matching.length == 1
+      file = matching[0]
+      p "selecting only matching file #{file}"
+      return file
+    end    
+    nil
+  end
+  
+  EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
+  
+  def do_copy_dvd_to_hard_drive should_save_file
       return unless vlc_currently_installed?
-      drive = choose_dvd_drive
-      fc = JFileChooser.new 
-      fc.setFileSelectionMode(nil)
-      fc.set_dialog_title "Please pick a DVD Edit List File"
-      fc.set_current_directory(JFile.new( __dir__  + "/../zamples/edit_decision_lists/dvds"))
-      edit_list_path = fc.go
+      drive, volume_name = choose_dvd_drive
+      if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
+        fc = JFileChooser.new
+        fc.setFileSelectionMode(nil)
+        fc.set_dialog_title "Please pick a DVD Edit List File"
+        fc.set_current_directory(JFile.new EDL_DIR)
+        edit_list_path = fc.go
+      end
       descriptors = YAML.load_file edit_list_path
       dvd_title = descriptors['title']
       if should_save_file
@@ -110,7 +126,6 @@ module SensibleSwing
       else
         save_to = nil
       end
-      # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
       bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
       if should_save_file
@@ -148,7 +163,7 @@ module SensibleSwing
           success = system(l) unless ARGV.find{|a| a == '--test'} # this doesn't seem to cancel out early for some reason..
           @progress_bar.set_value(10 + idx/total_size*90)
         end
-      }      
+      }
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       popup.dispose
@@ -162,20 +177,23 @@ module SensibleSwing
       end
    end
   
+  # returns e:\, win32ole instance
    def choose_dvd_drive
     opticals = DriveInfo.get_dvd_drives_as_win32ole
-    opticals.map!{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
+    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
     
     if opticals.length != 1
-      dialog = GetDisk.new(self, opticals)
+      dialog = GetDisk.new(self, names)
       dialog.setSize 200,125
       dialog.show
-      selected = dialog.selected
+      selected_idx = dialog.selected_idx
     else
-      selected = opticals[0]
-    end
-    if selected
-      return selected[0..2] # like E:\
+      selected_idx = 0
+      p 'selecting only disk drive ' + names[0]
+    end    
+    if selected_idx
+      disk = opticals[selected_idx]
+      return names[selected_idx][0..2], opticals[selected_idx].VolumeName
     else
       puts 'did not select a drive'
       java.lang.System.exit 1      
@@ -185,7 +203,7 @@ module SensibleSwing
  end
 
  class GetDisk < JDialog
-   attr_reader :selected
+   attr_reader :selected_idx
    def initialize parent, options_array
      super parent, true
      
@@ -193,8 +211,9 @@ module SensibleSwing
      box.add_action_listener do |e|
        idx = box.get_selected_index
        if idx != 0
-        @selected = box.get_selected_item
-        dispose 
+        # don't count choosing the first as a real entry
+        @selected_idx = box.get_selected_index - 1
+        dispose
        end
      end
     
@@ -210,7 +229,7 @@ module SensibleSwing
  
 end
 
-
-SensibleSwing::MainWindow.new.set_visible true
-
-puts 'Please use the Sensible Cinema GUI window popup'
+if $0 == __FILE__
+  SensibleSwing::MainWindow.new.set_visible true
+  puts 'Please use the Sensible Cinema GUI window popup...'
+end

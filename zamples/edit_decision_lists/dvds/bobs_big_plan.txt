@@ -6,6 +6,7 @@ blank_outs:
   # none
 
 title: Bob's Big Plan
+dvd_drive_label: BOBS_BIG_PLAN
 source: DVD (vlc)
 dvd_title_track: 1
 
