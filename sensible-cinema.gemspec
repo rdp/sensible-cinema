@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.14.5"
+  s.version = "0.14.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
      "ext/mkrf_conf.rb",
      "gplv3.txt",
      "lib/blanker.rb",
+     "lib/drive_info.rb",
      "lib/fake_blanker.rb",
      "lib/file_chooser.rb",
      "lib/keyboard_input.rb",
@@ -48,6 +49,7 @@ Gem::Specification.new do |s|
      "spec/blanker.spec.rb",
      "spec/common.rb",
      "spec/convert_image.rb",
+     "spec/drive_info.spec.rb",
      "spec/images/black.bmp",
      "spec/images/colon.bmp",
      "spec/images/hulu_0.bmp",
@@ -101,6 +103,7 @@ Gem::Specification.new do |s|
      "spec/ocr.spec.rb",
      "spec/overlayer.spec.rb",
      "spec/screen_tracker.spec.rb",
+     "spec/sensible_cinema_gui.spec.rb",
      "spec/silence.wav",
      "spec/swing_helpers.spec.rb",
      "spec/test_yaml.yml",
@@ -139,12 +142,14 @@ Gem::Specification.new do |s|
     "spec/blanker.spec.rb",
      "spec/common.rb",
      "spec/convert_image.rb",
+     "spec/drive_info.spec.rb",
      "spec/keyboard_input.spec.rb",
      "spec/mouse.spec.rb",
      "spec/muter.spec.rb",
      "spec/ocr.spec.rb",
      "spec/overlayer.spec.rb",
      "spec/screen_tracker.spec.rb",
+     "spec/sensible_cinema_gui.spec.rb",
      "spec/swing_helpers.spec.rb",
      "spec/vlc_programmer.spec.rb"
   ]
