@@ -34,7 +34,7 @@ class ScreenTracker
     @height = height
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
     @max_x = max_x
-    raise 'poor width or wrong window' if @x2 > max_x  || @x2 == x
+    raise "poor width or wrong window #{@x2} #{max_x} #{x}" if @x2 > max_x  || @x2 == x
     if @y2 > max_y || @y2 == y
       raise 'poor height or wrong window' 
     end

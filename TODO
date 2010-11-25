@@ -60,6 +60,8 @@ mplayer EDL's
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+make the overlay window uncloseable (?)
+note that youtube "can" be downloaded then a local edited copy created, from that download. (mb add downloading ability?)
 a "certified clean" list (?)
 screencast of things helpful (use, creation...).
 tune up the levels...
@@ -214,3 +216,5 @@ integrate with google TV...bravia...maybe...somehow...boxxee? roku?
   itunes TV? apple tv? ps3?
 
 OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does.
+
+take out all require 'rubygems'ses

@@ -2,22 +2,17 @@
 
 puts 'Loading Sensible Cinema...'
 
-require 'rubygems'
+require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
+require 'sane'
 
-def add_any_bundled_gems
-  Dir['vendor/cache/**/lib'].each{|lib_dir|
-    $: << lib_dir
-  }
+for file in ['vlc_programmer']
+  require_relative '../lib/' + file
 end
 
-add_any_bundled_gems
-
-require 'sane' # File.write
 require 'ruby-wmi'
+require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
-load File.dirname(__FILE__) +  '/sensible-cinema-cli'
-require 'tmpdir'
 
 module SensibleSwing
  class MainWindow < JFrame
@@ -35,6 +30,7 @@ module SensibleSwing
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
      b = JButton.new( "Play Hulu, Youtube, or a DVD (Tracking)" ).on_clicked {
+      load File.dirname(__FILE__) +  '/sensible-cinema-cli'
       Thread.new { go_sc([]) } # needs to be in its own thread becuase it blocks,
       # so "this thread" is the uni-swing thread, gets blocked, and the overlayer can't repaint
       self.close

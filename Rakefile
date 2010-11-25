@@ -63,19 +63,21 @@ task 'bundle_dependencies' => 'gemspec' do
    Dir.mkdir 'vendor/cache'
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
-       system("gem unpack #{d.name}")
+       system("#{Gem.ruby} -S gem unpack #{d.name}")
      }
      # add imagemagick
+     puts 'copying in imagemagick'
      Dir.mkdir 'imagemagick'
-     im_dir = RubyWhich.new.which('identify').select{|dir| dir =~ /ImageMagick/}[0]
+     im_identify_command = RubyWhich.new.which('identify').select{|dir| dir =~ /ImageMagick/}[0]
      #  "d:\\installs\\ImageMagick-6.6.2-Q16\\identify.EXE",
-     Dir["#{File.dirname im_dir}/*"].each{|file|
-       FileUtils.cp(file, 'imagemagick') rescue nil # some fail for some odd reason
+     Dir["#{File.dirname im_identify_command}/*"].each{|file|
+       FileUtils.cp_r(file, 'imagemagick') rescue nil # some fail for some odd reason
      }
-      
+     puts 'downloading in jruby-complete.jar file' 
      # jruby complete .jar file
      Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
        resp = http.get("/downloads/1.5.5/jruby-complete-1.5.5.jar")
+       puts 'copying... '
        open("jruby-complete-1.5.5.jar", "wb") { |file|
          file.write(resp.body)
        }

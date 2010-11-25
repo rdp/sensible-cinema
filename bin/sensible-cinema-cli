@@ -1,14 +1,13 @@
 #!/usr/bin/ruby
 
-require 'rubygems'
+require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
-Thread.abort_on_exception=true #gah
+Thread.abort_on_exception=true # gah
 
 for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser', 'ocr', 'vlc_programmer']
   require_relative '../lib/' + file
 end
-
 
 def go_sc(args)
   
