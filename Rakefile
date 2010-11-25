@@ -94,11 +94,13 @@ task 'create_distro_dir' do
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
-  FileUtils.rm_rf dir_out + '/..' # in case it exists
+  FileUtils.rm_rf Dir['sensible-cinema-*'] # remove old versions
+  raise 'unable to delete' if Dir[spec.name + '-*'].length > 0
+  
   existing = Dir['*']
   FileUtils.mkdir_p dir_out
   FileUtils.cp_r(existing, dir_out)
   # this one belongs in the trunk
   FileUtils.cp("#{dir_out}/run_sensible_cinema.bat", "#{dir_out}/..")
-  p 'created ' + dir_out
+  p 'created (still need to zip it) ' + dir_out
 end
