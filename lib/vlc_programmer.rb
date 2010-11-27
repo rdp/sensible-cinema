@@ -65,17 +65,17 @@ class VLCProgrammer
     combined.each{|start, endy, type|
       next unless start
       next if endy <= start # ignore mutes wholly contained within blanks
-      start = start + 0.23 # current guess as to how to get VLC to play back chunks that match...
+      real_start = start + 0.23 # current guess as to how to get VLC to play back chunks that match...
       if previous_end != start
         # play 'uncut' up to next "questionable section"
-        out += get_section("#{@dvd_title_name} : #{to_english previous_end} to #{to_english start} (clean)", previous_end, start, idx += 1)
+        out += get_section("#{@dvd_title_name} : #{to_english previous_end} to #{to_english start} (clean)", previous_end, real_start, idx += 1)
       else
         # immediately let it do the next action
       end
       
       # now play through the muted section...
       if type == :mute
-        out += get_section "#{@dvd_title_name} : #{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, true
+        out += get_section "#{@dvd_title_name} : #{to_english start}s to #{to_english endy}s muted", real_start, endy, idx += 1, true
       end
       previous_end = endy
     }

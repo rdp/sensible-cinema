@@ -1,0 +1,11 @@
+mutes:
+  "6:04" : "6:05" # Goodness knows... (but the real thing)
+blank_outs:
+  # none
+
+title: Happiest baby on the block
+dvd_drive_label: HAPPIEST_BABY_ON_THE_BLOCK
+source: DVD (vlc)
+dvd_title_track: 1
+
+other_notes: has a couple (modest) shots of nursing moms which aren't edited.

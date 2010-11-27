@@ -15,27 +15,32 @@
     add stuffs to imdb hmmm
     IMDB easy mapping
   unit test the GUI
-  can have collaborators re-selling EL's
-    good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
-    80/20
-  a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
-    leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
+  
   burnable to DVD/CD multi DVD, etc.
-    easily
-      automagically... (call into iso blah blah blah?)
+    easily (iso?)
+      automagically... (auto-burn insert your new disk!)
+      can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
     can lop off sections to save space (?)
     can burn extras from the DVD, too?
+    transcode...
   easy editor for this style of edit
   split the two projects somehow (project + distribution)
   partner (Jon, Karlie if interested...give beta)
   survey/beta release
+  all dogs go to heaven ...
+  can blank out the video, with audio continuing through...
 
 == DVD monetary backlog (unordered) ==
+  make the ripper low cpu prio?
+  can have collaborators re-selling EDL's
+    good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
+    80/20
 
-ensure file exists after we created it...and has a reasonable size
+better icon...
+ensure file exists after we created it...and has a reasonable size, before declaring success
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
-careful phrasing "if you can't afford it..."
+  with an avi file sink?
 authorize.net instead of paypal?
 blu-ray support somehow (real-time? rip?)
 legal shtuff (LICENSE)
@@ -43,21 +48,24 @@ some type of installer that can setup the registry...
 auto-assignment of EDL's to media:
   auto-play option for DVD's (auto-start?)
     use volume label differentiation
-    use spiffy differentiation for DVD's on windows
-  DVD's (right click on DVD player, play with SC?)
-a real website (github-y?)
-instructions on how to do their own (private) or do one and submit it (public), or email their friends :P
+  DVD's (right click on DVD player, rip with SC?)
+a real website
+instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
 double buffering hard drive/copying might speed things, if your HD is fast.
 personalized copier might be faster than the "type" command.
 merge with preferences
-install VLC from .msi where needed.  Pretty low prio...
 For the monetized version: nothing but cut and paste, no merging et al
 mplayer EDL's
-add option to "just rip a DVD of your own straight"
+add option to "just rip a DVD of your own straight full thing"
 avisynth?
+make the progress bar map "better" to the size of the various sections...
+detect these errors: dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
+
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+  DVD's (right click on DVD player, play with SC?)
+    use spiffy differentiation for DVD's on windows
 speed up slow unit tests
 can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
 make the overlay window uncloseable (?)
@@ -80,15 +88,9 @@ a netflix player descriptor
 beep at them when not tracking [?]
   default on...hmm
 
-An 'edit preferences' button et al.
-
 Just fold if s....
 
 a descriptor for some closed source app player...
-
-when saving to hard drive, you can "insert" streams where desired (experimental version only)
-
-can save stuff "for review later" as they watch it,
 
 can "overlay-audio/video"
 
@@ -153,7 +155,7 @@ an online applet web runnable? Why not?
   
 code refactors: "screen time change", order should be swapped in bin/x output (just cleanup)
 
-easier installation for windows: release a zip file that they can just click on a .bat file to run it
+easier installation for windows: self-extracting exe's :)
   later: .msi?
 
 can blank overlay with added text like "and you are one awesome klingon"
@@ -195,7 +197,7 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare VLC (and other) timings with a real DVD player, and with netflix online, etc.
+compare VLC (and other) timings with a real DVD player, and with netflix instant, etc.
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
   or known parseable imdb's
@@ -203,6 +205,7 @@ Have a "list of all known movies (url's)" and be able to open (IE et al) to the 
 does my sweet heart have any suggestions? (make it work well for laymen)
 
 web browser plugin?
+  popups *inside* netflix "play this edited" ?
 
 Programmatically do all of the above, by driving VLC with libvlc (its API).
   So this would be basically tracking VLC using its libvlc callbacks, instead of screen times
