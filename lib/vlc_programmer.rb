@@ -100,7 +100,7 @@ class VLCProgrammer
   end
   
   def self.get_section title, start, stop, idx, no_audio = false
-    loc = "dvd://#{@drive}@#{@dvd_title_track}"
+    loc = "dvdsimple://#{@drive}@#{@dvd_title_track}"
     if @filename_or_playlist_if_nil == nil
       "<track>
       <title>#{title}</title>
@@ -125,9 +125,9 @@ class VLCProgrammer
     filename = @filename_or_playlist_if_nil
     files = (1..idx).map{|n| "#{filename}.ps.#{n}"}
     # concat
-    line = 'type ' + files.join(' ')
-    line += " > #{@filename_or_playlist_if_nil}.ps\n"    
-    line += "rm " + files.join(' ') + "\n"
+    line = 'copy /b ' + files.join('+')
+    line += " #{@filename_or_playlist_if_nil}.ps\n"    
+    # LODO line += "rm " + files.join(' ') + "\n"
     line += "echo Done--you may now watch file #{filename}.ps in VLC player"
    end
     

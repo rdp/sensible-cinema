@@ -134,8 +134,9 @@ module SensibleSwing
       File.write(temp_file, bat_file_or_xspf)
       puts bat_file_or_xspf
       if should_save_file
-        popup = ModeLessDialog.new("Running edit list #{File.basename edit_list_path} against #{drive} (#{dvd_title})...\n" +
-          "Copying to #{save_to}.\n" + 
+        popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
+          "Running edit list #{File.basename edit_list_path} against \n" +
+           "    #{drive} (#{dvd_title})...\n" +
           "This could take quite awhile, and will prompt you when it is done.\n" +
           "It may also cause small popup ballon dialogs to appear.\n" +
           "You can close this window and continue working while it runs.",

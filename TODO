@@ -32,14 +32,17 @@
   can blank out the video, with audio continuing through...
 
 == DVD monetary backlog (unordered) ==
-  make the ripper low cpu prio?
+ 
+  can use a fast temp drive, save through to other :P
+    only prompt if have two...
+  pass a better title through when ripping so it doesn't just say dvd://1 always
   can have collaborators re-selling EDL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
     80/20
 
 better icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
-     12 Nov 24 19:03 making_marriage_work_edited_copy.ps
+      148 cars_widescreen_2006_edited.ps
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
   with an avi file sink?
@@ -63,7 +66,11 @@ detect these errors: dvdnav warning: cannot get next block (Error reading from D
 per movie, various EDL's, one includes profanity, one just violence, one paranoid, etc.
 when there are several, it lets you just choose between the ones that are valid (?)
 some better ripper...
-  maybe rip all with VLC, then edit with...umm...uh...
+  maybe rip all with VLC, then edit with...umm...uh...avisynth?
+  maybe it is bound by the same constrains mplayer is?
+
+ask VLC is "adding 0.23 expected?" "do you have the same constraints as mplayer?"
+ask VLC "fuzzy menus on the happiest baby dvd expected?"
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
