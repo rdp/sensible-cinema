@@ -17,12 +17,12 @@
   unit test the GUI
   
   burnable to DVD/CD multi DVD, etc.
-    easily (iso?)
       automagically... (auto-burn insert your new disk!)
       can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
     can lop off sections to save space (?)
     can burn extras from the DVD, too?
-    transcode...
+    transcode to condense...
+    split to allow?
   easy editor for this style of edit
   split the two projects somehow (project + distribution)
     two releases: experimental, normal (no imagemagick)
@@ -33,12 +33,14 @@
 
 == DVD monetary backlog (unordered) ==
  
+  make sure can work with very large DVD's...
   can use a fast temp drive, save through to other :P
     only prompt if have two...
   pass a better title through when ripping so it doesn't just say dvd://1 always
   can have collaborators re-selling EDL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
     80/20
+  .ts doesn't seem too awesome....
 
 better icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
@@ -71,6 +73,7 @@ some better ripper...
 
 ask VLC is "adding 0.23 expected?" "do you have the same constraints as mplayer?"
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
+slightly faster copying possible (664 versus 887 seconds to combine them all together.)
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 

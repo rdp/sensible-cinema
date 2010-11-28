@@ -1,57 +1,17 @@
 Sensible-cinema is a program that allows you to do pre-programmed edit decision lists (i.e. "mute out" 
-or "bleep out" scenes) for DVD's.
+or "bleep out" scene lists) for DVD's.
 An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc.
 
-Note that this README is outdated.  Currently just run sensible-cinema in jruby and the GUI will guide you :)
+To install: 
 
-== old Readme ==
-
-Currently it takes as input a list of "skippable" scenes, and a player description.
-It then tracks whichever player you are using, and mutes or blanks out the system appropriately, 
-during the scenes specified.
-
-It works out of the box with the hulu and VLC players on windows.  It isn't hard to 
-add new players, and probably wouldn't be too hard to add more operating systems etc.
-
-== How to Use ==
-
-Start playing your movie in its respective player, then startup sensible-cinema from
-the command line thus:
-
-     C:\> jruby -S sensible-cinema
-
-It prompts you for an EL (Edit decision List) file (ex: bambi.txt), 
-and then for a player file (ex: hulu_full_screen.txt).
-
-Sensible-cinema will now run in a console window, screen tracking the player to monitor its position,
-and react'ing appropriately.
-
-It is presumed that you'll then minimize sensible-cinema and proceed to enjoy the movie.
-
-You'll know that it's working if, when you change the time of your player (ex: dragging it to a new spot 
-in the playback), the screen output in sensible-cinema's console should change to match the new time.
-
-== How to install ==
-
-First you'll need to install jruby (in case you haven't already), from http://www.jruby.org
-Make sure you check the box "add it to my path" or something similar to that.
-
-Next install the gem by either opening up the command window or hitting windows+r (run) and typing
-
-       C:\> jruby -S gem install sensible-cinema 
-
-  it's jruby only currently (since jruby allows for proper thread concurrency, has an easy GUI, and feels actually sane on windows).
-  It could theoretically be ported to MRI 1.9.2, if anybody wanted to do so.
-  Also if anybody would be interested in porting this to Linux I'd be happy to collaborate.
-  
-You can test that it's installed by running it (see above) and selecting the "example_edit_decision_list.txt", and 
-choosing the hulu player.
-
-It will proceed do a few "demo" mutes and blank outs.
+download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
+unzip it
+run the file "run_sensible_cinema.bat" from within it.
+Note that you'll need java installed for it to work, but chances are you already have it.
 
 == Programming Your Own Edit List ==
 
-To program sensible-cinema, you create a scene description list it can use.
+To program sensible-cinema, you create an edit decision list it can use.
 
 An Edit List looks something like this example:
 
@@ -62,95 +22,29 @@ blank_outs:
 
 Here's one with more detail
 
-http://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.yml
+https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
 
-Basically your job is to save an appropriate file like that somewhere, 
+Basically your job is to create an appropriate file (like that one) somewhere, 
 then start sensible-cinema and instruct it to use your new file.
-
-To create it, basically you notice something you want to add to the list, add it, then go back a few seconds 
-in your media player, and it should now be muted/blanked out automatically.
-
-So here is a way to create your scene descriptions file.
-
-First create a new file 
-
-The easiest way to do this is to start sensible-cinema, then instead of choosing an existing file,
-"right click" on the existing file "example_edit_decision_list.txt" and choose "Copy"
-now right click below the list of files and choose "paste"
-This will create the file "example_edit_decision_list Copy.txt"
-Right click on it, choose rename, and give it a better name.
-Now open it.
-You can make changes to this file *on the fly* while the player is still playing.  It will notice 
-changes as the file is saved and apply them.
-
-Now select it for use in sensible-cinema (even though it's still blank).
-Now "screen" your movie.  As you watch it, you're going to add scenes to 
-that file, and then re-watch the scene to test your additions.
-
-As you watch when you encounter a questionable scene, go back several seconds using your player's 
-controls.  When you encounter it once again, track its beginning and ending time.  One way to do this
-is to, just before and just after the scene, hit the space bar *in the sensible-cinema window*.  
-Hitting the space bar outputs the current time.  If you hit it twice, once before and once after, 
-you should now have two reasonably accurate "timestamps" displayed.
-Add the beginning and end times to your scene description file (changes will be automatically picked up), 
-then review your additions by rewinding your player and letting it play through the scene again.
-It should now skip it (play it "sensibly").  If not, adjust your timestamps and try again.
 
 Once you're done then you can contribute your scene descriptions file if desired, back to the project itself [1].
 
-[1] http://github.com/rdp/sensible-cinema/issues
+[1] submit an issue: http://github.com/rdp/sensible-cinema/issues
 
 == FAQ ==
 
-Q. Can I watch movies this way on my TV, not just on my computer?
-
-A. Maybe.  Or possible not yet, depending on your current hardware.
-   Currently you'll either need to attach your computer to your TV
-   (buy some long cables, or a new graphics card that matches your cables, etc.) 
-   or get some computer that you can move closer to the TV to do the same 
-   (ex: buy a used older laptop with s-video out, use that, or a laptop with DVI/HDMI would
-   work with an HDMI TV).  If you're really aggressive you could run an ethernet cable from your computer, as well [1].
-   I'd be happy to do a linux port of sensible-cinema if anybody requests it, for use with 
-   their dedicated TV computer.
-   There has also been some work toward getting ones computer to stream "live" to your existing wii/ps3/xbox.
-   Message me if you're interested in trying it out (testers wanted--plus I'll only work on it if there's demand)!   
-
-Q. What movies does this work with?
-
-A. Any that you program it for :) (Assuming the computer player is compatible, which most probably are.)
-
-Q. What movies are freely available to watch online?
-
-A. Not many are available free (hulu, youtube have a few). Netflix has quite a few with its default subscription.  
-   You can of course use it with any existing DVD, or rent or borrow DVD's and watch them using sensible-cinema.
-
-Q. Why does my mouse bounce up and down while sensible-cinema is going?
-
-A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where 
-   you're at.  Message me if this bugs you too much and we'll see what we can do about it.
-
-[1] http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
-
-== Advanced Usage ==
-
-You could specify the scene descriptions list and player list on the command-line, if you don't want to have
-to pick them each time, like:
-
-     C:\> jruby -S sensible-cinema edit_decision_list.yml player_description.yml
-
-Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
-You can also specify -v or -t if you want to enable more verbose (chatty) output.
+Q. How do I watch these on my computer?
+A. You can burn a DVD with it.  First create the edited copy on your hard drive.  Then use
+  Dvd Flick is a good one for windows (here's a screencast of using it http://rogerdpack.t28.net/sensible-cinema/dvd%20flick%20create%20dvd%20from%20file.avi)
+  For OS X iDVD might work well.
+  You might be able to "beam" it to your PS3 and play it from there, using PS3 media server (or windows media player), or put it on a flash drive and play it from that.
 
 == Caveats ==
 
 NB that "someone" will have to create a scene descriptions list, per DVD/online movie.
 Unless it already exists, then "someone" already has, so you don't have to.  Fortunately
 only one person has to do it, once, for everybody to benefit, and the editing process is fairly easy.
-
-== Thanks ==
-
-Thanks to Jarmo for the win32-screenshot gem, mini_magick gem authors, jruby guys, etc.  
-The combination made programming this actually something of a pleasure.
+You can employ somebody to do it, or do it yourself, then submit it.
 
 == License ==
 
@@ -160,29 +54,29 @@ See the LICENSE file for licensing, usage terms (basically gplv3).
 
 The concept isn't too novel.  Some examples:
 
+Edited "airplane edit" style movies.
 Clean Flicks
 http://en.wikipedia.org/wiki/Linear_video_editing
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
-Edited "airplane edit" style movies.
 Normal movies versus "directors cut unedited" movies (one is sometimes preferable)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile).
-http://clearplay.com commercial (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
+http://clearplay.com a commercial editor (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com "scene cut editor" of the zoom player
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
 htp://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has always had the ability to "crop or cut parts of a title" etc.
-The VCR and the record button, coupled with the pause+rewind button (to edit out unwanted content).
+The VCR and the record button, coupled with the pause+rewind button (edit out unwanted content).
 http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and scene lists)
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
-The remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
+Using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
 The scissors and old VHS tapes (Clean Flicks' origin, BTW).
-Windows Movie Maker allows for users to cut and copy scenes of movies to their heart's content.
-http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player can do it with playlists for quite awhile
+Windows Movie Maker.  Allows for users to cut and copy scenes of movies to their heart's content.
+http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player can do it with playlists
 
 == Feedback ==
 
 Feedback, including feature requests, welcome.
 
-http://github.com/rdp/sensible-cinema
+http://github.com/rdp/sensible-cinema (message me or create an issue for feedback/any requests/bugs)
