@@ -6,7 +6,7 @@ Use the others are examples
   Some tips:
   
     use WinCheat to help with window names (under "Text") (alt+tab helps, too, since it displays titles).
-    run scene-skipper with 'test' for the scene description filename: it will dump a screenshot using the player description
+    run scene-skipper with 'test' for the Edit Decision List filename: it will dump a screenshot using the player description
     use Paint.net to examine the dumped graphic and get coords (invert it to get easy negative coords).
 
 NB that the clock coords can have negative start offsets, which mean "distance from the bottom right corner"

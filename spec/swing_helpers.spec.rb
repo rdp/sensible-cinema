@@ -1,5 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/common')
-
+require 'os'
 require_relative '../lib/swing_helpers'
 module SensibleSwing
 describe SensibleSwing do
@@ -13,6 +13,15 @@ describe SensibleSwing do
    #dialog.dispose # should get here :P
    # let them close it :P
   end
+  
+  it "should be able to convert filenames well" do
+    if OS.windows?
+      "a/b/c".to_filename.should == "a\\b\\c"
+    else
+      "a/b/c".to_filename.should == "a/b/c"
+    end
+  end
 
 end
 end
+puts 'close the windows...'

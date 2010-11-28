@@ -1,8 +1,5 @@
 require_relative 'overlayer'
 
-# add some common locations for vlc.exe to the path...
-ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
-
 class VLCProgrammer
 
   def self.to_english s
@@ -10,10 +7,12 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
 
-  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil
+  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil, dvd_title_name = nil
+  
     @drive = drive_with_slash || "e:\\"
     @filename_or_playlist_if_nil = filename
     @dvd_title_track = dvd_title_track || "1"
+    @dvd_title_name = dvd_title_name
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}
@@ -66,14 +65,17 @@ class VLCProgrammer
     combined.each{|start, endy, type|
       next unless start
       next if endy <= start # ignore mutes wholly contained within blanks
-
+      real_start = start + 0.23 # current guess as to how to get VLC to play back chunks that match...
       if previous_end != start
-        # play up to next "questionable section"
-        out += get_section("#{to_english previous_end} to #{to_english start} (clean)", previous_end, start, idx += 1)
+        # play 'uncut' up to next "questionable section"
+        out += get_section("#{@dvd_title_name} : #{to_english previous_end} to #{to_english start} (clean)", previous_end, real_start, idx += 1)
+      else
+        # immediately let it do the next action
       end
+      
       # now play through the muted section...
       if type == :mute
-        out += get_section "#{to_english start}s to #{to_english endy}s muted", start, endy, idx += 1, true
+        out += get_section "#{@dvd_title_name} : #{to_english start}s to #{to_english endy}s muted", real_start, endy, idx += 1, true
       end
       previous_end = endy
     }
@@ -98,7 +100,7 @@ class VLCProgrammer
   end
   
   def self.get_section title, start, stop, idx, no_audio = false
-    loc = "dvd://#{@drive}@#{@dvd_title_track}"
+    loc = "dvdsimple://#{@drive}@#{@dvd_title_track}"
     if @filename_or_playlist_if_nil == nil
       "<track>
       <title>#{title}</title>
@@ -111,7 +113,7 @@ class VLCProgrammer
       <location>#{loc}</location>
       </track>"
     else
-      "vlc.exe --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename_or_playlist_if_nil}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
+      "vlc --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename_or_playlist_if_nil}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
       #"call vlc #{@filename_or_playlist_if_nil}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end
@@ -123,9 +125,9 @@ class VLCProgrammer
     filename = @filename_or_playlist_if_nil
     files = (1..idx).map{|n| "#{filename}.ps.#{n}"}
     # concat
-    line = 'type ' + files.join(' ')
-    line += " > #{@filename_or_playlist_if_nil}.ps\n"    
-    line += "rm " + files.join(' ') + "\n"
+    line = 'copy /b ' + files.join('+')
+    line += " #{@filename_or_playlist_if_nil}.ps\n"    
+    # LODO line += "rm " + files.join(' ') + "\n"
     line += "echo Done--you may now watch file #{filename}.ps in VLC player"
    end
     

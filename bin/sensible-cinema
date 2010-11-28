@@ -2,12 +2,21 @@
 
 puts 'Loading Sensible Cinema...'
 
-require 'rubygems'
-require 'sane' # File.write
-require File.dirname(__FILE__) + '/../lib/swing_helpers'
-load File.dirname(__FILE__) +  '/sensible-cinema-cli'
-require 'tmpdir'
+require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
+require 'sane'
+
+for file in ['vlc_programmer']
+  require_relative '../lib/' + file
+end
+
 require 'ruby-wmi'
+require 'tmpdir'
+require_relative '../lib/swing_helpers'
+require_relative '../lib/drive_info'
+
+# add some common locations for vlc.exe to the path...
+# lodo use the registry to pull out the 'right' path...
+ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
 
 module SensibleSwing
  class MainWindow < JFrame
@@ -25,7 +34,8 @@ module SensibleSwing
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
      b = JButton.new( "Play Hulu, Youtube, or a DVD (Tracking)" ).on_clicked {
-      Thread.new { go_sc } # needs to be in its own thread becuase it blocks,
+      load File.dirname(__FILE__) +  '/sensible-cinema-cli'
+      Thread.new { go_sc([]) } # needs to be in its own thread becuase it blocks,
       # so "this thread" is the uni-swing thread, gets blocked, and the overlayer can't repaint
       self.close
      }
@@ -33,7 +43,7 @@ module SensibleSwing
      b.set_bounds(44,120,button_width,23)
      panel.add b
     
-     c=JButton.new( "Copy edited DVD to Hard Drive" )
+     c=JButton.new( "Copy edited copy of DVD to Hard Drive" )
      c.on_clicked {
        do_copy_dvd_to_hard_drive true
      }
@@ -54,78 +64,114 @@ module SensibleSwing
      @exit.set_bounds(44,320,button_width,23)
      panel.add @exit
     
-     reload = JButton.new( "reload code" ).on_clicked {
-      eval File.read(__FILE__), nil, __FILE__
-      p 're-evaled it'
-     }
-     reload.set_bounds(44,300,200,23)
-     panel.add reload if ARGV.find{|a| a == '--test'}
-     @p = JProgressBar.new(0, 100)
-     @p.set_value 0
-     @p.set_bounds(44,280,button_width,23)
-     panel.add @p
-     @buttons = [b,c,d,@exit]
-    
+     if ARGV.find{|a| a == '--test'}
+       reload = JButton.new( "reload code" ).on_clicked {
+        eval File.read(__FILE__), nil, __FILE__
+        p 're-evaled the code ...'
+       }
+       reload.set_bounds(20,300,20,20)
+       panel.add reload 
+     end
+     
+     @progress_bar = JProgressBar.new(0, 100)
+     @progress_bar.set_bounds(44,280,button_width,23)
+     @progress_bar.visible=false
+     panel.add @progress_bar
+     @buttons = [b,c,d,@exit]    
    end
   
-   def do_copy_dvd_to_hard_drive should_save_file
-      drive = choose_dvd_drive
-      fc = JFileChooser.new 
-      fc.setFileSelectionMode(nil)
-      fc.set_dialog_title "Please pick a DVD Edit List File"
-      fc.set_current_directory(JFile.new( __dir__  + "/../zamples/scene_lists/dvds"))
-      edit_list_path = fc.go
+   def vlc_currently_installed?
+     if !system("vlc  --qt-start-minimized vlc://quit 2>NUL")
+       JOptionPane.showMessageDialog(nil, "Appears you do not yet have VLC Media Player installed. Click ok to download it.", "VLC Player not found", JOptionPane::ERROR_MESSAGE)
+       system("start http://www.videolan.org/")
+       false
+     else
+      true
+     end
+   end
+  
+  def single_edit_list_matches_dvd volume_name
+    matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
+      YAML.load_file(file)["dvd_drive_label"] == volume_name      
+    }
+    if matching.length == 1
+      file = matching[0]
+      p "selecting only matching file #{file}"
+      return file
+    end    
+    nil
+  end
+  
+  EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
+  
+  def do_copy_dvd_to_hard_drive should_save_file
+      return unless vlc_currently_installed?
+      drive, volume_name = choose_dvd_drive
+      if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
+        fc = JFileChooser.new
+        fc.setFileSelectionMode(nil)
+        fc.set_dialog_title "Please pick a DVD Edit List File"
+        fc.set_current_directory(JFile.new EDL_DIR)
+        edit_list_path = fc.go
+      end
       descriptors = YAML.load_file edit_list_path
-      
+      dvd_title = descriptors['title']
       if should_save_file
         fc = JFileChooser.new 
-        # LODO allow for spaces in save to file
+        # LODO allow for spaces in the save to file
         fc.set_dialog_title "Pick where to save the file to"
-        save_to_file_name = ((descriptors["title"] || "my dvd") + ' edited').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-        fc.setSelectedFile(JFile.new(get_drive_with_most_space_with_slash + save_to_file_name)) 
+        save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+        fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
         save_to = fc.go
       else
         save_to = nil
       end
-      # LODO don't pop up those annoying windows
       dvd_title_track = descriptors["dvd_title_track"]
-      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track)
+      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
+ 
       temp_dir = Dir.tmpdir
+      temp_file = temp_dir + '/' + 'vlc.temp.xspf'
+      File.write(temp_file, bat_file_or_xspf)
+      puts bat_file_or_xspf
       if should_save_file
-        # allow our popups to still be serviced while it is running
+        popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
+          "Running edit list #{File.basename edit_list_path} against \n" +
+           "    #{drive} (#{dvd_title})...\n" +
+          "This could take quite awhile, and will prompt you when it is done.\n" +
+          "It may also cause small popup ballon dialogs to appear.\n" +
+          "You can close this window and continue working while it runs.",
+          "OK")      
+        
+        # this allows our popups to still be serviced while it is running
         Thread.new {
           run_copy_commands bat_file_or_xspf, save_to
+          popup.dispose
         }
       else
-        temp_file = temp_dir + '/' + 'vlc.xspf'
-        File.write(temp_file, bat_file_or_xspf)
         command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
-        p 'running', command
-        system(commands) # blocks the current window while running...
+        puts 'running playlist for DVD: ', command
+        system(command) # blocks the current window while running...
+        p 'done playing DVD'
       end
-      # TODO warn if they don't have VLC installed, with instructions...
       # LODO warn if they will overwrite a file in the end
    end
   
-   def run_copy_commands batch_file, save_to
-      popup = ModeLessDialog.new("Running the encoding in the background...\n" +
-        "This could take quite awhile, and will prompt you when it is done.\n" +
-        "It may also cause small popup ballon dialogs to appear.")
-      p 'saving to ' +  save_to + '.ps'
+   def run_copy_commands batch_commands, save_to
+      p 'saving to ' +  save_to + '.ps' # lodo cleanup the .ps here...
       @buttons.each{|b| b.set_enabled false}
       success = true
-      lines = batch_file.lines.to_a
+      lines = batch_commands.lines.to_a
       total_size = lines.length.to_f
+      @progress_bar.visible=true
+      @progress_bar.set_value(10) # start at 10% always, so they can see something.
       lines.each_with_index{|l, idx|
         if success
-          p 'running', l, 'percent', idx/total_size
-          success = system(l) unless ARGV.find{|a| a == '--test'} # doesn't seem to cancel out early for some reason..
-          @p.set_value(idx/total_size*100)
+          success = system(l) unless ARGV.find{|a| a == '--test'} # this doesn't seem to cancel out early for some reason..
+          @progress_bar.set_value(10 + idx/total_size*90)
         end
       }
-      @p.set_value(0)
+      @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
-      popup.dispose
       if success
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
         show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}.ps\""
@@ -136,43 +182,33 @@ module SensibleSwing
       end
    end
   
+  # returns e:\, win32ole instance
    def choose_dvd_drive
-    opticals = get_dvd_drives
-    opticals.map!{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
+    opticals = DriveInfo.get_dvd_drives_as_win32ole
+    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
     
     if opticals.length != 1
-      dialog = GetDisk.new(self, opticals)
+      dialog = GetDisk.new(self, names)
       dialog.setSize 200,125
       dialog.show
-      selected = dialog.selected
+      selected_idx = dialog.selected_idx
     else
-      selected = opticals[0]
-    end
-    if selected
-      return selected[0..2] 
+      selected_idx = 0
+      p 'selecting only disk drive ' + names[0]
+    end    
+    if selected_idx
+      disk = opticals[selected_idx]
+      return names[selected_idx][0..2], opticals[selected_idx].VolumeName
     else
-      puts 'did not select drive'
+      puts 'did not select a drive'
       java.lang.System.exit 1      
     end
-   end
-  
-  def get_drive_with_most_space_with_slash
-    disks = WMI::Win32_LogicalDisk.find(:all)
-    out = disks.sort_by{|d| d.FreeSpace.to_i}[-1].Name + "\\"
-    out
-  end
-    
-  private
-  def get_dvd_drives
-    disks = WMI::Win32_LogicalDisk.find(:all)
-    disks.select{|d| d.Description =~ /CD-ROM/} # hope this works...
   end
 
  end
 
-
  class GetDisk < JDialog
-   attr_reader :selected
+   attr_reader :selected_idx
    def initialize parent, options_array
      super parent, true
      
@@ -180,8 +216,9 @@ module SensibleSwing
      box.add_action_listener do |e|
        idx = box.get_selected_index
        if idx != 0
-        @selected = box.get_selected_item
-        dispose 
+        # don't count choosing the first as a real entry
+        @selected_idx = box.get_selected_index - 1
+        dispose
        end
      end
     
@@ -197,17 +234,7 @@ module SensibleSwing
  
 end
 
-require 'os'
-class String
- def to_filename
-   if OS.windows?
-     self.gsub('/', "\\")
-   else
-    self
-  end
- end
+if $0 == __FILE__
+  SensibleSwing::MainWindow.new.set_visible true
+  puts 'Please use the Sensible Cinema GUI window popup...'
 end
-
-SensibleSwing::MainWindow.new.set_visible true
-
-puts 'Please use the Sensible Cinema GUI window popup'

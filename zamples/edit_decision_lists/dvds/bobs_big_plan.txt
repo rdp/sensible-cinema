@@ -1,0 +1,13 @@
+mutes:
+  "1" : "1:07" # theme song is a bit loud at times.
+  "48:46" : "49:08" # theme song again
+  "29:14" : "30:46" # theme song again
+blank_outs:
+  # none
+
+title: Bob's Big Plan
+dvd_drive_label: BOBS_BIG_PLAN
+source: DVD (vlc)
+dvd_title_track: 1
+
+other_notes: could use more differentiation during the song, as I don't dislike *all* the music.

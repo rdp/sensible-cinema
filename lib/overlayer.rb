@@ -106,7 +106,7 @@ class OverLayer
         start2 = translate_string_to_seconds(start) if start
         endy2 = translate_string_to_seconds(endy) if endy
         if start2 == 0 || endy2 == 0 || start == nil || endy == nil
-          p 'warning--possible error in the scene descriptions file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
+          p 'warning--possible error in the Edit Decision List file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
           # drop this line into the bitbucket...
           next
         end
@@ -192,7 +192,7 @@ class OverLayer
       end
     end
     check_reload_yaml
-    time + state + "(r [or ctrl+c to quit]): "
+    time + state + "(r [ctrl+c or q to quit]): "
   end
 
   def keyboard_input char

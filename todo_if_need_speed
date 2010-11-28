@@ -1,0 +1,6 @@
+--server?  optionally higher process prio?
+convert to real java?
+when polling for bmp changes, just use two thin lines (if needed speed-wise?)
+call straight into GOCR [?]
+some funky video mirror so I can get bitmaps like in realtime [?]
+profile, optimize :P

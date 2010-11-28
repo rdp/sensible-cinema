@@ -2,72 +2,95 @@
 
 == probably next up+low prio ==
 
-  better timing for the saver-er...
+ preferences merger...hmm...
+ better timing for the saver-er...
     match better
     merge better
-  speed up unit tests
-
-== slightly lower than that even ==
-
+      try with a DVD...
+  
 == slightly lower than that ==
 
-  auto-select EDL
-
+  pass unit tests jruby
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
   unit test the GUI
-  can have collaborators re-selling EL's
-    good license for their stuff like "public domain" or what not :P
-    80/20
-  can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
-  a "big download" of the whole thing (so that people can actually use it without pain...batch file even would probably work splendidly...
-    leaner gem (size-wise...) but I guess some ability to have a zip downloader...hmm...
+  
   burnable to DVD/CD multi DVD, etc.
-    easily
-      automagically... (call into iso blah blah blah?)
+      automagically... (auto-burn insert your new disk!)
+      can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
     can lop off sections to save space (?)
-    can burn the extra sections, too?
+    can burn extras from the DVD, too?
+    transcode to condense...
+    split to allow?
   easy editor for this style of edit
-  split the two projects cleanly (project, distribution)
+  split the two projects somehow (project + distribution)
+    two releases: experimental, normal (no imagemagick)
   partner (Jon, Karlie if interested...give beta)
   survey/beta release
-  a certified clean list (?)
+  all dogs go to heaven ...
+  can blank out the video, with audio continuing through...
 
-== DVD backlog (unordered) ==
+== DVD monetary backlog (unordered) ==
+ 
+  make sure can work with very large DVD's...
+  can use a fast temp drive, save through to other :P
+    only prompt if have two...
+  pass a better title through when ripping so it doesn't just say dvd://1 always
+  can have collaborators re-selling EDL's
+    good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
+    80/20
+  .ts doesn't seem too awesome....
 
-some way to choose between x,y,z when auto-select sees several
-careful phrasing "if you can't afford it..."
-authorize instead of paypal?
-honest about DMCA (we don't distribute the cracker, we don't redistribute, don't perform any acts, etc.)
-if you burn you'll eventually be using a DMCA compatible player :P
-long list of players...we're not alone :)
-one part is probably not against copyright
-the authors of the program might not be liable for damages.  We don't feel dishonest about it, as long as 
-we own the DVD and have it with us when we watch the edited version.
+better icon...
+ensure file exists after we created it...and has a reasonable size, before declaring success
+      148 cars_widescreen_2006_edited.ps
+use DVD navigator ?
+  http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
+  with an avi file sink?
+authorize.net instead of paypal?
 blu-ray support somehow (real-time? rip?)
-
-some type of one click installer that can setup the registry...
+legal shtuff (LICENSE)
+some type of installer that can setup the registry...
 auto-assignment of EDL's to media:
-  auto-play option for DVD's (auto-start?)
-    use volume label differentiation
-    use spiffy differentiation for DVD's on windows
-  DVD's (right click on DVD player, play with SC?)
-a real website (github-y?)
-instructions on how to do their own (private) or do one and submit it (public), or email their friends :P
-double buffering hard drive/copying might speed things, if your HD is fast.
+  DVD's (right click on DVD player, rip with SC?)
+a real website
+instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
+double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
 personalized copier might be faster than the "type" command.
+merge with preferences
+For the monetized version: nothing but cut and paste, no merging et al
+mplayer EDL's
+add option to "just rip a DVD of your own straight full thing"
+avisynth?
+make the progress bar map "better" to the size of the various sections...
+detect these errors: dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
+per movie, various EDL's, one includes profanity, one just violence, one paranoid, etc.
+when there are several, it lets you just choose between the ones that are valid (?)
+some better ripper...
+  maybe rip all with VLC, then edit with...umm...uh...avisynth?
+  maybe it is bound by the same constrains mplayer is?
+
+ask VLC is "adding 0.23 expected?" "do you have the same constraints as mplayer?"
+ask VLC "fuzzy menus on the happiest baby dvd expected?"
+slightly faster copying possible (664 versus 887 seconds to combine them all together.)
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+  DVD's (right click on DVD player, play with SC?)
+    use spiffy differentiation for DVD's on windows
+speed up slow unit tests
+can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
+make the overlay window uncloseable (?)
+note that youtube "can" be downloaded then a local edited copy created, from that download. (mb add downloading ability?)
+a "certified clean" list (?)
 screencast of things helpful (use, creation...).
 tune up the levels...
 prototypes of the experimental stuff (overlay, track time while recording -> map file, specifiable levels, more?)
 
-the overlayer "freeze frames" in vista
-
-0:01:01.9 next will be at 0:01:02.0s (r [or q to quit]):
-0:01:04.0 next will be at 0:01:06.5s (blanked) (r [or q to quit]): "warning--unable to track screen time for some reason" # *of course you can't track it now!*
+fix:
+  0:01:01.9 next will be at 0:01:02.0s (r [or q to quit]):
+  0:01:04.0 next will be at 0:01:06.5s (blanked) (r [or q to quit]): "warning--unable to track screen time for some reason" # *of course you can't track it now!*
 
 byu.tv descriptor
 youtube non full screen: work with all browsers
@@ -78,25 +101,9 @@ a netflix player descriptor
 beep at them when not tracking [?]
   default on...hmm
 
-note that you are watching it using only bits and pieces of the original, similar to said bill.  And the
-authors of the program might not be cupable of copyright infringement themselves, since they distribute no infringed materials.
-
-Not responsible for your actions. Don't redistribute. "You run the risk on your own"
-"should the courts someday rule..."  If DVD next to me...
-
-install VLC from .msi where needed.  Pretty low prio...
-
-An 'edit preferences' button et al.
-
 Just fold if s....
 
-For the monetized version: nothing but cut and paste, no merging et al
-
 a descriptor for some closed source app player...
-
-when saving to hard drive, you can "insert" streams where desired (experimental version only)
-
-can save stuff "for review later" as they watch it,
 
 can "overlay-audio/video"
 
@@ -125,24 +132,20 @@ advertise on ruby flow
 
 DRY up :levels--it's in the ocr spec as well as the others...
 
-unit tests pass with normal ruby
+unit tests run with normal ruby
+
+back off on mouse jerking...only every so often?
+  maybe increase timings as you get farther along, to accomodate for drift?
 
 screen time change only detected... [unexpected] [rid myself of it]
 
-when polling for bmp changes, just use two lines (if needed speed-wise?)
-
-super duper VLC
-
-try new GOCR version...
-
-Do I *need* that other window always up or not? (Get rid of it...only do this after have a real window of my own though, that's always up)
+Do I *need* that other window always up or not? (Get rid of it?...only do this after have a real window of my own though, that's always up)
 
 preference for beeping at them, et al
 
-itunes video on demand
+itunes video on demand player
 
 blockbuster "rent" on demand player
-
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
@@ -162,25 +165,17 @@ an "online anybody can chat while watching this movie" (or anybody can edit this
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
-  a chrome plugin with imdb/community backing :)
   
-a known list of "compatible" imdb'ers...
-
 code refactors: "screen time change", order should be swapped in bin/x output (just cleanup)
 
-easier installer for windows: release a zip file that they can just click on a .bat file to run it
-  later: it installs/uninstalls appropo
-    suggestion: self-extractor
+easier installation for windows: self-extracting exe's :)
+  later: .msi?
 
 can blank overlay with added text like "and you are one awesome klingon"
 
 ability to record it from online/live, then apply edits.
 
-TSR that monitors "oh you're opening a VLC? you're playing the E drive? That's bob's big plan? You're maximized? Full screened? watching x on hulu? y on youtube?"
-
-add my stuff to imdb...? wiki?
-
-make youtube work if you have *several* open
+add my stuff to imdb...? make a wiki?
 
 user customizable levels...
   maybe even "I don't like ones that are x, y, z", or "boring level x"
@@ -215,9 +210,7 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare VLC (and other) timings with a real DVD player, and with netflix online, etc.
-
-overlay with an alpha transparent pic (?)
+compare VLC (and other) timings with a real DVD player, and with netflix instant, etc.
 
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
   or known parseable imdb's
@@ -225,17 +218,20 @@ Have a "list of all known movies (url's)" and be able to open (IE et al) to the 
 does my sweet heart have any suggestions? (make it work well for laymen)
 
 web browser plugin?
+  popups *inside* netflix "play this edited" ?
 
-Programmatically do all of the above, by driving VLC with its real API.
+Programmatically do all of the above, by driving VLC with libvlc (its API).
+  So this would be basically tracking VLC using its libvlc callbacks, instead of screen times
+  fork the Python project?
   VLC
     Allow it to record somehow (recordable)
     use VLC's web interface? telnet?
     optimize it with best appropriate iframes (LOL)
 
-integrate with google TV/bravia...maybe...somehow...boxxee? roku?
-  itunes TV? apple tv?
+integrate with google TV...bravia...maybe...somehow...boxxee? roku?
+  itunes TV? apple tv? ps3?
 
-OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does..
+OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does.
 
 --server?  optionally higher prio?
 
@@ -246,3 +242,5 @@ irb(main):002:0> a.seek 10_000_000_000
 irb(main):003:0> a.write 'b'
 => 1
 irb(main):004:0> a.close # freeze mri 1.9.2
+=======
+take out all require 'rubygems'ses
