@@ -1,5 +1,7 @@
 == medium ==
 
+  compare DVD with various players...
+  email that guy
 == probably next up+low prio ==
 
  preferences merger...hmm...
@@ -21,6 +23,7 @@
       can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
     can lop off sections to save space (?)
     can burn extras from the DVD, too?
+      optionally ?
     transcode to condense...
     split to allow?
   easy editor for this style of edit
@@ -32,7 +35,8 @@
   can blank out the video, with audio continuing through...
 
 == DVD monetary backlog (unordered) ==
- 
+
+better burning screencast
   make sure can work with very large DVD's...
   can use a fast temp drive, save through to other :P
     only prompt if have two...
@@ -42,6 +46,7 @@
     80/20
   .ts doesn't seem too awesome....
 
+k9 might preserve/shrink well...hmm...
 better icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
       148 cars_widescreen_2006_edited.ps
