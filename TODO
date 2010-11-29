@@ -1,9 +1,14 @@
 == medium ==
 
-  compare DVD with various players...
   email that guy
+  
 == probably next up+low prio ==
 
+ split the two projects somehow (project + distribution)
+    two releases: experimental, normal (no imagemagick)
+ compare DVD playback with various players...
+  check VLC ML
+    ask if this related: [015c24fc] main input error: Invalid PCR value in ES_OUT_SET_(GROUP_)PCR !
  preferences merger...hmm...
  better timing for the saver-er...
     match better
@@ -12,14 +17,15 @@
   
 == slightly lower than that ==
 
+rename bat as template.bat
   pass unit tests jruby
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
   unit test the GUI
   
-  burnable to DVD/CD multi DVD, etc.
-      automagically... (auto-burn insert your new disk!)
+  add an option "just save it to hard drive, well compressed..."
+  burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
       can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
     can lop off sections to save space (?)
     can burn extras from the DVD, too?
@@ -27,15 +33,14 @@
     transcode to condense...
     split to allow?
   easy editor for this style of edit
-  split the two projects somehow (project + distribution)
-    two releases: experimental, normal (no imagemagick)
   partner (Jon, Karlie if interested...give beta)
-  survey/beta release
+  beta release
   all dogs go to heaven ...
   can blank out the video, with audio continuing through...
 
 == DVD monetary backlog (unordered) ==
 
+check DVD patent expiration date
 better burning screencast
   make sure can work with very large DVD's...
   can use a fast temp drive, save through to other :P
@@ -74,14 +79,20 @@ per movie, various EDL's, one includes profanity, one just violence, one paranoi
 when there are several, it lets you just choose between the ones that are valid (?)
 some better ripper...
   maybe rip all with VLC, then edit with...umm...uh...avisynth?
-  maybe it is bound by the same constrains mplayer is?
+  maybe vlc is bound by the same constrains mplayer is?
+  maybe rip it to a more precise encoding, then edit it?
 
 ask VLC is "adding 0.23 expected?" "do you have the same constraints as mplayer?"
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
 slightly faster copying possible (664 versus 887 seconds to combine them all together.)
+@mplayer "when it says nearest keyframe, that could be in the future?" 
+@mplayer "when I say play for 3.2, and the keyframe is 0.5 before, does it end up playing for 3.2 or 3.7?"
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+
+@mplayer and VLC "you should seek better, like the ogg vorbis fellas recommend..."
+report to jruby "when one thread dies, the GUI becomes unresponsive" (and others already previously reported to ruby-forum.com...)
   DVD's (right click on DVD player, play with SC?)
     use spiffy differentiation for DVD's on windows
 speed up slow unit tests
