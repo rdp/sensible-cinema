@@ -1,3 +1,7 @@
+== 0.14.8 ==
+
+Fix some copying bugs.
+
 == 0.14.6 ==
 
 Auto-select EDL depending on which disk they have.
