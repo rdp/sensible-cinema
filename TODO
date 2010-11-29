@@ -243,7 +243,6 @@ Programmatically do all of the above, by driving VLC with libvlc (its API).
   So this would be basically tracking VLC using its libvlc callbacks, instead of screen times
   fork the Python project?
   VLC
-    Allow it to record somehow (recordable)
     use VLC's web interface? telnet?
     optimize it with best appropriate iframes (LOL)
 
@@ -262,4 +261,6 @@ irb(main):003:0> a.write 'b'
 => 1
 irb(main):004:0> a.close # freeze mri 1.9.2
 =======
-take out all require 'rubygems'ses
+take out all require 'rubygems'ses...
+
+package with portable imagemagick
