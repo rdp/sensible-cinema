@@ -6,7 +6,8 @@ ENV['PATH'] = im_path.to_filename + ';' + ENV['PATH']
 
 if RubyWhich.new.which('identify').length == 0 || RubyWhich.new.which('convert').length == 0
  # for gem users, so I don't have to bundle it :P
- raise 'appears you do not have imagemagick installed (or not in your path) -- please install it! http://www.imagemagick.org/script/binary-releases.php'
+ puts 'appears you do not have imagemagick installed (or not in your path) -- please install it first! http://www.imagemagick.org/script/binary-releases.php'
+ sleep 100
 end
 
 # helper for OCR'ing single digits that were screen captured
