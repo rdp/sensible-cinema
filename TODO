@@ -24,6 +24,8 @@ rename bat as template.bat
     IMDB easy mapping
   unit test the GUI
   
+popup "you may now watch": bring it to the front...
+  
   add an option "just save it to hard drive, well compressed..."
   burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
       can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
@@ -40,6 +42,7 @@ rename bat as template.bat
 
 == DVD monetary backlog (unordered) ==
 
+auto-zip it with my rake task :)
 check DVD patent expiration date
 better burning screencast
   make sure can work with very large DVD's...
