@@ -7,13 +7,11 @@ add new players, and probably wouldn't be too hard to add more operating systems
 
 == How to Use ==
 
-Start playing your movie in its respective player, then startup sensible-cinema from
-the command line thus:
+Start playing your movie in its respective player, then startup sensible-cinema by running the file
+run_sensible_cinema.bat
 
-     C:\> jruby -S sensible-cinema
-
-It prompts you for an EL (Edit decision List) file (ex: bambi.txt), 
-and then for a player file (ex: hulu_full_screen.txt).
+It prompts you for an EDL (Edit decision List) file (ex: bambi.txt), 
+and also for a player file (ex: hulu_full_screen.txt).
 
 Sensible-cinema will now run in a console window, screen tracking the player to monitor its position,
 and react'ing appropriately.
@@ -25,21 +23,14 @@ in the playback), the screen output in sensible-cinema's console should change t
 
 == How to install ==
 
-First you'll need to install jruby (in case you haven't already), from http://www.jruby.org
-Make sure you check the box "add it to my path" or something similar to that.
+You'll need to install imagemagick first: http://www.imagemagick.org/script/binary-releases.php
 
-Next install the gem by either opening up the command window or hitting windows+r (run) and typing
-
-       C:\> jruby -S gem install sensible-cinema 
-
-  it's jruby only currently (since jruby allows for proper thread concurrency, has an easy GUI, and feels actually sane on windows).
-  It could theoretically be ported to MRI 1.9.2, if anybody wanted to do so.
-  Also if anybody would be interested in porting this to Linux I'd be happy to collaborate.
+Next go and get the program: http://rogerdpack.t28.net
   
 You can test that it's installed by running it (see above) and selecting the "example_edit_decision_list.txt", and 
 choosing the hulu player.
 
-It will proceed do a few "demo" mutes and blank outs.
+It will show you a few "demo" mutes and blank outs.
 
 == FAQ ==
 
@@ -77,7 +68,11 @@ A. This enables your player to keep its on-screen time tracker, which in turn al
 You could specify the scene descriptions list and player list on the command-line, if you don't want to have
 to pick them each time, like:
 
-     C:\> jruby -S sensible-cinema edit_decision_list.yml player_description.yml
+first install jruby, then
+
+C:\> jruby -S gem install sensible-cinema (double check if that gives you the latest version)
+
+C:\> jruby -S sensible-cinema edit_decision_list.yml player_description.yml
 
 Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
 You can also specify -v or -t if you want to enable more verbose (chatty) output.
