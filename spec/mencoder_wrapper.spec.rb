@@ -48,4 +48,10 @@ describe MencoderWrapper do
     end
   end
   
+  it "should not insert an extra pause if a mute becomes a blank" do
+    settings = {"mutes"=>{1=>2}, "blank_outs"=>{"2"=>"3"}}
+    out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here'
+    out.should_not match(/-endpos 0.0/)
+  end
+  
 end
