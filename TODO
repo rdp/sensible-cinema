@@ -4,12 +4,13 @@
 
  split the two projects somehow (project + distribution)
     two releases: experimental, normal (no imagemagick)
- preferences merger...hmm...
+ preferences merger...hmm...;
  use mencoder keyint on rip.
    try it out, can it rip?  Can it merge? well?
-     re-do various things I have :P
-  compare DVD playback with physical player...
-  
+     re-do various EDL's I have :P
+  compare computer DVD playback with physical player...
+  @mencoder.exe distributor: OCI plz? puh-lease?
+
 == slightly lower than that ==
 
   pass unit tests jruby
@@ -23,28 +24,26 @@
   partner (Jon, Karlie if interested...give beta)
     create lotsa filters
   beta release
+  some better ripper...
+    maybe vlc is bound by the same constrains mplayer is?
+    maybe rip it to a more precise encoding, then edit it?
 
 == DVD monetary backlog (unordered) ==
 
+@dvd flick do you need that frequent i-frames?
   rename bat as template.bat
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
   all dogs go to heaven ...
   can blank out the video, with audio continuing through...
-burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
-    can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
-  can lop off sections to save space (?)
-  can burn extras from the DVD, too?
-    optionally ?
-  transcode to condense...
-  split to allow?
 add an option "just save full disk (unedited) to hard drive, well compressed..."
 @VLC: hard crash when ripping that one DVD...long one, about the constitution...
 auto-zip it with my rake task :)
 check DVD patent expiration date
 better burning screencast
-  make sure can work with very large DVD's...
+
+make sure can work with very large DVD's...
   can use a fast temp drive, save through to other :P
     only prompt if have two...
   pass a better title through when ripping so it doesn't just say dvd://1 always
@@ -53,7 +52,7 @@ better burning screencast
     80/20
   .ts doesn't seem too awesome....
 
-k9 might preserve/shrink well...hmm...
+k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
 better icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
       148 cars_widescreen_2006_edited.ps
@@ -76,19 +75,23 @@ mplayer EDL's
 add option to "just rip a DVD of your own straight full thing"
 avisynth?
 make the progress bar map "better" to the size of the various sections...
-detect these errors: dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
+detect occurrence of these type errors: dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
 per movie, various EDL's, one includes profanity, one just violence, one paranoid, etc.
 when there are several, it lets you just choose between the ones that are valid (?)
-some better ripper...
-  maybe rip all with VLC, then edit with...umm...uh...avisynth?
-  maybe vlc is bound by the same constrains mplayer is?
-  maybe rip it to a more precise encoding, then edit it?
 
 ask VLC is "adding 0.23 expected?" "do you have the same constraints as mplayer?"
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
 slightly faster copying possible (664 versus 887 seconds to combine them all together.)
 @mplayer "when it says nearest keyframe, that could be in the future?" 
 @mplayer "when I say play for 3.2, and the keyframe is 0.5 before, does it end up playing for 3.2 or 3.7?"
+burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
+    can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
+  can lop off sections to save space (?)
+  can burn extras from the DVD, too?
+    optionally ?
+  transcode to condense...
+  split to allow?
+
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
@@ -142,11 +145,12 @@ run it off a normal person (hulu, DVD). rinse and repeat
 
 advertise on ruby flow
 
-"ripperzy-ize"
+"ripperzy-ize" (low prio)
     can record from online [huh? do I even want this?]
       maybe can record something, then extract the bad, and get a better looking video...
       low prio
       remove commercials?
+        myth cutlist?
 
 DRY up :levels--it's in the ocr spec as well as the others...
 
@@ -154,10 +158,6 @@ unit tests run with normal ruby
 
 back off on mouse jerking...only every so often?
   maybe increase timings as you get farther along, to accomodate for drift?
-
-screen time change only detected... [unexpected] [rid myself of it]
-
-Do I *need* that other window always up or not? (Get rid of it?...only do this after have a real window of my own though, that's always up)
 
 preference for beeping at them, et al
 
@@ -169,7 +169,7 @@ no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
     probably only possible after creating the desktop streamer hmm
 
-no popularizing it for now, I guess
+no releasing experimental for now, I guess
 
 integrate with librivox' audio so you can avoid profanity in classics.  Somehow.  This would be nice for portable players.
   You know, for static things like this, a 'pre-cutter' would sure be convenient...
@@ -177,7 +177,7 @@ integrate with librivox' audio so you can avoid profanity in classics.  Somehow.
   
 itunes player for profanity (music)?
 
-make a list of "known clean" movies or what not...hmm...
+make a list of "known clean" movies...hmm...
 
 an "online anybody can chat while watching this movie" (or anybody can edit this wav and listen to it as overlay...) prefer the latter.
 
@@ -262,4 +262,6 @@ irb(main):004:0> a.close # freeze mri 1.9.2
 =======
 take out all require 'rubygems'ses...
 
-package with portable imagemagick
+package with portable imagemagick (meh)
+
+make a "book edit list" (word x is at position y...)
