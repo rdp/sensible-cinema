@@ -13,8 +13,8 @@
 
 == slightly lower than that ==
 
-  pass unit tests jruby
   unit test the GUI
+  no subtitles on national treasure...
   
   ask if there's a "cross platform way to split files accurately" besides my hacky kludge.
 
@@ -35,9 +35,11 @@
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
-  all dogs go to heaven ...
+  all dogs go to heaven...
   can blank out the video, with audio continuing through...
-add an option "just save full disk (unedited) to hard drive, well compressed..."
+add an option "just save full disk (unedited) to hard drive..."
+  add an option "just save full disk (edited) to hard drive...well compressed"
+    or do we want to do that by default anyway? (does it help burning? it helps with file size...hmm...)
 @VLC: hard crash when ripping that one DVD...long one, about the constitution...
 auto-zip it with my rake task :)
 check DVD patent expiration date
@@ -91,10 +93,11 @@ burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     optionally ?
   transcode to condense...
   split to allow?
-
+@smplayer: playing DVD's doesn't work currently
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+pass unit tests again jruby
 
 @mplayer and VLC "you should seek better, like the ogg vorbis fellas recommend..."
 report to jruby "when one thread dies, the GUI becomes unresponsive" (and others already previously reported to ruby-forum.com...)
