@@ -62,9 +62,11 @@ describe MencoderWrapper do
     print @out
   end
   
-  it "should do blanks" do
+  it "should avoid blanks" do
     setup
     @out.should_not include('-ss 2.0 -endpos 1.0')
+    # and not be freaky
+    @out.should_not match(/-endpos \d{6}.*nosound/)
   end
   
 end

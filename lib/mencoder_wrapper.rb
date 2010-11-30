@@ -15,13 +15,13 @@ class MencoderWrapper
         end
         # type is either mute or :blank or :mute
         if type == :blank
-         # do nothing... muhaha
+         # do nothing... clip will be avoided
         else
-          out += get_section start, endy, true, idx, to_here_final_file
+          out += get_section start, endy, idx, true, to_here_final_file
         end
         previous_end = endy
       }
-      out += get_section previous_end, 1_000_000, false, combined.length, to_here_final_file      
+      out += get_section previous_end, 1_000_000, combined.length, false, to_here_final_file
       out += "mencoder #{to_here_final_file}.avi.* -o #{to_here_final_file}\n"
       out += "@rem del #{@big_temp}\n" # LODO
       partials = (0..(combined.length)).map{|n| "#{to_here_final_file}.avi.#{n}"}
@@ -30,7 +30,7 @@ class MencoderWrapper
     end
     
     def get_section start, endy, idx, should_mute, to_here_final_file
-      raise if start == endy # should never happen...
+      raise if start == endy # should never be able to happen...
       "mencoder #{@big_temp} -ss #{start} -endpos #{endy - start} -o #{to_here_final_file}.avi.#{idx} -ovc copy #{should_mute ? " -nosound" : "-oac copy"}\n"
     end
   
