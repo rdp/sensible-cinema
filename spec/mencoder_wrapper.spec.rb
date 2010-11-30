@@ -69,4 +69,9 @@ describe MencoderWrapper do
     @out.should_not match(/-endpos \d{6}.*nosound/)
   end
   
+  it "should lop off a fraction of a second" do
+    setup
+    @out.should match(/-endpos 0.999/)
+  end
+  
 end

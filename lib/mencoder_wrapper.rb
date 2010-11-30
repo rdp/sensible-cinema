@@ -31,7 +31,8 @@ class MencoderWrapper
     
     def get_section start, endy, idx, should_mute, to_here_final_file
       raise if start == endy # should never be able to happen...
-      "mencoder #{@big_temp} -ss #{start} -endpos #{endy - start} -o #{to_here_final_file}.avi.#{idx} -ovc copy #{should_mute ? " -nosound" : "-oac copy"}\n"
+      # delete 0.001 as per wiki's suggestion.
+      "mencoder #{@big_temp} -ss #{start} -endpos #{endy - start - 0.001} -o #{to_here_final_file}.avi.#{idx} -ovc copy #{should_mute ? " -nosound" : "-oac copy"}\n"
     end
   
   end
