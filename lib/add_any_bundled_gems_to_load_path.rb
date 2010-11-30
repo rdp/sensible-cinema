@@ -1,6 +1,6 @@
 
 def add_any_bundled_gems_to_load_path
-  raise unless File.directory? 'vendor'
+  raise 'no vendor dir?' unless File.directory? 'vendor'
   if File.directory? 'vendor/cache'
     Dir['vendor/cache/**/lib'].each{|lib_dir|
       $: << lib_dir

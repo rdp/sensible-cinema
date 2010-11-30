@@ -53,11 +53,9 @@ class VLCProgrammer
     }
     
     combined.select{|start, endy, type|
-     start != nil
+     (start != nil) && (endy > start) # ignore mutes wholly contained within blanks...
     }
-
   end
-  
 
   def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil, dvd_title_name = nil
   
@@ -73,8 +71,8 @@ class VLCProgrammer
     idx = 0
 
     combined.each{|start, endy, type|
-      next unless start
-      next if endy <= start # ignore mutes wholly contained within blanks
+     # next unless start
+      #next if endy <= start 
       real_start = start # NB that this fails with VLC or mplayer, because of i-frame difficulties (google mencoder start time)
       if previous_end != start
         # play 'uncut' up to next "questionable section"

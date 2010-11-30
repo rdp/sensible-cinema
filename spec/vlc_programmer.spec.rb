@@ -97,10 +97,6 @@ describe 'VLC Programmer' do
     puts 'run it like $ mute5-10.bat'
   end
   
-  it "should modify path to have VLC available" do
-    ENV['PATH'].should include("VideoLAN")
-  end
-  
-  it "should produce a workable non VLC playable file"
+  it "should produce a file playable by windows media player"
   
 end
