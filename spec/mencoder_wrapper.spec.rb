@@ -26,10 +26,6 @@ describe MencoderWrapper do
     @out.should include("-oac copy")
   end
   
-  it "should concatenate them all together" do
-    @out.should match(/mencoder.*\*/)
-  end
-  
   it "should accomodate for mutes" do
     @out.should match(/ -nosound/)
   end
@@ -38,8 +34,18 @@ describe MencoderWrapper do
     @out.should include(".avi ")
   end
   
+  it "should concatenate them all together" do
+    @out.should match(/mencoder.*\*/)
+  end
+  
   it "should delete any large, grabbed tmp file" do
     @out.should match(/del.*tmp/)
+  end
+  
+  it "should delete any partials" do
+    0.upto(5) do |n|
+      @out.should  match(Regexp.new(/del.*#{n}/))
+    end
   end
   
 end

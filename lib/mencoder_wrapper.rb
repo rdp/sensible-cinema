@@ -23,6 +23,7 @@ class MencoderWrapper
       out += "mencoder #{to_here_final_file}.avi.* -o #{to_here_final_file}\n"
       out += "@rem del #{@big_temp}\n"
       partials = (0..(combined.length)).map{|n| "#{to_here_final_file}.avi.#{n}"}
+      out += "del " + partials.join(' ')
       
       # TODO delete all partials......
       # TODO 
