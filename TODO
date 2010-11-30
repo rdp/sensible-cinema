@@ -2,12 +2,12 @@
   
 == probably next up+low prio ==
 
- split the two projects somehow (project + distribution)
-    two releases: experimental, normal (no imagemagick)
- preferences merger...hmm...;
  use mencoder keyint on rip.
    try it out, can it rip?  Can it merge? well?
      re-do various EDL's I have :P
+ split the two projects somehow (project + distribution)
+    two releases: experimental, normal (no imagemagick)
+ preferences merger...hmm...;
   compare computer DVD playback with physical player...
   @mencoder.exe distributor: OCI plz? puh-lease?
 
