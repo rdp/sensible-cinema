@@ -7,7 +7,7 @@ class MencoderWrapper
     def get_bat_commands these_mutes, this_drive, to_here_final_file
       combined = VLCProgrammer.convert_incoming_to_split_sectors these_mutes
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
-      out = "mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} \n"
+      out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} \n"
       previous_end = 0
       @idx = 0
       combined.each {|start, endy, type|
@@ -23,11 +23,11 @@ class MencoderWrapper
         previous_end = endy
       }
       out += get_section previous_end, 1_000_000, false, to_here_final_file
-      partials = (0..@idx).map{|n| "#{to_here_final_file}.avi.#{n}"}
+      partials = (1..@idx).map{|n| "#{to_here_final_file}.avi.#{n}"}
       
       out += "del #{to_here_final_file}\n"
       #out += "copy /b #{partials.join('+')} #{to_here_final_file}\n"
-      out += "mencoder #{to_here_final_file}.avi.* -o #{to_here_final_file} -ovc copy -oac copy\n"
+      out += "mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       out += "@rem del #{@big_temp}\n" # LODO
       
       out += "@rem del " + partials.join(' ') + "\n"# LODO

@@ -37,18 +37,20 @@ describe MencoderWrapper do
     @out.should include(".avi ")
   end
   
-  it "should concatenate them all together" do
-    @out.should match(/mencoder.*\*.*ovc.*oac/)
+  it "should concatenate (merge) them all together" do
+    @out.should match(/mencoder.*ovc.*oac/)
   end
   
   it "should delete any large, grabbed tmp file" do
     @out.should match(/del.*tmp/)
   end
   
-  it "should delete any partials" do
+  it "should delete all partials" do
     0.upto(5) do |n|
       @out.should match(Regexp.new(/del.*#{n}/))
     end
+    # should delete the right numbers, too
+    @out.should_not match(/del to_here.avi.avi.0/)
   end
   
   def setup
@@ -63,14 +65,14 @@ describe MencoderWrapper do
     File.write('out.bat', @out)
   end
   
-  it "should avoid blanks" do
+  it "should not include blank sections" do
     setup
     @out.should_not include('-ss 2.0 -endpos 1.0')
-    # and not be freaky
+    # and not be freaky by setting the end to nosound
     @out.should_not match(/-endpos \d{6}.*nosound/)
   end
   
-  it "should lop off a fraction of a second" do
+  it "should lop off a fraction of a second per segment, as per wiki instructions" do
     setup
     @out.should match(/-endpos 0.999/)
   end
