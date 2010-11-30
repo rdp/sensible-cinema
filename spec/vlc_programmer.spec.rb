@@ -84,12 +84,12 @@ describe 'VLC Programmer' do
     bat_file.scan(/playlist/i).length.should == 0
     bat_file.scan(/--no-sout-audio/).length.should == 1
     bat_file.scan(/\n/).length.should be > 2
-    bat_file.scan(/go.ps.1.* go.ps.2/).length.should == 2
+    bat_file.scan(/go.ps.1\+go.ps.2/).length.should == 1
     bat_file.scan(/go.ps.4/).length.should == 0
     bat_file.scan(/--start-time/).length.should == 3
     bat_file.scan(/quit/).length.should == 3
-    bat_file.scan(/type/).length.should == 1
-    bat_file.scan(/rm go.ps.1/).length.should == 1
+    bat_file.scan(/copy \/b/).length.should == 1
+    bat_file.scan(/del go.ps.1/).length.should == 1
     bat_file.scan(/echo/).length.should == 1
     # should not have extra popups...
     bat_file.scan(/--qt-start-minimized/i).length.should == 3

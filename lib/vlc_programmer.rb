@@ -6,13 +6,8 @@ class VLCProgrammer
     @overlayer ||= OverLayer.allocate
     @overlayer.translate_time_to_human_readable s
   end
-
-  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil, dvd_title_name = nil
   
-    @drive = drive_with_slash || "e:\\"
-    @filename_or_playlist_if_nil = filename
-    @dvd_title_track = dvd_title_track || "1"
-    @dvd_title_name = dvd_title_name
+  def self.convert_incoming_to_split_sectors incoming
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :mute]}
@@ -56,7 +51,22 @@ class VLCProgrammer
         raise 'unexpected'
       end
     }
+    
+    combined.select{|start, endy, type|
+     start != nil
+    }
 
+  end
+  
+
+  def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil, dvd_title_name = nil
+  
+    @drive = drive_with_slash || "e:\\"
+    @filename_or_playlist_if_nil = filename
+    @dvd_title_track = dvd_title_track || "1"
+    @dvd_title_name = dvd_title_name
+    combined = convert_incoming_to_split_sectors incoming
+    
     out = get_header
 
     previous_end = 0
@@ -65,7 +75,7 @@ class VLCProgrammer
     combined.each{|start, endy, type|
       next unless start
       next if endy <= start # ignore mutes wholly contained within blanks
-      real_start = start + 0.23 # current guess as to how to get VLC to play back chunks that match...
+      real_start = start # NB that this fails with VLC or mplayer, because of i-frame difficulties (google mencoder start time)
       if previous_end != start
         # play 'uncut' up to next "questionable section"
         out += get_section("#{@dvd_title_name} : #{to_english previous_end} to #{to_english start} (clean)", previous_end, real_start, idx += 1)
@@ -127,7 +137,7 @@ class VLCProgrammer
     # concat
     line = 'copy /b ' + files.join('+')
     line += " #{@filename_or_playlist_if_nil}.ps\n"    
-    # LODO line += "rm " + files.join(' ') + "\n"
+    line += "@rem del " + files.join(' ') + "\n" # LODO!
     line += "echo Done--you may now watch file #{filename}.ps in VLC player"
    end
     
