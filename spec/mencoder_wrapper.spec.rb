@@ -12,10 +12,21 @@ describe MencoderWrapper do
     @out.should_not be nil
     @out.should include("e:\\")
   end
+  it "should use newline" do
+    @out.should include("\n")
+  end
   
   it "should use start and stop times" do
     @out.should include(" -ss ")
     @out.should include(" -endpos ")
+  end
+  
+  it "should have what looks like a working mencoder command" do
+    @out.should include("-avc copy")
+  end
+  
+  it "should concatenate them all together" do
+    @out.should match(/mencoder.*\*/)
   end
   
 end

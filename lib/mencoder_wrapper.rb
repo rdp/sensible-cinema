@@ -12,20 +12,22 @@ class MencoderWrapper
       previous_end = 0
       combined.each_with_index{|(start, endy, type), idx|
         # TODO test no intermediate section if blank follows blank et al
-        out += get_section previous_end, start, false, to_here_final_file
-        out += get_section start, endy, type == :mute, to_here_final_file
+        out += get_section previous_end, start, idx, false, to_here_final_file
+        out += get_section start, endy, type == :mute, idx, to_here_final_file
         previous_end = endy
       }
-      out += get_section previous_end, 1_000_000, false, to_here_final_file
+      out += get_section previous_end, 1_000_000, false, combined.length, to_here_final_file
       # TODO join them all together
-      #out += 
+      out += "mencoder #{to_here_final_file}.tmp.* -o #{to_here_final_file}\n"
       out += "@rem del #{to_here_final_file}.tmp"
+      # TODO delete olds...
       out
     end
     
-    def get_section start, endy, should_mute, to_here_final_file
+    def get_section start, endy, idx, should_mute, to_here_final_file
       # type is either mute or :blank or :mute
-      "mencoder #{to_here_final_file}.tmp -ss #{start} -endpos #{endy - start}"
+      # TODO should mute
+      "mencoder #{to_here_final_file}.tmp -ss #{start} -endpos #{endy - start} -o #{to_here_final_file}.tmp.#{idx} -ovc copy -avc copy\n"
     end
   
   end
