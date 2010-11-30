@@ -22,11 +22,24 @@ describe MencoderWrapper do
   end
   
   it "should have what looks like a working mencoder command" do
-    @out.should include("-avc copy")
+    @out.should include("-ovc copy")
+    @out.should include("-oac copy")
   end
   
   it "should concatenate them all together" do
     @out.should match(/mencoder.*\*/)
+  end
+  
+  it "should accomodate for mutes" do
+    @out.should match(/ -nosound/)
+  end
+  
+  it "should use avi extension" do
+    @out.should include(".avi ")
+  end
+  
+  it "should delete any large, grabbed tmp file" do
+    @out.should match(/del.*tmp/)
   end
   
 end
