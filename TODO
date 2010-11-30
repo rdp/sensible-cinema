@@ -16,6 +16,8 @@
     IMDB easy mapping
   unit test the GUI
   
+  ask if there's a "cross platform way to split files accurately" besides my hacky kludge.
+  
   burnable to DVD/CD multi DVD, etc.
       automagically... (auto-burn insert your new disk!)
       can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
