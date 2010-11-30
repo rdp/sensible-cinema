@@ -30,7 +30,8 @@ describe MencoderWrapper do
   end
   
   it "should accomodate for mutes" do
-    @out.should match(/ -nosound/)
+    # mutes by silencing...seems reasonable, based on the Family Law
+    @out.should match(/ -af volume=-200/)
   end
   
   it "should use avi extension" do
@@ -69,7 +70,7 @@ describe MencoderWrapper do
     setup
     @out.should_not include('-ss 2.0 -endpos 1.0')
     # and not be freaky by setting the end to nosound
-    @out.should_not match(/-endpos \d{6}.*nosound/)
+    @out.should_not match(/-endpos \d{6}.*volume/)
   end
   
   it "should lop off a fraction of a second per segment, as per wiki instructions" do
