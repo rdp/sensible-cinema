@@ -119,7 +119,7 @@ module SensibleSwing
       if should_save_file
         fc = JFileChooser.new 
         # LODO allow for spaces in the save to file
-        fc.set_dialog_title "Pick where to save the file to"
+        fc.set_dialog_title "Pick where to save #{dvd_title || "the file"} edited to"
         save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
         fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
         save_to = fc.go
@@ -178,7 +178,7 @@ module SensibleSwing
         system show_file
         self.close
       else
-        JOptionPane.showMessageDialog(nil, " Failed--please examine #{temp_file} and screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
+        JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
    end
   

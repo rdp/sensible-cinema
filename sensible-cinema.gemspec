@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.14.7"
+  s.version = "0.14.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-11-25}
+  s.date = %q{2010-11-29}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -28,6 +28,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
+    "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "gplv3.txt",
     "lib/add_any_bundled_gems_to_load_path.rb",
@@ -113,10 +114,11 @@ Gem::Specification.new do |s|
     "vendor/gocr049.exe",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/White Christmas.txt",
-    "zamples/edit_decision_lists/dvds/all_dogs_go_to_heaven_dvd.txt",
+    "zamples/edit_decision_lists/dvds/all_dogs_go_to_heaven.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
     "zamples/edit_decision_lists/dvds/cars_disney.txt",
-    "zamples/edit_decision_lists/dvds/happy_feet_dvd.txt",
+    "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
+    "zamples/edit_decision_lists/dvds/happy_feet.txt",
     "zamples/edit_decision_lists/dvds/labyrinth.txt",
     "zamples/edit_decision_lists/dvds/making marriage work.txt",
     "zamples/edit_decision_lists/example_edit_decision_list.txt",
