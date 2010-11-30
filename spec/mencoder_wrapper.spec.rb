@@ -38,7 +38,7 @@ describe MencoderWrapper do
   end
   
   it "should concatenate them all together" do
-    @out.should match(/mencoder.*\*/)
+    @out.should match(/mencoder.*\*.*ovc.*oac/)
   end
   
   it "should delete any large, grabbed tmp file" do
@@ -52,14 +52,15 @@ describe MencoderWrapper do
   end
   
   def setup
-    settings = {"mutes"=>{1=>2}, "blank_outs"=>{"2"=>"3"}}
-    @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here'
+    settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
+    @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
   end
   
   it "should not insert an extra pause if a mute becomes a blank" do
     setup
     @out.should_not match(/-endpos 0.0/)
     print @out
+    File.write('out.bat', @out)
   end
   
   it "should avoid blanks" do
@@ -72,6 +73,12 @@ describe MencoderWrapper do
   it "should lop off a fraction of a second" do
     setup
     @out.should match(/-endpos 0.999/)
+  end
+  
+  it "should not have doubles" do
+    setup  
+    @out.scan(/-endpos.*-o to_here.avi.avi.1/).length.should == 1
+    @out.scan(/-endpos.*-o to_here.avi.avi.2/).length.should == 1
   end
   
 end
