@@ -12,8 +12,11 @@ describe MencoderWrapper do
     @out.should_not be nil
     @out.should include("e:\\")
   end
-  it "should use newline" do
+  
+  it "should use newline every line" do
     @out.should include("\n")
+    @out.should_not match(/mencoder.*mencoder/)
+    @out.should_not match(/del.*del/)
   end
   
   it "should use start and stop times" do
@@ -44,14 +47,24 @@ describe MencoderWrapper do
   
   it "should delete any partials" do
     0.upto(5) do |n|
-      @out.should  match(Regexp.new(/del.*#{n}/))
+      @out.should match(Regexp.new(/del.*#{n}/))
     end
   end
   
-  it "should not insert an extra pause if a mute becomes a blank" do
+  def setup
     settings = {"mutes"=>{1=>2}, "blank_outs"=>{"2"=>"3"}}
-    out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here'
-    out.should_not match(/-endpos 0.0/)
+    @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here'
+  end
+  
+  it "should not insert an extra pause if a mute becomes a blank" do
+    setup
+    @out.should_not match(/-endpos 0.0/)
+    print @out
+  end
+  
+  it "should do blanks" do
+    setup
+    @out.should_not include('-ss 2.0 -endpos 1.0')
   end
   
 end
