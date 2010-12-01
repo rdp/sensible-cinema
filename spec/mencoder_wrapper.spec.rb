@@ -62,7 +62,6 @@ describe MencoderWrapper do
   it "should not insert an extra pause if a mute becomes a blank" do
     setup
     @out.should_not match(/-endpos 0.0/)
-    print @out
     File.write('out.bat', @out)
   end
   
@@ -82,6 +81,16 @@ describe MencoderWrapper do
     setup  
     @out.scan(/-endpos.*-o to_here.avi.avi.1/).length.should == 1
     @out.scan(/-endpos.*-o to_here.avi.avi.2/).length.should == 1
+  end
+  
+  it "should allow for subsections" do
+     settings = {"mutes"=>{15=>20, 30 => 35}}
+     out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'
+     out.should_not include("35")
+     out.should_not include(" 0 ")
+     out.should include("14")
+     out.should include("-endpos 24.99")
+     out.should_not include("99999")
   end
   
 end
