@@ -1,4 +1,8 @@
-require 'sane'
+if $0 == __FILE__
+  require 'rubygems'
+  require 'sane'
+end
+
 require_relative 'vlc_programmer'
 
 class MencoderWrapper
@@ -13,11 +17,11 @@ class MencoderWrapper
         start_here = OverLayer.translate_string_to_seconds(start_here)
         end_here   = OverLayer.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
-        raise Exception.new('unable to find any edit decisions to do within that range') unless combined.length > 0
-        previous_end = start_here
-      else
-        previous_end = 0
+        # it's relative now, since we rip from not the beginning
+        combined.map!{|start, endy, type| [start - start_here, endy - start_here, type]}
+#        raise Exception.new('unable to find any edit decisions to do within that range') unless combined.length > 0
       end
+      previous_end = 0
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
       out = ""
       out += "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} "
@@ -70,8 +74,10 @@ end
 if $0 == __FILE__
   require 'rubygems'
   require 'sane'
-  puts 'syntax: yaml_file_name e:\ to_here.avi 00:15 (start) 00:25 (end)'
+  puts 'syntax: yaml_file_name d:\ to_here.avi 00:15 (start) 00:25 (end)'
   a = YAML.load_file ARGV.shift
-  File.write('range.bat', MencoderWrapper.get_bat_commands(a, *ARGV))
+  drive = ARGV.shift
+  raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
+  File.write('range.bat', MencoderWrapper.get_bat_commands(a, drive, *ARGV))
   print 'wrote range.bat'
 end

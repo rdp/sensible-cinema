@@ -86,15 +86,18 @@ describe MencoderWrapper do
   context 'pinpointing sections' do
     before do
      settings = {"mutes"=>{15=>20, 30 => 35}}
-     @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'
-      
+     @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'  
     end
+    
     it "should allow for subsections" do
      @out.should_not include("-endpos 34.99")
-     @out.should_not include(" 0 ")
      @out.should include("14")
      @out.should_not include("99999")
-     @out.should include("-ss 14.0 -endpos 0.999")
+     # should all be relative to the start time...
+     @out.should include(" 0 ") # no start at 0 even
+     @out.should include("-ss 0 -endpos 0.999")
+     @out.should include("-ss 1.0 -endpos 4.999")
+     @out.should include("-ss 1.0")
   end
   
   it 'should originally rip just the desired section' do
