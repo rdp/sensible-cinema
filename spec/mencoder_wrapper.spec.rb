@@ -55,14 +55,13 @@ describe MencoderWrapper do
   end
   
   def setup
-    settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
-    @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
+    @settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
+    @out = MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here.avi'
   end
   
   it "should not insert an extra pause if a mute becomes a blank" do
     setup
     @out.should_not match(/-endpos 0.0/)
-    print @out
     File.write('out.bat', @out)
   end
   
@@ -82,6 +81,21 @@ describe MencoderWrapper do
     setup  
     @out.scan(/-endpos.*-o to_here.avi.avi.1/).length.should == 1
     @out.scan(/-endpos.*-o to_here.avi.avi.2/).length.should == 1
+  end
+  
+  it "should allow for subsections" do
+     settings = {"mutes"=>{15=>20, 30 => 35}}
+     out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'
+     out.should_not include("35")
+     out.should_not include(" 0 ")
+     out.should include("14")
+     out.should_not include("99999")
+     out.should include("-ss 14.0 -endpos 0.999")
+  end
+  
+  it "should raise if you focus down into nothing" do
+    setup
+    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should raise_error(/unable/)
   end
   
 end
