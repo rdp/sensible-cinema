@@ -38,7 +38,6 @@ class MencoderWrapper
       partials = (1..@idx).map{|n| "#{to_here_final_file}.avi.#{n}"}
       
       out += "del #{to_here_final_file}\n"
-      #out += "copy /b #{partials.join('+')} #{to_here_final_file}\n"
       out += "mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       out += "@rem del #{@big_temp}\n" # LODO
       
