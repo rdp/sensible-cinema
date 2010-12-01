@@ -20,7 +20,11 @@ class MencoderWrapper
       end
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
       out = ""
-      out += "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} \n"
+      out += "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} "
+      if start_here
+        out += " -ss #{start_here} -endpos #{end_here - start_here} "
+      end
+      out += "\n"
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end

@@ -90,8 +90,7 @@ describe MencoderWrapper do
       
     end
     it "should allow for subsections" do
-     print @out
-     @out.should_not include("35")
+     @out.should_not include("-endpos 34.99")
      @out.should_not include(" 0 ")
      @out.should include("14")
      @out.should_not include("99999")
