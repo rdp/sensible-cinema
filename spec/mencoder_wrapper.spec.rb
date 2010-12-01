@@ -55,8 +55,8 @@ describe MencoderWrapper do
   end
   
   def setup
-    settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
-    @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
+    @settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
+    @out = MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here.avi'
   end
   
   it "should not insert an extra pause if a mute becomes a blank" do
@@ -91,6 +91,11 @@ describe MencoderWrapper do
      out.should include("14")
      out.should include("-endpos 24.99")
      out.should_not include("99999")
+  end
+  
+  it "should raise if you focus down into nothing" do
+    setup
+    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should raise_error(/unable/)
   end
   
 end
