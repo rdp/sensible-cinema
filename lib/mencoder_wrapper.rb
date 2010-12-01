@@ -19,7 +19,8 @@ class MencoderWrapper
         previous_end = 0
       end
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
-      out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} \n"
+      out = ""
+      out += "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} \n"
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end
@@ -49,7 +50,7 @@ class MencoderWrapper
     def get_section start, endy, should_mute, to_here_final_file    
       raise if start == endy # should never be able to happen...
       # delete 0.001 as per wiki's suggestion.
-      endy = endy - 0.001
+      endy = endy - start - 0.001
       # very decreased volume is like muting :)
       sound_command = should_mute ? "-af volume=-200 -oac lavc" : "-oac lavc"  # LODO -oac copy ?
       "call mencoder #{@big_temp} -ss #{start} -endpos #{endy} -o #{to_here_final_file}.avi.#{@idx += 1} -ovc copy #{sound_command}\n"
@@ -64,6 +65,6 @@ if $0 == __FILE__
   require 'sane'
   puts 'syntax: yaml_file_name e:\ to_here.avi 00:15 (start) 00:25 (end)'
   a = YAML.load_file ARGV.shift
-  File.write('out.bat', MencoderWrapper.get_bat_commands(a, *ARGV))
-  print 'wrote out.bat'
+  File.write('range.bat', MencoderWrapper.get_bat_commands(a, *ARGV))
+  print 'wrote range.bat'
 end

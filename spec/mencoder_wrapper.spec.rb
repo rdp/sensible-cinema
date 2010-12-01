@@ -89,8 +89,8 @@ describe MencoderWrapper do
      out.should_not include("35")
      out.should_not include(" 0 ")
      out.should include("14")
-     out.should include("-endpos 24.99")
      out.should_not include("99999")
+     out.should include("-ss 14.0 -endpos 0.999")
   end
   
   it "should raise if you focus down into nothing" do
