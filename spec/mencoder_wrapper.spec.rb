@@ -35,7 +35,7 @@ describe MencoderWrapper do
   
   it "should accomodate for mutes the ffmpeg way" do
     # mutes by silencing...seems reasonable, based on the Family Law fella
-    @out.should match(/ -vol 0 /)
+    @out.should match(/-acodec ac3 -vol 0 /)
   end
   
   it "should use avi extension" do
@@ -47,7 +47,8 @@ describe MencoderWrapper do
   end
   
   it "should concatenate (merge) them all together" do
-    @out.should match(/mencoder.*ovc.*oac/)
+    @out.should match(/mencoder.* -ovc copy -oac copy/)
+    @out.should match(/mencoder to_here.1.avi/)
   end
   
   it "should delete any large, grabbed tmp file" do
@@ -59,8 +60,8 @@ describe MencoderWrapper do
       @out.should match(Regexp.new(/del.*#{n}/))
     end
     # should delete the right numbers, too, which starts at 1
-    @out.should_not match(/del to_here.avi.0.avi/)
-    @out.should match(/del to_here.avi.1.avi/)
+    @out.should_not match(/del to_here.0.avi/)
+    @out.should match(/del to_here.1.avi/)
   end
   
   def setup
