@@ -30,12 +30,12 @@ describe MencoderWrapper do
   
   it "should have what looks like a working ffmpeg style split commands" do
     # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
-    @out.should match(/ffmpeg -i from_here.*vcodec copy -acodec copy -ss .* -t /)
+    @out.should match(/ffmpeg -i to_here.*vcodec copy -acodec copy .*-ss .* -t /)
   end
   
-  it "should accomodate for mutes" do
-    # mutes by silencing...seems reasonable, based on the Family Law
-    @out.should match(/ -af volume=-200/)
+  it "should accomodate for mutes the ffmpeg way" do
+    # mutes by silencing...seems reasonable, based on the Family Law fella
+    @out.should match(/ -vol 0 /)
   end
   
   it "should use avi extension" do
@@ -78,13 +78,13 @@ describe MencoderWrapper do
   
   it "should lop off a fraction of a second per segment, as per wiki instructions" do
     setup
-    @out.should match(/-endpos 0.999/)
+    @out.should match(/-t 0.999/)
   end
   
   it "should not have doubles" do
     setup  
-    @out.scan(/-endpos.*-o to_here.avi.avi.1/).length.should == 1
-    @out.scan(/-endpos.*-o to_here.avi.avi.2/).length.should == 1
+    @out.scan(/-i.*-t.*to_here.avi.avi.1/).length.should == 1
+    @out.scan(/-i.*-t.*to_here.avi.avi.2/).length.should == 1
   end
   
   context 'pinpointing sections' do
@@ -94,13 +94,13 @@ describe MencoderWrapper do
     end
     
     it "should allow for subsections" do
-     @out.should_not include("-endpos 34.99")
+     @out.should_not include("-t 34.99")
      @out.should include("14")
      @out.should_not include("99999")
      # should all be relative to the start time...
      @out.should include(" 0 ") # no start at 0 even
-     @out.should include("-ss 0 -endpos 0.999")
-     @out.should include("-ss 1.0 -endpos 4.999")
+     @out.should include("-ss 0 -t 0.999")
+     @out.should include("-ss 1.0 -t 4.999")
      @out.should include("-ss 1.0")
   end
   

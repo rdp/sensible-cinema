@@ -12,7 +12,7 @@ class MencoderWrapper
     def get_header this_drive, start_here, end_here
       out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} "
       if start_here
-        out += " -ss #{start_here} -t #{end_here - start_here} "
+        out += " -ss #{start_here} -endpos #{end_here - start_here} "
       end
       out + "\n"
     end
@@ -66,8 +66,9 @@ class MencoderWrapper
       # delete 0.001 as per wiki's suggestion.
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
-      sound_command = should_mute ? "-af volume=-200 -oac lavc" : "-oac lavc"  # LODO -oac copy ?
-      "call ffmpeg -i #{@big_temp} -ss #{start} -endpos #{endy} -o #{to_here_final_file}.avi.#{@idx += 1} -ovc copy #{sound_command}\n"
+      sound_command = should_mute ? "-vol 0 " : " "
+      # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
+      "call ffmpeg -i #{@big_temp} -vcodec copy -acodec copy #{sound_command} -ss #{start} -t #{endy} #{to_here_final_file}.avi.#{@idx += 1}\n"
     end
   
   end
