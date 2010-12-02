@@ -66,10 +66,11 @@ class MencoderWrapper
       # delete 0.001 as per wiki's suggestion.
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
-      sound_command = should_mute ? " -target ntsc-dvd -vol 0 " : "-acodec copy "  #LODO extract the ac3...hmm...
+      # LODO can we copy more here? ntsc-dvd supposedly remuxes...
+      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO not have the ac3...hmm...
       # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
       partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
-      "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} -vcodec copy #{sound_command} -ss #{start} -t #{endy} #{partial_filename}\n"
+      "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
     end
   
   end
@@ -79,7 +80,7 @@ end
 if $0 == __FILE__
   require 'rubygems'
   require 'sane'
-  puts 'syntax: yaml_file_name d:\ to_here.avi 00:15 (start) 00:25 (end)'
+  puts 'syntax: yaml_file_name d:\ to_here 00:15 00:25'
   a = YAML.load_file ARGV.shift
   drive = ARGV.shift
   raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")

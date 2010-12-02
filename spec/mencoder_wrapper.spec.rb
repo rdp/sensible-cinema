@@ -35,15 +35,18 @@ describe MencoderWrapper do
   
   it "should accomodate for mutes the ffmpeg way" do
     # mutes by silencing...seems reasonable, based on the Family Law fella
-    @out.should match(/ -target ntsc-dvd -vol 0 /)
+    #require '_dbg'
+    @out.should match(/ -vcodec copy -acodec ac3 -vol 0 /)
+    @out.should_not match(/-vcodec copy.*-target ntsc-dvd/)
   end
   
   it "should use avi extension" do
     @out.should include(".avi ")
+    @out.should_not include(".avi.1 ")
   end
   
-  it "should always use the avi extension" do
-    @out.should_not include(".avi.1 ")
+  it "should not overuse the avi extension" do
+    @out.should_not include("avi.1.avi")
   end
   
   it "should concatenate (merge) them all together" do
