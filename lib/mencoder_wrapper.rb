@@ -46,7 +46,7 @@ class MencoderWrapper
         previous_end = endy
       }
       out += get_section previous_end, end_here || 1_000_000, false, to_here_final_file
-      partials = (1..@idx).map{|n| "#{to_here_final_file}.avi.#{n}"}
+      partials = (1..@idx).map{|n| "#{to_here_final_file}.avi.#{n}.avi"}
       
       out += "del #{to_here_final_file}\n"
       # ridiculous
@@ -68,7 +68,7 @@ class MencoderWrapper
       # very decreased volume is like muting :)
       sound_command = should_mute ? "-vol 0 " : " "
       # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
-      "call ffmpeg -i #{@big_temp} -vcodec copy -acodec copy #{sound_command} -ss #{start} -t #{endy} #{to_here_final_file}.avi.#{@idx += 1}\n"
+      "call ffmpeg -i #{@big_temp} -vcodec copy -acodec copy #{sound_command} -ss #{start} -t #{endy} #{to_here_final_file}.#{@idx += 1}.avi\n"
     end
   
   end

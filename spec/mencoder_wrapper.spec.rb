@@ -42,6 +42,10 @@ describe MencoderWrapper do
     @out.should include(".avi ")
   end
   
+  it "should always use the avi extension" do
+    @out.should_not include(".avi.1 ")
+  end
+  
   it "should concatenate (merge) them all together" do
     @out.should match(/mencoder.*ovc.*oac/)
   end
@@ -51,11 +55,12 @@ describe MencoderWrapper do
   end
   
   it "should delete all partials" do
-    0.upto(5) do |n|
+    1.upto(10) do |n|
       @out.should match(Regexp.new(/del.*#{n}/))
     end
-    # should delete the right numbers, too
-    @out.should_not match(/del to_here.avi.avi.0/)
+    # should delete the right numbers, too, which starts at 1
+    @out.should_not match(/del to_here.avi.0.avi/)
+    @out.should match(/del to_here.avi.1.avi/)
   end
   
   def setup
@@ -83,8 +88,9 @@ describe MencoderWrapper do
   
   it "should not have doubles" do
     setup  
-    @out.scan(/-i.*-t.*to_here.avi.avi.1/).length.should == 1
-    @out.scan(/-i.*-t.*to_here.avi.avi.2/).length.should == 1
+    # lodo cleanup this ugliness
+    @out.scan(/-i.*-t.*to_here.avi.1.avi/).length.should == 1
+    @out.scan(/-i.*-t.*to_here.avi.2.avi/).length.should == 1
   end
   
   context 'pinpointing sections' do
