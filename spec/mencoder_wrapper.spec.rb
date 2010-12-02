@@ -35,7 +35,6 @@ describe MencoderWrapper do
   
   it "should accomodate for mutes the ffmpeg way" do
     # mutes by silencing...seems reasonable, based on the Family Law fella
-    #require '_dbg'
     @out.should match(/ -vcodec copy -acodec ac3 -vol 0 /)
     @out.should_not match(/-vcodec copy.*-target ntsc-dvd/)
   end

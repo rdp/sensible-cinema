@@ -4,6 +4,8 @@
 == probably next up+low prio ==
 
  use mencoder + ffmpeg
+   smplayer.avi -> smplayer_or_vlc.avi
+     can I "just" burn that and it work?
      re-do various EDL's I have :P
  split the two projects somehow (project + distribution)
     two releases: experimental, normal (no imagemagick)
