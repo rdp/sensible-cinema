@@ -267,4 +267,10 @@ take out all require 'rubygems'ses...
 
 package with portable imagemagick (meh)
 
-make a "book edit list" (word x is at position y...)
+create a "book edit list" (word x is at position y...)
+
+@dvd flick: 
+  don't re-encode if not necessary
+  are your highest settings awesome?
+  
+  @smplayer: your CD config is awful.
