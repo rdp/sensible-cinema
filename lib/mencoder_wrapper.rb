@@ -66,9 +66,10 @@ class MencoderWrapper
       # delete 0.001 as per wiki's suggestion.
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
-      sound_command = should_mute ? "-acodec ac3 -vol 0 " : "-acodec copy "  #LODO extract the ac3...hmm...
+      sound_command = should_mute ? " -target ntsc-dvd -vol 0 " : "-acodec copy "  #LODO extract the ac3...hmm...
       # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
-      "call ffmpeg -i #{@big_temp} -vcodec copy #{sound_command} -ss #{start} -t #{endy} #{to_here_final_file}.#{@idx += 1}.avi\n"
+      partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
+      "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} -vcodec copy #{sound_command} -ss #{start} -t #{endy} #{partial_filename}\n"
     end
   
   end

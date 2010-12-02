@@ -35,7 +35,7 @@ describe MencoderWrapper do
   
   it "should accomodate for mutes the ffmpeg way" do
     # mutes by silencing...seems reasonable, based on the Family Law fella
-    @out.should match(/-acodec ac3 -vol 0 /)
+    @out.should match(/ -target ntsc-dvd -vol 0 /)
   end
   
   it "should use avi extension" do
@@ -63,6 +63,11 @@ describe MencoderWrapper do
     @out.should_not match(/del to_here.0.avi/)
     @out.should match(/del to_here.1.avi/)
   end
+  
+  it "should rm partial files" do
+    @out.should match(/del to_here.3.avi$/)
+  end
+  
   
   def setup
     @settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
