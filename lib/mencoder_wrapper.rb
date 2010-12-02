@@ -9,6 +9,14 @@ class MencoderWrapper
 
   class << self
   
+    def get_header this_drive, start_here, end_here
+      out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} "
+      if start_here
+        out += " -ss #{start_here} -t #{end_here - start_here} "
+      end
+      out + "\n"
+    end
+    
     def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil
       combined = VLCProgrammer.convert_incoming_to_split_sectors these_mutes
       
@@ -19,16 +27,11 @@ class MencoderWrapper
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
         # it's relative now, since we rip from not the beginning
         combined.map!{|start, endy, type| [start - start_here, endy - start_here, type]}
-#        raise Exception.new('unable to find any edit decisions to do within that range') unless combined.length > 0
+        raise Exception.new('unable to find any edit decisions to do within that range') unless combined.length > 0
       end
       previous_end = 0
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
-      out = ""
-      out += "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} "
-      if start_here
-        out += " -ss #{start_here} -endpos #{end_here - start_here} "
-      end
-      out += "\n"
+      out = get_header this_drive, start_here, end_here
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end
@@ -36,7 +39,7 @@ class MencoderWrapper
         end
         # type is either mute or :blank or :mute
         if type == :blank
-         # do nothing... clip will be avoided
+         # do nothing... clip will be skipped
         else
           out += get_section start, endy, true, to_here_final_file
         end
@@ -59,12 +62,12 @@ class MencoderWrapper
     end
     
     def get_section start, endy, should_mute, to_here_final_file    
-      raise if start == endy # should never be able to happen...
+      raise if start == endy # should never actually happen...
       # delete 0.001 as per wiki's suggestion.
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
       sound_command = should_mute ? "-af volume=-200 -oac lavc" : "-oac lavc"  # LODO -oac copy ?
-      "call mencoder #{@big_temp} -ss #{start} -endpos #{endy} -o #{to_here_final_file}.avi.#{@idx += 1} -ovc copy #{sound_command}\n"
+      "call ffmpeg -i #{@big_temp} -ss #{start} -endpos #{endy} -o #{to_here_final_file}.avi.#{@idx += 1} -ovc copy #{sound_command}\n"
     end
   
   end

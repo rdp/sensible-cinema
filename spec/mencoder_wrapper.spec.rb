@@ -19,14 +19,18 @@ describe MencoderWrapper do
     @out.should_not match(/del.*del/)
   end
   
-  it "should use start and stop times" do
-    @out.should include(" -ss ")
-    @out.should include(" -endpos ")
+  it "should use ffmpeg style start and stop times" do
+    @out.should match(/ffmpeg.*-ss/)
+    @out.should include(" -t ")
   end
   
-  it "should have what looks like a working mencoder command" do
-    @out.should include("-ovc copy")
-    @out.should include("-oac copy")
+  it "should have what looks like a working mencoder rip command" do
+    @out.should match(/mencoder dvd.*keyint=1/)
+  end
+  
+  it "should have what looks like a working ffmpeg style split commands" do
+    # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
+    @out.should match(/ffmpeg -i from_here.*vcodec copy -acodec copy -ss .* -t /)
   end
   
   it "should accomodate for mutes" do
@@ -108,6 +112,9 @@ describe MencoderWrapper do
     setup
     proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should raise_error(/unable/)
   end
+  
+  it "should take a temp file for focusing down into shtuff"
+  
 end
   
 end
