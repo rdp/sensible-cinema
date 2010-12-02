@@ -1,23 +1,23 @@
 == medium ==
+
   
 == probably next up+low prio ==
 
- use mencoder keyint on rip.
-   try it out, can it rip?  Can it merge? well?
+ use mencoder + ffmpeg
      re-do various EDL's I have :P
  split the two projects somehow (project + distribution)
     two releases: experimental, normal (no imagemagick)
  preferences merger...hmm...;
-  compare computer DVD playback with physical player...
-  @mencoder.exe distributor: OCI plz? puh-lease?
+ compare computer DVD playback with physical player...
 
 == slightly lower than that ==
 
+  easy installer for x,y,z
   unit test the GUI
   no subtitles on national treasure...
   
   ask if there's a "cross platform way to split files accurately" besides my hacky kludge.
-
+  
   popup "you may now watch": bring it to the front...
   
   easy editor for this style of edit
@@ -30,6 +30,7 @@
 
 == DVD monetary backlog (unordered) ==
 
+@mencoder.exe distributor: OCI plz? puh-lease?
 @dvd flick do you need that frequent i-frames?
   rename bat as template.bat
   can parse IMDB (require they put in the URL by hand fer now)
@@ -271,6 +272,8 @@ create a "book edit list" (word x is at position y...)
 
 @dvd flick: 
   don't re-encode if not necessary
-  are your highest settings awesome?
+  are your highest settings optimal?
+  accept subtitled video...
   
   @smplayer: your CD config is awful.
+@mencoder: can't split
