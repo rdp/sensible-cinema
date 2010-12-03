@@ -11,11 +11,12 @@ class MencoderWrapper
   
     def get_header this_drive, start_here, end_here
       out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done"
-      if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
-        out = ''
-      end
       if start_here
         out += " -ss #{start_here} -endpos #{end_here - start_here} "
+      end
+      if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
+        # unless we don't need to re-copy at all...
+        out = ''
       end
       out + "\n"
     end
@@ -53,10 +54,10 @@ class MencoderWrapper
       
       out += "del #{to_here_final_file}\n"
       # ridiculous
-      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.smplayer.avi -ovc copy -oac copy\n"
+      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.smplayer_or_vlc.avi -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
       # LODO the "insta play" mode, or the "faster rip" mode (related...)
-      out += "call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
+      # out += "call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
 
       out += "@rem del #{@big_temp}\n" # LODO      
       out += "@rem del " + partials.join(' ') + "\n"# LODO

@@ -74,6 +74,10 @@ describe MencoderWrapper do
     @out.should match(/mencoder to_here.1.avi/)
   end
   
+  it "should create a large conglom file" do
+    @out.should match(/smplayer_or_vlc/)
+  end
+  
   it "should delete any large, grabbed tmp file" do
     @out.should match(/del.*tmp/)
   end
