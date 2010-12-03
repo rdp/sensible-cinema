@@ -3,9 +3,8 @@
   
 == probably next up+low prio ==
 
- use mencoder from the gui
- use mencoder + ffmpeg
-     re-do various EDL's I have :P
+ easier re-do
+ re-do various EDL's I have :P
  split the two projects somehow (project + distribution)
     two releases: experimental, normal (no imagemagick)
       actually just one release--developers can use the experimenal :P

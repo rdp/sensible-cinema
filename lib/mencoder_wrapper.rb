@@ -51,14 +51,14 @@ class MencoderWrapper
       
       out += "del #{to_here_final_file}\n"
       # ridiculous
-      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.smplayer_or_vlc.avi -ovc copy -oac copy\n"
+      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.avi -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
       # LODO the "insta play" mode, or the "faster rip" mode (related...)
       # out += "call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
 
       out += "@rem del #{@big_temp}\n" # LODO      
       out += "@rem del " + partials.join(' ') + "\n"# LODO
-      out += "echo wrote to #{to_here_final_file}.smplayer_or_vlc.avi"
+      out += "echo wrote to #{to_here_final_file}.avi"
       out
     end
     
@@ -68,7 +68,7 @@ class MencoderWrapper
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
       # LODO can we copy more here? ntsc-dvd supposedly remuxes...
-      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO not have the ac3...hmm...
+      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO the ac3 must match the copy...hmm...
       # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
       partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
       "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
@@ -86,7 +86,7 @@ if $0 == __FILE__
   drive = ARGV.shift
   raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
   execute = ARGV.delete('--run')
-  commands =MencoderWrapper.get_bat_commands(a, drive, *ARGV)
+  commands = MencoderWrapper.get_bat_commands(a, drive, *ARGV)
   if ARGV.length > 2
     write_to = 'range.bat'
   else

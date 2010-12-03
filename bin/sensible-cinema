@@ -5,21 +5,17 @@ puts 'Loading Sensible Cinema...'
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
-for file in ['vlc_programmer']
-  require_relative '../lib/' + file
-end
+require_relative '../lib/mencoder_wrapper'
+require_relative '../lib/storage'
 
 require 'ruby-wmi'
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
 
-# add some common locations for vlc.exe to the path...
-# lodo use the registry to pull out the 'right' path...
-ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
-
 module SensibleSwing
  class MainWindow < JFrame
+   Storage = Storage.new("sc")
    def initialize
      super "Sensible-Cinema"
      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
@@ -39,26 +35,34 @@ module SensibleSwing
       # so "this thread" is the uni-swing thread, gets blocked, and the overlayer can't repaint
       self.close
      }
-     button_width = 230
-     b.set_bounds(44,120,button_width,23)
-     panel.add b
+     button_width = 240
+     b.set_bounds(44,220,button_width,23)
+     panel.add b if ARGV.include?("--test")
     
-     c=JButton.new( "Copy edited copy of DVD to Hard Drive" )
+     c = JButton.new( "Create edited copy of DVD on Hard Drive" )
      c.on_clicked {
-       do_copy_dvd_to_hard_drive true
+       do_copy_dvd_to_hard_drive false
      }
-     c.set_bounds(44,220,button_width,23)
+     c.set_bounds(44,120,button_width,23)
      panel.add c    
     
-     d=JButton.new( "Play edited DVD with VLC" )
+     d = JButton.new( "Preview edited section of a DVD" )
      d.on_clicked {
-       do_copy_dvd_to_hard_drive false
+       do_copy_dvd_to_hard_drive true
      }
     
      d.set_bounds(44,180,button_width,23)
      panel.add d
+   
+     e = JButton.new( "Re-run last preview" )
+     e.on_clicked {
+       repeat_last_copy_dvd_to_hard_drive
+     }
     
-     @exit = JButton.new("Exit").on_clicked {
+     e.set_bounds(44,260,button_width,23)
+     panel.add e
+
+    @exit = JButton.new("Exit").on_clicked {
        self.close
      }
      @exit.set_bounds(44,320,button_width,23)
@@ -75,19 +79,9 @@ module SensibleSwing
      
      @progress_bar = JProgressBar.new(0, 100)
      @progress_bar.set_bounds(44,280,button_width,23)
-     @progress_bar.visible=false
+     @progress_bar.visible = false
      panel.add @progress_bar
-     @buttons = [b,c,d,@exit]    
-   end
-  
-   def vlc_currently_installed?
-     if !system("vlc  --qt-start-minimized vlc://quit 2>NUL")
-       JOptionPane.showMessageDialog(nil, "Appears you do not yet have VLC Media Player installed. Click ok to download it.", "VLC Player not found", JOptionPane::ERROR_MESSAGE)
-       system("start http://www.videolan.org/")
-       false
-     else
-      true
-     end
+     @buttons = [b,c,d,e,@exit]
    end
   
   def single_edit_list_matches_dvd volume_name
@@ -104,8 +98,11 @@ module SensibleSwing
   
   EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
   
-  def do_copy_dvd_to_hard_drive should_save_file
-      return unless vlc_currently_installed?
+  def repeat_last_copy_dvd_to_hard_drive
+    generate_and_run_bat_file *Storage['last_params']
+  end
+  
+  def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times
       drive, volume_name = choose_dvd_drive
       if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
         fc = JFileChooser.new
@@ -115,49 +112,60 @@ module SensibleSwing
         edit_list_path = fc.go
       end
       descriptors = YAML.load_file edit_list_path
+
       dvd_title = descriptors['title']
-      if should_save_file
-        fc = JFileChooser.new 
-        # LODO allow for spaces in the save to file
-        fc.set_dialog_title "Pick where to save #{dvd_title || "the file"} edited to"
-        save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-        fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
-        save_to = fc.go
-      else
-        save_to = nil
+      fc = JFileChooser.new 
+      # LODO allow for spaces in the save to filename
+      dvd_title || 'no title given in edit list'
+      
+      if should_prompt_for_start_and_end_times
+        JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
+        start_time = JOptionPane.showInputDialog("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
+        Storage['start_time'] = start_time
+        end_time = JOptionPane.showInputDialog("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
+        Storage['end_time'] = end_time
+        unless start_time and end_time
+          JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
+          return
+        end
       end
-      dvd_title_track = descriptors["dvd_title_track"]
-      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
- 
-      temp_dir = Dir.tmpdir
-      temp_file = temp_dir + '/' + 'vlc.temp.xspf'
-      File.write(temp_file, bat_file_or_xspf)
-      puts bat_file_or_xspf
-      if should_save_file
-        popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
-          "Running edit list #{File.basename edit_list_path} against \n" +
-           "    #{drive} (#{dvd_title})...\n" +
-          "This could take quite awhile, and will prompt you when it is done.\n" +
-          "It may also cause small popup ballon dialogs to appear.\n" +
-          "You can close this window and continue working while it runs.",
-          "OK")      
-        
-        # this allows our popups to still be serviced while it is running
-        Thread.new {
-          run_copy_commands bat_file_or_xspf, save_to
-          popup.dispose
-        }
-      else
-        command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
-        puts 'running playlist for DVD: ', command
-        system(command) # blocks the current window while running...
-        p 'done playing DVD'
-      end
-      # LODO warn if they will overwrite a file in the end
+      
+      fc.set_dialog_title "Pick where to save #{dvd_title} edited to"
+      
+      save_to_file_name = dvd_title + ' edited copy'
+      save_to_file_name += ' single segment' if should_prompt_for_start_and_end_times
+      save_to_file_name=save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+      fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
+      save_to = fc.go
+      dvd_title_track = descriptors["dvd_title_track"] # TODO rdp
+      generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time
    end
   
-   def run_copy_commands batch_commands, save_to
-      p 'saving to ' +  save_to + '.ps' # lodo cleanup the .ps here...
+    def generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time
+      Storage['last_params'] = [save_to, edit_list_path, drive, dvd_title, start_time, end_time]
+      descriptors = YAML.load_file edit_list_path
+      p descriptors
+      bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time
+      temp_dir = Dir.tmpdir
+      temp_file = temp_dir + '/' + 'vlc.temp.bat'
+      File.write(temp_file, bat_file)
+      puts 'commands located at: ' + bat_file
+      popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
+        "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
+        "This could take quite awhile, and will prompt you when it is done.\n" +
+        "You can close this window and continue working while it runs.\n" + 
+        "NB that the created file will be playable with SMplayer or VLC player.",
+        "OK")
+      
+      # allow our popups to still be serviced while it is running
+      Thread.new {
+        run_create_commands bat_file, save_to
+        popup.dispose
+      }
+      # LODO warn if they will overwrite a file in the end
+    end
+  
+   def run_create_commands batch_commands, save_to
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
@@ -166,17 +174,23 @@ module SensibleSwing
       @progress_bar.set_value(10) # start at 10% always, so they can see something.
       lines.each_with_index{|l, idx|
         if success
-          success = system(l) unless ARGV.find{|a| a == '--test'} # this doesn't seem to cancel out early for some reason..
-          @progress_bar.set_value(10 + idx/total_size*90)
+          success = system(l) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
+          if l =~ /@rem /
+            success = true # these fail fof some reason?
+          else
+            p 'line failed ' + l unless success
+          end
         end
+        @progress_bar.set_value(10 + idx/total_size*90)
       }
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       if success
-        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
-        show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}.ps\""
+        saved_to = save_to + '.avi' # LODO pass this out?
+        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{saved_to} in SMPlayer or VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
+        show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
         system show_file
-        self.close
+        #self.close # ?
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end

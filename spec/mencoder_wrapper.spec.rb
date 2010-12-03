@@ -52,7 +52,8 @@ describe MencoderWrapper do
   
   it "should have what looks like a working ffmpeg style split commands" do
     # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
-    @out.should match(/ffmpeg -i to_here.*vcodec copy -acodec copy .*-ss .* -t /)
+    @out.should match(/ffmpeg -i to_here.*vcodec copy -acodec ac3 .*-ss .* -t /)
+    @out.should_not match(/acodec copy.*vol 0/)
   end
   
   it "should accomodate for mutes the ffmpeg way" do
@@ -76,7 +77,7 @@ describe MencoderWrapper do
   end
   
   it "should create a large conglom file" do
-    @out.should match(/smplayer_or_vlc/)
+    @out.should match(/mencoder.*-o to_here.avi -ovc copy -oac copy/)
   end
   
   it "should delete any large, grabbed tmp file" do
@@ -96,8 +97,8 @@ describe MencoderWrapper do
     @out.should match(/del to_here.3.avi$/)
   end
   
-  it "should echo that it is done" do
-    @out.should include("echo wrote")
+  it "should echo that it is done, with the right filename" do
+    @out.should include("echo wrote to to_here.avi")
   end
   
   def setup
