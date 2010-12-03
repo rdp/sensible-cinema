@@ -27,7 +27,7 @@ module SensibleSwing
  
      jlabel = JLabel.new 'Welcome to Sensible Cinema'
      happy = Font.new("Tahoma", Font::PLAIN, 11)
-     jlabel.set_font(happy)
+     jlabel.setFont(happy)
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
      b = JButton.new( "Play Hulu, Youtube, or a DVD (Tracking)" ).on_clicked {
@@ -115,16 +115,28 @@ module SensibleSwing
     end
     mencoder = RubyWhich.new.which('mencoder')
     if mencoder.length == 0
+      answer = JOptionPane.showConfirmDialog(nil, "Appears that you need to install a dependency: mencoder.
+      Its license is at: http://www.gnu.org/licenses/gpl-2.0.html.
+      Also this will download 7z locally (license: http://www.7-zip.org/license.txt).
+      Click yes if you accept the terms of the several license agreements. They will then be installed automatically.
+      Or click no to cancel.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
+      if answer == 1
+        p 'exiting, no mencoder...'
+        sleep 10
+        java.lang.System.exit(1)
+      end
       vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
       ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
       Dir.chdir(vendor_cache) do
+        Kernel.print 'downloading unzip utility...'
         download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-        system("unzip 7za920.zip") # now we have 7za.exe
+        system("unzip -o 7za920.zip") # -o means "overwrite" without prompting
+        # now we have 7za.exe
+        Kernel.print 'downloading mencoder'
         download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
-        system("7za e mencoder.7z -y -omencoder") # unzip it to the mencoder folder
+        system("7za e mencoder.7z -y -omencoder")
+        Kernel.puts 'done'
       end
-      require '_dbg'
-       3
     end
   end
   
