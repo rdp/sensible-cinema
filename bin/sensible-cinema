@@ -5,18 +5,12 @@ puts 'Loading Sensible Cinema...'
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
-for file in ['vlc_programmer']
-  require_relative '../lib/' + file
-end
+require_relative '../lib/mencoder_wrapper'
 
 require 'ruby-wmi'
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
-
-# add some common locations for vlc.exe to the path...
-# lodo use the registry to pull out the 'right' path...
-ENV['PATH'] = ENV['PATH'] + ";C:\\Program Files\\VideoLAN\\VLC"+ ";D:\\Program Files\\VideoLAN\\VLC" + ";E:\\Program Files\\VideoLAN\\VLC"
 
 module SensibleSwing
  class MainWindow < JFrame
@@ -41,22 +35,14 @@ module SensibleSwing
      }
      button_width = 230
      b.set_bounds(44,120,button_width,23)
-     panel.add b
+     panel.add b if ARGV.find("--test")
     
-     c=JButton.new( "Copy edited copy of DVD to Hard Drive" )
+     c = JButton.new( "Copy edited copy of DVD to Hard Drive" )
      c.on_clicked {
        do_copy_dvd_to_hard_drive true
      }
      c.set_bounds(44,220,button_width,23)
      panel.add c    
-    
-     d=JButton.new( "Play edited DVD with VLC" )
-     d.on_clicked {
-       do_copy_dvd_to_hard_drive false
-     }
-    
-     d.set_bounds(44,180,button_width,23)
-     panel.add d
     
      @exit = JButton.new("Exit").on_clicked {
        self.close
@@ -77,17 +63,7 @@ module SensibleSwing
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible=false
      panel.add @progress_bar
-     @buttons = [b,c,d,@exit]    
-   end
-  
-   def vlc_currently_installed?
-     if !system("vlc  --qt-start-minimized vlc://quit 2>NUL")
-       JOptionPane.showMessageDialog(nil, "Appears you do not yet have VLC Media Player installed. Click ok to download it.", "VLC Player not found", JOptionPane::ERROR_MESSAGE)
-       system("start http://www.videolan.org/")
-       false
-     else
-      true
-     end
+     @buttons = [b,c,@exit]    
    end
   
   def single_edit_list_matches_dvd volume_name
@@ -105,7 +81,6 @@ module SensibleSwing
   EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
   
   def do_copy_dvd_to_hard_drive should_save_file
-      return unless vlc_currently_installed?
       drive, volume_name = choose_dvd_drive
       if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
         fc = JFileChooser.new
@@ -127,24 +102,24 @@ module SensibleSwing
         save_to = nil
       end
       dvd_title_track = descriptors["dvd_title_track"]
-      bat_file_or_xspf = VLCProgrammer.convert_to_full_xspf(descriptors, save_to, drive, dvd_title_track, dvd_title)
+    
+      bat_file_or_xspf = MencoderWrapper.get_bat_commands descriptors, drive, save_to
  
       temp_dir = Dir.tmpdir
-      temp_file = temp_dir + '/' + 'vlc.temp.xspf'
+      temp_file = temp_dir + '/' + 'vlc.temp.bat'
       File.write(temp_file, bat_file_or_xspf)
-      puts bat_file_or_xspf
+      puts 'commands located at: ' + bat_file_or_xspf
       if should_save_file
         popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
-          "Running edit list #{File.basename edit_list_path} against \n" +
-           "    #{drive} (#{dvd_title})...\n" +
+          "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
           "This could take quite awhile, and will prompt you when it is done.\n" +
-          "It may also cause small popup ballon dialogs to appear.\n" +
-          "You can close this window and continue working while it runs.",
-          "OK")      
+          "You can close this window and continue working while it runs.\n" + 
+          "NB that the created file will be playable with SMplayer or VLC player.",
+          "OK")
         
-        # this allows our popups to still be serviced while it is running
+        # allow our popups to still be serviced while it is running
         Thread.new {
-          run_copy_commands bat_file_or_xspf, save_to
+          run_create_commands bat_file_or_xspf, save_to
           popup.dispose
         }
       else
@@ -156,7 +131,7 @@ module SensibleSwing
       # LODO warn if they will overwrite a file in the end
    end
   
-   def run_copy_commands batch_commands, save_to
+   def run_create_commands batch_commands, save_to
       p 'saving to ' +  save_to + '.ps' # lodo cleanup the .ps here...
       @buttons.each{|b| b.set_enabled false}
       success = true
@@ -173,8 +148,8 @@ module SensibleSwing
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       if success
-        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to}.ps in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
-        show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}.ps\""
+        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{save_to} in VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
+        show_file = "explorer /e,/select,\"#{File.expand_path(save_to).to_filename}\""
         system show_file
         self.close
       else

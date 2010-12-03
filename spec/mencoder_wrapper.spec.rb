@@ -76,7 +76,7 @@ describe MencoderWrapper do
   end
   
   it "should create a large conglom file" do
-    @out.should match(/smplayer_or_vlc/)
+    @out.should_not match(/smplayer_or_vlc/)
   end
   
   it "should delete any large, grabbed tmp file" do

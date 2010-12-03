@@ -86,7 +86,7 @@ if $0 == __FILE__
   drive = ARGV.shift
   raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
   execute = ARGV.delete('--run')
-  commands =MencoderWrapper.get_bat_commands(a, drive, *ARGV)
+  commands = MencoderWrapper.get_bat_commands(a, drive, *ARGV)
   if ARGV.length > 2
     write_to = 'range.bat'
   else
