@@ -35,11 +35,11 @@ module SensibleSwing
       # so "this thread" is the uni-swing thread, gets blocked, and the overlayer can't repaint
       self.close
      }
-     button_width = 240
+     button_width = 260
      b.set_bounds(44,220,button_width,23)
      panel.add b if ARGV.include?("--test")
     
-     c = JButton.new( "Create edited copy of DVD on Hard Drive" )
+     c = JButton.new( "Create edited copy of DVD on Your Hard Drive" )
      c.on_clicked {
        do_copy_dvd_to_hard_drive false
      }
@@ -52,17 +52,28 @@ module SensibleSwing
      }
     
      d.set_bounds(44,180,button_width,23)
-     panel.add d
+     panel.add d if ARGV.index("--create-mode")
    
-     e = JButton.new( "Re-run last preview" )
+     f = JButton.new("Open/Edit an Edit Decision List")
+     f.on_clicked {
+       dialog = FileDialog.new(self, "Pick file to edit")
+       dialog.set_directory EDL_DIR
+       filename = dialog.go
+      
+       system("start #{filename}")
+      }
+     f.set_bounds(44,260,button_width,23)
+     panel.add f if ARGV.index("--create-mode")
+  
+     e = JButton.new( "Re-run previous preview" )
      e.on_clicked {
        repeat_last_copy_dvd_to_hard_drive
      }
     
-     e.set_bounds(44,260,button_width,23)
-     panel.add e
+     e.set_bounds(44,220,button_width,23)
+     panel.add e if ARGV.index("--create-mode")
 
-    @exit = JButton.new("Exit").on_clicked {
+     @exit = JButton.new("Exit").on_clicked {
        self.close
      }
      @exit.set_bounds(44,320,button_width,23)
@@ -105,16 +116,15 @@ module SensibleSwing
   def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times
       drive, volume_name = choose_dvd_drive
       if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
-        fc = JFileChooser.new
-        fc.setFileSelectionMode(nil)
-        fc.set_dialog_title "Please pick a DVD Edit List File"
-        fc.set_current_directory(JFile.new EDL_DIR)
+        fc = FileDialog.new(self)
+        fc.set_title "Please pick a DVD Edit List File"
+        fc.set_directory(EDL_DIR)
         edit_list_path = fc.go
       end
       descriptors = YAML.load_file edit_list_path
 
       dvd_title = descriptors['title']
-      fc = JFileChooser.new 
+      fc = JFileChooser.new
       # LODO allow for spaces in the save to filename
       dvd_title || 'no title given in edit list'
       
@@ -130,12 +140,12 @@ module SensibleSwing
         end
       end
       
-      fc.set_dialog_title "Pick where to save #{dvd_title} edited to"
+      fc.set_title "Pick where to save #{dvd_title} edited to"
       
       save_to_file_name = dvd_title + ' edited copy'
       save_to_file_name += ' single segment' if should_prompt_for_start_and_end_times
       save_to_file_name=save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-      fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
+      fc.setFile(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
       dvd_title_track = descriptors["dvd_title_track"] # TODO rdp
       generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time

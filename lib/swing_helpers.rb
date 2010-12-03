@@ -5,8 +5,9 @@ module SensibleSwing
    JFileChooser, JComboBox, JDialog, SwingUtilities] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
  include_package 'java.awt'
  [FlowLayout, Font]
- include_class 'java.awt.event.ActionListener'
+ include_class java.awt.event.ActionListener
  JFile = java.io.File
+ include_class java.awt.FileDialog
  
  class JButton
    def initialize *args
@@ -38,6 +39,23 @@ module SensibleSwing
         java.lang.System.exit 1 # kills background proc...but we shouldn't let them do stuff while a background proc is running, anyway
       end
       get_selected_file.get_absolute_path
+    end
+    
+    # match FileDialog
+    def set_title x
+      set_dialog_title x
+    end
+    
+    def set_file f
+      set_selected_file JFile.new(f)
+    end
+    alias setFile set_file
+  end
+  
+  class FileDialog
+    def go
+      show
+      File.expand_path(get_directory + '/' + get_file) if get_file
     end
   end
   
