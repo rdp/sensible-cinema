@@ -1,5 +1,5 @@
 mutes:
-  "00:04" : "01:02" # theme song is a bit loud at times.
+  "00:03.8" : "01:03" # theme song is a bit loud at times.
   "48:46" : "49:08" # theme song again
   "29:14" : "30:46" # theme song again
 blank_outs:

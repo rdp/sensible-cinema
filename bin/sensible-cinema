@@ -54,7 +54,15 @@ module SensibleSwing
      d.set_bounds(44,180,button_width,23)
      panel.add d
    
-     @exit = JButton.new("Exit").on_clicked {
+     e = JButton.new( "Re-run last preview" )
+     e.on_clicked {
+       repeat_last_copy_dvd_to_hard_drive
+     }
+    
+     e.set_bounds(44,260,button_width,23)
+     panel.add e
+
+    @exit = JButton.new("Exit").on_clicked {
        self.close
      }
      @exit.set_bounds(44,320,button_width,23)
@@ -73,7 +81,7 @@ module SensibleSwing
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible = false
      panel.add @progress_bar
-     @buttons = [b,c,d,@exit]
+     @buttons = [b,c,d,e,@exit]
    end
   
   def single_edit_list_matches_dvd volume_name
@@ -90,6 +98,10 @@ module SensibleSwing
   
   EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
   
+  def repeat_last_copy_dvd_to_hard_drive
+    generate_and_run_bat_file *Storage['last_params']
+  end
+  
   def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times
       drive, volume_name = choose_dvd_drive
       if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
@@ -100,10 +112,11 @@ module SensibleSwing
         edit_list_path = fc.go
       end
       descriptors = YAML.load_file edit_list_path
+
       dvd_title = descriptors['title']
       fc = JFileChooser.new 
       # LODO allow for spaces in the save to filename
-      dvd_title || 'no dvd'
+      dvd_title || 'no title given in edit list'
       
       if should_prompt_for_start_and_end_times
         JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
@@ -124,14 +137,19 @@ module SensibleSwing
       save_to_file_name=save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
       save_to = fc.go
-      dvd_title_track = descriptors["dvd_title_track"]
-
-      bat_file_or_xspf = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time
- 
+      dvd_title_track = descriptors["dvd_title_track"] # TODO rdp
+      generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time
+   end
+  
+    def generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time
+      Storage['last_params'] = [save_to, edit_list_path, drive, dvd_title, start_time, end_time]
+      descriptors = YAML.load_file edit_list_path
+      p descriptors
+      bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/' + 'vlc.temp.bat'
-      File.write(temp_file, bat_file_or_xspf)
-      puts 'commands located at: ' + bat_file_or_xspf
+      File.write(temp_file, bat_file)
+      puts 'commands located at: ' + bat_file
       popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
         "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
         "This could take quite awhile, and will prompt you when it is done.\n" +
@@ -141,11 +159,11 @@ module SensibleSwing
       
       # allow our popups to still be serviced while it is running
       Thread.new {
-        run_create_commands bat_file_or_xspf, save_to
+        run_create_commands bat_file, save_to
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end
-   end
+    end
   
    def run_create_commands batch_commands, save_to
       @buttons.each{|b| b.set_enabled false}
@@ -157,10 +175,13 @@ module SensibleSwing
       lines.each_with_index{|l, idx|
         if success
           success = system(l) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
-          p 'line failed ' + l unless success
-          success = true if l =~ /@rem/ # these fail fof some reason?
-          @progress_bar.set_value(10 + idx/total_size*90)
+          if l =~ /@rem /
+            success = true # these fail fof some reason?
+          else
+            p 'line failed ' + l unless success
+          end
         end
+        @progress_bar.set_value(10 + idx/total_size*90)
       }
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
