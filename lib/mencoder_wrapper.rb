@@ -51,7 +51,7 @@ class MencoderWrapper
       
       out += "del #{to_here_final_file}\n"
       # ridiculous
-      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.smplayer_or_vlc.avi -ovc copy -oac copy\n"
+      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.avi -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
       # LODO the "insta play" mode, or the "faster rip" mode (related...)
       # out += "call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
