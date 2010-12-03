@@ -39,7 +39,7 @@ module SensibleSwing
     
      c = JButton.new( "Copy edited copy of DVD to Hard Drive" )
      c.on_clicked {
-       do_copy_dvd_to_hard_drive true
+       do_copy_dvd_to_hard_drive
      }
      c.set_bounds(44,220,button_width,23)
      panel.add c    
@@ -61,9 +61,9 @@ module SensibleSwing
      
      @progress_bar = JProgressBar.new(0, 100)
      @progress_bar.set_bounds(44,280,button_width,23)
-     @progress_bar.visible=false
+     @progress_bar.visible = false
      panel.add @progress_bar
-     @buttons = [b,c,@exit]    
+     @buttons = [b,c,@exit]
    end
   
   def single_edit_list_matches_dvd volume_name
@@ -80,7 +80,7 @@ module SensibleSwing
   
   EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
   
-  def do_copy_dvd_to_hard_drive should_save_file
+  def do_copy_dvd_to_hard_drive
       drive, volume_name = choose_dvd_drive
       if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
         fc = JFileChooser.new
@@ -91,16 +91,12 @@ module SensibleSwing
       end
       descriptors = YAML.load_file edit_list_path
       dvd_title = descriptors['title']
-      if should_save_file
         fc = JFileChooser.new 
         # LODO allow for spaces in the save to file
         fc.set_dialog_title "Pick where to save #{dvd_title || "the file"} edited to"
         save_to_file_name = ((dvd_title || "my dvd") + ' edited copy').gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
         fc.setSelectedFile(JFile.new(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)) 
         save_to = fc.go
-      else
-        save_to = nil
-      end
       dvd_title_track = descriptors["dvd_title_track"]
     
       bat_file_or_xspf = MencoderWrapper.get_bat_commands descriptors, drive, save_to
@@ -109,7 +105,6 @@ module SensibleSwing
       temp_file = temp_dir + '/' + 'vlc.temp.bat'
       File.write(temp_file, bat_file_or_xspf)
       puts 'commands located at: ' + bat_file_or_xspf
-      if should_save_file
         popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
           "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
           "This could take quite awhile, and will prompt you when it is done.\n" +
@@ -122,12 +117,6 @@ module SensibleSwing
           run_create_commands bat_file_or_xspf, save_to
           popup.dispose
         }
-      else
-        command = "vlc \"#{temp_file.to_filename}\" vlc://quit"
-        puts 'running playlist for DVD: ', command
-        system(command) # blocks the current window while running...
-        p 'done playing DVD'
-      end
       # LODO warn if they will overwrite a file in the end
    end
   
