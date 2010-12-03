@@ -1,3 +1,8 @@
+== 0.15.0 ==
+
+Use all i-frames for more accurate precision in cutting segments.
+Also use ffmpeg and mencoder for the same (no more VLC for encoding). Phew.
+
 == 0.14.8 ==
 
 Fix some copying bugs.
