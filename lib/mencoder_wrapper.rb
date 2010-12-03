@@ -58,7 +58,7 @@ class MencoderWrapper
 
       out += "@rem del #{@big_temp}\n" # LODO      
       out += "@rem del " + partials.join(' ') + "\n"# LODO
-      out += "echo wrote to #{to_here_final_file}.smplayer_or_vlc.avi"
+      out += "echo wrote to #{to_here_final_file}.avi"
       out
     end
     
@@ -68,7 +68,7 @@ class MencoderWrapper
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
       # LODO can we copy more here? ntsc-dvd supposedly remuxes...
-      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO not have the ac3...hmm...
+      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec ac3 " # LODO not have the ac3...hmm...
       # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
       partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
       "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
