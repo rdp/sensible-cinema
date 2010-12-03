@@ -9,16 +9,12 @@ class MencoderWrapper
 
   class << self
   
-    def get_header this_drive, start_here, end_here
-      out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done"
-      if start_here
-        out += " -ss #{start_here} -endpos #{end_here - start_here} "
-      end
+    def get_header this_drive
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
-        # unless we don't need to re-copy at all...
-        out = ''
+        ''
+      else
+        "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
       end
-      out + "\n"
     end
     
     def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil
@@ -30,12 +26,13 @@ class MencoderWrapper
         end_here   = OverLayer.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
         # it's relative now, since we rip from not the beginning
-        combined.map!{|start, endy, type| [start - start_here, endy - start_here, type]}
         raise Exception.new('unable to find any edit decisions to do within that range') unless combined.length > 0
+        previous_end = start_here
+      else
+        previous_end = 0
       end
-      previous_end = 0
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
-      out = get_header this_drive, start_here, end_here
+      out = get_header this_drive
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end

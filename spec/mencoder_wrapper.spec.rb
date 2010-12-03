@@ -26,10 +26,11 @@ describe MencoderWrapper do
   def go
     @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
   end
-  
+    
   it "should not rip it again if the .done file exists and the original file exist" do
     go
     @out.should include(" -o to_here.fulli.tmp.avi")
+    
     FileUtils.touch 'to_here.fulli.tmp.avi.done'
     go
     @out.should include(" -o to_here.fulli.tmp.avi")
@@ -131,19 +132,17 @@ describe MencoderWrapper do
      @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'  
     end
     
-    it "should allow for subsections" do
+    it "should always somewhat rip the whole thing" do
+      @out.should_not match(/mencoder dvd.*endpos/)
+    end
+    
+    it "should contain the included subsections" do
      @out.should_not include("-t 34.99")
-     @out.should include("14")
+     @out.should include("14.0")
      @out.should_not include("99999")
-     # should all be relative to the start time...
      @out.should include(" 0 ") # no start at 0 even
-     @out.should include("-ss 0 -t 0.999")
-     @out.should include("-ss 1.0 -t 4.999")
-     @out.should include("-ss 1.0")
-  end
-  
-  it 'should originally rip just the desired section' do
-    @out.should match(/dvd.*endpos/)
+     @out.should include("-ss 14.0 -t 0.999")
+     @out.should include("-ss 15.0 -t 4.999")
   end
   
   it "should raise if you focus down into nothing" do
