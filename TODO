@@ -8,17 +8,17 @@
      re-do various EDL's I have :P
  split the two projects somehow (project + distribution)
     two releases: experimental, normal (no imagemagick)
- preferences merger...hmm...;
+      actually just one release--developers can use the experimenal :P
+ preferences merger...hmm...
  compare computer DVD playback with physical player...
+ e-mail andrew
 
 == slightly lower than that ==
 
-  ripping "redoes" a large last section, for combining. Can I avoid this?
-    plus I do some copy, some ac3?
   easy installer for x,y,z
   unit test the GUI
-  no subtitles on national treasure...
-  
+  no subtitles on at least national treasure...
+  vlc poor timings on google doc
   ask if there's a "cross platform way to split files accurately" besides my hacky kludge.
   
   popup "you may now watch": bring it to the front...
@@ -27,14 +27,14 @@
   partner (Jon, Karlie if interested...give beta)
     create lotsa filters
   beta release
-  some better ripper...
-    maybe vlc is bound by the same constrains mplayer is?
-    maybe rip it to a more precise encoding, then edit it?
+  split out the EDL's o a separate project (?)
 
-== DVD monetary backlog (unordered) ==
+== DVD backlog (unordered) ==
 
+  ripping "redoes" a large last section, for combining. Can I avoid this?
+    plus I do some copy, some ac3?
 @mencoder.exe distributor: OCI plz? puh-lease?
-@dvd flick do you need that frequent i-frames?
+@dvd flick do you need that frequent of i-frames?
   rename bat as template.bat
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
@@ -59,18 +59,16 @@ make sure can work with very large DVD's...
   .ts doesn't seem too awesome....
 
 k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
-better icon...
+better .exe icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
       148 cars_widescreen_2006_edited.ps
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
   with an avi file sink?
-authorize.net instead of paypal?
 blu-ray support somehow (real-time? rip?)
 legal shtuff (LICENSE)
 some type of installer that can setup the registry...
-auto-assignment of EDL's to media:
-  DVD's (right click on DVD player, rip with SC?)
+right click on DVD player, rip with SC?
 a real website
 instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
 double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
@@ -82,14 +80,10 @@ add option to "just rip a DVD of your own straight full thing"
 avisynth?
 make the progress bar map "better" to the size of the various sections...
 detect occurrence of these type errors: dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
-per movie, various EDL's, one includes profanity, one just violence, one paranoid, etc.
+per movie, several EDL's, one includes profanity, one just violence, one paranoid, etc.
 when there are several, it lets you just choose between the ones that are valid (?)
 
-ask VLC is "adding 0.23 expected?" "do you have the same constraints as mplayer?"
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
-slightly faster copying possible (664 versus 887 seconds to combine them all together.)
-@mplayer "when it says nearest keyframe, that could be in the future?" 
-@mplayer "when I say play for 3.2, and the keyframe is 0.5 before, does it end up playing for 3.2 or 3.7?"
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
   can lop off sections to save space (?)
@@ -100,8 +94,12 @@ burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
 @smplayer: playing DVD's doesn't work currently
 try to compile transcode in cygwin (yipes)
 the ac3 thing
+videos for use, creation of EDL's
 
 == random backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
+also note that mencoder doesn't do splitting very well, for some reason.
 
 pass unit tests again jruby
 
