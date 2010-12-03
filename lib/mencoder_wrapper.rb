@@ -81,10 +81,16 @@ end
 if $0 == __FILE__
   require 'rubygems'
   require 'sane'
-  puts 'syntax: yaml_file_name d:\ to_here 00:15 00:25'
+  puts 'syntax: yaml_file_name d:\ to_here (00:15 00:25)'
   a = YAML.load_file ARGV.shift
   drive = ARGV.shift
   raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
-  File.write('range.bat', MencoderWrapper.get_bat_commands(a, drive, *ARGV))
-  print 'wrote range.bat'
+  commands =MencoderWrapper.get_bat_commands(a, drive, *ARGV)
+  if ARGV.length > 2
+    File.write('range.bat', commands)
+    print 'wrote range.bat'
+  else
+    File.write('all.bat', commands)
+    print 'wrote all.bat'
+  end
 end
