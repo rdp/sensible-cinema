@@ -6,6 +6,7 @@ require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
 require_relative '../lib/mencoder_wrapper'
+require_relative '../lib/storage'
 
 require 'ruby-wmi'
 require 'tmpdir'
@@ -14,6 +15,7 @@ require_relative '../lib/drive_info'
 
 module SensibleSwing
  class MainWindow < JFrame
+   Storage = Storage.new("sc")
    def initialize
      super "Sensible-Cinema"
      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
@@ -44,7 +46,7 @@ module SensibleSwing
      c.set_bounds(44,120,button_width,23)
      panel.add c    
     
-     d = JButton.new( "Preview an edited section of DVD" )
+     d = JButton.new( "Preview edited section of a DVD" )
      d.on_clicked {
        do_copy_dvd_to_hard_drive true
      }
@@ -105,8 +107,14 @@ module SensibleSwing
       
       if should_prompt_for_start_and_end_times
         JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
-        start_time = JOptionPane.showInputDialog("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)")
-        end_time = JOptionPane.showInputDialog("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)")
+        start_time = JOptionPane.showInputDialog("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
+        Storage['start_time'] = start_time
+        end_time = JOptionPane.showInputDialog("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
+        Storage['end_time'] = end_time
+        unless start_time and end_time
+          JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
+          return
+        end
       end
       
       fc.set_dialog_title "Pick where to save #{dvd_title} edited to"
@@ -149,6 +157,8 @@ module SensibleSwing
       lines.each_with_index{|l, idx|
         if success
           success = system(l) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
+          p 'line failed ' + l unless success
+          success = true if l =~ /@rem/ # these fail fof some reason?
           @progress_bar.set_value(10 + idx/total_size*90)
         end
       }
@@ -159,7 +169,7 @@ module SensibleSwing
         JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{saved_to} in SMPlayer or VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
         show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
         system show_file
-        self.close
+        #self.close # ?
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end

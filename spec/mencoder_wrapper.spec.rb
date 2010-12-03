@@ -53,6 +53,7 @@ describe MencoderWrapper do
   it "should have what looks like a working ffmpeg style split commands" do
     # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
     @out.should match(/ffmpeg -i to_here.*vcodec copy -acodec ac3 .*-ss .* -t /)
+    @out.should_not match(/acodec copy.*vol 0/)
   end
   
   it "should accomodate for mutes the ffmpeg way" do
