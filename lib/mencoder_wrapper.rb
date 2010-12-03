@@ -58,7 +58,7 @@ class MencoderWrapper
 
       out += "@rem del #{@big_temp}\n" # LODO      
       out += "@rem del " + partials.join(' ') + "\n"# LODO
-
+      out += "echo wrote to #{to_here_final_file}.smplayer_or_vlc.avi"
       out
     end
     
@@ -81,16 +81,18 @@ end
 if $0 == __FILE__
   require 'rubygems'
   require 'sane'
-  puts 'syntax: yaml_file_name d:\ to_here (00:15 00:25)'
+  puts 'syntax: yaml_file_name d:\ output (00:15 00:25) (--run)'
   a = YAML.load_file ARGV.shift
   drive = ARGV.shift
   raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
+  execute = ARGV.delete('--run')
   commands =MencoderWrapper.get_bat_commands(a, drive, *ARGV)
   if ARGV.length > 2
-    File.write('range.bat', commands)
-    print 'wrote range.bat'
+    write_to = 'range.bat'
   else
-    File.write('all.bat', commands)
-    print 'wrote all.bat'
+    write_to = 'all.bat'
   end
+  File.write(write_to, commands)
+  print 'wrote ' + write_to
+  system(write_to) if execute
 end

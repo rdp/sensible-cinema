@@ -1,5 +1,5 @@
 mutes:
-  "6:18" : "6:19" # Goodness knows... (but real)
+  "6:18" : "6:19.1" # G... knows...
 blank_outs:
   # none
 

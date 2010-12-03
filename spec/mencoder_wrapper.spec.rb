@@ -92,8 +92,12 @@ describe MencoderWrapper do
     @out.should match(/del to_here.1.avi/)
   end
   
-  it "should rm partial files" do
+  it "should rm partial files before writing each one" do
     @out.should match(/del to_here.3.avi$/)
+  end
+  
+  it "should echo that it is done" do
+    @out.should include("echo wrote")
   end
   
   def setup
@@ -119,7 +123,7 @@ describe MencoderWrapper do
     @out.should match(/-t 0.999/)
   end
   
-  it "should not have doubles" do
+  it "should not have doubled .avi.avi's" do
     setup  
     # lodo cleanup this ugliness
     @out.scan(/-i.*-t.*to_here.avi.1.avi/).length.should == 1
@@ -153,8 +157,6 @@ describe MencoderWrapper do
   it "should create a temp file" do
     
   end
-  
-  it "should take a temp file for focusing down into shtuff"
   
 end
   
