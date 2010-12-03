@@ -66,6 +66,8 @@ task 'bundle_dependencies' => 'gemspec' do
    FileUtils.rm_rf 'vendor/cache'
    Dir.mkdir 'vendor/cache'
    Dir.chdir 'vendor/cache' do
+     puts 'downloading 7za.exe'
+     raise unless system("wget http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7z920.exe")
      dependencies.each{|d|
        system("#{Gem.ruby} -S gem unpack #{d.name}")
      }
