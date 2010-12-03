@@ -6,11 +6,10 @@
  preferences merger...hmm...
  compare computer DVD playback with physical player...
  e-mail andrew
- pass a title through when ripping so it doesn't use dvd://1 always
 
 == slightly lower than that ==
 
-  button for "suck in EDL's" ?
+  button for "suck in EDL's"
     split out the EDL's to a separate project (?)
     check their patent first
   unit test the GUI
@@ -22,16 +21,17 @@
   partner (Jon, Karlie if interested...give beta)
     create lotsa filters
   beta release/rinse and repeat with ppl (once it's releasable...)
-  re-do various DVD EDL's I have :P
+  re-do the various DVD EDL's I have :P
   legal shtuff (LICENSE)
   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
   can generate mplayer EDL's
-  better using/burning screencast
+  using+burning screencast
   editing screencast
   a real'ish website
 
 == DVD backlog (unordered, some very low prio) ==
 
+ warn when labels don't match...
  kill old mencoder instances more readily...
  split the two projects somehow (project + distribution)
     two releases: experimental, developer/experimental
@@ -47,7 +47,7 @@
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
-  all dogs go to heaven...
+  all dogs go to heaven...finish EDL
   can blank out the video, with audio continuing through...
   add an option "just save full disk (unedited) to hard drive..."
   add an option "just save full disk (edited) to hard drive...well compressed"
