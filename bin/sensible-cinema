@@ -38,7 +38,7 @@ module SensibleSwing
      }
      button_width = 260
      b.set_bounds(44,220,button_width,23)
-     panel.add b if ARGV.include?("--test")
+     panel.add b if ARGV.include?("--experimental")
     
      c = JButton.new( "Create edited copy of DVD on Your Hard Drive" )
      c.on_clicked {
@@ -141,8 +141,9 @@ module SensibleSwing
   end
   
   def single_edit_list_matches_dvd volume_name
+    return unless volume_name # ignore nil searches...
     matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
-      YAML.load_file(file)["dvd_drive_label"] == volume_name      
+      YAML.load_file(file)["dvd_drive_label"] == volume_name
     }
     if matching.length == 1
       file = matching[0]
@@ -194,18 +195,17 @@ module SensibleSwing
       fc.setFile(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
       dvd_title_track = descriptors["dvd_title_track"] # TODO rdp
-      generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time
+      generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time, dvd_title_track
    end
   
-    def generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time
+    def generate_and_run_bat_file save_to, edit_list_path, drive, dvd_title, start_time, end_time, dvd_title_track
       Storage['last_params'] = [save_to, edit_list_path, drive, dvd_title, start_time, end_time]
       descriptors = YAML.load_file edit_list_path
-      p descriptors
-      bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time
+      bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
       temp_dir = Dir.tmpdir
-      temp_file = temp_dir + '/' + 'vlc.temp.bat'
+      temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, bat_file)
-      puts 'commands located at: ' + bat_file
+      puts 'commands located for debugging purposes at: ' + bat_file
       popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
         "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
         "This could take quite awhile, and will prompt you when it is done.\n" +

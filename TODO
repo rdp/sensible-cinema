@@ -3,19 +3,18 @@
   
 == probably next up+low prio ==
 
- split the two projects somehow (project + distribution)
-    two releases: experimental, developer/experimental (no imagemagick for either)
  preferences merger...hmm...
  compare computer DVD playback with physical player...
  e-mail andrew
+ pass a title through when ripping so it doesn't use dvd://1 always
 
 == slightly lower than that ==
 
-  easy installer for dependencies
-    button for "suck in EDl's" ?
-      check their patent first
+  button for "suck in EDL's" ?
+    split out the EDL's to a separate project (?)
+    check their patent first
   unit test the GUI
-  make sure no subtitles on at least national treasure...
+  make sure no subtitles on national treasure...
   vlc poor timings on google doc
   
   note how to get the title number
@@ -23,9 +22,7 @@
   partner (Jon, Karlie if interested...give beta)
     create lotsa filters
   beta release/rinse and repeat with ppl (once it's releasable...)
-  split out the EDL's to a separate project (?)
   re-do various DVD EDL's I have :P
-  pass a title through when ripping so it doesn't use dvd://1 always
   legal shtuff (LICENSE)
   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
   can generate mplayer EDL's
@@ -35,6 +32,10 @@
 
 == DVD backlog (unordered, some very low prio) ==
 
+ kill old mencoder instances more readily...
+ split the two projects somehow (project + distribution)
+    two releases: experimental, developer/experimental
+  auto-download imagemagick, too
   check all the various options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   popup "you may now watch": bring it to the front...
   can rip from a DVD-like folder (?)

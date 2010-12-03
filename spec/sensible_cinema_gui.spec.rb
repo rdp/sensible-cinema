@@ -8,6 +8,10 @@ module SensibleSwing
       MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should_not be nil
     end
     
+    it "should not auto-select if you pass it nil" do
+      MainWindow.new.single_edit_list_matches_dvd(nil).should be nil
+    end
+    
     it "should prompt if two EDL's match a DVD title" do
       MainWindow.const_set(:EDL_DIR, 'temp')
       FileUtils.rm_rf 'temp'

@@ -13,13 +13,13 @@ class MencoderWrapper
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         ''
       else
-        "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+        "call mencoder dvd://#{@dvd_title_track} -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
       end
     end
     
-    def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil
+    def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
       combined = VLCProgrammer.convert_incoming_to_split_sectors these_mutes
-      
+      @dvd_title_track = dvd_title_track
       if start_here || end_here
         raise 'need both' unless end_here && start_here
         start_here = OverLayer.translate_string_to_seconds(start_here)
