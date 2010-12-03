@@ -7,7 +7,7 @@ blank_outs:
 
 title: Bob's Big Plan
 dvd_drive_label: BOBS_BIG_PLAN
-source: DVD (vlc)
+source: DVD
 dvd_title_track: 1
 
 other_notes: could use more differentiation during the song, as I don't dislike *all* the music.
