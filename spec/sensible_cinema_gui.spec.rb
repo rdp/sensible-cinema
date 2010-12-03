@@ -18,11 +18,11 @@ module SensibleSwing
         File.binwrite('b.txt', "dvd_drive_label: BOBS_BIG_PLAN")
       end
       MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
-      
     end
     
-    it "should modify path to have mencder available, and ffmpeg, and download them on the fly"
-  
+    it "should modify path to have mencder available, and ffmpeg, and download them on the fly" do
+      ENV['PATH'].should include("mencoder")
+    end
   
   end
 end

@@ -8,10 +8,11 @@ require 'sane'
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
 
-require 'ruby-wmi'
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
+
+ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/vendor/cache/mencoder'.to_filename
 
 module SensibleSwing
  class MainWindow < JFrame
@@ -58,8 +59,7 @@ module SensibleSwing
      f.on_clicked {
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
-       filename = dialog.go
-      
+       filename = dialog.go      
        system("start #{filename}")
       }
      f.set_bounds(44,260,button_width,23)
@@ -93,7 +93,23 @@ module SensibleSwing
      @progress_bar.visible = false
      panel.add @progress_bar
      @buttons = [b,c,d,e,@exit]
+     check_for_dependencies
    end
+  
+  def check_for_dependencies
+    require 'whichr'
+    ffmpeg = RubyWhich.new.which('ffmpeg')
+    if ffmpeg.length == 0
+      JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: imagemagick.\n
+      Click ok to be directed to its website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
+      system("start http://www.imagemagick.org/script/binary-releases.php#windows")
+      java.lang.System.exit(1)
+    end
+    mencoder = RubyWhich.new.which('mencoder')
+    if mencoder.length
+      #http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z
+    end
+  end
   
   def single_edit_list_matches_dvd volume_name
     matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
@@ -101,10 +117,11 @@ module SensibleSwing
     }
     if matching.length == 1
       file = matching[0]
-      p "selecting only matching file #{file}"
-      return file
-    end    
-    nil
+      p "selecting the one matching file #{file}"
+      file
+    else    
+      nil
+    end
   end
   
   EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"

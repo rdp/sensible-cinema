@@ -10,4 +10,4 @@ dvd_drive_label: BOBS_BIG_PLAN
 source: DVD
 dvd_title_track: 1
 
-other_notes: could use more differentiation during the song, as I don't dislike *all* the music.
+other_notes: could use more differentiation during the song, as I don't dislike *all* the music. still needs some tweaking...
