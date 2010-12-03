@@ -4,6 +4,8 @@ require_relative '../lib/mencoder_wrapper'
 describe MencoderWrapper do
 
   before do
+    FileUtils.rm 'to_here.fulli.tmp.avi.done' rescue nil
+    FileUtils.rm 'to_here.fulli.tmp.avi' rescue nil
     @a = YAML.load_file "../zamples/edit_decision_lists/dvds/happy_feet.txt"
     @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
   end
@@ -11,6 +13,29 @@ describe MencoderWrapper do
   it "should be able to convert" do      
     @out.should_not be nil
     @out.should include("e:\\")
+  end
+  
+  it "should have what looks like a working mencoder rip command" do
+    @out.should match(/mencoder dvd.*keyint=1/)
+  end
+  
+  it "should create a .done file after ripping" do
+    @out.should include("&& echo got_file > to_here.fulli.tmp.avi.done")
+  end
+  
+  def go
+    @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
+  end
+  
+  it "should not rip it again if the .done file exists and the original file exist" do
+    go
+    @out.should include(" -o to_here.fulli.tmp.avi")
+    FileUtils.touch 'to_here.fulli.tmp.avi.done'
+    go
+    @out.should include(" -o to_here.fulli.tmp.avi")
+    FileUtils.touch 'to_here.fulli.tmp.avi'
+    go
+    @out.should_not include(" -o to_here.fulli.tmp.avi")  
   end
   
   it "should use newline every line" do
@@ -22,10 +47,6 @@ describe MencoderWrapper do
   it "should use ffmpeg style start and stop times" do
     @out.should match(/ffmpeg.*-ss/)
     @out.should include(" -t ")
-  end
-  
-  it "should have what looks like a working mencoder rip command" do
-    @out.should match(/mencoder dvd.*keyint=1/)
   end
   
   it "should have what looks like a working ffmpeg style split commands" do
@@ -69,7 +90,6 @@ describe MencoderWrapper do
   it "should rm partial files" do
     @out.should match(/del to_here.3.avi$/)
   end
-  
   
   def setup
     @settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
@@ -125,6 +145,10 @@ describe MencoderWrapper do
   it "should raise if you focus down into nothing" do
     setup
     proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should raise_error(/unable/)
+  end
+  
+  it "should create a temp file" do
+    
   end
   
   it "should take a temp file for focusing down into shtuff"

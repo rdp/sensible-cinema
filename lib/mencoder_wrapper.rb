@@ -10,7 +10,10 @@ class MencoderWrapper
   class << self
   
     def get_header this_drive, start_here, end_here
-      out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} "
+      out = "call mencoder dvd:// -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done"
+      if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
+        out = ''
+      end
       if start_here
         out += " -ss #{start_here} -endpos #{end_here - start_here} "
       end
