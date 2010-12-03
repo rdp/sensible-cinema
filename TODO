@@ -8,7 +8,6 @@
  preferences merger...hmm...
  compare computer DVD playback with physical player...
  e-mail andrew
- easier 'open/create' one
 
 == slightly lower than that ==
 
@@ -18,26 +17,26 @@
   unit test the GUI
   make sure no subtitles on at least national treasure...
   vlc poor timings on google doc
-  check if there's a "cross platform way to split files accurately" besides my hacky kludge.
   
-  popup "you may now watch": bring it to the front...
   note how to get the title number
     add a way to get the label rather easily...
   partner (Jon, Karlie if interested...give beta)
     create lotsa filters
-  beta release
+  beta release/rinse and repeat with ppl (once it's releasable...)
   split out the EDL's to a separate project (?)
   re-do various DVD EDL's I have :P
   pass a title through when ripping so it doesn't use dvd://1 always
   legal shtuff (LICENSE)
   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
-  mplayer EDL's
+  can generate mplayer EDL's
   better using/burning screencast
   editing screencast
   a real'ish website
 
 == DVD backlog (unordered, some very low prio) ==
 
+  check all the various options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
+  popup "you may now watch": bring it to the front...
   can rip from a DVD-like folder (?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
     plus I do some copy, some ac3?
