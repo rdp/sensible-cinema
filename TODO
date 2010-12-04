@@ -16,13 +16,12 @@
   a real'ish website
   "run create mode" button (?)
   license the first time they run it (gplv3)
+  bring that window to the top! (before done dialog...)
 
 == DVD backlog (unordered, some very low prio) ==
 
  DRY up dependency installation code
   install them to cache2 or something...so I can cleanup..
- bring that window to the top! (before done dialog...)
- advertise urug, ruby flow :)
  using+burning screencast
  editing screencast
   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
@@ -30,7 +29,9 @@
     add a way to get the label rather easily...
      add an option "just save full disk (unedited) to hard drive..."
        note to people: can edit those to your liking
-    
+
+
+ advertise urug, ruby flow :)
  "Re-run most recent" disabled when there isn't one [?]
  unit test the GUI
  re-do DVD EDL's that need it :P
