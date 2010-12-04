@@ -12,21 +12,34 @@ class EdlParser
     
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []
-    blanks = raw["blanks"] || []
-    require 'ruby-debug'
-#    debugger
+    blanks = raw["blank_outs"] || []
+    raw["mutes"] = convert_to_timestamp_arrays(mutes)
+    raw["blank_outs"] = convert_to_timestamp_arrays(blanks)
     raw
   end
   
-  Timestamp = /[\d:\.]+/
+  def self.convert_to_timestamp_arrays array
+    out = []
+    while(single_element = extract_entry!(array))
+      out << single_element
+    end
+    out
+  end
+  
+  TimeStamp = /^\d+:\d\d[\d:\.]*$/
+  # if it has at least one colon, followed by a digit, then a digit, then some combo of digits and colons...
   
   def self.extract_entry! from_this
-    # two digits, then whatever else you want, that's not a digit
+    return nil if from_this.length == 0
+    # two digits, then whatever else you see, that's not a digit...
     out = from_this.shift(2)
-    while(from_this[0] && from_this[0] !~ Timestamp)
+    out.each{|d|
+      raise 'non timestamp? ' + d unless d =~ TimeStamp
+    }
+    while(from_this[0] && from_this[0] !~ TimeStamp)
      out << from_this.shift
     end
-    out    
+    out
   end
 
 end
