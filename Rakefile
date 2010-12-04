@@ -103,7 +103,7 @@ task 'create_distro_dir' do
   p 'created (still need to zip it) ' + dir_out
 end
 
-desc 'j -S rake bundle_dependencies create_distro_dir release'
-task 'full_release' => [:bundle_dependencies, :create_distro_dir, :release, :build] do
-  system("#{Gem.ruby} -S gem push pkg/*.gem") 
+desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
+task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release
+  system("#{Gem.ruby} -S gem push #{Dir['pkg/*.gem'][-1]}") 
 end

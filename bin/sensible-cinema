@@ -48,11 +48,15 @@ module SensibleSwing
        path = RubyWhich.new.which('smplayer')
        if(path.length == 0)
             JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
-         Click ok to be directed to its download website.\n", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
+         Click ok to be directed to its download website.
+         Also note that if it ever hangs, kill the process, and then use VLC instead
+         (though VLC only has approximate timings).", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
          system("start http://smplayer.sourceforge.net/downloads.php")
        else
-         drive, volume, md5 = choose_dvd_drive
-         system("smplayer dvd:// -dvd-device #{drive}")
+         #drive, volume, md5 = choose_dvd_drive
+         command = "smplayer dvd://"
+         puts command
+         system(command)
        end 
      }
      b.set_bounds(44,150,button_width,23)
@@ -129,11 +133,10 @@ module SensibleSwing
       answer = JOptionPane.showConfirmDialog(nil, "Appears that you need to install a dependency: mencoder.
       Its license is at: http://www.gnu.org/licenses/gpl-2.0.html.
       Also this will download 7z locally (license: http://www.7-zip.org/license.txt).
-      Click yes if you accept the terms of the several license agreements. They will then be installed automatically.
-      Or click no to cancel.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
+      Click yes if you accept the terms of the several license agreements mentioned. The programs will then be downloaded.
+      Or click no to cancel and exit.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
       if answer == 1
         p 'exiting, no mencoder...'
-        sleep 10
         java.lang.System.exit(1)
       end
       vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
