@@ -1,5 +1,4 @@
 "title" => "Bob's Big Plan",
-"disk_unique_id" => "d41d8cd98f00b204e9800998ecf8427e",
 "dvd_title_track" => 1,
 "other notes" => "could use more nit-picking of the song, as some parts seem all right in the end",
 
