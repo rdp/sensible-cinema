@@ -1,4 +1,4 @@
-  == medium ==
+== medium ==
 
   
 == probably next up+low prio ==
@@ -7,49 +7,45 @@
 
 == slightly lower than that ==
 
-  unit test the GUI
   make sure no subtitles on national treasure...
-  vlc poor timings on google doc
-  
-  note how to get the title number
-    add a way to get the label rather easily...
   partner (Jon, Karlie if interested...give beta)
     create lotsa filters
   beta release/rinse and repeat with ppl (once it's releasable...)
-  re-do the various DVD EDL's I have :P
   legal shtuff (LICENSE)
-  instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
   can generate mplayer EDL's
-  using+burning screencast
-  editing screencast
   a real'ish website
 
 == DVD backlog (unordered, some very low prio) ==
 
+ using+burning screencast
+ editing screencast
+  instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
+  note how to get the title number
+    add a way to get the label rather easily...
+     add an option "just save full disk (unedited) to hard drive..."
+       note to people: can edit those to your liking
+    
+ unit test the GUI
+ re-do DVD EDL's that need it :P
+   all dogs go to heaven...finish EDL
  warn when labels exist and don't match...
  kill old mencoder instances more often...
- split the two projects somehow (project + distribution)
-    two releases: experimental, developer/experimental
   auto-download imagemagick, too
   check all the various options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   popup "you may now watch": bring it to the front...
   can rip from a DVD-like folder (?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
     plus I do some copy, some ac3?
-@mencoder.exe distributor: OCI plz? puh-lease?
 @dvd flick do you need that frequent of i-frames?
   rename bat as template.bat
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
-  all dogs go to heaven...finish EDL
   can blank out the video, with audio continuing through...
-  add an option "just save full disk (unedited) to hard drive..."
   add an option "just save full disk (edited) to hard drive...well compressed"
-    or do we want to do that by default anyway? (does it help burning? it helps with file size...hmm...)
+    or do we want to do that by default anyway? (does it help burning? file size...hmm...)
 @VLC: hard crash when ripping that one DVD...long one, about the constitution...
-auto-zip it with my rake task :)
-check DVD patent expiration date
+in general, fine tune burning with various things...
 
 make sure can work with very large DVD's...
   can use a fast temp drive, save through to other :P
@@ -57,7 +53,7 @@ make sure can work with very large DVD's...
   can have collaborators re-selling EDL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
 a real website
-advertise "call for helpers" ?
+advertise "call for helpers"?
 k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
 better .exe icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
@@ -66,28 +62,31 @@ blu-ray support somehow (real-time? rip?)
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
   with an avi file sink?
-right click on DVD player, rip edited with SC?
 double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
 make the progress bar map "better" to the size of the various sections...
 detect occurrence of these type errors (DVD read failure): dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
 per movie, several EDL's, one includes profanity, one just violence, one paranoid, etc.
 when there are several, it lets you just choose between the ones that are valid (?)
 
-ask VLC "fuzzy menus on the happiest baby dvd expected?"
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
   can lop off sections to save space (?)
   can burn extras from the DVD, too?
     optionally ?
-  transcode to condense...
+  transcode to condense..?
   split to allow?
 @smplayer: setting up DVD's is confusing
 try to compile transcode in cygwin (yipes)
-the ac3 thing
-note to people: can edit those to your liking
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+the ac3 thing
+ask VLC "fuzzy menus on the happiest baby dvd expected?"
+right click on DVD player, rip edited with SC?
+auto-zip it with my rake task :)
+split the two projects somehow (project + distribution)
+    two releases: experimental, developer/experimental
+    bring back the old :)    
 button for "suck in EDL's"
  split out the EDL's to a separate project (?)
 make the other stuff work again, since I no longer use YAML...

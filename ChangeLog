@@ -1,7 +1,16 @@
+== 0.16.0 ==
+
+Change the YAML style so that it can have filterable categories (disabled for now, but there are unit tests
+that show the use of such as a form of "combining user preferences" with the EDL to produce a 
+new customized one.
+
+Allow for quite more easily user creation by allowing users to access just specific "scenes" of the video edited.
+
 == 0.15.0 ==
 
 Use all i-frames for more accurate precision in cutting segments.
 Also use ffmpeg and mencoder for the same (no more VLC for encoding). Phew.
+Note that by at least this version, auto DVD title selection as a parameter has been built in (see git log).
 
 == 0.14.8 ==
 
@@ -13,7 +22,7 @@ Auto-select EDL depending on which disk they have.
 
 == 0.14.5 ==
 
-Make it distributable more easily.
+Made it distributable more easily.
 
 == 0.14.4 ==
 
