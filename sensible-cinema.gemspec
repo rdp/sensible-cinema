@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.16.0"
+  s.version = "0.16.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -50,6 +50,7 @@ Gem::Specification.new do |s|
     "lib/vlc_programmer.rb",
     "never_do",
     "run_sensible_cinema.bat",
+    "run_sensible_cinema_in_create_mode.bat",
     "sensible-cinema.gemspec",
     "spec/blanker.spec.rb",
     "spec/common.rb",

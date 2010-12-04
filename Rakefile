@@ -104,6 +104,6 @@ task 'create_distro_dir' do
 end
 
 desc 'j -S rake bundle_dependencies create_distro_dir release'
-task 'full_release' => [:bundle_dependencies, :create_distro_dir, :release] do
- # do nothing :)
+task 'full_release' => [:bundle_dependencies, :create_distro_dir, :release, :build] do
+  system("#{Gem.ruby} -S gem push pkg/*.gem") 
 end
