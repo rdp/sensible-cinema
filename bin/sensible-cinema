@@ -30,7 +30,7 @@ module SensibleSwing
      jlabel = JLabel.new 'Welcome to Sensible Cinema!'
      happy = Font.new("Tahoma", Font::PLAIN, 11)
      jlabel.setFont(happy)
-     jlabel.set_bounds(44,44,136,14)
+     jlabel.set_bounds(44,44,160,14)
      panel.add jlabel
     
      button_width = 270
