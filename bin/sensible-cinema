@@ -12,6 +12,7 @@ require_relative '../lib/edl_parser'
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
+require 'whichr'
 
 ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
 
@@ -39,7 +40,23 @@ module SensibleSwing
        do_copy_dvd_to_hard_drive false
      }
      c.set_bounds(44,120,button_width,23)
-     panel.add c    
+     panel.add c
+    
+     b = JButton.new("Watch current DVD unedited")
+     b.on_clicked {
+       ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
+       path = RubyWhich.new.which('smplayer')
+       if(path.length == 0)
+            JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
+         Click ok to be directed to its download website.\n", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
+         system("start http://smplayer.sourceforge.net/downloads.php")
+       else
+         drive, volume, md5 = choose_dvd_drive
+         system("smplayer dvd:// -dvd-device #{drive}")
+       end 
+     }
+     b.set_bounds(44,150,button_width,23)
+     panel.add b
     
      d = JButton.new( "Preview edited section of a DVD" )
      d.on_clicked {
@@ -81,14 +98,13 @@ module SensibleSwing
        self.close
      }
      @exit.set_bounds(44,320,button_width,23)
-     panel.add @exit
-    
+     panel.add @exit    
      
      @progress_bar = JProgressBar.new(0, 100)
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible = false
      panel.add @progress_bar
-     @buttons = [c,d,e,reload,@exit]
+     @buttons = [b,c,d,e,reload,@exit]
      check_for_dependencies
    end
   
@@ -100,11 +116,10 @@ module SensibleSwing
   end
   
   def check_for_dependencies
-    require 'whichr'
     ffmpeg = RubyWhich.new.which('ffmpeg')
     if ffmpeg.length == 0
       JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: imagemagick.\n
-      Click ok to be directed to its website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
+      Click ok to be directed to its download website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
       Then restart Sensible-Cinema.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
       system("start http://www.imagemagick.org/script/binary-releases.php#windows")
       java.lang.System.exit(1)
