@@ -13,7 +13,7 @@ class MencoderWrapper
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         ''
       else
-        "call mencoder dvd://#{@dvd_title_track} -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+        "call mencoder dvd://#{@dvd_title_track} -sid 1000 -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
       end
     end
     

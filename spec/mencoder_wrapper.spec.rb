@@ -18,6 +18,7 @@ describe MencoderWrapper do
   
   it "should have what looks like a working mencoder rip command" do
     @out.should match(/mencoder dvd.*keyint=1/)
+    @out.should match(/-sid 1000/)
   end
   
   it "should create a .done file after ripping" do

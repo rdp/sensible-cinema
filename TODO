@@ -19,10 +19,12 @@
   bundle 7z [?]
    remove note about it
   make sure no subtitles on national treasure...
+  assert that at least one drive has a DVD in it...
 
 == DVD backlog (unordered, some very low prio) ==
 
- using, burning, creating text
+ issues
+ using, burning, creating text "howto's"
 
  using+burning screencast
  editing screencast
