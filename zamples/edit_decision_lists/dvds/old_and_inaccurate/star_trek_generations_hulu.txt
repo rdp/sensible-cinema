@@ -1,0 +1,8 @@
+source: "hulu"
+mutes:
+  08:54.5 : 08:56 # religious exclamation
+  10:46.5 : 10:48 # religious exclamation
+  11:21 : 11:24.5 # re
+  19:45 : 19:50 # religious exclamation weak "may *** have mercy on your soul"
+  "01:15:38.5" : "01:15:41.5" # "scatalogical" Data when they are about to plummet to earth
+missing: "religious exclamation strong near beginning [sorry]"

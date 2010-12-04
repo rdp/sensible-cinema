@@ -1,12 +1,13 @@
 require File.dirname(__FILE__) + "/common"
 require_relative '../lib/mencoder_wrapper'
+require_relative '../lib/edl_parser'
 
 describe MencoderWrapper do
 
   before do
     FileUtils.rm 'to_here.fulli.tmp.avi.done' rescue nil
     FileUtils.rm 'to_here.fulli.tmp.avi' rescue nil
-    @a = YAML.load_file "../zamples/edit_decision_lists/dvds/happy_feet.txt"
+    @a = EdlParser.parse_file "../zamples/edit_decision_lists/dvds/bobs_big_plan.txt"
     @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
   end
   
@@ -85,7 +86,7 @@ describe MencoderWrapper do
   end
   
   it "should delete all partials" do
-    1.upto(10) do |n|
+    1.upto(7) do |n|
       @out.should match(Regexp.new(/del.*#{n}/))
     end
     # should delete the right numbers, too, which starts at 1
