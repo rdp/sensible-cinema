@@ -25,7 +25,7 @@ module SensibleSwing
      setSize 350,400
      add panel # why can't I just slap these down?
  
-     jlabel = JLabel.new 'Welcome to Sensible Cinema'
+     jlabel = JLabel.new 'Welcome to Sensible Cinema!'
      happy = Font.new("Tahoma", Font::PLAIN, 11)
      jlabel.setFont(happy)
      jlabel.set_bounds(44,44,136,14)
@@ -59,8 +59,8 @@ module SensibleSwing
      f.on_clicked {
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
-       filename = dialog.go      
-       system("start #{filename}")
+       filename = dialog.go
+       system("start #{filename}") if filename
       }
      f.set_bounds(44,260,button_width,23)
      panel.add f if ARGV.index("--create-mode")
@@ -154,7 +154,7 @@ module SensibleSwing
     end
   end
   
-  EDL_DIR = __dir__  + "/../zamples/edit_decision_lists/dvds"
+  EDL_DIR = File.expand_path(__dir__  + "/../zamples/edit_decision_lists/dvds").to_filename
   
   def repeat_last_copy_dvd_to_hard_drive
     generate_and_run_bat_file *Storage['last_params']
@@ -165,7 +165,7 @@ module SensibleSwing
       if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
         fc = FileDialog.new(self)
         fc.set_title "Please pick a DVD Edit List File"
-        fc.set_directory(EDL_DIR)
+        fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
       descriptors = YAML.load_file edit_list_path

@@ -101,6 +101,6 @@ task 'create_distro_dir' do
   FileUtils.mkdir_p dir_out
   FileUtils.cp_r(existing, dir_out)
   # this one belongs in the trunk
-  FileUtils.cp("#{dir_out}/run_sensible_cinema.bat", "#{dir_out}/..")
+  FileUtils.cp(Dir["#{dir_out}/*.bat"], "#{dir_out}/..")
   p 'created (still need to zip it) ' + dir_out
 end
