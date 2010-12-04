@@ -15,11 +15,6 @@ To program sensible-cinema, you create an edit decision list it can use.
 
 An Edit List looks something like this example:
 
-mutes:
-  "01:00:00" : "01:01:02.5" # mute from exactly one hour to one hour, one minute, two seconds and a half will be muted.
-blank_outs:
-  "01:00:00" : "01:01:02.5" # also blank out (overlay with blank window) the same.
-
 Here's one with more detail
 
 https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
@@ -33,10 +28,10 @@ Once you're done then you can contribute your scene descriptions file if desired
 
 == FAQ ==
 
-Q. How do I watch these on my computer?
-A. You can burn a DVD with it.  First create the edited copy on your hard drive.  Then use
-  Dvd Flick is a good one for windows (here's a screencast of using it http://rogerdpack.t28.net/sensible-cinema/dvd%20flick%20create%20dvd%20from%20file.avi)
-  For OS X iDVD might work well.
+Q. How do I watch these on my TV?
+A. You can burn a DVD with it.  First create it on your hard drive.  Then use
+  Dvd Flick ()a good one for windows) (here's a screencast of using it within http://rogerdpack.t28.net/sensible-cinema)
+  For OS X : iDVD might work well.
   You might be able to "beam" it to your PS3 and play it from there, using PS3 media server (or windows media player), or put it on a flash drive and play it from that.
 
 == Caveats ==
@@ -81,6 +76,7 @@ http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 
 == Feedback ==
 
-Feedback, including feature requests, welcome.
+Feedback, including feature requests, comments, welcome.
 
 http://github.com/rdp/sensible-cinema (message me or create an issue for feedback/any requests/bugs)
+rogerdpack@gmail.com
