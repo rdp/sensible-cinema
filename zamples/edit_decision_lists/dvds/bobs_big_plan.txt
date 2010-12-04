@@ -8,5 +8,3 @@
   "28:13.5" , "29:40", "theme song again",
   "48:46" , "49:08", "theme song again"
 ]
-
-# 47 -> 50
