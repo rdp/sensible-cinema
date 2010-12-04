@@ -3,15 +3,10 @@
   
 == probably next up+low prio ==
 
- preferences merger...hmm...
  compare computer DVD playback with physical player...
- e-mail andrew
 
 == slightly lower than that ==
 
-  button for "suck in EDL's"
-    split out the EDL's to a separate project (?)
-    check their patent first
   unit test the GUI
   make sure no subtitles on national treasure...
   vlc poor timings on google doc
@@ -31,8 +26,8 @@
 
 == DVD backlog (unordered, some very low prio) ==
 
- warn when labels don't match...
- kill old mencoder instances more readily...
+ warn when labels exist and don't match...
+ kill old mencoder instances more often...
  split the two projects somehow (project + distribution)
     two releases: experimental, developer/experimental
   auto-download imagemagick, too
@@ -71,7 +66,6 @@ blu-ray support somehow (real-time? rip?)
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
   with an avi file sink?
-some type of installer that can setup the registry...
 right click on DVD player, rip edited with SC?
 double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
 make the progress bar map "better" to the size of the various sections...
@@ -90,9 +84,12 @@ burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
 @smplayer: setting up DVD's is confusing
 try to compile transcode in cygwin (yipes)
 the ac3 thing
+note to people: can edit those to your liking
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+button for "suck in EDL's"
+ split out the EDL's to a separate project (?)
 make the other stuff work again, since I no longer use YAML...
 advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
 also note that mencoder doesn't do splitting very well, for some reason.
@@ -131,9 +128,6 @@ a descriptor for some closed source app player...
 
 can "overlay-audio/video"
 
-GUI:
- preferences for levels, etc.
-  
 blanker: allow for one side of the screen or another...
 
 PISH
