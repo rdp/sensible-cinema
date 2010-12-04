@@ -1,30 +1,31 @@
 == medium ==
   
 == probably next up+low prio ==
-
  
 == slightly lower than that ==
 
   button for "auto create new for current dvd"
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
+      my dvd's
   beta release/rinse and repeat with various ppl (once it's releasable...)
   can generate mplayer EDL's and play them...hmm...smplayer them?
     update license too...
   a real'ish website
   license the first time they run it (gplv3)
   bring that window to the top! (before done dialog...)
-  smaller .zip
-  bundle 7z [?]
-   remove note about it
   assert that at least one drive has a DVD in it...
   compare computer DVD playback with physical player...
 
 == DVD backlog (unordered, some very low prio) ==
 
- issues
- using, burning, creating text "howto's"
-
+  smaller .zip
+  bundle 7z [?]
+   remove note about it
+ using, burning, creating  "howto's"
+   better
+    usability test?
+    
  using+burning screencast
  editing screencast
   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
@@ -32,7 +33,6 @@
     add a way to get the label rather easily...
      add an option "just save full disk (unedited) to hard drive..."
        note to people: can edit those to your liking
- note that VLC is at times useful for fast forward pin pointing...
 
  DRY up dependency installation code
   install them to cache2 or something...so I can cleanup the deploy code...
