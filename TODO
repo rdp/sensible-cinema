@@ -1,5 +1,4 @@
 == medium ==
-
   
 == probably next up+low prio ==
 
@@ -8,15 +7,16 @@
 == slightly lower than that ==
 
   make sure no subtitles on national treasure...
-  partner (Jon, Karlie if interested...give beta)
-    create lotsa filters
-  beta release/rinse and repeat with ppl (once it's releasable...)
-  legal shtuff (LICENSE)
+  partner for filters (Jon, Karlie if interested...give beta)
+    lotsa filters somehow
+  beta release/rinse and repeat with various ppl (once it's releasable...)
   can generate mplayer EDL's
+    update license too...
   a real'ish website
 
 == DVD backlog (unordered, some very low prio) ==
 
+ advertise urug, ruby flow :)
  using+burning screencast
  editing screencast
   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
@@ -25,6 +25,7 @@
      add an option "just save full disk (unedited) to hard drive..."
        note to people: can edit those to your liking
     
+ "Re-run most recent" disabled when there isn't one [?]
  unit test the GUI
  re-do DVD EDL's that need it :P
    all dogs go to heaven...finish EDL
@@ -53,7 +54,6 @@ make sure can work with very large DVD's...
   can have collaborators re-selling EDL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
 a real website
-advertise "call for helpers"?
 k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
 better .exe icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
@@ -75,8 +75,8 @@ burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     optionally ?
   transcode to condense..?
   split to allow?
-@smplayer: setting up DVD's is confusing
 try to compile transcode in cygwin (yipes)
+legal shtuff (LICENSE)
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
@@ -267,6 +267,6 @@ create a "book edit list" (word x is at position y...)
   are your highest settings optimal?
   accept subtitled video...
   
-  @smplayer: your CD config is awful.
+@smplayer: your CD config is awful.
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...

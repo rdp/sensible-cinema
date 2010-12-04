@@ -4,13 +4,18 @@ Change the YAML style so that it can have filterable categories (disabled for no
 that show the use of such as a form of "combining user preferences" with the EDL to produce a 
 new customized one.
 
-Allow for quite more easily user creation by allowing users to access just specific "scenes" of the video edited.
+Allow for quite more easily user creation/editing of EDL's by allowing users to access just specific "scenes" of the video edited.
+
+Disable title auto selection use, now use md5sum of the DVD's IFO files for auto-selection of EDL.
 
 == 0.15.0 ==
 
 Use all i-frames for more accurate precision in cutting segments.
 Also use ffmpeg and mencoder for the same (no more VLC for encoding). Phew.
 Note that by at least this version, auto DVD title selection as a parameter has been built in (see git log).
+Note that by at least this version, it could compute an md5sum of a DVD's IFO files to compute
+a unique ID for that disk.
+Note that before this, I was using the volume name to generate filenames.
 
 == 0.14.8 ==
 

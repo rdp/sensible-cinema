@@ -32,6 +32,8 @@ module SensibleSwing
      jlabel.set_bounds(44,44,136,14)
      panel.add jlabel
     
+     button_width = 270
+    
      c = JButton.new( "Create edited copy of DVD on Your Hard Drive" )
      c.on_clicked {
        do_copy_dvd_to_hard_drive false
@@ -52,18 +54,28 @@ module SensibleSwing
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
        filename = dialog.go
-       system("start #{filename}") if filename
-      }
+       system("notepad \"#{filename}\"") if filename
+     }
      f.set_bounds(44,260,button_width,23)
      panel.add f if ARGV.index("--create-mode")
   
-     e = JButton.new( "Re-run previous preview" )
+     e = JButton.new( "Re-run most recent preview segment" )
      e.on_clicked {
        repeat_last_copy_dvd_to_hard_drive
      }
     
      e.set_bounds(44,220,button_width,23)
      panel.add e if ARGV.index("--create-mode")
+    
+     reload = JButton.new( "Get a disk's unique ID" ).on_clicked {
+       drive, volume, md5 = choose_dvd_drive
+       # display it, allow them to copy and paste it out
+       JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
+      This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
+     }
+    
+     reload.set_bounds(44,290,button_width,20)
+     panel.add reload  if ARGV.index("--create-mode")
 
      @exit = JButton.new("Exit").on_clicked {
        self.close
@@ -71,20 +83,12 @@ module SensibleSwing
      @exit.set_bounds(44,320,button_width,23)
      panel.add @exit
     
-     if ARGV.find{|a| a == '--test'}
-       reload = JButton.new( "reload code" ).on_clicked {
-        eval File.read(__FILE__), nil, __FILE__
-        p 're-evaled the code ...'
-       }
-       reload.set_bounds(20,300,20,20)
-       panel.add reload 
-     end
      
      @progress_bar = JProgressBar.new(0, 100)
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible = false
      panel.add @progress_bar
-     @buttons = [b,c,d,e,@exit]
+     @buttons = [c,d,e,reload,@exit]
      check_for_dependencies
    end
   
@@ -132,16 +136,16 @@ module SensibleSwing
     end
   end
   
-  def single_edit_list_matches_dvd volume_name
-    return unless volume_name # ignore nil searches...
+  def single_edit_list_matches_dvd md5
+    return unless md5 # ignore nil searches, where it wasn't set in the .txt file
     matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
-      EdlParser.parse_file(file)["dvd_drive_label"] == volume_name
+      EdlParser.parse_file(file)["disk_unique_id"] == md5
     }
     if matching.length == 1
       file = matching[0]
       p "selecting the one matching file #{file}"
       file
-    else    
+    else
       nil
     end
   end
@@ -153,19 +157,21 @@ module SensibleSwing
   end
   
   def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times
-      drive, volume_name = choose_dvd_drive
-      if !(edit_list_path = single_edit_list_matches_dvd(volume_name))
+      drive, dvd_volume_name, md5sum = choose_dvd_drive
+      edit_list_path = single_edit_list_matches_dvd(md5sum)
+      if !edit_list_path
         fc = FileDialog.new(self)
         fc.set_title "Please pick a DVD Edit List File"
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
       descriptors = EdlParser.parse_file edit_list_path
-
-      dvd_title = descriptors['title']
+      
+      dvd_title = descriptors['title'] || dvd_volume_name
+      
       fc = JFileChooser.new
       # LODO allow for spaces in the save to filename
-      dvd_title || 'no title given in edit list'
+      dvd_title ||= 'no'
       
       if should_prompt_for_start_and_end_times
         JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
@@ -209,7 +215,7 @@ module SensibleSwing
         run_create_commands bat_file, save_to
         popup.dispose
       }
-      # LODO warn if they will overwrite a file in the end
+      # LODO warn if they will overwrite a file in the end...
     end
   
    def run_create_commands batch_commands, save_to
@@ -243,10 +249,10 @@ module SensibleSwing
       end
    end
   
-  # returns e:\, win32ole instance
+  # returns e:\, volume, md5sum
    def choose_dvd_drive
     opticals = DriveInfo.get_dvd_drives_as_win32ole
-    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'empty') + ")"}
+    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'please insert DVD before proceeding if you want to use this drive') + ")"}
     
     if opticals.length != 1
       dialog = GetDisk.new(self, names)
@@ -255,13 +261,14 @@ module SensibleSwing
       selected_idx = dialog.selected_idx
     else
       selected_idx = 0
-      p 'selecting only disk drive ' + names[0]
-    end    
+      p 'selecting user\'s only disk drive ' + names[0]
+    end
+    
     if selected_idx
       disk = opticals[selected_idx]
-      return names[selected_idx][0..2], opticals[selected_idx].VolumeName
+      return names[selected_idx][0..2], opticals[selected_idx].VolumeName, DriveInfo.md5sum_disk(opticals[selected_idx].Name)
     else
-      puts 'did not select a drive'
+      puts 'did not select a drive...exiting'
       java.lang.System.exit 1      
     end
   end

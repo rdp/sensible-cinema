@@ -5,7 +5,7 @@ module SensibleSwing
   describe MainWindow do
   
     it "should auto-select a EDL if it matches a DVD's title" do
-      MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should_not be nil
+      MainWindow.new.single_edit_list_matches_dvd("d41d8cd98f00b204e9800998ecf8427e").should_not be nil
     end
     
     it "should not auto-select if you pass it nil" do
@@ -18,10 +18,10 @@ module SensibleSwing
       Dir.mkdir 'temp'
       MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
       Dir.chdir 'temp' do
-        File.binwrite('a.txt', "dvd_drive_label: BOBS_BIG_PLAN")
-        File.binwrite('b.txt', "dvd_drive_label: BOBS_BIG_PLAN")
+        File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
       end
-      MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
+      MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
     end
     
     it "should modify path to have mencder available, and ffmpeg, and download them on the fly" do

@@ -1,42 +1,53 @@
-All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want this changed.
+All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed.
 
-May contain some 3rd party libraries under their own (separate, open source) licenses.
+May contain some 3rd party libraries/executables under their own (separate, open source) licenses.
 
-Note that this software should be legal in the EU, 
-as it is only software and therefore theoretically not subject to patents (see "What about patent licenses?" in [2]).
-It's basically for use in the EU.
+Is this legal?  
+
+Unclear.  In general ripping personal DVD's is fine.
+It is controversial to use open source software to play/rip DVD's.
+There are a few conflicting views.  
+Sensible-cinema doesn't actually do any decryption or decoding, nor has any knowledge of it,
+but calls out to another separate program to rip.  It doesn't even have knowledge
+as to whether it is ripping something encrypted or not.  We don't distribute sensible-cinema with
+that program, either.
+You can ask the authors of that program if it is legal.  Apparently
+libdvdcss that it uses has never been challenged in court, and uses a slightly different algorithm
+than those that have.
+Note also that fair use does allow one to "record" things (especially things that they own)
+for personal use/backup.
+Using sensible-cinema is probably not any more unethical than ripping your DVD collection to your hard
+drive so you can keep your DVD's all in one place.
+Also note that if you watch an edited DVD, your are using a DVD player that conforms
+with DMCA specifications, so that might have some influence.
+
+In general, you are responsible for your actions and use of this program.
+It is possible that the authors of sensible-cinema are not cupable of anything
+regarding its use themselves, since they re-distribute no edited media, 
+nor distribute cracking codes.  In general, check your country's rules first.
+
+In terms of copyright, it could indeed be legal, at least in the United States, when viewed
+using the "playlist" option (v 0.10'ish).
+In general, if I have the original DVD sitting next to my TV, I don't feel bad about watching
+its edited copy at the same time, but please consult a laywer first if you have any concerns.
+
+Do not redistribute copied commercial DVD's.  We have learned from clean flicks that
+redistributing edited commercial DVD's is illegal in the US.  We hope that sensible-cinema
+is more legal, since you can get the DVD's from wherever you want, and it doesn't change their
+structure at all.  Please don't redistribute.
+
+DO NOT MAKE ILLEGAL COPIES.
+
+Note that this software might well be legal in the EU, 
+as it is only software and therefore thus possibly not subject to patents (see "What about patent licenses?" in [2]).
 If it's not legal in your country, don't use it!
 
-The http://en.wikipedia.org/wiki/Family_Entertainment_and_Copyright_Act describes a recent 
-US law that appears related (and is in its favor).
-
-A history of various related thoughts was described here:
+A more ancient history of various related thoughts was described here:
 http://betterlogic.com/roger/?p=2618
 
-Enjoy!
+Also note that several ideas have been released in the code that are disabled in the final release.  Please see the blog
+for release notes http://betterlogic.com/roger, as well as http://ruby-forum.com (ruby talk ML there), and rubygems.org
+which lists the various releases, and github.com/rdp/sensible-cinema which lists commits and changes and releases.
 
 [1] http://www.gnu.org/licenses/gpl.html, also gplv3 file.
 [2] http://www.videolan.org/support/faq.html
-
-add note "we don't distribute anything that breaks encryption keys" like http://k9copy.sourceforge.net/
-
-honest about DMCA (we don't distribute the cracker, we don't redistribute, don't perform any acts, etc.)
-if you burn you'll eventually be using a DMCA compatible player :P
-long list of players...we're not alone :)
-the authors of the program might not be liable for damages.  We don't feel dishonest about it, as long as 
-we own the DVD and have it with us when we watch the edited version.
-
-not more unethical than ripping your DVD collection to hard drive so you can keep your DVD's all in one 
-place and don't have to worry about losing them.  Then you edit them manually to remove cruft, and watch them
-from there.
-
-for me, the images and audio are unencrypted, so storing/saving those away might well be fair use, but check your countries rules first 
-(similar to how recording using a VCR might well not be illegal under fair use). But don't take my word for it.
-
-note that you are watching it using only bits and pieces of the original, similar to said bill.  And the
-authors of the program might not be cupable of copyright infringement themselves, since they distribute no infringed materials.
-
-Not responsible for your actions. Don't redistribute. "You run the risk on your own"
-"should the courts someday rule..."  If DVD next to me...
-
-fair use may apply

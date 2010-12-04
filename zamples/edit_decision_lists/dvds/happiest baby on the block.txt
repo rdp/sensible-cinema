@@ -5,4 +5,4 @@
 "dvd_drive_label" => "HAPPIEST_BABY_ON_THE_BLOCK",
 "source" => "DVD",
 "dvd_title_track" => 1,
-"other notes" => "has a couple (modest) shots of nursing moms which aren't edited."
+"other notes" => "has a couple (modest) shots of nursing moms which aren't cut."
