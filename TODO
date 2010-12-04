@@ -20,6 +20,7 @@
 == DVD backlog (unordered, some very low prio) ==
 
  DRY up dependency installation code
+  install them to cache2 or something...so I can cleanup..
  bring that window to the top! (before done dialog...)
  advertise urug, ruby flow :)
  using+burning screencast

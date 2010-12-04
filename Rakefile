@@ -102,3 +102,8 @@ task 'create_distro_dir' do
   FileUtils.cp(Dir["#{dir_out}/*.bat"], "#{dir_out}/..")
   p 'created (still need to zip it) ' + dir_out
 end
+
+desc 'j -S rake bundle_dependencies create_distro_dir release'
+task 'full_release' => [:bundle_dependencies, :create_distro_dir, :release] do
+ # do nothing :)
+end
