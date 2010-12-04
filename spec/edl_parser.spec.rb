@@ -6,9 +6,9 @@ describe EdlParser do
   E = EdlParser
   
   it "should parse" do
-    E.parse_string('"a" => "3"').should ==  {"a"=>"3", "mutes"=>[], "blank_outs"=>[]}
+    E.parse_string('"a" => "3"', nil).should ==  {"a"=>"3", "mutes"=>[], "blank_outs"=>[]}
   end
-  # LODO is blank_outs the best term for it?
+  
   it "should get mutes and blank_outs" do
    string = File.read(__dir__ + "/../zamples/edit_decision_lists/example_edit_decision_list.txt")
    expected = 
@@ -23,7 +23,7 @@ describe EdlParser do
     "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
     "whatever_else_you_want"=>"this is the old version of the film"
    }
-   E.parse_string(string).should == expected
+   E.parse_string(string, nil).should == expected
   end
   
   it "should extract digits well" do
@@ -43,7 +43,7 @@ describe EdlParser do
   end
   
   it "should detect timestamps well" do
-   t = EdlParser::TimeStamp
+    t = EdlParser::TimeStamp
    "2:01".should match(t)
    "1:01.5".should match(t)
    "00:00:00.5".should match(t)
@@ -55,6 +55,22 @@ describe EdlParser do
   it "should parse a real file" do
    E.parse_file(File.expand_path(__dir__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
       {"mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["48:46", "49:08", "theme song again"], ["29:14", "30:46", "theme song again"]], "title"=>"Bob's Big Plan", "dvd_drive_label"=>"BOBS_BIG_PLAN", "source"=>"DVD", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "blank_outs"=>[]}
+  end
+  
+  it "should be able to use personal preferences to decide which edits to make" do
+   out = <<-EOL
+      "mutes" => [
+      "00:10", "00:15", "test category", "1",
+      "00:20", "00:25", "test category", "2"
+      ]
+    EOL
+    parsed = E.parse_string out, nil
+    parsed["mutes"].length.should == 2 # has them both
+
+    1.upto(2) do |n|
+      parsed = E.parse_string(out, nil, [["test category", n.to_s]] )
+      parsed["mutes"].length.should == 1 # has them both
+    end
   end
   
 end

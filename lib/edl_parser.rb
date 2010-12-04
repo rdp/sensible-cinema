@@ -1,12 +1,12 @@
 class EdlParser
 
   def self.parse_file filename
-    parse_string File.read(filename)
+    parse_string File.read(filename), filename
   end
   
   # better eye-ball these before letting people run them, eh?
   # but I couldn't think of any other way
-  def self.parse_string string, filename = nil
+  def self.parse_string string, filename, ok_categories_array = []
     string = '{' + string + "\n}"
     if filename
      raw = eval(string, binding, filename)
@@ -17,15 +17,20 @@ class EdlParser
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []
     blanks = raw["blank_outs"] || []
-    raw["mutes"] = convert_to_timestamp_arrays(mutes)
-    raw["blank_outs"] = convert_to_timestamp_arrays(blanks)
+    raw["mutes"] = convert_to_timestamp_arrays(mutes, ok_categories_array)
+    raw["blank_outs"] = convert_to_timestamp_arrays(blanks, ok_categories_array)
     raw
   end
   
-  def self.convert_to_timestamp_arrays array
+  def self.convert_to_timestamp_arrays array, ok_categories_array
     out = []
     while(single_element = extract_entry!(array))
-      out << single_element
+      # assume that it's always start_time, end_time, category, number
+      category = single_element[-2]
+      category_number = single_element[-1]
+      unless ok_categories_array.index([category, category_number])
+        out << single_element
+      end
     end
     out
   end
