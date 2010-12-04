@@ -1,4 +1,4 @@
-# comment and descriptions can go after a # on each line.  See http://github.com/rdp/sensible-cinema for complete creation instructions
+# comments can go after a # on each line.
 
 "mutes" => [
   "00:00:01", "00:00:02", # mute from second 1 to second 2
@@ -42,3 +42,5 @@
 "source" => "Hulu",
 "url" => "http://www.byutv.org/watch/1790-100",
 "whatever_else_you_want" => "this is the old version of the film"
+
+# NB that you have to put commas just about everywhere. That might help

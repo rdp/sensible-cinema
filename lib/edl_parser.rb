@@ -6,9 +6,13 @@ class EdlParser
   
   # better eye-ball these before letting people run them, eh?
   # but I couldn't think of any other way
-  def self.parse_string string
-    string = '{' + string + '}'
-    raw = eval string
+  def self.parse_string string, filename = nil
+    string = '{' + string + "\n}"
+    if filename
+     raw = eval(string, binding, filename)
+    else
+     raw = eval string
+    end
     
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []

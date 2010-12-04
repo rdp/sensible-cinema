@@ -1,13 +1,11 @@
-mutes:
-  "00:03.8" : "01:03" # theme song is a bit loud at times.
-  "48:46" : "49:08" # theme song again
-  "29:14" : "30:46" # theme song again
-blank_outs:
-  # none
+"mutes" => [
+  "00:03.8" , "01:03", "theme song is a bit raucous at times",
+  "48:46" , "49:08", "theme song again",
+  "29:14" , "30:46", "theme song again"
+],
 
-title: Bob's Big Plan
-dvd_drive_label: BOBS_BIG_PLAN
-source: DVD
-dvd_title_track: 1
-
-other_notes: could use more differentiation during the song, as I don't dislike *all* the music. still needs some tweaking...
+"title" => "Bob's Big Plan",
+"dvd_drive_label" => "BOBS_BIG_PLAN",
+"source" => "DVD",
+"dvd_title_track" => 1,
+"other notes" => "could use more nit-picking of the song, as some parts seem all right in the end"

@@ -23,9 +23,7 @@ describe EdlParser do
     "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
     "whatever_else_you_want"=>"this is the old version of the film"
    }
-   require '_dbg'
    E.parse_string(string).should == expected
-  
   end
   
   it "should extract digits well" do
@@ -52,6 +50,11 @@ describe EdlParser do
    "00:00:00".should match(t)
    "5".should_not match(t)
    "category".should_not match(t)
+  end
+  
+  it "should parse a real file" do
+   E.parse_file(File.expand_path(__dir__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
+      {"mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["48:46", "49:08", "theme song again"], ["29:14", "30:46", "theme song again"]], "title"=>"Bob's Big Plan", "dvd_drive_label"=>"BOBS_BIG_PLAN", "source"=>"DVD", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "blank_outs"=>[]}
   end
   
 end
