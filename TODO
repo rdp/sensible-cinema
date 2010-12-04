@@ -3,6 +3,7 @@
 == probably next up+low prio ==
 
  compare computer DVD playback with physical player...
+ release .zip
 
 == slightly lower than that ==
 
@@ -10,12 +11,16 @@
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
   beta release/rinse and repeat with various ppl (once it's releasable...)
-  can generate mplayer EDL's
+  can generate mplayer EDL's and play them...hmm...smplayer them?
     update license too...
   a real'ish website
+  "run create mode" button (?)
+  license the first time they run it (gplv3)
 
 == DVD backlog (unordered, some very low prio) ==
 
+ DRY up dependency installation code
+ bring that window to the top! (before done dialog...)
  advertise urug, ruby flow :)
  using+burning screencast
  editing screencast

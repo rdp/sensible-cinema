@@ -58,7 +58,7 @@ module SensibleSwing
      b.set_bounds(44,150,button_width,23)
      panel.add b
     
-     d = JButton.new( "Preview edited section of a DVD" )
+     d = JButton.new( "Preview edited section of current DVD" )
      d.on_clicked {
        do_copy_dvd_to_hard_drive true
      }
@@ -186,7 +186,6 @@ module SensibleSwing
       
       fc = JFileChooser.new
       # LODO allow for spaces in the save to filename
-      dvd_title ||= 'no'
       
       if should_prompt_for_start_and_end_times
         JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
@@ -212,7 +211,7 @@ module SensibleSwing
    end
   
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time]
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
       bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'

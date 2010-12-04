@@ -26,7 +26,6 @@ class MencoderWrapper
         end_here   = OverLayer.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
         # it's relative now, since we rip from not the beginning
-        raise Exception.new('unable to find any edit decisions to do within that range') unless combined.length > 0
         previous_end = start_here
       else
         previous_end = 0

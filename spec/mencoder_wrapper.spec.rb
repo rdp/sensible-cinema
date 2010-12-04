@@ -151,13 +151,9 @@ describe MencoderWrapper do
      @out.should include("-ss 15.0 -t 4.999")
   end
   
-  it "should raise if you focus down into nothing" do
+  it "should allow you to play something even if there's no edit list, just for examination sake" do
     setup
-    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should raise_error(/unable/)
-  end
-  
-  it "should create a temp file" do
-    
+    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should_not raise_error(/unable/)
   end
   
 end
