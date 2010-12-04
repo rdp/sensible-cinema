@@ -27,6 +27,8 @@ Also after you're done, you can delete any left over files that are still there.
 
 Also after you're done, you can submit it back to the project by emailing me with an attachment: rogerdpack@gmail.com
 
+Also if you want sensible-cinema to be able to auto-choose your EDL, then include its unique id (click the "Get a disk's unique id" button).
+
 A few pointers:
  You can just watch the DVD (using any DVD player), and get timestamps that way, before starting this.
  You can watch the DVD using VLC Player, which has a "fast forward" button, just recognize that VLC's timestamps are slightly off,
