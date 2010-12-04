@@ -161,7 +161,7 @@ module SensibleSwing
     }
     if matching.length == 1
       file = matching[0]
-      p "selecting the one matching file #{file}"
+      p "selecting the one matching file #{file} #{md5}"
       file
     else
       nil
@@ -176,6 +176,7 @@ module SensibleSwing
   
   def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times
       drive, dvd_volume_name, md5sum = choose_dvd_drive
+      p drive, dvd_volume_name, md5sum
       edit_list_path = single_edit_list_matches_dvd(md5sum)
       if !edit_list_path
         fc = FileDialog.new(self)
@@ -283,7 +284,8 @@ module SensibleSwing
     
     if selected_idx
       disk = opticals[selected_idx]
-      return names[selected_idx][0..2], opticals[selected_idx].VolumeName, DriveInfo.md5sum_disk(opticals[selected_idx].Name)
+      prefix = names[selected_idx][0..2] 
+      return prefix, opticals[selected_idx].VolumeName, DriveInfo.md5sum_disk(prefix)
     else
       puts 'did not select a drive...exiting'
       java.lang.System.exit 1      

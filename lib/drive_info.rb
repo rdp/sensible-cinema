@@ -5,10 +5,11 @@ class DriveInfo
 
  def self.md5sum_disk(dir)
   digest = Digest::MD5.new()
-  
-  Dir[dir + "VIDEO_TS/*.IFO"].sort.each{|f|
+  files  = Dir[dir + "VIDEO_TS/*.IFO"]
+  files.sort.each{|f|
     digest << File.binread(f) 
   }
+  raise 'bad drive' unless files.length > 0
   digest.hexdigest
  end
 
