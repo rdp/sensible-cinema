@@ -142,7 +142,7 @@ EOL
 
      setSize 350,430
      
-     @buttons = [b,c,d,e,unique_id,@exit]
+     @buttons = [b,c,d,e,g,unique_id,@exit]
      check_for_dependencies
    end
   
