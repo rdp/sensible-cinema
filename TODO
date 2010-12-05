@@ -16,10 +16,11 @@
   license the first time they run it (gplv3)
   checkbox for other license or something?
   bring that window to the top! (before done dialog...)
-  assert that at least one drive has a DVD in it...
+  assert that at least one drive has a DVD in it...maybe loop refuse until this happens?
   compare computer DVD playback with physical player...
   just run previews in smplayer :P
   ffmpeg easier
+  md5sum the full rip files...why not?
 
 == DVD backlog (unordered, some very low prio) ==
 

@@ -309,7 +309,6 @@ EOL
       if success
         if @after_success_once
           procy = @after_success_once
-          @after_success_once = nil
           procy.call
         else
           saved_to = save_to + '.avi' # LODO pass this out?
@@ -321,6 +320,7 @@ EOL
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
+      @after_success_once = nil
    end
   
   # returns e:\, volume, md5sum
