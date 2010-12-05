@@ -76,7 +76,7 @@ module SensibleSwing
      d.set_bounds(44,180,button_width,23)
      panel.add d if ARGV.index("--create-mode")
    
-     f = JButton.new("Open/Edit an Edit Decision List")
+     f = JButton.new("Open/Edit an existing Edit Decision List")
      f.on_clicked {
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
@@ -94,16 +94,6 @@ module SensibleSwing
      e.set_bounds(44,220,button_width,23)
      panel.add e if ARGV.index("--create-mode")
     
-     reload = JButton.new( "Get a disk's unique ID" ).on_clicked {
-       drive, volume, md5 = choose_dvd_drive
-       # display it, allow them to copy and paste it out
-       JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
-      This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
-     }
-    
-     reload.set_bounds(44,290,button_width,20)
-     panel.add reload  if ARGV.index("--create-mode")
-
      @progress_bar = JProgressBar.new(0, 100)
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible = false
@@ -115,24 +105,34 @@ module SensibleSwing
       input = <<-EOL
 # comments can go after a # on any line.
 "mutes" => [
-  "00:00:01.0", "00:00:02.0", "dang",
+  "00:00:01.0", "00:00:02.0", "da..",
 ],
 
 "blank_outs" => [
-  "01:01:00.0" , "01:02:00.0", "nude scene"
+  "01:01:00.0" , "01:02:00.0", "violent scene of some sort"
 ],
 "disk_unique_id" => "#{md5}",
 "title" => "#{volume}",
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.
 EOL
-      puts input
-      filename = volume.gsub(' ', '_') + '.txt'
+      filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
       
      end 
-     g.set_bounds(44,320,button_width,20)
+     g.set_bounds(44,290,button_width,20)
      panel.add g if ARGV.index("--create-mode")
+
+     unique_id = JButton.new( "Calculate a DVD's unique ID" ).on_clicked {
+       drive, volume, md5 = choose_dvd_drive
+       # display it, allow them to copy and paste it out
+       JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
+      This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
+     }
+    
+     unique_id.set_bounds(44,320,button_width,20)
+     panel.add unique_id  if ARGV.index("--create-mode")
+
 
      @exit = JButton.new("Exit").on_clicked {
        self.close
@@ -142,7 +142,7 @@ EOL
 
      setSize 350,430
      
-     @buttons = [b,c,d,e,reload,@exit]
+     @buttons = [b,c,d,e,unique_id,@exit]
      check_for_dependencies
    end
   
