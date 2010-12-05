@@ -42,7 +42,7 @@ module SensibleSwing
      c.set_bounds(44,120,button_width,23)
      panel.add c
     
-     b = JButton.new("Open ripped version of DVD unedited") # LODO watch in realtime button...
+     b = JButton.new("Watch DVD from hard drive unedited") # LODO watch in realtime option--then rippers and watchers can combine
      b.on_clicked {
        ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
        path = RubyWhich.new.which('smplayer')
@@ -50,13 +50,20 @@ module SensibleSwing
             JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
          Click ok to be directed to its download website.
          Also note that if it ever hangs, kill the process, and then use VLC instead
-         (though VLC only has approximate timings).", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
+         (though VLC only has approximate timings).", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
          system("start http://smplayer.sourceforge.net/downloads.php")
        else
-         wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
          command = "smplayer #{wrote_to_here_fulli}"
-         puts command
-         system(command)
+         on_success = proc {
+           puts command
+           system(command)
+         }
+        if success_no_run
+          on_success.call
+        else
+          @after_success_once = on_success # shenanigans to be able to let this thread run...
+        end
        end 
      }
      b.set_bounds(44,150,button_width,23)
@@ -214,17 +221,19 @@ module SensibleSwing
       # how does save_to map to fulli?
       fulli = save_to + ".fulli.tmp.avi"
       if want_full_list
+        # make it create a dummy response file for us :)
+        start_time = "00:00"
+        end_time = "00:01"
         if File.exist? fulli + ".done"
           # just return the full path early...
-          return fulli
+          return [true, fulli]
         end
       end
-      thread = generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
-      thread.join if want_full_list # LODO huh? I guess normal flow is that it run in the background with disabled buttons until it finishes...hmm...
-      fulli
-   end
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
+      [false, fulli]
+    end
   
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
+  def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
       Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
       bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
       temp_dir = Dir.tmpdir
@@ -266,12 +275,18 @@ module SensibleSwing
       }
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
-      if success
-        saved_to = save_to + '.avi' # LODO pass this out?
-        JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{saved_to} in SMPlayer or VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
-        show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
-        system show_file
-        #self.close # ?
+      if true#success
+        if @after_success_once
+          procy = @after_success_once
+          @after_success_once = nil
+          procy.call
+        else
+          saved_to = save_to + '.avi' # LODO pass this out?
+          JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{saved_to} in SMPlayer or VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
+          show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
+          system show_file
+          #self.close # ?
+        end
       else
         JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
