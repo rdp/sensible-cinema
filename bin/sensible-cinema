@@ -24,7 +24,6 @@ module SensibleSwing
      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
      panel = JPanel.new
      panel.set_layout nil
-     setSize 350,400
      add panel # why can't I just slap these down?
  
      jlabel = JLabel.new 'Welcome to Sensible Cinema!'
@@ -105,17 +104,20 @@ module SensibleSwing
      reload.set_bounds(44,290,button_width,20)
      panel.add reload  if ARGV.index("--create-mode")
 
-     @exit = JButton.new("Exit").on_clicked {
-       self.close
-     }
-     @exit.set_bounds(44,320,button_width,23)
-     panel.add @exit    
-     
      @progress_bar = JProgressBar.new(0, 100)
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible = false
      panel.add @progress_bar
-     @buttons = [b,c,d,e,f,reload,@exit]
+
+     @exit = JButton.new("Exit").on_clicked {
+       self.close
+     }
+     @exit.set_bounds(44,350,button_width,23)
+     panel.add @exit    
+
+     setSize 350,430
+     
+     @buttons = [b,c,d,e,reload,@exit]
      check_for_dependencies
    end
   

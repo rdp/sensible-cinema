@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.16.3"
+  s.version = "0.16.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "gplv3.txt",
+    "how_to_create",
     "lib/add_any_bundled_gems_to_load_path.rb",
     "lib/blanker.rb",
     "lib/drive_info.rb",
