@@ -115,11 +115,11 @@ module SensibleSwing
       input = <<-EOL
 # comments can go after a # on any line.
 "mutes" => [
-  #"00:00:01", "00:00:02",
+  "00:00:01.0", "00:00:02.0", "dang",
 ],
 
 "blank_outs" => [
-  #"01:01:00" , "01:02:00"
+  "01:01:00.0" , "01:02:00.0", "nude scene"
 ],
 "disk_unique_id" => "#{md5}",
 "title" => "#{volume}",
@@ -306,7 +306,7 @@ EOL
       }
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
-      if true#success
+      if success
         if @after_success_once
           procy = @after_success_once
           @after_success_once = nil
