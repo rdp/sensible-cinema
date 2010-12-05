@@ -57,7 +57,7 @@ module SensibleSwing
          command = "smplayer #{wrote_to_here_fulli}"
          on_success = proc {
            puts command
-           system(command)
+           Thread.new { system(command) }
          }
         if success_no_run
           on_success.call
@@ -82,7 +82,7 @@ module SensibleSwing
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
        filename = dialog.go
-       system("notepad \"#{filename}\"") if filename
+       Thread.new { system("notepad \"#{filename}\"")} if filename # blocks otherwise...
      }
      f.set_bounds(44,260,button_width,23)
      panel.add f if ARGV.index("--create-mode")

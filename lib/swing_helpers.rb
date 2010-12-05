@@ -8,7 +8,8 @@ module SensibleSwing
  include_class java.awt.event.ActionListener
  JFile = java.io.File
  include_class java.awt.FileDialog
- 
+ include_class java.lang.System
+
  class JButton
    def initialize *args
     super *args
@@ -18,7 +19,13 @@ module SensibleSwing
    def on_clicked &block
      raise unless block
      add_action_listener do |e|
-       block.call
+       begin
+        block.call
+      rescue Exception => e
+        puts 'got fatal exception', e
+        puts e.backtrace.join("\n")
+        System.exit(1) # LODO no exit 
+      end        
      end
      self
    end

@@ -9,7 +9,7 @@ class DriveInfo
   files.sort.each{|f|
     digest << File.binread(f) 
   }
-  raise 'bad drive' unless files.length > 0
+  raise 'drive might not yet have disc in it? ' + dir unless files.length > 0
   digest.hexdigest
  end
 
