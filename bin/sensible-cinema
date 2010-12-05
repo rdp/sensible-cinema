@@ -84,7 +84,7 @@ module SensibleSwing
        open_file_to_edit_it filename if filename
     }
      f.set_bounds(44,260,button_width,23)
-     panel.add f if ARGV.index("--create-mode")
+     panel.add f
   
      e = JButton.new( "Re-run most recent preview segment" )
      e.on_clicked {
