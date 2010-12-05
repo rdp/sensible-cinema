@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.16.5"
+  s.version = "0.16.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -23,11 +23,13 @@ Gem::Specification.new do |s|
     "ChangeLog",
     "LICENSE",
     "README",
+    "RUN SENSIBLE CINEMA CLICK HERE.bat",
     "Rakefile",
     "TODO",
     "VERSION",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
+    "edit sensible cinema decision list files.bat",
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "gplv3.txt",
@@ -50,8 +52,6 @@ Gem::Specification.new do |s|
     "lib/swing_helpers.rb",
     "lib/vlc_programmer.rb",
     "never_do",
-    "run_sensible_cinema.bat",
-    "run_sensible_cinema_in_create_mode.bat",
     "sensible-cinema.gemspec",
     "spec/blanker.spec.rb",
     "spec/common.rb",
