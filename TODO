@@ -6,6 +6,7 @@
 
   button for "auto create new for current dvd"
     should have a line for DVD track :)
+    good demosy
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's
@@ -14,9 +15,11 @@
     update license too...
   a real'ish website
   license the first time they run it (gplv3)
+  checkbox for other license or something?
   bring that window to the top! (before done dialog...)
   assert that at least one drive has a DVD in it...
   compare computer DVD playback with physical player...
+  just run previews in smplayer :P
 
 == DVD backlog (unordered, some very low prio) ==
 
