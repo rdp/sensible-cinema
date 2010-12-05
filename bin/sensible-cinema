@@ -81,8 +81,8 @@ module SensibleSwing
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
        filename = dialog.go
-       Thread.new { system("notepad \"#{filename}\"")} if filename # blocks otherwise...
-     }
+       open_file_to_edit_it filename if filename
+    }
      f.set_bounds(44,260,button_width,23)
      panel.add f if ARGV.index("--create-mode")
   
@@ -108,6 +108,30 @@ module SensibleSwing
      @progress_bar.set_bounds(44,280,button_width,23)
      @progress_bar.visible = false
      panel.add @progress_bar
+    
+     g = JButton.new("Create New Edit List for current DVD")
+     g.on_clicked do
+       drive, volume, md5 = choose_dvd_drive
+      input = <<-EOL
+# comments can go after a # on any line.
+"mutes" => [
+  #"00:00:01", "00:00:02",
+],
+
+"blank_outs" => [
+  #"01:01:00" , "01:02:00"
+],
+"disk_unique_id" => "#{md5}",
+"title" => "#{volume}",
+EOL
+      puts input
+      filename = volume.gsub(' ', '_') + '.txt'
+      File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
+      open_file_to_edit_it filename
+      
+     end 
+     g.set_bounds(44,320,button_width,20)
+     panel.add g if ARGV.index("--create-mode")
 
      @exit = JButton.new("Exit").on_clicked {
        self.close
@@ -162,7 +186,11 @@ module SensibleSwing
       end
     end
   end
-  
+
+  def open_file_to_edit_it filename
+   Thread.new { system("notepad \"#{filename}\"")} # blocks otherwise...
+  end
+
   def single_edit_list_matches_dvd md5
     return unless md5 # ignore nil searches, where it wasn't set in the .txt file
     matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
