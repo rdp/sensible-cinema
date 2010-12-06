@@ -60,19 +60,12 @@ module SensibleSwing
     end
 
     class FakeFileChooser
-      @@original_return_this = 'abc'
-      @@return_this = @@original_return_this
       def set_title x
       end
       def set_file y
       end
       def go
-        to_return = @@return_this
-        @@return_this = @@original_return_this
-        to_return
-      end
-      def self.set_return_this_once to_this
-        @@return_this = to_this
+        'abc'
       end
     end
     
@@ -104,7 +97,6 @@ module SensibleSwing
     end
 
     def prompt_for_start_and_end_times
-      FakeFileChooser.set_return_this_once("abc_segment")
       @subject.instance_variable_get(:@preview_section).simulate_click
       @args[-1].should == 1
       @args[-2].should == "01:00"
