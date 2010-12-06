@@ -4,8 +4,12 @@ load '../bin/sensible-cinema'
 module SensibleSwing
   describe MainWindow do
   
+    it "should be able to start up" do
+      MainWindow.new.dispose# shouldn't crash :)
+    end
+  
     it "should auto-select a EDL if it matches a DVD's title" do
-      MainWindow.new.single_edit_list_matches_dvd("d41d8cd98f00b204e9800998ecf8427e").should_not be nil
+      MainWindow.new.single_edit_list_matches_dvd("19d121ae8dc40cdd70b57ab7e8c74f76").should_not be nil
     end
     
     it "should not auto-select if you pass it nil" do

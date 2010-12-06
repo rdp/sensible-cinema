@@ -15,14 +15,34 @@ require_relative '../lib/drive_info'
 require 'whichr'
 
 ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
+ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
 
 module SensibleSwing
  class MainWindow < JFrame
+
+   def new_jbutton title, only_on_create_mode
+    button = JButton.new title
+    button.set_bounds(44, @starting_button_y, @button_width, 23)
+    @starting_button_y += 30
+    if only_on_create_mode
+      if ARGV.index("--create-mode")
+        @panel.add button
+        @buttons << button
+      end
+    else
+      @panel.add button
+      @buttons << button
+    end
+    button
+   end
+
    Storage = Storage.new("sc")
    def initialize
      super "Sensible-Cinema"
      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
      panel = JPanel.new
+     @panel = panel
+     @buttons = []
      panel.set_layout nil
      add panel # why can't I just slap these down?
  
@@ -31,25 +51,25 @@ module SensibleSwing
      jlabel.setFont(happy)
      jlabel.set_bounds(44,44,160,14)
      panel.add jlabel
+     @starting_button_y = 120
+     @button_width = 270
     
-     button_width = 270
+     @progress_bar = JProgressBar.new(0, 100)
+     @progress_bar.set_bounds(44,80,@button_width,23)
+     @progress_bar.visible = false
+     panel.add @progress_bar
     
-     c = JButton.new( "Create edited copy of DVD on Your Hard Drive" )
+     c = new_jbutton( "Create edited copy of DVD on Your Hard Drive", false )
      c.on_clicked {
        do_copy_dvd_to_hard_drive false
      }
-     c.set_bounds(44,120,button_width,23)
-     panel.add c
     
-     b = JButton.new("Watch DVD from hard drive unedited") # LODO watch in realtime option--then rippers and watchers can combine
+     b = new_jbutton("Watch DVD from hard drive unedited", false) # LODO watch in realtime option--then rippers and watchers can combine
      b.on_clicked {
-       ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
        path = RubyWhich.new.which('smplayer')
        if(path.length == 0)
             JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
-         Click ok to be directed to its download website.
-         Also note that if it ever hangs, kill the process, and then use VLC instead
-         (though VLC only has approximate timings).", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+         Click ok to be directed to its download website.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
          system("start http://smplayer.sourceforge.net/downloads.php")
        else
          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
@@ -65,41 +85,26 @@ module SensibleSwing
         end
        end 
      }
-     b.set_bounds(44,150,button_width,23)
-     panel.add b if ARGV.index("--create-mode") # LODO allow end users to play it from here?
     
-     d = JButton.new( "Preview edited section of current DVD" )
+     d = new_jbutton( "Preview edited section of current DVD", true )
      d.on_clicked {
        do_copy_dvd_to_hard_drive true
      }
     
-     d.set_bounds(44,180,button_width,23)
-     panel.add d if ARGV.index("--create-mode")
-   
-     f = JButton.new("Open/Edit an existing Edit Decision List")
+     f = new_jbutton("Open/Edit an existing Edit Decision List", false)
      f.on_clicked {
        dialog = FileDialog.new(self, "Pick file to edit")
        dialog.set_directory EDL_DIR
        filename = dialog.go
        open_file_to_edit_it filename if filename
-    }
-     f.set_bounds(44,260,button_width,23)
-     panel.add f
+     }
   
-     e = JButton.new( "Re-run most recent preview segment" )
+     e = new_jbutton( "Re-run most recent preview segment", true )
      e.on_clicked {
        repeat_last_copy_dvd_to_hard_drive
      }
     
-     e.set_bounds(44,220,button_width,23)
-     panel.add e if ARGV.index("--create-mode")
-    
-     @progress_bar = JProgressBar.new(0, 100)
-     @progress_bar.set_bounds(44,280,button_width,23)
-     @progress_bar.visible = false
-     panel.add @progress_bar
-    
-     g = JButton.new("Create New Edit List for current DVD")
+     g = new_jbutton("Create New Edit List for current DVD", true)
      g.on_clicked do
        drive, volume, md5 = choose_dvd_drive
       input = <<-EOL
@@ -120,29 +125,20 @@ EOL
       open_file_to_edit_it filename
       
      end 
-     g.set_bounds(44,290,button_width,20)
-     panel.add g if ARGV.index("--create-mode")
 
-     unique_id = JButton.new( "Calculate a DVD's unique ID" ).on_clicked {
+     unique_id = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
        drive, volume, md5 = choose_dvd_drive
        # display it, allow them to copy and paste it out
        JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
       This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
      }
     
-     unique_id.set_bounds(44,320,button_width,20)
-     panel.add unique_id  if ARGV.index("--create-mode")
-
-
-     @exit = JButton.new("Exit").on_clicked {
+     @exit = new_jbutton("Exit", false).on_clicked {
        self.close
      }
-     @exit.set_bounds(44,350,button_width,23)
-     panel.add @exit    
 
      setSize 350,430
      
-     @buttons = [b,c,d,e,g,unique_id,@exit]
      check_for_dependencies
    end
   
