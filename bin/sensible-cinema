@@ -229,7 +229,7 @@ module SensibleSwing
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
       drive, dvd_volume_name, md5sum = choose_dvd_drive
-      p drive, dvd_volume_name, md5sum
+      puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
       edit_list_path = single_edit_list_matches_dvd(md5sum)
       if !edit_list_path
         fc = FileDialog.new(self)
@@ -295,7 +295,6 @@ module SensibleSwing
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
-      puts 'commands copied for debugging purposes to: ' + temp_file
       popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" +
       "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
@@ -311,7 +310,7 @@ module SensibleSwing
       # LODO warn if they will overwrite a file in the end...
     end
     
-    attr_accessor :background_thread
+    attr_accessor :background_thread, :after_success_once
 
     def run_create_commands batch_commands, save_to
       @buttons.each{|b| b.set_enabled false}

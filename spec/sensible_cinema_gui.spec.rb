@@ -106,8 +106,11 @@ module SensibleSwing
     
     it "if the .done file does not exist, it should call mplayer later" do
       @subject.instance_variable_get(:@watch_unedited).simulate_click
+      @subject.after_success_once.should_not == nil
       @command.should == nil # scary timing spec
       @subject.background_thread.join
+      # should have cleaned up...
+      @subject.after_success_once.should == nil
       @command.should_not == nil
     end
     
