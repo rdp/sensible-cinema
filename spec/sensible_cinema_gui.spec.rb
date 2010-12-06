@@ -56,6 +56,7 @@ module SensibleSwing
         @command = command
         Thread.new {} # fake out the return...
       }
+      @subject.stub!(:open_file_to_edit_it) {}
     end
 
     class FakeFileChooser
@@ -106,6 +107,17 @@ module SensibleSwing
     it "if the .done file does not exist, it should not call mplayer" do
       @subject.instance_variable_get(:@watch_unedited).simulate_click
       @command.should == nil
+    end
+    
+    it "should create a new file for ya" do
+      out = MainWindow::EDL_DIR + "/volume.txt"
+      File.exist?( out ).should be_false
+      @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click
+      begin
+        File.exist?( out ).should be_true
+      ensure
+        FileUtils.rm_rf out
+      end
     end
 
   end

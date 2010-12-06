@@ -129,6 +129,7 @@ module SensibleSwing
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.
         EOL
         filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
+        p 'wrote to ' + filename
         File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
         open_file_to_edit_it filename
 
@@ -238,7 +239,7 @@ module SensibleSwing
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
-
+      return unless edit_list_path
       descriptors = EdlParser.parse_file edit_list_path
 
       dvd_title = descriptors['title'] || dvd_volume_name
