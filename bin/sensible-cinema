@@ -37,6 +37,12 @@ module SensibleSwing
     end
 
     Storage = Storage.new("sc")
+    
+    alias system_blocking system
+    def system_non_blocking command
+     Thread.new { system_blocking command }
+    end
+    undef system
 
     def initialize
       super "Sensible-Cinema"
@@ -70,22 +76,21 @@ module SensibleSwing
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
           JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          system("start http://smplayer.sourceforge.net/downloads.php")
+          Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+          System.exit(1)
         else
           success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
           command = "smplayer #{wrote_to_here_fulli}"
-          thread = nil
           on_success = proc {
             puts command
-            thread = Thread.new { system(command) }
+            system_non_blocking command
           }
           if success_no_run
             on_success.call
           else
             @after_success_once = on_success # shenanigans to be able to let this thread run...
           end
-          thread
         end
       }
 
@@ -158,7 +163,7 @@ module SensibleSwing
         JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: imagemagick.\n
         Click ok to be directed to its download website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
         Then restart Sensible-Cinema.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-        system("start http://www.imagemagick.org/script/binary-releases.php#windows")
+        system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
         java.lang.System.exit(1)
       end
       mencoder = RubyWhich.new.which('mencoder')
@@ -177,18 +182,18 @@ module SensibleSwing
         Dir.chdir(vendor_cache) do
           Kernel.print 'downloading unzip utility...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-          system("unzip -o 7za920.zip") # -o means "overwrite" without prompting
+          system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
           Kernel.print 'downloading mencoder'
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
-          system("7za e mencoder.7z -y -omencoder")
+          system_blocking("7za e mencoder.7z -y -omencoder")
           Kernel.puts 'done'
         end
       end
     end
 
     def open_file_to_edit_it filename
-      Thread.new { system("notepad \"#{filename}\"")} # blocks otherwise...
+      system_non_blocking "notepad \"#{filename}\""
     end
 
     def single_edit_list_matches_dvd md5
@@ -312,7 +317,7 @@ module SensibleSwing
       @progress_bar.set_value(10) # start at 10% always, so they can see something.
       lines.each_with_index{|l, idx|
         if success
-          success = system(l) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
+          success = system_blocking(l) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
           if l =~ /@rem /
             success = true # these fail fof some reason?
           else
@@ -331,7 +336,7 @@ module SensibleSwing
           saved_to = save_to + '.avi' # LODO pass this out?
           JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{saved_to} in SMPlayer or VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
-          system show_file
+          system_non_blocking show_file
           #self.close # ?
         end
       else

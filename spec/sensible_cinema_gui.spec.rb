@@ -51,8 +51,9 @@ module SensibleSwing
       }
       @subject.stub!(:show_blocking_message_dialog) {}
       @subject.stub!(:get_user_input) {'01:00'}
-      @subject.stub!(:system) { |command|
+      @subject.stub!(:system_non_blocking) { |command|
         @command = command
+        Thread.new {} # fake out the return...
       }
     end
 
@@ -84,15 +85,13 @@ module SensibleSwing
     
     it "if the .done file exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli.tmp.avi.done"
-      @subject.instance_variable_get(:@watch_unedited).simulate_click.join
-      
+      @subject.instance_variable_get(:@watch_unedited).simulate_click
       @command.should == "smplayer abc.fulli.tmp.avi"
       FileUtils.rm "abc.fulli.tmp.avi.done"
     end
     
     it "if the .done file does not exist, it should not call mplayer" do
-      @subject.instance_variable_get(:@watch_unedited).simulate_click.should == nil
-      sleep 0.01
+      @subject.instance_variable_get(:@watch_unedited).simulate_click
       @command.should == nil
     end
 
