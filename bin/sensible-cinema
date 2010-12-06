@@ -104,7 +104,7 @@ module SensibleSwing
         open_file_to_edit_it filename if filename
       }
 
-      @preview_section = new_jbutton( "Preview around an edited scene on current DVD", true )
+      @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
       @preview_section.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true
         on_success = proc { |file|
@@ -117,7 +117,7 @@ module SensibleSwing
         end
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recent preview", true )
+      @rerun_preview = new_jbutton( "Re-run most recently performed preview", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
@@ -144,7 +144,7 @@ module SensibleSwing
 
       end
 
-      @display_unique = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
+      @display_unique = new_jbutton( "Calculate DVD's unique ID", true ).on_clicked {
         drive, volume, md5 = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
@@ -310,7 +310,7 @@ module SensibleSwing
       "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
-      "NB that the created file will be playable with SMplayer or VLC player.",
+      "NB that the created file will be playable only with smplayer or VLC player.",
       "OK")
 
       # allow our popups to still be serviced while it is running

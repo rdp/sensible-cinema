@@ -2,21 +2,16 @@
   
 == probably next up+low prio ==
 
-  "non realtime, non edity good" release
-    md5sum the full rip files...appears necessary...
-      is it necessary?
-      add button for md5sum
-    family only
+  "non realtime, non edity good" release (family only)
     add some "||'s" to bat files...
-    just run previews in smplayer :P
     popup "you may now watch": bring it to the front...
-    move the progressbar to the top :)
     cool runnings:
-     dvdnav
-     make a copy?
+     make a copy me--do they now match?
+     get a working copy--do they match?
 
 == slightly lower than that ==
 
+  move the progressbar to the bottom :)
   license the first time they run it (gplv3)
   only pick that filename once...
   note "used to screen track" somewhere in an announcement...
@@ -37,6 +32,9 @@
 
 == DVD backlog (unordered, some very low prio) ==
 
+  md5sum the full rip files...appears necessary...
+    is it necessary?
+    add button for md5sum
   propaganda-ize
     alternative.to
     blogs that have ever mentioned clearplay
