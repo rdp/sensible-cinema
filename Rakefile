@@ -72,7 +72,7 @@ task 'bundle_dependencies' => 'gemspec' do
      puts 'downloading in jruby-complete.jar file' 
      # jruby complete .jar file
      Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
-       resp = http.get("/downloads/1.5.5/jruby-complete-1.5.5.jar")
+       resp = http.get("/downloads/1.5.6/jruby-complete-1.5.6.jar")
        puts 'copying it... '
        open("jruby-complete-1.5.5.jar", "wb") { |file|
          file.write(resp.body)

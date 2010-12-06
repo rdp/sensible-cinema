@@ -3,7 +3,7 @@
 puts 'Loading Sensible Cinema...'
 
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
-require 'sane'
+require 'sane' # failure here means you haven't bundled your dependencies...[rake task]
 
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
