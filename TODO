@@ -1,7 +1,9 @@
 == medium ==
   
 == probably next up+low prio ==
- 
+
+  md5sum the full rip files...appears necessary...
+
 == slightly lower than that ==
 
   partner for filters (Jon, Karlie if interested...give beta)
@@ -9,6 +11,7 @@
       my dvd's
       friend's dvd's
       partners'...
+  add some "||'s" to bat files...
   beta release/rinse and repeat with various ppl (once it's releasable...)
   can generate mplayer EDL's and play them...hmm...smplayer them?
     update license too...
@@ -20,14 +23,13 @@
   compare computer DVD playback with physical player...
   just run previews in smplayer :P
   ffmpeg easier
-  md5sum the full rip files...why not?
 
 == DVD backlog (unordered, some very low prio) ==
 
   several "play now" options...without a navigator of course :)
     one for during encoding, too...
     plus figure out if mplayer is a fast forward feature...
-  
+  non parallelize
   move the progressbar to the top :)
   smaller .zip
   bundle 7z [?]
@@ -99,6 +101,8 @@ burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
   split to allow?
 try to compile transcode in cygwin (yipes)
 legal shtuff (LICENSE)
+
+@smplayer: right click on DVD...
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
