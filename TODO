@@ -3,8 +3,8 @@
 == probably next up+low prio ==
 
   "non realtime, non edity good" release
-    unit test the GUI
     md5sum the full rip files...appears necessary...
+      is it necessary?
       add button for md5sum
     family only
     add some "||'s" to bat files...

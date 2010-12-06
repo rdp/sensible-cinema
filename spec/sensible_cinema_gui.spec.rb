@@ -40,9 +40,9 @@ module SensibleSwing
         ["drive", "volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-4].should == 'abc'
+        args[-4].should match(/abc/)
         @args = args
-        'echo'
+        'sleep 0.1'
       }
       @subject.stub!(:new_filechooser) {
         FakeFileChooser.new
@@ -60,12 +60,19 @@ module SensibleSwing
     end
 
     class FakeFileChooser
+      @@original_return_this = 'abc'
+      @@return_this = @@original_return_this
       def set_title x
       end
       def set_file y
       end
       def go
-        'abc'
+        to_return = @@return_this
+        @@return_this = @@original_return_this
+        to_return
+      end
+      def self.set_return_this_once to_this
+        @@return_this = to_this
       end
     end
     
@@ -73,16 +80,36 @@ module SensibleSwing
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli.tmp.avi"]
     end
     
+    it "should call through to explorer for the full thing" do
+      @subject.do_copy_dvd_to_hard_drive(false)
+      @subject.background_thread.join
+      @args[-2].should == nil
+      @command.should match /explorer/
+      @command.should_not match /fulli/
+    end
+    
     it "should be able to return the full list if it already exists" do
       FileUtils.touch "abc.fulli.tmp.avi.done"
       @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli.tmp.avi"]
       FileUtils.rm "abc.fulli.tmp.avi.done"
     end
+    
+    it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
+     @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
+     @subject.background_thread.join
+     @args[-1].should == 1
+     @args[-2].should == "01:00"
+     @command.should match /explorer/
+     @command.should_not match /fulli/
+    end
 
     def prompt_for_start_and_end_times
-      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
+      FakeFileChooser.set_return_this_once("abc_segment")
+      @subject.instance_variable_get(:@preview_section).simulate_click
       @args[-1].should == 1
       @args[-2].should == "01:00"
+      @subject.background_thread.join
+      @command.should match /smplayer/
     end
 
     it "should prompt for start and end times" do
@@ -93,9 +120,10 @@ module SensibleSwing
       prompt_for_start_and_end_times
       old_args = @args
       @args = nil
-      @subject.repeat_last_copy_dvd_to_hard_drive
+      @subject.repeat_last_copy_dvd_to_hard_drive.join
       @args.should == old_args
     end
+    
     
     it "if the .done file exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli.tmp.avi.done"

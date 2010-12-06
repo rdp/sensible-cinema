@@ -39,9 +39,12 @@ module SensibleSwing
     Storage = Storage.new("sc")
     
     alias system_blocking system
+    
     def system_non_blocking command
      Thread.new { system_blocking command }
     end
+    
+    # make them choose which one to use
     undef system
 
     def initialize
@@ -75,12 +78,12 @@ module SensibleSwing
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
-          JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
+          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
           Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
           System.exit(1)
         else
-          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true # LODO pass in a block (currently @after_success_once is run from the other thread--even have a race condition in there!)
           on_success = proc {
             command = "smplayer #{wrote_to_here_fulli}"
             system_non_blocking command
@@ -88,7 +91,7 @@ module SensibleSwing
           if success_no_run
             on_success.call
           else
-            @after_success_once = on_success # shenanigans to be able to let this thread run...
+            @after_success_once = on_success # shenanigans to be able to let that thread run...
           end
         end
       }
@@ -101,17 +104,27 @@ module SensibleSwing
         open_file_to_edit_it filename if filename
       }
 
-      @preview_section = new_jbutton( "Preview around edited scene on current DVD", true )
+      @preview_section = new_jbutton( "Preview around an edited scene on current DVD", true )
       @preview_section.on_clicked {
-        do_copy_dvd_to_hard_drive true
+        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true
+        p success_no_run, wrote_to_here_fulli
+        on_success = proc { |file|
+           p 'in good'
+          system_non_blocking("smplayer #{file}")          
+        }
+        if success_no_run
+          on_success.call
+        else
+          @after_success_once = on_success # shenanigans to be able to let that thread run...
+        end
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recent preview scene", true )
+      @rerun_preview = new_jbutton( "Re-run most recent preview", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
 
-      @create_new_edl_for_current_dvd = new_jbutton("Create New Edit List for current DVD", true)
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit Decision List for current DVD", true)
       @create_new_edl_for_current_dvd.on_clicked do
         drive, volume, md5 = choose_dvd_drive
       input = <<-EOL
@@ -125,7 +138,7 @@ module SensibleSwing
 ],
 "disk_unique_id" => "#{md5}",
 "title" => "#{volume}",
-"dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.
+"dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.  And delete this overly verbose comment either way :)
         EOL
         filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
         File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
@@ -159,7 +172,7 @@ module SensibleSwing
     def check_for_dependencies
       ffmpeg = RubyWhich.new.which('ffmpeg')
       if ffmpeg.length == 0
-        JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: imagemagick.\n
+        show_blocking_message_dialog(self, "It appears that you need to install a dependency: imagemagick.\n
         Click ok to be directed to its download website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
         Then restart Sensible-Cinema.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
         system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
@@ -219,8 +232,8 @@ module SensibleSwing
       JFileChooser.new
     end
 
-    def show_blocking_message_dialog(title, message)
-      JOptionPane.showMessageDialog(nil, message, title, JOptionPane::INFORMATION_MESSAGE)
+    def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
+      JOptionPane.showMessageDialog(nil, message, title, style)
     end
     
     def get_user_input(message, default)
@@ -233,7 +246,7 @@ module SensibleSwing
       edit_list_path = single_edit_list_matches_dvd(md5sum)
       if !edit_list_path
         fc = FileDialog.new(self)
-        fc.set_title "Please pick a DVD Edit List File"
+        fc.set_title "Please pick a DVD Edit Decision List File"
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
@@ -247,7 +260,7 @@ module SensibleSwing
       # LODO allow for spaces in the save_to filename
 
       if should_prompt_for_start_and_end_times
-        show_blocking_message_dialog("Preview", "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.")
+        show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview")
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
         Storage['start_time'] = start_time
         end_time = get_user_input("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
@@ -333,18 +346,17 @@ module SensibleSwing
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       if success
+        saved_to = save_to + '.avi' # LODO pass this out?
         if @after_success_once
-          procy = @after_success_once
-          procy.call
+          @after_success_once.call saved_to
         else
-          saved_to = save_to + '.avi' # LODO pass this out?
-          JOptionPane.showMessageDialog(nil, " Done--you may now watch file #{saved_to} in SMPlayer or VLC player", "Done!", JOptionPane::INFORMATION_MESSAGE)
+          show_blocking_message_dialog(" Done--you may now watch file #{saved_to} in SMPlayer or VLC player")
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
           system_non_blocking show_file
           #self.close # ?
         end
       else
-        JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
+        show_blocking_message_dialog("Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
       @after_success_once = nil
     end
