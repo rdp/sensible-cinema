@@ -37,6 +37,7 @@ module SensibleSwing
    end
 
    Storage = Storage.new("sc")
+
    def initialize
      super "Sensible-Cinema"
      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
@@ -86,11 +87,6 @@ module SensibleSwing
        end 
      }
     
-     @preview_section = new_jbutton( "Preview edited section of current DVD", true )
-     @preview_section.on_clicked {
-       do_copy_dvd_to_hard_drive true
-     }
-    
      @open_list = new_jbutton("Open/Edit a pre-existing Edit Decision List", false)
      @open_list.on_clicked {
        dialog = FileDialog.new(self, "Pick file to edit")
@@ -99,13 +95,18 @@ module SensibleSwing
        open_file_to_edit_it filename if filename
      }
   
-     e = new_jbutton( "Re-run most recent preview segment", true )
-     e.on_clicked {
+     @preview_section = new_jbutton( "Preview around edited scene on current DVD", true )
+     @preview_section.on_clicked {
+       do_copy_dvd_to_hard_drive true
+     }
+    
+     @rerun_preview = new_jbutton( "Re-run most recent preview scene", true )
+     @rerun_preview.on_clicked {
        repeat_last_copy_dvd_to_hard_drive
      }
     
-     g = new_jbutton("Create New Edit List for current DVD", true)
-     g.on_clicked do
+     @create_new_edl_for_current_dvd = new_jbutton("Create New Edit List for current DVD", true)
+     @create_new_edl_for_current_dvd.on_clicked do
        drive, volume, md5 = choose_dvd_drive
       input = <<-EOL
 # comments can go after a # on any line.
@@ -126,7 +127,7 @@ EOL
       
      end 
 
-     unique_id = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
+     @display_unique = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
        drive, volume, md5 = choose_dvd_drive
        # display it, allow them to copy and paste it out
        JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
@@ -208,6 +209,10 @@ EOL
     generate_and_run_bat_file *Storage['last_params']
   end
   
+  def new_filechooser
+    JFileChooser.new
+  end
+  
   def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
       drive, dvd_volume_name, md5sum = choose_dvd_drive
       p drive, dvd_volume_name, md5sum
@@ -218,12 +223,14 @@ EOL
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
+      
       descriptors = EdlParser.parse_file edit_list_path
       
       dvd_title = descriptors['title'] || dvd_volume_name
       
-      fc = JFileChooser.new
-      # LODO allow for spaces in the save to filename
+      fc = new_filechooser
+      
+      # LODO allow for spaces in the save_to filename
       
       if should_prompt_for_start_and_end_times
         JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
@@ -241,8 +248,8 @@ EOL
       
       save_to_file_name = dvd_title + ' edited copy'
       save_to_file_name += ' single segment' if should_prompt_for_start_and_end_times || want_full_list
-      save_to_file_name=save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-      fc.setFile(DriveInfo.get_drive_with_most_space_with_slash + save_to_file_name)
+      save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+      fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
       dvd_title_track = descriptors["dvd_title_track"]
       # how does save_to map to fulli?
@@ -258,6 +265,10 @@ EOL
       end
       generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
       [false, fulli]
+    end
+    
+    def get_drive_with_most_space_with_slash
+      DriveInfo.get_drive_with_most_space_with_slash
     end
   
   def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
