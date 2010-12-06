@@ -326,7 +326,7 @@ EOL
   # returns e:\, volume, md5sum
    def choose_dvd_drive
     opticals = DriveInfo.get_dvd_drives_as_win32ole
-    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'please insert DVD before proceeding if you want to use this drive') + ")"}
+    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
     
     if opticals.length != 1
       dialog = GetDisk.new(self, names)
