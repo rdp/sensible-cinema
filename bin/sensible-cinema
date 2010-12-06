@@ -18,96 +18,98 @@ ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/.
 ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
 
 module SensibleSwing
- class MainWindow < JFrame
+  class MainWindow < JFrame
 
-   def new_jbutton title, only_on_create_mode
-    button = JButton.new title
-    button.set_bounds(44, @starting_button_y, @button_width, 23)
-    @starting_button_y += 30
-    if only_on_create_mode
-      if ARGV.index("--create-mode")
+    def new_jbutton title, only_on_create_mode
+      button = JButton.new title
+      button.set_bounds(44, @starting_button_y, @button_width, 23)
+      @starting_button_y += 30
+      if only_on_create_mode
+        if ARGV.index("--create-mode")
+          @panel.add button
+          @buttons << button
+        end
+      else
         @panel.add button
         @buttons << button
       end
-    else
-      @panel.add button
-      @buttons << button
+      button
     end
-    button
-   end
 
-   Storage = Storage.new("sc")
+    Storage = Storage.new("sc")
 
-   def initialize
-     super "Sensible-Cinema"
-     setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
-     panel = JPanel.new
-     @panel = panel
-     @buttons = []
-     panel.set_layout nil
-     add panel # why can't I just slap these down?
- 
-     jlabel = JLabel.new 'Welcome to Sensible Cinema!'
-     happy = Font.new("Tahoma", Font::PLAIN, 11)
-     jlabel.setFont(happy)
-     jlabel.set_bounds(44,44,160,14)
-     panel.add jlabel
-     @starting_button_y = 120
-     @button_width = 270
-    
-     @progress_bar = JProgressBar.new(0, 100)
-     @progress_bar.set_bounds(44,80,@button_width,23)
-     @progress_bar.visible = false
-     panel.add @progress_bar
-    
-     @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive", false )
-     @create.on_clicked {
-       do_copy_dvd_to_hard_drive false
-     }
-    
-     @watch_unedited = new_jbutton("Watch DVD from hard drive unedited", true) # LODO watch in realtime option--then rippers and watchers can combine
-     @watch_unedited.on_clicked {
-       path = RubyWhich.new.which('smplayer')
-       if(path.length == 0)
-            JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
-         Click ok to be directed to its download website.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-         system("start http://smplayer.sourceforge.net/downloads.php")
-       else
-         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
-         command = "smplayer #{wrote_to_here_fulli}"
-         on_success = proc {
-           puts command
-           Thread.new { system(command) }
-         }
-        if success_no_run
-          on_success.call
+    def initialize
+      super "Sensible-Cinema"
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
+      panel = JPanel.new
+      @panel = panel
+      @buttons = []
+      panel.set_layout nil
+      add panel # why can't I just slap these down?
+
+      jlabel = JLabel.new 'Welcome to Sensible Cinema!'
+      happy = Font.new("Tahoma", Font::PLAIN, 11)
+      jlabel.setFont(happy)
+      jlabel.set_bounds(44,44,160,14)
+      panel.add jlabel
+      @starting_button_y = 120
+      @button_width = 270
+
+      @progress_bar = JProgressBar.new(0, 100)
+      @progress_bar.set_bounds(44,80,@button_width,23)
+      @progress_bar.visible = false
+      panel.add @progress_bar
+
+      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive", false )
+      @create.on_clicked {
+        do_copy_dvd_to_hard_drive false
+      }
+
+      @watch_unedited = new_jbutton("Watch DVD from hard drive unedited", true) # LODO watch in realtime option--then rippers and watchers can combine
+      @watch_unedited.on_clicked {
+        path = RubyWhich.new.which('smplayer')
+        if(path.length == 0)
+          JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: SMPlayer.\n
+          Click ok to be directed to its download website.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          system("start http://smplayer.sourceforge.net/downloads.php")
         else
-          @after_success_once = on_success # shenanigans to be able to let this thread run...
+          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+          command = "smplayer #{wrote_to_here_fulli}"
+          thread = nil
+          on_success = proc {
+            puts command
+            thread = Thread.new { system(command) }
+          }
+          if success_no_run
+            on_success.call
+          else
+            @after_success_once = on_success # shenanigans to be able to let this thread run...
+          end
+          thread
         end
-       end 
-     }
-    
-     @open_list = new_jbutton("Open/Edit a pre-existing Edit Decision List", false)
-     @open_list.on_clicked {
-       dialog = FileDialog.new(self, "Pick file to edit")
-       dialog.set_directory EDL_DIR
-       filename = dialog.go
-       open_file_to_edit_it filename if filename
-     }
-  
-     @preview_section = new_jbutton( "Preview around edited scene on current DVD", true )
-     @preview_section.on_clicked {
-       do_copy_dvd_to_hard_drive true
-     }
-    
-     @rerun_preview = new_jbutton( "Re-run most recent preview scene", true )
-     @rerun_preview.on_clicked {
-       repeat_last_copy_dvd_to_hard_drive
-     }
-    
-     @create_new_edl_for_current_dvd = new_jbutton("Create New Edit List for current DVD", true)
-     @create_new_edl_for_current_dvd.on_clicked do
-       drive, volume, md5 = choose_dvd_drive
+      }
+
+      @open_list = new_jbutton("Open/Edit a pre-existing Edit Decision List", false)
+      @open_list.on_clicked {
+        dialog = FileDialog.new(self, "Pick file to edit")
+        dialog.set_directory EDL_DIR
+        filename = dialog.go
+        open_file_to_edit_it filename if filename
+      }
+
+      @preview_section = new_jbutton( "Preview around edited scene on current DVD", true )
+      @preview_section.on_clicked {
+        do_copy_dvd_to_hard_drive true
+      }
+
+      @rerun_preview = new_jbutton( "Re-run most recent preview scene", true )
+      @rerun_preview.on_clicked {
+        repeat_last_copy_dvd_to_hard_drive
+      }
+
+      @create_new_edl_for_current_dvd = new_jbutton("Create New Edit List for current DVD", true)
+      @create_new_edl_for_current_dvd.on_clicked do
+        drive, volume, md5 = choose_dvd_drive
       input = <<-EOL
 # comments can go after a # on any line.
 "mutes" => [
@@ -120,100 +122,108 @@ module SensibleSwing
 "disk_unique_id" => "#{md5}",
 "title" => "#{volume}",
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.
-EOL
-      filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
-      File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
-      open_file_to_edit_it filename
-      
-     end 
+        EOL
+        filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
+        File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
+        open_file_to_edit_it filename
 
-     @display_unique = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
-       drive, volume, md5 = choose_dvd_drive
-       # display it, allow them to copy and paste it out
-       JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
-      This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
-     }
-    
-     @exit = new_jbutton("Exit", false).on_clicked {
-       self.close
-     }
+      end
 
-     setSize 350,430
-     
-     check_for_dependencies
-   end
-  
-  def download full_url, to_here
-    require 'open-uri'
-    writeOut = open(to_here, "wb")
-    writeOut.write(open(full_url).read)
-    writeOut.close
-  end
-  
-  def check_for_dependencies
-    ffmpeg = RubyWhich.new.which('ffmpeg')
-    if ffmpeg.length == 0
-      JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: imagemagick.\n
-      Click ok to be directed to its download website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
-      Then restart Sensible-Cinema.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)      
-      system("start http://www.imagemagick.org/script/binary-releases.php#windows")
-      java.lang.System.exit(1)
+      @display_unique = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
+        drive, volume, md5 = choose_dvd_drive
+        # display it, allow them to copy and paste it out
+        JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
+        This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
+      }
+
+      @exit = new_jbutton("Exit", false).on_clicked {
+        self.close
+      }
+
+      setSize 350,430
+
+      check_for_dependencies
     end
-    mencoder = RubyWhich.new.which('mencoder')
-    if mencoder.length == 0
-      answer = JOptionPane.showConfirmDialog(nil, "Appears that you need to install a dependency: mencoder.
-      Its license is at: http://www.gnu.org/licenses/gpl-2.0.html.
-      Also this will download 7z locally (license: http://www.7-zip.org/license.txt).
-      Click yes if you accept the terms of the several license agreements mentioned. The programs will then be downloaded.
-      Or click no to cancel and exit.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
-      if answer == 1
-        p 'exiting, no mencoder...'
+
+    def download full_url, to_here
+      require 'open-uri'
+      writeOut = open(to_here, "wb")
+      writeOut.write(open(full_url).read)
+      writeOut.close
+    end
+
+    def check_for_dependencies
+      ffmpeg = RubyWhich.new.which('ffmpeg')
+      if ffmpeg.length == 0
+        JOptionPane.showMessageDialog(self, "It appears that you need to install a dependency: imagemagick.\n
+        Click ok to be directed to its download website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
+        Then restart Sensible-Cinema.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+        system("start http://www.imagemagick.org/script/binary-releases.php#windows")
         java.lang.System.exit(1)
       end
-      vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
-      ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
-      Dir.chdir(vendor_cache) do
-        Kernel.print 'downloading unzip utility...'
-        download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-        system("unzip -o 7za920.zip") # -o means "overwrite" without prompting
-        # now we have 7za.exe
-        Kernel.print 'downloading mencoder'
-        download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
-        system("7za e mencoder.7z -y -omencoder")
-        Kernel.puts 'done'
+      mencoder = RubyWhich.new.which('mencoder')
+      if mencoder.length == 0
+        answer = JOptionPane.showConfirmDialog(nil, "Appears that you need to install a dependency: mencoder.
+        Its license is at: http://www.gnu.org/licenses/gpl-2.0.html.
+        Also this will download 7z locally (license: http://www.7-zip.org/license.txt).
+        Click yes if you accept the terms of the several license agreements mentioned. The programs will then be downloaded.
+          Or click no to cancel and exit.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
+        if answer == 1
+          p 'exiting, no mencoder...'
+          java.lang.System.exit(1)
+        end
+        vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
+        ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
+        Dir.chdir(vendor_cache) do
+          Kernel.print 'downloading unzip utility...'
+          download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
+          system("unzip -o 7za920.zip") # -o means "overwrite" without prompting
+          # now we have 7za.exe
+          Kernel.print 'downloading mencoder'
+          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
+          system("7za e mencoder.7z -y -omencoder")
+          Kernel.puts 'done'
+        end
       end
     end
-  end
 
-  def open_file_to_edit_it filename
-   Thread.new { system("notepad \"#{filename}\"")} # blocks otherwise...
-  end
-
-  def single_edit_list_matches_dvd md5
-    return unless md5 # ignore nil searches, where it wasn't set in the .txt file
-    matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
-      EdlParser.parse_file(file)["disk_unique_id"] == md5
-    }
-    if matching.length == 1
-      file = matching[0]
-      p "selecting the one matching file #{file} #{md5}"
-      file
-    else
-      nil
+    def open_file_to_edit_it filename
+      Thread.new { system("notepad \"#{filename}\"")} # blocks otherwise...
     end
-  end
-  
-  EDL_DIR = File.expand_path(__dir__  + "/../zamples/edit_decision_lists/dvds").to_filename
-  
-  def repeat_last_copy_dvd_to_hard_drive
-    generate_and_run_bat_file *Storage['last_params']
-  end
-  
-  def new_filechooser
-    JFileChooser.new
-  end
-  
-  def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
+
+    def single_edit_list_matches_dvd md5
+      return unless md5 # ignore nil searches, where it wasn't set in the .txt file
+      matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
+        EdlParser.parse_file(file)["disk_unique_id"] == md5
+      }
+      if matching.length == 1
+        file = matching[0]
+        p "selecting the one matching file #{file} #{md5}"
+        file
+      else
+        nil
+      end
+    end
+
+    EDL_DIR = File.expand_path(__dir__  + "/../zamples/edit_decision_lists/dvds").to_filename
+
+    def repeat_last_copy_dvd_to_hard_drive
+      generate_and_run_bat_file *Storage['last_params']
+    end
+
+    def new_filechooser
+      JFileChooser.new
+    end
+
+    def show_blocking_message_dialog(title, message)
+      JOptionPane.showMessageDialog(nil, message, title, JOptionPane::INFORMATION_MESSAGE)
+    end
+    
+    def get_user_input(message, default)
+     start_time = JOptionPane.showInputDialog(message, default)
+    end
+
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
       drive, dvd_volume_name, md5sum = choose_dvd_drive
       p drive, dvd_volume_name, md5sum
       edit_list_path = single_edit_list_matches_dvd(md5sum)
@@ -223,29 +233,29 @@ EOL
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
-      
+
       descriptors = EdlParser.parse_file edit_list_path
-      
+
       dvd_title = descriptors['title'] || dvd_volume_name
-      
+
       fc = new_filechooser
-      
+
       # LODO allow for spaces in the save_to filename
-      
+
       if should_prompt_for_start_and_end_times
-        JOptionPane.showMessageDialog(nil, "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview!", JOptionPane::INFORMATION_MESSAGE)
-          start_time = JOptionPane.showInputDialog("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
-          Storage['start_time'] = start_time
-          end_time = JOptionPane.showInputDialog("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
-          Storage['end_time'] = end_time
-          unless start_time and end_time
-            JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
-            return
-          end
+        show_blocking_message_dialog("Preview", "Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.")
+        start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
+        Storage['start_time'] = start_time
+        end_time = get_user_input("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
+        Storage['end_time'] = end_time
+        unless start_time and end_time
+          JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
+          return
+        end
       end
-      
+
       fc.set_title "Pick where to save #{dvd_title} edited to"
-      
+
       save_to_file_name = dvd_title + ' edited copy'
       save_to_file_name += ' single segment' if should_prompt_for_start_and_end_times || want_full_list
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
@@ -266,25 +276,25 @@ EOL
       generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
       [false, fulli] # false means it's running in a background thread :P
     end
-    
+
     def get_drive_with_most_space_with_slash
       DriveInfo.get_drive_with_most_space_with_slash
     end
-  
-  def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
+
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
       Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
       bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, bat_file)
       puts 'commands located for debugging purposes at: ' + bat_file
-      popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" + 
-        "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
-        "This could take quite awhile, and will prompt you when it is done.\n" +
-        "You can close this window and continue working while it runs.\n" + 
-        "NB that the created file will be playable with SMplayer or VLC player.",
-        "OK")
-      
+      popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" +
+      "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
+      "This could take quite awhile, and will prompt you when it is done.\n" +
+      "You can close this window and continue working while it runs.\n" +
+      "NB that the created file will be playable with SMplayer or VLC player.",
+      "OK")
+
       # allow our popups to still be serviced while it is running
       Thread.new {
         run_create_commands bat_file, save_to
@@ -292,8 +302,8 @@ EOL
       }
       # LODO warn if they will overwrite a file in the end...
     end
-  
-   def run_create_commands batch_commands, save_to
+
+    def run_create_commands batch_commands, save_to
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
@@ -328,58 +338,58 @@ EOL
         JOptionPane.showMessageDialog(nil, " Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
       end
       @after_success_once = nil
-   end
-  
-  # returns e:\, volume, md5sum
-   def choose_dvd_drive
-    opticals = DriveInfo.get_dvd_drives_as_win32ole
-    names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
-    
-    if opticals.length != 1
-      dialog = GetDisk.new(self, names)
-      dialog.setSize 200,125
-      dialog.show
-      selected_idx = dialog.selected_idx
-    else
-      selected_idx = 0
-      p 'selecting user\'s only disk drive ' + names[0]
     end
-    
-    if selected_idx
-      disk = opticals[selected_idx]
-      prefix = names[selected_idx][0..2] 
-      return prefix, opticals[selected_idx].VolumeName, DriveInfo.md5sum_disk(prefix)
-    else
-      puts 'did not select a drive...exiting'
-      java.lang.System.exit 1      
+
+    # returns e:\, volume, md5sum
+    def choose_dvd_drive
+      opticals = DriveInfo.get_dvd_drives_as_win32ole
+      names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
+
+      if opticals.length != 1
+        dialog = GetDisk.new(self, names)
+        dialog.setSize 200,125
+        dialog.show
+        selected_idx = dialog.selected_idx
+      else
+        selected_idx = 0
+        p 'selecting user\'s only disk drive ' + names[0]
+      end
+
+      if selected_idx
+        disk = opticals[selected_idx]
+        prefix = names[selected_idx][0..2]
+        return prefix, opticals[selected_idx].VolumeName, DriveInfo.md5sum_disk(prefix)
+      else
+        puts 'did not select a drive...exiting'
+        java.lang.System.exit 1
+      end
     end
+
   end
 
- end
+  class GetDisk < JDialog
+    attr_reader :selected_idx
+    def initialize parent, options_array
+      super parent, true
 
- class GetDisk < JDialog
-   attr_reader :selected_idx
-   def initialize parent, options_array
-     super parent, true
-     
-     box = JComboBox.new
-     box.add_action_listener do |e|
-       idx = box.get_selected_index
-       if idx != 0
-        # don't count choosing the first as a real entry
-        @selected_idx = box.get_selected_index - 1
-        dispose
-       end
-     end
-    
-     box.add_item "Click to select DVD drive" # put something in index 0
-     options_array.each{|drive|
-       box.add_item drive
-     }
-     add box
-     pack
+      box = JComboBox.new
+      box.add_action_listener do |e|
+        idx = box.get_selected_index
+        if idx != 0
+          # don't count choosing the first as a real entry
+          @selected_idx = box.get_selected_index - 1
+          dispose
+        end
+      end
+
+      box.add_item "Click to select DVD drive" # put something in index 0
+      options_array.each{|drive|
+        box.add_item drive
+      }
+      add box
+      pack
     end
- end
+  end
 end
 
 if $0 == __FILE__

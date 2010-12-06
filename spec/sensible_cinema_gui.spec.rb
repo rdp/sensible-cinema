@@ -41,6 +41,7 @@ module SensibleSwing
       }
       @subject.stub!(:generate_and_run_bat_file) { |*args|
         args[0].should == 'abc'
+        @args = args
       }
       @subject.stub!(:new_filechooser) {
         FakeFileChooser.new
@@ -48,8 +49,12 @@ module SensibleSwing
       @subject.stub!(:get_drive_with_most_space_with_slash) {
         "e:\\"
       }
+      @subject.stub!(:show_blocking_message_dialog) {}
+      @subject.stub!(:get_user_input) {'01:00'}
+      @subject.stub!(:system) { |command|
+        @command = command
+      }
     end
-
 
     class FakeFileChooser
       def set_title x
@@ -69,6 +74,26 @@ module SensibleSwing
       FileUtils.touch "abc.fulli.tmp.avi.done"
       @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli.tmp.avi"]
       FileUtils.rm "abc.fulli.tmp.avi.done"
+    end
+    
+    it "should prompt for start and end times" do
+      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
+      @args[-1].should == 1
+      @args[-2].should == "01:00"
+    end
+    
+    it "if the .done file exists, it should directly call smplayer" do
+      FileUtils.touch "abc.fulli.tmp.avi.done"
+      @subject.instance_variable_get(:@watch_unedited).simulate_click.join
+      
+      @command.should == "smplayer abc.fulli.tmp.avi"
+      FileUtils.rm "abc.fulli.tmp.avi.done"
+    end
+    
+    it "if the .done file does not exist, it should not call mplayer" do
+      @subject.instance_variable_get(:@watch_unedited).simulate_click.should == nil
+      sleep 0.01
+      @command.should == nil
     end
 
   end
