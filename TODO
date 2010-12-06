@@ -2,7 +2,7 @@
   
 == probably next up+low prio ==
 
-  "non realtime, non edity" release
+  "non realtime, non edity good" release
     md5sum the full rip files...appears necessary...
       add button for md5sum
     family only
@@ -10,6 +10,7 @@
     just run previews in smplayer :P
     popup "you may now watch": bring it to the front...
     move the progressbar to the top :)
+    unit test the GUI
 
 == slightly lower than that ==
 
@@ -77,7 +78,6 @@
   install them to cache2 or something...so I can cleanup the deploy code...
  advertise urug, ruby flow :)
  "Re-run most recent" disabled when there isn't one [?]
- unit test the GUI
  re-do DVD EDL's that need it :P
    all dogs go to heaven...finish EDL
  warn when labels exist and don't match...
