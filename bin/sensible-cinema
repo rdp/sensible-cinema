@@ -285,14 +285,18 @@ module SensibleSwing
     def get_drive_with_most_space_with_slash
       DriveInfo.get_drive_with_most_space_with_slash
     end
+    
+    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    end
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
       Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
-      bat_file = MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
-      File.write(temp_file, bat_file)
-      puts 'commands located for debugging purposes at: ' + bat_file
+      File.write(temp_file, commands)
+      puts 'commands copied for debugging purposes to: ' + temp_file
       popup = ModeLessDialog.new(          "Copying to #{save_to}.\n" +
       "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
@@ -302,7 +306,7 @@ module SensibleSwing
 
       # allow our popups to still be serviced while it is running
       Thread.new {
-        run_create_commands bat_file, save_to
+        run_create_commands commands, save_to
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end...

@@ -39,9 +39,10 @@ module SensibleSwing
       @subject.stub!(:choose_dvd_drive) {
         ["drive", "volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
-      @subject.stub!(:generate_and_run_bat_file) { |*args|
-        args[0].should == 'abc'
+      @subject.stub!(:get_mencoder_commands) { |*args|
+        args[-4].should == 'abc'
         @args = args
+        'fake command 1'
       }
       @subject.stub!(:new_filechooser) {
         FakeFileChooser.new
@@ -76,11 +77,23 @@ module SensibleSwing
       @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli.tmp.avi"]
       FileUtils.rm "abc.fulli.tmp.avi.done"
     end
-    
-    it "should prompt for start and end times" do
+
+    def prompt_for_start_and_end_times
       @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
       @args[-1].should == 1
       @args[-2].should == "01:00"
+    end
+
+    it "should prompt for start and end times" do
+      prompt_for_start_and_end_times
+    end
+    
+    it "should be able to reprompt for start and end times automagically" do
+      prompt_for_start_and_end_times
+      old_args = @args
+      @args = nil
+      @subject.repeat_last_copy_dvd_to_hard_drive
+      @args.should == old_args
     end
     
     it "if the .done file exists, it should directly call smplayer" do
