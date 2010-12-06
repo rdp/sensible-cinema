@@ -42,7 +42,7 @@ module SensibleSwing
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-4].should == 'abc'
         @args = args
-        'fake command 1'
+        'echo'
       }
       @subject.stub!(:new_filechooser) {
         FakeFileChooser.new
@@ -104,9 +104,11 @@ module SensibleSwing
       FileUtils.rm "abc.fulli.tmp.avi.done"
     end
     
-    it "if the .done file does not exist, it should not call mplayer" do
+    it "if the .done file does not exist, it should call mplayer later" do
       @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @command.should == nil
+      @command.should == nil # scary timing spec
+      @subject.background_thread.join
+      @command.should_not == nil
     end
     
     it "should create a new file for ya" do
@@ -118,6 +120,10 @@ module SensibleSwing
       ensure
         FileUtils.rm_rf out
       end
+    end
+    
+    it "should display unique" do
+      @subject.instance_variable_get(:@display_unique).simulate_click.should == "01:00"
     end
 
   end

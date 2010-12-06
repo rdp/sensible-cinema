@@ -81,9 +81,8 @@ module SensibleSwing
           System.exit(1)
         else
           success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
-          command = "smplayer #{wrote_to_here_fulli}"
           on_success = proc {
-            puts command
+            command = "smplayer #{wrote_to_here_fulli}"
             system_non_blocking command
           }
           if success_no_run
@@ -116,20 +115,19 @@ module SensibleSwing
       @create_new_edl_for_current_dvd.on_clicked do
         drive, volume, md5 = choose_dvd_drive
       input = <<-EOL
-# comments can go after a # on any line.
+# comments can go after a # on any line, for example this one.
 "mutes" => [
-  "00:00:01.0", "00:00:02.0", "da..",
+  "0:00:01.0", "0:00:02.0", "da..",
 ],
 
 "blank_outs" => [
-  "01:01:00.0" , "01:02:00.0", "violent scene of some sort"
+  "1:01:00.0" , "1:02:00.0", "violent scene of some sort"
 ],
 "disk_unique_id" => "#{md5}",
 "title" => "#{volume}",
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.
         EOL
         filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
-        p 'wrote to ' + filename
         File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
         open_file_to_edit_it filename
 
@@ -138,7 +136,7 @@ module SensibleSwing
       @display_unique = new_jbutton( "Calculate a DVD's unique ID", true ).on_clicked {
         drive, volume, md5 = choose_dvd_drive
         # display it, allow them to copy and paste it out
-        JOptionPane.showInputDialog("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
+        get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
         This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
       }
 
@@ -150,7 +148,7 @@ module SensibleSwing
 
       check_for_dependencies
     end
-
+    
     def download full_url, to_here
       require 'open-uri'
       writeOut = open(to_here, "wb")
@@ -306,12 +304,14 @@ module SensibleSwing
       "OK")
 
       # allow our popups to still be serviced while it is running
-      Thread.new {
+      @background_thread = Thread.new {
         run_create_commands commands, save_to
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end...
     end
+    
+    attr_accessor :background_thread
 
     def run_create_commands batch_commands, save_to
       @buttons.each{|b| b.set_enabled false}
