@@ -1,3 +1,12 @@
+== 0.16.7 ==
+
+Accomodate for disks that have scratches in them better.
+
+== 0.16.5 ==
+
+Enable "preferences merging" of user preferences with an edit decision list to come up with a new edit decision list for them.
+The prototypes are there, though it's not enabled.
+
 == 0.16.0 ==
 
 Change the YAML style so that it can have filterable categories (disabled for now, but there are unit tests
@@ -16,6 +25,8 @@ Note that by at least this version, auto DVD title selection as a parameter has 
 Note that by at least this version, it could compute an md5sum of a DVD's IFO files to compute
 a unique ID for that disk.
 Note that before this, I was using the volume name to generate filenames.
+Note that several (even more) revisions ago, I used on screen timestamp OCR and thus tracking to be able to 
+control output of hulu, youtube, etc. (online displayable programs).
 
 == 0.14.8 ==
 

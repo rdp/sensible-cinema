@@ -61,7 +61,7 @@ task 'bundle_dependencies' => 'gemspec' do
   
    spec = eval File.read('sensible-cinema.gemspec')
    dependencies = spec.runtime_dependencies
-   dependencies = dependencies + get_transitive_dependencies(dependencies)
+   dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
    Gem.loaded_specs.select{|name, spec| name == 'os'}
    FileUtils.rm_rf 'vendor/cache'
    Dir.mkdir 'vendor/cache'

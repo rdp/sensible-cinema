@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.16.6"
+  s.version = "0.16.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -121,6 +121,7 @@ Gem::Specification.new do |s|
     "vendor/gocr049.exe",
     "vendor/unzip.exe",
     "zamples/edit_decision_lists/category descriptions.txt",
+    "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
     "zamples/edit_decision_lists/dvds/bob the builder pets in a pickle.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",

@@ -5,17 +5,13 @@
   "non realtime, non edity good" release (family only)
     add some "||'s" to bat files...
     popup "you may now watch": bring it to the front...
-    cool runnings:
-     make a copy me--do they now match?
-     get a working copy--do they match?
 
 == slightly lower than that ==
 
+  note "I first use this to edit my temple movie"
   move the progressbar to the bottom :)
   license the first time they run it (gplv3)
-  only pick that filename once...
-  note "used to screen track" somewhere in an announcement...
-    also note the merger, if not previously noted :)
+  only pick that filename once per session...
   note "just a linear editor"
   note "just a wrapper"
   partner for filters (Jon, Karlie if interested...give beta)
@@ -26,12 +22,15 @@
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish website
   checkbox for other license or something?
-  assert that at least one drive has a DVD in it...maybe loop refuse until this happens?
   compare computer DVD playback with physical player...
   overlay audio
 
 == DVD backlog (unordered, some very low prio) ==
 
+  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
+  cool runnings:
+     make a copy me--do they now match?
+     get a working copy--do they match?
   md5sum the full rip files...appears necessary...
     is it necessary?
     add button for md5sum
