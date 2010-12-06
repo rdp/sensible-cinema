@@ -6,6 +6,9 @@
 
 == slightly lower than that ==
 
+  note "used to screen track" somewhere in an announcement...
+  note "just a linear editor"
+  note "just a wrapper"
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's
@@ -22,21 +25,28 @@
   assert that at least one drive has a DVD in it...maybe loop refuse until this happens?
   compare computer DVD playback with physical player...
   just run previews in smplayer :P
-  ffmpeg easier
+  add button for md5sum
 
 == DVD backlog (unordered, some very low prio) ==
 
+  LLC then pay people
+  redo the edit buttons into an ordering of sorts...
+  note that this can corrupt your soul!
   several "play now" options...without a navigator of course :)
     one for during encoding, too...
     plus figure out if mplayer is a fast forward feature...
   non parallelize
+    can have different volume settings
+    can insert other titles [?]
+      these last two have gotta be lower prio than the rest...
+  install smplayer before mencoder [?]
   move the progressbar to the top :)
   smaller .zip
   bundle 7z [?]
    remove note about it
  using, burning, creating  "howto's"
    better
-    usability test?
+    usability test them?
     
  using+burning screencast
  editing screencast
@@ -46,6 +56,7 @@
      add an option "just save full disk (unedited) to hard drive..."
        note to people: can edit those to your liking
 
+ imagemagick (ffmpeg) easier install...
  DRY up dependency installation code
   install them to cache2 or something...so I can cleanup the deploy code...
  advertise urug, ruby flow :)
@@ -77,7 +88,7 @@ make sure can work with very large DVD's...
     only prompt if have two...
   can have collaborators re-selling EDL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
-a real website
+a real website that looks good
 k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
 better .exe icon...
 ensure file exists after we created it...and has a reasonable size, before declaring success
