@@ -264,7 +264,7 @@ EOL
         end
       end
       generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
-      [false, fulli]
+      [false, fulli] # false means it's running in a background thread :P
     end
     
     def get_drive_with_most_space_with_slash
