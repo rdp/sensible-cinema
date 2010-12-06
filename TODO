@@ -29,6 +29,7 @@
 
 == DVD backlog (unordered, some very low prio) ==
 
+  prompt for name, auto populate with volume name
   LLC then pay people
   redo the edit buttons into an ordering of sorts...
   note that this can corrupt your soul!
@@ -102,6 +103,10 @@ make the progress bar map "better" to the size of the various sections...
 detect occurrence of these type errors (DVD read failure): dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
 per movie, several EDL's, one includes profanity, one just violence, one paranoid, etc.
 when there are several, it lets you just choose between the ones that are valid (?)
+
+"show" what drive they have in there--like an auto-detect, and if it has EDL's available for it or not.
+Note to people: make several EDL's per movie.
+Note to people: clean your disks!
 
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
