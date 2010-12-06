@@ -2,10 +2,19 @@
   
 == probably next up+low prio ==
 
-  md5sum the full rip files...appears necessary...
+  "non realtime, non edity" release
+    md5sum the full rip files...appears necessary...
+      add button for md5sum
+    family only
+    add some "||'s" to bat files...
+    just run previews in smplayer :P
+    popup "you may now watch": bring it to the front...
+    move the progressbar to the top :)
 
 == slightly lower than that ==
 
+  license the first time they run it (gplv3)
+  only pick that filename once...
   note "used to screen track" somewhere in an announcement...
     also note the merger, if not previously noted :)
   note "just a linear editor"
@@ -15,38 +24,39 @@
       my dvd's
       friend's dvd's
       partners'...
-  add some "||'s" to bat files...
   beta release/rinse and repeat with various ppl (once it's releasable...)
-  can generate mplayer EDL's and play them...hmm...smplayer them?
-    update license too...
   a real'ish website
-  license the first time they run it (gplv3)
   checkbox for other license or something?
-  bring that window to the top! (before done dialog...)
   assert that at least one drive has a DVD in it...maybe loop refuse until this happens?
   compare computer DVD playback with physical player...
-  just run previews in smplayer :P
-  add button for md5sum
   overlay audio
 
 == DVD backlog (unordered, some very low prio) ==
 
-  vnc has a good license :)
+  play a bigger noise when totally done...(dvd flick has one...)
+  vnc has a good looking license :)
   unzip instructions?
   prompt for name, auto populate with volume name
-  LLC then pay people
+  LLC before ever pay anyone
   redo the edit buttons into an ordering of sorts...
   note that this can corrupt your soul!
+  plus figure out if mplayer is a fast forward feature...
   several "play now" options...without a navigator of course :)
-    one for during encoding, too...
-    plus figure out if mplayer is a fast forward feature...
+    one for watch unedited "as grabbing" (create mode)
+    visualbasic
+    "round conservatively, write no file" way
+      mplayer batch (playlist?)
+    "round conservatively, yes write file" (+1 you track it)
+    can generate mplayer EDL's and play them...hmm...smplayer them?
+      update license too...
+    get half-way through, start playing back as writing edited full copy
+      maybe not all of these tho...
   non parallelize
-  whichr: return nil
     can have different volume settings
-    can insert other titles [?]
+    can insert other titles mid-stream [?]
       these last two have gotta be lower prio than the rest...
+  whichr: return nil
   install smplayer before mencoder [?]
-  move the progressbar to the top :)
   smaller .zip
   bundle 7z [?]
    remove note about it
@@ -73,8 +83,7 @@
  warn when labels exist and don't match...
  kill old mencoder instances more often...
   auto-download imagemagick, too
-  check all the various options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
-  popup "you may now watch": bring it to the front...
+  check all the many options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   can rip from a DVD-like folder (?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
     plus I do some copy, some ac3?
@@ -90,24 +99,20 @@
 in general, fine tune burning with various things...
 
 make sure can work with very large DVD's...
-  can use a fast temp drive, save through to other :P
-    only prompt if have two...
+  can use a fast temp drive, save through it to another :P
+    (when they have two...)
   can have collaborators re-selling EDL's
     good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
 a real website that looks good
 k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
 better .exe icon...
-ensure file exists after we created it...and has a reasonable size, before declaring success
-      148 cars_widescreen_2006_edited.ps
 blu-ray support somehow (real-time? rip?)
 use DVD navigator ?
   http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
   with an avi file sink?
 double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
-make the progress bar map "better" to the size of the various sections...
-detect occurrence of these type errors (DVD read failure): dvdnav warning: cannot get next block (Error reading from DVD.) somehow (file size...)
-per movie, several EDL's, one includes profanity, one just violence, one paranoid, etc.
-when there are several, it lets you just choose between the ones that are valid (?)
+  might not work for all modes tho...
+make the progress bar map "better" to the actual time that each section should take...
 
 "show" what drive they have in there--like an auto-detect, and if it has EDL's available for it or not.
 Note to people: make several EDL's per movie.
@@ -125,7 +130,7 @@ legal shtuff (LICENSE)
 
 @smplayer: right click on DVD...
 
-== random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+== random non-DVD (or don't care when) backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
 the ac3 thing
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
