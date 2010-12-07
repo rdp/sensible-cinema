@@ -3,12 +3,14 @@
 == probably next up+low prio ==
 
   "non realtime, non edity good" release (family only)
-    add some "||'s" to bat files...
+    Cool runnings EDL
     popup "you may now watch": bring it to the front...
-
+    I'm actually not using the right video codec LOL :P
+    note rifftrax when I release
+  
 == slightly lower than that ==
 
-  note "I first use this to edit my temple movie"
+
   move the progressbar to the bottom :)
   license the first time they run it (gplv3)
   only pick that filename once per session...
@@ -20,53 +22,58 @@
       friend's dvd's
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
-  a real'ish website
-  checkbox for other license or something?
+  a real'ish-er website
+  checkbox for other licenses or something?
   compare computer DVD playback with physical player...
-  overlay audio
+  Harry Potter audio is Spanish!
+  program the temple thing for it
+    note "I first use this to edit my temple movie"
 
 == DVD backlog (unordered, some very low prio) ==
 
+  overlay audio
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   cool runnings:
      make a copy me--do they now match?
      get a working copy--do they match?
-  md5sum the full rip files...appears necessary...
+  md5sum the full rip files...
     is it necessary?
-    add button for md5sum
+      yes? add button for md5sum
   propaganda-ize
     alternative.to
-    blogs that have ever mentioned clearplay
+    blogs that have ever mentioned clearplay :P
   play a bigger noise when totally done...(dvd flick has one...)
   vnc has a good looking license :)
   unzip instructions?
   prompt for name, auto populate with volume name
-  LLC before ever pay anyone
-  redo the edit buttons into an ordering of sorts...
+  LLC before ever pay anyone, if I ever do
+  redo the creation mode buttons into an ordering of sorts...
   note that this can corrupt your soul!
-  plus figure out if mplayer is a fast forward feature...
+    don't watch it if it's dark! come on!
+  figure out if mplayer/smplayer as a player has a fast forward feature...
   several "play now" options...without a navigator of course :)
-    one for watch unedited "as grabbing" (create mode)
-    visualbasic
-    "round conservatively, write no file" way
+    one for watch unedited "as grabbing" (in create mode)
+    visualbasic-like playlist
+    "round conservatively, write no file" playback
       mplayer batch (playlist?)
-    "round conservatively, yes write file" (+1 you track it)
     can generate mplayer EDL's and play them...hmm...smplayer them?
       update license too...
+    "round conservatively, yes write file" (+1 you track it)
     get half-way through, start playing back as writing edited full copy
-      maybe not all of these tho...
+      (maybe not all of these tho...)
   non parallelize
     can have different volume settings
-    can insert other titles mid-stream [?]
+    can insert other sections (same disk) mid-stream :P
       these last two have gotta be lower prio than the rest...
   whichr: return nil
   install smplayer before mencoder [?]
   smaller .zip
   bundle 7z [?]
    remove note about it
- using, burning, creating  "howto's"
+  using, burning, creating  "howto's"
    better
     usability test them?
+    umm...shouldn't using be pretty straight forward tho?
     
  using+burning screencast
  editing screencast

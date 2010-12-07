@@ -6,14 +6,14 @@ To install:
 
 download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
 unzip it
-run the file "run_sensible_cinema.bat" from within it.
-Note that you'll need java installed for it to work, but chances are you already have it.
+"go into it" and run the file "run sensible cinema.bat" from within it.
+Note that you'll need java previously installed for it to work, but chances are you already have it.
 
-== Programming Your Own Edit List ==
+== Programming Your Own List ==
 
-To program sensible-cinema, you create an edit decision list it can use.
+To program sensible-cinema, you create an edit decision list for it to use.
 
-An Edit List looks something like this example:
+An Edit Decision List looks something like this example:
 
 Here's one with more detail
 
@@ -60,6 +60,7 @@ Normal movies versus "directors cut unedited" movies (one is sometimes preferabl
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile).
 http://clearplay.com a commercial editor (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
+http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com "scene cut editor" of the zoom player
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
