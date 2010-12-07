@@ -135,10 +135,10 @@ module SensibleSwing
   "1:01:00.0" , "1:02:00.0", "violent scene of some sort"
 ],
 "disk_unique_id" => "#{md5}",
-"title" => "#{volume}",
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.  And delete this overly verbose comment either way :)
         EOL
         filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
+        filename.downcase!
         File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
         open_file_to_edit_it filename
 

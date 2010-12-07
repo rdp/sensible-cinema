@@ -37,7 +37,7 @@ module SensibleSwing
     before do
       @subject = MainWindow.new
       @subject.stub!(:choose_dvd_drive) {
-        ["drive", "volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
+        ["drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-4].should match(/abc/)
@@ -140,6 +140,11 @@ module SensibleSwing
       @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click
       begin
         File.exist?( out ).should be_true
+        content = File.read(out)
+        p content
+        content.should_not include("\"title\"")
+        content.should include("disk_unique_id")
+        content.should include("dvd_title_track")
       ensure
         FileUtils.rm_rf out
       end
