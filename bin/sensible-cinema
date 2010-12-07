@@ -293,6 +293,7 @@ EOL
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
+      File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w").close
       dvd_title_track = descriptors["dvd_title_track"]
       # how does save_to map to fulli?
       fulli = save_to + ".fulli.tmp.avi"
@@ -347,13 +348,14 @@ EOL
       total_size = lines.length.to_f
       @progress_bar.visible=true
       @progress_bar.set_value(10) # start at 10% always, so they can see something.
-      lines.each_with_index{|l, idx|
+      lines.each_with_index{|line, idx|
         if success
-          success = system_blocking(l) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
-          if l =~ /@rem /
+          puts "running #{line}"
+          success = system_blocking(line) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
+          if line =~ /@rem /
             success = true # these fail fof some reason?
           else
-            p 'line failed ' + l unless success
+            p 'line failed: ' + line unless success
           end
         end
         @progress_bar.set_value(10 + idx/total_size*90)
@@ -394,7 +396,7 @@ EOL
       if selected_idx
         disk = opticals[selected_idx]
         prefix = names[selected_idx][0..2]
-        puts "calculating drive unique id..."
+        puts "calculating disk's unique id..."
         md5sum = DriveInfo.md5sum_disk(prefix)
         return prefix, opticals[selected_idx].VolumeName, md5sum
       else

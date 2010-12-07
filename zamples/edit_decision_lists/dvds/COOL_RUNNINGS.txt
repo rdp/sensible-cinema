@@ -1,7 +1,7 @@
 # comments can go after a # on any line.
 "mutes" => [
  "14:53.7", "14:55", "greetings sled g..",
- "58:39", "58:40" # bad arsenic
+ "58:40", "58:41" # bad arsenic
  #58:40 just one
  #59:08
  #59:16
