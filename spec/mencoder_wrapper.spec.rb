@@ -38,7 +38,7 @@ describe MencoderWrapper do
     @out.should include(" -o to_here.fulli.tmp.avi")
     FileUtils.touch 'to_here.fulli.tmp.avi'
     go
-    @out.should_not include(" -o to_here.fulli.tmp.avi")  
+    @out.should match(/@rem.*-o to_here.fulli.tmp.avi/)  
   end
   
   it "should use newline every line" do
@@ -67,10 +67,6 @@ describe MencoderWrapper do
   it "should use avi extension" do
     @out.should include(".avi ")
     @out.should_not include(".avi.1 ")
-  end
-  
-  it "should not overuse the avi extension" do
-    @out.should_not include("avi.1.avi")
   end
   
   it "should concatenate (merge) them all together" do

@@ -83,18 +83,18 @@
      add an option "just save full disk (unedited) to hard drive..."
        note to people: can edit those to your liking
 
- imagemagick (ffmpeg) easier install...
- DRY up dependency installation code
-  install them to cache2 or something...so I can cleanup the deploy code...
- advertise urug, ruby flow :)
- "Re-run most recent" disabled when there isn't one [?]
- re-do DVD EDL's that need it :P
+  imagemagick (ffmpeg) easier install...
+  DRY up dependency installation code
+  install dep's to cache2 or something...so I can cleanup the deploy code...
+  advertise urug, ruby flow :)
+  "Re-run most recent" disabled when there isn't one [?]
+  re-do DVD EDL's that need it :P
    all dogs go to heaven...finish EDL
- warn when labels exist and don't match...
- kill old mencoder instances more often...
+  warn when labels exist and don't match...
+  kill old mencoder instances more often...
   auto-download imagemagick, too
   check all the many options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
-  can rip from a DVD-like folder (?)
+  can rip from a DVD-like local folder (would anybody ever need this?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
     plus I do some copy, some ac3?
 @dvd flick do you need that frequent of i-frames?
