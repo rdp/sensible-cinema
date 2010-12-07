@@ -41,6 +41,17 @@ describe MencoderWrapper do
     @out.should match(/@rem.*-o to_here.fulli.tmp.avi/)  
   end
   
+  it "should raise if the output file is held by some other process" do
+    for file in ['to_here.avi', 'to_here.1.avi']
+      open_handle = File.open(file, 'w')
+      begin
+        proc { go }.should raise_error(/Permission denied/)
+      ensure
+        open_handle.close
+      end
+    end
+  end
+  
   it "should use newline every line" do
     @out.should include("\n")
     @out.should_not match(/mencoder.*mencoder/)

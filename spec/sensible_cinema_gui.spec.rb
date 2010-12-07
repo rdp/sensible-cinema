@@ -153,6 +153,6 @@ module SensibleSwing
     it "should display unique" do
       @subject.instance_variable_get(:@display_unique).simulate_click.should == "01:00"
     end
-
+    
   end
 end

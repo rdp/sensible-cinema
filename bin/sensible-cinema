@@ -119,7 +119,7 @@ module SensibleSwing
         end
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame (edited)", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }

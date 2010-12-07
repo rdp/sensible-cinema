@@ -9,7 +9,7 @@
   
 == slightly lower than that ==
 
-  popup "you may now watch" => non blocking
+  not loop on preview view (smplayer)
   re-run latest preview -> smplayer
   license the first time they run it (gplv3)
   only pick that filename once per session...

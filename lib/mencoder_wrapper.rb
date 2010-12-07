@@ -47,17 +47,19 @@ class MencoderWrapper
       }
       out += get_section previous_end, end_here || 1_000_000, false, to_here_final_file
       partials = (1..@idx).map{|n| "#{to_here_final_file}.#{n}.avi"}
-      
-      out += "del #{to_here_final_file}\n"
+      to_here_final_file = to_here_final_file + ".avi"
+      if File.exist? to_here_final_file
+        FileUtils.rm to_here_final_file # raises on failure...which is what we want I think
+      end
       # ridiculous
-      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file}.avi -ovc copy -oac copy\n"
+      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
       # LODO the "insta play" mode, or the "faster rip" mode (related...)
       out += "@rem call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
 
-      out += "@rem del #{@big_temp}\n" # LODO      
-      out += "del " + partials.join(' ') + "\n"# LODO
-      out += "echo wrote to #{to_here_final_file}.avi"
+      out += "@rem del #{@big_temp}\n" # LODO no @rem
+      out += "@rem del " + partials.join(' ') + "\n"# LODO no @rem
+      out += "echo wrote to #{to_here_final_file}"
       out
     end
     
@@ -70,6 +72,9 @@ class MencoderWrapper
       codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO the ac3 must match the copy...hmm...
       # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
       partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
+      if File.exist? partial_filename
+        FileUtils.rm partial_filename
+      end
       "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
     end
   
