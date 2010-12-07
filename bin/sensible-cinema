@@ -150,7 +150,7 @@ EOL
 
       end
 
-      @display_unique = new_jbutton( "Calculate DVD's unique ID", true ).on_clicked {
+      @display_unique = new_jbutton( "Calculate current DVD's unique ID", true ).on_clicked {
         drive, volume, md5 = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
