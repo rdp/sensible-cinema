@@ -4,12 +4,13 @@
 
   "non realtime, non edity good" release (family only)
     Cool runnings EDL
-    popup "you may now watch": bring it to the front...
     I'm actually not using the right video codec LOL :P
-    note rifftrax when I release
+    note rifftrax on blog when I release
   
 == slightly lower than that ==
 
+  popup "you may now watch" => non blocking
+  re-run latest preview -> smplayer
   license the first time they run it (gplv3)
   only pick that filename once per session...
   note "just a linear editor"

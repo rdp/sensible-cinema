@@ -6,12 +6,12 @@ describe SensibleSwing do
 
   it "should close its modeless dialog" do
    
-   dialog = ModeLessDialog.new("Is this modeless?")
-   dialog = ModeLessDialog.new("Is this modeless?\nSecond lineLL")
-   dialog = ModeLessDialog.new("Is this modeless?\nSecond lineLL\nThird line too!")
-   dialog = ModeLessDialog.new("Can this take very long lines of input, like super long?")
+   dialog = NonBlockingDialog.new("Is this modeless?")
+   dialog = NonBlockingDialog.new("Is this modeless?\nSecond lineLL")
+   dialog = NonBlockingDialog.new("Is this modeless?\nSecond lineLL\nThird line too!")
+   dialog = NonBlockingDialog.new("Can this take very long lines of input, like super long?")
    #dialog.dispose # should get here :P
-   # let them close it :P
+   # let user close it :P
   end
   
   it "should be able to convert filenames well" do

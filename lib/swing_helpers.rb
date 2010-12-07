@@ -71,7 +71,7 @@ module SensibleSwing
     end
   end
   
-  class ModeLessDialog < JDialog
+  class NonBlockingDialog < JDialog
     def initialize title_and_display_text, close_button_text= 'Close'
       super nil
       lines = title_and_display_text.split("\n")
