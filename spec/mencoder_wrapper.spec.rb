@@ -16,8 +16,13 @@ describe MencoderWrapper do
     @out.should include("e:\\")
   end
   
-  it "should have what looks like a working mencoder rip command" do
-    @out.should match(/mencoder dvdnav.*keyint=1/)
+  it "should have what looks like a working mencoder grab command" do
+    @out.should match(/mencoder dvdnav:/)
+    @out.should match(/dvdnav.*lavcopt.*keyint=1/)
+    @out.should match(/dvdnav.*lavcopt.*mpeg2video/)
+  end
+  
+  it "should avoid subtitles" do
     @out.should match(/-sid 1000/)
   end
   

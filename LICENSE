@@ -15,13 +15,14 @@ that program, either.
 You can ask the authors of that program if it is legal.  Apparently
 libdvdcss that it uses has never been challenged in court, and uses a slightly different algorithm
 than those that have.
-Note also that fair use does allow one to "record" things (especially things that they own)
-for personal use/backup.
+Note also that fair use at times does allow one to "record" things for personal use/backup.
 Using sensible-cinema is probably not any more unethical than ripping your DVD collection to your hard
 drive so you can keep your DVD's all in one place.  It's about the same as ripping a DVD, editing
-it in Windows Movie Maker to take out the bad scenes, then watching that.
+it in Windows Movie Maker to take out the bad scenes, then watching it.
+It's about the same as using VLC Media Player to view a DVD, which also uses libdvdcss.
 Also note that if you watch an edited DVD, your are using a DVD player that conforms
 with DMCA specifications, so that might have some influence.
+
 
 In general, you are responsible for your actions and use of this program.
 It is possible that the authors of sensible-cinema are not cupable of anything

@@ -14,7 +14,10 @@ class MencoderWrapper
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         out = '@rem '
       end
-      out + "call mencoder dvdnav://#{@dvd_title_track} -sid 1000 -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
+      lavcopts = "vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3"
+      #lavcopts = "keyint=1"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -sid 1000 -oac copy  -lavcopts #{lavcopts} -ofps 30000/1001 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
     def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"

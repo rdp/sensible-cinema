@@ -1,17 +1,29 @@
-Sensible-cinema is a program that allows you to do pre-programmed edit decision lists (i.e. "mute out" 
-or "bleep out" scene lists) for DVD's.
-An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc.
+Sensible-cinema is a program that allows you to apply pre-programmed edit decision lists (i.e. "mute out" 
+or "bleep out" scene lists or skip scenes) for DVD's.
 
-To install: 
+An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc, but is currently disabled.
+
+It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
+a few freely available open source (GPL) programs [2].
+
+[1] http://en.wikipedia.org/wiki/Linear_video_editing
+[2] http://en.wikipedia.org/wiki/Edit_decision_list
+[3] http://www.gnu.org/licenses/
+
+To use it, basically install it, then run it. It will come up with some windows where you choose what to do
+(edit a list, apply a list to a DVD, etc.)
+
+== Installation ==
 
 download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
-unzip it
-"go into it" and run the file "run sensible cinema.bat" from within it.
+unzip it (right click -> Extract all)
+"click into it" and search for and start the file "run sensible cinema.bat"
+
 Note that you'll need java previously installed for it to work, but chances are you already have it.
 
-== Programming Your Own List ==
+== Creating Your Own List ==
 
-To program sensible-cinema, you create an edit decision list for it to use.
+You create an edit decision list for sensible cinema to use against whatever you want.
 
 An Edit Decision List looks something like this example:
 
@@ -32,55 +44,59 @@ Q. How do I watch these on my TV?
 A. You can burn a DVD with it.  First create it on your hard drive.  Then use
   Dvd Flick ()a good one for windows) (here's a screencast of using it within http://rogerdpack.t28.net/sensible-cinema)
   For OS X : iDVD might work well.
-  You could also drag your laptop over to your TV and hook it in that way.
-  If you're interested in being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have something in mind.
+  You could also drag your laptop over to your TV and hook it in that way.  Or buy a very long cord and plug it in as an extra monitor.
+  If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
+  something in mind that could eventually help.
 
 == Caveats ==
 
-NB that "someone" will have to create a scene descriptions list, per DVD/online movie.
-Unless it already exists, then "someone" already has, so you don't have to.  Fortunately
-only one person has to do it, once, for everybody to benefit, and the editing process is fairly easy.
-You can employ somebody to do it, or do it yourself, then submit it.
+NB that "someone" has to create a edit decision lists, per DVD.
+If one doesn't yet exist for the DVD you want edited,
+you could employ somebody to create it, or create it yourself.  Make sure to submit it
+back to us when you're done, so that everyone can benefit from it.
+Fortunately only one person has to do it, once, for everybody to benefit, and the editing process is fairly easy.
 
 == License ==
 
-See the LICENSE file for licensing, usage terms (basically gplv3 for all the source).
-(c) 2010 Roger Pack
+See the included LICENSE file for licensing, usage terms (basically gplv3 for all the source).
+Some other programs are (distributed separately and) called by this one, typically under the gplv2.
+
+All files (c) 2010 Roger Pack
 
 == Related ==
 
-The concept isn't too novel.  Some examples:
+The concept isn't too novel.  Some earlier examples:
 
 Edited "airplane edit" style movies.
-Commercial TV (ABC, NBC) show their own (edited) movies at times.
-Clean Flicks (used to) sell edited movies
+Commercial TV (ABC, NBC) show their own (edited) movies.
 http://en.wikipedia.org/wiki/Linear_video_editing
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
-Normal movies versus "directors cut unedited" movies (one is sometimes preferable)
+Normal movies versus "directors cut" versions of movies (one is at times preferable)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
+Clean Flicks (used to) sell edited movies
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
-http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile).
-http://clearplay.com a commercial editor (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
+http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile, with no complaints).
+http://clearplay.com a commercial editing player (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's.
 http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com "scene cut editor" of the zoom player
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
-The VCR and the record button, coupled with the pause+rewind button (edit out unwanted content).
-http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and scene lists)
+The VCR with its record button, coupled with the stop+rewind button.
+http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and edit decision lists, in realtime)
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
 Using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
 The scissors and old VHS tapes (Clean Flicks' origin, BTW).
 Windows Movie Maker.  Allows for users to cut and copy scenes of movies to their heart's content.
-http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player can do it with playlists
+http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's via playlists
 Corel WinDVD has "Quick Clip" settings for capturing on DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 
 == Feedback ==
 
-Feedback, including feature requests, comments, welcome.
+Feedback, including feature requests, comments, etc. welcome.
 
 http://github.com/rdp/sensible-cinema (message me or create an issue for feedback/any requests/bugs)
-rogerdpack@gmail.com
+or rogerdpack@gmail.com

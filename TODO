@@ -3,20 +3,14 @@
 == probably next up+low prio ==
 
   "non realtime, non edity good" release (family only)
-    Cool runnings EDL
-    I'm actually not using the right video codec LOL :P
-      is mencoder or ffmpeg best for this? hmm...I'm guessing mencoder for now...
-      the other mencoder command?
     note rifftrax on blog when I release
-    Harry Potter audio!
   
 == slightly lower than that ==
 
+  Harry Potter audio!
   60 fps?
   re-run latest preview -> play in smplayer
-  license the first time they run it (gplv3)
-  note "just a linear editor"
-  note "just a wrapper"
+  license required first time they run it (gplv3)
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
@@ -345,3 +339,6 @@ create a "book edit list" (word x is at position y...)
 @smplayer: your CD config is awful.
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...
+donate money to several projects I like :)
+
+@mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
