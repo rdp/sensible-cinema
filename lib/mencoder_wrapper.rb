@@ -14,7 +14,7 @@ class MencoderWrapper
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         out = '@rem '
       end
-      out + "call mencoder dvd://#{@dvd_title_track} -sid 1000 -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -sid 1000 -oac copy -lavcopts keyint=1 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
     def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
