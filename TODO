@@ -21,37 +21,33 @@
   program the temple thing with it
     note such "I first use this to edit my temple movie"
   a real'ish-er website
+  only pick that filename once per session...
+  combine filenames since we don't *need* segment anymore
+  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
+  play a bigger noise when totally done...(dvd flick has one...)
+  prompt for name...
+  note that this can corrupt your soul!
+    don't watch it if it's dark! come on!
 
-== DVD backlog (unordered, some very low prio) ==
+== DVD backlog (unordered, some very low prio, basically never do) ==
 
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
   allowing for torn discs:
     does VLC as a ripper even make sense in these cases? (as "just a ripper")?
     try baking sode tooth paste...
   split EDL's somehow into their own project/LLC...
-  add md5 "warning" when a disc fails doesn't match because of read failure...
+  add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
   note SSD or perhaps tons of RAM help with speed :)
-  only pick that filename once per session...
-  overlay audio
-  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   cool runnings:
-     make a copy me--do they now match?
      get a working copy--do they match?
-  md5sum the full rip files...
-    is it necessary?
-      yes? add button for md5sum
+     only if toothpaste fails me :)
   propaganda-ize
     alternative.to
     blogs that have ever mentioned clearplay :P
-  play a bigger noise when totally done...(dvd flick has one...)
   vnc has a good looking license :)
   unzip instructions?
-  prompt for name, auto populate with volume name
-  LLC before ever pay anyone, if I ever do
-  redo the creation mode buttons into an ordering of sorts...
-  note that this can corrupt your soul!
-    don't watch it if it's dark! come on!
+  LLC before ever pay anyone, if I do
   figure out if mplayer/smplayer as a player has a fast forward feature...
   several "play now" options...without a navigator of course :)
     visualbasic-like playlist
@@ -70,12 +66,10 @@
     one that's "rip and save first 20 minutes, start me on that, do the whole thing..."
   finalize my google doc on rippers et al.  
   non parallelize
-    can have different volume settings
     can insert other sections (same disk) mid-stream :P
       these last two have gotta be lower prio than the rest...
   whichr: return nil
   install smplayer before mencoder [?]
-  smaller .zip
   bundle 7z [?]
    remove note about it
   using, burning, creating  "howto's"
@@ -147,33 +141,28 @@ try to compile transcode in cygwin (yipes)
 legal shtuff (LICENSE)
 
 @smplayer: right click on DVD...
-
-== random non-DVD (or don't care when) backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
-
-the ac3 thing
+the ac3 thing (I have to specify it...is this necessary? is it always ac3?)
+can have different volume settings
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
 right click on DVD player, rip edited with SC?
-auto-zip it with my rake task :)
-split the two projects somehow (project + distribution)
-    two releases: experimental, developer/experimental
-    bring back the old :)    
-button for "suck in EDL's"
- split out the EDL's to a separate project (?)
-make the other stuff work again, since I no longer use YAML...
-advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
-also note that mencoder doesn't do splitting very well, for some reason.
-
-pass unit tests again jruby
-
 @mplayer and VLC "you should seek better, like the ogg vorbis fellas recommend..."
 report to jruby "when one thread dies, the GUI becomes unresponsive" (and others already previously reported to ruby-forum.com...)
   DVD's (right click on DVD player, play with SC?)
     use spiffy differentiation for DVD's on windows
+a "certified clean" list
+advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
+check for "newer version available" or not...
+
+== random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+make the other stuff work again, since I no longer use YAML...
+
+pass unit tests again jruby
+
 speed up slow unit tests
 can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
 make the overlay window uncloseable (?)
-note that youtube "can" be downloaded then a local edited copy created, from that download. (mb add downloading ability?)
-a "certified clean" list (?)
+note that youtube can be downloaded then a local edited copy created, from that download. (mb add downloading ability?)
 screencast of things helpful (use, creation...).
 tune up the levels...
 prototypes of the experimental stuff (overlay, track time while recording -> map file, specifiable levels, more?)
