@@ -6,13 +6,14 @@
     Cool runnings EDL
     I'm actually not using the right video codec LOL :P
       is mencoder or ffmpeg best for this? hmm...I'm guessing mencoder for now...
+      the other mencoder command?
     note rifftrax on blog when I release
-    Harry Potter audio is Spanish!
+    Harry Potter audio!
   
 == slightly lower than that ==
 
   60 fps?
-  re-run latest preview -> smplayer
+  re-run latest preview -> play in smplayer
   license the first time they run it (gplv3)
   note "just a linear editor"
   note "just a wrapper"
@@ -29,6 +30,7 @@
 
 == DVD backlog (unordered, some very low prio) ==
 
+  split EDL's somehow into their own project/LLC...
   add md5 "warning" when a disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
   note SSD or perhaps tons of RAM help with speed :)
@@ -54,15 +56,21 @@
     don't watch it if it's dark! come on!
   figure out if mplayer/smplayer as a player has a fast forward feature...
   several "play now" options...without a navigator of course :)
-    one for watch unedited "as grabbing" (in create mode)
     visualbasic-like playlist
+      one line at a time :P
+      provide link for cheap DVD decoder :)
     "round conservatively, write no file" playback
       mplayer batch (playlist?)
     can generate mplayer EDL's and play them...hmm...smplayer them?
       update license too...
-    "round conservatively, yes write file" (+1 you track it)
-    get half-way through, start playing back as writing edited full copy
-      (maybe not all of these tho...)
+    "round conservatively, yes write file"
+      then I guess they could play it back?
+    get half-way through (rip, start writing edited copy), then start playing back as writing edited full copy
+    one that's "play DVD to x, now play it muted, now play it to y" (playlist? batch?)
+      one for watch unedited "as grabbing" (in create mode)
+      can I do this super accurately anyway, more easily?
+    one that's "rip and save first 20 minutes, start me on that, do the whole thing..."
+  finalize my google doc on rippers et al.  
   non parallelize
     can have different volume settings
     can insert other sections (same disk) mid-stream :P
