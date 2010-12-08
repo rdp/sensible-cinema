@@ -2,13 +2,9 @@
   
 == probably next up+low prio ==
 
-  "non realtime, non edity good" release (family only)
-    note rifftrax on blog when I release
-  
 == slightly lower than that ==
 
   Harry Potter audio!
-  60 fps?
   re-run latest preview -> play in smplayer
   license required first time they run it (gplv3)
   partner for filters (Jon, Karlie if interested...give beta)
@@ -17,13 +13,15 @@
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
-  checkbox for other licenses or something?
+  checkbox for all other licenses or something?
   compare computer DVD playback with physical player...
   program the temple thing with it
     note such "I first use this to edit my temple movie"
 
 == DVD backlog (unordered, some very low prio) ==
 
+  60 fps?
+  ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
   allowing for torn discs:
     does VLC as a ripper even make sense in these cases? (as "just a ripper")?
     try baking sode tooth paste...
