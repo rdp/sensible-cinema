@@ -14,8 +14,11 @@
 "blank_outs" => [
   "58:40", "58:41", # bad arsenic, but I dislike lip reading.
   "59:08", "59:09", # "
-  "1:16:57.0" , "1:16:57.5", "bad a.." # verified
+  "1:16:57.0" , "1:16:57.5", "bad a..", # verified
   # 15:22 irv beats his radio with pool cue should go...
+  "15:20", "15:30",
+  "59:15", "59:59",
+  "1:01:35", "1:01:45"
 ],
 
 "disk_unique_id" => "5a0a43f52e5d5e705fdfaa831b38409b",
