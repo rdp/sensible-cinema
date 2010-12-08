@@ -6,10 +6,11 @@
     Cool runnings EDL
     I'm actually not using the right video codec LOL :P
     note rifftrax on blog when I release
+    Harry Potter audio is Spanish!
   
 == slightly lower than that ==
 
-  Harry Potter audio is Spanish!
+  60 fps?
   re-run latest preview -> smplayer
   license the first time they run it (gplv3)
   note "just a linear editor"
@@ -24,10 +25,10 @@
   compare computer DVD playback with physical player...
   program the temple thing with it
     note such "I first use this to edit my temple movie"
-    
 
 == DVD backlog (unordered, some very low prio) ==
 
+  add md5 "warning" when a disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
   note SSD or perhaps tons of RAM help with speed :)
   only pick that filename once per session...
