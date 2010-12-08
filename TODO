@@ -3,8 +3,6 @@
 == probably next up+low prio ==
 
  "realtime" release:
-    Andrew's e-mail
-    prompt for disc name only...
     Harry Potter audio!
     mplayer EDL...
     try baking soda tooth paste
@@ -32,6 +30,7 @@
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  create a ML?
   only pick that filename once per session...
   combine filenames since we don't *need* _segment anymore
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
@@ -74,6 +73,7 @@
   whichr: return nil
   install smplayer before mencoder [?]
   bundle 7z [?]
+   if license agreement allows
    remove note about it
   using, burning, creating  "howto's"
    better

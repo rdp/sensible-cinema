@@ -127,6 +127,9 @@ module SensibleSwing
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit Decision List for current DVD", true)
       @create_new_edl_for_current_dvd.on_clicked do
         drive, volume, md5 = choose_dvd_drive
+        name = get_user_input("Enter DVD name for #{volume}")
+
+        get_user_input
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
@@ -141,9 +144,9 @@ module SensibleSwing
 "disk_unique_id" => "#{md5}",
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.  And delete this overly verbose comment either way :)
 #"not edited out stuff" => "fighting (punching) in a bar at 1:00:30 'ish could use some editing love"
-#"title" => ""
+"name" => "#{name}"
 EOL
-        filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
+        filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
         File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
         open_file_to_edit_it filename

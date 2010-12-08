@@ -135,8 +135,9 @@ module SensibleSwing
     end
     
     it "should create a new file for ya" do
-      out = MainWindow::EDL_DIR + "/volume.txt"
+      out = MainWindow::EDL_DIR + "/sweetest_disc_ever.txt"
       File.exist?( out ).should be_false
+      @subject.stub!(:get_user_input) {'sweetest disc ever'}
       @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click
       begin
         File.exist?( out ).should be_true
