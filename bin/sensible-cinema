@@ -141,7 +141,7 @@ module SensibleSwing
 "disk_unique_id" => "#{md5}",
 "dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.  And delete this overly verbose comment either way :)
 #"not edited out stuff" => "fighting (punching) in a bar at 1:00:30 'ish could use some editing love"
-
+#"title" => ""
 EOL
         filename = EDL_DIR + "\\" + volume.gsub(' ', '_') + '.txt'
         filename.downcase!
@@ -324,8 +324,8 @@ EOL
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
-      popup = NonBlockingDialog.new(          "Copying to #{save_to}.\n" +
-      "Running #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
+      popup = NonBlockingDialog.new("Copying to #{save_to}.\n" +
+      "Applying EDL #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
       "NB that the created file will be playable only with smplayer or VLC player.",
