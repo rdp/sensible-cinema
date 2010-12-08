@@ -30,6 +30,8 @@
 
 == DVD backlog (unordered, some very low prio) ==
 
+  allowing for torn discs:
+    does VLC as a ripper even make sense in these cases? (as "just a ripper")?
   split EDL's somehow into their own project/LLC...
   add md5 "warning" when a disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
