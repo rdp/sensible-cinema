@@ -58,6 +58,7 @@ http://en.wikipedia.org/wiki/Linear_video_editing
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
 Normal movies versus "directors cut unedited" movies (one is sometimes preferable)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
+http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile).
 http://clearplay.com a commercial editor (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's (uses its own DVD-player in its current incantation).
 http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
@@ -75,6 +76,7 @@ Windows Movie Maker.  Allows for users to cut and copy scenes of movies to their
 http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player can do it with playlists
 Corel WinDVD has "Quick Clip" settings for capturing on DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
+http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 
 == Feedback ==
 
