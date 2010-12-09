@@ -4,20 +4,20 @@ or "bleep out" scene lists or skip scenes) for DVD's.
 An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc, but is currently disabled.
 
 It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source (GPL) programs [2].
+a few freely available open source (GPL) programs [2] (VLC Media Player, mplayer/mencoder, ffmpeg).
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] http://www.gnu.org/licenses/
 
-To use it, basically install it, then run it. It will come up with some windows where you choose what to do
-(edit a list, apply a list to a DVD, etc.)
+To use it, basically install it, then run it. It will come up with some windows where you choose what you want to do
+(edit a list, apply an edit decision list to a DVD, etc.)
 
 == Installation ==
 
 download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
 unzip it (right click -> Extract all)
-"click into it" and search for and start the file "run sensible cinema.bat"
+"click into it" and search for then run the file "run sensible cinema.bat"
 
 Note that you'll need java previously installed for it to work, but chances are you already have it.
 
