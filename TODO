@@ -5,10 +5,12 @@
  "realtime" release:
     Harry Potter audio!
     mplayer EDL...
-    try baking soda tooth paste
+      test...
+    note baking soda tooth paste
+    
     license required first time they run it (gplv3)
     compare computer DVD playback with physical player...
-    re-run latest preview -> play in smplayer
+    re-run latest preview -> auto play in smplayer
     "it's license is at -> open window, note [in other window]"
   
 == slightly lower than that ==
@@ -32,7 +34,6 @@
 
   create a ML?
   only pick that filename once per session...
-  combine filenames since we don't *need* _segment anymore
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
   allowing for torn discs:
     does VLC as a ripper even make sense in these cases? (as "just a ripper")?

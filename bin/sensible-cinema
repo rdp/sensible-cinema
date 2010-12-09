@@ -292,7 +292,6 @@ EOL
       fc.set_title "Pick where to save #{dvd_title} edited to"
 
       save_to_file_name = dvd_title + ' edited copy'
-      save_to_file_name += ' single segment' if should_prompt_for_start_and_end_times || want_full_list
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
