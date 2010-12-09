@@ -4,20 +4,20 @@ or "bleep out" scene lists or skip scenes) for DVD's.
 An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc, but is currently disabled.
 
 It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source (GPL) programs [2].
+a few freely available open source (GPL) programs [2] (VLC Media Player, mplayer/mencoder, ffmpeg).
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] http://www.gnu.org/licenses/
 
-To use it, basically install it, then run it. It will come up with some windows where you choose what to do
-(edit a list, apply a list to a DVD, etc.)
+To use it, basically install it, then run it. It will come up with some windows where you choose what you want to do
+(edit a list, apply an edit decision list to a DVD, etc.)
 
 == Installation ==
 
 download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
 unzip it (right click -> Extract all)
-"click into it" and search for and start the file "run sensible cinema.bat"
+"click into it" and search for then run the file "run sensible cinema.bat"
 
 Note that you'll need java previously installed for it to work, but chances are you already have it.
 
@@ -40,13 +40,14 @@ Once you're done then you can contribute your scene descriptions file if desired
 
 == FAQ ==
 
-Q. How do I watch these on my TV?
-A. You can burn a DVD with it.  First create it on your hard drive.  Then use
-  Dvd Flick ()a good one for windows) (here's a screencast of using it within http://rogerdpack.t28.net/sensible-cinema)
+Q. How do I watch these on my TV, not just on my computer?
+A. You could burn a new DVD with it.  First create it on your hard drive.  Then use some burning utility.
+  Dvd Flick is a good one for windows.  Heere's a screencast of using it: http://rogerdpack.t28.net/sensible-cinema
   For OS X : iDVD might work well.
-  You could also drag your laptop over to your TV and hook it in that way.  Or buy a very long cord and plug it in as an extra monitor.
+  You might be able to move your laptop over to near your TV and hook it in from there.  
+  Or buy a very long cord and plug it in as an extra monitor from your desktop.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
-  something in mind that could eventually help.
+  something in mind that could help, though hasn't been created yet.
 
 == Caveats ==
 
