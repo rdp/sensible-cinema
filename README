@@ -1,27 +1,25 @@
 Sensible-cinema is a program that allows you to apply pre-programmed edit decision lists (i.e. "mute out" 
 or "bleep out" scene lists or skip scenes) for DVD's.
 
-An experimental player also works on arbitrary media players like netflix online, vlc, hulu, etc, but is currently disabled.
-
 It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source (GPL) programs [2].
+a few freely available open source (GPL) programs [2] (VLC Media Player, mplayer/mencoder, ffmpeg).
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] http://www.gnu.org/licenses/
 
-To use it, basically install it, then run it. It will come up with some windows where you choose what to do
-(edit a list, apply a list to a DVD, etc.)
+To use it, basically install it, then run it. It will come up with some windows where you choose what you want to do
+(edit a list, apply an edit decision list to a DVD, etc.)
 
 == Installation ==
 
 download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
 unzip it (right click -> Extract all)
-"click into it" and search for and start the file "run sensible cinema.bat"
+"click into it" and search for then run the file "run sensible cinema.bat"
 
 Note that you'll need java previously installed for it to work, but chances are you already have it.
 
-== Creating Your Own List ==
+== Creating Your Own Edit Lists, or modifying the existing ones ==
 
 You create an edit decision list for sensible cinema to use against whatever you want.
 
@@ -40,13 +38,14 @@ Once you're done then you can contribute your scene descriptions file if desired
 
 == FAQ ==
 
-Q. How do I watch these on my TV?
-A. You can burn a DVD with it.  First create it on your hard drive.  Then use
-  Dvd Flick ()a good one for windows) (here's a screencast of using it within http://rogerdpack.t28.net/sensible-cinema)
+Q. How do I watch these on my TV, not just on my computer?
+A. You could burn a new DVD with it.  First create it on your hard drive.  Then use some burning utility.
+  Dvd Flick is a good one for windows.  Heere's a screencast of using it: http://rogerdpack.t28.net/sensible-cinema
   For OS X : iDVD might work well.
-  You could also drag your laptop over to your TV and hook it in that way.  Or buy a very long cord and plug it in as an extra monitor.
+  You might be able to move your laptop over to near your TV and hook it in from there.  
+  Or buy a very long cord and plug it in as an extra monitor from your desktop.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
-  something in mind that could eventually help.
+  something in mind that could help, though hasn't been created yet.
 
 == Caveats ==
 
@@ -56,10 +55,60 @@ you could employ somebody to create it, or create it yourself.  Make sure to sub
 back to us when you're done, so that everyone can benefit from it.
 Fortunately only one person has to do it, once, for everybody to benefit, and the editing process is fairly easy.
 
+== Motivation ==
+
+The initial motivation for the project was that I dislike profanity in movies.
+It's jarring, if you're not used to it in real life.
+Also sometimes certain scenes in movies offend, and don't contribute to the overall plot,
+and I'd rather not watch a movie that has them.
+Clearplay (a realtime filtering DVD player)
+(for me) didn't cut it.  It costs (I'm too cheap to pay--and many
+many other people don't/can't use it...).  Their
+filters sometimes don't cut out all unwanted content (ex: Saints and
+Soldiers left profanity in its filtered version...which wasn't what I had
+anticipated.  Others have noted that sometimes the edit timings
+are off so that it will mute out sections just previous to the profanity, while
+leaving the profanity in, etc.).  Also clearplay apparently runs a rather 
+confusing subscription policy, as well [1].
+Also sometimes clearplay "mutes out" profanity but you can easily still lip read it,
+so it's almost as if you were exposed to it anyway.  Not ideal.
+There is no little community collaboration/review.
+They don't even have a "request a filter" option anymore.
+They don't have filters for movies that I want edited (Condorman and Tron
+lacked last time I checked...probably because they are too
+obscure.) Also I watch movies only on computer, and they no
+longer have a computer player.  They also don't edit streamed
+online movies either (last time I checked, anyway).  So overall I
+wanted to build my own that overcame some of these hurdles and was
+also more accessible/open.
+
+I also wanted to get a prototype out there of some ideas so that
+people can't patent them and pretend that they were inventors :)
+
+So the project started off as a prototype that could "watch hulu (online) movies
+edited" (it uses screen tracking and OCR's the on-screen
+timestamp, monitors it for specific times, and reacts appropriately).
+However, I do not currently release that version to the public for patent
+reasons (clearplay has a patent on realtime tracking,
+which is similar).  I have released older versions that do, but not
+anymore.
+Then I realized I could basically have the same effect by using
+pre-processing and Edit Decision Lists (basically by using playlists with
+VLC, to play from second x to y, then from x to mu, etc.).
+I just pass in a playlist, it does all the work for me.
+There are a few released versions that do this exactly.
+Then it occurred to me that you could grab the several clean segments
+off a DVD, and piece them together to create an edited copy.  This avoids 
+realtime tracking.  Which is where we are now.
+
+See also the LICENSE file.
+
+[1] http://www.amazon.com/review/R27VK5BR9NDHBD/ref=cm_cr_pr_viewpnt#R27VK5BR9NDHBD
+
 == License ==
 
-See the included LICENSE file for licensing, usage terms (basically gplv3 for all the source).
-Some other programs are (distributed separately and) called by this one, typically under the gplv2.
+See the included LICENSE file for licensing and usage terms (basically it's under gplv3 for all the source).
+Some other programs are (distributed separately and) used by this one, typically they are under the gplv2 license.
 
 All files (c) 2010 Roger Pack
 
@@ -71,7 +120,7 @@ Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited) movies.
 http://en.wikipedia.org/wiki/Linear_video_editing
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
-Normal movies versus "directors cut" versions of movies (one is at times preferable)
+Normal movies versus "directors cut" versions of movies (one is at times preferable, profanity wise)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 Clean Flicks (used to) sell edited movies
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
@@ -87,10 +136,10 @@ http://code.google.com/p/movie-content-editor (written in Python, controls VLC b
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
 Using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
-The scissors and old VHS tapes (Clean Flicks' origin, BTW).
+The scissors and old VHS tapes (Clean Flicks' origin, if I remember correctly).
 Windows Movie Maker.  Allows for users to cut and copy scenes of movies to their heart's content.
 http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's via playlists
-Corel WinDVD has "Quick Clip" settings for capturing on DVD.
+Corel WinDVD has "Quick Clip" settings for capturing from DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 
@@ -100,3 +149,5 @@ Feedback, including feature requests, comments, etc. welcome.
 
 http://github.com/rdp/sensible-cinema (message me or create an issue for feedback/any requests/bugs)
 or rogerdpack@gmail.com
+If you're a developer and want to help out with programmming it, please do!
+Also ping me if you want a mailing list created or what not.

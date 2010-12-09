@@ -2,25 +2,29 @@
   
 == probably next up+low prio ==
 
- "realtime" release:
-    Harry Potter audio!
-    mplayer EDL...
-    try baking soda tooth paste
-    license required first time they run it (gplv3)
+ "licensing" release:
+    mpeg is broken!
+    note baking soda tooth paste
+    
+    license required first time they run it (gplv3 etc.)
     compare computer DVD playback with physical player...
-    re-run latest preview -> play in smplayer
+    re-run latest preview -> auto play in smplayer
     "it's license is at -> open window, note [in other window]"
+    delete test file
+    yes delete temp's when done...
+    program the temple thing with it
+      note such "I first use this to edit my temple movie"
   
 == slightly lower than that ==
 
+  mplayer EDL...
+      test...
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
   checkbox for all other licenses or something?
-  program the temple thing with it
-    note such "I first use this to edit my temple movie"
   a real'ish-er website
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   play a bigger noise when totally done...(dvd flick has one...)
@@ -30,9 +34,10 @@
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  advertise in christian places
+  .exe installer, just unzip, run the .bat file for them :)
   create a ML?
   only pick that filename once per session...
-  combine filenames since we don't *need* _segment anymore
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
   allowing for torn discs:
     does VLC as a ripper even make sense in these cases? (as "just a ripper")?

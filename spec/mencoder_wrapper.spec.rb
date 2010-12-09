@@ -19,11 +19,15 @@ describe MencoderWrapper do
   it "should have what looks like a working mencoder grab command" do
     @out.should match(/mencoder dvdnav:/)
     @out.should match(/dvdnav.*lavcopt.*keyint=1/)
-    @out.should match(/dvdnav.*lavcopt.*mpeg2video/)
+    #@out.should match(/dvdnav.*lavcopt.*mpeg2video/)
   end
   
   it "should avoid subtitles" do
     @out.should match(/-sid 1000/)
+  end
+  
+  it "should default to english" do
+    @out.should match(/-alang en/)
   end
   
   it "should create a .done file after ripping" do
