@@ -34,9 +34,9 @@
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
-  advertise in christian places
-  .exe installer, just unzip, run the .bat file for them :)
-  create a ML?
+  mencoder harddup useful?
+  .exe installer, just unzips, runs the .bat file for them [?] :)
+  create a ML on demand
   only pick that filename once per session...
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
   allowing for torn discs:
@@ -46,10 +46,8 @@
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
   note SSD or perhaps tons of RAM help with speed :)
-  cool runnings:
-     get a working copy--do they match?
-     only if toothpaste fails me :)
   propaganda-ize
+    advertise in christian places
     alternative.to
     blogs that have ever mentioned clearplay :P
   vnc has a good looking license :)
