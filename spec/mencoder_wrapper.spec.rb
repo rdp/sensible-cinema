@@ -139,14 +139,14 @@ describe MencoderWrapper do
   
   it "should lop off a fraction of a second per segment, as per wiki instructions" do
     setup
-    @out.should match(/-t 0.999/)
+    @out.should match(/0.999/)
   end
   
   it "should not have doubled .avi.avi's" do
     setup  
-    # lodo cleanup this ugliness
-    @out.scan(/-i.*-t.*to_here.avi.1.avi/).length.should == 1
-    @out.scan(/-i.*-t.*to_here.avi.2.avi/).length.should == 1
+    # lodo cleanup this ugliness [.avi.1.avi]...
+    @out.scan(/(ffmpeg|mencoder).*to_here.avi.1.avi/).length.should == 1
+    @out.scan(/(ffmpeg|mencoder).*to_here.avi.2.avi/).length.should == 1
   end
   
   context 'pinpointing sections' do
@@ -164,8 +164,8 @@ describe MencoderWrapper do
      @out.should include("14.0")
      @out.should_not include("99999")
      @out.should include(" 0 ") # no start at 0 even
-     @out.should include("-ss 14.0 -t 0.999")
-     @out.should include("-ss 15.0 -t 4.999")
+     @out.should match(/-ss 14.0.*0.999/)
+     @out.should match(/-ss 15.0.*4.999/)
   end
   
   it "should allow you to play something even if there's no edit list, just for examination sake" do
