@@ -3,24 +3,28 @@
 == probably next up+low prio ==
 
  "licensing" release:
-    mpeg is broken!
     note baking soda tooth paste in error message
     license required first time they run it (gplv3 etc.)
-    compare computer DVD playback with physical player...
+    compare computer DVD timings with physical player...
     re-run latest preview -> auto play in smplayer
-    "it's license is at -> open window, note [in other window]"
+    "it's license is the same as mplayer, and is at -> open window, note [in other window]"
     delete test file
     yes delete temp's when done now...
     program the temple thing with it
       note such "I first use this to edit my temple movie"
-    smplayer first...
+    install smplayer first...
 
-By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
+    By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
+    LICENSE
+    
+    next release:
+      mplayer EDL...
+        test...
 
 == slightly lower than that ==
 
-  mplayer EDL...
-      test...
+  mpeg is broken?
+    check it against cool runnings...
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
@@ -29,13 +33,17 @@ By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Googl
   checkbox for all other licenses or something?
   a real'ish-er website
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
-  play a bigger noise when totally done...(dvd flick has one...)
+  play a bigger noise when totally done...(dvd flick'ish...)
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
-  during "initial rip" can watch it (unedited) while it's still ripping (mplayer)
+  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  can I rip it raw (mencoder -> mpg), then use -hr-edl-seek to split?
+  can I not use mencoder at all?
+    assuming cool runnings really was normal...
+  wiki ("next to" my own EDL's?)
   mencoder harddup useful?
   .exe installer, just unzips, runs the .bat file for them [?] :)
   create a ML on demand
