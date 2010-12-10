@@ -31,5 +31,6 @@ Also if you want sensible-cinema to be able to auto-choose your EDL, then includ
 
 A few pointers:
  You can just watch the DVD (using any DVD player), and get timestamps that way, before starting this.
+ A good one is "smplayer" (the [ and ] keys control playback speed)
  You can watch the DVD using VLC Player, which has a "fast forward" button, just recognize that VLC's timestamps are slightly off,
   so they'll only be approximate, but it might still help.
