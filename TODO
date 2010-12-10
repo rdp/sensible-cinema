@@ -13,6 +13,7 @@
     yes delete temp's when done now...
     program the temple thing with it
       note such "I first use this to edit my temple movie"
+    smplayer first...
 
 By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
 
@@ -137,6 +138,8 @@ make the progress bar map "better" to the actual time that each section should t
 Note to people: make several EDL's per movie.
 Note to people: clean your disks!
 
+@mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
+
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
   can lop off sections to save space (?)
@@ -163,6 +166,7 @@ buy blu-ray decrypter, try it out.
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+fade in/fade out volume, video
 make the other stuff work again, since I no longer use YAML...
 
 pass unit tests again jruby
