@@ -7,7 +7,7 @@
 "blank_outs" => [
   "1:01:00.0" , "1:02:00.0", "violent scene of some sort",
 ],
-"audio_codec" => "pcm",
+"audio_codec" => "lavc",
 
 "disk_unique_id" => "a2e3ece630251e4a785218ce71a20ce1",
 "dvd_title_track" => "1", # most DVD's use title 1. See http://betterlogic.com/roger/2010/11/how-to-use-vlc-to-tell-how-many-titles-and-chapters-and-which-is-the-main/
