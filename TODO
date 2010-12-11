@@ -29,6 +29,18 @@
 
 == slightly lower than that, somewhat ordered ==
 
+calculating disk's unique id...
+F:\, Roger's Wedding, a2e3ece630251e4a785218ce71a20ce1
+got fatal exception
+D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:12: syntax error, unexpected tSTRING_BEG
+
+"disk_unique_id" => "a2e3ece630251e4a785218ce71a20ce1",
+^
+D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:1:in `parse_string'
+
+
+
+
   umm...shouldn't using be pretty straight forward tho?
   only pick a drive once per session
   during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
