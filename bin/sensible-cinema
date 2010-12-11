@@ -294,7 +294,9 @@ EOL
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
-      File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w").close
+      a =File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
+      a.close
+      File.delete a.path
       dvd_title_track = descriptors["dvd_title_track"]
       # how does save_to map to fulli?
       fulli = save_to + ".fulli.tmp.avi"

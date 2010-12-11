@@ -8,10 +8,9 @@
     compare computer DVD timings with physical player...
     re-run latest preview -> auto play in smplayer
     "it's license is the same as mplayer, and is at -> open window, note [in other window]"
-    delete test file
     program the temple thing with it
       note such "I first use this to edit my temple movie"
-    install smplayer first...
+    install smplayer first before mencoder...
 
     By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
     LICENSE
@@ -22,7 +21,7 @@
 
 == slightly lower than that ==
 
-  pick -oac copy versus -oac pcm...
+  once pick -oac copy versus -oac pcm...
   only pick a drive once per session
   mpeg is lossy (at least my current one pass one is)
     could check if DVD Flick handles *oversize* files well, for information sake 
@@ -41,25 +40,20 @@
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
   during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
+  only pick output filename once per session...
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
-  can I rip it raw (mencoder -> mpg), then use -hr-edl-seek to split?
   can I not use mencoder at all?
     assuming cool runnings really was normal...
-  wiki ("next to" my own EDL's?)
+  wiki ("next to" distributed EDL's?)
   mencoder harddup useful?
   .exe installer, just unzips, runs the .bat file for them [?] :)
-  create a ML on demand
-  only pick that filename once per session...
+  create a forum
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
-  allowing for torn discs:
-    does VLC as a ripper even make sense in these cases? (as "just a ripper")?
-    try baking sode tooth paste...
   split EDL's somehow into their own project/LLC...
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
-  note SSD or perhaps tons of RAM help with speed :)
   propaganda-ize
     advertise in christian places
     alternative.to

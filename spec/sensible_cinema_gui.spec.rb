@@ -18,16 +18,19 @@ module SensibleSwing
 
     it "should prompt if two EDL's match a DVD title" do
       old_edl = MainWindow::EDL_DIR
-      MainWindow.const_set(:EDL_DIR, 'temp')
-      FileUtils.rm_rf 'temp'
-      Dir.mkdir 'temp'
-      MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
-      Dir.chdir 'temp' do
-        File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-      end
-      MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
+      begin
+        MainWindow.const_set(:EDL_DIR, 'temp')
+        FileUtils.rm_rf 'temp'
+        Dir.mkdir 'temp'
+        MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
+        Dir.chdir 'temp' do
+          File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+          File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        end
+        MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
+      ensure
       MainWindow.const_set(:EDL_DIR, old_edl)
+      end
     end
 
     it "should modify path to have mencder available, and ffmpeg, and download them on the fly" do
@@ -71,6 +74,7 @@ module SensibleSwing
     
     it "should be able to do a normal copy to hard drive, edited" do
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli.tmp.avi"]
+      File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
     
     it "should call through to explorer for the full thing" do
