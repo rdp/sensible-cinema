@@ -140,10 +140,12 @@ module SensibleSwing
   "1:01:00.0" , "1:02:00.0", "violent scene of some sort",
 ],
 
-"disk_unique_id" => "#{md5}",
-"dvd_title_track" => "1", # most DVD's use title 1. See http://betterlogic.com/roger/2010/11/how-to-use-vlc-to-tell-how-many-titles-and-chapters-and-which-is-the-main/
-"not edited out stuff" => "",
 "name" => "#{name}"
+"disk_unique_id" => "#{md5}",
+
+# "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it doesn't record the right length track, see http://betterlogic.com/roger/2010/11/how-to-use-vlc-to-tell-how-many-titles-and-chapters-and-which-is-the-main/
+# "not edited out stuff" => "",
+
 EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
@@ -290,7 +292,7 @@ EOL
 
       fc.set_title "Pick where to save #{dvd_title} edited to"
 
-      save_to_file_name = dvd_title + ' edited copy'
+      save_to_file_name = dvd_title + ' edited version'
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
@@ -331,7 +333,7 @@ EOL
       "Applying EDL #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
-      "NB that the created file will be playable only with smplayer or VLC player.",
+      "NB that the created file will be playable only with smplayer or VLC.",
       "OK")
 
       # allow our popups to still be serviced while it is running
