@@ -17,14 +17,21 @@
       MIT?    
     once pick -oac copy versus -oac pcm...
       test
+  vnc has a good looking license :)
+  install smplayer before mencoder [?]
+  bundle 7z [?]
+   if license agreement allows
+   remove note about it
       
     next release:
       mplayer EDL...
         test...
 
-== slightly lower than that ==
+== slightly lower than that, somewhat ordered ==
 
+  umm...shouldn't using be pretty straight forward tho?
   only pick a drive once per session
+  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
   mpeg is lossy (at least my current one pass one is)
     could check if DVD Flick handles *oversize* files well, for information sake 
     check it against cool runnings...
@@ -41,7 +48,6 @@
   play a bigger noise when totally done...(dvd flick'ish...)
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
-  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
   only pick output filename once per session...
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
@@ -58,10 +64,8 @@
     advertise in christian places
     alternative.to
     blogs that have ever mentioned clearplay :P
-  vnc has a good looking license :)
-  unzip instructions?
-  LLC before ever pay anyone, if I do
-  figure out if mplayer/smplayer as a player has a fast forward feature...
+  LLC before ever pay anyone, if I ever do
+  note the mplayer/smplayer as a player fast forward feature...
   several "play now" options...without a navigator of course :)
     visualbasic-like playlist
       one line at a time :P
@@ -78,18 +82,7 @@
       can I do this super accurately anyway, more easily?
     one that's "rip and save first 20 minutes, start me on that, do the whole thing..."
   finalize my google doc on rippers et al.  
-  non parallelize
-    can insert other sections (same disk) mid-stream :P
-      these last two have gotta be lower prio than the rest...
   whichr: return nil
-  install smplayer before mencoder [?]
-  bundle 7z [?]
-   if license agreement allows
-   remove note about it
-  using, burning, creating  "howto's"
-   better
-    usability test them?
-    umm...shouldn't using be pretty straight forward tho?
     
  using+burning screencast
  editing screencast
@@ -113,8 +106,9 @@
   can rip from a DVD-like local folder (would anybody ever need this?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
     plus I do some copy, some ac3?
-@dvd flick do you need that frequent of i-frames?
+  @dvd flick do you need that frequent of i-frames?
   rename bat as template.bat
+  add a developer readme
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
