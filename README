@@ -1,5 +1,5 @@
-Sensible-cinema is a program that allows you to apply pre-programmed edit decision lists (i.e. "mute out" 
-or "bleep out" scene lists or skip scenes) for DVD's.
+Sensible-cinema (also known as "paranoid cinema" [inside joke] ) is a program that allows you to apply 
+programmed edit decision lists (i.e. "mute out" or "bleep out" scene lists or skip scenes) to DVD's.
 
 It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
 a few freely available open source (GPL) programs [2] (VLC Media Player, mplayer/mencoder, ffmpeg).

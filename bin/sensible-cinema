@@ -129,8 +129,7 @@ module SensibleSwing
         drive, volume, md5 = choose_dvd_drive
         name = get_user_input("Enter DVD name for #{volume}")
 
-        get_user_input
-      input = <<-EOL
+        input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
@@ -142,8 +141,8 @@ module SensibleSwing
 ],
 
 "disk_unique_id" => "#{md5}",
-"dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.  And delete this overly verbose comment either way :)
-#"not edited out stuff" => "fighting (punching) in a bar at 1:00:30 'ish could use some editing love"
+"dvd_title_track" => "1", # most DVD's use title 1. See http://betterlogic.com/roger/2010/11/how-to-use-vlc-to-tell-how-many-titles-and-chapters-and-which-is-the-main/
+"not edited out stuff" => "",
 "name" => "#{name}"
 EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
@@ -254,7 +253,7 @@ EOL
       JOptionPane.showMessageDialog(nil, message, title, style)
     end
     
-    def get_user_input(message, default)
+    def get_user_input(message, default = '')
      start_time = JOptionPane.showInputDialog(message, default)
     end
 
