@@ -9,19 +9,20 @@ class MencoderWrapper
 
   class << self
   
-    def get_header this_drive
+    def get_header this_drive, these_settings
       out = ''
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         out = '@rem '
       end
       # video_opts = "-ovc lavc -lavcopts keyint=1" # seems reasonable quality somehow...
       # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
+      audio_codec = these_settings['audio_codec'] || 'copy'
       video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out + "call mencoder dvdnav://#{@dvd_title_track} -alang en -nocache -sid 1000 -oac copy #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
-    def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
-      combined = VLCProgrammer.convert_incoming_to_split_sectors these_mutes
+    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
+      combined = VLCProgrammer.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       if start_here || end_here
         raise 'need both' unless end_here && start_here
@@ -34,7 +35,7 @@ class MencoderWrapper
         previous_end = 0
       end
       @big_temp = to_here_final_file + ".fulli.tmp.avi"
-      out = get_header this_drive
+      out = get_header this_drive, these_settings
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end

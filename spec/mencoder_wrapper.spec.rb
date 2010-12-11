@@ -123,8 +123,14 @@ describe MencoderWrapper do
     File.exist?('to_here.3.avi').should be false
   end
   
-  it "should echo that it is done, with the right filename" do
+  it "should echo that it is done, and with the right filename" do
     @out.should include("echo wrote to to_here.avi")
+  end
+  
+  it "should accept audio_code" do
+    settings = {"audio_codec"=>"pcm"}
+    out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
+    out.should include("-oac pcm")
   end
   
   def setup
