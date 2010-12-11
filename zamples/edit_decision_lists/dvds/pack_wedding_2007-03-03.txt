@@ -1,0 +1,23 @@
+# comments can go after a # on any line, for example this one.
+
+"mutes" => [
+  "0:00:01.0", "0:00:02.0", "da..",
+],
+
+"blank_outs" => [
+  "1:01:00.0" , "1:02:00.0", "violent scene of some sort",
+],
+
+"disk_unique_id" => "a2e3ece630251e4a785218ce71a20ce1",
+"dvd_title_track" => "1", # most DVD's use title 1. See http://betterlogic.com/roger/2010/11/how-to-use-vlc-to-tell-how-many-titles-and-chapters-and-which-is-the-main/
+"not edited out stuff" => "",
+"name" => "Pack Wedding 2007-03-03"
+
+#1:03- 1:08 - 1:16
+#12:13 kissing
+
+#28:00 presents???
+
+#34:00 "thank g.."
+
+#got to 38:00

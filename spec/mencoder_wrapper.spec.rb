@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + "/common"
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/edl_parser'
 
+# mpeg fulli one pass doesn't look "awful"
+# mp4 fulli default looks way granular
+# so could either attempt to re-encode at high cpu, possibly still lossy
+# or do the frame accurate splitter. Prefer the latter.
+
 describe MencoderWrapper do
 
   before do
