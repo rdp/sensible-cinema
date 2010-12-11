@@ -330,7 +330,7 @@ EOL
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
       popup = NonBlockingDialog.new("Copying to #{save_to}.\n" +
-      "Applying EDL #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
+      "Applying EDL #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
       "NB that the created file will be playable only with smplayer or VLC.",

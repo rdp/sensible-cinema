@@ -18,7 +18,7 @@ class MencoderWrapper
       # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
       audio_codec = these_settings['audio_codec'] || 'copy'
       video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out + "call mencoder dvdnav://#{@dvd_title_track} -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
     def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
@@ -34,7 +34,7 @@ class MencoderWrapper
       else
         previous_end = 0
       end
-      @big_temp = to_here_final_file + ".fulli.tmp.avi"
+      @big_temp = to_here_final_file + ".fulli.tmp.mpg"
       out = get_header this_drive, these_settings
       @idx = 0
       combined.each {|start, endy, type|
