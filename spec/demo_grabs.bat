@@ -1,17 +1,15 @@
-call mencoder dvdnav://1 -alang en -nocache -sid 1000 -oac copy -ovc lavc keyint=1 -ovc lavc -o to_here.avi.fulli.tmp.avi -dvd-device e:\ && echo got_file > to_here.avi.fulli.tmp.avi.done
-
 @rem raw
 
-call mencoder dvdnav://1 -endpos 180 -nocache -sid 1000 -of mpeg  -oac copy -ovc copy -o raw.mpg
+call mencoder dvdnav://1 -endpos 180 -nocache -sid 1000 -of mpeg  -oac copy -ovc copy -o raw.mpg -dvd-device d:\
 
 @rem mp4 i's'
 
-call mencoder dvdnav://1 -endpos 180 -alang en -nocache -sid 1000 -oac copy -ovc lavc -lavcopts keyint=1 -ovc lavc -o mp4.avi -dvd-device d:\ 
+call mencoder dvdnav://1 -endpos 180 -alang en -nocache -sid 1000 -oac copy -ovc lavc -lavcopts keyint=1 -ovc lavc -o mp4.avi -dvd-device f:\ 
 
 
 @rem mpeg2 i's'
 
-call mencoder dvdnav://1 -endpos 180 -alang en -nocache -sid 1000 -oac copy -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3 -ofps 30000/1001 -ovc lavc -o mpegfulli.avi -dvd-device d:\ 
+call mencoder dvdnav://1 -endpos 180 -alang en -nocache -sid 1000 -oac copy -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3 -ofps 30000/1001 -ovc lavc -o mpegfulli.avi -dvd-device f:\ 
 
 @rem unfortunately it re-encodes it with our [lackluster] mpeg2 encoding...I think...
 
