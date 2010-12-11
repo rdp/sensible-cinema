@@ -14,12 +14,9 @@ class MencoderWrapper
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         out = '@rem '
       end
+      # video_opts = "-ovc lavc -lavcopts keyint=1" # seems reasonable quality somehow...
       # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
-      # video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3 -ofps 30000/1001"
-      # not working yet...
-      video_opts = "-ovc lavc -lavcopts keyint=1" # seems reasonable quality somehow...
-      # TODO next step is...maybe grab it verbatim then convert it using ffmpeg to something high quality?
-      # TODO -oac copy versus -oac pcm...
+      video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
       out + "call mencoder dvdnav://#{@dvd_title_track} -alang en -nocache -sid 1000 -oac copy #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
@@ -64,7 +61,7 @@ class MencoderWrapper
       out += "@rem call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
 
       out += "@rem del #{@big_temp}\n" # LODO no @rem
-      out += "@rem del " + partials.join(' ') + "\n"# LODO no @rem
+      out += "del " + partials.join(' ') + "\n"# LODO no @rem
       out += "echo wrote to #{to_here_final_file}"
       out
     end

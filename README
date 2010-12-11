@@ -1,25 +1,28 @@
 Sensible-cinema (also known as "paranoid cinema" [inside joke] ) is a program that allows you to apply 
-programmed edit decision lists (i.e. "mute out" or "bleep out" scene lists or skip scenes) to DVD's.
+programmed edit lists (Edit Decision Lists [2]) to DVD's.
+I.e. you can edit a DVD to "mute out" or "bleep out" scenes, or skip them.
 
-It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source (GPL) programs [2] (VLC Media Player, mplayer/mencoder, ffmpeg).
+It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
+a few freely available open source (GPL) programs [3] (VLC Media Player, Mplayer/mencoder, ffmpeg et al)
+to accomplish the editing.
+
+To use it, basically install then run it (see below).
+It will come up with some windows where you choose what you want to do
+(edit an edit list, use an edit decision list to edit a DVD, etc.)
+
+Enjoy!
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] http://www.gnu.org/licenses/
 
-To use it, basically install it, then run it. It will come up with some windows where you choose what you want to do
-(edit a list, apply an edit decision list to a DVD, etc.)
-
 == Installation ==
 
-download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
-unzip it (right click -> Extract all)
-"click into it" and search for then run the file "run sensible cinema.bat"
+To install, download the latest .zip versioned file from: http://rogerdpack.t28.net/sensible-cinema/
+then unzip it (right click -> Extract all)
+then "click into it" and search for and run the file "run sensible cinema.bat"
 
-Note that you'll need java previously installed for it to work, but chances are you already have it.
-
-== Creating Your Own Edit Lists, or modifying the existing ones ==
+== Creating Your Own Edit Lists, or modifying previously existing ones ==
 
 You create an edit decision list for sensible cinema to use against whatever you want.
 
@@ -116,7 +119,7 @@ All files (c) 2010 Roger Pack
 
 == Related ==
 
-The concept isn't too novel.  Some earlier examples:
+The concept isn't too novel.  Some other examples:
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited) movies.
@@ -144,6 +147,13 @@ http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's
 Corel WinDVD has "Quick Clip" settings for capturing from DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
+
+== Troubleshooting ==
+
+Note that you'll need java previously installed for this to work.  You probably already do though.
+If you run into a snag, try cleaning your DVD. Baking soda toothpaste might help.
+If it still errs, report it back to the authors, along with a screen snapshot and steps of
+how to reproduce the problem.
 
 == Feedback ==
 

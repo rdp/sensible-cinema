@@ -71,7 +71,7 @@ module SensibleSwing
       @starting_button_y = 120
       @button_width = 330
 
-      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from the DVD", false )
+      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
       }
@@ -98,7 +98,7 @@ module SensibleSwing
         end
       }
 
-      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit Decision List", false)
+      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", false)
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR

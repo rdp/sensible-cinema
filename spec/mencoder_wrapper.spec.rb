@@ -19,7 +19,11 @@ describe MencoderWrapper do
   it "should have what looks like a working mencoder grab command" do
     @out.should match(/mencoder dvdnav:/)
     @out.should match(/dvdnav.*lavcopt.*keyint=1/)
-    #@out.should match(/dvdnav.*lavcopt.*mpeg2video/)
+    use_mpg2_fulli = true
+    if use_mpg2_fulli
+      @out.should match(/dvdnav.*lavcopt.*mpeg2video/)
+      @out.should match(/autoaspect/) # try to preserve aspect
+    end
   end
   
   it "should avoid subtitles" do
@@ -38,7 +42,7 @@ describe MencoderWrapper do
     @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
   end
     
-  it "should not rip it again if the .done file exists and the original file exist" do
+  it "should not grab it again if the .done file exists and the original file exist" do
     go
     @out.should include(" -o to_here.fulli.tmp.avi")
     
@@ -111,8 +115,12 @@ describe MencoderWrapper do
     @out.should match(/del to_here.1.avi/)
   end
   
-  it "should rm partial files before writing each one" do
-    @out.should match(/del to_here.3.avi$/)
+  it "should rm the files in the code, not the batch commands" do
+    FileUtils.touch 'to_here.3.avi'
+    File.exist?('to_here.3.avi').should be true
+    out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
+    out.should_not match(/del to_here.3.avi$/)
+    File.exist?('to_here.3.avi').should be false
   end
   
   it "should echo that it is done, with the right filename" do
@@ -145,8 +153,8 @@ describe MencoderWrapper do
   it "should not have doubled .avi.avi's" do
     setup  
     # lodo cleanup this ugliness [.avi.1.avi]...
-    @out.scan(/(ffmpeg|mencoder).*to_here.avi.1.avi/).length.should == 1
-    @out.scan(/(ffmpeg|mencoder).*to_here.avi.2.avi/).length.should == 1
+    @out.scan(/(ffmpeg|mencoder).*to_here.avi.1.avi/).length.should be >= 1
+    @out.scan(/(ffmpeg|mencoder).*to_here.avi.2.avi/).length.should be >= 1
   end
   
   context 'pinpointing sections' do
@@ -155,7 +163,7 @@ describe MencoderWrapper do
      @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'  
     end
     
-    it "should always somewhat rip the whole thing" do
+    it "should always somewhat grab the whole thing, no endpos" do
       @out.should_not match(/mencoder dvd.*endpos/)
     end
     

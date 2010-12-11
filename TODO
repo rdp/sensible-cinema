@@ -9,7 +9,6 @@
     re-run latest preview -> auto play in smplayer
     "it's license is the same as mplayer, and is at -> open window, note [in other window]"
     delete test file
-    yes delete temp's when done now...
     program the temple thing with it
       note such "I first use this to edit my temple movie"
     install smplayer first...
@@ -23,8 +22,13 @@
 
 == slightly lower than that ==
 
-  mpeg is broken?
+  pick -oac copy versus -oac pcm...
+  only pick a drive once per session
+  mpeg is lossy (at least my current one pass one is)
+    could check if DVD Flick handles *oversize* files well, for information sake 
     check it against cool runnings...
+      on the big screen...does raw.mpg look normal there? fulli?
+        if so, then program the "frame accurate" cutter
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
