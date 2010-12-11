@@ -2,37 +2,51 @@
   
 == probably next up+low prio ==
 
- "realtime" release:
-    Harry Potter audio!
-    mplayer EDL...
-      test...
-    note baking soda tooth paste
-    
-    license required first time they run it (gplv3)
-    compare computer DVD playback with physical player...
+ "licensing" release:
+    note baking soda tooth paste in error message
+    license required first time they run it (gplv3 etc.)
+    compare computer DVD timings with physical player...
     re-run latest preview -> auto play in smplayer
-    "it's license is at -> open window, note [in other window]"
-  
+    "it's license is the same as mplayer, and is at -> open window, note [in other window]"
+    delete test file
+    yes delete temp's when done now...
+    program the temple thing with it
+      note such "I first use this to edit my temple movie"
+    install smplayer first...
+
+    By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
+    LICENSE
+    
+    next release:
+      mplayer EDL...
+        test...
+
 == slightly lower than that ==
 
+  mpeg is broken?
+    check it against cool runnings...
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
   checkbox for all other licenses or something?
-  program the temple thing with it
-    note such "I first use this to edit my temple movie"
   a real'ish-er website
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
-  play a bigger noise when totally done...(dvd flick has one...)
+  play a bigger noise when totally done...(dvd flick'ish...)
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
-  during "initial rip" can watch it (unedited) while it's still ripping (mplayer)
+  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
-  create a ML?
+  can I rip it raw (mencoder -> mpg), then use -hr-edl-seek to split?
+  can I not use mencoder at all?
+    assuming cool runnings really was normal...
+  wiki ("next to" my own EDL's?)
+  mencoder harddup useful?
+  .exe installer, just unzips, runs the .bat file for them [?] :)
+  create a ML on demand
   only pick that filename once per session...
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
   allowing for torn discs:
@@ -42,10 +56,8 @@
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
   note SSD or perhaps tons of RAM help with speed :)
-  cool runnings:
-     get a working copy--do they match?
-     only if toothpaste fails me :)
   propaganda-ize
+    advertise in christian places
     alternative.to
     blogs that have ever mentioned clearplay :P
   vnc has a good looking license :)
@@ -134,6 +146,8 @@ make the progress bar map "better" to the actual time that each section should t
 Note to people: make several EDL's per movie.
 Note to people: clean your disks!
 
+@mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
+
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
   can lop off sections to save space (?)
@@ -156,9 +170,11 @@ report to jruby "when one thread dies, the GUI becomes unresponsive" (and others
 a "certified clean" list
 advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
 check for "newer version available" or not...
+buy blu-ray decrypter, try it out.
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+fade in/fade out volume, video
 make the other stuff work again, since I no longer use YAML...
 
 pass unit tests again jruby

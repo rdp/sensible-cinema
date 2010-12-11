@@ -15,9 +15,11 @@ class MencoderWrapper
         out = '@rem '
       end
       # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
-      lavcopts = "vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3"
-      lavcopts = "keyint=1"
-      out + "call mencoder dvdnav://#{@dvd_title_track} -nocache -sid 1000 -oac copy  -lavcopts #{lavcopts} -ofps 30000/1001 -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      # video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3 -ofps 30000/1001"
+      # not working yet...
+      video_opts = "-ovc lavc keyint=1" # seems reasonable quality somehow...
+      # TODO next step is...maybe grab it verbatim then convert it using ffmpeg to something high quality?
+      out + "call mencoder dvdnav://#{@dvd_title_track} -alang en -nocache -sid 1000 -oac copy #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
     def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
@@ -73,12 +75,11 @@ class MencoderWrapper
       # very decreased volume is like muting :)
       # LODO can we copy more here? ntsc-dvd supposedly remuxes...
       codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO the ac3 must match the copy...hmm...
-      # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
       partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
       if File.exist? partial_filename
         FileUtils.rm partial_filename
       end
-      "del #{partial_filename}\ncall ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
+      "call ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
     end
   
   end
