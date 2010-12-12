@@ -12,24 +12,26 @@
       note such "I first use this to edit my temple movie"
     install smplayer first before mencoder...
 
-    By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
+    By clicking 'I accept' below you are agreeing to the 
     LICENSE
-      MIT?    
-    once pick -oac copy versus -oac pcm...
-      test
+      MIT?
   vnc has a good looking license :)
   "would you like to go to smplayer website?"
   install smplayer before mencoder [?]
   bundle 7z [?]
    if license agreement allows
    remove note about it
+   thinking not...
       
     next release:
       mplayer EDL...
         test...
-  don't delete temps if it's a specific scene run...
+      don't delete temps if it's a specific scene run...
+
+  it doesn't preserve aspect ratio right (temple DVD)
 
 == slightly lower than that, somewhat ordered ==
+
 
 calculating disk's unique id...
 F:\, Roger's Wedding, a2e3ece630251e4a785218ce71a20ce1
