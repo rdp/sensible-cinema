@@ -133,11 +133,11 @@ module SensibleSwing
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
-  "0:00:01.0", "0:00:02.0", "da..",
+  "0:00:01.0", "0:00:02.0", "profanity", "da..",
 ],
 
 "blank_outs" => [
-  "1:01:00.0" , "1:02:00.0", "violent scene of some sort",
+  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "name" => "#{name}"
