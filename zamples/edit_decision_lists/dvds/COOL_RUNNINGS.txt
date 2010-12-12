@@ -14,7 +14,7 @@
 "blank_outs" => [
   "58:40", "58:41", # bad arsenic, but I dislike lip reading.
   "59:08", "59:09", # "
-  "1:16:57.0" , "1:16:57.5", "bad a..", # verified
+  "1:16:57.0" , "1:16:57.5", "bad a..",
   # 15:22 irv beats his radio with pool cue should go...
   "15:20", "15:30",
   "59:15", "59:59",
@@ -25,3 +25,25 @@
 "dvd_title_track" => "1",
 "other stuff" => "fighting (punching) in a bar 1:00:30 'ish could use some editing"
 # 1:01:42 "shutup snaka"
+
+
+# 22:25 heck
+# 23:45 heck, something else paranoid
+# 22:00 butt
+# 32:20 shutup
+# 38:30 40:40 g..
+# 1:16 too early
+# 1:22:30 den???
+# 1:21:50 .. heck
+# 1:20:50 dang swiss
+# 1:13:40 paranoid
+# 1:11:40 gah
+# 47:15 a-h
+# 57:20 ... father
+# 1:07:45 hook
+# cut beating (paranoid)
+# 34:00
+# 3:00 backside
+# 6:57 thigh, hug
+# 14:15 under breath
+# 
