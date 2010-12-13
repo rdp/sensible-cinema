@@ -63,8 +63,11 @@ task 'bundle_dependencies' => 'gemspec' do
    dependencies = spec.runtime_dependencies
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
    Gem.loaded_specs.select{|name, spec| name == 'os'}
-   Dir['vendor/cache/**/*'].each{|f|
-     FileUtils.rm_rf f unless f =~ /jruby.*jar/ # that one takes too long to download...
+   Dir['vendor/cache/*'].each{|f|
+    unless f =~ /jruby.*jar/ # that one takes too long to download...
+      FileUtils.rm_rf f
+      raise 'unable to delete ' + f if File.exist?(f)
+    end
    }
    FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
