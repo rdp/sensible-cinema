@@ -2,10 +2,6 @@
   
 == up next release ==
 
-  realtime
-   ask smplayer if a DVD edl is an option...
-   tell person on forum how...
-  
   simplify/de-bugify
   
     that button shows up? (issue 10)
@@ -14,7 +10,8 @@
     re-run latest preview -> auto play in smplayer
     move that one button *out* ...
     only pick a drive once per session
-  only pick output filename once per session...
+    only pick output filename once per session...
+    kill mencoder instances.
   
 calculating disk's unique id...
 F:\, Roger's Wedding, a2e3ece630251e4a785218ce71a20ce1
@@ -51,6 +48,7 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  fix some specz
   can pull from imdb at package time [?]
   delete fulli file
     except if it's a specific scene run...
@@ -110,7 +108,6 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
   re-do DVD EDL's that need it :P
    all dogs go to heaven...finish EDL
   warn when labels exist and don't match...
-  kill old mencoder instances more often...
   auto-download imagemagick, too
   check all the many options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   can rip from a DVD-like local folder (would anybody ever need this?)
