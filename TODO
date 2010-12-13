@@ -1,15 +1,21 @@
 == medium ==
   
-== probably next up+low prio ==
+== up next release ==
 
-== slightly lower than that, somewhat ordered ==
-
-  EDL for blender movie...
-  compare computer DVD timings with physical player...
-  re-run latest preview -> auto play in smplayer
-  mplayer EDL...
-    test...
+  realtime
+    mplayer EDL...
+      test...
+  
+  simplify/de-bugify
+  
+    that button shows up? (issue 10)
     
+    EDL for blender movie...
+    re-run latest preview -> auto play in smplayer
+    move that one button *out* ...
+    only pick a drive once per session
+  only pick output filename once per session...
+  
 calculating disk's unique id...
 F:\, Roger's Wedding, a2e3ece630251e4a785218ce71a20ce1
 got fatal exception
@@ -18,10 +24,16 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
 "disk_unique_id" => "a2e3ece630251e4a785218ce71a20ce1",
 ^
 D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:1:in `parse_string'
-
-  umm...shouldn't using be pretty straight forward tho?
-  only pick a drive once per session
   during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
+  
+  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
+  disallow choosing empty drive? fail cleaner? (issue 11)
+
+
+== slightly lower than that, somewhat ordered ==
+
+  compare computer DVD timings with physical player...
+  
   mpeg is lossy (at least my current one pass one is)
     could check if DVD Flick handles *oversize* files well, for information sake 
     check it against cool runnings...
@@ -33,17 +45,16 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
-  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   play a bigger noise when totally done...(dvd flick'ish...)
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
-  only pick output filename once per session...
   does ffdshow let WMP playback the audio on those files?
-  delete fulli file
-    except if it's a specific scene run...
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  can pull from imdb at package time [?]
+  delete fulli file
+    except if it's a specific scene run...
   bundle 7z [?]
    if license agreement allows
    thinking not though...
@@ -61,6 +72,7 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
     alternative.to
     blogs that have ever mentioned clearplay :P
   LLC before ever pay anyone, if I ever do
+  @DVD flick: support multi-track audio/subtitles (if they're already in the streams...)
   note the mplayer/smplayer as a player fast forward feature...
   several "play now" options...without a navigator of course :)
     visualbasic-like playlist
