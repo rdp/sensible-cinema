@@ -13,16 +13,12 @@
     install smplayer first before mencoder...
 
     By clicking 'I accept' below you are agreeing to the 
-    LICENSE
-      MIT?
+    LICENSE file
+      MIT? if gplv3 weak...
   vnc has a good looking license :)
   "would you like to go to smplayer website?"
-  install smplayer before mencoder [?]
-  bundle 7z [?]
-   if license agreement allows
-   remove note about it
-   thinking not...
-      
+  install smplayer before mencoder
+  remove note about 7z
 
 == slightly lower than that, somewhat ordered ==
 
@@ -67,6 +63,10 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  bundle 7z [?]
+   if license agreement allows
+   thinking not though...
+  bundle rubyzip
   create wiki ("next to" distributed EDL's?)
   mencoder harddup useful?
   .exe installer, just unzips, runs the .bat file for them [?] :)
