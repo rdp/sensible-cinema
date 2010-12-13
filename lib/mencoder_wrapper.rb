@@ -15,10 +15,6 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-end
 
 require_relative 'vlc_programmer'
 
