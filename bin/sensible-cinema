@@ -127,7 +127,8 @@ module SensibleSwing
       @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true)
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
-        if(path.length == 0)
+        path2 = RubyWhich.new.which('mplayer')
+        if(path.length == 0 || path2.length == 0)
           # this one has its own license...
           show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
           Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
