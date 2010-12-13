@@ -74,6 +74,7 @@ module SensibleSwing
       super "Sensible-Cinema"
       if !Storage['main_license_accepted']
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE file', 'I acknowledge that I have read the LICENSE file.'
         Storage['main_license_accepted'] = true
       end
 
@@ -103,6 +104,7 @@ module SensibleSwing
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
+          # this one has its own license...
           show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
           Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
@@ -211,18 +213,17 @@ EOL
       writeOut.close
     end
     
-    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement'
+    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
       UIManager.put("OptionPane.noButtonText", 'View License')
       # cancel button stays the same...
       
-      message = "By clicking accept, below, you are agreeing to the license agreement for #{program} (the #{license_name}),
+      message ||= "By clicking accept, below, you are agreeing to the license agreement for #{program} (the #{license_name}),
       located at #{license_url_should_also_be_embedded_by_you_in_message}.
-      Click 'View License' to view it in a web browser."
+      Click 'View License' to view it on your local machine."
       
       returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
-      p returned
       # 1 is view
       # 0 is accept
       # 2 is cancel
