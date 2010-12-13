@@ -51,7 +51,7 @@ class MencoderWrapper
       else
         previous_end = 0
       end
-      @big_temp = to_here_final_file + ".fulli.tmp.mpg"
+      @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
       out = get_header this_drive, these_settings
       @idx = 0
       combined.each {|start, endy, type|
@@ -72,15 +72,13 @@ class MencoderWrapper
       if File.exist? to_here_final_file
         FileUtils.rm to_here_final_file # raises on failure...which is what we want I think
       end
-      # ridiculous
       out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
-      # LODO the "insta play" mode, or the "faster rip" mode (related...)
       out += "@rem call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
 
       out += "@rem del #{@big_temp}\n" # LODO no @rem
-      out += "del " + partials.join(' ') + "\n"# LODO no @rem
-      out += "echo wrote to #{to_here_final_file}"
+      out += "@rem del " + partials.join(' ') + "\n"# LODO no @rem
+      out += "echo wrote (probably successfully) to #{to_here_final_file}"
       out
     end
     
@@ -100,23 +98,4 @@ class MencoderWrapper
   
   end
 
-end
-
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-  puts 'syntax: yaml_file_name d:\ output (00:15 00:25) (--run)'
-  a = YAML.load_file ARGV.shift
-  drive = ARGV.shift
-  raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
-  execute = ARGV.delete('--run')
-  commands = MencoderWrapper.get_bat_commands(a, drive, *ARGV)
-  if ARGV.length > 2
-    write_to = 'range.bat'
-  else
-    write_to = 'all.bat'
-  end
-  File.write(write_to, commands)
-  print 'wrote ' + write_to
-  system(write_to) if execute
 end

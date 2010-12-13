@@ -73,7 +73,7 @@ Soldiers left profanity in its filtered version...which wasn't what I had
 anticipated.  Others have noted that sometimes the edit timings
 are off so that it will mute out sections just previous to the profanity, while
 leaving the profanity in, etc.).  Also clearplay apparently runs a rather 
-confusing subscription policy, as well [1].
+confusing subscription policy, as well, so I'm told [1].
 Also sometimes clearplay "mutes out" profanity but you can easily still lip read it,
 so it's almost as if you were exposed to it anyway.  Not ideal.
 There is no little community collaboration/review.
@@ -105,7 +105,7 @@ Then it occurred to me that you could grab the several clean segments
 off a DVD, and piece them together to create an edited copy.  This avoids 
 realtime tracking.  Which is where we are now.
 
-See also the LICENSE file.
+See also the LICENSE.TXT file.
 
 [1] http://www.amazon.com/review/R27VK5BR9NDHBD/ref=cm_cr_pr_viewpnt#R27VK5BR9NDHBD
 
@@ -118,7 +118,7 @@ All files (c) 2010 Roger Pack
 
 == Related ==
 
-The concept isn't too novel.  Some other examples:
+The concept isn't too novel.  Some other previously existing examples:
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited) movies.
