@@ -60,7 +60,7 @@ module SensibleSwing
         ["drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-4].should match(/abc/)
+        args[-5].should match(/abc/)
         @args = args
         'sleep 0.1'
       }
@@ -97,7 +97,7 @@ module SensibleSwing
     it "should call through to explorer for the full thing" do
       @subject.do_copy_dvd_to_hard_drive(false)
       @subject.background_thread.join
-      @args[-2].should == nil
+      @args[-3].should == nil
       @command.should match /explorer/
       @command.should_not match /fulli/
     end
@@ -111,16 +111,16 @@ module SensibleSwing
     it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
      @subject.background_thread.join
-     @args[-1].should == 1
-     @args[-2].should == "01:00"
+     @args[-2].should == 1
+     @args[-3].should == "01:00"
      @command.should match /explorer/
      @command.should_not match /fulli/
     end
 
     def prompt_for_start_and_end_times
       @subject.instance_variable_get(:@preview_section).simulate_click
-      @args[-1].should == 1
-      @args[-2].should == "01:00"
+      @args[-2].should == 1
+      @args[-3].should == "01:00"
       @subject.background_thread.join
       @command.should match /smplayer/
     end

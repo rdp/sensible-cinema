@@ -349,7 +349,7 @@ EOL
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
-      a =File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
+      a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
       a.close
       File.delete a.path
       dvd_title_track = descriptors["dvd_title_track"]
@@ -364,7 +364,7 @@ EOL
           return [true, fulli]
         end
       end
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -376,9 +376,9 @@ EOL
       MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
-      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times]
+      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)

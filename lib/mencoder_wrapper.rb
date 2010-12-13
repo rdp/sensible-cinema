@@ -38,7 +38,8 @@ class MencoderWrapper
       out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
-    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
+    # called from the UI...
+    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false
       combined = VLCProgrammer.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       if start_here || end_here
@@ -75,9 +76,11 @@ class MencoderWrapper
       out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
       out += "@rem call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
+      
+      delete_prefix = delete_partials ? "" : "@rem "
 
       out += "@rem del #{@big_temp}\n" # LODO no @rem
-      out += "@rem del " + partials.join(' ') + "\n"# LODO no @rem
+      out += "#{delete_prefix} del " + partials.join(' ') + "\n"
       out += "echo wrote (probably successfully) to #{to_here_final_file}"
       out
     end
