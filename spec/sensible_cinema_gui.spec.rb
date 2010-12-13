@@ -54,8 +54,8 @@ module SensibleSwing
       ENV['PATH'].should include("mencoder")
     end
     
-    it "should modify path to have mplayer available" do
-      ENV['PATH'].should include("mplayer")
+    it "should not modify path to have mplayer available" do
+      ENV['PATH'].should_not include("mplayer")
     end
     
     before do

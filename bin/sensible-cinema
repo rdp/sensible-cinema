@@ -32,9 +32,11 @@ require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
 require 'whichr'
 
+# must put mencoder first, as it has a working mplayer.exe in it...
 ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
+
 for drive in ['c', 'd', 'e']
-  ENV['PATH'] = ENV['PATH'] + ";#{drive}:\\Program Files\\SMPlayer;#{drive}:\\Program Files\\SMPlayer\\mplayer"
+  ENV['PATH'] = ENV['PATH'] + ";#{drive}:\\Program Files\\SMPlayer;#{drive}"
 end
 
 module SensibleSwing
@@ -113,12 +115,10 @@ module SensibleSwing
         title = descriptors["dvd_title_track"] || "1"
         # oh the insanity...
         popup = NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
-        At times it may start skipping forward.
-        Hit the left arrow to bring it back to normal.
         Also right and left arrows to seek, f key for full screen.")
         # LODO dry up mplayer opts...
         # LODO more user friendly re-player...
-        command =  "mplayer dvdnav://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        command =  "mplayer dvd://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
         p command
         system_non_blocking command
       }
@@ -285,7 +285,7 @@ EOL
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
-          Kernel.print 'downloading mencoder'
+          Kernel.print 'downloading mencoder.7z...'
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           system_blocking("7za e mencoder.7z -y -omencoder")
           Kernel.puts 'done'
