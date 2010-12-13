@@ -119,7 +119,7 @@ module SensibleSwing
         q to quit.")
         # LODO dry up mplayer opts...
         # LODO more user friendly re-player...
-        command =  "mplayer dvd://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        command =  "mplayer dvdnav://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
         p command
         system_non_blocking command
       }
