@@ -35,9 +35,8 @@ https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/e
 Basically your job is to create an appropriate file (like that one) somewhere, 
 then start sensible-cinema and instruct it to use your new file.
 
-Once you're done then you can contribute your scene descriptions file if desired, back to the project itself [1].
-
-[1] submit an issue: http://github.com/rdp/sensible-cinema/issues
+Once you're done then you can contribute your scene descriptions file if desired, back to the project itself (see the "feedback" section,
+below).
 
 == FAQ ==
 
@@ -152,14 +151,18 @@ http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 
 Note that you'll need java previously installed for this to work.  You probably already do though.
 If you run into a snag, try cleaning your DVD. Baking soda toothpaste might help.
-If it still errs, report it back to the authors, along with a screen snapshot and steps of
-how to reproduce the problem.
+If it still errs, report it to the authors, along with a screen snapshot and steps of
+how to reproduce the problem, preferably.  See feedback section.
+
+If it says "audio problem try pcm" then you can add
+"audio_codec" => "lavc"
+to your EDL and try again.
 
 == Feedback ==
 
 Feedback, including feature requests, comments, etc. welcome.
 
 http://github.com/rdp/sensible-cinema (message me or create an issue for feedback/any requests/bugs)
-or rogerdpack@gmail.com
+or e-mail rogerdpack@gmail.com
 If you're a developer and want to help out with programmming it, please do!
 Also ping me if you want a mailing list created or what not.

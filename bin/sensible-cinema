@@ -41,7 +41,6 @@ module SensibleSwing
     def increment_button_location
       @starting_button_y += 30
     end
-    
 
     Storage = Storage.new("sc")
     
@@ -51,11 +50,16 @@ module SensibleSwing
      Thread.new { system_blocking command }
     end
     
-    # make them choose which one to use
+    # make them choose which system call to use explicitly
     undef system
 
     def initialize
       super "Sensible-Cinema"
+      if true#!Storage['main_license_accepted']
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
+        #Storage['main_license_accepted'] = true
+      end
+
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
       panel = JPanel.new
       @panel = panel
@@ -73,6 +77,8 @@ module SensibleSwing
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
+        get_user_input('a', 'b')
+
         do_copy_dvd_to_hard_drive false
       }
 
@@ -187,6 +193,38 @@ EOL
       writeOut.write(open(full_url).read)
       writeOut.close
     end
+    
+    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message
+      title = 'Confirm Acceptance of License Agreement'
+      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
+      UIManager.put("OptionPane.yesButtonText", 'Accept')
+      UIManager.put("OptionPane.noButtonText", 'View License')
+      # cancel button stays the same...
+      
+      message = "By clicking accept, below, you are agreeing to the license agreement for #{program} (the #{license_name}),
+      located at #{license_url_should_also_be_embedded_by_you_in_message}.
+      Click 'View License' to view it in a web browser."
+      
+      returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      p returned
+      # 1 is view
+      # 0 is accept
+      # 2 is cancel
+      if returned == 1
+        system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
+        System.exit 1
+      end
+      if returned == 2
+        p 'license not accepted...'
+        System.exit 1
+      end
+      if returned == -1
+        p 'license exited'
+        System.exit 1
+      end
+      throw unless returned == 0
+      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+    end
 
     def check_for_dependencies
       ffmpeg = RubyWhich.new.which('ffmpeg')
@@ -255,7 +293,13 @@ EOL
       JOptionPane.showMessageDialog(nil, message, title, style)
     end
     
+    include_class javax.swing.UIManager
     def get_user_input(message, default = '')
+      require "_dbg"
+          UIManager.put("OptionPane.noButtonText", "Non");
+    UIManager.put("OptionPane.okButtonText", "D'accord");
+    UIManager.put("OptionPane.yesButtonText", "Oui");
+      
      start_time = JOptionPane.showInputDialog(message, default)
     end
 
@@ -378,7 +422,7 @@ EOL
           #self.close # ?
         end
       else
-        show_blocking_message_dialog("Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
+        show_blocking_message_dialog("Failed--please examine screen output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
       end
       @after_success_once = nil
     end
