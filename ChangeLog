@@ -1,3 +1,7 @@
+== 0.18.0 ==
+
+Add some home video EDL's, clarify the license(s), use a slightly better video codec, minor bug fixes/refactoring.
+
 == 0.17.0 ==
 
 Grab using a different codec (wish I could grab to the *same* codec)

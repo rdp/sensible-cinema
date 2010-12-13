@@ -5,31 +5,32 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.17.0"
+  s.version = "0.18.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-12-08}
+  s.date = %q{2010-12-13}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
   s.extra_rdoc_files = [
     "ChangeLog",
-    "LICENSE",
+    "LICENSE.TXT",
     "README",
     "TODO"
   ]
   s.files = [
     "ChangeLog",
-    "LICENSE",
+    "LICENSE.TXT",
     "README",
     "RUN SENSIBLE CINEMA CLICK HERE.bat",
     "Rakefile",
     "TODO",
+    "USAGE_TERMS.TXT",
     "VERSION",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
-    "edit sensible cinema decision list files.bat",
+    "create new sensible cinema decision list files.bat",
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "gplv3.txt",
@@ -44,6 +45,7 @@ Gem::Specification.new do |s|
     "lib/mencoder_wrapper.rb",
     "lib/mouse.rb",
     "lib/mouse_forever.rb",
+    "lib/mplayer_edl.rb",
     "lib/muter.rb",
     "lib/ocr.rb",
     "lib/overlayer.rb",
@@ -52,6 +54,7 @@ Gem::Specification.new do |s|
     "lib/swing_helpers.rb",
     "lib/vlc_programmer.rb",
     "never_do",
+    "preamble",
     "sensible-cinema.gemspec",
     "spec/blanker.spec.rb",
     "spec/common.rb",
@@ -108,6 +111,7 @@ Gem::Specification.new do |s|
     "spec/keyboard_input.spec.rb",
     "spec/mencoder_wrapper.spec.rb",
     "spec/mouse.spec.rb",
+    "spec/mplayer_edl.spec.rb",
     "spec/muter.spec.rb",
     "spec/ocr.spec.rb",
     "spec/overlayer.spec.rb",
@@ -122,6 +126,7 @@ Gem::Specification.new do |s|
     "vendor/unzip.exe",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
+    "zamples/edit_decision_lists/dvds/Harry Potter 2.txt",
     "zamples/edit_decision_lists/dvds/bob the builder pets in a pickle.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
@@ -132,6 +137,7 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/labyrinth.txt",
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/making marriage work.txt",
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/star_trek_generations_hulu.txt",
+    "zamples/edit_decision_lists/dvds/pack_wedding_2007-03-03.txt",
     "zamples/edit_decision_lists/example_edit_decision_list.txt",
     "zamples/edit_decision_lists/old_not_yet_update/youtube/gummy_bear_song_youtube.txt",
     "zamples/edit_decision_lists/old_not_yet_update/youtube/nuki_song_youtube.txt",
@@ -159,6 +165,7 @@ Gem::Specification.new do |s|
     "spec/keyboard_input.spec.rb",
     "spec/mencoder_wrapper.spec.rb",
     "spec/mouse.spec.rb",
+    "spec/mplayer_edl.spec.rb",
     "spec/muter.spec.rb",
     "spec/ocr.spec.rb",
     "spec/overlayer.spec.rb",
