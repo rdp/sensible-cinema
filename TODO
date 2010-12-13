@@ -5,6 +5,7 @@
   realtime
     mplayer EDL...
       test...
+        out of order ok?
   
   simplify/de-bugify
   
