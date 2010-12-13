@@ -57,7 +57,7 @@ module SensibleSwing
     before do
       @subject = MainWindow.new
       @subject.stub!(:choose_dvd_drive) {
-        ["drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
+        ["mock_dvd_drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-5].should match(/abc/)
@@ -172,8 +172,16 @@ module SensibleSwing
       end
     end
     
-    it "should display unique" do
+    it "should display unique disc in an input box" do
       @subject.instance_variable_get(:@display_unique).simulate_click.should == "01:00"
+    end
+    
+    it "should create an edl" do
+      @subject.instance_variable_get(:@edl).simulate_click
+      
+      @command.should match(/mplayer.*-edl/)
+      @command.should match(/-dvd-device /)
+      p @command
     end
     
   end

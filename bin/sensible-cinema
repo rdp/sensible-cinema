@@ -25,6 +25,7 @@ require 'sane' # failure here means you haven't bundled your dependencies...[rak
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
 require_relative '../lib/edl_parser'
+require_relative '../lib/mplayer_edl'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -99,8 +100,19 @@ module SensibleSwing
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
       }
+      
+      @edl = new_jbutton( "Watch from DVD edited", false )
+      @edl.on_clicked {
+        drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+        temp_dir = Dir.tmpdir
+        temp_file = temp_dir + '/mplayer.temp.edl'
+        edl_contents = MplayerEdl.convert_to_edl descriptors
+        File.write(temp_file, edl_contents)
+        title = descriptors["dvd_title_track"] || "1"
+        system_non_blocking "mplayer dvdnav://#{title} -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+      }
 
-      @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true) # LODO watch in realtime option--then rippers and watchers can combine
+      @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true)
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
@@ -306,8 +318,8 @@ EOL
     def get_user_input(message, default = '')
       start_time = JOptionPane.showInputDialog(message, default)
     end
-
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
+    
+    def choose_dvd_and_edl_for_it
       drive, dvd_volume_name, md5sum = choose_dvd_drive
       puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
       edit_list_path = single_edit_list_matches_dvd(md5sum)
@@ -317,9 +329,14 @@ EOL
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
-      return unless edit_list_path
+      raise 'cancelled' unless edit_list_path
       descriptors = EdlParser.parse_file edit_list_path
+      return drive, dvd_volume_name, md5sum, edit_list_path, descriptors
+    end
 
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
+      drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
+      
       dvd_title = descriptors['title'] || dvd_volume_name
 
       fc = new_filechooser
