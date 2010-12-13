@@ -1,3 +1,4 @@
+=begin
 Copyright 2010, Roger Pack 
 This file is part of Sensible Cinema.
 
@@ -13,7 +14,8 @@ This file is part of Sensible Cinema.
 
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-    require 'sane' # gem
+=end
+require 'sane' # gem
 require 'whichr' # gem
 require_relative 'swing_helpers' # to_filename lodo not have it there
 im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/cache/imagemagick") # convert.exe wants to only be chosen from here...

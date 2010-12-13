@@ -1,3 +1,4 @@
+=begin
 Copyright 2010, Roger Pack 
 This file is part of Sensible Cinema.
 
@@ -13,7 +14,8 @@ This file is part of Sensible Cinema.
 
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-    # avoid full loading if testing impossible
+=end
+# avoid full loading if testing impossible
 if RUBY_VERSION < '1.9.2' && RUBY_PLATFORM !~ /java/
   puts 'not compatible to MRI < 1.9.2'
   exit 0 # this isn't a really real failure...

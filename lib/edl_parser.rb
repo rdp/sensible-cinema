@@ -1,3 +1,4 @@
+=begin
 Copyright 2010, Roger Pack 
 This file is part of Sensible Cinema.
 
@@ -13,7 +14,8 @@ This file is part of Sensible Cinema.
 
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-    class EdlParser
+=end
+class EdlParser
 
   def self.parse_file filename
     parse_string File.read(filename), filename

@@ -1,3 +1,4 @@
+=begin
 Copyright 2010, Roger Pack 
 This file is part of Sensible Cinema.
 
@@ -13,7 +14,8 @@ This file is part of Sensible Cinema.
 
     You should have received a copy of the GNU General Public License
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-    
+=end
+
 def add_any_bundled_gems_to_load_path
   raise 'no vendor dir?' unless File.directory? 'vendor'
   if File.directory? 'vendor/cache'
