@@ -97,8 +97,6 @@ module SensibleSwing
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
-        get_user_input('a', 'b')
-
         do_copy_dvd_to_hard_drive false
       }
 
@@ -306,12 +304,7 @@ EOL
     
     include_class javax.swing.UIManager
     def get_user_input(message, default = '')
-      require "_dbg"
-          UIManager.put("OptionPane.noButtonText", "Non");
-    UIManager.put("OptionPane.okButtonText", "D'accord");
-    UIManager.put("OptionPane.yesButtonText", "Oui");
-      
-     start_time = JOptionPane.showInputDialog(message, default)
+      start_time = JOptionPane.showInputDialog(message, default)
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
@@ -374,7 +367,7 @@ EOL
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
-    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
     end
 
