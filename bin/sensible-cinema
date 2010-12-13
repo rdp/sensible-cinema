@@ -115,7 +115,8 @@ module SensibleSwing
         title = descriptors["dvd_title_track"] || "1"
         # oh the insanity...
         popup = NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
-        Also right and left arrows to seek, f key for full screen.")
+        Also right and left arrows to seek, F key for full screen,
+        q to quit.")
         # LODO dry up mplayer opts...
         # LODO more user friendly re-player...
         command =  "mplayer dvd://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"

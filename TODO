@@ -3,9 +3,6 @@
 == up next release ==
 
   realtime
-    mplayer EDL...
-      test...
-        out of order ok?
   
   simplify/de-bugify
   
@@ -29,7 +26,6 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
   
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   disallow choosing empty drive? fail cleaner? (issue 11)
-
 
 == slightly lower than that, somewhat ordered ==
 
