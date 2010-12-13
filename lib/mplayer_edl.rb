@@ -15,20 +15,18 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
+
 require_relative 'overlayer'
+require_relative 'vlc_programmer'
 
 class MplayerEdl
   def self.convert_to_edl specs
-    out = []
-    for type, metric in {"mutes" => 1, "blank_outs" => 0}
-      specs[type].each{|start, endy, other|
-        out << [OverLayer.translate_string_to_seconds(start), OverLayer.translate_string_to_seconds(endy), metric]
-      }
+    combined = VLCProgrammer.convert_incoming_to_split_sectors specs
+    out = ''
+    map = {:mute => 1, :blank => 0}
+    for start, endy, type in combined
+      out += "#{start} #{endy} #{map[type]}\n"
     end
-    real_out = ''
-    out.sort.each{|start, endy, metric|
-      real_out += "#{start} #{endy} #{metric}\n"
-    }
-    real_out
+    out
   end
 end

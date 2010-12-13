@@ -24,6 +24,8 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
   
+  # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
+  # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
   def self.convert_incoming_to_split_sectors incoming
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
@@ -36,7 +38,7 @@ class VLCProgrammer
       puts 'warning--detected an end before a start' if e < s
     }
 
-    # a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
+    # VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
     # should mute 5-6, skip 6-7
     combined.each_with_index{|(start, endy, type), index|
       next if index == 0 # nothing to do there..

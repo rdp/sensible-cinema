@@ -30,4 +30,13 @@ describe MplayerEdl do
 2793.5 2801.0 1
 EOL
   end
+  
+  
+  it "should ignore overlaps" do
+    a = MplayerEdl.convert_to_edl({ "mutes"=>{105=>145}, "blank_outs" => {105 => 145} } )
+    a.should == <<EOL
+105.0 145.0 0
+EOL
+    
+  end
 end
