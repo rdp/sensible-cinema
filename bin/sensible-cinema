@@ -72,9 +72,9 @@ module SensibleSwing
 
     def initialize
       super "Sensible-Cinema"
-      if true#!Storage['main_license_accepted']
+      if !Storage['main_license_accepted']
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
-        #Storage['main_license_accepted'] = true
+        Storage['main_license_accepted'] = true
       end
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
@@ -211,8 +211,7 @@ EOL
       writeOut.close
     end
     
-    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message
-      title = 'Confirm Acceptance of License Agreement'
+    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
       UIManager.put("OptionPane.noButtonText", 'View License')
@@ -254,19 +253,11 @@ EOL
       end
       mencoder = RubyWhich.new.which('mencoder')
       if mencoder.length == 0
-        answer = JOptionPane.showConfirmDialog(nil, "Appears that you need to install a dependency: mencoder.
-        Its license is at: http://www.gnu.org/licenses/gpl-2.0.html.
-        Also this will download 7z locally (license: http://www.7-zip.org/license.txt).
-        Click yes if you accept the terms of the several license agreements mentioned. The programs will then be downloaded.
-          Or click no to cancel and exit.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
-        if answer == 1
-          p 'exiting, no mencoder...'
-          java.lang.System.exit(1)
-        end
+        show_blocking_license_accept_dialog 'MPlayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mencoder."
         vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
         ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
         Dir.chdir(vendor_cache) do
-          Kernel.print 'downloading unzip utility...'
+          Kernel.print 'downloading unzipper...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe

@@ -3,21 +3,12 @@
 == probably next up+low prio ==
 
  "licensing" release:
-    license required first time they run it (gplv3 etc.)
     compare computer DVD timings with physical player...
     re-run latest preview -> auto play in smplayer
-    "it's license is the same as mplayer, and is at -> open window, note [in other window]"
     program the temple thing with it
       note such "I first use this to edit my temple movie"
-    install smplayer first before mencoder...
 
-    By clicking 'I accept' below you are agreeing to the 
-    LICENSE file
-      MIT? if gplv3 weak...
   vnc has a good looking license :)
-  "would you like to go to smplayer website?"
-  install smplayer before mencoder
-  remove note about 7z
 
 == slightly lower than that, somewhat ordered ==
 
@@ -52,7 +43,6 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
       my dvd's (loose timestamps...)
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
-  checkbox for all other licenses or something?
   a real'ish-er website
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   play a bigger noise when totally done...(dvd flick'ish...)
@@ -88,7 +78,6 @@ D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/p
     "round conservatively, write no file" playback
       mplayer batch (playlist?)
     can generate mplayer EDL's and play them...hmm...smplayer them?
-      update license too...
     "round conservatively, yes write file"
       then I guess they could play it back immediately...?
     get half-way through (rip, start writing edited copy), then start playing back as writing edited full copy
