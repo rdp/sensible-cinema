@@ -33,7 +33,9 @@ require_relative '../lib/drive_info'
 require 'whichr'
 
 ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
-ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
+for drive in ['c', 'd', 'e']
+  ENV['PATH'] = ENV['PATH'] + ";#{drive}:\\Program Files\\SMPlayer;#{drive}:\\Program Files\\SMPlayer\\mplayer"
+end
 
 module SensibleSwing
   class MainWindow < JFrame
@@ -109,7 +111,16 @@ module SensibleSwing
         edl_contents = MplayerEdl.convert_to_edl descriptors
         File.write(temp_file, edl_contents)
         title = descriptors["dvd_title_track"] || "1"
-        system_non_blocking "mplayer dvdnav://#{title} -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        # oh the insanity...
+        popup = NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
+        At times it may start skipping forward.
+        Hit the left arrow to bring it back to normal.
+        Also right and left arrows to seek, f key for full screen.")
+        # LODO dry up mplayer opts...
+        # LODO more user friendly re-player...
+        command =  "mplayer dvdnav://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        p command
+        system_non_blocking command
       }
 
       @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true)

@@ -53,7 +53,11 @@ module SensibleSwing
     it "should modify path to have mencder available, and ffmpeg, and download them on the fly" do
       ENV['PATH'].should include("mencoder")
     end
-
+    
+    it "should modify path to have mplayer available" do
+      ENV['PATH'].should include("mplayer")
+    end
+    
     before do
       @subject = MainWindow.new
       @subject.stub!(:choose_dvd_drive) {
