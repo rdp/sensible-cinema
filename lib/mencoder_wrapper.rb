@@ -34,10 +34,15 @@ class MencoderWrapper
       out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
+    def calculate_final_filename to_here_final_file
+      @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
+    end
+    
     # called from the UI...
     def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false
       combined = VLCProgrammer.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
+      assert dvd_title_track
       if start_here || end_here
         raise 'need both' unless end_here && start_here
         start_here = OverLayer.translate_string_to_seconds(start_here)
@@ -48,7 +53,7 @@ class MencoderWrapper
       else
         previous_end = 0
       end
-      @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
+      calculate_final_filename to_here_final_file
       out = get_header this_drive, these_settings
       @idx = 0
       combined.each {|start, endy, type|

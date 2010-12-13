@@ -140,6 +140,7 @@ module SensibleSwing
             command = "smplayer #{wrote_to_here_fulli}"
             system_non_blocking command
           }
+          #on_success.call # start it anyway :)
           if success_no_run
             on_success.call
           else
@@ -148,7 +149,7 @@ module SensibleSwing
         end
       }
 
-      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", false)
+      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR
@@ -377,9 +378,9 @@ EOL
       a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
       a.close
       File.delete a.path
-      dvd_title_track = descriptors["dvd_title_track"]
+      dvd_title_track = descriptors["dvd_title_track"] || "1"
       # how does save_to map to fulli?
-      fulli = save_to + ".fulli.tmp.avi"
+      fulli = MencoderWrapper.calculate_final_filename save_to
       if want_full_list
         # make it create a dummy response file for us :)
         start_time = "00:00"
@@ -446,7 +447,7 @@ EOL
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       if success
-        saved_to = save_to + '.avi' # LODO pass this out?
+        saved_to = save_to + '.avi'
         if @after_success_once
           @after_success_once.call saved_to
         else

@@ -94,9 +94,11 @@ module SensibleSwing
     end
     
     it "should be able to do a normal copy to hard drive, edited" do
-      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli.tmp.avi"]
+      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
+    
+    it "should have a good default title of 1"
     
     it "should call through to explorer for the full thing" do
       @subject.do_copy_dvd_to_hard_drive(false)
@@ -107,13 +109,13 @@ module SensibleSwing
     end
     
     it "should be able to return the full list if it already exists" do
-      FileUtils.touch "abc.fulli.tmp.avi.done"
-      @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli.tmp.avi"]
-      FileUtils.rm "abc.fulli.tmp.avi.done"
+      FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
+      @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
     it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
-     @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
+     @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      @subject.background_thread.join
      @args[-2].should == 1
      @args[-3].should == "01:00"
@@ -143,16 +145,18 @@ module SensibleSwing
     
     
     it "if the .done file exists, it should directly call smplayer" do
-      FileUtils.touch "abc.fulli.tmp.avi.done"
+      FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @command.should == "smplayer abc.fulli.tmp.avi"
-      FileUtils.rm "abc.fulli.tmp.avi.done"
+      @command.should == "smplayer abc.fulli_unedited.tmp.mpg"
+      FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
-    it "if the .done file does not exist, it should call mplayer later" do
+    it "if the .done file does not exist, it should still mplayer later" do
       @subject.instance_variable_get(:@watch_unedited).simulate_click
       @subject.after_success_once.should_not == nil
-      @command.should == nil # scary timing spec
+      @command.should_not == nil # scary timing spec
+      @command = nil
+      # now call through again...
       @subject.background_thread.join
       # should have cleaned up...
       @subject.after_success_once.should == nil
