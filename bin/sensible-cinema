@@ -140,11 +140,13 @@ module SensibleSwing
             command = "smplayer #{wrote_to_here_fulli}"
             system_non_blocking command
           }
-          #on_success.call # start it anyway :)
           if success_no_run
             on_success.call
           else
-            @after_success_once = on_success # shenanigans to be able to let that thread run...
+            Thread.new { 
+              sleep 5; on_success.call # start it anyway :) 
+            }
+            #@after_success_once = on_success # shenanigans to be able to let that thread run...
           end
         end
       }
