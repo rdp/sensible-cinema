@@ -1,3 +1,20 @@
+=begin
+Copyright 2010, Roger Pack 
+This file is part of Sensible Cinema.
+
+    Sensible Cinema is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Sensible Cinema is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
+=end
 require File.expand_path(File.dirname(__FILE__) + '/common')
 load '../bin/sensible-cinema'
 
@@ -18,29 +35,36 @@ module SensibleSwing
 
     it "should prompt if two EDL's match a DVD title" do
       old_edl = MainWindow::EDL_DIR
-      MainWindow.const_set(:EDL_DIR, 'temp')
-      FileUtils.rm_rf 'temp'
-      Dir.mkdir 'temp'
-      MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
-      Dir.chdir 'temp' do
-        File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-      end
-      MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
+      begin
+        MainWindow.const_set(:EDL_DIR, 'temp')
+        FileUtils.rm_rf 'temp'
+        Dir.mkdir 'temp'
+        MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
+        Dir.chdir 'temp' do
+          File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+          File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        end
+        MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
+      ensure
       MainWindow.const_set(:EDL_DIR, old_edl)
+      end
     end
 
     it "should modify path to have mencder available, and ffmpeg, and download them on the fly" do
       ENV['PATH'].should include("mencoder")
     end
-
+    
+    it "should not modify path to have mplayer available" do
+      ENV['PATH'].should_not include("mplayer")
+    end
+    
     before do
       @subject = MainWindow.new
       @subject.stub!(:choose_dvd_drive) {
-        ["drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
+        ["mock_dvd_drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-4].should match(/abc/)
+        args[-5].should match(/abc/)
         @args = args
         'sleep 0.1'
       }
@@ -70,36 +94,39 @@ module SensibleSwing
     end
     
     it "should be able to do a normal copy to hard drive, edited" do
-      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli.tmp.avi"]
+      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
+    
+    it "should have a good default title of 1"
     
     it "should call through to explorer for the full thing" do
       @subject.do_copy_dvd_to_hard_drive(false)
       @subject.background_thread.join
-      @args[-2].should == nil
+      @args[-3].should == nil
       @command.should match /explorer/
       @command.should_not match /fulli/
     end
     
     it "should be able to return the full list if it already exists" do
-      FileUtils.touch "abc.fulli.tmp.avi.done"
-      @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli.tmp.avi"]
-      FileUtils.rm "abc.fulli.tmp.avi.done"
+      FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
+      @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
     it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
-     @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli.tmp.avi"]
+     @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      @subject.background_thread.join
-     @args[-1].should == 1
-     @args[-2].should == "01:00"
+     @args[-2].should == 1
+     @args[-3].should == "01:00"
      @command.should match /explorer/
      @command.should_not match /fulli/
     end
 
     def prompt_for_start_and_end_times
       @subject.instance_variable_get(:@preview_section).simulate_click
-      @args[-1].should == 1
-      @args[-2].should == "01:00"
+      @args[-2].should == 1
+      @args[-3].should == "01:00"
       @subject.background_thread.join
       @command.should match /smplayer/
     end
@@ -118,20 +145,17 @@ module SensibleSwing
     
     
     it "if the .done file exists, it should directly call smplayer" do
-      FileUtils.touch "abc.fulli.tmp.avi.done"
+      FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @command.should == "smplayer abc.fulli.tmp.avi"
-      FileUtils.rm "abc.fulli.tmp.avi.done"
+      @command.should == "smplayer abc.fulli_unedited.tmp.mpg"
+      FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
-    it "if the .done file does not exist, it should call mplayer later" do
-      @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @subject.after_success_once.should_not == nil
-      @command.should == nil # scary timing spec
-      @subject.background_thread.join
-      # should have cleaned up...
+    it "if the .done file does not exist, it should call smplayer ja" do
+      @subject.stub!(:sleep) {} # speed this up...
+      @subject.instance_variable_get(:@watch_unedited).simulate_click.join
       @subject.after_success_once.should == nil
-      @command.should_not == nil
+      @command.should_not == nil # scary timing spec
     end
     
     it "should create a new file for ya" do
@@ -151,8 +175,16 @@ module SensibleSwing
       end
     end
     
-    it "should display unique" do
+    it "should display unique disc in an input box" do
       @subject.instance_variable_get(:@display_unique).simulate_click.should == "01:00"
+    end
+    
+    it "should create an edl" do
+      @subject.instance_variable_get(:@edl).simulate_click
+      
+      @command.should match(/mplayer.*-edl/)
+      @command.should match(/-dvd-device /)
+      p @command
     end
     
   end

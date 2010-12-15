@@ -2,8 +2,9 @@
 
 "disk_unique_id" => "dc5a1b0081d60a94f1d7742ee14759cd",
 
-#"blank_outs" => [
-#  "5:44", "6:10",
-#],
+"blank_outs" => [
+  "5:44", "6:10",
+  "0:10", "0:20",
+],
 
 # appears pretty clean overall...

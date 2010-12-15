@@ -1,98 +1,98 @@
 == medium ==
   
-== probably next up+low prio ==
+== up next release ==
 
- "licensing" release:
-    note baking soda tooth paste in error message
-    license required first time they run it (gplv3 etc.)
-    compare computer DVD timings with physical player...
-    re-run latest preview -> auto play in smplayer
-    "it's license is the same as mplayer, and is at -> open window, note [in other window]"
-    delete test file
-    yes delete temp's when done now...
-    program the temple thing with it
-      note such "I first use this to edit my temple movie"
-    install smplayer first...
-
-    By clicking 'I accept' below you are agreeing to the YouTube Terms of Use, Google Terms of Service and Privacy Policy. 
-    LICENSE
+  simplify/de-bugify
+  
+    that button shows up? (issue 10)
     
-    next release:
-      mplayer EDL...
-        test...
+    EDL for blender movie...
+    re-run latest preview -> auto play in smplayer
+    move that one button *out* ...
+    only pick a drive once per session
+    only pick output filename once per session...
+    kill mencoder instances.
+  
+calculating disk's unique id...
+F:\, Roger's Wedding, a2e3ece630251e4a785218ce71a20ce1
+got fatal exception
+D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:12: syntax error, unexpected tSTRING_BEG
 
-== slightly lower than that ==
+"disk_unique_id" => "a2e3ece630251e4a785218ce71a20ce1",
+^
+D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:1:in `parse_string'
+  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
+  
+  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
+  disallow choosing empty drive? fail cleaner? (issue 11)
 
-  mpeg is broken?
+== slightly lower than that, somewhat ordered ==
+
+  compare computer DVD timings with physical player...
+  
+  mpeg is lossy (at least my current one pass one is)
+    could check if DVD Flick handles *oversize* files well, for information sake 
     check it against cool runnings...
+      on the big screen...does raw.mpg look normal there? fulli?
+        if so, then program the "frame accurate" cutter
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
-  checkbox for all other licenses or something?
   a real'ish-er website
-  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
   play a bigger noise when totally done...(dvd flick'ish...)
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
     dove.org, your kids will find the originals!
   during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
+  does ffdshow let WMP playback the audio on those files?
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
-  can I rip it raw (mencoder -> mpg), then use -hr-edl-seek to split?
-  can I not use mencoder at all?
-    assuming cool runnings really was normal...
-  wiki ("next to" my own EDL's?)
+  fix some specz
+  can pull from imdb at package time [?]
+  delete fulli file
+    except if it's a specific scene run...
+  bundle 7z [?]
+   if license agreement allows
+   thinking not though...
+  bundle rubyzip
+  create wiki ("next to" distributed EDL's?)
   mencoder harddup useful?
   .exe installer, just unzips, runs the .bat file for them [?] :)
-  create a ML on demand
-  only pick that filename once per session...
+  create a forum
   ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
-  allowing for torn discs:
-    does VLC as a ripper even make sense in these cases? (as "just a ripper")?
-    try baking sode tooth paste...
   split EDL's somehow into their own project/LLC...
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
-  note SSD or perhaps tons of RAM help with speed :)
   propaganda-ize
     advertise in christian places
     alternative.to
     blogs that have ever mentioned clearplay :P
-  vnc has a good looking license :)
-  unzip instructions?
-  LLC before ever pay anyone, if I do
-  figure out if mplayer/smplayer as a player has a fast forward feature...
+  LLC before ever pay anyone, if I ever do
+  @DVD flick: support multi-track audio/subtitles (if they're already in the streams...)
+  note the mplayer/smplayer as a player fast forward feature...
   several "play now" options...without a navigator of course :)
     visualbasic-like playlist
       one line at a time :P
-      provide link for cheap DVD decoder :)
+      provide link for cheap DVD decoder if absent [ffdshow?] :)
     "round conservatively, write no file" playback
       mplayer batch (playlist?)
     can generate mplayer EDL's and play them...hmm...smplayer them?
-      update license too...
     "round conservatively, yes write file"
-      then I guess they could play it back?
+      then I guess they could play it back immediately...?
     get half-way through (rip, start writing edited copy), then start playing back as writing edited full copy
     one that's "play DVD to x, now play it muted, now play it to y" (playlist? batch?)
       one for watch unedited "as grabbing" (in create mode)
       can I do this super accurately anyway, more easily?
-    one that's "rip and save first 20 minutes, start me on that, do the whole thing..."
-  finalize my google doc on rippers et al.  
-  non parallelize
-    can insert other sections (same disk) mid-stream :P
-      these last two have gotta be lower prio than the rest...
+    one that's "rip and save first 20 minutes edited, start me on that, do the whole thing..." [?]
+      except after 20 minutes you're hosed
+    some super spiffy version that can grab and play "both" *on the fly* somehow LOL
+      maybe one that is watching the extraction (get info, get info, get info...)...as it includes scene x, it adds it edited to the end of the final output file...
+        This seems like the only real way.
+    one that's "we're ripping, but play from that via EDL or playlist"
   whichr: return nil
-  install smplayer before mencoder [?]
-  bundle 7z [?]
-   if license agreement allows
-   remove note about it
-  using, burning, creating  "howto's"
-   better
-    usability test them?
-    umm...shouldn't using be pretty straight forward tho?
     
  using+burning screencast
  editing screencast
@@ -110,14 +110,14 @@
   re-do DVD EDL's that need it :P
    all dogs go to heaven...finish EDL
   warn when labels exist and don't match...
-  kill old mencoder instances more often...
   auto-download imagemagick, too
   check all the many options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   can rip from a DVD-like local folder (would anybody ever need this?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
-    plus I do some copy, some ac3?
-@dvd flick do you need that frequent of i-frames?
+    plus I do some copy, some ac3 audio codec? huh? avoidable?
+  @dvd flick do you need that frequent of i-frames?
   rename bat as template.bat
+  add a developer readme
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping

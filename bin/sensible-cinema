@@ -1,4 +1,21 @@
 #!/usr/bin/ruby # so my editor will like it...
+=begin
+Copyright 2010, Roger Pack 
+This file is part of Sensible Cinema.
+
+    Sensible Cinema is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Sensible Cinema is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
+=end
 
 puts 'Loading Sensible Cinema...'
 
@@ -8,14 +25,19 @@ require 'sane' # failure here means you haven't bundled your dependencies...[rak
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
 require_relative '../lib/edl_parser'
+require_relative '../lib/mplayer_edl'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
 require 'whichr'
 
+# must put mencoder first, as it has a working mplayer.exe in it...
 ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
-ENV['PATH'] = ENV['PATH'] + ";d:\\Program Files\\SMPlayer;c:\\Program Files\\SMPlayer"
+
+for drive in ['c', 'd', 'e']
+  ENV['PATH'] = ENV['PATH'] + ";#{drive}:\\Program Files\\SMPlayer;#{drive}"
+end
 
 module SensibleSwing
   class MainWindow < JFrame
@@ -41,7 +63,6 @@ module SensibleSwing
     def increment_button_location
       @starting_button_y += 30
     end
-    
 
     Storage = Storage.new("sc")
     
@@ -51,11 +72,19 @@ module SensibleSwing
      Thread.new { system_blocking command }
     end
     
-    # make them choose which one to use
+    # make them choose which system call to use explicitly
     undef system
 
     def initialize
       super "Sensible-Cinema"
+      version = File.read(File.dirname(__FILE__) + "/../VERSION")
+      p version
+      if !(Storage['main_license_accepted'] == version)
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE file', 'I acknowledge that I have read the LICENSE file.'
+        Storage['main_license_accepted'] = version
+      end
+
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
       panel = JPanel.new
       @panel = panel
@@ -71,15 +100,36 @@ module SensibleSwing
       @starting_button_y = 120
       @button_width = 330
 
-      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from the DVD", false )
+      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
       }
+      
+      @edl = new_jbutton( "Watch from DVD edited", false )
+      @edl.on_clicked {
+        drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+        temp_dir = Dir.tmpdir
+        temp_file = temp_dir + '/mplayer.temp.edl'
+        edl_contents = MplayerEdl.convert_to_edl descriptors
+        File.write(temp_file, edl_contents)
+        title = descriptors["dvd_title_track"] || "1"
+        # oh the insanity...
+        popup = NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
+        Also right and left arrows to seek, F key for full screen,
+        q to quit.")
+        # LODO dry up mplayer opts...
+        # LODO more user friendly re-player...
+        command =  "mplayer dvdnav://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        p command
+        system_non_blocking command
+      }
 
-      @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true) # LODO watch in realtime option--then rippers and watchers can combine
+      @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true)
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
-        if(path.length == 0)
+        path2 = RubyWhich.new.which('mplayer')
+        if(path.length == 0 || path2.length == 0)
+          # this one has its own license...
           show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
           Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
@@ -93,12 +143,15 @@ module SensibleSwing
           if success_no_run
             on_success.call
           else
-            @after_success_once = on_success # shenanigans to be able to let that thread run...
+            Thread.new { 
+              sleep 5; on_success.call # start it anyway :) 
+            }
+            #@after_success_once = on_success # shenanigans to be able to let that thread run...
           end
         end
       }
 
-      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit Decision List", false)
+      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR
@@ -129,23 +182,24 @@ module SensibleSwing
         drive, volume, md5 = choose_dvd_drive
         name = get_user_input("Enter DVD name for #{volume}")
 
-        get_user_input
-      input = <<-EOL
+        input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
-  "0:00:01.0", "0:00:02.0", "da..",
+  "0:00:01.0", "0:00:02.0", "profanity", "da..",
 ],
 
 "blank_outs" => [
-  "1:01:00.0" , "1:02:00.0", "violent scene of some sort",
+  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
-"disk_unique_id" => "#{md5}",
-"dvd_title_track" => "1" # most DVD's use title 1 for the main film.  Some don't though.  The correct number is discoverable by opening the film in VLC and choosing "playback -> title" while watching the main feature.  If its not 1, then change this here.  And delete this overly verbose comment either way :)
 "name" => "#{name}"
-#"not edited out stuff" => "fighting (punching) in a bar at 1:00:30 'ish could be edit out still"
-#"closing thoughts" => "still a fairly dark movie"
+"disk_unique_id" => "#{md5}",
+
+# "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it doesn't record the right track, see http://betterlogic.com/roger/2010/11/how-to-use-vlc-to-tell-how-many-titles-and-chapters-and-which-is-the-main
+# "not edited out stuff" => "",
+# "closing thoughts" => "still a fairly dark movie"
+
 EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
@@ -187,6 +241,36 @@ EOL
       writeOut.write(open(full_url).read)
       writeOut.close
     end
+    
+    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
+      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
+      UIManager.put("OptionPane.yesButtonText", 'Accept')
+      UIManager.put("OptionPane.noButtonText", 'View License')
+      # cancel button stays the same...
+      
+      message ||= "By clicking accept, below, you are agreeing to the license agreement for #{program} (the #{license_name}),
+      located at #{license_url_should_also_be_embedded_by_you_in_message}.
+      Click 'View License' to view it on your local machine."
+      
+      returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      # 1 is view
+      # 0 is accept
+      # 2 is cancel
+      if returned == 1
+        system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
+        System.exit 1
+      end
+      if returned == 2
+        p 'license not accepted...'
+        System.exit 1
+      end
+      if returned == -1
+        p 'license exited'
+        System.exit 1
+      end
+      throw unless returned == 0
+      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+    end
 
     def check_for_dependencies
       ffmpeg = RubyWhich.new.which('ffmpeg')
@@ -199,23 +283,15 @@ EOL
       end
       mencoder = RubyWhich.new.which('mencoder')
       if mencoder.length == 0
-        answer = JOptionPane.showConfirmDialog(nil, "Appears that you need to install a dependency: mencoder.
-        Its license is at: http://www.gnu.org/licenses/gpl-2.0.html.
-        Also this will download 7z locally (license: http://www.7-zip.org/license.txt).
-        Click yes if you accept the terms of the several license agreements mentioned. The programs will then be downloaded.
-          Or click no to cancel and exit.", "Lacking dependency", JOptionPane::YES_NO_OPTION)
-        if answer == 1
-          p 'exiting, no mencoder...'
-          java.lang.System.exit(1)
-        end
+        show_blocking_license_accept_dialog 'MPlayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mencoder."
         vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
         ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
         Dir.chdir(vendor_cache) do
-          Kernel.print 'downloading unzip utility...'
+          Kernel.print 'downloading unzipper...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
-          Kernel.print 'downloading mencoder'
+          Kernel.print 'downloading mencoder.7z...'
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           system_blocking("7za e mencoder.7z -y -omencoder")
           Kernel.puts 'done'
@@ -255,11 +331,12 @@ EOL
       JOptionPane.showMessageDialog(nil, message, title, style)
     end
     
-    def get_user_input(message, default)
-     start_time = JOptionPane.showInputDialog(message, default)
+    include_class javax.swing.UIManager
+    def get_user_input(message, default = '')
+      start_time = JOptionPane.showInputDialog(message, default)
     end
-
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
+    
+    def choose_dvd_and_edl_for_it
       drive, dvd_volume_name, md5sum = choose_dvd_drive
       puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
       edit_list_path = single_edit_list_matches_dvd(md5sum)
@@ -269,9 +346,14 @@ EOL
         fc.set_directory EDL_DIR
         edit_list_path = fc.go
       end
-      return unless edit_list_path
+      raise 'cancelled' unless edit_list_path
       descriptors = EdlParser.parse_file edit_list_path
+      return drive, dvd_volume_name, md5sum, edit_list_path, descriptors
+    end
 
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
+      drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
+      
       dvd_title = descriptors['title'] || dvd_volume_name
 
       fc = new_filechooser
@@ -292,14 +374,16 @@ EOL
 
       fc.set_title "Pick where to save #{dvd_title} edited to"
 
-      save_to_file_name = dvd_title + ' edited copy'
+      save_to_file_name = dvd_title + ' edited version'
       save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
       fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
       save_to = fc.go
-      File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w").close
-      dvd_title_track = descriptors["dvd_title_track"]
+      a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
+      a.close
+      File.delete a.path
+      dvd_title_track = descriptors["dvd_title_track"] || "1"
       # how does save_to map to fulli?
-      fulli = save_to + ".fulli.tmp.avi"
+      fulli = MencoderWrapper.calculate_final_filename save_to
       if want_full_list
         # make it create a dummy response file for us :)
         start_time = "00:00"
@@ -309,7 +393,7 @@ EOL
           return [true, fulli]
         end
       end
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -317,21 +401,21 @@ EOL
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
-    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
-      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times]
+      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
       popup = NonBlockingDialog.new("Copying to #{save_to}.\n" +
-      "Applying EDL #{File.basename edit_list_path} against #{drive} (#{dvd_title}).\n" +
+      "Applying EDL #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
-      "NB that the created file will be playable only with smplayer or VLC player.",
+      "NB that the created file will be playable only with smplayer or VLC.",
       "OK")
 
       # allow our popups to still be serviced while it is running
@@ -366,7 +450,7 @@ EOL
       @progress_bar.visible=false
       @buttons.each{|b| b.set_enabled true}
       if success
-        saved_to = save_to + '.avi' # LODO pass this out?
+        saved_to = save_to + '.avi'
         if @after_success_once
           @after_success_once.call saved_to
         else
@@ -376,7 +460,7 @@ EOL
           #self.close # ?
         end
       else
-        show_blocking_message_dialog("Failed--please examine screen output and report back!", "Failed", JOptionPane::ERROR_MESSAGE)
+        show_blocking_message_dialog("Failed--please examine screen output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
       end
       @after_success_once = nil
     end

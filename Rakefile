@@ -63,21 +63,30 @@ task 'bundle_dependencies' => 'gemspec' do
    dependencies = spec.runtime_dependencies
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
    Gem.loaded_specs.select{|name, spec| name == 'os'}
-   FileUtils.rm_rf 'vendor/cache'
-   Dir.mkdir 'vendor/cache'
+   Dir['vendor/cache/*'].each{|f|
+    unless f =~ /jruby.*jar/ # that one takes too long to download...
+      FileUtils.rm_rf f
+      raise 'unable to delete ' + f if File.exist?(f)
+    end
+   }
+   FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
        system("#{Gem.ruby} -S gem unpack #{d.name}")
      }
-     puts 'downloading in jruby-complete.jar file' 
-     # jruby complete .jar file
-     Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
-       resp = http.get("/downloads/1.5.6/jruby-complete-1.5.6.jar")
-       puts 'copying it... '
-       open("jruby-complete-1.5.5.jar", "wb") { |file|
-         file.write(resp.body)
-       }
-     }
+     to_here = "jruby-complete-1.5.5.jar"
+     unless File.exist? to_here
+       url = "/downloads/1.5.6/jruby-complete-1.5.6.jar"
+       puts 'downloading in jruby-complete.jar file '  + url
+       # jruby complete .jar file
+       Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
+         resp = http.get(url)
+         puts 'copying it... '
+        open(to_here, "wb") { |file|
+           file.write(resp.body)
+        }
+      }
+     end
      # create a shunt win32ole file, so that require 'win32ole' will work.
      Dir.mkdir 'lib'
      File.write('lib/win32ole.rb', 'require "jruby-win32ole"')

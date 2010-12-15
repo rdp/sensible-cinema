@@ -35,6 +35,6 @@
 "source" => "Hulu",
 "url" => "http://www.byutv.org/watch/1790-100",
 "whatever_else_you_want" => "this is the old version of the film",
-"disk_unique_id" => "19d121ae8dc40cdd70b57ab7e8c74f76", # for DVD's to be able to differentiate (and auto select) themselves.
+"disk_unique_id" => "19d131ae8dc40cdd70b57ab7e8c74f76", # for DVD's to be able to differentiate (and auto select) themselves.
 
 # NB that you have to put commas just about everywhere. That might help

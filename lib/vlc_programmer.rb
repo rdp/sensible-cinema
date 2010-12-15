@@ -1,3 +1,20 @@
+=begin
+Copyright 2010, Roger Pack 
+This file is part of Sensible Cinema.
+
+    Sensible Cinema is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Sensible Cinema is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
+=end
 require_relative 'overlayer'
 
 class VLCProgrammer
@@ -7,6 +24,8 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
   
+  # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
+  # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
   def self.convert_incoming_to_split_sectors incoming
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
@@ -19,7 +38,7 @@ class VLCProgrammer
       puts 'warning--detected an end before a start' if e < s
     }
 
-    # a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
+    # VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
     # should mute 5-6, skip 6-7
     combined.each_with_index{|(start, endy, type), index|
       next if index == 0 # nothing to do there..

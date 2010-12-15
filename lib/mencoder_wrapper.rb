@@ -1,7 +1,20 @@
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-end
+=begin
+Copyright 2010, Roger Pack 
+This file is part of Sensible Cinema.
+
+    Sensible Cinema is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Sensible Cinema is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
+=end
 
 require_relative 'vlc_programmer'
 
@@ -9,22 +22,27 @@ class MencoderWrapper
 
   class << self
   
-    def get_header this_drive
+    def get_header this_drive, these_settings
       out = ''
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         out = '@rem '
       end
+      # video_opts = "-ovc lavc -lavcopts keyint=1" # seems reasonable quality somehow...
       # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
-      # video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:aspect=4/3 -ofps 30000/1001"
-      # not working yet...
-      video_opts = "-ovc lavc keyint=1" # seems reasonable quality somehow...
-      # TODO next step is...maybe grab it verbatim then convert it using ffmpeg to something high quality?
-      out + "call mencoder dvdnav://#{@dvd_title_track} -alang en -nocache -sid 1000 -oac copy #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      audio_codec = these_settings['audio_codec'] || 'copy'
+      video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
-    def get_bat_commands these_mutes, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1"
-      combined = VLCProgrammer.convert_incoming_to_split_sectors these_mutes
+    def calculate_final_filename to_here_final_file
+      @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
+    end
+    
+    # called from the UI...
+    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false
+      combined = VLCProgrammer.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
+      assert dvd_title_track
       if start_here || end_here
         raise 'need both' unless end_here && start_here
         start_here = OverLayer.translate_string_to_seconds(start_here)
@@ -35,8 +53,8 @@ class MencoderWrapper
       else
         previous_end = 0
       end
-      @big_temp = to_here_final_file + ".fulli.tmp.avi"
-      out = get_header this_drive
+      calculate_final_filename to_here_final_file
+      out = get_header this_drive, these_settings
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end
@@ -56,15 +74,15 @@ class MencoderWrapper
       if File.exist? to_here_final_file
         FileUtils.rm to_here_final_file # raises on failure...which is what we want I think
       end
-      # ridiculous
       out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer
-      # LODO the "insta play" mode, or the "faster rip" mode (related...)
       out += "@rem call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
+      
+      delete_prefix = delete_partials ? "" : "@rem "
 
       out += "@rem del #{@big_temp}\n" # LODO no @rem
-      out += "@rem del " + partials.join(' ') + "\n"# LODO no @rem
-      out += "echo wrote to #{to_here_final_file}"
+      out += "#{delete_prefix} del " + partials.join(' ') + "\n"
+      out += "echo wrote (probably successfully) to #{to_here_final_file}"
       out
     end
     
@@ -84,23 +102,4 @@ class MencoderWrapper
   
   end
 
-end
-
-if $0 == __FILE__
-  require 'rubygems'
-  require 'sane'
-  puts 'syntax: yaml_file_name d:\ output (00:15 00:25) (--run)'
-  a = YAML.load_file ARGV.shift
-  drive = ARGV.shift
-  raise 'wrong drive' unless File.exist?(drive + "AUDIO_TS")
-  execute = ARGV.delete('--run')
-  commands = MencoderWrapper.get_bat_commands(a, drive, *ARGV)
-  if ARGV.length > 2
-    write_to = 'range.bat'
-  else
-    write_to = 'all.bat'
-  end
-  File.write(write_to, commands)
-  print 'wrote ' + write_to
-  system(write_to) if execute
 end

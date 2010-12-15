@@ -1,25 +1,28 @@
-Sensible-cinema is a program that allows you to apply pre-programmed edit decision lists (i.e. "mute out" 
-or "bleep out" scene lists or skip scenes) for DVD's.
+Sensible-cinema (also known as "paranoid cinema" [inside joke] ) is a program that allows you to apply 
+programmed edit lists (Edit Decision Lists [2]) to DVD's.
+I.e. you can edit a DVD to "mute out" or "bleep out" scenes, or skip them.
 
-It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source (GPL) programs [2] (VLC Media Player, mplayer/mencoder, ffmpeg).
+It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
+a few freely available open source (GPL) programs [3] (VLC Media Player, Mplayer/mencoder, ffmpeg et al)
+to accomplish the editing.
+
+To use it, basically install then run it (see below).
+It will come up with some windows where you choose what you want to do
+(edit an edit list, use an edit decision list to edit a DVD, etc.)
+
+Enjoy!
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] http://www.gnu.org/licenses/
 
-To use it, basically install it, then run it. It will come up with some windows where you choose what you want to do
-(edit a list, apply an edit decision list to a DVD, etc.)
-
 == Installation ==
 
-download the latest .zip version file from: http://rogerdpack.t28.net/sensible-cinema/
-unzip it (right click -> Extract all)
-"click into it" and search for then run the file "run sensible cinema.bat"
+To install, download the latest .zip versioned file from: http://rogerdpack.t28.net/sensible-cinema/
+then unzip it (right click -> Extract all)
+then "click into it" and search for and run the file "run sensible cinema.bat"
 
-Note that you'll need java previously installed for it to work, but chances are you already have it.
-
-== Creating Your Own Edit Lists, or modifying the existing ones ==
+== Creating Your Own Edit Lists, or modifying previously existing ones ==
 
 You create an edit decision list for sensible cinema to use against whatever you want.
 
@@ -32,9 +35,8 @@ https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/e
 Basically your job is to create an appropriate file (like that one) somewhere, 
 then start sensible-cinema and instruct it to use your new file.
 
-Once you're done then you can contribute your scene descriptions file if desired, back to the project itself [1].
-
-[1] submit an issue: http://github.com/rdp/sensible-cinema/issues
+Once you're done then you can contribute your scene descriptions file if desired, back to the project itself (see the "feedback" section,
+below).
 
 == FAQ ==
 
@@ -71,7 +73,7 @@ Soldiers left profanity in its filtered version...which wasn't what I had
 anticipated.  Others have noted that sometimes the edit timings
 are off so that it will mute out sections just previous to the profanity, while
 leaving the profanity in, etc.).  Also clearplay apparently runs a rather 
-confusing subscription policy, as well [1].
+confusing subscription policy, as well, so I'm told [1].
 Also sometimes clearplay "mutes out" profanity but you can easily still lip read it,
 so it's almost as if you were exposed to it anyway.  Not ideal.
 There is no little community collaboration/review.
@@ -103,7 +105,7 @@ Then it occurred to me that you could grab the several clean segments
 off a DVD, and piece them together to create an edited copy.  This avoids 
 realtime tracking.  Which is where we are now.
 
-See also the LICENSE file.
+See also the LICENSE.TXT file.
 
 [1] http://www.amazon.com/review/R27VK5BR9NDHBD/ref=cm_cr_pr_viewpnt#R27VK5BR9NDHBD
 
@@ -116,7 +118,7 @@ All files (c) 2010 Roger Pack
 
 == Related ==
 
-The concept isn't too novel.  Some earlier examples:
+The concept isn't too novel.  Some other previously existing examples:
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited) movies.
@@ -145,11 +147,22 @@ Corel WinDVD has "Quick Clip" settings for capturing from DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 
+== Troubleshooting ==
+
+Note that you'll need java previously installed for this to work.  You probably already do though.
+If you run into a snag, try cleaning your DVD. Baking soda toothpaste might help.
+If it still errs, report it to the authors, along with a screen snapshot and steps of
+how to reproduce the problem, preferably.  See feedback section.
+
+If it says "audio problem try pcm" then you can add
+"audio_codec" => "lavc"
+to your EDL and try again.
+
 == Feedback ==
 
 Feedback, including feature requests, comments, etc. welcome.
 
 http://github.com/rdp/sensible-cinema (message me or create an issue for feedback/any requests/bugs)
-or rogerdpack@gmail.com
+or e-mail rogerdpack@gmail.com
 If you're a developer and want to help out with programmming it, please do!
 Also ping me if you want a mailing list created or what not.
