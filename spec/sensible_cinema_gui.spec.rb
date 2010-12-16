@@ -89,7 +89,7 @@ module SensibleSwing
         ["mock_dvd_drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-5].should match(/abc/)
+        args[-4].should match(/abc/)
         @args = args
         'sleep 0.1'
       }
@@ -109,6 +109,10 @@ module SensibleSwing
       }
       @subject.stub!(:open_file_to_edit_it) {}
     end
+    
+    after do
+      @subject.background_thread.join if @subject.background_thread
+    end
 
     class FakeFileChooser
       def set_title x
@@ -126,6 +130,7 @@ module SensibleSwing
     end
 
     it "should be able to do a normal copy to hard drive, edited" do
+      @subject.system_non_blocking "ls"
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
@@ -153,16 +158,16 @@ module SensibleSwing
     it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      @subject.background_thread.join
-     @args[-2].should == 1
-     @args[-3].should == "01:00"
+     @args[-1].should == 1
+     @args[-2].should == "01:00"
      @command.should match /explorer/
      @command.should_not match /fulli/
     end
 
     def prompt_for_start_and_end_times
       @subject.instance_variable_get(:@preview_section).simulate_click
-      @args[-2].should == 1
-      @args[-3].should == "01:00"
+      @args[-1].should == 1
+      @args[-2].should == "01:00"
       @subject.background_thread.join
       @command.should match /smplayer/
     end

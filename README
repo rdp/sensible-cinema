@@ -158,6 +158,8 @@ If it says "audio problem try pcm" then you can add
 "audio_codec" => "lavc"
 to your EDL and try again.
 
+Also if your DVD playback has no audio, try the "lavc" setting, above.  And report it (see feedback).
+
 == Feedback ==
 
 Feedback, including feature requests, comments, etc. welcome.

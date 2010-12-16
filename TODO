@@ -11,9 +11,6 @@
     kill mencoder instances.
   
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
-  
-  
-  
   disallow choosing empty drive? fail cleaner? (issue 11)
 
 == slightly lower than that, somewhat ordered ==
@@ -35,7 +32,6 @@
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
     dove.org, your kids will find the originals!
-  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
   does ffdshow let WMP playback the audio on those files?
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
@@ -60,6 +56,7 @@
     advertise in christian places
     alternative.to
     blogs that have ever mentioned clearplay :P
+    free google adwords (?)
   LLC before ever pay anyone, if I ever do
   @DVD flick: support multi-track audio/subtitles (if they're already in the streams...)
   note the mplayer/smplayer as a player fast forward feature...
@@ -69,7 +66,6 @@
       provide link for cheap DVD decoder if absent [ffdshow?] :)
     "round conservatively, write no file" playback
       mplayer batch (playlist?)
-    can generate mplayer EDL's and play them...hmm...smplayer them?
     "round conservatively, yes write file"
       then I guess they could play it back immediately...?
     get half-way through (rip, start writing edited copy), then start playing back as writing edited full copy
@@ -117,6 +113,9 @@
 @VLC: hard crash when ripping that one DVD...long one, about the constitution...
 in general, fine tune burning with various things...
 
+
+@rspec: it appears to *undo* my stub's after the test, so background threads choke (take out after...)
+
 make sure can work with very large DVD's...
   can use a fast temp drive, save through it to another :P
     (when they have two...)
@@ -138,6 +137,9 @@ Note to people: make several EDL's per movie.
 Note to people: clean your disks!
 
 @mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
+
+@ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
+   and to .avi sometimes works, sometimes it results in static!
 
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
