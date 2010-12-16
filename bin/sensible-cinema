@@ -149,14 +149,6 @@ module SensibleSwing
         end
       }
 
-      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
-      @open_list.on_clicked {
-        dialog = FileDialog.new(self, "Pick file to edit")
-        dialog.set_directory EDL_DIR
-        filename = dialog.go
-        open_file_to_edit_it filename if filename
-      }
-
       @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
       @preview_section.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true
@@ -173,6 +165,14 @@ module SensibleSwing
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
+      }
+
+      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
+      @open_list.on_clicked {
+        dialog = FileDialog.new(self, "Pick file to edit")
+        dialog.set_directory EDL_DIR
+        filename = dialog.go
+        open_file_to_edit_it filename if filename
       }
 
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit Decision List for current DVD", true)
@@ -369,10 +369,10 @@ EOL
       descriptors["dvd_title_track"] || "1"
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_fulli_name = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       
-      dvd_title = descriptors['title'] || dvd_volume_name
+      dvd_title = descriptors['name'] || dvd_volume_name
 
       fc = new_filechooser
 
@@ -399,18 +399,19 @@ EOL
       a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
       a.close
       File.delete a.path
-      dvd_title_track = get_title_track(descriptors)
-      # how does save_to map to fulli?
+      
       fulli = MencoderWrapper.calculate_final_filename save_to
-      if want_full_list
-        # make it create a dummy response file for us :)
-        start_time = "00:00"
-        end_time = "00:01"
+      if want_fulli_name
         if File.exist? fulli + ".done"
           # just return the full path early...
           return [true, fulli]
         end
+        # make it create a dummy response file for us :)
+        start_time = "00:00"
+        end_time = "00:01"
       end
+      
+      dvd_title_track = get_title_track(descriptors)
       generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_prompt_for_start_and_end_times
       [false, fulli] # false means it's running in a background thread :P
     end
