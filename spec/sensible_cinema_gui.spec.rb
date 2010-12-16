@@ -32,6 +32,13 @@ module SensibleSwing
     it "should not auto-select if you pass it nil" do
       MainWindow.new.single_edit_list_matches_dvd(nil).should be nil
     end
+    
+    it "should not die if you choose a poorly formed edl" do
+      @subject.stub!(:choose_dvd_and_edl_for_it) {
+        eval("a-----") # throw Syntax Error
+      }
+      @subject.do_copy_dvd_to_hard_drive true
+    end
 
     it "should prompt if two EDL's match a DVD title" do
       old_edl = MainWindow::EDL_DIR
@@ -93,6 +100,11 @@ module SensibleSwing
       end
     end
     
+    # name like :@rerun_previous
+    def click_button(name)
+      @subject.instance_variable_get(name).simulate_click
+    end
+
     it "should be able to do a normal copy to hard drive, edited" do
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
@@ -135,11 +147,6 @@ module SensibleSwing
       prompt_for_start_and_end_times
     end
     
-    # name like :@rerun_previous
-    def click_button(name)
-      @subject.instance_variable_get(name).simulate_click
-    end
-    
     it "should be able to rerun the latest start and end times with the rerun button" do
       prompt_for_start_and_end_times
       old_args = @args
@@ -147,11 +154,10 @@ module SensibleSwing
       @args = nil
       click_button(:@rerun_preview).join
       @args.should == old_args
+      @command.should match(/explorer/)
     end
     
-    it "should rerun the latest preview straight to smplayer" do
-          
-    end
+    it "should rerun the latest preview straight to smplayer"
     
     it "if the .done file exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
@@ -164,7 +170,7 @@ module SensibleSwing
       @subject.stub!(:sleep) {} # speed this test up...
       @subject.instance_variable_get(:@watch_unedited).simulate_click.join
       @subject.after_success_once.should == nil
-      @command.should_not == nil # scary timing spec
+      @command.should_not == nil # scary timing spec!
     end
     
     it "should create a new file for ya" do
