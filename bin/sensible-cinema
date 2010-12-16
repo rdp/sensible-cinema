@@ -306,7 +306,11 @@ EOL
     def single_edit_list_matches_dvd md5
       return unless md5 # ignore nil searches, where it wasn't set in the .txt file
       matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
-        EdlParser.parse_file(file)["disk_unique_id"] == md5
+        begin
+          parse_edl(file)["disk_unique_id"] == md5
+        rescue SyntaxError
+         # ignore
+        end
       }
       if matching.length == 1
         file = matching[0]
@@ -336,6 +340,10 @@ EOL
       start_time = JOptionPane.showInputDialog(message, default)
     end
     
+    def parse_edl path
+      EdlParser.parse_file path
+    end
+    
     def choose_dvd_and_edl_for_it
       drive, dvd_volume_name, md5sum = choose_dvd_drive
       puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
@@ -347,7 +355,15 @@ EOL
         edit_list_path = fc.go
       end
       raise 'cancelled' unless edit_list_path
-      descriptors = EdlParser.parse_file edit_list_path
+      descriptors = nil
+      while(!descriptors)
+        begin
+          descriptors = parse_edl edit_list_path
+        rescue SyntaxError => e
+          puts e
+          show_blocking_message_dialog("syntax error: " + edit_list_path + " " + e)
+        end
+      end
       return drive, dvd_volume_name, md5sum, edit_list_path, descriptors
     end
 

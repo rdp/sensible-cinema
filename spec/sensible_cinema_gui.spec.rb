@@ -34,12 +34,30 @@ module SensibleSwing
     end
     
     it "should not die if you choose a poorly formed edl" do
-      @subject.stub!(:choose_dvd_and_edl_for_it) {
-        eval("a-----") # throw Syntax Error
+      time_through = 0
+      @subject.stub!(:single_edit_list_matches_dvd) {
+        'fake filename doesnt even matter because we fake the parsing of it later'
       }
-      @subject.do_copy_dvd_to_hard_drive true
+      
+      @subject.stub!(:parse_edl) {
+        if time_through == 0
+          time_through += 1
+          eval("a-----") # throws Syntax Error first time
+        else
+          "stuff"
+        end
+      }
+      @subject.choose_dvd_and_edl_for_it
+      @show_blocking_message_dialog_last_args.should_not be nil
     end
-
+    
+    it "should not select a file if poorly formed" do
+      @subject.stub!(:parse_edl) {
+        eval("a----")
+      }
+      @subject.single_edit_list_matches_dvd 'fake md5'
+    end
+    
     it "should prompt if two EDL's match a DVD title" do
       old_edl = MainWindow::EDL_DIR
       begin
@@ -81,7 +99,9 @@ module SensibleSwing
       @subject.stub!(:get_drive_with_most_space_with_slash) {
         "e:\\"
       }
-      @subject.stub!(:show_blocking_message_dialog) {}
+      @subject.stub!(:show_blocking_message_dialog) { |*args|
+        @show_blocking_message_dialog_last_args = args
+      }
       @subject.stub!(:get_user_input) {'01:00'}
       @subject.stub!(:system_non_blocking) { |command|
         @command = command
