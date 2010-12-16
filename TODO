@@ -6,22 +6,14 @@
   
     EDL for blender movie...
     re-run latest preview -> auto play in smplayer
-    move that one button *out* ...
     only pick a drive once per session
     only pick output filename once per session...
     kill mencoder instances.
   
-calculating disk's unique id...
-F:\, Roger's Wedding, a2e3ece630251e4a785218ce71a20ce1
-got fatal exception
-D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:12: syntax error, unexpected tSTRING_BEG
-
-"disk_unique_id" => "a2e3ece630251e4a785218ce71a20ce1",
-^
-D:\dev\sensible-cinema-never-commit-from-here\zamples\edit_decision_lists\dvds/pack_wedding_2007-03-03.txt:1:in `parse_string'
-  during "initial create rip" can watch it (unedited) while it's still ripping (mplayer)
-  
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
+  
+  
+  
   disallow choosing empty drive? fail cleaner? (issue 11)
 
 == slightly lower than that, somewhat ordered ==

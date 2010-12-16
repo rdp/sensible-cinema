@@ -100,14 +100,15 @@ describe MencoderWrapper do
   
   it "should have what looks like a working ffmpeg style split commands" do
     # ffmpeg -i from_here.avi   -vcodec copy -acodec copy -ss 1:00 -t 1:00 out.avi
-    @out.should match(/ffmpeg -i to_here.*vcodec copy -acodec ac3 .*-ss .* -t /)
-    @out.should_not match(/acodec copy.*vol 0/)
+   @out.should match(/ffmpeg -i to_here.fulli_unedited.tmp.mpg -vcodec copy -acodec .*-ss.*-t/)
+   @out.should match(/-acodec ac3 -ar 48000 -ac 2/)
   end
   
   it "should accomodate for mutes the ffmpeg way" do
     # mutes by silencing...seems reasonable, based on the Family Law fella
     @out.should match(/ -vcodec copy -acodec ac3 -vol 0 /)
     @out.should_not match(/-vcodec copy.*-target ntsc-dvd/)
+    @out.should_not match(/acodec copy.*vol 0/)
   end
   
   it "should use avi extension" do

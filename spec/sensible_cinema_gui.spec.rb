@@ -203,7 +203,6 @@ module SensibleSwing
       begin
         File.exist?( out ).should be_true
         content = File.read(out)
-        p content
         content.should_not include("\"title\"")
         content.should include("disk_unique_id")
         content.should include("dvd_title_track")
