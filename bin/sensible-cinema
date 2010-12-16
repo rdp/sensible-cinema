@@ -122,7 +122,7 @@ module SensibleSwing
         system_non_blocking command
       }
 
-      @watch_unedited = new_jbutton("Watch the current DVD unedited (while grabbing to hard drive)", true)
+      @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
         path2 = RubyWhich.new.which('mplayer')

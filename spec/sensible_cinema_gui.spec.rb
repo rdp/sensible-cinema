@@ -178,10 +178,8 @@ module SensibleSwing
       @args = nil
       click_button(:@rerun_preview).join
       @args.should == old_args
-      @command.should match(/explorer/)
+      @command.should match(/smplayer/)
     end
-    
-    it "should rerun the latest preview straight to smplayer"
     
     it "if the .done file exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
