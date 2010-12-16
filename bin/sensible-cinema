@@ -112,18 +112,17 @@ module SensibleSwing
         temp_file = temp_dir + '/mplayer.temp.edl'
         edl_contents = MplayerEdl.convert_to_edl descriptors
         File.write(temp_file, edl_contents)
-        title = descriptors["dvd_title_track"] || "1"
-        # oh the insanity...
+        title_track = get_title_track(descriptors)
+        # oh the insanity of the console UI...LODO more user friendly player
         popup = NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
         Also right and left arrows to seek, F key for full screen,
         q to quit.")
         # LODO dry up mplayer opts...
-        # LODO more user friendly re-player...
-        command =  "mplayer dvdnav://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        command =  "mplayer dvdnav://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
         system_non_blocking command
       }
 
-      @watch_unedited = new_jbutton("Watch the current DVD unedited (from hard drive)", true)
+      @watch_unedited = new_jbutton("Watch the current DVD unedited (while grabbing to hard drive)", true)
       @watch_unedited.on_clicked {
         path = RubyWhich.new.which('smplayer')
         path2 = RubyWhich.new.which('mplayer')
@@ -365,6 +364,10 @@ EOL
       end
       return drive, dvd_volume_name, md5sum, edit_list_path, descriptors
     end
+    
+    def get_title_track descriptors
+      descriptors["dvd_title_track"] || "1"
+    end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_full_list = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
@@ -396,7 +399,7 @@ EOL
       a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
       a.close
       File.delete a.path
-      dvd_title_track = descriptors["dvd_title_track"] || "1"
+      dvd_title_track = get_title_track(descriptors)
       # how does save_to map to fulli?
       fulli = MencoderWrapper.calculate_final_filename save_to
       if want_full_list

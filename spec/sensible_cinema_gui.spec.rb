@@ -130,7 +130,11 @@ module SensibleSwing
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
     
-    it "should have a good default title of 1"
+    it "should have a good default title of 1" do
+     @subject.get_title_track({}).should == "1"
+     descriptors = {"dvd_title_track" => "3"}
+     @subject.get_title_track(descriptors).should == "3"
+    end
     
     it "should call through to explorer for the full thing" do
       @subject.do_copy_dvd_to_hard_drive(false)
@@ -216,7 +220,6 @@ module SensibleSwing
     
     it "should create an edl and pass it through to mplayer" do
       @subject.instance_variable_get(:@mplayer_edl).simulate_click
-      
       @command.should match(/mplayer.*-edl/)
       @command.should match(/-dvd-device /)
     end
