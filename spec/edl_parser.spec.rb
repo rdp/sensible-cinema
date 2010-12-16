@@ -56,7 +56,7 @@ describe EdlParser do
   end
   
   it "should raise if the first two aren't digits" do
-    proc { EdlParser.extract_entry!(["a"])}.should raise_exception
+    proc { EdlParser.extract_entry!(["a"])}.should raise_exception(SyntaxError) 
   end
   
   it "should detect timestamps well" do

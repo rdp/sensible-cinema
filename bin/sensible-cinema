@@ -162,7 +162,7 @@ module SensibleSwing
         end
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
@@ -175,7 +175,7 @@ module SensibleSwing
         open_file_to_edit_it filename if filename
       }
 
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit Decision List for current DVD", true)
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit Decision List for a DVD", true)
       @create_new_edl_for_current_dvd.on_clicked do
         drive, volume, md5 = choose_dvd_drive
         name = get_user_input("Enter DVD name for #{volume}")
@@ -206,7 +206,7 @@ EOL
 
       end
 
-      @display_unique = new_jbutton( "Calculate current DVD's unique ID", true ).on_clicked {
+      @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
         drive, volume, md5 = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
@@ -381,13 +381,13 @@ EOL
       if should_prompt_for_start_and_end_times
         show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview")
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
-        Storage['start_time'] = start_time if start_time
         end_time = get_user_input("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
-        Storage['end_time'] = end_time if end_time
         unless start_time and end_time
           JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
           return
         end
+        Storage['start_time'] = start_time
+        Storage['end_time'] = end_time
       end
 
       fc.set_title "Pick where to save #{dvd_title} edited to"

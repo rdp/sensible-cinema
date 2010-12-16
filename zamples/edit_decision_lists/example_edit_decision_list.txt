@@ -23,7 +23,7 @@
 "blank_outs" => [
   # this first one blanks (by overlaying *over* the video, a black window)
   # from one hour one minute to one hour two minutes, like:
-  "01:01:00" , "01:02:00", "nudity", "Kate Winslet's...",
+  "01:01:00" , "01:02:00", "nudity", "...",
   # you can also always optionally use decimals, like 3 minutes 3 seconds and a half to 3 minutes 4 seconds and a half (one second blank out):
   "00:03:03.5", "00:03:04.5",
 ],
