@@ -105,8 +105,8 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @edl = new_jbutton( "Watch from DVD edited", false )
-      @edl.on_clicked {
+      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false )
+      @mplayer_edl.on_clicked {
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         temp_dir = Dir.tmpdir
         temp_file = temp_dir + '/mplayer.temp.edl'
@@ -120,7 +120,6 @@ module SensibleSwing
         # LODO dry up mplayer opts...
         # LODO more user friendly re-player...
         command =  "mplayer dvdnav://#{title} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
-        p command
         system_non_blocking command
       }
 
@@ -445,7 +444,6 @@ EOL
     attr_accessor :background_thread, :after_success_once
 
     def run_create_commands batch_commands, save_to
-      p @buttons
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a

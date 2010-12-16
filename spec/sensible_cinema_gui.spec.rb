@@ -214,12 +214,11 @@ module SensibleSwing
       @subject.instance_variable_get(:@display_unique).simulate_click.should == "01:00"
     end
     
-    it "should create an edl" do
-      @subject.instance_variable_get(:@edl).simulate_click
+    it "should create an edl and pass it through to mplayer" do
+      @subject.instance_variable_get(:@mplayer_edl).simulate_click
       
       @command.should match(/mplayer.*-edl/)
       @command.should match(/-dvd-device /)
-      p @command
     end
     
   end
