@@ -135,14 +135,23 @@ module SensibleSwing
       prompt_for_start_and_end_times
     end
     
-    it "should be able to reprompt for start and end times automagically" do
+    # name like :@rerun_previous
+    def click_button(name)
+      @subject.instance_variable_get(name).simulate_click
+    end
+    
+    it "should be able to rerun the latest start and end times with the rerun button" do
       prompt_for_start_and_end_times
       old_args = @args
+      old_args.should_not == nil
       @args = nil
-      @subject.repeat_last_copy_dvd_to_hard_drive.join
+      click_button(:@rerun_preview).join
       @args.should == old_args
     end
     
+    it "should rerun the latest preview straight to smplayer" do
+          
+    end
     
     it "if the .done file exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
@@ -152,7 +161,7 @@ module SensibleSwing
     end
     
     it "if the .done file does not exist, it should call smplayer ja" do
-      @subject.stub!(:sleep) {} # speed this up...
+      @subject.stub!(:sleep) {} # speed this test up...
       @subject.instance_variable_get(:@watch_unedited).simulate_click.join
       @subject.after_success_once.should == nil
       @command.should_not == nil # scary timing spec

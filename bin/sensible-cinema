@@ -78,7 +78,7 @@ module SensibleSwing
     def initialize
       super "Sensible-Cinema"
       version = File.read(File.dirname(__FILE__) + "/../VERSION")
-      p version
+      puts version.strip
       if !(Storage['main_license_accepted'] == version)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
         show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE file', 'I acknowledge that I have read the LICENSE file.'
@@ -429,6 +429,7 @@ EOL
     attr_accessor :background_thread, :after_success_once
 
     def run_create_commands batch_commands, save_to
+      p @buttons
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
