@@ -4,17 +4,18 @@
 
   simplify/de-bugify
   
-    EDL for blender movie...
-    re-run latest preview -> auto play in smplayer
     only pick a drive once per session
     only pick output filename once per session...
+      does this allow me to kill that other button?
+        if not: re-run latest preview -> auto play in smplayer
     kill mencoder instances.
   
   assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
-  disallow choosing empty drive? fail cleaner? (issue 11)
 
 == slightly lower than that, somewhat ordered ==
 
+  disallow choosing empty drive? fail cleaner? (issue 11)
+  make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
   compare computer DVD timings with physical player...
   
   mpeg is lossy (at least my current one pass one is)
