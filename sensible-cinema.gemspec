@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.18.2"
+  s.version = "0.18.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-12-13}
+  s.date = %q{2010-12-17}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
-    "create new sensible cinema decision list files.bat",
+    "create or edit sensible cinema decision list files.bat",
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "gplv3.txt",
@@ -127,6 +127,7 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
     "zamples/edit_decision_lists/dvds/Harry Potter 2.txt",
+    "zamples/edit_decision_lists/dvds/big_buck_bunny_dvd.txt",
     "zamples/edit_decision_lists/dvds/bob the builder pets in a pickle.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
