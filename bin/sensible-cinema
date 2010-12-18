@@ -105,22 +105,24 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false )
-      @mplayer_edl.on_clicked {
-        drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
-        temp_dir = Dir.tmpdir
-        temp_file = temp_dir + '/mplayer.temp.edl'
-        edl_contents = MplayerEdl.convert_to_edl descriptors
-        File.write(temp_file, edl_contents)
-        title_track = get_title_track(descriptors)
-        # oh the insanity of the console UI...LODO more user friendly player
-        popup = NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
-        Also right and left arrows to seek, F key for full screen,
-        q to quit.")
-        # LODO dry up mplayer opts...
-        command =  "mplayer dvdnav://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}" #  dvdnav?
-        Thread.new { system_blocking command; popup.dispose }
-      }
+      # @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false )
+      # @mplayer_edl.on_clicked {
+      #   drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+      #   descriptors = EdlParser.parse_file edl_path
+      #   
+      #   temp_dir = Dir.tmpdir
+      #   temp_file = temp_dir + '/mplayer.temp.edl'
+      #   edl_contents = MplayerEdl.convert_to_edl descriptors
+      #   File.write(temp_file, edl_contents)
+      #   title_track = get_title_track(descriptors)
+      #   # oh the insanity of the console UI...LODO more user friendly player
+      #   @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
+      #   Also right and left arrows to seek, F key for full screen,
+      #   q to quit.")
+      #   # LODO dry up mplayer opts...
+      #   command =  "mplayer dvd://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+      #   Thread.new { system_blocking command; popup.dispose }
+      # }
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
       @watch_unedited.on_clicked {
@@ -453,7 +455,15 @@ EOL
       lines.each_with_index{|line, idx|
         if success
           puts "running #{line}"
-          success = system_blocking(line) unless ARGV.find{|a| a == '--test'} # this might not actually cancel out early for some reason...
+          begin
+            success = system_blocking(line)
+          rescue Exception => e
+            p e
+            if line =~ /mencoder/
+              system_blocking("taskkill /f /IM mencoder.exe") # these are death if they stay around...
+            end
+            raise e
+          end
           if line =~ /@rem /
             success = true # these fail fof some reason?
           else
