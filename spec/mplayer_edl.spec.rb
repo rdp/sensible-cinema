@@ -39,4 +39,22 @@ EOL
 EOL
     
   end
+
+  it "should add to mutes" do
+    a = MplayerEdl.convert_to_edl({ "mutes"=>{105=>106}, "blank_outs" => {110 => 111} }, 1 )
+    a.should == <<EOL
+105.0 107.0 1
+110.0 111.0 0
+EOL
+  end
+
+  it "should catch overlaps from additions to mutes" do
+    a = MplayerEdl.convert_to_edl({ "mutes"=>{105=>106}, "blank_outs" => {106 => 107} }, 1 )
+    a.should == <<EOL
+105.0 106.0 1
+106.0 107.0 0
+EOL
+
+end  
+
 end

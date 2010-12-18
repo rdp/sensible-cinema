@@ -109,7 +109,7 @@ module SensibleSwing
       @mplayer_edl.on_clicked {
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         descriptors = EdlParser.parse_file edl_path
-        
+        require '_dbg'
         temp_dir = Dir.tmpdir
         temp_file = temp_dir + '/mplayer.temp.edl'
         edl_contents = MplayerEdl.convert_to_edl descriptors
