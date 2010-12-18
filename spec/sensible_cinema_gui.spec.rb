@@ -103,6 +103,10 @@ module SensibleSwing
         @show_blocking_message_dialog_last_args = args
       }
       @subject.stub!(:get_user_input) {'01:00'}
+      @subject.stub!(:system_blocking) { |command|
+        @system_blocking_command = command
+      }
+
       @subject.stub!(:system_non_blocking) { |command|
         @command = command
         Thread.new {} # fake out the return...
@@ -221,9 +225,9 @@ module SensibleSwing
     end
     
     it "should create an edl and pass it through to mplayer" do
-      @subject.instance_variable_get(:@mplayer_edl).simulate_click
-      @command.should match(/mplayer.*-edl/)
-      @command.should match(/-dvd-device /)
+      @subject.instance_variable_get(:@mplayer_edl).simulate_click.join
+      @system_blocking_command.should match(/mplayer.*-edl/)
+      @system_blocking_command.should match(/-dvd-device /)
     end
     
   end
