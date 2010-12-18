@@ -254,4 +254,7 @@ module SensibleSwing
     end
     
   end
+  
+  it "should prompt you if you need to enter a dvd"
+  
 end

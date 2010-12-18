@@ -481,6 +481,7 @@ EOL
     # returns e:\, volume, md5sum
     def choose_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_win32ole
+      show_blocking_message_dialog 'insert dvd first' unless opticals.find{|d| d.VolumeName }
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD and re-select') + ")"}
 
       if opticals.length != 1
