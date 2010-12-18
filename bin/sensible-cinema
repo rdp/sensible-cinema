@@ -118,7 +118,7 @@ module SensibleSwing
         Also right and left arrows to seek, F key for full screen,
         q to quit.")
         # LODO dry up mplayer opts...
-        command =  "mplayer dvdnav://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        command =  "mplayer dvdnav://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}" #  dvdnav?
         Thread.new { system_blocking command; popup.dispose }
       }
 
@@ -469,9 +469,10 @@ EOL
         if run_mplayer
           system_non_blocking "smplayer #{saved_to}"
         else
-          NonBlockingDialog.new(" Done--you may now watch file #{saved_to} in SMPlayer or VLC player")
+          # lodo NonBlockingDialog once it can get to the top instead of being so buried...
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
-          system_non_blocking show_file
+          system_blocking show_file # returns immediately
+          show_blocking_message_dialog "Done--you may now watch file #{saved_to} in SMPlayer or VLC player"
         end
       else
         show_blocking_message_dialog("Failed--please examine screen output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
