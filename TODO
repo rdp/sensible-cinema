@@ -4,7 +4,6 @@
 
   simplify/de-bugify
   
-    only pick a drive once per session
     only pick output filename once per session...
       does this allow me to kill that other button?
         if not: re-run latest preview -> auto play in smplayer
