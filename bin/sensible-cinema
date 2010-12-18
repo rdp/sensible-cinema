@@ -122,7 +122,7 @@ module SensibleSwing
         # LODO dry up mplayer dvd opts...
         command =  "mplayer dvd://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
         p command
-        Thread.new { system_blocking command; popup.dispose }
+        Thread.new { system_blocking command; @popup.dispose }
       }
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)

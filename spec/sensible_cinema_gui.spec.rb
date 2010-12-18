@@ -149,8 +149,8 @@ module SensibleSwing
       @subject.do_copy_dvd_to_hard_drive(false)
       @subject.background_thread.join
       @args[-3].should == nil
-      @command.should match /explorer/
-      @command.should_not match /fulli/
+      @system_blocking_command.should match /explorer/
+      @system_blocking_command.should_not match /fulli/
     end
     
     it "should be able to return the full list if it already exists" do
@@ -225,9 +225,16 @@ module SensibleSwing
     end
     
     it "should create an edl and pass it through to mplayer" do
-      @subject.instance_variable_get(:@mplayer_edl).simulate_click.join
+      click_button(:@mplayer_edl).join
       @system_blocking_command.should match(/mplayer.*-edl/)
       @system_blocking_command.should match(/-dvd-device /)
+    end
+    
+    it "should play edl with elongated mutes" do
+      temp_dir = Dir.tmpdir
+      temp_file = temp_dir + '/mplayer.temp.edl'
+      click_button(:@mplayer_edl).join
+      p File.read(temp_file)
     end
     
     it "should only prompt for drive once" do
@@ -253,8 +260,9 @@ module SensibleSwing
       count.should == 1
     end
     
+    it "should prompt you if you need to insert a dvd"
+    
+    
   end
-  
-  it "should prompt you if you need to enter a dvd"
   
 end
