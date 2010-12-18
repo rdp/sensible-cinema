@@ -15,15 +15,12 @@
   all dogs edit list
   cool runnings edit list
   temple edit list
-  disallow choosing empty drive? fail cleaner? (issue 11)
+  disallow choosing empty drive? fail more gracefully? (issue 11)
   make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
   compare computer DVD timings with physical player...
   
   mpeg is lossy (at least my current one pass one is)
-    could check if DVD Flick handles *oversize* files well, for information sake 
-    check it against cool runnings...
-      on the big screen...does raw.mpg look normal there? fulli?
-        if so, then program the "frame accurate" cutter
+  could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
@@ -41,6 +38,7 @@
   splitter abs. coords option
   video on how to use imdb
   alternate endings
+  @ffmpeg there's no audio when going mpg -> mpg with copy!
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
     vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
   with "preview segment" can't you preview it once it has passed that segment?
