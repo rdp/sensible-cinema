@@ -37,7 +37,8 @@
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
-  @mplayer you *die* with edl's on many DVD's...
+  @mplayer you *die* with edl's on many DVD's... ex: on bunny one
+    vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
   with "preview segment" can't you preview it once it has passed that segment?
   can pull from imdb at package time [?]
   delete fulli file
