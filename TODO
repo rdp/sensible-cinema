@@ -8,6 +8,7 @@
   research into edl dvdnav being flaky...
     maybe they just need an extra second or so added, always?
     happiest baby...
+  make sure release has right .bat files
     
 == slightly lower than that, somewhat ordered ==
 
@@ -18,14 +19,6 @@
     temple
     cool runnings
     cars
-  kill mencoder instances always, even if hard in jruby 1.5 :)
-    how can I get the return val tho?
-    ffi for waitpid?
-    ignore taskkill failures :P
-    bundle with 1.6 complete :P
-      use IO.popen4, x threads readline, kill that translated pid on way out :)
-      GetExitCodeProcess, wait for single object: http://www.codeguru.com/forum/showthread.php?p=390227
-      task
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's here
   mpeg is lossy (at least my current one pass conversion is)

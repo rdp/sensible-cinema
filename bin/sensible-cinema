@@ -541,13 +541,4 @@ if $0 == __FILE__
   a = SensibleSwing::MainWindow.new
   a.set_visible true
   puts 'Please use the Sensible Cinema GUI window popup...'
-  b = Thread.new {
-    while(a.is_displayable)
-      sleep 0
-    end
-    p 'killing any left over mencoder instances...'
-    system("taskkill /f /IM mencoder.exe")
-  }
-  p 'joining'
-  b.join
 end
