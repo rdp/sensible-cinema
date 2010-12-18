@@ -1,5 +1,6 @@
 All files (c) Roger Pack 2010
 All files are released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed.
+The edit lists are CC license, like wikipedia.
 
 May contain some 3rd party libraries/executables under their own (separate, open source) licenses.
 

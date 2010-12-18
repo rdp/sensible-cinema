@@ -27,19 +27,7 @@ then "click into it" and search for and run the file "run sensible cinema.bat"
 
 == Creating Your Own Edit Lists, or modifying previously existing ones ==
 
-You create an edit decision list for sensible cinema to use against whatever you want.
-
-An Edit Decision List looks something like this example:
-
-Here's one with more detail
-
-https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
-
-Basically your job is to create an appropriate file (like that one) somewhere, 
-then start sensible-cinema and instruct it to use your new file.
-
-Once you're done then you can contribute your scene descriptions file if desired, back to the project itself (see the "feedback" section,
-below).
+See the accompanied how_to_create.txt file.
 
 == FAQ ==
 
@@ -51,6 +39,10 @@ A. You could burn a new DVD with it.  First create it on your hard drive.  Then 
   Or buy a very long cord and plug it in as an extra monitor from your desktop.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.
+
+Q. I want to give an edited DVD to a friend, how do I do that?
+A. Probably give them the original DVD and a link to sensible-cinema :)
+   You may want to loan them a DVD burner if they don't have one.
 
 == Caveats ==
 

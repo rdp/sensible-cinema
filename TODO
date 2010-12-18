@@ -8,11 +8,13 @@
       does this allow me to kill that other button?
         if not: re-run latest preview -> auto play in smplayer
     kill mencoder instances.
-  
-  assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
+    assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
 
 == slightly lower than that, somewhat ordered ==
 
+  all dogs edit list
+  cool runnings edit list
+  temple edit list
   disallow choosing empty drive? fail cleaner? (issue 11)
   make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
   compare computer DVD timings with physical player...
@@ -32,10 +34,13 @@
   note that this can corrupt your soul!
     don't watch it if it's dark! come on!
     dove.org, your kids will find the originals!
-  does ffdshow let WMP playback the audio on those files?
+  research into edl dvdnav being flaky...
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  splitter abs. coords option
+  video on how to use imdb
+  alternate endings
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
     vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
   with "preview segment" can't you preview it once it has passed that segment?
