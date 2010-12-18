@@ -164,7 +164,7 @@ module SensibleSwing
      @subject.background_thread.join
      @args[-1].should == 1
      @args[-2].should == "01:00"
-     @command.should match /explorer/
+     @command.should match /smplayer/
      @command.should_not match /fulli/
     end
 

@@ -133,19 +133,10 @@ module SensibleSwing
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
           System.exit(1)
         else
-          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true # LODO pass in a block (currently @after_success_once is run from the other thread--even have a race condition in there!)
-          on_success = proc {
-            command = "smplayer #{wrote_to_here_fulli}"
-            system_non_blocking command
-          }
-          if success_no_run
-            on_success.call
-          else
-            Thread.new { 
-              sleep 5; on_success.call # start it anyway, a bit delayed to let it start spooling to disk... 
-            }
-            #@after_success_once = on_success # shenanigans to be able to let that thread run...
-          end
+          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+          sleep 5 unless success_no_run
+          command = "smplayer #{wrote_to_here_fulli}"
+          system_non_blocking command
         end
       }
 
@@ -388,7 +379,7 @@ EOL
       end
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_fulli_name = false
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
@@ -406,9 +397,8 @@ EOL
       dvd_title = descriptors['name'] || dvd_volume_name
       save_to = get_save_to_filename dvd_title
       fulli = MencoderWrapper.calculate_final_filename save_to
-      if want_fulli_name
+      if exit_early_if_fulli_exists
         if File.exist? fulli + ".done"
-          # just return the full path early...
           return [true, fulli]
         end
         # make it create a dummy response file for us :)
@@ -417,7 +407,8 @@ EOL
       end
       
       dvd_title_track = get_title_track(descriptors)
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
+      run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -429,8 +420,8 @@ EOL
       MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track]
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer]
       commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
@@ -444,7 +435,7 @@ EOL
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new {
-        run_create_commands commands, save_to
+        run_create_commands commands, save_to, run_mplayer
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end...
@@ -452,7 +443,7 @@ EOL
     
     attr_accessor :background_thread, :after_success_once
 
-    def run_create_commands batch_commands, save_to
+    def run_create_commands batch_commands, save_to, run_mplayer
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
@@ -475,18 +466,16 @@ EOL
       @buttons.each{|b| b.set_enabled true}
       if success
         saved_to = save_to + '.avi'
-        if @after_success_once
-          @after_success_once.call saved_to
+        if run_mplayer
+          system_non_blocking "smplayer #{saved_to}"
         else
           NonBlockingDialog.new(" Done--you may now watch file #{saved_to} in SMPlayer or VLC player")
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
           system_non_blocking show_file
-          #self.close # ?
         end
       else
         show_blocking_message_dialog("Failed--please examine screen output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
       end
-      @after_success_once = nil
     end
 
     # returns e:\, volume, md5sum
