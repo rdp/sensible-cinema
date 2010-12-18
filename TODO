@@ -7,11 +7,11 @@
     only pick output filename once per session...
       does this allow me to kill that other button?
         if not: re-run latest preview -> auto play in smplayer
-    kill mencoder instances.
     assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
 
 == slightly lower than that, somewhat ordered ==
 
+  kill mencoder instances always, even if hard in jruby 1.5 :)
   all dogs edit list
   cool runnings edit list
   temple edit list
@@ -32,9 +32,11 @@
     don't watch it if it's dark! come on!
     dove.org, your kids will find the originals!
   research into edl dvdnav being flaky...
+    especially with arrows...
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  some status bar that shows which DVD is in currently, how many match it, et al (pre button)
   splitter abs. coords option
   video on how to use imdb
   alternate endings
