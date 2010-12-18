@@ -25,6 +25,7 @@
     bundle with 1.6 complete :P
       use IO.popen4, x threads readline, kill that translated pid on way out :)
       GetExitCodeProcess, wait for single object: http://www.codeguru.com/forum/showthread.php?p=390227
+      task
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's here
   mpeg is lossy (at least my current one pass conversion is)
@@ -352,3 +353,5 @@ something like you watch it *with* you friends and can all chat together...hmm..
 donate money to several projects I use/like :)
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
+
+@jruby: system("mencoder") from a button doesn't get interrupted by an exception [!]

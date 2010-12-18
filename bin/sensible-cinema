@@ -119,8 +119,9 @@ module SensibleSwing
       #   @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
       #   Also right and left arrows to seek, F key for full screen,
       #   q to quit.")
-      #   # LODO dry up mplayer opts...
+      #   # LODO dry up mplayer dvd opts...
       #   command =  "mplayer dvd://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+      #   p command
       #   Thread.new { system_blocking command; popup.dispose }
       # }
 
@@ -455,15 +456,7 @@ EOL
       lines.each_with_index{|line, idx|
         if success
           puts "running #{line}"
-          begin
-            success = system_blocking(line)
-          rescue Exception => e
-            p e
-            if line =~ /mencoder/
-              system_blocking("taskkill /f /IM mencoder.exe") # these are death if they stay around...
-            end
-            raise e
-          end
+          success = system_blocking(line)
           if line =~ /@rem /
             success = true # these fail fof some reason?
           else
@@ -545,6 +538,16 @@ EOL
 end
 
 if $0 == __FILE__
-  SensibleSwing::MainWindow.new.set_visible true
+  a = SensibleSwing::MainWindow.new
+  a.set_visible true
   puts 'Please use the Sensible Cinema GUI window popup...'
+  b = Thread.new {
+    while(a.is_displayable)
+      sleep 0
+    end
+    p 'killing any left over mencoder instances...'
+    system("taskkill /f /IM mencoder.exe")
+  }
+  p 'joining'
+  b.join
 end
