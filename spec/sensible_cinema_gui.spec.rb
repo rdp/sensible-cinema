@@ -242,5 +242,16 @@ module SensibleSwing
       count.should == 1
     end
     
+    it "should only prompt for save to filename once" do
+      count = 0
+      @subject.stub!(:new_filechooser) {
+        count += 1
+        FakeFileChooser.new
+      }
+      @subject.get_save_to_filename 'yo'
+      @subject.get_save_to_filename 'yo'
+      count.should == 1
+    end
+    
   end
 end

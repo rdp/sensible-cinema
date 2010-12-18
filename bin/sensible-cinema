@@ -373,16 +373,19 @@ EOL
     end
     
     def get_save_to_filename dvd_title
-      fc = new_filechooser
-      fc.set_title "Pick where to save #{dvd_title} edited to"
-      save_to_file_name = dvd_title + ' edited version'
-      save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
-      fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
-      save_to = fc.go
-      a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
-      a.close
-      File.delete a.path
-      save_to
+      @_get_save_to_filename ||=
+      begin
+        fc = new_filechooser
+        fc.set_title "Pick where to save #{dvd_title} edited to"
+        save_to_file_name = dvd_title + ' edited version'
+        save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation for now...
+        fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
+        save_to = fc.go
+        a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
+        a.close
+        File.delete a.path
+        save_to
+      end
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, want_fulli_name = false
