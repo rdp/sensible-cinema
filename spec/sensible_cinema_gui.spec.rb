@@ -230,5 +230,17 @@ module SensibleSwing
       @system_blocking_command.should match(/-dvd-device /)
     end
     
+    it "should only prompt for drive once" do
+      count = 0
+      @subject.stub!(:choose_dvd_drive) {
+        raise 'bad' if count == 1
+        count = 1
+        ['drive', 'volume', '19d121ae8dc40cdd70b57ab7e8c74f76']
+      }
+      @subject.choose_dvd_and_edl_for_it
+      @subject.choose_dvd_and_edl_for_it
+      count.should == 1
+    end
+    
   end
 end
