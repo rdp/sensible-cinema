@@ -18,7 +18,7 @@
   disallow choosing empty drive? fail more gracefully? (issue 11)
   make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
   compare computer DVD timings with physical player...
-  
+  mailing list
   mpeg is lossy (at least my current one pass one is)
   could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
@@ -48,12 +48,11 @@
   bundle 7z [?]
    if license agreement allows
    thinking not though...
-  bundle rubyzip
-  create wiki ("next to" distributed EDL's?)
   mencoder harddup useful?
-  .exe installer, just unzips, runs the .bat file for them [?] :)
-  create a forum
-  ask if you can somehow more grab to the *same* codec (ffmpeg, mencoder mailing lists)
+  .exe installer
+    just unzips, runs the .bat file for them [?] :)
+      full msi
+  ask if you can somehow more easily grab to "mostly the same" exact codec (ffmpeg, mencoder mailing lists)
   split EDL's somehow into their own project/LLC...
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
@@ -99,9 +98,7 @@
   advertise urug, ruby flow :)
   "Re-run most recent" disabled when there isn't one [?]
   re-do DVD EDL's that need it :P
-   all dogs go to heaven...finish EDL
   warn when labels exist and don't match...
-  auto-download imagemagick, too
   check all the many options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   can rip from a DVD-like local folder (would anybody ever need this?)
   ripping "redoes" a large last section, for combining. Can I avoid this?
@@ -117,7 +114,6 @@
     or do we want to do that by default anyway? (does it help burning? file size...hmm...)
 @VLC: hard crash when ripping that one DVD...long one, about the constitution...
 in general, fine tune burning with various things...
-
 
 @rspec: it appears to *undo* my stub's after the test, so background threads choke (take out after...)
 
@@ -137,10 +133,9 @@ double buffering hard drive/incoming copying from DVD might speed things, if you
   might not work for all modes tho...
 make the progress bar map "better" to the actual time that each section should take...
 
-"show" what drive they have in there--like an auto-detect, and if it has EDL's available for it or not.
-Note to people: make several EDL's per movie.
 Note to people: clean your disks!
-
+  in an exception
+  
 @mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
 
 @ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
@@ -154,7 +149,6 @@ burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
   transcode to condense..?
   split to allow?
 try to compile transcode in cygwin (yipes)
-legal shtuff (LICENSE)
 
 @smplayer: right click on DVD...
 the ac3 thing (I have to specify it...is this necessary? is it always ac3?)
@@ -347,6 +341,6 @@ create a "book edit list" (word x is at position y...)
 @smplayer: your CD config is awful.
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...
-donate money to several projects I like :)
+donate money to several projects I use/like :)
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
