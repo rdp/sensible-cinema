@@ -2,18 +2,19 @@
   
 == up next release ==
 
+  research into edl dvdnav being flaky...
+    especially with arrows...
+  linearize edl's
+  
+== slightly lower than that, somewhat ordered ==
+
   edit lists:
     temple
     cool runnings
     cars
-    
-== slightly lower than that, somewhat ordered ==
-
-  research into edl dvdnav being flaky...
-    especially with arrows...
+    all dogs
   kill mencoder instances always, even if hard in jruby 1.5 :)
     how can I get the return val tho? processbuilder gem?
-  all dogs edit list
   compare computer DVD timings with physical player...
   mpeg is lossy (at least my current one pass one is)
   could check if DVD Flick handles *oversize* files well, for information sake 
@@ -29,6 +30,12 @@
     note that this can corrupt your soul!
     don't watch it if it's dark! come on!
     dove.org, your kids will find the originals!
+  propaganda-ize
+    advertise in christian places
+    alternative.to
+    blogs that have ever mentioned clearplay :P
+    free google adwords (?)
+    advertise urug, ruby flow :)
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
@@ -36,6 +43,7 @@
   some status bar that shows which DVD is in currently, how many match it, et al (pre button)
   splitter abs. coords option
   video on how to use imdb
+    if times match DVD players
   alternate endings
   @ffmpeg there's no audio when going mpg -> mpg with copy!
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
@@ -44,9 +52,6 @@
   can pull from imdb at package time [?]
   delete fulli file
     except if it's a specific scene run...
-  bundle 7z [?]
-   if license agreement allows
-   thinking not though...
   mencoder harddup useful?
   .exe installer
     just unzips, runs the .bat file for them [?] :)
@@ -55,11 +60,6 @@
   split EDL's somehow into their own project/LLC...
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
-  propaganda-ize
-    advertise in christian places
-    alternative.to
-    blogs that have ever mentioned clearplay :P
-    free google adwords (?)
   LLC before ever pay anyone, if I ever do
   @DVD flick: support multi-track audio/subtitles (if they're already in the streams...)
   note the mplayer/smplayer as a player fast forward feature...
@@ -94,7 +94,6 @@
   imagemagick (ffmpeg) easier install...
   DRY up dependency installation code
   install dep's to cache2 or something...so I can cleanup the deploy code...
-  advertise urug, ruby flow :)
   "Re-run most recent" disabled when there isn't one [?]
   re-do DVD EDL's that need it :P
   warn when labels exist and don't match...

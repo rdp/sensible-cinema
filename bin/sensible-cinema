@@ -457,7 +457,7 @@ EOL
           if line =~ /@rem /
             success = true # these fail fof some reason?
           else
-            p 'line failed: ' + line + ' maybe time frame is past end of DVD, or Also note that if your DVD has scratches that cause it to skip, the time signatures will be off, so clean your discs!' unless success
+            puts "\n", 'line failed: ' + line + "\n" + '   see troubleshooting in README.txt file!' unless success
           end
         end
         @progress_bar.set_value(10 + idx/total_size*90)
