@@ -2,12 +2,17 @@
   
 == up next release ==
 
-  research into edl dvdnav being flaky...
-    especially with arrows...
-  linearize edl's
-  
+  poc edit lists:
+    cool runnings
+    happiest
+    
 == slightly lower than that, somewhat ordered ==
 
+  linearize edl's
+    don't use them linear, just linearize
+  
+  research into edl dvdnav being flaky...
+    especially with arrows...
   edit lists:
     temple
     cool runnings
@@ -16,27 +21,27 @@
   kill mencoder instances always, even if hard in jruby 1.5 :)
     how can I get the return val tho? processbuilder gem?
   compare computer DVD timings with physical player...
-  mpeg is lossy (at least my current one pass one is)
+    if same, add imdb todo's here
+  mpeg is lossy (at least my current one pass conversion is)
   could check if DVD Flick handles *oversize* files well, for information sake 
+  check the DVD burning experience overall
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
+      only after linearize
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
     mailing list, link to it
   play a bigger noise when totally done...(dvd flick'ish...)
-  make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
-    note that this can corrupt your soul!
-    don't watch it if it's dark! come on!
-    dove.org, your kids will find the originals!
   propaganda-ize
     advertise in christian places
     alternative.to
     blogs that have ever mentioned clearplay :P
     free google adwords (?)
     advertise urug, ruby flow :)
-
+  they 'play from unedited till it hits the first bad spot' "play now" option
+  
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
   disallow choosing empty drive? fail more gracefully? (issue 11)
