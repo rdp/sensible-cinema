@@ -2,21 +2,19 @@
   
 == up next release ==
 
-  simplify/de-bugify
-  
-    assert that at least one drive has a DVD in it...maybe loop refuse with message until this?
-
+  edit lists:
+    temple
+    cool runnings
+    cars
+    
 == slightly lower than that, somewhat ordered ==
 
+  research into edl dvdnav being flaky...
+    especially with arrows...
   kill mencoder instances always, even if hard in jruby 1.5 :)
     how can I get the return val tho? processbuilder gem?
   all dogs edit list
-  cool runnings edit list
-  temple edit list
-  disallow choosing empty drive? fail more gracefully? (issue 11)
-  make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
   compare computer DVD timings with physical player...
-  mailing list
   mpeg is lossy (at least my current one pass one is)
   could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
@@ -25,15 +23,16 @@
       partners'...
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
+    mailing list, link to it
   play a bigger noise when totally done...(dvd flick'ish...)
-  note that this can corrupt your soul!
+  make them acknowledge "just because it lacks profanity...does not immediately make it an inspiring experience."
+    note that this can corrupt your soul!
     don't watch it if it's dark! come on!
     dove.org, your kids will find the originals!
-  research into edl dvdnav being flaky...
-    especially with arrows...
 
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  disallow choosing empty drive? fail more gracefully? (issue 11)
   some status bar that shows which DVD is in currently, how many match it, et al (pre button)
   splitter abs. coords option
   video on how to use imdb

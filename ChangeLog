@@ -1,3 +1,7 @@
+== 0.18.3 ==
+
+Cleanup UI, make more user friendly in a few circumstances, for create, fix buttons.
+
 == 0.18.0 ==
 
 Add some home video EDL's, clarify the license(s), use a slightly better video codec, minor bug fixes/refactoring.
