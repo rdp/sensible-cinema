@@ -1,3 +1,9 @@
+== 0.19.0 ==
+
+Add working EDL playback with mplayer, cleanup interfaces.
+Also add ability to arbitrarily "enlargen" the scope of edit decisions (in this case, mutes), to match
+(either paranoia or) mplayer playback, useful for daily normal use, too, in principle.
+
 == 0.18.3 ==
 
 Cleanup UI, make more user friendly in a few circumstances, for create, fix buttons.

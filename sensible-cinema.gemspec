@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.18.4"
+  s.version = "0.19.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-12-17}
+  s.date = %q{2010-12-18}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -32,6 +32,8 @@ Gem::Specification.new do |s|
     "create or edit sensible cinema decision list files.bat",
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
+    "go.bat",
+    "goc.bat",
     "gplv3.txt",
     "how_to_create.txt",
     "lib/add_any_bundled_gems_to_load_path.rb",
