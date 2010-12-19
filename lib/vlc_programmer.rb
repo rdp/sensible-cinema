@@ -40,9 +40,10 @@ class VLCProgrammer
 
     # VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
     # should mute 5-6, skip 6-7
+    previous = combined[0]
     combined.each_with_index{|(start, endy, type), index|
+      p start, endy, type, index
       next if index == 0 # nothing to do there..
-      previous = combined[index-1]
       previous_end = previous[1]
       previous_type = previous[2]
       previous_start = previous[0]
@@ -59,16 +60,17 @@ class VLCProgrammer
             if previous_type == :mute
                raise 'overlapping mute?'
             end
+            next
           else
              # start mine when the last one ended...
              combined[index] = [previous_end, endy, type]
           end
 
         end
-     
       else
         raise 'unexpected'
       end
+      previous = combined[index] 
     }
     
     combined.select{|start, endy, type|
