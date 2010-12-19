@@ -1,11 +1,8 @@
 # comments can go after a # on any line.
 "mutes" => [
  "14:53.7", "14:55", "greetings sled g..",
- "59:15.5", "59:16.5", "bad a...",
- #59:22
- #59:52 dang good apology
- #1:02:08 "butt whipped"
- #1:02:27 "butt whipping"
+ "1:02:03", "1:02:04", "butt whipped"
+ "1:02:36", "1:02:37", "butt whipping" #not verified
  #1:01:40 "sled g... does it again"
 ],
 
@@ -17,8 +14,8 @@
   "1:16:57.0" , "1:16:57.5", "bad a..",
   # 15:22 irv beats his radio with pool cue should go...
   "15:20", "15:30",
-  "59:15", "59:59",
-  "1:01:35", "1:01:45"
+  "59:15", "59:59", "bad arsenic ...",
+  
 ],
 
 "disk_unique_id" => "5a0a43f52e5d5e705fdfaa831b38409b",
