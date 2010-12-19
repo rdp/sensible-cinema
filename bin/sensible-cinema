@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-puts 'Loading Sensible Cinema...'
+print 'Loading Sensible Cinema...'
 
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane' # failure here means you haven't bundled your dependencies...[rake task]
@@ -40,6 +40,9 @@ for drive in ['c', 'd', 'e']
 end
 
 module SensibleSwing
+  VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip
+  puts "v. " + VERSION
+  
   class MainWindow < JFrame
 
     def new_jbutton title, only_on_create_mode
@@ -74,15 +77,12 @@ module SensibleSwing
     
     # make them choose which system call to use explicitly
     undef system
-
     def initialize
       super "Sensible-Cinema"
-      version = File.read(File.dirname(__FILE__) + "/../VERSION")
-      puts "v. " + version.strip
-      if !(Storage['main_license_accepted'] == version)
+      if !(Storage['main_license_accepted'] == VERSION)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
         show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE file', 'I acknowledge that I have read the LICENSE file.'
-        Storage['main_license_accepted'] = version
+        Storage['main_license_accepted'] = VERSION
       end
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
