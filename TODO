@@ -12,7 +12,6 @@
   
   edit lists:
     temple
-    cool runnings
     cars
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's here
@@ -38,6 +37,7 @@
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  dvdnav versus dvd for mplayer edl?
   disallow choosing empty drive? fail more gracefully? (issue 11)
   some status bar that shows which DVD is in currently, how many match it, et al (pre button)
   splitter abs. coords option
