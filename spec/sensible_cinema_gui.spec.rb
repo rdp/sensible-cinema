@@ -308,6 +308,13 @@ module SensibleSwing
       # it does :)
     end
     
+    it "should not show the normal buttons in create mode" do
+      MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
+      ARGV << "--create-mode"
+      MainWindow.new.buttons.length.should == 8
+      ARGV.pop # cleanup--why not :)
+    end
+    
   end
   
 end

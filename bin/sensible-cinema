@@ -45,17 +45,17 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
-    def new_jbutton title, only_on_create_mode
+    def new_jbutton title, only_on_create_mode, add = false
       button = JButton.new title
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       
-      if only_on_create_mode
-        if ARGV.index("--create-mode") || ARGV.index("-c")
-          increment_button_location
-          @panel.add button
-          @buttons << button
-        end
+      if ARGV.index("--create-mode")
+        add = true if only_on_create_mode
       else
+        add = true if !only_on_create_mode
+      end
+         
+      if add
         increment_button_location
         @panel.add button
         @buttons << button
@@ -201,7 +201,7 @@ EOL
       increment_button_location
       increment_button_location
 
-      @exit = new_jbutton("Exit", false).on_clicked {
+      @exit = new_jbutton("Exit", false, true).on_clicked {
         self.close
       }
 
@@ -450,7 +450,7 @@ EOL
       # LODO warn if they will overwrite a file in the end...
     end
     
-    attr_accessor :background_thread, :after_success_once
+    attr_accessor :background_thread, :after_success_once, :buttons
 
     def run_create_commands batch_commands, save_to, run_mplayer
       @buttons.each{|b| b.set_enabled false}
