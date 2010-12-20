@@ -19,13 +19,13 @@ This file is part of Sensible Cinema.
 require 'sane'
 class EdlParser
 
-  def self.parse_file filename
-    parse_string File.read(filename), filename
+  def self.parse_file filename, ignore_settings = false
+    parse_string File.read(filename), filename, [], ignore_settings
   end
   
   # better eye-ball these before letting people run them, eh?
   # but I couldn't think of any other way
-  def self.parse_string string, filename, ok_categories_array = []
+  def self.parse_string string, filename, ok_categories_array = [], ignore_settings = false
     string = '{' + string + "\n}"
     if filename
      raw = eval(string, binding, filename)
@@ -38,6 +38,9 @@ class EdlParser
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []
     blanks = raw["blank_outs"] || []
+    if ignore_settings
+      mutes = blanks = []
+    end
     raw["mutes"] = convert_to_timestamp_arrays(mutes, ok_categories_array)
     raw["blank_outs"] = convert_to_timestamp_arrays(blanks, ok_categories_array)
     raw

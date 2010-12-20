@@ -126,20 +126,10 @@ module SensibleSwing
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
       @watch_unedited.on_clicked {
-        path = RubyWhich.new.which('smplayer')
-        path2 = RubyWhich.new.which('mplayer')
-        if(path.length == 0 || path2.length == 0)
-          # this one has its own license...
-          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
-          System.exit(1)
-        else
-          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
-          sleep 5 unless success_no_run
-          command = "smplayer #{wrote_to_here_fulli}"
-          system_non_blocking command
-        end
+        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+        sleep 5 unless success_no_run
+        command = "smplayer #{wrote_to_here_fulli}"
+        system_non_blocking command
       }
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
@@ -154,10 +144,15 @@ module SensibleSwing
           @after_success_once = on_success # shenanigans to be able to let that thread run...
         end
       }
-
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
+      
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame (edited)", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
+      }
+
+      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
+      @preview_section_unedited.on_clicked {
+        
       }
 
       @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
@@ -288,6 +283,19 @@ EOL
           Kernel.puts 'done'
         end
       end
+      
+      if ARGV.index('--create-mode')
+        # they're going to want these dependencies
+        path = RubyWhich.new.which('smplayer')
+        path2 = RubyWhich.new.which('mplayer')
+        if(path.length == 0 || path2.length == 0)
+          # this one has its own license...
+          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
+          Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+          System.exit(1)
+        end
+      end
     end
 
     def open_file_to_edit_it filename
@@ -387,6 +395,9 @@ EOL
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
+      
+      #descriptors = parse_edl(edit_list_path)
+      
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
         # only show it once :)

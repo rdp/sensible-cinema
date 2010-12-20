@@ -96,4 +96,8 @@ describe EdlParser do
     proc {E.parse_string '"mutes"=>["0:33", "0:34"]', 'filename'}.should_not raise_error
   end
   
+  it "should be able to optionally ignore settings" do
+    E.parse_string('"mutes"=>["0:33", "0:34"]', 'filename', [], true)['mutes'].should == []
+  end
+  
 end
