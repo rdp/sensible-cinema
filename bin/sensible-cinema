@@ -134,16 +134,7 @@ module SensibleSwing
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
       @preview_section.on_clicked {
-        require '_dbg'
-        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true
-        on_success = proc { |file|
-          system_non_blocking("smplayer #{file}")          
-        }
-        if success_no_run
-          on_success.call
-        else
-          @after_success_once = on_success # shenanigans to be able to let that thread run...
-        end
+        do_copy_dvd_to_hard_drive true
       }
       
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame (edited)", true )

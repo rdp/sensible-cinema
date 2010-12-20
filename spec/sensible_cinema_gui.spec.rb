@@ -176,9 +176,9 @@ module SensibleSwing
 
     def prompt_for_start_and_end_times
       click_button(:@preview_section)
+      join_background_thread
       @args[-2].should == 1
       @args[-3].should == "01:00"
-      join_background_thread
       @command.should match /smplayer/
     end
 
@@ -213,7 +213,12 @@ module SensibleSwing
     
     it "should raise if you watch an edited time frame with no edits in it" do
       @subject.unstub!(:get_mencoder_commands)
-      prompt_for_start_and_end_times
+      proc { prompt_for_start_and_end_times }.should raise_error(/unable to find deletion entry/)
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      # rspec bug: wrong backtrace: proc { prompt_for_start_and_end_times #}.should_not raise_error LODO
+      click_button(:@preview_section) # doesn't raise
+      join_background_thread
+      @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
     end
     
     it "if the .done files exists, it should directly call smplayer" do
