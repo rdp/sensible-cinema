@@ -114,6 +114,8 @@ end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
 task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release sigh
-  system("#{Gem.ruby} -S gem push #{Dir['pkg/*.gem'][-1]}") 
+  gems = Dir['pkg/*.gem']
+  gems[0..-2].each{|f| File.delete f} # kill old versions...
+  system("#{Gem.ruby} -S gem push #{gems[-1]}") 
   puts "don't forget to blog about it...and upload .zip of it..."
 end
