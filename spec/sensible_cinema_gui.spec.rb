@@ -186,6 +186,15 @@ module SensibleSwing
       prompt_for_start_and_end_times
     end
     
+    temp_dir = Dir.tmpdir
+    
+    it "should be able to preview unedited" do
+      click_button(:@preview_section_unedited)
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      temp_file = temp_dir + '/vlc.temp.bat'
+      File.read(temp_file).should contain("59.99")
+    end
+    
     it "should be able to rerun the latest start and end times with the rerun button" do
       prompt_for_start_and_end_times
       old_args = @args
@@ -196,7 +205,7 @@ module SensibleSwing
       @command.should match(/smplayer/)
     end
     
-    it "if the .done file exists, it should directly call smplayer" do
+    it "if the .done files exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
       @command.should == "smplayer abc.fulli_unedited.tmp.mpg"
@@ -207,7 +216,7 @@ module SensibleSwing
       @subject.stub!(:sleep) {} # speed this test up...
       @subject.instance_variable_get(:@watch_unedited).simulate_click.join
       @subject.after_success_once.should == nil
-      @command.should_not == nil # scary timing spec!
+      @command.should_not == nil
     end
     
     it "should create a new file for ya" do
@@ -237,7 +246,6 @@ module SensibleSwing
     end
     
     it "should play edl with elongated mutes" do
-      temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/mplayer.temp.edl'
       click_button(:@mplayer_edl).join
       wrote = File.read(temp_file)
