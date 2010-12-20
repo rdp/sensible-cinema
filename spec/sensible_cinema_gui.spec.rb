@@ -236,7 +236,7 @@ module SensibleSwing
       click_button(:@mplayer_edl).join
       wrote = File.read(temp_file)
       # normally "378.0 379.1 1\n"
-      wrote.should include("380.6 1")
+      wrote.should include("380.85 1")
     end
     
     it "should only prompt for drive once" do
