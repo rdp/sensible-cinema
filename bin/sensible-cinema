@@ -134,6 +134,7 @@ module SensibleSwing
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
       @preview_section.on_clicked {
+        require '_dbg'
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true
         on_success = proc { |file|
           system_non_blocking("smplayer #{file}")          
@@ -152,7 +153,6 @@ module SensibleSwing
 
       @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
       @preview_section_unedited.on_clicked {
-      require '_dbg'
         do_copy_dvd_to_hard_drive true, false, true
       }
 
@@ -425,7 +425,7 @@ EOL
       
       dvd_title_track = get_title_track(descriptors)
       run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, !ignore_settings
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -433,13 +433,13 @@ EOL
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
-    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
-      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, true, require_deletion_entry # delete partials...
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer]
-      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
