@@ -359,6 +359,10 @@ EOL
         end
         [drive, dvd_volume_name, md5sum, edit_list_path, descriptors]
       end
+      
+      # reload it just in case
+      @_choose_dvd_and_edl_for_it[4] = parse_edl(@_choose_dvd_and_edl_for_it[3])
+      @_choose_dvd_and_edl_for_it
     end
     
     def get_title_track descriptors

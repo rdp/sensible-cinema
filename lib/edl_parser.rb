@@ -15,6 +15,8 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
+
+require 'sane'
 class EdlParser
 
   def self.parse_file filename
@@ -30,6 +32,8 @@ class EdlParser
     else
      raw = eval string
     end
+    
+    raise SyntaxError.new("maybe missing quotation marks?" + string) if raw.keys.contain?(nil)
     
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []

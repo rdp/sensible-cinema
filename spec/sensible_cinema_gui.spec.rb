@@ -58,20 +58,26 @@ module SensibleSwing
       @subject.single_edit_list_matches_dvd 'fake md5'
     end
     
-    it "should prompt if two EDL's match a DVD title" do
+    def with_clean_edl_dir_as this
+      FileUtils.rm_rf 'temp'
+      Dir.mkdir 'temp'
       old_edl = MainWindow::EDL_DIR
+      MainWindow.const_set(:EDL_DIR, 'temp')
       begin
-        MainWindow.const_set(:EDL_DIR, 'temp')
-        FileUtils.rm_rf 'temp'
-        Dir.mkdir 'temp'
+        yield
+      ensure
+        MainWindow.const_set(:EDL_DIR, old_edl)
+      end
+    end
+    
+    it "should prompt if two EDL's match a DVD title" do
+      with_clean_edl_dir_as 'temp' do
         MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
         Dir.chdir 'temp' do
           File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
           File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
         end
         MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
-      ensure
-      MainWindow.const_set(:EDL_DIR, old_edl)
       end
     end
 
@@ -251,6 +257,20 @@ module SensibleSwing
       count.should == 1
     end
     
+    it "should allow for file to change contents while editing it" do
+      with_clean_edl_dir_as 'temp' do
+        File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        @subject.stub!(:choose_dvd_drive) {
+          ["mock_dvd_drive", "Volume", "abcdef1234"]
+        }
+        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
+        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234",mutes=>["33", "34"]')
+        p File.binread('temp/a.txt')
+        require '_dbg'
+        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
+      end
+    end
+    
     it "should only prompt for save to filename once" do
       count = 0
       @subject.stub!(:new_filechooser) {
@@ -262,8 +282,9 @@ module SensibleSwing
       count.should == 1
     end
     
-    it "should prompt you if you need to insert a dvd"
-    
+    it "should prompt you if you need to insert a dvd" do
+      # it does :)
+    end
     
   end
   
