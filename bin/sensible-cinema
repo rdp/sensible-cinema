@@ -147,12 +147,13 @@ module SensibleSwing
       
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame (edited)", true )
       @rerun_preview.on_clicked {
-        repeat_last_copy_dvd_to_hard_drive
+        repeat_last_copy_dvd_to_hard_drive 
       }
 
       @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
       @preview_section_unedited.on_clicked {
-        
+      require '_dbg'
+        do_copy_dvd_to_hard_drive true, false, true
       }
 
       @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
@@ -339,8 +340,8 @@ EOL
       start_time = JOptionPane.showInputDialog(message, default)
     end
     
-    def parse_edl path
-      EdlParser.parse_file path
+    def parse_edl path, ignore_settings = false
+      EdlParser.parse_file path, ignore_settings
     end
     
     def choose_dvd_and_edl_for_it
@@ -367,8 +368,7 @@ EOL
         end
         [drive, dvd_volume_name, md5sum, edit_list_path, descriptors]
       end
-      
-      # reload it just in case
+      # reload it just in case it has changed on disk
       @_choose_dvd_and_edl_for_it[4] = parse_edl(@_choose_dvd_and_edl_for_it[3])
       @_choose_dvd_and_edl_for_it
     end
@@ -393,10 +393,10 @@ EOL
       end
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, ignore_settings = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       
-      #descriptors = parse_edl(edit_list_path)
+      descriptors = parse_edl(edit_list_path, ignore_settings)
       
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times

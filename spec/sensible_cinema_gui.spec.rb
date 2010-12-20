@@ -97,7 +97,7 @@ module SensibleSwing
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-4].should match(/abc/)
         @args = args
-        'sleep 0.1'
+        'fake get_mencoder_commands'
       }
       @subject.stub!(:new_filechooser) {
         FakeFileChooser.new
@@ -178,7 +178,7 @@ module SensibleSwing
       @subject.instance_variable_get(:@preview_section).simulate_click
       @args[-1].should == 1
       @args[-2].should == "01:00"
-      @subject.background_thread.join
+      join_background_thread
       @command.should match /smplayer/
     end
 
@@ -188,11 +188,17 @@ module SensibleSwing
     
     temp_dir = Dir.tmpdir
     
+    def join_background_thread
+      @subject.background_thread.join
+    end
+    
     it "should be able to preview unedited" do
-      click_button(:@preview_section_unedited)
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      @subject.unstub!(:get_mencoder_commands)
+      click_button(:@preview_section_unedited)
+      join_background_thread
       temp_file = temp_dir + '/vlc.temp.bat'
-      File.read(temp_file).should contain("59.99")
+      File.read(temp_file).should include("59.99")
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
