@@ -264,9 +264,7 @@ module SensibleSwing
           ["mock_dvd_drive", "Volume", "abcdef1234"]
         }
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
-        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234",mutes=>["33", "34"]')
-        p File.binread('temp/a.txt')
-        require '_dbg'
+        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]')
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
       end
     end
