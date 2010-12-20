@@ -21,7 +21,8 @@ require_relative 'vlc_programmer'
 
 class MplayerEdl
   def self.convert_to_edl specs, add_this_many_to_end = 0
-    combined = VLCProgrammer.convert_incoming_to_split_sectors specs, add_this_many_to_end
+    # simple re-map.
+    combined = EdlParser.convert_incoming_to_split_sectors specs, add_this_many_to_end
     out = ''
     map = {:mute => 1, :blank => 0}
     for start, endy, type in combined

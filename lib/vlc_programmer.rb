@@ -24,59 +24,6 @@ class VLCProgrammer
     @overlayer.translate_time_to_human_readable s
   end
   
-  # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
-  # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
-  def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes = 0
-    mutes = incoming["mutes"] || {}
-    blanks = incoming["blank_outs"] || {}
-    mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v) + add_this_to_mutes, :mute]}
-    blanks = blanks.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :blank]}
-
-    combined = (mutes+blanks).sort
-
-    combined.each{|s, e, t|
-      puts 'warning--detected an end before a start' if e < s
-    }
-
-    # VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
-    # should mute 5-6, skip 6-7
-    previous = combined[0]
-    combined.each_with_index{|(start, endy, type), index|
-      p start, endy, type, index
-      next if index == 0 # nothing to do there..
-      previous_end = previous[1]
-      previous_type = previous[2]
-      previous_start = previous[0]
-      if type == :blank
-        raise 'no overlap like that allowed as of yet' unless previous_end <= endy
-        if previous_type == :mute && previous_end > start
-          previous[1] = start # make it end when we start...
-        end
-      elsif type == :mute
-        if previous_end > start
-          
-          if previous_end >= endy
-            combined[index] = [nil] # null it out...it's a mute subsumed by a blank apparently...
-            if previous_type == :mute
-               raise 'overlapping mute?'
-            end
-            next
-          else
-             # start mine when the last one ended...
-             combined[index] = [previous_end, endy, type]
-          end
-
-        end
-      else
-        raise 'unexpected'
-      end
-      previous = combined[index] 
-    }
-    
-    combined.select{|start, endy, type|
-     (start != nil) && (endy > start) # ignore mutes wholly contained within blanks...
-    }
-  end
 
   def self.convert_to_full_xspf incoming, filename = nil, drive_with_slash = nil, dvd_title_track = nil, dvd_title_name = nil
   
@@ -84,7 +31,7 @@ class VLCProgrammer
     @filename_or_playlist_if_nil = filename
     @dvd_title_track = dvd_title_track || "1"
     @dvd_title_name = dvd_title_name
-    combined = convert_incoming_to_split_sectors incoming
+    combined = EdlParser.convert_incoming_to_split_sectors incoming
     
     out = get_header
 

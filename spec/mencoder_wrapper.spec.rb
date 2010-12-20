@@ -208,7 +208,7 @@ describe MencoderWrapper do
   
   it "should allow you to play something even if there's no edit list, just for examination sake" do
     setup
-    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15'}.should_not raise_error(/unable/)
+    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15', "1", false, true}.should raise_error(/unable/)
   end
   
 end

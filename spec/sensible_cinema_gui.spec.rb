@@ -211,6 +211,11 @@ module SensibleSwing
       @command.should match(/smplayer/)
     end
     
+    it "should raise if you watch an edited time frame with no edits in it" do
+    
+    
+    end
+    
     it "if the .done files exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click

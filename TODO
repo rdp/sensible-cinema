@@ -5,8 +5,7 @@
   edit lists:
     cool runnings EDL
     stuff from paper
-      new button "watch segment unedited"
-        if they click "watch segment edited" must contain change
+      if they click "watch segment edited" must contain change
       less "need java first" messages
       rename as delete lists
       remove some buttons from create mode

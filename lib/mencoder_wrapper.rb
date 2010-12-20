@@ -16,7 +16,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require_relative 'vlc_programmer'
+require_relative 'edl_parser'
 
 class MencoderWrapper
 
@@ -39,8 +39,8 @@ class MencoderWrapper
     end
     
     # called from the UI...
-    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false
-      combined = VLCProgrammer.convert_incoming_to_split_sectors these_settings
+    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
+      combined = EdlParser.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       assert dvd_title_track
       if start_here || end_here
@@ -48,6 +48,7 @@ class MencoderWrapper
         start_here = OverLayer.translate_string_to_seconds(start_here)
         end_here   = OverLayer.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
+        raise "unable to find deletion entry between #{start_here} and #{end_here}" if require_deletion_entry && combined.length == 0
         # it's relative now, since we rip from not the beginning
         previous_end = start_here
       else
