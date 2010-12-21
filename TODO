@@ -9,6 +9,7 @@
       
 == slightly lower than that, somewhat ordered ==
 
+  "unable to find" -> popup, not die
   SyntaxError very annoying output when missing an internal , ...hmm...
   @license: requires legal DVD's to be present
   can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not?
