@@ -301,7 +301,7 @@ EOL
         begin
           parse_edl(file)["disk_unique_id"] == md5
         rescue SyntaxError
-         # ignore
+         # ignore poorly formed delete lists for auto choose
         end
       }
       if matching.length == 1
@@ -325,6 +325,7 @@ EOL
 
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
       JOptionPane.showMessageDialog(nil, message, title, style)
+      true
     end
     
     include_class javax.swing.UIManager
@@ -349,19 +350,22 @@ EOL
           edit_list_path = fc.go
         end
         raise 'cancelled' unless edit_list_path
-        descriptors = nil
-        while(!descriptors)
+        [drive, dvd_volume_name, md5sum, edit_list_path, nil]
+      end
+      
+      # reload it just in case it has changed on disk
+      edit_list_path = @_choose_dvd_and_edl_for_it[3]
+      p 'path is', edit_list_path
+      descriptors = nil
+      while(!descriptors)
           begin
             descriptors = parse_edl edit_list_path
           rescue SyntaxError => e
             puts e
-            show_blocking_message_dialog("syntax error: " + edit_list_path + " " + e)
+            show_blocking_message_dialog("your file has an error: \n" + edit_list_path + "\n " + e)
           end
-        end
-        [drive, dvd_volume_name, md5sum, edit_list_path, descriptors]
       end
-      # reload it just in case it has changed on disk
-      @_choose_dvd_and_edl_for_it[4] = parse_edl(@_choose_dvd_and_edl_for_it[3])
+      @_choose_dvd_and_edl_for_it[-1] = descriptors
       @_choose_dvd_and_edl_for_it
     end
     
@@ -392,8 +396,8 @@ EOL
       
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
-        # only show it once :)
-        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes a deletion section in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview") || true
+        # only show this message once :)
+        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes a deletion section in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview")
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
         end_time = get_user_input("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
         unless start_time and end_time
@@ -416,8 +420,8 @@ EOL
       end
       
       dvd_title_track = get_title_track(descriptors)
-      run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, !ignore_settings
+      should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_run_mplayer, !ignore_settings
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -425,13 +429,19 @@ EOL
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
+    # stubbable :)
     def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, true, require_deletion_entry # delete partials...
     end
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
       Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
-      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+      begin
+        commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+      rescue SyntaxError => e
+        show_blocking_message_dialog("Appears your Delete List file has a problem--perhaps a missing comma or quotation mark?" + e)
+        return
+      end
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)

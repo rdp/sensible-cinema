@@ -289,6 +289,7 @@ module SensibleSwing
         }
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
         File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]')
+        # it changed!
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
       end
     end
@@ -304,15 +305,27 @@ module SensibleSwing
       count.should == 1
     end
     
-    it "should prompt you if you need to insert a dvd" do
-      # it does :)
-    end
+    it "should prompt you if you need to insert a dvd"
     
     it "should not show the normal buttons in create mode" do
       MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should == 8
       ARGV.pop # cleanup--why not :)
+    end
+    
+    it "should prompt you if you re-choose, and your file now has a failure in it" do
+      with_clean_edl_dir_as 'temp' do
+        File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        @subject.stub!(:choose_dvd_drive) {
+          ["mock_dvd_drive", "Volume", "abcdef1234"]
+        }
+        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
+        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]')
+        # it changed!
+        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
+      end
+      
     end
     
   end
