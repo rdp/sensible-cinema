@@ -23,6 +23,7 @@ It's about the same as using VLC media player to watch a DVD, which also uses li
 Also note that if you watch an edited DVD in a commercial DVD player, your are using a DVD player that conforms
 with encryption specifications, so that might have some sway.
 Note also that fair use at times does allow one to "record" things for personal use/backup (for example off the TV).
+Note that sensible cinema does require the original DVD to be present when using it, also.
 
 If general, if it's not legal in your country, then don't use it!
 You are responsible for your actions and use of this program.
@@ -31,16 +32,16 @@ regarding its use themselves, since they re-distribute no edited media,
 nor distribute cracking codes.  Check your country's rules first.
 If it's illegal, don't use it!
 
-Note: do not redistribute/re-sell edited commercial DVD's.  We have learned from clean flicks that
-redistributing edited commercial DVD's is illegal in the US.  We hope that sensible-cinema
-is more legal, since you can get the DVD's from wherever you want, and it doesn't change their
-structure at all.  Please don't redistribute.  If creating copies of commercial DVD's is illegal
+Note: do not redistribute/re-sell edited DVD's.  We have learned the hard way from clean flicks that
+redistributing edited commercial DVD's is against copyright in the US.  We hope that sensible-cinema
+is more legal, since you can get the DVD's from wherever you want, and keep the original.  
+Please don't redistribute.  If creating copies of commercial DVD's is illegal
 in your country, then don't do it!  Use the "watch in realtime" option.
 
 DO NOT MAKE ILLEGAL COPIES.
 
-In terms of copyright, it could be legal under the The Family Home Movie Act of 2005, 
-at least in the United States, when viewed using the "playlist" option (v 0.10'ish, then later removed).
+In terms of copyright, it could be legal under the The Family Home Movie Act of 2005,
+at least in the United States, when viewed using the "playlist" option (v 0.10'ish, then later removed), or the "realtime" option (0.18.0'ish +).
 In general, if I have the original DVD sitting next to my TV, I don't feel bad about watching
 its edited copy, but please consult a laywer first if you have any concerns.
 
