@@ -221,7 +221,7 @@ EOL
     end
     
     def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
-      puts 'Please confirm license agreement in an open window'
+      puts 'Please confirm license agreement in open window'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
       UIManager.put("OptionPane.noButtonText", 'View License')
