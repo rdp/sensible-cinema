@@ -166,8 +166,6 @@ If it says "audio problem try pcm" then you can add
 "audio_codec" => "lavc"
 to your EDL and try again.
 
-Also if your DVD playback has no audio, try the "lavc" setting, above.  And report it (see feedback).
-
 It can fail also because a deletion is past end of DVD, or 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off after that point, 
 so clean your discs and try again!

@@ -40,9 +40,9 @@ module SensibleSwing
        begin
          block.call
        rescue Exception => e
-         puts 'got fatal exception', e
-         puts e.backtrace.join("\n")
-         System.exit(1) # LODO no exit 
+         puts 'got fatal exception in button', e, e.class
+         puts e.backtrace.join("\n"), e
+         System.exit(1) # LODO no exit [?]
        end        
      end
      self

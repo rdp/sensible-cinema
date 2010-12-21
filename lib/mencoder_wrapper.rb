@@ -19,7 +19,8 @@ This file is part of Sensible Cinema.
 require_relative 'edl_parser'
 
 class MencoderWrapper
-
+  class TimingError < StandardError
+  end
   class << self
   
     def get_header this_drive, these_settings
@@ -29,9 +30,9 @@ class MencoderWrapper
       end
       # video_opts = "-ovc lavc -lavcopts keyint=1" # seems reasonable quality somehow...
       # equivalent of ffmpeg's -target ntsc-dvd...I think...except that aspect thing terrifies me...
-      audio_codec = these_settings['audio_codec'] || 'copy'
+      audio_codec = these_settings['audio_codec'] || 'lavc' # not copy...sniff...
       video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -ovc lavc -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac lavc #{video_opts} -ovc #{audio_codec} -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"
     end
     
     def calculate_final_filename to_here_final_file
@@ -48,7 +49,7 @@ class MencoderWrapper
         start_here = OverLayer.translate_string_to_seconds(start_here)
         end_here   = OverLayer.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
-        raise "unable to find deletion entry between #{start_here} and #{end_here}" if require_deletion_entry && combined.length == 0
+        raise TimingError.new("unable to find deletion entry between #{start_here} and #{end_here}") if require_deletion_entry && combined.length == 0
         # it's relative now, since we rip from not the beginning
         previous_end = start_here
       else

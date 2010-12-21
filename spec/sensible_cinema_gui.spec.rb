@@ -191,7 +191,7 @@ module SensibleSwing
     temp_dir = Dir.tmpdir
     
     def join_background_thread
-      @subject.background_thread.join
+      @subject.background_thread.join # must be running...
     end
     
     it "should be able to preview unedited" do
@@ -213,12 +213,13 @@ module SensibleSwing
       @command.should match(/smplayer/)
     end
     
-    it "should raise if you watch an edited time frame with no edits in it" do
+    it "should warn if you watch an edited time frame with no edits in it" do
       @subject.unstub!(:get_mencoder_commands)
-      proc { prompt_for_start_and_end_times }.should raise_error(/unable to find deletion entry/)
+      click_button(:@preview_section)
+      @show_blocking_message_dialog_last_args[0].should =~ /unable to/
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
-      # rspec bug: wrong backtrace: proc { prompt_for_start_and_end_times #}.should_not raise_error LODO
-      click_button(:@preview_section) # doesn't raise
+      # rspec bug: wrong'ish backtrace: proc { prompt_for_start_and_end_times #}.should_not raise_error LODO
+      click_button(:@preview_section)
       join_background_thread
       @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
     end
@@ -338,7 +339,7 @@ module SensibleSwing
       MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should == 8
-      ARGV.pop # cleanup--why not :)
+      ARGV.pop # test cleanup--why not :)
     end
     
   end

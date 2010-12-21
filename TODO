@@ -8,6 +8,7 @@
       
 == slightly lower than that, somewhat ordered ==
 
+  detect disks have changed, re-query.
   HP edl
   can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not?
   linearize edl's
@@ -43,6 +44,7 @@
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
   "preview edited in a wholly blank section that includes an audio section should fail"
   an 'always skip mutes' option for paranoia.
   dvdnav versus dvd for mplayer edl?

@@ -439,8 +439,8 @@ EOL
       Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
       begin
         commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
-      rescue SyntaxError => e
-        show_blocking_message_dialog("Appears your Delete List file has a problem--perhaps a missing comma or quotation mark?" + e)
+      rescue MencoderWrapper::TimingError => e
+        show_blocking_message_dialog("Appears you chose a time frame with no deletion segment in it:" + e)
         return
       end
       temp_dir = Dir.tmpdir

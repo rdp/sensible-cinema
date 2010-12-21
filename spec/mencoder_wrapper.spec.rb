@@ -45,7 +45,11 @@ describe MencoderWrapper do
     if use_mpg2_fulli_unedited
       @out.should match(/dvdnav.*lavcopt.*mpeg2video/)
       @out.should match(/autoaspect/) # try to preserve aspect
+    else
+      @out.should match(/dvdnav.*-ovc copy/)
     end
+    # "poor" audio for certain DVD's <sigh>
+    @out.should match(/dvdnav.*-oac lavc/)
   end
   
   it "should avoid subtitles" do
@@ -117,12 +121,9 @@ describe MencoderWrapper do
     @out.should_not include(".avi.1 ")
   end
   
-  it "should concatenate (merge) them all together" do
+  it "should concatenate (merge) them all together into one large conglom file" do
     @out.should match(/mencoder.* -ovc copy -oac copy/)
     @out.should match(/mencoder to_here.1.avi/)
-  end
-  
-  it "should create a large conglom file" do
     @out.should match(/mencoder.*-o to_here.avi -ovc copy -oac copy/)
   end
   
@@ -152,9 +153,10 @@ describe MencoderWrapper do
   end
   
   it "should accept audio_code" do
-    settings = {"audio_codec"=>"pcm"}
+    # for the audio philes, I guess..
+    settings = {"audio_codec"=>"copy"}
     out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
-    out.should include("-oac pcm")
+    out.should include("-oac copy")
   end
   
   def setup
