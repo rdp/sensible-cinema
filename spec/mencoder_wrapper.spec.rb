@@ -52,6 +52,11 @@ describe MencoderWrapper do
     @out.should match(/dvdnav.*-oac lavc/)
   end
   
+  it "should not double setting params" do
+    @out.should_not =~ /-ovc.*-ovc/
+    @out.should_not =~ /-oac.*-oac/
+  end
+  
   it "should avoid subtitles" do
     @out.should match(/-sid 1000/)
   end
@@ -154,9 +159,9 @@ describe MencoderWrapper do
   
   it "should accept audio_code" do
     # for the audio philes, I guess..
-    settings = {"audio_codec"=>"copy"}
+    settings = {"audio_codec"=>"copy2"}
     out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
-    out.should include("-oac copy")
+    out.should include("-oac copy2")
   end
   
   def setup

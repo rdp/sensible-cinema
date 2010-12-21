@@ -355,7 +355,6 @@ EOL
       
       # reload it just in case it has changed on disk
       edit_list_path = @_choose_dvd_and_edl_for_it[3]
-      p 'path is', edit_list_path
       descriptors = nil
       while(!descriptors)
           begin
