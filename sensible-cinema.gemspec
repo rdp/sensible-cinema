@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.19.0"
+  s.version = "0.19.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-12-18}
+  s.date = %q{2010-12-21}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -62,6 +62,7 @@ Gem::Specification.new do |s|
     "spec/convert_image.rb",
     "spec/drive_info.spec.rb",
     "spec/edl_parser.spec.rb",
+    "spec/go_line.bat",
     "spec/images/black.bmp",
     "spec/images/colon.bmp",
     "spec/images/hulu_0.bmp",

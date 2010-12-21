@@ -1,16 +1,16 @@
-You create an edit decision list for sensible cinema to use against whatever you want.
+You create a delete list for sensible cinema to use against whatever you want.
 
-An Edit Decision List looks something like this:
+An delete list looks something like this example:
 
 https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
 
-Basically your job is to create an appropriate file (like that one) somewhere, 
+Basically your job is to create an appropriate file (like that one), 
 then start sensible-cinema and instruct it to use your new file.
 
 For a DVD, the steps might look like this:
 
-open Sensible cinema in create mode
-insert DVD, click "create new edit list" button
+open Sensible cinema "create mode"
+insert DVD, click "create new" button
 
 click "open ripped version of DVD unedited", right click, create new file, name it something.txt, right click, "open", and then select it.
 
@@ -39,7 +39,7 @@ Also after you're done, you can submit it back to the project by emailing me wit
 
 Also if you want sensible-cinema to be able to auto-choose your EDL, then include its unique id (click the "Get a disk's unique id" button).
 
- I typically like to make two edit lists per DVD.  One that takes out swearing, sex, and gruesome violence, and another
+ I typically like to make two delete lists per DVD.  One that takes out swearing, sex, and gruesome violence, and another
    "more paranoid" version that takes out basically anything that could be offensive to anybody :) ("dang", "fetch", "too tense" of scenes...)
   
 A few pointers:

@@ -1,3 +1,8 @@
+== 0.19.1 ==
+
+Clarify buttons' meanings, layout (add one), fix some bugs in create mode, like it not re-loading edited files.
+Can optionally watch unedited.
+
 == 0.19.0 ==
 
 Add working EDL playback with mplayer, cleanup interfaces.

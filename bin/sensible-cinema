@@ -137,17 +137,17 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive true
       }
       
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame (edited)", true )
-      @rerun_preview.on_clicked {
-        repeat_last_copy_dvd_to_hard_drive 
-      }
-
       @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
       @preview_section_unedited.on_clicked {
         do_copy_dvd_to_hard_drive true, false, true
       }
 
-      @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
+      @rerun_preview.on_clicked {
+        repeat_last_copy_dvd_to_hard_drive 
+      }
+
+      @open_list = new_jbutton("Open/Edit a Delete List", true)
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR
@@ -155,7 +155,7 @@ module SensibleSwing
         open_file_to_edit_it filename if filename
       }
 
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit Decision List for a DVD", true)
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true)
       @create_new_edl_for_current_dvd.on_clicked do
         drive, volume, md5 = choose_dvd_drive
         name = get_user_input("Enter DVD name for #{volume}")
@@ -344,7 +344,7 @@ EOL
         edit_list_path = single_edit_list_matches_dvd(md5sum)
         if !edit_list_path
           fc = FileDialog.new(self)
-          fc.set_title "Please pick a DVD Edit Decision List File"
+          fc.set_title "Please pick a DVD Delete List File"
           fc.set_directory EDL_DIR
           edit_list_path = fc.go
         end
@@ -393,7 +393,7 @@ EOL
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
         # only show it once :)
-        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes an edit decision in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview") || true
+        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes a deletion section in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take like 20 minutes as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.", "Preview") || true
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
         end_time = get_user_input("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", Storage['end_time'])
         unless start_time and end_time

@@ -5,25 +5,27 @@
   edit lists:
     cool runnings EDL
     stuff from paper
-      if they click "watch segment edited" must contain change
       less "need java first" messages
-      rename as delete lists
       
 == slightly lower than that, somewhat ordered ==
 
+  "unable to find" -> popup, not die
+  SyntaxError very annoying output when missing an internal , ...hmm...
+  @license: requires legal DVD's to be present
   can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not?
   linearize edl's
     don't use them linear, just linearize
       not this release
-      
   @dvd flick: auto-detect the aspect ratio, if possible (?)
-  
+  delete final file at create list time [?] sometime
+  "preview edited in a wholly blank section that includes an audio section should fail"
   edit lists:
     temple
     cars
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
   mpeg is lossy (at least my current one pass conversion is)
+  add button "upload"
   check the DVD burning experience too...
     could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
@@ -42,9 +44,11 @@
     free google adwords (?)
     advertise urug, ruby flow :)
   add they 'play from unedited till it hits the first bad spot, if still useful
+  add to text "must close, regenerate sections, to watch edited section again"
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  an 'always skip mutes' option for paranoia.
   dvdnav versus dvd for mplayer edl?
   disallow choosing empty drive? fail more gracefully? (issue 11)
   some status bar that shows which DVD is in currently, how many match it, et al (pre button)

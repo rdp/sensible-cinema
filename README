@@ -1,17 +1,17 @@
 Sensible-cinema (also known to us as "paranoid cinema" [inside joke ha ha] ) is a program that allows you to apply 
-programmed edit lists (i.e. Edit Decision Lists) to DVD's you own [2].
+programmed delete lists (i.e. Edit Decision Lists [2]) to DVD's you already own.
 
 I.e. you can edit a DVD to "mute out" or skip certain scenes.
 
 It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source programs [3] (VLC Media Player, Mplayer/mencoder, ffmpeg et al)
-to accomplish the editing for you.  Then you can sit back and relax as you watch a "sanitized"
+a few freely available open source programs [3]
+to accomplish the editing for you.  Then you can sit back and relax as you watch the "sensible"
 version of your DVD.
 
-To use it, basically install it then run it (see installation section, below).
+To use it, basically install it then run it (see installation, below).
 It will come up with some windows where you choose what you want to do
 
-If you try to make an edited copy of your DVD, note that it will take about one and a half times
+If you try to make a copy of your DVD, note that it will take about one and a half times
 as long as the playtime of the movie itself, so budget some time for it.
 
 Also note that just because a video lacks profanity...does not immediately make it an inspiring experience.
@@ -26,7 +26,7 @@ Enjoy your movies!
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
-[3] mostly GPL programs, see http://www.gnu.org/licenses/
+[3] mostly GPL programs, see http://www.gnu.org/licenses/ VLC Media Player, Mplayer/mencoder, ffmpeg, etc.
 [4] http://lds.org/library/display/0,4945,161-1-11-1,00.html search for the word "wholesome"
 
 == Installation ==
@@ -35,7 +35,7 @@ To install, download the latest .zip versioned file from: http://rogerdpack.t28.
 then unzip it (right click -> Extract all)
 then "click into it" and search for and run the file "run sensible cinema.bat"
 
-== Creating Your Own Edit Lists, or modifying previously existing ones ==
+== Creating Your Own Delete Lists, or modifying previously existing ones ==
 
 See the accompanied how_to_create.txt file.
 
@@ -56,7 +56,7 @@ A. Probably give them the original DVD and a link to sensible-cinema :)
 
 == Caveats ==
 
-NB that "someone" has to create a edit decision lists, per DVD.
+NB that "someone" has to create a delete list, per DVD.
 If one doesn't yet exist for the DVD you want edited,
 you could employ somebody to create it, or create it yourself.  Make sure to submit it
 back to us when you're done, so that everyone can benefit from it.
@@ -168,7 +168,7 @@ to your EDL and try again.
 
 Also if your DVD playback has no audio, try the "lavc" setting, above.  And report it (see feedback).
 
-It can fail also because an edit decision is past end of DVD, or 
+It can fail also because a deletion is past end of DVD, or 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off after that point, 
 so clean your discs and try again!
 
