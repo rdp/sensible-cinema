@@ -3,19 +3,25 @@
 == up next release ==
 
   edit lists:
-    cool runnings
-    
+    cool runnings EDL
+    stuff from paper
+      if they click "watch segment edited" must contain change
+      less "need java first" messages
+      rename as delete lists
+      
 == slightly lower than that, somewhat ordered ==
 
   @license: requires legal DVD's to be present
+  can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not?
   linearize edl's
     don't use them linear, just linearize
+      not this release
   
   edit lists:
     temple
     cars
   compare computer DVD timings with physical player's timings...
-    if same, add imdb todo's here
+    if same, add imdb todo's up here
   mpeg is lossy (at least my current one pass conversion is)
   check the DVD burning experience too...
     could check if DVD Flick handles *oversize* files well, for information sake 
@@ -27,14 +33,14 @@
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
     mailing list, link to it
+    button to mail/submit :)
   play a bigger noise when totally done...(dvd flick'ish...)
   propaganda-ize
     advertise in christian places
-    alternative.to
     blogs that have ever mentioned clearplay :P
     free google adwords (?)
     advertise urug, ruby flow :)
-  add they 'play from unedited till it hits the first bad spot
+  add they 'play from unedited till it hits the first bad spot, if still useful
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 

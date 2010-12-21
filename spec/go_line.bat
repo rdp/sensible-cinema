@@ -1,0 +1,1 @@
+jd -S rspec sensible_cinema_gui.spec.rb -l %*

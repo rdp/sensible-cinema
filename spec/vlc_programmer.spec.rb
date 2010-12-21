@@ -92,6 +92,11 @@ describe 'VLC Programmer' do
     a.scan(/ to /).length.should == 2 # 0->6, 7 -> end
 
   end
+  
+  it "should ignore a mute wholly within a blank" do
+    a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {6=> 7}, "blank_outs" => {5=>8, 9=>10} } )
+    a.scan(/ to /).length.should == 3 # 0->5, 8 -> 9, 10 => end
+  end
 
   it "should not try to save it to a file from within the xml" do
     a = VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=>10} } )

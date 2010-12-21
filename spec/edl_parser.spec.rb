@@ -38,7 +38,8 @@ describe EdlParser do
     ["01:01:00", "01:02:00", "profanity", "bodily function 1"]], 
     "missing_content"=>"this doesn't list some mild name calling", 
     "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
-    "whatever_else_you_want"=>"this is the old version of the film"
+    "whatever_else_you_want"=>"this is the old version of the film",
+
    }
    E.parse_string(string, nil).should == expected
   end
@@ -88,6 +89,15 @@ describe EdlParser do
       parsed = E.parse_string(out, nil, [["test category", n.to_s]] )
       parsed["mutes"].length.should == 1 # has them both
     end
+  end
+  
+  it "should reject misformatted files" do
+    proc {E.parse_string 'mutes=>["0:33", "0:34"]', 'filename'}.should raise_error(SyntaxError)
+    proc {E.parse_string '"mutes"=>["0:33", "0:34"]', 'filename'}.should_not raise_error
+  end
+  
+  it "should be able to optionally ignore settings" do
+    E.parse_string('"mutes"=>["0:33", "0:34"]', 'filename', [], true)['mutes'].should == []
   end
   
 end

@@ -45,17 +45,17 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
-    def new_jbutton title, only_on_create_mode
+    def new_jbutton title, only_on_create_mode, add = false
       button = JButton.new title
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       
-      if only_on_create_mode
-        if ARGV.index("--create-mode") || ARGV.index("-c")
-          increment_button_location
-          @panel.add button
-          @buttons << button
-        end
+      if ARGV.index("--create-mode")
+        add = true if only_on_create_mode
       else
+        add = true if !only_on_create_mode
+      end
+         
+      if add
         increment_button_location
         @panel.add button
         @buttons << button
@@ -126,38 +126,25 @@ module SensibleSwing
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
       @watch_unedited.on_clicked {
-        path = RubyWhich.new.which('smplayer')
-        path2 = RubyWhich.new.which('mplayer')
-        if(path.length == 0 || path2.length == 0)
-          # this one has its own license...
-          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
-          System.exit(1)
-        else
-          success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
-          sleep 5 unless success_no_run
-          command = "smplayer #{wrote_to_here_fulli}"
-          system_non_blocking command
-        end
+        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+        sleep 5 unless success_no_run
+        command = "smplayer #{wrote_to_here_fulli}"
+        system_non_blocking command
       }
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
       @preview_section.on_clicked {
-        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true
-        on_success = proc { |file|
-          system_non_blocking("smplayer #{file}")          
-        }
-        if success_no_run
-          on_success.call
-        else
-          @after_success_once = on_success # shenanigans to be able to let that thread run...
-        end
+        do_copy_dvd_to_hard_drive true
+      }
+      
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame (edited)", true )
+      @rerun_preview.on_clicked {
+        repeat_last_copy_dvd_to_hard_drive 
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
-      @rerun_preview.on_clicked {
-        repeat_last_copy_dvd_to_hard_drive
+      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
+      @preview_section_unedited.on_clicked {
+        do_copy_dvd_to_hard_drive true, false, true
       }
 
       @open_list = new_jbutton("Open/Edit a pre-existing DVD Edit List", true)
@@ -214,7 +201,7 @@ EOL
       increment_button_location
       increment_button_location
 
-      @exit = new_jbutton("Exit", false).on_clicked {
+      @exit = new_jbutton("Exit", false, true).on_clicked {
         self.close
       }
 
@@ -234,6 +221,7 @@ EOL
     end
     
     def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
+      puts 'Please confirm license agreement in an open window'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
       UIManager.put("OptionPane.noButtonText", 'View License')
@@ -288,6 +276,19 @@ EOL
           Kernel.puts 'done'
         end
       end
+      
+      if ARGV.index('--create-mode')
+        # they're going to want these dependencies
+        path = RubyWhich.new.which('smplayer')
+        path2 = RubyWhich.new.which('mplayer')
+        if(path.length == 0 || path2.length == 0)
+          # this one has its own license...
+          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
+          Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+          System.exit(1)
+        end
+      end
     end
 
     def open_file_to_edit_it filename
@@ -331,8 +332,8 @@ EOL
       start_time = JOptionPane.showInputDialog(message, default)
     end
     
-    def parse_edl path
-      EdlParser.parse_file path
+    def parse_edl path, ignore_settings = false
+      EdlParser.parse_file path, ignore_settings
     end
     
     def choose_dvd_and_edl_for_it
@@ -359,6 +360,9 @@ EOL
         end
         [drive, dvd_volume_name, md5sum, edit_list_path, descriptors]
       end
+      # reload it just in case it has changed on disk
+      @_choose_dvd_and_edl_for_it[4] = parse_edl(@_choose_dvd_and_edl_for_it[3])
+      @_choose_dvd_and_edl_for_it
     end
     
     def get_title_track descriptors
@@ -381,8 +385,11 @@ EOL
       end
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, ignore_settings = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
+      
+      descriptors = parse_edl(edit_list_path, ignore_settings)
+      
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
         # only show it once :)
@@ -410,7 +417,7 @@ EOL
       
       dvd_title_track = get_title_track(descriptors)
       run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, !ignore_settings
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -418,13 +425,13 @@ EOL
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
-    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
-      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, true, require_deletion_entry # delete partials...
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer]
-      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+      commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
@@ -443,7 +450,7 @@ EOL
       # LODO warn if they will overwrite a file in the end...
     end
     
-    attr_accessor :background_thread, :after_success_once
+    attr_accessor :background_thread, :after_success_once, :buttons
 
     def run_create_commands batch_commands, save_to, run_mplayer
       @buttons.each{|b| b.set_enabled false}

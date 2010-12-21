@@ -58,20 +58,26 @@ module SensibleSwing
       @subject.single_edit_list_matches_dvd 'fake md5'
     end
     
-    it "should prompt if two EDL's match a DVD title" do
+    def with_clean_edl_dir_as this
+      FileUtils.rm_rf 'temp'
+      Dir.mkdir 'temp'
       old_edl = MainWindow::EDL_DIR
+      MainWindow.const_set(:EDL_DIR, 'temp')
       begin
-        MainWindow.const_set(:EDL_DIR, 'temp')
-        FileUtils.rm_rf 'temp'
-        Dir.mkdir 'temp'
+        yield
+      ensure
+        MainWindow.const_set(:EDL_DIR, old_edl)
+      end
+    end
+    
+    it "should prompt if two EDL's match a DVD title" do
+      with_clean_edl_dir_as 'temp' do
         MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
         Dir.chdir 'temp' do
           File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
           File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
         end
         MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
-      ensure
-      MainWindow.const_set(:EDL_DIR, old_edl)
       end
     end
 
@@ -89,9 +95,9 @@ module SensibleSwing
         ["mock_dvd_drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-4].should match(/abc/)
+        args[-5].should match(/abc/)
         @args = args
-        'sleep 0.1'
+        'fake get_mencoder_commands'
       }
       @subject.stub!(:new_filechooser) {
         FakeFileChooser.new
@@ -148,7 +154,7 @@ module SensibleSwing
     it "should call through to explorer for the full thing" do
       @subject.do_copy_dvd_to_hard_drive(false)
       @subject.background_thread.join
-      @args[-3].should == nil
+      @args[-4].should == nil
       @system_blocking_command.should match /explorer/
       @system_blocking_command.should_not match /fulli/
     end
@@ -162,22 +168,37 @@ module SensibleSwing
     it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      @subject.background_thread.join
-     @args[-1].should == 1
-     @args[-2].should == "01:00"
+     @args[-2].should == 1
+     @args[-3].should == "01:00"
      @command.should match /smplayer/
      @command.should_not match /fulli/
     end
 
     def prompt_for_start_and_end_times
-      @subject.instance_variable_get(:@preview_section).simulate_click
-      @args[-1].should == 1
-      @args[-2].should == "01:00"
-      @subject.background_thread.join
+      click_button(:@preview_section)
+      join_background_thread
+      @args[-2].should == 1
+      @args[-3].should == "01:00"
       @command.should match /smplayer/
     end
 
     it "should prompt for start and end times" do
       prompt_for_start_and_end_times
+    end
+    
+    temp_dir = Dir.tmpdir
+    
+    def join_background_thread
+      @subject.background_thread.join
+    end
+    
+    it "should be able to preview unedited" do
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      @subject.unstub!(:get_mencoder_commands)
+      click_button(:@preview_section_unedited)
+      join_background_thread
+      temp_file = temp_dir + '/vlc.temp.bat'
+      File.read(temp_file).should include("59.99")
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
@@ -190,7 +211,17 @@ module SensibleSwing
       @command.should match(/smplayer/)
     end
     
-    it "if the .done file exists, it should directly call smplayer" do
+    it "should raise if you watch an edited time frame with no edits in it" do
+      @subject.unstub!(:get_mencoder_commands)
+      proc { prompt_for_start_and_end_times }.should raise_error(/unable to find deletion entry/)
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      # rspec bug: wrong backtrace: proc { prompt_for_start_and_end_times #}.should_not raise_error LODO
+      click_button(:@preview_section) # doesn't raise
+      join_background_thread
+      @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
+    end
+    
+    it "if the .done files exists, it should directly call smplayer" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
       @command.should == "smplayer abc.fulli_unedited.tmp.mpg"
@@ -201,7 +232,7 @@ module SensibleSwing
       @subject.stub!(:sleep) {} # speed this test up...
       @subject.instance_variable_get(:@watch_unedited).simulate_click.join
       @subject.after_success_once.should == nil
-      @command.should_not == nil # scary timing spec!
+      @command.should_not == nil
     end
     
     it "should create a new file for ya" do
@@ -231,12 +262,11 @@ module SensibleSwing
     end
     
     it "should play edl with elongated mutes" do
-      temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/mplayer.temp.edl'
       click_button(:@mplayer_edl).join
       wrote = File.read(temp_file)
       # normally "378.0 379.1 1\n"
-      wrote.should include("380.6 1")
+      wrote.should include("380.85 1")
     end
     
     it "should only prompt for drive once" do
@@ -251,6 +281,18 @@ module SensibleSwing
       count.should == 1
     end
     
+    it "should allow for file to change contents while editing it" do
+      with_clean_edl_dir_as 'temp' do
+        File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        @subject.stub!(:choose_dvd_drive) {
+          ["mock_dvd_drive", "Volume", "abcdef1234"]
+        }
+        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
+        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]')
+        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
+      end
+    end
+    
     it "should only prompt for save to filename once" do
       count = 0
       @subject.stub!(:new_filechooser) {
@@ -262,8 +304,16 @@ module SensibleSwing
       count.should == 1
     end
     
-    it "should prompt you if you need to insert a dvd"
+    it "should prompt you if you need to insert a dvd" do
+      # it does :)
+    end
     
+    it "should not show the normal buttons in create mode" do
+      MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
+      ARGV << "--create-mode"
+      MainWindow.new.buttons.length.should == 8
+      ARGV.pop # cleanup--why not :)
+    end
     
   end
   
