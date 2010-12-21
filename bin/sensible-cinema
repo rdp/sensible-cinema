@@ -147,7 +147,7 @@ module SensibleSwing
         repeat_last_copy_dvd_to_hard_drive 
       }
 
-      @open_list = new_jbutton("Open a Delete List", true)
+      @open_list = new_jbutton("Open/Edit a Delete List", true)
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR

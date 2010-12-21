@@ -9,6 +9,7 @@
       
 == slightly lower than that, somewhat ordered ==
 
+  SyntaxError very annoying output when missing an internal , ...hmm...
   @license: requires legal DVD's to be present
   can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not?
   linearize edl's
@@ -24,6 +25,7 @@
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
   mpeg is lossy (at least my current one pass conversion is)
+  add button "upload"
   check the DVD burning experience too...
     could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
@@ -43,7 +45,6 @@
     advertise urug, ruby flow :)
   add they 'play from unedited till it hits the first bad spot, if still useful
   add to text "must close, regenerate sections, to watch edited section again"
-  
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
