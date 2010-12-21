@@ -15,6 +15,8 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
+
+require 'ostruct'
 require File.expand_path(File.dirname(__FILE__) + '/common')
 load '../bin/sensible-cinema'
 
@@ -281,17 +283,32 @@ module SensibleSwing
       count.should == 1
     end
     
-    it "should allow for file to change contents while editing it" do
-      with_clean_edl_dir_as 'temp' do
+    def should_allow_for_changing_file corrupt_file = false
+       with_clean_edl_dir_as 'temp' do
         File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
         @subject.stub!(:choose_dvd_drive) {
           ["mock_dvd_drive", "Volume", "abcdef1234"]
         }
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
-        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]')
+        new_file_contents = '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]'
+        new_file_contents = '"a syntax error' if corrupt_file
+        File.binwrite('temp/a.txt', new_file_contents)
         # it changed!
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
       end
+    end
+    
+    it "should allow for file to change contents while editing it" do
+      should_allow_for_changing_file
+    end
+    
+    it "should prompt you if you re-choose, and your file now has a failure in it" do
+      @subject.stub(:show_blocking_message_dialog) {
+        @got_here = true
+        @subject.stub(:parse_edl) { 'pass the second time through' }
+      }
+      should_allow_for_changing_file true
+      @got_here.should == true
     end
     
     it "should only prompt for save to filename once" do
@@ -305,27 +322,23 @@ module SensibleSwing
       count.should == 1
     end
     
-    it "should prompt you if you need to insert a dvd"
+    it "should prompt you if you need to insert a dvd" do
+      DriveInfo.stub(:get_dvd_drives_as_win32ole) {
+        a = OpenStruct.new
+        a.Name = 'a name'
+        # no VolumeName though
+        [a] 
+      }
+      @subject.unstub!(:choose_dvd_drive)
+      proc {@subject.choose_dvd_drive }.should raise_error(/might not yet have.*in it/)
+      @show_blocking_message_dialog_last_args.should_not be nil
+    end
     
     it "should not show the normal buttons in create mode" do
       MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should == 8
       ARGV.pop # cleanup--why not :)
-    end
-    
-    it "should prompt you if you re-choose, and your file now has a failure in it" do
-      with_clean_edl_dir_as 'temp' do
-        File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        @subject.stub!(:choose_dvd_drive) {
-          ["mock_dvd_drive", "Volume", "abcdef1234"]
-        }
-        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
-        File.binwrite('temp/a.txt', '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]')
-        # it changed!
-        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
-      end
-      
     end
     
   end
