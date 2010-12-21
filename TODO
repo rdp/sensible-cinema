@@ -14,6 +14,9 @@
   linearize edl's
     don't use them linear, just linearize
       not this release
+
+  delete final file at create list time [?] sometime
+  "preview edited in a wholly blank section that includes an audio section should fail"
   
   edit lists:
     temple
@@ -39,9 +42,12 @@
     free google adwords (?)
     advertise urug, ruby flow :)
   add they 'play from unedited till it hits the first bad spot, if still useful
+  add to text "must close, regenerate sections, to watch edited section again"
+  
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  an 'always skip mutes' option for paranoia.
   dvdnav versus dvd for mplayer edl?
   disallow choosing empty drive? fail more gracefully? (issue 11)
   some status bar that shows which DVD is in currently, how many match it, et al (pre button)
