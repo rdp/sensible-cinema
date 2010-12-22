@@ -12,11 +12,7 @@
   broken button
   add button "upload/mail/submit" to ML [?]
   edl is broken on HP at 2 hours, "from the dvd straight"
-    mplayer edl if it's all blank outs work?
-  check the DVD burning experience too...
-    does it work now, audio-wise?
-    was it broken?
-      nope
+    mplayer edl if it's all blank outs works?
   fix edl_parser spec
   detect disks have changed, re-query.
   cleaner error on locked file :)
