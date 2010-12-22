@@ -344,9 +344,9 @@ EOL
     end
     
     def choose_dvd_and_edl_for_it
-      @_choose_dvd_and_edl_for_it ||= 
+      drive, dvd_volume_name, md5sum = choose_dvd_drive
+      @_edit_list_path ||= 
       begin
-        drive, dvd_volume_name, md5sum = choose_dvd_drive
         puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
         edit_list_path = single_edit_list_matches_dvd(md5sum)
         if !edit_list_path
@@ -356,22 +356,20 @@ EOL
           edit_list_path = fc.go
         end
         raise 'cancelled' unless edit_list_path
-        [drive, dvd_volume_name, md5sum, edit_list_path, nil]
+        edit_list_path
       end
       
       # reload it just in case it has changed on disk
-      edit_list_path = @_choose_dvd_and_edl_for_it[3]
       descriptors = nil
       while(!descriptors)
           begin
-            descriptors = parse_edl edit_list_path
+            descriptors = parse_edl @_edit_list_path
           rescue SyntaxError => e
             puts e
-            show_blocking_message_dialog("your file has an error--please fix then hit ok: \n" + edit_list_path + "\n " + e)
+            show_blocking_message_dialog("your file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
           end
       end
-      @_choose_dvd_and_edl_for_it[-1] = descriptors
-      @_choose_dvd_and_edl_for_it
+      [drive, dvd_volume_name, md5sum, @_edit_list_path, descriptors]
     end
     
     def get_title_track descriptors
@@ -506,7 +504,11 @@ EOL
 
     # returns e:\, volume, md5sum
     def choose_dvd_drive
-      opticals = DriveInfo.get_dvd_drives_as_win32ole
+      opticals = DriveInfo.get_dvd_drives_as_openstruct
+      if @saved_opticals == opticals
+        # memoize :)
+        return @_choose_dvd_drive
+      end
       show_blocking_message_dialog 'insert dvd first' unless opticals.find{|d| d.VolumeName }
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD and re-start') + ")"}
 
@@ -525,7 +527,9 @@ EOL
         prefix = names[selected_idx][0..2]
         puts "calculating disk's unique id..."
         md5sum = DriveInfo.md5sum_disk(prefix)
-        return prefix, opticals[selected_idx].VolumeName, md5sum
+        @_choose_dvd_drive = [prefix, opticals[selected_idx].VolumeName, md5sum]
+        @saved_opticals = opticals
+        return @_choose_dvd_drive
       else
         puts 'did not select a drive...exiting'
         java.lang.System.exit 1

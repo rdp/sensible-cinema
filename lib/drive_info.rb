@@ -17,6 +17,7 @@ This file is part of Sensible Cinema.
 =end
 require 'digest/md5'
 require 'ruby-wmi'
+require 'ostruct'
 
 class DriveInfo
 
@@ -30,9 +31,9 @@ class DriveInfo
   digest.hexdigest
  end
 
- def self.get_dvd_drives_as_win32ole
+ def self.get_dvd_drives_as_openstruct
    disks = WMI::Win32_LogicalDisk.find(:all)
-   disks.select{|d| d.Description =~ /CD-ROM/} # hope this works...
+   disks.select{|d| d.Description =~ /CD-ROM/}.map{|d| d2 = OpenStruct.new; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2}
  end
   
 def self.get_drive_with_most_space_with_slash

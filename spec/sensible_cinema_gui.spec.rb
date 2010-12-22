@@ -277,17 +277,6 @@ module SensibleSwing
       wrote.should include("380.85 1")
     end
     
-    it "should only prompt for drive once" do
-      count = 0
-      @subject.stub!(:choose_dvd_drive) {
-        raise 'bad' if count == 1
-        count = 1
-        ['drive', 'volume', '19d121ae8dc40cdd70b57ab7e8c74f76']
-      }
-      @subject.choose_dvd_and_edl_for_it
-      @subject.choose_dvd_and_edl_for_it
-      count.should == 1
-    end
     
     def should_allow_for_changing_file corrupt_file = false
        with_clean_edl_dir_as 'temp' do
@@ -328,16 +317,33 @@ module SensibleSwing
       count.should == 1
     end
     
-    it "should prompt you if you need to insert a dvd" do
-      DriveInfo.stub(:get_dvd_drives_as_win32ole) {
-        a = OpenStruct.new
-        a.Name = 'a name'
-        # no VolumeName though
-        [a] 
-      }
-      @subject.unstub!(:choose_dvd_drive)
-      proc {@subject.choose_dvd_drive }.should raise_error(/might not yet have.*in it/)
-      @show_blocking_message_dialog_last_args.should_not be nil
+    describe 'cacheing dvd drive' do
+      before do
+        DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
+          a = OpenStruct.new
+          # NB no VolumeName set
+          a.Name = 'a name'
+          [a] 
+        }
+        @subject.unstub!(:choose_dvd_drive)
+      end
+      
+      it "should only prompt for drive once" do
+        count = 0
+        DriveInfo.stub!(:md5sum_disk) {
+          raise if count == 1
+          count = 1
+          '19d121ae8dc40cdd70b57ab7e8c74f76'
+        }
+        @subject.choose_dvd_and_edl_for_it
+        @subject.choose_dvd_and_edl_for_it
+        count.should == 1
+      end
+  
+      it "should prompt you if you need to insert a dvd" do
+        proc {@subject.choose_dvd_drive }.should raise_error(/might not yet have.*in it/)
+        @show_blocking_message_dialog_last_args.should_not be nil
+      end
     end
     
     it "should not show the normal buttons in create mode" do
