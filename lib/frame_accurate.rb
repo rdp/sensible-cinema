@@ -1,0 +1,3 @@
+class FrameAccurate
+  
+end

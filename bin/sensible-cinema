@@ -361,7 +361,7 @@ EOL
             descriptors = parse_edl edit_list_path
           rescue SyntaxError => e
             puts e
-            show_blocking_message_dialog("your file has an error: \n" + edit_list_path + "\n " + e)
+            show_blocking_message_dialog("your file has an error--please fix then hit ok: \n" + edit_list_path + "\n " + e)
           end
       end
       @_choose_dvd_and_edl_for_it[-1] = descriptors
