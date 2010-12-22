@@ -12,4 +12,5 @@
 ],
 
 "disk_unique_id" => "9a56136cdd5bc321ebff064cd59b8322",
-"title" => "Harry Potter 2 Chamber of secrets"
+"title" => "Harry Potter 2 Chamber of secrets",
+"grabbed_md5" => "abc"

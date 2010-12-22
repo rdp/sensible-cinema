@@ -105,7 +105,7 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false )
+      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", true )
       @mplayer_edl.on_clicked {
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         descriptors = EdlParser.parse_file edl_path

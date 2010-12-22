@@ -19,6 +19,10 @@ require File.dirname(__FILE__) + "/common"
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/edl_parser'
 
+#  require 'digest/md5'
+# hasher = Digest::MD5.new
+# size = 1024*1024
+# p Digest::MD5.file('HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg')
 # mpeg fulli_unedited one pass doesn't look "awful"
 # mp4 fulli_unedited default looks way granular
 # so could either attempt to re-encode at high cpu, possibly still lossy
