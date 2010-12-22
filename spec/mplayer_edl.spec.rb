@@ -37,7 +37,6 @@ EOL
     a.should == <<EOL
 105.0 145.0 0
 EOL
-    
   end
 
   it "should add to mutes" do

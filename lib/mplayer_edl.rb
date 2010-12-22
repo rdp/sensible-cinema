@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
 =end
 
 require_relative 'overlayer'
-require_relative 'vlc_programmer'
+require_relative 'edl_parser'
 
 class MplayerEdl
   def self.convert_to_edl specs, add_this_many_to_end = 0

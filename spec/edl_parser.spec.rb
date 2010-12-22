@@ -100,4 +100,8 @@ describe EdlParser do
     E.parse_string('"mutes"=>["0:33", "0:34"]', 'filename', [], true)['mutes'].should == []
   end
   
+  it "should sort exactly overlapping segments" do
+    EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}, "blank_outs"=>{105=>145}}).should == [[105.0, 145.0, :blank]]
+  end
+  
 end

@@ -111,11 +111,3 @@ class VLCProgrammer
 
 end
 
-# <= 1.8.7 compat...
-class Symbol
-  # Standard in ruby 1.9. See official documentation[http://ruby-doc.org/core-1.9/classes/Symbol.html]
-  def <=>(with)
-    return nil unless with.is_a? Symbol
-    to_s <=> with.to_s
-  end unless method_defined? :"<=>"
-end

@@ -84,6 +84,7 @@ class EdlParser
     mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v) + add_this_to_mutes, :mute]}
     blanks = blanks.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :blank]}
 
+    combined = (mutes+blanks).sort_by{|entry| entry[0,1]}
     combined = (mutes+blanks).sort
 
     combined.each{|s, e, t|
@@ -129,4 +130,14 @@ class EdlParser
     }
   end
 
+end
+
+# <= 1.8.7 Symbol compat
+
+class Symbol
+  # Standard in ruby 1.9. See official documentation[http://ruby-doc.org/core-1.9/classes/Symbol.html]
+  def <=>(with)
+    return nil unless with.is_a? Symbol
+    to_s <=> with.to_s
+  end unless method_defined? :"<=>"
 end
