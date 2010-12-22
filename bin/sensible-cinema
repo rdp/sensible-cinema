@@ -439,7 +439,7 @@ EOL
       begin
         commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
-        show_blocking_message_dialog("Appears you chose a time frame with no deletion segment in it:" + e)
+        show_blocking_message_dialog("Appears you chose a time frame with no deletion segment in it--please try again:" + e)
         return
       end
       temp_dir = Dir.tmpdir
