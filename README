@@ -158,13 +158,11 @@ http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 == Troubleshooting ==
 
 Note that you'll need java previously installed for this to work.  You probably already do though.
-If you run into a snag, try cleaning your DVD. Baking soda toothpaste might help.
-If it still errs, report it to the authors, along with a screen snapshot and steps of
+If you run into a snag, it might have failed in "grabbing" the DVD, and only got part of it.
+Try cleaning your DVD and starting over (delete all files, start again). 
+Baking soda toothpaste might help with cleaning it.
+If it still errs, report it, along with a screen snapshot and steps of
 how to reproduce the problem, preferably.  See feedback section.
-
-If it says "audio problem try pcm" then you can add
-"audio_codec" => "lavc"
-to your EDL and try again.
 
 It can fail also because a deletion is past end of DVD, or 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off after that point, 

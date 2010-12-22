@@ -7,9 +7,14 @@
     temple
     cars
     HP
+  md5 the fulli version... [?]
+  play a bigger noise when totally done...(dvd flick'ish...)
+  fix edl_parser spec
+  detect disks have changed, re-query.
       
 == slightly lower than that, somewhat ordered ==
 
+  button start EDL playback here [?]
   "sensible-cinema gpl"
   linearize edl's
     don't use them linear, just linearize
@@ -29,14 +34,12 @@
   a real'ish-er website
     link to ML
     add button "upload/mail/submit" to ML [?]
-  play a bigger noise when totally done...(dvd flick'ish...)
   propaganda-ize
     advertise in christian places
     blogs that have ever mentioned clearplay :P
     free google adwords (?)
     advertise urug, ruby flow :)
   add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
-  fix edl_parser spec
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
@@ -48,7 +51,6 @@
       back to audio copy? huh?
   calculating disk's unique id... -> gui somewhere
   @dvd flick: auto-detect the aspect ratio, if possible (?)
-  detect disks have changed, re-query.
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
   "preview edited in a wholly blank section that includes an audio section should fail"
   an 'always skip mutes' option for paranoia.
