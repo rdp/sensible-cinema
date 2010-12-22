@@ -23,6 +23,9 @@
   mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
     frame accurate splitter
   "sensible-cinema gpl"
+  can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
+    I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
+      appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
   button start EDL playback here [?]
   md5 and verify the fulli version... [?]
     only useful once I get the frame accurate stuff done

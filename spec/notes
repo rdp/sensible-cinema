@@ -1,3 +1,6 @@
+mplayer dvd://23 -dvd-device e:\ -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl
+  seems to play with audio in sync always, with cars (now with potter...)
+
 what if you grab with "full" audio...does it make its way back out to the DVD? what does dvd flick do audio wise?
 
 without harddup smplayer got audio video out of sync playing DVD, as well as playing ripped files, however
