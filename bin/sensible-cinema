@@ -111,7 +111,7 @@ module SensibleSwing
         descriptors = EdlParser.parse_file edl_path
         temp_dir = Dir.tmpdir
         temp_file = temp_dir + '/mplayer.temp.edl'
-        edl_contents = MplayerEdl.convert_to_edl descriptors, 1.75 # add a sec to mutes to accomodate for mplayer's oddness...
+        edl_contents = MplayerEdl.convert_to_edl descriptors, 5.75 # add a sec to mutes to accomodate for mplayer's oddness...
         File.write(temp_file, edl_contents)
         title_track = get_title_track(descriptors)
         # oh the insanity of the console UI...LODO more user friendly player

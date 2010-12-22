@@ -3,19 +3,19 @@
 == up next release ==
 
   edit lists actually *working*:
-    cool runnings
-    temple
-    cars
-    HP
+    cool runnings at home
+    temple at home
+    cars bring home :)
+    HP at work
+  edl is broken on HP at 2 hours
       
 == slightly lower than that, somewhat ordered ==
 
+  md5 the fulli version... [?]
   broken button
   fix edl_parser spec
   detect disks have changed, re-query.
-  md5 the fulli version... [?]
   button start EDL playback here [?]
-  "sensible-cinema gpl"
   cleaner error on locked file :)
   linearize edl's
     don't use them linear, just linearize
@@ -23,8 +23,7 @@
   play a bigger noise when totally done...(dvd flick'ish...)
   mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
     frame accurate splitter
-  compare computer DVD timings with physical player's timings...
-    if same, add imdb todo's up here
+  "sensible-cinema gpl"
   check the DVD burning experience too...
     could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
@@ -36,6 +35,8 @@
   a real'ish-er website
     link to ML
     add button "upload/mail/submit" to ML [?]
+  compare computer DVD timings with physical player's timings...
+    if same, add imdb todo's up here
   propaganda-ize
     advertise in christian places
     blogs that have ever mentioned clearplay :P
