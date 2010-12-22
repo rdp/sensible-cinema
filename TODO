@@ -2,39 +2,39 @@
   
 == up next release ==
 
-  edit lists actually *working*:
+  low hanging fruit/bugs:
     cool runnings at home
-    temple at home
-    cars bring home :)
+    edl straight is broken on HP at 2 hours
+    mplayer edl if it's all blank outs works right then?
+    fix edl_parser spec
+    detect disks have changed, re-query.
+    play a bigger noise when totally done...(dvd flick'ish...)
 
 == slightly lower than that, somewhat ordered ==
 
-  broken button
-  edl is broken on HP at 2 hours, "from the dvd straight"
-  mplayer edl if it's all blank outs works right then?
-  fix edl_parser spec
-  detect disks have changed, re-query.
-  cleaner error on locked file :)
+  temple at home
+  cars bring home :)
   linearize edl's
     don't use them linear, just linearize
       not this release
-  play a bigger noise when totally done...(dvd flick'ish...)
   mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
     frame accurate splitter
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
-  button start EDL playback here [?]
+        this might not matter once I have frame accurate
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
       only after linearize
+  button start EDL playback here [?]
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
     link to ML
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
+  cleaner error on locked file :)
   propaganda-ize
     advertise in christian places
     blogs that have ever mentioned clearplay :P

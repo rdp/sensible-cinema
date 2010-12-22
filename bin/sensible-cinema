@@ -77,6 +77,7 @@ module SensibleSwing
     
     # make them choose which system call to use explicitly
     undef system
+    
     def initialize
       super "Sensible-Cinema (gpl)"
       if !(Storage['main_license_accepted'] == VERSION)
@@ -111,7 +112,7 @@ module SensibleSwing
         descriptors = EdlParser.parse_file edl_path
         temp_dir = Dir.tmpdir
         temp_file = temp_dir + '/mplayer.temp.edl'
-        edl_contents = MplayerEdl.convert_to_edl descriptors, 5.75 # add a sec to mutes to accomodate for mplayer's oddness...
+        edl_contents = MplayerEdl.convert_to_edl descriptors, 1.75 # add a sec to mutes to accomodate for mplayer's oddness...
         File.write(temp_file, edl_contents)
         title_track = get_title_track(descriptors)
         # oh the insanity of the console UI...LODO more user friendly player
@@ -126,7 +127,7 @@ module SensibleSwing
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
       @watch_unedited.on_clicked {
-        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
         sleep 5 unless success_no_run
         command = "smplayer #{wrote_to_here_fulli}"
         system_non_blocking command
@@ -193,7 +194,7 @@ EOL
         This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
       }
       
-      @upload = new_jbutton( "Upload/e-mail suggestion/Submit anything").on_clicked {
+      @upload = new_jbutton( "Upload/e-mail suggestion/Submit anything", true).on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
@@ -465,7 +466,7 @@ EOL
       # LODO warn if they will overwrite a file in the end...
     end
     
-    attr_accessor :background_thread, :after_success_once, :buttons
+    attr_accessor :background_thread, :buttons
 
     def run_create_commands batch_commands, save_to, run_mplayer
       @buttons.each{|b| b.set_enabled false}

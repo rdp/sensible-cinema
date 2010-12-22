@@ -224,19 +224,23 @@ module SensibleSwing
       @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
     end
     
-    it "if the .done files exists, it should directly call smplayer" do
+    it "if the .done files exists, watch unedited should call smplayer ja" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
       @command.should == "smplayer abc.fulli_unedited.tmp.mpg"
       FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
-    it "if the .done file does not exist, it should call smplayer ja" do
-      @subject.stub!(:sleep) {} # speed this test up...
+    it "if the .done file does not exist, watch unedited should call smplayer after x seconds" do
+      @subject.stub!(:sleep) {
+        @slept = true
+      } # speed this test up...
+      @subject.unstub!(:get_mencoder_commands)
       click_button(:@watch_unedited).join
-      @subject.after_success_once.should == nil
-      @command.should =~ /smplayer.*fulli/
+      join_background_thread
       @system_blocking_command.should_not == nil
+      @slept.should == true
+      @show_blocking_message_dialog_last_args.should == nil
     end
     
     it "should create a new file for ya" do
@@ -337,9 +341,9 @@ module SensibleSwing
     end
     
     it "should not show the normal buttons in create mode" do
-      MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
+      MainWindow.new.buttons.length.should == 2 # exit button, two normal buttons
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 8
+      MainWindow.new.buttons.length.should == 10
       ARGV.pop # test cleanup--why not :)
     end
     
