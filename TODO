@@ -16,7 +16,6 @@
   fix edl_parser spec
   detect disks have changed, re-query.
   cleaner error on locked file :)
-  
   linearize edl's
     don't use them linear, just linearize
       not this release
@@ -46,6 +45,7 @@
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
+  can I get the original audio tracks back?
   show them how to use smplayer with subtitles
   can overlay with an image
   can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not, with audio?

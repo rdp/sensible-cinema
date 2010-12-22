@@ -1,0 +1,24 @@
+what if you grab with "full" audio...does it make its way back out to the DVD? what does dvd flick do audio wise?
+
+without harddup smplayer got audio video out of sync playing DVD, as well as playing ripped files, however
+  when you wrote those to DVD, they seemed to get back in sync. ffmpeg, perhaps, is/was fixing them?
+
+fulli with lavc audio and video: mplayer cannot play it back right, but if it's re-encoded with mencoder first [? or is it ffmpeg?], mplayer
+seems to play it fine then. Thin ice here...
+
+if I pull from dvd with -acodec lavc (basically downgrade to stereo), then ffmpeg can extract to avi with sound.
+  otherwise (cars only), it lacks sound *only on computer players*
+
+Note that mencoder cannot have an endpos on a dvd. Weird.
+
+Note that dvdflick "appears" to encode correctly even if the size is too big, as in it just encodes it "lossy-y"
+  The encoding actually appears to be fairly high quality, that dvd flick does, video wise, at least.
+
+ffmpeg -i bigg.mpg -acodec copy -vcodec copy bigg.reindexffmpeg.mpg
+
+resulted in a sound with no audio
+
+I got bigg trying to combine (mencoder ?) two large files.
+
+I think bigg has honestly messed up audio, no reindexing seems to help it, at all.
+

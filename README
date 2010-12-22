@@ -168,11 +168,15 @@ It can fail also because a deletion is past end of DVD, or
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off after that point, 
 so clean your discs and try again!
 
+Also make sure you aren't out of disk space.
+
 Also you could try a different computer (desktop computers' DVD drives seem to work better at times than laptops')
 
-Too slow? One big speedup would be getting a faster hard drive (like an SSD).  A second might be to get a faster DVD drive.
-  I'm not certain but I don't believe that a faster cpu (or even dual core, etc.), will currently help much, 
+Too slow? One big speedup would be getting a faster hard drive (SSD perhaps, though
+  sensible cinema mostly reads large files, so a speedy spinning disk might help, too).  A second might be to get a faster DVD drive.
+  I'm not certain but I don't believe that a faster cpu (or even dual core, etc.), will help much, 
   though it might like 3% or something.
+  Also ping me if you think it's too slow and I'll see what I can do.
 
 == Feedback ==
 
