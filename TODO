@@ -16,14 +16,15 @@
   md5 the fulli version... [?]
   button start EDL playback here [?]
   "sensible-cinema gpl"
+  cleaner error on locked file :)
   linearize edl's
     don't use them linear, just linearize
       not this release
   play a bigger noise when totally done...(dvd flick'ish...)
+  mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
+    frame accurate splitter
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
-  mpeg is lossy (at least my current one pass conversion still is...)
-    frame accurate splitter
   check the DVD burning experience too...
     could check if DVD Flick handles *oversize* files well, for information sake 
   partner for filters (Jon, Karlie if interested...give beta)
