@@ -6,19 +6,21 @@
     cool runnings at home
     temple at home
     cars bring home :)
-    HP at work
-  edl is broken on HP at 2 hours
-    mplayer edl if it's all blank outs work?
       
 == slightly lower than that, somewhat ordered ==
 
-  fulli doesn't even play full with smplayer!
-  md5 the fulli version... [?]
   broken button
+  add button "upload/mail/submit" to ML [?]
+  edl is broken on HP at 2 hours, "from the dvd straight"
+    mplayer edl if it's all blank outs work?
+  check the DVD burning experience too...
+    does it work now, audio-wise?
+    was it broken?
+      nope
   fix edl_parser spec
   detect disks have changed, re-query.
-  button start EDL playback here [?]
   cleaner error on locked file :)
+  
   linearize edl's
     don't use them linear, just linearize
       not this release
@@ -26,8 +28,9 @@
   mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
     frame accurate splitter
   "sensible-cinema gpl"
-  check the DVD burning experience too...
-    could check if DVD Flick handles *oversize* files well, for information sake 
+  button start EDL playback here [?]
+  md5 and verify the fulli version... [?]
+    only useful once I get the frame accurate stuff done
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
@@ -36,7 +39,6 @@
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
     link to ML
-    add button "upload/mail/submit" to ML [?]
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
   propaganda-ize

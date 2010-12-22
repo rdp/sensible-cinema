@@ -494,7 +494,7 @@ EOL
           show_blocking_message_dialog "Done--you may now watch file #{saved_to} in SMPlayer or VLC player"
         end
       else
-        show_blocking_message_dialog("Failed--please examine screen output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
+        show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
       end
     end
 
