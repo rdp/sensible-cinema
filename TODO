@@ -2,7 +2,7 @@
   
 == up next release ==
 
-  edit lists:
+  edit lists actually *work*:
     cool runnings
     temple
     cars
@@ -35,6 +35,7 @@
     free google adwords (?)
     advertise urug, ruby flow :)
   add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
+  fix edl_parser spec
   
 == DVD backlog (unordered, some very low prio, basically never do) ==
 
