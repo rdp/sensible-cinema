@@ -2,15 +2,15 @@
   
 == up next release ==
 
-  edit lists actually *work*:
+  edit lists actually *working*:
     cool runnings
     temple
     cars
     HP
-  broken button
       
 == slightly lower than that, somewhat ordered ==
 
+  broken button
   fix edl_parser spec
   detect disks have changed, re-query.
   md5 the fulli version... [?]
