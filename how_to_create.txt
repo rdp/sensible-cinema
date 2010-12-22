@@ -15,35 +15,26 @@ insert DVD, click "create new" button
 click "open ripped version of DVD unedited", right click, create new file, name it something.txt, right click, "open", and then select it.
 
 it will rip that fella to the hard drive (for the save to filename, use the default).  
-It will take quite awhile, but will get everything set up for quick editing after that.
+It will take quite awhile, but will get everything set up for quick editing after that point.
 
 In the meantime, make your file look like this:
 
 https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
 
-After it finishes ripping it, it will start you watching it in mplayer, which should give you a reasonable view of good timestamps.
+After it finishes ripping it, it will start you watching it in mplayer, from which you can "derive" the parts you wish to delete.
 
-Add timestamps to your file as necessary, then (exit smplayer and) click "Preview edited section of current DVD" (use the default filename always),
-give it a range "around" the edit you just added, then it will give you an .avi file with just that segment.
-Watch it (in VLC or smplayer), and see if your edit worked.  If it didn't, edit it, hit "re-run most recent preview"
-If it did, then click "Open ripped version of DVD" again, and continue playing from where you were before.
-
-When you're done finally, then click "Create edited copy of DVD on your hard drive".
-It will re-rip and do it all (will take forever), but will give you your final product.
-Alternatively, you could get a final product by clicking "Preview edited section of current DVD" and putting in a start timestamp of
-00:00 and an end timestamp of 9999 or what not.  Same deal, but will take you less time.
+Add timestamps to your file as necessary, then (exit smplayer and) click "Preview edited section of current DVD" (use the default filename),
+give it a range "around" the edit you just added, then it will preview that segment.  If it didn't work, edit the file,
+close smplayer, and hit "re-run most recent preview"
 
 Also after you're done, you can delete any left over files that are still there.
 
-Also after you're done, you can submit it back to the project by emailing me with an attachment: rogerdpack@gmail.com
+Also after you're done, you can submit it back to the project by submitting it, see end of README.
 
-Also if you want sensible-cinema to be able to auto-choose your EDL, then include its unique id (click the "Get a disk's unique id" button).
-
+A few pointers:
  I typically like to make two delete lists per DVD.  One that takes out swearing, sex, and gruesome violence, and another
    "more paranoid" version that takes out basically anything that could be offensive to anybody :) ("dang", "fetch", "too tense" of scenes...)
-  
-A few pointers:
  You can just watch the DVD (using any DVD player), and get timestamps that way, before starting this.
- A good one is "smplayer" (the [ and ] keys control playback speed)
- You can watch the DVD using VLC Player, which has a "fast forward" button, just recognize that VLC's timestamps are slightly off,
-  so they'll only be approximate, but it might still help.
+ A good one is "smplayer" (the [ and ] keys control playback speed), and you can turn on subtitles to find profanity.
+ You can watch the DVD using VLC Player, which has a "fast forward" button, just recognize that VLC's timestamps are always slightly off,
+  so they'll only be approximate, but it might be close.
