@@ -119,4 +119,5 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   system("#{Gem.ruby} -S gem push #{gems[-1]}")
   FileUtils.rm_rf 'pkg'
   puts "don't forget to blog about it...and upload .zip of it..."
+  system("git push origin master")
 end

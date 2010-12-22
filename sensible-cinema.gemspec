@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.19.2"
+  s.version = "0.19.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2010-12-21}
+  s.date = %q{2010-12-22}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/edl_parser.rb",
     "lib/fake_blanker.rb",
     "lib/file_chooser.rb",
+    "lib/frame_accurate.rb",
     "lib/keyboard_input.rb",
     "lib/mencoder_wrapper.rb",
     "lib/mouse.rb",
@@ -62,6 +63,7 @@ Gem::Specification.new do |s|
     "spec/convert_image.rb",
     "spec/drive_info.spec.rb",
     "spec/edl_parser.spec.rb",
+    "spec/frame_accurate.spec.rb",
     "spec/go_line.bat",
     "spec/images/black.bmp",
     "spec/images/colon.bmp",
@@ -115,6 +117,7 @@ Gem::Specification.new do |s|
     "spec/mouse.spec.rb",
     "spec/mplayer_edl.spec.rb",
     "spec/muter.spec.rb",
+    "spec/notes",
     "spec/ocr.spec.rb",
     "spec/overlayer.spec.rb",
     "spec/screen_tracker.spec.rb",
@@ -165,6 +168,7 @@ Gem::Specification.new do |s|
     "spec/convert_image.rb",
     "spec/drive_info.spec.rb",
     "spec/edl_parser.spec.rb",
+    "spec/frame_accurate.spec.rb",
     "spec/keyboard_input.spec.rb",
     "spec/mencoder_wrapper.spec.rb",
     "spec/mouse.spec.rb",

@@ -78,10 +78,10 @@ class EdlParser
   
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
-  def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes = 0
+  def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v) + add_this_to_mutes, :mute]}
+    mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k) - add_this_to_mutes_beginning, OverLayer.translate_string_to_seconds(v) + add_this_to_mutes_end, :mute]}
     blanks = blanks.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :blank]}
 
     combined = (mutes+blanks).sort_by{|entry| entry[0,1]}

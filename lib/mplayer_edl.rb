@@ -20,9 +20,9 @@ require_relative 'overlayer'
 require_relative 'edl_parser'
 
 class MplayerEdl
-  def self.convert_to_edl specs, add_this_many_to_end = 0
+  def self.convert_to_edl specs, add_this_many_to_end = 0, add_this_many_to_beginning = 0
     # simple re-map.
-    combined = EdlParser.convert_incoming_to_split_sectors specs, add_this_many_to_end
+    combined = EdlParser.convert_incoming_to_split_sectors specs, add_this_many_to_end, add_this_many_to_beginning
     out = ''
     map = {:mute => 1, :blank => 0}
     for start, endy, type in combined

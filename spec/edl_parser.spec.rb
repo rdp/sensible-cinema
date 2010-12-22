@@ -104,4 +104,9 @@ describe EdlParser do
     EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}, "blank_outs"=>{105=>145}}).should == [[105.0, 145.0, :blank]]
   end
   
+  it "should add to both ends" do
+    EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}}, 1).should == [[105.0, 146.0, :mute]]
+    EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}}, 1,1).should == [[104.0, 146.0, :mute]]
+  end
+  
 end

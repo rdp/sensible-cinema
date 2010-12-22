@@ -1,3 +1,9 @@
+Now you can specify an arbitrary "precision" around mute settings to make them more conservative or not.
+
+== 0.19.3 ==
+
+Hopefully work with audio from more DVD's now.
+
 == 0.19.2 ==
 
 More user friendliness.
