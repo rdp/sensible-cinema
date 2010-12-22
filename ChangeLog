@@ -1,3 +1,7 @@
+== 0.19.2 ==
+
+More user friendliness.
+
 == 0.19.1 ==
 
 Clarify buttons' meanings, layout (add one), fix some bugs in create mode, like it not re-loading edited files.
