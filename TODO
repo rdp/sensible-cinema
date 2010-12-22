@@ -6,13 +6,12 @@
     cool runnings at home
     temple at home
     cars bring home :)
-      
+
 == slightly lower than that, somewhat ordered ==
 
   broken button
-  add button "upload/mail/submit" to ML [?]
   edl is broken on HP at 2 hours, "from the dvd straight"
-    mplayer edl if it's all blank outs works?
+  mplayer edl if it's all blank outs works right then?
   fix edl_parser spec
   detect disks have changed, re-query.
   cleaner error on locked file :)
@@ -22,13 +21,10 @@
   play a bigger noise when totally done...(dvd flick'ish...)
   mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
     frame accurate splitter
-  "sensible-cinema gpl"
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
   button start EDL playback here [?]
-  md5 and verify the fulli version... [?]
-    only useful once I get the frame accurate stuff done
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
@@ -45,9 +41,12 @@
     free google adwords (?)
     advertise urug, ruby flow :)
   add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
+  md5 and verify the fulli version... [?]
+    only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
   
-== DVD backlog (unordered, some very low prio, basically never do) ==
+== DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  can I combine commands onto one command line for a quicker anything?
   can I get the original audio tracks back?
   show them how to use smplayer with subtitles
   can overlay with an image

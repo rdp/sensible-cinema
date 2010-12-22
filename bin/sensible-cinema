@@ -78,7 +78,7 @@ module SensibleSwing
     # make them choose which system call to use explicitly
     undef system
     def initialize
-      super "Sensible-Cinema"
+      super "Sensible-Cinema (gpl)"
       if !(Storage['main_license_accepted'] == VERSION)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
         show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read the LICENSE.TXT file.'
@@ -105,7 +105,7 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", true )
+      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", true ) # TODO enable once it works with HP
       @mplayer_edl.on_clicked {
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         descriptors = EdlParser.parse_file edl_path
@@ -191,6 +191,11 @@ EOL
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
         This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
+      }
+      
+      @upload = new_jbutton( "Upload/e-mail suggestion/Submit anything").on_clicked {
+        system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
+        system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
       @progress_bar = JProgressBar.new(0, 100)

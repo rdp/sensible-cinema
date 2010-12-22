@@ -1,3 +1,11 @@
+The kicker is that if I want to watch the "unedited all" option in mplayer (which I do for the "quick start" mode), then it needs to be as is...
+
+audio_codec = these_settings['audio_codec'] || 'lavc' # not copy...sniff...or you can't hear cars...as ffmpeg loses it on transfer [?] at least the intermediates you *cannot* hear.
+
+HP with edl (only) seriously fails at the 2 hour mark, even with 5 seconds added, or seems to, at least.
+
+windows media player is able to playback the "fulli" that mplayer gets out of sync on (lavc audio), at least with cars.
+
 mplayer dvd://23 -dvd-device e:\ -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl
   seems to play with audio in sync always, with cars (now with potter...)
 
