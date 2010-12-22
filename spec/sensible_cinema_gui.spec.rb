@@ -83,7 +83,7 @@ module SensibleSwing
       end
     end
 
-    it "should modify path to have mencder available, and ffmpeg, and download them on the fly" do
+    it "should modify path to have mencoder available" do
       ENV['PATH'].should include("mencoder")
     end
     
@@ -233,9 +233,10 @@ module SensibleSwing
     
     it "if the .done file does not exist, it should call smplayer ja" do
       @subject.stub!(:sleep) {} # speed this test up...
-      @subject.instance_variable_get(:@watch_unedited).simulate_click.join
+      click_button(:@watch_unedited).join
       @subject.after_success_once.should == nil
-      @command.should_not == nil
+      @command.should =~ /smplayer.*fulli/
+      @system_blocking_command.should_not == nil
     end
     
     it "should create a new file for ya" do

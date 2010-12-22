@@ -7,18 +7,19 @@
     temple
     cars
     HP
-  md5 the fulli version... [?]
-  play a bigger noise when totally done...(dvd flick'ish...)
-  fix edl_parser spec
-  detect disks have changed, re-query.
+  broken button
       
 == slightly lower than that, somewhat ordered ==
 
+  fix edl_parser spec
+  detect disks have changed, re-query.
+  md5 the fulli version... [?]
   button start EDL playback here [?]
   "sensible-cinema gpl"
   linearize edl's
     don't use them linear, just linearize
       not this release
+  play a bigger noise when totally done...(dvd flick'ish...)
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
   mpeg is lossy (at least my current one pass conversion still is...)
