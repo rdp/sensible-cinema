@@ -1,9 +1,12 @@
 smplayer on HP2 -> edited version (ffmpeg through mencoder) with oac copy, is off by an annoying split second when replayed in smplayer
- at other times, it fails everywhere almost sync-wise
+ at other times, it fails everywhere almost, sync-wise
   that "might" have been with HP and -oac lavc, but without harddup.  or maybe it was -oac copy
   VLC plays the audio splendidly on the same.
   plays well from DVD, though.  Just that one file isn't playable with mplayer...
   how does EDL fit into all of this, though?
+  also note that mplayer originally couldn't cut right because of audio (with oac copy, I believe)
+
+ffmpeg said that the huge HP grab was always 48 minute duration [?] (then proceeded to work right)
 
 edl *fails* with HP at the 2 hour mark, audio.  The audio did seem to line up, at least, with their lips.
   and if it's video--fails the same. Seems to think it's at second 2678, or minute 44, not minute 120?
