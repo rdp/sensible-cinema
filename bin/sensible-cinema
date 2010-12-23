@@ -26,6 +26,7 @@ require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
 require_relative '../lib/edl_parser'
 require_relative '../lib/mplayer_edl'
+require_relative '../lib/play_audio'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -496,6 +497,7 @@ EOL
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
           system_blocking show_file # returns immediately
           show_blocking_message_dialog "Done--you may now watch file #{saved_to} in SMPlayer or VLC player"
+          PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)

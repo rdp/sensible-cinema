@@ -152,11 +152,15 @@ module SensibleSwing
     end
     
     it "should call through to explorer for the full thing" do
+      PlayAudio.stub!(:play) {
+        @played = true
+      }
       @subject.do_copy_dvd_to_hard_drive(false)
       @subject.background_thread.join
       @args[-4].should == nil
       @system_blocking_command.should match /explorer/
       @system_blocking_command.should_not match /fulli/
+      @played.should == true
     end
     
     it "should be able to return the fulli name if it already exists" do
