@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.19.3"
+  s.version = "0.19.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -51,6 +51,7 @@ Gem::Specification.new do |s|
     "lib/muter.rb",
     "lib/ocr.rb",
     "lib/overlayer.rb",
+    "lib/play_audio.rb",
     "lib/screen_tracker.rb",
     "lib/storage.rb",
     "lib/swing_helpers.rb",
@@ -128,6 +129,7 @@ Gem::Specification.new do |s|
     "spec/vlc_programmer.spec.rb",
     "todo_if_need_speed",
     "vendor/gocr049.exe",
+    "vendor/music.wav",
     "vendor/unzip.exe",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
