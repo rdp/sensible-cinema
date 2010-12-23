@@ -357,6 +357,7 @@ create a "book edit list" (word x is at position y...)
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...
 donate money to several projects I use/like :)
+  after have LLC
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
