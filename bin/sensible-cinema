@@ -277,7 +277,7 @@ EOL
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
-          Kernel.print 'downloading mencoder.7z...'
+          Kernel.print 'downloading mencoder.7z (6MB) ...'
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           system_blocking("7za e mencoder.7z -y -omencoder")
           Kernel.puts 'done'
