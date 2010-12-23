@@ -2,15 +2,12 @@
   
 == up next release ==
 
-  low hanging fruit/bugs:
-    cool runnings at home
-
 == slightly lower than that, somewhat ordered ==
 
   edl straight is broken on HP at 2 hours
   warn on low disk
-  temple at home
-  cars bring home to do real EDL :)
+  temple EDL at home
+  cars bring home :)
   linearize edl's
     don't use them linear, just linearize
       not this release

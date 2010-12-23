@@ -123,7 +123,7 @@ end
 task 'deploy' do
   name = 'sensible-cinema-' + File.read('VERSION').strip + ".zip"
   raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
-  raise unless system ("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema\"")
+  raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema\"")
 end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
@@ -133,6 +133,7 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   system("#{Gem.ruby} -S gem push #{gems[-1]}")
   FileUtils.rm_rf 'pkg'
   Rake::Task["zip"].execute
+  Rake::Task["deploy"].execute
   system("git push origin master")
   puts "don't forget to blog about it...and upload .zip of it..."
 end
