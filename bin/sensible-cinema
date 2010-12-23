@@ -454,7 +454,7 @@ EOL
       "Applying EDL #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
-      "NB that the created file will be playable only with smplayer or VLC.",
+      "NB that the created file will be playable only with VLC (possibly with smplayer).",
       "OK")
 
       # allow our popups to still be serviced while it is running
@@ -497,7 +497,7 @@ EOL
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
           system_blocking show_file # returns immediately
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
-          show_blocking_message_dialog "Done--you may now watch file #{saved_to} in SMPlayer or VLC player"
+          show_blocking_message_dialog "Done--you may now watch file #{saved_to} in VLC player (possibly smplayer)"
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
