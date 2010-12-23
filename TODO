@@ -15,7 +15,7 @@
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
-      only after linearize
+      only after linearize, new year
   mpeg is lossy (at least my current one pass conversion still is...) AND SO SLOW FOR EDITING and smplayer can't play it right unedited
     frame accurate splitter
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?

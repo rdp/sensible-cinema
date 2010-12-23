@@ -352,7 +352,7 @@ EOL
         edit_list_path = single_edit_list_matches_dvd(md5sum)
         if !edit_list_path
           fc = FileDialog.new(self)
-          fc.set_title "Please pick a DVD Delete List File"
+          fc.set_title "Please pick a DVD Delete List File (non matching found)"
           fc.set_directory EDL_DIR
           edit_list_path = fc.go
         end
