@@ -1,3 +1,19 @@
+smplayer on HP2 -> edited version (ffmpeg through mencoder) with oac copy, is off by an annoying split second when replayed in smplayer
+
+smplayer on fulli oac copy HP 2 *fails* everywhere almost sync-wise
+
+edl *fails* with HP at the 2 hour mark, audio.  The audio did seem to line up, at least, with their lips.
+  and if it's video--fails the same. Seems to think it's at second 2678, or minute 44, not minute 120?
+
+smplayer on bob pets pickle and baby has sync'ed audio with oac copy
+  in general, if it starts sync'ed, smplayer stays in sync all the way through
+  
+got av_interleaved_write_frame(): Operation not permitted
+  on call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -'
+;?Pss 749.0 -t 4109.999 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.5.avi
+  then it passed (reading off the "old fulli" with poor audio) when did it again. huh?
+  out of disk?
+  
 edl works *great* with cars at 15 minutes, and appears to at an hour, too.  Oh, and the audio matches perfectly.
 
 The kicker is that if I want to watch the "unedited all" option in mplayer (which I do for the "quick start" mode), then it needs to be as is...
