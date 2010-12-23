@@ -19,13 +19,13 @@
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
-        this might not matter once I have frame accurate
+        do this after frame accurate
   partner for filters (Jon, Karlie if interested...give beta)
     lotsa filters somehow
       my dvd's (loose timestamps...)
       partners'...
       only after linearize
-  button start EDL playback here [?]
+  button start EDL playback here [?] (for create mode)
   beta release/rinse and repeat with various ppl (once it's releasable...)
   a real'ish-er website
     link to ML
