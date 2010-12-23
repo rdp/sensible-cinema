@@ -33,13 +33,11 @@ describe EdlParser do
     "mutes"=>[["00:00:01", "00:00:02"], 
     ["00:00:01", "00:00:02", "profanity", "dang"], 
     ["01:01:00", "01:02:00"]], 
-    "blank_outs"=>[["01:01:00", "01:02:00", "nudity", "5"], 
-    ["00:03:03.5", "00:03:04.5"], 
-    ["01:01:00", "01:02:00", "profanity", "bodily function 1"]], 
+    "blank_outs"=>[["01:01:00", "01:02:00", "nudity", "..."], ["00:03:03.5", "00:03:04.5"]], 
     "missing_content"=>"this doesn't list some mild name calling", 
     "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
     "whatever_else_you_want"=>"this is the old version of the film",
-
+    "disk_unique_id"=>"19d131ae8dc40cdd70b57ab7e8c74f76"
    }
    E.parse_string(string, nil).should == expected
   end
@@ -72,7 +70,7 @@ describe EdlParser do
   
   it "should parse a real file" do
    E.parse_file(File.expand_path(__dir__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
-      {"mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["48:46", "49:08", "theme song again"], ["29:14", "30:46", "theme song again"]], "title"=>"Bob's Big Plan", "dvd_drive_label"=>"BOBS_BIG_PLAN", "source"=>"DVD", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "blank_outs"=>[]}
+     {"title"=>"Bob's Big Plan", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "disk_unique_id"=>"259961ce38971cac3e28214ec4ec278b", "mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["28:13.5", "29:40", "theme song again"], ["48:46", "49:08", "theme song again"]], "blank_outs"=>[]}
   end
   
   it "should be able to use personal preferences to decide which edits to make" do

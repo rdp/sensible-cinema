@@ -1,3 +1,5 @@
+edl works *great* with cars at 15 minutes, and appears to at an hour, too.  Oh, and the audio matches perfectly.
+
 The kicker is that if I want to watch the "unedited all" option in mplayer (which I do for the "quick start" mode), then it needs to be as is...
 
 audio_codec = these_settings['audio_codec'] || 'lavc' # not copy...sniff...or you can't hear cars...as ffmpeg loses it on transfer [?] at least the intermediates you *cannot* hear.

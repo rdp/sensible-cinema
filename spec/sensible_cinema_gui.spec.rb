@@ -127,10 +127,8 @@ module SensibleSwing
     end
 
     class FakeFileChooser
-      def set_title x
-      end
-      def set_file y
-      end
+      def set_title x; end
+      def set_file y; end
       def go
         'abc'
       end
@@ -161,15 +159,15 @@ module SensibleSwing
       @system_blocking_command.should_not match /fulli/
     end
     
-    it "should be able to return the full list if it already exists" do
+    it "should be able to return the fulli name if it already exists" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
       FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
-    it "should call explorer for the we can't reach this path of opening a partial without telling it what to do with it" do
+    it "should call explorer eventually, if it has to create the fulli file" do
      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
-     @subject.background_thread.join
+     join_background_thread
      @args[-2].should == 1
      @args[-3].should == "01:00"
      @command.should match /smplayer/
