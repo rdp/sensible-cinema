@@ -1,6 +1,7 @@
 smplayer on HP2 -> edited version (ffmpeg through mencoder) with oac copy, is off by an annoying split second when replayed in smplayer
-
-smplayer on fulli oac copy HP 2 *fails* everywhere almost sync-wise
+ at other times, it fails everywhere almost sync-wise
+  that "might" have been with HP and -oac lavc, but without harddup.  or maybe it was -oac copy
+  VLC plays the audio splendidly on the same.
 
 edl *fails* with HP at the 2 hour mark, audio.  The audio did seem to line up, at least, with their lips.
   and if it's video--fails the same. Seems to think it's at second 2678, or minute 44, not minute 120?
@@ -12,7 +13,7 @@ got av_interleaved_write_frame(): Operation not permitted
   on call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -'
 ;?Pss 749.0 -t 4109.999 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.5.avi
   then it passed (reading off the "old fulli" with poor audio) when did it again. huh?
-  out of disk?
+  out of disk perhaps??
   
 edl works *great* with cars at 15 minutes, and appears to at an hour, too.  Oh, and the audio matches perfectly.
 
