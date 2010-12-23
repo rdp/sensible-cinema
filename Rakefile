@@ -123,7 +123,7 @@ end
 task 'deploy' do
   name = 'sensible-cinema-' + File.read('VERSION').strip + ".zip"
   raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
-  raise unless system("scp rdp@ilab1.cs.byu.edu:~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema")
+  raise unless system ("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema\"")
 end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
