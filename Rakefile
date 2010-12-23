@@ -122,7 +122,9 @@ end
 
 task 'deploy' do
   name = 'sensible-cinema-' + File.read('VERSION').strip + ".zip"
+  p 'copying in'
   raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
+  p 'copying over'
   raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema\"")
 end
 
