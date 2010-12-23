@@ -1,4 +1,7 @@
+== 0.19.4 ==
 Now you can specify an arbitrary "precision" around mute settings to make them more conservative or not.
+Add audio alert.
+Fix broken button.
 
 == 0.19.3 ==
 

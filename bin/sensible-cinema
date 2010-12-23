@@ -80,7 +80,7 @@ module SensibleSwing
     undef system
     
     def initialize
-      super "Sensible-Cinema (gpl)"
+      super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
         show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read the LICENSE.TXT file.'
@@ -195,7 +195,7 @@ EOL
         This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
       }
       
-      @upload = new_jbutton( "Upload/e-mail suggestion/Submit anything", true).on_clicked {
+      @upload = new_jbutton( "Upload/E-mail suggestion/Submit anything", true).on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
