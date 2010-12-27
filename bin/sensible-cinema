@@ -215,7 +215,7 @@ EOL
       increment_button_location
       increment_button_location
 
-      setSize 410, @starting_button_y
+      setSize @button_width+80, @starting_button_y
 
       check_for_dependencies
     end
