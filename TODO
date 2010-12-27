@@ -3,17 +3,20 @@
 == up next release ==
 
   edl straight is broken on HP at 2 hours
+    what about cars at...1:05?
   warn on potentially low disk
+  clear runnings finish
+  have ben and chris test it.
 
 == slightly lower than that, somewhat ordered ==
 
   temple EDL at home
-  cars backport EDL :)
+  cars backport real EDL :)
   linearize edl's
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
     frame accurate splitter naive
-  more filter
+  more filters
     my dvd's (loose timestamps...)
     friend dvd's
     partner for filters (Jon, Karlie if interested...give beta)
@@ -35,11 +38,12 @@
     advertise urug, ruby flow :)
     only after new year
   add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
-  md5 and verify the fulli version... [?]
-    only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  a website that gives you a "wholesome meter"
+  md5 and verify the fulli version... [?]
+    only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
   frame accurate splitter could be optimized, perhaps, split wise, speed wise?
   speedify things (the whole process takes approximately...eternity?)
   can I combine commands onto one command line for a quicker anything?
