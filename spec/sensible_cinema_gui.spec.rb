@@ -35,22 +35,39 @@ module SensibleSwing
       MainWindow.new.single_edit_list_matches_dvd(nil).should be nil
     end
     
-    it "should not die if you choose a poorly formed edl" do
+    it "should not die if you choose a poorly formed edl (should warn)" do
       time_through = 0
       @subject.stub!(:single_edit_list_matches_dvd) {
-        'fake filename doesnt even matter because we fake the parsing of it later'
+        'fake filename doesnt matter because we fake its being parsed'
       }
       
       @subject.stub!(:parse_edl) {
         if time_through == 0
           time_through += 1
-          eval("a-----") # throws Syntax Error first time
+          eval("a-----") # force it to throw a Syntax Error first time
         else
           "stuff"
         end
       }
       @subject.choose_dvd_and_edl_for_it
       @show_blocking_message_dialog_last_args.should_not be nil
+    end
+    
+    it "should warn if you don't have enough disk space" do
+      @subject.get_freespace('.').should be > 0
+      @subject.stub!(:get_freespace) {
+        0
+      }
+      @subject.get_save_to_filename 'dvd_title'
+      @show_blocking_message_dialog_last_args[0].should =~ /may not be enough/
+    end
+    
+    it "should not warn if you have enough free disk space" do
+      @subject.stub!(:get_freespace) {
+        16_000_000_000
+      }
+      @subject.get_save_to_filename 'dvd_title'
+      @show_blocking_message_dialog_last_args.should be nil
     end
     
     it "should not select a file if poorly formed" do
@@ -122,7 +139,12 @@ module SensibleSwing
       @subject.stub!(:open_file_to_edit_it) {}
       
       PlayAudio.stub!(:play) {
-        # don't play anything :)
+        # don't play anything, by default :)
+      }
+      
+      @subject.stub!(:get_freespace) {
+        # during testing, we *always* have enough free space :)
+        16_000_000_000
       }
       
     end
@@ -310,7 +332,7 @@ module SensibleSwing
         new_file_contents = '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]'
         new_file_contents = '"a syntax error' if corrupt_the_file
         File.binwrite('temp/a.txt', new_file_contents)
-        # it changed!
+        # file has been modified!
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
       end
     end
@@ -339,7 +361,7 @@ module SensibleSwing
       count.should == 1
     end
     
-    describe 'cacheing dvd drive selection' do
+    describe 'with unstubbed choose_dvd_drive' do
       before do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
           a = OpenStruct.new

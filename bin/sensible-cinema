@@ -344,6 +344,10 @@ EOL
       EdlParser.parse_file path, ignore_settings
     end
     
+    def get_freespace path
+      JFile.new(path).get_usable_space
+    end
+    
     def choose_dvd_and_edl_for_it
       drive, dvd_volume_name, md5sum = choose_dvd_drive
       @_edit_list_path ||= 
@@ -389,6 +393,9 @@ EOL
         a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
         a.close
         File.delete a.path
+        if get_freespace(save_to) < 16_000_000_000
+          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} (depending on DVD size, you may need like 16G free, but typically will need around 10GB free).  Click OK to continue.")
+        end
         save_to
       end
     end
