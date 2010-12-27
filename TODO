@@ -3,9 +3,7 @@
 == up next release ==
 
   edl straight is broken on HP at 2 hours
-    what about cars at...1:05?
-    what about if it's blanks intead of mutes?
-    what if I play the ripped file, does it work then?
+    compare with cars
   warn on potentially low disk
   clear runnings finish
     have ben and chris test it.
@@ -42,6 +40,8 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  @smplayer: unable to seek in cars (once I figure out if this is specific to a particular DVD)
+    @mplayer: edl disworks after a certain timestamp (after...)
   disallow:
     "0:45:00.0" , "00:450:10.0",  # second 2700
   issues

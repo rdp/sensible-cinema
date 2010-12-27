@@ -1,3 +1,27 @@
+an edl with (updated mplayer and) dvdnav:// (bob) results in a crash when seeking the first few seconds, at least.
+
+Seeking using the "forward 10, back 10" works in mplayer console, 
+  also works (!) with smplayer (+10, back 10).
+  
+Also it works *perfectly* when playing from the ripped file.
+
+There is only one break in cars DVD. A:3756
+  Is it the same in other large DVD's?
+  so certainly, mplayer's edl playback is broken currently, for DVD's.
+
+if I change the mute to 2:13, then it works [!], though probably doubly.
+
+"enable dvd menus" in mplayer doesn't seem to help with seeking weirdness in smplayer
+
+smplayer edl against cars DVD *fails* on later ones (1:05), but succeeds on 15:00, mute-wise.
+Like epic fail.
+also seeking totally fails:
+  58 -> 58 works (cars)
+  transition to broken seeking:1:02:44
+  also always thinks its chapter 1 :)
+  
+smplayer playing cars fulli (of some sort) seems to be a split second off, audio-wise
+
 smplayer on HP2 -> edited version (ffmpeg through mencoder) with oac copy, is off by an annoying split second when replayed in smplayer
  at other times, it fails everywhere almost, sync-wise
   that "might" have been with HP and -oac lavc, but without harddup.  or maybe it was -oac copy

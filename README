@@ -66,53 +66,53 @@ Also note that if your DVD has scratches that cause it to skip, the time signatu
 
 == Motivation ==
 
-The initial motivation for the project was that I dislike profanity in movies.
-It's jarring, if you're not used to it in real life.
-Also sometimes certain scenes in movies offend, and don't contribute to the overall plot,
-and I'd rather not watch a movie that has them.
-Clearplay (a realtime filtering DVD player)
-(for me) didn't cut it.  It costs (I'm too cheap to pay--and many
+The initial motivation for the project was that I dislike deity profanity in movies.
+And reall any profanity is jarring, if you're not used to it in real life, and can
+make you a bit on edge when you watch a movie.
+Also sometimes only certain scenes in movies offend, and don't contribute to the overall plot,
+and I'd rather not watch a movie that has them.  But I still want to be able to watch movies at all :)
+I tried Clearplay (a realtime filtering DVD player)
+but (for me) it didn't seem to cut it.  It costs money (I'm too cheap to pay--and many
 many other people don't/can't use it...).  Their
 filters sometimes don't cut out all unwanted content (ex: Saints and
 Soldiers left profanity in its filtered version...which wasn't what I had
 anticipated.  Others have noted that sometimes the edit timings
-are off so that it will mute out sections just previous to the profanity, while
-leaving the profanity in, etc.).  Also clearplay apparently runs a rather 
-confusing subscription policy, as well, so I'm told [1].
-Also sometimes clearplay "mutes out" profanity but you can easily still lip read it,
-so it's almost as if you were exposed to it anyway.  Not ideal.
-There is no little community collaboration/review.
-They don't even have a "request a filter" option anymore.
-They don't have filters for movies that I want edited (Condorman and Tron
-lacked last time I checked...probably because they are too
-obscure.) Also I watch movies only on computer, and they no
-longer have a computer player.  They also don't edit streamed
+are slightly off so that it will mute out sections just previous to profanity, while
+leaving the profanity itself in, etc.).  Clearplay apparently also runs a rather 
+confusing subscription policy, as well, I'm told [1].
+Clearplay also has little community collaboration/review (though they do have some feedback).
+They don't even have a "request a filter" option anymore, like they used to.
+They also don't have filters for all the movies that I want to see edited (Condorman and Tron
+lacked last time I checked were lacking...probably because they are too
+obscure.) Also I watch movies only on computer, and they
+have no computer filter player, only DVD players.  They also don't edit streamed
 online movies either (last time I checked, anyway).  So overall I
 wanted to build my own that overcame some of these hurdles and was
 also more accessible/open.
 
-I also wanted to get a prototype out there of some ideas so that
-people can't patent them and pretend that they were inventors :)
+I also wanted to get a prototype out there of some of my ideas so that
+others can't patent them and pretend that they were inventors :)
 
-So the project started off as a prototype that could "watch hulu (online) movies
+So originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
 edited" (it uses screen tracking and OCR's the on-screen
 timestamp, monitors it for specific times, and reacts appropriately).
-However, I do not currently release that version to the public for patent
-reasons (clearplay has a patent on realtime tracking,
-which is similar).  I have released older versions that do, but not
-anymore.
-Then I realized I could basically have the same effect by using
-pre-processing and Edit Decision Lists (basically by using playlists with
-VLC, to play from second x to y, then from x to mu, etc.).
+However, this functionality, though working, is disabled for patent
+reasons (clearplay has a patent on realtime tracking).  
+Some older released versions had it enabled, but not anymore.
+Then I realized I could basically create the same effect using
+(more patent friendly) pre-processing and deletion lists (basically 
+Edit Decision Lists enforced using playlists for
+VLC, like play from second x to y, then from x to mu, etc.).
 I just pass in a playlist, it does all the work for me.
 There are a few released versions that do this exactly.
 Then it occurred to me that you could grab the several clean segments
 off a DVD, and piece them together to create an edited copy.  This avoids 
-realtime tracking.  Which is where we are now.
+realtime tracking.  This seems reasonably patent friendly, so it is
+what I release here. 
 
 See also the LICENSE.TXT file.
 
-[1] http://www.amazon.com/review/R27VK5BR9NDHBD/ref=cm_cr_pr_viewpnt#R27VK5BR9NDHBD
+[1] http://www.amazon.com/review/R27VK5BR9NDHBD/ref=cm_cr_pr_viewpnt#R27VK5BR9NDHBD amazon review of clearplay product
 
 == License ==
 
