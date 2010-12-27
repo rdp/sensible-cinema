@@ -543,7 +543,7 @@ EOL
         @saved_opticals = opticals
         return @_choose_dvd_drive
       else
-        puts 'did not select a drive...exiting'
+        puts 'did not select a drive...hard exiting'
         java.lang.System.exit 1
       end
     end
