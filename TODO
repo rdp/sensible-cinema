@@ -4,7 +4,7 @@
 
   edl straight is broken on HP at 2 hours
     what about cars at...1:05?
-    what about if it's blanks?
+    what about if it's blanks intead of mutes?
     what if I play the ripped file, does it work then?
   warn on potentially low disk
   clear runnings finish
@@ -32,7 +32,6 @@
   a real'ish-er website
   compare computer DVD timings with physical player's timings...
     if same, add imdb todo's up here
-  cleaner user error on locked file (why) :)
   propaganda-ize
     advertise in christian places
     blogs that have ever mentioned clearplay :P
@@ -43,6 +42,9 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  disallow:
+    "0:45:00.0" , "00:450:10.0",  # second 2700
+  issues
   a website that gives you a "wholesome meter"
   md5 and verify the fulli version... [?]
     only useful once I get the frame accurate stuff done, and any audio tweakage, etc.

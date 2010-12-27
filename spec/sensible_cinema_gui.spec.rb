@@ -120,6 +120,11 @@ module SensibleSwing
         Thread.new {} # fake out the return...
       }
       @subject.stub!(:open_file_to_edit_it) {}
+      
+      PlayAudio.stub!(:play) {
+        # don't play anything :)
+      }
+      
     end
     
     after do
@@ -215,6 +220,22 @@ module SensibleSwing
       @command.should match(/smplayer/)
     end
     
+    it "should not die if you pass it the same start and end time frames--graceful acceptance" do
+      @subject.stub!(:get_mencoder_commands) {
+        raise MencoderWrapper::TimingError
+      }
+      click_button(:@rerun_preview)
+      @show_blocking_message_dialog_last_args[0].should =~ /you chose a time frame/
+    end
+    
+    it "should not die if you pass it the same start and end time frames--graceful acceptance" do
+      @subject.stub!(:get_mencoder_commands) {
+        raise Errno::EACCES
+      }
+      click_button(:@rerun_preview) # lodo rspec error: wrong backtrace if no => e!
+      @show_blocking_message_dialog_last_args[0].should =~ /a file/
+    end
+
     it "should warn if you watch an edited time frame with no edits in it" do
       @subject.unstub!(:get_mencoder_commands)
       click_button(:@preview_section)
@@ -279,8 +300,7 @@ module SensibleSwing
       wrote.should include("380.85 1")
     end
     
-    
-    def should_allow_for_changing_file corrupt_file = false
+    def should_allow_for_changing_file corrupt_the_file = false
        with_clean_edl_dir_as 'temp' do
         File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
         @subject.stub!(:choose_dvd_drive) {
@@ -288,7 +308,7 @@ module SensibleSwing
         }
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
         new_file_contents = '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]'
-        new_file_contents = '"a syntax error' if corrupt_file
+        new_file_contents = '"a syntax error' if corrupt_the_file
         File.binwrite('temp/a.txt', new_file_contents)
         # it changed!
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
@@ -319,7 +339,7 @@ module SensibleSwing
       count.should == 1
     end
     
-    describe 'cacheing dvd drive' do
+    describe 'cacheing dvd drive selection' do
       before do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
           a = OpenStruct.new
@@ -333,8 +353,7 @@ module SensibleSwing
       it "should only prompt for drive once" do
         count = 0
         DriveInfo.stub!(:md5sum_disk) {
-          raise if count == 1
-          count = 1
+          count += 1
           '19d121ae8dc40cdd70b57ab7e8c74f76'
         }
         @subject.choose_dvd_and_edl_for_it

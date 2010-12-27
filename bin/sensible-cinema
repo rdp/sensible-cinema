@@ -192,7 +192,7 @@ EOL
         drive, volume, md5 = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
-        This is used to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
+        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
       }
       
       @upload = new_jbutton( "Upload/E-mail suggestion/Submit anything", true).on_clicked {
@@ -445,6 +445,9 @@ EOL
         commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
         show_blocking_message_dialog("Appears you chose a time frame with no deletion segment in it--please try again:" + e)
+        return
+      rescue Errno::EACCES => e
+        show_blocking_message_dialog("Appears a file on the system is locked: perhaps you need to close down some instance of mplayer?" + e)
         return
       end
       temp_dir = Dir.tmpdir
