@@ -100,14 +100,14 @@ module SensibleSwing
       jlabel.set_bounds(44,44,160,14)
       panel.add jlabel
       @starting_button_y = 120
-      @button_width = 330
+      @button_width = 350
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime (might not work)", false )
+      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime (not always be accurate)", false )
       @mplayer_edl.on_clicked {
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         descriptors = EdlParser.parse_file edl_path
@@ -277,7 +277,7 @@ EOL
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
-          Kernel.print 'downloading mencoder.7z...'
+          Kernel.print 'downloading mencoder.7z (6MB) ...'
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           system_blocking("7za e mencoder.7z -y -omencoder")
           Kernel.puts 'done'
@@ -352,7 +352,7 @@ EOL
         edit_list_path = single_edit_list_matches_dvd(md5sum)
         if !edit_list_path
           fc = FileDialog.new(self)
-          fc.set_title "Please pick a DVD Delete List File"
+          fc.set_title "Please pick a DVD Delete List File (non matching found)"
           fc.set_directory EDL_DIR
           edit_list_path = fc.go
         end
@@ -454,7 +454,7 @@ EOL
       "Applying EDL #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
       "This could take quite awhile, and will prompt you when it is done.\n" +
       "You can close this window and continue working while it runs.\n" +
-      "NB that the created file will be playable only with smplayer or VLC.",
+      "NB that the created file will be playable only with VLC (possibly with smplayer).",
       "OK")
 
       # allow our popups to still be serviced while it is running
@@ -496,8 +496,8 @@ EOL
           # lodo NonBlockingDialog once it can get to the top instead of being so buried...
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
           system_blocking show_file # returns immediately
-          show_blocking_message_dialog "Done--you may now watch file #{saved_to} in SMPlayer or VLC player"
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
+          show_blocking_message_dialog "Done--you may now watch file #{saved_to} in VLC player (possibly smplayer)"
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
@@ -508,10 +508,10 @@ EOL
     def choose_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_openstruct
       if @saved_opticals == opticals
-        # memoize :)
+        # memoize...kind of :)
         return @_choose_dvd_drive
       end
-      show_blocking_message_dialog 'insert dvd first' unless opticals.find{|d| d.VolumeName }
+      show_blocking_message_dialog 'insert a dvd first' unless opticals.find{|d| d.VolumeName }
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD and re-start') + ")"}
 
       if opticals.length != 1

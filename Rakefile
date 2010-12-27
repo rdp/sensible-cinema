@@ -112,12 +112,30 @@ task 'create_distro_dir' do
   p 'created (still need to zip it) ' + dir_out
 end
 
+task 'zip' do
+  name = 'sensible-cinema-' + File.read('VERSION').strip
+  c = "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
+  raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
+  FileUtils.rm_rf name
+  p 'created ' + name + '.zip, and deleted its folder'
+end
+
+task 'deploy' do
+  name = 'sensible-cinema-' + File.read('VERSION').strip + ".zip"
+  p 'copying in'
+  raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
+  p 'copying over'
+  raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema\"")
+end
+
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
 task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release sigh
   gems = Dir['pkg/*.gem']
   gems[0..-2].each{|f| File.delete f} # kill old versions...
   system("#{Gem.ruby} -S gem push #{gems[-1]}")
   FileUtils.rm_rf 'pkg'
-  puts "don't forget to blog about it...and upload .zip of it..."
+  Rake::Task["zip"].execute
+  Rake::Task["deploy"].execute
   system("git push origin master")
+  puts "don't forget to blog about it...and upload .zip of it..."
 end

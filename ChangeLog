@@ -1,3 +1,11 @@
+== 0.19.6 ==
+
+Update terminology to make it more clear what can play what when it's done.
+
+== 0.19.5 ==
+
+Some notes, deploy methods.
+
 == 0.19.4 ==
 
 Now you can specify an arbitrary "precision" around mute settings to make them more conservative or not.
