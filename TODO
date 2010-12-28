@@ -9,19 +9,20 @@
 
 == slightly lower than that, somewhat ordered ==
 
-  temple EDL at home
-  cars backport real EDL :)
   linearize edl's
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
     frame accurate splitter naive
   more filters
     my dvd's (loose timestamps...)
+      cars backport real EDL :)
     enlist chris' help
       need mac port [?]
     friend dvd's, me DL
     partner for filters (Jon, Karlie if interested...give beta)
       all only after linearize, new year, frame accurate
+  temple EDL at home
+  can have the mouse jerk "only every so often"
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
