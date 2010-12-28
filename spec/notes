@@ -1,3 +1,5 @@
+HP 2 "full edited" had a twidge off of audio even in VLC (unsure if that was copy or lavc audio)
+
 mplayer (updated) playing dvd:// (bob) can't seek if past 30 minutes or so (pause/hang)
 
 mplayer (updated) playback, if it ever goes off the screen, chokes and hurles and dies (or if it goes under a window that is always on top).
