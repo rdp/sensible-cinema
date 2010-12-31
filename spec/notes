@@ -1,3 +1,9 @@
+$ to fix mplayer out of sync audio:
+$ ffmpeg -i HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -target ntsc-dvd -t 1600 yo.mpg
+seemed to be as good as adding a harddup via mplayer.  except...umm...VLC can play it right so why can't mplayer?  Hopefully all doesn't matter [?]
+
+ffmpeg "copy copy" on HP fulli seemed to not have audio when that was replayed via mplayer.
+
 monsters inc. overlaps at 25 minutes, 50'ish, 70, "when they land" and there's like 30 'select scenes' (chapters) in that time frame...
 
 bob "they will come" has no mplayer overlap (45 minutes long)

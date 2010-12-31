@@ -11,6 +11,8 @@
 
 == slightly lower than that, somewhat ordered ==
 
+  don't exit program if they don't select a disk :)
+  if they type in a "new" start time, use that as the default end time input
   linearize edl's
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
@@ -43,6 +45,7 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  @mplayer: why you can't play it when VLC can? huh? (audio sync)
   can watch conference like a music video :)
     can play "this section then that, with this one's audio
   add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
