@@ -374,3 +374,4 @@ donate money to several projects I use/like :)
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
 @jruby: system("mencoder") from a button doesn't get interrupted by an exception [!]
+@vlc: replay mp4's are too dark.
