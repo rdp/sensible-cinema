@@ -6,6 +6,8 @@
     work cars
   clear runnings finish
     have ben and chris test it out
+  "watch edited while grabbing"
+  "preview section loosely accurate"
 
 == slightly lower than that, somewhat ordered ==
 
@@ -37,16 +39,18 @@
     blogs that have ever mentioned clearplay :P
     free google adwords (?)
     advertise urug, ruby flow :)
-    only after new year
-  add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
+    only after new year, new LLC
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  can watch conference like a music video :)
+    can play "this section then that, with this one's audio
+  add they 'play from unedited from grab till it hits the first bad spot', if useful [?]
   @smplayer: unable to seek in cars (once I figure out if this is specific to a particular DVD)
-    @mplayer: edl disworks after a certain timestamp (after...)
+  @mplayer: edl disworks after a certain timestamp (after...)
   disallow:
     "0:45:00.0" , "00:450:10.0",  # second 2700
-  issues
+  github issues
   a website that gives you a "wholesome meter"
   md5 and verify the fulli version... [?]
     only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
@@ -55,7 +59,7 @@
   can I combine commands onto one command line for a quicker anything?
   can I get the original audio tracks back?
   show them how to use smplayer with subtitles
-  can overlay with an image
+  can overlay with an image (DVD edited file)
   can you forceidx on the original copy and have mplayer replay EDL in realtime accurately or not, with audio?
     if not somehow, wait till video falls through, then see if I can...do something here with audio...yipers..
     sound accurate?
@@ -63,33 +67,26 @@
   calculating disk's unique id... -> gui somewhere
   @dvd flick: auto-detect the aspect ratio, if possible (?)
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
-  "preview edited in a wholly blank section that includes an audio section should fail"
-  an 'always skip mutes' option for paranoia.
-  dvdnav versus dvd for mplayer edl?
+  an 'always blank not skip the mutes' option for paranoia
+  dvdnav versus dvd for mplayer edl? (report)
   disallow choosing empty drive? fail more gracefully? (issue 11)
-  some status bar that shows which DVD is in currently, how many match it, et al (pre button)
-  splitter abs. coords option
   video on how to use imdb
     if times match DVD players
-  alternate endings
-  @ffmpeg there's no audio when going mpg -> mpg with copy!
+  alternate endings et al
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
     vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
   with "preview segment" can't you preview it once it has passed that segment?
   can pull from imdb at package time [?]
-  delete fulli file
+  delete fulli file automatically
     except if it's a specific scene run...
-  mencoder harddup useful?
   .exe installer
     just unzips, runs the .bat file for them [?] :)
       full msi
   ask if you can somehow more easily grab to "mostly the same" exact codec (ffmpeg, mencoder mailing lists)
-  split EDL's somehow into their own project/LLC...
+  split EDL's themselves somehow into their own project/LLC...
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   not loop on preview view (smplayer)
-  LLC before ever pay anyone, if I ever do
-  @DVD flick: support multi-track audio/subtitles (if they're already in the streams...)
-  note the mplayer/smplayer as a player fast forward feature...
+  LLC before ever pay anyone anything, if I ever do
   several "play now" options...without a navigator of course :)
     visualbasic-like playlist
       one line at a time :P
@@ -108,98 +105,70 @@
       maybe one that is watching the extraction (get info, get info, get info...)...as it includes scene x, it adds it edited to the end of the final output file...
         This seems like the only real way.
     one that's "we're ripping, but play from that via EDL or playlist"
-  whichr: return nil
     
- using+burning screencast
- editing screencast
-  instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
-  note how to get the title number
-    add a way to get the label rather easily...
-     add an option "just save full disk (unedited) to hard drive..."
-       note to people: can edit those to your liking
-
+  using+burning screencast
+  editing screencast
+   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
+   note how to get the title number
+     add a way to get the label rather easily...
+      add an option "just save full disk (unedited) to hard drive..."
+        note to people: can edit those to your liking
   imagemagick (ffmpeg) easier install...
   DRY up dependency installation code
-  install dep's to cache2 or something...so I can cleanup the deploy code...
+  install dep's to cache2 or something...so I can avoid redownload after a release...
   "Re-run most recent" disabled when there isn't one [?]
-  re-do DVD EDL's that need it :P
   warn when labels exist and don't match...
-  check all the many options to see if there's a "cross platform way to split files accurately" besides my hacky kludge.
   can rip from a DVD-like local folder (would anybody ever need this?)
-  ripping "redoes" a large last section, for combining. Can I avoid this?
-    plus I do some copy, some ac3 audio codec? huh? avoidable?
-  @dvd flick do you need that frequent of i-frames?
-  rename bat as template.bat
-  add a developer readme
+  rename bats as template.bat
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
   can blank out the video, with audio continuing through...
-  add an option "just save full disk (edited) to hard drive...well compressed"
-    or do we want to do that by default anyway? (does it help burning? file size...hmm...)
-@VLC: hard crash when ripping that one DVD...long one, about the constitution...
-in general, fine tune burning with various things...
+  @VLC: hard crash when ripping that one DVD...long one, about the constitution...
+  in general, fine tune burning with various things...
 
-@rspec: it appears to *undo* my stub's after the test, so background threads choke (take out after...)
+    can use a fast temp drive, save through it to another :P
+      (when they have two...)
+  better .exe icon...
+  blu-ray support somehow (real-time? rip?)
+  use DVD navigator ?
+    http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
+    with an avi file sink?
+  double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
+    might not work for all modes tho...
+  make the progress bar map "better" to the actual time that each section should take...
 
-make sure can work with very large DVD's...
-  can use a fast temp drive, save through it to another :P
-    (when they have two...)
-  can have collaborators re-selling EDL's
-    good license for their stuff like "public domain" or what not :P Can't be a hypocrite now, can I?
-a real website that looks good
-k9 might preserve/shrink well...hmm...auto calculation may be possible...hmm...
-better .exe icon...
-blu-ray support somehow (real-time? rip?)
-use DVD navigator ?
-  http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
-  with an avi file sink?
-double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
-  might not work for all modes tho...
-make the progress bar map "better" to the actual time that each section should take...
+  @mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
 
-Note to people: clean your disks!
-  in an exception
-  
-@mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
-
-@ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
-   and to .avi sometimes works, sometimes it results in static!
+  @ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
+     and to .avi sometimes works, sometimes it results in static!
 
 burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
   can lop off sections to save space (?)
   can burn extras from the DVD, too?
     optionally ?
-  transcode to condense..?
-  split to allow?
-try to compile transcode in cygwin (yipes)
 
 @smplayer: right click on DVD...
 the ac3 thing (I have to specify it...is this necessary? is it always ac3?)
-can have different volume settings
+can have different volume settings, like low volume instead of 0 [?]
 ask VLC "fuzzy menus on the happiest baby dvd expected?"
-right click on DVD player, rip edited with SC?
-@mplayer and VLC "you should seek better, like the ogg vorbis fellas recommend..."
 report to jruby "when one thread dies, the GUI becomes unresponsive" (and others already previously reported to ruby-forum.com...)
   DVD's (right click on DVD player, play with SC?)
-    use spiffy differentiation for DVD's on windows
 a "certified clean" list
 advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
-check for "newer version available" or not...
+a check for "newer version available" or not...
 buy blu-ray decrypter, and drive, try it out.
-@jruby: all the weird stuff I posted to the ML
+a single netflix descriptor, just in case
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
-copy to one drive, write to another, for speedup
 fade in/fade out volume, video
 make the other stuff work again, since I no longer use YAML...
 
-pass unit tests again jruby
+pass all unit tests again jruby
 
 speed up slow unit tests
-can "watch as it is being ripped" (concat, watching it as it grows faster than you watch...)
 make the overlay window uncloseable (?)
 note that youtube can be downloaded then a local edited copy created, from that download. (mb add downloading ability?)
 screencast of things helpful (use, creation...).

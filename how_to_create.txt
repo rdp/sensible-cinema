@@ -35,6 +35,7 @@ A few pointers:
  I typically like to make two delete lists per DVD.  One that takes out swearing, sex, and gruesome violence, and another
    "more paranoid" version that takes out basically anything that could be offensive to anybody :) ("dang", "fetch", "too tense" of scenes...)
  You can just watch the DVD (using any DVD player), and get timestamps that way, before starting this.
- A good one is "smplayer" (the [ and ] keys control playback speed), and you can turn on subtitles to find profanity.
+ A good one is "smplayer" (the [ and ] keys control playback speed, right and left, page up and page down control seeking), 
+ and you can turn on subtitles to help locae profanity (as also in VLC).
  You can watch the DVD using VLC Player, which has a "fast forward" button, just recognize that VLC's timestamps are always slightly off,
   so they'll only be approximate, but it might be close.
