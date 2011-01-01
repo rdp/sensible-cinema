@@ -24,7 +24,7 @@ module SensibleSwing
   describe MainWindow do
 
     it "should be able to start up" do
-      MainWindow.new.dispose# shouldn't crash :)
+      MainWindow.new.dispose# doesn't crash :)
     end
 
     it "should auto-select a EDL if it matches a DVD's title" do

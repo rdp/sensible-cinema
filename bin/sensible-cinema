@@ -135,22 +135,28 @@ module SensibleSwing
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "preview section fast by starting at beginning", true).on_clicked {
-        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true, true
+      @fast_preview = new_jbutton( "preview section fast mode", true).on_clicked {
+        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
-        background_thread.join if background_thread # let it write out the original fulli, if necessary
+        background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli + ".fast.mpg"
-        if ! File.exist?(nice_file)
+        if !File.exist?(nice_file)
           p = NonBlockingDialog.new("Creating quick lookup file")
-          raise unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
-          p.dispose # just in case
+          raise 'create failed' unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
+          p.dispose # it will be there for sure
         end
         smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
         old_prefs = File.read(smplayer_prefs_file)
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
         File.write(smplayer_prefs_file, new_prefs)
         thread = do_mplayer_edl( "smplayer #{nice_file}", 0)
-        Thread.new { thread.join; File.write(smplayer_prefs_file, old_prefs)} # ???
+        Thread.new { # XX do we need this?
+          begin
+            thread.join
+          ensure
+            File.write(smplayer_prefs_file, old_prefs)
+          end
+        }
       }
 
       @open_list = new_jbutton("Open/Edit a Delete List", true)
@@ -418,8 +424,8 @@ EOL
         File.delete a.path
         freespace = get_freespace(save_to)
         if freespace < 16_000_000_000
-          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
-          (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace}).  Click OK to continue.")
+# after works, memoize          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
+  #        (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace}).  Click OK to continue.")
         end
         save_to
       end
