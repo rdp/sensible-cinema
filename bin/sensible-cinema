@@ -132,10 +132,10 @@ module SensibleSwing
 
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
       @rerun_preview.on_clicked {
-        repeat_last_copy_dvd_to_hard_drive 
+        repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "preview section fast by starting at certain time", true).on_clicked {
+      @fast_preview = new_jbutton( "preview section fast by starting at beginning", true).on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary
@@ -145,7 +145,12 @@ module SensibleSwing
           raise unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
           p.dispose # just in case
         end
-        do_mplayer_edl "mplayer -ss #{Storage['start_time']} #{nice_file}", 0
+        smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
+        old_prefs = File.read(smplayer_prefs_file)
+        new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
+        File.write(smplayer_prefs_file, new_prefs)
+        thread = do_mplayer_edl( "smplayer #{nice_file}", 0)
+        Thread.new { thread.join; File.write(smplayer_prefs_file, old_prefs)} # ???
       }
 
       @open_list = new_jbutton("Open/Edit a Delete List", true)
@@ -226,13 +231,13 @@ EOL
       writeOut.close
     end
     
+    EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
+    
     def do_mplayer_edl play_this_start = nil, add_secs = 1.75
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         descriptors = EdlParser.parse_file edl_path
-        temp_dir = Dir.tmpdir
-        temp_file = temp_dir + '/mplayer.temp.edl'
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs # add a sec to mutes to accomodate for mplayer's oddness...
-        File.write(temp_file, edl_contents)
+        File.write(EdlTempFile, edl_contents)
         title_track = get_title_track(descriptors)
         # oh the insanity of the console UI...LODO more user friendly player
         @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
@@ -240,7 +245,7 @@ EOL
         q to quit.")
         # LODO dry up mplayer dvd opts...
         play_this_start ||= "mplayer dvd://#{title_track}"
-        command =  "#{play_this_start} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        command =  "#{play_this_start} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
         p command
         Thread.new { system_blocking command; @popup.dispose }
     end
