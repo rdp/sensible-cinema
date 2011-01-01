@@ -133,7 +133,7 @@ module SensibleSwing
       }
 
       @subject.stub!(:system_non_blocking) { |command|
-        @command = command
+        @system_non_blocking_command = command
         Thread.new {} # fake out the return...
       }
       @subject.stub!(:open_file_to_edit_it) {}
@@ -201,8 +201,8 @@ module SensibleSwing
      join_background_thread
      @args[-2].should == 1
      @args[-3].should == "01:00"
-     @command.should match /smplayer/
-     @command.should_not match /fulli/
+     @system_non_blocking_command.should match /smplayer/
+     @system_non_blocking_command.should_not match /fulli/
     end
 
     def prompt_for_start_and_end_times
@@ -210,7 +210,7 @@ module SensibleSwing
       join_background_thread
       @args[-2].should == 1
       @args[-3].should == "01:00"
-      @command.should match /smplayer/
+      @system_non_blocking_command.should match /smplayer/
     end
 
     it "should prompt for start and end times" do
@@ -232,6 +232,11 @@ module SensibleSwing
       File.read(temp_file).should include("59.99")
     end
     
+    it "should call something for fast preview" do
+      click_button(:@fast_preview)
+      @system_blocking_command.should =~ /ffmpeg.*ntsc-dvd/
+    end
+    
     it "should be able to rerun the latest start and end times with the rerun button" do
       prompt_for_start_and_end_times
       old_args = @args
@@ -239,7 +244,7 @@ module SensibleSwing
       @args = nil
       click_button(:@rerun_preview).join
       @args.should == old_args
-      @command.should match(/smplayer/)
+      @system_non_blocking_command.should match(/smplayer/)
     end
     
     it "should not die if you pass it the same start and end time frames--graceful acceptance" do
@@ -272,7 +277,7 @@ module SensibleSwing
     it "if the .done files exists, watch unedited should call smplayer ja" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @command.should == "smplayer abc.fulli_unedited.tmp.mpg"
+      @system_non_blocking_command.should == "smplayer abc.fulli_unedited.tmp.mpg"
       FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
@@ -392,7 +397,7 @@ module SensibleSwing
     it "should not show the normal buttons in create mode" do
       MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 9
+      MainWindow.new.buttons.length.should == 10
       ARGV.pop # test cleanup--why not :)
     end
     

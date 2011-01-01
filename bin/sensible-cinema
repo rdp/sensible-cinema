@@ -109,21 +109,7 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime (not always be accurate)", false )
       @mplayer_edl.on_clicked {
-        drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
-        descriptors = EdlParser.parse_file edl_path
-        temp_dir = Dir.tmpdir
-        temp_file = temp_dir + '/mplayer.temp.edl'
-        edl_contents = MplayerEdl.convert_to_edl descriptors, 1.75 # add a sec to mutes to accomodate for mplayer's oddness...
-        File.write(temp_file, edl_contents)
-        title_track = get_title_track(descriptors)
-        # oh the insanity of the console UI...LODO more user friendly player
-        @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
-        Also right and left arrows to seek, F key for full screen,
-        q to quit.")
-        # LODO dry up mplayer dvd opts...
-        command =  "mplayer dvd://#{title_track} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
-        p command
-        Thread.new { system_blocking command; @popup.dispose }
+        do_mplayer_edl
       }
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
@@ -147,6 +133,19 @@ module SensibleSwing
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive 
+      }
+      
+      @fast_preview = new_jbutton( "preview section fast", true).on_clicked {
+        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive true, true
+        sleep 0.5 # lodo take out?
+        background_thread.join # let it write out the original fulli, if necessary
+        nice_file = wrote_to_here_fulli + ".fast.mpg"
+        if ! File.exist?(nice_file)
+          p = NonBlockingDialog.new("Creating quick lookup file")
+          system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
+          p.dispose # just in case
+        end
+        do_mplayer_edl nice_file
       }
 
       @open_list = new_jbutton("Open/Edit a Delete List", true)
@@ -227,6 +226,25 @@ EOL
       writeOut.close
     end
     
+    def do_mplayer_edl play_this = nil
+        drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+        descriptors = EdlParser.parse_file edl_path
+        temp_dir = Dir.tmpdir
+        temp_file = temp_dir + '/mplayer.temp.edl'
+        edl_contents = MplayerEdl.convert_to_edl descriptors, 1.75 # add a sec to mutes to accomodate for mplayer's oddness...
+        File.write(temp_file, edl_contents)
+        title_track = get_title_track(descriptors)
+        # oh the insanity of the console UI...LODO more user friendly player
+        @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
+        Also right and left arrows to seek, F key for full screen, [, ] to control playback speed.
+        q to quit.")
+        # LODO dry up mplayer dvd opts...
+        play_this ||= "dvd://#{title_track}"
+        command =  "mplayer #{play_this} -nocache -alang en -sid 1000 -edl #{File.expand_path temp_file} -dvd-device #{drive}"
+        p command
+        Thread.new { system_blocking command; @popup.dispose }
+    end
+      
     def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
@@ -393,8 +411,10 @@ EOL
         a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
         a.close
         File.delete a.path
-        if get_freespace(save_to) < 16_000_000_000
-          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} (depending on DVD size, you may need like 16G free, but typically will need around 10GB free).  Click OK to continue.")
+        freespace = get_freespace(save_to)
+        if freespace < 16_000_000_000
+          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
+          (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace}).  Click OK to continue.")
         end
         save_to
       end
