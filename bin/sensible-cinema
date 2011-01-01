@@ -141,7 +141,7 @@ module SensibleSwing
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli + ".fast.mpg"
         if !File.exist?(nice_file)
-          p = NonBlockingDialog.new("Creating quick lookup file")
+          p = NonBlockingDialog.new("Creating quick lookup file--NB that for each changed deletion, you'll need to restart the fast preview SMplayer")
           raise 'create failed' unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
           p.dispose # it will be there for sure
         end
@@ -374,7 +374,7 @@ EOL
     end
     
     def get_freespace path
-      JFile.new(path).get_usable_space
+      JFile.new(File.dirname(path)).get_usable_space
     end
     
     def choose_dvd_and_edl_for_it
@@ -424,8 +424,8 @@ EOL
         File.delete a.path
         freespace = get_freespace(save_to)
         if freespace < 16_000_000_000
-# after works, memoize          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
-  #        (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace}).  Click OK to continue.")
+          show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
+          (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you only have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
         end
         save_to
       end

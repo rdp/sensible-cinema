@@ -55,6 +55,7 @@ module SensibleSwing
     
     it "should warn if you don't have enough disk space" do
       @subject.get_freespace('.').should be > 0
+      @subject.get_freespace("c:\\nonexistent").should be > 0
       @subject.stub!(:get_freespace) {
         0
       }
