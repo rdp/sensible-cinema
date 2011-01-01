@@ -109,7 +109,7 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime (not always be accurate)", false )
       @mplayer_edl.on_clicked {
-        do_mplayer_edl
+        do_mplayer_edl nil, 0, 0.5
       }
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
@@ -149,7 +149,7 @@ module SensibleSwing
         old_prefs = File.read(smplayer_prefs_file)
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
         File.write(smplayer_prefs_file, new_prefs)
-        thread = do_mplayer_edl( "smplayer #{nice_file}", 0)
+        thread = do_mplayer_edl( "smplayer #{nice_file}", 0, 0.5)
         Thread.new { # XX do we need this?
           begin
             thread.join
@@ -239,10 +239,10 @@ EOL
     
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
-    def do_mplayer_edl play_this_start = nil, add_secs = 1.75
+    def do_mplayer_edl play_this_start, add_secs_end, add_secs_beginning
         drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
         descriptors = EdlParser.parse_file edl_path
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs # add a sec to mutes to accomodate for mplayer's oddness...
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning # add a sec to mutes to accomodate for mplayer's oddness...
         File.write(EdlTempFile, edl_contents)
         title_track = get_title_track(descriptors)
         # oh the insanity of the console UI...LODO more user friendly player
