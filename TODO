@@ -11,6 +11,7 @@
 
 == slightly lower than that, somewhat ordered ==
 
+  file size thing broken
   don't exit program if they don't select a disk :)
   if they type in a "new" start time, use that as the default end time input
   linearize edl's
