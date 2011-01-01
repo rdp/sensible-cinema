@@ -11,27 +11,25 @@
  "40:55", "40:56", "g",
  "47:24.4", "47:25", "A. holes",
  "48:40", "48:41.1", "G",
-#1:00:00", "1:00:00", "D", #maybe already blanked out?,
+ "59:51", "59:52", "D", 
+ "1:02:03", "1:02:04", "butt whipped",
+ "1:02:36.2", "1:02:37", "butt whipping",  
  "1:11:35", "1:11:35.4", "h..",
  "1:12:43", "1:12:44", "G",
  "1:22:01.5", "1:22:02", "d...",
-#1:23:40", "1:23:40", "h (before that dingaling)",
-#1:24:35", "1:24:35", "G.",
- "1:02:03", "1:02:04", "butt whipped",
- "1:02:36.2", "1:02:37", "butt whipping",  
+ "1:22:53", "1:22:54", "dingaling",
+ "1:23:03", "1:23:03.3", "h.",
+ "1:23:48", "1:23:49", "G.", 
  "1:01:40.2", "1:01:41", "sled g... does it again"
 ],
 
-# 57:20 'ish something father? blood fire
-# also at around 1:02:40
 
 "blank_outs" => [
-# 15:22 irv beats his radio with pool cue should go...
  "15:20", "15:30",
  "38:40.4", "38:43.6", "j. c. what h..",  
- "58:40", "58:41", # bad arsenic, but I dislike lip reading.
- "59:08", "59:09", # "
- "59:15", "59:59", "bad arsenic ...",
+ "58:40", "58:41", "bad arsenic, but I dislike lip reading.",
+ "59:08", "59:09", " bad arsenic",
+ "59:15", "59:49", "bad arsenic ...",
  "1:14:30.5", "1:14:47", "psalm",
  "1:16:57.0" , "1:16:57.5", "bad a..",
 ],
@@ -39,27 +37,17 @@
 
 "disk_unique_id" => "5a0a43f52e5d5e705fdfaa831b38409b",
 "dvd_title_track" => "1",
-"other stuff" => "fighting (punching) in a bar 1:00:30 'ish could use some editing"
-# 1:01:42 "shutup snaka"
 
 
-
-#22:50 some talk of butts in there
-
+# not edited out, paranoid list
 
 # 32:20 shutup
 # 1:16 too early
 # 1:22:30 den???
-# 1:21:50 .. heck
-# 1:20:50 dang swiss
 # 1:13:40 paranoid
-# 1:11:40 gah
-# 47:15 a-h
-# 57:20 ... father
 # 1:07:45 hook
-# cut beating (paranoid)
-# 34:00
 # 3:00 backside
 # 6:57 thigh, hug
-# 14:15 under breath
-# 
+# 1:00:00 fighting in the bar
+# 1:01:42 "shutup snaka"
+# 15:22 irv beats his radio with pool cue should go...
