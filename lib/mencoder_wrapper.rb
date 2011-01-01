@@ -88,7 +88,7 @@ class MencoderWrapper
     end
     
     def get_section start, endy, should_mute, to_here_final_file    
-      raise if start == endy # should never actually happen...
+      raise 'start == end' if start == endy # should never actually happen...
       # delete 0.001 as per wiki's suggestion.
       endy = endy - start - 0.001
       # very decreased volume is like muting :)

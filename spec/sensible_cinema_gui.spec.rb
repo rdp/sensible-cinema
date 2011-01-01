@@ -227,14 +227,16 @@ module SensibleSwing
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
       @subject.unstub!(:get_mencoder_commands)
       click_button(:@preview_section_unedited)
-      join_background_thread
+      join_background_thread # scary timing spec
       temp_file = temp_dir + '/vlc.temp.bat'
       File.read(temp_file).should include("59.99")
     end
     
     it "should call something for fast preview" do
       click_button(:@fast_preview)
-      @system_blocking_command.should =~ /ffmpeg.*ntsc-dvd/
+      # pending ... @system_non_blocking_command.should =~ /ffmpeg.*ntsc-dvd/
+      join_background_thread
+      @system_blocking_command.should =~ /mplayer.*fast/ # pending, smplayer
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
