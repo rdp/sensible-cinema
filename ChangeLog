@@ -1,3 +1,7 @@
+== 0.20.0 ==
+
+Add a "fast preview" option which makes editing...faster.  Also it incorporates the "arbitrary precision" around settings.
+
 == 0.19.7 ==
 
 Slightly more user friendly error handling.

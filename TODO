@@ -2,27 +2,27 @@
   
 == up next release ==
 
-  edl straight: work HP
+  edl straight DVD replay: work HP
     work cars
-  clear runnings finish
+  clear runnings
     have ben and chris test it out
-  "watch edited while grabbing"
-  "preview section loosely accurate"
 
 == slightly lower than that, somewhat ordered ==
 
-  file size thing broken
+  the 0.5 offset only is applying to mutes currently [fix]
+    also note that the beginning offset is wrong-o [?]
+  "watch edited while grabbing"
   don't exit program if they don't select a disk :)
   if they type in a "new" start time, use that as the default end time input
   linearize edl's
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
     frame accurate splitter naive
-  more filters
+  more DL's
     my dvd's (loose timestamps...)
       cars backport real EDL :)
     enlist chris' help
-      need mac port [?]
+      first need mac port [?]
     friend dvd's, me DL
     partner for filters (Jon, Karlie if interested...give beta)
       all only after linearize, new year, frame accurate
@@ -43,6 +43,9 @@
     free google adwords (?)
     advertise urug, ruby flow :)
     only after new year, new LLC
+  use DVD navigator ?
+    http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
+    with an avi file sink?
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
@@ -54,7 +57,7 @@
   @mplayer: edl disworks after a certain timestamp (after...)
   disallow:
     "0:45:00.0" , "00:450:10.0",  # second 2700
-  github issues
+  all github issues
   a website that gives you a "wholesome meter"
   md5 and verify the fulli version... [?]
     only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
@@ -112,18 +115,16 @@
     
   using+burning screencast
   editing screencast
-   instructions on how to do their own (private) EDL or do one and submit it (public), or email their friends :P
-   note how to get the title number
-     add a way to get the label rather easily...
+   instructions on how to do their own (private) DL or do one and submit it (public), or email their friends :P
       add an option "just save full disk (unedited) to hard drive..."
-        note to people: can edit those to your liking
+        note to people: can edit these to your liking, resubmit
   imagemagick (ffmpeg) easier install...
   DRY up dependency installation code
   install dep's to cache2 or something...so I can avoid redownload after a release...
   "Re-run most recent" disabled when there isn't one [?]
   warn when labels exist and don't match...
   can rip from a DVD-like local folder (would anybody ever need this?)
-  rename bats as template.bat
+  rename bats as template.bats
   can parse IMDB (require they put in the URL by hand fer now)
     add stuffs to imdb hmmm
     IMDB easy mapping
@@ -135,9 +136,6 @@
       (when they have two...)
   better .exe icon...
   blu-ray support somehow (real-time? rip?)
-  use DVD navigator ?
-    http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
-    with an avi file sink?
   double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
     might not work for all modes tho...
   make the progress bar map "better" to the actual time that each section should take...
@@ -166,7 +164,7 @@ buy blu-ray decrypter, and drive, try it out.
 a single netflix descriptor, just in case
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
-
+  
 fade in/fade out volume, video
 make the other stuff work again, since I no longer use YAML...
 
