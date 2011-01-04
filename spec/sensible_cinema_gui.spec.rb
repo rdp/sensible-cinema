@@ -392,7 +392,7 @@ module SensibleSwing
       end
   
       it "should prompt you if you need to insert a dvd" do
-        proc {@subject.choose_dvd_drive }.should raise_error(/might not yet have.*in it/)
+        proc {@subject.choose_dvd_drive}.should raise_error(/might not yet have.*in it/)
         @show_blocking_message_dialog_last_args.should_not be nil
       end
     end
@@ -404,6 +404,15 @@ module SensibleSwing
       ARGV.pop # test cleanup--why not :)
     end
     
-  end
+    it "should read splits from the file" do
+      
+    end
+    
+    it "should warn if there are no DVD splits and you try to use EDL"
+    
+    
+  end # describe MainWindow
+  
+  
   
 end

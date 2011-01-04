@@ -122,9 +122,12 @@ describe EdlParser do
       [[2.0, 3.0, :mute], [5.0, 6.0, :mute], [7.0, 8.0, :blank]]
   end
   
+  it "should err on overlap" do
+    proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [1000])}.should raise_error(/overlap/i)
+  end
+  
   it "should take the greater of the end and beginning on combined splits and greater of the blank versus mute" do
     # so if I have a very long mute with a mute in the middle, it should turn into a very long mute
-    proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [1000])}.should raise_error(/overlap/i)
     go({ "mutes"=>{5=>10, 103=>107}}, 0, 0, [100]).should == [[3.0, 10.0, :mute]]
     go({ "mutes"=>{5=>10, 103=>110}}, 0, 0, [100]).should == [[3.0, 10.0, :mute]]
     go({ "mutes"=>{5=>10, 103=>111}}, 0, 0, [100]).should == [[3.0, 11.0, :mute]]
@@ -132,8 +135,5 @@ describe EdlParser do
     go({ "mutes"=>{5=>10}, "blank_outs" => {103=>110}}, 0, 0, [100]).should == [[3.0, 10.0, :blank]]
     go({ "blank_outs"=>{5=>10}, "mutes" => {103=>110}}, 0, 0, [100]).should == [[3.0, 10.0, :blank]]
   end
-  
-  #it should read them from the DL's
-#it should warn if there are none
   
 end
