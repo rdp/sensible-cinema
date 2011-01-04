@@ -128,6 +128,7 @@ describe EdlParser do
     go({ "mutes"=>{5=>10, 103=>107}}, 0, 0, [100])
     go({ "mutes"=>{5=>10, 103=>110}}, 0, 0, [100])
     go({ "mutes"=>{5=>10, 103=>111}}, 0, 0, [100])
+    # now throw in blanks to the mix...
 
   end
   
