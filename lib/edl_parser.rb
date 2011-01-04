@@ -100,19 +100,24 @@ class EdlParser
     previous = nil
     combined.each_with_index{|current, idx|
       s,e,t = current
-      if previous
-        ps, pe, pt = previous
-        if (s < pe) || (s < ps)
-          raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}") unless splits.length > 0
-        end
-      end
       if e < s
        raise SyntaxError.new("detected an end before a start: #{e} < #{s}") if e < s unless splits.length > 0
       end
+      if previous
+        ps, pe, pt = previous
+        if (s < pe)
+          raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}") unless splits.length > 0
+          # our start might be within the previous' in which case its their start, with (greater of our, their endig)
+          preferred_end = [e,pe].max
+          preferred_type = [t,pt].detect{|t| t == :blank} || :mute # prefer blank to mute
+          combined[idx-1] = [ps, preferred_end, preferred_type]
+          combined[idx] = nil # allow it to be culled later
+        end
+        
+      end
       previous = current
     }
-
-    combined
+    combined.compact
   end
 
   def self.translate_string_to_seconds s
