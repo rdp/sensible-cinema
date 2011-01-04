@@ -412,16 +412,14 @@ module SensibleSwing
       MplayerEdl.stub(:convert_to_edl) do |d,s,s,splits|
         splits1 = splits
       end
-      require '_dbg'
       @subject.do_mplayer_edl nil, 0, 0
       splits1.should == []
     end
     
-    it "should warn if there are no DVD splits and you try to use EDL"
-    
+    it "should warn if there are no DVD splits and you try to use EDL" do
+      
+    end
     
   end # describe MainWindow
-  
-  
   
 end

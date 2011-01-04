@@ -243,7 +243,7 @@ EOL
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       descriptors = EdlParser.parse_file edl_path
       splits = (descriptors['mplayer_dvd_splits'] || []).map{|s|  EdlParser.translate_string_to_seconds(s) }
-      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning # add a sec to mutes to accomodate for mplayer's oddness...
+      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
       File.write(EdlTempFile, edl_contents)
       title_track = get_title_track(descriptors)
       # oh the insanity of the console UI...LODO more user friendly player
