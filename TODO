@@ -49,6 +49,7 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  @ffmpeg: gop 12 for ntsc-dvd?
   @mplayer: why you can't play it when VLC can? huh? (audio sync)
   can watch conference like a music video :)
     can play "this section then that, with this one's audio
