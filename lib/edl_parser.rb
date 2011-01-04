@@ -76,20 +76,18 @@ class EdlParser
     out
   end
   
-  def self.get_secs k, splits_including_zero, offset
+  def self.get_secs k, splits, offset
     original_secs = translate_string_to_seconds(k)+ offset
     # now if splits is 900 and we'are at 909, then we're just 9
-    closest_splits = splits_including_zero.reverse.detect{|t| t < original_secs}
+    closest_splits = splits.reverse.detect{|t| t < original_secs} || 0
     original_secs - closest_splits
   end
   
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
-  def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0
-    splits = incoming['split_sections'] || []
+  def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0, splits = []
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    splits = [0] + splits.map{|t| t.to_f}
     mutes = mutes.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :mute]}
     blanks = blanks.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :blank]}
 
@@ -118,7 +116,7 @@ class EdlParser
           if previous_end >= endy
             combined[index] = [nil] # null it out...it's a mute subsumed by a blank apparently...
             if previous_type == :mute
-               raise 'overlapping mute?'
+              raise 'overlapping mute?' unless splits.length > 0 # then it's possible <sigh>
             end
             next
           else

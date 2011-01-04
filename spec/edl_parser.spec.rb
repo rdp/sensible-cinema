@@ -116,15 +116,13 @@ describe EdlParser do
   end
   
   it "should allow for splits in its parseage" do
-    go({ "mutes"=>{5=>6,105=>106}, "blank_outs" => {110 => 111}, "split_sections" => [103] }).should == 
+    go({ "mutes"=>{5=>6,105=>106}, "blank_outs" => {110 => 111} }, 0, 0, [103]).should == 
       [[2.0, 3.0, :mute], [5.0, 6.0, :mute], [7.0, 8.0, :blank]]
   end
   
   it "should take the greater of the end and beginning on combined splits and greater of the blank versus mute" do
-    
     # so if I have a very long mute with a mute in the middle, it should turn into a very long mute
     go({ "mutes"=>{5=>10,6=>7}}).should == [[5.0, 10.0, :mute]]
-    
   end
   
 end
