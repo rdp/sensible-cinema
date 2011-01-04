@@ -98,7 +98,7 @@ class EdlParser
     combined = (mutes+blanks).sort
     
     previous = nil
-    combined.each{|current|
+    combined.each_with_index{|current, idx|
       s,e,t = current
       if previous
         ps, pe, pt = previous
