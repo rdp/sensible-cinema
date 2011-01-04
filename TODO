@@ -9,11 +9,14 @@
 
 == slightly lower than that, somewhat ordered ==
 
-  the 0.5 offset only is applying to mutes currently [fix]
-    also note that the beginning offset is wrong-o [?]
-  "watch edited while grabbing"
+  FHE friendly: always harddup, "watch as grabbed" button [plus other ramifications]
+    warn appropro on poor DL's for the other way
+    make the other button work again (watch unedited while grabbing)
+    delete .1.avi files again, iff in full mode
+  the 0.5s offset only is applying to mutes currently [fix]
+    also note to users that the beginning offset is wrong-o [?]
   don't exit program if they don't select a disk :)
-  if they type in a "new" start time, use that as the default end time input
+  if they type in a "new" start time, use that as the default end time input too
   linearize edl's
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
