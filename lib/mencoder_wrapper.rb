@@ -44,8 +44,8 @@ class MencoderWrapper
       assert dvd_title_track
       if start_here || end_here
         raise 'need both' unless end_here && start_here
-        start_here = OverLayer.translate_string_to_seconds(start_here)
-        end_here   = OverLayer.translate_string_to_seconds(end_here)
+        start_here = EdlParser.translate_string_to_seconds(start_here)
+        end_here   = EdlParser.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
         raise TimingError.new("unable to find deletion entry between #{start_here} and #{end_here}") if require_deletion_entry && combined.length == 0
         # it's relative now, since we rip from not the beginning

@@ -105,6 +105,7 @@ class OverLayer
     @start_time = Time.now_f # assume they want to start immediately...
   end
   
+  # note this is actually deprecated and won't work anymore <sigh> and needs to be updated.
   def self.translate_yaml raw_yaml
     begin
       all = YAML.load(raw_yaml) || {}      
@@ -120,8 +121,8 @@ class OverLayer
       new = {}
       maps.each{|start,endy|
         # both are like 1:02.0
-        start2 = translate_string_to_seconds(start) if start
-        endy2 = translate_string_to_seconds(endy) if endy
+        start2 = EdlParser.translate_string_to_seconds(start) if start
+        endy2 = EdlParser.translate_string_to_seconds(endy) if endy
         if start2 == 0 || endy2 == 0 || start == nil || endy == nil
           p 'warning--possible error in the Edit Decision List file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
           # drop this line into the bitbucket...
@@ -164,27 +165,10 @@ class OverLayer
       @just_unblanked = false
       p 'ignoring timestamp update ' + to_this_exact_string_might_be_nil.to_s if $VERBOSE
     else
-      set_seconds OverLayer.translate_string_to_seconds(to_this_exact_string_might_be_nil) + delta if to_this_exact_string_might_be_nil
+      set_seconds EdlParser.translate_string_to_seconds(to_this_exact_string_might_be_nil) + delta if to_this_exact_string_might_be_nil
     end
   end
   
-  def self.translate_string_to_seconds s
-    # might actually already be a float, or int, depending on the yaml
-    # int for 8 => 9 and also for 1:09 => 1:10
-    if s.is_a? Numeric
-      return s.to_f
-    end
-    
-    # s is like 1:01:02.0
-    total = 0.0
-    seconds = s.split(":")[-1]
-    total += seconds.to_f
-    minutes = s.split(":")[-2] || "0"
-    total += 60 * minutes.to_i
-    hours = s.split(":")[-3] || "0"
-    total += 60* 60 * hours.to_i
-    total
-  end
   
   # returns seconds it's at currently...
   def cur_time

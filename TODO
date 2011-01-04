@@ -10,6 +10,8 @@
 == slightly lower than that, somewhat ordered ==
 
   add ""revision""
+  note: you need to offet your start times
+  it should add to both mutes and xxx's in edl
   note: can make several different versions, with different filenames, and should rewatch the film after finalizing it (edited), like "grab to hard drive"
   FHE friendly: always harddup, "watch as grabbed" button [plus other ramifications]
     warn appropro on poor DL's for the other way
@@ -353,3 +355,11 @@ donate money to several projects I use/like :)
 
 @jruby: system("mencoder") from a button doesn't get interrupted by an exception [!]
 @vlc: replay mp4's are too dark.
+
+@rspec:   1) EdlParser should raise for end before beginning
+     Failure/Error: proc{ go({"mutes"=>{105=>104.9}})}.should raise_error(/SyntaxError/)
+     expected Exception with message matching /SyntaxError/, got #<SyntaxError: warning--detected an end before a start 104.9 < 105.0>
+     # edl_parser.spec.rb:115
+     # :1
+    
+    message confusing :)

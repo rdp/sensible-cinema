@@ -99,12 +99,29 @@ describe EdlParser do
   end
   
   it "should sort exactly overlapping segments" do
-    EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}, "blank_outs"=>{105=>145}}).should == [[105.0, 145.0, :blank]]
+    go({"mutes"=>{105=>145}, "blank_outs"=>{105=>145}}).should == [[105.0, 145.0, :blank]]
   end
   
   it "should add to both ends" do
-    EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}}, 1).should == [[105.0, 146.0, :mute]]
-    EdlParser.convert_incoming_to_split_sectors({"mutes"=>{105=>145}}, 1,1).should == [[104.0, 146.0, :mute]]
+    go({"mutes"=>{105=>145}}, 1).should == [[105.0, 146.0, :mute]]
+    go({"mutes"=>{105=>145}}, 1,1).should == [[104.0, 146.0, :mute]]
+  end
+  
+  def go *args
+    EdlParser.convert_incoming_to_split_sectors *args
+  end
+  
+  it "should raise for end before beginning" do
+    proc{ go({"mutes"=>{105=>104.9}})}.should raise_error(SyntaxError)
+  end
+  
+  it "should allow for splits in its parseage" do
+    go({ "mutes"=>{5=>6,105=>106}, "blank_outs" => {110 => 111}, "split_sections" => [103] }).should == 
+      [[2.0, 3.0, :mute], [5.0, 6.0, :mute], [7.0, 8.0, :blank]]
+  end
+  
+  it "should take the greater of the end and beginning on combined splits and greater of the blank versus mute" do
+    
   end
   
 end

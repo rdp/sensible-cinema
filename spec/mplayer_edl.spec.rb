@@ -63,5 +63,14 @@ end
 EOL
   
   end
+  
+  it "should accomodate for split sections in some dvd's and order the output" do
+    a = MplayerEdl.convert_to_edl({ "mutes"=>{5=>6,105=>106}, "blank_outs" => {110 => 111}, "split_sections" => [103] }, 0, 0 )
+    a.should == <<-EOL
+2.0 3.0 1
+5.0 6.0 1
+7.0 8.0 0
+    EOL
+  end
 
 end

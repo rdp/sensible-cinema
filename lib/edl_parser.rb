@@ -76,19 +76,27 @@ class EdlParser
     out
   end
   
+  def self.get_secs k, splits_including_zero, offset
+    original_secs = translate_string_to_seconds(k)+ offset
+    # now if splits is 900 and we'are at 909, then we're just 9
+    closest_splits = splits_including_zero.reverse.detect{|t| t < original_secs}
+    original_secs - closest_splits
+  end
+  
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
   def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0
+    splits = incoming['split_sections'] || []
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    mutes = mutes.map{|k, v| [OverLayer.translate_string_to_seconds(k) - add_this_to_mutes_beginning, OverLayer.translate_string_to_seconds(v) + add_this_to_mutes_end, :mute]}
-    blanks = blanks.map{|k, v| [OverLayer.translate_string_to_seconds(k), OverLayer.translate_string_to_seconds(v), :blank]}
+    splits = [0] + splits.map{|t| t.to_f}
+    mutes = mutes.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :mute]}
+    blanks = blanks.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :blank]}
 
-    combined = (mutes+blanks).sort_by{|entry| entry[0,1]}
     combined = (mutes+blanks).sort
 
     combined.each{|s, e, t|
-      puts 'warning--detected an end before a start' if e < s
+      raise SyntaxError.new("detected an end before a start #{e} < #{s}") if e < s
     }
 
     # VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
@@ -130,6 +138,25 @@ class EdlParser
     }
   end
 
+  def self.translate_string_to_seconds s
+    # might actually already be a float, or int, depending on the yaml
+    # int for 8 => 9 and also for 1:09 => 1:10
+    if s.is_a? Numeric
+      return s.to_f
+    end
+    
+    # s is like 1:01:02.0
+    total = 0.0
+    seconds = s.split(":")[-1]
+    total += seconds.to_f
+    minutes = s.split(":")[-2] || "0"
+    total += 60 * minutes.to_i
+    hours = s.split(":")[-3] || "0"
+    total += 60* 60 * hours.to_i
+    total
+  end
+
+  
 end
 
 # <= 1.8.7 Symbol compat
