@@ -15,6 +15,7 @@
     delete .1.avi files again, iff in full mode
   the 0.5s offset only is applying to mutes currently [fix]
     also note to users that the beginning offset is wrong-o [?]
+  the "edited.avi" *must* be playable in WMP
   don't exit program if they don't select a disk :)
   if they type in a "new" start time, use that as the default end time input too
   linearize edl's
