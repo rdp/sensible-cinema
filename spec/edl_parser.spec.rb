@@ -99,7 +99,9 @@ describe EdlParser do
   end
   
   it "should sort exactly overlapping segments" do
-    go({"mutes"=>{105=>145}, "blank_outs"=>{105=>145}}).should == [[105.0, 145.0, :blank]]
+    proc { go({"mutes"=>{105=>145}, "blank_outs"=>{105=>145}})}.should raise_error(SyntaxError)
+    proc { go({"mutes"=>{105=>145}, "blank_outs"=>{110=>130}})}.should raise_error(SyntaxError)
+    proc { go({"mutes"=>{105=>145}, "blank_outs"=>{110=>150}})}.should raise_error(SyntaxError)
   end
   
   it "should add to both ends" do
@@ -122,7 +124,8 @@ describe EdlParser do
   
   it "should take the greater of the end and beginning on combined splits and greater of the blank versus mute" do
     # so if I have a very long mute with a mute in the middle, it should turn into a very long mute
-    go({ "mutes"=>{5=>10,6=>7}}).should == [[5.0, 10.0, :mute]]
+    proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [1000])}.should raise_error(/overlap/i)
+    
   end
   
 end

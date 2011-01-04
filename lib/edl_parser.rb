@@ -86,54 +86,33 @@ class EdlParser
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
   def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0, splits = []
+    if splits != []
+      # allow it to do all the double checks we later skip, just in case :)
+      self.convert_incoming_to_split_sectors incoming
+    end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :mute]}
     blanks = blanks.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :blank]}
 
     combined = (mutes+blanks).sort
-
-    combined.each{|s, e, t|
-      raise SyntaxError.new("detected an end before a start #{e} < #{s}") if e < s
-    }
-
-    # VLCProgrammer.convert_to_full_xspf({ "mutes" => {5=> 7}, "blank_outs" => {6=>7} } )
-    # should mute 5-6, skip 6-7
-    previous = combined[0]
-    combined.each_with_index{|(start, endy, type), index|
-      next if index == 0 # nothing to do there..
-      previous_end = previous[1]
-      previous_type = previous[2]
-      previous_start = previous[0]
-      if type == :blank
-        raise 'no overlap like that allowed as of yet' unless previous_end <= endy
-        if previous_type == :mute && previous_end > start
-          previous[1] = start # make it end when we start...
-        end
-      elsif type == :mute
-        if previous_end > start
-          
-          if previous_end >= endy
-            combined[index] = [nil] # null it out...it's a mute subsumed by a blank apparently...
-            if previous_type == :mute
-              raise 'overlapping mute?' unless splits.length > 0 # then it's possible <sigh>
-            end
-            next
-          else
-             # start mine when the last one ended...
-             combined[index] = [previous_end, endy, type]
-          end
-
-        end
-      else
-        raise 'unexpected'
-      end
-      previous = combined[index] 
-    }
     
-    combined.select{|start, endy, type|
-     (start != nil) && (endy > start) # ignore mutes wholly contained within blanks...
+    previous = nil
+    combined.each{|current|
+      s,e,t = current
+      if previous
+        ps, pe, pt = previous
+        if (s < pe) || (s < ps)
+          raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}")
+        end
+      end
+      if e < s
+       raise SyntaxError.new("detected an end before a start: #{e} < #{s}") if e < s
+      end
+      previous = current
     }
+
+    combined
   end
 
   def self.translate_string_to_seconds s
