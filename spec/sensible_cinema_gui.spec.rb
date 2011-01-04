@@ -406,6 +406,7 @@ module SensibleSwing
     
     it "should read splits from the file" do
       
+      
     end
     
     it "should warn if there are no DVD splits and you try to use EDL"
