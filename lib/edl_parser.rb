@@ -103,11 +103,11 @@ class EdlParser
       if previous
         ps, pe, pt = previous
         if (s < pe) || (s < ps)
-          raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}")
+          raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}") unless splits.length > 0
         end
       end
       if e < s
-       raise SyntaxError.new("detected an end before a start: #{e} < #{s}") if e < s
+       raise SyntaxError.new("detected an end before a start: #{e} < #{s}") if e < s unless splits.length > 0
       end
       previous = current
     }
