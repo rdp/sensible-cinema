@@ -125,7 +125,10 @@ describe EdlParser do
   it "should take the greater of the end and beginning on combined splits and greater of the blank versus mute" do
     # so if I have a very long mute with a mute in the middle, it should turn into a very long mute
     proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [1000])}.should raise_error(/overlap/i)
-    
+    go({ "mutes"=>{5=>10, 103=>107}}, 0, 0, [100])
+    go({ "mutes"=>{5=>10, 103=>110}}, 0, 0, [100])
+    go({ "mutes"=>{5=>10, 103=>111}}, 0, 0, [100])
+
   end
   
 end
