@@ -147,7 +147,10 @@ module SensibleSwing
         # during testing, we *always* have enough free space :)
         16_000_000_000
       }
-      
+      # less chatty...
+      @subject.stub!(:p) {}
+      @subject.stub!(:puts) {}
+
     end
     
     after do
@@ -234,9 +237,9 @@ module SensibleSwing
     end
     
     it "should call something for fast preview" do
-      click_button(:@fast_preview)
-      # pending ... @system_non_blocking_command.should =~ /ffmpeg.*ntsc-dvd/
+      click_button(:@fast_preview).join
       join_background_thread
+      #XXXX @system_blocking_command.should =~ /ffmpeg.*ntsc-dvd/ # I think this is a timing thing...
       @system_blocking_command.should =~ /mplayer.*fast/ # pending, smplayer
     end
     
@@ -323,11 +326,11 @@ module SensibleSwing
     end
     
     it "should play edl with elongated mutes" do
-      temp_file = temp_dir + '/mplayer.temp.edl'
       click_button(:@mplayer_edl).join
-      wrote = File.read(temp_file)
-      # normally "378.0 379.1 1\n"
-      wrote.should include("380.85 1")
+      wrote = File.read(MainWindow::EdlTempFile)
+      # normally "378.0 379.1 1"
+      p wrote
+      wrote.should include("377.5 379.1 1")
     end
     
     def should_allow_for_changing_file corrupt_the_file = false
@@ -405,8 +408,13 @@ module SensibleSwing
     end
     
     it "should read splits from the file" do
-      
-      
+      splits1 = nil
+      MplayerEdl.stub(:convert_to_edl) do |d,s,s,splits|
+        splits1 = splits
+      end
+      require '_dbg'
+      @subject.do_mplayer_edl nil, 0, 0
+      splits1.should == []
     end
     
     it "should warn if there are no DVD splits and you try to use EDL"

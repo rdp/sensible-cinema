@@ -89,6 +89,11 @@ describe EdlParser do
     end
   end
   
+  it "should parse mplayer_dvd_splits as floats" do
+    E.parse_string('"mplayer_dvd_splits" => []', 'fakename')['mplayer_dvd_splits'].should == []
+    E.parse_string('"mplayer_dvd_splits" => ["123.5","124.5"]', 'fakename')['mplayer_dvd_splits'].should == [123.5,124.5]
+  end
+  
   it "should reject misformatted files" do
     proc {E.parse_string 'mutes=>["0:33", "0:34"]', 'filename'}.should raise_error(SyntaxError)
     proc {E.parse_string '"mutes"=>["0:33", "0:34"]', 'filename'}.should_not raise_error

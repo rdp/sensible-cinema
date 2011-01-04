@@ -24,8 +24,8 @@ class EdlParser
     parse_string File.read(filename), filename, [], ignore_settings
   end
   
-  # better eye-ball these before letting people run them, eh?
-  # but I couldn't think of any other way
+  # better eye-ball these before letting people run them, eh? XXXX
+  # but I couldn't think of any other way to parse the files tho
   def self.parse_string string, filename, ok_categories_array = [], ignore_settings = false
     string = '{' + string + "\n}"
     if filename
@@ -47,6 +47,7 @@ class EdlParser
     raw
   end
   
+  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though disabled
   def self.convert_to_timestamp_arrays array, ok_categories_array
     out = []
     while(single_element = extract_entry!(array))

@@ -109,7 +109,7 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime (not always be accurate)", false )
       @mplayer_edl.on_clicked {
-        do_mplayer_edl nil, 0, 0.5
+        do_mplayer_edl
       }
 
       @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
@@ -149,7 +149,7 @@ module SensibleSwing
         old_prefs = File.read(smplayer_prefs_file)
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
         File.write(smplayer_prefs_file, new_prefs)
-        thread = do_mplayer_edl( "smplayer #{nice_file}", 0, 0.5)
+        thread = do_mplayer_edl( "smplayer #{nice_file}")
         Thread.new { # XX do we need this?
           begin
             thread.join
@@ -239,21 +239,22 @@ EOL
     
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
-    def do_mplayer_edl play_this_start, add_secs_end, add_secs_beginning
-        drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
-        descriptors = EdlParser.parse_file edl_path
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning # add a sec to mutes to accomodate for mplayer's oddness...
-        File.write(EdlTempFile, edl_contents)
-        title_track = get_title_track(descriptors)
-        # oh the insanity of the console UI...LODO more user friendly player
-        @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
-        Also right and left arrows to seek, F key for full screen, [, ] to control playback speed.
-        q to quit.")
-        # LODO dry up mplayer dvd opts...
-        play_this_start ||= "mplayer dvd://#{title_track}"
-        command =  "#{play_this_start} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
-        p command
-        Thread.new { system_blocking command; @popup.dispose }
+    def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
+      drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+      descriptors = EdlParser.parse_file edl_path
+      splits = (descriptors['mplayer_dvd_splits'] || []).map{|s|  EdlParser.translate_string_to_seconds(s) }
+      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning # add a sec to mutes to accomodate for mplayer's oddness...
+      File.write(EdlTempFile, edl_contents)
+      title_track = get_title_track(descriptors)
+      # oh the insanity of the console UI...LODO more user friendly player
+      @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
+      Also right and left arrows to seek, F key for full screen, [, ] to control playback speed.
+      q to quit.")
+      # LODO dry up mplayer dvd opts...
+      play_this_mplayer ||= "mplayer dvd://#{title_track}"
+      command =  "#{play_this_mplayer} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      p command
+      Thread.new { system_blocking command; @popup.dispose }
     end
       
     def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
