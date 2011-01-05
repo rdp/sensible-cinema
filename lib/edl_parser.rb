@@ -77,12 +77,21 @@ class EdlParser
     out
   end
   
-  def self.get_secs k, splits, offset
-    original_secs = translate_string_to_seconds(k)+ offset
-    # now if splits is 900 and we'are at 909, then we're just 9
-    closest_split_idx = splits.reverse.index{|t| t < original_secs}
-    closest_split = closest_split_idx ? splits[-closest_split_idx] : 0
-    original_secs - closest_split
+  def self.get_secs timestamp_string_begin, timestamp_string_end, add_begin, add_end, splits
+    answers = []
+    for type, offset, multiplier in [[timestamp_string_begin, add_begin, -1], [timestamp_string_end, add_end, 1]]
+      original_secs = translate_string_to_seconds(type) + offset
+      # now if splits is 900 and we'are at 909, then we're just 9
+      closest_split_idx = splits.reverse.index{|t| t < original_secs}
+      if closest_split_idx
+        closest_split = splits.reverse[closest_split_idx]
+        # add some extra seconds onto these if they're "past" a split, too
+        original_secs = original_secs - closest_split + multiplier * (splits.length - closest_split_idx)
+        original_secs = [0, original_secs].max # no negatives allowed :)
+      end
+      answers << original_secs
+    end
+    answers
   end
   
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
@@ -94,9 +103,9 @@ class EdlParser
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    mutes = mutes.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :mute]}
-    blanks = blanks.map{|k, v| [get_secs(k, splits, -add_this_to_mutes_beginning), get_secs(v, splits, add_this_to_mutes_end), :blank]}
-
+    mutes = mutes.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:mute]}
+    blanks = blanks.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:blank]}
+    p mutes, blanks
     combined = (mutes+blanks).sort
     
     previous = nil

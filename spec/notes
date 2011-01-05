@@ -1,4 +1,10 @@
+
 previewing section on HP 2 hours or so and the first thing overlapped the muted section in error...went too long...huh?
+  call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -ss 7260.0 -t 10.499 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.1.avi
+  call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec ac3 -vol 0  -ss 7270.5 -t 1.499 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.2.avi
+  call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -ss 7272.0 -t 3.999 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.3.avi
+
+  resulted in sectors of 13.17 1.93, 5.03 instead of 10.5, 1.5, and 4. huh?
 
 $ to fix mplayer out of sync audio:
 $ ffmpeg -i HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -target ntsc-dvd -t 1600 yo.mpg
