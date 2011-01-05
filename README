@@ -172,10 +172,17 @@ Also make sure you aren't out of disk space.
 
 Also you could try a different computer (desktop computers' DVD drives seem to work better at times than laptops')
 
+Also (for power users) make sure your version of ffmpeg is relatively new, as older versions (r19313).
+If you don't know what this means ...
+
 Too slow? One big speedup would be getting a faster hard drive (SSD perhaps, though
-  sensible cinema mostly reads large files, so a speedy spinning disk might help, too).  A second might be to get a faster DVD drive.
+  sensible cinema mostly reads large files, so a speedy spinning disk might 
+  be just as fast, except for high end SSD's).  A second help might be to get a faster DVD drive.
+  Another option is to watch it in the realtime option.
+  A faster disk drive might help, too, though that's a bit more rare to upgrade, and they all
+  seem to be the same speed to me (about 60 fps).
   I'm not certain but I don't believe that a faster cpu (or even dual core, etc.), will help much, 
-  though it might like 3% or something.
+  though it might like 3% or something.  It might help for the burning to disk phase, though.
   Also ping me if you think it's too slow and I'll see what I can do.
 
 == Feedback ==

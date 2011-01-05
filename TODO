@@ -7,13 +7,17 @@
   clear runnings
     finalize
     have ben and chris test it out
-
+  HP one section with new ffmpeg
+  
 == slightly lower than that, somewhat ordered ==
 
+  note to people "you about to preview these edits"
+  note you can use fast preview with the other going in the background
   test HP if I put the whole thing together (2 hour mark)
-    try it again with grabbing from DVD too
+    try it with new ffmpeg
+    try it again with grabbing afresh from DVD too
   add "revision"
-  note: you need to offset your start times
+  note: you need to re-offset your start and end times
     change it to be aggressive sometimes yes, other times no
   note: can make several different versions, with different filenames, and should rewatch the film after finalizing it (edited), like "grab to hard drive" and have a friend watch it, if desired.
   make the other button work again (watch unedited while grabbing)
@@ -55,6 +59,7 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  @ffmpeg: do you get slower the farther into large files you are?
   FHE friendly: always harddup, "watch as grabbed" button [plus other ramifications]
   @ffmpeg: gop 12 for ntsc-dvd?
   @ffmpeg: doesn't grab the right time frames?
