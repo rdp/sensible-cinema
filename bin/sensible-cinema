@@ -431,7 +431,7 @@ EOL
         freespace = get_freespace(save_to)
         if freespace < 16_000_000_000
           show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
-          (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you only have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
+          (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
         end
         save_to
       end
