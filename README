@@ -172,8 +172,8 @@ Also make sure you aren't out of disk space.
 
 Also you could try a different computer (desktop computers' DVD drives seem to work better at times than laptops')
 
-Also (for power users) make sure your version of ffmpeg is relatively new, as older versions (r19313).
-If you don't know what this means ...
+Also (for power users) make sure your version of ffmpeg is relatively new, as older versions (r19313) is known to crop wrong.
+If you don't know what this means then you're probably ok and don't have to worry about it.
 
 Too slow? One big speedup would be getting a faster hard drive (SSD perhaps, though
   sensible cinema mostly reads large files, so a speedy spinning disk might 

@@ -9,15 +9,13 @@
   
 == slightly lower than that, somewhat ordered ==
 
-  vendorize ffmpeg
-  cleanup the reuse start
-  note to people "you about to preview these edits"
-  note you can use fast preview with the other going in the background
-  add "revision"...
   note: you need to re-offset your start and end times
     change it to be aggressive sometimes yes, other times no
   note: can make several different versions, with different filenames, and should rewatch the film after finalizing it (edited), like "grab to hard drive" and have a friend watch it, if desired.
   make the other button work again (watch unedited while grabbing)
+  note to people "you are about to preview these edits"
+  note you can use fast preview with the other going in the background
+  add "revision"...
   the "edited.avi" *must* be playable in WMP
   don't exit program if they don't select a disk :)
   if they type in a "new" start time, use that as the default end time input too
@@ -25,6 +23,7 @@
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
     frame accurate splitter naive
+  vendorize ffmpeg
   more DL's
     my dvd's (loose timestamps...)
       cars backport real EDL :)
@@ -56,8 +55,8 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  @mplayer: some way to not have to use phreaky pipes in doze ("+1")
   @ffmpeg: do you get slower the farther into large files you are?
-  FHE friendly: always harddup, "watch as grabbed" button [plus other ramifications]
   @ffmpeg: gop 12 for ntsc-dvd?
   @mplayer: why you can't play it when VLC can? huh? (audio sync)
   can watch conference like a music video :)
@@ -96,6 +95,7 @@
   can pull from imdb at package time [?]
   delete fulli file automatically
     except if it's a specific scene run...
+  FHE friendly: an option for "watch EDL as grabbed" (always harddup?)
   .exe installer
     just unzips, runs the .bat file for them [?] :)
       full msi
