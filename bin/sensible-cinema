@@ -189,7 +189,7 @@ module SensibleSwing
 # "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it plays anything except the main title, see http://goo.gl/QHLIF
 # "not edited out stuff" => "",
 # "closing thoughts" => "still a fairly dark movie",
-
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"] # find these by playing your dvd with smplayer, and noting where the timing switches [buggedly] back to zero in error--common on many DVD's.  Setting it here lets the 'insta play' feature work right.
 EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
@@ -242,7 +242,12 @@ EOL
     def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       descriptors = EdlParser.parse_file edl_path
-      splits = (descriptors['mplayer_dvd_splits'] || []).map{|s|  EdlParser.translate_string_to_seconds(s) }
+      splits = descriptors['mplayer_dvd_splits']
+      if splits == nil
+        show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past about an hour might not work.")
+        splits = []
+      end
+      splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
       File.write(EdlTempFile, edl_contents)
       title_track = get_title_track(descriptors)

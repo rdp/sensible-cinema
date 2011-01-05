@@ -50,7 +50,7 @@ module SensibleSwing
         end
       }
       @subject.choose_dvd_and_edl_for_it
-      @show_blocking_message_dialog_last_args.should_not be nil
+      @show_blocking_message_dialog_last_arg.should_not be nil
     end
     
     it "should warn if you don't have enough disk space" do
@@ -60,7 +60,7 @@ module SensibleSwing
         0
       }
       @subject.get_save_to_filename 'dvd_title'
-      @show_blocking_message_dialog_last_args[0].should =~ /may not be enough/
+      @show_blocking_message_dialog_last_arg.should =~ /may not be enough/
     end
     
     it "should not warn if you have enough free disk space" do
@@ -68,14 +68,14 @@ module SensibleSwing
         16_000_000_000
       }
       @subject.get_save_to_filename 'dvd_title'
-      @show_blocking_message_dialog_last_args.should be nil
+      @show_blocking_message_dialog_last_arg.should be nil
     end
     
     it "should not select a file if poorly formed" do
       @subject.stub!(:parse_edl) {
         eval("a----")
       }
-      @subject.single_edit_list_matches_dvd 'fake md5'
+      @subject.single_edit_list_matches_dvd('fake md5') # doesn't die
     end
     
     def with_clean_edl_dir_as this
@@ -91,6 +91,7 @@ module SensibleSwing
     end
     
     it "should prompt if two EDL's match a DVD title" do
+      MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
       with_clean_edl_dir_as 'temp' do
         MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
         Dir.chdir 'temp' do
@@ -126,8 +127,9 @@ module SensibleSwing
         "e:\\"
       }
       @subject.stub!(:show_blocking_message_dialog) { |*args|
-        @show_blocking_message_dialog_last_args = args
+        @show_blocking_message_dialog_last_arg = args[0]
       }
+      
       @subject.stub!(:get_user_input) {'01:00'}
       @subject.stub!(:system_blocking) { |command|
         @system_blocking_command = command
@@ -258,7 +260,7 @@ module SensibleSwing
         raise MencoderWrapper::TimingError
       }
       click_button(:@rerun_preview)
-      @show_blocking_message_dialog_last_args[0].should =~ /you chose a time frame/
+      @show_blocking_message_dialog_last_arg.should =~ /you chose a time frame/
     end
     
     it "should not die if you pass it the same start and end time frames--graceful acceptance" do
@@ -266,13 +268,13 @@ module SensibleSwing
         raise Errno::EACCES
       }
       click_button(:@rerun_preview) # lodo rspec error: wrong backtrace if no => e!
-      @show_blocking_message_dialog_last_args[0].should =~ /a file/
+      @show_blocking_message_dialog_last_arg.should =~ /a file/
     end
 
     it "should warn if you watch an edited time frame with no edits in it" do
       @subject.unstub!(:get_mencoder_commands)
       click_button(:@preview_section)
-      @show_blocking_message_dialog_last_args[0].should =~ /unable to/
+      @show_blocking_message_dialog_last_arg.should =~ /unable to/
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
       # rspec bug: wrong'ish backtrace: proc { prompt_for_start_and_end_times #}.should_not raise_error LODO
       click_button(:@preview_section)
@@ -296,7 +298,7 @@ module SensibleSwing
       join_background_thread
       @system_blocking_command.should_not == nil
       @slept.should == true
-      @show_blocking_message_dialog_last_args.should == nil
+      @show_blocking_message_dialog_last_arg.should == nil
     end
     
     it "should create a new file for ya" do
@@ -310,6 +312,7 @@ module SensibleSwing
         content.should_not include("\"title\"")
         content.should include("disk_unique_id")
         content.should include("dvd_title_track")
+        content.should include("mplayer_dvd_splits")
       ensure
         FileUtils.rm_rf out
       end
@@ -396,7 +399,7 @@ module SensibleSwing
   
       it "should prompt you if you need to insert a dvd" do
         proc {@subject.choose_dvd_drive}.should raise_error(/might not yet have.*in it/)
-        @show_blocking_message_dialog_last_args.should_not be nil
+        @show_blocking_message_dialog_last_arg.should_not be nil
       end
     end
     
@@ -417,9 +420,16 @@ module SensibleSwing
     end
     
     it "should warn if there are no DVD splits and you try to use EDL" do
-      
-    end
-    
+      with_clean_edl_dir_as 'temp' do
+        File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        @subject.stub!(:choose_dvd_drive) {
+           ["mock_dvd_drive", "mockVolume", "abcdef1234"]
+        }
+        @subject.do_mplayer_edl(nil, 0, 0)
+        @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
+      end
+   end
+  
   end # describe MainWindow
   
 end
