@@ -189,7 +189,7 @@ module SensibleSwing
 # "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it plays anything except the main title, see http://goo.gl/QHLIF
 # "not edited out stuff" => "",
 # "closing thoughts" => "still a fairly dark movie",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"] # find these by playing your dvd with smplayer, and noting where the timing switches [buggedly] back to zero in error--common on many DVD's.  Setting it here lets the 'insta play' feature work right.
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # find these by playing your dvd with smplayer, and noting where the timing switches [buggedly] back to zero in error--common on many DVD's.  Setting it here lets the 'insta play' feature work right.
 EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
@@ -244,7 +244,7 @@ EOL
       descriptors = EdlParser.parse_file edl_path
       splits = descriptors['mplayer_dvd_splits']
       if splits == nil
-        show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past about an hour might not work.")
+        show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period won't work (fixable...).")
         splits = []
       end
       splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
@@ -375,8 +375,8 @@ EOL
       start_time = JOptionPane.showInputDialog(message, default)
     end
     
-    def parse_edl path, ignore_settings = false
-      EdlParser.parse_file path, ignore_settings
+    def parse_edl path
+      EdlParser.parse_file path
     end
     
     def get_freespace path
@@ -437,10 +437,13 @@ EOL
       end
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, ignore_settings = false
+    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
       drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       
-      descriptors = parse_edl(edit_list_path, ignore_settings)
+      descriptors = parse_edl(edit_list_path)
+      if watch_unedited
+        descriptors['mutes'] = descriptors['blank_outs'] = []
+      end
       
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
@@ -470,7 +473,8 @@ EOL
       
       dvd_title_track = get_title_track(descriptors)
       should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_run_mplayer, !ignore_settings
+      require_deletion_entry = true unless watch_unedited
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -480,7 +484,8 @@ EOL
     
     # stubbable :)
     def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
-      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, true, require_deletion_entry # delete partials...
+      delete_partials = true unless start_time
+      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, delete_partials, require_deletion_entry # delete partials...
     end
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
