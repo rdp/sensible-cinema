@@ -2,19 +2,20 @@
   
 == up next release ==
 
-  edl straight DVD replay: work HP
+  edl straight DVD replay:
     work cars
   clear runnings
+    finalize
     have ben and chris test it out
 
 == slightly lower than that, somewhat ordered ==
 
+  test HP if I put the whole thing together (2 hour mark)
+    try it again with grabbing from DVD too
   add "revision"
-  note: you need to offet your start times
-   change it to be aggressive sometimes yes, other times no
-  note: can make several different versions, with different filenames, and should rewatch the film after finalizing it (edited), like "grab to hard drive"
-  FHE friendly: always harddup, "watch as grabbed" button [plus other ramifications]
-    delete .1.avi files again, iff in full mode
+  note: you need to offset your start times
+    change it to be aggressive sometimes yes, other times no
+  note: can make several different versions, with different filenames, and should rewatch the film after finalizing it (edited), like "grab to hard drive" and have a friend watch it, if desired.
   make the other button work again (watch unedited while grabbing)
   the "edited.avi" *must* be playable in WMP
   don't exit program if they don't select a disk :)
@@ -54,7 +55,9 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  FHE friendly: always harddup, "watch as grabbed" button [plus other ramifications]
   @ffmpeg: gop 12 for ntsc-dvd?
+  @ffmpeg: doesn't grab the right time frames?
   @mplayer: why you can't play it when VLC can? huh? (audio sync)
   can watch conference like a music video :)
     can play "this section then that, with this one's audio
