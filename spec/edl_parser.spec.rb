@@ -127,7 +127,7 @@ describe EdlParser do
       [[2.0, 3.0, :mute], [5.0, 6.0, :mute], [7.0, 8.0, :blank]]
   end
   
-  it "should err on overlap" do
+  it "should raise on poor overlap" do
     proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [1000])}.should raise_error(/overlap/i)
   end
   

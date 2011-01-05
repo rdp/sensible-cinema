@@ -1,4 +1,4 @@
-previewing section on HP 2 hours or so and the first thing overlapped the muted section...huh?
+previewing section on HP 2 hours or so and the first thing overlapped the muted section in error...went too long...huh?
 
 $ to fix mplayer out of sync audio:
 $ ffmpeg -i HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -target ntsc-dvd -t 1600 yo.mpg

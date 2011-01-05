@@ -80,8 +80,9 @@ class EdlParser
   def self.get_secs k, splits, offset
     original_secs = translate_string_to_seconds(k)+ offset
     # now if splits is 900 and we'are at 909, then we're just 9
-    closest_splits = splits.reverse.detect{|t| t < original_secs} || 0
-    original_secs - closest_splits
+    closest_split_idx = splits.reverse.index{|t| t < original_secs}
+    closest_split = closest_split_idx ? splits[-closest_split_idx] : 0
+    original_secs - closest_split
   end
   
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
