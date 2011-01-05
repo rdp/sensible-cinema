@@ -1,3 +1,4 @@
+watching a DVD "from the DVD" in smplayer seemed to have the right audio always. yep.
 
 previewing section on HP 2 hours or so and the first thing overlapped the muted section in error...went too long...huh?
   call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -ss 7260.0 -t 10.499 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.1.avi
