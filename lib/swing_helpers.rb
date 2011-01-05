@@ -104,7 +104,7 @@ module SensibleSwing
       }
       close.set_bounds(125,30+15*lines.length,70,25)
       get_content_pane.add close
-      set_size 400, 100+15*lines.length
+      set_size 550, 100+15*lines.length # XXX variable width? or use swing build in better?
       set_visible true
       setDefaultCloseOperation JFrame::DISPOSE_ON_CLOSE
       setLocationRelativeTo nil # center it on the screen
