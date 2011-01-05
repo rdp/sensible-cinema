@@ -112,7 +112,7 @@ module SensibleSwing
         do_mplayer_edl
       }
 
-      @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive)", true)
+      @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive--saves overall time)", true)
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
         sleep 5 unless success_no_run
