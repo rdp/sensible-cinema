@@ -20,8 +20,7 @@ require_relative 'overlayer'
 class VLCProgrammer
 
   def self.to_english s
-    @overlayer ||= OverLayer.allocate
-    @overlayer.translate_time_to_human_readable s
+    EdlParser.translate_time_to_human_readable s
   end
   
 

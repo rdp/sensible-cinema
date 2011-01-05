@@ -142,21 +142,7 @@ class OverLayer
       all[type] = new.sort
     end
     all
-  end
-  
-  def translate_time_to_human_readable seconds
-    # 3600 => "1:00:00"
-    out = ''
-    hours = seconds.to_i / 3600
-    out << "%d" % hours
-    out << ":"
-    seconds = seconds - hours*3600
-    minutes = seconds.to_i / 60
-    out << "%02d" % minutes
-    seconds = seconds - minutes * 60
-    out << ":"
-    out << "%04.1f" % seconds
-  end
+  end  
   
   def timestamp_changed to_this_exact_string_might_be_nil, delta
     if @just_unblanked

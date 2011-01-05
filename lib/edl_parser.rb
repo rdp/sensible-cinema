@@ -148,6 +148,21 @@ class EdlParser
     total += 60* 60 * hours.to_i
     total
   end
+  
+  def self.translate_time_to_human_readable seconds
+    # 3600 => "1:00:00"
+    out = ''
+    hours = seconds.to_i / 3600
+    out << "%d" % hours
+    out << ":"
+    seconds = seconds - hours*3600
+    minutes = seconds.to_i / 60
+    out << "%02d" % minutes
+    seconds = seconds - minutes * 60
+    out << ":"
+    out << "%04.1f" % seconds
+  end
+
 
   
 end
