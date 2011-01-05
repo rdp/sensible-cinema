@@ -153,14 +153,21 @@ class EdlParser
     # 3600 => "1:00:00"
     out = ''
     hours = seconds.to_i / 3600
-    out << "%d" % hours
-    out << ":"
+    if hours > 0
+      out << "%d" % hours
+      out << ":"
+    end
     seconds = seconds - hours*3600
     minutes = seconds.to_i / 60
     out << "%02d" % minutes
     seconds = seconds - minutes * 60
     out << ":"
-    out << "%04.1f" % seconds
+    # avoid .0 at the end
+    if seconds != seconds.to_i
+      out << "%04.1f" % seconds
+    else
+      out << "%02d" % seconds
+    end
   end
 
 

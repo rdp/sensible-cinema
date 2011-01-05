@@ -430,14 +430,7 @@ describe OverLayer do
         @o.status.should include("q") # for quit
       end
     end
-
-    it "should have human readable output" do
-      @o.translate_time_to_human_readable(3600).should == "1:00:00.0"
-      @o.translate_time_to_human_readable(3600.0).should == "1:00:00.0"
-      @o.translate_time_to_human_readable(3601).should == "1:00:01.0"
-      @o.translate_time_to_human_readable(3661).should == "1:01:01.0"
-    end
-
+    
     it "should no longer accept human readable style as starting seconds" do
       proc { OverLayer.new 'temp.yml', "01:01.5" }.should raise_error(ArgumentError)
     end

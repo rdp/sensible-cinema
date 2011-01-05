@@ -152,4 +152,30 @@ describe EdlParser do
   
   it "should handle edge cases, like where an entry overlaps the divider, or the added stuff causes it to"
   
+  def translate x
+    EdlParser.translate_string_to_seconds x
+  end
+  
+  def english y
+    EdlParser.translate_time_to_human_readable y
+  end
+  
+  it "should translate strings to ints well" do
+    translate("00.09").should == 0.09
+    translate("1.1").should == 1.1
+    translate("01").should == 1
+    translate("1:01").should == 61
+    translate("1:01:01.1").should == 60*61+1.1
+    translate("1:01:01").should == 60*61+1
+  end
+  
+  it "should translate ints to english timestamps well" do
+    english(60).should == "01:00"
+    english(60.1).should == "01:00.1"
+    english(3600).should == "1:00:00"
+    english(3599).should == "59:59"
+    english(3660).should == "1:01:00"
+    english(3660 + 0.1).should == "1:01:00.1"
+  end
+  
 end
