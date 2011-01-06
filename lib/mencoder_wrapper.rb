@@ -30,7 +30,7 @@ class MencoderWrapper
       end
       audio_codec = these_settings['audio_codec'] || 'lavc' # not copy...sniff...or you can't hear cars...
       video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo got_file > #{@big_temp}.done\n"# -vf harddup
+      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"# -vf harddup
     end
     
     def calculate_final_filename to_here_final_file

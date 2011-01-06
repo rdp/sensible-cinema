@@ -70,7 +70,7 @@ describe MencoderWrapper do
   end
   
   it "should create a .done file after ripping" do
-    @out.should include("&& echo got_file > to_here.fulli_unedited.tmp.mpg.done")
+    @out.should include("&& echo done_grabbing > to_here.fulli_unedited.tmp.mpg.done")
   end
   
   def go
