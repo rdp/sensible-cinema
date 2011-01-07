@@ -571,7 +571,7 @@ EOL
         return @_choose_dvd_drive
       end
       show_blocking_message_dialog 'insert a dvd first' unless opticals.find{|d| d.VolumeName }
-      names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD and re-start') + ")"}
+      names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
 
       if opticals.length != 1
         dialog = GetDisk.new(self, names)
