@@ -125,7 +125,7 @@ task 'deploy' do
   p 'copying in'
   raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
   p 'copying over'
-  raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@myfavoritepal.com:~/www/rogerdpackt28/sensible-cinema\"")
+  raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@freemusicformormons.com:~/www/rogerdpackt28/sensible-cinema\"")
 end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
