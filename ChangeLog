@@ -1,3 +1,7 @@
+== 0.20.3 ==
+
+Minor aesthetics, also it works now with mplayer EDL mode.
+
 == 0.20.0 ==
 
 Add a "fast preview" option which makes editing...faster.  Also it incorporates the "arbitrary precision" around settings.
