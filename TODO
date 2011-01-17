@@ -56,9 +56,14 @@
   use DVD navigator ?
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     with an avi file sink?
+     
+  D:\dev\sensible-cinema-never-commit-from-here>mv vendor\cache.bak ..
+
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  integrate sub-titles-zy-er (like the Python fella)
+    or maybe...use theirs?
   @mplayer: some way to not have to use phreaky pipes in doze ("+1")
   @ffmpeg: do you get slower the farther into large files you are?
   @ffmpeg: gop 12 for ntsc-dvd?
