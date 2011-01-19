@@ -1,15 +1,18 @@
-Sensible-cinema (also known to us as "paranoid cinema" [inside joke ha ha] ) is a program that allows you to apply 
-programmed delete lists (i.e. Edit Decision Lists [2]) to DVD's you already own.
+Sensible-cinema (also known to us as "paranoid cinema" [our own inside joke ha ha]) is a program that allows you to apply 
+pre-programmed delete lists (e.g. Edit Decision Lists [2]) to DVD's you already own.
 
-I.e. you can edit a DVD to "mute out" or skip certain scenes.
+I.e. you can play or edit a DVD to "mute out" or skip certain scenes.
 
-It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source programs [3]
-to accomplish the editing for you.  Then you can sit back and relax as you watch the "sensible"
-version of your DVD.
+This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
 
 To use it, basically install it, insert an original DVD that you want to see edited, then run sensible cinema.
-It will pop up some windows where you choose what to do for that DVD, hopefully easily.
+It will pop up some windows where you choose what to do.
+You can either watch it edited, or created an edited version of the DVD, on your hard drive.
+You could burn that edited file to a new DVD, if you desire and have a DVD burner on your computer.
+
+How? Sensible is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
+a few freely available open source programs [3]
+to accomplish the editing for you.  
 
 Note that the whole process can at times take hours, so budget some time for it.
 
