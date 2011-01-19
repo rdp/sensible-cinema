@@ -1,4 +1,12 @@
+MPlayer git-20100211-1-g1c6846f-Kovensky-mt (C) 2000-2009 MPlayer Team
+  can play dvd:// and dvdnav:// with seeking at the beginning without crashing...[because old, maybe?]
+  mulder's: http://mulder.googlecode.com/files/MPUI.2010-10-17.Full-Package.exe crashes like normal [dvdnav only]
+    smplayers seem to always play dvd:// so never crash [?]
+
+the internet seems to "not tell me" if transcode's avisplit is frame accurate or not.
+
 watching a DVD "from the DVD" in smplayer seemed to have the right audio always. yep.
+  i.e. transcoding from dvd flick fixed it [probably]
 
 previewing section on HP 2 hours or so and the first thing overlapped the muted section in error...went too long...huh?
   call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -ss 7260.0 -t 10.499 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.1.avi
@@ -6,10 +14,9 @@ previewing section on HP 2 hours or so and the first thing overlapped the muted 
   call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -ss 7272.0 -t 3.999 C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.3.avi
 
   resulted in sectors of 13.17 1.93, 5.03 instead of 10.5, 1.5, and 4. huh?
-   with FFmpeg version SVN-r19313,
+   with FFmpeg version SVN-r19313, [BAD VERSION probably]
   call ffmpeg -i C:\HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -vcodec copy -acodec copy  -ss 7260.0 -t 10.499 yo.1.avi
     with r32676 seemed much more sane (!)
-
 
 $ to fix mplayer out of sync audio:
 $ ffmpeg -i HP_AND_THE_CHAMBER_OF_SECRETS_edited_version.fulli_unedited.tmp.mpg -target ntsc-dvd -t 1600 yo.mpg
@@ -23,7 +30,7 @@ bob "they will come" has no mplayer overlap (45 minutes long)
 
 HP 2 "full and edited version" had a twidge off of audio even in VLC (unsure if that was copy or lavc audio)
   seems consistent
-  The DVD (flick) appeared to have audio in perfect sync, always.
+  The DVD (flick) burned, then played, appeared to have audio in perfect sync, always.
   seems to play fine in smplayer
   the fulli version was *totally off* in smplayer
   fulli, edited version had some artifacts in VLC
