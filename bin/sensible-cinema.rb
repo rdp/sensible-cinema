@@ -18,8 +18,7 @@ This file is part of Sensible Cinema.
 =end
 
 print 'Loading Sensible Cinema...'
-
-require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
+require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 require 'sane' # failure here means you haven't bundled your dependencies...[rake task]
 
 require_relative '../lib/mencoder_wrapper'
