@@ -32,10 +32,11 @@ Also after you're done, you can delete any left over files that are still there.
 Also after you're done, you can submit it back to the project by submitting it, see end of README.
 
 A few pointers:
- I typically like to make two delete lists per DVD.  One that takes out swearing, sex, and gruesome violence, and another
-   "more paranoid" version that takes out basically anything that could be offensive to anybody :) ("dang", "fetch", "too tense" of scenes...)
- You can just watch the DVD (using any DVD player), and get timestamps that way, before starting this.
- A good one is "smplayer" (the [ and ] keys control playback speed, right and left, page up and page down control seeking), 
- and you can turn on subtitles to help locae profanity (as also in VLC).
- You can watch the DVD using VLC Player, which has a "fast forward" button, just recognize that VLC's timestamps are always slightly off,
-  so they'll only be approximate, but it might be close.
+ You can make several different "delete lists" per DVD, just use different filenames.
+    For example one could take out all profanity, and the other take out profanity and also remove tense scenes.
+ You can just watch the DVD (using any DVD player), and get timestamps that way, before creating a delete list.
+ A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, page up and page down 
+   buttons control seeking), and you can turn on subtitles to help locate profanity.  You can also use VLC, though
+   recognize that VLC's timestamps are a bit off.
+ Also note that you should probably rewatch the whole thing when you're done, to double check and see if you got the time signatures right
+  (using grab mode).

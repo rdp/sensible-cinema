@@ -31,6 +31,7 @@ require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
 require 'whichr'
+require 'ruby-wmi'
 
 # must put mencoder first, as it has a working mplayer.exe in it...
 ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
@@ -72,7 +73,19 @@ module SensibleSwing
     alias system_original system
     
     def system_blocking command, low_prio = false
-      system_original command
+      if low_prio
+        out = IO.popen(command)
+        low_prio = 64
+        p 'running it lower prio'
+        WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => Win.get_process_id(out.pid)}).SetPriority low_prio
+        # XXXX when jruby finally wurx...
+        #WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => out.pid}).SetPriority low_prio
+        print out.read # what happens to stdout I wonder?
+        out.close
+        $?.exitstatus == 0 # 0 means success
+      else
+        system_original command
+      end
     end
     
     def system_non_blocking command
@@ -145,7 +158,10 @@ module SensibleSwing
         nice_file = wrote_to_here_fulli + ".fast.mpg"
         if !File.exist?(nice_file)
           p = NonBlockingDialog.new("Creating quick lookup file--NB that for each changed deletion, you'll need to restart the fast preview SMplayer")
-          raise 'create failed' unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
+          unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
+            File.delete nice_file
+            raise 'create failed' 
+          end
           p.dispose # it will be there for sure
         end
         smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
@@ -174,7 +190,6 @@ module SensibleSwing
       @create_new_edl_for_current_dvd.on_clicked do
         drive, volume, md5 = choose_dvd_drive
         name = get_user_input("Enter DVD name for #{volume}")
-
         input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
@@ -189,11 +204,11 @@ module SensibleSwing
 "name" => "#{name}",
 "disk_unique_id" => "#{md5}",
 
-# "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it plays anything except the main title, see http://goo.gl/QHLIF
-# "not edited out stuff" => "",
-# "closing thoughts" => "still a fairly dark movie",
+# "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it plays anything except the main title, when you use it, see http://goo.gl/QHLIF
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still a fairly dark movie, overall",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # find these by playing your dvd with smplayer, and noting where the timing switches [buggedly] back to zero in error--common on many DVD's.  Setting it here lets the 'insta play' feature work right.
-EOL
+        EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
         File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
@@ -246,8 +261,11 @@ EOL
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       descriptors = EdlParser.parse_file edl_path
       splits = descriptors['mplayer_dvd_splits']
-      if splits == nil
-        show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period won't work (fixable...).")
+      if splits == nil && !play_this_mplayer
+        # don't display warning if they are watching the .fast file, since it doesn't need these
+        if !play_this_mplayer
+          show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period won't work (fixable...).")
+        end
         splits = []
       end
       splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
@@ -539,7 +557,7 @@ EOL
       lines.each_with_index{|line, idx|
         if success
           puts "running #{line}"
-          success = system_blocking(line)
+          success = system_blocking(line, true)
           if line =~ /@rem /
             success = true # these fail fof some reason?
           else
@@ -625,6 +643,15 @@ EOL
       pack
     end
   end
+end
+
+require 'ffi'
+
+module Win
+  extend FFI::Library
+  ffi_lib 'kernel32'
+  ffi_convention :stdcall
+  attach_function :get_process_id, :GetProcessId, [ :long ], :uint
 end
 
 if $0 == __FILE__

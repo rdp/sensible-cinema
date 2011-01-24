@@ -131,8 +131,8 @@ module SensibleSwing
       }
       
       @subject.stub!(:get_user_input) {'01:00'}
-      @subject.stub!(:system_blocking) { |command|
-        @system_blocking_command = command
+      @subject.stub!(:system_blocking) { |*command|
+        @system_blocking_command = command[0]
       }
 
       @subject.stub!(:system_non_blocking) { |command|
