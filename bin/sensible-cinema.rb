@@ -69,10 +69,14 @@ module SensibleSwing
 
     Storage = Storage.new("sc")
     
-    alias system_blocking system
+    alias system_original system
+    
+    def system_blocking command, low_prio = false
+      system_original command
+    end
     
     def system_non_blocking command
-     Thread.new { system_blocking command }
+     Thread.new { system_original command }
     end
     
     # make them choose which system call to use explicitly
