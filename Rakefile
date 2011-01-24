@@ -12,7 +12,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'whichr', '>= 0.3.6'
     s.add_dependency 'jruby-win32ole'
     s.add_dependency 'rdp-ruby-wmi'
-    s.add_dependency 'ffi' # mouse, etc.
+    s.add_dependency 'ffi' # mouse, etc. needed at least for MRI
     s.add_development_dependency 'rspec' # prefer rspec 2 I guess...
     s.add_development_dependency 'jeweler'
     s.add_development_dependency 'hitimes' # now jruby compat!

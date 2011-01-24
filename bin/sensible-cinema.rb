@@ -40,6 +40,8 @@ for drive in ['c', 'd', 'e']
   ENV['PATH'] = ENV['PATH'] + ";#{drive}:\\Program Files\\SMPlayer;#{drive}"
 end
 
+import 'javax.swing.ImageIcon'
+
 module SensibleSwing
   VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip
   puts "v. " + VERSION
@@ -74,18 +76,22 @@ module SensibleSwing
     
     def system_blocking command, low_prio = false
       if low_prio
-        out = IO.popen(command)
-        low_prio = 64
-        p 'running it lower prio'
-        WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => Win.get_process_id(out.pid)}).SetPriority low_prio
-        # XXXX when jruby finally wurx...
-        #WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => out.pid}).SetPriority low_prio
-        print out.read # what happens to stdout I wonder?
-        out.close
-        $?.exitstatus == 0 # 0 means success
-      else
-        system_original command
+        command = "start /LOW #{command}"
       end
+      #   out = IO.popen(command)
+      #   low_prio = 64
+      #   p 'running it lower cpu priority', Win.get_process_id(out.pid)
+      #   require 'ruby-debug'
+      #   debugger
+      #   WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => Win.get_process_id(out.pid)}).SetPriority low_prio
+      #   # XXXX when jruby finally wurx...
+      #   #WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => out.pid}).SetPriority low_prio
+      #    out.read # what happens to stdout I wonder?
+      #   out.close
+      #   $?.exitstatus == 0 # 0 means success
+      # else
+        system_original command
+      # end
     end
     
     def system_non_blocking command
@@ -248,7 +254,7 @@ module SensibleSwing
       increment_button_location
 
       setSize @button_width+80, @starting_button_y
-
+      setIconImage(ImageIcon.new(__dir__ + "/monkey.png").getImage())
       check_for_dependencies
     end
     
@@ -311,13 +317,17 @@ module SensibleSwing
         System.exit 1
       end
       if returned == -1
-        p 'license exited'
+        p 'license exited early...'
         System.exit 1
       end
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
-
+    
+    def print *args
+      Kernel.print *args # avoid bin\sensible-cinema.rb:83:in `system_blocking': cannot convert instance of class org.jruby.RubyString to class java.awt.Graphics (TypeError)
+    end
+    
     def check_for_dependencies
       ffmpeg = RubyWhich.new.which('ffmpeg')
       if ffmpeg.length == 0
@@ -327,20 +337,21 @@ module SensibleSwing
         system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
         java.lang.System.exit(1)
       end
+      
       mencoder = RubyWhich.new.which('mencoder')
       if mencoder.length == 0
         show_blocking_license_accept_dialog 'MPlayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mencoder."
         vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
         ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
         Dir.chdir(vendor_cache) do
-          Kernel.print 'downloading unzipper...'
+          print 'downloading unzipper...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
-          Kernel.print 'downloading mencoder.7z (6MB) ...'
+          print 'downloading mencoder.7z (6MB) ...'
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           system_blocking("7za e mencoder.7z -y -omencoder")
-          Kernel.puts 'done'
+          puts 'done'
         end
       end
       
