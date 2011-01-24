@@ -40,3 +40,5 @@ A few pointers:
    recognize that VLC's timestamps are a bit off.
  Also note that you should probably rewatch the whole thing when you're done, to double check and see if you got the time signatures right
   (using grab mode).
+ Also note that you can add timing information to IMDB's wiki pages about movies.  This can help users of other than sensible cinema
+  with editing their movies.

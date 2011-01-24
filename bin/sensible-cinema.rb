@@ -157,19 +157,23 @@ module SensibleSwing
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli + ".fast.mpg"
         if !File.exist?(nice_file)
-          p = NonBlockingDialog.new("Creating quick lookup file--NB that for each changed deletion, you'll need to restart the fast preview SMplayer")
+          p = NonBlockingDialog.new("Creating quick lookup file--NB that for each changed deletion, 
+          you'll need to restart the fast preview SMplayer
+          Also note that the start and end times will be slightly off if reality [delayed]
+          Also note that while doing fast preview, it can be doing a normal preview as well
+          in the background, simultaneously.")
           unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
             File.delete nice_file
             raise 'create failed' 
           end
-          p.dispose # it will be there for sure
+          p.dispose # it will be active for sure
         end
         smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
         old_prefs = File.read(smplayer_prefs_file)
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
         File.write(smplayer_prefs_file, new_prefs)
         thread = do_mplayer_edl( "smplayer #{nice_file}")
-        Thread.new { # XX do we need this?
+        Thread.new { # XXX do we need this?
           begin
             thread.join
           ensure

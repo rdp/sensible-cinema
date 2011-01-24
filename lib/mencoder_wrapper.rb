@@ -29,8 +29,8 @@ class MencoderWrapper
         out = '@rem '
       end
       audio_codec = these_settings['audio_codec'] || 'lavc' # not copy...sniff...or you can't hear cars...
-      video_opts = "-ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"# -vf harddup
+      video_opts = "-vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
+      out + "call mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"
     end
     
     def calculate_final_filename to_here_final_file
@@ -77,7 +77,7 @@ class MencoderWrapper
       out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer to run...
       # or is ffdshow enough without this?
-      out += "@rem call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
+      out += "@rem old way... call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
       
       delete_prefix = delete_partials ? "" : "@rem "
 

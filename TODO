@@ -3,43 +3,42 @@
 == up next release ==
 
   edl straight DVD replay:
-    work cars
+    work cars, monsters inc
   clear runnings
-    have ben and chris test it out
+    have ben and chris test it out, ask about quality
   
-== slightly lower than that, somewhat ordered ==
+== slightly lower than that, only somewhat ordered ==
 
-  the "warning delete lists not there" comes up when you hit the fast preview button
-  note: you need to re-offset your start and end times
-    change it to be aggressive sometimes yes, other times no
+  fast preview: change it to be aggressive sometimes yes, other times no
   note to previewer "you are about to preview these edits"
-  note you can use fast preview with the other going in the background
-  the final "edited.avi" *must* be playable in WMP
-  don't exit program if they don't select a disk :)
-  ask for more beta testers
+  ask for more beta testers for use
+  ask for more beta testers for creation
+
   linearize edl's
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
     frame accurate splitter naive
+  the final "edited.avi" really "should" be playable in WMP...except if they want to watch it on their computer they can use EDL mode,
+    but double check if they can watch it, either way.
+  don't exit program if they don't select a disk originally :)
   more DL's
     my dvd's (loose timestamps...)
       cars backport real EDL :)
     enlist chris' help
-      first need mac port [?]
-    friend dvd's, me DL
+    friend dvd's, me Delete List [?]
     partner for filters (Jon, Karlie if interested...give beta)
       all only after linearize, new year, frame accurate
-  temple EDL at home
+  temple EDL at home, just finish don't burn
   can have the mouse jerk "only every so often"
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
         do this after frame accurate
-  button start EDL playback here [?] (for create mode)
+  button start EDL playback from dvd here [?] (for create mode)
   beta release/rinse and repeat with various ppl
-  a real'ish-er website
+  a real'ish website
   compare computer DVD timings with physical player's timings...
-    if same, add imdb todo's up here
+  make it so it can suck in from "another wiki" the DL's, at package time
   propaganda-ize
     advertise in christian places
     blogs that have ever mentioned clearplay :P
@@ -50,10 +49,9 @@
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     with an avi file sink?
      
-  D:\dev\sensible-cinema-never-commit-from-here>mv vendor\cache.bak ..
-  
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  burn from files to disc
   vendorize ffmpeg, then they don't have to install imagemagick...
   @smplayer: provide a command line param for "extra params to run this time around" or what not...
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
