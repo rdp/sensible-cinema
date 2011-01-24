@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.20.3"
+  s.version = "0.20.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-01-17}
+  s.date = %q{2011-01-24}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = ["sensible-cinema", "sensible-cinema-cli"]
+  s.executables = ["sensible-cinema-cli", "sensible-cinema.rb"]
   s.extensions = ["ext/mkrf_conf.rb"]
   s.extra_rdoc_files = [
     "ChangeLog",
@@ -27,8 +27,8 @@ Gem::Specification.new do |s|
     "Rakefile",
     "TODO",
     "VERSION",
-    "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
+    "bin/sensible-cinema.rb",
     "create or edit sensible cinema delete list files.bat",
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",

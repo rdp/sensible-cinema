@@ -9,7 +9,7 @@
   
 == slightly lower than that, somewhat ordered ==
 
-  the "warning delet lists not there" comes up when you hit the fast preview button
+  the "warning delete lists not there" comes up when you hit the fast preview button
   use .done for the fast files :)
   is there an easy way to change priority?
     if yes then just for the system loop :)  
@@ -27,7 +27,6 @@
     don't use them linear, just linearize
   mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
     frame accurate splitter naive
-  vendorize ffmpeg
   more DL's
     my dvd's (loose timestamps...)
       cars backport real EDL :)
@@ -58,12 +57,11 @@
     with an avi file sink?
      
   D:\dev\sensible-cinema-never-commit-from-here>mv vendor\cache.bak ..
-
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  vendorize ffmpeg, then they don't have to install imagemagick...
   @smplayer: provide a command line param for "extra params to run this time around" or what not...
-  create a "fantom edit"
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
   integrate sub-titles-zy-er (like the Python fella)
     or maybe...use theirs?

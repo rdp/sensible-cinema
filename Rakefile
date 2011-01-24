@@ -66,7 +66,7 @@ task 'bundle_dependencies' => 'gemspec' do
    Dir['vendor/cache/*'].each{|f|
     unless f =~ /jruby.*jar/ # that one takes too long to download...
       FileUtils.rm_rf f
-      raise 'unable to delete ' + f if File.exist?(f)
+      raise 'unable to delete: ' + f if File.exist?(f)
     end
    }
    FileUtils.mkdir_p 'vendor/cache'
@@ -103,7 +103,7 @@ task 'create_distro_dir' do
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
   FileUtils.rm_rf Dir['sensible-cinema-*'] # remove old versions
-  raise 'unable to delete' if Dir[spec.name + '-*'].length > 0
+  raise 'unable to delete zip' if Dir[spec.name + '-*'].length > 0
   
   existing = Dir['*']
   FileUtils.mkdir_p dir_out
@@ -131,6 +131,7 @@ end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
 task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release sigh
+  system("cp -r vendor/cache ../cache.bak")
   gems = Dir['pkg/*.gem']
   gems[0..-2].each{|f| File.delete f} # kill old versions...
   system("#{Gem.ruby} -S gem push #{gems[-1]}")
@@ -138,5 +139,7 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system("git push origin master")
-  puts "don't forget to blog about it...and upload .zip of it..."
+  system("cp -r ../cache.bak/* vendor/cache")
+
+  puts "don't forget to blog about it..."
 end
