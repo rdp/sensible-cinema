@@ -169,7 +169,7 @@ module SensibleSwing
           p.dispose # it will be active for sure
         end
         smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
-        old_prefs = File.read(smplayer_prefs_file)
+        old_prefs = File.read(smplayer_prefs_file) rescue ''
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
         File.write(smplayer_prefs_file, new_prefs)
         thread = do_mplayer_edl( "smplayer #{nice_file}")
