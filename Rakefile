@@ -75,7 +75,6 @@ task 'bundle_dependencies' => 'gemspec' do
        system("#{Gem.ruby} -S gem unpack #{d.name}")
      }
      to_here = "jruby-complete-1.5.5.jar"
-     p 'do you need to delete your old jruby complete...do you?'
      unless File.exist? to_here
        url = "/downloads/1.6.0.RC1/jruby-complete-1.6.0.RC1.jar"
        puts 'downloading in jruby-complete.jar file '  + url

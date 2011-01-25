@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.20.5"
+  s.version = "0.20.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-01-24}
+  s.date = %q{2011-01-25}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["monkey.png", "sensible-cinema-cli", "sensible-cinema.rb"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -129,8 +129,10 @@ Gem::Specification.new do |s|
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
     "todo_if_need_speed",
+    "vendor/SetPriority.exe",
     "vendor/gocr049.exe",
     "vendor/music.wav",
+    "vendor/readme.txt",
     "vendor/unzip.exe",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",

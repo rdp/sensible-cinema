@@ -2,7 +2,7 @@
 
 Set lower priority for processes better.
 
-== 0.21.0 ==
+== 0.20.5 ==
 
 Now allow for editing using EDL mode only.
 Also lower the priority for [most] processes during create time.
