@@ -81,12 +81,12 @@ module SensibleSwing
     def with_clean_edl_dir_as this
       FileUtils.rm_rf 'temp'
       Dir.mkdir 'temp'
-      old_edl = MainWindow::EDL_DIR
-      MainWindow.const_set(:EDL_DIR, 'temp')
+      old_edl = MainWindow::EDL_DIR.dup
+      MainWindow::EDL_DIR.sub!(/.*/, 'temp')
       begin
         yield
       ensure
-        MainWindow.const_set(:EDL_DIR, old_edl)
+        MainWindow::EDL_DIR.sub!(/.*/, old_edl)
       end
     end
     
