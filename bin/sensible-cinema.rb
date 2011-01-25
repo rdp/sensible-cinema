@@ -86,24 +86,17 @@ module SensibleSwing
         if command =~ /(ffmpeg|mencoder)/
           # XXXX not sure if there's a better way...because some have ampersands...
           # unfortunately have to check for nil because it could exit too early [?]
-          begin
-            exe_name = $1 + '.exe'
-            p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
-            piddy = p.call || p.call || p.call # we actually do need this to sleep...guess we're too quick
-            # but the first one still inexplicably fails always...
-            if piddy
-              # piddy.SetPriority low_prio # this can seg fault...yikes...
-              pid = piddy.ProcessId # this doesn't seg fault, tho
-              system_original("vendor\\setpriority -lowest #{pid}")
-            else
-              # XXXX first one always fails [?] huh?
-              p 'unable to find!' + exe_name
-            end
-          rescue Exception => e
-            # XXXX blocked on the related jruby bug...I assume...I'm not sure how, though, since I don't know of a thread of
-            # ours that dies, but we'll leave it at that for now.
-            # also, don't kill ffmpeg, you'll be fine :)
-            p 'exception setting prio', e, e.backtrace.join("\n")
+          exe_name = $1 + '.exe'
+          p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
+          piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
+          # but the first one still inexplicably fails always... LODO
+          if piddy
+            # piddy.SetPriority low_prio # this can seg fault...yikes...
+            pid = piddy.ProcessId # this doesn't seg fault, tho
+            system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
+          else
+            # XXXX first one always fails [?] huh?
+            p 'unable to find to set priority ' + exe_name
           end
         end
         print out.read # let it finish
