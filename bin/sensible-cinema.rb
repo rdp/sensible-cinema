@@ -34,7 +34,9 @@ require 'whichr'
 require 'ruby-wmi'
 
 # must put mencoder first, as it has a working mplayer.exe in it...
-ENV['PATH'] = ENV['PATH'] + ';' + File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache/mencoder'.to_filename
+vendor = File.expand_path(File.dirname(__FILE__)) + '/../vendor'
+# XX do we need to_filename though?
+ENV['PATH'] = ENV['PATH'] + ';' + (vendor + '/cache/mencoder').to_filename + ';' + (vendor + '/cache').to_filename
 
 for drive in ['c', 'd', 'e']
   ENV['PATH'] = ENV['PATH'] + ";#{drive}:\\Program Files\\SMPlayer;#{drive}"
@@ -84,12 +86,22 @@ module SensibleSwing
         if command =~ /(ffmpeg|mencoder)/
           # XXXX not sure if there's a better way...because some have ampersands...
           # unfortunately have to check for nil because it could exit too early [?]
-          piddy = WMI::Win32_Process.find(:first,  :conditions => {'Name' => $1 + '.exe'})
-          if piddy
-            piddy.SetPriority low_prio 
-          else
-            # XXXX first one always fails [?] huh?
-            p 'unable to find!' + command
+          begin
+            exe_name = $1 + '.exe'
+            p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
+            piddy = p.call || p.call || p.call # we actually do need this to sleep...guess we're too quick
+            # but the first one still inexplicably fails always, even with MRI... hmm...
+            if piddy
+              # piddy.SetPriority low_prio # this can seg fault...yikes...
+              pid = piddy.ProcessId # this doesn't seg fault, tho
+              system_original(c ="vendor\\setpriority -lowest #{pid}")
+            else
+              # XXXX first one always fails [?] huh?
+              p 'unable to find!' + exe_name
+            end
+          rescue Exception => e
+            # XXXX why do I  run into this using the wmi version? [to reproduce, kill a single ffmpeg, then rerun it from the GUI *blam*]
+            p 'exception setting prio', e, e.backtrace.join("\n")
           end
         end
         print out.read # let it finish
@@ -616,10 +628,18 @@ module SensibleSwing
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
 
       if opticals.length != 1
-        dialog = GetDisk.new(self, names)
-        dialog.setSize 200,125
-        dialog.show
-        selected_idx = dialog.selected_idx
+        count = 0
+        opticals.each{|d| count += 1 if d.VolumeName}
+        if count == 1
+         # just choose it if there's only one disk in there
+         p 'selecting only disk present in the various DVD drives'
+         selected_idx = opticals.index{|d| d.VolumeName}
+        else
+          dialog = GetDisk.new(self, names)
+          dialog.setSize 200,125
+          dialog.show
+          selected_idx = dialog.selected_idx
+        end
       else
         selected_idx = 0
         p 'selecting user\'s only disk drive ' + names[0]

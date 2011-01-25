@@ -79,7 +79,7 @@ class MencoderWrapper
       # or is ffdshow enough without this?
       out += "@rem old way... call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
       
-      delete_prefix = delete_partials ? "" : "@rem "
+      delete_prefix = ""#delete_partials ? "" : "@rem "
 
       out += "@rem del #{@big_temp}\n" # LODO no @rem
       out += "#{delete_prefix} del " + partials.join(' ') + "\n"
