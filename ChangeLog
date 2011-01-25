@@ -1,3 +1,7 @@
+== 0.21.0 ==
+
+Now allow for editing using EDL mode only.
+
 == 0.20.3 ==
 
 Minor aesthetics, also it works now with mplayer EDL mode.
