@@ -406,7 +406,7 @@ module SensibleSwing
     it "should not show the normal buttons in create mode" do
       MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 10
+      MainWindow.new.buttons.length.should == 11
       ARGV.pop # test cleanup--why not :)
     end
     

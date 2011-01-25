@@ -48,17 +48,17 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
-    def new_jbutton title, only_on_create_mode, add = false
+    def new_jbutton title, only_on_create_mode, always_add = false
       button = JButton.new title
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       
       if ARGV.index("--create-mode")
-        add = true if only_on_create_mode
+        always_add = true if only_on_create_mode
       else
-        add = true if !only_on_create_mode
+        always_add = true if !only_on_create_mode
       end
          
-      if add
+      if always_add
         increment_button_location
         @panel.add button
         @buttons << button
@@ -75,23 +75,29 @@ module SensibleSwing
     alias system_original system
     
     def system_blocking command, low_prio = false
-      if low_prio
-        command = "start /LOW #{command}"
-      end
-      #   out = IO.popen(command)
-      #   low_prio = 64
-      #   p 'running it lower cpu priority', Win.get_process_id(out.pid)
-      #   require 'ruby-debug'
-      #   debugger
-      #   WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => Win.get_process_id(out.pid)}).SetPriority low_prio
-      #   # XXXX when jruby finally wurx...
-      #   #WMI::Win32_Process.find(:first,  :conditions => {:ProcessId => out.pid}).SetPriority low_prio
-      #    out.read # what happens to stdout I wonder?
-      #   out.close
-      #   $?.exitstatus == 0 # 0 means success
-      # else
+    if low_prio
+        return if command =~ /^@rem/
+        # man jruby+windows does not make this easy on me...
+        out = IO.popen(command) # + " 2>&1"
+        low_prio = 64
+        
+        if command =~ /(ffmpeg|mencoder)/
+          # XXXX not sure if there's a better way...because some have ampersands...
+          # unfortunately have to check for nil because it could exit too early [?]
+          piddy = WMI::Win32_Process.find(:first,  :conditions => {'Name' => $1 + '.exe'})
+          if piddy
+            piddy.SetPriority low_prio 
+          else
+            # XXXX first one always fails [?] huh?
+            p 'unable to find!' + command
+          end
+        end
+        print out.read # let it finish
+        out.close
+        $?.exitstatus == 0 # 0 means success
+      else
         system_original command
-      # end
+      end
     end
     
     def system_non_blocking command
@@ -129,12 +135,12 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false )
+      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false, true )
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
 
-      @watch_unedited = new_jbutton("Watch a DVD unedited (while grabbing to hard drive--saves overall time)", true)
+      @watch_unedited = new_jbutton("Watch DVD unedited (while also grabbing to hard drive--saves overall time)", true) # if you have a fast enough cpu, that is
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
         sleep 5 unless success_no_run
@@ -214,10 +220,10 @@ module SensibleSwing
 "name" => "#{name}",
 "disk_unique_id" => "#{md5}",
 
-# "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it plays anything except the main title, when you use it, see http://goo.gl/QHLIF
+# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still a fairly dark movie, overall",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # find these by playing your dvd with smplayer, and noting where the timing switches [buggedly] back to zero in error--common on many DVD's.  Setting it here lets the 'insta play' feature work right.
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
         EOL
         filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
         filename.downcase!
@@ -674,3 +680,5 @@ if $0 == __FILE__
   a.set_visible true
   puts 'Please use the Sensible Cinema GUI window popup...'
 end
+
+# icon attribution: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62

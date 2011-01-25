@@ -6,6 +6,8 @@
     work cars, monsters inc
   clear runnings
     have ben and chris test it out, ask about quality
+  the final "edited.avi" really "should" be playable in WMP...except if they want to watch it on their computer they can use EDL mode,
+    but double check if they can watch it, either way.
   
 == slightly lower than that, only somewhat ordered ==
 
@@ -14,18 +16,15 @@
   note to previewer "you are about to preview these edits"
   ask for more beta testers for use
   ask for more beta testers for creation
-  re-play as EDL button for both modes
-    describe on the how to
 
   linearize edl's
     don't use them linear, just linearize
-  mpeg is lossy (at least my current one pass conversion still is...)  and smplayer can't play it right unedited
+  mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
     frame accurate splitter naive
   the final "edited.avi" really "should" be playable in WMP...except if they want to watch it on their computer they can use EDL mode,
     but double check if they can watch it, either way.
-  don't exit program if they don't select a disk originally :)
   more DL's
-    my dvd's (loose timestamps...)
+    my dvd's (with loose timestamps...)
       cars backport real EDL :)
     enlist chris' help
     friend dvd's, me Delete List [?]
@@ -37,7 +36,6 @@
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
         do this after frame accurate
-  button start EDL playback from dvd here [?] (for create mode)
   beta release/rinse and repeat with various ppl
   a real'ish website
   compare computer DVD timings with physical player's timings...
@@ -54,6 +52,11 @@
      
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  don't exit program if they don't select a disk originally :)
+  button start EDL playback from dvd here [?] (for create mode)
+  re-play as EDL button for both modes--describe on the how to better
+  fix prio for first ffmpeg [huh?]
+  calculating md5...do this while they choose it [low prio] :)
   @dvd flick: right click on a movie file "write this file to DVD .iso as only title (no menu), burn this file as DVD only title (no menu)"
   @dvd flick: default should not be to loop
   @dvd flick: use first aspect ratio by default.
