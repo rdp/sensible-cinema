@@ -90,17 +90,19 @@ module SensibleSwing
             exe_name = $1 + '.exe'
             p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
             piddy = p.call || p.call || p.call # we actually do need this to sleep...guess we're too quick
-            # but the first one still inexplicably fails always, even with MRI... hmm...
+            # but the first one still inexplicably fails always...
             if piddy
               # piddy.SetPriority low_prio # this can seg fault...yikes...
               pid = piddy.ProcessId # this doesn't seg fault, tho
-              system_original(c ="vendor\\setpriority -lowest #{pid}")
+              system_original("vendor\\setpriority -lowest #{pid}")
             else
               # XXXX first one always fails [?] huh?
               p 'unable to find!' + exe_name
             end
           rescue Exception => e
-            # XXXX why do I  run into this using the wmi version? [to reproduce, kill a single ffmpeg, then rerun it from the GUI *blam*]
+            # XXXX blocked on the related jruby bug...I assume...I'm not sure how, though, since I don't know of a thread of
+            # ours that dies, but we'll leave it at that for now.
+            # also, don't kill ffmpeg, you'll be fine :)
             p 'exception setting prio', e, e.backtrace.join("\n")
           end
         end
@@ -188,7 +190,7 @@ module SensibleSwing
           in the background, simultaneously.")
           unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
             File.delete nice_file
-            raise 'create failed' 
+            raise 'create ' 
           end
           p.dispose # it will be active for sure
         end
