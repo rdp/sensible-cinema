@@ -287,7 +287,7 @@ module SensibleSwing
       if splits == nil && !play_this_mplayer
         # don't display warning if they are watching the .fast file, since it doesn't need these
         if !play_this_mplayer
-          show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period won't work (fixable...).")
+          show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
         end
         splits = []
       end

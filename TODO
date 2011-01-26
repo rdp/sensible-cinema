@@ -28,17 +28,16 @@
     my dvd's (with loose timestamps...)
       cars backport real EDL :)
     enlist chris' help
-    friend dvd's, me Delete List [?]
+    friend dvd's, me create Delete List [?]
     partner for filters (Jon, Karlie if interested...give beta)
       all only after linearize, new year, frame accurate
   fast preview: change it to be aggressive sometimes yes, other times no
-  temple EDL at home, just finish don't burn
   can have the mouse jerk "only every so often"
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
         do this after frame accurate
-  beta release/rinse and repeat with various ppl
+  beta release: rinse and repeat with various ppl
   a real'ish website
   compare computer DVD timings with physical player's timings...
   make it so it can suck in from "another wiki" the DL's, at package time
@@ -55,6 +54,7 @@
      
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  temple EDL at home, just finish don't burn
   some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
     auto-upload?
   mencoder playlist mode
