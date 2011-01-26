@@ -14,4 +14,6 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 It's in jruby, and currently packages itself up as a zip with jruby-complete.jar and its required dependencies.
 The tests are in the spec directory, though some of them are out of date as development has focused in other areas.
 
+Currently windows only, ping me if you want that changed.
+
 We welcome all feedback :)
