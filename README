@@ -33,9 +33,7 @@ Enjoy your movies!
 
 == Installation ==
 
-To install, download the latest .zip versioned file from: http://rogerdpack.t28.net/sensible-cinema/
-then unzip it (right click -> Extract all)
-then "click into it" and search for and run the file "run sensible cinema.bat"
+Instructions available here: http://rogerdpack.t28.net/sensible-cinema/
 
 == Creating Your Own Delete Lists, or modifying previously existing ones ==
 
@@ -50,16 +48,17 @@ A. You could burn a new DVD with it.  First create it on your hard drive.  Then 
   For OS X : iDVD might work well.
   You might be able to move your laptop over to near your TV and hook it in from there.  
   Or buy a very long cord and plug it in as an extra monitor from your desktop.
+  You could buy a projector, attach it to your computer as a display, and then use that to display the video.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.
 
 Q. I want to give an edited DVD to a friend, how do I do that?
-A. Probably give them the original DVD and a link to sensible-cinema :)
-   You may want to loan them a DVD burner if they don't have one.
+A. Probably give them the original DVD and email them a link to sensible-cinema :)
+   You may want to loan them a DVD burner if they don't have one and want one, too.
 
 == Caveats ==
 
-NB that "someone" has to create a delete list, per DVD.
+NB that "someone" has to first create a delete list, per DVD.
 If one doesn't yet exist for the DVD you want edited,
 you could employ somebody to create it, or create it yourself.  Make sure to submit it
 back to us when you're done, so that everyone can benefit from it.
@@ -70,7 +69,7 @@ Also note that if your DVD has scratches that cause it to skip, the time signatu
 == Motivation ==
 
 The initial motivation for the project was that I dislike deity profanity in movies.
-And reall any profanity is jarring, if you're not used to it in real life, and can
+And really any profanity is jarring, if you're not used to it in real life, and can
 make you a bit on edge when you watch a movie.
 Also sometimes only certain scenes in movies offend, and don't contribute to the overall plot,
 and I'd rather not watch a movie that has them.  But I still want to be able to watch movies at all :)
@@ -181,12 +180,12 @@ If you don't know what this means then you're probably ok and don't have to worr
 "DVDNAV stream read error!"
   this typically means a dirty or scratched DVD.
 
-== Feedback ==
+== Feedback/Development ==
 
 Feedback, including feature requests, comments, etc. welcome.
 
 Mailing List: http://groups.google.com/group/sensible-cinema
 
-If you're a developer and want to help out with programmming it, please do!
-Source code: http://github.com/rdp/sensible-cinema (create an issue for any feature requests/bugs)
-or e-mail rogerdpack@gmail.com
+If you're a developer and want to help out with programmming or look and feel, etc., please do!
+Source code (free, GPL) : http://github.com/rdp/sensible-cinema (create an issue for any feature requests/bugs)
+or e-mail the google group: http://groups.google.com/group/sensible-cinema
