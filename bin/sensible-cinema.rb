@@ -191,7 +191,7 @@ module SensibleSwing
         old_prefs = File.read(smplayer_prefs_file) rescue ''
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
         File.write(smplayer_prefs_file, new_prefs)
-        thread = do_mplayer_edl( "smplayer #{nice_file}")
+        thread = do_mplayer_edl( "smplayer #{nice_file}") # note the smplayer, but it's for the fast file...
         Thread.new { # XXX do we need this?
           begin
             thread.join
