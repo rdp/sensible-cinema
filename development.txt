@@ -1,0 +1,17 @@
+Source code (free, GPL) : http://github.com/rdp/sensible-cinema (create an issue for feature requests/bugs)
+
+
+You can test this out by (on windows) installing daemon tools, then mounting the DVD of "big buck bunny" (open source, freely available movie)
+Or you could burn a copy of big buck bunny to DVD, then use that to test it with (a slightly more cross platform approach).
+
+You should be able to run the program and test it out against said DVD, put it through its paces, etc.
+
+Or if you have a DVD that already has a delete list available for it, you could use that, too.
+
+The main development roadmap is in the README. If you have any feedback/feature requests, et al, post an
+issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
+
+It's in jruby, and currently packages itself up as a zip with jruby-complete.jar and its required dependencies.
+The tests are in the spec directory, though some of them are out of date as development has focused in other areas.
+
+We welcome all feedback :)

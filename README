@@ -35,7 +35,7 @@ Enjoy your movies!
 
 Instructions available here: http://rogerdpack.t28.net/sensible-cinema/
 
-== Creating Your Own Delete Lists, or modifying previously existing ones ==
+== Creating Your Own Delete Lists, or modifying the previously existing ones ==
 
 See the accompanied how_to_create.txt file.
 
@@ -182,10 +182,11 @@ If you don't know what this means then you're probably ok and don't have to worr
 
 == Feedback/Development ==
 
-Feedback, including feature requests, comments, etc. welcome.
+Feedback, including feature requests, comments, etc. welcome:
+
+(for example it's windows only currently--if you want that changed, send an email, etc.):
 
 Mailing List: http://groups.google.com/group/sensible-cinema
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
-Source code (free, GPL) : http://github.com/rdp/sensible-cinema (create an issue for any feature requests/bugs)
-or e-mail the google group: http://groups.google.com/group/sensible-cinema
+See development.txt
