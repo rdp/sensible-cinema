@@ -11,14 +11,12 @@
   
 == slightly lower than that, only somewhat ordered ==
 
-  "release" it to developers if it appears to still work for me locally :P
-  release it to famiy interested, perhaps?
-  fast preview: change it to be aggressive sometimes yes, other times no
+  "release" it to developers
+    that guy, URUG
+  release it to family interested, perhaps?
   note to previewer "you are about to preview these edits"
   ask for more beta testers for use
   ask for more beta testers for creation
-  some way for, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
-    auto-upload?
 
   linearize edl's
     don't use them linear, just linearize
@@ -33,6 +31,7 @@
     friend dvd's, me Delete List [?]
     partner for filters (Jon, Karlie if interested...give beta)
       all only after linearize, new year, frame accurate
+  fast preview: change it to be aggressive sometimes yes, other times no
   temple EDL at home, just finish don't burn
   can have the mouse jerk "only every so often"
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
@@ -52,9 +51,13 @@
   use DVD navigator ?
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     need an avi file sink?
+  a single netflix descriptor, just in case
      
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
+    auto-upload?
+  mencoder playlist mode
   just youtube for the various videos
   better icon
   don't exit program if they don't select a disk originally :)
@@ -186,10 +189,10 @@ a "certified clean" list
 advertise my "splitting joining" google doc page. also test the various options there for accurateness :)
 a check for "newer version available" or not...
 buy blu-ray decrypter, and drive, try it out.
-a single netflix descriptor, just in case
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
-  
+
+something that works with cable TV, too, somehow?
 figure out why I need to uses dvdnav:// sometimes, dvd:// others to not crash :P
 
 if sued, could use straight mplayer -ss (+- one at a time, or possibly in a playlist [?] like VLC can...)
@@ -347,6 +350,8 @@ OCR the captioning as an auto profanity filter? (or perhaps download subtitles t
 
 --server?  optionally higher prio?
 
+@MRI:
+
 irb(main):001:0> a = File.open('big1', 'w')
 => #<File:big1>
 irb(main):002:0> a.seek 10_000_000_000
@@ -362,22 +367,21 @@ package with portable imagemagick (meh)
 create a "book edit list" (word x is at position y...)
 
 @dvd flick: 
-  don't re-encode if not necessary
   are your highest settings optimal?
-  accept subtitled video...
+  accept subtitled video...huh?
+  accept multi-audio track videos
   
 @smplayer: your CD config is awful.
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...
-donate money to several projects I use/like :)
-  after have LLC
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
 @jruby: system("mencoder") from a button doesn't get interrupted by an exception [!]
 @vlc: replay mp4's are too dark.
 
-@rspec:   1) EdlParser should raise for end before beginning
+@rspec:   
+1) EdlParser should raise for end before beginning
      Failure/Error: proc{ go({"mutes"=>{105=>104.9}})}.should raise_error(/SyntaxError/)
      expected Exception with message matching /SyntaxError/, got #<SyntaxError: warning--detected an end before a start 104.9 < 105.0>
      # edl_parser.spec.rb:115
