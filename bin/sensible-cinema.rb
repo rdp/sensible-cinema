@@ -251,6 +251,10 @@ module SensibleSwing
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
+      @play_smplayer = new_jbutton( "Play DVD unedited smplayer", true).on_clicked {
+        play_dvd_smplayer_unedited
+      }
+      
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
       @progress_bar.visible = false
@@ -278,6 +282,14 @@ module SensibleSwing
       writeOut.close
     end
     
+    def play_dvd_smplayer_unedited
+      drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+      title_track = get_title_track(descriptors)
+      command =  "smplayer dvdnav://#{title_track} -dvd-device #{drive}"
+      p command
+      system_non_blocking command
+    end
+
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
     def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
@@ -371,11 +383,11 @@ module SensibleSwing
       if ARGV.index('--create-mode')
         # they're going to want these dependencies
         path = RubyWhich.new.which('smplayer')
-        path2 = RubyWhich.new.which('mplayer')
-        if(path.length == 0 || path2.length == 0)
+        if(path.length == 0)
           # this one has its own license...
           show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          Click ok to be directed to its download website, where you can download and install it, then restart sensible cinema.", 
+          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
           System.exit(1)
         end
