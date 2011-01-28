@@ -87,6 +87,7 @@ module SensibleSwing
           # XXXX not sure if there's a better way...because some have ampersands...
           # unfortunately have to check for nil because it could exit too early [?]
           exe_name = $1 + '.exe'
+          begin
           p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
           piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
           # but the first one still inexplicably fails always... LODO
@@ -97,6 +98,9 @@ module SensibleSwing
           else
             # XXXX first one always fails [?] huh?
             p 'unable to find to set priority ' + exe_name
+          end
+          rescue Exception => e
+            p 'warning, got exception trying to set PID [jruby...]', e
           end
         end
         print out.read # let it finish
