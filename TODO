@@ -7,7 +7,7 @@
   clear runnings
     have ben and chris test it out, ask about quality
   the final "edited.avi" really "should" be playable in WMP...except if they want to watch it on their computer they can use EDL mode,
-    take out .fast stuff
+    take out .fast stuff [?]
   
 == slightly lower than that, only somewhat ordered ==
 
@@ -57,7 +57,7 @@
   temple EDL at home, just finish don't burn
   some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
     auto-upload?
-  mencoder playlist mode
+  mencoder playlist mode/batch file style [?]
   just youtube for the various videos
   better icon
   don't exit program if they don't select a disk originally :)
