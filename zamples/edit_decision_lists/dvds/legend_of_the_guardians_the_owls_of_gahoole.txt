@@ -1,0 +1,16 @@
+# comments can go after a # on any line, for example this one.
+
+"mutes" => [
+  # 
+],
+
+"blank_outs" => [
+  "5057","5059", "violence", "stabs other owl with stick, not seen really"
+],
+
+"name" => "Legend of the Guardians the owls of Gahoole",
+"disk_unique_id" => "43429521aac41a983fc32dbc3ebbe28e",
+
+# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
+"not edited out stuff" => "some references to 'in the name of gokin' were left in.",
+"mplayer_dvd_splits" => [], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX

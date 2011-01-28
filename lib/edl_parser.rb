@@ -61,8 +61,9 @@ class EdlParser
     out
   end
   
-  TimeStamp = /^\d+:\d\d[\d:\.]*$/
+  TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/
   # starts with a digit, has at least one colon followed by two digits,then some combo of digits and colons and periods...
+  # or just like 5057 s
   
   def self.extract_entry! from_this
     return nil if from_this.length == 0
