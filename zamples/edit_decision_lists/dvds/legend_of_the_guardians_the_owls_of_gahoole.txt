@@ -5,7 +5,7 @@
 ],
 
 "blank_outs" => [
-  "5057","5059", "violence", "stabs other owl with stick, not seen really"
+  "01:24:17","01:24:19", "violence", "stabs other owl with stick, though not seen really"
 ],
 
 "name" => "Legend of the Guardians the owls of Gahoole",
