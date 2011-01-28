@@ -53,9 +53,12 @@
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     need an avi file sink?
   a single netflix descriptor, just in case
-     
+  fast preview mode: look for modifications to file, kill mplayer instances for them :)
+  
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+
+  @mplayer: seeking to within EDL failz
   temple EDL at home, just finish don't burn
   some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
     auto-upload?
