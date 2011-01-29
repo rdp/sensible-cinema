@@ -1,3 +1,7 @@
+== 0.21.2 ==
+
+Make fast preview faster, some minor cleanups.
+
 == 0.21.1 ==
 
 Set lower priority for processes better.
