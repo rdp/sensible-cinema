@@ -1,4 +1,4 @@
-Sensible-cinema (also known to us as "paranoid cinema" [our own inside joke ha ha]) is a program that allows you to apply 
+Sensible-cinema (also known to us as "paranoid cinema" [our own inside joke ha ha]) allows you to apply 
 pre-programmed delete lists (e.g. Edit Decision Lists [2]) to DVD's you already own.
 
 I.e. you can play or edit a DVD to "mute out" or skip certain scenes.
@@ -179,6 +179,14 @@ If you don't know what this means then you're probably ok and don't have to worr
 
 "DVDNAV stream read error!"
   this typically means a dirty or scratched DVD.
+
+You try to play back a sensible cinema-ized file and it plays back without
+ audio or video?
+
+ This probably means you're using windows media player, and don't have "codecs" installed
+   to handle this type of video.  Not to fear, just download the "ffdshow tryouts"
+   and, when it gives you the option, be sure to check "mpeg2 video" and then
+   it should "just work."
 
 == Feedback/Development ==
 

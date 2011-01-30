@@ -5,27 +5,22 @@
   edl straight DVD replay:
     work cars, monsters inc
   clear runnings
-    have ben and chris test it out, ask about quality
-  the final "edited.avi" really "should" be playable in WMP...except if they want to watch it on their computer they can use EDL mode,
-    take out .fast stuff
+    have ben and chris test it out, then ask about quality
   
 == slightly lower than that, only somewhat ordered ==
 
-  vendor smplayer
-  test if latest smplayer can work with edl and seek
+  a single netflix descriptor, just in case
+  add a "play the edited file for current DVD" button
+  vendor smplayer, ffmpeg
+  10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
+  test if latest smplayer can work with edl and seek [?]
   "release" it to developers
-    that guy, URUG
+    URUG, plug.org
   release it to family interested, perhaps?
   note to previewer "you are about to preview these edits"
-  ask for more beta testers for use
-  ask for more beta testers for creation
+  ask for more beta testers for use,  ask for more beta testers for creation 
+    after I do my own DVD's
 
-  linearize edl's
-    don't use them linear, just linearize
-  mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
-    frame accurate splitter naive
-  the final "edited.avi" really "should" be playable in WMP...except if they want to watch it on their computer they can use EDL mode,
-    but double check if they can watch it, either way.
   more DL's
     my dvd's (with loose timestamps...)
       cars backport real EDL :)
@@ -33,6 +28,10 @@
     friend dvd's, me create Delete List [?]
     partner for filters (Jon, Karlie if interested...give beta)
       all only after linearize, new year, frame accurate
+  mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
+    frame accurate splitter naive
+  the final "edited.avi" really "could/should" be playable in WMP...
+    but double check if they can watch it, either way.
   fast preview: change it to be aggressive sometimes yes, other times no
   can have the mouse jerk "only every so often"
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
@@ -40,10 +39,11 @@
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
         do this after frame accurate
   beta release: rinse and repeat with various ppl
-  a real'ish website
+  a real'ish-er website
   compare computer DVD timings with physical player's timings...
   make it so it can suck in from "another wiki" the DL's, at package time
   propaganda-ize
+    advertise in LDS newsgroups et al, for beta testers?
     advertise in christian places
     blogs that have ever mentioned clearplay :P
     free google adwords (?)
@@ -52,12 +52,15 @@
   use DVD navigator ?
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     need an avi file sink?
-  a single netflix descriptor, just in case
   fast preview mode: look for modifications to file, kill mplayer instances for them :)
   fast preview tends to "not go far enough" [like the end of profanity still there in the real way]
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
+  replay on iphone edited
+  linearize edl's
+    don't use them linear, just linearize
+  add tooltips
   monkey.png is in bin...
   better icon
   better installer etc.
