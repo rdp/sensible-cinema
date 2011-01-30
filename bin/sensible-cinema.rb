@@ -139,7 +139,7 @@ module SensibleSwing
       jlabel.set_bounds(44,44,160,14)
       panel.add jlabel
       @starting_button_y = 120
-      @button_width = 350
+      @button_width = 400
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
@@ -255,7 +255,7 @@ module SensibleSwing
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
-      @play_smplayer = new_jbutton( "Play DVD unedited smplayer", true).on_clicked {
+      @play_smplayer = new_jbutton( "Play DVD unedited (smplayer)", true).on_clicked {
         play_dvd_smplayer_unedited
       }
       

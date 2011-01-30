@@ -142,5 +142,5 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   system(c = "cp -r ../cache.bak/* vendor/cache")
   p 'ran', c
 
-  puts "don't forget to blog about it..."
+  puts "don't forget to blog about it...UPDATE THE LINK"
 end
