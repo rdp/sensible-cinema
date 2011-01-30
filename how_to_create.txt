@@ -12,7 +12,7 @@ insert your DVD, click "Create new delete list for DVD" button
 Now you want to add timestamps and then test them to make sure they're accurate, using the various buttons.
 
 Note that you can also add timestamps then click "Watch DVD on computer realtime" to avoid having 
-to rip it to your hard drive.  This is slightly less accurate, though faster.
+to rip it to your hard drive.  This is slightly less accurate, though faster.  See pointers.
 
 If you want to edit it the accurate way, then you can use the "Watch DVD unedited" button
 to save time, as it allows you to watch it while it "grabs" it to the hard drive (note: you'll
@@ -26,12 +26,12 @@ A few pointers:
  You can make several different "delete lists" per DVD, just use different filenames.
     For example one could take out all profanity, and the other take out profanity and also remove tense scenes.
  You can just watch a DVD (using any DVD player), and get timestamps that way, before creating a delete list at all.
- A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, page up and page down 
-   buttons control seeking), and you can also turn on subtitles to help locate profanity.  You can also do the
-   same thing using VLC player, except that VLC's timestamps are a bit off.
- Also note that you should probably rewatch the whole thing when you're done, to double check and see if you got the time signatures right
-  (using grab mode).
- Also note that you can add timing information to IMDB's wiki pages about movies.  This can help users of other than sensible cinema
-  with editing their movies.
- Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just setup the EDL to work right [ http://goo.gl/yMfqX ]
-  then use math to setup the correct time signatures.
+ A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, 
+   page up and page down buttons control seeking), and you can also turn on subtitles to help locate profanity.  
+   You can also do the same thing using VLC player, except that VLC's timestamps are always a bit off.
+ Also note that you should probably rewatch the whole thing when you're done, to double check and see 
+  if you got the time signatures right (using "create DVD file on local hard drive" button).
+ Also note that you can add your timing information to IMDB's parental guide pages about movies.  
+  This can help users of other than sensible cinema with editing their movies.
+ Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just setup the 
+  EDL to work right [ http://goo.gl/yMfqX ] then use math to setup the correct time signatures.
