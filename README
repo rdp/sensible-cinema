@@ -70,18 +70,21 @@ Also note that if your DVD has scratches that cause it to skip, the time signatu
 
 The initial motivation for the project was that I dislike deity profanity in movies.
 And really any profanity is jarring, if you're not used to it in real life, and can
-make you a bit on edge when you watch a movie.
-Also sometimes only certain scenes in movies offend, and don't contribute to the overall plot,
-and I'd rather not watch a movie that has them.  But I still want to be able to watch movies at all :)
+put you a bit on edge when you watch a movie.  
+Also sometimes only certain scenes (read sex scenes) in movies are offensive to me,
+and don't contribute to the overall plot, and I'd rather not watch a movie that has them.  
+But I still want to be able to watch movies at all :)
+
 I tried Clearplay (a realtime filtering DVD player)
-but (for me) it didn't seem to cut it.  It costs money (I'm too cheap to pay--and many
-many other people don't/can't use it...).  Their
+but (for me) it didn't seem to cut it.  It costs money monthly (I'm too cheap to pay--and many
+many other people don't/can't use it because of that...).  Their
 filters sometimes don't cut out all unwanted content (ex: Saints and
-Soldiers left profanity in its filtered version...which wasn't what I had
-anticipated.  Others have noted that sometimes the edit timings
-are slightly off so that it will mute out sections just previous to profanity, while
-leaving the profanity itself in, etc.).  Clearplay apparently also runs a rather 
+Soldiers left profanity in...which wasn't what I had
+anticipated).  Others have noted that sometimes their edit timings (or perhaps DVD players)
+are slightly mismatched so that it will mute sections just previous to a profanity, while
+leaving the profanity itself in, etc.  Clearplay apparently also runs a rather 
 confusing subscription policy, as well, I'm told [1].
+They also seem to have rather flimsy DVD players, or so I'm told [2].
 Clearplay also has little community collaboration/review (though they do have some feedback).
 They don't even have a "request a filter" option anymore, like they used to.
 They also don't have filters for all the movies that I want to see edited (Condorman and Tron
@@ -93,7 +96,7 @@ wanted to build my own that overcame some of these hurdles and was
 also more accessible/open.
 
 I also wanted to get a prototype out there of some of my ideas so that
-others can't patent them and pretend that they were inventors :)
+others can't patent them and pretend that they were first inventors :)
 
 So originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
 edited" (it uses screen tracking and OCR's the on-screen
@@ -114,11 +117,18 @@ what I release here.
 
 See also the LICENSE.TXT file.
 
-[1] http://www.amazon.com/review/R27VK5BR9NDHBD/ref=cm_cr_pr_viewpnt#R27VK5BR9NDHBD amazon review of clearplay product
+[1] http://www.amazon.com/gp/product/B002YPRW7S/ref=cm_rdp_product
+ "...I agree that it is not made clear on their website that if you don't continue your membership, you can't continue 
+  to use the [previously downloaded] filters"
 
+[2] http://deseretbook.com/ClearPlay-HDMI-DVD-Player-30-Day-Trial-Membership/i/5038491
+ "We bought a clearplay player about 2 years ago. It worked great, until it just stopped working. I called their support line, 
+  and they told us the model we got was defective, and that the new one was much better and we could get it at a discount, but 
+  the next one just died also."
+  
 == License ==
 
-See the included LICENSE file for licensing and usage terms (basically it's under gplv3 for all the source).
+See the included LICENSE.TXT file for licensing and usage terms (basically it's under gplv3 for all the source).
 Some other programs are (distributed separately and) used by this one, typically they are under the gplv2 license.
 
 All files (c) 2010 Roger Pack
@@ -190,3 +200,5 @@ Mailing List: http://groups.google.com/group/sensible-cinema
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
 See development.txt
+
+You can see a full list of features from the various releases in the file ChangeLog.txt
