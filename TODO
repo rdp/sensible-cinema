@@ -9,6 +9,8 @@
   
 == slightly lower than that, only somewhat ordered ==
 
+  check if the python one lines up or not/ping them
+  port to linux
   a single netflix descriptor, just in case
   add a "play the edited file for current DVD" button
   vendor smplayer, ffmpeg
@@ -60,7 +62,6 @@
   
 == DVD backlog (unordered, some very low prio, basically all never do) ==
 
-  check if the python one lines up or not
   use voice recognition for profanity [?]
   auto subit for filters [?]
   replay on iphone edited
