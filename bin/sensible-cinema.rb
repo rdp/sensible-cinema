@@ -87,6 +87,7 @@ module SensibleSwing
           # XXXX not sure if there's a better way...because some have ampersands...
           # unfortunately have to check for nil because it could exit too early [?]
           exe_name = $1 + '.exe'
+          begin
           p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
           piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
           # but the first one still inexplicably fails always... LODO
@@ -97,6 +98,9 @@ module SensibleSwing
           else
             # XXXX first one always fails [?] huh?
             p 'unable to find to set priority ' + exe_name
+          end
+          rescue Exception => e
+            p 'warning, got exception trying to set PID [jruby...]', e
           end
         end
         print out.read # let it finish
@@ -135,7 +139,7 @@ module SensibleSwing
       jlabel.set_bounds(44,44,160,14)
       panel.add jlabel
       @starting_button_y = 120
-      @button_width = 350
+      @button_width = 400
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
@@ -170,12 +174,12 @@ module SensibleSwing
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "preview section fast mode", true).on_clicked {
+      @fast_preview = new_jbutton( "preview (fast mode)", true).on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
-        nice_file = wrote_to_here_fulli + ".fast.mpg"
-        if !File.exist?(nice_file)
+        nice_file = wrote_to_here_fulli #+ ".fast.mpg"
+        if false#!File.exist?(nice_file)
           p = NonBlockingDialog.new("Creating quick lookup file--NB that for each changed deletion, 
           you'll need to restart the fast preview SMplayer
           Also note that the start and end times will be slightly off if reality [delayed]
@@ -251,7 +255,7 @@ module SensibleSwing
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
-      @play_smplayer = new_jbutton( "Play DVD unedited smplayer", true).on_clicked {
+      @play_smplayer = new_jbutton( "Play DVD unedited (smplayer)", true).on_clicked {
         play_dvd_smplayer_unedited
       }
       
@@ -494,6 +498,7 @@ module SensibleSwing
           show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
           (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
         end
+        raise 'cannot save to filname with spaces yet (ask for it)' if save_to =~ / /
         save_to
       end
     end
@@ -574,7 +579,8 @@ module SensibleSwing
       "Copying to #{save_to}.\n" +
       "This could take quite awhile, and will prompt you and chime a noise when it is done.\n" +
       "You can close this window and continue working while it runs in the background.\n" +
-      "NB that the created file will be playable only with VLC (possibly with smplayer).",
+      "NB that the created file will be playable only with VLC (possibly with smplayer, possibly with\n" +
+      "Windows Media Player if you install ffdshow first with mpeg2 video checkbox checked.).",
       "OK")
 
       # allow our popups to still be serviced while it is running

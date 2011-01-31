@@ -1,46 +1,37 @@
-You create a delete list for sensible cinema to use against whatever you want.
+You can create a delete list for sensible cinema to use against whatever DVD you want.
 
-An delete list looks something like this example:
+A delete list looks something like this example:
 
 https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
-
-Basically your job is to create an appropriate file (like that one), 
-then start sensible-cinema and instruct it to use your new file.
 
 For a DVD, the steps might look like this:
 
-open Sensible cinema "create mode"
-insert DVD, click "create new" button
+open Sensible cinema with "edit/create mode...bat"
+insert your DVD, click "Create new delete list for DVD" button
 
-click "open ripped version of DVD unedited", right click, create new file, name it something.txt, right click, "open", and then select it.
+Now you want to add timestamps and then test them to make sure they're accurate, using the various buttons.
 
-it will rip that fella to the hard drive (for the save to filename, use the default).  
-It will take quite awhile, but will get everything set up for quick editing after that point.
+Note that you can also add timestamps then click "Watch DVD on computer realtime" to avoid having 
+to rip it to your hard drive.  This is slightly less accurate, though faster.  See pointers.
 
-In the meantime, make your file look like this:
+If you want to edit it the accurate way, then you can use the "Watch DVD unedited" button
+to save time, as it allows you to watch it while it "grabs" it to the hard drive (note: you'll
+probably need at least a dual core processor for this button to work well).
 
-https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
-
-After it finishes ripping it, it will start you watching it in mplayer, from which you can "derive" the parts you wish to delete.
-
-Add timestamps to your file as necessary, then (exit smplayer and) click "Preview edited section of current DVD" (use the default filename),
-give it a range "around" the edit you just added, then it will preview that segment.  If it didn't work, edit the file,
-close smplayer, and hit "re-run most recent preview"
-
-Also after you're done, you can delete any left over files that are still there.
-
-Also after you're done, you can submit it back to the project by submitting it, see end of README.
+After you're done, you can submit your newly created delete list back to the project 
+(so others can use it) by using the Upload button.
 
 A few pointers:
+
  You can make several different "delete lists" per DVD, just use different filenames.
     For example one could take out all profanity, and the other take out profanity and also remove tense scenes.
- You can just watch the DVD (using any DVD player), and get timestamps that way, before creating a delete list.
- A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, page up and page down 
-   buttons control seeking), and you can turn on subtitles to help locate profanity.  You can also use VLC, though
-   recognize that VLC's timestamps are a bit off.
- Also note that you should probably rewatch the whole thing when you're done, to double check and see if you got the time signatures right
-  (using grab mode).
- Also note that you can add timing information to IMDB's wiki pages about movies.  This can help users of other than sensible cinema
-  with editing their movies.
- Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just setup the EDL to work right [ http://goo.gl/yMfqX ]
-  then use math to setup the correct time signatures.
+ You can just watch a DVD (using any DVD player), and get timestamps that way, before creating a delete list at all.
+ A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, 
+   page up and page down buttons control seeking), and you can also turn on subtitles to help locate profanity.  
+   You can also do the same thing using VLC player, except that VLC's timestamps are always a bit off.
+ Also note that you should probably rewatch the whole thing when you're done, to double check and see 
+  if you got the time signatures right (using "create DVD file on local hard drive" button).
+ Also note that you can add your timing information to IMDB's parental guide pages about movies.  
+  This can help users of other than sensible cinema with editing their movies.
+ Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just setup the 
+  EDL to work right [ http://goo.gl/yMfqX ] then use math to setup the correct time signatures.

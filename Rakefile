@@ -130,6 +130,8 @@ end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
 task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release sigh
+  raise unless system("git pull")
+  raise unless system("git push origin master")
   system("cp -r vendor/cache ../cache.bak")
   gems = Dir['pkg/*.gem']
   gems[0..-2].each{|f| File.delete f} # kill old versions...
@@ -137,8 +139,8 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   FileUtils.rm_rf 'pkg'
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
-  system("git push origin master")
-  system("cp -r ../cache.bak/* vendor/cache")
+  system(c = "cp -r ../cache.bak/* vendor/cache")
+  p 'ran', c
 
-  puts "don't forget to blog about it..."
+  puts "don't forget to blog about it...UPDATE THE LINK"
 end

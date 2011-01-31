@@ -1,4 +1,4 @@
-Sensible-cinema (also known to us as "paranoid cinema" [our own inside joke ha ha]) is a program that allows you to apply 
+Sensible-cinema (also known to us as "paranoid cinema" [our own inside joke ha ha]) allows you to apply 
 pre-programmed delete lists (e.g. Edit Decision Lists [2]) to DVD's you already own.
 
 I.e. you can play or edit a DVD to "mute out" or skip certain scenes.
@@ -7,12 +7,12 @@ This allows you to sit back and relax as you watch a more "sensiblized" showing 
 
 To use it, basically install it, insert an original DVD that you want to see edited, then run sensible cinema.
 It will pop up some windows where you choose what to do.
+
 You can either watch it edited, or created an edited version of the DVD, on your hard drive.
-You could burn that edited file to a new DVD, if you desire and have a DVD burner on your computer.
+You could also burn that edited file to a new DVD, if you desire and have a DVD burner on your computer.
 
 How? Sensible is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source programs [3]
-to accomplish the editing for you.  
+a few freely available open source programs [3] to accomplish the editing for you.  
 
 Note that the whole process can at times take hours, so budget some time for it.
 
@@ -20,7 +20,7 @@ Also note that just because a video lacks profanity...does not immediately make 
 I'd suggest carefully evaluating your motives, and going with those.
 Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not wholesome! Be nice to yourself!
 dove.org is a good reference for discovering the "uplifting" level of movies [4].  And of course sensible cinema does help
-a little bit.
+a little bit with that, too.
 Also note that even if you have an edited copy of a DVD floating around, if you have kids, chances are they
 will eventually find (and watch) the unedited originals, so be careful there, and do what is needful.
 
@@ -28,7 +28,7 @@ Enjoy your movies!
 
 [1] http://en.wikipedia.org/wiki/Linear_video_editing
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
-[3] mostly GPL programs, see http://www.gnu.org/licenses/ VLC Media Player, Mplayer/mencoder, ffmpeg, etc.
+[3] mostly GPL programs, see http://www.gnu.org/licenses/ VLC Media Player, Mplayer/mencoder, ffmpeg, et al.
 [4] http://lds.org/library/display/0,4945,161-1-11-1,00.html search for the word "wholesome"
 
 == Installation ==
@@ -189,6 +189,14 @@ If you don't know what this means then you're probably ok and don't have to worr
 
 "DVDNAV stream read error!"
   this typically means a dirty or scratched DVD.
+
+You try to play back a sensible cinema-ized file and it plays back without
+ audio or video?
+
+ This probably means you're using windows media player, and don't have "codecs" installed
+   to handle this type of video.  Not to fear, just download the "ffdshow tryouts"
+   and, when it gives you the option, be sure to check "mpeg2 video" and then
+   it should "just work."
 
 == Feedback/Development ==
 
