@@ -73,50 +73,7 @@ module SensibleSwing
     end
 
     Storage = Storage.new("sc")
-    
-    alias system_original system
-    
-    def system_blocking command, low_prio = false
-    if low_prio
-        return if command =~ /^@rem/
-        # man jruby+windows does not make this easy on me...
-        out = IO.popen(command) # + " 2>&1"
-        low_prio = 64
-        
-        if command =~ /(ffmpeg|mencoder)/
-          # XXXX not sure if there's a better way...because some have ampersands...
-          # unfortunately have to check for nil because it could exit too early [?]
-          exe_name = $1 + '.exe'
-          begin
-          p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
-          piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-          # but the first one still inexplicably fails always... LODO
-          if piddy
-            # piddy.SetPriority low_prio # this can seg fault...yikes...
-            pid = piddy.ProcessId # this doesn't seg fault, tho
-            system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
-          else
-            # XXXX first one always fails [?] huh?
-            p 'unable to find to set priority ' + exe_name
-          end
-          rescue Exception => e
-            p 'warning, got exception trying to set PID [jruby...]', e
-          end
-        end
-        print out.read # let it finish
-        out.close
-        $?.exitstatus == 0 # 0 means success
-      else
-        system_original command
-      end
-    end
-    
-    def system_non_blocking command
-     Thread.new { system_original command }
-    end
-    
-    # make them choose which system call to use explicitly
-    undef system
+   
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
@@ -149,6 +106,10 @@ module SensibleSwing
       @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false, true )
       @mplayer_edl.on_clicked {
         do_mplayer_edl
+      }
+      
+      @watch_created_file = new_jbutton( "Watch edited copy of DVD", false).on_clicked {
+        raise 'todo'
       }
 
       @watch_unedited = new_jbutton("Watch DVD unedited (while also grabbing to hard drive--saves overall time)", true) # if you have a fast enough cpu, that is
@@ -215,32 +176,7 @@ module SensibleSwing
 
       @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true)
       @create_new_edl_for_current_dvd.on_clicked do
-        drive, volume, md5 = choose_dvd_drive
-        name = get_user_input("Enter DVD name for #{volume}")
-        input = <<-EOL
-# comments can go after a # on any line, for example this one.
-
-"mutes" => [
-  "0:00:01.0", "0:00:02.0", "profanity", "da..",
-],
-
-"blank_outs" => [
-  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-],
-
-"name" => "#{name}",
-"disk_unique_id" => "#{md5}",
-
-# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
-# "not edited out stuff" => "some violence",
-# "closing thoughts" => "still a fairly dark movie, overall",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
-        EOL
-        filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
-        filename.downcase!
-        File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
-        open_file_to_edit_it filename
-
+        create_brand_new_edl
       end
 
       @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
@@ -278,6 +214,79 @@ module SensibleSwing
       setIconImage(ImageIcon.new(__dir__ + "/monkey.png").getImage())
       check_for_dependencies
     end
+    
+    def create_brand_new_edl
+        drive, volume, md5 = choose_dvd_drive
+        name = get_user_input("Enter DVD name for #{volume}")
+        input = <<-EOL
+# comments can go after a # on any line, for example this one.
+
+"mutes" => [
+  "0:00:01.0", "0:00:02.0", "profanity", "da..",
+],
+
+"blank_outs" => [
+  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"name" => "#{name}",
+"disk_unique_id" => "#{md5}",
+
+# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still a fairly dark movie, overall",
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
+        EOL
+        filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
+        filename.downcase!
+        File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
+        open_file_to_edit_it filename
+      end
+
+     
+    alias system_original system
+    
+    def system_blocking command, low_prio = false
+      if low_prio
+        return if command =~ /^@rem/
+        # man jruby+windows does not make this easy on me...
+        out = IO.popen(command) # + " 2>&1"
+        low_prio = 64
+        
+        if command =~ /(ffmpeg|mencoder)/
+          # XXXX not sure if there's a better way...because some have ampersands...
+          # unfortunately have to check for nil because it could exit too early [?]
+          exe_name = $1 + '.exe'
+          begin
+          p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
+          piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
+          # but the first one still inexplicably fails always... LODO
+          if piddy
+            # piddy.SetPriority low_prio # this can seg fault...yikes...
+            pid = piddy.ProcessId # this doesn't seg fault, tho
+            system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
+          else
+            # XXXX first one always fails [?] huh?
+            p 'unable to find to set priority ' + exe_name
+          end
+          rescue Exception => e
+            p 'warning, got exception trying to set PID [jruby...]', e
+          end
+        end
+        print out.read # let it finish
+        out.close
+        $?.exitstatus == 0 # 0 means success
+      else
+        system_original command
+      end
+    end
+    
+    def system_non_blocking command
+     Thread.new { system_original command }
+    end
+    
+    # make them choose which system call to use explicitly
+    undef system
     
     def download full_url, to_here
       require 'open-uri'

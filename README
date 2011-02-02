@@ -193,13 +193,14 @@ If you don't know what this means then you're probably ok and don't have to worr
 "DVDNAV stream read error!"
   this typically means a dirty or scratched DVD.
 
-You try to play back a sensible cinema-ized file and it plays back without
- audio or video?
+You try to play back a sensible cinema-ized video file and it plays back without
+ audio or video (example: windows media player)?
 
  This probably means you're using windows media player, and don't have "codecs" installed
    to handle this type of video.  Not to fear, just download the "ffdshow tryouts"
    and, when it gives you the option, be sure to check "mpeg2 video" and then
-   it should "just work."
+   it should "just work."  You could also play the file in VLC Media Player or smplayer
+   (there's a button for that).
 
 == Feedback/Development ==
 
