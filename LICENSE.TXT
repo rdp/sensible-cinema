@@ -20,9 +20,10 @@ You can ask the authors of that program if it is legal.  Apparently
 libdvdcss (which the other programs that it calls out to use) has never been legally challenged in court (or so they say), 
 and uses a slightly different algorithm than those that have, so the jury's out.
 Also since we only call out to another (separate) executable, we're as legal as audacity calling out to winlame.dll for its
-mp3 conversions, or perhaps similar to handbrake calling out to VLC Media Player.
-Using sensible-cinema is probably not any more unethical than ripping your DVD collection to your hard
-drive so you can ""keep your DVD's all in one place" or what not (which might be under fair use).
+mp3 conversions, or perhaps similar to Handbrake calling out to VLC Media Player.  Use only after knowing the risk.
+Using sensible-cinema is also might not be more unethical than ripping your DVD collection to your hard
+drive so you can "keep your DVD's all in one place" or what not (which might be fair use), since it
+basically saves away the original with sections removed.  Only original content is saved.
 It's about the same as using VLC media player to watch a DVD, which also uses libdvdcss.
 Also note that if you watch an edited DVD in a commercial DVD player, your are using a DVD player that conforms
 with encryption specifications, so that might have some sway.
@@ -36,12 +37,11 @@ regarding its use themselves, since they re-distribute no edited media,
 nor distribute cracking codes.  Check your country's rules first.
 If it's illegal, don't use it!
 
-Note: do not redistribute/re-sell edited DVD's.  We have learned the hard way from clean flicks that
-redistributing edited commercial DVD's is against copyright in the US.  We hope that sensible-cinema
+Note: for sure do not redistribute/re-sell edited DVD's.  We have learned from clean flicks that
+redistributing (well at least renting/selling) edited commercial DVD's is against copyright in the US.  We hope that sensible-cinema
 is more legal, since you can get the DVD's from wherever you want, and keep the original.  
 Please don't redistribute.  If creating copies of commercial DVD's is illegal
 in your country, then don't do it!  Use the "watch in realtime" option.
-
 DO NOT MAKE ILLEGAL COPIES.
 
 In terms of copyright, it could be legal under the The Family Home Movie Act of 2005,
