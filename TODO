@@ -9,41 +9,43 @@
   
 == slightly lower than that, only somewhat ordered ==
 
+  can have the mouse jerk "only every so often"
+  a single netflix descriptor, just in case
+  use DVD navigator?
+    http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
+    need an avi file sink? avisynth?
+  make it so it can suck in from "another wiki" the DL's, at package time
+  post a demo of it streaming to a console device
+  post a demo of it playing back blu-ray edited, +- to a projector
+  post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
+  
+  
   check if the python one lines up or not/ping them
   port to linux
-  a single netflix descriptor, just in case
   add a "play the edited file for current DVD" button
-  vendor smplayer, ffmpeg
-  10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
-  test if latest smplayer can work with edl and seek [?]
+  vendor smplayer * 2
+    test if latest smplayer can work with edl and seek [?]
   "release" it to developers
-    URUG, plug.org
-  release it to family interested, perhaps?
+    plug.org, rubyists?
   note to previewer "you are about to preview these edits"
-  ask for more beta testers for use,  ask for more beta testers for creation 
-    after I do my own DVD's
-
   more DL's
     my dvd's (with loose timestamps...)
       cars backport real EDL :)
     enlist chris' help
     friend dvd's, me create Delete List [?]
-    partner for filters (Jon, Karlie if interested...give beta)
+    partner for filters (Jon, Karlie [any family interested], and for beta-testing)
       all only after linearize, new year, frame accurate
+  after I do my own DVD's
+    ask for more beta testers for use, ask for more beta testers for creation 
+      facebook? lds lists?
   mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
     frame accurate splitter naive
-  the final "edited.avi" really "could/should" be playable in WMP...
-    but double check if they can watch it, either way.
   fast preview: change it to be aggressive sometimes yes, other times no
-  can have the mouse jerk "only every so often"
-  can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
-    I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
-      appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
-        do this after frame accurate
+  10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   beta release: rinse and repeat with various ppl
-  a real'ish-er website
-  compare computer DVD timings with physical player's timings...
-  make it so it can suck in from "another wiki" the DL's, at package time
+  a "pictures-zy" website
+    own really long url movie bad scene skipper sensible cinema.t28.net add in there content editor or something lots of google SEO happy words
+  compare various computer DVD timings with physical player's timings...
   propaganda-ize
     advertise in LDS newsgroups et al, for beta testers?
     advertise in christian places
@@ -51,19 +53,32 @@
     free google adwords (?)
     advertise urug, ruby flow :)
     only after new year, new LLC
-  use DVD navigator?
-    http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
-    need an avi file sink? avisynth?
   fast preview mode: look for modifications to file, kill mplayer instances for them :)
-  fast preview tends to "not go far enough" [like the end of profanity still there in the real way]
+  fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   better "how to create" file
-  cleanup look of readme file
   force categories to match
   more stuff from the google doc
   a button for "just play a dvd" for normal users
+  advertise google adwords/facebook ?
   
-== DVD backlog (unordered, some very low prio, basically all never do) ==
+== DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  google android TV app/iTV ?
+  advertise ldsliving once I have patentable stuff done... [?]
+  md5 the zips at release time
+  somehow map DVD's to the "subdownloader" style subtitles?
+    use their md5 now?
+  advertise related bounties
+  don't exit if a timestamps has same beginning as end, but do warn
+  a pro website
+  the final "edited.avi" really "could/should" be playable in WMP...
+    but double check if they can watch it, either way.
+  vendor ffmpeg
+  can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
+    I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
+      appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
+        do this after frame accurate
+  cleanup look of readme file
   can convert auto to JSON, too, for consumption by other players [?]
   use voice recognition for profanity [?]
   auto subit for filters [?]
@@ -85,7 +100,7 @@
   don't exit program if they don't select a disk originally :)
   button start EDL playback from dvd here [?] (for create mode)
   re-play as EDL button for both modes--describe on the how to better
-  fix prio for first ffmpeg [huh?]
+  fix prio for first ffmpeg instance [huh?]
   calculating md5...do this while they choose it [low prio] :)
   @dvd flick: right click on a movie file "write this file to DVD .iso as only title (no menu), burn this file as DVD only title (no menu)"
   @dvd flick: default should not be to loop

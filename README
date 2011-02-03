@@ -50,7 +50,8 @@ A. You could burn a new DVD with it.  First create it on your hard drive.  Then 
   Or buy a very long cord and plug it in as an extra monitor from your desktop.
   You could buy a projector, attach it to your computer as a display, and then use that to display the video.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
-  something in mind that could help, though hasn't been created yet.
+  something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
+  I might come up with a competitor to it if the same is desired).
 
 Q. I want to give an edited DVD to a friend, how do I do that?
 A. Probably give them the original DVD and email them a link to sensible-cinema :)
@@ -102,23 +103,25 @@ I also wanted to get a prototype out there of some of my ideas so that
 others can't patent them and pretend that they were first inventors :)
 
 So originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
-edited" (it uses screen tracking and OCR's the on-screen
-timestamp, monitors it for specific times, and reacts appropriately).
-However, this functionality, though working, is disabled for patent
-reasons (clearplay has a patent on realtime tracking).  
-Some older released versions had it enabled, but not anymore.
+edited" (it uses/used screen snap-shotting and track, using OCR, the on-screen
+timestamp of the player, monitor it for specific times, and react appropriately).
+However, this functionality, though working, is disabled currently for patent
+concerns.  
+Some older released versions had it enabled, but not latest releases.
 Then I realized I could basically create the same effect using
-(more patent friendly) pre-processing and deletion lists (basically 
+(more patent friendly) pre-processing and/or deletion lists (basically 
 Edit Decision Lists enforced using playlists for
 VLC, like play from second x to y, then from x to mu, etc.).
-I just pass in a playlist, it does all the work for me.
-There are a few released versions that do this exactly.
+I just pass in a playlist, it does all the work for me, without real-time tracking.
+There are a few released versions that did this.
 Then it occurred to me that you could grab the several clean segments
 off a DVD, and piece them together to create an edited copy.  This avoids 
 realtime tracking.  This seems reasonably patent friendly, so it is
 what I release here. 
+I also added mplayer functionality later, which does real-time tracking, as well.
+The playlist option is currently disabled, as it was deemed too user-non-friendly.
 
-See also the LICENSE.TXT file.
+See also the LICENSE.TXT file for more legal information.
 
 [1] http://www.amazon.com/gp/product/B002YPRW7S/ref=cm_rdp_product
  "...I agree that it is not made clear on their website that if you don't continue your membership, you can't continue 

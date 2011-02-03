@@ -1,10 +1,11 @@
 All files (c) Roger Pack 2010
-All files are released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed.
-The edit lists are CC license, like wikipedia.
+All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed at all.
 
-May contain some 3rd party libraries/executables under their own (separate, open source) licenses.
+The edit lists, however are public domain.
 
-So...is this legal?  
+Note: may call out to some 3rd party libraries/executables under their own (separate, open source) licenses.
+
+So...is this legal?
 
 Unclear.  In general ripping personal DVD's is legal.
 And making "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under fair use [3] .
@@ -14,12 +15,14 @@ There are a few conflicting views.
 Sensible-cinema doesn't actually do any decryption or decoding, nor has any knowledge of it.  
 It doesn't even have knowledge
 as to whether the DVD being ripped is encrypted or not.  We don't distribute sensible-cinema with
-the ripping program, either (the user must install it later).
+the ripping program, or any ripping codes, either (the user must install it later after being prompted).
 You can ask the authors of that program if it is legal.  Apparently
 libdvdcss (which the other programs that it calls out to use) has never been legally challenged in court (or so they say), 
 and uses a slightly different algorithm than those that have, so the jury's out.
+Also since we only call out to another (separate) executable, we're as legal as audacity calling out to winlame.dll for its
+mp3 conversions, or perhaps similar to handbrake calling out to VLC Media Player.
 Using sensible-cinema is probably not any more unethical than ripping your DVD collection to your hard
-drive so you can ""keep your DVD's all in one place" or what not.
+drive so you can ""keep your DVD's all in one place" or what not (which might be under fair use).
 It's about the same as using VLC media player to watch a DVD, which also uses libdvdcss.
 Also note that if you watch an edited DVD in a commercial DVD player, your are using a DVD player that conforms
 with encryption specifications, so that might have some sway.
@@ -42,7 +45,7 @@ in your country, then don't do it!  Use the "watch in realtime" option.
 DO NOT MAKE ILLEGAL COPIES.
 
 In terms of copyright, it could be legal under the The Family Home Movie Act of 2005,
-at least in the United States, when viewed using the "playlist" option (v 0.10'ish, then later removed), or the "realtime" option (0.18.0'ish +).
+at least in the United States, when viewed using the "playlist" option (v 0.10'ish, later removed--used VLC), or the "realtime" option (0.18.0'ish +, using mplayer).
 In general, if I have the original DVD sitting next to my TV, I don't feel bad about watching
 its edited copy, but please consult a laywer first if you have any concerns.
 
