@@ -7,7 +7,8 @@ May contain some 3rd party libraries/executables under their own (separate, open
 So...is this legal?  
 
 Unclear.  In general ripping personal DVD's is legal.
-And making "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under fair use.
+And making "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under fair use [3] .
+
 It is controversial to use open source software to play/rip commercial DVD's.
 There are a few conflicting views.  
 Sensible-cinema doesn't actually do any decryption or decoding, nor has any knowledge of it.  
@@ -70,3 +71,4 @@ Please check with your legal advisor, and if this is the case in your country, y
 
 [1] http://www.gnu.org/licenses/gpl.html, also gplv3 file.
 [2] http://www.videolan.org/support/faq.html
+[3] http://www.macworld.com/article/150731/2010/04/dvdripping_faqs.html
