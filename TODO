@@ -12,29 +12,11 @@
   can have the mouse jerk "only every so often"
   a single netflix descriptor, just in case
   use DVD navigator?
+    wow terrifying
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
-    need an avi file sink? avisynth?
-    http://www.dreamincode.net/forums/topic/88457-how-to-make-a-dvd-player-for-vbnet/
-    http://www.youtube.com/watch?v=nJCgYiAolb8&feature=related
-    VB -> GUI
-      then command line lines? (that's as good as dll, maybe?)
-    is there a dshow c++ demo? yes, but it appears to not use MSWebDVD ... so no helper methods :( MSVidWebDVD msvidctl.dll MSWEBDVDLib 
-      maybe could call into MSWebDVD from c++ still...but it appears rare...
-      except idvdcontrol2 should have PlayPeriodInTitleAutoStop ... http://msdn.microsoft.com/en-us/library/dd389908(v=vs.85).aspx
-    http://www.codeproject.com/KB/directx/directshownet.aspx C# ? directshow? looks a bit unsupported...
-    http://www.youtube.com/watch?v=FRJkUSt2_6A&feature=related
-    I don't think ruby will be easy...because it needs a canvas [?] how does VB do it?
-    Don't think ActiveX will cut it [not as complete, anyway]
-      except it *is* basically, only activeX http://msdn.microsoft.com/en-us/library/dd390906(v=vs.85).aspx
-      
-    first pass: VB that works
-    second pass: VB that can work scripted...
-    how does autoit bind things though...
-    EC_DVD_PLAYPERIOD_AUTOSTOP
-    even autoit seems iffy at this point...
-    ruby even more so...don't know how to bind, 
-    JUST DO VB !!!!
+    is there a dshow c++ demo? ... so no helper methods :( MSVidWebDVD msvidctl.dll MSWEBDVDLib MSVidCtl.dll
+      command line, then PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     
   post demo of it doing netflix local computer
   blu-ray descriptor
@@ -125,6 +107,7 @@
   better installer etc.
   note: can do the two types of preview at same time...concurrently...
   @mplayer: seeking to within EDL failz
+  can make community overlay "comments" somehow or other/whatever cyberlink does :)
   temple EDL at home, just finish don't burn
   some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
     auto-upload?
