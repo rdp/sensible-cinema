@@ -13,12 +13,34 @@
   a single netflix descriptor, just in case
   use DVD navigator?
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
+    http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
     need an avi file sink? avisynth?
-  make it so it can suck in from "another wiki" the DL's, at package time
-  post a demo of it streaming to a console device
-  post a demo of it playing back blu-ray edited, +- to a projector
+    http://www.dreamincode.net/forums/topic/88457-how-to-make-a-dvd-player-for-vbnet/
+    http://www.youtube.com/watch?v=nJCgYiAolb8&feature=related
+    VB -> GUI
+      then command line lines? (that's as good as dll, maybe?)
+    is there a dshow c++ demo? yes, but it appears to not use MSWebDVD ... so no helper methods :( MSVidWebDVD msvidctl.dll MSWEBDVDLib 
+      maybe could call into MSWebDVD from c++ still...but it appears rare...
+      except idvdcontrol2 should have PlayPeriodInTitleAutoStop ... http://msdn.microsoft.com/en-us/library/dd389908(v=vs.85).aspx
+    http://www.codeproject.com/KB/directx/directshownet.aspx C# ? directshow? looks a bit unsupported...
+    http://www.youtube.com/watch?v=FRJkUSt2_6A&feature=related
+    I don't think ruby will be easy...because it needs a canvas [?] how does VB do it?
+    Don't think ActiveX will cut it [not as complete, anyway]
+      except it *is* basically, only activeX http://msdn.microsoft.com/en-us/library/dd390906(v=vs.85).aspx
+      
+    first pass: VB that works
+    second pass: VB that can work scripted...
+    how does autoit bind things though...
+    EC_DVD_PLAYPERIOD_AUTOSTOP
+    even autoit seems iffy at this point...
+    ruby even more so...don't know how to bind, 
+    JUST DO VB !!!!
+    
+  post demo of it doing netflix local computer
+  blu-ray descriptor
+  post a demo of it playing back blu-ray edited, local computer, projector
   post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
-  
+  make it so it can suck in from "another wiki" the DL's, at package time  
   
   check if the python one lines up or not/ping them
   port to linux
@@ -35,6 +57,7 @@
     friend dvd's, me create Delete List [?]
     partner for filters (Jon, Karlie [any family interested], and for beta-testing)
       all only after linearize, new year, frame accurate
+  gherkin'ize
   after I do my own DVD's
     ask for more beta testers for use, ask for more beta testers for creation 
       facebook? lds lists?
@@ -54,22 +77,22 @@
     advertise ruby flow
     only after new year, new LLC
     http://ldscinema.blogspot.com/
-    advertise facebook [?]
+    advertise facebook (at least their page :) [?]
   fast preview mode: look for modifications to file, kill mplayer instances for them :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
-  better "how to create" file
-  force categories to match
-  more stuff from the google doc
-  a button for "just play a dvd" for normal users
+  better "how to create" file, rename
+  a button for "just play a dvd unedited" for normal users
   fantom edit DL
-  an editor that can track and overlay...using OCR :)
-  more from that guy, here or there
-  youtubes -> new account
+  an editor that can track and overlay...use OCR! :)
+  youtube videos -> new account
   
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
- 
-  a fully javascript version...hmm...maybe an applet overlay [post 2020]
+  more from that guy, here or there
+  force categories to match [?]
+  K-Lite Standard codec pack might allow for DVD playback free [?]
+  post a demo of it streaming to a console device
+  a fully javascript version...hmm...maybe an applet overlay [post 2020 ?]
   alpha transparent "grey" overlay (for partial parts of the window)
   video using play on -> console (+- window only)
   certain sections: can speed them up, to make them less scary or what not, but you can still see what's happening. Not sure how audio could/should apply here.
@@ -92,7 +115,7 @@
   cleanup look of readme file
   can convert auto to JSON, too, for consumption by other players [?]
   use voice recognition for profanity [?]
-  auto subit for filters [?]
+  easier submit for DL's
   replay on iphone edited
   linearize edl's
     don't use them linear, just linearize
@@ -239,6 +262,8 @@ a check for "newer version available" or not...
 buy blu-ray decrypter, and drive, try it out.
 
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+after 2020: DVD Navigator in C++ ?
 
 something that works with cable TV, too, somehow?
 figure out why I need to uses dvdnav:// sometimes, dvd:// others to not crash :P
