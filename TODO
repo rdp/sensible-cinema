@@ -1,11 +1,6 @@
 == medium ==
   
 == up next release ==
-
-  edl straight DVD replay:
-    work cars, monsters inc
-  clear runnings
-    have ben and chris test it out, then ask about quality
   
 == slightly lower than that, only somewhat ordered ==
 
@@ -15,22 +10,28 @@
     wow terrifying
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
-    is there a dshow c++ demo? ... so no helper methods :( MSVidWebDVD msvidctl.dll MSWEBDVDLib MSVidCtl.dll
-      command line, then PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
-    
-  post demo of it doing netflix local computer
+    is there a dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
   blu-ray descriptor
+  post some playon.tv demo screencast..this should prove all shouldn't it [?]
+  
+  post demo of it doing netflix (just screencast local computer)
   post a demo of it playing back blu-ray edited, local computer, projector
   post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
-  make it so it can suck in from "another wiki" the DL's, at package time  
-  
+
+  edl straight DVD replay:
+    work cars, monsters inc
+  clear runnings
+    have ben and chris test it out, then ask about quality
+
+  make it so it can suck in from "another wiki" the DL's, at package time
   check if the python one lines up or not/ping them
   port to linux
-  add a "play the edited file for current DVD" button
+  add a "play edited file for current DVD" button
+  fix "play DVD unedited" button
   vendor smplayer * 2
     test if latest smplayer can work with edl and seek [?]
   "release" it to developers
-    plug.org, rubyists?
+    plug.org, more rubyists?
   note to previewer "you are about to preview these edits"
   more DL's
     my dvd's (with loose timestamps...)
@@ -70,6 +71,7 @@
   
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  use wget to download jruby, then can use RC2+ then can rename bin's
   more from that guy, here or there
   force categories to match [?]
   K-Lite Standard codec pack might allow for DVD playback free [?]
