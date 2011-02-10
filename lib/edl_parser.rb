@@ -80,6 +80,14 @@ class EdlParser
   
   def self.get_secs timestamp_string_begin, timestamp_string_end, add_begin, add_end, splits
     answers = []
+    unless timestamp_string_begin
+    p 'BAD'
+      raise 'non begin' 
+    end
+    unless timestamp_string_end
+    p 'BAD2', '', ''
+      raise 'non end' 
+    end
     for type, offset, multiplier in [[timestamp_string_begin, add_begin, -1], [timestamp_string_end, add_end, 1]]
       original_secs = translate_string_to_seconds(type) + offset
       # now if splits is 900 and we'are at 909, then we're just 9
@@ -104,6 +112,7 @@ class EdlParser
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
+    p 'incoming', incoming, splits
     mutes = mutes.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:mute]}
     blanks = blanks.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:blank]}
     combined = (mutes+blanks).sort
@@ -140,7 +149,13 @@ class EdlParser
     
     # s is like 1:01:02.0
     total = 0.0
-    seconds = s.split(":")[-1]
+    seconds = nil
+    begin
+      seconds = s.split(":")[-1]
+    rescue Exception => e
+     p 'failed!', s
+     raise e
+    end
     total += seconds.to_f
     minutes = s.split(":")[-2] || "0"
     total += 60 * minutes.to_i

@@ -247,28 +247,27 @@ module SensibleSwing
     alias system_original system
     
     def system_blocking command, low_prio = false
+      return true if command =~ /^@rem/ # jruby+MRI bug, I think...
       if low_prio
-        return if command =~ /^@rem/
-        # man jruby+windows does not make this easy on me...
         out = IO.popen(command) # + " 2>&1"
-        low_prio = 64
+        low_prio = 64 # from msdn
         
         if command =~ /(ffmpeg|mencoder)/
-          # XXXX not sure if there's a better way...because some have ampersands...
+          # XXXX not sure if there's a better way...because some *are* complex and have ampersands...
           # unfortunately have to check for nil because it could exit too early [?]
           exe_name = $1 + '.exe'
           begin
-          p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
-          piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-          # but the first one still inexplicably fails always... LODO
-          if piddy
-            # piddy.SetPriority low_prio # this can seg fault...yikes...
-            pid = piddy.ProcessId # this doesn't seg fault, tho
-            system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
-          else
-            # XXXX first one always fails [?] huh?
-            p 'unable to find to set priority ' + exe_name
-          end
+            p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
+            piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
+            # but the first one still inexplicably fails always... LODO
+            if piddy
+              # piddy.SetPriority low_prio # this can seg fault...yikes...
+              pid = piddy.ProcessId # this doesn't seg fault, tho
+              system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
+            else
+              # XXXX first one always fails [?] huh?
+              p 'unable to find to set priority ' + exe_name
+            end
           rescue Exception => e
             p 'warning, got exception trying to set PID [jruby...]', e
           end
@@ -613,10 +612,8 @@ module SensibleSwing
         if success
           puts "running #{line}"
           success = system_blocking(line, true)
-          if line =~ /@rem /
-            success = true # these fail fof some reason?
-          else
-            puts "\n", 'line failed: ' + line + "\n" + '   see troubleshooting in README.txt file!' unless success
+          if !success
+            puts "\n", 'line failed: ' + line + "\n" + '   see troubleshooting section in README.txt file! ignoring further processing commands...'
           end
         end
         @progress_bar.set_value(10 + idx/total_size*90)
