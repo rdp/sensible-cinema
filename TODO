@@ -18,6 +18,7 @@
   post some playon.tv demo screencast..this should prove all shouldn't it [?]
   
   post a demo of it playing back blu-ray edited, local computer, projector
+  does blu-ray work with my C++ project?
   post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
   edl straight DVD replay:
     work cars, monsters inc
@@ -73,7 +74,9 @@
   
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
-  use wget to download [newer version of] jruby, then can use RC2+ then can rename bin's
+  move template .bat's to a template folder
+    have them use a real version of jruby.jar (the right er version)
+    use wget to download [newer version of] jruby, then can use RC2+ then can rename bin's
   more from that guy, here or there
   force categories to match [?]
   K-Lite Standard codec pack might allow for DVD playback free [?]
@@ -248,9 +251,13 @@ advertise my "splitting joining" google doc page. also test the various options 
 a check for "newer version available" or not...
 buy blu-ray decrypter, and drive, try it out.
 
+
 == random non-DVD backlog ... note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+take out use_class_name for descriptors
+
 after 2020: DVD Navigator in C++ ?
+it should track "is paused" better (OCR)
 
 something that works with cable TV, too, somehow?
 figure out why I need to uses dvdnav:// sometimes, dvd:// others to not crash :P

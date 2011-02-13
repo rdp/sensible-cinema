@@ -52,13 +52,17 @@ class ScreenTracker
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
     @max_x = max_x
     raise "poor width or wrong window #{@x2} #{max_x} #{x}" if @x2 > max_x  || @x2 == x
-    if @y2 > max_y || @y2 == y
-      raise 'poor height or wrong window' 
+    if @y2 > max_y || @y2 == y || @y2 <= 0
+      raise "poor height or wrong window selected #{@y2} > #{max_y} || #{@y2} == #{y} || #{@y2} <= 0" 
+    end
+    if max_x == 0 || max_y == 0
+      # I don't think we can ever get here, because of the checks above
+      raise 'window invisible?'
     end
     @digits = digits
     @previously_displayed_warning = false
     @dump_digit_count = 1
-    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits if $VERBOSE
+    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits.inspect if $VERBOSE
   end
   
   def get_hwnd
@@ -124,7 +128,13 @@ class ScreenTracker
         if(x < 0)
           x = @max_x + x
         end
-        out[type] = Win32::Screenshot::BitmapMaker.capture_area(@hwnd, x, @y, x+w, @y2) {|h,w,bmp| bmp}
+        x2 = x + w
+        raise 'a digit width can never be negative #{w}' if w <= 0
+        y2 = @y2
+        width = x2 - x
+        height = y2 - @y
+        # lodo calculate these only once...
+        out[type] = Win32::Screenshot::BitmapMaker.capture_area(@hwnd, x, @y, x2, y2) {|h,w,bmp| bmp}
       end
     end
     out
@@ -165,7 +175,7 @@ class ScreenTracker
         sleep 0.02
         if(Time.now - time_since_last_screen_change > 2.0)
           # display a warning
-          p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?]'
+          p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet, or paused?]'
           @previously_displayed_warning = true
           time_since_last_screen_change = Time.now
           # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)

@@ -277,7 +277,7 @@ describe ScreenTracker do
 
     it "should be able to pass through the option to invert images" do
       @a = ScreenTracker.new(SILENCE, 100, 100, 10, 10, false,
-      {:should_invert => true, :second_ones => [-66, 7]} )
+      {:should_invert => true, :second_ones => [-66, 7]} ) # VLC descriptor is messed currently...
       got_it = nil
       OCR.stub!(:identify_digit) {|*args|
         got_it = args

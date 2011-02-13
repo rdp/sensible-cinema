@@ -72,7 +72,7 @@ class OverLayer
   attr_accessor :all_sequences
   
   def reload_yaml!
-    @all_sequences = OverLayer.translate_yaml(File.read(@filename))
+    @all_sequences = OverLayer.translate_file(@filename)
     puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless defined?($AM_IN_UNIT_TEST)
     signal_change
   end  
@@ -82,7 +82,7 @@ class OverLayer
     @all_sequences.each{|type, values|
       if values.is_a? Array
         new_sequences[type] = values.map{|s, f|
-          [translate_time_to_human_readable(s), translate_time_to_human_readable(f)]
+          [EdlParser.translate_time_to_human_readable(s), EdlParser.translate_time_to_human_readable(f)]
         }
       else
         new_sequences[type] = values
@@ -109,17 +109,18 @@ class OverLayer
   end
   
   # note this is actually deprecated and won't work anymore <sigh> and needs to be updated.
-  def self.translate_yaml raw_yaml
+  def self.translate_file filename
     begin
-      all = YAML.load(raw_yaml) || {}      
+      all = EdlParser.parse_file(filename)
     rescue NoMethodError, ArgumentError => e
       p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
-      raise e
+      raise e # hope this is ok...
     end
+    
     # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
     # translate to floats like 62.0 => 63.0
 
-    for type in [:mutes, :blank_outs]
+    for type in [:mutes, :blank_outs] # LODO standardize these :mutes and :blank_outs somewhere...scary to have them repeated *everywhere*
       maps = all[type] || all[type.to_s] || {}
       new = {}
       maps.each{|start,endy|
@@ -165,7 +166,7 @@ class OverLayer
   end
   
   def cur_english_time
-    translate_time_to_human_readable(cur_time)
+    EdlParser.translate_time_to_human_readable(cur_time)
   end
   
   def status
@@ -175,7 +176,7 @@ class OverLayer
       if next_sig == :done
         state = " no more after this point..."
       else
-        state = " next will be at #{translate_time_to_human_readable next_sig}s "
+        state = " next will be at #{EdlParser.translate_time_to_human_readable next_sig}s "
       end
       if blank? or muted?
         state += "(" + [muted? ? "muted" : nil, blank? ? "blanked" : nil ].compact.join(' ') + ") "

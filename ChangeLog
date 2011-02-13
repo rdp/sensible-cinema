@@ -10,6 +10,9 @@ the right directshow parameters.
 
 You could also use a projector to project anything you see on your computer.
 
+Note also that with the previous code (screen tracker), it already had the capability to do 
+"mutes" and "blank out overlays" simultaneously, for quite a few releases.
+
 == 0.21.2 ==
 
 Make fast preview faster, some minor cleanups.

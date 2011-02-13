@@ -17,12 +17,12 @@ This file is part of Sensible Cinema.
 =end
 require 'sane' # gem
 require 'whichr' # gem
-require_relative 'swing_helpers' # to_filename lodo not have it there
-im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/cache/imagemagick") # convert.exe wants to only be chosen from here...
-ENV['PATH'] = im_path.to_filename + ';' + ENV['PATH']
+
+# not a dependency yet, so I don't have to bundle it...
+# im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/cache/imagemagick") # convert.exe wants to only be chosen from here...
+# ENV['PATH'] = im_path.gsub('/', "\\") + ';' + ENV['PATH']
 
 if RubyWhich.new.which('identify').length == 0 || RubyWhich.new.which('convert').length == 0
- # for gem users, so I don't have to bundle it :P
  puts 'appears you do not have imagemagick installed (or not in your path) -- please install it first! http://www.imagemagick.org/script/binary-releases.php'
  sleep 100
 end

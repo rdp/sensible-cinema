@@ -70,10 +70,12 @@ class EdlParser
     # two digits, then whatever else you see, that's not a digit...
     out = from_this.shift(2)
     out.each{|d|
-      raise SyntaxError.new('non timestamp? ' + d) unless d =~ TimeStamp
+      unless d =~ TimeStamp
+        raise SyntaxError.new('non timestamp? ' + d) 
+      end
     }
     while(from_this[0] && from_this[0] !~ TimeStamp)
-     out << from_this.shift
+      out << from_this.shift
     end
     out
   end

@@ -96,8 +96,8 @@ def go_sc(args)
       
       # exit early if we just wanted a screen dump...a little kludgey...
       unless overlay
-        puts 'warning--only doing screen dump in t-minus 4s...'      
-        sleep 4
+        puts 'warning--only doing screen dump in t-minus 2s...'      
+        sleep 2
         puts 'snap!'
         screen_tracker.dump_bmp
         exit 1
