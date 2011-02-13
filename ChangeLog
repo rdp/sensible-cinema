@@ -1,6 +1,7 @@
 == 0.21.3 ==
 
 Fix installation mistake.
+Add a "netflix instant" descriptor.  Seems to work well on firefox on windows.
 
 Note also that anything you can view on your computer you can view precisely the same,
 and with audio, by capturing and "beaming" the screen (like playon.tv does) to your
