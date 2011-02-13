@@ -21,11 +21,7 @@ We welcome all feedback/contribution :)
 == Advanced Usage ==
 
 For the screen tracker (experimental version--see experimental.txt),
-note that you could specify the scene descriptions list and player list on the command-line, if you don't want to have
-to pick them each time, like:
+you could specify the scene descriptions list and player list on the command-line, so you don't want to have
+to re-select them like this will tell you how to run it from the command line:
 
-C:\sensible-cinema> jruby bin\sensible-cinema-cli edit_decision_list.yml player_description.yml
-
-Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
-Useful for debugging your screen capture of the current player.
-You can also specify -v or -t if you want to enable more verbose (chatty) output.
+C:\sensible-cinema> jruby bin\sensible-cinema-cli --help

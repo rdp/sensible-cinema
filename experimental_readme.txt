@@ -32,11 +32,14 @@ It will show you a few "demo" mutes and blank outs.
 
 Q. What movies are freely available to watch online?
 
-A. Not many are available free (hulu, youtube have a few). Netflix has quite a few with its default subscription.  
-   You can of course use it with any existing DVD, too, or rent or borrow DVD's and watch them using sensible-cinema.
-   If they have a delete list (or you can create your own for them).
+A. Not many are available free (hulu, youtube have a few). Netflix has quite a few now for money.  
+   You can of course use SC with DVD's, too, or rent or borrow DVD's.
+   (If they have a delete list (or you could create your own for them if not...).)
 
 Q. Why does my mouse bounce up and down while sensible-cinema is going?
 
 A. This enables your player to keep its on-screen time tracker, which in turn allows sensible-cinema to track where 
-   you're at.  Message me if this bugs you too much and we'll see what we can do about it.
+   you're at time position.  Message me if this bugs you too much and we'll see what we can do to alleviate it.
+  
+To create a new player, basically you have to create a new descriptor, then add unit tests for all of its digits, to make sure they OCR well :(
+A bit convoluted, I agree.  Ping me if you want one added.
