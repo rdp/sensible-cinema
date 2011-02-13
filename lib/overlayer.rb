@@ -21,6 +21,8 @@ require 'timeout'
 require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
+require_relative 'edl_parser'
+
 require 'pp' # for pretty_inspect
 
 class OverLayer
