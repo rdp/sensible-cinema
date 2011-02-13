@@ -112,9 +112,9 @@ class OverLayer
   def self.translate_yaml raw_yaml
     begin
       all = YAML.load(raw_yaml) || {}      
-    rescue NoMethodError, ArgumentError
-      p 'appears your file has a syntax error in it--perhaps missing quotation marks?'
-      return
+    rescue NoMethodError, ArgumentError => e
+      p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
+      raise e
     end
     # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
     # translate to floats like 62.0 => 63.0

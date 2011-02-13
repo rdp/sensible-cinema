@@ -242,7 +242,8 @@ module SensibleSwing
       click_button(:@fast_preview).join
       join_background_thread
       #XXXX @system_blocking_command.should =~ /ffmpeg.*ntsc-dvd/ # I think this is a timing thing...
-      @system_blocking_command.should =~ /mplayer.*fast/ # pending, smplayer
+      @system_blocking_command.should =~ /smplayer/
+      @system_blocking_command.should_not =~ /mplayer.*fast/ # the old way
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
@@ -406,7 +407,7 @@ module SensibleSwing
     it "should not show the normal buttons in create mode" do
       MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 11
+      MainWindow.new.buttons.length.should == 12
       ARGV.pop # test cleanup--why not :)
     end
     

@@ -27,7 +27,7 @@ describe EdlParser do
   end
   
   it "should get mutes and blank_outs" do
-   string = File.read(__dir__ + "/../zamples/edit_decision_lists/example_edit_decision_list.txt")
+   string = File.read(__dir__ + "/../zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt")
    expected = 
    {
     "mutes"=>[["00:00:01", "00:00:02"], 

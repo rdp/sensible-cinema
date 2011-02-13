@@ -92,6 +92,7 @@ class EdlParser
       original_secs = translate_string_to_seconds(type) + offset
       # now if splits is 900 and we'are at 909, then we're just 9
       closest_split_idx = splits.reverse.index{|t| t < original_secs}
+      p 'got idx', closest_split_idx
       if closest_split_idx
         closest_split = splits.reverse[closest_split_idx]
         # add some extra seconds onto these if they're "past" a split, too
@@ -189,7 +190,7 @@ class EdlParser
   
 end
 
-# <= 1.8.7 Symbol compat
+# == 1.8.7 Symbol compat
 
 class Symbol
   # Standard in ruby 1.9. See official documentation[http://ruby-doc.org/core-1.9/classes/Symbol.html]
@@ -197,4 +198,8 @@ class Symbol
     return nil unless with.is_a? Symbol
     to_s <=> with.to_s
   end unless method_defined? :"<=>"
+end
+
+if RUBY_VERSION < '1.8.7'
+  raise 'needs ruby 1.8.7 at least'
 end

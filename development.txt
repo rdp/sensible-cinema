@@ -12,6 +12,8 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 
 It's written in jruby, and currently packages itself up as a zip with jruby-complete.jar with its required dependencies (see the Rakefile).
 
+To run it from source, you may need to install a few gem dependencies (listed in the Rakefile)
+
 The tests are in the spec directory, though some of them are out of date as development has focused in other areas.
 
 Currently it's windows only, ping me if you want that changed.
@@ -24,4 +26,4 @@ For the screen tracker (experimental version--see experimental.txt),
 you could specify the scene descriptions list and player list on the command-line, so you don't want to have
 to re-select them like this will tell you how to run it from the command line:
 
-C:\sensible-cinema> jruby bin\sensible-cinema-cli --help
+C:\sensible-cinema-git-clone>jruby bin\sensible-cinema-cli --help
