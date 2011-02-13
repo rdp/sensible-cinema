@@ -2,7 +2,11 @@
   
 == up next release ==
 
-  a single netflix descriptor, just in case
+  a single netflix descriptor
+  post demo of it doing netflix (just screencast local computer)
+  
+== slightly lower than that, only somewhat ordered ==
+  
   can have the mouse jerk "only every so often"
   use DVD navigator?
     wow terrifying
@@ -10,11 +14,9 @@
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
     is there a dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
   blu-ray descriptor
+  infer from url for netflix
   post some playon.tv demo screencast..this should prove all shouldn't it [?]
   
-== slightly lower than that, only somewhat ordered ==
-  
-  post demo of it doing netflix (just screencast local computer)
   post a demo of it playing back blu-ray edited, local computer, projector
   post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
   edl straight DVD replay:
@@ -71,7 +73,7 @@
   
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
-  use wget to download jruby, then can use RC2+ then can rename bin's
+  use wget to download [newer version of] jruby, then can use RC2+ then can rename bin's
   more from that guy, here or there
   force categories to match [?]
   K-Lite Standard codec pack might allow for DVD playback free [?]

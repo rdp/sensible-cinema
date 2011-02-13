@@ -108,9 +108,9 @@ module SensibleSwing
         do_mplayer_edl
       }
       
-      @watch_created_file = new_jbutton( "Watch edited copy of DVD", false).on_clicked {
-        raise 'todo'
-      }
+#      @watch_created_file = new_jbutton( "Watch edited copy of DVD", false).on_clicked {
+#        raise 'todo'
+#      }
 
       @watch_unedited = new_jbutton("Watch DVD unedited (while also grabbing to hard drive--saves overall time)", true) # if you have a fast enough cpu, that is
       @watch_unedited.on_clicked {
@@ -368,8 +368,8 @@ module SensibleSwing
     def check_for_dependencies
       ffmpeg = RubyWhich.new.which('ffmpeg')
       if ffmpeg.length == 0
-        show_blocking_message_dialog(self, "It appears that you need to install a dependency: imagemagick.\n
-        Click ok to be directed to its download website.\nYou'll probably want to download and install the \"windows-dll.exe\" package.\n
+        show_blocking_message_dialog("It appears that you need to install a dependency: imagemagick.\n
+        Click ok to be directed to its download website.\nYou'll probably want to download and run the \"windows-dll.exe\" package.\n
         Then restart Sensible-Cinema.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
         system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
         java.lang.System.exit(1)
