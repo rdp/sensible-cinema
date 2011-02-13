@@ -1,4 +1,4 @@
-Source code (free, GPL) : http://github.com/rdp/sensible-cinema (create an issue for feature requests/bugs)
+Source code (open source, GPLv3) : http://github.com/rdp/sensible-cinema (create an issue for feature requests/bugs etc.)
 
 You can test the program out out by (on windows) installing daemon tools, then mounting the DVD of "big buck bunny" (open source, freely available movie)
 Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against (a slightly more cross platform approach).
@@ -17,3 +17,15 @@ The tests are in the spec directory, though some of them are out of date as deve
 Currently it's windows only, ping me if you want that changed.
 
 We welcome all feedback/contribution :)
+
+== Advanced Usage ==
+
+For the screen tracker (experimental version--see experimental.txt),
+note that you could specify the scene descriptions list and player list on the command-line, if you don't want to have
+to pick them each time, like:
+
+C:\sensible-cinema> jruby bin\sensible-cinema-cli edit_decision_list.yml player_description.yml
+
+Also if you specify "test" for the scene descriptions file, it will pause 4s, take a snapshot of the player, then exit.
+Useful for debugging your screen capture of the current player.
+You can also specify -v or -t if you want to enable more verbose (chatty) output.
