@@ -6,6 +6,7 @@
   
   jonah
   fix 9 digit
+  jruby ocr spec bug
   don't do most:
   can have the mouse jerk "only every so often"
     can jerk closer to failure sections...
