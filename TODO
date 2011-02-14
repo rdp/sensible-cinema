@@ -2,36 +2,32 @@
   
 == up next release ==
   
+  jonah
+  post a demo of it playing back VLC edited, local computer, projector
+  email jon
+  
 == slightly lower than that, only somewhat ordered ==
   
-  jonah
   fix 9 digit
-  jruby ocr spec bug
-  don't do most:
-  can have the mouse jerk "only every so often"
-    can jerk closer to failure sections...
+  jruby ocr spec bug [newer versions of gems no stringIO require? if not then jruby bug?]
+  
   use DVD navigator?
-    wow terrifying
+    wow terrifying...kind of
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
     is there a dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
-  blu-ray descriptor
-  infer from url for netflix
-  post some playon.tv demo screencast..this should prove all shouldn't it [?]
-  can "control mouse" to mute, and drag it to change location (+1 auto)
-  
-  post a demo of it playing back blu-ray edited, local computer, projector
-  does blu-ray work with my C++ project?
-  post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
-  edl straight DVD replay:
+    does this line up right? can it work, at all?
+    
+  edl straight DVD mplayer replay:
     work cars, monsters inc
   clear runnings
-    have ben and chris test it out, then ask about quality
+    have ben and chris test it out, then ask about video quality
+
   make it so it can suck in from "another wiki" the DL's, at package time
   check if the python one lines up or not/ping them
   port to linux
-  add a "play edited file for current DVD" button
-  fix "play DVD unedited" button
+  port to OS X
+  fix the "play previously credited edited file for current DVD" button
   vendor smplayer * 2
     test if latest smplayer can work with edl and seek [?]
   "release" it to developers
@@ -48,8 +44,6 @@
   after I do my own DVD's
     ask for more beta testers for use, ask for more beta testers for creation 
       facebook? lds lists?
-  mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
-    frame accurate splitter naive
   fast preview: change it to be aggressive sometimes yes, other times no
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   beta release: rinse and repeat with various ppl
@@ -70,13 +64,25 @@
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   better "how to create" file, rename
   a button for "just play a dvd unedited" for normal users
-  fantom edit DL
   an editor that can track and overlay...use OCR! :)
   youtube videos -> new account
   post demo of it selecting categories.
   
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  fantom edit DL
+  mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
+    frame accurate splitter naive
+  does blu-ray work with my C++ project?
+  don't do most:
+  can have the mouse jerk "only every so often"
+    can jerk closer to failure sections...
+  blu-ray descriptor
+  post a demo of it playing back blu-ray edited, local computer, projector
+  infer from url for netflix
+  post some playon.tv demo screencast..this should prove all shouldn't it [?]
+  can "control mouse" to mute, and drag it to change location (+1 auto)
+  post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
   move template .bat's to a template folder
     have them use a real version of jruby.jar (the right er version)
     use wget to download [newer version of] jruby, then can use RC2+ then can rename bin's
