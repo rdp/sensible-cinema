@@ -1,3 +1,26 @@
+15, 30, 45
+ k-lite XP mplayer:
+ 15: before you [eat]
+ 30: a man that .. can count on to deliver his message yes [well]
+ 45: big smile from after duck
+ 
+DvdSampler (k-lite xp)
+ 15: before [you] eat
+ 30: a man that .. can count on to deliver his message yes [well]
+ 45: big smile from after duck
+
+VLC
+ 15: and [if] you follow god's commands (early?)
+ 30: something about nineveh makes you feel sad [I dont' really ] want to talk about it [?]
+ 45: [smiles] traveling buddy, I'm coming [gulp]
+
+smplayer, mplayer 30369
+ 15: wash your hands [before] you eat
+ 30: a man that .. can count on to deliver his message yes [well]
+ 45: big smile from after duck
+
+hulu, youtube, netflix, file [vlc, mplayer] 
+
 MPlayer git-20100211-1-g1c6846f-Kovensky-mt (C) 2000-2009 MPlayer Team
   can play dvd:// and dvdnav:// with seeking at the beginning without crashing...[because old, maybe?]
   mulder's: http://mulder.googlecode.com/files/MPUI.2010-10-17.Full-Package.exe crashes like normal [dvdnav only]

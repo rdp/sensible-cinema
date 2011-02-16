@@ -3,7 +3,6 @@
 == up next release ==
   
   jonah
-  post a demo of it playing back VLC edited, local computer
   email jon
   
 == slightly lower than that, only somewhat ordered ==
@@ -27,6 +26,9 @@
 
 == yes do, unordered ==
 
+  it should clear smplayer options on startup, just in case [?]
+  the "play DVD with smplayer unedited" prompts for delete list x2
+  post a demo of it playing back VLC edited, local computer
   fix the "play previously credited edited file for current DVD" button
   a button for "just play a dvd unedited" for normal users
   make it so it can suck in from "another wiki" the DL's, at package time
