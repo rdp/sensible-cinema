@@ -1,12 +1,13 @@
 You can create a delete list for sensible cinema to use against whatever DVD you want.
 
-A delete list looks something like this example:
+A delete list looks something like those within "edit delete lists here":
 
-https://github.com/rdp/sensible-cinema/blob/master/zamples/edit_decision_lists/example_edit_decision_list.txt
+https://github.com/rdp/sensible-cinema/tree/master/zamples
 
-For a DVD, the steps might look like this:
+To create a new one, for a DVD, the steps might look like this:
 
 open Sensible cinema with "edit/create mode...bat"
+
 insert your DVD, click "Create new delete list for DVD" button
 
 Now you want to add timestamps and then test them to make sure they're accurate, using the various buttons.
