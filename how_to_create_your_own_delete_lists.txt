@@ -35,3 +35,7 @@ A few pointers:
   This can help users of other than sensible cinema with editing their movies.
  Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just setup the 
   EDL to work right [ http://goo.gl/yMfqX ] then use math to setup the correct time signatures.
+
+
+Note also that you can fork the code from github, commit changes, and 
+submit a pull request if you desire to contribute, as well (for example more delete lists, etc.)
