@@ -21,6 +21,8 @@ print 'Loading Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 require 'sane' # failure here means you haven't bundled your dependencies...[rake task]
 
+raise 'need newer jruby!' unless RUBY_DESCRIPTION =~ /1.6.\d/ # sanity check
+
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
 require_relative '../lib/edl_parser'

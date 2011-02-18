@@ -1,3 +1,10 @@
+
+Note that some other projects, like
+http://universalsubtitles.org/
+are related and use web players' javascript API hooks into players in order to
+track playback and insert dynamic overlays, and use their internal volume
+control, all based on timestamp or inferred timestamp.
+
 == 0.21.3 ==
 
 Fix installation mistake.
