@@ -12,6 +12,6 @@
 "name" => "Turn Around Alma Younger",
 "disk_unique_id" => "f4538677a522494d571e6d23e73040e3",
 
-"dvd_title_track" => "3", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
-"not edited out stuff" => "closing credit song loud",
-"mplayer_dvd_splits" => [], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
+"dvd_title_track" => "3", 
+"not edited out stuff" => "closing credit song loud, also there is a bit of violence [kicking] around 11:00",
+"mplayer_dvd_splits" => [], 
