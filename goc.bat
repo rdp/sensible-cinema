@@ -1,1 +1,1 @@
-call j bin\sensible-cinema.rb --create-mode
+call j %* bin\sensible-cinema --create-mode

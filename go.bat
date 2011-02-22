@@ -1,1 +1,1 @@
-call j %* bin\sensible-cinema.rb
+call j %* bin\sensible-cinema
