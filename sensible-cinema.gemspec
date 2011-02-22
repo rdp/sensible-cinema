@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.21.3"
+  s.version = "0.21.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-02-12}
+  s.date = %q{2011-02-22}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["monkey.png", "sensible-cinema-cli", "sensible-cinema.rb"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -36,8 +36,9 @@ Gem::Specification.new do |s|
     "ext/mkrf_conf.rb",
     "go.bat",
     "goc.bat",
+    "goe.bat",
     "gplv3.txt",
-    "how_to_create.txt",
+    "how_to_create_your_own_delete_lists.txt",
     "lib/add_any_bundled_gems_to_load_path.rb",
     "lib/blanker.rb",
     "lib/drive_info.rb",
@@ -92,6 +93,7 @@ Gem::Specification.new do |s|
     "spec/images/netflix_a7.bmp",
     "spec/images/netflix_a8.bmp",
     "spec/images/netflix_a9.bmp",
+    "spec/images/netflix_b9.bmp",
     "spec/images/vlc_0.bmp",
     "spec/images/vlc_2_4.bmp",
     "spec/images/vlc_2_6.bmp",
@@ -145,6 +147,7 @@ Gem::Specification.new do |s|
     "vendor/music.wav",
     "vendor/readme.txt",
     "vendor/unzip.exe",
+    "www/index.html",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
     "zamples/edit_decision_lists/dvds/Harry Potter 2.txt",
@@ -162,6 +165,8 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/making marriage work.txt",
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/star_trek_generations_hulu.txt",
     "zamples/edit_decision_lists/dvds/pack_wedding_2007-03-03.txt",
+    "zamples/edit_decision_lists/dvds/turn_around_alma_younger.txt",
+    "zamples/edit_decision_lists/netflix/example_file_copy_me.txt",
     "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/youtube/gummy_bear_song_youtube.txt",

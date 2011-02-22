@@ -327,9 +327,7 @@ module SensibleSwing
       File.write(EdlTempFile, edl_contents)
       title_track = get_title_track(descriptors)
       # oh the insanity of the console UI...LODO more user friendly player
-      @popup ||= NonBlockingDialog.new("Running mplayer.  To control it, use space for pause.\n
-      Also right and left arrows to seek, F key for full screen, [, ] to control playback speed.
-      q or escape to quit.")
+      @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen.")
       # LODO dry up mplayer dvd opts...
       play_this_mplayer ||= "mplayer dvd://#{title_track}"
       command =  "#{play_this_mplayer} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"

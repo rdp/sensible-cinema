@@ -112,8 +112,11 @@ task 'create_distro_dir' do
   p 'created (still need to zip it) ' + dir_out
 end
 
+def cur_ver
+  File.read('VERSION').strip
+end
 task 'zip' do
-  name = 'sensible-cinema-' + File.read('VERSION').strip
+  name = 'sensible-cinema-' + cur_ver
   c = "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
   FileUtils.rm_rf name
@@ -121,11 +124,14 @@ task 'zip' do
 end
 
 task 'deploy' do
-  name = 'sensible-cinema-' + File.read('VERSION').strip + ".zip"
+  name = 'sensible-cinema-' + cur_ver + ".zip"
   p 'copying in'
   raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
   p 'copying over'
   raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@freemusicformormons.com:~/www/rogerdpackt28/sensible-cinema/releases\"")
+  # ugh ugh ughly
+  raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"rm \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
+  raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"ln -s \\~/www/rogerdpackt28/sensible-cinema/releases/#{name} \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
 end
 
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
