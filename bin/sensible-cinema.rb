@@ -98,7 +98,23 @@ module SensibleSwing
       jlabel.set_bounds(44,44,160,14)
       panel.add jlabel
       @starting_button_y = 120
-      @button_width = 400
+      @button_width = 400      
+      
+      ## BUTTONS ##
+      
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true)
+      @create_new_edl_for_current_dvd.on_clicked do
+        create_brand_new_edl
+      end
+
+      @open_list = new_jbutton("Open/Edit a Delete List", true)
+      @open_list.on_clicked {
+        dialog = FileDialog.new(self, "Pick file to edit")
+        dialog.set_directory EDL_DIR
+        filename = dialog.go
+        open_file_to_edit_it filename if filename
+      }
+      
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
       @create.on_clicked {
@@ -113,14 +129,6 @@ module SensibleSwing
 #      @watch_created_file = new_jbutton( "Watch edited copy of DVD", false).on_clicked {
 #        raise 'todo'
 #      }
-
-      @watch_unedited = new_jbutton("Watch DVD unedited (while also grabbing to hard drive--saves overall time)", true) # if you have a fast enough cpu, that is
-      @watch_unedited.on_clicked {
-        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
-        sleep 5 unless success_no_run
-        command = "smplayer #{wrote_to_here_fulli}"
-        system_non_blocking command
-      }
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
       @preview_section.on_clicked {
@@ -137,7 +145,7 @@ module SensibleSwing
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "preview (fast mode)", true).on_clicked {
+      @fast_preview = new_jbutton( "preview (fast smplayer mode)", true).on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
@@ -167,33 +175,31 @@ module SensibleSwing
           end
         }
       }
-
-      @open_list = new_jbutton("Open/Edit a Delete List", true)
-      @open_list.on_clicked {
-        dialog = FileDialog.new(self, "Pick file to edit")
-        dialog.set_directory EDL_DIR
-        filename = dialog.go
-        open_file_to_edit_it filename if filename
-      }
-
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true)
-      @create_new_edl_for_current_dvd.on_clicked do
-        create_brand_new_edl
-      end
-
-      @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
-        drive, volume, md5 = choose_dvd_drive
-        # display it, allow them to copy and paste it out
-        get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
-        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
-      }
       
-      @upload = new_jbutton( "Upload/E-mail suggestion/Submit anything", true).on_clicked {
+      @watch_unedited = new_jbutton("Watch full DVD unedited (while also grabbing to hard drive--saves overall time)", true) # if you have a fast enough cpu, that is
+      @watch_unedited.on_clicked {
+        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
+        sleep 5 unless success_no_run
+        command = "smplayer #{wrote_to_here_fulli}"
+        system_non_blocking command
+      }
+
+
+      # until I can let them know *why* they would ever need this button...
+      # @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
+      #   drive, volume, md5 = choose_dvd_drive
+      #   # display it, allow them to copy and paste it out
+      #   get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
+      #   This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
+      # }
+      
+      @upload = new_jbutton("Upload/E-mail suggestion/Submit anything", true).on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
       @play_smplayer = new_jbutton( "Play DVD unedited (smplayer)", true).on_clicked {
+        raise 'done'
         play_dvd_smplayer_unedited
       }
       
@@ -715,6 +721,29 @@ module Win
   ffi_convention :stdcall
   attach_function :get_process_id, :GetProcessId, [ :long ], :uint
 end
+
+
+
+class ShutdownHook 
+  include java.lang.Runnable
+          	def initialize( &block)
+          		super()
+          		@block=block
+          	end
+              def run
+                  @block[]
+              end
+end
+          
+          def at_exit2( &block)
+          	hook = ShutdownHook.new( &block)
+          	java.lang.Runtime.getRuntime.addShutdownHook(java.lang.Thread.new( hook ))
+          end
+
+at_exit2 {
+  system("taskkill /f /im mencoder.exe") # todo...
+  system("taskkill /f /im ffmpeg.exe")
+}
 
 if $0 == __FILE__
   a = SensibleSwing::MainWindow.new
