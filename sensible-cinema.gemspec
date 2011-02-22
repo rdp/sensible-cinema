@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors = ["Roger Pack"]
   s.date = %q{2011-02-22}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = ["monkey.png", "sensible-cinema-cli", "sensible-cinema.rb"]
+  s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
   s.extra_rdoc_files = [
     "ChangeLog",
@@ -28,9 +28,8 @@ Gem::Specification.new do |s|
     "TODO",
     "VERSION",
     "bin/monkey.png",
+    "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
-    "bin/sensible-cinema.rb",
-    "create or edit sensible cinema delete list files.bat",
     "development.txt",
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",

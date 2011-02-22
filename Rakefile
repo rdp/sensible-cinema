@@ -95,7 +95,7 @@ task 'bundle_dependencies' => 'gemspec' do
   
 end
 
-desc 'create distro zippable file'
+desc 'create distro zippable dir'
 task 'create_distro_dir' do
   raise 'need  bundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
