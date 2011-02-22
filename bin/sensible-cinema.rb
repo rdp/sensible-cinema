@@ -121,31 +121,35 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited realtime", false, true )
+      @mplayer_edl = new_jbutton( "Watch DVD on computer edited (realtime -- mplayer EDL)", false, true )
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
       
-#      @watch_created_file = new_jbutton( "Watch edited copy of DVD", false).on_clicked {
+      @play_smplayer = new_jbutton( "Watch DVD on computer unedited (realtime smplayer)", true).on_clicked {
+        play_dvd_smplayer_unedited
+      }
+      
+#      @watch_created_file = new_jbutton( "Watch edited file copy of DVD", false).on_clicked {
 #        raise 'todo'
 #      }
 
-      @preview_section = new_jbutton( "Preview a certain time frame (edited)", true )
+      @preview_section = new_jbutton( "Preview a certain time frame from file (edited)", true )
       @preview_section.on_clicked {
         do_copy_dvd_to_hard_drive true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
+      @preview_section_unedited = new_jbutton("Preview a certain time frame from file (unedited)", true)
       @preview_section_unedited.on_clicked {
         do_copy_dvd_to_hard_drive true, false, true
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched file preview time frame", true )
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "preview (fast smplayer mode)", true).on_clicked {
+      @fast_preview = new_jbutton( "fast preview all (smplayer EDL on file)", true).on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
@@ -176,7 +180,7 @@ module SensibleSwing
         }
       }
       
-      @watch_unedited = new_jbutton("Watch full DVD unedited (while also grabbing to hard drive--saves overall time)", true) # if you have a fast enough cpu, that is
+      @watch_unedited = new_jbutton("Watch full DVD unedited (while simultaneously grabbing file to hard drive)", true)
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
         sleep 5 unless success_no_run
@@ -196,11 +200,6 @@ module SensibleSwing
       @upload = new_jbutton("Upload/E-mail suggestion/Submit anything", true).on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
-      }
-      
-      @play_smplayer = new_jbutton( "Play DVD unedited (smplayer)", true).on_clicked {
-        raise 'done'
-        play_dvd_smplayer_unedited
       }
       
       @progress_bar = JProgressBar.new(0, 100)
