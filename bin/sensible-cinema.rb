@@ -223,9 +223,9 @@ module SensibleSwing
     end
     
     def create_brand_new_edl
-        drive, volume, md5 = choose_dvd_drive
-        name = get_user_input("Enter DVD name for #{volume}")
-        input = <<-EOL
+      drive, volume, md5 = choose_dvd_drive
+      name = get_user_input("Enter DVD name for #{volume}")
+      input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
@@ -244,12 +244,11 @@ module SensibleSwing
 # "closing thoughts" => "still a fairly dark movie, overall",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
         EOL
-        filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
-        filename.downcase!
-        File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
-        open_file_to_edit_it filename
-      end
-
+      filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
+      filename.downcase!
+      File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
+      open_file_to_edit_it filename
+    end
      
     alias system_original system
     
