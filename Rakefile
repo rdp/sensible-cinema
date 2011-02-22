@@ -76,7 +76,7 @@ task 'bundle_dependencies' => 'gemspec' do
      }
      to_here = "jruby-complete-1.5.5.jar"
      unless File.exist? to_here
-       url = "/downloads/1.6.0.RC1/jruby-complete-1.6.0.RC1.jar"
+       url = "/downloads/1.6.0.RC2/jruby-complete-1.6.0.RC2.jar"
        puts 'downloading in jruby-complete.jar file '  + url
        # jruby complete .jar file
        Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
@@ -146,7 +146,5 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
-  p 'ran', c
-
-  puts "don't forget to blog about it...UPDATE THE LINK"
+  p 'ran', c, 'did it work? vendor/cache should be propagated...'
 end

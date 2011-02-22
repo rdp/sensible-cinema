@@ -97,7 +97,6 @@
   post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
   move template .bat's to a template folder
     have them use a real version of jruby.jar (the right er version)
-    use wget to download [newer version of] jruby, then can use RC2+ then can rename bin's
   more from that guy, here or there
   force categories to match [?]
   K-Lite Standard codec pack might allow for DVD playback free [?]
