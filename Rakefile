@@ -62,7 +62,8 @@ task 'bundle_dependencies' => 'gemspec' do
    spec = eval File.read('sensible-cinema.gemspec')
    dependencies = spec.runtime_dependencies
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
-   Gem.loaded_specs.select{|name, spec| name == 'os'}
+   system("rm -rf ../cache.bak")
+   system("cp -r vendor/cache ../cache.bak") # for retrieval later
    Dir['vendor/cache/*'].each{|f|
     unless f =~ /jruby.*jar/ # that one takes too long to download...
       FileUtils.rm_rf f
@@ -87,7 +88,7 @@ task 'bundle_dependencies' => 'gemspec' do
         }
       }
      end
-     # create a shunt win32ole file, so that require 'win32ole' will work.
+     # create a shunt win32ole file, so that require 'win32ole' will just work.
      Dir.mkdir 'lib'
      File.write('lib/win32ole.rb', 'require "jruby-win32ole"')
   
@@ -138,7 +139,6 @@ desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean c
 task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release sigh
   raise unless system("git pull")
   raise unless system("git push origin master")
-  system("cp -r vendor/cache ../cache.bak")
   gems = Dir['pkg/*.gem']
   gems[0..-2].each{|f| File.delete f} # kill old versions...
   system("#{Gem.ruby} -S gem push #{gems[-1]}")
@@ -146,5 +146,5 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
-  p 'ran', c, 'did it work? vendor/cache should be propagated...'
+  p 'ran', c, 'did it work? vendor/cache should still have mencoder.exe...'
 end

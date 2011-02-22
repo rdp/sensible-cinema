@@ -360,6 +360,7 @@ module SensibleSwing
         p 'license exited early...'
         System.exit 1
       end
+      p 'confirmed'
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
