@@ -74,8 +74,10 @@
   an editor that can track and overlay...use OCR! :)
   youtube videos -> new account name
   youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
-    does it use inferred timestamp?  can I use that, too? [phase 1--publish simple javascript demo of it muting for awhile after startup]
-	phase 2: I can accomodate for pauses, too.
+    does it use inferred timestamp?  can I use that generally, too? [phase 1--publish simple javascript demo of it muting for awhile after startup]
+  	phase 2: I can accomodate for pauses, too.
+    phase 3: I can re-train based on events of stoppage
+    phase 4: I can constantly poll and react
   
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
