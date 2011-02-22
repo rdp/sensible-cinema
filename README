@@ -5,24 +5,27 @@ I.e. you can play or edit a DVD to "mute out" or skip certain scenes.
 
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
 
-To use it, basically install it, insert an original DVD that you want to see edited, then run sensible cinema.
-It will pop up some windows where you choose what to do.
+To use it, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
+It will pop up some windows where you choose what to do with that DVD.
 
-You can either watch it edited, or created an edited version of the DVD, on your hard drive.
-You could also burn that edited file to a new DVD, if you desire and have a DVD burner on your computer.
+You can either watch it edited in realtime, or created an edited video version of the DVD, on your hard drive.
+You could burn that edited file to a new DVD, if you desire and have a DVD burner on your computer,
+or just watch it there.
 
-How? Sensible is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos, by wrapping
-a few freely available open source programs [3] to accomplish the editing for you.  
+How? Sensible cinema basically takes the original DVD, slices out the bad parts, then gives you the result.
+It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
+a few freely available open source programs [3] to accomplish the editing for you.
+It also has a few "realtime viewing" options available, again based on open source software [3].
 
-Note that the whole process can at times take hours, so budget some time for it.
+Note that the whole process can take several hours, so budget some time for it.
 
-Also note that just because a video lacks profanity...does not immediately make it an inspiring experience.
+Also note that just because an edited video lacks profanity...does not immediately make it an inspiring experience.
 I'd suggest carefully evaluating your motives, and going with those.
 Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not wholesome! Be nice to yourself!
-dove.org is a good reference for discovering the "uplifting" level of movies [4].  And of course sensible cinema does help
-a little bit with that, too.
+
+dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].  
 Also note that even if you have an edited copy of a DVD floating around, if you have kids, chances are they
-will eventually find (and watch) the unedited originals, so be careful there, and do what is needful.
+will eventually find (and watch) the unedited originals, so be careful there, and do what is needed.
 
 Enjoy your movies!
 
@@ -39,21 +42,32 @@ Instructions available here: http://rogerdpack.t28.net/sensible-cinema/
 
 See the accompanied how_to_create_your_own_delete_lists.txt file.
 
+== Creating your own edited DVD ==
+
+If you so desire, you could create an edited DVD from the edited file that sensible cinema gives you.
+See http://www.youtube.com/watch?v=lBE4WlUM5Qs for how to create a DVD from a video file in windows
+See 
+http://rogerdpack.t28.net/sensible-cinema/how to create a dvd from a file in windows using dvd flick.avi
+for a full size version of that video.  It just shows how to use the free http://www.dvdflick.net to burn a video file to a disk. 
+See also LICENSE.TXT for some caveats there.
+
+Windows DVD Maker might help, too.
+
 == FAQ ==
 
 Q. How do I watch these on my TV, not just on my computer?
-A. One option is you could burn a new DVD with it.  See http://rogerdpack.t28.net/sensible-cinema for instructions.
-  You might be able to move your laptop over to near your TV and hook it in from your laptop.
+A. One option is you could burn a new DVD with the edited video file.  See "Creating your own edited DVD"
+  You also might be able to move your laptop over to near your TV and hook it in from your laptop.
   Or buy a very long cord and plug it in as an extra monitor from your desktop/laptop.
   You could buy a projector, attach it to your laptop, and then use that to display the video.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
   I might come up with a competitor to it if desired).
   If you're really good you could try VGA over an Ethernet cable, too: 
-  http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
+  http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279  
 
-Q. I want to give an edited DVD to a friend, how do I do that?
-A. Give them the original DVD and a link to sensible-cinema's website :)
+Q. I want to give an edited DVD to a friend, how do I do that well?
+A. Give them the original DVD and a link to sensible-cinema's website so they can download it.
    You may want to loan them a DVD burner if they don't have one and want one, too.
 
 == Caveats ==
@@ -66,16 +80,15 @@ Fortunately only one person has to do it, once, for everybody to benefit, and th
 editing process is fairly easy.
 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off, 
-so recommend always clean your discs!
+so we recommend to always clean your discs!
 
 == Motivation ==
 
 The initial motivation for the project was that I dislike deity profanity in movies.
 And really any profanity is jarring, if you're not used to it in real life, and can
 put you a bit on edge when you watch a movie.  
-Also sometimes only certain scenes (read sex scenes) in movies are offensive to me,
-and don't contribute to the overall plot, and I'd rather not watch a movie that has them.  
-But I still want to be able to watch movies at all :)
+Also sometimes producers put in certain scenes (read: sex scenes) just to get a rating.
+I don't want just those scenes, but still want to be able to watch the movies :)
 
 I tried Clearplay (a realtime filtering DVD player)
 but (for me) it didn't seem to cut it.  It costs money monthly (I'm too cheap to pay--and many
@@ -86,43 +99,21 @@ expected).  Others have noted that sometimes their edit timings (or perhaps DVD 
 are slightly mismatched so that it will mute sections just previous to profanity, while
 not muting the profanity itself.  Clearplay apparently also runs a rather 
 confusing subscription policy, I'm told [1], as well as selling DVD players that 
-seem to be a bit lackluster at times [2].
+are a bit lackluster at times [2].
 Clearplay also has little community collaboration/review (though you can email them feedback).
 They no longer seem to have a "request a filter" option, though they used to.
 They also don't have filters for all movies that I, at times, would like to watch edited (Condorman and Tron
 lacking last time I checked...probably because they are too
 obscure.) Also, some people watch movies only on computer, and they
-no longer have a computer player, only DVD players.  They also don't edit streamed
+no longer have a computer player, only hardware DVD players.  They also don't edit streamed
 online movies either (last time I checked, anyway).  So overall I
-wanted to build my own that overcame some of these hurdles and was
-also more accessible/open/cheap.
+wanted to build my own that overcame some of these hurdles.
 I also emailed them once (2003?) to inform them I'd be making an open source
 equivalent, and haven't heard back from them, which I assume to mean implicitly
-they're all for the idea :)
+they're all for it :)
 
-I also wanted to get a prototype out there of some of my ideas so that
-others can't patent them and pretend that they were first inventors :)
-
-So originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
-edited" (it uses/used screen snap-shotting and track, using OCR, the on-screen
-timestamp of the player, monitor it for specific times, and react appropriately).
-However, this functionality, though working, is disabled currently for patent
-concerns.  
-Some older released versions had it enabled, but not latest releases.
-Then I realized I could basically create the same effect using
-(more patent friendly) pre-processing and/or deletion lists (basically 
-Edit Decision Lists enforced using playlists for
-VLC, like play from second x to y, then from x to mu, etc.).
-I just pass in a playlist, it does all the work for me, without real-time tracking.
-There are a few released versions that did this.
-Then it occurred to me that you could grab the several clean segments
-off a DVD, and piece them together to create an edited copy.  This avoids 
-realtime tracking.  This seems reasonably patent friendly, so it is
-what I release here. 
-I also added mplayer functionality later, which does real-time tracking, as well.
-The playlist option is currently disabled, as it was deemed too user-non-friendly.
-
-See also the LICENSE.TXT file for more legal information.
+I also wanted to get a prototype out there of some of these ideas so that
+others can't later patent them and pretend that they were first inventors :)
 
 [1] http://www.amazon.com/gp/product/B002YPRW7S/ref=cm_rdp_product
  "...I agree that it is not made clear on their website that if you don't continue your membership, you can't continue 
@@ -132,7 +123,31 @@ See also the LICENSE.TXT file for more legal information.
  "We bought a clearplay player about 2 years ago. It worked great, until it just stopped working. I called their support line, 
   and they told us the model we got was defective, and that the new one was much better and we could get it at a discount, but 
   the next one just died also."
-  
+
+== History ==
+
+Originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
+edited" (it uses/used screen snap-shotting and tracks, using OCR, the on-screen
+timestamp of the player, monitors it for specific times, and reacts appropriately).
+However, this functionality, though working and available, is disabled currently for potential patent
+concerns.
+Some older released versions had it enabled, but not the latest releases.
+Then I realized I could basically create the same effect using the
+(deemed more patent friendly) pre-processing (slice out bad scenes) and/or deletion lists.  It basically was
+Edit Decision Lists enforced using playlists and
+VLC.  I.e. play from second x to y, now play then from z to second mu, muted, now from q to r, etc.
+I just passed VLC a playlist, it did all the work for me, without any necessary real-time tracking.
+There are a few released versions that did this.
+Then it occurred to me that you could grab the several clean segments
+off a DVD, and piece them together to create an edited version.  This also avoids 
+realtime tracking, so I included it.
+I also added some mplayer EDL playback functionality later.
+The playlist option is disabled in later releases, as it was deemed too user-non-friendly.
+
+You can see a full list of features that have already been published and demonstrated
+in the file ChangeLog.txt.  Each feature works in some released version of sensible-cinema
+though some features or absent in later versions.  The changelog lists all of the features.
+
 == License ==
 
 See the included LICENSE.TXT file for licensing and usage terms (basically it's under gplv3 for all the source).
@@ -141,9 +156,11 @@ typically released under their own gpl v2 license.
 
 All files (c) 2010 Roger Pack
 
+See the accompanied LICENSE.TXT file for more legal information, before using the product.
+
 == Related ==
 
-The concept isn't too novel.  Some other previously existing related type examples:
+The concepts aren't novel.  Some other previously existing related type examples:
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited) movies.
@@ -209,20 +226,14 @@ You try to play back a sensible cinema-ized video file and it plays back without
 
 == Thanks ==
 
-Thanks to Jarmo for the win32-screenshot gem, mini_magick gem authors, jruby guys, etc.  
+Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
 The combination of these tools made programming this actually something of a pleasure.
 
 == Feedback/Development ==
 
 Feedback, including feature requests, comments, etc. welcome:
 
-(for example it's windows only currently--if you want that changed, send an email, etc.):
-
 Mailing List: http://groups.google.com/group/sensible-cinema
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
-See development.txt
-
-You can see a full list of features that have already been published and demonstrated
-in the file ChangeLog.txt.  Each feature works in some released version of sensible-cinema
-though some features or absent in later versions.  The changelog lists all of the features.
+See development.txt / github.com/rdp
