@@ -20,8 +20,7 @@ This file is part of Sensible Cinema.
 print 'Loading Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 require 'sane' # failure here means you haven't bundled your dependencies...[rake task]
-
-raise 'need newer jruby!' unless RUBY_DESCRIPTION =~ /1.6.\d/ # sanity check
+raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2'
 
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
