@@ -4,6 +4,7 @@
   
   email jon
   
+  
 == slightly lower than that, only somewhat ordered ==
   
   agree to abide, shouldn't in the US [?]
@@ -60,14 +61,6 @@
     own really long url movie bad scene skipper sensible cinema.t28.net add in there content editor or something lots of google SEO happy words
     actually, just use sourceforge for hosting...
   propaganda-ize
-    advertise in LDS newsgroups et al, for beta testers?
-    advertise in christian places
-    blogs that have ever mentioned clearplay :P
-    free google adwords (?)
-    advertise ruby flow
-    only after new year, new LLC
-    http://ldscinema.blogspot.com/
-    advertise facebook (at least their page :) [?]
   fast preview mode: look for modifications to file, kill mplayer instances for them :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   an editor that can track and overlay...use OCR! ? :)
@@ -77,7 +70,13 @@
   	phase 2: I can accomodate for pauses, too.
     phase 3: I can re-train based on events of stoppage
     phase 4: I can constantly poll and react
-  
+    
+==undecided ==
+  rebrand dvd player from MS
+  buy visual studio?
+  note k-lite , pay, or install DVD player from CD from dvd drive/new computer
+  pedir edit lists from that place...or pay...or other places ?
+
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
   github issues [maybe just add here]
@@ -461,6 +460,8 @@ create a "book edit list" (word x is at position y...)
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...
 
+do the same, but for books...also optimize them for reading through full volumes...you don't want a summary...don't want the title, know it's librivox...maybe say chapter x, that's it.  Probably start by just editing out the profanity, though :P Also do the Book of Mormon
+
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
 @jruby: system("mencoder") from a button doesn't get interrupted by an exception [!]
@@ -474,3 +475,6 @@ something like you watch it *with* you friends and can all chat together...hmm..
      # :1
     
     message confusing :)
+
+a boxee api? 
+I *could* record netflix movies, then edit those manually (or mapped-ly)...meh clearplay needs some niche--we don't have each other after all.
