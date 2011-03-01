@@ -10,7 +10,7 @@
   
   use DVD navigator?
     wow terrifying...mostly
-   get it working: , update video card drivers, uninstall logmein [?] ????
+    get it working: , update video card drivers, uninstall logmein [?] ????
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
     dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
@@ -25,6 +25,8 @@
 
 == yes do, unordered ==
 
+ note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
+ compare timings, get more (byu.tv--buy dvd's?)
  note nero
  amazon player, just in case ;P, also note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing right...
  one button is broken...play with [s]mplayer unedited [?]
