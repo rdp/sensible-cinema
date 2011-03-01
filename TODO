@@ -10,27 +10,28 @@
   
   use DVD navigator?
     wow terrifying...mostly
-    get it working: , update video card drivers, uninstall logmein [?] ????
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
     dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     does this line up right? can it work, at all?
-    does blu-ray work with my C++ project?
+    add button
     
   edl straight DVD mplayer replay:
     work cars, monsters inc
+  compare DVD timings with physical player timings
+
+== blocked ==
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
-  compare various computer DVD timings with physical player timings
 
 == yes do, unordered ==
 
  note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
- compare timings, get more (byu.tv--buy dvd's?)
+ compare timings, get more (byu.tv--buy dvd's?, various others)
+   make it able to "map" to netflix' timing, for patent sake
  note nero
- amazon player, just in case ;P, also note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing right...
- one button is broken...play with [s]mplayer unedited [?]
- jonah DVD timings at work, various DVD players [?]
+ amazon player descriptor, just in case ;P, also note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing right...
+ that one button is broken...play with [s]mplayer unedited [?]
   "sorry, cannot run without"
   bring back batch file mplayer
   "understand and accept the implications"
@@ -75,22 +76,19 @@
   youtube videos -> new account name
   youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
     does it use inferred timestamp?  can I use that generally, too? [phase 1--publish simple javascript demo of it muting for awhile after startup]
-  	phase 2: I can accomodate for pauses, too.
-    phase 3: I can re-train based on events of stoppage
-    phase 4: I can constantly poll and react
-    
-==undecided ==
+  demo of tracking VLC += system keys (cheap enough should be easy)
+  note k-lite , pay, or install DVD player from CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
   rebrand dvd player from MS
-  add button for same
-  buy visual studio?
-  note k-lite , pay, or install DVD player from CD from dvd drive/new computer
-
-
+    
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  does blu-ray playback work with my C++ project?
+  javascript API 
+    phase 2: I can accomodate for pauses, too.
+    phase 3: I can re-train based on events of stoppage
+    phase 4: I can constantly poll and react
   github issues [maybe just add here]
   more from that guy urug
-  demo of tracking VLC += system keys
   post a demo of it playing back blu-ray edited, +- projector, +- playon (?)
   fantom edit DL
   mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
