@@ -2,6 +2,20 @@
   
 == up next release ==
   
+  update tons of verbiage
+    changelog/full feature list
+      note phantom rumored edited streamer
+  "for instance one author lives in the US, has never made"
+  "don't do it"
+    rename the file to is_it_legal_to_copy_dvds, reference it
+  "we know x, y are not l..."
+  "sorry, cannot run without"
+  "understand and accept the implications"
+  add a "non work sponsored" note
+  agree to abide, shouldn't in the US [?]
+  note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
+  note nero
+  note youtube video url's
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   
@@ -11,27 +25,25 @@
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
     dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP requires the bad way gah! what the...
     does this line up right? can it work, at all?
-    add new button for it
-  changelog/full feature list
-    note phantom rumored edited streamer
+      add new button for it LOL
     
 == blocked ==
 
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
 
-== yes do, unordered [normal, patentzy] ==
+== yes do, semi-ordered [normal, patentzy] ==
 
   === patentzy yes and no do ===
-    amazon player descriptor, just in case ;P, also note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing right...
+    amazon player descriptor, just in case ;P, 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
       phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-    make it able to "map" to a fake netflix' timing, for patent sake, just rough demo/unit test.
+    make it able to "map" to a fake netflix' adjusted timing, for patent sake, just rough demo/unit test.
     can jerk mouse only every so often, and/or not at all 
     create video demo of tracking VLC += system keys (cheap enough should be easy)
     can scan descriptors to "pick the right one"
-    edited streamer demo (the phantom one)
+    edited streamer demo (the rumor guy demo)
     incorporate the DL translator from the BYU-I fella
     post a demo of it playing back blu-ray edited, +- projector, +- playon (?)
     fix 9 digit the fancy shmancy way :P
@@ -44,27 +56,20 @@
     does blu-ray playback work with my C++ project?
     beep at them/warn when not tracking [?]
       default on...hmm
+    batch file visual C DVD player?
 
-  note youtube video url's
+  should both mute and blank when blanking
+    make optional though? hmm time for a third type...
+  powerdvd timings jonah
   create new DL's to a separate, new folder
   warn on "create new list" if a previous one exists (just a dismiss dialog, then still allow them to create a new one)
-  "for instance one author lives in the US, has never made"
-  "don't do it"
-    rename the file to is_it_legal_to_copy_dvds, reference it
   figure out which patenzy to actually do/not do
-  add a "non work sponsored" note
-  "we know x, y are not l..."
   force vlc player installation, too :P
-  agree to abide, shouldn't in the US [?]
   edl straight DVD mplayer replay:
     work cars, monsters inc
   compare DVD timings with physical player timings
- note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
- note nero
- that one button is broken...play with [s]mplayer unedited [?]
-  "sorry, cannot run without"
-  bring back batch file mplayer :)
-  "understand and accept the implications"
+  that one button is broken...play with [s]mplayer unedited [?]
+  bring in batch file mplayer :)
   tool tips for all buttons...tweak naming, too :P do something!
   it should clear smplayer options on startup always, just in case
   the "play DVD with smplayer unedited" prompts for delete list x2
@@ -89,6 +94,7 @@
       all only after linearize, new year, frame accurate
   ask for more beta testers for use, ask for more beta testers for creation 
     facebook? lds lists?
+      after cleanup the view (tooltips)
   fast preview: change it to be aggressive sometimes yes, other times no
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   beta release: rinse and repeat with various ppl
@@ -98,13 +104,11 @@
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   youtube videos -> new account name
-  note k-lite/CCCP, pay, or re-install DVD player from installation CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
   rebrand dvd player from MS
-  buy delete lists from x,y,z [?]
+    note k-lite/CCCP, pay, or re-install DVD player from installation CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
+  try buy delete lists from x,y,z [?]
   propaganda-ize (other file)
   note: can do the two types of preview at same time...concurrently...to save time...
-  should both mute and blank when blanking
-    make optional?
   vendorize ffmpeg, then they don't have to install imagemagick...
   mplayer EDL while grabbing, from grabbed.  
     
@@ -117,6 +121,7 @@
       phase 4: I can constantly poll and react
     post a demo of it streaming to a console device
 
+  note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing just right...(is this what mplayer does)
   check if the python one lines up or not/ping them on it
   an spiffy editor that can track and easily use overlay...use OCR! ? :)
   github issues [maybe just add them all here]
