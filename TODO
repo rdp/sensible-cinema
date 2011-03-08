@@ -14,32 +14,45 @@
     add new button for it
   changelog/full feature list
     note phantom rumored edited streamer
+    
 == blocked ==
 
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
 
-== yes do, unordered ==
+== yes do, unordered [normal, patentzy] ==
 
   === patentzy yes and no do ===
-  fix 9 digit the fancy shmancy way :P
-  amazon player descriptor, just in case ;P, also note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing right...
-  make it so it can suck in from "another wiki" the DL's, at package time
-  youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
-    does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-  make it able to "map" to a fake netflix' timing, for patent sake, just rough demo/unit test.
-  can jerk mouse only every so often, and/or not at all 
-  create video demo of tracking VLC += system keys (cheap enough should be easy)
-  can scan descriptors to "pick the right one"
-  edited streamer demo (the phantom one)
-  beep at them when not tracking [?]
-    default on...hmm
-  incorporat the DL translator from the BYU-I fella
-  post a demo of it playing back blu-ray edited, +- projector, +- playon (?)
+    amazon player descriptor, just in case ;P, also note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing right...
+    make it so it can suck in from "another wiki" the DL's, at package time, somehow
+    youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
+      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
+    make it able to "map" to a fake netflix' timing, for patent sake, just rough demo/unit test.
+    can jerk mouse only every so often, and/or not at all 
+    create video demo of tracking VLC += system keys (cheap enough should be easy)
+    can scan descriptors to "pick the right one"
+    edited streamer demo (the phantom one)
+    incorporate the DL translator from the BYU-I fella
+    post a demo of it playing back blu-ray edited, +- projector, +- playon (?)
+    fix 9 digit the fancy shmancy way :P
+    post a demo of it playing back blu-ray edited, local computer, projector
+    infer from url for netflix
+    post some playon.tv demo screencast..this should prove all shouldn't it [?]
+    can "control mouse" to click player mute button, and also drag it to change location
+    post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
+    blu-ray player descriptor
+    does blu-ray playback work with my C++ project?
+    beep at them/warn when not tracking [?]
+      default on...hmm
 
-
-  figure out which patenzy to actually do
-  add "non work sponsored" note
+  note youtube video url's
+  create new DL's to a separate, new folder
+  warn on "create new list" if a previous one exists (just a dismiss dialog, then still allow them to create a new one)
+  "for instance one author lives in the US, has never made"
+  "don't do it"
+    rename the file to is_it_legal_to_copy_dvds, reference it
+  figure out which patenzy to actually do/not do
+  add a "non work sponsored" note
   "we know x, y are not l..."
   force vlc player installation, too :P
   agree to abide, shouldn't in the US [?]
@@ -57,12 +70,11 @@
   the "play DVD with smplayer unedited" prompts for delete list x2
   fix the "play previously credited edited file for current DVD" button
   a button for "just play a dvd unedited" for normal users
-  vendor smplayer * 2
+  vendorize smplayer * 2
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
   port to linux
     port to OS X
-      when have a computer for the same :P
   "release" it to more developers
     plug.org, more rubyists?
     after OS X :)
@@ -90,43 +102,36 @@
   rebrand dvd player from MS
   buy delete lists from x,y,z [?]
   propaganda-ize (other file)
-  blu-ray player descriptor
   note: can do the two types of preview at same time...concurrently...to save time...
   should both mute and blank when blanking
     make optional?
   vendorize ffmpeg, then they don't have to install imagemagick...
-  mplayer EDL while grabbing, from grabbed.
-  
+  mplayer EDL while grabbing, from grabbed.  
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  == patentizable never do ==
+    javascript API
+      phase 2: I can accomodate for pauses, too.
+      phase 3: I can re-train based on events of stoppage
+      phase 4: I can constantly poll and react
+    post a demo of it streaming to a console device
+
   check if the python one lines up or not/ping them on it
   an spiffy editor that can track and easily use overlay...use OCR! ? :)
-  does blu-ray playback work with my C++ project?
-  javascript API 
-    phase 2: I can accomodate for pauses, too.
-    phase 3: I can re-train based on events of stoppage
-    phase 4: I can constantly poll and react
   github issues [maybe just add them all here]
   more from that guy urug
-  create fantom DL
+  create fantom edit DL
   mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
     frame accurate splitter naive
   can jerk mouse more often closer to failure sections...
-  post a demo of it playing back blu-ray edited, local computer, projector
-  infer from url for netflix
-  post some playon.tv demo screencast..this should prove all shouldn't it [?]
-  can "control mouse" to click player mute button, and also drag it to change location
-  post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
   move template .bat's to a template folder
     have them use a real version of jruby.jar (the right er version)
   force categories to match [?]
-  post a demo of it streaming to a console device
   a fully javascript version...hmm...maybe an applet overlay [post 2020 ?]
   alpha transparent "grey" overlay (for partial parts of the window)
   post video demo of it selecting categories....
   certain sections: can speed them up, to make them less scary or what not, but you can still see what's happening. Not sure how audio could/should apply here.
-  donate to mplayer, others [?] [VLC ja, which includes libdvdcss, h264 kind of] dvd flick, dns hosting, ac3filter
   google android TV app/iTV ?
   somehow map DVD's to the "subdownloader" style subtitles?
     use their md5 overall too?
@@ -134,18 +139,15 @@
   don't exit if a timestamps has same beginning as end, but do warn
   a really snazzy pro website
   the final "edited.avi" really "could/should" be playable in WMP...
-    but double check if they can watch it, either way.
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
         do this after frame accurate
-  cleanup look of readme file
-  can convert auto to JSON, too, for consumption by other players [?]
-  super easy submit for DL's
-  replay on iphone edited
+  super easier submit for DL's
+  replay on iphone edited somehow
   linearize edl's
     don't use them linear, just linearize
-  monkey.png is in bin...
+  monkey.png is in bin...move it
   better icon
   @mplayer: seeking to within EDL failz
   can make community overlay "comments" somehow or other/whatever cyberlink does :)
