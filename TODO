@@ -459,6 +459,8 @@ take out all require 'rubygems'ses...
 
 package with portable imagemagick (meh)
 
+warn them when it looks like screen capture is very painful/expensive [is it too bad anyway, though] ? iff necessary
+
 create a "book edit list" (word x is at position y...)
 
 @dvd flick: 
