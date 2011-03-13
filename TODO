@@ -20,12 +20,15 @@
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   
   use DVD navigator?
-    wow terrifying...ly buggy...
+    wow terrifying...
     http://msdn.microsoft.com/en-us/library/dd388584(v=VS.85).aspx
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
-    dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP requires the bad way gah! what the...
+    dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     does this line up right? can it work, at all?
       add new button for it LOL
+      update the error messages...
+	  
+	  can't write to printf...figure it out...
     
 == blocked ==
 
@@ -58,6 +61,7 @@
       default on...hmm
     batch file visual C DVD player?
 
+  force install of VLC
   should both mute and blank when blanking
     make optional though? hmm time for a third type...
   powerdvd timings jonah
