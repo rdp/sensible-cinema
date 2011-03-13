@@ -31,9 +31,7 @@
 	  can't write to printf...figure it out...
 	  see if http://dslweb.nwnexus.com/~ast/dload/guicon.htm answers 
 	  refs:
-	    http://stackoverflow.com/questions/587767/how-to-output-to-console-in-c-windows (good one, right answer)
-  	    also http://stackoverflow.com/questions/250404/where-does-console-writeline-go-in-debug
-	  C#: http://www.google.com/search?q=output+to+console+c%23+windows+app&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a
+	    http://stackoverflow.com/questions/587767/how-to-output-to-console-in-c-windows (good one, right answer, needs clarification if I get that stuff working though)
     
 == blocked ==
 
