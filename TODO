@@ -64,6 +64,13 @@
       default on...hmm
     batch file visual C DVD player?
 
+
+
+  "have read and accept readme, legal_conerns**"
+  "each with its own copyright and authorship and responsibility"
+  include copy of gplv1, gplv2
+  note blu-ray complaint, plus didn't he have one other?
+  note history: "after mplayer got EDL playback, some other did too [myth?], the python one was created too, VLC could work with playlists"
   force install of VLC
   should both mute and blank when blanking
     make optional though? hmm time for a third type...
@@ -130,6 +137,7 @@
       phase 4: I can constantly poll and react
     post a demo of it streaming to a console device
 
+  note patentzy: "mine is positive parts"
   note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing just right...(is this what mplayer does)
   check if the python one lines up or not/ping them on it
   an spiffy editor that can track and easily use overlay...use OCR! ? :)
