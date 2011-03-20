@@ -28,12 +28,10 @@
     dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     does this line up right? can it work, at all?
       add new button for it LOL
-      update the error messages...
-	  
-	  can't write to printf...figure it out...
-	  see if http://dslweb.nwnexus.com/~ast/dload/guicon.htm answers 
-	  refs:
-	    http://stackoverflow.com/questions/587767/how-to-output-to-console-in-c-windows (good one, right answer, needs clarification if I get that stuff working though)
+      lodo:
+        update its error messages...
+        show time remaining, too, and less ugly [?]
+        can come out of full screen more easily :P
     
 == blocked ==
 
