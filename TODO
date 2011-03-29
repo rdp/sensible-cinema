@@ -39,6 +39,7 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
+  try buy delete lists from x,y,z [?]
   @develoeprs what bat fiels do
   note hadnbrake, legal at least for those fre movies
   full pass re-write of README, legal "definitely definitely not legal"
@@ -125,7 +126,6 @@
   youtube videos -> new account name
   rebrand dvd player from MS
     note k-lite/CCCP, pay, or re-install DVD player from installation CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
-  try buy delete lists from x,y,z [?]
   propaganda-ize (other file)
   note: can do the two types of preview at same time...concurrently...to save time...
   vendorize ffmpeg, then they don't have to install imagemagick...
@@ -134,7 +134,14 @@
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
-  purchase forever strong, compare timestamps with amazon VoD, too, also jonah  amazon VoD [if desired?]
+  clear up confusion about how to actually install it.
+  Noted (I should probably not display that message unless java isn't installed).
+  note how to do pull request for non users :P
+  make .bat file friendlier for case of accidental download
+  note "this is the full list--your help is wanted/needed"
+  note that it's still alpha!
+
+  purchase forever strong, compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
   can have user submittable bookmarks, kind of like how espn3 does their playbacks.
   == patentizable never do ==
     javascript API
