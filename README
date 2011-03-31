@@ -8,9 +8,8 @@ This allows you to sit back and relax as you watch a more "sensiblized" showing 
 To use it, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
 It will pop up some windows where you choose what to do with that DVD.
 
-You can either watch it edited in realtime, or created an edited video version of the DVD, on your hard drive.
-You could burn that edited file to a new DVD, if you desire and have a DVD burner on your computer,
-or just watch it there.
+You can either watch it edited in realtime from the DVD, or created an edited 
+video version of the DVD (an sensibilized video file), on your hard drive.
 
 How? Sensible cinema basically takes the original DVD, slices out the bad parts, then gives you the result.
 It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
@@ -45,26 +44,24 @@ See the accompanied how_to_create_your_own_delete_lists.txt file.
 
 == Creating your own edited DVD ==
 
-I don't know I've never burned my own DVD.
-Windows DVD Maker might help, http://www.dvdflick.net is free and might help.
+I don't know how I've never burned a DVD.
+Windows DVD Maker might help, http://www.dvdflick.net might help.
 See also LICENSE.TXT for some caveats you should understand first.
 
 == FAQ ==
 
 Q. How do I watch these on my TV, not just on my computer?
-A. One option is you could burn a new DVD with the edited video file.  See "Creating your own edited DVD"
-  You also might be able to move your laptop over to near your TV and hook it in from your laptop.
-  Or buy a very long cord and plug it in as an extra monitor from your desktop/laptop.
-  You could buy a projector, attach it to your laptop, and then use that to display the video.
+A. You also might be able to move a laptop over to near your TV and hook it in from your laptop.
+  Or buy a very long monitor cord and plug it in from your desktop/laptop.
+  You could also buy a projector, attach it to your laptop, and then use that to display the video.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
-  I might come up with a competitor to it if desired).
-  If you're really good you could try VGA over an Ethernet cable, too: 
+  I might come up with a competitor to it if desired, as it costs).
+  If you're really ambitious and bleeding edge you could even try VGA over an Ethernet cable, too: 
   http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279  
 
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original DVD and a link to sensible-cinema's website so they can download it.
-   You may want to loan them a DVD burner if they don't have one and want one, too.
+A. Give them the original DVD and a link to sensible-cinema's website so they can download and use it.
 
 == Caveats ==
 
