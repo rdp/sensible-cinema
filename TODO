@@ -137,11 +137,12 @@
   vendorize ffmpeg, then they don't have to install imagemagick...
   mplayer EDL while grabbing, from grabbed.  
   check why out of sync my turn on earth on blacky MPH-HC
+  swing "edit ling/add new line" that makes it trivial :)
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
-  clear up confusion about how to actually install it.
-  Noted (I should probably not display that message unless java isn't installed).
+  uservoice ?
+  Noted (I should probably not display that message unless java isn't installed). [did I get all feedback from that guy?]
   note how to do pull request for non users :P
   make .bat file friendlier for case of accidental download
   note "this is the full list--your help is wanted/needed"
