@@ -18,9 +18,9 @@
   note youtube video url's
   pull in issues
   pull in from latest guy/urug 
+  DRY up README/www
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
-  @www page don't mention burn [?]
   fix known bugz...
   we stopped using VLC playlist mode because the timing was slightly inaccurate.
   use DVD navigator?
@@ -46,12 +46,12 @@
   "I accept the terms in all of the license agreements"
   
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-  @developers what bat fiels do
+  @developers what bat files do
   note handbrake, legal at least for those free movies
   full pass re-write of README, legal "definitely definitely not legal"
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   
-  === patentzy yes and no do ===
+  === patentzy yes and no do [some no do are in other section] ===
     amazon player descriptor, just in case ;P, 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
@@ -72,6 +72,8 @@
     beep at them/warn when not tracking [?]
       default on...hmm
     batch file visual C DVD player?
+    can jerk mouse more often closer to failure sections...
+    can pull from imdb at package time [?]
 
   donate to the most popular sourceforges...if I don't remember having done so already :P
   donate menumeter
@@ -90,11 +92,11 @@
   force vlc player installation, too :P
   edl straight DVD mplayer replay:
     work cars, monsters inc
-  compare DVD timings with physical player timings
   that one button is broken...play with [s]mplayer unedited [?]
   bring in batch file mplayer :)
   tool tips for all buttons...tweak naming, too :P do something!
   it should clear smplayer options on startup always, just in case
+  note abandoned vlc timings issues
   the "play DVD with smplayer unedited" prompts for delete list x2
   fix the "play previously credited edited file for current DVD" button
   a button for "just play a dvd unedited" for normal users
@@ -112,7 +114,7 @@
     my dvd's (with loose timestamps...)
       cars backport real EDL :)
     enlist chris' help to create
-    friend dvd's, me create Delete List [?]
+    friend's dvd's, me create Delete List [?]
     partner for filters (Jon, Karlie [any family interested], and for beta-testing)
       all only after linearize, new year, frame accurate
   ask for more beta testers for use, ask for more beta testers for creation 
@@ -125,7 +127,7 @@
     actually, just use sourceforge for hosting...maybe google SEO friendly :) ???
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
-  youtube videos -> new account name
+  youtube videos -> new account name, remove the one [?]
   rebrand dvd player from MS
     note k-lite/CCCP, pay, or re-install DVD player from installation CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
   propaganda-ize (other file)
@@ -135,10 +137,6 @@
   check why out of sync my turn on earth on blacky MPH-HC
   swing "edit line/add new line" that makes it trivial :)
   note "pay us/somebody to do it for you on the google group"?
-    
-== DVD backlog (totally unordered, some very low prio, basically all never do) ==
-
-  uservoice ?
   Noted (I should probably not display that message unless java isn't installed). [did I get all feedback from that guy?]
   note how to do pull request for non users :P
   make .bat file friendlier for case of accidental download
@@ -146,6 +144,18 @@
   note that it's still alpha!
 
   purchase forever strong, compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
+  note patentzy: "mine is positive parts"
+  more from that guy urug
+  create fantom edit DL
+  github issues [maybe just add them all here]
+  calculating disk's unique id... -> note on gui...
+  don't exit program if they don't select a disk originally :)
+  split EDL's themselves somehow into their own project/LLC...
+    
+== DVD backlog (totally unordered, some very low prio, basically all never do) ==
+
+  super spiffy editor that tracks timestamps for you for new lines
+  uservoice ?
   can have user submittable bookmarks, kind of like how espn3 does their playbacks.
   == patentizable never do ==
     javascript API
@@ -153,29 +163,25 @@
       phase 3: I can re-train based on events of stoppage
       phase 4: I can constantly poll and react
     post a demo of it streaming to a console device
+    post video demo of it selecting categoriesi unit test 
 
-  note patentzy: "mine is positive parts"
   note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing just right...(is this what mplayer does)
+  don't exit if a timestamps has same beginning as end, but do warn (is this a problem still?)
   check if the python one lines up or not/ping them on it
   an spiffy editor that can track and easily use overlay...use OCR! ? :)
-  github issues [maybe just add them all here]
-  more from that guy urug
-  create fantom edit DL
   mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
     frame accurate splitter naive
-  can jerk mouse more often closer to failure sections...
+    only if asked?
   move template .bat's to a template folder
     have them use a real version of jruby.jar (the right er version)
   force categories to match [?]
   a fully javascript version...hmm...maybe an applet overlay [post 2020 ?]
   alpha transparent "grey" overlay (for partial parts of the window)
-  post video demo of it selecting categories....
   certain sections: can speed them up, to make them less scary or what not, but you can still see what's happening. Not sure how audio could/should apply here.
   google android TV app/iTV ?
   somehow map DVD's to the "subdownloader" style subtitles?
     use their md5 overall too?
   advertise related bounties to their various groups
-  don't exit if a timestamps has same beginning as end, but do warn
   a really snazzy pro website
   the final "edited.avi" really "could/should" be playable in WMP...
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
@@ -194,15 +200,13 @@
     auto-upload?
   mencoder playlist mode possible?
   just youtube for the various videos
-  don't exit program if they don't select a disk originally :)
-  button start EDL playback from dvd here [?] (for create mode)
+  add button start EDL playback from dvd here [?] (for create mode)
   re-play as EDL button for both modes--describe on the how to better
   fix prio for first ffmpeg instance not being settable [huh?]
   calculating md5...do this while they choose it [low prio] :)
   @dvd flick: right click on a movie file "write this file to DVD .iso as only title (no menu), burn this file as DVD only title (no menu)"
   @dvd flick: default should not be to loop
   @dvd flick: use first aspect ratio by default.
-  burn from files to disc
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
   integrate sub-titles-zy-er (like the Python fella)
     or maybe...use theirs?
@@ -213,14 +217,11 @@
     can play "this section then that, with this one's audio
   disallow:
     "0:45:00.0" , "00:450:10.0",  # second 2700
-  a website that gives you a "wholesome meter" ? 
   md5 and verify the fulli version... [?]
     only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
-  frame accurate splitter could be optimized, perhaps, split wise, speed wise?
   speedify things (the whole process takes approximately...eternity?)
   show them how to use smplayer with subtitles
-  can overlay with an image
-  calculating disk's unique id... -> note on gui...
+  can overlay with an arbitrary image
   @dvd flick: auto-detect the aspect ratio, if possible (?)
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
   an 'always blank not skip the mutes' option for paranoid
@@ -230,22 +231,20 @@
   accomodate alternate endings et al
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
     vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
-  can pull from imdb at package time [?]
   delete fulli file automatically
     except if it's a specific scene run...
   .exe installer
     just unzips, runs the .bat file for them [?] :)
       full msi
-  ask if you can somehow more easily grab to "mostly the same" exact codec (ffmpeg, mencoder mailing lists)
-  split EDL's themselves somehow into their own project/LLC...
+  ask if you can somehow more easily grab to "mostly the same" exact codec (ffmpeg, mencoder mailing lists) [blog that you can't]
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
   LLC before ever pay anyone anything, if I ever do
   add some or any of the following "play now" options...without a true navigator of course :)
     visualbasic-like msdvdweb playlist
       one line at a time :P
       provide link for cheap DVD decoder if they lack one :)
-    "round conservatively, yes write file" ?
-      then I guess they could play it back immediately...?
+    "round conservatively, yes write inaccurate file straight from DVD in pieces" ?
+      then I guess they could play that file back immediately...?
     get half-way through (rip, start writing edited copy), then start playing back as continuing to write edited full copy (if windows allows...might have to watch it piece-wise)
     one that's "play DVD to x, now play it muted, now play it to y" (playlist? batch? ms?)
     one that's "rip and save first 20 minutes edited, start me on that, while doing the whole thing..." [?]
@@ -253,10 +252,10 @@
     some super spiffy version that can grab and play "both" *on the fly* somehow LOL
       maybe one that is watching the extraction (get info, get info, get info...)...as it includes scene x, it adds it edited to the end of the final output file...
         This seems like the only real way.
-    one that's "we're ripping, but play from that via EDL or playlist"
+    one that's "we're grabbing, but play from that via EDL or playlist against that file as it comes in"
   
-  using screencast
-  editing screencast
+  how to use screencast
+  editing/creating screencast
    instructions on how to do their own (private) DL or do one and submit it (public), or email their friends :P
       add an option "just save full disk (unedited) to hard drive..."
         note to people: can edit these to your liking, resubmit
@@ -271,26 +270,19 @@
     IMDB easy DVD mapping...
   can blank out the video, with audio continuing through...
   @VLC: hard crash when ripping that one DVD...long one, about the constitution...
-  in general, fine tune burning with various things...
-
     can use a fast temp drive, save through it to another :P
       (when they have two...)
-  better .exe icon...
-  blu-ray support somehow (real-time? rip?)
+  blu-ray support somehow (real-time? OCR?)
   double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
     might not work for all modes tho...
   make the progress bar map "better" to the actual time that each section should take...
 
-  @mencoder: cannot rip from dvd with -ovc copy -oac copy (tearing)
-
   @ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
      and to .avi sometimes works, sometimes it results in static!
 
-burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
+  burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
     can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
-  can lop off sections to save space (?)
-  can burn extras from the DVD, too?
-    optionally ?
+  can lop off sections/screen coords to save disk space (?)
 
 @smplayer: right click on DVD...
 @dvd flick/DeVeDe: right click on DVD...burn this file to DVD
@@ -299,8 +291,8 @@ make it can have different volume settings, like low volume instead of 0 [?]
 ask VLC "fuzzy menus on the happiest baby dvd expected?" (if they're still there...)
 DVD's: right click on DVD player, play with SC
 a "certified clean" movie list
-a check for "newer version available" or not...
-buy blu-ray decrypter software, try it out...
+a check for "newer version available" automagically not...
+buy blu-ray VLC software, try that out...
   
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
