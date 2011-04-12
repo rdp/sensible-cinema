@@ -53,30 +53,27 @@
   
   === patentzy yes and no do ===
     amazon player descriptor, just in case ;P, 
-    make it so it can suck in from "another wiki" the DL's, at package time, somehow
+    make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
       phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
     make it able to "map" to a fake netflix' adjusted timing, for patent sake, just rough demo/unit test.
     can jerk mouse only every so often, and/or not at all 
     create video demo of tracking VLC += system keys (cheap enough should be easy)
-    can scan descriptors to "pick the right one"
-    edited streamer demo (the rumor guy demo)
+    can scan several player descriptors to "pick the right one"
+    edited streamer screencast demo (the rumor guy demo)
     incorporate the DL translator from the BYU-I fella
-    post a demo of it playing back blu-ray edited, +- projector, +- playon (?)
-    fix 9 digit the fancy shmancy way :P
-    post a demo of it playing back blu-ray edited, local computer, projector
+    post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
+    fix the failing 9 digit test the fancy shmancy way :P
     infer from url for netflix
-    post some playon.tv demo screencast..this should prove all shouldn't it [?]
+    post some playon.tv demo screencast...this should prove all shouldn't it [?]
     can "control mouse" to click player mute button, and also drag it to change location
-    post a demo of it playing back via streaming to another computer, +- only streaming a particular region of the screen
     blu-ray player descriptor
     does blu-ray playback work with my C++ project?
     beep at them/warn when not tracking [?]
       default on...hmm
     batch file visual C DVD player?
 
-
-  donate to the most pular sourceforges...if I don't remember having done so already :P
+  donate to the most popular sourceforges...if I don't remember having done so already :P
   donate menumeter
   "have read and accept readme, legal_conerns**"
   "each with its own copyright and authorship and responsibility"
@@ -87,7 +84,7 @@
   should both mute and blank when blanking
     make optional though? hmm time for a third type...
   powerdvd timings jonah
-  create new DL's to a separate, new folder
+  create local new DL's to a separate, new folder
   warn on "create new list" if a previous one exists (just a dismiss dialog, then still allow them to create a new one)
   figure out which patenzy to actually do/not do
   force vlc player installation, too :P
@@ -124,8 +121,7 @@
   fast preview: change it to be aggressive sometimes yes, other times no
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   beta release: rinse and repeat with various ppl
-  make website slightly more "pictures-zy"
-    own really long url movie bad scene skipper sensible cinema.t28.net add in there content editor or something lots of google SEO happy words
+  make my website slightly more "pictures-zy"
     actually, just use sourceforge for hosting...maybe google SEO friendly :) ???
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
@@ -133,11 +129,12 @@
   rebrand dvd player from MS
     note k-lite/CCCP, pay, or re-install DVD player from installation CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
   propaganda-ize (other file)
-  note: can do the two types of preview at same time...concurrently...to save time...
+  note to them: can do the two types of preview at same time...concurrently...to save time...
   vendorize ffmpeg, then they don't have to install imagemagick...
   mplayer EDL while grabbing, from grabbed.  
   check why out of sync my turn on earth on blacky MPH-HC
-  swing "edit ling/add new line" that makes it trivial :)
+  swing "edit line/add new line" that makes it trivial :)
+  note "pay us/somebody to do it for you on the google group"?
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
