@@ -280,12 +280,9 @@
   @ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
      and to .avi sometimes works, sometimes it results in static!
 
-  burnable to DVD/CD/multi DVD automagically... (auto-burn insert your new disk!)
-    can *re-use* original navigation stuffs, less the profanity (is that possible? VobBlanker help, perhaps?)
   can lop off sections/screen coords to save disk space (?)
 
 @smplayer: right click on DVD...
-@dvd flick/DeVeDe: right click on DVD...burn this file to DVD
 the ac3 thing (I have to specify it...is this necessary? is it always ac3?) [basically, can I copy audio again?]
 make it can have different volume settings, like low volume instead of 0 [?]
 ask VLC "fuzzy menus on the happiest baby dvd expected?" (if they're still there...)
