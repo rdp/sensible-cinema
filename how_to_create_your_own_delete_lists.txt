@@ -1,4 +1,4 @@
-You can create a delete list for sensible cinema to use against whatever DVD you want.
+You can create a delete list for sensible cinema to use against whatever DVD you want (probably one that doesn't have its own delete list yet).
 
 A delete list (currently) lists sections you want muted or skipped.  Here is an example
 
