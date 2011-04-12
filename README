@@ -139,7 +139,8 @@ The playlist option is disabled in later releases, as it was deemed too user-non
 
 You can see a full list of features that have already been published and demonstrated
 in the file ChangeLog.txt.  Each feature works in some released version of sensible-cinema
-though some features or absent in later versions.  The changelog lists all of the features.
+though some features or absent in later versions.  The changelog lists all of the 
+features of the versions.
 
 == License ==
 

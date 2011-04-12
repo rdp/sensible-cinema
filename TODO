@@ -51,7 +51,7 @@
   full pass re-write of README, legal "definitely definitely not legal"
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   
-  === patentzy yes and no do [some no do are in other section] ===
+  === patentzy [ignore all] yes and no do [some no do are in other section] ===
     amazon player descriptor, just in case ;P, 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
