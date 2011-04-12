@@ -17,7 +17,7 @@
   note nero
   note youtube video url's
   pull in issues
-  pull in from latest guy/urug 
+  pull in from latest guy+urug 
   DRY up README/www
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
@@ -47,7 +47,7 @@
   
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
   @developers what bat files do
-  note handbrake, legal at least for those free movies
+  note legal at least for those free movies
   full pass re-write of README, legal "definitely definitely not legal"
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   
@@ -56,30 +56,32 @@
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
       phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-    make it able to "map" to a fake netflix' adjusted timing, for patent sake, just rough demo/unit test.
+    make it able to "map" to a fake netflix' adjusted timing, just rough demo/unit test.
     can jerk mouse only every so often, and/or not at all 
-    create video demo of tracking VLC += system keys (cheap enough should be easy)
+    create video demo of it tracking VLC += system keys (cheap enough should be easy)
     can scan several player descriptors to "pick the right one"
-    edited streamer screencast demo (the rumor guy demo)
+    edited streamer screencast demo (the rumor guy demo of that like zendiva)
     incorporate the DL translator from the BYU-I fella
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
     fix the failing 9 digit test the fancy shmancy way :P
-    infer from url for netflix
+    infer edl from url for netflix
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
     can "control mouse" to click player mute button, and also drag it to change location
     blu-ray player descriptor
     does blu-ray playback work with my C++ project?
     beep at them/warn when not tracking [?]
-      default on...hmm
-    batch file visual C DVD player?
+      default on...I think.
+    batch file visual C DVD player
     can jerk mouse more often closer to failure sections...
-    can pull from imdb at package time [?]
+    can pull one from imdb at all, video "show it creates a file"
+    make it suck in from imdb at build time
 
+  note we previously had playlist VLC using xspf
   donate to the most popular sourceforges...if I don't remember having done so already :P
-  donate menumeter
+  donate menumeter $
   "have read and accept readme, legal_conerns**"
   "each with its own copyright and authorship and responsibility"
-  include copy of gplv1, gplv2
+  include copy of gplv1, but just reference theirs [?]
   note blu-ray complaint, plus didn't he have one other?
   note history: "after mplayer got EDL playback, some other did too [myth?], the python one was created too, VLC could work with playlists"
   force install of VLC
@@ -89,11 +91,9 @@
   create local new DL's to a separate, new folder
   warn on "create new list" if a previous one exists (just a dismiss dialog, then still allow them to create a new one)
   figure out which patenzy to actually do/not do
-  force vlc player installation, too :P
   edl straight DVD mplayer replay:
     work cars, monsters inc
   that one button is broken...play with [s]mplayer unedited [?]
-  bring in batch file mplayer :)
   tool tips for all buttons...tweak naming, too :P do something!
   it should clear smplayer options on startup always, just in case
   note abandoned vlc timings issues
@@ -123,18 +123,15 @@
   fast preview: change it to be aggressive sometimes yes, other times no
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   beta release: rinse and repeat with various ppl
-  make my website slightly more "pictures-zy"
     actually, just use sourceforge for hosting...maybe google SEO friendly :) ???
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   youtube videos -> new account name, remove the one [?]
-  rebrand dvd player from MS
+  custom brand C dvd player
     note k-lite/CCCP, pay, or re-install DVD player from installation CD from dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins
   propaganda-ize (other file)
-  note to them: can do the two types of preview at same time...concurrently...to save time...
   vendorize ffmpeg, then they don't have to install imagemagick...
   mplayer EDL while grabbing, from grabbed.  
-  check why out of sync my turn on earth on blacky MPH-HC
   swing "edit line/add new line" that makes it trivial :)
   note "pay us/somebody to do it for you on the google group"?
   Noted (I should probably not display that message unless java isn't installed). [did I get all feedback from that guy?]
@@ -142,18 +139,19 @@
   make .bat file friendlier for case of accidental download
   note "this is the full list--your help is wanted/needed"
   note that it's still alpha!
-
-  purchase forever strong, compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
+  purchase forever strong [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
   note patentzy: "mine is positive parts"
-  more from that guy urug
-  create fantom edit DL
-  github issues [maybe just add them all here]
+  create a semi-accurate fantom edit DL
   calculating disk's unique id... -> note on gui...
   don't exit program if they don't select a disk originally :)
   split EDL's themselves somehow into their own project/LLC...
+  note to them [in create file]: can do the two types of preview at same time...concurrently...to save time...
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  bring in batch file mplayer :)
+  make my website slightly more "pictures-zy"
+  check why out of sync my turn on earth on blacky MPH-HC
   super spiffy editor that tracks timestamps for you for new lines
   uservoice ?
   can have user submittable bookmarks, kind of like how espn3 does their playbacks.
