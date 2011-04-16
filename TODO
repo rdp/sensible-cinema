@@ -21,6 +21,7 @@
   DRY up README/www
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
+  note we don't always use libdvdcss
 # "closing thoughts" => "still a fairly dark movie, overall", smallify
   fix known bugz...
   we stopped using VLC playlist mode because the timing was slightly inaccurate.
