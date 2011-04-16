@@ -42,7 +42,7 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
-  @rubygems: doesn't install all gem dependencies
+  publish new version of rdp-win32screenshot
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
   note "inspired by the fantom edit.." too?
@@ -53,6 +53,7 @@
   note legal at least for those free movies
   full pass re-write of README, legal "definitely definitely not legal"
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
+  accept "mplayer_dvd_splits" => ["4749"]
   
   === patentzy [ignore all] yes and no do [some no do are in other section] ===
     amazon player descriptor, just in case ;P, 
