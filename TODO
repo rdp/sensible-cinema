@@ -81,13 +81,15 @@
     can pull one from imdb at all, video "show it creates a file"
     make it suck in from imdb at build time
     C player: minimize instead of skip :P
-    C player: don't mute, just almost mute LOL or almost mute and overplay some other audio [static? arbitrary?] very loud beep?
+    C player: don't mute, just almost mute LOL or almost mute and obscure
     can suck it in "in realtime" from online, and parse it, for demo purposes
     password protect it or whatever, to disallow heavier settings
     a UI to select categories
     edited blu ray movie playback screencast, as that's apparently not in the patent...
-    don't use timecodes, use "% of the movie" and "total length"
+    don't use timecodes, use "% of the movie" and "total length" perhaps?
     look at their patents for other ideas? [all patents, nissim patents?]
+    web based auto-EDL converter on the fly prototype, for download uh guess.
+    
 
   note we previously had playlist VLC using xspf
   donate to the most popular sourceforges...if I don't remember having done so already :P
