@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-02-22}
+  s.date = %q{2011-04-18}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "TODO",
     "VERSION",
+    "advanced--create or edit sensible cinema delete list files.bat",
     "bin/monkey.png",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
@@ -34,8 +35,8 @@ Gem::Specification.new do |s|
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "go.bat",
+    "go_online.bat",
     "goc.bat",
-    "goe.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
     "lib/add_any_bundled_gems_to_load_path.rb",
@@ -60,6 +61,7 @@ Gem::Specification.new do |s|
     "lib/vlc_programmer.rb",
     "never_do",
     "preamble",
+    "propaganda",
     "sensible-cinema.gemspec",
     "spec/blanker.spec.rb",
     "spec/common.rb",
@@ -165,7 +167,6 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/star_trek_generations_hulu.txt",
     "zamples/edit_decision_lists/dvds/pack_wedding_2007-03-03.txt",
     "zamples/edit_decision_lists/dvds/turn_around_alma_younger.txt",
-    "zamples/edit_decision_lists/netflix/example_file_copy_me.txt",
     "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/youtube/gummy_bear_song_youtube.txt",
@@ -211,38 +212,47 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<sane>, [">= 0.22.0"])
-      s.add_runtime_dependency(%q<rdp-win32screenshot>, [">= 0.0.8"])
+      s.add_runtime_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_runtime_dependency(%q<mini_magick>, [">= 3.1"])
       s.add_runtime_dependency(%q<whichr>, [">= 0.3.6"])
       s.add_runtime_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_runtime_dependency(%q<rdp-ruby-wmi>, [">= 0"])
       s.add_runtime_dependency(%q<ffi>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<hitimes>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_runtime_dependency(%q<hitimes>, [">= 0"])
+      s.add_runtime_dependency(%q<rspec>, [">= 0"])
+      s.add_runtime_dependency(%q<jeweler>, [">= 0"])
+      s.add_runtime_dependency(%q<rake>, [">= 0"])
     else
       s.add_dependency(%q<sane>, [">= 0.22.0"])
-      s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.8"])
+      s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_dependency(%q<mini_magick>, [">= 3.1"])
       s.add_dependency(%q<whichr>, [">= 0.3.6"])
       s.add_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
       s.add_dependency(%q<ffi>, [">= 0"])
+      s.add_dependency(%q<hitimes>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<hitimes>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<hitimes>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0"])
     end
   else
     s.add_dependency(%q<sane>, [">= 0.22.0"])
-    s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.8"])
+    s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
     s.add_dependency(%q<mini_magick>, [">= 3.1"])
     s.add_dependency(%q<whichr>, [">= 0.3.6"])
     s.add_dependency(%q<jruby-win32ole>, [">= 0"])
     s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
     s.add_dependency(%q<ffi>, [">= 0"])
+    s.add_dependency(%q<hitimes>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<hitimes>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<hitimes>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0"])
   end
 end
 

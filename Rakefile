@@ -13,9 +13,16 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'jruby-win32ole' # LODO take out ...
     s.add_dependency 'rdp-ruby-wmi'
     s.add_dependency 'ffi' # mouse, etc. needed at least for MRI
+    
     s.add_development_dependency 'hitimes' # now jruby compat!
     s.add_development_dependency 'rspec' # prefer rspec 2 these days I guess...
-    s.add_development_dependency 'jeweler'
+    
+    # add as real dependencies for now, as gem install --development is still broken for jruby, basically installing transitive dependencies in error
+    for name in ['hitimes', 'rspec', 'jeweler', 'rake']
+      # bundling rake won't be too expensive, right?
+      s.add_dependency name
+    end
+    
     s.extensions = ["ext/mkrf_conf.rb"]
 end
 
@@ -77,7 +84,7 @@ task 'bundle_dependencies' => 'gemspec' do
      }
      to_here = "jruby-complete-1.5.5.jar"
      unless File.exist? to_here
-       url = "/downloads/1.6.0.RC2/jruby-complete-1.6.0.RC2.jar"
+       url = "/downloads/1.6.1/jruby-complete-1.6.1.jar"
        puts 'downloading in jruby-complete.jar file '  + url
        # jruby complete .jar file
        Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
@@ -88,7 +95,9 @@ task 'bundle_dependencies' => 'gemspec' do
         }
       }
      end
+    
      # create a shunt win32ole file, so that require 'win32ole' will just work.
+     # XXXX may no longer need it...
      Dir.mkdir 'lib'
      File.write('lib/win32ole.rb', 'require "jruby-win32ole"')
   
