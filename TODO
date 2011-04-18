@@ -2,7 +2,6 @@
   
 == up next release/very next task: ==
   
-  run it at work
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
@@ -22,6 +21,8 @@
   DRY up README/www
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
+  timing: what about tron normal (non rental) DVD, does its mplayer get off a bit, too?
+    if so, are there other DVD's that get off a bit, too, or is this a one time thing? huh?
   note we don't always use libdvdcss
 # "closing thoughts" => "still a fairly dark movie, overall", smallify
   fix known bugz...
