@@ -23,10 +23,12 @@
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   timing: what about tron normal (non rental) DVD, does its mplayer get off a bit, too?
     if so, are there other DVD's that get off a bit, too, or is this a one time thing? huh?
+  timing: if I can't find another that plays at 30/29.97 all the way through, buy Tron retail and (see if it does as the rental did)
+    then make it work
   note we don't always use libdvdcss
-# "closing thoughts" => "still a fairly dark movie, overall", smallify
+  # "closing thoughts" => "still a fairly dark movie, overall", smallify
   fix known bugz...
-  we stopped using VLC playlist mode because the timing was slightly inaccurate.
+  note we stopped using VLC playlist mode because the timing was slightly inaccurate.
   use DVD navigator?
     wow terrifying...
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
@@ -317,6 +319,7 @@ uservoice
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+can synchronize hulu/netflix instant play, for girlfriends
 sell to clearplay with non patent agreement (for netflix' sake). Nah :P
   get job?
   warn clearplay (mplayer, python)
