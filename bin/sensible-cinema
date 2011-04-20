@@ -27,6 +27,7 @@ rescue LoadError
   require 'sane'
 end
 
+raise 'need jruby' unless OS.jruby?
 raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2'
 
 require_relative '../lib/mencoder_wrapper'
