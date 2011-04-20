@@ -1,11 +1,14 @@
 == 0.21.6 ==
 
-
 Note that this other project http://code.google.com/p/movie-content-editor/ previously existed and has
 capability to take a list of subtitles (captions) for a VLC compatible device (file, DVD)
 and control VLC to mute or skip over scenes.  It can have a user-configurable
 list of "words to avoid."  It can also take the caption avoidable scene list, and merge
 that one with a user given list, to come up with a "final" skip/mute list.
+
+Note also that comskip:
+http://www.kaashoek.com/comskip
+Analyzes video for certain aspects and auto-skips scenes based on computerized criteria.
 
 == 0.21.5 ==
 
