@@ -1,0 +1,8 @@
+http://en.gentoo-wiki.com/wiki/DVD_to_MP4 mentions "subtitle ripper"
+avidemux can apparently do it, too
+subtitles hint: http://forum.videolan.org/viewtopic.php?f=7&t=48761&p=155667&hilit=clearplay#p155667 ?
+somehow map DVD's to the "subdownloader" style subtitles?
+  use their md5 overall too
+  OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does.
+
+what if VLC plays a dvd mp4 do the subtitle timings map?

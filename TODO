@@ -24,7 +24,6 @@
 
 . We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
   timing info: mplayer OS X, VLC OS X, others?
-  subtitles hint: http://forum.videolan.org/viewtopic.php?f=7&t=48761&p=155667&hilit=clearplay#p155667 ?
   investigate: can I use the zoomplayer max?
   edit EDL to include realtime lists [zoom, etc.'s]
   timing: what about tron normal (non rental) DVD, does its mplayer get off a bit, too?
@@ -213,8 +212,7 @@ idonate http://lame.buanzo.com.ar/
   alpha transparent "grey" overlay (for partial parts of the window)
   certain sections: can speed them up, to make them less scary or what not, but you can still see what's happening. Not sure how audio could/should apply here.
   google android TV app/iTV ?
-  somehow map DVD's to the "subdownloader" style subtitles?
-    use their md5 overall too?
+  subtitle_todo file
   advertise related bounties to their various groups
   a really snazzy pro website
   the final "edited.avi" really "could/should" be playable in WMP...
@@ -497,8 +495,6 @@ Programmatically do all of the above, by driving VLC with libvlc (its API).
 
 integrate with google TV...bravia...maybe...somehow...boxxee? roku?
   itunes TV? apple tv? ps3?
-
-OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does.
 
 --server?  optionally higher prio?
 
