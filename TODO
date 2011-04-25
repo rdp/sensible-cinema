@@ -22,6 +22,8 @@
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
 
+. We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
+  timing info: mplayer OS X, VLC OS X, others?
   subtitles hint: http://forum.videolan.org/viewtopic.php?f=7&t=48761&p=155667&hilit=clearplay#p155667 ?
   investigate: can I use the zoomplayer max?
   edit EDL to include realtime lists [zoom, etc.'s]
@@ -51,6 +53,7 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
+idonate http://lame.buanzo.com.ar/
   publish new version of rdp-win32screenshot
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
