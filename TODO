@@ -105,6 +105,8 @@ idonate http://lame.buanzo.com.ar/
     have the user forced to tell me what each digit is, themselves :P
     
 
+  the fake blanker one doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
+    also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   note we previously had playlist VLC using xspf
   donate to the most popular sourceforges...if I don't remember having done so already :P
   donate menumeter $
@@ -556,3 +558,14 @@ a boxee api?
 I *could* record netflix movies, then edit those manually (or mapped-ly)...meh clearplay needs some niche--we don't have each other after all.
 donate to the top 25 sourceforge's that don't look illegal, esp. if haven't before
 @mplayer: allow the equals in this: mplayer dvdnav:// -dvd-device=f:
+
+opening youtube, if not already opened, choose chrome in plugin, get this:
+RuntimeError: poor width or wrong window 94 1 71
+     initialize at c:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:54
+  new_from_yaml at c:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:27
+          go_sc at bin\sensible-cinema-cli:94
+         (root) at bin\sensible-cinema-cli:128
+        [hard exit]
+        
+if it looks paused I should basically pause my tracking [if it looks nothing, then keep going with my tracking]
+it fails on "friday" tracks 0:48 as 1:48

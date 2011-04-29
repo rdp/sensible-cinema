@@ -7,7 +7,7 @@ Jeweler::Tasks.new do |s|
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
     s.add_dependency 'sane', '>= 0.22.0'
-    s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3'# 0.8.0 ?
+    s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3' # was 0.8.0 ?
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
     s.add_dependency 'jruby-win32ole' # LODO take out ...

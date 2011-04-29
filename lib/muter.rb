@@ -17,6 +17,8 @@ This file is part of Sensible Cinema.
 =end
 require 'rubygems' # ugh
 require 'ffi'
+require 'sane'
+require_relative 'mouse'
 
 module Muter
   # from msdn on keybd_event ...
@@ -48,16 +50,28 @@ module Muter
     keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
+  @@use_mouse = true
+  
   def mute!
-    #unmute! # just in case
-    hit_mute_key
+    #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
+    # anyway we just use a toggle for now...dangerous but works, if barely
+    if @@use_mouse
+      hit_mute_key
+    else
+      Mouse.single_click_left_mouse_button
+    end
   end
 
   # TODO better for doze 7...
   def unmute!
-    hit_mute_key # Windows XP...
-    hit_volume_down_key
-    hit_volume_up_key
+    if !@@use_mouse
+      hit_mute_key # Windows XP...
+      hit_volume_down_key
+      hit_volume_up_key
+    else
+      Mouse.single_click_left_mouse_button
+    end
+    
   end
       
   # allow for Muter.xxx
