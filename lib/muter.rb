@@ -50,7 +50,7 @@ module Muter
     keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
-  @@use_mouse = true
+  @@use_mouse = false # ai ai
   
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
