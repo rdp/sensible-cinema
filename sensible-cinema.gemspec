@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.21.5"
+  s.version = "0.21.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-04-18}
+  s.date = %q{2011-04-29}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
   s.extensions = ["ext/mkrf_conf.rb"]
@@ -35,8 +35,8 @@ Gem::Specification.new do |s|
     "experimental_readme.txt",
     "ext/mkrf_conf.rb",
     "go.bat",
-    "go_online.bat",
-    "goc.bat",
+    "go_ocr_tracker.bat",
+    "gocreatemode.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
     "lib/add_any_bundled_gems_to_load_path.rb",
@@ -59,6 +59,7 @@ Gem::Specification.new do |s|
     "lib/storage.rb",
     "lib/swing_helpers.rb",
     "lib/vlc_programmer.rb",
+    "md5s.txt",
     "never_do",
     "preamble",
     "propaganda",
@@ -142,6 +143,7 @@ Gem::Specification.new do |s|
     "spec/swing_helpers.spec.rb",
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
+    "subtitle_todo",
     "todo_if_need_speed",
     "vendor/SetPriority.exe",
     "vendor/gocr049.exe",
@@ -155,6 +157,8 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/big_buck_bunny_dvd.txt",
     "zamples/edit_decision_lists/dvds/bob the builder pets in a pickle.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
+    "zamples/edit_decision_lists/dvds/example_delete_list.txt",
+    "zamples/edit_decision_lists/dvds/example_delete_list_that_has_no_cuts_in_it.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
     "zamples/edit_decision_lists/dvds/legend_of_the_guardians_the_owls_of_gahoole.txt",
     "zamples/edit_decision_lists/dvds/making_marriage_work.txt",
@@ -170,7 +174,8 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/youtube/gummy_bear_song_youtube.txt",
-    "zamples/edit_decision_lists/old_not_yet_updated/youtube/nuki_song_youtube.txt",
+    "zamples/edit_decision_lists/youtube/demo_mutes.txt",
+    "zamples/edit_decision_lists/youtube/nuki_song_youtube.txt",
     "zamples/players/how_to_create_more_players.txt",
     "zamples/players/hulu/total_length_over_an_hour.txt",
     "zamples/players/netflix/netflix_firefox_non_maximized.txt",

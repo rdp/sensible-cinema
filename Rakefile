@@ -1,5 +1,8 @@
 require 'jeweler'
 require 'os'
+
+ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem
+
 Jeweler::Tasks.new do |s|
     s.name = "sensible-cinema"
     s.summary = "an EDL scene-selector/bleeper that works with online players like hulu"
@@ -155,5 +158,4 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
-  p 'ran', c, 'did it work? vendor/cache should still have mencoder.exe...'
 end
