@@ -74,7 +74,7 @@ idonate http://lame.buanzo.com.ar/
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
       phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
     make it able to "map" to a fake netflix' adjusted timing, just rough demo/unit test.
-    can jerk mouse only every so often, and/or not at all 
+    can jerk mouse only every so often
     create video demo of it tracking VLC += system keys (cheap enough should be easy)
     can scan several player descriptors to "pick the right one"
     edited streamer screencast demo (the rumor guy demo of that like zendiva)
@@ -83,7 +83,7 @@ idonate http://lame.buanzo.com.ar/
     fix the failing 9 digit test the fancy shmancy way :P
     infer edl from url for netflix
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
-    can "control mouse" to click player mute button, and also drag it to change location
+    can "control mouse" to drag it to change location
     blu-ray player descriptor
     does blu-ray playback work with my C++ project?
     beep at them/warn when not tracking [?]
