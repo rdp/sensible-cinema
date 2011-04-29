@@ -55,7 +55,7 @@ module Muter
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
     # anyway we just use a toggle for now...dangerous but works, if barely
-    if @@use_mouse
+    if !@@use_mouse
       hit_mute_key
     else
       Mouse.single_click_left_mouse_button

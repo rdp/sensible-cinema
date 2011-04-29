@@ -92,7 +92,13 @@ def go_sc(args)
       puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
       # this one doesn't use any updates, so just pass in file contents, not filename
       screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
-      Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
+      does_not_need_mouse_jerk = YAML.load_file(player_description)["does_not_need_mouse_movement"]
+      unless does_not_need_mouse_jerk
+        p 'yes mouse jitter' if $VERBOSE or $DEBUG
+        Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
+      else
+        p 'no mouse jitter' if $VERBOSE or $DEBUG
+      end
       
       # exit early if we just wanted a screen dump...a little kludgey...
       unless overlay
