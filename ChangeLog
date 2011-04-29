@@ -6,6 +6,8 @@ brought back in youtube EDL's
 added new feature to actually manipulate the mouse to control the playback controls
   of the internal (embedded player), so it's like automaton controlling video playback.
 
+demo of all: http://www.youtube.com/watch?v=gJ4jFCFPan0
+
 == 0.21.6 ==
 
 Note that this other project http://code.google.com/p/movie-content-editor/ previously existed and has

@@ -1,0 +1,38 @@
+random md5's for tracking
+
+ed492ff097a16ac9c3c207beed7a8d17 *full3.avi
+http://www.youtube.com/watch?v=gJ4jFCFPan0
+
+
+74f4876260c7fcfe8a696ac81d3cf883  Debug.7z
+8d47950de913d97536ffe8d13a8d7203  latest-sensible-cinema.zip
+2ab9b0b909e24d2cb5b91b45fb35fda5  sensible-cinema-0.14.5.zip
+7e8afff74f9f991b789067e7e1ddd286  sensible-cinema-0.14.6.zip
+cb32a7f982aee03598e54eefda0f7f98  sensible-cinema-0.14.8.zip
+81c4d19f9975f42ea5d945c4248e2412  sensible-cinema-0.16.2.zip
+bd62ba887644a437366de0b66f817631  sensible-cinema-0.16.3.zip
+a12babdfb09abf7a2a833a0a9e393c20  sensible-cinema-0.16.4.zip
+f2f05570882f3ae65d9d8f53b42c260a  sensible-cinema-0.16.5.zip
+f8d9205e31ac7af6b3d709de97e4294c  sensible-cinema-0.16.7.zip
+918db721fdb71ce6274188375536581f  sensible-cinema-0.17.0.zip
+5618d81aca3ed103601105f17d535ad7  sensible-cinema-0.18.1.zip
+78fd2b42a55ffec8d219bb7bf803a721  sensible-cinema-0.18.2.zip
+8edcf4e60c358496ec9581e015215b18  sensible-cinema-0.18.3.zip
+a64c55b101f858218b83dfb7af6d0b53  sensible-cinema-0.18.4.zip
+60f09f712e9cc8004626ad2da3520cc6  sensible-cinema-0.19.0.zip
+d24f66b08b8f28c146f5473629f378d7  sensible-cinema-0.19.1.zip
+11936f547af54471e0f800748edfe906  sensible-cinema-0.19.2.zip
+dcc25e1c3fcd5f7745580ad351786134  sensible-cinema-0.19.4.zip
+b28f00a1019b665635a302450f8bdcbb  sensible-cinema-0.19.5.zip
+5300900ea5407f87fcc198297720a5d6  sensible-cinema-0.19.6.zip
+66b2259c3da4c732aa550c3a707770ac  sensible-cinema-0.19.7.zip
+2c5da873803e2399ea4b7eabea9d681e  sensible-cinema-0.20.0.zip
+81001183f1460b6607342dfee616eb2d  sensible-cinema-0.20.2.zip
+944917cf6086abfcdf4c4a0bb4ffc718  sensible-cinema-0.20.3.zip
+823b8eb07a0d5c59d7fc40e1dcb9bdca  sensible-cinema-0.20.5.zip
+deca5dc53b714b067e5fd7eedb0adc40  sensible-cinema-0.20.6.zip
+c38b4a7ce1a9fab40566f8b1a876a7d0  sensible-cinema-0.21.1.zip
+569832ce944f1b9cd285a495db787d5d  sensible-cinema-0.21.2.zip
+9f71c5a9f59d2e7370a9ad06e4441ace  sensible-cinema-0.21.3.zip
+d628fe7d5284ecb764df8b79aee7b773  sensible-cinema-0.21.4.zip
+8d47950de913d97536ffe8d13a8d7203  sensible-cinema-0.21.5.zip
