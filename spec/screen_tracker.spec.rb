@@ -24,7 +24,6 @@ describe ScreenTracker do
   SILENCE = /silence.*VLC/
 
   def start_vlc
-    # unfortunately this is run before every context [bug] with rspec 1.3...
     unless $pid1
       assert !$pid1
       # enforce we only have at most one running...
@@ -33,7 +32,9 @@ describe ScreenTracker do
         raise Exception.new('must close existing vlcs first')
       rescue
         silence = File.expand_path("./silence.wav").gsub("/", "\\")
-        Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for jruby...
+        Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for JRUBY-4959 /4958
+        
+        # now also work around JRUBY-5756
         until $pid1
           $pid1 = GetPid.get_process_id_from_window(Win32::Screenshot::Util.window_hwnd(SILENCE)) rescue nil
           sleep 0.01

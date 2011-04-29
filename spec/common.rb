@@ -31,6 +31,7 @@ Thread.abort_on_exception = true
 require 'timeout'
 require 'fileutils'
 require 'pathname'
+require 'java' if OS.java?
 
 Dir.chdir File.dirname(__FILE__) # always run from the right dir...
 autoload :YAML, 'yaml'
@@ -44,7 +45,6 @@ begin
   }
 rescue LoadError
   if RUBY_PLATFORM =~ /java/
-    require 'java'
     Benchmark.module_eval {
       def self.realtime
         beginy = java.lang.System.nano_time

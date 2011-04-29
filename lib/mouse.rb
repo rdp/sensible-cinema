@@ -28,6 +28,9 @@ module Mouse
   MOUSEEVENTF_MOVE = 1
   INPUT_MOUSE = 0
   MOUSEEVENTF_ABSOLUTE = 0x8000
+  MOUSEEVENTF_LEFTDOWN = 0x0002
+  MOUSEEVENTF_LEFTUP   = 0x0004
+  
   
   class MouseInput < FFI::Struct
     layout :dx, :long,
@@ -37,9 +40,11 @@ module Mouse
            :time, :ulong,
            :extra, :ulong
   end
+  
   class InputEvent < FFI::Union
     layout :mi, MouseInput
   end 
+  
   class Input < FFI::Struct
     layout :type, :ulong,
            :evt, InputEvent
@@ -47,6 +52,7 @@ module Mouse
   
   # UINT SendInput(UINT nInputs, LPINPUT pInputs, int cbSize);
   attach_function :SendInput, [ :uint, :pointer, :int ], :uint
+  
   class << self
     
     def jitter_forever_in_own_thread
@@ -56,44 +62,55 @@ module Mouse
   
       in_evt = myinput[:evt][:mi]
   
-      in_evt[:mouse_data] = 0
-      in_evt[:flags] = Mouse::MOUSEEVENTF_MOVE # | Mouse::MOUSEEVENTF_ABSOLUTE
+      in_evt[:mouse_data] = 0 # null it out
+      in_evt[:flags] = Mouse::MOUSEEVENTF_MOVE
       in_evt[:time] = 0
       in_evt[:extra] = 0
       in_evt[:dx] = 0
-      in_evt[:dy] = 8 # just enough for VLC full screen...
+      in_evt[:dy] = 8 # just enough for VLC when full screened...
   
-      old_x = get_mouse.x
-      old_y = get_mouse.y
+      old_x = get_mouse_location.x
+      old_y = get_mouse_location.y
       Thread.new {
         loop {
-          cur_x = get_mouse.x
-          cur_y = get_mouse.y
+          cur_x = get_mouse_location.x
+          cur_y = get_mouse_location.y
           if(cur_x == old_x && cur_y == old_y)
             @total_movements += 1
             in_evt[:dy] *= -1
-            Mouse.SendInput(1, myinput, Mouse::Input.size)
+            SendInput(1, myinput, Mouse::Input.size)
             in_evt[:dy] *= -1
             sleep 0.05
-            Mouse.SendInput(1, myinput, Mouse::Input.size)
-            old_x = get_mouse.x
-            old_y = get_mouse.y            
+            SendInput(1, myinput, Mouse::Input.size)
+            old_x = get_mouse_location.x
+            old_y = get_mouse_location.y            
             sleep 0.75
           else
-            old_x = get_mouse.x
-            old_y = get_mouse.y
+            old_x = get_mouse_location.x
+            old_y = get_mouse_location.y
             sleep 3
           end
         }
       }
       
     end
+    
+    def single_click_left_mouse_button
+      myinput = Mouse::Input.new
+      myinput[:type] = Mouse::INPUT_MOUSE
+      in_evt = myinput[:evt][:mi]
+      in_evt[:flags] = MOUSEEVENTF_LEFTDOWN
+      SendInput(1, myinput, Mouse::Input.size)
+      in_evt[:flags] = MOUSEEVENTF_LEFTUP
+      SendInput(1, myinput, Mouse::Input.size)
+    end
 
-    def get_mouse
+    def get_mouse_location
       MouseInfo.getPointerInfo.getLocation
     end
     
     attr_accessor :total_movements
+    
   end
     
 end
