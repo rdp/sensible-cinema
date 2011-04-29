@@ -1,0 +1,12 @@
+"mutes" => [
+  "00:10" , "00:15", 
+  "30", "40",
+],
+
+"blank_outs" => [
+ # none
+],
+
+"title" => "Friday Song",
+"source" => "youtube",
+"source_url" => "http://www.youtube.com/watch?v=CD2LRROpph0"
