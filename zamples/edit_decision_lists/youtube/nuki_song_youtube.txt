@@ -1,0 +1,13 @@
+
+"mutes" => [
+  # none
+],
+
+"blank_outs" => [
+  "00:46.4" , "00:48.5", "bum wigglin'",
+  "02:18.5" , "02:20", "bum wigglin'",
+],
+
+"title" => "Nuki Song",
+"source" => "youtube",
+"url" => "http://www.youtube.com/watch?v=xd12hR68sWM"
