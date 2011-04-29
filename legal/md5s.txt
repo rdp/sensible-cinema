@@ -4,6 +4,13 @@ ed492ff097a16ac9c3c207beed7a8d17 *full3.avi
 http://www.youtube.com/watch?v=gJ4jFCFPan0
 
 
+c:\dev\ruby\sensible-cinema\legal>md5sum "g:\mute system.avi"
+\e988e897ede5f27c49d8011bfb4cb246 *g:\\mute system.avi
+
+c:\dev\ruby\sensible-cinema\legal>md5sum "g:\mute vlc.avi"
+\4a8b3612c666dd037ff91d68dc2c57b6 *g:\\mute vlc.avi
+
+
 74f4876260c7fcfe8a696ac81d3cf883  Debug.7z
 8d47950de913d97536ffe8d13a8d7203  latest-sensible-cinema.zip
 2ab9b0b909e24d2cb5b91b45fb35fda5  sensible-cinema-0.14.5.zip

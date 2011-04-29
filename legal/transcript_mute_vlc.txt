@@ -1,0 +1,117 @@
+
+c:\dev\ruby\sensible-cinema>call j bin\sensible-cinema-cli
+Welcome to Sensible Cinema...
+Please Select Computer Player
+Select Edit Decision List
+error: have to specify a scene descriptions file
+    or specify "test" on the command line if you just want to snapshot your player
+
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>git log | head
+
+c:\dev\ruby\sensible-cinema>git.exe log   | cat
+commit d310d82ae5ddc7894ba8ef52d7910773cbe47bf1
+Author: rogerdpack <rogerpack2005@gmail.com>
+Date:   Fri Apr 29 14:12:59 2011 -0600
+
+    default to using keyboard keys for muting
+
+commit da72313659df6227af92bb01f552802fea88ed8a
+Author: rogerdpack <rogerpack2005@gmail.com>
+
+c:\dev\ruby\sensible-cinema>git status
+
+c:\dev\ruby\sensible-cinema>git.exe status   | cat
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       .redcar/
+#       bad_digit2second_ones.bmp
+#       bad_digit3minute_tens.bmp
+#       sensible-cinema-0.21.6.zip
+#       vendor/cache/
+nothing added to commit but untracked files present (use "git add" to track)
+
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>
+c:\dev\ruby\sensible-cinema>go_ocr_tracker.bat
+
+c:\dev\ruby\sensible-cinema>call j bin\sensible-cinema-cli
+Welcome to Sensible Cinema...
+Please Select Computer Player
+Select Edit Decision List
+Selected scene descriptions file demo_mutes.txt
+        (full path: C:\dev\ruby\sensible-cinema\zamples\edit_decision_lists\youtube\demo_mutes.txt)
+(re) loaded mute sequences from demo_mutes.txt as
+{"title"=>"Friday Song",
+ "source"=>"youtube",
+ "source_url"=>"http://www.youtube.com/watch?v=CD2LRROpph0",
+ :mutes=>[["00:10", "00:15"], ["00:30", "00:40"]],
+ :blank_outs=>[]}
+
+Selected player windowed_total_length_under_an_hour.txt
+        (full path: C:\dev\ruby\sensible-cinema\zamples\players\vlc\windowed_total_length_under_an_hour.txt)
+Opening the curtains... (please play in your other player now)
+syntax from command line: "C:\dev\ruby\sensible-cinema\zamples\players\vlc\windowed_total_length_under_an_hour.txt" "C:\dev\ruby\sensible-cinema\zamples\edit_decision_lists\youtube\demo_mutes.txt"
+00:02.1 next will be at 00:10s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:03.9 next will be at 00:10s (r [ctrl+c or q to quit]): "tracking it successfully again"
+00:10.0 next will be at 00:10s (r [ctrl+c or q to quit]):
+00:14.9 next will be at 00:15s (muted) (r [ctrl+c or q to quit]):
+00:21.9 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:23.9 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:26.0 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:28.0 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:30.0 next will be at 00:30s (r [ctrl+c or q to quit]):
+"warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:32.0 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:34.0 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:36.0 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:37.2 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "tracking it successfully again"
+
+00:25.0 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:27.1 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:29.1 next will be at 00:30s (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:30 next will be at 00:40s (r [ctrl+c or q to quit]): :
+00:31.1 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:33.2 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:35.2 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:37.2 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:39.3 next will be at 00:40s (muted) (r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen
+obscured or it's not playing yet, or paused?]"
+00:40.0 next will be at 00:40s (muted) (r [ctrl+c or q to quit]):
+00:41.2 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:43.2 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:45.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:47.2 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:49.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:51.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:53.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:55.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:57.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+00:59.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:01.3 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:03.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:05.5 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:07.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:09.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:11.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:13.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:15.4 no more after this point...(r [ctrl+c or q to quit]): "warning--unable to track screen time for some reason [perhaps screen obscured or it's not playing yet, or paused?]"
+01:16.1 no more after this point...(r [ctrl+c or q to quit]):
+quitting
+01:16.2 no more after this point...(r [ctrl+c or q to quit]):
+c:\dev\ruby\sensible-cinema>
+
+
