@@ -101,8 +101,8 @@ module Mouse
     
     def single_click_left_mouse_button
       left_mouse_down!
-      sleep 0.1
       left_mouse_up!
+      p "CLICKED LEFT MOUSE BUTTON"
     end
     
     def left_mouse_down!
