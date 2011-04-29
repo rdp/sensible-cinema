@@ -17,6 +17,7 @@ This file is part of Sensible Cinema.
 =end
 require 'rubygems'
 require 'ffi'
+require 'java'
 
 module Mouse
   extend FFI::Library
@@ -99,8 +100,9 @@ module Mouse
     end
     
     def single_click_left_mouse_button
-      left_mouse_down
-      left_mouse_up
+      left_mouse_down!
+      sleep 0.1
+      left_mouse_up!
     end
     
     def left_mouse_down!
@@ -111,18 +113,11 @@ module Mouse
       change_left_mouse_button MOUSEEVENTF_LEFTUP
     end
 
-    def change_left_mouse_button action_type
-      myinput = Mouse::Input.new
-      myinput[:type] = Mouse::INPUT_MOUSE
-      in_evt = myinput[:evt][:mi]
-      in_evt[:flags] = action_type
-      SendInput(1, myinput, Mouse::Input.size)
-    end
-
     VK_LBUTTON = 0x01 # mouse left button for GetAsyncKeyState
     
     def left_mouse_button_state
-      if GetAsyncKeyState(VK_LBUTTON) == 0 # there's more info in there, but non zero means down
+      GetAsyncKeyState(VK_LBUTTON) # ignore a first call, which also tells us if it has changed at all since last call
+      if GetAsyncKeyState(VK_LBUTTON) == 0 # zero means up
         :up
       else
         :down
@@ -134,6 +129,17 @@ module Mouse
     end
     
     attr_accessor :total_movements
+    
+    private
+    
+    def change_left_mouse_button action_type
+      myinput = Mouse::Input.new
+      myinput[:type] = Mouse::INPUT_MOUSE
+      in_evt = myinput[:evt][:mi]
+      in_evt[:flags] = action_type
+      SendInput(1, myinput, Mouse::Input.size)
+    end
+
     
   end
     

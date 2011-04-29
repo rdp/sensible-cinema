@@ -26,10 +26,10 @@ describe ScreenTracker do
   def start_vlc
     unless $pid1
       assert !$pid1
-      # enforce we only have at most one running...
+      # enforce that we only have at most one running...
       begin
         Win32::Screenshot.window(SILENCE, 0) {}
-        raise Exception.new('must close existing vlcs first')
+        raise Exception.new('must close existing vlcs first') # isn't caught
       rescue
         silence = File.expand_path("./silence.wav").gsub("/", "\\")
         vlc =  Dir['/program files*/videolan/VLC/vlc.exe'][0]

@@ -53,5 +53,13 @@ describe Mouse do
     Mouse.left_mouse_up!
     Mouse.left_mouse_button_state.should be :up
   end
+  
+  it "should be able to click" do
+    Mouse.left_mouse_button_state.should be :up
+    Mouse.single_click_left_mouse_button
+    Mouse.left_mouse_up!
+    Mouse.left_mouse_up!
+    Mouse.left_mouse_button_state.should be :up
+  end
 
 end
