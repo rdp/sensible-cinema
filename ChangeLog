@@ -1,8 +1,10 @@
-== ==
+== 0.21.6 ==
 
 Can work on windows 7 64 bit now
 added ability to control whether needs mouse movement or not [control mouse movement]
-brought back in some youtube EDL's
+brought back in youtube EDL's
+added new feature to actually manipulate the mouse to control the playback controls
+  of the internal (embedded player), so it's like automaton controlling video playback.
 
 == 0.21.6 ==
 
