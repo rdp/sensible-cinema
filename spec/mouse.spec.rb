@@ -18,6 +18,8 @@ This file is part of Sensible Cinema.
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/mouse'
 
+p 'dont move the mouse!'
+
 describe Mouse do
 
   it "should move it a couple times" do
@@ -42,6 +44,14 @@ describe Mouse do
     rescue Timeout::Error
     end
     Mouse.total_movements.should == old + 1
+  end
+  
+  it "should be able to left mouse click" do
+    Mouse.left_mouse_button_state.should be :up
+    Mouse.left_mouse_down!
+    Mouse.left_mouse_button_state.should be :down
+    Mouse.left_mouse_up!
+    Mouse.left_mouse_button_state.should be :up
   end
 
 end

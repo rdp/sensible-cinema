@@ -32,7 +32,8 @@ describe ScreenTracker do
         raise Exception.new('must close existing vlcs first')
       rescue
         silence = File.expand_path("./silence.wav").gsub("/", "\\")
-        Dir.chdir("/program files/VideoLan/VLC") do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for JRUBY-4959 /4958
+        vlc =  Dir['/program files*/videolan/VLC/vlc.exe'][0]
+        Dir.chdir(File.dirname(vlc)) do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for JRUBY-4959 /4958
         
         # now also work around JRUBY-5756
         until $pid1

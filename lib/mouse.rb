@@ -52,6 +52,9 @@ module Mouse
   
   # UINT SendInput(UINT nInputs, LPINPUT pInputs, int cbSize);
   attach_function :SendInput, [ :uint, :pointer, :int ], :uint
+
+  # poller...
+  attach_function :GetAsyncKeyState, [:int], :uint
   
   class << self
     
@@ -96,15 +99,36 @@ module Mouse
     end
     
     def single_click_left_mouse_button
+      left_mouse_down
+      left_mouse_up
+    end
+    
+    def left_mouse_down!
+      change_left_mouse_button MOUSEEVENTF_LEFTDOWN
+    end
+    
+    def left_mouse_up!
+      change_left_mouse_button MOUSEEVENTF_LEFTUP
+    end
+
+    def change_left_mouse_button action_type
       myinput = Mouse::Input.new
       myinput[:type] = Mouse::INPUT_MOUSE
       in_evt = myinput[:evt][:mi]
-      in_evt[:flags] = MOUSEEVENTF_LEFTDOWN
-      SendInput(1, myinput, Mouse::Input.size)
-      in_evt[:flags] = MOUSEEVENTF_LEFTUP
+      in_evt[:flags] = action_type
       SendInput(1, myinput, Mouse::Input.size)
     end
 
+    VK_LBUTTON = 0x01 # mouse left button for GetAsyncKeyState
+    
+    def left_mouse_button_state
+      if GetAsyncKeyState(VK_LBUTTON) == 0 # there's more info in there, but non zero means down
+        :up
+      else
+        :down
+      end
+    end
+    
     def get_mouse_location
       MouseInfo.getPointerInfo.getLocation
     end
