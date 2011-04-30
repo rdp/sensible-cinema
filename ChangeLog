@@ -1,3 +1,11 @@
+== ==
+
+NB that sensible cinema can mute by muting system volume/adjusting it [the unmute actually uses adjustment]:
+http://www.youtube.com/watch?v=8cUV8DKLOK8
+or by using keystrokes sent directly to the application to mute it via the application:
+http://www.youtube.com/watch?v=0AsJtVyVMzk
+(and has been able to do this for quite some time)
+
 == 0.21.6 ==
 
 Can work on windows 7 64 bit now
