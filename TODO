@@ -70,6 +70,7 @@ idonate http://lame.buanzo.com.ar/
   full pass re-write of README, legal "definitely definitely not legal"
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   accept "mplayer_dvd_splits" => ["4749"]
+  open_edl_list_org_todo.txt
   
   === patentzy yes and no do, vaguely ordered ===
     == higher-zy prio ==
