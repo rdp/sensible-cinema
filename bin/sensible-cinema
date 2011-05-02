@@ -274,9 +274,9 @@ module SensibleSwing
           begin
             p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
             piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-            # but the first one still inexplicably fails always... LODO
+            # but the first time through this still inexplicably fails... LODO
             if piddy
-              # piddy.SetPriority low_prio # this can seg fault...yikes...
+              # piddy.SetPriority low_prio # this call can seg fault at times...yikes...JRUBY-5422
               pid = piddy.ProcessId # this doesn't seg fault, tho
               system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
             else
