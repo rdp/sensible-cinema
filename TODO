@@ -575,3 +575,4 @@ RuntimeError: poor width or wrong window 94 1 71
 if it looks paused I should basically pause my tracking [if it looks nothing, then keep going with my tracking]
 it fails on "friday" tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
+figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
