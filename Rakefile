@@ -158,4 +158,5 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
+  system("rm -rf ../cache.bak")
 end
