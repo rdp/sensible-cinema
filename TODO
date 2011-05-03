@@ -2,26 +2,23 @@
   
 == up next release/very next task: ==
 
+  
+== slightly lower than that, only somewhat ordered current theme: patentability still ==
+  note blu-ray CP complaint, and that one fellow mentioned it with something else?
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
   "for instance one author lives in the US, has never made"
   "don't do it"
     rename the file to is_it_legal_to_copy_dvds, reference it
-  "we know x, y are not legal..."
-  "sorry, cannot run without"
+  "we know x, y are not l..."
+  "sorry, cannot run without...."
   "understand and accept the implications"
   add a "non work sponsored" note
   agree to abide, shouldn't in the US [?]
   note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
   note nero
   DRY up README/www
-  
-== slightly lower than that, only somewhat ordered current theme: patentability still ==
-
-  == gather phase ==
-    note blu-ray complaint, plus didn't he have one other?
-
   make it not die if you have no DVD in there yet...
   tell your webpage that the user needs a message, "You can't install from the repository.  Download this file here for the full install package".
   blog post "editing movie content player" or something video edit program
@@ -204,7 +201,7 @@
   mplayer EDL while grabbing, from grabbed.  
   swing "edit line/add new line" that makes it trivial :)
   note "pay us/somebody to do it for you on the google group"?
-  Noted (I should probably not display that message unless java isn't installed). [did I get all feedback from that guy?]
+  I should probably not display that message unless java isn't installed
   note how to do pull request for non users :P
   make .bat file friendlier for case of accidental download
   note "this is the full list--your help is wanted/needed"
