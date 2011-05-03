@@ -1,23 +1,20 @@
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
-  
+
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
   "for instance one author lives in the US, has never made"
   "don't do it"
     rename the file to is_it_legal_to_copy_dvds, reference it
-  "we know x, y are not l..."
+  "we know x, y are not legal..."
   "sorry, cannot run without"
   "understand and accept the implications"
   add a "non work sponsored" note
   agree to abide, shouldn't in the US [?]
   note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
   note nero
-  note youtube video url's
-  pull in issues
-  pull in from latest guy+urug 
   DRY up README/www
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
@@ -25,6 +22,9 @@
   == gather phase ==
     note blu-ray complaint, plus didn't he have one other?
 
+  make it not die if you have no DVD in there yet...
+  tell your webpage that the user needs a message, "You can't install from the repository.  Download this file here for the full install package".
+  blog post "editing movie content player" or something video edit program
   un-paranoid note
   note: avidemux [auto-trainable, usable...]
   make them accept the license in order to download the stuff [checkbox] :P
@@ -65,6 +65,7 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
+  port to OS X
   to develop: order sintel DVD, use that: http://www.sintel.org/
   donate http://lame.buanzo.com.ar/
   cp: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
@@ -74,7 +75,6 @@
   http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
   note "inspired by the fantom edit.." too?
   "I accept the terms in all of the license agreements"
-  
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
   @developers what bat files do
   note legal at least for those free movies
@@ -175,7 +175,6 @@
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
   port to linux
-    port to OS X
   "release" it to more developers
     plug.org, more rubyists?
     after OS X :)
@@ -218,13 +217,24 @@
   split EDL's themselves somehow into their own project/LLC...
   note to them [in create file]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
+  if !exist vendor\cache
 
 == DVD decide later to move up or down ==
 
   maybe it should just say "readable lips" for the EDL's, not that it should mute. Let the user decide what to do or what not :P
+  auto-feedback on crashes [?]
+  take out the extra console window box output :) [scary, and closing it closes SC!]
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  accomodate failed deletes better than dying with a backtrace
+  auto-download and run for them the smplayer install exe ? [scary sourceforge, extra step]
+  don't totally die if they cancel out of "Please pick a DVD Delete list file"
+  non matching found -> none were found that matched your DVD
+  load progress bar...
+  vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
+  machine learning for video analysis [?]
+  transcribe the audio of movies? crowd source it? whoa!
   buy legal XP dvd'er, install at home
   mv changelog name
   note: preceded by clean flicks :P
@@ -241,7 +251,6 @@
   create a uservoice/uservoice+
   kmplayer timings
   can have user submittable bookmarks, kind of like how espn3 does their playbacks.
-
   note that I might be able to make a half and half that just responds to "sleeps"...if I can get the timing just right...(is this what mplayer does)
   don't exit if a timestamps has same beginning as end, but do warn (is this a problem still?)
   check if the python one lines up or not/ping them on it
@@ -368,6 +377,19 @@ a check for "newer version available" automagically not...
 uservoice  
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+can die when doesn't start well:
+
+Selected player normal_in_youtube.com.chrome.txt
+        (full path: C:\dev\ruby\sensible-cinema\zamples\players\youtube\normal_in_youtube.com.chrome.txt)
+C:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:37:in `initialize': poor width or wrong window (RuntimeError)
+        from C:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:10:in `new'
+        from C:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:10:in `new_from_yaml'
+        from bin\sensible-cinema-cli:73:in `go_sc'
+        from bin\sensible-cinema-cli:107
+
+misses digits: vlc non full screened 18:00 in...
+misses digits: youtube friday somewhere along there...40 or so [or maybe it got them fine actually...]
 
 can synchronize hulu/netflix instant play, for girlfriends
 sell to clearplay with non patent agreement (for netflix' sake). Nah :P

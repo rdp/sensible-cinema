@@ -1,7 +1,8 @@
 web based auto-EDL converter on the fly prototype, for download uh guess.
-a checkbox this one is "ready"
 
-note that mplayer has an easy training mode, if desired...
+a checkbox this EDL is "ready"
+
+note that mplayer has an easy training mode, if useful to you...
 
 openedllist.org [no]
 openmovie...org
@@ -9,9 +10,9 @@ openmovie...org
 open-list-of-editable-movie-scenes.org
 
 editable-list-of-movie-scenes.org ?
+filtertube?
 
 can export raw edl
-
 
 download full/all, or API
 search
@@ -21,9 +22,7 @@ certainly multiple output formats
 can open DVD's page from DVD insertion [?]
 
 can add "a new line" just right
-
-
-pie in the sky: can meter your OCR, blank/overlay/mute for you, for testing purposes LOL
+can edit a line just right
 
 ratings, et al
 
@@ -31,7 +30,35 @@ maybe one global one, per movie? maybe make them all wiki editable, yes!
 
 with comments
 
-anonymous submit?
-
-
 restful?
+json
+
+team with imdb somehow?
+
+submit it for approval by peers?
+
+note the license very well
+
+  all online EDL editor
+    flash canvas
+    OCR?
+    hotkeys
+    advanced editing, like sub-parts of frames, with each way to specify the sub-parts
+
+
+partner somehow with kids-in-mind or what not [display their ratings alongside mine?]
+
+popularize at BYU?
+
+publicly postable API [?] user, pass, content? yes!
+
+"distributable filters to any device" roku, hulu, netflix, etc. [and partner with them? could propose it :P]
+
+never do:  
+  allow business "partners" to somehow use it, too...hmm...
+  make it into a marketplace?
+  a spiffy way to share it with friends, like super easy:
+    http://www.google.com/url?sa=D&q=www.fitleredvids.com/%3Ffilter%3D1a2x%26video%3Dyoutube.com/watch%252av%3D6eECWYhhldQ
+  automagically usable for youtube [the only one with a sensible API]...
+  pie in the sky: can meter your OCR, blank/overlay/mute for you, for testing purposes LOL
+

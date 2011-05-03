@@ -14,7 +14,13 @@ can autodownload captions based on some unique identifier of the video
 use that information [see below] to call straight into a controlled 
 sub-player's API to then monitor and control the player.
 
-Note that I can convert among various types of EDL playbacks, as well
+Note that sensible-cinema can convert among various types of EDL playbacks, as well.
+
+Note also that mplayer has a sort of EDL training mode, with
+realtime tracking and input to create EDL's
+
+Note also that our EDL's can include URL's, ex: the youtube url in question, or netflix url.
+
 
 == 0.21.6 ==
 
@@ -36,7 +42,8 @@ that one with a user given list, to come up with a "final" skip/mute list.
 
 Note also that comskip:
 http://www.kaashoek.com/comskip
-Analyzes video for certain aspects and auto-skips scenes based on computerized criteria.
+Analyzes video for certain aspects and auto-skips scenes based on computerized criteria,
+it also includes machine learning for that regard.
 
 == 0.21.5 ==
 
@@ -52,6 +59,8 @@ are related and exist and use web players' javascript API hooks into players in 
 track playback and insert dynamic overlays, and use their internal volume
 control, all based on timestamp or inferred timestamp.
 
++- https://github.com/8planes/mirosubs
+
 == 0.21.3 ==
 
 Fix installation mistake.
@@ -66,7 +75,7 @@ the right directshow parameters.
 You could also use a projector to project anything you see on your computer.
 
 Note also that with the previous code (screen tracker), it already had the capability to do 
-"mutes" and "blank out overlays" simultaneously, for quite a few releases.
+"mutes" and "blank out overlays" simultaneously, for quite a few releases now.
 
 == 0.21.2 ==
 

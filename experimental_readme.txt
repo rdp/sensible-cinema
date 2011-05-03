@@ -1,4 +1,4 @@
-Currently the experimental screen tracker (bin\sensible-cinema-cli) prompts for a delete list
+Currently the experimental screen tracking edited player (bin\sensible-cinema-cli) prompts for a delete list
 and a player description.
 
 It then tracks whichever player you are using, by using OCR on its timestamps (

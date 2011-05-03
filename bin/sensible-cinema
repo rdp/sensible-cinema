@@ -383,7 +383,7 @@ module SensibleSwing
       ffmpeg = RubyWhich.new.which('ffmpeg')
       if ffmpeg.length == 0
         show_blocking_message_dialog("It appears that you need to install a dependency: imagemagick.\n
-        Click ok to be directed to its download website.\nYou'll probably want to download and run the \"windows-dll.exe\" package.\n
+        Click ok to be directed to its download website.\nYou'll probably want to download and run the \"windows-dll.exe\" http package.\n
         Then restart Sensible-Cinema/console window.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
         system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
         java.lang.System.exit(1)
