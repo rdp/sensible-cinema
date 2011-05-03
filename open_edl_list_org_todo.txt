@@ -1,2 +1,37 @@
-
 web based auto-EDL converter on the fly prototype, for download uh guess.
+a checkbox this one is "ready"
+
+note that mplayer has an easy training mode, if desired...
+
+openedllist.org [no]
+openmovie...org
+
+open-list-of-editable-movie-scenes.org
+
+editable-list-of-movie-scenes.org ?
+
+can export raw edl
+
+
+download full/all, or API
+search
+
+certainly multiple output formats
+
+can open DVD's page from DVD insertion [?]
+
+can add "a new line" just right
+
+
+pie in the sky: can meter your OCR, blank/overlay/mute for you, for testing purposes LOL
+
+ratings, et al
+
+maybe one global one, per movie? maybe make them all wiki editable, yes!
+
+with comments
+
+anonymous submit?
+
+
+restful?

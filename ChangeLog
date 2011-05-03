@@ -6,6 +6,16 @@ or by using keystrokes sent directly to the application to mute it via the appli
 http://www.youtube.com/watch?v=0AsJtVyVMzk
 (and has been able to do this for quite some time)
 
+Note also that many other forms of automation techniques have already existed (ex: autoit, etc.)
+
+Note also that this other, separate project http://code.google.com/p/movie-content-editor/
+can autodownload captions based on some unique identifier of the video
+(a hash, which also apparently works with DVD's), parse the downloaded captions, and
+use that information [see below] to call straight into a controlled 
+sub-player's API to then monitor and control the player.
+
+Note that I can convert among various types of EDL playbacks, as well
+
 == 0.21.6 ==
 
 Can work on windows 7 64 bit now

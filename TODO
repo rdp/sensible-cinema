@@ -25,16 +25,24 @@
   == gather phase ==
     note blu-ray complaint, plus didn't he have one other?
 
+  un-paranoid note
+  note: avidemux [auto-trainable, usable...]
   make them accept the license in order to download the stuff [checkbox] :P
   note "inspired by the fantom edit.." too?
+  timings: OS X everything...
+  avidemux timings...
+  "is a separate project with its own..."
+  Does VLC grab really have off timings each time?
   We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
-  timing info: mplayer OS X, VLC OS X, others?
+  timing info: mplayer OS X, VLC OS X, others? VLC ripped, converted...
   investigate: can I use the zoomplayer max?
   edit EDL to include realtime lists [zoom, etc.'s]
   timing: what about tron normal (non rental) DVD, does its mplayer get off a bit, too?
     if so, are there other DVD's that get off a bit, too, or is this a one time thing? huh?
   timing: if I can't find another that plays at 30/29.97 all the way through, buy Tron retail and (see if it does as the rental did)
     then make it work
+  package curl [?]
+  timing info on WMPC was off for some DVD or other? audio was off? huh?
   note we don't always use libdvdcss
   # "closing thoughts" => "still a fairly dark movie, overall", smallify
   fix known bugz...
@@ -57,7 +65,10 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
-idonate http://lame.buanzo.com.ar/
+  to develop: order sintel DVD, use that: http://www.sintel.org/
+  donate http://lame.buanzo.com.ar/
+  cp: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
+    too slow, too, with new EDL's
   publish new version of rdp-win32screenshot
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
@@ -77,14 +88,19 @@ idonate http://lame.buanzo.com.ar/
       youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
         phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
-      cheap minimize demo
+      cheap minimize demo "fake auto" :)
+      note that we have a unit test that can control mouse position, and monitor it for changes, and use this information to control mouse control, like feedback, less frequent jerk
       cheap static-ify demo for mutes
-      url -> url inference [just a simple youtube demo--hopefully this is cake...]    
-      
+        also a straight almost mute one, if that's even possible
+      url -> url inference [just a simple youtube demo--hopefully this is cake...]
+    
+    note: mplayer has a training mode for easy use/creation
+    space -> advance from pause until next edit item?
+    add fine grained "new ratings" to some demo EDL
     infer edl from url for netflix
     amazon player descriptor, just in case ;P
     make it able to "map" to a fake netflix' adjusted timing, just rough demo/unit test.
-    can jerk mouse only every so often
+    can jerk mouse only every so often (cheap would be to just arbitrarily have it from x to y, demo that)
     can scan several player descriptors to "pick the right one"
     edited streamer screencast demo (the rumor guy demo, like zediva)
     incorporate the DL translator from the BYU-I fella
@@ -116,8 +132,21 @@ idonate http://lame.buanzo.com.ar/
       phase 4: I can constantly poll and react
     post a demo of it streaming to a console device
     categories filterable by "level" "profanity level 2 and below is ok for me and my kids"
-    
+    maybe could just "play from x to y" [no exclude info?] 
+    stage one: query, auto-download when they hit a netflix movie of some type
+      stage two: chrome plugin for the same
+    editor that can use OCR, too :P
+    can insert deleted scenes et al [even external scenes :P]
+
+  @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
+  @legal: one way is probably legal...
+  note: you transfer (c) to me
+  buy HP2, cool runnings, forever strong :P
+  buy forever strong italian, compare... :P
+  create EDL: 10 commandments DVD to skip intro
+  by default add: DVD title, english descriptive title, total length
   would umplayer be better somehow?
+  note: maybe DVD-R is ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
   the fake blanker one doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate to the most popular sourceforges...if I don't remember having done so already :P
@@ -196,6 +225,10 @@ idonate http://lame.buanzo.com.ar/
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  buy legal XP dvd'er, install at home
+  mv changelog name
+  note: preceded by clean flicks :P
+  mac "just play it" using their DVD player
   slim down the gem
   figure out how to auto-crop on its way in?
   figure out some way to work with cable providers/iphones?
@@ -281,7 +314,7 @@ idonate http://lame.buanzo.com.ar/
       full msi
   ask if you can somehow more easily grab to "mostly the same" exact codec (ffmpeg, mencoder mailing lists) [blog that you can't]
   add md5 "warning" when something (anything) had failed disc fails doesn't match because of read failure...
-  LLC before ever pay anyone anything, if I ever do
+  LLC before I ever pay anyone anything, if I ever do
   add some or any of the following "play now" options...without a true navigator of course :)
     visualbasic-like msdvdweb playlist
       one line at a time :P
@@ -517,11 +550,9 @@ irb(main):002:0> a.seek 10_000_000_000
 => 0
 irb(main):003:0> a.write 'b'
 => 1
-irb(main):004:0> a.close # freeze mri 1.9.2
+irb(main):004:0> a.close # very slow mri 1.9.2
 =======
 take out all require 'rubygems'ses...
-
-package with portable imagemagick (meh)
 
 warn them when it looks like screen capture is very painful/expensive [is it too bad anyway, though] ? iff necessary
 
@@ -576,3 +607,7 @@ if it looks paused I should basically pause my tracking [if it looks nothing, th
 it fails on "friday" tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
 figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
+
+@avidemux: resave fails in bizarre ways :P
+
+verbatim ISO copy, then scratch out appropriate bits?
