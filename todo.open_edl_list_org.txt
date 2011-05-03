@@ -54,6 +54,8 @@ publicly postable API [?] user, pass, content? yes!
 
 "distributable filters to any device" roku, hulu, netflix, etc. [and partner with them? could propose it :P]
 
+super easy skip to this time: http://www.youtube.com/watch?feature=player_embedded&v=m75dQ7D3QcM#t=16s
+
 never do:  
   allow business "partners" to somehow use it, too...hmm...
   make it into a marketplace?
@@ -61,4 +63,5 @@ never do:
     http://www.google.com/url?sa=D&q=www.fitleredvids.com/%3Ffilter%3D1a2x%26video%3Dyoutube.com/watch%252av%3D6eECWYhhldQ
   automagically usable for youtube [the only one with a sensible API]...
   pie in the sky: can meter your OCR, blank/overlay/mute for you, for testing purposes LOL
+
 
