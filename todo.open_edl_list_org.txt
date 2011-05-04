@@ -15,7 +15,16 @@ filtertube?
 can export raw edl
 
 download full/all, or API
-search
+searchable
+
+imdb -> dvd mapper?
+  reuse dvd profiler...?
+
+real dvd image from dvd profiler :P
+
+various output types
+
+search everything...
 
 certainly multiple output formats
 
@@ -48,7 +57,7 @@ note the license very well
 
 partner somehow with kids-in-mind or what not [display their ratings alongside mine?]
 
-popularize at BYU?
+popularize/propaganda-ize at BYU?
 
 publicly postable API [?] user, pass, content? yes!
 
@@ -63,5 +72,6 @@ never do:
     http://www.google.com/url?sa=D&q=www.fitleredvids.com/%3Ffilter%3D1a2x%26video%3Dyoutube.com/watch%252av%3D6eECWYhhldQ
   automagically usable for youtube [the only one with a sensible API]...
   pie in the sky: can meter your OCR, blank/overlay/mute for you, for testing purposes LOL
+UPC code? -> amazon... -> 
 
 
