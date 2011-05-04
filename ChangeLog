@@ -17,7 +17,7 @@ sub-player's API to then monitor and control the player.
 Note that sensible-cinema can convert among various types of EDL playbacks, as well.
 
 Note also that mplayer has a sort of EDL training mode, with
-realtime tracking and input to create EDL's
+realtime tracking and input to create EDL's easily, using user keyboard input in realtime.
 
 Note also that our EDL's can include URL's, ex: the youtube url in question, or netflix url.
 
@@ -34,6 +34,8 @@ Note also some original content ideas here:
 http://betterlogic.com/roger/2009/02/user-contributed-movie-scene-selection-or-past-clearplay/
 and
 http://programming-gone-awry.blogspot.com/2009/12/beyond-clearplay.html
+
+Note also that gracenote has been able to do remote lookups based on metrics of discs for years.
 
 == 0.21.6 ==
 

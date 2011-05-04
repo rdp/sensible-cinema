@@ -4,6 +4,7 @@
 
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
+  edit this todo list
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
@@ -62,11 +63,10 @@
 
 == yes do, semi-ordered [normal, patentzy] ==
   port to OS X
-  to develop: order sintel DVD, use that: http://www.sintel.org/
+  note: to develop: order sintel DVD, use that: http://www.sintel.org/
   donate http://lame.buanzo.com.ar/
   cp: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
-  publish new version of rdp-win32screenshot
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
   note "inspired by the fantom edit.." too?
@@ -81,16 +81,16 @@
   
   === patentzy yes and no do, vaguely ordered ===
     == higher-zy prio ==
-      youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
-        phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-      make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
       cheap minimize demo "fake auto" :)
-      note that we have a unit test that can control mouse position, and monitor it for changes, and use this information to control mouse control, like feedback, less frequent jerk
       cheap static-ify demo for mutes
-        also a straight almost mute one, if that's even possible
+        also a straight almost mute one, using volume down
       url -> url inference [just a simple youtube demo--hopefully this is cake...]
-    
-    note: mplayer has a training mode for easy use/creation
+   
+    user preference "how many down clicks on volume for profanity"? 
+    make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
+    youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
+      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
+    note that we have a unit test that can control mouse position, and monitor it for changes, and use this information to control mouse control, like feedback, less frequent jerk
     space -> advance from pause until next edit item?
     add fine grained "new ratings" to some demo EDL
     infer edl from url for netflix
@@ -218,11 +218,12 @@
 == DVD decide later to move up or down ==
 
   maybe it should just say "readable lips" for the EDL's, not that it should mute. Let the user decide what to do or what not :P
-  auto-feedback on crashes [?]
-  take out the extra console window box output :) [scary, and closing it closes SC!]
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  take out the extra console window box output :) [scary, and closing it closes SC!]
+  auto-feedback on crashes [?]
+  publish new version of rdp-win32screenshot, if it ever existed
   timing all dogs go to heaven--way off in hulu? huh?
   script avisynth, as a demo?
   script avidemux, as a demo?
