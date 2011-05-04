@@ -28,6 +28,7 @@ http://www.videolan.org/developers/libbluray.html
 
 It could also track blu-ray players like PowerDVD, so check there.
 
+Also note that dvd profiler has been able to auto-download based on DVD title for quite awhile, since 1999 http://www.afterdawn.com/news/article.cfm/1999/07/14/dvd_profiler_open_beta_available
 == 0.21.6 ==
 
 Can work on windows 7 64 bit now
