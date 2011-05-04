@@ -4,7 +4,6 @@
 
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
-  note blu-ray CP complaint, and that one fellow mentioned it with something else?
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
@@ -224,6 +223,9 @@
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  timing all dogs go to heaven--way off in hulu? huh?
+  script avisynth, as a demo?
+  script avidemux, as a demo?
   accomodate failed deletes better than dying with a backtrace
   auto-download and run for them the smplayer install exe ? [scary sourceforge, extra step]
   don't totally die if they cancel out of "Please pick a DVD Delete list file"
@@ -280,13 +282,14 @@
   can make community overlay "comments" somehow or other/whatever cyberlink does :)
   some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
     auto-upload?
+  re-look through all my old "thoughts" notes
   mencoder playlist mode possible?
   just youtube for the various videos
   add button start EDL playback from dvd here [?] (for create mode)
   re-play as EDL button for both modes--describe on the how to better
   fix prio for first ffmpeg instance not being settable [huh?]
   calculating md5...do this while they choose it [low prio] :)
-  @dvd flick: right click on a movie file "write this file to DVD .iso as only title (no menu), burn this file as DVD only title (no menu)"
+  @dvd flick: right click on a movie file "write this file to DVD .iso as only title (no menu), burn this file as DVD only title (no menu)" [+- with filters x,y or z]
   @dvd flick: default should not be to loop
   @dvd flick: use first aspect ratio by default.
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
@@ -375,6 +378,8 @@ uservoice
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+some low level frame hijacker for incoming cable movies, too? ... hmm...
+
 can die when doesn't start well:
 
 Selected player normal_in_youtube.com.chrome.txt
@@ -390,6 +395,7 @@ misses digits: youtube friday somewhere along there...40 or so [or maybe it got 
 
 can synchronize hulu/netflix instant play, for girlfriends
 create avisynth realtime EDL'er
+
 
 when mouse jerks the "first" time--don't count it!  It's the next transition that matters..I think so...
   or count it as "worst possible" ?
