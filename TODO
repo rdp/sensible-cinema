@@ -6,7 +6,7 @@
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   edit this todo list
   purchase forever strong DVD, and only use for late term timing thingz...
-  note competition is welcome and good!
+  note competition is welcome and good! (and note competitors, even...)
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
@@ -629,12 +629,14 @@ RuntimeError: poor width or wrong window 94 1 71
           go_sc at bin\sensible-cinema-cli:94
          (root) at bin\sensible-cinema-cli:128
         [hard exit]
+
+create a "map" of VLC DVD timings to "real" timings via tracking.  Hopefully never necessary...
         
 if it looks paused I should basically pause my tracking [if it looks nothing, then keep going with my tracking]
 it fails on "friday" tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
 figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
 
-@avidemux: resave fails in bizarre ways :P
+@avidemux: resave a file fails in a bizarre way :P
 
 verbatim ISO copy, then scratch out appropriate bits?
