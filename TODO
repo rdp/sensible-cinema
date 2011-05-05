@@ -5,7 +5,8 @@
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   edit this todo list
-  purchase forever strong blu ray et al, and only use for late term timing thingz...
+  purchase forever strong DVD, and only use for late term timing thingz...
+  
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
@@ -211,7 +212,7 @@
   create a semi-accurate fantom edit DL
   calculating disk's unique id... -> note on gui...
   don't exit program if they don't select a disk originally :)
-  split EDL's themselves somehow into their own project/LLC...
+  split EDL's themselves somehow into their own project...
   note to them [in create file]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
   if !exist vendor\cache
@@ -532,8 +533,11 @@ blanker outer with user specifiable color
 
 Auto mute/blank commercials?
 
-transfer ownership to an LLC
+transfer ownership to a single LLC
   new github username
+  new domains
+  new sourceforge with that email
+  new youtube
 
 overlay/replace current playback with some url of audio or video
   user editable joke overlays (like a wiki...)
