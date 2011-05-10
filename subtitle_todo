@@ -9,3 +9,15 @@ what if VLC plays a dvd mp4 do the subtitle timings map?
 
 
 http://en.flossmanuals.net/Avidemux/ExtractingDVDSubtitles/
+
+accomodate hello
+accomodate oh...shoot! and sentence edges, etc.
+it can output the "bad whole sentence" with it edited out profanities...
+
+it can lookup the md5 of DVD's on the fly, use that automagically [?]
+it can use "two" .srt files [user generated versus original] and combine them both [?]
+
+is there a way to double check your .srt file is accurate?
+
+somehow interfact with md5/opensubtitles or someone else?  hmm...
+

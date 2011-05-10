@@ -1,4 +1,7 @@
-# warning: somewhat explicit!
+#
+# warning: somewhat scary/explicit!
+
+# see subtitle_todo file
 
 
 
