@@ -5,6 +5,13 @@
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   edit this todo list
+  figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
+  propagate "all movies"
+    for their srt...
+  perfect the frame accurate splitter...is it fast enough in ruby, too?
+  wikipedia realtime
+  color coordinate my google doc on splitters
+  timings OSOH XP
   purchase forever strong DVD, and only use for late term timing thingz...
   note competition is welcome and good! (and note competitors, even...)
   update tons of verbiage
@@ -51,13 +58,20 @@
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
 	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
+  make it frame accurate output
+  allow it to "just play from X to Y exactly" ...
     does this line up right? can it work, at all?
       add new button for it LOL
       lodo:
         update its error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
-    
+  mac version of the C player 
+    "just play from X to Y exactly" 
+  write an in/out of IMDB how to...
+  describe how to grab "more"
+    also note VLC GUI/console, try it out +- dvdfab with a "free" DVD
+
 == blocked ==
 
   clear runnings
@@ -87,7 +101,9 @@
       cheap static-ify demo for mutes
         also a straight almost mute one, using volume down
       url -> url inference [just a simple youtube demo--hopefully this is cake...]
-   
+  
+    cheap minimize via (probably foreground window + API real windows API) 
+    manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
