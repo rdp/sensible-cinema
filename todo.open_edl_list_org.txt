@@ -6,7 +6,7 @@ cross-over stuff:
 
 can accept avidemux times...
 
-
+somehow tell them how/to update IMDB too...
 
 web based auto-EDL converter on the fly prototype, for download uh guess.
 
