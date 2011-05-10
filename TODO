@@ -5,9 +5,11 @@
   
 == slightly lower than that, only somewhat ordered current theme: patentability still ==
   edit this todo list
+  avidemux/ffmpeg timing for a grabbed osoh
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   propagate "all movies"
     for their srt...
+  time a movie using 'their' player--which one is accurate at the end, anyway?
   perfect the frame accurate splitter...is it fast enough in ruby, too?
   wikipedia realtime
   color coordinate my google doc on splitters

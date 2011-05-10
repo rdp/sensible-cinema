@@ -1,18 +1,41 @@
+mplayer os x extended has the same "where am I?" on this DVD problem mplayer has.
+
 OSOH:
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
-    1:00 once was lost but no[w] am found
-
-  mac mplayer: 6791.6 1:53:11.6
-     1:00 [on]ce was lost
-     other is at 3604.7
-  VLC:
-    at beginning, seemed to think it had 1:53:05 left
-    sum: 1:53:04 but it seemed to be cheating...I think it was cheating :P
+    1:00 once was lost but now[ow] am found, possible slight hiccup immediately after
+  mac mplayer: 
+     total: 6791.6 1:53:11.6
+      1:00:00 that saved a wretch like me, I once [w]as lost
+     other "normal" is at about 3604.7
+  VLC mac:
+    at beginning, seemed to think it had 1:53:05 left negative
+    sum: 1:53:04 but it seemed to be cheating...I think it was cheating near the end, too :P
+    1:00:00 saved a wret[ch] like me
   Emerson DVD player:
     barely displayed the 4 of 1:53:04
     1:00 once was lost but no[w] am found
-
+  VLC XP:
+    1:53:05 total
+    1:00:00 saved a wr[ehhh]tch like me 59:49'ish on others I think.
+  MPCHC 
+    1:53:05 total
+    1:00:00 once was lost but n[ow] am found beginning of oh on now
+  WMP CCCP
+    1:53:05 total
+    1:00:00 once was lost but [n]ow am found [quite close to above I think, might be normal]
+  smplayer XP:
+    1:53:05 total [!] fake total
+    unable to seek
+  mplayer XP
+    1:00:00 that saved a wretch like me, I once [w]as lost
+    sum: 6791.6 (= 1:53:11.5) 
+  mac mplayer extended:
+    sum: 1:53:05 negative, in reality went to 1:53:11 :P
+    1:00:00 that saved a wretch like me, I once [w]as lost
+    
+  [should be 3.6 off per hour, 6.8 for osoh's sum, is 6.6 'ish :P]
+  
 tron
 
   WMP
