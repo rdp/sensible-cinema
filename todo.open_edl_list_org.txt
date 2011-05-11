@@ -1,5 +1,7 @@
 (profanity parsing stuff is in other todo)
 
++ creationzy stuff
+
 
 cross-over stuff:
   can sync the whole thing package
@@ -115,3 +117,13 @@ can clone?
 "editable" checkbox?
 
 link to helpful hints/progs in Brazil?
+an spiffy editor that can track and easily use overlay...use OCR! ? :)
+
+  a fully javascript version...hmm...maybe an applet overlay [post 2020 ?]
+
+can show linear/categorically
+
+  some way for, super easy, as they play, it can mark the time signature and add it in...like super easy contribution...hmm...
+    auto-upload?
+    
+a "certified clean" movie list

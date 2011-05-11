@@ -54,4 +54,3 @@ A few pointers:
   EDL to work right [ http://goo.gl/yMfqX ] then use math to setup the correct time signatures.
 
 [1] http://forum.videolan.org/viewtopic.php?f=2&t=81879
-
