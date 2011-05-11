@@ -93,3 +93,10 @@ UPC code? -> amazon... ->
 
 
 can upload srt files...
+
+  propagate "all movies"
+    for their srt...
+
+maybe it should just say "readable lips" for the EDL's, not that it should mute. Let the user decide what to do or what not :P
+
+  swing "edit line/add new line" that makes it trivial :)

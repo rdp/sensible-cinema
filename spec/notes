@@ -1,5 +1,7 @@
 mplayer os x extended has the same "where am I?" on this DVD problem mplayer has.
 
+monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
+
 OSOH:
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
@@ -15,7 +17,7 @@ OSOH:
   Emerson DVD player:
     barely displayed the 4 of 1:53:04
     1:00 once was lost but no[w] am found
-  VLC XP:
+  VLC XP 1.1.7
     1:53:05 total
     1:00:00 saved a wr[ehhh]tch like me 59:49'ish on others I think.
   MPCHC 
@@ -38,8 +40,14 @@ OSOH:
   
   WMP windows 7:
     -1:53:05
-    
-    
+    1:00:00 once was lost but n[o]ow am found
+    ended with last second at 1:53:03...interesting.
+  powerdvd 8:
+    ended with last second at 1:53:03...interesting.
+    1:00:00 once was lost but no[o]w am found
+  VLC 7 1.1.9
+    that saved a wre[tch] like me
+    exhibits same odd lagging timestamps at end.
   
 tron
 
@@ -69,8 +77,9 @@ tron
   powerdvd:
     15: hey carl [switch scenes]
     60: not just for me [] what do you mean
-    2:00:00 beau garrett stage left    
+    2:00:00 beau garrett stage left
 
+Jonah:
 
 15, 30, 45
  k-lite XP mplayer:
@@ -78,7 +87,7 @@ tron
  30: a man that .. can count on to deliver his message yes [well]
  45: big smile from after duck
  
-DvdSampler (k-lite xp)
+DvdSample (k-lite xp)
  15: before [you] eat
  30: a man that .. can count on to deliver his message yes [well]
  45: big smile from after duck
@@ -103,6 +112,9 @@ youtube: lower quality?
 15: wash your hands before you [eat]
  30: yes well [you] and ...
  45: big smile, turns [to his right] after duck
+
+TODO jonah DVD windows 7 various incantations
+TODO jonah blu ray timings windows 7
 
 netflix jonah
 
@@ -134,7 +146,6 @@ saints and soldiers (chrome work netflix):
 jonah if you watch it all the way through
   30: my uncle [was] a big star 
     
-TODO jonah DVD windows 7 various incantations
 
 VLC jonah_edit.tmp.mpg
  15: (on camel) do not fight, do not cheat [wash] your hands
@@ -146,9 +157,8 @@ mplayer jonah_edit.tmp.mpg
  30: can count on to deliver his messages [] yes well
  45: between duck surfacing [] big grin
  
-forever young {netflix, byu.tv}
+forever young
  30: netflix: some running at 29:50...
-
 
 
 MPlayer git-20100211-1-g1c6846f-Kovensky-mt (C) 2000-2009 MPlayer Team
