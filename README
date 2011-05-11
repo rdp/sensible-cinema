@@ -149,8 +149,8 @@ is "different" than standard DVD players, so I decided to just use standardized 
 for VLC playback.
 
 You can see a full list of features that have already been published and demonstrated
-in the file ChangeLog.txt.  Each feature works in some released version of sensible-cinema
-though some features or absent in later versions.  The changelog lists all of the 
+in the file change_log_with_feature_list.txt.  Each feature works in some released version of sensible-cinema
+though some features or absent in later versions.  The change_log_with_feature_list.txt lists all of the 
 features of the versions.
 
 == License ==

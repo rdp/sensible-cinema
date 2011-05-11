@@ -4,12 +4,12 @@
   verbiage release
   C EDL/specific portion player
   web site
-  one non real time consumer?
   
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
-  * high prio patents  
+  * high prio patents
+  closure on blu ray timing/avidemux
   
 == slightly lower than that, only somewhat ordered current theme==
 
@@ -22,14 +22,13 @@
 == yes do, semi-ordered [normal, patentzy] ==
 
   edit this todo list all of it
-  note myth cutlist ?
+  note myth cutlist as inspiration?
   cp: have to replace multiple ones
   try disney digital copy/amazon download/various rippers: bitripper [?] dvdfab or something like that? [to check their framing/timing]
-  publish sintel ISO ? if there's one that has some long'ish video...
-  avidemux/ffmpeg timing for a grabbed osoh
+  publish a sintel ISO ? if there's one that has some long'ish video...
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
-  note competition is welcome and good! (and note competitors, even...)
+  README: note competition is welcome and good!
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
@@ -170,6 +169,12 @@
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  avidemux/ffmpeg timing for a grabbed copy of osoh
+  an all online EDL editor
+    flash canvas
+    OCR?
+    hotkeys
+    advanced editing, like sub-parts of frames, with each way to specify the sub-parts
   donate http://lame.buanzo.com.ar
   donate winscp, sox, 
   do todo.inventionzy.txt

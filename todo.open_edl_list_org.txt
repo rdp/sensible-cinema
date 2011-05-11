@@ -1,7 +1,6 @@
 (profanity parsing stuff is in other todo)
 
-+ creationzy stuff
-
+this file also includes EDL creationzy stuffs
 
 cross-over stuff:
   can sync the whole thing package
@@ -9,7 +8,9 @@ cross-over stuff:
   can just retrieve via URL the latest?
 
 perfect the frame accurate splitter...is it fast enough in ruby, too?
-  wikipedia realtime
+
+wikipedia realtime
+
 color coordinate my google doc on splitters
 
 can accept avidemux times...
@@ -35,11 +36,6 @@ open-list-of-editable-movie-scenes.org [no]
 badscenelist.org
 
 moviedetailedscenelist.org * [does google keywords have a preference?]
-
-editable-list-of-movie-scenes.org ?
-filtertube?
-
-list-of-movie-bad-contents.org
 
 can export raw edl
 
@@ -71,19 +67,18 @@ with comments
 restful?
 json
 
-team with imdb somehow?
+team with imdb somehow/kids-in-mind or what not [display their ratings alongside mine?] or maybe "can link to multiple 3rd party urls"?
 
-submit it for approval by peers?
+submit it for approval by peers/filter by peer review?
 
-note the license very well
+note the license well
 
-  all online EDL editor
+  an all online EDL editor
     flash canvas
     OCR?
     hotkeys
     advanced editing, like sub-parts of frames, with each way to specify the sub-parts
 
-partner somehow with kids-in-mind or what not [display their ratings alongside mine?]
 
 popularize/propaganda-ize at BYU?
 
