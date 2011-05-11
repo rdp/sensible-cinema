@@ -1,9 +1,10 @@
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
+  ** high prio patents
   
 == slightly lower than that, only somewhat ordered current theme==
-  ** high prio patents
+
   
 == blocked ==
 
@@ -58,12 +59,13 @@
         update its error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
-  describe how to grab "more" [?]
+  describe how to grab "more" in the google doc [?]
     also note VLC GUI/console, try it out +- dvdfab with a "free" DVD
   check if md5 same mac versus PC, VLC done several times/fix too
   port to OS X overall
   note: to develop: burn the big buck bunny iso to DVD
   donate http://lame.buanzo.com.ar
+  donate winscp, sox, 
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
@@ -81,21 +83,22 @@
     == higher-zy prio ==
       cheap minimize demo "fake auto" :)
       cheap static-ify demo for mutes
-        also a straight almost mute one, using volume downs
-    
+      also a straight "almost mute" demo, using volume downs/ups
+     
+
     url -> url inference [hopefully this is cake...]
     cheap minimize via (probably foreground window + API real windows API) 
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
+      or even just suck in any web file, for starters
     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
       phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-    note that we have a unit test that can control mouse position, and monitor it for changes, and use this information to control mouse control, like feedback, less frequent jerk
     space -> advance from pause until next edit item?
     add fine grained "new ratings" to some demo EDL
     infer edl from url for netflix
     amazon player descriptor, just in case ;P
-    make it able to "map" to a fake netflix' adjusted timing, just rough demo/unit test.
+    make it able to "map" to a fake netflix' adjusted timing, just rough demo/unit test [low prio since we can already auto-adjust timing info based on circumstance]
     can jerk mouse only every so often (cheap would be to just arbitrarily have it from x to y, demo that)
     can scan several player descriptors to "pick the right one"
     edited streamer screencast demo (the rumor guy demo, like zediva)

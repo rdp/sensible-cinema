@@ -37,6 +37,13 @@ http://programming-gone-awry.blogspot.com/2009/12/beyond-clearplay.html
 
 Note also that gracenote has been able to do remote lookups based on metrics and/or title of optical discs for years.
 
+Note also that Sensible Cinema has for several releases been able to auto-adjust timing info based on player.
+
+Note also that we have a unit test that can control mouse position, and monitor it for changes, and use this 
+information to control our own mouse control, so it uses it like feedback, ex: less frequent jerking at times.
+
+So we can also jerk less frequently in certain given circumstances.
+
 == 0.21.6 ==
 
 Can work on windows 7 64 bit now
