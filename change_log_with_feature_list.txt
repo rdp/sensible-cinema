@@ -44,6 +44,8 @@ information to control our own mouse control, so it uses it like feedback, ex: l
 
 So we can also jerk less frequently in certain given circumstances.
 
+Note that I have heard tell of an edited movie service that streams "edited content" through the web to an end listener.
+
 == 0.21.6 ==
 
 Can work on windows 7 64 bit now

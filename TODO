@@ -1,37 +1,35 @@
 == roadmap ==
 
-  invention videos/verbiage
-  verbiage release
+  invention videos
+  verbiage release/text in todo items
   C EDL/specific portion player
-  web site
+  pull realtime players from mine/propagate wikipedia with list
+  on to the build library phase?
+  create web site ?
   
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
-  * high prio patents
-  closure on blu ray timing/avidemux
-  
-== slightly lower than that, only somewhat ordered current theme==
 
+  high prio patents
+  closure on blu ray timing
   
 == blocked ==
 
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
 
-== yes do, semi-ordered [normal, patentzy] ==
+== yes do, un-ordered [normal] ==
 
-  edit this todo list all of it
+  edit this todo list all of it/roadmap-ize...
   note myth cutlist as inspiration?
   cp: have to replace multiple ones
-  try disney digital copy/amazon download/various rippers: bitripper [?] dvdfab or something like that? [to check their framing/timing]
+  try disney digital copy/amazon download/various rippers to check their framing/timing accuracy
   publish a sintel ISO ? if there's one that has some long'ish video...
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   README: note competition is welcome and good!
   update tons of verbiage
-    changelog/full feature list
-      note phantom rumored edited streamer
   legal:
     "for instance one author lives in the US, has never made"
     "don't do it"
@@ -49,7 +47,7 @@
   make them accept the license in order to download the stuff at all [checkbox] :P
   note "inspired by the phantom edit.." too?
   "is a separate project with its own..."
-  Do various VLC grabs really have off timings each time, and compared to mplayer?
+  Do various VLC grabs really have off timings each time, and compared to mplayer grabs?
   We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
   timing info: VLC on ripped, VLC on transcoded copy?
   investigate: can I use the zoomplayer max?
@@ -58,92 +56,65 @@
   use DVD navigator?
     wow terrifying...
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
-	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
-    dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
-  make it frame accurate output
-    after done: note we don't always use libdvdcss in the legal
-  allow it to "just play from X to Y exactly" ...
+  	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
+    PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
+    make it frame accurate output
+      after done: 
+        note we don't always use libdvdcss in the legal
+        add new button for it LOL
+    allow it to "just play from X to Y exactly" ...
     does this line up right? can it work, at all?
-      add new button for it LOL
       lodo:
-        update its error messages...
+        update its semi-bad error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
-  describe how to grab "more" in the google doc [?]
-    also note VLC GUI/console, try it out +- dvdfab with a "free" DVD
+    note pay for XP, or possibly re-install DVD player from installation CD from
+    dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
   check if md5 same mac versus PC, VLC done several times/fix too
-  port to OS X overall
   note: to develop: burn the big buck bunny iso to DVD or just use it
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   "I accept the terms in all of the license agreements"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-  @developers describe what the various bat files do
   note it is legal at least for free movies
   full pass re-write of README, legal
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
-  do open_edl_list_org_todo.txt contents
+  do open_edl_list_org_todo.txt file
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   @legal: one way is probably legal...
-  buy HP2, cool runnings, owl movie :P
-  create EDL: 10 commandments DVD to skip intro
-  by default add: DVD title, english descriptive title
-  note: maybe DVD-R is ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
+  buy HP2, cool runnings :P
+  create an EDL: 10 commandments DVD to skip the intro music LOL
+  by default add: DVD title, english descriptive title [prompt?]
+  note legal: maybe DVD-R is sometimes ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
   the fake blanker one doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
-  donate to the most popular sourceforges...if I don't remember having done so already :P
   donate menumeter $
   "have read and accept readme, legal_conerns**"
   "each with its own copyright and authorship and responsibility"
   just reference their copy of gplv1 etc.
-  show the gpl itself
   note history: "after mplayer got EDL playback, some other did too [myth?], the python one was created too, VLC could work with playlists"
-  force an install of VLC, too
-  should both mute and blank when blanking
-    make optional though? hmm time for a third type...
   create local new DL's to a separate, new folder
-  warn on "create new list" if a previous one exists (just a dismiss dialog, then still allow them to create a new one)
   that one button is broken...play with [s]mplayer unedited [?]
   tool tips for all buttons...tweak naming, too :P do something!
   it should clear smplayer options on startup always, just in case
-  note abandoned vlc timings issues
   the "play DVD with smplayer unedited" prompts for delete list x2
   fix the "play previously credited edited file for current DVD" button
-  a button for "just play a dvd unedited" for normal users
   vendorize smplayer * 2
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
-  port to linux
-  "release" it to more developers
-    plug.org, more rubyists?
-    after OS X :)
-  note to previewer "you are about to preview these specific edits..."
-  gherkin'ize
-  more DL's
-    my dvd's (with loose timestamps...)
-      cars backport real EDL :)
-    enlist chris' help to create
-    friend's dvd's, me create Delete List [?]
-    partner for filters (Jon, Karlie [any family interested], and for beta-testing)
-      all only after linearize, new year, frame accurate
+  note to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation 
-    facebook? lds lists?
-      after cleanup the view (tooltips)
   fast preview: change it to be aggressive sometimes yes, other times no
-  10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   beta release: rinse and repeat with various ppl
     actually, just use sourceforge for hosting...maybe google SEO friendly :) ???
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   youtube videos -> new account name
-  custom brand C dvd player
-    note pay for XP, or possibly re-install DVD player from installation CD from
-    dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
-  propaganda-ize (see other file)
+  propaganda-ize (file)
   vendorize ffmpeg, then they don't have to install imagemagick...
-  mplayer EDL while grabbing, from grabbed.  
+  mplayer EDL while grabbing, from grabbed :P  
   note "pay us/somebody to do it for you on the google group"?
   I should probably not display that message unless java isn't installed
   make .bat file friendlier for case of accidental download
@@ -152,16 +123,13 @@
   create a semi-accurate phantom edit EDL copy
   calculating disk's unique id... -> have it note on gui...
   don't exit program if they don't select a disk originally :)
-  note to them [in create file]: can do the two types of preview at same time...concurrently...to save time...
+  note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
   timing all dogs go to heaven--way off in hulu? huh?
-  wasn't some timing or other way off?
-  auto-download and run for them the smplayer install exe ? [scary sourceforge, extra step]
-  non matching found -> none were found that matched your DVD
+  wasn't some timing or other way off, too?
+  auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   don't totally die if they cancel out of "Please pick a DVD Delete list file"
-  change changelog name
   note: preceded by clean flicks :P
-  todo.subtitle file
   disallow choosing empty drive? fail more gracefully? (issue 11)
 
 == DVD decide later to move up or down ==
@@ -169,6 +137,15 @@
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  force an install of VLC, too
+  todo.subtitle file
+  10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
+  make optional though? hmm time for a third type blank but non mute...
+  port to linux
+  "release" it to more developers
+    plug.org, more rubyists?
+    after OS X :)
+  port to OS X overall
   avidemux/ffmpeg timing for a grabbed copy of osoh
   an all online EDL editor
     flash canvas

@@ -3,6 +3,7 @@
       cheap static-ify demo for mutes
       also a straight "half mute" demo, using volume downs/ups     
 
+    both mute and blank when blanking by default...
     url -> url inference [hopefully this is cake...]
     cheap minimize via (probably foreground window + API real windows API) 
     manual select which to include into an EDL

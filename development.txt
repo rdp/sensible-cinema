@@ -20,6 +20,7 @@ Currently it's windows only, ping me if you want that changed.
 
 Note: you transfer (c) to copyrighted published of sensible cinema when you submit patches.
 
+Note that there are batch files to run it in normal, create, and "realtime OCR track" mode.
 
 We welcome all feedback/contribution :)
 
