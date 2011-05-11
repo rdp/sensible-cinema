@@ -32,6 +32,10 @@ openmovie...org
 
 open-list-of-editable-movie-scenes.org [no]
 
+badscenelist.org
+
+moviedetailedscenelist.org * [does google keywords have a preference?]
+
 editable-list-of-movie-scenes.org ?
 filtertube?
 
@@ -127,3 +131,7 @@ can show linear/categorically
     auto-upload?
     
 a "certified clean" movie list
+
+disallow "0:45:00.0" , "00:450:10.0",  # second 2700
+
+internally store them as non-timestamps LOL

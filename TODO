@@ -2,7 +2,10 @@
 
   invention videos/verbiage
   verbiage release
-
+  C EDL/specific portion player
+  web site
+  one non real time consumer?
+  
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
@@ -19,7 +22,7 @@
 == yes do, semi-ordered [normal, patentzy] ==
 
   edit this todo list all of it
-  note myth cutlist
+  note myth cutlist ?
   cp: have to replace multiple ones
   try disney digital copy/amazon download/various rippers: bitripper [?] dvdfab or something like that? [to check their framing/timing]
   publish sintel ISO ? if there's one that has some long'ish video...
@@ -71,7 +74,7 @@
     also note VLC GUI/console, try it out +- dvdfab with a "free" DVD
   check if md5 same mac versus PC, VLC done several times/fix too
   port to OS X overall
-  note: to develop: burn the big buck bunny iso to DVD
+  note: to develop: burn the big buck bunny iso to DVD or just use it
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
@@ -83,17 +86,11 @@
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
   do open_edl_list_org_todo.txt contents
-  
-  === patentzy yes actually do vaguely ordered ===
-      cheap minimize demo "fake auto" :)
-      cheap static-ify demo for mutes
-      also a straight "half mute" demo, using volume downs/ups     
-
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   @legal: one way is probably legal...
   buy HP2, cool runnings, owl movie :P
   create EDL: 10 commandments DVD to skip intro
-  by default add: DVD title, english descriptive title, total length
+  by default add: DVD title, english descriptive title
   note: maybe DVD-R is ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
   the fake blanker one doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
@@ -238,8 +235,6 @@
   @ffmpeg: gop 12 for ntsc-dvd?
   can watch conference like a music video :)
     can play "this section then that, with this one's audio
-  disallow:
-    "0:45:00.0" , "00:450:10.0",  # second 2700
   md5 and verify the fulli version... [?]
     only useful once I get the frame accurate stuff done, and any audio tweakage, etc.
   speedify things (the whole process takes approximately...eternity?)
