@@ -2,7 +2,16 @@ mplayer os x extended has the same "where am I?" on this DVD problem mplayer has
 
 monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
 
+DVD player conclusions:
+  VLC's are all pretty consistent
+  various mplayers are pretty consistent
+  VLC can be up to at least 30s off [!]
+  mplayers are at 29.97/30 offset
+  WMP is pretty close, but internally inconsistent by 0.5s
+  powerdvd is pretty close but internally inconsistent but about 0.5s
+
 OSOH:
+
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
     1:00 once was lost but now[ow] am found, possible slight hiccup immediately after
@@ -20,7 +29,7 @@ OSOH:
   VLC XP 1.1.7
     1:53:05 total
     1:00:00 saved a wr[ehhh]tch like me 59:49'ish on others I think.
-  MPCHC 
+  MPCHC
     1:53:05 total
     1:00:00 once was lost but n[ow] am found beginning of oh on now
   WMP CCCP
@@ -95,7 +104,7 @@ DvdSample (k-lite xp)
 VLC
  15: and [if] you follow god's commands (early?)
  30: something about nineveh makes you feel sad [I dont' really ] want to talk about it [?]
- 45: [smiles] traveling buddy, I'm coming [gulp]
+ 45: fire 3, I'm coming traveling buddy [flash back to them] (in wmp this is at 44:27) 
 
 smplayer, mplayer 30369
  15: wash your hands [before] you eat
@@ -107,13 +116,21 @@ hulu
  30: a man that .. can count on to deliver his message yes [well]
  45: just before the big grin from duck
 
-youtube: lower quality?
-
-15: wash your hands before you [eat]
+youtube jonah: appears lower quality?
+ 15: wash your hands before you [eat]
  30: yes well [you] and ...
  45: big smile, turns [to his right] after duck
 
-TODO jonah DVD windows 7 various incantations
+powerdvd 8:
+  15: wash your hands before you [eat] --- wash your hands [before] you eat --- wash your [hands] before you eat LOL
+  30: can count on to deliver his messages yes [] well  ---  yes well ... you and [] ... are like peas in a pod ai ai 
+  45: big smile [] he turns to his right  --- turns [to his right] -- [] turns to his right
+
+wmp windows 7: [wmp feels slightly unstable timing-wise]
+  15:  before [] you eat --- before [you] eat
+  30:  yes []well --- yes well[]
+  45:  turns [to his right] --- turns to his right[]
+  
 TODO jonah blu ray timings windows 7
 
 netflix jonah
@@ -168,7 +185,7 @@ MPlayer git-20100211-1-g1c6846f-Kovensky-mt (C) 2000-2009 MPlayer Team
 
 the internet seems to "not tell me" if transcode's avisplit is frame accurate or not.
 
-watching a DVD "from the DVD" in smplayer seemed to have the right audio always. yep.
+watching a DVD "from the new DVD ISO" in smplayer seemed to have the right audio always. yep.
   i.e. transcoding from dvd flick fixed it [probably]
 
 previewing section on HP 2 hours or so and the first thing overlapped the muted section in error...went too long...huh?
