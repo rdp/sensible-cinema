@@ -12,9 +12,9 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
-  edit this todo list
+  edit this todo list all of it
   cp: have to replace multiple ones
-  try disney digital copy/amazon download/various rippers: bitripper [?] dvdfab or something like that?
+  try disney digital copy/amazon download/various rippers: bitripper [?] dvdfab or something like that? [to check their framing/timing]
   avidemux/ffmpeg timing for a grabbed osoh
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
@@ -200,18 +200,22 @@
   make .bat file friendlier for case of accidental download
     if !exist vendor\cache
   note "this is the full list--your help is wanted/needed"
-  create a semi-accurate fantom edit DL
+  create a semi-accurate fantom edit EDL copy
   calculating disk's unique id... -> have it note on gui...
   don't exit program if they don't select a disk originally :)
   note to them [in create file]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
   timing all dogs go to heaven--way off in hulu? huh?
+  wasn't some timing or other way off?
+  auto-download and run for them the smplayer install exe ? [scary sourceforge, extra step]
+  non matching found -> none were found that matched your DVD
 
 == DVD decide later to move up or down ==
 
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  an "automatic mplayer split finder" :)
   buy forever strong italian, compare... :P
   mac version of the C player 
     "just play from X to Y exactly" 
@@ -222,11 +226,8 @@
   auto-feedback on crashes [?]
   publish new version of rdp-win32screenshot, if it ever existed
   script avidemux, as a demo?
-  accomodate failed deletes better than dying with a backtrace
-  auto-download and run for them the smplayer install exe ? [scary sourceforge, extra step]
+  accomodate failed deletes [files in use] better than dying with a backtrace
   don't totally die if they cancel out of "Please pick a DVD Delete list file"
-  non matching found -> none were found that matched your DVD
-  load progress bar...
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
   transcribe the audio of movies? crowd source it? whoa!
@@ -632,4 +633,4 @@ figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
 
 @avidemux: resave a file fails in a bizarre way :P
 
-verbatim ISO copy, then scratch out appropriate bits?
+ISO copy, then scratch out appropriate bits?

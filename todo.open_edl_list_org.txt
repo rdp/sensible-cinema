@@ -107,4 +107,11 @@ maybe it should just say "readable lips" for the EDL's, not that it should mute.
   swing "edit line/add new line" that makes it trivial :)
 
   accept "mplayer_dvd_splits" => ["4749"]
-note: you transfer (c) to me
+  
+note: you transfer (c) to CC
+
+"imdb pasteable" option
+can clone?
+"editable" checkbox?
+
+link to helpful hints/progs in Brazil?
