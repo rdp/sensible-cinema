@@ -138,12 +138,15 @@ Then I realized I could basically create the same effect using the
 Edit Decision Lists enforced using playlists and
 VLC.  I.e. play from second x to y, now play then from z to second mu, muted, now from q to r, etc.
 I just passed VLC a playlist, it did all the work for me, without any necessary real-time tracking.
-There are a few released versions that did this.
+There are a few released versions that did this.  It avoids real-time tracking by specifying "play from here to here"
+not "skip from here to here" as some other editing players do.
 Then it occurred to me that you could grab the several clean segments
 off a DVD, and piece them together to create an edited version.  This also avoids 
-realtime tracking, so I included it.
+realtime tracking, so I included that functionality.
 I also added some mplayer EDL playback functionality later.
-The playlist option is disabled in later releases, as it was deemed too user-non-friendly.
+The playlist option is disabled in later releases, as it was deemed too user-non-friendly, and VLC timing
+is "different" than standard DVD players, so I decided to just use standardized timing, though it worked fine
+for VLC playback.
 
 You can see a full list of features that have already been published and demonstrated
 in the file ChangeLog.txt.  Each feature works in some released version of sensible-cinema

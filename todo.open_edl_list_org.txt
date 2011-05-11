@@ -4,9 +4,14 @@ cross-over stuff:
   can just retrieve via URL the latest?
   just run rails locally and they edit it locally, then submit?
 
+perfect the frame accurate splitter...is it fast enough in ruby, too?
+  wikipedia realtime
+color coordinate my google doc on splitters
+
 can accept avidemux times...
 
 somehow tell them how/to update IMDB too...
+  write an in/out of IMDB how to...
 
 web based auto-EDL converter on the fly prototype, for download uh guess.
 
@@ -100,3 +105,6 @@ can upload srt files...
 maybe it should just say "readable lips" for the EDL's, not that it should mute. Let the user decide what to do or what not :P
 
   swing "edit line/add new line" that makes it trivial :)
+
+  accept "mplayer_dvd_splits" => ["4749"]
+note: you transfer (c) to me

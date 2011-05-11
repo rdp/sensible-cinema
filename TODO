@@ -1,66 +1,56 @@
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
-
   
-== slightly lower than that, only somewhat ordered current theme: patentability still ==
+== slightly lower than that, only somewhat ordered current theme==
+  ** high prio patents
+  
+== blocked ==
+
+  clear runnings
+    have ben and chris test it out, have it work, then ask about video quality
+
+== yes do, semi-ordered [normal, patentzy] ==
   edit this todo list
   cp: have to replace multiple ones
   try disney digital copy/amazon download/various rippers: bitripper [?] dvdfab or something like that?
-  Other side of heaven DVD timings work
   avidemux/ffmpeg timing for a grabbed osoh
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
-  time a movie using a 'real' DVD player--which one is accurate at the end, anyway?
-  perfect the frame accurate splitter...is it fast enough in ruby, too?
-  wikipedia realtime
-  color coordinate my google doc on splitters
-  purchase forever strong DVD, and only use for late term timing thingz...
+  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   note competition is welcome and good! (and note competitors, even...)
   update tons of verbiage
     changelog/full feature list
       note phantom rumored edited streamer
-  "for instance one author lives in the US, has never made"
-  "don't do it"
-    rename the file to is_it_legal_to_copy_dvds, reference it
-  "we know x, y are not l..."
+  legal:
+    "for instance one author lives in the US, has never made"
+    "don't do it"
+     rename the file to is_it_legal_to_copy_dvds, reference it
+    "we know x, y are not l..."
   "sorry, cannot run without...."
   "understand and accept the implications"
   add a "non work sponsored" note
   agree to abide, shouldn't in the US [?]
-  note no blu-ray, I had settings on full for that war one, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
-  note nero
-  DRY up README/www
-  make it not die if you have no DVD in there yet...
+  note no CP blu-ray, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
+  make it not die if you have no DVD in there yet when you click...
   tell your webpage that the user needs a message, "You can't install from the repository.  Download this file here for the full install package".
-  blog post "editing movie content player" or something video edit program
   un-paranoid note
-  note: avidemux [auto-trainable, usable...]
-  make them accept the license in order to download the stuff [checkbox] :P
+  note in changelog: avidemux [auto-trainable, usable...]
+  make them accept the license in order to download the stuff at all [checkbox] :P
   note "inspired by the fantom edit.." too?
-  timings: OS X everything...
-  avidemux timings...
   "is a separate project with its own..."
-  Does VLC grab really have off timings each time?
+  Do various VLC grabs really have off timings each time, and compared to mplayer?
   We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
-  timing info: mplayer OS X, VLC OS X, others? VLC ripped, converted...
+  timing info: VLC on ripped, VLC on transcoded copy?
   investigate: can I use the zoomplayer max?
-  edit EDL to include realtime lists [zoom, etc.'s]
-  timing: what about tron normal (non rental) DVD, does its mplayer get off a bit, too?
-    if so, are there other DVD's that get off a bit, too, or is this a one time thing? huh?
-  timing: if I can't find another that plays at 30/29.97 all the way through, buy Tron retail and (see if it does as the rental did)
-    then make it work
   package curl [?] with its own license
-  timing info on WMPC was off for some DVD or other? audio was off? huh?
-  note we don't always use libdvdcss
-  # "closing thoughts" => "still a fairly dark movie, overall", smallify
-  fix known bugz...
-  note we stopped using VLC playlist mode because the timing was slightly inaccurate.
+  # "closing thoughts" => "still a fairly dark movie, overall", smallify this line
   use DVD navigator?
     wow terrifying...
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
 	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     dshow c++ demo? PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
   make it frame accurate output
+    after done: note we don't always use libdvdcss in the legal
   allow it to "just play from X to Y exactly" ...
     does this line up right? can it work, at all?
       add new button for it LOL
@@ -68,35 +58,24 @@
         update its error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
-  mac version of the C player 
-    "just play from X to Y exactly" 
-  write an in/out of IMDB how to...
-  describe how to grab "more"
+  describe how to grab "more" [?]
     also note VLC GUI/console, try it out +- dvdfab with a "free" DVD
-
-== blocked ==
-
-  clear runnings
-    have ben and chris test it out, have it work, then ask about video quality
-
-== yes do, semi-ordered [normal, patentzy] ==
   check if md5 same mac versus PC, VLC done several times/fix too
   port to OS X overall
-  note: to develop: burn the big buck bunny iso to DVD or use xxx...
+  note: to develop: burn the big buck bunny iso to DVD
   donate http://lame.buanzo.com.ar
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
-  http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
   note "inspired by the fantom edit.." too?
   "I accept the terms in all of the license agreements"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-  @developers what bat files do
+  @developers describe what the various bat files do
   note legal at least for those free movies
   full pass re-write of README, legal "definitely definitely not legal"
   Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
-  accept "mplayer_dvd_splits" => ["4749"]
-  open_edl_list_org_todo.txt
+  accept "mplayer_dvd_splits" => ["4749"] [large second integer...hmm...]
+  do open_edl_list_org_todo.txt contents
   
   === patentzy yes and no do, vaguely ordered ===
     == higher-zy prio ==
@@ -126,7 +105,6 @@
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
     can "control mouse" to drag it to change location
     blu-ray player descriptor somehow
-    does blu-ray playback work with my C++ project?
     beep at them/warn when not tracking [?]
       default on...I think.
     can jerk mouse more often closer to failure sections...
@@ -157,12 +135,9 @@
 
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   @legal: one way is probably legal...
-  note: you transfer (c) to me
-  buy HP2, cool runnings :P
-  buy forever strong italian, compare... :P
+  buy HP2, cool runnings, owl movie :P
   create EDL: 10 commandments DVD to skip intro
   by default add: DVD title, english descriptive title, total length
-  would umplayer be better somehow?
   note: maybe DVD-R is ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
   the fake blanker one doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
@@ -170,12 +145,12 @@
   donate menumeter $
   "have read and accept readme, legal_conerns**"
   "each with its own copyright and authorship and responsibility"
-  include copy of gplv1, but just reference theirs
+  just reference their copy of gplv1 etc.
+  show the gpl itself
   note history: "after mplayer got EDL playback, some other did too [myth?], the python one was created too, VLC could work with playlists"
-  force install of VLC
+  force an install of VLC, too
   should both mute and blank when blanking
     make optional though? hmm time for a third type...
-  powerdvd timings jonah
   create local new DL's to a separate, new folder
   warn on "create new list" if a previous one exists (just a dismiss dialog, then still allow them to create a new one)
   that one button is broken...play with [s]mplayer unedited [?]
@@ -222,25 +197,27 @@
   make .bat file friendlier for case of accidental download
     if !exist vendor\cache
   note "this is the full list--your help is wanted/needed"
-  purchase forever strong [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
-  note patentzy: "mine is positive parts"
   create a semi-accurate fantom edit DL
   calculating disk's unique id... -> have it note on gui...
   don't exit program if they don't select a disk originally :)
   note to them [in create file]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
+  timing all dogs go to heaven--way off in hulu? huh?
 
 == DVD decide later to move up or down ==
 
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  buy forever strong italian, compare... :P
+  mac version of the C player 
+    "just play from X to Y exactly" 
+  forever strong DVD timestamps [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
+  check timing info on WMPC was off for some DVD or other? the audio was off? huh?
   blu ray timings work
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-feedback on crashes [?]
   publish new version of rdp-win32screenshot, if it ever existed
-  timing all dogs go to heaven--way off in hulu? huh?
-  script avisynth, as a demo?
   script avidemux, as a demo?
   accomodate failed deletes better than dying with a backtrace
   auto-download and run for them the smplayer install exe ? [scary sourceforge, extra step]

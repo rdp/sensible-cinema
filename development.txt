@@ -18,6 +18,9 @@ The tests are in the spec directory, though some of them are out of date as deve
 
 Currently it's windows only, ping me if you want that changed.
 
+Note: you transfer (c) to copyrighted published of sensible cinema when you submit patches.
+
+
 We welcome all feedback/contribution :)
 
 == Advanced Usage ==
