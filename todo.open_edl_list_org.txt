@@ -1,8 +1,10 @@
+(profanity parsing stuff is in other todo)
+
+
 cross-over stuff:
   can sync the whole thing package
   can sync the whole thing local...
   can just retrieve via URL the latest?
-  just run rails locally and they edit it locally, then submit?
 
 perfect the frame accurate splitter...is it fast enough in ruby, too?
   wikipedia realtime
@@ -26,10 +28,12 @@ there is some shared information across DVD's...
 openedllist.org [no]
 openmovie...org
 
-open-list-of-editable-movie-scenes.org
+open-list-of-editable-movie-scenes.org [no]
 
 editable-list-of-movie-scenes.org ?
 filtertube?
+
+list-of-movie-bad-contents.org
 
 can export raw edl
 
@@ -41,16 +45,13 @@ imdb -> dvd mapper?
 
 make it into a dvd profiler like "library of your own" (actually, this has potential...maybe...or a sync method for just your DVD's or something)
 
-
-real dvd image from dvd profiler :P
+real dvd cover title image from dvd profiler et al :P
 
 various output types
 
-search everything...
-
 certainly multiple output formats
 
-can open DVD's page from DVD insertion [?]
+can open DVD's page at DVD insertion time [?]
 
 can add "a new line" just right
 can edit a line just right
@@ -75,7 +76,6 @@ note the license very well
     OCR?
     hotkeys
     advanced editing, like sub-parts of frames, with each way to specify the sub-parts
-
 
 partner somehow with kids-in-mind or what not [display their ratings alongside mine?]
 
