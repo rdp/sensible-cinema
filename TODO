@@ -80,10 +80,11 @@
     have ben and chris test it out, have it work, then ask about video quality
 
 == yes do, semi-ordered [normal, patentzy] ==
-  port to OS X
-  note: to develop: order sintel DVD, use that: http://www.sintel.org/
-  donate http://lame.buanzo.com.ar/
-  cp: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
+  check if md5 same mac versus PC, VLC done several times/fix too
+  port to OS X overall
+  note: to develop: burn the big buck bunny iso to DVD or use xxx...
+  donate http://lame.buanzo.com.ar
+  clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   http://sourceforge.net/tracker/?func=detail&aid=3127133&group_id=205275&atid=992989
@@ -101,9 +102,9 @@
     == higher-zy prio ==
       cheap minimize demo "fake auto" :)
       cheap static-ify demo for mutes
-        also a straight almost mute one, using volume down
-      url -> url inference [just a simple youtube demo--hopefully this is cake...]
-  
+        also a straight almost mute one, using volume downs
+    
+    url -> url inference [hopefully this is cake...]
     cheap minimize via (probably foreground window + API real windows API) 
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
