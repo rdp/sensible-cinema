@@ -15,6 +15,7 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
+
 if RUBY_PLATFORM !~ /java/
   require_relative 'fake_blanker'
 else
@@ -45,24 +46,34 @@ else
       @fr.repaint
       unblank_full_screen! # and hide it to start
     end
+    
+    @@use_mouse = true
 
     def self.blank_full_screen! seconds
-      # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
-      @fr.setAlwaysOnTop(false) 
-      @fr.setAlwaysOnTop(true)
-      @fr.set_location(0,0)
-      @fr.repaint # early paint, just in case that helps it pop up faster :)
-      if seconds
-        @label.set_text "   #{seconds} s" 
+      if @@use_mouse
+        Mouse.single_click_left_mouse_button
       else
-        @label.set_text "  Blank section"
+        # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
+        @fr.setAlwaysOnTop(false) 
+        @fr.setAlwaysOnTop(true)
+        @fr.set_location(0,0)
+        @fr.repaint # early paint, just in case that helps it pop up faster :)
+        if seconds
+          @label.set_text "   #{seconds} s" 
+        else
+          @label.set_text "  Blank section"
+        end
       end
     end
     
     def self.unblank_full_screen!
-      # move it off screen...
-      @fr.set_location(-2100, -2100)
-      @fr.repaint 0
+      if @@use_mouse
+        Mouse.single_click_left_mouse_button
+      else
+        # just move it off screen...lodo
+        @fr.set_location(-2100, -2100)
+        @fr.repaint 0
+      end
     end
     
     def self.shutdown
