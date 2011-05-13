@@ -1,5 +1,5 @@
-@echo Welcome to Sensible Cinema.
-@echo This window will display lots of debug message output!
+@echo Welcome to Sensible Cinema...
+@echo This window will display lots of debug message output (which you can just ignore)!
 @setlocal
 @rem disable any local rubyopt settings...
 @set RUBYOPT=

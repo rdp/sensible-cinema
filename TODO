@@ -5,7 +5,7 @@
   C EDL/specific portion player
   pull realtime players from mine/propagate wikipedia with list
   on to the build library phase?
-  create web site ?
+  ? ... create web site  ? or do I need this before propagate? prolly not for an initial base...
   
 == high prio like blocking bugs ==  
   
@@ -22,6 +22,7 @@
 == yes do, un-ordered [normal] ==
 
   edit this todo list all of it/roadmap-ize...
+  note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter
   note myth cutlist as inspiration?
   cp: have to replace multiple ones
   try disney digital copy/amazon download/various rippers to check their framing/timing accuracy
@@ -185,7 +186,6 @@
   check if the python one lines up or not/ping them on it
   mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
     only if asked?
-  move template .bat's to a template folder
   alpha transparent "grey" overlay (for partial parts of the window)
   certain sections: can speed them up, to make them less scary or what not, but you can still see what's happening. Not sure how audio could/should apply here.
   google android TV app/iTV ?
