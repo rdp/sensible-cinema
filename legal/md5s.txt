@@ -2,8 +2,10 @@ random md5's for tracking
 
 ed492ff097a16ac9c3c207beed7a8d17 *full3.avi
 http://www.youtube.com/watch?v=gJ4jFCFPan0
-
-
+e988e897ede5f27c49d8011bfb4cb246  mute system.avi
+4a8b3612c666dd037ff91d68dc2c57b6  mute vlc.avi
+a2c8625b646cb4bbfb99a66171b9b8f1  netflix descriptor working.avi
+abe0f3a34eb8935d4f532b2ee789ceb9  to_here3.avi.fulli.tmp.avi
 c:\dev\ruby\sensible-cinema\legal>md5sum "g:\mute system.avi"
 \e988e897ede5f27c49d8011bfb4cb246 *g:\\mute system.avi
 => http://www.youtube.com/watch?v=8cUV8DKLOK8
@@ -43,3 +45,6 @@ c38b4a7ce1a9fab40566f8b1a876a7d0  sensible-cinema-0.21.1.zip
 9f71c5a9f59d2e7370a9ad06e4441ace  sensible-cinema-0.21.3.zip
 d628fe7d5284ecb764df8b79aee7b773  sensible-cinema-0.21.4.zip
 8d47950de913d97536ffe8d13a8d7203  sensible-cinema-0.21.5.zip
+
+
+
