@@ -5,43 +5,44 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.21.6"
+  s.version = "0.21.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-04-29}
+  s.date = %q{2011-05-13}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
-  s.extensions = ["ext/mkrf_conf.rb"]
+  s.executables = ["countdown.rb", "monkey.png", "sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
-    "ChangeLog",
     "LICENSE.TXT",
     "README",
     "TODO"
   ]
   s.files = [
-    "ChangeLog",
     "LICENSE.TXT",
     "README",
-    "RUN SENSIBLE CINEMA CLICK HERE.bat",
     "Rakefile",
     "TODO",
     "VERSION",
-    "advanced--create or edit sensible cinema delete list files.bat",
+    "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_ZIP_INSTEAD",
+    "bin/countdown.rb",
     "bin/monkey.png",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
+    "business_ideas.txt",
+    "change_log_with_feature_list.txt",
     "development.txt",
-    "experimental_readme.txt",
-    "ext/mkrf_conf.rb",
+    "experimental_ocr_readme.txt",
     "go.bat",
     "go_ocr_tracker.bat",
     "gocreatemode.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
+    "legal/md5s.txt",
+    "legal/transcript_mute_vlc.txt",
     "lib/add_any_bundled_gems_to_load_path.rb",
     "lib/blanker.rb",
     "lib/drive_info.rb",
+    "lib/edl_converter.rb",
     "lib/edl_parser.rb",
     "lib/fake_blanker.rb",
     "lib/file_chooser.rb",
@@ -55,12 +56,13 @@ Gem::Specification.new do |s|
     "lib/ocr.rb",
     "lib/overlayer.rb",
     "lib/play_audio.rb",
+    "lib/profanity_finder.rb",
     "lib/screen_tracker.rb",
     "lib/storage.rb",
     "lib/swing_helpers.rb",
     "lib/vlc_programmer.rb",
-    "md5s.txt",
     "never_do",
+    "ocr.todo_if_need_speed",
     "preamble",
     "propaganda",
     "sensible-cinema.gemspec",
@@ -143,8 +145,11 @@ Gem::Specification.new do |s|
     "spec/swing_helpers.spec.rb",
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
-    "subtitle_todo",
-    "todo_if_need_speed",
+    "template_bats/RUN SENSIBLE CINEMA CLICK HERE.bat",
+    "template_bats/advanced--create or edit sensible cinema delete list files.bat",
+    "todo.inventionzy.txt",
+    "todo.open_edl_list_org.txt",
+    "todo.subtitle",
     "vendor/SetPriority.exe",
     "vendor/gocr049.exe",
     "vendor/music.wav",

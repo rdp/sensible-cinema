@@ -1,4 +1,6 @@
-== ==
+== 0.21.7 ==
+
+Basically just added some demos codes/inventionzy stuff.
 
 NB that sensible cinema can mute by muting system volume/adjusting it [the unmute actually uses adjustment]:
 http://www.youtube.com/watch?v=8cUV8DKLOK8
@@ -23,7 +25,7 @@ Note also that our EDL's can include URL's, ex: the youtube url in question, or 
 
 Note also that since we can control VLC (via screen tracking, or API such as
 http://code.google.com/p/movie-content-editor/
-) which means that our system works for blu rays, as well, inasmuch as VLC plays blu ray
+) which means that our system works for blu rays, as well, inasmuch as VLC +- handbrake plays blu ray
 http://www.videolan.org/developers/libbluray.html
 
 It could also track blu-ray players like PowerDVD, so check there.
@@ -35,7 +37,7 @@ http://betterlogic.com/roger/2009/02/user-contributed-movie-scene-selection-or-p
 and
 http://programming-gone-awry.blogspot.com/2009/12/beyond-clearplay.html
 
-Note also that gracenote has been able to do remote lookups based on metrics and/or title of optical discs for years.
+Note also that gracenote CDDB has been able to do remote lookups based on metrics and/or title of optical discs for years.
 
 Note also that Sensible Cinema has for several releases been able to auto-adjust timing info based on player.
 
