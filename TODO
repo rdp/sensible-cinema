@@ -262,7 +262,6 @@
   "Re-run most recent" disabled when there isn't one [?]
   warn when labels exist but don't match...
   can rip from a DVD-like local folder (would anybody ever need this?)
-  rename production bats as template.bats
   can parse IMDB
     add stuffs to imdb hmmm
     IMDB easy DVD mapping...

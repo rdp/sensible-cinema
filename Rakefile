@@ -22,12 +22,10 @@ Jeweler::Tasks.new do |s|
     
     # add as real dependencies for now, as gem install --development is still broken for jruby, basically installing transitive dependencies in error
     for name in ['hitimes', 'rspec', 'jeweler', 'rake']
-      # bundling rake won't be too expensive, right?
+      # bundling rake won't be too expensive, right? and this allows for easier dev setup through gem install
       s.add_dependency name
     end
-    
-    s.extensions = ["ext/mkrf_conf.rb"]
-end
+  end
 
 desc 'run all specs'
 task 'spec' do
