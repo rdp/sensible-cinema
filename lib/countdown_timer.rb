@@ -26,7 +26,7 @@ def initialize
       
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
-          seconds_left = 35*60 - (Time.now - @start_time)
+          seconds_left = (ARGV[0] || '35').to_i*60 - (Time.now - @start_time)
           @jlabel.set_text "%d:%d" % [seconds_left/60, seconds_left % 60]
       end
       @switch_image_timer.start
