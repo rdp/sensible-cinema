@@ -1,3 +1,6 @@
+TODO: they say "wretch" late? [avisynth says they do]
+
+
 mplayer os x extended has the same "where am I?" on this DVD problem mplayer has.
 
 monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
@@ -11,16 +14,24 @@ DVD player conclusions:
   powerdvd is pretty close but internally inconsistent but about 0.5s
   appears mplayer on a file 
 
+speeds: vertex 2: 105MB/s old HD desktop 58 MB/s
+
 OSOH:
 
-  todo: 
-    ffmpeg with various rips--can I get a good bead on the audio
 
   mplayer grab can be frame accurate: matching md5's (I think it's actually mpg) dvdoutmplayer1.avi  dvdoutmplayer.mpg
+    87402c45126207884bacc46e6f681722 *dvdoutmplayer.mpg
 
   vlc grab appears to have the same file size, different md5sum's [!] dvdout.vlc3.mpg  vlcdvdout2.mpg
+    1b32659b94ea01b45e2860809db49539 *dvdout.7.mpg vlc
+    eb4ff70f8bfb1147294d218242492322 *dvdout.8.mpg vlc
+    bdcfadd21f09de4de011694af75b67cd *dvdout.vlc3.mpg # seem to all work fine...when they do
 
-  dvdoutmplayer2 seems corrupt (garbled, too short? huh?)
+  vlc doesn't have timing info for dvdout.9.mpg (its own grab)
+  
+  avisynth on vlc with right frame 
+
+  dvdoutmplayer2 seems corrupt (garbled, too short, green)
   
   smplayer play from  dvdoutmplayer1.avi works fine, WMP works (doesn't know how to seek), VLC works 29.97
 

@@ -17,7 +17,7 @@
   high prio patents
   closure on blu ray timing
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
-    VLC avidemux/ffmpeg does it appear quite accurate, esp. near the very end?
+    VLC try rip again several times...
   
 == blocked ==
 
@@ -27,7 +27,8 @@
 == yes do, un-ordered [normal] ==
 
   edit this todo list all of it
-  note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter
+  @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
+  note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter ?
   note myth cutlist as inspiration?
   cp: have to replace multiple ones
   try disney digital copy/amazon library "local download"
@@ -141,6 +142,9 @@
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  VLC: make some more bounties: per file save location at least, anything else [check for suggestions]
+    also suggest uservoice ?
+  
   If I use VLC, does cacheing help CPU/disk grabbing? 
     http://www.howtogeek.com/howto/windows/fix-for-vlc-skipping-and-lagging-playing-high-def-video-files/
     update VLC forum if so
