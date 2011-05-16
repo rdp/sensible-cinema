@@ -138,12 +138,14 @@
   disallow choosing empty drive? fail more gracefully? (issue 11)
 
 == DVD decide later to move up or down ==
-
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  If I use VLC, does cacheing help CPU/disk grabbing? 
+    http://www.howtogeek.com/howto/windows/fix-for-vlc-skipping-and-lagging-playing-high-def-video-files/
+    update VLC forum if so
   donate to some charity or other!
-  can I just use mencoder with an EDL to split/join more quickly or something?
+  can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
   force an install of VLC, too
   todo.subtitle file
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
@@ -153,7 +155,7 @@
     plug.org, more rubyists?
     after OS X :)
   port to OS X overall
-  avidemux/ffmpeg timing for a grabbed copy of osoh
+  @VLC also tell them to tell people how to play hi-def better, when they try [?] if it shtinks
   an all online EDL editor
     flash canvas
     OCR?
