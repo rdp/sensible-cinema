@@ -44,17 +44,19 @@
 
 
 
-
 profanities = {'hell' => 'heck', 'g' + 
 'o' + 'd' => 'g..', 'lord' => 'lo..', 'da' + 
 'mn' => 'da..', 'f' + 
-'u' +
-'c' + 'k' => 
+ 117.chr +
+99.chr + 
+ 107.chr => 
 'f...',
 'bi' +
-'tch' => 'b.....',
-'ba' +
-'stard' => 'ba.....'
+'tc' + 104.chr => 'b.....',
+'bas' +
+'tard' => 'ba.....',
+('a'
+ + 's'*2) => 'a..'
 }
 
 incoming = File.read(ARGV[0])
