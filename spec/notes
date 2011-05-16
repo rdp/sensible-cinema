@@ -4,18 +4,52 @@ monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
 
 DVD player conclusions:
   VLC's are all pretty consistent
-  various mplayers are pretty consistent
+  various mplayers are pretty consistent with themselves
   VLC can be up to at least 30s off [!]
-  mplayers are at 29.97/30 offset
-  WMP is pretty close, but internally inconsistent by 0.5s
+  mplayers are all at 29.97/30 offset
+  WMP is pretty close, but internally inconsistent by about 0.5s
   powerdvd is pretty close but internally inconsistent but about 0.5s
+  appears mplayer on a file 
 
 OSOH:
 
+  todo: 
+    ffmpeg with various rips--can I get a good bead on the audio
+
+  mplayer grab can be frame accurate: matching md5's (I think it's actually mpg) dvdoutmplayer1.avi  dvdoutmplayer.mpg
+
+  vlc grab appears to have the same file size, different md5sum's [!] dvdout.vlc3.mpg  vlcdvdout2.mpg
+
+  dvdoutmplayer2 seems corrupt (garbled, too short? huh?)
+  
+  smplayer play from  dvdoutmplayer1.avi works fine, WMP works (doesn't know how to seek), VLC works 29.97
+
+  smplayer from dvdoutmplayer1.avi:
+       1:00:00 once was [l]ost 
+
+  VLC from mplayer grab:
+    1:00:00 once wa[a]s lost 
+    
   VLC reading OSOH from handbrake m4v:
     1:00:00 I once w[a]s lost but now --- I once [w]as lost but now am found
     1:53:11 sum [?] (accurate with mplayer!)
+  
+  smplayer from DVDD:
+      1:00:00 I once was [l]ost but now
+
+  avidemux reading OSOH from mplayer grab, also from vlc grab:
+    1:00:00 accurate wa[a]s lost audio, video way off LOL
+      copy and paste also inaccurate <sigh>
+  
+  avidemux reading OSOH from handbrake:
+    1:00:00 accurate wa[a]s lost
+      
+  ffmpeg reading OSOH from handbrake m4v:
+    1:00:00 I once [was] lost but now (no audio though but looks like it would be...)
     
+  VLC reading dvdoutmplayer.mpg, handbrake m4v:
+      1:00:00 accurate wa[a]s lost
+
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
     1:00 once was lost but now[ow] am found, possible slight hiccup immediately after

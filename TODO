@@ -4,7 +4,7 @@
   C EDL+specific portion player
   verbiage release/text in todo items
   ....
-  pull realtime players from mine
+  pull realtime players from mine/update todo
   build library phase, 20 dvd's
   create web site
   propagate wikipedia with list of realtimers etc.
@@ -16,6 +16,8 @@
 
   high prio patents
   closure on blu ray timing
+  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
+    VLC avidemux/ffmpeg does it appear quite accurate, esp. near the very end?
   
 == blocked ==
 
@@ -24,14 +26,13 @@
 
 == yes do, un-ordered [normal] ==
 
-  edit this todo list all of it/roadmap-ize...
+  edit this todo list all of it
   note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter
   note myth cutlist as inspiration?
   cp: have to replace multiple ones
-  try disney digital copy/amazon download/various rippers to check their framing/timing accuracy
-  publish a sintel ISO ? if there's one that has some long'ish video...
+  try disney digital copy/amazon library "local download"
+  publish a simple sintel ISO ? if there's one that has some long'ish video...
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
-  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   README: note competition is welcome and good!
   update tons of verbiage
   legal:
@@ -291,6 +292,9 @@ DVD's: right click on DVD player, play with SC
 an auto-check for "newer version available" automagically not...
 
 ISO copy, then scratch out appropriate bits?
+
+@avidemux: don't shtink with DVD files: http://ubuntuforums.org/showthread.php?p=10822953#post10822953
+
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
 some low level frame hijacker for incoming cable movies, too? ... hmm...
