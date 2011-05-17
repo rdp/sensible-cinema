@@ -1,8 +1,8 @@
 == roadmap ==
 
-  cheap patetnzy
-  C EDL+specific portion player
-  verbiage release/text in todo items
+  release: cheap patetnzy
+  release: C EDL+specific portion player
+  release: verbiage release/text in todo items
   ....
   pull realtime players from mine/update todo
   build library phase, 20 dvd's
@@ -15,7 +15,6 @@
 == up next release/very next task: ==
 
   high prio patents
-  closure on blu ray timing
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
     VLC try rip again several times...
   
@@ -24,9 +23,13 @@
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
 
-== yes do, un-ordered [normal] ==
+== yes do, un-ordered currently ==
 
   edit this todo list all of it
+  closure on blu ray timing
+  does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s?
+  figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
+  create+publish an ISO of my temple DVD :P
   @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
   note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter ?
   note myth cutlist as inspiration?
@@ -141,6 +144,7 @@
     
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  it can "slow certain sections down" that looks cool! :)
   XP timings with cineplayer [osoh, jonah]
   script powerdvd?
   VLC: make some more bounties: per file save location at least, anything else [check for suggestions]

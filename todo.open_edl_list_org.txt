@@ -28,6 +28,8 @@ there is some shared information across DVD's...
   hmm...
 
 
+note with avidemux you can "cut out" the bad scene pretty precisely to see it better (though video is off?)
+
 openedllist.org [no]
 openmovie...org
 

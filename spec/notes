@@ -16,8 +16,23 @@ DVD player conclusions:
 
 speeds: vertex 2: 105MB/s old HD desktop 58 MB/s
 
+avidemux from "normal" rips is still off frame-rate wise...
+
 OSOH:
 
+  avidemux on mplayer grab:
+    sound ok, lips off, same as VLC grab
+
+  avidemux on handbrake:
+    segfault
+    
+  avidemux on VLC grab:
+    1:00:00 once wa[a]s lost audio, video appears messed up lips
+
+  mplayer playing VLC grab:
+    1:00:00 once was [l]ost
+
+  "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
 
   mplayer grab can be frame accurate: matching md5's (I think it's actually mpg) dvdoutmplayer1.avi  dvdoutmplayer.mpg
     87402c45126207884bacc46e6f681722 *dvdoutmplayer.mpg
