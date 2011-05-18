@@ -83,14 +83,13 @@ module SensibleSwing
       @starting_button_y += 30
     end
 
-    Storage = Storage.new("sc")
-   
+    Storage = Storage.new("sensible_cinema")
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html'
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read the LICENSE.TXT file.'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 'Sensible Cinema is distributed under the gplv3. Click accept if you accept this agreement.'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read, understand, and accept the implications given in the LICENSE.TXT file'
         Storage['main_license_accepted'] = VERSION
       end
 
@@ -337,25 +336,30 @@ module SensibleSwing
       # oh the insanity of the console UI...LODO more user friendly player
       @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
-      play_this_mplayer ||= "mplayer dvd://#{title_track}"
+      play_this_mplayer ||= "mplayer dvd://#{title_track} -vo direct3d" # direct3d for windows 7 nvidia's sake yipes
       command =  "#{play_this_mplayer} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
       
-    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, title = 'Confirm Acceptance of License Agreement', message = nil
-      puts 'Please confirm license agreement in open window'
+    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
+        title = 'Confirm Acceptance of License Agreement', message = nil
+      puts 'Please confirm license agreement in open window.'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
-      UIManager.put("OptionPane.noButtonText", 'View License')
+      UIManager.put("OptionPane.noButtonText", "View License (#{license_name})")
       # cancel button stays the same...
       
-      message ||= "By clicking accept, below, you are agreeing to the license agreement for #{program} (the #{license_name}),
-      located at #{license_url_should_also_be_embedded_by_you_in_message}.
-      Click 'View License' to view it on your local machine."
+      message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
+      separately, or Sensible Cinema can download it for you.
+      By clicking accept, below, you are confirming that you have read and agree to be bound by the
+      terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
+      Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
+      separate program, with its own distribution, license, ownership and copyright.  
+      You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       
       returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
-      # 1 is view
+      # 1 is view button was clicked
       # 0 is accept
       # 2 is cancel
       if returned == 1
@@ -363,14 +367,14 @@ module SensibleSwing
         System.exit 1
       end
       if returned == 2
-        p 'license not accepted...'
+        p 'license not accepted...exiting'
         System.exit 1
       end
       if returned == -1
-        p 'license exited early...'
+        p 'license exited early...exiting'
         System.exit 1
       end
-      p 'confirmed'
+      p 'confirmed license'
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
@@ -391,7 +395,7 @@ module SensibleSwing
       
       mencoder = RubyWhich.new.which('mencoder')
       if mencoder.length == 0
-        show_blocking_license_accept_dialog 'MPlayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mencoder."
+        show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
         ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
         Dir.mkdir(vendor_cache) unless File.directory? vendor_cache # development may not have it created yet...

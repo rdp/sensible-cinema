@@ -129,11 +129,13 @@ others can't later patent them and pretend that they were first inventors :)
 
 == History ==
 
+It was preceded by cleanflicks, zoomplayer's EDL.
+
 Originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
 edited" (it uses/used screen snap-shotting and tracks, using OCR, the on-screen
 timestamp of the player, monitors it for specific times, and reacts appropriately).
 However, this functionality, though working and available, is disabled currently for potential patent
-concerns.
+issues.
 Some older released versions had it enabled, but not the latest releases.
 Then I realized I could basically create the same effect using the
 (deemed more patent friendly) pre-processing (slice out bad scenes) and/or deletion lists.  It basically was

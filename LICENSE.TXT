@@ -39,9 +39,10 @@ If it's illegal, don't use it!
 
 Note: for sure do not redistribute/re-sell edited DVD's.  We have learned from clean flicks that
 redistributing (well at least renting/selling) edited commercial DVD's is against copyright in the US.  We hope that sensible-cinema
-is more legal, since you can get the DVD's from wherever you want, and keep the original.  
+is more legal, since you basically have to have the original DVD in hand.
 Please don't redistribute.  If creating copies of commercial DVD's is illegal
-in your country, then don't do it!  Use the "watch in realtime" option.
+in your country, then don't do it!  Use the "watch in realtime" option.  Unless that's illegal.
+USING THIS SOFTWARE MIGHT BE ILLEGAL IN SOME COUNTRIES.
 DO NOT MAKE ILLEGAL COPIES.
 
 In terms of copyright, it could be legal under the The Family Home Movie Act of 2005,
@@ -63,15 +64,16 @@ lists commits and changes and release notes, and is publicly available.
 A more ancient history of various brainstorming thoughts was described here:
 http://betterlogic.com/roger/?p=2618
 
-Note also that the authors of sensible cinema make no money on the project, nor sell the product. 
-It's distributed free for use for any end users, source code is available (see license section).
+Note sensible cinema is distributed free for free, source code is also available (see README text file).
 
-YOU MUST AGREE TO THE gplv3 in order to  use this software.
+YOU MUST AGREE TO THE gplv3 in order to use this software.
 
-USING THIS SOFTWARE MIGHT BE ILLEGAL IN SOME COUNTRIES 
+Note also that we used parts of the 7-Zip program, that 7-Zip is licensed under the GNU LGPL license, see http://www.7-zip.org, where the source code can be found.
 
-Please check with your legal advisor, and if this is the case in your country, you are NOT licensed to use this freeware.
+See also the README text file which contains some invention related notes.
 
 [1] http://www.gnu.org/licenses/gpl.html, also gplv3 file.
-[2] http://www.videolan.org/support/faq.html
+[2] http://www.videolan.org/legal.html
 [3] http://www.macworld.com/article/150731/2010/04/dvdripping_faqs.html
+
+note also http://en.wikipedia.org/wiki/DVD_Decrypter

@@ -139,4 +139,10 @@ disallow "0:45:00.0" , "00:450:10.0",  # second 2700
 
 internally store them as non-timestamps LOL
 
-note my google doc grab doc
+note my google doc grabbers doc
+
+should I partner with dvd profiler? more easy? cheap?
+
+is there anybody out there DVD subtitle-zy that has an algorithm for unique-ifying DVD's? anybody?
+
+  We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.

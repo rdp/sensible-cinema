@@ -2,8 +2,8 @@
 
   release: cheap inventionzy
   release: C EDL+specific portion player
-  release: verbiage release/text in todo items
   ....
+  release: verbiage release/text in todo items/README
   pull realtime players from mine/update todo
   build library phase, 20 dvd's
   create web site
@@ -14,49 +14,42 @@
   
 == up next release/very next task: ==
 
+  ffmpeg/mencoder timings
   high prio patents
+  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
+  legal ??
   
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
-  preceded by EDL, cleanflix
-  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
+  research the gplv3, add terms. Maybe want real lawyer, even?
+  make them accept the license in order to download the stuff at all [checkbox] :P
   closure on blu ray timing
+  preceded by EDL, cleanflix
   does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s or so?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
   create+publish an ISO of my temple DVD :P
   @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
-  note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter ?
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
   note myth cutlist as inspiration?
   cp: have to replace multiple ones
   try disney digital copy/amazon library "local download"
-  publish a simple sintel ISO ? if there's one that has some long'ish video...
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   README: note competition is welcome and good!
   update tons of verbiage
   legal:
-    "for instance one author lives in the US, has never made"
     "don't do it"
      rename the file to is_it_legal_to_copy_dvds, reference it
     "we know x, y are not l..."
   "sorry, cannot run without...."
-  "understand and accept the implications"
   add a "non work sponsored" note
   agree to abide, shouldn't in the US [?]
   note no CP blu-ray, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
   make it not die if you have no DVD in there yet when you click...
-  tell your webpage that the user needs a message, "You can't install from the repository.  Download this file here for the full install package".
   un-paranoid note
   note in changelog: avidemux [auto-trainable, usable...]
-  make them accept the license in order to download the stuff at all [checkbox] :P
   note "inspired by the phantom edit.." too?
-  "is a separate project with its own..."
-  Do various VLC grabs really have off timings each time, and compared to mplayer grabs?
-  We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
-  timing info: VLC on ripped, VLC on transcoded copy?
-  investigate: can I use the zoomplayer max?
   package curl [?] with its own license
   # "closing thoughts" => "still a fairly dark movie, overall", smallify this line
   use DVD navigator?
@@ -78,27 +71,21 @@
     note pay for XP, or possibly re-install DVD player from installation CD from
     dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
   check if md5 same mac versus PC, VLC done several times/fix too
-  note: to develop: burn the big buck bunny iso to DVD or just use it
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
-  "I accept the terms in all of the license agreements"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
   note it is legal at least for free movies
-  full pass re-write of README, legal
-  Yes, but you are required to specify in your documentation (1) that you used parts of the 7-Zip program, (2) that 7-Zip is licensed under the GNU LGPL license and (3) you must give a link to www.7-zip.org, where the source code can be found.
   accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
   do open_edl_list_org_todo.txt file
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   @legal: one way is probably legal...
   create an EDL: 10 commandments DVD to skip the intro music LOL
   by default add: DVD title, english descriptive title [prompt?]
-  note legal: maybe DVD-R is sometimes ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
-  the fake blanker one doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
+  note legal: maybe using DVD-R is sometimes ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
+  the fake blanker EDL doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate menumeter $
-  "have read and accept readme, legal_conerns**"
-  "each with its own copyright and authorship and responsibility"
   just reference their copy of gplv1 etc.
   note history: "after mplayer got EDL playback, some other did too [myth?], the python one was created too, VLC could work with playlists"
   create local new DL's to a separate, new folder
@@ -119,24 +106,18 @@
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   youtube videos -> new account name
   propaganda-ize (file)
-  vendorize ffmpeg, then they don't have to install imagemagick...
-  mplayer EDL while grabbing, from grabbed :P  
+  vendorize a copy of ffmpeg, then they don't have to install imagemagick...maybe say "accept the terms of the licenses"
+  mplayer EDL while grabbing, from grabbed :P
   note "pay us/somebody to do it for you on the google group"?
-  I should probably not display that message unless java isn't installed
-  make .bat file friendlier for case of accidental download
-    if !exist vendor\cache
   note "this is the full list--your help is wanted/needed"
   create a semi-accurate phantom edit EDL copy
   calculating disk's unique id... -> have it note on gui...
-  don't exit program if they don't select a disk originally :)
+  don't exit program if they don't select a disk originally :)  if they cancel out of "Please pick a DVD Delete list file"
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
   timing all dogs go to heaven--way off in hulu? huh?
-  wasn't some timing or other way off, too?
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
-  don't totally die if they cancel out of "Please pick a DVD Delete list file"
-  note: preceded by clean flicks :P
-  disallow choosing empty drive? fail more gracefully? (issue 11)
+  preceded by zoomplayer EDL, other EDL capable editors :)
 
 == DVD decide later to move up or down ==
 
@@ -144,6 +125,8 @@
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  disallow choosing empty drive? fail more gracefully when they do?
+  investigate: can I use the zoomplayer max?
   would mplayer OSD on screen display be useful?
   sons of provo "music video"
   finish monsters inc. fella
@@ -280,7 +263,6 @@
         note to people: can edit these to your liking, resubmit
   DRY up dependency installation' code
   "Re-run most recent" disabled when there isn't one [?]
-  warn when labels exist but don't match...
   can rip from a DVD-like local folder (would anybody ever need this?)
   can parse IMDB
     add stuffs to imdb hmmm
@@ -289,7 +271,7 @@
   @VLC: hard crash when ripping that one DVD...long one, about the constitution...
     can use a fast temp drive, save through it to another :P
       (when they have two...)
-  blu-ray support somehow (OCR?)
+  blu-ray support somehow (OCR maybe)
   double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
     might not work for all modes tho...
   make the progress bar map "better" to the actual time that each section should take...
@@ -304,6 +286,7 @@ the ac3 thing (I have to specify it...is this necessary? is it always ac3?) [bas
 make it so it can have different volume settings, like low volume instead of just always 0
 DVD's: right click on DVD player, play with SC
 an auto-check for "newer version available" automagically not...
+warn when labels both exist but don't match...
 
 ISO copy, then scratch out appropriate bits?
 
