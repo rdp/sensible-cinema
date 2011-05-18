@@ -1,3 +1,11 @@
+== 0.21.9 == (released same day as 0.21.8 to try to clarify quickly)
+
+Added some lists of previously existing work.
+
+Clarified licenses and agreement.
+
+Note also that zoomplayer has an (unrelated) "cut scene" editor, and anydvd has "dynamic DVD re-write"
+
 == 0.21.8 ==
 
 Added demo/prototype of being able to automatically adjust timestamps, given an input one, 

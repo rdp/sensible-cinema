@@ -131,7 +131,9 @@ others can't later patent them and pretend that they were first inventors :)
 
 It was preceded/inspired by EDL's in the 90's, cleanflicks (both analog and digital ways), 
 zoomplayer's scene-cut editor, http://code.google.com/p/movie-content-editor, the many
-other editors that support EDL for content creation and/or playback, and mplayer's EDL's.
+other editors that support EDL for content creation and/or playback, mplayer's EDL's, and 
+mythtv/XBMC's EDL support.
+
 See also the "related" section.
 
 Originally the project started as a prototype to "watch hulu (online) and netflix instant movies
@@ -187,7 +189,7 @@ http://clearplay.com a commercial editing player (tracks DVD's while they play--
 http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com "scene cut editor" of the zoom player
-http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut support--also contains links to some other editors)
+http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut supporter--also contains links to some other editors' support for EDL's)
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
 The VCR with its record button, coupled with the stop+rewind button.
 http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and edit decision lists, in realtime)
@@ -199,8 +201,11 @@ The scissors and old VHS tapes (Clean Flicks' origin, if I remember correctly). 
 Windows Movie Maker.  Allows for users to cut and copy scenes of movies to their heart's content.
 http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's via playlists
 Corel WinDVD has "Quick Clip" settings for capturing from DVD.
+Microsoft's magnified basically copies DVD's screen output if mouse is placed over playing DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
+ZoomPlayer MAX's scene cut editor
+anydvd HD's "magic file replacement" for DVD's/blu-ray's
 
 == Troubleshooting ==
 
