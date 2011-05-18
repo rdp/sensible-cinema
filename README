@@ -127,41 +127,42 @@ others can't later patent them and pretend that they were first inventors :)
   and they told us the model we got was defective, and that the new one was much better and we could get it at a discount, but 
   the next one just died also."
 
-== History ==
+== Overly Verbose History ==
 
-It was preceded by cleanflicks, zoomplayer's EDL.
+It was preceded/inspired by EDL's in the 90's, cleanflicks (both analog and digital ways), 
+zoomplayer's scene-cut editor, http://code.google.com/p/movie-content-editor, the many
+other editors that support EDL for content creation and/or playback, and mplayer's EDL's.
+See also the "related" section.
 
-Originally the project started off as a prototype that could "watch hulu (online) and netflix instant movies
-edited" (it uses/used screen snap-shotting and tracks, using OCR, the on-screen
+Originally the project started as a prototype to "watch hulu (online) and netflix instant movies
+edited" (it uses/used screen snap-shotting and tracks, using OCR of the on-screen
 timestamp of the player, monitors it for specific times, and reacts appropriately).
 However, this functionality, though working and available, is disabled currently for potential patent
 issues.
 Some older released versions had it enabled, but not the latest releases.
 Then I realized I could basically create the same effect using the
-(deemed more patent friendly) pre-processing (slice out bad scenes) and/or deletion lists.  It basically was
-Edit Decision Lists enforced using playlists and
+(possibly more patent friendly) pre-processing style, like cutting out bad scenes, like cleanflix did.
+It basically was implementing Edit Decision Lists (EDL's) using playlists and
 VLC.  I.e. play from second x to y, now play then from z to second mu, muted, now from q to r, etc.
 I just passed VLC a playlist, it did all the work for me, without any necessary real-time tracking.
-There are a few released versions that did this.  It avoids real-time tracking by specifying "play from here to here"
+There are a few released versions with this feature enabled.  They avoid real-time tracking by specifying "play from here to here"
 not "skip from here to here" as some other editing players do.
 Then it occurred to me that you could grab the several clean segments
 off a DVD, and piece them together to create an edited version.  This also avoids 
-realtime tracking, so I included that functionality.
-I also added some mplayer EDL playback functionality later.
-The playlist option is disabled in later releases, as it was deemed too user-non-friendly, and VLC timing
+realtime tracking, so I included that ability.
+The playlist option is disabled in later releases, as it was deemed too user-non-friendly, because VLC timing
 is "different" than standard DVD players, so I decided to just use standardized timing, though it worked fine
-for VLC playback.
+for VLC playbacks.
 
-You can see a full list of features that have already been published and demonstrated
-in the file change_log_with_feature_list.txt.  Each feature works in some released version of sensible-cinema
-though some features or absent in later versions.  The change_log_with_feature_list.txt lists all of the 
-features of the versions.
+You can see a full list of other features that have been published and demonstrated
+in the accompanying change_log_with_feature_list.txt.  Each feature works in some released version of sensible-cinema
+though some features are absent in later versions.
 
 == License ==
 
-See the included LICENSE.TXT file for licensing and usage terms (basically it's under gplv3 for all the source).
-Some other programs are (distributed separately and) called out to, if present. These are
-typically released under their own gpl v2 license.
+See the included LICENSE.TXT file for licensing and usage terms (basically it's released under gplv3).
+Some other programs are (distributed separately and) leveraged, if present. These are
+typically released under their own copy of the gplv2 license.
 
 All files (c) 2010 Roger Pack
 
@@ -203,8 +204,7 @@ http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 
 == Troubleshooting ==
 
-Note that you'll need java previously installed for this to work.  Most people already do though.
-If you run into a snag, it might have failed in "grabbing" the DVD, and only got part of it.
+If you run into some snag, it possibly could have failed in "grabbing" the DVD, and only got part of it.
 Try cleaning your DVD and starting over (delete all files, start again). 
 Baking soda toothpaste might help with cleaning it.
 If it still errs, report it, along with a screen snapshot and steps of

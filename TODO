@@ -3,7 +3,7 @@
   release: cheap inventionzy
   release: C EDL+specific portion player
   ....
-  release: verbiage release/text in todo items/README
+  release: verbiage release/text in todo items/README/license
   pull realtime players from mine/update todo
   build library phase, 20 dvd's
   create web site
@@ -25,7 +25,6 @@
   research the gplv3, add terms. Maybe want real lawyer, even?
   make them accept the license in order to download the stuff at all [checkbox] :P
   closure on blu ray timing
-  preceded by EDL, cleanflix
   does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s or so?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
   create+publish an ISO of my temple DVD :P
@@ -117,7 +116,6 @@
   buy the blu-ray VLC software, try that out...
   timing all dogs go to heaven--way off in hulu? huh?
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
-  preceded by zoomplayer EDL, other EDL capable editors :)
 
 == DVD decide later to move up or down ==
 
