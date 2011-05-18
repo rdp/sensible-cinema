@@ -1,11 +1,17 @@
 (profanity parsing stuff is in other todo)
 
+
 this file also includes EDL creationzy stuffs
+
 
 cross-over stuff:
   can sync the whole thing package
   can sync the whole thing local...
   can just retrieve via URL the latest?
+
+do research auto-subtitler MD5 they use for dvd's what is it?  Is there any standard? Anyone? what about sorting the ifo's is that reasonably close to how they naturally come/match other guy?
+
+eventually be like DVD profiler (imdb, kids in mind, UPC, images, maybe more?)
 
 perfect the frame accurate splitter...is it fast enough in ruby, too?
 

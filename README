@@ -1,3 +1,5 @@
+
+
 Sensible-cinema (also known to us as "paranoid cinema" [our own inside joke ha ha]) allows you to apply 
 pre-programmed delete lists (e.g. Edit Decision Lists [2]) to DVD's you already own.  It is currently in beta,
 though will always be free software, even after release.
@@ -5,6 +7,8 @@ though will always be free software, even after release.
 I.e. you can play or edit a DVD to "mute out" or skip certain scenes.
 
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
+
+Note: please install from the zip files at http://rogerdpack.t28.net/sensible-cinema and not from github.
 
 To use it, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
 It will pop up some windows where you choose what to do with that DVD.

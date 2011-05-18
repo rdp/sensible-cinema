@@ -1,7 +1,11 @@
 == ==
 
-Demo of being able to automatically adjust timestamps, given an input one, 
+Added demo/prototype of being able to automatically adjust timestamps, given an input one, 
 to match say other players' location of that timestamp.
+
+Note also that we have done tons of previous functionality related to selecting DVD title tracks appropriately.
+
+Note also that since basically the original the online player has ability to not just skip scenes but "overlay" them so that they are not seen, and/or mute them.
 
 == 0.21.7 ==
 
