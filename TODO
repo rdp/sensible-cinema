@@ -139,7 +139,9 @@
   disallow choosing empty drive? fail more gracefully? (issue 11)
 
 == DVD decide later to move up or down ==
-    
+
+  force them to use my bundled mplayer version (currently it doesn't install to vendor/cache if you have an mplayer in the path, then fails to start mplayer)
+
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
   would mplayer OSD on screen display be useful?

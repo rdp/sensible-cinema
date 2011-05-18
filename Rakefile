@@ -139,8 +139,10 @@ task 'deploy' do
   p 'copying in'
   raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
   p 'copying over'
-  raise unless system("ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@freemusicformormons.com:~/www/rogerdpackt28/sensible-cinema/releases\"")
   # ugh ugh ughly
+  c = "ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@freemusicformormons.com:~/www/rogerdpackt28/sensible-cinema/releases\""
+  raise unless system(c)
+  p 'linking'
   raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"rm \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
   raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"ln -s \\~/www/rogerdpackt28/sensible-cinema/releases/#{name} \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
 end
