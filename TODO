@@ -3,27 +3,26 @@
   release: cheap inventionzy
   release: C EDL+specific portion player
   ....
-  release: verbiage release/text in todo items/README/license
   pull realtime players from mine/update todo
   build library phase, 20 dvd's
   create web site
   propagate wikipedia with list of realtimers etc.
   more build library
+  verbiage release/text in todo items/README/license
   
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
 
-  ffmpeg/mencoder timings
+  ffmpeg/mencoder timings for splitting files
   high prio patents
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
-  legal ??
+  make them accept the license in order to download the stuff at all [checkbox] :P
   
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
   research the gplv3, add terms. Maybe want real lawyer, even?
-  make them accept the license in order to download the stuff at all [checkbox] :P
   closure on blu ray timing
   does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s or so?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
@@ -31,7 +30,6 @@
   @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
-  note myth cutlist as inspiration?
   cp: have to replace multiple ones
   try disney digital copy/amazon library "local download"
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
@@ -86,7 +84,6 @@
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate menumeter $
   just reference their copy of gplv1 etc.
-  note history: "after mplayer got EDL playback, some other did too [myth?], the python one was created too, VLC could work with playlists"
   create local new DL's to a separate, new folder
   that one button is broken...play with [s]mplayer unedited [?]
   tool tips for all buttons...tweak naming, too :P do something!
@@ -114,7 +111,6 @@
   don't exit program if they don't select a disk originally :)  if they cancel out of "Please pick a DVD Delete list file"
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   buy the blu-ray VLC software, try that out...
-  timing all dogs go to heaven--way off in hulu? huh?
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
 
 == DVD decide later to move up or down ==
@@ -292,6 +288,7 @@ ISO copy, then scratch out appropriate bits?
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+timing all dogs go to heaven--way off in hulu? huh?
 some low level frame hijacker for incoming cable movies, too? ... hmm...
 
 can die when doesn't start well:
@@ -373,10 +370,9 @@ advertise on ruby flow
 
 "ripperzy-ize" (low prio)
     can record from online [huh? do I even want this?]
-      maybe can record something, then extract the bad, and get a better looking video...
+      maybe can record something, then extract the bad...
       low prio
       remove commercials?
-        myth cutlist?
 
 DRY up :levels--it's in the ocr spec as well as the others...
 
