@@ -2,38 +2,71 @@ avidemux barely off lips:
   mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
   ffmpeg -i dvdoutmplayer.mpg -sameq yo.mpg took forever, grabbed wrong audio track :P
 
-
 mplayer os x extended has the same "where am I?" on this DVD problem mplayer has.
 
 monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
 
 DVD player conclusions:
   VLC's are all pretty consistent
-  various mplayers are pretty consistent with themselves
-  VLC can be up to at least 30s off [!]
-  mplayers are all at 29.97/30 offset
-  WMP is pretty close, but internally inconsistent by about 0.5s
-  powerdvd is pretty close but internally inconsistent but about 0.5s
-  appears mplayer on a file 
+  VLC DVD playback can be up to at least 30s off [!]
+  mplayers are at the 29.97 offset
+    I think mplayer.exe's are pretty consistent
+    smplayer?
+  WMP is pretty close, but internally inconsistent by some odd
+  powerdvd is pretty close but internally inconsistent by some odd
+  mplayer grab seems right on [played back with VLC]
+  VLC grabs it fine
+  WMP on handbrake is 29.97
 
 speeds: ffmpeg: vertex 2: 105MB/s old HD desktop 58 MB/s
 
-avidemux from "normal" rips is still off frame-rate wise...
+avidemux from "normal" rips are still off frame-rate wise somehow...
+
   "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
 
   handbrake file:
     segfault
 
-appears that smplayer is "right" and DVD players tell you 1:00:00 when it has taken you 1:00:04 in reality.
+appears that 29.97 is closer to "wall clock time" and DVD players tell you 1:00:00 when it has taken you 1:00:04 in reality.
+  at 1:00:00 wristwatch was about 4s ahead
   LODO verify by watching through whole film
 
-at 1:00:00 wristwatch was about 4s ahead
+I wonder if mplayer is just a little bit ahead, or internally inconsistent based on poor seeking for GOP's or some odd...it's either right ahead or right on?
 
-maybe mplayer "can" be accurate?
+appears smplayer is "like a second" or something behind mplayer, and mplayer doesn't quite agree with VLC but is pretty close, and mplayer.exe seems internally consistent.
+
+are all windows GUI wrapper players internally incosistent, except maybe VLC which is still "a tidge off"?
 
 OSOH:
 
-  mplayer DVD
+  mplayer.exe new dvdoutmplayer.mpg:
+    1:00:00 I once [w]as lost but now
+
+  some mplayer.exe's may have been  Sherpya-SVN-r33216-4.2.5
+    versus Sherpya-SVN-r30369-4.2.5 for smplayer
+    they seem pretty close though...
+
+  TODO mencoder splits versus ffmpeg on these ? +- vlc versus mplayer grabs...hmm...except we want GOP friendly...
+
+  smplayer's mplayer.exe on mplayer file:
+    1:00:00 I once [w]as lost but now
+
+  smplayer's mplayer.exe on VLC file:
+    unknown timing (no times), but lips are in sync
+    
+  smplayer's mplayer.exe DVD:
+    1:00:00 I was wa[a]s lost like perfect --- I was w[a]as lost -- I once [wa]as lost like every time the w, or just right after it... 3/4 of the way through the w
+
+  WMP on handbrake:
+    1:00:00 I was wa[a]s lost
+
+  WMP on VLC file:
+    1:00:00 that saved a [wr]etch like me --- that save[d] a wretch like me [huh? it's guessing, like VLC does?]
+
+  WMP on mplayer file:
+    cannot seek
+
+  smplayer DVD
     1:00:00 once was [lo]st
 
   avidemux on mplayer grab:
@@ -42,26 +75,31 @@ OSOH:
   avidemux on VLC grab:
     1:00:00 once wa[a]s lost audio, video appears messed up lips [looks like they are really grabbing raw data]
 
-  mplayer playing VLC grab:
+  smplayer playing VLC grab:
     lips are in sync 
-    1:00:00 once was [l]ost --- once was []lost
+    searching is "odd"
+    1:00:00 once was [l]ost --- once was []lost --- once wa[s] lost
+    
+  mplayer.exe playing any VLC grab:
+    the timing are all messed up, starting at 47453, but it appeared to be right one somewhere "once was lost"
 
-  mplayer grab can be frame accurate: matching md5's (I think it's actually mpg) dvdoutmplayer1.avi  dvdoutmplayer.mpg
-    87402c45126207884bacc46e6f681722 *dvdoutmplayer.mpg
+  the mplayer grab can be frame accurate, with matching md5's (I think it's actually mpg) dvdoutmplayer1.avi  dvdoutmplayer.mpg
+    87402c45126207884bacc46e6f681722
 
-  vlc grab appears to have the same file size, different md5sum's [!] dvdout.vlc3.mpg  vlcdvdout2.mpg
+  vlc grab appears to have the exact same file size, different md5sum's [!] dvdout.vlc3.mpg  vlcdvdout2.mpg
     1b32659b94ea01b45e2860809db49539 *dvdout.7.mpg vlc
     eb4ff70f8bfb1147294d218242492322 *dvdout.8.mpg vlc
-    bdcfadd21f09de4de011694af75b67cd *dvdout.vlc3.mpg # seem to all work fine...
+    bdcfadd21f09de4de011694af75b67cd *dvdout.vlc3.mpg # they seem to all work fine...
     
   vlc doesn't have timing replay info for dvdout.9.mpg (its own grab) just approximates
   
   dvdoutmplayer2 seems corrupt (garbled, too short, green)
   
-  smplayer play from dvdoutmplayer1.avi works fine, WMP works (doesn't know how to seek), VLC works 29.97
+  WMP dvdoutmplayer1.avi works (doesn't know how to seek), VLC works 29.97
 
   smplayer from dvdoutmplayer1.avi:
-       1:00:00 once was [l]ost 
+      1:00:00 once was [l]ost  --- once was []lost (because of smplayer?)
+      seeks fine
 
   VLC from mplayer grab:
     1:00:00 once wa[a]s lost 
@@ -86,13 +124,15 @@ OSOH:
   VLC reading dvdoutmplayer.mpg, handbrake m4v:
       1:00:00 accurate wa[a]s lost
 
+ All DVD's below this:
+
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
     1:00 once was lost but now[ow] am found, possible slight hiccup immediately after
-  mac mplayer: 
+  mac mplayer:
      total: 6791.6 1:53:11.6
       1:00:00 that saved a wretch like me, I once [w]as lost
-     other "normal DVD player" is at about my 3604.7
+      other "normal DVD player" this is at about my 3604.7
   VLC mac:
     at beginning, seemed to think it had 1:53:05 left negative
     sum: 1:53:04 but it seemed to be cheating...I think it was cheating near the end, too :P
@@ -111,7 +151,7 @@ OSOH:
     1:00:00 once was lost but [n]ow am found [quite close to above I think, might be normal]
   smplayer XP:
     1:53:05 total [!] fake total
-    unable to seek
+    unable to seek [crash]
   mplayer XP
     1:00:00 that saved a wretch like me, I once [w]as lost
     sum: 6791.6 (= 1:53:11.5)
@@ -121,14 +161,14 @@ OSOH:
     
   [should be 3.6 off per hour, 6.8 for osoh's sum, is 6.6 'ish :P]
   
-  WMP windows 7:
+  WMP windows 7 DVD:
     -1:53:05
     1:00:00 once was lost but n[o]ow am found
     ended with last second at 1:53:03...interesting.
   powerdvd 8:
     ended with last second at 1:53:03...interesting.
     1:00:00 once was lost but no[o]w am found
-  VLC 7 1.1.9
+  VLC 7 1.1.9 DVD
     that saved a wre[tch] like me
     exhibits same odd lagging timestamps at end.
   

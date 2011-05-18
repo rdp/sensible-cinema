@@ -1,4 +1,4 @@
-== ==
+== 0.21.8 ==
 
 Added demo/prototype of being able to automatically adjust timestamps, given an input one, 
 to match say other players' location of that timestamp.
@@ -6,6 +6,8 @@ to match say other players' location of that timestamp.
 Note also that we have done tons of previous functionality related to selecting DVD title tracks appropriately.
 
 Note also that since basically the original the online player has ability to not just skip scenes but "overlay" them so that they are not seen, and/or mute them.
+
+Note also that SPlayer has the ability to use a DVD to lookup its information/subtitles, which is an interesting invention.
 
 == 0.21.7 ==
 

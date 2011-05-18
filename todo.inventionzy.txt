@@ -2,10 +2,10 @@
       cheap minimize demo "fake auto" :)
       cheap static-ify demo for mutes
       also a straight "half mute" demo, using volume downs/ups     
+      cheap minimize via (probably foreground window + API real windows API) 
 
     both mute and blank when blanking by default...
     url -> url inference [hopefully this is cake...]
-    cheap minimize via (probably foreground window + API real windows API) 
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)

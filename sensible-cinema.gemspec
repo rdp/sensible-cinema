@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.21.7"
+  s.version = "0.21.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-05-13}
+  s.date = %q{2011-05-18}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = ["countdown.rb", "monkey.png", "sensible-cinema", "sensible-cinema-cli"]
+  s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
     "LICENSE.TXT",
     "README",
@@ -23,8 +23,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "TODO",
     "VERSION",
-    "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_ZIP_INSTEAD",
-    "bin/countdown.rb",
+    "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_RELEASE_ZIP_INSTEAD",
     "bin/monkey.png",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
@@ -39,8 +38,11 @@ Gem::Specification.new do |s|
     "how_to_create_your_own_delete_lists.txt",
     "legal/md5s.txt",
     "legal/transcript_mute_vlc.txt",
+    "legal2",
     "lib/add_any_bundled_gems_to_load_path.rb",
+    "lib/auto_convert.rb",
     "lib/blanker.rb",
+    "lib/count_down_timer_jruby_swing.rb",
     "lib/drive_info.rb",
     "lib/edl_converter.rb",
     "lib/edl_parser.rb",
@@ -147,6 +149,7 @@ Gem::Specification.new do |s|
     "spec/vlc_programmer.spec.rb",
     "template_bats/RUN SENSIBLE CINEMA CLICK HERE.bat",
     "template_bats/advanced--create or edit sensible cinema delete list files.bat",
+    "todo.build_library.txt",
     "todo.inventionzy.txt",
     "todo.open_edl_list_org.txt",
     "todo.subtitle",
