@@ -1,6 +1,6 @@
 == roadmap ==
 
-  release: cheap patetnzy
+  release: cheap inventionzy
   release: C EDL+specific portion player
   release: verbiage release/text in todo items
   ....
@@ -15,23 +15,19 @@
 == up next release/very next task: ==
 
   high prio patents
-  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
-    VLC try rip again several times...
   
-== blocked ==
-
-  clear runnings
-    have ben and chris test it out, have it work, then ask about video quality
-
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
+  time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   closure on blu ray timing
-  does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s?
+  does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s or so?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
   create+publish an ISO of my temple DVD :P
   @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
   note this in legal: http://en.wikipedia.org/wiki/DVD_Decrypter ?
+  clear runnings
+    have ben and chris test it out, have it work, then ask about video quality
   note myth cutlist as inspiration?
   cp: have to replace multiple ones
   try disney digital copy/amazon library "local download"

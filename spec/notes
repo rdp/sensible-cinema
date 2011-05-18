@@ -1,4 +1,6 @@
-TODO: they say "wretch" late? [avisynth says they do]
+avidemux barely off lips:
+  mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
+  ffmpeg -i dvdoutmplayer.mpg -sameq yo.mpg took forever, grabbed wrong audio track :P
 
 
 mplayer os x extended has the same "where am I?" on this DVD problem mplayer has.
@@ -14,25 +16,35 @@ DVD player conclusions:
   powerdvd is pretty close but internally inconsistent but about 0.5s
   appears mplayer on a file 
 
-speeds: vertex 2: 105MB/s old HD desktop 58 MB/s
+speeds: ffmpeg: vertex 2: 105MB/s old HD desktop 58 MB/s
 
 avidemux from "normal" rips is still off frame-rate wise...
+  "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
+
+  handbrake file:
+    segfault
+
+appears that smplayer is "right" and DVD players tell you 1:00:00 when it has taken you 1:00:04 in reality.
+  LODO verify by watching through whole film
+
+at 1:00:00 wristwatch was about 4s ahead
+
+maybe mplayer "can" be accurate?
 
 OSOH:
 
-  avidemux on mplayer grab:
-    sound ok, lips off, same as VLC grab
+  mplayer DVD
+    1:00:00 once was [lo]st
 
-  avidemux on handbrake:
-    segfault
+  avidemux on mplayer grab:
+    sound ok, lips off
     
   avidemux on VLC grab:
-    1:00:00 once wa[a]s lost audio, video appears messed up lips
+    1:00:00 once wa[a]s lost audio, video appears messed up lips [looks like they are really grabbing raw data]
 
   mplayer playing VLC grab:
-    1:00:00 once was [l]ost
-
-  "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
+    lips are in sync 
+    1:00:00 once was [l]ost --- once was []lost
 
   mplayer grab can be frame accurate: matching md5's (I think it's actually mpg) dvdoutmplayer1.avi  dvdoutmplayer.mpg
     87402c45126207884bacc46e6f681722 *dvdoutmplayer.mpg
@@ -40,15 +52,13 @@ OSOH:
   vlc grab appears to have the same file size, different md5sum's [!] dvdout.vlc3.mpg  vlcdvdout2.mpg
     1b32659b94ea01b45e2860809db49539 *dvdout.7.mpg vlc
     eb4ff70f8bfb1147294d218242492322 *dvdout.8.mpg vlc
-    bdcfadd21f09de4de011694af75b67cd *dvdout.vlc3.mpg # seem to all work fine...when they do
-
-  vlc doesn't have timing info for dvdout.9.mpg (its own grab)
+    bdcfadd21f09de4de011694af75b67cd *dvdout.vlc3.mpg # seem to all work fine...
+    
+  vlc doesn't have timing replay info for dvdout.9.mpg (its own grab) just approximates
   
-  avisynth on vlc with right frame 
-
   dvdoutmplayer2 seems corrupt (garbled, too short, green)
   
-  smplayer play from  dvdoutmplayer1.avi works fine, WMP works (doesn't know how to seek), VLC works 29.97
+  smplayer play from dvdoutmplayer1.avi works fine, WMP works (doesn't know how to seek), VLC works 29.97
 
   smplayer from dvdoutmplayer1.avi:
        1:00:00 once was [l]ost 
@@ -82,7 +92,7 @@ OSOH:
   mac mplayer: 
      total: 6791.6 1:53:11.6
       1:00:00 that saved a wretch like me, I once [w]as lost
-     other "normal" is at about 3604.7
+     other "normal DVD player" is at about my 3604.7
   VLC mac:
     at beginning, seemed to think it had 1:53:05 left negative
     sum: 1:53:04 but it seemed to be cheating...I think it was cheating near the end, too :P
@@ -104,9 +114,9 @@ OSOH:
     unable to seek
   mplayer XP
     1:00:00 that saved a wretch like me, I once [w]as lost
-    sum: 6791.6 (= 1:53:11.5) 
+    sum: 6791.6 (= 1:53:11.5)
   mac mplayer extended:
-    sum: 1:53:05 negative, in reality went to 1:53:11 :P
+    sum: -1:53:05, in reality went to 1:53:11 :P
     1:00:00 that saved a wretch like me, I once [w]as lost
     
   [should be 3.6 off per hour, 6.8 for osoh's sum, is 6.6 'ish :P]
