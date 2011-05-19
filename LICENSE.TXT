@@ -41,9 +41,10 @@ Note: for sure do not redistribute/re-sell edited DVD's.  We have learned from c
 redistributing (well at least renting/selling) edited commercial DVD's is against copyright in the US.  We hope that sensible-cinema
 is more legal, since you basically have to have the original DVD in hand.
 Please don't redistribute.  If creating copies of commercial DVD's is illegal
-in your country, then don't do it!  Use the "watch in realtime" option.  Unless that's illegal.
+in your country, then don't do it!  Use the "watch in realtime" option.  Unless that's illegal.  Consult your lawyer.
 USING THIS SOFTWARE MIGHT BE ILLEGAL IN SOME COUNTRIES.
 DO NOT MAKE ILLEGAL COPIES.
+USE AT YOUR OWN RISK.
 
 In terms of copyright, it could be legal under the The Family Home Movie Act of 2005,
 at least in the United States, when viewed using the "playlist" option (v 0.10'ish, later removed--used VLC), or the "realtime" option (0.18.0'ish +, using mplayer).
@@ -51,6 +52,7 @@ In general, if I have the original DVD sitting next to my TV, I don't feel bad a
 its edited copy, but please consult a laywer first if you have any concerns.
 
 This program can also be used for editing home movies, etc (example, the "pack wedding" file herein included).
+Note also that this software contains no decryption codes itself.
 
 Note that this software might well be legal in the EU, 
 as it is only software (if you watch it on your computer), and therefore possibly not subject to patents in certain countries

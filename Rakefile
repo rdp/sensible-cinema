@@ -153,7 +153,7 @@ task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :
   raise unless system("git push origin master")
   gems = Dir['pkg/*.gem']
   gems[0..-2].each{|f| File.delete f} # kill old versions...
-  system("#{Gem.ruby} -S gem push #{gems[-1]}")
+  raise unless system("#{Gem.ruby} -S gem push #{gems[-1]}")
   FileUtils.rm_rf 'pkg'
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
