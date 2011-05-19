@@ -2,27 +2,25 @@
 
   release: cheap inventionzy
   release: C EDL+specific portion player
-  ....
+  ??
   pull realtime players from mine/update todo
   build library phase, 20 dvd's
   create web site
   propagate wikipedia with list of realtimers etc.
   more build library
-  verbiage release/text in todo items/README/license
   
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
 
-  ffmpeg/mencoder timings for splitting files
   high prio patents
+  ffmpeg/mencoder timings for splitting files
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
   research the gplv3, add terms. Maybe want real lawyer, even?
-  closure on blu ray timing
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
   create+publish an ISO of my temple DVD or what not :P
   @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
@@ -32,7 +30,8 @@
   try disney digital copy/amazon library "local download"
   figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   README: note competition is welcome and good!
-  update tons of verbiage
+  closure on blu ray timing
+  update tons of verbiage readme, legal, etc.
   legal:
     "don't do it"
      rename the file to is_it_legal_to_copy_dvds, reference it
