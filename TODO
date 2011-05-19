@@ -17,16 +17,14 @@
   ffmpeg/mencoder timings for splitting files
   high prio patents
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
-  make them accept the license in order to download the stuff at all [checkbox] :P
   
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
   research the gplv3, add terms. Maybe want real lawyer, even?
   closure on blu ray timing
-  does mencoder "grab" slightly off, like how mplayer appears to play slightly off, like 0.5s or so?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
-  create+publish an ISO of my temple DVD :P
+  create+publish an ISO of my temple DVD or what not :P
   @VLC: use http://www.startssl.com for trac, https forum, also forum always returns 409's
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
@@ -110,7 +108,6 @@
   calculating disk's unique id... -> have it note on gui...
   don't exit program if they don't select a disk originally :)  if they cancel out of "Please pick a DVD Delete list file"
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
-  buy the blu-ray VLC software, try that out...
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
 
 == DVD decide later to move up or down ==
@@ -159,7 +156,6 @@
   mac version of the C player 
     "just play from X to Y exactly" 
   forever strong DVD timestamps [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
-  blu ray timings work
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-feedback on crashes [?]
   publish new version of rdp-win32screenshot, if it ever existed
