@@ -79,7 +79,7 @@ for profanity, sanitized in profanities
     timing = glop.split("\n").first.strip
     timing =~ /(\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d)/
     # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-    puts %!"#{$1}.#{$2}" , "#{$1}.#{$2}", "profanity", "#{sanitized}",! 
+    puts %!"#{$1}.#{$2}" , "#{$3}.#{$4}", "profanity", "#{sanitized}",! 
   end
   
 end

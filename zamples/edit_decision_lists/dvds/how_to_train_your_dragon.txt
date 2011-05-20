@@ -1,0 +1,31 @@
+# comments can go after a # on any line, for example this one.
+
+"mutes" => [
+  
+"00:11:48.421" , "00:11:50.616", "profanity", "g..",
+"00:17:41.941" , "00:17:44.432", "profanity", "a..",
+"00:23:15.974" , "00:23:17.874", "profanity", "a..",
+"00:23:18.010" , "00:23:21.275", "profanity", "a..",
+"00:33:21.046" , "00:33:22.343", "profanity", "a..",
+"00:44:58.242" , "00:45:01.609", "profanity", "g..",
+"00:47:47.912" , "00:47:52.042", "profanity", "g..",
+"00:48:22.179" , "00:48:25.512", "profanity", "odin",
+"00:48:28.052" , "00:48:29.917", "profanity", "thor",
+"00:52:40.437" , "00:52:43.304", "profanity", "odin",
+"01:12:41.837" , "01:12:46.035", "profanity", "heck",
+"01:14:32.648" , "01:14:35.208", "profanity", "thor",
+"01:14:39.421" , "01:14:41.286", "profanity", "odin",
+
+],
+
+"blank_outs" => [
+ # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"name" => "How to Train Your Dragon",
+"disk_unique_id" => "60c64d18ce76f8b14eae852a1c7d8c7f",
+
+"dvd_title_track" => "9", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still a fairly dark movie, overall",
+"mplayer_dvd_splits" => [], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
