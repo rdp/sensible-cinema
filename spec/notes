@@ -1,3 +1,6 @@
+
+how to train dragon srt right on with mplayer 29.97
+
 avidemux barely off lips:
   mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
   ffmpeg -i dvdoutmplayer.mpg -sameq yo.mpg took forever, grabbed wrong audio track :P

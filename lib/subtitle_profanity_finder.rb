@@ -56,8 +56,11 @@ profanities = {'hell' => 'heck', 'g' +
 'bas' +
 'tard' => 'ba.....',
 ('a' +
- 's'*2) => 'a..'
+ 's'*2) => 'a..',
+'thor' => 'thor', 'odin' => 'odin'
 }.to_a
+
+# sat...
 
 profanities.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
@@ -70,10 +73,15 @@ for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^\d+$/m)
 for profanity, sanitized in profanities
   # dunno if we should force words to just start with this or contain it anywhere...
   # what about 'g..ly' for example?
-  # or 'ung..ly' ?
+  # or 'un...ly' ?
+  
   if glop =~ profanity
-    p 'contains', sanitized
+    timing = glop.split("\n").first.strip
+    timing =~ /(\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d)/
+    # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+    puts %!"#{$1}.#{$2}" , "#{$1}.#{$2}", "profanity", "#{sanitized}",! 
   end
+  
 end
 
 
