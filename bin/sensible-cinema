@@ -337,7 +337,7 @@ module SensibleSwing
       @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
       play_this_mplayer ||= "mplayer dvd://#{title_track} -vo direct3d" # direct3d for windows 7 nvidia's sake yipes
-      command =  "#{play_this_mplayer} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      command =  "#{play_this_mplayer} -framedrop -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
