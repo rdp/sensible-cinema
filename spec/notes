@@ -1,5 +1,29 @@
+blu sub:
 
-how to train dragon srt right on with mplayer 29.97
+
+865
+01:28:47,322 --> 01:28:48,864
+… we have…
+
+866
+01:28:49,908 --> 01:28:51,325
+… dragons.
+
+
+dvd subs:
+
+869
+01:28:47,602 --> 01:28:49,126
+<i>...we have...</i>
+
+870
+01:28:50,205 --> 01:28:51,604
+<i>...dragons.</i>
+
+
+0.7 off?
+
+how to train dragon DVD srt right on with mplayer 29.97
 
 avidemux barely off lips:
   mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
