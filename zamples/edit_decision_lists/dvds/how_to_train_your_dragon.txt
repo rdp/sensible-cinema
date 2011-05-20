@@ -18,7 +18,7 @@
 ],
 
 "blank_outs" => [
- # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+ # example: "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "name" => "How to Train Your Dragon",

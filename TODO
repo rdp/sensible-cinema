@@ -21,8 +21,9 @@
 
   edit this todo list all of it
   "enter name for new dvd" guess at a good name _
+  not "example" more for each line, or maybe just fill in with 00's?
   note that other guy's profanity fella
-  mplayer EDL alow 
+  mplayer EDL allow 
 got fatal exception in button
 detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
 SyntaxError
@@ -37,7 +38,7 @@ SyntaxError
   double check if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   README: note competition is welcome and good!
   closure on blu ray timing
-  update tons of verbiage readme, legal, etc.
+  update verbiage readme, legal, etc.
   legal:
     "don't do it"
      rename the file to is_it_legal_to_copy_dvds, reference it
