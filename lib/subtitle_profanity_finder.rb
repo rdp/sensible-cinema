@@ -55,24 +55,29 @@ profanities = {'hell' => 'heck', 'g' +
 'tc' + 104.chr => 'b.....',
 'bas' +
 'tard' => 'ba.....',
-('a'
- + 's'*2) => 'a..'
-}
+('a' +
+ 's'*2) => 'a..'
+}.to_a
+
+profanities.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
 incoming = File.read(ARGV[0])
 
+
+
+for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^\d+$/m)
+
 for profanity, sanitized in profanities
   # dunno if we should force words to just start with this or contain it anywhere...
-  # what about 'godly' for example?
-  # or 'ungodly' ?
-  if incoming =~ Regexp.new(profanity, Regexp::IGNORECASE)
+  # what about 'g..ly' for example?
+  # or 'ung..ly' ?
+  if glop =~ profanity
     p 'contains', sanitized
   end
 end
 
 
-
-
+end
 
 
 
