@@ -336,8 +336,11 @@ module SensibleSwing
       # oh the insanity of the console UI...LODO more user friendly player
       @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
-      play_this_mplayer ||= "mplayer dvd://#{title_track} -vo direct3d" # direct3d for windows 7 nvidia's sake yipes
-      command =  "#{play_this_mplayer} -framedrop -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      play_this_mplayer ||= "mplayer dvd://#{title_track} " # direct3d for windows 7 nvidia's sake yipes
+      command =  "#{play_this_mplayer} -vo direct3d -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      # -framedrop for slower systems, once had -nocache, but that's only for dvdnav:// I think
+      # -hardframedrop might help a bit but hurts so much too
+      #dvd:// bcause the bundled mplayer crashes with dvdnav LOL
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
@@ -753,8 +756,9 @@ end
           end
 
 at_exit2 {
-  system("taskkill /f /im mencoder.exe") # todo...
-  system("taskkill /f /im ffmpeg.exe")
+  system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
+  system("taskkill /f /im ffmpeg.exe 2>NUL")
+  system("taskkill /f /im mplayer.exe 2>NUL")
 }
 
 if $0 == __FILE__
