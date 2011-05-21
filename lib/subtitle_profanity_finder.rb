@@ -61,6 +61,7 @@ profanities = {'hell' => 'heck', 'g' +
 }.to_a
 
 # sat...
+profanities[:breast] = 'breast' if ARGV[0] == '--with-br'
 
 profanities.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
