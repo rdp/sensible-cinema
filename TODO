@@ -2,11 +2,13 @@
 
   release: cheap inventionzy
   release: C EDL+specific portion player
-  ??
+  ?? below ??
   pull realtime players from mine/update todo
+    possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track, then download either VLC or smplayer, then..."
   build library phase, 20 dvd's
   create web site
   propagate wikipedia with list of realtimers etc.
+    don't mention mplayer EDL, just link to wikipedia :P
   more build library
   
 == high prio like blocking bugs ==  
