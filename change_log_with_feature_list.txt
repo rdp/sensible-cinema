@@ -1,3 +1,8 @@
+== ==
+
+Add profanity subtitle auto-generator, also make it "optional" for specific profanities.
+
+
 == 0.21.9 == (released same day as 0.21.8 to try to clarify quickly)
 
 Added some lists of previously existing work.
