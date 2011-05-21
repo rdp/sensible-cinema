@@ -13,6 +13,7 @@
   
 == up next release/very next task: ==
 
+can pass in a profanity
 butt
 minimize
 blog dark, blog other
@@ -127,6 +128,7 @@ SyntaxError
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  check if opening in MS editor is 29.97 or not
   disallow choosing empty drive? fail more gracefully when they do?
   investigate: can I use the zoomplayer max?
   would mplayer OSD on screen display be useful?
