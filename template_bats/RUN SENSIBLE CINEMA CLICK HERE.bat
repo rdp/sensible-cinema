@@ -6,8 +6,17 @@
 @set RUBYOPT=
 @rem check for java installed...we will be needing that :)
 @java -version > NUL 2>&1 || echo need to install java JRE first please install it from java.com && pause && GOTO DONE
-@cd sensible-cinema && java -cp "./vendor/cache/jruby-complete-1.5.5.jar" org.jruby.Main bin\sensible-cinema %* || echo ERROR. Please look for error message, above, and report back the error you see, or fix it && pause
+
+@cd sensible-cinema
+@IF EXIST .\\vendor\\cache\\jruby-complete-1.6.1.jar GOTO RUN
+@echo 'downloading jruby [11MB]...'
+wget http://rogerdpack.t28.net/sensible-cinema/releases/jruby-complete-1.6.1.jar -O ./vendor/cache/jruby-complete-1.6.1.jar
+@rem fall through
+
+:RUN
+@java -cp "./vendor/cache/jruby-complete-1.5.5.jar" org.jruby.Main bin\sensible-cinema %* || echo ERROR. Please look for error message, above, and report back the error you see, or fix it && pause
 @rem taskkill /f /im mencoder.exe
+
 GOTO DONE
 
 :NOWINDIR
