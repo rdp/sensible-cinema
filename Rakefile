@@ -107,7 +107,7 @@ task 'bundle_dependencies' => 'gemspec' do
 end
 
 desc 'create distro zippable dir'
-task 'create_distro_dir' do
+task 'create_distro_dir' => :gemspec do # depends on gemspec...
   raise 'need  bundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')

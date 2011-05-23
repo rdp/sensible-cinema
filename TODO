@@ -1,8 +1,8 @@
-== roadmap ==
+== roadmap [for tasks, see below though] ==
 
   release: cheap inventionzy
   release: C EDL+specific portion player
-  ??
+  ?? on below
   pull realtime players from mine/update todo
   build library phase, 20 dvd's
   create web site
@@ -13,13 +13,14 @@
   
 == up next release/very next task: ==
 
+  ffmpeg/mencoder timings for splitting files 3595
   high prio patents
-  ffmpeg/mencoder timings for splitting files
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
+  
   research the gplv3, add terms. Maybe want real lawyer, even?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
   create+publish an ISO of my temple DVD or what not :P
@@ -64,6 +65,7 @@
         can come out of full screen more easily :P
     note pay for XP, or possibly re-install DVD player from installation CD from
     dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
+    note to them: use ac3filter
   check if md5 same mac versus PC, VLC done several times/fix too
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
@@ -115,6 +117,7 @@
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
   disallow choosing empty drive? fail more gracefully when they do?
   investigate: can I use the zoomplayer max?
   would mplayer OSD on screen display be useful?
@@ -123,6 +126,7 @@
   it can "slow certain sections down" that looks cool! :)
   XP timings with cineplayer [osoh, jonah]
   how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
+    also xbmc has a plugin
   script powerdvd?
   VLC: make some more bounties: per file save location at least, anything else [check for suggestions]
     also suggest uservoice ?
