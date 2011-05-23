@@ -50,12 +50,10 @@ class DriveInfo
   if OS.mac?
     require 'plist'
     a = Dir['/Volumes/*'].map{|dir|
-p dir
      parsed = Plist.parse_xml(`diskutil info -plist "#{dir}"`)
-p parsed
      d2 = OpenStruct.new
      d2.VolumeName = parsed["VolumeName"]
-     d2.Name = dir
+     d2.Name = dir # DevNode?
      d2.FreeSpace = parsed["FreeSpace"].to_i
      d2
     }
