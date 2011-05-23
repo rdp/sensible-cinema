@@ -73,36 +73,20 @@ task 'bundle_dependencies' => 'gemspec' do
    system("rm -rf ../cache.bak")
    system("cp -r vendor/cache ../cache.bak") # for retrieval later
    Dir['vendor/cache/*'].each{|f|
-    unless f =~ /jruby.*jar/ # that one takes too long to download...
-      FileUtils.rm_rf f
-      raise 'unable to delete: ' + f if File.exist?(f)
-    end
+    FileUtils.rm_rf f
+    raise 'unable to delete: ' + f if File.exist?(f)
    }
    FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
        system("#{Gem.ruby} -S gem unpack #{d.name}")
      }
-     to_here = "jruby-complete-1.5.5.jar"
-     unless File.exist? to_here
-       url = "/downloads/1.6.1/jruby-complete-1.6.1.jar"
-       puts 'downloading in jruby-complete.jar file '  + url
-       # jruby complete .jar file
-       Net::HTTP.start("jruby.org.s3.amazonaws.com") { |http|
-         resp = http.get(url)
-         puts 'copying jruby complete in... '
-        open(to_here, "wb") { |file|
-           file.write(resp.body)
-        }
-      }
-     end
     
      # create a shunt win32ole file, so that require 'win32ole' will just work.
-     # XXXX may no longer need it...
+     # XXXX may no longer need this...
      Dir.mkdir 'lib'
      File.write('lib/win32ole.rb', 'require "jruby-win32ole"')
-  
-   end # chdir
+   end
   
 end
 

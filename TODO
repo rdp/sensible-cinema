@@ -2,11 +2,13 @@
 
   release: cheap inventionzy
   release: C EDL+specific portion player
-  ?? on below
+  ?? below ??
   pull realtime players from mine/update todo
+    possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track, then download either VLC or smplayer, then..."
   build library phase, 20 dvd's
   create web site
   propagate wikipedia with list of realtimers etc.
+    don't mention mplayer EDL, just link to wikipedia :P
   more build library
   
 == high prio like blocking bugs ==  
@@ -14,13 +16,34 @@
 == up next release/very next task: ==
 
   ffmpeg/mencoder timings for splitting files 3595
+can pass in a profanity
+get LLC before "real" domain name
+for mplayer realtime it needs to start earlier, end on time
+butt
+details [auto from subs, allow web]
+"you google it" (EDL)
+fix dvdnav?
+eff
+force them to have a DVD in the drive :P
+minimize crash
+mplayer instructions are obscured
+can handle dual md5's
+blog dark, blog other
   high prio patents
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   
 == yes do, un-ordered currently ==
 
   edit this todo list all of it
+  tell them "exactly how to make super specific" cuts
   
+  "enter name for new dvd" guess at a good name _
+  not "example" more for each line, or maybe just fill in with 00's?
+  note that other guy's profanity fella
+  mplayer EDL allow 
+got fatal exception in button
+detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
+SyntaxError
   research the gplv3, add terms. Maybe want real lawyer, even?
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
   create+publish an ISO of my temple DVD or what not :P
@@ -29,10 +52,10 @@
     have ben and chris test it out, have it work, then ask about video quality
   cp: have to replace multiple ones
   try disney digital copy/amazon library "local download"
-  figure out if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
+  double check if .srt DVD files are 29.97 accurate or 30...hmm...I'd guess the former...
   README: note competition is welcome and good!
   closure on blu ray timing
-  update tons of verbiage readme, legal, etc.
+  update verbiage readme, legal, etc.
   legal:
     "don't do it"
      rename the file to is_it_legal_to_copy_dvds, reference it
@@ -117,7 +140,11 @@
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+<<<<<<< HEAD
   bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
+=======
+  check if opening in MS editor is 29.97 or not
+>>>>>>> b2ba2885ab2ad8b77e02c85d12ef298229e36031
   disallow choosing empty drive? fail more gracefully when they do?
   investigate: can I use the zoomplayer max?
   would mplayer OSD on screen display be useful?
