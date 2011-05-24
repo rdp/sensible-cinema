@@ -16,12 +16,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 require 'rubygems'
-begin
-  require 'rspec' # rspec2
-rescue LoadError
-  require 'spec' # rspec1
-  require 'spec/autorun'
-end
+require 'rspec' # rspec2
 
 # some useful utilities...
 

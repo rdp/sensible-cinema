@@ -13,17 +13,17 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3' # was 0.8.0 ?
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
-    s.add_dependency 'jruby-win32ole' # LODO take out ...
     s.add_dependency 'rdp-ruby-wmi'
     s.add_dependency 'ffi' # mouse, etc. needed at least for MRI
-    
+    s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
     s.add_development_dependency 'hitimes' # now jruby compat!
-    s.add_development_dependency 'rspec' # prefer rspec 2 these days I guess...
+    s.add_development_dependency 'rspec', '> 2'
     
     # add as real dependencies for now, as gem install --development is still broken for jruby, basically installing transitive dependencies in error
     for name in ['hitimes', 'rspec', 'jeweler', 'rake']
       # bundling rake won't be too expensive, right? and this allows for easier dev setup through gem install
       s.add_dependency name
+      s.add_development_dependency name
     end
   end
 

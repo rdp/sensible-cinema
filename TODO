@@ -17,7 +17,9 @@
 
 add in contrib DVD
   ffmpeg/mencoder timings for splitting files 3595
+make install work again
 can pass in a profanity
+note/include jruby license, include gplv1 et al, note "also included locally"
 get LLC before "real" domain name
 for mplayer realtime it needs to start earlier, end on time
 butt
@@ -67,7 +69,6 @@ SyntaxError
   note no CP blu-ray, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
   make it not die if you have no DVD in there yet when you click...
   un-paranoid note
-  note in changelog: avidemux [auto-trainable, usable...]
   note "inspired by the phantom edit.." too?
   package curl [?] with its own license
   # "closing thoughts" => "still a fairly dark movie, overall", smallify this line
@@ -195,7 +196,6 @@ SyntaxError
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
   transcribe the audio of movies? crowd source it? whoa!
-  slim down the gem
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
   @smplayer: why do you sometimes start with subtitles enabled?
