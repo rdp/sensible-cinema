@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
 =end
 require 'rubygems'
 require 'rspec' # rspec2
-
+require 'rspec/autorun' # ???
 # some useful utilities...
 
 require 'sane'

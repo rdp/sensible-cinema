@@ -17,9 +17,6 @@ This file is part of Sensible Cinema.
 =end
 require 'digest/md5'
 require 'sane'
-if OS.doze?
-  require 'ruby-wmi'
-end
 require 'ostruct'
 
 class DriveInfo
@@ -35,7 +32,7 @@ class DriveInfo
  end
 
  def self.get_dvd_drives_as_openstruct
-  disks = get_all_drives_as_ostructs
+   disks = get_all_drives_as_ostructs
    disks.select{|d| d.Description =~ /CD-ROM/}.map{|d| d2 = OpenStruct.new; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2}
  end
   
@@ -57,10 +54,10 @@ class DriveInfo
      d2.FreeSpace = parsed["FreeSpace"].to_i
      d2
     }
-p a
+    p a
     a
   else
-    require 'wmi'
+    require 'ruby-wmi'
     disks = WMI::Win32_LogicalDisk.find(:all)
     disks.map{|d| d2 = OpenStruct.new; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2.FreeSpace = d.FreeSpace.to_i; d2} 
   end

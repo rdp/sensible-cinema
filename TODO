@@ -26,10 +26,8 @@
   bounty dvdnav
   get LLC before "real" domain name
   add profanity filter button
-  remove some buttons by default [?]
+  remove some buttons by default ?
   force them to have a DVD in the drive :P
-  "enter name for new dvd" guess at a good name
-  not "example" more for each line, or maybe just fill in with 00's?
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try my copy
@@ -49,7 +47,7 @@
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
-    make it frame accurate output
+    make it frame accurate output text :)
       after done: 
         note we don't always use libdvdcss in the legal
         add new button for it LOL
@@ -59,9 +57,9 @@
         update its semi-bad error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
-    note pay for XP, or possibly re-install DVD player from installation CD from
+    note pay for XP, or possibly re-install a DVD player from installation CD might work.
     dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
-    note to them: use ac3filter
+    note to them windows vista/7: use ac3filter
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
     
@@ -84,9 +82,9 @@
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
   note to previewer "you are about to preview these specific edits..." ?
-  ask for more beta testers for use, ask for more beta testers for creation 
+  ask for more beta testers for use, ask for more beta testers for creation, too
   beta release: rinse and repeat with various ppl
-  switch to using sourceforge for hosting...
+  switch to using sourceforge solely for the new hosting...
   youtube videos -> new account name
   propaganda-ize (file)
   vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe

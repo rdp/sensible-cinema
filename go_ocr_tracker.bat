@@ -1,1 +1,1 @@
-call j bin\sensible-cinema-cli %*
+call j bin\sensible-cinema-cli %* || call jruby bin\sensible-cinema-cli %*

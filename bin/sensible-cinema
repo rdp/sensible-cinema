@@ -88,7 +88,7 @@ module SensibleSwing
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 'Sensible Cinema is distributed under the gplv3. Click accept if you accept this agreement.'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 'Sensible Cinema is distributed under the gplv3. Click accept if you accept the terms of this license agreement.'
         show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read, understand, and accept the implications given in the LICENSE.TXT file'
         Storage['main_license_accepted'] = VERSION
       end
@@ -232,25 +232,26 @@ module SensibleSwing
     
     def create_brand_new_edl
       drive, volume, md5 = choose_dvd_drive
-      name = get_user_input("Enter DVD name for #{volume}")
+      english_name = get_user_input("Enter English DVD name for #{volume}", volume.gsub('_', ' ').downcase)
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
-  "0:00:01.0", "0:00:02.0", "profanity", "da..",
+  "0:00:01.0", "0:00:02.0", "profanity", "da..", # example line
 ],
 
 "blank_outs" => [
-  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "00:03:00.0" , "00:04:00.0", "violence", "of some sort", # example line
 ],
 
-"name" => "#{name}",
+"name" => "#{english_name}",
+"volume_name" => "#{volume}"
 "disk_unique_id" => "#{md5}",
 
-# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
+# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
-# "closing thoughts" => "still a fairly dark movie, overall",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
+# "closing thoughts" => "still...",
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
         EOL
       filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
       filename.downcase!
@@ -468,6 +469,7 @@ module SensibleSwing
     end
     
     include_class javax.swing.UIManager
+    
     def get_user_input(message, default = '')
       start_time = JOptionPane.showInputDialog(message, default)
     end

@@ -1,4 +1,4 @@
-Source code (open source, GPLv3) : http://github.com/rdp/sensible-cinema (create an issue for feature requests/bugs etc.)
+A few notes for developers:
 
 You can test the program out out by (on windows) installing daemon tools, then mounting the DVD of "big buck bunny" (open source, freely available movie)
 Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against (a slightly more cross platform approach).
@@ -7,16 +7,21 @@ There are some demo DVD ISO's for development in
 http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos (my own DVD, I release it under the CC license, as well as some
 other CC released licensed DVD's).
 
-You should be able to run the program and test it out against said DVD, put it through its paces to demo it, etc.
+You should be able to run the program and test it out against said DVD, put it through its paces to demo it, fix it, etc.
 
 Or if you have a DVD that already has a delete list available for it, you could use that, obviously.
 
-The main development roadmap is in the README. If you have any feedback/feature requests, et al, post an
+The main development roadmap is in the TODO. If you have any feedback/feature requests, et al, post an
 issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
 
-It's written in jruby, and currently packages itself up as a zip with jruby-complete.jar with its required dependencies (see the Rakefile).
+Sensible cinema is written in jruby, and currently packages itself up as a zip with jruby-complete.jar with its required dependencies (see the Rakefile) for windows.
 
 To run it from source, you may need to install a few gem dependencies (listed in the Rakefile)
+
+or install them automatically:
+
+$ jruby -S gem install sensible-cinema # installs dev. dependencies
+Note that, in order to run the unit tests, you'll want to checkout the source from the repository to get all the test images
 
 The tests are in the spec directory, though some of them are out of date as development has focused in other areas.
 
@@ -24,9 +29,7 @@ Currently it's windows only, ping me if you want that changed.
 
 Note: you transfer (c) to copyrighted published of sensible cinema when you submit patches.
 
-Note that there are batch files to run it in normal, create, and "realtime OCR track" mode.
-
-Note that, in order to run the unit tests, you'll want to checkout the source from the repository to get all the test images.
+Note that there are batch files to more easily run SC in normal, create, and/or "realtime OCR track" mode.
 
 All feedback/contribution welcome :)
 
