@@ -59,6 +59,8 @@ module SensibleSwing
   VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip
   puts "v. " + VERSION
   
+  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+  
   class MainWindow < JFrame
 
     def new_jbutton title, only_on_create_mode, always_add = false
@@ -129,12 +131,12 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited (realtime -- mplayer EDL)", false, true )
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime -- mplayer EDL)", false, true )
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
       
-      @play_smplayer = new_jbutton( "Watch DVD on computer unedited (realtime smplayer)", true).on_clicked {
+      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
         play_dvd_smplayer_unedited
       }
       
@@ -232,20 +234,22 @@ module SensibleSwing
     
     def create_brand_new_edl
       drive, volume, md5 = choose_dvd_drive
-      english_name = get_user_input("Enter English DVD name for #{volume}", volume.gsub('_', ' ').downcase)
+      english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
-  "0:00:01.0", "0:00:02.0", "profanity", "da..", # example line
+  # example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
 ],
 
 "blank_outs" => [
-  "00:03:00.0" , "00:04:00.0", "violence", "of some sort", # example line
+  # example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "name" => "#{english_name}",
-"volume_name" => "#{volume}"
+"volume_name" => "#{volume}",
 "disk_unique_id" => "#{md5}",
 
 # "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
@@ -253,7 +257,8 @@ module SensibleSwing
 # "closing thoughts" => "still...",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
         EOL
-      filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
+      # frame0 is the name of our window LOL tough to avoid that one...
+      filename = EDL_DIR + "\\" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
@@ -436,12 +441,13 @@ module SensibleSwing
     end
 
     def single_edit_list_matches_dvd md5
-      return unless md5 # ignore nil searches, where it wasn't set in the .txt file
       matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
         begin
           parse_edl(file)["disk_unique_id"] == md5
         rescue SyntaxError
-         # ignore poorly formed delete lists for auto choose
+         # ignore poorly formed delete lists for the auto choose
+          p 'warning, unable to parse:' + file
+          false
         end
       }
       if matching.length == 1
@@ -471,7 +477,9 @@ module SensibleSwing
     include_class javax.swing.UIManager
     
     def get_user_input(message, default = '')
-      start_time = JOptionPane.showInputDialog(message, default)
+      received = JOptionPane.showInputDialog(message, default)
+      raise 'user canceled' unless received
+      received
     end
     
     def parse_edl path

@@ -23,7 +23,10 @@
 == yes do, un-ordered currently ==
 
   todo.subtitle
-  bounty dvdnav
+  leave in "play from x to y mplayer from DVD" I think :P [more?]
+  what does mplayer do with -ss big_number past the end of an end?
+  Watch...unedited smplayer doesn't play from the right device if you have two :P
+  bounty dvdnav (calendar will ping me)
   get LLC before "real" domain name
   add profanity filter button
   remove some buttons by default ?
