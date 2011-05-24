@@ -16,6 +16,7 @@
 == up next release/very next task: ==
 
   ffmpeg/mencoder timings for splitting files 3595
+make install work again
 can pass in a profanity
 note/include jruby license, include gplv1 et al, note "also included locally"
 get LLC before "real" domain name
@@ -194,7 +195,6 @@ SyntaxError
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
   transcribe the audio of movies? crowd source it? whoa!
-  slim down the gem
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
   @smplayer: why do you sometimes start with subtitles enabled?
