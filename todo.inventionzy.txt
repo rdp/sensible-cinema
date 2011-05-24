@@ -7,8 +7,9 @@
      fix the failing 9 digit test the fancy shmancy way :P
      can pass in a profanity command line
      can handle dual md5's
-     youtube: use the javascript API somehow, like http://universalsubtitles.org/en/
+     youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
        phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
+        just in case youtube takes over the world
  
     4 point editor
     both mute and blank when blanking by default...
@@ -28,7 +29,7 @@
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
     can "control mouse" to drag it to change location
-    blu-ray player descriptor somehow
+    some blu-ray player descriptor somehow
     beep at them/warn when not tracking [?]
       default on...I think.
     can jerk mouse more often closer to failure sections...
@@ -37,14 +38,13 @@
     C player: minimize instead of skip :P
     C player: don't mute, just almost mute LOL or almost mute and static-ify
     can suck it in "in realtime" from online, and parse it, for demo purposes
-    password protect it or whatever, to disallow heavier settings
     a UI to select categories, works
     edited blu ray movie playback screencast, as that's apparently not in the patent...
     don't use timecodes, use "% of the movie" and "total length" perhaps?
     look at their patents for other ideas? [all patents, nissim patents?]
     just pause it, tell them how far to fast forward at that point :P
     have the user forced to tell me what each digit is, themselves :P
-    the online edl stuff itself
+    the online edl stuff itself (its todo list)
     javascript API
       phase 2: I can accomodate for pauses, too.
       phase 3: I can re-train based on events of stoppage
@@ -56,4 +56,4 @@
       stage two: chrome plugin for the same
     editor that can use OCR, too :P
     can insert deleted scenes et al [even external scenes :P]
-  can have user submittable bookmarks, kind of like how espn3 does their playbacks...hmm...
+    can have user submittable bookmarks, kind of like how espn3 does their playbacks...hmm...
