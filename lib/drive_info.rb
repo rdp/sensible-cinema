@@ -43,7 +43,6 @@ class DriveInfo
  end
 
  def self.get_all_drives_as_ostructs
-
   if OS.mac?
     require 'plist'
     a = Dir['/Volumes/*'].map{|dir|
@@ -52,14 +51,14 @@ class DriveInfo
      d2.VolumeName = parsed["VolumeName"]
      d2.Name = dir # DevNode?
      d2.FreeSpace = parsed["FreeSpace"].to_i
+     d2.Description = parsed['Description'] # work ??
      d2
     }
-    p a
     a
   else
     require 'ruby-wmi'
     disks = WMI::Win32_LogicalDisk.find(:all)
-    disks.map{|d| d2 = OpenStruct.new; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2.FreeSpace = d.FreeSpace.to_i; d2} 
+    disks.map{|d| d2 = OpenStruct.new; d2.Description = d.Description; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2.FreeSpace = d.FreeSpace.to_i; d2} 
   end
  end
 
