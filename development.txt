@@ -22,7 +22,9 @@ Note: you transfer (c) to copyrighted published of sensible cinema when you subm
 
 Note that there are batch files to run it in normal, create, and "realtime OCR track" mode.
 
-We welcome all feedback/contribution :)
+Note that, in order to run the unit tests, you'll want to checkout the source from the repository to get all the test images.
+
+All feedback/contribution welcome :)
 
 == Advanced Usage ==
 
