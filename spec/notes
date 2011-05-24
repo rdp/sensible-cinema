@@ -1,4 +1,7 @@
+using ffmpeg/mencoder against handbrake, they seemed to be a few seconds forward I think...sigh...
 
+at 1:44 or so I seemed about 6s ahead. yup yup.
+  at end, I had like 1:53:20'ish'ish [?] (ok probably like 1:53:11 but who knows for sure :P)
 
 TODO: convert VLC, mplayers to i-framers, see if they're the same frame-wise (avidemux?).  Then run ffmpeg, mencoder against them again to split (the i's).
   also try the parsers on the...handbrake fella somehow? avidemux?
