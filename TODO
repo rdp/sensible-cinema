@@ -17,6 +17,7 @@
 
   ffmpeg/mencoder timings for splitting files 3595
 can pass in a profanity
+note/include jruby license, include gplv1 et al, note "also included locally"
 get LLC before "real" domain name
 for mplayer realtime it needs to start earlier, end on time
 butt
