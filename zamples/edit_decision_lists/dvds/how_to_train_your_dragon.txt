@@ -24,5 +24,5 @@
 "disk_unique_id" => "60c64d18ce76f8b14eae852a1c7d8c7f",
 
 "dvd_title_track" => "9", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
-"not edited out stuff" => "breast helmet, butt, undies, heckheim's gate, what the eff [feel free to add them in]",
-"mplayer_dvd_splits" => [], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
+"not edited out stuff" => "breast helmet, butt, undies, heckheim's gate, what the eff [feel free to add them]",
+"mplayer_dvd_splits" => [], # none
