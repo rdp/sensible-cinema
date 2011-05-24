@@ -4,7 +4,7 @@ You can test the program out out by (on windows) installing daemon tools, then m
 Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against (a slightly more cross platform approach).
 
 There are some demo DVD ISO's for development in 
-rogerdpack.t28.net/sensible-cinema/releases/dvd_isos (my own DVD, I release it under the CC license, as well as some
+http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos (my own DVD, I release it under the CC license, as well as some
 other CC released licensed DVD's).
 
 You should be able to run the program and test it out against said DVD, put it through its paces to demo it, etc.

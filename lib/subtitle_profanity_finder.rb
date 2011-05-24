@@ -67,7 +67,7 @@ profanities.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECAS
 
 incoming = File.read(ARGV[0])
 
-
+found_any = false
 
 for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^\d+$/m)
 
@@ -77,6 +77,7 @@ for profanity, sanitized in profanities
   # or 'un...ly' ?
   
   if glop =~ profanity
+    found_any = true
     timing = glop.split("\n").first.strip
     timing =~ /(\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d)/
     # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
@@ -88,11 +89,4 @@ end
 
 end
 
-
-
-
-
-
-
-
-
+p 'no profanity detected' unless found_any

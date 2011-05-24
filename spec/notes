@@ -1,12 +1,17 @@
-using ffmpeg/mencoder against handbrake, they seemed to be a few seconds forward I think...sigh...
+
+== timing dvd versus clock time: ==
 
 at 1:44 or so I seemed about 6s ahead. yup yup.
   at end, I had like 1:53:20'ish'ish [?] (ok probably like 1:53:11 but who knows for sure :P)
 
-TODO: convert VLC, mplayers to i-framers, see if they're the same frame-wise (avidemux?).  Then run ffmpeg, mencoder against them again to split (the i's).
-  also try the parsers on the...handbrake fella somehow? avidemux?
-
-mplayer1 mencoder.dvdout.8.mpg had timing that was totally wrong/unseekable
+== using handbrake's file for splitting ==
+using ffmpeg/mencoder against handbrake, they seemed to be a few seconds forward I think...sigh...
+  TODO figure out how to use handbrake, if I ever need to <sigh> it's almost user friendly, dang!
+  TODO try the parsers on the...handbrake fella somehow? avidemux?
+  maybe convert to mpeg or something?
+  maybe handbrake is "reading my mind" time-wise and inserting 30fps timestamps on each frame?
+  
+mplayer1 to play mencoder.dvdout.8.mpg had timing that was totally wrong/unseekable
 mencoder.dvdoutmplayer.mpg was unseekable in avidemux
 [-5,5]
 1.301 for change of scene for ffmpegdvdout.8.mpeg, ffmpegdvdoutmplayer.mpg
@@ -14,8 +19,7 @@ mencoder.dvdoutmplayer.mpg was unseekable in avidemux
 
 that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
 
-blu sub:
-
+== blu sub versus dvd ==
 
 865
 01:28:47,322 --> 01:28:48,864
@@ -145,8 +149,12 @@ OSOH:
     1:00:00 once wa[a]s lost 
     
   VLC reading OSOH from handbrake m4v:
-    1:00:00 I once w[a]s lost but now --- I once [w]as lost but now am found
+    1:00:00 I once w[a]s lost but now --- I once [w]as lost but now am found -- I once wa[a]s lost
+       [pretty close to 29.97, maybe within GUI incosistency consistency]
     1:53:11 sum [?] (accurate with mplayer!)
+  
+  VLC reading OSOH from handbrake m4v after an "oac straight copy" from ffmpeg:
+    I once wa[a]s lost
   
   smplayer from DVDD:
       1:00:00 I once was [l]ost but now
