@@ -78,4 +78,6 @@ See also the README text file which contains some invention related notes.
 [2] http://www.videolan.org/legal.html
 [3] http://www.macworld.com/article/150731/2010/04/dvdripping_faqs.html
 
-note also http://en.wikipedia.org/wiki/DVD_Decrypter
+note also http://en.wikipedia.org/wiki/DVD_Decrypter for some legal interesting quotes.
+
+Also note that this project was done under the gplv3 in Roger's jurisdiction, not a product of anybody else, his is the only copyright.

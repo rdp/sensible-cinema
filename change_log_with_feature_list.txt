@@ -1,8 +1,10 @@
 == ==
 
 Add profanity subtitle auto-parser-generator, which can parse .srt's, extract timestamps, look for profanity.  also make it "optional" for specific profanities. (offline analyzer, doesn't include auto-OCR or what not)
+This was inspired by the python program, and also an email'ed program to me that did this in C# with XBMC/mplayer EDL syntax.
 
 Note well that avidemux can extract subtitles from tracks (example: from DVD) through training it on character recognition (trainable), and parses it out for you appropriately.  It's a separate, unrelated open source project.  Note also that VLC and other players can overlay arbitrary .srt subtitles over movies, and also they can display DVD subtitles correctly.  See also the python movie content editor.  Also note that several programs can just use normal OCR to extract .srt's from subtitle overlays/tracks.
+
 
 
 == 0.21.9 == (released same day as 0.21.8 to try to clarify quickly)

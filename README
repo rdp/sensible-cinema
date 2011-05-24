@@ -25,9 +25,11 @@ Also note that just because an edited video lacks profanity...does not immediate
 I'd suggest carefully evaluating your motives, and going with those.
 Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not wholesome! Be nice to yourself!
 
-dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].  
-Also note that even if you have an edited copy of a DVD floating around, if you have kids, chances are they
-will eventually find (and watch) the unedited originals, so be careful there, and do what is needed.
+dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].
+kids-in-mind.com is also a good reference for profanity levels, though sometimes it misses *glaring* profanities,
+and it also lacks timestamps to know when the profanities occur.
+Also note that even if you happen to have an edited copy of a DVD floating around, if you have kids, chances are they
+will eventually find (and watch) the unedited originals, so be careful there.
 
 Enjoy your movies!
 
@@ -102,18 +104,20 @@ Clearplay also has little community collaboration/review (though you can email t
 They also don't have filters for all movies that I, at times, would like to watch edited (Condorman and Tron
 lacking last time I checked...probably because they are too
 obscure.) So if there isn't one, you basically have to request one and then *hope* they ever get around to it.
+Also they might never get around to it.
 Also, some people watch movies only on computer, and they
 no longer seem to offer a computer player, only hardware DVD players.  They also don't edit streamed
-online movies either (last time I checked, anyway), nor offer a blu-ray player.  So overall I
-wanted to build my own that overcame some of these hurdles.
+online movies either (last time I checked, anyway), nor offer a blu-ray player.  
 I also emailed them once (2003?) to inform them I'd be making an open source
 equivalent, and haven't heard back, which I assume to mean implicitly
-they're all for it :)
-Also no blu ray player support that I know of.
-Also clearplay isn't quite flexible enough, editing out only profanity/sex/violence et al.  Some users may want to,
-for example, skip the intro to specific movies (read: older movies with long songs and no content during the intro) because...it's deemed boring.  Clearplay 
-does not allow for that.  
+they're all for it :)  Also no blu ray player support that I know of.
+Also clearplay isn't quite flexible enough, editing out only profanity/sex/violence et al (and based
+only on their own criteria).  Some users may want to,
+for example, skip the intro to specific movies (read: older movies with long songs and no 
+content during the intro) because...it's deemed boring.  Clearplay does not allow for that.  
 Also clearplay doesn't seem to users for example leave comments on their filters, to improve them.
+
+So overall I wanted to build my own that overcame some of these hurdles, hopefully.
 
 I also wanted to get a prototype out there of some of these ideas so that
 others can't later patent them and pretend that they were first inventors later :)
@@ -129,13 +133,14 @@ others can't later patent them and pretend that they were first inventors later 
 
 == Overly Verbose History ==
 
-It was preceded/inspired by EDL's in the 90's, cleanflicks (both analog and digital incantations late 90's), 
+It was preceded/inspired by EDL's in editors in the 90's, cleanflicks (both analog and digital incantations late 90's), 
 then mplayer had EDL support, zoomplayer added a scene-cut editor, http://code.google.com/p/movie-content-editor came along, the many
 other editors that support EDL for content creation and/or playback (see wikipedia for "edit decision list"),
-mythtv/XBMC's EDL support, and VLC added playlists with optional start and stop positions per entry.
+mythtv/XBMC's EDL support (as suggested by the phantom edit [1], oreillynet.com), 
+and VLC added playlists with optional start and stop positions per entry.
 I knew the right elements were ready for sensible cinema.
 
-See also the "related" section.
+See also the "related" section, and "motivation"
 
 Originally the project started as a prototype to "watch hulu (online) and netflix instant movies
 edited" (it uses/used screen snap-shotting and tracks, using OCR of the on-screen
@@ -160,6 +165,8 @@ for VLC playbacks.
 You can see a full list of other features that have been published and demonstrated
 in the accompanying change_log_with_feature_list.txt.  Each feature works in some released version of sensible-cinema
 though some features are absent in later versions.
+
+[1] http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html
 
 == License ==
 
@@ -260,3 +267,5 @@ Mailing List: http://groups.google.com/group/sensible-cinema
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
 See development.txt / github.com/rdp
+
+If you want to donate something, please donate to your local charity, this one is free of charge.

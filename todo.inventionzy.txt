@@ -5,7 +5,9 @@
      cheap minimize via (probably foreground window + API real windows API) 
      url -> url inference [hopefully this is cake...]
      fix the failing 9 digit test the fancy shmancy way :P
-      
+     can pass in a profanity command line
+     can handle dual md5's
+ 
     4 point editor
     both mute and blank when blanking by default...
     manual select which to include into an EDL

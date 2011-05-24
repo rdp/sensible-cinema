@@ -18,48 +18,30 @@
   edit this todo list all of it
   high prio patents
   make install work again
+  package curl [?] with its own license
   
 == yes do, un-ordered currently ==
 
-can pass in a profanity command line
-note "others are released under this license, that license"
-note/include jruby license, include gplv1 et al, note "also included locally"
-get LLC before "real" domain name
-for mplayer realtime it needs to start early, but end on time
-butt
-details [auto from subs, allow web]
-"you google it" (EDL that is)
-fix dvdnav?
-force them to have a DVD in the drive :P
-mplayer instructions are obscured
-can handle dual md5's
-  tell them "exactly how to make super specific" cuts
-  
-  "enter name for new dvd" guess at a good name _
+  todo.subtitle
+  bounty dvdnav
+  get LLC before "real" domain name
+  add profanity filter button
+  remove some buttons by default [?]
+  force them to have a DVD in the drive :P
+  "enter name for new dvd" guess at a good name
   not "example" more for each line, or maybe just fill in with 00's?
-  note that other guy's profanity fella
-  mplayer EDL allow 
-got fatal exception in button
-detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
-SyntaxError
-  research the gplv3, add terms. Maybe want real lawyer, even?
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
+    me try my copy
   try disney digital copy/amazon library "local download"
   figure out handbrake use for splitting
   blu ray timing
-  another pass on verbiage readme, legal, etc.
   legal:
-    "don't do it"
      rename the file to is_it_legal_to_copy_dvds, reference it
     "we know x, y are not l..."
-  "sorry, cannot run without...."
-  add a "non work sponsored" note
-  agree to abide, shouldn't in the US [?]
+    agree to abide, shouldn't in the US [?]
   make it not die if you have no DVD in there yet when you click...
   un-paranoid note
-  note "inspired by the phantom edit.." too?
-  package curl [?] with its own license
   # "closing thoughts" => "still a fairly dark movie, overall", smallify this line
   use DVD navigator?
     wow terrifying...
@@ -80,27 +62,22 @@ SyntaxError
     note pay for XP, or possibly re-install DVD player from installation CD from
     dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
     note to them: use ac3filter
-  check if md5 same mac versus PC, VLC done several times/fix too
-  clearplay: 
-    too slow, too, with new EDL's
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-  note it is legal at least for free movies
-  accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
+    
   do open_edl_list_org_todo.txt file
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
-  @legal: one way is probably legal...
-  create an EDL: 10 commandments DVD to skip the intro music LOL
-  by default add: DVD title, english descriptive title [prompt?]
+  create this EDL: 10 commandments DVD to skip the intro music LOL
+  by default add: DVD title, english descriptive title [prompt for english]
   note legal: maybe using DVD-R is sometimes ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
+    apparently copying DVD's to DVD-R is in itself no illegal.
   the fake blanker EDL doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate menumeter $
-  just reference their copy of gplv1 etc.
-  create local new DL's to a separate, new folder
+  just reference their (non local) copy of gplv1 etc.
+  create local new DL's to a separate, different folder
   that one button is broken...play with [s]mplayer unedited [?]
   tool tips for all buttons...tweak naming, too :P do something!
-  it should clear smplayer options on startup always, just in case
   the "play DVD with smplayer unedited" prompts for delete list x2
   fix the "play previously credited edited file for current DVD" button
   vendorize smplayer * 2
@@ -108,36 +85,58 @@ SyntaxError
     be able to use smplayer, never just mplayer [yikes]
   note to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation 
-  fast preview: change it to be aggressive sometimes yes, other times no
   beta release: rinse and repeat with various ppl
-    actually, just use sourceforge for hosting...maybe google SEO friendly :) ???
-  fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
-  fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
+  switch to using sourceforge for hosting...
   youtube videos -> new account name
   propaganda-ize (file)
-  vendorize a copy of ffmpeg, then they don't have to install imagemagick...maybe say "accept the terms of the licenses"
-  mplayer EDL while grabbing, from grabbed :P
+  vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe
   note "pay us/somebody to do it for you on the google group"?
   note "this is the full list--your help is wanted/needed"
-  create a semi-accurate phantom edit EDL copy
+  create a semi-accurate phantom edit EDL
+    http://www.chefelf.com/forums/index.php?showtopic=6176
   calculating disk's unique id... -> have it note on gui...
   don't exit program if they don't select a disk originally :)  if they cancel out of "Please pick a DVD Delete list file"
-  note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
-  auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   tell them "you can open the file for more specific timestamps via microsoft DVD creator" or whatever it is.
+  would mplayer OSD on screen display be useful?
+  in reality all local editing things can go?
+  re-run with test DVD's
+  another full pass on verbiage readme, legal, etc.
 
 == DVD decide later to move up or down ==
 
+  the "frame accurate" splitter
+
+== DVD realtime backlog yes do, unordered ==
+
+  for mplayer realtime it needs to start early, but end on time
+  mplayer instructions are obscured
+  mplayer EDL allow 
+    got fatal exception in button
+    detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
+    SyntaxError
+  accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
+  it should clear old smplayer options on startup always, just in case, somehow
+  fast preview: change it to be aggressive sometimes yes, other times no
+  fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
+  fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
+  mplayer EDL while grabbing, from grabbed :P
+  auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   force them to use my bundled mplayer version (currently it doesn't install to vendor/cache if you have an mplayer in the path, then fails to start mplayer)
+    ideal would be use smplayer with my mplayer
+  note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  fix dvdnav?
+  research the gplv3, add terms. Maybe want real lawyer, even?
+  note "others are released under this license, that license"
+  note/include jruby license, include gplv1 et al, note "also included locally"
+  check if md5 same mac versus PC for VLC/mplayer rips, VLC done several times/fix too
   figure out how to fix avidemux being like...still barely off frame-rate wise hmm...
     bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
   check if opening in MS editor is 29.97 or not
   disallow choosing empty drive? fail more gracefully when they do?
   investigate: can I use the zoomplayer max?
-  would mplayer OSD on screen display be useful?
   sons of provo "music video"
   finish monsters inc. fella
   it can "slow certain sections down" that looks cool! :)
@@ -151,7 +150,6 @@ SyntaxError
   If I use VLC, does cacheing help CPU/disk grabbing? 
     http://www.howtogeek.com/howto/windows/fix-for-vlc-skipping-and-lagging-playing-high-def-video-files/
     update VLC forum if so
-  donate to some charity or other!
   can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
   force an install of VLC, too
   todo.subtitle file
@@ -296,8 +294,6 @@ make it so it can have different volume settings, like low volume instead of jus
 DVD's: right click on DVD player, play with SC
 an auto-check for "newer version available" automagically not...
 warn when labels both exist but don't match...
-
-ISO copy, then scratch out appropriate bits?
 
 @avidemux: don't shtink with DVD files: http://ubuntuforums.org/showthread.php?p=10822953#post10822953
 

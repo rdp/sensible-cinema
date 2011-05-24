@@ -1,8 +1,16 @@
 (profanity parsing stuff is in other todo)
+tell them "exactly how to make super specific" cuts
 
+tell them how to "grab"
+
+allow for "details" on entry uh guess...
 
 this file also includes EDL creationzy stuffs
 
+can accept in miriad time signatures
+
+"realtime? you google it" (EDL that is)
+  here's a hint: mplayer stops might be useful to you ??
 
 cross-over stuff:
   can sync the whole thing package
@@ -12,8 +20,6 @@ cross-over stuff:
 do research auto-subtitler MD5 they use for dvd's what is it?  Is there any standard? Anyone? what about sorting the ifo's is that reasonably close to how they naturally come/match other guy?
 
 eventually be like DVD profiler (imdb, kids in mind, UPC, images, maybe more?)
-
-perfect the frame accurate splitter...is it fast enough in ruby, too?
 
 wikipedia realtime
 
