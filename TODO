@@ -67,7 +67,6 @@ SyntaxError
   note no CP blu-ray, history was "first mplayer had EDL support, then the python guy, this builds on their work" (and mention VLC too)
   make it not die if you have no DVD in there yet when you click...
   un-paranoid note
-  note in changelog: avidemux [auto-trainable, usable...]
   note "inspired by the phantom edit.." too?
   package curl [?] with its own license
   # "closing thoughts" => "still a fairly dark movie, overall", smallify this line
