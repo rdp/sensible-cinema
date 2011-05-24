@@ -1,6 +1,8 @@
 == ==
 
-Add profanity subtitle auto-generator, also make it "optional" for specific profanities.
+Add profanity subtitle auto-generator, also make it "optional" for specific profanities. (offline analyzer, doesn't include auto-OCR or what not)
+
+Note well that avidemux can extract subtitles from tracks (example: from DVD) through training it on character recognition, and it parses it out for you.  It's a separate, unrelated open source project.  Note also that VLC and other players can overlay arbitrary .srt subtitles over movies, and also they can display DVD subtitles correctly.  See also the python movie content editor.
 
 
 == 0.21.9 == (released same day as 0.21.8 to try to clarify quickly)
