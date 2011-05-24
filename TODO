@@ -1,4 +1,4 @@
-== roadmap ==
+== roadmap [for tasks, see below though] ==
 
   release: cheap inventionzy
   release: C EDL+specific portion player
@@ -15,15 +15,22 @@
   
 == up next release/very next task: ==
 
+  ffmpeg/mencoder timings for splitting files 3595
 can pass in a profanity
+note/include jruby license, include gplv1 et al, note "also included locally"
 get LLC before "real" domain name
 for mplayer realtime it needs to start earlier, end on time
 butt
+details [auto from subs, allow web]
+"you google it" (EDL)
+fix dvdnav?
+eff
+force them to have a DVD in the drive :P
 minimize crash
-
+mplayer instructions are obscured
+can handle dual md5's
 blog dark, blog other
   high prio patents
-  ffmpeg/mencoder timings for splitting files
   time a movie using a 'real' DVD player--which one is accurate by the end, anyway?
   
 == yes do, un-ordered currently ==
@@ -82,6 +89,7 @@ SyntaxError
         can come out of full screen more easily :P
     note pay for XP, or possibly re-install DVD player from installation CD from
     dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
+    note to them: use ac3filter
   check if md5 same mac versus PC, VLC done several times/fix too
   clearplay: more expensive than normal players, thus less useful, subscription model not fit for casual movie viewers, or poor movie viewers,
     too slow, too, with new EDL's
@@ -133,7 +141,11 @@ SyntaxError
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+<<<<<<< HEAD
+  bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
+=======
   check if opening in MS editor is 29.97 or not
+>>>>>>> b2ba2885ab2ad8b77e02c85d12ef298229e36031
   disallow choosing empty drive? fail more gracefully when they do?
   investigate: can I use the zoomplayer max?
   would mplayer OSD on screen display be useful?
@@ -142,6 +154,7 @@ SyntaxError
   it can "slow certain sections down" that looks cool! :)
   XP timings with cineplayer [osoh, jonah]
   how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
+    also xbmc has a plugin
   script powerdvd?
   VLC: make some more bounties: per file save location at least, anything else [check for suggestions]
     also suggest uservoice ?

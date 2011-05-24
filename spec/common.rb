@@ -16,12 +16,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 require 'rubygems'
-begin
-  require 'rspec' # rspec2
-rescue LoadError
-  require 'spec' # rspec1
-  require 'spec/autorun'
-end
+require 'rspec' # rspec2
 
 # some useful utilities...
 
@@ -44,7 +39,7 @@ begin
     end
   }
 rescue LoadError
-  if RUBY_PLATFORM =~ /java/
+  if OS.java?
     Benchmark.module_eval {
       def self.realtime
         beginy = java.lang.System.nano_time
@@ -65,6 +60,8 @@ end
 
 require 'ffi'
 
+if OS.windows?
+  # I guess they all don't need this...
 module GetPid
   extend FFI::Library
   ffi_lib 'user32', 'kernel32'
@@ -79,4 +76,6 @@ module GetPid
     out.get_uint32(0) # read_uint
   end
   
+end
+
 end

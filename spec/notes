@@ -1,3 +1,16 @@
+
+
+TODO: convert VLC, mplayers to i-framers, see if they're the same frame-wise (avidemux?).  Then run ffmpeg, mencoder against them again to split (the i's).
+  also try the parsers on the...handbrake fella somehow? avidemux?
+
+mplayer1 mencoder.dvdout.8.mpg had timing that was totally wrong/unseekable
+mencoder.dvdoutmplayer.mpg was unseekable in avidemux
+[-5,5]
+1.301 for change of scene for ffmpegdvdout.8.mpeg, ffmpegdvdoutmplayer.mpg
+2.102 for change of scene ffmpeg.mencoder.dvdoutmplayer.mpg
+
+that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
+
 blu sub:
 
 
@@ -20,10 +33,9 @@ dvd subs:
 01:28:50,205 --> 01:28:51,604
 <i>...dragons.</i>
 
+0.3 off?
 
-0.7 off?
-
-how to train dragon DVD srt right on with mplayer 29.97
+how to train dragon DVD srt right on with mplayer DVD 29.97
 
 avidemux barely off lips:
   mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
@@ -66,16 +78,14 @@ are all windows GUI wrapper players internally incosistent, except maybe VLC whi
 
 OSOH:
 
-  mplayer.exe new dvdoutmplayer.mpg:
+  mplayer.exe2 dvdoutmplayer.mpg:
     1:00:00 I once [w]as lost but now
 
   some mplayer.exe's may have been  Sherpya-SVN-r33216-4.2.5
     versus Sherpya-SVN-r30369-4.2.5 for smplayer
     they seem pretty close though...
 
-  TODO mencoder splits versus ffmpeg on these ? +- vlc versus mplayer grabs...hmm...except we want GOP friendly...
-
-  smplayer's mplayer.exe on mplayer file:
+    smplayer's mplayer.exe on mplayer file:
     1:00:00 I once [w]as lost but now
 
   smplayer's mplayer.exe on VLC file:
@@ -272,7 +282,7 @@ wmp windows 7: [wmp feels slightly unstable timing-wise]
   30:  yes []well --- yes well[]
   45:  turns [to his right] --- turns to his right[]
   
-TODO jonah blu ray timings windows 7
+LODO jonah blu ray timings
 
 netflix jonah
 
