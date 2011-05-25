@@ -17,20 +17,19 @@
 
   edit this todo list all of it
   high prio patents
-  make install work again
-    package curl [?]
   
 == yes do, un-ordered currently ==
 
+  make install work again
+    package curl [?]
   todo.subtitle
   leave in "play from x to y mplayer from DVD" I think :P [more?]
-  what does mplayer do with -ss big_number past the end of an end?
-  Watch...unedited smplayer doesn't play from the right device if you have two :P
-  bounty dvdnav (calendar will ping me)
+  what does mplayer do with -ss big_number past the end of an end [monster's inc]?
+  Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before "real" domain name
-  add profanity filter button
+  add profanity filter this file button
   remove some buttons by default ?
-  force them to have a DVD in the drive :P
+  always force them to have a DVD in the drive :P
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try my copy
@@ -125,9 +124,13 @@
   force them to use my bundled mplayer version (currently it doesn't install to vendor/cache if you have an mplayer in the path, then fails to start mplayer)
     ideal would be use smplayer with my mplayer
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
+  @VLC you lop off the end, somehow, I guess...
 
 == DVD backlog (totally unordered, some very low prio, basically all never do) ==
 
+  bounty dvdnav (calendar will ping me)
+  @mencoder you lop off the end somehow
+  @VLC convert -> dump raw always displays--expected? also saves nothing?
   fix dvdnav?
   research the gplv3, add terms. Maybe want real lawyer, even?
   note "others are released under this license, that license"

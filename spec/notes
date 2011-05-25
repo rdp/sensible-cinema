@@ -1,3 +1,98 @@
+== VLC ripper ==
+
+Can't figure out the gui at all, files are always blank or not there? yipes.
+Looks like dvdsimple still uses dvdnav so we should be all right with dvdsimple I think.
+
+== ripping sintel ==
+
+conclusions:
+  VLC cuts off the end, it appears
+  mencoder seems a bit trippy, also cuts off the end [?] huh?
+
+using mencoder for raw copying seems...to not work so well.  Maybe it was warning me how cruddy it is.
+  it's either mplayer or VLC uh guess. I think.
+
+vlc dvdsimple.1
+  avidemux:
+    26607 frames
+    sum 14:47.787 [bizarre]
+    sound is on
+    voice 14:33
+    seems to go through to the end
+  vlc to play:
+    no timing info, seems to go through to the end
+    
+vlc dvdsimple.2
+  avidemux:
+    26607 frames
+    sum 14:47.787
+    "t" 14:39
+
+mencoder dvd/dvdnav has *tons* of 
+  ERROR: scr 137.884, dts 0.000, pts 137.022
+
+  1 duplicate frames(s)!
+  Post: 321.7s 1000f... [normal status line]
+
+  at least it says "success" at the end yipes. Yiperipers mencoder.
+
+mencoder.dvd when replayed with WMP had messed up audio, same with mencoder.dvdnav
+
+mplayer dvd played fine with WMP
+
+sintel has 3F2R/LFE audio
+
+dvdout.mencoder.straight-copy.dvd
+  avidemux ends too early 13:26 huh?
+    switching to 24fps doesn't help...
+    24180 frames
+    audio is in perfect sync
+    avidemux doesn't show as much of the end as VLC does huh?
+  in VLC has no sound at the end ** loses end **
+    ends early still, just cuts out at 14:47
+    "your voice" at 14:33
+  
+dvdout.mencoder.dvdnav
+  avidemux 13:54
+  25005 frames
+  I will be listening for the drum...
+
+dvdout.mplayer.dvd
+  avidemux:
+    27030 frames
+    15:01.901s
+    "voice" 14:33
+  vlc
+    "voice" 14:33
+    15:01
+  ffmpeg
+     Duration: 00:15:01.63, start: 0.300300 (like 15:01.93?)
+
+dvdout.mplayer.dvd.full.2
+  avidemux 27030, 15:01.901
+
+dvdout.mplayer.dvdnav.2
+  avidemux 
+    27030, 00:15:01.901
+    "voice" 14:33
+
+sintel_open_source.fulli_unedited.tmp.mpg
+  avidemux
+    26607 frames, 14:47 (is complete)
+    audio is absolutely off
+  VLC
+    audio is on
+    total 14:47 (complete ?)
+    your voice 14:33
+    what the....it's on but then too short but it's not?
+      guess is it's "ok" but indexed poorly somehow...
+      this is ridiculous
+    
+
+maybe I need to reindex them or something?
+
+mplayer rip's seem to be md5 consistent, with dvd and dvdnav (and slightly different)
+
 
 == timing dvd versus clock time: ==
 
