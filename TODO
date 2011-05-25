@@ -41,37 +41,30 @@
     "we know x, y are not l..."
     agree to abide, shouldn't in the US [?]
   make it not die if you have no DVD in there yet when you click...
-  un-paranoid note
-  # "closing thoughts" => "still a fairly dark movie, overall", smallify this line
-  use DVD navigator?
+  C player:
+    use DVD navigator
     wow terrifying...
-    just use mplayer EDL stuff, plus title :)
+    just use mplayer EDL syntax, plus title track :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
-      after done: 
+      after done:
         note we don't always use libdvdcss in the legal
-        add new button for it LOL
     allow it to "just play from X to Y exactly" ...
     does this line up right? can it work, at all?
       lodo:
         update its semi-bad error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
-    note pay for XP, or possibly re-install a DVD player from installation CD might work.
-    dvd drive/new computer http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for cheapest
+    note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter
   if it doesn't parse it loops *forever* "error pooping" "error pooping"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-    
   do open_edl_list_org_todo.txt file
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   create this EDL: 10 commandments DVD to skip the intro music LOL
-  by default add: DVD title, english descriptive title [prompt for english]
-  note legal: maybe using DVD-R is sometimes ok? http://www.amazon.com/TRY-Grace-Farah/dp/B001KVZGCA/ref=sr_1_2?ie=UTF8&qid=1304366946&sr=8-2
-    apparently copying DVD's to DVD-R is in itself no illegal.
-  the fake blanker EDL doesn't work if title is off [real fix: add another button "just watch the thing" even for real users?]
+  the fake blanker EDL doesn't work well... [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate menumeter $
   just reference their (non local) copy of gplv1 etc.
@@ -95,12 +88,11 @@
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
   calculating disk's unique id... -> have it note on gui...
-  don't exit program if they don't select a disk originally :)  if they cancel out of "Please pick a DVD Delete list file"
+  don't exit program if they don't select a disk originally :) e.g. if they cancel out of "Please pick a DVD Delete list file"
   tell them "you can open the file for more specific timestamps via microsoft DVD creator" or whatever it is.
-  would mplayer OSD on screen display be useful?
-  in reality all local editing things can go?
-  re-run with test DVD's
-  another full pass on verbiage readme, legal, etc.
+   mplayer OSD
+  re-run with the test DVD's
+  another full pass on verbiage legal, etc.
 
 == DVD decide later to move up or down ==
 
