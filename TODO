@@ -93,12 +93,13 @@
    mplayer OSD
   re-run with the test DVD's
   another full pass on verbiage legal, etc.
+  frame accurate
 
 == DVD decide later to move up or down ==
 
   the "frame accurate" splitter
 
-== DVD realtime backlog yes do, unordered ==
+== DVD-realtime backlog yes do [?], unordered ==
 
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
@@ -118,7 +119,7 @@
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   @VLC you lop off the end, somehow, I guess...
 
-== DVD backlog (totally unordered, some very low prio, basically all never do) ==
+== DVD/DVD realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
   bounty dvdnav (calendar will ping me)
   @mencoder you lop off the end somehow
