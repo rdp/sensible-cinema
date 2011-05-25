@@ -1,7 +1,11 @@
 (profanity parsing stuff is in other todo)
 tell them "exactly how to make super specific" cuts
 
+use a database internally :P
+
 tell them how to "grab"
+
+"your library" of rippeds with pictures et al LOL
 
 allow for "details" on entry uh guess...
 

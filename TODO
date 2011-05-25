@@ -17,12 +17,18 @@
 
   edit this todo list all of it
   high prio patents
+  ffmpeg gop 1 on handbrake [?]
+    if this works (which it prolly won't) then recommend handbrake
+    else just tell them to use VLC or mplayer <sigh>
+    if so tell them "search handbrake's forum for libdvdcss.dll"
   
 == yes do, un-ordered currently ==
 
+  do I need/want to accomodate for m4v
   make install work again
     package curl [?]
   todo.subtitle
+  add button "play from here to here"
   leave in "play from x to y mplayer from DVD" I think :P [more?]
   what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
@@ -63,7 +69,7 @@
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
   do open_edl_list_org_todo.txt file
   @legal: requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
-  create this EDL: 10 commandments DVD to skip the intro music LOL
+  create the following EDL: 10 commandments DVD to skip the intro music LOL
   the fake blanker EDL doesn't work well... [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate menumeter $
@@ -71,11 +77,12 @@
   create local new DL's to a separate, different folder
   that one button is broken...play with [s]mplayer unedited [?]
   tool tips for all buttons...tweak naming, too :P do something!
-  the "play DVD with smplayer unedited" prompts for delete list x2
+  the "play DVD with smplayer unedited" prompts for delete list
   fix the "play previously credited edited file for current DVD" button
   vendorize smplayer * 2
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
+    apparently just using webdl is like r30369 yipers
   note to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
   beta release: rinse and repeat with various ppl
@@ -89,15 +96,17 @@
     http://www.chefelf.com/forums/index.php?showtopic=6176
   calculating disk's unique id... -> have it note on gui...
   don't exit program if they don't select a disk originally :) e.g. if they cancel out of "Please pick a DVD Delete list file"
-  tell them "you can open the file for more specific timestamps via microsoft DVD creator" or whatever it is.
-   mplayer OSD
+  tell them "you can open the file for more specific editing accuracy of timestamps via microsoft DVD creator" or whatever it is.
+  mplayer OSD
   re-run with the test DVD's
   another full pass on verbiage legal, etc.
   frame accurate
+  better md5
 
 == DVD decide later to move up or down ==
 
   the "frame accurate" splitter
+    sounds like I want to move in that direction, esp. if handbrake ends up being sane
 
 == DVD-realtime backlog yes do [?], unordered ==
 
@@ -293,6 +302,8 @@ an auto-check for "newer version available" automagically not...
 warn when labels both exist but don't match...
 
 @avidemux: don't shtink with DVD files: http://ubuntuforums.org/showthread.php?p=10822953#post10822953
+@mplayer warn before overwrite
+@mplayer you cannot convert mkv files correctly you silly!
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 

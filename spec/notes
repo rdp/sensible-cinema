@@ -1,6 +1,6 @@
-== VLC ripper ==
+== VLC as a ripper ==
 
-Can't figure out the gui at all, files are always blank or not there? yipes.
+Can't figure out how to use the gui at all, files are always blank or not there? yipes.
 Looks like dvdsimple still uses dvdnav so we should be all right with dvdsimple I think.
 
 == ripping sintel ==
@@ -86,24 +86,26 @@ sintel_open_source.fulli_unedited.tmp.mpg
     your voice 14:33
     what the....it's on but then too short but it's not?
       guess is it's "ok" but indexed poorly somehow...
-      this is ridiculous
-    
+      this is ridiculous    
 
 maybe I need to reindex them or something?
 
 mplayer rip's seem to be md5 consistent, with dvd and dvdnav (and slightly different)
 
+== timing dvd player time versus clock time: ==
 
-== timing dvd versus clock time: ==
-
-at 1:44 or so I seemed about 6s ahead. yup yup.
+at 1:44:00 or so I seemed about 6s ahead. yup yup.
   at end, I had like 1:53:20'ish'ish [?] (ok probably like 1:53:11 but who knows for sure :P)
 
+appears that 29.97 is closer to "wall clock time" and DVD players tell you 1:00:00 when it has taken you 1:00:04 in reality.
+  at 1:00:00 wristwatch was about 4s ahead
+
 == using handbrake's file for splitting ==
+
 using ffmpeg/mencoder against handbrake, they seemed to be a few seconds forward I think...sigh...
   TODO figure out how to use handbrake, if I ever need to <sigh> it's almost user friendly, dang!
   TODO try the parsers on the...handbrake fella somehow? avidemux?
-  maybe convert to mpeg or something?
+  maybe convert to mpeg or something +- GOP 1
   maybe handbrake is "reading my mind" time-wise and inserting 30fps timestamps on each frame?
   
 mplayer1 to play mencoder.dvdout.8.mpg had timing that was totally wrong/unseekable
@@ -139,13 +141,35 @@ dvd subs:
 
 how to train dragon DVD srt right on with mplayer DVD 29.97
 
-avidemux barely off lips:
-  mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
-  ffmpeg -i dvdoutmplayer.mpg -sameq yo.mpg took forever, grabbed wrong audio track :P
+== mplayer dvdnav  ==
 
 mplayer os x extended has the same "where am I?" on this DVD problem mplayer has.
 
 monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
+
+== avidemux on ripped files ==
+
+avidemux barely off lips:
+  mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
+  ffmpeg -i dvdoutmplayer.mpg -sameq yo.mpg took forever, grabbed wrong audio track :P
+
+avidemux from "normal" rips are still off frame-rate wise somehow...
+
+  "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
+
+  handbrake file:
+    segfault
+
+avidemux on dvdoutmplayer.mpg
+  sound right on 1:00:00 wa[a]s lost, looks good.
+
+avidemux on mplayer grab:
+  sound ok, lips off
+    
+avidemux on VLC grab:
+  1:00:00 "once wa[a]s lost" audio, video appears messed up lips [looks like they are really grabbing raw data]
+
+== DVD player versus PC player various times ==
 
 DVD player conclusions:
   VLC's are all pretty consistent
@@ -159,26 +183,22 @@ DVD player conclusions:
   VLC grabs it fine
   WMP on handbrake is 29.97
 
-speeds: ffmpeg: vertex 2: 105MB/s old HD desktop 58 MB/s
-
-avidemux from "normal" rips are still off frame-rate wise somehow...
-
-  "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
-
-  handbrake file:
-    segfault
-
-appears that 29.97 is closer to "wall clock time" and DVD players tell you 1:00:00 when it has taken you 1:00:04 in reality.
-  at 1:00:00 wristwatch was about 4s ahead
-  LODO verify by watching through whole film
+speeds: ffmpeg: vertex 2 SSD: 105MB/s old HD desktop 58 MB/s
 
 I wonder if mplayer is just a little bit ahead, or internally inconsistent based on poor seeking for GOP's or some odd...it's either right ahead or right on?
 
 appears smplayer is "like a second" or something behind mplayer, and mplayer doesn't quite agree with VLC but is pretty close, and mplayer.exe seems internally consistent.
 
-are all windows GUI wrapper players internally incosistent, except maybe VLC which is still "a tidge off"?
+are all windows GUI wrapper players internally inconsistent, except maybe VLC which is still itself "a tidge off"?
 
 OSOH:
+
+  VLC on OSOH-handbrake.ffmpeg.full.avi
+    1:00:00 is smoking "up" apex [which looks like "wa[a]s" lost actually...hmm...]
+
+  AviDemux on OSOH-handbrake.ffmpeg.full.avi
+    1:00:00 saved a wretch [like] me (audio is off)
+      video is smoking "up" apex [right]
 
   mplayer.exe2 dvdoutmplayer.mpg:
     1:00:00 I once [w]as lost but now
@@ -207,12 +227,6 @@ OSOH:
 
   smplayer DVD
     1:00:00 once was [lo]st
-
-  avidemux on mplayer grab:
-    sound ok, lips off
-    
-  avidemux on VLC grab:
-    1:00:00 once wa[a]s lost audio, video appears messed up lips [looks like they are really grabbing raw data]
 
   smplayer playing VLC grab:
     lips are in sync 
