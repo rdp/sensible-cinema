@@ -5,9 +5,14 @@ Looks like dvdsimple still uses dvdnav so we should be all right with dvdsimple 
 
 == ripping sintel ==
 
-conclusions:
-  VLC cuts off the end, it appears
+thoughts:
+  VLC cuts off a bit at the end, it appears
   mencoder seems a bit trippy, also cuts off the end [?] huh?
+
+
+vlc Sintel.handbrake.m4v
+  14:33 "voice"
+  15:02 total, got to the "real" end
 
 using mencoder for raw copying seems...to not work so well.  Maybe it was warning me how cruddy it is.
   it's either mplayer or VLC uh guess. I think.

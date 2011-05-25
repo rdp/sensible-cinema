@@ -1,13 +1,16 @@
 All files (c) Roger Pack 2010
 All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed at all.
 
-The edit lists, however are public domain.
+The edit lists, however are creative commons licensed.
 
 Note: may call out to some 3rd party libraries/executables under their own (separate, open source) licenses.
 
 So...is this legal?
 
 Unclear.  In general ripping personal DVD's is legal.
+Note also that if you don't feel it legal in your country, you can still use the timing info to "manually" skip/mute scenes you
+dislike.  Also you may be able to hook up something that does editing in "realtime" while playing it back (see README for related works). 
+
 And making "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under fair use [3] .
 
 It is controversial to use open source software to play/rip commercial DVD's.
