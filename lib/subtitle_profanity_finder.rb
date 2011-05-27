@@ -14,7 +14,14 @@ module SubtitleProfanityFinder
 
 
 
-  def self.output_to_stdout args
+  def self.edl_output args
+
+
+
+
+
+
+
 
 
 
@@ -64,9 +71,6 @@ module SubtitleProfanityFinder
       'breast' => 'br....'
     }
 
-    # sat...
-
-
     incoming = File.read(args.shift)
 
     while args.length > 0
@@ -77,8 +81,7 @@ module SubtitleProfanityFinder
 
     profanities = profanities.to_a.sort.reverse.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
-    found_any = false
-
+    output = ''
     for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^\d+$/m)
 
       for profanity, sanitized in profanities
@@ -87,8 +90,6 @@ module SubtitleProfanityFinder
         # or 'un...ly' ?
 
         if glop =~ profanity
-          found_any = true
-
           # create english-ified version
           # take out timing line, number line
           sanitized_glop = glop.lines.to_a[1..-2].join('')
@@ -106,15 +107,13 @@ module SubtitleProfanityFinder
           timing_line = glop.split("\n").first.strip
           timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
           # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-          puts %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized}", "#{sanitized_glop.strip}",!
+          output += %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized}", "#{sanitized_glop.strip}",\n!
         end
 
       end
 
-
     end
-
-    p 'no profanity detected' unless found_any
+    output
 
   end
 end
@@ -124,6 +123,6 @@ if $0 == __FILE__
     p 'syntax: filename.srt prof1 sanitized_equivalent1 prof2 sanitized_equivalent2'
     exit
   else
-    SubtitleProfanityFinder.output_to_stdout ARGV
+    print SubtitleProfanityFinder.edl_output ARGV
   end
 end
