@@ -228,7 +228,7 @@ module SensibleSwing
       increment_button_location
 
       setSize @button_width+80, @starting_button_y
-      setIconImage(ImageIcon.new(__dir__ + "/monkey.png").getImage())
+      setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
     end
     

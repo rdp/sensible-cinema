@@ -1,3 +1,11 @@
+
+VLC: hard crash when ripping that one DVD...long one, about the constitution...
+
+http://forums.thetvdb.com/viewtopic.php?f=8&t=1726&p=25563#p25563
+  seems to imply that their disc id field is useless...not sure they'll be useful to me at all then...
+  
+http://betterlogic.com/roger/2011/05/opensubtitles-lookup-dvd-subtitles useful :P
+
 == VLC as a ripper ==
 
 Can't figure out how to use the gui at all, files are always blank or not there? yipes.
@@ -203,7 +211,12 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
 
 OSOH:
 
-  VLC on OSOH-handbrake.ffmpeg.full.avi
+  windows movie maker, dvdout.8.vlc.mpg
+    1:00:00 sweet that sound that [s]aved a wretch
+    kinder close to VLC...
+
+
+VLC on OSOH-handbrake.ffmpeg.full.avi
     1:00:00 is smoking "up" apex [which looks like "wa[a]s" lost actually...hmm...]
 
   AviDemux on OSOH-handbrake.ffmpeg.full.avi

@@ -1,7 +1,7 @@
 (profanity parsing stuff is in other todo)
 tell them "exactly how to make super specific" cuts
 
-use a database internally :P
+use a database internally, with raw floats :P
 
 tell them how to "grab"
 
@@ -14,7 +14,8 @@ this file also includes EDL creationzy stuffs
 can accept in miriad time signatures
 
 "realtime? you google it" (EDL that is)
-  here's a hint: mplayer stops might be useful to you ??
+
+maybe can/should interface with themoviedb.org ?
 
 cross-over stuff:
   can sync the whole thing package

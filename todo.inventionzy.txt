@@ -11,6 +11,7 @@
        phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
         just in case youtube takes over the world
  
+    blu-ray OCR
     4 point editor
     both mute and blank when blanking by default...
     manual select which to include into an EDL
