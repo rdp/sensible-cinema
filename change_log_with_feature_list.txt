@@ -1,4 +1,6 @@
-== 0.21.9 ==
+== ==
+
+== 0.21.9 == [gem only release]
 
 Add profanity subtitle auto-parser-generator, which can parse .srt's, extract timestamps, look for profanity.  also make it "optional" for specific profanities. (offline analyzer, doesn't include auto-OCR or what not)
 This was inspired by the python program, and also an email'ed program to me that did this in C# with XBMC/mplayer EDL syntax.

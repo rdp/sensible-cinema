@@ -44,8 +44,11 @@
 
 
 
-profanities = {'hell' => 'heck', 'g' + 
-'o' + 'd' => 'g..', 'lord' => 'lo..', 'da' + 
+profanities = {'hell' => 'heck', 
+  'g' + 
+'o' + 'd' => 'g..', 'go' +
+'d' +
+'s' => 'g...', 'lord' => 'lo..', 'da' + 
 'mn' => 'da..', 'f' + 
  117.chr +
 99.chr + 
@@ -57,16 +60,25 @@ profanities = {'hell' => 'heck', 'g' +
 'tard' => 'ba.....',
 ('a' +
  's'*2) => 'a..',
-'thor' => 'thor', 'odin' => 'odin',
 'breast' => 'br....'
-}.to_a
+}
 
 # sat...
-profanities[:breast] = 'breast' if ARGV[0] == '--with-br'
 
-profanities.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
+if ARGV.empty?
+  p 'syntax: filename.srt prof1 sanitized_equivalent1 prof2 sanitized_equivalent2'
+  exit
+end
 
-incoming = File.read(ARGV[0])
+incoming = File.read(ARGV.shift)
+
+while ARGV.length > 0
+  prof = ARGV.shift
+  sanitized = ARGV.shift
+  profanities[prof] = sanitized  
+end
+
+profanities = profanities.to_a.sort.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
 found_any = false
 
@@ -79,10 +91,21 @@ for profanity, sanitized in profanities
   
   if glop =~ profanity
     found_any = true
-    timing = glop.split("\n").first.strip
-    timing =~ /(\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d)/
+    
+    # create english-ified version
+    # take out timing line, number line
+    sanitized_glop = glop.lines.to_a[1..-2].join('')
+    sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
+    
+    # sanitize
+    for (prof2, sanitized2) in profanities
+      sanitized_glop.gsub!(prof2, sanitized2)
+    end
+    
+    timing_line = glop.split("\n").first.strip
+    timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
     # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-    puts %!"#{$1}.#{$2}" , "#{$3}.#{$4}", "profanity", "#{sanitized}",! 
+    puts %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized}", "#{sanitized_glop.strip}",! 
   end
   
 end
