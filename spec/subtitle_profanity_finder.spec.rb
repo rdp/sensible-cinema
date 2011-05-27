@@ -15,50 +15,17 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
+
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/subtitle_profanity_finder'
+require 'sane'
 
+describe SubtitleProfanityFinder do
 
-describe Mouse do
-
-  it "should move it a couple times" do
-    old = Mouse.total_movements
-    begin
-    Timeout::timeout(2) {
-      Mouse::jitter_forever_in_own_thread.join
-    }
-    rescue Timeout::Error
-    end
-    Mouse.total_movements.should be > old
+  it "should parse out heck" do
+    output = SubtitleProfanityFinder.edl_output ['dragon.srt']
+    output.should include("\"heck\"")
+    output.should include("e heck b") # description
   end
   
-  it "should not move it if the user does" do
-    old = Mouse.total_movements
-    begin
-    Timeout::timeout(2) {
-      Mouse::jitter_forever_in_own_thread
-      x = 1
-      loop {java.awt.Robot.new.mouse_move(500 + (x+=1),500); sleep 0.1; }
-    }
-    rescue Timeout::Error
-    end
-    Mouse.total_movements.should == old + 1
-  end
-  
-  it "should be able to left mouse click" do
-    Mouse.left_mouse_button_state.should be :up
-    Mouse.left_mouse_down!
-    Mouse.left_mouse_button_state.should be :down
-    Mouse.left_mouse_up!
-    Mouse.left_mouse_button_state.should be :up
-  end
-  
-  it "should be able to click" do
-    Mouse.left_mouse_button_state.should be :up
-    Mouse.single_click_left_mouse_button
-    Mouse.left_mouse_up!
-    Mouse.left_mouse_up!
-    Mouse.left_mouse_button_state.should be :up
-  end
-
 end
