@@ -72,6 +72,7 @@ A. You also might be able to move a laptop over to near your TV and hook it in f
   If you're really ambitious and bleeding edge you could even try VGA over an Ethernet cable, too: 
   http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
   You may be able to create your own edited DVD, see section "Creating your own"
+  You may be able to come up with some real-time player editor, too, see LICENSE.TXT
 
 Q. I want to give an edited DVD to a friend, how do I do that well?
 A. Give them the original DVD and a link to sensible-cinema's website so they can download it.
@@ -84,6 +85,9 @@ you could create it yourself, or employ somebody to create it.  Make sure to sub
 back to us when you're done, so that the rest of the users can benefit from it.
 Fortunately just one person has to do it, once, for everybody to benefit, and the 
 editing process is not too bad.
+
+We also have a subtitle parser which really helps locate profanity more conveniently, so that will help you
+build your delete list.
 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off, 
 so we recommend to always clean your discs first!
@@ -254,6 +258,9 @@ You try to play back a sensible cinema-ized video file and it plays back without
    and, when it gives you the option, be sure to check "mpeg2 video" and then
    it should "just work."  You could also optionally just play the file in VLC Media Player or smplayer
    (there's a button for that).  Installing "AC3Filter" may help if you have no audio.
+
+If the picture is too grainy/pixelated or the process is too slow, let me know and I'll work on
+making it better.  No really, I have some ideas, but want to know if there's need first.
 
 == Thanks ==
 
