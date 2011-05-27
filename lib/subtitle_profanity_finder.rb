@@ -78,7 +78,7 @@ while ARGV.length > 0
   profanities[prof] = sanitized  
 end
 
-profanities = profanities.to_a.sort.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
+profanities = profanities.to_a.sort.reverse.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
 found_any = false
 
@@ -96,12 +96,16 @@ for profanity, sanitized in profanities
     # take out timing line, number line
     sanitized_glop = glop.lines.to_a[1..-2].join('')
     sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
+    sanitized_glop.gsub!(/<i>/, '') # oddity
+    sanitized_glop.gsub!(/[^a-zA-Z0-9]/, ' ') # kill weird stuff like ellipses
+    
     
     # sanitize
     for (prof2, sanitized2) in profanities
       sanitized_glop.gsub!(prof2, sanitized2)
     end
     
+    # extract timing info
     timing_line = glop.split("\n").first.strip
     timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
     # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
