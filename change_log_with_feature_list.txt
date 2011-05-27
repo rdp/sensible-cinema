@@ -8,6 +8,7 @@ Note well that avidemux can extract subtitles from tracks (example: from DVD) th
 
 Demo of auto-adjusted time signature, to map for instance a timestamps to another player, or what not.
 
+Also some cross platform capabilities.
 
 == 0.21.9 == (released same day as 0.21.8 to try to clarify quickly)
 

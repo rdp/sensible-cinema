@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.version = "0.21.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Roger Pack}]
-  s.date = %q{2011-05-24}
+  s.authors = ["Roger Pack"]
+  s.date = %q{2011-05-27}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = [%q{monkey.png}, %q{sensible-cinema-cli}, %q{sensible-cinema}]
+  s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
     "LICENSE.TXT",
     "README",
@@ -117,6 +117,7 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/making marriage work.txt",
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/star_trek_generations_hulu.txt",
     "zamples/edit_decision_lists/dvds/pack_wedding_2007-03-03.txt",
+    "zamples/edit_decision_lists/dvds/sintel_open_source_blender.txt",
     "zamples/edit_decision_lists/dvds/tron_legacy.txt",
     "zamples/edit_decision_lists/dvds/turn_around_alma_younger.txt",
     "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
@@ -137,8 +138,8 @@ Gem::Specification.new do |s|
     "zamples/players/youtube/note_these_assume_less_than_10_minutes_length.txt"
   ]
   s.homepage = %q{http://github.com/rdp}
-  s.require_paths = [%q{lib}]
-  s.rubygems_version = %q{1.8.2}
+  s.require_paths = ["lib"]
+  s.rubygems_version = %q{1.7.2}
   s.summary = %q{an EDL scene-selector/bleeper that works with online players like hulu}
   s.test_files = [
     "spec/blanker.spec.rb",
