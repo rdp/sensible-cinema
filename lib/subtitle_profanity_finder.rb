@@ -57,7 +57,8 @@ profanities = {'hell' => 'heck', 'g' +
 'tard' => 'ba.....',
 ('a' +
  's'*2) => 'a..',
-'thor' => 'thor', 'odin' => 'odin'
+'thor' => 'thor', 'odin' => 'odin',
+'breast' => 'br....'
 }.to_a
 
 # sat...
