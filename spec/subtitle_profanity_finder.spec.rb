@@ -22,10 +22,32 @@ require 'sane'
 
 describe SubtitleProfanityFinder do
 
-  it "should parse out heck" do
+  describe "should parse out heck" do
+    
     output = SubtitleProfanityFinder.edl_output ['dragon.srt']
-    output.should include("\"heck\"")
-    output.should include("e heck b") # description
+    
+    it "should include the bad line with timestamp" do
+      output.should match(/00:00:54.929.*"heck"/)
+    end
+    
+    it "should include the description" do
+      output.should include("e heck b")
+    end
+    
+  end
+  
+  describe "it should take optional params" do
+    output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'word']
+    
+    it "should parse out the word word" do
+      output.should match(/00:00:50.089.*"word"/)
+    end
+    
+    it "should parse out and replace with euphemism" do
+      output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'w...']
+      output.should match(/00:00:50.089.*In a w\.\.\./)
+    end
+    
   end
   
 end
