@@ -28,7 +28,7 @@ rescue LoadError
 end
 
 raise 'need jruby' unless OS.java?
-raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2'
+raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2' # may not need this since we still accomodate for so many oddities :P
 
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'

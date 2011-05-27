@@ -15,7 +15,6 @@
   
 == up next release/very next task: ==
 
-  edit this todo list all of it
   high prio patents
   ffmpeg gop 1 on handbrake [?]
     if this works (which it prolly won't) then recommend handbrake
@@ -23,14 +22,14 @@
     if so tell them "search handbrake's forum for libdvdcss.dll"
   
 == yes do, un-ordered currently ==
+
   @themoviedb: main title, also delete, don't you want to be a DVD database, not solely a movie database?
     maybe tvdb allow imdb linking, lookup of DVD by sig
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   do I need/want to accomodate for m4v somehow?
   make install work again
     package curl [?]
-  todo.subtitle
-  add button "play from here to here"
+  add button "play from exactly here to here" in mplayer uh guess :P
   leave in "play from x to y mplayer from DVD" I think :P [more?]
   what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
@@ -48,7 +47,6 @@
      rename the file to is_it_legal_to_copy_dvds, reference it
     "we know x, y are not l..."
     agree to abide, shouldn't in the US [?]
-  make it not die if you have no DVD in there yet when you click...
   C player:
     use DVD navigator
     wow terrifying...
@@ -92,6 +90,7 @@
   youtube videos -> new account name
   propaganda-ize (file)
   vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe
+    and sanity
   note "pay us/somebody to do it for you on the google group"?
   note "this is the full list--your help is wanted/needed"
   create a semi-accurate phantom edit EDL
@@ -107,7 +106,7 @@
 == DVD decide later to move up or down ==
 
 
-== DVD-realtime backlog yes do [?], unordered ==
+== DVD-realtime backlog yes [?] do, unordered ==
 
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
@@ -125,10 +124,12 @@
   force them to use my bundled mplayer version (currently it doesn't install to vendor/cache if you have an mplayer in the path, then fails to start mplayer)
     ideal would be use smplayer with my mplayer
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
-  @VLC you lop off the end, somehow, I guess...
 
 == DVD/DVD realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  todo.subtitle
+  @VLC you lop off the end, somehow, I guess...
+  make it not die if you have no DVD in there yet when you choose a drive...
   the "frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
   bounty dvdnav (calendar will ping me)
