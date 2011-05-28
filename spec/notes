@@ -146,6 +146,11 @@ handbrake -> ffmpeg I think sameq -> ffmpeg split
   mplayer:
     I o[o]nce was lost
 
+handbrake -> ffmpeg I think sameq -> mencoder split
+  audio is the beginning LOL
+  avidemux
+    2.04 [pretty close...interesting]
+
 == blu sub versus dvd ==
 
 865

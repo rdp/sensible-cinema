@@ -1,6 +1,6 @@
 == roadmap [for just tasks, see below though] ==
 
-  release: cheap inventionzy
+  release: cheap inventionzy, and medium inventionzy
   release: C EDL+specific portion player
   ?? ordering/looseness below ??
   pull realtime players from mine/update todo/make mine take a file
@@ -21,7 +21,7 @@
 == yes do, un-ordered currently, from the various release options ==
 
   subtitles: impass :)
-  tell th
+  can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work accurately?
   @themoviedb: on delete, don't you want to be a DVD database, not solely a movie database?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
@@ -109,6 +109,8 @@
   investigate: can I use the zoomplayer max?
   bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
   the final "edited.avi" really "could/should" be playable in WMP...
+  @opensubtitles to allow for DVD unique ID query?
+    would help splayer, me too :)
 
 == DVD decide later to move up or down ==
 
@@ -155,8 +157,6 @@
   it can "slow certain sections down" that might look way cool! LOL
   how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
     also xbmc has a plugin
-    tell opensubtitles to allow for DVD unique ID query?
-      would help splayer, me too :)
   script powerdvd via keystrokes
   VLC: suggest uservoice
   can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
