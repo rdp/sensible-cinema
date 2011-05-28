@@ -17,18 +17,13 @@
 == up next release/very next task: ==
 
   high prio patents
-  ffmpeg gop 1 on handbrake [?]
-    if this works (which it prolly won't) then recommend handbrake
-    else just tell them to use VLC or mplayer <sigh>
-    if so tell them "search handbrake's forum for libdvdcss.dll"
   
 == yes do, un-ordered currently, from the various release options ==
 
   subtitles: impass :)
-  @themoviedb: main title, also delete, don't you want to be a DVD database, not solely a movie database?
-    maybe tvdb allow imdb linking, lookup of DVD by sig
+  tell th
+  @themoviedb: on delete, don't you want to be a DVD database, not solely a movie database?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
-  do I need/want to accomodate for m4v somehow?
   make install work again
     package curl [?]
   add button "play from exactly here to here" in mplayer uh guess :P
@@ -44,6 +39,7 @@
     me try my copy
   try disney digital copy/amazon library "local download"
   blu ray timing
+  try mplayer to rip that long constitution movie
   legal:
      rename the file to is_it_legal_to_copy_dvds, reference it
     "we know x, y are not l..."
@@ -138,6 +134,7 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  can I accomodate for m4v somehow? Is it consistent?
   pull in information from thetvdb to the GUI app
   create the following EDL: 10 commandments DVD to skip the intro music LOL
   todo.subtitle

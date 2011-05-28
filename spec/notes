@@ -22,6 +22,9 @@ handbrake has "inconsistent" output (timings seem fine, however, huh?)
   05/25/2011  01:47 PM       223,728,412 Sintel_NTSC-2.dvdcss.3.m4v
   05/25/2011  01:01 PM       223,727,952 Sintel_NTSC-2.dvdcss.m4v
   05/25/2011  12:13 PM       223,727,148 Sintel_NTSC-2.m4v
+  # pretty close though
+  213M May 25 13:01 Sintel_NTSC-2.dvdcss.m4v
+  213M May 25 13:20 Sintel_NTSC-2.dvdcss.2.m4v
 
 vlc Sintel.handbrake.m4v
   14:33 "voice"
@@ -134,6 +137,15 @@ mencoder.dvdoutmplayer.mpg was unseekable in avidemux
 
 that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
 
+handbrake -> ffmpeg I think sameq -> ffmpeg split
+  avidemux:
+    1.96
+    same with same file split again...hmm...at least it's consistent...
+  vlc:
+    no audio
+  mplayer:
+    I o[o]nce was lost
+
 == blu sub versus dvd ==
 
 865
@@ -211,17 +223,24 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
 
 OSOH:
 
+
+
   windows movie maker, dvdout.8.vlc.mpg
     1:00:00 sweet that sound that [s]aved a wretch
     kinder close to VLC...
 
 
-VLC on OSOH-handbrake.ffmpeg.full.avi
+  VLC on OSOH-handbrake.ffmpeg.full.avi
     1:00:00 is smoking "up" apex [which looks like "wa[a]s" lost actually...hmm...]
-
+    
   AviDemux on OSOH-handbrake.ffmpeg.full.avi
     1:00:00 saved a wretch [like] me (audio is off)
-      video is smoking "up" apex [right]
+      video is smoking "up" apex [right] 
+
+  avidemux on OSOH-handbrake.ffmpeg.fulli.avi
+    1:00:00
+      video is like 20s back, grabbing beer
+      audio "in the name of the"
 
   mplayer.exe2 dvdoutmplayer.mpg:
     1:00:00 I once [w]as lost but now
