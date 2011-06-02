@@ -5,6 +5,7 @@
   ?? ordering/looseness below ??
   pull realtime players from mine/update todo/make mine take a file
     possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track, then download either VLC or smplayer, then..."
+    instructions: reference the sintel DVD :) (download it from my site here)
   build library phase, 20 dvd's
   create web site/api
   propagate wikipedia with list of realtimers etc.
@@ -21,13 +22,11 @@
 == yes do, un-ordered currently, from the various release options ==
 
   subtitles: impass :)
-  can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work accurately?
-  @themoviedb: on delete, don't you want to be a DVD database, not solely a movie database?
+  can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
     package curl [?]
   add button "play from exactly here to here" in mplayer uh guess :P
-  leave in "play from x to y mplayer from DVD" I think :P [more?]
   what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before "real" domain name
@@ -38,33 +37,28 @@
     have ben and chris test it out, have it work, then ask about video quality
     me try my copy
   try disney digital copy/amazon library "local download"
-  blu ray timing
-  try mplayer to rip that long constitution movie
+  check if VLC still crashes on ripping that constitution fella, check mplayer on it, check it on other DVD's, check it with dvdnav vs. dvdsimple
   legal:
-     rename the file to is_it_legal_to_copy_dvds, reference it
+    rename the file to is_it_legal_to_copy_dvds, reference it
     "we know x, y are not l..."
     agree to abide, shouldn't in the US [?]
   C player:
     use DVD navigator
-    wow terrifying...
-    just use mplayer EDL syntax, plus title track :)
+    just use mplayer EDL syntax, plus a title track :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
-      after done:
-        note we don't always use libdvdcss in the legal
     allow it to "just play from X to Y exactly" ...
-    does this line up right? can it work, at all?
+    does this line up right/perfect? can it work, at all?
       lodo:
         update its semi-bad error messages...
         show time remaining, too, and less ugly [?]
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
-    note to them windows vista/7: use ac3filter
-  if it doesn't parse it loops *forever* "error pooping" "error pooping"
+    note to them windows vista/7: use ac3filter [?]
+  if it doesn't parse something it loops *forever* "error pooping" "error pooping"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-  do open_edl_list_org_todo.txt file
   @legal: it requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   the fake blanker EDL doesn't work well... [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
@@ -82,9 +76,8 @@
   note to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
   beta release: rinse and repeat with various ppl
-  switch to using sourceforge solely for the new hosting...
+  switch to using sourceforge solely for hosting releases...
   youtube videos -> new account name
-  todo.propaganda
   vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe
     and sanity
   note "pay us/somebody to do it for you on the google group"?
@@ -99,9 +92,9 @@
     7: Windows Live Movie Maker
     previous: Windows Movie Maker
   mplayer OSD optionally [?]
-  re-run with the test DVD's
+  re-run with the several test DVD's
   another full pass on verbiage legal, etc.
-  better md5 with dll
+  better md5 with dll [?]
   port to OS X overall
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   delete unedited.fulli file automatically
@@ -109,11 +102,17 @@
   investigate: can I use the zoomplayer max?
   bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
   the final "edited.avi" really "could/should" be playable in WMP...
-  @opensubtitles to allow for DVD unique ID query?
-    would help splayer, me too :)
+
+== other lists ==
+  todo.propaganda
+  todo.inventionzy
+  open_edl_list_org_todo.txt file
+  todo.build_library
+  todo.subtitle
 
 == DVD decide later to move up or down ==
 
+  a wholesome meter?
 
 == DVD-realtime backlog [?] do, unordered ==
 
@@ -136,6 +135,8 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  blu ray timing
+    my one, others.  Are they the same as DVD's?  They seem really close...
   can I accomodate for m4v somehow? Is it consistent?
   pull in information from thetvdb to the GUI app
   create the following EDL: 10 commandments DVD to skip the intro music LOL
