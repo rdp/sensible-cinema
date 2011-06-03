@@ -21,11 +21,15 @@
   
 == yes do, un-ordered currently, from the various release options ==
 
+  youtube/hulu timings
   subtitles: impass :)
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
     package curl [?]
+  buy a few "pay" things, see if they are accurate...
+  figure out how to get avidemux to seek perfectly...some type of transform from raw? add a button for it?
+    some screencast on using it well?
   add button "play from exactly here to here" in mplayer uh guess :P
   what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   Watch...unedited smplayer button doesn't play from the right device if you have two :P

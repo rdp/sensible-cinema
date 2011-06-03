@@ -207,11 +207,11 @@ avidemux on VLC grab:
 == DVD player versus PC player various times ==
 
 DVD player conclusions:
-  VLC's are all pretty consistent
+  VLC's are all pretty consistent across platforms/versions
   VLC DVD playback can be up to at least 30s off [!]
   mplayers are at the 29.97 offset
-    I think mplayer.exe's are pretty consistent
-    smplayer?
+    I think mplayer.exe's are pretty consistent across platforms/versions
+    smplayer off a tidge, of course, since it's a GUI
   WMP is pretty close, but internally inconsistent by some odd
   powerdvd is pretty close but internally inconsistent by some odd
   mplayer grab seems right on [played back with VLC]
