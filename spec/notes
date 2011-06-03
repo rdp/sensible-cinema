@@ -1,6 +1,11 @@
- dvdsimple://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
-
-VLC: hard crash when ripping that one DVD...long one, about the constitution...
+dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
+at the end there was a menu but only for about 5s...hmm...
+mplayer can't play it seemingly.
+dvdsimple
+  that file plays in VLC without timestamps, with always 00:00, seeking takes forever :P
+  plays in smplayer, timestamps/seeking way messed.
+  
+  
 
 http://forums.thetvdb.com/viewtopic.php?f=8&t=1726&p=25563#p25563
   seems to imply that their disc id field is useless...not sure they'll be useful to me at all then...
