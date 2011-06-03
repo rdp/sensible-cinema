@@ -22,6 +22,7 @@
 == yes do, un-ordered currently, from the various release options ==
 
   youtube/hulu timings
+  can vlc rip to dvdnav?
   subtitles: impass :)
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
@@ -139,6 +140,9 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+http://www.mpcclub.com/forum/archive/index.php/t-10680.html idx?
+  @mpc: easier upconvert
+  @VLC: plugin for EDL maybe? [when opening file/DVD look for .edl file?]
   blu ray timing
     my one, others.  Are they the same as DVD's?  They seem really close...
   can I accomodate for m4v somehow? Is it consistent?

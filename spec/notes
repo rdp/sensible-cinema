@@ -1,5 +1,34 @@
+vlc dvd  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
+  at the end there was a menu but only for about 5s...hmm...
+  mplayer can't play it seemingly.
+  avidemux thinks it's the menu, 1 frame long
+dvdsimple
+  that file plays in VLC without timestamps, with always 00:00, seeking takes forever :P
+  plays in smplayer, timestamps/seeking way messed.
+  avidemux: lookup and smile and breath 1:00:00  
+  188642 frames 02:11:07.951
+  transition back 2:00:00.533 frame 172640
+  
+mplayer.raw:
+ playable VLC, seeking a bit odd.
+ playable mplayer
+  says it's 1:27 total
+  I do declare, it suffers from the same time repeat stuff that mplayer does
+  and mplayer appears to exit if you go past the first's end timeout :P
+  sound in sync
+ avidemux:
+   says it's 2:11:09.828  188687 frames
+    2:00:00 look at him, he looks back, look at him "hey"
+    transition back to him after 2: 2:00:00.909 frame 172649 hmm...
+    
+widely different sizes:
 
-VLC: hard crash when ripping that one DVD...long one, about the constitution...
+4786500 -rwx------+  1 Melissa        None     4901372252 Jun  2 20:54 dvdout.vlc.dvdsimple.mpg
+4948560 -rwx------+  1 Melissa        None     5067325116 Jun  2 21:09 dvdout.vlc.2.mpg
+   5372 -rwx------+  1 Melissa        None        5496968 Jun  2 22:05 dvdout.vlc.dvdsimple.mpg.idx
+5102140 -rwx------+  1 Melissa        None     5224591360 Jun  2 22:10 dvdout.mplayer.dvd.mpg
+
+good news is vlc didn't really crash
 
 http://forums.thetvdb.com/viewtopic.php?f=8&t=1726&p=25563#p25563
   seems to imply that their disc id field is useless...not sure they'll be useful to me at all then...
