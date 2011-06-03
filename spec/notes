@@ -1,3 +1,4 @@
+ dvdsimple://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
 
 VLC: hard crash when ripping that one DVD...long one, about the constitution...
 
