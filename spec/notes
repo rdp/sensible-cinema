@@ -7,6 +7,7 @@ up next:
   makemkv, handbrake on longer dvd's consistent?
 
 
+
 == c ==
 
 vlc dvd  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
@@ -20,8 +21,18 @@ dvdsimple
   plays in smplayer, timestamps/seeking way messed.
   avidemux: lookup and smile and breath 1:00:00  
   188642 frames 02:11:07.951
-  transition back 2:00:00.533 frame 172640 (same with second copy)
+  transition back 2:00:00.533 frame 172640 (same with both copies)
   at home: 15 MB/s, 39% cpu
+
+D:\>md5sum dvdout.vlc.dvdsimple.mpg   dvdsimple.vlc.2.mpg
+adf1d3e92afe2511562152d0124d3abd *dvdout.vlc.dvdsimple.mpg
+71b081d293753dc5efc39271f5bb91be *dvdsimple.vlc.2.mpg
+06/02/2011  08:54 PM     4,901,372,252 dvdout.vlc.dvdsimple.mpg
+06/02/2011  10:05 PM         5,496,968 dvdout.vlc.dvdsimple.mpg.idx
+06/03/2011  06:56 PM     4,901,382,216 dvdsimple.vlc.2.mpg
+06/04/2011  11:36 AM         5,496,964 dvdsimple.vlc.2.mpg.idx
+
+The fact that they appear the same frame at 2hours though...makes me "guess" that they're accurate?
   
 mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
  playable VLC, seeking a bit odd.
@@ -40,6 +51,8 @@ mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
   D:\>md5sum  dvdout.mplayer.dvd.dumpstream.mpg  mplayer.dumpstream.2.mpg
   a147eb922cb00eff5d3a25e155390380 *dvdout.mplayer.dvd.dumpstream.mpg
   a147eb922cb00eff5d3a25e155390380 *mplayer.dumpstream.2.mpg
+  on mac:
+    says it is reading at 2.2 MB/s [mplayer playing sez it's reading 740/900 KB/s ... hmm...]...2 MB/s 14% cpu
 
 handbrake at home: 6fps, 237K/s [compressed]/s
 
@@ -57,6 +70,14 @@ makemkv: 11 MB/s, [says 4.5x] no pauses, 13.5 MB/s, 14.5 MB/s, seems to grow as 
   plays well vlc, same, but with yellow subtitles [subtitles always enabled by default?]
   appears to be a raw rip...
   opens very slowly in avidemux at home...feels longer...
+  avidemux: no video present...seemed to have all the frames [?]
+
+
+D:\Video>md5sum 
+\550dc434e837a3e64a516675a65c969f *E\\title00.mkv
+\288be3124b7ceba3493e8706c9ac45fa *E.part\\title00.mkv
+\124b9069c89a8fdf748e68638a8f1d41 *2\\title00.mkv
+   5,140,185,916  though...hmm...my guess is it's lightning accurate...
   
 == disc id ==
 
