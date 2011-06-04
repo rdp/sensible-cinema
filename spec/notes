@@ -1,12 +1,16 @@
 up next:
-  what about ripping from fulli with the two?
+  what about ripping section from fulli with the two?
+    what was up with it differing from the other two?
   makemkv osoh...
   do multiple sintel makemkv's match?
+  const: retry dvdsimple, mplayer raw, makemkv, handbrake check, for frames
 
 vlc dvd  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
   at the end there was a menu but only for about 5s...hmm...
   mplayer can't play it seemingly.
   avidemux thinks it's the menu, 1 frame long
+  this is the loopy one
+  vlc can play it at the beginning, seeking seems to end early or...take forever?
 dvdsimple
   that file plays in VLC without timestamps, with always 00:00, seeking takes forever :P
   plays in smplayer, timestamps/seeking way messed.
@@ -29,17 +33,17 @@ mplayer.raw:
 widely different sizes:
 
 4786500 -rwx------+  1 Melissa        None     4901372252 Jun  2 20:54 dvdout.vlc.dvdsimple.mpg
-4948560 -rwx------+  1 Melissa        None     5067325116 Jun  2 21:09 dvdout.vlc.2.mpg
+4948560 -rwx------+  1 Melissa        None     5067325116 Jun  2 21:09 dvdout.vlc.2.mpg [loopy?]
    5372 -rwx------+  1 Melissa        None        5496968 Jun  2 22:05 dvdout.vlc.dvdsimple.mpg.idx
 5102140 -rwx------+  1 Melissa        None     5224591360 Jun  2 22:10 dvdout.mplayer.dvd.mpg
 
-good news is vlc didn't really crash
+good news is vlc didn't seem to crash anymore
+
+== disc id ==
 
 http://forums.thetvdb.com/viewtopic.php?f=8&t=1726&p=25563#p25563
-  seems to imply that their disc id field is useless...not sure they'll be useful to me at all then...
+  seems to imply that their disc id field is currently useless...not sure they'll be useful to me at all then...
   
-http://betterlogic.com/roger/2011/05/opensubtitles-lookup-dvd-subtitles useful :P
-
 == VLC as a ripper ==
 
 Can't figure out how to use the gui at all, files are always blank or not there? yipes.
