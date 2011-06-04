@@ -17,8 +17,9 @@ dvdsimple
   avidemux: lookup and smile and breath 1:00:00  
   188642 frames 02:11:07.951
   transition back 2:00:00.533 frame 172640
+  at home: 15 MB/s, 39% cpu
   
-mplayer.raw:
+mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
  playable VLC, seeking a bit odd.
  playable mplayer
   says it's 1:27 total
@@ -29,7 +30,8 @@ mplayer.raw:
    says it's 2:11:09.828  188687 frames
     2:00:00 look at him, he looks back, look at him "hey"
     transition back to him after 2: 2:00:00.909 frame 172649 hmm...
-    
+  at home: 8.6MB/s, 5% cpu [scawah!]
+  
 widely different sizes:
 
 4786500 -rwx------+  1 Melissa        None     4901372252 Jun  2 20:54 dvdout.vlc.dvdsimple.mpg
