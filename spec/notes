@@ -6,7 +6,8 @@ up next:
   const: retry dvdsimple, mplayer raw, makemkv, handbrake check, for frames
   makemkv, handbrake on longer dvd's consistent?
 
-handbrake at hand: 6fps, 237K/s [compressed]/s
+
+== c ==
 
 vlc dvd  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
   at the end there was a menu but only for about 5s...hmm...
@@ -19,22 +20,29 @@ dvdsimple
   plays in smplayer, timestamps/seeking way messed.
   avidemux: lookup and smile and breath 1:00:00  
   188642 frames 02:11:07.951
-  transition back 2:00:00.533 frame 172640
+  transition back 2:00:00.533 frame 172640 (same with second copy)
   at home: 15 MB/s, 39% cpu
   
 mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
  playable VLC, seeking a bit odd.
  playable mplayer
-  says it's 1:27 total
+  says it's 1:27 total [disc break?]
   I do declare, it suffers from the same time repeat stuff that mplayer does
   and mplayer appears to exit if you go past the first's end timeout :P
   sound in sync
+  can't seek [?]
+  on the DVD it has about one disc break
  avidemux:
    says it's 2:11:09.828  188687 frames
     2:00:00 look at him, he looks back, look at him "hey"
     transition back to him after 2: 2:00:00.909 frame 172649 hmm...
-  at home: 8.6MB/s, 5% cpu [scawah!]
-  
+  at home: 8.6MB/s, 5% cpu [scawah slow!]
+  D:\>md5sum  dvdout.mplayer.dvd.dumpstream.mpg  mplayer.dumpstream.2.mpg
+  a147eb922cb00eff5d3a25e155390380 *dvdout.mplayer.dvd.dumpstream.mpg
+  a147eb922cb00eff5d3a25e155390380 *mplayer.dumpstream.2.mpg
+
+handbrake at home: 6fps, 237K/s [compressed]/s
+
 widely different sizes:
 
 4786500 -rwx------+  1 Melissa        None     4901372252 Jun  2 20:54 dvdout.vlc.dvdsimple.mpg
@@ -44,6 +52,12 @@ widely different sizes:
 
 good news is vlc didn't seem to crash anymore
 
+makemkv: 11 MB/s, [says 4.5x] no pauses, 13.5 MB/s, 14.5 MB/s, seems to grow as it goes... 19 Mb/s...18...11:31
+  plays well with no freaky seeking in smplayer, timing "feels close or right on" white subtitles
+  plays well vlc, same, but with yellow subtitles [subtitles always enabled by default?]
+  appears to be a raw rip...
+  opens very slowly in avidemux at home...feels longer...
+  
 == disc id ==
 
 http://forums.thetvdb.com/viewtopic.php?f=8&t=1726&p=25563#p25563
@@ -261,16 +275,17 @@ avidemux on VLC grab:
 
 == DVD player versus PC player various times ==
 
-DVD player conclusions:
+conclusions:
   VLC's are all pretty consistent across platforms/versions
-  VLC DVD playback can be up to at least 30s off [!]
+  VLC DVD playback can be 30s off
   mplayers are at the 29.97 offset
     I think mplayer.exe's are pretty consistent across platforms/versions
-    smplayer off a tidge, of course, since it's a GUI
+    smplayer off a tidge, of course, blame on being a GUI
+    dumpstream md5 accurate, length accurate too
   WMP is pretty close, but internally inconsistent by some odd
-  powerdvd is pretty close but internally inconsistent by some odd
-  mplayer grab seems very consistent, and "correct" (well, when played back with VLC).
-  mencoder didn't grab it all the way?
+  powerdvd is pretty close but internally inconsistent by some odd factor.
+  mplayer grab seems very consistent, and "correct" (well, when played back with VLC, so loose rating there).
+  mencoder didn't grab it all the way? but is md5 accurate, even with dvdnav or without
   VLC grabs it fine
   WMP on handbrake'd is around 29.97 -- couldn't play back the mplayer grab, guessed on the VLC grab
 
