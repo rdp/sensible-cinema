@@ -1,5 +1,5 @@
 up next:
-  several mencoder OSOH's...do they match x3? what about ripping from fulli with the two?
+  what about ripping from fulli with the two?
   makemkv osoh...
   do multiple sintel makemkv's match?
 
@@ -224,7 +224,7 @@ monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
 
 [-5,5]
   1.301 for (avidemux) change of scene for ffmpegdvdout.vlc.8.mpeg, ffmpegdvdoutmplayer.mpg
-  2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe the ffmpeg is wrong...?]
+  2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe fulli from dvdoutmplayer ?]
 
 that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
 
@@ -261,10 +261,9 @@ DVD player conclusions:
   WMP is pretty close, but internally inconsistent by some odd
   powerdvd is pretty close but internally inconsistent by some odd
   mplayer grab seems very consistent, and "correct" (well, when played back with VLC).
-  mencoder [?]
-  VLC grabs it fine [?]
+  mencoder didn't grab it all the way?
+  VLC grabs it fine
   WMP on handbrake'd is around 29.97 -- couldn't play back the mplayer grab, guessed on the VLC grab
-  
 
 speeds: ffmpeg: vertex 2 SSD: 105MB/s old HD desktop 58 MB/s
 
@@ -374,14 +373,21 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
     transition 59:57.347 total frames 162835 dvdout.8.mpg, dvdout.7.mpg too
   
   avidemux mencoder.dvdout.2.mpg
-    transition 00:59:57.389 total frames 148031
+    transition 00:59:57.389 total frames 148031 # transition is almost perfect...as nearly as you could ask for...
     file was truncated but said it got to 100% [?]
     mencoder1 -ovc copy -oac copy dvd://1 -dvd-device e: -of mpeg -o mencoder.dvdoutmplayer.2.mpg
     VLC "thinks" it's 1:53:11 sum, but only can play to like 20minutes off the end, also VLC cannot play the audio right? [avidemux can tho]    
     1 duplicate frame(s)!
-    Pos:7470.6s 162842f (100%) 74.28fps Trem:   0min 5958mb  A-V:-0.060 [6767:448]
-    only 6.1G comp 6.8
+    Pos:7470.6s 162842f (100%) 74.28fps Trem:   0min 5958mb  A-V:-0.060 [6767:448] # dvdnav:  162843f
+    only 6.1G compare to normal 6.8
     mplayer can't play it back with right audio, either :P
+    re-doing it didn't help. This way is hosed :P
+    ripping it this way and dvdnav were both really jerky...dirty?
+    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdout.3.mpg
+    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdout.2.mpg
+    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdnavout.1.mpg # !
+    when played back within VLC, audio gets out of sync when searching [plays from beginning ignoring seeks [?]]
+    goes to he's crying, a tear, leans in for beijinhos numa moca <snip>
     
   avidemux reading OSOH from handbrake.mkv straight:
     1:00:00 accurate wa[a]s lost
