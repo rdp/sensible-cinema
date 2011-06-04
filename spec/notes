@@ -4,6 +4,9 @@ up next:
   makemkv osoh...
   do multiple sintel makemkv's match?
   const: retry dvdsimple, mplayer raw, makemkv, handbrake check, for frames
+  makemkv, handbrake on longer dvd's consistent?
+
+handbrake at hand: 6fps, 237K/s [compressed]/s
 
 vlc dvd  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
   at the end there was a menu but only for about 5s...hmm...
