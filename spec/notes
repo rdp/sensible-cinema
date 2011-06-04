@@ -3,12 +3,14 @@ up next:
   what about ripping section from fulli with the two?
     what was up with it differing from the other two?
   do multiple sintel makemkv's match? they should be the same size...
-  const: retry dvdsimple, mplayer raw, makemkv, handbrake check, for frames
-  makemkv, handbrake on longer dvd's consistent?
-  mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
-  makemkv osoh...
-  subtitles const. one...
-
+  handbrake several: consistent? accurate?
+  const: makemkv check for frames/consistency
+  handbrake on longer dvd's consistent frame-wise?
+  mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
+  makemkv osoh...against vlc/mplayer?
+  subtitles line up ? const. one...
+  makemkv mac same [size]?
+  
 
 == c ==
 
@@ -84,7 +86,12 @@ a147eb922cb00eff5d3a25e155390380 mac.dump.mpg
 vlc dvdsimple mac:
 vlc dvdsimple://d:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.mpg}" vlc://quit
 /Applications/VLC.app/Contents/MacOS/VLC dvdsimple:///dev/disk1@1 --sout #standard{access=file,mux=ts,dst=dvdout.dvdsimple.vlc.mpg}
-seems to be writing at about 4 MB/s, is in super time. 28% cpu
+seems to be writing at about 4 MB/s, is in super time, 28% cpu
+  55-32 = 23 minutes 
+  lightning: 188097
+
+makemkv mac: 3.9 MB/s  [2.9x]...5.0 MB/s...40% cpu
+ 5140185934 Jun  4 14:29 title00.mkv
 
 
 == disc id ==
