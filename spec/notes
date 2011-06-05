@@ -82,6 +82,7 @@ real	45m56.187s
 user	0m49.138s
 sys	5m43.019s
 a147eb922cb00eff5d3a25e155390380 mac.dump.mpg
+  flash: 188106
 
 vlc dvdsimple mac:
 vlc dvdsimple://d:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.mpg}" vlc://quit
