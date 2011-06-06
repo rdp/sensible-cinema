@@ -4,8 +4,6 @@
   release: C EDL+specific portion player
   ?? ordering/looseness below ??
   pull realtime players from mine/update todo/make mine take a file
-    possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track, then download either VLC or smplayer, then..."
-    instructions: reference the sintel DVD :) (download it from my site here)
   build library phase, 20 dvd's
   create web site/api
   propagate wikipedia with list of realtimers etc.
@@ -24,7 +22,9 @@
 == yes do, un-ordered currently, from the various release options ==
 
   google "scripted dvd playback" adobe, one other, avisynth
-  note to google group in u. s.
+  possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track in the EDL, then download either VLC or smplayer, then..."
+  instructions: reference the sintel DVD :) (download it from my site here)
+  note to google group...
   add an mencoder convert with mplayer_breaks button :P
   tell them they 
     need makemkv or anydvd :P

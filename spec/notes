@@ -2,25 +2,29 @@ up next:
   convert my makemkv's to mpg, whose do they match now?
   what about ripping section from fulli with the two?
     what was up with it differing from the other two?
-  do multiple sintel makemkv's match? they should be the same size...
-  handbrake several: consistent? accurate?
-  const: makemkv check for frames/consistency
+  handbrake: md5 consistent? accurate with other mkv?
   handbrake on longer dvd's consistent frame-wise?
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
   makemkv osoh...against vlc/mplayer?
   subtitles line up ? const. one...
-  makemkv mac same [size]?
-  
+  makemkv mac same frames when converted as pc?
 
 == c ==
 
-vlc dvd  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
+conclusions: mplayer's are consistent grabbing cross-platform
+  makemkv is consistent size-wise, same box
+  vlc seems to always be consistent with itself, frame-wise
+  vlc is off of mplayer by 0.3s, but not at the beginning so what the....
+  can discard vlc dvd
+
+vlc dvd-straight  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
   at the end there was a menu but only for about 5s...hmm...
   mplayer can't play it seemingly.
   avidemux thinks it's the menu, 1 frame long
   this is the loopy one
   vlc can play it at the beginning, seeking seems to end early or...take forever?
-dvdsimple
+  
+vlc dvdsimple
   that file plays in VLC without timestamps, with always 00:00, seeking takes forever :P
   plays in smplayer, timestamps/seeking way messed.
   avidemux: lookup and smile and breath 1:00:00  
@@ -111,8 +115,12 @@ thoughts:
   VLC cuts off a bit at the end, it appears
   mencoder seems a bit trippy, also cuts off the end [?] huh?
 
-makemkv:
+makemkv: [says 14.7 MB/s]
   avidemux: cannot seek easily, audio seems right on, cannot see video
+  2,277,725,773 title04.mkv
+  2,277,725,773 title04.mkv # accurate size...
+  5a25ac6a97dea8989fa18d35562eb9a0 *Sintel_NTSCa\\title04.mkv
+  e08d829137b8c1f0008d4bd974f8a0ba *Sintel_NTSCb\\title04.mkv
 
 handbrake has "inconsistent" output (timings seem fine, however, huh?)
   05/25/2011  01:20 PM       223,727,993 Sintel_NTSC-2.dvdcss.2.m4v
@@ -122,6 +130,10 @@ handbrake has "inconsistent" output (timings seem fine, however, huh?)
   # pretty close though
   213M May 25 13:01 Sintel_NTSC-2.dvdcss.m4v
   213M May 25 13:20 Sintel_NTSC-2.dvdcss.2.m4v
+  avidemux:
+    sound and audio work! :P
+    "voice" at 14:33
+
 
 vlc Sintel.handbrake.m4v
   14:33 "voice"
@@ -208,7 +220,7 @@ sintel_open_source.fulli_unedited.tmp.mpg
 
 mplayer rip's seem to be md5 consistent, with dvd and dvdnav (though slightly different)
 
-handbrake md5's don't match...
+handbrake md5's/sizes don't match...
   ba99d43dc28d8407be7e194008594615 *Sintel_NTSC-2.dvdcss.2.m4v
   657bba230231ac18669de6a6c86f81bc *Sintel_NTSC-2.dvdcss.3.m4v
   6ec89d2ed2fcb7a468f2ee0d98a997f7 *Sintel_NTSC-2.dvdcss.m4v
@@ -322,7 +334,7 @@ conclusions:
   WMP is pretty close, but internally inconsistent by some odd
   powerdvd is pretty close but internally inconsistent by some odd factor.
   mplayer grab seems very consistent, and "correct" (well, when played back with VLC, so loose rating there).
-  mencoder didn't grab it all the way? but is md5 accurate, even with dvdnav or without
+  mencoder didn't grab it all the way? but is md5 accurate, even with dvdnav or without [can disregard]
   VLC grabs it fine
   WMP on handbrake'd is around 29.97 -- couldn't play back the mplayer grab, guessed on the VLC grab
 
@@ -339,17 +351,37 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
   mplayer1 to play mencoder.dvdout.8.part.mpg had timing that was totally wrong/unseekable
   mencoder.dvdoutmplayer.part.mpg was unseekable in avidemux
 
+  avidemux mencoder.dvdout.2.mpg
+    transition 00:59:57.389 86251
+    total frames 148031 
+    file was truncated but said it got to 100% [?]
+    mencoder1 -ovc copy -oac copy dvd://1 -dvd-device e: -of mpeg -o mencoder.dvdoutmplayer.2.mpg
+    VLC "thinks" it's 1:53:11 sum, but only can play to like 20minutes off the end, also VLC cannot play the audio right? [avidemux can tho]    
+    1 duplicate frame(s)!
+    Pos:7470.6s 162842f (100%) 74.28fps Trem:   0min 5958mb  A-V:-0.060 [6767:448] # dvdnav:  162843f
+    only 6.1G compare to normal 6.8
+    mplayer can't play it back with right audio, either :P
+    re-doing it didn't help. This way is hosed :P
+    ripping it this way and dvdnav were both really jerky...dirty?
+    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdout.3.mpg
+    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdout.2.mpg
+    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdnavout.1.mpg # !
+    when played back within VLC, audio gets out of sync when searching [plays from beginning ignoring seeks [?]]
+    goes to he's crying, a tear, leans in for beijinhos numa moca <snip>
+
   windows movie maker, dvdout.8.vlc.mpg
     1:00:00 sweet that sound that [s]aved a wretch
     kinder close to VLC...
 
-  VLC on OSOH-handbrake.ffmpeg.full.avi
+  VLC on OSOH-handbrake.ffmpeg.fulli.avi
     1:00:00 is smoking "up" apex [audio is absent, which looks like "wa[a]s" lost actually...hmm...we might be able to salvage this...]
+    transition: 00:59:56.96 frame 89924 (but shouldn't match, since this one has accurate audio...)
     
   AviDemux on OSOH-handbrake.ffmpeg.full.avi
     1:00:00 saved a wretch [like] me (audio is way off the video, and off accurate)
       video is smoking "up" apex [right]
-      transition 59:56.96 169781 frames :P
+      transition 59:56.96 89924
+      169781 total frames :P
 
   mplayer.exe2 dvdoutmplayer.mpg:
     1:00:00 I once [w]as lost but now
@@ -426,29 +458,14 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
   avidemux reading OSOH from mplayer grab:
     1:00:00 accurate wa[a]s lost audio, video way off LOL
       copy and paste also unfortunately video inaccurate <sigh>
-    transition 59:57.347 total frames 162840
+    transition 59:57.347  86250
+    total frames 162840
       
   avidemux reading OSOH vlc grab:
     1:00:00 accurate wa[a]s lost audio, video way off LOL
       copy and paste also unfortunately video inaccurate <sigh>
-    transition 59:57.347 total frames 162835 dvdout.8.mpg, dvdout.7.mpg too
-  
-  avidemux mencoder.dvdout.2.mpg
-    transition 00:59:57.389 total frames 148031 # transition is almost perfect...as nearly as you could ask for...
-    file was truncated but said it got to 100% [?]
-    mencoder1 -ovc copy -oac copy dvd://1 -dvd-device e: -of mpeg -o mencoder.dvdoutmplayer.2.mpg
-    VLC "thinks" it's 1:53:11 sum, but only can play to like 20minutes off the end, also VLC cannot play the audio right? [avidemux can tho]    
-    1 duplicate frame(s)!
-    Pos:7470.6s 162842f (100%) 74.28fps Trem:   0min 5958mb  A-V:-0.060 [6767:448] # dvdnav:  162843f
-    only 6.1G compare to normal 6.8
-    mplayer can't play it back with right audio, either :P
-    re-doing it didn't help. This way is hosed :P
-    ripping it this way and dvdnav were both really jerky...dirty?
-    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdout.3.mpg
-    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdout.2.mpg
-    7b11bc3c0d05df5f6667f5ccb15ec6e9 *mencoder.dvdnavout.1.mpg # !
-    when played back within VLC, audio gets out of sync when searching [plays from beginning ignoring seeks [?]]
-    goes to he's crying, a tear, leans in for beijinhos numa moca <snip>
+    transition 59:57.347 frame 86250
+    total frames 162835 dvdout.8.mpg, dvdout.7.mpg too  
     
   avidemux reading OSOH from handbrake.mkv straight:
     1:00:00 accurate wa[a]s lost
@@ -462,7 +479,7 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
   VLC reading dvdoutmplayer.mpg, handbrake m4v:
       1:00:00 accurate wa[a]s lost
 
- All DVD playing below this:
+=== All DVD playing below this ===
 
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
