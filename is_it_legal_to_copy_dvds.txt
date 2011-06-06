@@ -1,11 +1,17 @@
 So...is this legal?
 
 Unclear.  In general ripping personal DVD's is legal.
-Note also that if you don't feel it legal in your country, you can still use the timing info to "manually" skip/mute scenes you
-dislike.  Also you may be able to hook up something that does editing in "realtime" while playing it back (see README 
-for a list ofrelated works). 
 
-And making verbatim "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under fair use [3].
+Note also that if you don't feel it is legal in your country, you can still use the timing info given 
+to "manually" skip/mute scenes you dislike.  
+Also you may be able to hook up something that does the editing in "realtime" while playing it back (see README 
+for a list of related works that might help with this).  This would fall under the The Family Home Movie Act of 2005.
+
+And making verbatim "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under 
+fair use [3].
+
+Sensible cinema doesn't include any ability to actually rip DVD's,
+and relies on you to use something else for that, on your own.
 
 It is controversial to use open source software to play/rip commercial DVD's.
 There are a few conflicting views.
@@ -15,58 +21,56 @@ as to whether the DVD was originally encrypted or not, we chose a "you have to d
 some other means" philosophy.  
 You can ask the authors of the ripping programs if it is legal.  Apparently
 libdvdcss (which the other programs that it calls out to use) has never been legally challenged in court (or so they say), 
-and uses a slightly different algorithm than those that have, so the jury's still out on that.  Apparently
-it has been challenged in French courts and found legal so it might vary from country to country.
+and uses a slightly different algorithm than those that have, so the jury's still out.  Possibly
+it has been challenged in French courts and found legal so it might vary from country to country [4].
 
-Using sensible-cinema is also might not be more unethical than ripping your DVD collection to your hard
+Using sensible-cinema also might not be more unethical than ripping your DVD collection to your hard
 drive so you can "keep your DVD's all in one place" or what not (which might even be termed fair use), since it
-basically only saves away parts of the original.  Only original content is saved.  It just happens to be bits and
-pieces that remove the profanity.
+basically only saves parts from the original concatenated.  Only original content is saved.  It just happens to be bits and
+pieces that don't have the profanity.
 Note also that fair use at times does allow one to "record" things for personal use/backup (for example off the TV).
 Note that sensible cinema does require the original DVD to be present when using it, also, to help enforce copy protection,
-at least for watching it/using it within sensible cinema.
+at least for watching it/using from within sensible cinema itself.
 
 If general, if it's not legal in your country, then don't use it!
-You are responsible for your actions and use of this program.
+You are responsible for your actions and use of the program.
 It is possible that the authors of sensible-cinema are not cupable of anything
 regarding its use themselves, since they re-distribute no edited media, 
-nor distribute cracking codes.  Check your country's rules first.
+nor distribute cracking codes.  Check your country's rules first.  Be warned.
 
-Note: for sure do not redistribute or re-sell edited DVD's.  We have learned from clean flicks that
-redistributing (well at least renting/selling) edited commercial DVD's is illegal in the US.
+Note: do not redistribute or re-sell edited DVD's, certainly that is illegal.  
+We have learned from clean flicks that redistributing 
+(well at least renting/selling) edited commercial DVD's is illegal in the US.
 Please don't redistribute.  Consult your lawyer.
-USING THIS SOFTWARE MIGHT BE ILLEGAL IN SOME COUNTRIES.
 DO NOT MAKE ILLEGAL COPIES.
 USE AT YOUR OWN RISK.
 
-In terms of copyright, some uses of sensible cinema may be legal under the The Family Home Movie Act of 2005,
-at least in the United States, when viewed using the "playlist" option 
-(v 0.10'ish, later removed--used VLC), or the "realtime" option (0.18.0 -> 0.21'ish +, using mplayer).
+In terms of copyright, some uses of sensible cinema may be legal under The Family Home Movie Act of 2005,
+at least in the United States, when viewed using the "playlist" option or "realtime" options
+(v 0.10'ish, later removed--used VLC), the "realtime" option (0.18.0 -> 0.21'ish +, using mplayer).
 In general, if I have the original DVD sitting next to my TV, I don't feel bad about watching
-its edited copy, but please consult a laywer first if you have concerns.
+it edited, but please consult a laywer first if you have concerns.
 
 This program can also be used for editing home movies, etc (example, the "pack wedding" file herein included).
-Note also that this software contains no decryption codes itself.
 
 Note that this software might well be legal in the EU, 
 as it is only software (if you watch it on your computer), and therefore possibly not subject to patents in certain countries
-(see "What about patent licenses?" in [2]).
+(see "Patents and codec" in [2]).
 
-Also note that several ideas have been released in code that are disabled in later releases.  Please see the mailing list and/or blog
+Also note that several ideas have been released in various releases that are disabled in later releases.  Please see the mailing list and/or blog
 for release notes http://betterlogic.com/roger, as well as http://ruby-forum.com (ruby talk ML there), and rubygems.org
-which lists the various released ruby sources, including release notes, when installed, and also github.com/rdp/sensible-cinema which,
-lists commits and changes and release notes, and is publicly available. And see also the changelog.
+which lists the various released ruby sources, including release notes, and also github.com/rdp/sensible-cinema which,
+lists commits and changes and release notes, and is publicly available. And see also the changelog file included herein for a list.
 See also the README text file which contains some invention related notes.
-A more ancient history of various brainstorming thoughts was described here:
+A more ancient history of various brainstorming thoughts was also described here:
 http://betterlogic.com/roger/?p=2618
 
-YOU MUST AGREE TO THE gplv3 in order to use this software.
-
-Note also that we used parts of the 7-Zip program, that 7-Zip is licensed under the GNU LGPL license, see http://www.7-zip.org, where its source code can be found.
+NB: YOU MUST AGREE TO THE gplv3 in order to use this software.  See LICENSE.TXT file.
 
 [2] http://www.videolan.org/legal.html
 [3] http://www.macworld.com/article/150731/2010/04/dvdripping_faqs.html
+[4] http://www.videolan.org/legal.html
 
-note also http://en.wikipedia.org/wiki/DVD_Decrypter for some more legal interesting quotes.
+note also http://en.wikipedia.org/wiki/DVD_Decrypter for some more legal interestingnss.
 
 Also note that this project was done under the gplv3 in Roger's jurisdiction, not a product of anybody else or any other owner.

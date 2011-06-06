@@ -1,8 +1,15 @@
-All files (c) Roger Pack 2010
+All files (c) Roger Pack 2010-2011
+
 All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed at some point.
 
 The edit lists included, are creative commons licensed.
 
 Note: may call out to some 3rd party libraries/executables under their own (separate, open source) licenses.
+
+Note also that we used parts of the 7-Zip program, that 7-Zip is licensed under the GNU LGPL license, see http://www.7-zip.org, where its source code can be found.
+
+Ffmpeg is included, under the GPLv2: http://www.ffmpeg.org/legal.html http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+curl is included, released under an MIT/X style license: http://curl.haxx.se/docs/copyright.html
 
 See first also the file "is_it_legal_to_copy_dvds.txt" for more information on legal use in your country.

@@ -51,14 +51,13 @@ is called "latest-sensible-cinema.zip"
 
 See the accompanied how_to_create_your_own_delete_lists.txt file.
 
-== Creating your own edited DVD ==
+== Creating an edited DVD ==
 
-I don't know how I've never burned a DVD.
-Windows DVD Maker might help, http://www.dvdflick.net might help.
 See also is_it_legal_to_copy_dvds.txt for some caveats you should understand.
-DO NOT MAKE ILLEGAL COPIES OF DVD's.
-Sensible cinema doesn't include any ability to actually rip DVD's,
-and relies on you to use outside sources for that.
+I don't actually know how I've never burned a DVD.
+Windows DVD Maker might help, http://www.dvdflick.net might help.
+iDVD might help on mac.
+DO NOT MAKE ILLEGAL COPIES OF DVD's. See is_it_legal_to_copy_dvds.txt.
 
 == FAQ ==
 
@@ -71,11 +70,11 @@ A. You also might be able to move a laptop over to near your TV and hook it in f
   I might come up with a competitor to it if desired, as the existing one costs money).
   If you're really ambitious and bleeding edge you could even try VGA over an Ethernet cable, too: 
   http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
-  You may be able to create your own edited DVD, see section "Creating your own"
-  You may be able to come up with some real-time player editor, too, see LICENSE.TXT
+  You may be able to create your own edited DVD, see section "Creating an edited DVD"
+  You may be able to come up with some real-time player editor, too, see section "related works" et al
 
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original DVD and a link to sensible-cinema's website so they can download it.
+A. Give them the original unedited DVD and a link to sensible-cinema's website.
 
 == Caveats ==
 
@@ -275,12 +274,14 @@ Feedback, including feature requests, comments, etc. welcome:
 Mailing List: http://groups.google.com/group/sensible-cinema
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
-See development.txt / github.com/rdp
+See development.txt / github.com/rdp/sensible-cinema
 
-If you want to donate something, please donate to your local charity, this one is free of charge.
+If you want to donate something, please consider donating to a charity of your choice.  No really.  Do it for this!
 
 == Competition/use of files ==
 
 Note that competition/use of files from sensible cinema is welcome!
+
 In fact, the current end goal is to publish the delete lists (EDL's) as a separate repository, under the creative
-commons license, meaning that even for profit users can use them for whatever other use they want.
+commons license, meaning that even for profit users can use them for whatever other use they want, hopefully
+good uses :)
