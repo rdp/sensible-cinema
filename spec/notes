@@ -3,7 +3,7 @@ up next:
     this might answer what was up with it differing (mencoder, ffmpeg from dvdout.8.mpg were different)
   @home: subtitles line up ? const. one...
   @home: makemkv mac same frames when converted as pc? [lightning strike, at home]
-  convert mpg to avi, machete?
+  convert mpg to avi, machete/avidemux?
 
 == never try ==
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
@@ -385,7 +385,8 @@ avidemux on VLC grab:
   1:00:00 "once wa[a]s lost" audio, video appears messed up lips [looks like they are really grabbing raw data]
   top C of cast: 156622 01:48:52.449
 
-== AVS vs. avidemux OSOH ==
+== AVS vs. avidemux OSOH/attempt fix avidemux ==
+
   59:56.981 transition with OSOH.handbrake.m4v
   seems to get the audio right LOL. No frames but does have frame accurate seek.
   59:56.97 mplayer grab [!]
@@ -402,10 +403,10 @@ avidemux on VLC grab:
   ffmpegifying mplayerraw: no audio in avidemux, same frame: 28650 00:59:57.347
   [mencoder, ffmpeg both maxed out on cpu with no transcoding [?]]
   
-  mencodefiying mplayerraw: 
+  mencodefiying mplayerraw (mpeg -> mpeg): 
     mencoder1 dvdoutmplayer.mpg -o dvdoutmplayer.mencoderified.mpg -forceidx -oac copy -ovc copy
     lots of "1 duplicate frame(s)!"
-    unseekable/jerky 2.5.4 avidemux
+    unseekable, with jerky video
     
   newer avidemux:
     00:59:57.130 for OSOHhandbrake.m4v [close but no cigar--but what does AVS say it has?]
@@ -415,7 +416,18 @@ avidemux on VLC grab:
     
   AVS dvdout.7.mpg
     transition: 59:56.994 [appears right on, this is accurate]
-
+    
+  mencoderified mpeg fulli:
+    had to set frame rate to 24.  Actually that didn't work it was just broke
+    audio right on though
+    so non editable avidemux
+      actually it shouldn't matter, since we just use this internally, and ffmpeg likes it,
+      maybe they can only use the original for editing
+      assuming it still works to cut it well though...
+  
+  ffmpegified dvdoutmplayer avidemux (mpeg -> mpeg no transcoding):
+    no audio, transition at 86250 00:59:57.347 (exactly same as normal mpeg)
+  
 == DVD player versus PC player various times ==
 
 conclusions:
@@ -443,8 +455,10 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
 
 == OSOH ==
 
-  mplayer -> mencoderfulli
-    plenty of "1 duplicate frame(s)!"
+  mplayer -> mencoder
+    see above
+  mplayer -> ffmpegify
+    see above
 
   makemkv -> tsmuxer -> mpg:
     162838 frames total

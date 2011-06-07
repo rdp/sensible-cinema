@@ -8,6 +8,8 @@ Note that I obscure profanities within the code to a "euphemized" version for hu
 
 Note that VLC has had a "subtitle filter" capability for awhile: https://forum.videolan.org/viewtopic.php?f=7&t=90847
 
+Note that VLC can "upconvert" [ex: DVD's] so I guess that means since we support it, we support upconverting players.
+
 == 0.21.9 == [gem only release]
 
 Add profanity subtitle auto-parser-generator, which can parse .srt's, extract timestamps, look for profanity.  also make it "optional" for specific profanities. (offline analyzer, doesn't include auto-OCR or what not)
