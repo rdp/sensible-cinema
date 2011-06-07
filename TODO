@@ -150,9 +150,9 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
   @makemkv: wrong title no:Title #0 was added (7 cell(s), 0:14:58)
      Title #1 was added (8 cell(s), 0:14:57), also give us title no's in the dialog :P
-
   @mencoder: you don't rip DVD's quite right. But you try. Oh how you try.
   @mpc: easier upconvert
   @VLC: plugin for EDL maybe? [when opening file/DVD look for .edl file?]

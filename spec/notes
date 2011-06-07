@@ -5,9 +5,45 @@ up next:
   handbrake: md5 consistent? accurate with other mkv?
   handbrake on longer dvd's consistent frame-wise?
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
-  makemkv osoh...against vlc/mplayer?
   subtitles line up ? const. one...
   makemkv mac same frames when converted as pc?
+
+== makemkv to mpg ==
+
+conclusions: use tsmuxer, makemkv seems raw enough...
+
+tsmuxer cannot unmix handbrake's file.
+
+ffmpeg seems out: https://ffmpeg.org/trac/ffmpeg/ticket/177, even with June 3 version
+  Ffmpeg.exe -i myfile.264 -i myfile.aac -vcodec copy -f mpegts -acodec copy output.ts
+
+mencoder "hurls" through it: 
+  mencoder -ovc copy -oac copy -idx -of mpeg -o yo.mpg big.mkv
+tsmuxer? 
+  http://juliensimon.blogspot.com/2009/01/howto-converting-mkv-files-to-play-on.html
+  http://www.smlabs.net/en/products/tsmuxer/
+  
+mkvtoolnix doesn't work...
+
+maybe if I use ffmpeg to fulli it first...I can also translate it to mpeg?
+
+My first question is...does handbrake and makemkv match, +- fulli
+  *seems* like a 
+
+makemkv => tsmuxer => ts
+  still needed frame shifter...
+  audio still off...
+  transition 86250 59:57.347
+  
+I seem unable to very the frames of the HANDBRAKE one LOL.  It keeps segfaulting Avidemux no matter what it's status...
+  plus I can't compare except by framecount, which is probably messed up anyway...hmm...
+
+mkvextract{+...} over tsmuxer?
+
+ffmpeg -r 23.976 -f h264 -i video.h264 -f ac3 -i audio.ac3 -vcodec copy -acodec copy -f vob output.vob 
+tsremux ?
+m2ts ?
+H264TSCutter ?
 
 == c ==
 
@@ -306,7 +342,7 @@ avidemux barely off lips:
   mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
   ffmpeg -i dvdoutmplayer.mpg -sameq yo.mpg took forever, grabbed wrong audio track :P
 
-avidemux from "normal" rips are still off frame-rate wise somehow...
+avidemux from all "normal" rips are still off frame-rate wise somehow...
 
   "wretch" and "me" were visually on, WMP, VLC, VLC on a VLC grab was either on or really really close, mplayer is right on with the DVD
 
@@ -318,9 +354,37 @@ avidemux on dvdoutmplayer.mpg
 
 avidemux on mplayer grab:
   sound ok, lips off
+  top C of cast: 156622 01:48:52.449
     
 avidemux on VLC grab:
   1:00:00 "once wa[a]s lost" audio, video appears messed up lips [looks like they are really grabbing raw data]
+  top C of cast: 156622 01:48:52.449
+
+== AVS vs. avidemux ==
+  59:56.981 transition with OSOH.handbrake.m4v
+  seems to get the audio right LOL. No frames but does have frame accurate seek.
+  59:56.97 mplayer grab [!]
+  
+  AviDemux ffmpeg.fulli 59:56.96 without frame adjustment [!] (prolly doesn't even need the fulli, it's just the consistent frames it needs [?])
+
+  mencoder/ffmpeg "save" avidemux without fulli?
+    maybe mencoder with -idx is good nuff to fix it for avidemux?
+
+  ffmpeg on OSOH.handbrake.m4v *fail* 12GB, freezes Avidemux, no video VLC
+  
+  TODO: ffmpeg on mplayer straight, avidemux + idx on mplayer straight => avidemux
+  
+  ffmpegifying mplayerraw: no audio in avidemux, same frame: 28650 00:59:57.347
+  [mencoder, ffmpeg both maxed out on cpu with no transcoding [?]]
+  
+  mencodefiying mplayerraw: 
+    mencoder1 dvdoutmplayer.mpg -o dvdoutmplayer.mencoderified.mpg -forceidx -oac copy -ovc copy
+    lots of "1 duplicate frame(s)!"
+    unseekable/jerky 2.5.4 avidemux
+    
+  newer avidemux:
+    00:59:57.130 for OSOHhandbrake.m4v [close but no cigar--but what does AVS say it has?]
+  
 
 == DVD player versus PC player various times ==
 
@@ -330,7 +394,7 @@ conclusions:
   mplayers are at the 29.97 offset
     I think mplayer.exe's are pretty consistent across platforms/versions
     smplayer off a tidge, of course, blame on being a GUI
-    dumpstream md5 accurate, length accurate too
+    dumpstream is md5 accurate, length accurate too
   WMP is pretty close, but internally inconsistent by some odd
   powerdvd is pretty close but internally inconsistent by some odd factor.
   mplayer grab seems very consistent, and "correct" (well, when played back with VLC, so loose rating there).
@@ -348,6 +412,13 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
 
 == OSOH ==
 
+  makemkv -> mpg:
+    162838 frames total
+    avidemux:
+      audio off [as expected]
+      59:57.305 transition
+      top C of cast: 156622 01:48:52.449
+      
   mplayer1 to play mencoder.dvdout.8.part.mpg had timing that was totally wrong/unseekable
   mencoder.dvdoutmplayer.part.mpg was unseekable in avidemux
 
@@ -474,7 +545,7 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
     audio and video were
       
   ffmpeg reading OSOH from handbrake m4v:
-    1:00:00 I once [was] lost but now (no audio though but looks like it would be...)
+    1:00:00 I once [was] lost but now (no audio though but looks like it would be accurate...)
     
   VLC reading dvdoutmplayer.mpg, handbrake m4v:
       1:00:00 accurate wa[a]s lost
