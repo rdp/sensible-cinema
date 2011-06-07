@@ -351,14 +351,6 @@ mplayer os x extended has the same "where am I?" on this DVD problem mplayer has
 
 monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
 
-== splitting ripped files ==
-
-[-5,5]
-  1.301 for (avidemux) change of scene for ffmpegdvdout.vlc.8.mpeg, ffmpegdvdoutmplayer.mpg
-  2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe fulli from dvdoutmplayer ?]
-
-that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
-
 == avidemux on ripped files ==
 
 my *guess* is that any transcoding will save it, anything else won't :( [bounty is out for it though!]
@@ -462,7 +454,19 @@ appears smplayer is "like a second" or something behind mplayer, and mplayer doe
 
 are all windows GUI wrapper players internally inconsistent, except maybe VLC which is still itself "a tidge off"?
 
+== splitting osoh ==
+
+"ideal" would be a transition at 1.987 I believe
+
+[-5,5]
+  1.301 for (avidemux) change of scene for ffmpegdvdout.vlc.8.mpeg, ffmpegdvdoutmplayer.mpg
+  2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe fulli from dvdoutmplayer ?]
+    that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
+
 == OSOH ==
+
+  mplayer1 to play mencoder.dvdout.8.part.mpg had timing that was totally wrong/unseekable
+  mencoder.dvdoutmplayer.part.mpg was unseekable in avidemux
 
   mplayer -> mencoder
     see above
@@ -475,9 +479,6 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
       audio off [as expected]
       59:57.305 transition
       top C of cast: 156622 01:48:52.449
-      
-  mplayer1 to play mencoder.dvdout.8.part.mpg had timing that was totally wrong/unseekable
-  mencoder.dvdoutmplayer.part.mpg was unseekable in avidemux
 
   avidemux mencoder.dvdout.2.mpg
     transition 00:59:57.389 86251
