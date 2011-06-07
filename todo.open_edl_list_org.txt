@@ -1,6 +1,8 @@
 (profanity parsing stuff is in other todo)
 tell them "exactly how to make super specific" cuts
 
+they can add their own buffer time periods :P
+
 use a database internally, with raw floats :P
 
 tell them how to "grab"
