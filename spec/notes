@@ -1,16 +1,20 @@
 up next:
+  mencoder dvd://1 -oac copy -ovc lavc -ofps 24000/1001 http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-telecine.html
   what about ripping section from fulli with the two?
     what was up with it differing from the other two?
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
   subtitles line up ? const. one...
   makemkv mac same frames when converted as pc?
   does fulli seem to agree?
-  OSS unmkv? mencoder?
-  does fulli save avidemux?
+  does fulli "save" avidemux?
 
 == makemkv to mpg OSOH ==
 
-conclusions: use tsmuxer, makemkv seems good frame-accurate-wise...
+conclusions: 
+  tsmuxer is quite good
+  makemkv seems great frame-accuracy-wise
+    also mplayer...
+  makem4v -> tsmuxer -> avidemux isn't enough
 
 tsmuxer cannot unmix handbrake's file.
 
@@ -292,6 +296,8 @@ appears that 29.97 is closer to "wall clock time" and DVD players tell you 1:00:
 
 == using handbrake's file for splitting ==
 
+I think it's accurate...and with conversion to fulli editable in avidemux :P
+
 using ffmpeg/mencoder against handbrake, they seemed to be a few seconds forward I think...sigh...
   TODO figure out how to use handbrake, if I ever need to <sigh> it's almost user friendly, dang!
   TODO try the parsers on the...handbrake fella somehow? avidemux?
@@ -375,7 +381,7 @@ avidemux on VLC grab:
   1:00:00 "once wa[a]s lost" audio, video appears messed up lips [looks like they are really grabbing raw data]
   top C of cast: 156622 01:48:52.449
 
-== AVS vs. avidemux ==
+== AVS vs. avidemux OSOH ==
   59:56.981 transition with OSOH.handbrake.m4v
   seems to get the audio right LOL. No frames but does have frame accurate seek.
   59:56.97 mplayer grab [!]
@@ -400,6 +406,11 @@ avidemux on VLC grab:
   newer avidemux:
     00:59:57.130 for OSOHhandbrake.m4v [close but no cigar--but what does AVS say it has?]
   
+  playing OSOH with mplayer resulted in *one* mpg_demux switching frames message, at the beginning...and yet this means avidemux was hosed?
+    I guess so, since its audio was very accurate, it has no video adjust, it is hosed.s
+    
+  AVS dvdout.7.mpg
+    transition: 59:56.994 [appears right on, this is accurate]
 
 == DVD player versus PC player various times ==
 
@@ -416,6 +427,7 @@ conclusions:
   mencoder didn't grab it all the way? but is md5 accurate, even with dvdnav or without [can disregard]
   VLC grabs it fine
   WMP on handbrake'd is around 29.97 -- couldn't play back the mplayer grab, guessed on the VLC grab
+  fulli on handbrake does "save" avidemux [full editable] [unfortunately that's handbrake...]
 
 speeds: ffmpeg: vertex 2 SSD: 105MB/s old HD desktop 58 MB/s
 
@@ -427,7 +439,10 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
 
 == OSOH ==
 
-  makemkv -> mpg:
+  mplayer -> mencoderfulli
+    plenty of "1 duplicate frame(s)!"
+
+  makemkv -> tsmuxer -> mpg:
     162838 frames total
     avidemux:
       audio off [as expected]
@@ -466,8 +481,10 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
   AviDemux on OSOH-handbrake.ffmpeg.full.avi
     1:00:00 saved a wretch [like] me (audio is way off the video, and off accurate)
       video is smoking "up" apex [right]
-      transition 59:56.96 89924
+      transition 59:56.96 frame 89924
       169781 total frames :P
+      didn't require video frame rate adjustment
+      so fulli'ing it didn't seem to hurt it, this way...
 
   mplayer.exe2 dvdoutmplayer.mpg:
     1:00:00 I once [w]as lost but now

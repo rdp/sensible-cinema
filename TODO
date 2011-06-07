@@ -21,8 +21,9 @@
   
 == yes do, un-ordered currently, from the various release options ==
 
+  tell them "use makemkv with tsmuxer to transform it to an mpeg, or use mplayer"
   donate tsmuxer
-  google "scripted dvd playback" adobe, one other, avisynth
+  google "scripted dvd playback" adobe, one other, avisynth dvd [?]
   check cp p.'s
   possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track in the EDL, then download either VLC or smplayer, then..."
   instructions: reference the sintel DVD :) (download it from my site here)
@@ -116,7 +117,6 @@
   delete unedited.fulli file automatically
     except if it's a specific scene run...
   investigate: can I use the zoomplayer max?
-  bounty avidemux handle: demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. sniff
   the final "edited.avi" really "could/should" be playable in WMP...
 
 == other lists ==
