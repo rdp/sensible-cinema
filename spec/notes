@@ -1,6 +1,5 @@
 up next:
-  what about ripping section from fulli with the two?
-    this might answer what was up with it differing (mencoder, ffmpeg from dvdout.8.mpg were different)
+  what about fulli'ing
   @home: subtitles line up ? const. one...
   @home: makemkv mac same frames when converted as pc? [lightning strike, at home]
   convert mpg to avi, machete/avidemux?
@@ -8,6 +7,8 @@ up next:
 == never try ==
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
   mencoder dvd://1 -oac copy -ovc lavc -ofps 24000/1001 http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-telecine.html # should set it right :P
+
+I think ps > ts ? and VLC will trust it?
 
 == makemkv to mpg OSOH ==
 
@@ -30,7 +31,7 @@ tsmuxer?
   
 mkvtoolnix doesn't work...
 
-maybe if I use ffmpeg to fulli it first...I can also translate it to mpeg?
+maybe if I use ffmpeg to fulli it first...
 
 My first question is...does handbrake and makemkv match, +- fulli
 
@@ -189,7 +190,6 @@ handbrake has "inconsistent" output (timings seem fine, however, huh?)
   avidemux:
     sound and audio work! :P
     "voice" at 14:33
-
 
 vlc Sintel.handbrake.m4v
   14:33 "voice"
@@ -379,9 +379,10 @@ avidemux on VLC grab:
 
 == AVS vs. avidemux OSOH/attempt fix avidemux ==
 
-  59:56.981 transition with OSOH.handbrake.m4v
-  seems to get the audio right LOL. No frames but does have frame accurate seek.
-  59:56.97 mplayer grab [!]
+  AVS
+    59:56.981 transition with OSOH.handbrake.m4v
+    seems to get the audio right LOL. No frames but does have frame accurate seek.
+    59:56.97 mplayer grab [!]
   
   AviDemux ffmpeg.fulli 59:56.96 without frame adjustment [!] (prolly doesn't even need the fulli, it's just the consistent frames it needs [?])
 
@@ -400,9 +401,14 @@ avidemux on VLC grab:
     lots of "1 duplicate frame(s)!"
     unseekable, with jerky video
     
-  newer avidemux:
-    00:59:57.130 for OSOHhandbrake.m4v [close but no cigar--but what does AVS say it has?]
-  
+  OSOHhandbrake.m4v
+    avidemux:
+      00:59:57.130 for  [close but no cigar]
+    AVS
+      worked great. transition 59:56.987 
+    machete 
+      won't open the mkv file
+
   playing OSOH with mplayer resulted in *one* mpg_demux switching frames message, at the beginning...and yet this means avidemux was hosed?
     I guess so, since its audio was very accurate, it has no video adjust, it is hosed.s
     
@@ -425,10 +431,7 @@ avidemux on VLC grab:
     
   avs on mkv raw sintel:
     seems to work great, took awhile loading :P
-    
-  avs on mkv raw OSOH:
-    worked great. transition 59:56.987 machete won't open the mkv file
-    
+  
 == DVD player versus PC player various times ==
 
 conclusions:
@@ -456,12 +459,48 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
 
 == splitting osoh ==
 
-"ideal" would be a transition at 1.987 I believe
+0.0334 is one
+
+ffprobe:
+  I think pts is what matterz over dts
+  duration_time doesn't seem to match LOL.
+  3594.904978 3594.955022 [3594.988411 3595.038456] 3595.071822
+  videos pts' at: 3596.906978 3596.957022, 3597.040456, 3597.073822, 3597.123878 so telling it 
+  last video: 6791.515056 1:13:11.52, or possibly 6791.431644 1:13:11.43
+    these don't match AVS precisely...no no...
+
+double check AVS: 
+
+  mplayer 59:56.991 (3596.991) (one at 3596.990411, next at 3597.040456 )
+  mkv 56.971 (with lots of back clicks...) 56.987 with 14 clicks... I think hitting the stop button does reset it. clicks divide by 2?
+    59:56.969 with lots of forward clicks...
+
+"ideal" would be a transition at 1.987 I believe (off 59:56.987)
 
 [-5,5]
   1.301 for (avidemux) change of scene for ffmpegdvdout.vlc.8.mpeg, ffmpegdvdoutmplayer.mpg
   2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe fulli from dvdoutmplayer ?]
     that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
+
+  ffmpeg splitting dvdoutmplayer.mencoderfulli.mpeg resulted in no audio avidemux, and the poor video that we saw before in avidemux [way off]
+    $ created it with mencoder filename.whatever -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac copy -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o output.mpeg 
+    mencoder splitting the same had audio [seemingly not accurate?], and the same way off video.  Seems that 
+    *that* fulli is *honestly* messed [same as in how_to I believe]
+    mencoder went really fast though :P
+    did have oac copy tho...
+    
+  mencoder splitting OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi:
+    audio was the same as the beginning of the movie LOL [needs to be re-transcoded?]
+    transition: 00:00:02.080 frame 52...hmm...maybe 3 frames off/late? hmm...well 3 frames (maybe 2) is better than 9 uh guess (still only 0.1s which...maybe acceptable...)
+    
+ OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg
+    not even VLC can play/open it LOL
+    $ splits it with ffmpeg -i OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi -vcodec copy -acodec copy -ss 3595 -t 10 OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg
+    that was handbrake I suppose...
+    
+  maybe I can survive with raw mpeg -> fulli ...
+  
+  AVS *might* be a tidge off, soo...
 
 == OSOH ==
 
