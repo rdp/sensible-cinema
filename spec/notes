@@ -428,6 +428,15 @@ avidemux on VLC grab:
   ffmpegified dvdoutmplayer avidemux (mpeg -> mpeg no transcoding):
     no audio, transition at 86250 00:59:57.347 (exactly same as normal mpeg)
   
+  avidemux on mkv raw sintel:
+    no video
+    
+  avs on mkv raw sintel:
+    seems to work great, took awhile loading :P
+    
+  avs on mkv raw OSOH:
+    worked great. transition 59:56.987 machete won't open the mkv file
+    
 == DVD player versus PC player various times ==
 
 conclusions:
