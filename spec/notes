@@ -1,12 +1,13 @@
 up next:
-  mencoder dvd://1 -oac copy -ovc lavc -ofps 24000/1001 http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-telecine.html
   what about ripping section from fulli with the two?
-    what was up with it differing from the other two?
+    this might answer what was up with it differing (mencoder, ffmpeg from dvdout.8.mpg were different)
+  @home: subtitles line up ? const. one...
+  @home: makemkv mac same frames when converted as pc? [lightning strike, at home]
+  convert mpg to avi, machete?
+
+== never try ==
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
-  subtitles line up ? const. one...
-  makemkv mac same frames when converted as pc?
-  does fulli seem to agree?
-  does fulli "save" avidemux?
+  mencoder dvd://1 -oac copy -ovc lavc -ofps 24000/1001 http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-telecine.html # should set it right :P
 
 == makemkv to mpg OSOH ==
 
@@ -332,6 +333,7 @@ handbrake -> ffmpeg I think sameq -> mencoder split
 dvd subs:
 
 869
+
 01:28:47,602 --> 01:28:49,126
 <i>...we have...</i>
 
@@ -358,6 +360,8 @@ monsters' inc. plays fine with CCCP+WMP in XP.  No 'where am I?' syndrome.
 that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
 
 == avidemux on ripped files ==
+
+my *guess* is that any transcoding will save it, anything else won't :( [bounty is out for it though!]
 
 avidemux barely off lips:
   mencoder -forceidx -oac copy -ovc copy  dvdoutmplayer.mpg -o yo3.mpg is unseekable
