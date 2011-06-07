@@ -1,20 +1,20 @@
 up next:
-  convert my makemkv's to mpg, whose do they match now?
   what about ripping section from fulli with the two?
     what was up with it differing from the other two?
-  handbrake: md5 consistent? accurate with other mkv?
-  handbrake on longer dvd's consistent frame-wise?
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
   subtitles line up ? const. one...
   makemkv mac same frames when converted as pc?
+  does fulli seem to agree?
+  OSS unmkv? mencoder?
+  does fulli save avidemux?
 
-== makemkv to mpg ==
+== makemkv to mpg OSOH ==
 
-conclusions: use tsmuxer, makemkv seems raw enough...
+conclusions: use tsmuxer, makemkv seems good frame-accurate-wise...
 
 tsmuxer cannot unmix handbrake's file.
 
-ffmpeg seems out: https://ffmpeg.org/trac/ffmpeg/ticket/177, even with June 3 version
+ffmpeg seems out as ts muxer: https://ffmpeg.org/trac/ffmpeg/ticket/177, even with June 3 version
   Ffmpeg.exe -i myfile.264 -i myfile.aac -vcodec copy -f mpegts -acodec copy output.ts
 
 mencoder "hurls" through it: 
@@ -28,7 +28,6 @@ mkvtoolnix doesn't work...
 maybe if I use ffmpeg to fulli it first...I can also translate it to mpeg?
 
 My first question is...does handbrake and makemkv match, +- fulli
-  *seems* like a 
 
 makemkv => tsmuxer => ts
   still needed frame shifter...
@@ -45,13 +44,19 @@ tsremux ?
 m2ts ?
 H264TSCutter ?
 
+speed indexing avidemux off blacky slow: 3 MB/s 
+tsmuxer blacky fast -> slow: 8 min 37 secs for 5.33 GB
+avidemux blacky fast: 38 MB/s...blacky slow started choking near the end...
+
 == c ==
 
 conclusions: mplayer's are consistent grabbing cross-platform
-  makemkv is consistent size-wise, same box
+  makemkv is consistent size-wise, same boxes...
   vlc seems to always be consistent with itself, frame-wise
-  vlc is off of mplayer by 0.3s, but not at the beginning so what the....
-  can discard vlc dvd
+  vlc is off of mplayer/mkv by 0.3s, but not at the beginning so what the....
+  can discard vlc dvd :)
+  one frame off is probably ok/accurate.
+  avidemux cannot read makemkv output.
 
 vlc dvd-straight  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
   at the end there was a menu but only for about 5s...hmm...
@@ -64,7 +69,7 @@ vlc dvdsimple
   that file plays in VLC without timestamps, with always 00:00, seeking takes forever :P
   plays in smplayer, timestamps/seeking way messed.
   avidemux: lookup and smile and breath 1:00:00  
-  188642 frames 02:11:07.951
+  188642 frames 02:11:07.951 (should be 188654 but that's ok...)
   transition back 2:00:00.533 frame 172640 (same with second copy)
   at home: 15 MB/s, 39% cpu
   total: 188642 frames, 2:11:07.951
@@ -90,7 +95,7 @@ mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
   a147eb922cb00eff5d3a25e155390380 *dvdout.mplayer.dvd.dumpstream.mpg
   a147eb922cb00eff5d3a25e155390380 *mplayer.dumpstream.2.mpg
   total: 188687 frames 2:11:09.828
-  fading in c: 111
+  fading in c: frame 111
   lightning hits ground: 188106 02:10:45.595 0.375
   
 they all have the beginning dot of the poof at 228...
@@ -106,14 +111,21 @@ widely different sizes:
 
 good news is vlc didn't seem to crash anymore
 
-makemkv: 11 MB/s, [says 4.5x] no pauses, 13.5 MB/s, 14.5 MB/s, seems to grow as it goes... 19 Mb/s...18...11:31
+makemkv -c-: 11 MB/s, [says 4.5x] no pauses, 13.5 MB/s, 14.5 MB/s, seems to grow as it goes... 19 Mb/s...18...11:31
   plays well with no freaky seeking in smplayer, timing "feels close or right on" white subtitles
-  plays well vlc, same, but with yellow subtitles [subtitles always enabled by default?]
-  appears to be a raw rip...
-  opens very slowly in avidemux at home...feels longer...3 minutes to load each time?
-  2:11:08.618 188658 frames total
-  had to set it to 24 frames
-  seems to have all the frames till end of D
+  plays well vlc, same, but with yellow subtitles [subtitles always enabled by default???]
+  avidemux
+    appears to be a raw rip...
+    opens very slowly in avidemux at home...feels longer...3 minutes to load each time?
+    2:11:08.618 188658 frames total
+    had to set it to 24 frames [? huh it worked once?]
+    no video, audio jerky r7149
+
+makemkv -> tsmuxer -> avidemux:
+  188657 frames total
+  transition: 172649 02:00:00.909 [didn't have to adjust frame rate]
+  lightning strikes: 188106 02:10:45.595
+  jerky audio but works [and video works]
 
 They start the same, then consistently get 9 frames off at some "hiccup" point...so one is wrong...
 
@@ -134,6 +146,9 @@ seems to be writing at about 4 MB/s, is in super time, 28% cpu
 makemkv mac: 3.9 MB/s  [2.9x]...5.0 MB/s...40% cpu
  5140185934 Jun  4 14:29 title00.mkv
  5140185934 Jun  4 22:29 title00.mkv # that's nice...pretty close :P
+
+avidemux matroska from blacky fast: 35 MB/s
+copy blacky slow to fast: 30 MB/s
 
 == disc id ==
 
