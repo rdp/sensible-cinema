@@ -9,57 +9,52 @@
   propagate wikipedia with list of realtimers etc.
     don't mention mplayer EDL, just link to wikipedia :P
   more build library
-  compare netflix timings et al
+  compare netflix/blu-ray timings et al
   
 == high prio like blocking bugs ==  
   
 == up next release/very next task: ==
 
-  notes todos
   high prio patents
   
 == yes do, un-ordered currently, from the various release options ==
 
-  tell them "use makemkv with tsmuxer to transform it to an mpeg, or use mplayer"
+  tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
+    "just look at the title track in the EDL, then..."
+  tell them "to edit easily..."
+    "you could watch it under mplayer with the OSD turned on" 
+      [+ button for same?]
+      "you could watch it with a normal DVD player (hardware or software, a la powerDDVD et al)"
+        add button for "convert from DVD Player [mplayer OSD, commercial]" to accurate timestamp [single timestamp]
+    "you could edit it in basically any editor--they are usually pretty accurate [instructions for powerproducer]"
+      windows DVD Maker is not accurate enough
+    "you could edit your file "raw" file "with avidemux, except video will be slightly off, but audio will be on"
+    "you could get timestamps from playing it back with VLC and watching the time, though VLC [or any GUI] is always slightly off."
   @mulder: dvdnav crashes
   check with blu-ray...does it match timing-wise? sub-title wise?
   donate tsmuxer, makemkv
   google "scripted dvd playback" adobe, one other, avisynth dvd [?]
   check cp p.'s
-  possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track in the EDL, then download either VLC or smplayer, then..."
   instructions: reference the sintel DVD :) (download it from my site here)
   note to google group...
   add an mencoder convert with mplayer_breaks button :P
-  tell them they 
-    need makemkv or anydvd :P
-  compare grab from mac, pc, same DVD
-  never download them from online
-  what about diferent muxer type for vlc? ps/ts
   youtube/hulu timings
-  subtitles: impass  assistance :)
+  subtitles: impass assistance :)
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
     package curl [?]
-  buy a few "pay" things, see if they are accurate...
-  figure out how to get avidemux to seek perfectly...some type of transform from raw? add a button for it?
-    some screencast on using it well?
-  add button "play from exactly here to here" in mplayer uh guess :P
-  what does mplayer do with -ss big_number past the end of an end [monster's inc]?
+  add button "play from exactly here to here" in [mplayer uh guess?] :P
+    what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
-  get LLC before "real" domain name
+  get LLC before a "real" domain name
   add profanity filter this file button
   remove some buttons by default ?
   always force them to have a DVD in the drive :P
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try my copy
-  try disney digital copy/amazon library "local download"
-  check if VLC still crashes on ripping that constitution fella, check mplayer on it, check it on other DVD's, check it with dvdnav vs. dvdsimple
-  legal:
-    rename the file to is_it_legal_to_copy_dvds, reference it
-    "we know x, y are not l..."
-    agree to abide, shouldn't in the US [?]
+  try disney digital copy/amazon library "local download"...
   C player:
     use DVD navigator
     just use mplayer EDL syntax, plus a title track :)
@@ -77,12 +72,9 @@
     note to them windows vista/7: use ac3filter [?]
   if it doesn't parse something it loops *forever* "error pooping" "error pooping"
   try buy delete lists from all x,y,z [?] maybe ask for them for free first?
-  @legal: it requires DVD 1st, and also tell them "make sure you have the drive in there if you ever watch it edited"
   the fake blanker EDL doesn't work well... [real fix: add another button "just watch the thing" even for real users?]
     also it propagates the filename with weird, for other later buttons: Test_Delete_File_for_if_you_want_to_watch_something_straight_edited_version
   donate menumeter $
-  just reference their (non local) copy of gplv1 etc.
-  create local new DL's to a separate, different folder
   that one button is broken...play with [s]mplayer unedited [?]
   tool tips for all buttons...tweak naming, too :P do something!
   the "play DVD with smplayer unedited" prompts for delete list
@@ -109,10 +101,9 @@
   tell them "you can open the file for more specific editing accuracy of timestamps via microsoft Windows Movie Maker" or whatever it is (try it out first :P)
     7: Windows Live Movie Maker
     previous: Windows Movie Maker
-  mplayer OSD optionally [?]
-  re-run with the several test DVD's
+  mplayer OSD [optionally [?]]
+  re-run with several owned DVD's
   another full pass on verbiage legal, etc.
-  better md5 with dll [?]
   port to OS X overall
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   delete unedited.fulli file automatically
@@ -315,10 +306,8 @@ warn when labels both exist and don't match...
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
-@mplayer is it really too slow, and there thus no hope for EDL working right? maybe it could change to be based off the get_time_pos ?  
-
-@smplayer: bounty or fix: their for their display [if they use get_time_pos isn't that enough]
-
+@smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]
+  @mplayer is it really too slow [link], and there thus no hope for EDL working right? maybe it could change to be based off the get_time_pos ?
 Also things skip-worthy include The prefix/endfix of Netflix
 series' that they run together( ex: Dr. Who has 4 episodes in a row, with 4 jarring
 main-title themes between them all.)   This type of thing

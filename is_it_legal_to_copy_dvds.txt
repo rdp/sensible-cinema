@@ -30,7 +30,7 @@ basically only saves parts from the original concatenated.  Only original conten
 pieces that don't have the profanity.
 Note also that fair use at times does allow one to "record" things for personal use/backup (for example off the TV).
 Note that sensible cinema does require the original DVD to be present when using it, also, to help enforce copy protection,
-at least for watching it/using from within sensible cinema itself.
+at least for watching it/using from within sensible cinema.  Certainly do not rip DVD's you don't own.
 
 If general, if it's not legal in your country, then don't use it!
 You are responsible for your actions and use of the program.
@@ -64,6 +64,10 @@ lists commits and changes and release notes, and is publicly available. And see 
 See also the README text file which contains some invention related notes.
 A more ancient history of various brainstorming thoughts was also described here:
 http://betterlogic.com/roger/?p=2618
+
+Never download files from the Internet and use those--we all know this is illegal.
+
+Note also that since SC requires larger raw JPEG's, this discourages piracy since those are usually for compressed videos, which don't work.
 
 NB: YOU MUST AGREE TO THE gplv3 in order to use this software.  See LICENSE.TXT file.
 

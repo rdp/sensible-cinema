@@ -1,9 +1,26 @@
-rup next:
+up next:
+  so...does it work with makemkv ts?
 
-  
+== ? ==
+
+conclusions: mencoder -forceidx can make a copied rip file play great in mencoder [and presumably be cut right?]
+  makemkv has no problems with resets.
+  VLC playing any mpeg *file* is actually pretty close to right on.
+
+dvdoutmplayer.mpg.mencoder.ofps.mpg did not save avidemux
+
+VLC playing any mpeg *file* is actually pretty accurate.  Oh the insanity...I guess the extra abstraction of reading from disc kills it.
+
+mplayer playing mplayergrab *does* reset internally...and osd also fails...interesting...
+  *however* running mencoder1 -forceidx c.mpg -ovc copy -oac copy -o c.mencoderidx.mpg *does fix it* (for mplayer anyway...)
+    unfortunately unseekable in avidemux...
+  makemkv doesn't reset ever...timestamps are I think 29.97 in that case (both OSD, other)
+    tsmuxer on that *lacks* timestamps at all in VLC, mplayer is 10 minutes off, it's in french [?]
+      splitting it goes a bit early (oh duh it has all the i-frames still...)
+      
 == splitting osoh/accuracy ==
 
-old way: rip/fulli with mencoder dvdnav/freaky, split with ffmpeg, join with mencoder
+old way: rip/fulli with mencoder dvdnav+fulli freaky, split with ffmpeg, join with mencoder
 
 mencoder filename -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac mp3lame -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o something.mpg
   avidemux on this had way off audio--video looked ok
@@ -48,7 +65,7 @@ double check AVS:
   ffmpeg splitting dvdoutmplayer.mencoderfulli.mpeg resulted in no audio avidemux, and the poor video that we saw before in avidemux [way off]
     $ created it with mencoder filename.whatever -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac copy -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o output.mpeg 
     mencoder splitting the same had audio [seemingly not accurate?], and the same way off video.  Seems that 
-    *that* fulli is *honestly* messed [same as in how_to I believe]
+    *that* fulli is *honestly* messed [same as in how_to I believe] except now I try it again later and it works? maybe -oac copy messed it up?
     mencoder went really fast though :P
     did have oac copy tho...
     
@@ -88,6 +105,7 @@ double check AVS:
   AVS can't seem to use dvdoutmplayer.mpg ?
 
 == never try ==
+  check if mencoder/ffmpeg go forward to backward to find the nearest I-frame...
   mencoder as ts muxer? vlc?
   virtualdubmod mpeg2...
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
@@ -424,7 +442,7 @@ handbrake -> ffmpeg I think sameq -> mencoder split
 == blu subtitles versus dvd ==
 
 National Treasure [2004] {English} [XviD].srt doesn't seem to match up with mplayer OSD, like 6 seconds off per hour?
-  mplayer OSD seems way off...or does it match powerdvd?
+  mplayer OSD seems way off...or actually match normal players whoa!?
 
 865
 01:28:47,322 --> 01:28:48,864
@@ -488,7 +506,7 @@ avidemux on VLC grab:
 
   AVS
     59:56.981 transition with OSOH.handbrake.m4v
-    seems to get the audio right LOL. No frames but does have frame accurate seek.
+    seems to get the audio right LOL. No frame counts but does seem to have frame accurate seek/timing
     59:56.97 mplayer grab [!]
   
   AviDemux ffmpeg.fulli 59:56.96 without frame adjustment [!] (prolly doesn't even need the fulli, it's just the consistent frames it needs [?])

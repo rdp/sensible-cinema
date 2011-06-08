@@ -90,8 +90,10 @@ module SensibleSwing
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 'Sensible Cinema is distributed under the gplv3. Click accept if you accept the terms of this license agreement.'
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read, understand, and accept the implications given in the LICENSE.TXT file'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+          'Sensible Cinema is distributed under the gplv3. Click accept if you accept the terms of this license agreement.'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
+          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, and accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
       end
 

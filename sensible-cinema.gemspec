@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.21.9"
+  s.version = "0.21.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-05-26}
+  s.date = %q{2011-06-08}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
+  s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
     "LICENSE.TXT",
     "README",
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "TODO",
     "VERSION",
     "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_RELEASE_ZIP_INSTEAD",
-    "bin/monkey.png",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
     "business_ideas.txt",
@@ -36,6 +35,7 @@ Gem::Specification.new do |s|
     "gocreatemode.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
+    "is_it_legal_to_copy_dvds.txt",
     "legal/md5s.txt",
     "legal/transcript_mute_vlc.txt",
     "legal2",
@@ -76,6 +76,7 @@ Gem::Specification.new do |s|
     "spec/edl_parser.spec.rb",
     "spec/frame_accurate.spec.rb",
     "spec/go_line.bat",
+    "spec/how_to",
     "spec/keyboard_input.spec.rb",
     "spec/mencoder_wrapper.spec.rb",
     "spec/mouse.spec.rb",
@@ -86,6 +87,7 @@ Gem::Specification.new do |s|
     "spec/overlayer.spec.rb",
     "spec/screen_tracker.spec.rb",
     "spec/sensible_cinema_gui.spec.rb",
+    "spec/subtitle_profanity_finder.spec.rb",
     "spec/swing_helpers.spec.rb",
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
@@ -95,6 +97,7 @@ Gem::Specification.new do |s|
     "todo.inventionzy.txt",
     "todo.open_edl_list_org.txt",
     "todo.subtitle",
+    "vendor/monkey.png",
     "vendor/readme.txt",
     "www/index.html",
     "zamples/edit_decision_lists/category descriptions.txt",

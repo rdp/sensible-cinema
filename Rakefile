@@ -113,6 +113,7 @@ end
 def cur_ver
   File.read('VERSION').strip
 end
+
 task 'zip' do
   name = 'sensible-cinema-' + cur_ver
   c = "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
@@ -134,14 +135,18 @@ task 'deploy' do
   raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"ln -s \\~/www/rogerdpackt28/sensible-cinema/releases/#{name} \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
 end
 
+task 'gem_release' do
+  FileUtils.rm_rf 'pkg'
+  Rake::Task["build"].execute
+  raise unless system("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
+  FileUtils.rm_rf 'pkg'
+end
+
 desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
-task 'full_release' => [:bundle_dependencies, :create_distro_dir, :build] do # :release sigh
+task 'full_release' => [:bundle_dependencies, :create_distro_dir] do # this is :release
   raise unless system("git pull")
   raise unless system("git push origin master")
-  gems = Dir['pkg/*.gem']
-  gems[0..-2].each{|f| File.delete f} # kill old versions...
-  raise unless system("#{Gem.ruby} -S gem push #{gems[-1]}")
-  FileUtils.rm_rf 'pkg'
+  Rake::Task["gem_release"].execute
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")

@@ -1,4 +1,4 @@
-== ==
+== 0.21.10 == [gem only release]
 
 The (offline) subtitle parser now generates descriptions better (to look for false positives),
 and accepts parameters more easily on the command line (examle, if you want to exclude "Thor"
@@ -9,6 +9,8 @@ Note that I obscure profanities within the code to a "euphemized" version for hu
 Note that VLC has had a "subtitle filter" capability for awhile: https://forum.videolan.org/viewtopic.php?f=7&t=90847
 
 Note that VLC can "upconvert" [ex: DVD's] so I guess that means since we support it, we support upconverting players.
+
+Tons of notes on how to use (or not use) various players/grabbers.
 
 == 0.21.9 == [gem only release]
 
