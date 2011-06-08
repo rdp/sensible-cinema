@@ -1,9 +1,10 @@
 == roadmap [for just tasks, see below though] ==
 
   release: cheap inventionzy, and medium inventionzy
-  release: C EDL+specific portion player
+  release: C EDL/specific portion [A,B] player
+  pull ripping/make mine take a file
   ?? ordering/looseness below ??
-  pull realtime players from mine/update todo/make mine take a file
+  pull realtime players from mine [?], update todo
   build library phase, 20 dvd's
   create web site/api
   propagate wikipedia with list of realtimers etc.
