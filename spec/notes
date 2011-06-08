@@ -1,8 +1,12 @@
 up next:
-  what about fulli'ing
+  what about fulli'ing plus the old way?
+    work?
+    avidemux?
   @home: subtitles line up ? const. one...
-  @home: makemkv mac same frames when converted as pc? [lightning strike, at home]
-  convert mpg to avi, machete/avidemux?
+  @home: makemkv mac same frames when converted as pc? [lightning strike, at home] [copy to pc first..]
+  mencoder as ts muxer?
+  ffmpeg offer bounty
+  virtualdubmod mpeg2...
   
 == splitting osoh/accuracy ==
 
@@ -11,8 +15,6 @@ old way: rip/fulli with mencoder dvdnav/freaky, split with ffmpeg, join with men
 mencoder filename -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac mp3lame -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o something.mpg
 
 ffmpeg -i filename -vcodec copy -acodec copy -ss 3595 -t 10 part1.avi
-
-
 
 painful virtualdubmod: http://forum.videohelp.com/threads/326615-Play-an-MTS-file-frame-by-frame-displaying-timecode-or-frame-number
 
@@ -234,6 +236,7 @@ seems to be writing at about 4 MB/s, is in super time, 28% cpu
 makemkv mac: 3.9 MB/s  [2.9x]...5.0 MB/s...40% cpu
  5140185934 Jun  4 14:29 title00.mkv
  5140185934 Jun  4 22:29 title00.mkv # that's nice...pretty close :P
+ avidemux (old) no video, tsmuxer doesn't work, so can't tell if accurate.
 
 avidemux matroska from blacky fast: 35 MB/s
 copy blacky slow to fast: 30 MB/s
