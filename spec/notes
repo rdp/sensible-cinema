@@ -1,9 +1,8 @@
 up next:
   what about fulli'ing plus the old way?
-    work?
+    does it work at all? just the old way...
     avidemux?
   @home: subtitles line up ? const. one...
-  @home: makemkv mac same frames when converted as pc? [lightning strike, at home] [copy to pc first..]
   mencoder as ts muxer?
   ffmpeg offer bounty
   virtualdubmod mpeg2...
@@ -245,9 +244,13 @@ makemkv mac: 3.9 MB/s  [2.9x]...5.0 MB/s...40% cpu
 
   via tsmuxer pc: 015257ed8192206d8b6f1d25ce2800a0 *title00.ts
     correct frame-age 106
-
-avidemux matroska from blacky fast: 35 MB/s
-copy blacky slow to fast: 30 MB/s
+  *can* edit it via avidemux mac
+    correct frame-age 106
+    md5[sum] takes 8 MB/s read speed [a bit slower than the desktop felt like half'ish for indexing]
+   mac tsmuxer MD5 (title00.ts) = 015257ed8192206d8b6f1d25ce2800a0
+ 
+avidemux matroska from blacky fast drive: 35 MB/s
+copy blacky slow drive to fast: 30 MB/s (until hit non defrag is my guess, then lik2 2 MB/s)
 
 == disc id ==
 
