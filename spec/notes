@@ -243,6 +243,9 @@ makemkv mac: 3.9 MB/s  [2.9x]...5.0 MB/s...40% cpu
  5140185934 Jun  4 22:29 title00.mkv # that's nice...pretty close :P
  avidemux (old) no video, tsmuxer doesn't work, so can't tell if accurate.
 
+  via tsmuxer pc: 015257ed8192206d8b6f1d25ce2800a0 *title00.ts
+    correct frame-age 106
+
 avidemux matroska from blacky fast: 35 MB/s
 copy blacky slow to fast: 30 MB/s
 
