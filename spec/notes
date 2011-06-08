@@ -3,6 +3,88 @@ up next:
   @home: subtitles line up ? const. one...
   @home: makemkv mac same frames when converted as pc? [lightning strike, at home]
   convert mpg to avi, machete/avidemux?
+  
+== splitting osoh/accuracy ==
+
+old way: rip/fulli with mencoder dvdnav/freaky, split with ffmpeg, join with mencoder
+
+mencoder filename -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac mp3lame -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o something.mpg
+
+ffmpeg -i filename -vcodec copy -acodec copy -ss 3595 -t 10 part1.avi
+
+
+
+painful virtualdubmod: http://forum.videohelp.com/threads/326615-Play-an-MTS-file-frame-by-frame-displaying-timecode-or-frame-number
+
+machete can't open mpeg avi's :(
+
+0.0334 is length of one...except then it ignores that :P
+
+ffprobe (dvdoutmplayer):
+  I think pts is what matterz over dts
+  duration_time doesn't seem to match LOL.
+  3594.904978 3594.955022 [3594.988411 3595.038456] 3595.071822
+  videos pts' at: 3596.906978 3596.957022, 3597.040456, 3597.073822, 3597.123878 so telling it 
+  last video: 6791.515056 1:13:11.52, or possibly 6791.431644 1:13:11.43
+    these don't match AVS precisely...no no...
+  first video: pts_time=0.280633 though one was N/A, so what is AVS's 0.016 ? nothing matches? (unless they have some internal counter they're "matching" against it... hmm...)
+
+double check AVS: 
+
+  mplayer 59:56.991 (3596.991) (one at 3596.990411, next at 3597.040456 )
+  mkv 56.971 (with lots of back clicks...) 56.987 with 14 clicks... I think hitting the stop button does reset it. clicks divide by 2?
+    59:56.969 with lots of forward clicks...
+    
+  says sum is 1:53:11.334
+
+"ideal" would be a transition at 1.987 I believe (off 59:56.987)
+
+[-5,5]
+  1.301 for (avidemux) change of scene for ffmpegdvdout.vlc.8.mpeg, ffmpegdvdoutmplayer.mpg
+  2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe fulli from dvdoutmplayer ?]
+    that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
+
+  ffmpeg splitting dvdoutmplayer.mencoderfulli.mpeg resulted in no audio avidemux, and the poor video that we saw before in avidemux [way off]
+    $ created it with mencoder filename.whatever -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac copy -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o output.mpeg 
+    mencoder splitting the same had audio [seemingly not accurate?], and the same way off video.  Seems that 
+    *that* fulli is *honestly* messed [same as in how_to I believe]
+    mencoder went really fast though :P
+    did have oac copy tho...
+    
+  mencoder splitting OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi:
+    audio was the same as the beginning of the movie LOL [needs to be re-transcoded?]
+    transition: 00:00:02.080 frame 52...hmm...maybe 3 frames off/late? hmm...well 3 frames (maybe 2) is better than 9 uh guess (still only 0.1s which...maybe acceptable...)
+    
+ OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg
+    not even VLC can play/open it LOL
+    $ splits it with ffmpeg -i OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi -vcodec copy -acodec copy -ss 3595 -t 10 OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg
+    that was handbrake I suppose...
+    
+  maybe I can survive with raw mpeg -> fulli ...
+  
+  AVS *might* be a tidge off, too...but I'm starting to think it might be spot on...but maybe not...
+
+  avidemux on "mp4'ed" ffmpeg dvdoutmplayer:
+    transition 00:59:56.963 # maybe machete was rounding this up?
+
+  dvdoutmplayer.ffmpeg-copy.ffmpeg.mpg [NB avidemux likes this much better than avi!] 1.3s [like the old one...]
+  
+  with big avi's avidemux always says "rebuilding frames", also it did not fix avidemux to become frame accurate, with the normal lossless mpeg's in there.
+    cannot avidemux seek, or rather it is truly painful! gah!
+    cannot seeming AVS seek? dvdoutmplayer.ffmpeg.copy.avi
+
+ OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi
+   when played in VLC, seemed to transition at about 59:56.9'ish
+  
+ OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg unplayable in even VLC
+
+ dvdoutmplayer.mpg.ffmpeg.mpg.ffmpegcopy.10.mpg played fine 1.3s, maybe it's an mp3 ffmpeg splitter bug thing?
+    from avidemux it's cutting at (albeit useless) 00:59:55.720 
+
+  re-avi or mpeg'ing with ffmpeg doesn't save avidemux. k?
+    plus re-mpegin'g it's unopenable with AVS Editor
+  
+  AVS can't seem to use dvdoutmplayer.mpg ?
 
 == never try ==
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
@@ -457,50 +539,6 @@ appears smplayer is "like a second" or something behind mplayer, and mplayer doe
 
 are all windows GUI wrapper players internally inconsistent, except maybe VLC which is still itself "a tidge off"?
 
-== splitting osoh ==
-
-0.0334 is one
-
-ffprobe:
-  I think pts is what matterz over dts
-  duration_time doesn't seem to match LOL.
-  3594.904978 3594.955022 [3594.988411 3595.038456] 3595.071822
-  videos pts' at: 3596.906978 3596.957022, 3597.040456, 3597.073822, 3597.123878 so telling it 
-  last video: 6791.515056 1:13:11.52, or possibly 6791.431644 1:13:11.43
-    these don't match AVS precisely...no no...
-
-double check AVS: 
-
-  mplayer 59:56.991 (3596.991) (one at 3596.990411, next at 3597.040456 )
-  mkv 56.971 (with lots of back clicks...) 56.987 with 14 clicks... I think hitting the stop button does reset it. clicks divide by 2?
-    59:56.969 with lots of forward clicks...
-
-"ideal" would be a transition at 1.987 I believe (off 59:56.987)
-
-[-5,5]
-  1.301 for (avidemux) change of scene for ffmpegdvdout.vlc.8.mpeg, ffmpegdvdoutmplayer.mpg
-  2.102 for (avidemux) change of scene ffmpeg.mencoder.dvdoutmplayer.mpg [what is that anyway maybe fulli from dvdoutmplayer ?]
-    that looks like an odd difference.  Except maybe they went in different directions searching for an iframe...
-
-  ffmpeg splitting dvdoutmplayer.mencoderfulli.mpeg resulted in no audio avidemux, and the poor video that we saw before in avidemux [way off]
-    $ created it with mencoder filename.whatever -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac copy -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o output.mpeg 
-    mencoder splitting the same had audio [seemingly not accurate?], and the same way off video.  Seems that 
-    *that* fulli is *honestly* messed [same as in how_to I believe]
-    mencoder went really fast though :P
-    did have oac copy tho...
-    
-  mencoder splitting OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi:
-    audio was the same as the beginning of the movie LOL [needs to be re-transcoded?]
-    transition: 00:00:02.080 frame 52...hmm...maybe 3 frames off/late? hmm...well 3 frames (maybe 2) is better than 9 uh guess (still only 0.1s which...maybe acceptable...)
-    
- OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg
-    not even VLC can play/open it LOL
-    $ splits it with ffmpeg -i OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi -vcodec copy -acodec copy -ss 3595 -t 10 OTHER_SIDE_OF_HEAVEN-1handbrake.ffmpeg.fulli.avi.ffmpeg.10.mpg
-    that was handbrake I suppose...
-    
-  maybe I can survive with raw mpeg -> fulli ...
-  
-  AVS *might* be a tidge off, soo...
 
 == OSOH ==
 
