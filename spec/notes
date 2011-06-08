@@ -216,7 +216,12 @@ makemkv -> tsmuxer -> avidemux:
   transition: 172649 02:00:00.909 [didn't have to adjust frame rate]
   lightning strikes: 188106 02:10:45.595
   jerky audio but works [and video works]
-
+  
+06/04/2011  11:26 AM     5,140,185,916 title00.mkv
+06/07/2011  10:22 PM     5,330,395,396 title00.ts
+06/07/2011  10:27 PM         5,659,886 title00.ts.idx
+   5,140,185,916 title00.mkv other one, 934 on mac
+  
 They start the same, then consistently get 9 frames off at some "hiccup" point...so one is wrong...
 
 dumpstream mac: [md5 reads at 23 MB/s]
