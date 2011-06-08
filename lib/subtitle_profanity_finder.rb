@@ -52,7 +52,7 @@ module SubtitleProfanityFinder
 
     profanities = {'hell' => 'heck',
       'g' +
-      'o' + 100.chr => 'g..', 'g' +
+      'o' + 100.chr => '...', 'g' +
       111.chr + 
       100.chr +
       's' => 'g...',
@@ -120,7 +120,7 @@ end
 
 if $0 == __FILE__
   if ARGV.empty?
-    p 'syntax: filename.srt prof1 sanitized_equivalent1 prof2 sanitized_equivalent2'
+    p 'syntax: filename.srt [prof1 sanitized_equivalent1 prof2 sanitized_equivalent2 ...]'
     exit
   else
     print SubtitleProfanityFinder.edl_output ARGV

@@ -1,23 +1,23 @@
-up next:
-  what about fulli'ing plus the old way?
-    does it work at all? just the old way...
-    avidemux?
-  @home: subtitles line up ? const. one...
-  mencoder as ts muxer?
-  ffmpeg offer bounty
-  virtualdubmod mpeg2...
+rup next:
+
   
 == splitting osoh/accuracy ==
 
 old way: rip/fulli with mencoder dvdnav/freaky, split with ffmpeg, join with mencoder
 
 mencoder filename -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac mp3lame -vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001 -o something.mpg
-
+  avidemux on this had way off audio--video looked ok
+  avs on this: unseekable
+  
 ffmpeg -i filename -vcodec copy -acodec copy -ss 3595 -t 10 part1.avi
+  transition at 1.835 frame 55 that actually might be right...wow it actually seemed to work I am *flabberghasted*
+  avidemux can open it well
+  AVS can open it, but not seek nor play it [useless]
 
-painful virtualdubmod: http://forum.videohelp.com/threads/326615-Play-an-MTS-file-frame-by-frame-displaying-timecode-or-frame-number
+the painful virtualdubmod: http://forum.videohelp.com/threads/326615-Play-an-MTS-file-frame-by-frame-displaying-timecode-or-frame-number
 
 machete can't open mpeg avi's :(
+  can't open anything from the old work flow...guess it's out.
 
 0.0334 is length of one...except then it ignores that :P
 
@@ -88,10 +88,11 @@ double check AVS:
   AVS can't seem to use dvdoutmplayer.mpg ?
 
 == never try ==
+  mencoder as ts muxer? vlc?
+  virtualdubmod mpeg2...
   mkv to mpg? mencoder -ovc copy -oac copy -idx -o <name of the merged file> <files you want to be merged>
   mencoder dvd://1 -oac copy -ovc lavc -ofps 24000/1001 http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-telecine.html # should set it right :P
-
-I think ps > ts ? and VLC will trust it?
+  I think ps > ts ? and VLC will trust it? [does it avidemux help?]
 
 == makemkv to mpg OSOH ==
 
@@ -146,6 +147,11 @@ conclusions: mplayer's are consistent grabbing cross-platform
   can discard vlc dvd :)
   one frame off is probably ok/accurate.
   avidemux cannot read makemkv output.
+
+timing "cairo next week" powerdvd, "10 %" vlc, mplayer's OSD "cairo next week" [!]
+  mplayer1 dvd://1
+  
+  mpui has the same "crash" with dvdvnav...
 
 vlc dvd-straight  dvd://f:\@1 --sout "#standard{access=file,mux=ts,dst=dvdout.vlc.dvd.3.mpg}" vlc://quit caused it to go past the end of the title and just keep looping oddly :P
   at the end there was a menu but only for about 5s...hmm...
@@ -415,7 +421,10 @@ handbrake -> ffmpeg I think sameq -> mencoder split
   avidemux
     2.04 [pretty close...interesting]
 
-== blu sub versus dvd ==
+== blu subtitles versus dvd ==
+
+National Treasure [2004] {English} [XviD].srt doesn't seem to match up with mplayer OSD, like 6 seconds off per hour?
+  mplayer OSD seems way off...or does it match powerdvd?
 
 865
 01:28:47,322 --> 01:28:48,864
@@ -475,6 +484,8 @@ avidemux on VLC grab:
 
 == AVS vs. avidemux OSOH/attempt fix avidemux ==
 
+  powerproducer has an edit option, seems accurate [!] 59:56.96 transition, audio is on
+
   AVS
     59:56.981 transition with OSOH.handbrake.m4v
     seems to get the audio right LOL. No frames but does have frame accurate seek.
@@ -486,8 +497,6 @@ avidemux on VLC grab:
     maybe mencoder with -idx is good nuff to fix it for avidemux?
 
   ffmpeg on OSOH.handbrake.m4v *fail* 12GB, freezes Avidemux, no video VLC
-  
-  TODO: ffmpeg on mplayer straight, avidemux + idx on mplayer straight => avidemux
   
   ffmpegifying mplayerraw: no audio in avidemux, same frame: 28650 00:59:57.347
   [mencoder, ffmpeg both maxed out on cpu with no transcoding [?]]
@@ -501,7 +510,7 @@ avidemux on VLC grab:
     avidemux:
       00:59:57.130 for  [close but no cigar]
     AVS
-      worked great. transition 59:56.987 
+      loaded great. transition 59:56.987 
     machete 
       won't open the mkv file
 
@@ -527,6 +536,12 @@ avidemux on VLC grab:
     
   avs on mkv raw sintel:
     seems to work great, took awhile loading :P
+    
+  avs on dvdoutmplayer.mpg:
+    cannot seek
+  
+  avs on mencoder.fulli.mpg (of the above):
+    cannot seek or play...is this normal? Is it just me?
   
 == DVD player versus PC player various times ==
 

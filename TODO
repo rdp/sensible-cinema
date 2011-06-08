@@ -15,13 +15,15 @@
   
 == up next release/very next task: ==
 
-  some timing thing 'er other...
+  notes todos
   high prio patents
   
 == yes do, un-ordered currently, from the various release options ==
 
   tell them "use makemkv with tsmuxer to transform it to an mpeg, or use mplayer"
-  donate tsmuxer
+  @mulder: dvdnav crashes
+  check with blu-ray...does it match timing-wise? sub-title wise?
+  donate tsmuxer, makemkv
   google "scripted dvd playback" adobe, one other, avisynth dvd [?]
   check cp p.'s
   possibly just say "I do it from file, here's how to most easily rip to a file, just look at the title track in the EDL, then download either VLC or smplayer, then..."
@@ -34,7 +36,7 @@
   never download them from online
   what about diferent muxer type for vlc? ps/ts
   youtube/hulu timings
-  subtitles: impass :)
+  subtitles: impass  assistance :)
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
@@ -312,6 +314,10 @@ warn when labels both exist and don't match...
 @mplayer you cannot convert mkv files correctly you silly!
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+
+@mplayer is it really too slow, and there thus no hope for EDL working right? maybe it could change to be based off the get_time_pos ?  
+
+@smplayer: bounty or fix: their for their display [if they use get_time_pos isn't that enough]
 
 Also things skip-worthy include The prefix/endfix of Netflix
 series' that they run together( ex: Dr. Who has 4 episodes in a row, with 4 jarring
