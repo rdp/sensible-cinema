@@ -42,11 +42,12 @@ require_relative '../lib/drive_info'
 require 'whichr'
 require 'ruby-wmi'
 
-# must put mencoder first, as it has a working mplayer.exe in it...
-vendor = File.expand_path(File.dirname(__FILE__)) + '/../vendor'
-# XX do we need to_filename though?
+vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
 
-ENV['PATH'] = (vendor + '/cache/mencoder').to_filename + ';' + (vendor + '/cache').to_filename + ';' + ENV['PATH']
+for name in ['.', 'mencoder', 'ffmpeg']
+  # put them all before the old path
+  ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
+end
 
 installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
 
@@ -387,7 +388,7 @@ module SensibleSwing
         p 'license exited early...exiting'
         System.exit 1
       end
-      p 'confirmed license'
+      p 'confirmed license noted: ' + license_name
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
@@ -397,9 +398,9 @@ module SensibleSwing
     end
     
     def download_7zip
-      Dir.mkdir('vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
+      Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
       unless File.exist? 'vendor/cache/7za.exe'
-        Dir.chdir('/vendor/cache') do
+        Dir.chdir('vendor/cache') do
           print 'downloading unzipper...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
@@ -409,32 +410,30 @@ module SensibleSwing
       end
     end
     
-    def download_zip_to english_name = "Mplayer (6MB)", url= "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", to_this = "mencoder"
+    def download_zip_to english_name, url, to_this
+        download_7zip
         Dir.chdir('vendor/cache') do
           file_name = url.split('/')[-1]
           print "downloading #{english_name} ..."
-#          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           download(url, file_name)
           system_blocking("7za e #{file_name} -y -o#{to_this}")
-          puts 'done'
+          puts 'done ' + english_name
           # creates vendor/cache/mencoder/mencoder.exe...
         end
-      
     end
     
     def check_for_dependencies
       #ffmpeg = RubyWhich.new.which('ffmpeg')
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg-git-1929807-win32-static/ffmpeg.exe')
-      if false#!File.exist?(ffmpeg_exe_loc)
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+      if !File.exist?(ffmpeg_exe_loc)
         show_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        download_zip_to "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
       end
-      
-      # mencoder_array = RubyWhich.new.which('mencoder')
+      raise unless File.exist?(ffmpeg_exe_loc)
       
       if !File.exist?('vendor/cache/mencoder/mencoder.exe')
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        download_7zip
-        download_zip_to
+        download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder"
       end
       
       if ARGV.index('--create-mode')
