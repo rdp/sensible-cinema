@@ -442,7 +442,7 @@ module SensibleSwing
         if(path.length == 0)
           # this one has its own license...
           show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it, then restart sensible cinema.", 
+          Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
           "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
           System.exit(1)
