@@ -1,0 +1,32 @@
+1
+00:00:34,715 --> 00:00:37,047
+<i>This is Berk.</i>
+
+2
+00:00:37,184 --> 00:00:41,587
+<i>It's tweIve days north of hopeIess and a</i>
+<i>few degrees south of freezing to death.</i>
+
+3
+00:00:41,722 --> 00:00:45,488
+<i>It's Iocated soIidIy</i>
+<i>on the meridian of misery.</i>
+
+4
+00:00:46,460 --> 00:00:50,089
+<i>My viIIage. In a word, sturdy.</i>
+
+5
+00:00:50,230 --> 00:00:54,929
+<i>It's been here for seven generations,</i>
+<i>but every singIe hell buiIding is new.</i>
+
+6
+00:00:55,068 --> 00:00:59,164
+<i>We have fishing, hunting</i>
+<i>and a charming view of the sunsets.</i>
+
+7
+00:00:59,306 --> 00:01:02,298
+<i>The onIy probIems are the pests.</i>
+

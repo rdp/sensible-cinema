@@ -12,7 +12,7 @@
 ],
 
 "name" => "Legend of the Guardians the owls of Gahoole",
-"disk_unique_id" => "43429521aac41a983fc32dbc3ebbe28e",
+"disk_unique_id" => "43429521aac41a983fc32dbc3ebbe28e", # 55f39d15a7edc259325daefec2b476b2 non rental
 
 "not edited out stuff" => "end battle scene is a tidge tense for youngsters. Reasonably good feeling at end.",
 "mplayer_dvd_splits" => [], # (none)

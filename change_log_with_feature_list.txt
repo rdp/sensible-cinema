@@ -1,3 +1,31 @@
+== ==
+
+== 0.21.10 == [gem only release]
+
+The (offline) subtitle parser now generates descriptions better (to look for false positives),
+and accepts parameters more easily on the command line (examle, if you want to exclude "Thor"
+then its ruby lib\subtitle_profanity_finder.rb filename.srt Thor t....)
+
+Note that I obscure profanities within the code to a "euphemized" version for human use.
+
+Note that VLC has had a "subtitle filter" capability for awhile: https://forum.videolan.org/viewtopic.php?f=7&t=90847
+
+Note that VLC can "upconvert" [ex: DVD's] so I guess that means since we support it, we support upconverting players.
+
+Tons of notes on how to use (or not use) various players/grabbers.
+
+== 0.21.9 == [gem only release]
+
+Add profanity subtitle auto-parser-generator, which can parse .srt's, extract timestamps, look for profanity.  also make it "optional" for specific profanities. (offline analyzer, doesn't include auto-OCR or what not)
+This was inspired by the python program, and also an email'ed program to me that did this in C# with XBMC/mplayer EDL syntax.
+Also it has optional profanities.
+
+Note well that avidemux can extract subtitles from tracks (example: from DVD) through training it on character recognition (trainable), and parses it out for you appropriately.  It's a separate, unrelated open source project.  Note also that VLC and other players can overlay arbitrary .srt subtitles over movies, and also they can display DVD subtitles correctly.  See also the python movie content editor.  Also note that several programs can just use normal OCR to extract .srt's from subtitle overlays/tracks.
+
+Demo of auto-adjusted time signature, to map for instance a timestamps to another player, or what not.
+
+Also some cross platform capabilities.
+
 == 0.21.9 == (released same day as 0.21.8 to try to clarify quickly)
 
 Added some lists of previously existing work.

@@ -1,8 +1,23 @@
 (profanity parsing stuff is in other todo)
+tell them "exactly how to make super specific" cuts
 
+they can add their own buffer time periods :P
+
+use a database internally, with raw floats :P
+
+tell them how to "grab"
+
+"your library" of rippeds with pictures et al LOL
+
+allow for "details" on entry uh guess...
 
 this file also includes EDL creationzy stuffs
 
+can accept in miriad time signatures
+
+"realtime? you google it" (EDL that is)
+
+maybe can/should interface with themoviedb.org ?
 
 cross-over stuff:
   can sync the whole thing package
@@ -12,8 +27,6 @@ cross-over stuff:
 do research auto-subtitler MD5 they use for dvd's what is it?  Is there any standard? Anyone? what about sorting the ifo's is that reasonably close to how they naturally come/match other guy?
 
 eventually be like DVD profiler (imdb, kids in mind, UPC, images, maybe more?)
-
-perfect the frame accurate splitter...is it fast enough in ruby, too?
 
 wikipedia realtime
 
@@ -146,3 +159,7 @@ should I partner with dvd profiler? more easy? cheap?
 is there anybody out there DVD subtitle-zy that has an algorithm for unique-ifying DVD's? anybody?
 
   We are not and cannot be held legally responsible for any third party use of this software (much like Microsoft et al cannot be held responsible for the use of Windows in illegal activities, etc.). Additionally we do <strong>not</strong> track the use of phpBB software in any way.
+
+
+dvddb:
+  english for the chapters, links to subtitles [!]

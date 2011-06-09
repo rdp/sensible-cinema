@@ -28,7 +28,8 @@ class MencoderWrapper
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
         out = '@rem '
       end
-      audio_codec = these_settings['audio_codec'] || 'lavc' # not copy...sniff...or you can't hear cars...
+      audio_codec = these_settings['audio_codec'] || 'mp3lame' # not copy...sniff...or you can't hear cars... LODO
+      # LODO do I need mp3lame for sintel, or can I get away with lavc?
       video_opts = "-vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
       out + "mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"
     end
@@ -75,9 +76,7 @@ class MencoderWrapper
         FileUtils.rm to_here_final_file # raises on deletion failure...which is what we want I think...hopefully.
       end
       out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
-      # LODO only do this if they want to watch it on their computer, with something other than smplayer, or want to make it smaller, as it takes *forever* longer to run...
-      # or is ffdshow enough without this?
-      out += "@rem old way... call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
+      out += "@rem old DISABLED join way... call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
       
       delete_prefix = ""#delete_partials ? "" : "@rem "
 
@@ -93,7 +92,7 @@ class MencoderWrapper
       endy = endy - start - 0.001
       # very decreased volume is like muting :)
       # LODO can we copy more here? ntsc-dvd supposedly remuxes...
-      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO the ac3 must match the copy...hmm...
+      codecs = should_mute ? "-vcodec copy -acodec ac3 -vol 0 " : "-vcodec copy -acodec copy " # LODO the ac3 must match the other copy codec ?
       partial_filename = to_here_final_file + '.' + (@idx += 1).to_s + '.avi'
       if File.exist? partial_filename
         FileUtils.rm partial_filename

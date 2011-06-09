@@ -23,8 +23,8 @@ require 'whichr' # gem
 # ENV['PATH'] = im_path.gsub('/', "\\") + ';' + ENV['PATH']
 
 if RubyWhich.new.which('identify').length == 0 || RubyWhich.new.which('convert').length == 0
- puts 'appears you do not have imagemagick installed (or not in your path) -- please install it first! http://www.imagemagick.org/script/binary-releases.php'
- sleep 100
+ puts 'appears you do not have imagemagick installed (or not in your path) -- please download and install it first! http://www.imagemagick.org/script/binary-releases.php'
+ raise
 end
 
 # helper for OCR'ing single digits that were screen captured

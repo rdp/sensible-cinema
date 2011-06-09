@@ -22,13 +22,12 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_
 begin
   require 'sane' # failure here means you haven't bundled your dependencies... [$ jruby -S rake bundle_dependencies after doing jruby -S gem install sensible-cinema ]
 rescue LoadError
-  p 'warning, loading full rubygems for your developers convenient LODO and'
-  require 'rubygems'
-  require 'sane'
+  p 'warning, didnt find bundled gems, loading full rubygems for developer convenience [run rake bundle_dependencies]'
+  raise
 end
 
-raise 'need jruby' unless OS.jruby?
-raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2'
+raise 'need jruby' unless OS.java?
+raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2' # may not need this since we still accomodate for so many oddities :P
 
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
@@ -42,10 +41,12 @@ require_relative '../lib/drive_info'
 require 'whichr'
 require 'ruby-wmi'
 
-# must put mencoder first, as it has a working mplayer.exe in it...
-vendor = File.expand_path(File.dirname(__FILE__)) + '/../vendor'
-# XX do we need to_filename though?
-ENV['PATH'] = ENV['PATH'] + ';' + (vendor + '/cache/mencoder').to_filename + ';' + (vendor + '/cache').to_filename
+vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
+
+for name in ['.', 'mencoder', 'ffmpeg']
+  # put them all before the old path
+  ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
+end
 
 installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
 
@@ -58,6 +59,8 @@ import 'javax.swing.ImageIcon'
 module SensibleSwing
   VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip
   puts "v. " + VERSION
+  
+  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # sigh
   
   class MainWindow < JFrame
 
@@ -88,8 +91,10 @@ module SensibleSwing
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 'Sensible Cinema is distributed under the gplv3. Click accept if you accept this agreement.'
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'LICENSE.TXT file', File.expand_path(File.dirname(__FILE__) + "/../LICENSE.TXT"), 'LICENSE.TXT file', 'I acknowledge that I have read, understand, and accept the implications given in the LICENSE.TXT file'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+          'Sensible Cinema is distributed under the gplv3. Click accept if you accept the terms of this license agreement.'
+        show_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
+          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, and accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
       end
 
@@ -129,12 +134,12 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD on computer edited (realtime -- mplayer EDL)", false, true )
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime -- mplayer EDL)", false, true )
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
       
-      @play_smplayer = new_jbutton( "Watch DVD on computer unedited (realtime smplayer)", true).on_clicked {
+      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
         play_dvd_smplayer_unedited
       }
       
@@ -226,33 +231,37 @@ module SensibleSwing
       increment_button_location
 
       setSize @button_width+80, @starting_button_y
-      setIconImage(ImageIcon.new(__dir__ + "/monkey.png").getImage())
+      setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
     end
     
     def create_brand_new_edl
       drive, volume, md5 = choose_dvd_drive
-      name = get_user_input("Enter DVD name for #{volume}")
+      english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
 
 "mutes" => [
-  "0:00:01.0", "0:00:02.0", "profanity", "da..",
+  # example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
 ],
 
 "blank_outs" => [
-  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  # example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
-"name" => "#{name}",
+"name" => "#{english_name}",
+"volume_name" => "#{volume}",
 "disk_unique_id" => "#{md5}",
 
-# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this field right.
+# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
-# "closing thoughts" => "still a fairly dark movie, overall",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for whatever reason.  See http://goo.gl/yMfqX
+# "closing thoughts" => "still...",
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
         EOL
-      filename = EDL_DIR + "\\" + name.gsub(' ', '_') + '.txt'
+      # frame0 is the name of our window LOL tough to avoid that one...
+      filename = EDL_DIR + "\\" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
@@ -290,7 +299,7 @@ module SensibleSwing
         out.close
         $?.exitstatus == 0 # 0 means success
       else
-        system_original command
+        raise command + ' failed' unless system_original command
       end
     end
     
@@ -336,8 +345,12 @@ module SensibleSwing
       # oh the insanity of the console UI...LODO more user friendly player
       @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
-      play_this_mplayer ||= "mplayer dvd://#{title_track} -vo direct3d" # direct3d for windows 7 nvidia's sake yipes
-      command =  "#{play_this_mplayer} -nocache -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      play_this_mplayer ||= "mplayer dvd://#{title_track} " 
+      # direct3d for windows 7 nvidia's sake yipes
+      command =  "#{play_this_mplayer} -vo direct3d -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      # -framedrop for slower systems, once had -nocache, but that's only for dvdnav:// I think
+      # -hardframedrop might help a bit but hurts so much too
+      #dvd:// bcause the bundled mplayer crashes with dvdnav LOL
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
@@ -374,7 +387,7 @@ module SensibleSwing
         p 'license exited early...exiting'
         System.exit 1
       end
-      p 'confirmed license'
+      p 'confirmed license noted: ' + license_name
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
@@ -383,33 +396,41 @@ module SensibleSwing
       Kernel.print *args # avoid bin\sensible-cinema.rb:83:in `system_blocking': cannot convert instance of class org.jruby.RubyString to class java.awt.Graphics (TypeError)
     end
     
-    def check_for_dependencies
-      ffmpeg = RubyWhich.new.which('ffmpeg')
-      if ffmpeg.length == 0
-        show_blocking_message_dialog("It appears that you need to install a dependency: imagemagick.\n
-        Click ok to be directed to its download website.\nYou'll probably want to download and run the \"windows-dll.exe\" http package.\n
-        Then restart Sensible-Cinema/console window.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-        system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
-        java.lang.System.exit(1)
-      end
-      
-      mencoder = RubyWhich.new.which('mencoder')
-      if mencoder.length == 0
-        show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
-        ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
-        Dir.mkdir(vendor_cache) unless File.directory? vendor_cache # development may not have it created yet...
-        Dir.chdir(vendor_cache) do
+    def download_7zip
+      Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
+      unless File.exist? 'vendor/cache/7za.exe'
+        Dir.chdir('vendor/cache') do
           print 'downloading unzipper...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-          system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
-          # now we have 7za.exe
-          print 'downloading mencoder.7z (6MB) ...'
-#          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
-          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder.7z")
-          system_blocking("7za e mencoder.7z -y -omencoder")
-          puts 'done'
+          system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
+      end
+    end
+    
+    def download_zip_to english_name, url, to_this
+        download_7zip
+        Dir.chdir('vendor/cache') do
+          file_name = url.split('/')[-1]
+          print "downloading #{english_name} ..."
+          download(url, file_name)
+          system_blocking("7za e #{file_name} -y -o#{to_this}")
+          puts 'done ' + english_name
+          # creates vendor/cache/mencoder/mencoder.exe...
+        end
+    end
+    
+    def check_for_dependencies
+      #ffmpeg = RubyWhich.new.which('ffmpeg')
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+      if !File.exist?(ffmpeg_exe_loc)
+        show_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        download_zip_to "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
+      end
+      raise unless File.exist?(ffmpeg_exe_loc)
+      
+      if !File.exist?('vendor/cache/mencoder/mencoder.exe')
+        show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
+        download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder"
       end
       
       if ARGV.index('--create-mode')
@@ -418,7 +439,7 @@ module SensibleSwing
         if(path.length == 0)
           # this one has its own license...
           show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it, then restart sensible cinema.", 
+          Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
           "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
           System.exit(1)
@@ -431,12 +452,13 @@ module SensibleSwing
     end
 
     def single_edit_list_matches_dvd md5
-      return unless md5 # ignore nil searches, where it wasn't set in the .txt file
       matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
         begin
           parse_edl(file)["disk_unique_id"] == md5
         rescue SyntaxError
-         # ignore poorly formed delete lists for auto choose
+         # ignore poorly formed delete lists for the auto choose
+          p 'warning, unable to parse:' + file
+          false
         end
       }
       if matching.length == 1
@@ -464,8 +486,11 @@ module SensibleSwing
     end
     
     include_class javax.swing.UIManager
+    
     def get_user_input(message, default = '')
-      start_time = JOptionPane.showInputDialog(message, default)
+      received = JOptionPane.showInputDialog(message, default)
+      raise 'user canceled' unless received
+      received
     end
     
     def parse_edl path
@@ -542,7 +567,7 @@ module SensibleSwing
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
         # only show this message once :)
-        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes a deleted section in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take a long time as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.\n
+        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes a deleted section in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.\n
         Also note that if you change your delete list, you'll need to close, and regenerate the video to see it with your new settings.", "Preview")
         old_start = Storage['start_time']
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
@@ -753,8 +778,9 @@ end
           end
 
 at_exit2 {
-  system("taskkill /f /im mencoder.exe") # todo...
-  system("taskkill /f /im ffmpeg.exe")
+  system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
+  system("taskkill /f /im ffmpeg.exe 2>NUL")
+  system("taskkill /f /im mplayer.exe 2>NUL")
 }
 
 if $0 == __FILE__

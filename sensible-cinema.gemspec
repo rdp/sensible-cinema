@@ -5,13 +5,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.21.9"
+  s.version = "0.21.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-05-18}
+  s.date = %q{2011-06-09}
   s.email = %q{rogerdpack@gmail.com}
-  s.executables = ["monkey.png", "sensible-cinema", "sensible-cinema-cli"]
+  s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
     "LICENSE.TXT",
     "README",
@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
     "TODO",
     "VERSION",
     "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_RELEASE_ZIP_INSTEAD",
-    "bin/monkey.png",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
     "business_ideas.txt",
@@ -36,6 +35,7 @@ Gem::Specification.new do |s|
     "gocreatemode.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
+    "is_it_legal_to_copy_dvds.txt",
     "legal/md5s.txt",
     "legal/transcript_mute_vlc.txt",
     "legal2",
@@ -58,9 +58,9 @@ Gem::Specification.new do |s|
     "lib/ocr.rb",
     "lib/overlayer.rb",
     "lib/play_audio.rb",
-    "lib/profanity_finder.rb",
     "lib/screen_tracker.rb",
     "lib/storage.rb",
+    "lib/subtitle_profanity_finder.rb",
     "lib/swing_helpers.rb",
     "lib/vlc_programmer.rb",
     "never_do",
@@ -71,68 +71,12 @@ Gem::Specification.new do |s|
     "spec/blanker.spec.rb",
     "spec/common.rb",
     "spec/convert_image.rb",
+    "spec/dragon.srt",
     "spec/drive_info.spec.rb",
     "spec/edl_parser.spec.rb",
     "spec/frame_accurate.spec.rb",
     "spec/go_line.bat",
-    "spec/images/black.bmp",
-    "spec/images/colon.bmp",
-    "spec/images/hulu_0.bmp",
-    "spec/images/hulu_2.bmp",
-    "spec/images/hulu_2_3.bmp",
-    "spec/images/hulu_2_4.bmp",
-    "spec/images/hulu_3.bmp",
-    "spec/images/hulu_3_4.bmp",
-    "spec/images/hulu_4.bmp",
-    "spec/images/hulu_4_4.bmp",
-    "spec/images/hulu_5.bmp",
-    "spec/images/hulu_7.bmp",
-    "spec/images/hulu_8.bmp",
-    "spec/images/hulu_slash.bmp",
-    "spec/images/netflix_a0.bmp",
-    "spec/images/netflix_a1.bmp",
-    "spec/images/netflix_a2.bmp",
-    "spec/images/netflix_a3.bmp",
-    "spec/images/netflix_a4.bmp",
-    "spec/images/netflix_a5.bmp",
-    "spec/images/netflix_a6.bmp",
-    "spec/images/netflix_a7.bmp",
-    "spec/images/netflix_a8.bmp",
-    "spec/images/netflix_a9.bmp",
-    "spec/images/netflix_b9.bmp",
-    "spec/images/vlc_0.bmp",
-    "spec/images/vlc_2_4.bmp",
-    "spec/images/vlc_2_6.bmp",
-    "spec/images/vlc_4.bmp",
-    "spec/images/vlc_5.bmp",
-    "spec/images/vlc_6.bmp",
-    "spec/images/vlc_9.bmp",
-    "spec/images/vlc_colon.bmp",
-    "spec/images/youtube_0.bmp",
-    "spec/images/youtube_1.bmp",
-    "spec/images/youtube_2_0.bmp",
-    "spec/images/youtube_2_5.bmp",
-    "spec/images/youtube_2_6.bmp",
-    "spec/images/youtube_3_0.bmp",
-    "spec/images/youtube_4.bmp",
-    "spec/images/youtube_4_0.bmp",
-    "spec/images/youtube_5.bmp",
-    "spec/images/youtube_6.bmp",
-    "spec/images/youtube_light_0.bmp",
-    "spec/images/youtube_light_1_3.bmp",
-    "spec/images/youtube_light_2_1.bmp",
-    "spec/images/youtube_light_2_3.bmp",
-    "spec/images/youtube_light_2_9.bmp",
-    "spec/images/youtube_light_4.bmp",
-    "spec/images/youtube_light_4_3.bmp",
-    "spec/images/youtube_light_5.bmp",
-    "spec/images/youtube_light_5_0.bmp",
-    "spec/images/youtube_light_8.bmp",
-    "spec/images/youtube_light_9.bmp",
-    "spec/images/youtube_small_0.bmp",
-    "spec/images/youtube_small_2.bmp",
-    "spec/images/youtube_small_2_0.bmp",
-    "spec/images/youtube_small_4.bmp",
+    "spec/how_to",
     "spec/keyboard_input.spec.rb",
     "spec/mencoder_wrapper.spec.rb",
     "spec/mouse.spec.rb",
@@ -143,7 +87,7 @@ Gem::Specification.new do |s|
     "spec/overlayer.spec.rb",
     "spec/screen_tracker.spec.rb",
     "spec/sensible_cinema_gui.spec.rb",
-    "spec/silence.wav",
+    "spec/subtitle_profanity_finder.spec.rb",
     "spec/swing_helpers.spec.rb",
     "spec/test_yaml.yml",
     "spec/vlc_programmer.spec.rb",
@@ -153,11 +97,9 @@ Gem::Specification.new do |s|
     "todo.inventionzy.txt",
     "todo.open_edl_list_org.txt",
     "todo.subtitle",
-    "vendor/SetPriority.exe",
-    "vendor/gocr049.exe",
-    "vendor/music.wav",
+    "vendor/jruby-complete-1.6.2.jar",
+    "vendor/monkey.png",
     "vendor/readme.txt",
-    "vendor/unzip.exe",
     "www/index.html",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
@@ -168,6 +110,7 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/example_delete_list.txt",
     "zamples/edit_decision_lists/dvds/example_delete_list_that_has_no_cuts_in_it.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
+    "zamples/edit_decision_lists/dvds/how_to_train_your_dragon.txt",
     "zamples/edit_decision_lists/dvds/legend_of_the_guardians_the_owls_of_gahoole.txt",
     "zamples/edit_decision_lists/dvds/making_marriage_work.txt",
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/White Christmas.txt",
@@ -178,6 +121,8 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/making marriage work.txt",
     "zamples/edit_decision_lists/dvds/old_and_inaccurate/star_trek_generations_hulu.txt",
     "zamples/edit_decision_lists/dvds/pack_wedding_2007-03-03.txt",
+    "zamples/edit_decision_lists/dvds/sintel_open_source_blender.txt",
+    "zamples/edit_decision_lists/dvds/tron_legacy.txt",
     "zamples/edit_decision_lists/dvds/turn_around_alma_younger.txt",
     "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt",
@@ -200,25 +145,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.5.1}
   s.summary = %q{an EDL scene-selector/bleeper that works with online players like hulu}
-  s.test_files = [
-    "spec/blanker.spec.rb",
-    "spec/common.rb",
-    "spec/convert_image.rb",
-    "spec/drive_info.spec.rb",
-    "spec/edl_parser.spec.rb",
-    "spec/frame_accurate.spec.rb",
-    "spec/keyboard_input.spec.rb",
-    "spec/mencoder_wrapper.spec.rb",
-    "spec/mouse.spec.rb",
-    "spec/mplayer_edl.spec.rb",
-    "spec/muter.spec.rb",
-    "spec/ocr.spec.rb",
-    "spec/overlayer.spec.rb",
-    "spec/screen_tracker.spec.rb",
-    "spec/sensible_cinema_gui.spec.rb",
-    "spec/swing_helpers.spec.rb",
-    "spec/vlc_programmer.spec.rb"
-  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
@@ -230,9 +156,12 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<whichr>, [">= 0.3.6"])
       s.add_runtime_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_runtime_dependency(%q<rdp-ruby-wmi>, [">= 0"])
+      s.add_runtime_dependency(%q<plist>, [">= 0"])
       s.add_runtime_dependency(%q<ffi>, [">= 0"])
       s.add_development_dependency(%q<hitimes>, [">= 0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["> 2"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
+      s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_runtime_dependency(%q<hitimes>, [">= 0"])
       s.add_runtime_dependency(%q<rspec>, [">= 0"])
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
@@ -244,9 +173,12 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<whichr>, [">= 0.3.6"])
       s.add_dependency(%q<jruby-win32ole>, [">= 0"])
       s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
+      s.add_dependency(%q<plist>, [">= 0"])
       s.add_dependency(%q<ffi>, [">= 0"])
       s.add_dependency(%q<hitimes>, [">= 0"])
-      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["> 2"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
+      s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<hitimes>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
@@ -259,9 +191,12 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<whichr>, [">= 0.3.6"])
     s.add_dependency(%q<jruby-win32ole>, [">= 0"])
     s.add_dependency(%q<rdp-ruby-wmi>, [">= 0"])
+    s.add_dependency(%q<plist>, [">= 0"])
     s.add_dependency(%q<ffi>, [">= 0"])
     s.add_dependency(%q<hitimes>, [">= 0"])
-    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["> 2"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
+    s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<hitimes>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])

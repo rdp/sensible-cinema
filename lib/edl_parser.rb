@@ -94,7 +94,6 @@ class EdlParser
       original_secs = translate_string_to_seconds(type) + offset
       # now if splits is 900 and we'are at 909, then we're just 9
       closest_split_idx = splits.reverse.index{|t| t < original_secs}
-      p 'got idx', closest_split_idx
       if closest_split_idx
         closest_split = splits.reverse[closest_split_idx]
         # add some extra seconds onto these if they're "past" a split, too

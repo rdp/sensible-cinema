@@ -1,0 +1,27 @@
+# comments can go after a # on any line, for example this one.
+
+# after splits seem way early...
+
+"mutes" => [
+  "13:10", "13:14", "profanity", "he..",
+  "31:24", "31:32", "profanity", "da..",
+  "37:57", "38:07", "profanity", "he..",
+  "1:01:32", "1:01:41", "profanity", "he..",
+  "1:30:28", "1:30:37", "profanity", "he..",
+  "56:02", "56:12", "language", "deity reference",
+],
+
+"blank_outs" => [
+  "1:16:35", "1:16:45", "language", "son of our maker",
+  "1:17:58", "1:18:10", "language", "praying to flynn",
+  "1:36:40", "1:36:49", "language", "false deity",
+  "1:37:10", "1:37:30", "language", "creator"
+],
+
+"name" => "Tron Legacy",
+"disk_unique_id" => "ec8f2ba8d8b4edd83e8fc60b63ca3236",
+
+"not edited out stuff" => "some cyborg violence",
+"probable rating" => "still pg, age about 10",
+"mplayer_dvd_splits" => ["1:19:09"]
+# 4749

@@ -29,6 +29,7 @@ describe 'dvd_drive_info' do
   end
   
   it "should be able to do it for real drive" do
+    DriveInfo.get_dvd_drives_as_openstruct.length.should be > 0
     DriveInfo.get_dvd_drives_as_openstruct.each{|d|
       DriveInfo.md5sum_disk(d.Name + "/").length.should be > 0 if d.VolumeName
     }
