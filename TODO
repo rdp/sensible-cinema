@@ -20,6 +20,7 @@
   
 == yes do, un-ordered currently, from the various release options ==
 
+  subtitles: impass assistance :)
   tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
     "just look at the title track in the EDL, then..."
   tell them "to edit easily..."
@@ -40,7 +41,6 @@
   note to google group...
   add an mencoder convert with mplayer_breaks button :P
   youtube/hulu timings
-  subtitles: impass assistance :)
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
   BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
@@ -87,7 +87,6 @@
   note to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
   beta release: rinse and repeat with various ppl
-  switch to using sourceforge solely for hosting releases...
   youtube videos -> new account name
   vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe
     and sanity
