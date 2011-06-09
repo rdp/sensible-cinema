@@ -22,9 +22,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_
 begin
   require 'sane' # failure here means you haven't bundled your dependencies... [$ jruby -S rake bundle_dependencies after doing jruby -S gem install sensible-cinema ]
 rescue LoadError
-  p 'warning, didnt find bundled gems, loading full rubygems for developer convenience [run rake bundle_dependencies to overcome this message]'
-  require 'rubygems'
-  require 'sane'
+  p 'warning, didnt find bundled gems, loading full rubygems for developer convenience [run rake bundle_dependencies]'
+  raise
 end
 
 raise 'need jruby' unless OS.java?
