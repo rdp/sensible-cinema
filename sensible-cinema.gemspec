@@ -97,6 +97,7 @@ Gem::Specification.new do |s|
     "todo.inventionzy.txt",
     "todo.open_edl_list_org.txt",
     "todo.subtitle",
+    "vendor/jruby-complete-1.6.2.jar",
     "vendor/monkey.png",
     "vendor/readme.txt",
     "www/index.html",

@@ -8,14 +8,9 @@
 @java -version > NUL 2>&1 || echo need to install java JRE first please install it from java.com && pause && GOTO DONE
 
 @cd sensible-cinema
-@IF EXIST .\\vendor\\cache\\jruby-complete-1.6.2.jar GOTO RUN
-@echo 'downloading prequisite (jruby) [11MB] ...'
-@vendor\curl.exe http://rogerdpack.t28.net/sensible-cinema/releases/jruby-complete-1.6.2.jar -o vendor/cache/jruby-complete-1.6.2.jar
-@rem fall through
+@java -cp "./vendor/jruby-complete-1.6.2.jar" org.jruby.Main bin\sensible-cinema %* || echo ERROR. Please look for error message, above, and report back the error you see, or fix it && pause
 
-:RUN
-@java -cp "./vendor/cache/jruby-complete-1.6.2.jar" org.jruby.Main bin\sensible-cinema %* || echo ERROR. Please look for error message, above, and report back the error you see, or fix it && pause
-@rem taskkill /f /im mencoder.exe
+@rem taskkill /f /im mencoder.exe ???
 
 GOTO DONE
 
@@ -23,6 +18,7 @@ GOTO DONE
 @echo "it appears you downloaded sensible cinema straight from github--please download it instead from http://rogerdpack.t28.net/sensible-cinema/ for it to work properly"
 @pause
 @start http://rogerdpack.t28.net/sensible-cinema
-GOTO DONE
+
+@rem fall through
 
 :DONE

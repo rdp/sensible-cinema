@@ -1,7 +1,7 @@
 require 'jeweler'
 require 'os'
 
-ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem
+ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem hackaround...
 
 Jeweler::Tasks.new do |s|
     s.name = "sensible-cinema"
@@ -83,7 +83,7 @@ task 'rebundle_dependencies' => 'gemspec' do
    FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
-       system("#{Gem.ruby} -S gem unpack #{d.name}")
+       system("#{OS.ruby_bin} -S gem unpack #{d.name}")
      }
    end
   
