@@ -13,6 +13,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-win32screenshot', '>= 0.0.7.3' # was 0.8.0 ?
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
+    s.add_dependency 'jruby-win32ole'
     s.add_dependency 'rdp-ruby-wmi' # windows
     s.add_dependency 'plist' # mac
     s.add_dependency 'ffi' # mouse, etc. needed at least for MRI
@@ -65,7 +66,7 @@ def get_transitive_dependencies dependencies
 end
 
 desc 'collect binary and gem deps for distribution'
-task 'bundle_dependencies' => 'gemspec' do
+task 'rebundle_dependencies' => 'gemspec' do
    require 'whichr'
    require 'fileutils'
    require 'net/http'
@@ -84,23 +85,18 @@ task 'bundle_dependencies' => 'gemspec' do
      dependencies.each{|d|
        system("#{Gem.ruby} -S gem unpack #{d.name}")
      }
-    
-     # create a shunt win32ole file, so that require 'win32ole' will just work.
-     # XXXX may no longer need this...
-     Dir.mkdir 'lib'
-     File.write('lib/win32ole.rb', 'require "jruby-win32ole"')
    end
   
 end
 
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
-  raise 'need  bundle_dependencies first' unless File.directory? 'vendor/cache'
+  raise 'need  rebundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
   FileUtils.rm_rf Dir['sensible-cinema-*'] # remove old versions
-  raise 'unable to delete zip' if Dir[spec.name + '-*'].length > 0
+  raise 'unable to delete...' if Dir[spec.name + '-*'].length > 0
   
   existing = Dir['*']
   FileUtils.mkdir_p dir_out
@@ -142,8 +138,8 @@ task 'gem_release' do
   FileUtils.rm_rf 'pkg'
 end
 
-desc 'j -S rake bundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
-task 'full_release' => [:bundle_dependencies, :create_distro_dir] do # this is :release
+desc 'j -S rake rebundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
+task 'full_release' => [:rebundle_dependencies, :create_distro_dir] do # this is :release
   raise unless system("git pull")
   raise unless system("git push origin master")
   Rake::Task["gem_release"].execute
