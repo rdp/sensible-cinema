@@ -404,8 +404,6 @@ module SensibleSwing
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
-      else
-        p 'unzipper already present'
       end
     end
     
