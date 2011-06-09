@@ -397,8 +397,16 @@ module SensibleSwing
     end
     
     def download_7zip
-      
-      
+      Dir.mkdir('vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
+      unless File.exist? 'vendor/cache/7za.exe'
+        Dir.chdir('/vendor/cache') do
+          print 'downloading unzipper...'
+          download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
+          system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
+        end
+      else
+        p 'unzipper already present'
+      end
     end
     
     def check_for_dependencies
@@ -413,14 +421,10 @@ module SensibleSwing
       
       # mencoder_array = RubyWhich.new.which('mencoder')
       if !File.exist?('vendor/cache/mencoder/mencoder.exe')
+        
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
-        Dir.mkdir(vendor_cache) unless File.directory? vendor_cache # development may not have it created yet...
-        Dir.chdir(vendor_cache) do
-          print 'downloading unzipper...'
-          download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-          system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
-          # now we have 7za.exe
+        download_7zip
+        Dir.chdir('vendor/cache') do
           print 'downloading mencoder.7z (6MB) ...'
 #          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder.7z")
