@@ -33,7 +33,7 @@
     "you could get timestamps from playing it back with VLC and watching the time, though VLC [or any GUI] is always slightly off."
   @mulder: dvdnav crashes
   check with blu-ray...does it match timing-wise? sub-title wise?
-  donate tsmuxer, makemkv
+  donate tsmuxer, makemkv, ffmpeg windows
   google "scripted dvd playback" adobe, one other, avisynth dvd [?]
   check cp p.'s
   instructions: reference the sintel DVD :) (download it from my site here)

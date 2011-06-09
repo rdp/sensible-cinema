@@ -117,26 +117,35 @@ task 'zip' do
   c = "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
   FileUtils.rm_rf name
-  p 'created ' + name + '.zip, and deleted its folder'
+  p 'created ' + name + '.zip, and deleted its [from] folder'
+end
+
+def sys arg
+ raise unless system arg
 end
 
 task 'deploy' do
   name = 'sensible-cinema-' + cur_ver + ".zip"
-  p 'copying in'
-  raise unless system("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
-  p 'copying over'
+  p 'copying to ilab'
+  sys("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
+  p 'creating sf dir'
+  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
+  p 'copying into sf'
+  sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
+  p 'copying over to rogerd...'
   # ugh ugh ughly
   c = "ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@freemusicformormons.com:~/www/rogerdpackt28/sensible-cinema/releases\""
-  raise unless system(c)
-  p 'linking'
-  raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"rm \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
-  raise unless system("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"ln -s \\~/www/rogerdpackt28/sensible-cinema/releases/#{name} \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
+  sys(c)
+  p 'linking rogerd...'
+  sys("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"rm \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
+  sys("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"ln -s \\~/www/rogerdpackt28/sensible-cinema/releases/#{name} \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
+  p 'successfully deployed! ' + cur_ver
 end
 
 task 'gem_release' do
   FileUtils.rm_rf 'pkg'
   Rake::Task["build"].execute
-  raise unless system("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
+  sys("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
   FileUtils.rm_rf 'pkg'
 end
 
@@ -144,7 +153,7 @@ desc 'j -S rake rebundle_dependencies create_distro_dir ... (releases with clean
 task 'full_release' => [:rebundle_dependencies, :create_distro_dir] do # this is :release
   raise unless system("git pull")
   raise unless system("git push origin master")
-  Rake::Task["gem_release"].execute
+#  Rake::Task["gem_release"].execute
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")

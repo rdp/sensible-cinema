@@ -15,9 +15,9 @@
 GOTO DONE
 
 :NOVENDORDIR
-@echo "it appears you downloaded sensible cinema straight from github--please download it instead from http://rogerdpack.t28.net/sensible-cinema/ for it to work properly"
+@echo "it appears you downloaded sensible cinema straight from github--please download it instead fromhttps://sourceforge.net/projects/sensible-cinema/files/ for it to work properly"
 @pause
-@start http://rogerdpack.t28.net/sensible-cinema
+@start https://sourceforge.net/projects/sensible-cinema/files
 
 @rem fall through
 

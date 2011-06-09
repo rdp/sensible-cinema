@@ -10,10 +10,10 @@ to help it to grow!
 To use, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
 It will pop up some windows where you choose what to do.
 
-Note: please install from the zip files at http://rogerdpack.t28.net/sensible-cinema and not from gitub's "downloads" button.
-See the "install" section.
+Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
+and not from github's "download" button.  See the "install" section, below.
 
-It basically allows you to create an edited video version of the DVD, onto your hard drive, and you can watch it there.
+Sensible cinema basically allows you to create an edited video version of the DVD, onto your hard drive, and you can watch it there.
 
 How? Sensible cinema basically takes the original DVD, slices out the bad parts, then combines it back
 into a new file and gives you the result.
@@ -44,8 +44,7 @@ Enjoy your movies!
 == Installation ==
 
 Installation instructions available here: http://rogerdpack.t28.net/sensible-cinema
-NB that you want to download from there only, not from github, and the file you want to get
-is called "latest-sensible-cinema.zip"
+NB that you want to download from sourceforge, not from github.
 
 == Creating Your Own Delete Lists, or modifying previously existing ones ==
 

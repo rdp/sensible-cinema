@@ -1,4 +1,11 @@
-== ==
+== 0.22.1 ==
+
+Test release for automated sourceforge build system
+
+== 0.22.0 ==
+
+Full release. No real changes, just made it able to be distributed again
+[+ bundles its own ffmpeg instead of requiring an imagemagick installation]
 
 == 0.21.10 == [gem only release]
 
