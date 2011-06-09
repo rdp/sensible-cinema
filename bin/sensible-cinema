@@ -22,7 +22,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_
 begin
   require 'sane' # failure here means you haven't bundled your dependencies... [$ jruby -S rake bundle_dependencies after doing jruby -S gem install sensible-cinema ]
 rescue LoadError
-  p 'warning, loading full rubygems for your developers convenient LODO and'
+  p 'warning, didnt find bundled gems, loading full rubygems for developer convenience [run rake bundle_dependencies to overcome this message]'
   require 'rubygems'
   require 'sane'
 end
@@ -45,7 +45,8 @@ require 'ruby-wmi'
 # must put mencoder first, as it has a working mplayer.exe in it...
 vendor = File.expand_path(File.dirname(__FILE__)) + '/../vendor'
 # XX do we need to_filename though?
-ENV['PATH'] = ENV['PATH'] + ';' + (vendor + '/cache/mencoder').to_filename + ';' + (vendor + '/cache').to_filename
+
+ENV['PATH'] = (vendor + '/cache/mencoder').to_filename + ';' + (vendor + '/cache').to_filename + ';' + ENV['PATH']
 
 installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
 
@@ -298,7 +299,7 @@ module SensibleSwing
         out.close
         $?.exitstatus == 0 # 0 means success
       else
-        system_original command
+        raise command + ' failed' unless system_original command
       end
     end
     
@@ -395,6 +396,11 @@ module SensibleSwing
       Kernel.print *args # avoid bin\sensible-cinema.rb:83:in `system_blocking': cannot convert instance of class org.jruby.RubyString to class java.awt.Graphics (TypeError)
     end
     
+    def download_7zip
+      
+      
+    end
+    
     def check_for_dependencies
       ffmpeg = RubyWhich.new.which('ffmpeg')
       if ffmpeg.length == 0
@@ -405,22 +411,23 @@ module SensibleSwing
         java.lang.System.exit(1)
       end
       
-      mencoder = RubyWhich.new.which('mencoder')
-      if mencoder.length == 0
+      # mencoder_array = RubyWhich.new.which('mencoder')
+      if !File.exist?('vendor/cache/mencoder/mencoder.exe')
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         vendor_cache = File.expand_path(File.dirname(__FILE__)) + "/../vendor/cache/"
-        ENV['PATH'] = ENV['PATH'] + ';' + vendor_cache + '\\..;' + vendor_cache
         Dir.mkdir(vendor_cache) unless File.directory? vendor_cache # development may not have it created yet...
         Dir.chdir(vendor_cache) do
           print 'downloading unzipper...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-          system_blocking("unzip -o 7za920.zip") # -o means "overwrite" without prompting
+          system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
           # now we have 7za.exe
           print 'downloading mencoder.7z (6MB) ...'
 #          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
           download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder.7z")
           system_blocking("7za e mencoder.7z -y -omencoder")
           puts 'done'
+          
+          # creates vendor/cache/mencoder/mencoder.exe...
         end
       end
       
