@@ -409,30 +409,32 @@ module SensibleSwing
       end
     end
     
+    def download_zip_to english_name = "Mplayer (6MB)", url= "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", to_this = "mencoder"
+        Dir.chdir('vendor/cache') do
+          file_name = url.split('/')[-1]
+          print "downloading #{english_name} ..."
+#          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
+          download(url, file_name)
+          system_blocking("7za e #{file_name} -y -o#{to_this}")
+          puts 'done'
+          # creates vendor/cache/mencoder/mencoder.exe...
+        end
+      
+    end
+    
     def check_for_dependencies
-      ffmpeg = RubyWhich.new.which('ffmpeg')
-      if ffmpeg.length == 0
-        show_blocking_message_dialog("It appears that you need to install a dependency: imagemagick.\n
-        Click ok to be directed to its download website.\nYou'll probably want to download and run the \"windows-dll.exe\" http package.\n
-        Then restart Sensible-Cinema/console window.", "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-        system_non_blocking("start http://www.imagemagick.org/script/binary-releases.php#windows")
-        java.lang.System.exit(1)
+      #ffmpeg = RubyWhich.new.which('ffmpeg')
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg-git-1929807-win32-static/ffmpeg.exe')
+      if false#!File.exist?(ffmpeg_exe_loc)
+        show_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
       end
       
       # mencoder_array = RubyWhich.new.which('mencoder')
+      
       if !File.exist?('vendor/cache/mencoder/mencoder.exe')
-        
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_7zip
-        Dir.chdir('vendor/cache') do
-          print 'downloading mencoder.7z (6MB) ...'
-#          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2032492/MPlayer-rtm-svn-32492.7z", "mencoder.7z")
-          download("http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder.7z")
-          system_blocking("7za e mencoder.7z -y -omencoder")
-          puts 'done'
-          
-          # creates vendor/cache/mencoder/mencoder.exe...
-        end
+        download_zip_to
       end
       
       if ARGV.index('--create-mode')
