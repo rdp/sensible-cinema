@@ -2,7 +2,7 @@ up next:
   so...does it work with makemkv ts? do I even need tsmuxer?
   
 == ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli ==
-  conclusion: they seem comfortably close :P
+  conclusion: they seem close :P
 
   transition on fulli:
     avs: 59:56.867, pp: 56.90, avidemux: 56.863
