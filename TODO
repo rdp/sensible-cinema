@@ -35,14 +35,12 @@
   @mulder: dvdnav crashes
   check with blu-ray...does it match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, ffmpeg windows
-  google "scripted dvd playback" adobe, one other, avisynth dvd [?]
   check cp p.'s
   instructions: reference the sintel DVD :) (download it from my site here)
   note to google group...
   add an mencoder convert with mplayer_breaks button :P
   youtube/hulu timings
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
-  BY CLICKING "I Agree" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT
   make install work again
     package curl [?]
   add button "play from exactly here to here" in [mplayer uh guess?] :P
@@ -103,12 +101,11 @@
     previous: Windows Movie Maker
   mplayer OSD [optionally [?]]
   re-run with several owned DVD's
-  another full pass on verbiage legal, etc.
   port to OS X overall
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   delete unedited.fulli file automatically
     except if it's a specific scene run...
-  investigate: can I use the zoomplayer max?
+  investigate: can I use zoomplayer max?
   the final "edited.avi" really "could/should" be playable in WMP...
 
 == other lists ==

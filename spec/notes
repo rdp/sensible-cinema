@@ -1,5 +1,22 @@
 up next:
-  so...does it work with makemkv ts?
+  so...does it work with makemkv ts? do I even need tsmuxer?
+  
+== ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli ==
+  conclusion: they seem comfortably close :P
+
+  transition on fulli:
+    avs: 59:56.867, pp: 56.90, avidemux: 56.863
+      maybe pp was .86 but didn't update its framing right?
+  ffprobe shows possible vcodecs at: 3596.826 3596.793 3596.826 3596.8597 3596.893 3596.926 
+    counting them: 107790 doesn't line up at all...10 frames off? it must duplicate some frames implicitly...
+  ffmpeg at 3596.866 got avidemux's frame: 59:56.930 (107800)
+  ffmpeg at 3596.83 got avidemux's frame: 00:59:56.896 (107799)
+  ffmpeg at 3596.82 got avidemux's frame: 00:59:56.896 (107798) which seems to match ffprobe...and imply that 3596.826 is the transition frame [?]
+   so basically everything is...one frame off? ffmpeg is one frame off from avs/others?
+  mplayer DVD OSD: 00:59:53.25 (converted: 3596.84) V:3597.3 [V value huh? ]
+    previous was 59:53:21 [pre-switch] (3596.80 converted)
+    about one frame off avs/avidemux []
+      . = frame advance mplayer 
 
 == ? ==
 
@@ -138,9 +155,10 @@ maybe if I use ffmpeg to fulli it first...
 My first question is...does handbrake and makemkv match, +- fulli
 
 makemkv => tsmuxer => ts
-  still needed frame shifter...
-  audio still off...
-  transition 86250 59:57.347
+  avidemux:
+    still needed frame shifter...
+    audio still off...
+    transition 86250 59:57.347
   
 I seem unable to very the frames of the HANDBRAKE one LOL.  It keeps segfaulting Avidemux no matter what it's status...
   plus I can't compare except by framecount, which is probably messed up anyway...hmm...
@@ -443,27 +461,19 @@ handbrake -> ffmpeg I think sameq -> mencoder split
 
 National Treasure [2004] {English} [XviD].srt doesn't seem to match up with mplayer OSD, like 6 seconds off per hour?
   mplayer OSD seems way off...or actually match normal players whoa!?
-
 865
 01:28:47,322 --> 01:28:48,864
 … we have…
-
 866
 01:28:49,908 --> 01:28:51,325
 … dragons.
-
-
 dvd subs:
-
 869
-
 01:28:47,602 --> 01:28:49,126
 <i>...we have...</i>
-
 870
 01:28:50,205 --> 01:28:51,604
 <i>...dragons.</i>
-
 0.3 off?
 
 how to train dragon DVD srt right on with mplayer DVD 29.97

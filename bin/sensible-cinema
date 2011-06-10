@@ -92,9 +92,9 @@ module SensibleSwing
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          'Sensible Cinema is distributed under the gplv3. Click accept if you accept the terms of this license agreement.'
+          'Sensible Cinema is distributed under the gplv3. BY CLICKING "accept" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT'
         show_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
-          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, and accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
+          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
       end
 
@@ -362,7 +362,7 @@ module SensibleSwing
       UIManager.put("OptionPane.yesButtonText", 'Accept')
       UIManager.put("OptionPane.noButtonText", "View License (#{license_name})")
       # cancel button stays the same...
-      
+
       message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
       separately, or Sensible Cinema can download it for you.
       By clicking accept, below, you are confirming that you have read and agree to be bound by the

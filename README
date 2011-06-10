@@ -208,6 +208,7 @@ http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (X
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
 The VCR with its record button, coupled with the stop+rewind button.
 http://kb2.adobe.com/cps/191/tn_19151.html Adobe Director MX 2004 can "script" DVD playback.
+DVD's themselves allow for "scripted" playback of certain content, jumping from location to location, switching audio, etc.
 http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and edit decision lists, in realtime)
 http://forums.gbpvr.com/showthread.php?10606-Automated-Cutting-and-Transcoding-Guide-Using-Mencoder/page45
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
