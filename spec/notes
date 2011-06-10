@@ -1,5 +1,5 @@
 up next:
-  so...does it work with makemkv ts? do I even need tsmuxer?
+  so...does it work with makemkv ts? do I even need tsmuxer? fulli
   
 == ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli ==
   conclusion: they seem close :P
@@ -22,11 +22,11 @@ up next:
 
 conclusions: mencoder -forceidx can make a copied rip file play great in mencoder [and presumably be cut right?]
   makemkv has no problems with resets.
-  VLC playing any mpeg *file* is actually pretty close to right on.
+  VLC playing any mpeg *file* is actually pretty close to right on [?]
 
 dvdoutmplayer.mpg.mencoder.ofps.mpg did not save avidemux
 
-VLC playing any mpeg *file* is actually pretty accurate.  Oh the insanity...I guess the extra abstraction of reading from disc kills it.
+VLC playing mpeg *file* is actually pretty accurate.  Oh the insanity...I guess the extra abstraction of reading from disc kills it.
 
 mplayer playing mplayergrab *does* reset internally...and osd also fails...interesting...
   *however* running mencoder1 -forceidx c.mpg -ovc copy -oac copy -o c.mencoderidx.mpg *does fix it* (for mplayer anyway...)

@@ -22,7 +22,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_
 begin
   require 'sane' # failure here means you haven't bundled your dependencies... [$ jruby -S rake bundle_dependencies after doing jruby -S gem install sensible-cinema ]
 rescue LoadError
-  p 'warning, didnt find bundled gems, loading full rubygems for developer convenience [run rake bundle_dependencies]'
+  p 'please run $ rake rebundle_dependencies first, as we dislike needing rubygems'
   raise
 end
 
@@ -430,7 +430,7 @@ module SensibleSwing
       
       if !File.exist?('vendor/cache/mencoder/mencoder.exe')
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033216/MPlayer-rtm-svn-33216.7z", "mencoder"
+        download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
       end
       
       if ARGV.index('--create-mode')
