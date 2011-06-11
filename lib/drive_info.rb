@@ -24,7 +24,7 @@ class DriveInfo
 
  def self.md5sum_disk(dir)
   digest = Digest::MD5.new()
-  files  = Dir[dir + "VIDEO_TS/*.IFO"]
+  files  = Dir[dir + "/VIDEO_TS/*.IFO"]
   raise 'drive might not yet have disc in it? ' + dir.inspect unless files.length > 0
   files.sort.each{|f| # sort tends to not do anything anyway...
     digest << File.binread(f) 
@@ -34,34 +34,39 @@ class DriveInfo
 
  def self.get_dvd_drives_as_openstruct
    disks = get_all_drives_as_ostructs
-   disks.select{|d| d.Description =~ /CD-ROM/}.map{|d| d2 = OpenStruct.new; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2}
+   disks.select{|d| d.Description =~ /CD-ROM/}
  end
   
  def self.get_drive_with_most_space_with_slash
   disks = get_all_drives_as_ostructs
   most_space = disks.sort_by{|d| d.FreeSpace}[-1]
-  most_space.Name + "\\"
+  most_space.MountPoint + "/"
  end
 
  def self.get_all_drives_as_ostructs
   if OS.mac?
     require 'plist'
-require 'ruby-debug'
-#debugger
-    a = Dir['/Volumes/*'].map{|dir|
+    Dir['/Volumes/*'].map{|dir|
      parsed = Plist.parse_xml(`diskutil info -plist "#{dir}"`)
      d2 = OpenStruct.new
      d2.VolumeName = parsed["VolumeName"]
      d2.Name = dir # DevNode?
      d2.FreeSpace = parsed["FreeSpace"].to_i
      d2.Description = parsed['OpticalDeviceType']
+     d2.MountPoint = parsed['MountPoint']
+     if d2.MountPoint == '/'
+       d2.MountPoint = File.expand_path '~' # better ?
+     end
      d2
     }
-    a
   else
     require 'ruby-wmi'
     disks = WMI::Win32_LogicalDisk.find(:all)
-    disks.map{|d| d2 = OpenStruct.new; d2.Description = d.Description; d2.VolumeName = d.VolumeName; d2.Name = d.Name; d2.FreeSpace = d.FreeSpace.to_i; d2} 
+    disks.map{|d| d2 = OpenStruct.new; d2.Description = d.Description; d2.VolumeName = d.VolumeName; d2.Name = d.Name; 
+      d2.FreeSpace = d.FreeSpace.to_i
+      d2.MountPoint = d.Name[0..2]
+      d2
+    } 
   end
  end
 

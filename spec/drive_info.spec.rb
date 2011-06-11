@@ -32,21 +32,22 @@ describe 'dvd_drive_info' do
     DriveInfo.get_dvd_drives_as_openstruct.length.should be > 0
     found_one = false
     DriveInfo.get_dvd_drives_as_openstruct.each{|d|
-      if d.VolumeName
-        DriveInfo.md5sum_disk(d.Name + "/").length.should be > 0
+      if d.VolumeName # mounted ...
+        DriveInfo.md5sum_disk(d.MountPoint).length.should be > 0
         found_one = true
         d.FreeSpace.should == 0
       end
     }
     found_one.should be true
   end
-  
+
   it "should return a drive with most space" do
     space_drive = DriveInfo.get_drive_with_most_space_with_slash
-    space_drive[1..-1]..should == ":\\"
+    space_drive[1..-1]..should == ":\\" if OS.windows?
+    space_drive[0..0].should == "/" if !OS.windows?
     require 'fileutils'
-    FileUtils.touch space_drive + '/touched_file'
-    FileUtils.rm space_drive + '/touched_file'
+    FileUtils.touch space_drive + 'touched_file'
+    FileUtils.rm space_drive + 'touched_file'
   end
 
 end
