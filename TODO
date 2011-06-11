@@ -21,6 +21,7 @@
 == yes do, un-ordered currently, from the various release options ==
 
   subtitles: impass assistance :)
+  note realtime: clearplay
   tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
     "just look at the title track in the EDL, then..."
   tell them "to edit easily..."
