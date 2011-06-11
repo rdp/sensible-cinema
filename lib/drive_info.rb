@@ -25,10 +25,10 @@ class DriveInfo
  def self.md5sum_disk(dir)
   digest = Digest::MD5.new()
   files  = Dir[dir + "VIDEO_TS/*.IFO"]
-  files.sort.each{|f| # sort tends to not do anything...
+  raise 'drive might not yet have disc in it? ' + dir.inspect unless files.length > 0
+  files.sort.each{|f| # sort tends to not do anything anyway...
     digest << File.binread(f) 
   }
-  raise 'drive might not yet have disc in it? ' + dir unless files.length > 0
   digest.hexdigest
  end
 

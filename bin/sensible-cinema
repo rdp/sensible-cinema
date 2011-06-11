@@ -709,7 +709,7 @@ module SensibleSwing
       unless opticals.find{|d| d.VolumeName }
         show_blocking_message_dialog 'insert a dvd first' 
         exit 1
-      exit
+      end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
 
       if opticals.length != 1
