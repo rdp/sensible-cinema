@@ -5,10 +5,20 @@ success = true
 # MPlayer OSX Extended instead of smplayer... ?
 module CheckInstalledMac
  def self.check_for_installed name
-  command = {"gocr" => "gocr --help", "convert" => "convert --help", 
-    "mplayer" => "mplayer -version", "ffmpeg" => "ffmpeg -version"}[name]
+  if name == 'mencoder'
+    output = `mencoder --fail 2>&1`
+    if output =~ /mencoder/i
+      # success, it is installed
+      return true
+    else
+      # fall through
+    end
+  end
 
-  raise 'unknown' unless command # double check
+  command = {"gocr" => "gocr --help", "convert" => "convert --help", 
+    "mplayer" => "mplayer", "mencoder" => "fakey", "ffmpeg" => "ffmpeg -version"}[name]
+
+  raise 'unknown ' + name unless command # double check
 
   unless system(command + " 1> " + OS.dev_null + " 2>" + OS.dev_null)
      name = 'ImageMagick' if name == 'convert' # special case...

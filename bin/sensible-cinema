@@ -432,6 +432,8 @@ module SensibleSwing
       else
         if !CheckInstalledMac.check_for_installed(unix_name)
           exit 1
+        else
+          true
         end
       end
     end
@@ -442,7 +444,6 @@ module SensibleSwing
         show_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
         download_zip_to "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
       end
-      raise unless File.exist?(ffmpeg_exe_loc)
       
       if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
@@ -705,7 +706,10 @@ module SensibleSwing
         # memoize...kind of :)
         return @_choose_dvd_drive
       end
-      show_blocking_message_dialog 'insert a dvd first' unless opticals.find{|d| d.VolumeName }
+      unless opticals.find{|d| d.VolumeName }
+        show_blocking_message_dialog 'insert a dvd first' 
+        exit 1
+      exit
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
 
       if opticals.length != 1

@@ -16,6 +16,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 require 'digest/md5'
+require 'rubygems'
 require 'sane'
 require 'ostruct'
 
@@ -45,13 +46,15 @@ class DriveInfo
  def self.get_all_drives_as_ostructs
   if OS.mac?
     require 'plist'
+require 'ruby-debug'
+#debugger
     a = Dir['/Volumes/*'].map{|dir|
      parsed = Plist.parse_xml(`diskutil info -plist "#{dir}"`)
      d2 = OpenStruct.new
      d2.VolumeName = parsed["VolumeName"]
      d2.Name = dir # DevNode?
      d2.FreeSpace = parsed["FreeSpace"].to_i
-     d2.Description = parsed['Description'] # work ??
+     d2.Description = parsed['OpticalDeviceType']
      d2
     }
     a
@@ -64,3 +67,7 @@ class DriveInfo
 
 end
 
+if $0 == __FILE__
+  require 'pp'
+  p DriveInfo.get_dvd_drives_as_openstruct
+end
