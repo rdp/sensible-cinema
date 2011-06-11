@@ -424,13 +424,13 @@ module SensibleSwing
           # creates vendor/cache/mencoder/mencoder.exe...
         end
     end
-
+    require 'lib/check_installed_mac.rb'
     def check_for_exe windows_loc, unix_name
+      # in windows, that exe *at that location* must exist...
       if OS.windows?
-        File.exist?(windows_loc)
+        File.exist?(loc)
       else
-        if !system_blocking(unix_name + " -v")
-          puts "please install " + unix_name  
+        if !CheckInstalledMac.check_for_installed(unix_name)
           exit 1
         end
       end
