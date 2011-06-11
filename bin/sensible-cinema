@@ -27,7 +27,7 @@ rescue LoadError
 end
 
 raise 'need jruby' unless OS.java?
-raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still accomodate for so many oddities :P
+raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many oddities :P
 
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
@@ -44,20 +44,20 @@ require 'ruby-wmi' unless OS.mac?
 
 vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
 
-if OS.mac?
-for name in ['.', 'mencoder', 'ffmpeg']
-  # put them all before the old path
-  ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
-end
+if OS.windows?
+  for name in ['.', 'mencoder', 'ffmpeg']
+    # put them all before the old path
+    ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
+  end
 
-installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
+  installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
 
-for folder in installed_smplayer_folders
-  ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
-end
+  for folder in installed_smplayer_folders
+    ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+  end
 
 else
-  ENV['PATH'] = ENV['PATH'] + ':' + '/opt/local/bin' # add macports' bin...
+  ENV['PATH'] = ENV['PATH'] + ':' + '/opt/local/bin' # add macports' bin in, just in case...
 end
 
 import 'javax.swing.ImageIcon'
@@ -425,9 +425,9 @@ module SensibleSwing
         end
     end
 
-    def check_for_exe loc, unix_name
+    def check_for_exe windows_loc, unix_name
       if OS.windows?
-        File.exist?(loc)
+        File.exist?(windows_loc)
       else
         if !system_blocking(unix_name + " -v")
           puts "please install " + unix_name  
@@ -785,9 +785,11 @@ end
 
 
 at_exit2 {
-  system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
-  system("taskkill /f /im ffmpeg.exe 2>NUL")
-  system("taskkill /f /im mplayer.exe 2>NUL")
+  if OS.windows?
+    system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
+    system("taskkill /f /im ffmpeg.exe 2>NUL")
+    system("taskkill /f /im mplayer.exe 2>NUL")
+  end
 }
 
 if $0 == __FILE__
