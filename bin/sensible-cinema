@@ -454,15 +454,19 @@ module SensibleSwing
       
       if ARGV.index('--create-mode')
         # they're going to want these dependencies
-        check_for_exe("mplayer", "mplayer")
-        path = RubyWhich.new.which('smplayer')
-        if(path.length == 0)
-          # this one has its own license...
-          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
-          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
-          System.exit(1)
+        if OS.windows?
+          path = RubyWhich.new.which('smplayer')
+          if(path.length == 0)
+            # this one has its own installer...
+            show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
+            Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
+            "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+            system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+            System.exit(1)
+          end
+        else
+          check_for_exe("mplayer", "mplayer") # OS X ...
+          puts 'warning for OS X users--the smplayer-type buttons aren\'t going to work'
         end
       end
     end
@@ -798,9 +802,13 @@ at_exit2 {
 }
 
 if $0 == __FILE__
-  a = SensibleSwing::MainWindow.new
-  a.set_visible true
-  puts 'Please use the Sensible Cinema GUI window popup...'
+  if ARGV.index('-h') || ARGV.index('--help')
+    puts 'syntax: [--create-mode]'
+  else
+    a = SensibleSwing::MainWindow.new
+    a.set_visible true
+    puts 'Please use the Sensible Cinema GUI window popup...'
+  end
 end
 
-# icon attribution: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62
+# icon derived from: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62
