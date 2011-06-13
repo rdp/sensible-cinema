@@ -1,7 +1,12 @@
 up next:
 
 == does it work with makemkv with ts muxer? ==
-  
+
+  OSOH/ title00.ts
+    transition: frame 107798 00:59:56.863
+    with ffmpeg 3596.82 seems to be in perfect lock-step with the other.
+    both have sound.
+    perfeito
 
 == so...does it work with makemkv without tsmuxer? ==
 
@@ -12,10 +17,10 @@ up next:
     did *not* seem to work (avidemux: audio messed up, transition 86250 00:59:57.347 which is kind-er right...)
   to be continued...
   demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. OSOH only saw it once
-
   
 == ja donatei ==
-  ossfarm
+
+  ossfarm, winscp
 
 == ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli ==
   conclusion: they seem close :P
