@@ -1,7 +1,10 @@
 up next:
+  check if ffmpeg goes forward or back.
+  did it match better for OSOH mplayer fulli?  Did it match the other fulli? huh? maybe it was only off with the .ts file for some freaky reason?
 
 == ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli c lightning ==
 
+  try with all x*y ways to do this LOL
 
 == does it work with makemkv with ts muxer? ==
 
