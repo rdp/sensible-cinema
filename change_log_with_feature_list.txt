@@ -1,3 +1,7 @@
+== ==
+
+OS X compatibility.  Though not heavily used it *might* work.
+
 == 0.22.1 ==
 
 Test release for automated sourceforge build system

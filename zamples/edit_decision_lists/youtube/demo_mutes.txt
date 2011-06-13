@@ -4,7 +4,7 @@
 ],
 
 "blank_outs" => [
- # none
+ "1:00.0", "1:05.0"
 ],
 
 "title" => "Friday Song",

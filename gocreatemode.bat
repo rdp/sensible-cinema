@@ -1,1 +1,1 @@
-call j %* bin\sensible-cinema --create-mode || call jruby %* bin\sensible-cinema --create-mode
+call j %* bin\sensible-cinema --create-mode
