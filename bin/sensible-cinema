@@ -27,7 +27,7 @@ rescue LoadError
 end
 
 raise 'need jruby' unless OS.java?
-raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0.RC2' # may not need this since we still accomodate for so many oddities :P
+raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many oddities :P
 
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
@@ -39,19 +39,25 @@ require 'tmpdir'
 require_relative '../lib/swing_helpers'
 require_relative '../lib/drive_info'
 require 'whichr'
-require 'ruby-wmi'
+require 'os'
+require 'ruby-wmi' unless OS.mac?
 
 vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
 
-for name in ['.', 'mencoder', 'ffmpeg']
-  # put them all before the old path
-  ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
-end
+if OS.windows?
+  for name in ['.', 'mencoder', 'ffmpeg']
+    # put them all before the old path
+    ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
+  end
 
-installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
+  installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
 
-for folder in installed_smplayer_folders
-  ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+  for folder in installed_smplayer_folders
+    ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+  end
+
+else
+  ENV['PATH'] = ENV['PATH'] + ':' + '/opt/local/bin' # add macports' bin in, just in case...
 end
 
 import 'javax.swing.ImageIcon'
@@ -345,10 +351,14 @@ module SensibleSwing
       # oh the insanity of the console UI...LODO more user friendly player
       @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
-      play_this_mplayer ||= "mplayer dvdnav://#{title_track} -nocache " 
+      play_this_mplayer ||= "mplayer dvd://#{title_track} "  # was dvdnav -nocache
+      # dvd:// bcause the bundled mplayer crashes with dvdnav LOL [also macports' has no dvdnav ? ]
       # direct3d for windows 7 nvidia's sake yipes
       command =  "#{play_this_mplayer} -vo direct3d -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       # -hardframedrop might help a bit but hurts too much
+      unless OS.mac?
+         command += " -vo direct3d" # nvidia drivers for older cards yipes
+      end
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
@@ -416,31 +426,47 @@ module SensibleSwing
           # creates vendor/cache/mencoder/mencoder.exe...
         end
     end
+    require 'lib/check_installed_mac.rb'
+    def check_for_exe windows_loc, unix_name
+      # in windows, that exe *at that location* must exist...
+      if OS.windows?
+        File.exist?(loc)
+      else
+        if !CheckInstalledMac.check_for_installed(unix_name)
+          exit 1
+        else
+          true
+        end
+      end
+    end
     
     def check_for_dependencies
-      #ffmpeg = RubyWhich.new.which('ffmpeg')
       ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
-      if !File.exist?(ffmpeg_exe_loc)
+      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
         show_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
         download_zip_to "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
       end
-      raise unless File.exist?(ffmpeg_exe_loc)
       
-      if !File.exist?('vendor/cache/mencoder/mencoder.exe')
+      if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
         show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
       end
       
       if ARGV.index('--create-mode')
         # they're going to want these dependencies
-        path = RubyWhich.new.which('smplayer')
-        if(path.length == 0)
-          # this one has its own license...
-          show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-          Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
-          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
-          System.exit(1)
+        if OS.windows?
+          path = RubyWhich.new.which('smplayer')
+          if(path.length == 0)
+            # this one has its own installer...
+            show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
+            Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
+            "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+            system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+            System.exit(1)
+          end
+        else
+          check_for_exe("mplayer", "mplayer") # OS X ...
+          puts 'warning for OS X users--the smplayer-type buttons aren\'t going to work'
         end
       end
     end
@@ -686,7 +712,10 @@ module SensibleSwing
         # memoize...kind of :)
         return @_choose_dvd_drive
       end
-      show_blocking_message_dialog 'insert a dvd first' unless opticals.find{|d| d.VolumeName }
+      unless opticals.find{|d| d.VolumeName }
+        show_blocking_message_dialog 'insert a dvd first' 
+        exit 1
+      end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
 
       if opticals.length != 1
@@ -709,11 +738,10 @@ module SensibleSwing
 
       if selected_idx
         disk = opticals[selected_idx]
-        prefix = names[selected_idx][0..2]
         puts "calculating disk's unique id..."
-        md5sum = DriveInfo.md5sum_disk(prefix)
-        @_choose_dvd_drive = [prefix, opticals[selected_idx].VolumeName, md5sum]
-        @saved_opticals = opticals
+        md5sum = DriveInfo.md5sum_disk(disk.MountPoint)
+        @_choose_dvd_drive = [disk.MountPoint, opticals[selected_idx].VolumeName, md5sum]
+        @saved_opticals = opticals # since we force them to have their disc already in there...guess this is ok for os x :)
         return @_choose_dvd_drive
       else
         puts 'did not select a drive...hard exiting'
@@ -748,17 +776,6 @@ module SensibleSwing
   end
 end
 
-require 'ffi'
-
-module Win
-  extend FFI::Library
-  ffi_lib 'kernel32'
-  ffi_convention :stdcall
-  attach_function :get_process_id, :GetProcessId, [ :long ], :uint
-end
-
-
-
 class ShutdownHook 
   include java.lang.Runnable
           	def initialize( &block)
@@ -775,16 +792,23 @@ end
           	java.lang.Runtime.getRuntime.addShutdownHook(java.lang.Thread.new( hook ))
           end
 
+
 at_exit2 {
-  system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
-  system("taskkill /f /im ffmpeg.exe 2>NUL")
-  system("taskkill /f /im mplayer.exe 2>NUL")
+  if OS.windows?
+    system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
+    system("taskkill /f /im ffmpeg.exe 2>NUL")
+    system("taskkill /f /im mplayer.exe 2>NUL")
+  end
 }
 
 if $0 == __FILE__
-  a = SensibleSwing::MainWindow.new
-  a.set_visible true
-  puts 'Please use the Sensible Cinema GUI window popup...'
+  if ARGV.index('-h') || ARGV.index('--help')
+    puts 'syntax: [--create-mode]'
+  else
+    a = SensibleSwing::MainWindow.new
+    a.set_visible true
+    puts 'Please use the Sensible Cinema GUI window popup...'
+  end
 end
 
-# icon attribution: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62
+# icon derived from: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62

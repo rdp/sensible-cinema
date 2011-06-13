@@ -33,6 +33,10 @@ Note that there are batch files to more easily run SC in normal, create, and/or 
 
 All feedback/contribution welcome :)
 
+== mac os x developers ==
+
+You'll have to install a few dependencies.  It will tell you which, or you can discover them by running lib/check_installed_xxx.rb
+
 == Advanced Usage ==
 
 For the screen tracker (experimental version--see experimental.txt),

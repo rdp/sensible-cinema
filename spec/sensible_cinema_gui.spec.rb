@@ -18,7 +18,7 @@ This file is part of Sensible Cinema.
 
 require 'ostruct'
 require File.expand_path(File.dirname(__FILE__) + '/common')
-load '../bin/sensible-cinema.rb'
+load '../bin/sensible-cinema'
 
 module SensibleSwing
   describe MainWindow do

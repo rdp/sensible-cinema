@@ -29,8 +29,13 @@ end
 
 # helper for OCR'ing single digits that were screen captured
 module OCR
-  
-  GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr049.exe -C 0-9:/ ")
+  if OS.windows? 
+    GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr049.exe -C 0-9:/ ")
+  else
+    require_relative 'check_installed_mac'
+    exit 1 unless CheckInstalledMac.check_for_installed 'gocr'
+    GOCR = "gocr"
+  end
   
   CACHE = {}
   

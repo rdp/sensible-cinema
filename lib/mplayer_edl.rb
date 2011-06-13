@@ -16,7 +16,6 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require_relative 'overlayer'
 require_relative 'edl_parser'
 
 class MplayerEdl

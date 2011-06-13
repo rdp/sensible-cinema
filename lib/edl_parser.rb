@@ -16,8 +16,6 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require_relative 'overlayer'
-
 class EdlParser
 
   def self.parse_file filename, ignore_settings = false

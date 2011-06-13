@@ -1,16 +1,18 @@
 == roadmap [for just tasks, see below though] ==
 
   release: cheap inventionzy, and medium inventionzy
-  release: C EDL/specific portion [A,B] player
-  pull ripping/make mine take a file
+  release: C EDL
   ?? ordering/looseness below ??
+  C specific portion [A,B] player
+  pull ripping/make mine take a file
+    or
+  compare netflix/blu-ray timings et al
   pull realtime players from mine [?], update todo
   build library phase, 20 dvd's
   create web site/api
   propagate wikipedia with list of realtimers etc.
     don't mention mplayer EDL, just link to wikipedia :P
   more build library
-  compare netflix/blu-ray timings et al
   
 == high prio like blocking bugs ==  
   
@@ -21,7 +23,9 @@
 == yes do, un-ordered currently, from the various release options ==
 
   subtitles: impass assistance :)
-  tell them "I need it as a raw mpeg file, just look at the title track in the EDL, then use makemkv with tsmuxer to transform it to a .ts, or use mplayer to grab it" 
+  note realtime: clearplay
+  tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
+    "just look at the title track in the EDL, then..."
   tell them "to edit easily..."
     "hardware DVD player/commercial DVD software"
     "you could watch it under mplayer with the OSD turned on" 
@@ -101,7 +105,7 @@
     previous: Windows Movie Maker
   mplayer OSD [optionally [?]]
   re-run with several owned DVD's
-  port to OS X overall
+  port to OS X--try everything out, make sure it works
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   delete unedited.fulli file automatically
     except if it's a specific scene run...
@@ -175,8 +179,8 @@
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   port to linux
   "release" it to more developers
-    plug.org, more rubyists?
-    after OS X :)
+    plug.org, more rubyists than urug?
+    after OS X confidence :)
   @VLC also tell them to tell people how to play hi-def better, when they try [?] if it shtinks
   an all online EDL editor
     flash canvas
@@ -187,7 +191,7 @@
   donate winscp, sox
   do todo.inventionzy.txt all
   an "automatic mplayer split finder" :)
-  buy forever strong italian, compare... :P
+  buy forever strong in italian, compare... :P
   mac version of the C player 
     "just play from X to Y exactly" [?]
   forever strong DVD timestamps [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
