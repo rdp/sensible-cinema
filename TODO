@@ -35,7 +35,6 @@
     "you could edit it in basically any editor--they are usually pretty accurate"
     "you could edit your file "raw" file "with avidemux, except video will be slightly off, but audio will be on"
     "VLC [or any GUI] is always slightly off."
-  @mulder: dvdnav crashes
   can I avoid requiring use of tsmuxer first?
   check with blu-ray...does it match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, ffmpeg windows
@@ -110,6 +109,7 @@
   mplayer OSD [optionally [?]]
   re-run with several owned DVD's
   port to OS X--try everything out, make sure it works
+    check mplayerx, os x mplayer extended [?] dvdnav et al [?]
   auto-download and run for them the smplayer install exe [avoid scary sourceforge/extra step]
   delete unedited.fulli file automatically
     except if it's a specific scene run...
@@ -124,8 +124,6 @@
   todo.subtitle
 
 == DVD decide later to move up or down ==
-
-  a wholesome meter?
 
 == DVD-realtime backlog [?] do, unordered ==
 
@@ -164,10 +162,8 @@
   make it not die if you have no DVD in there yet when you choose a drive...
   the "frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
-  bounty dvdnav (calendar will ping me)
   @mencoder you lop off the end somehow
   @VLC convert -> dump raw always displays--expected? also saves nothing?
-  fix dvdnav?
   research the gplv3, add terms. Maybe want real lawyer, even?
   note "others are released under this license, that license"
   note/include jruby license, include gplv1 et al, note "also included locally"
@@ -308,6 +304,8 @@ warn when labels both exist and don't match...
 
 @mplayer warn before overwrite
 @mplayer you cannot convert mkv files correctly you silly!
+bounty dvdnav
+fix dvdnav?
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
@@ -349,7 +347,6 @@ after 2020: DVD Navigator in C++ ?
 it should track "is paused" better (OCR)
 
 something that works with cable TV, too, somehow?
-figure out why I need to uses dvdnav:// sometimes, dvd:// others to not crash :P
 
 if sued, could use straight mplayer -ss (+- one at a time, or possibly in a playlist [?] like VLC can...)
   -hr-edl-seek ?
