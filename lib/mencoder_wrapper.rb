@@ -23,15 +23,20 @@ class MencoderWrapper
   end
   class << self
   
-    def get_header this_drive, these_settings
+    def get_header this_file, these_settings
       out = ''
       if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
-        out = '@rem '
+        out = '@rem ' # don't re-do this file if .done file already exists...
       end
       audio_codec = these_settings['audio_codec'] || 'mp3lame' # not copy...sniff...or you can't hear cars... LODO
-      # LODO do I need mp3lame for sintel, or can I get away with lavc?
-      video_opts = "-vf scale=720:480,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out + "mencoder dvdnav://#{@dvd_title_track} -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"
+      # LODO do I need mp3lame for sintel, or can I get away with lavc? will it work overall currently?
+      # -vf pullup,softskip "fixes" freaky mixed DVD's, or so they tell me...
+      # harddup is "to create a DVD compliant" video which...I think I don't need...
+      #   "This will result in a slightly bigger file, but will not cause problems when demuxing or remuxing into other container formats." LODO no harddup ok ???
+      # lodo: can I use ffmpeg to unmux-ify/GOP'ify perhaps?
+      # LODO 24000/1001 ?
+      video_opts = "-vf scale=pullup,softskip,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
+      out + "mencoder "{this_file.gsub('"', '\\"')}" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"
     end
     
     def calculate_final_filename to_here_final_file
@@ -44,7 +49,7 @@ class MencoderWrapper
       @dvd_title_track = dvd_title_track
       assert dvd_title_track
       if start_here || end_here
-        raise 'need both' unless end_here && start_here
+        raise 'need end and start' unless end_here && start_here
         start_here = EdlParser.translate_string_to_seconds(start_here)
         end_here   = EdlParser.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }
