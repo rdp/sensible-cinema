@@ -23,7 +23,10 @@
 == yes do, un-ordered currently, from the various release options ==
 
   subtitles: impass assistance :)
+    je.....
   note realtime: clearplay
+  analyze: should I use mulder for mplayer+-smplayer instead?
+    did his older versions...crash on dvdnav? huh?
   tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
     "just look at the title track in the EDL, then..."
   tell them "to edit easily..."
@@ -37,7 +40,7 @@
     "VLC [or any GUI] is always slightly off."
   can I avoid requiring use of tsmuxer first?
   check with blu-ray...does it match timing-wise? sub-title wise?
-  donate tsmuxer, makemkv, ffmpeg windows
+  donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?]
   check cp p.'s
   instructions: reference the sintel DVD :) (download it from my site here)
   note to google group...
