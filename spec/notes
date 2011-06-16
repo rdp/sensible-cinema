@@ -1,10 +1,12 @@
 up next:
-  check if ffmpeg goes forward or back.
-  did it match better for OSOH mplayer fulli?  Did it match the other fulli? huh? maybe it was only off with the .ts file for some freaky reason?
 
-== ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli c lightning ==
+==  ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli c lightning ==
 
   try with all x*y ways to do this LOL
+  fascinatingly, on the mplayer dump file, the OSD doesn't work right, and resets. LOL
+  mplayer dvdnav OSD:
+    preceding: 02:10:36.-4
+    actual strike: 02:10:36.00
 
 == does it work with makemkv with ts muxer? ==
 
@@ -26,15 +28,14 @@ up next:
   
 == ja donatei ==
 
-  ossfarm, winscp
+  ossfarm, putty, tons others, I think...
 
 == ffmpeg vs. AVS vs. powerproducer zact timings...splitting fulli ==
 
   conclusion: 
-    ffmpeg is a tidge off [?]
-    mencoder is way off
-    pick your poison :)
+    mencoder splitting for zact timing seemss off
     ffmpeg is consistent with ffprobe I...would guess.
+      which *seems* to match the DVD "quite closely"
 
   note this was fulli from mplayer rip...though ffmpeg seemed to match better with both [?]
 
@@ -48,23 +49,30 @@ up next:
   ffmpeg at 3596.82 got avidemux's frame: 00:59:56.896 (107798) which seems to match ffprobe...and imply that 3596.826 is the transition frame [?]
    so basically everything is...one frame off? ffmpeg is one frame off from avs/others?
   mplayer DVD OSD: 00:59:53.25 (converted: 3596.84) V:3597.3 [V value huh? ]
-    previous was 59:53:21 [pre-switch] (3596.80 converted)
+    previous frame to transition one was 59:53:21 [pre-switch] (3596.80 converted)
     about one frame off avs/avidemux []
       . = frame advance in mplayer 
       
   title00.ts
     (non-finger frame)
     AVS on ts (not fulli): ffmpeg's 3596.82 frame is shown 57.042 [+ crash?]
-    powerproducer: 57.0 even (meaning before 57.03)
+    powerproducer: 57.0 even (meaning probably the frame before 57.03)
     mplayer: 4197.0 [second .0], (OSD from file)
     avidemux on .ts: 00:59:57.347 86250 (but the timing is always off for that one...)
     however with fulli I guess we're closer somehow magically [?]
     
     mencoder 3596.82 seemed *way* too early frame-wise...
       used: mencoder1 -ss 3596.82 -endpos 3 -oac copy -ovc copy  title00.ts.mencoder.fulli.mpg -o  title00.ts.mencoder.fulli.mpg.mencoder.3596.82.mpg
+    NB: "non knuckles" *is* the first transition frame...
+      and it "should" be OSD, above...huh? the ts file is off?
     
-  AVS on original mkv: 
-    non finger frame: 56.986
+  title00.ts.fulli
+    AVS 59:56.887 [phew pretty close again...what?]
+    conclusion: the ts is a bit off somehow? what?
+    powerproducer: 56.86 or 56.90
+    
+  AVS on original mkv:
+    non finger frame: 56.966 (previous was .926)
   
 == ? ==
 
@@ -72,7 +80,7 @@ mkv2vob just extracts singles, not re-muxes them [not useful here]
 mkvmerge only ... [not useful here]
 
 conclusions: mencoder -forceidx can make a copied rip file play great in mencoder [and presumably be cut right?]
-  makemkv has no problems with resets.
+  makemkv has no problems with/signs of internal resets.
   VLC playing any mpeg *file* is actually pretty close to right on [?]
 
 dvdoutmplayer.mpg.mencoder.ofps.mpg did not save avidemux

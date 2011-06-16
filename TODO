@@ -42,6 +42,8 @@
   check with blu-ray...does it match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?]
   check cp p.'s
+  auto tsmuxer? 
+    MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr  --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
   instructions: reference the sintel DVD :) (download it from my site here)
   note to google group...
   add an mencoder convert with mplayer_breaks button :P
