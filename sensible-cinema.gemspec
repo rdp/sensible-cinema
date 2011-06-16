@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-06-10}
+  s.date = %q{2011-06-15}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
     "lib/add_any_bundled_gems_to_load_path.rb",
     "lib/auto_convert.rb",
     "lib/blanker.rb",
+    "lib/check_installed_mac.rb",
     "lib/count_down_timer_jruby_swing.rb",
     "lib/drive_info.rb",
     "lib/edl_converter.rb",

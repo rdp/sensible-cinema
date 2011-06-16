@@ -20,9 +20,9 @@ This file is part of Sensible Cinema.
 print 'Loading Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
-  require 'sane' # failure here means you haven't bundled your dependencies... [$ jruby -S rake bundle_dependencies after doing jruby -S gem install sensible-cinema ]
+  require 'sane' 
 rescue LoadError
-  p 'please run $ rake rebundle_dependencies first, as we dislike needing rubygems'
+  p 'please run $ rake rebundle_copy_in_dependencies first, as we dislike needing locally installed rubygems'
   raise
 end
 
@@ -49,8 +49,8 @@ if OS.windows?
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
-
-  installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
+  
+  installed_smplayer_folders = Dir['{c,d,e}:/program files*/MPlayer for Windows']
 
   for folder in installed_smplayer_folders
     ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
@@ -98,7 +98,7 @@ module SensibleSwing
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          'Sensible Cinema is distributed under the gplv3. BY CLICKING "accept" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT'
+          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
         show_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
           'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
@@ -185,16 +185,13 @@ module SensibleSwing
           end
           p.dispose # it will be active for sure
         end
-        smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
-        old_prefs = File.read(smplayer_prefs_file) rescue ''
-        new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
-        File.write(smplayer_prefs_file, new_prefs)
-        thread = do_mplayer_edl( "smplayer #{nice_file}") # note the smplayer, but it's for the fast file...
+        set_smplayer_opts "-edl #{EdlTempFile}"
+        thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
         Thread.new { # XXX do we need this?
           begin
             thread.join
           ensure
-            File.write(smplayer_prefs_file, old_prefs)
+            set_smplayer_opts ''
           end
         }
       }
@@ -203,7 +200,7 @@ module SensibleSwing
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
         sleep 5 unless success_no_run
-        command = "smplayer #{wrote_to_here_fulli}"
+        command = "smplayer_portable #{wrote_to_here_fulli}"
         system_non_blocking command
       }
 
@@ -239,6 +236,18 @@ module SensibleSwing
       setSize @button_width+80, @starting_button_y
       setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
+    end
+    require 'fileutils'
+    def set_smplayer_opts to_this
+        smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
+        old_prefs = File.read(smplayer_prefs_file) rescue ''
+        old_prefs = "[advanced]\nmplayer_additional_options=" unless old_prefs.contain? 'mplayer_additional_options='
+        new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
+        FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
+        File.write(smplayer_prefs_file, new_prefs)
+        p 'wrote', new_prefs
+        # no worky doze File.write(File.expand_path('~/.mplayer/config'), to_this)
+        smplayer_prefs_file
     end
     
     def create_brand_new_edl
@@ -326,7 +335,8 @@ module SensibleSwing
     def play_dvd_smplayer_unedited
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       title_track = get_title_track(descriptors)
-      command =  "smplayer dvdnav://#{title_track} -dvd-device #{drive}"
+      config = set_smplayer_opts "-dvd-device #{drive}"
+      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
       p command
       system_non_blocking command
     end
@@ -408,7 +418,7 @@ module SensibleSwing
       Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
       unless File.exist? 'vendor/cache/7za.exe'
         Dir.chdir('vendor/cache') do
-          print 'downloading unzipper...'
+          print 'downloading unzipper (400K) ...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
@@ -432,7 +442,7 @@ module SensibleSwing
     def check_for_exe windows_loc, unix_name
       # in windows, that exe *at that location* must exist...
       if OS.windows?
-        File.exist?(loc)
+        File.exist?(windows_loc)
       else
         if !CheckInstalledMac.check_for_installed(unix_name)
           exit 1
@@ -457,13 +467,13 @@ module SensibleSwing
       if ARGV.index('--create-mode')
         # they're going to want these dependencies
         if OS.windows?
-          path = RubyWhich.new.which('smplayer')
+          path = RubyWhich.new.which('smplayer_portable')
           if(path.length == 0)
             # this one has its own installer...
-            show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-            Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
+            show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
+            Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
             "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-            system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+            system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
             System.exit(1)
           end
         else
@@ -694,7 +704,8 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer
-          system_non_blocking "smplayer #{saved_to}"
+          set_smplayer_opts ''
+          system_non_blocking "smplayer_portable #{saved_to}"
         else
           # lodo NonBlockingDialog once it can get to the top instead of being so buried...
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""

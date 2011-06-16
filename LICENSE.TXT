@@ -10,6 +10,6 @@ Note also that we used parts of the 7-Zip program, that 7-Zip is licensed under 
 
 Ffmpeg is included, under the GPLv2: http://www.ffmpeg.org/legal.html http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-curl is included, released under an MIT/X style license: http://curl.haxx.se/docs/copyright.html
+unzip.exe is herein included, under the free info-zip license: http://www.info-zip.org/license.html
 
 See first also the file "is_it_legal_to_copy_dvds.txt" for more information on legal use in your country.

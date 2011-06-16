@@ -21,7 +21,8 @@
   high prio patents
   
 == yes do, un-ordered currently, from the various release options ==
-
+  
+  if they disdain to choose a filename the whole thing exits.
   subtitles: impass assistance :)
     je.....
   note realtime: clearplay
@@ -45,7 +46,6 @@
   auto tsmuxer? 
     MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr  --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
   instructions: reference the sintel DVD :) (download it from my site here)
-  note to google group...
   add an mencoder convert with mplayer_breaks button :P
   youtube/hulu timings
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
@@ -60,7 +60,7 @@
   always force them to have a DVD in the drive :P
   cross platform discid
   split LLC's website+consumer
-  employ: watch @ realtime after profanity filter :P
+  employ: watch @ realtime after profanity filter first pass :P
   
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
