@@ -89,7 +89,7 @@ module SensibleSwing
   end
   
   class NonBlockingDialog < JDialog
-    def initialize title_and_display_text, close_button_text= 'Close'
+    def initialize title_and_display_text, close_button_text = 'Close'
       super nil
       lines = title_and_display_text.split("\n")
       set_title lines[0]

@@ -98,9 +98,9 @@ module SensibleSwing
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
           "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-        show_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
           'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
       end
@@ -147,8 +147,7 @@ module SensibleSwing
       }
       
       @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
-        @play_smplayer_warn = show_non_blocking_message_dialog "Turn on OSD by using the 'o' key, Turn off subtitles by using the 'v' key."
-        play_dvd_smplayer_unedited false
+        play_dvd_smplayer_unedited
       }
       
 #      @watch_created_file = new_jbutton( "Watch edited file copy of DVD", false).on_clicked {
@@ -176,7 +175,7 @@ module SensibleSwing
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli #+ ".fast.mpg"
         if false#!File.exist?(nice_file)
-          p = NonBlockingDialog.new("Creating quick lookup file--NB that for each changed deletion, 
+          p = show_non_blocking_message_dialog("Creating quick lookup file--NB that for each changed deletion, 
           you'll need to restart the fast preview SMplayer
           Also note that the start and end times will be slightly off if reality [delayed]
           Also note that while doing fast preview, it can be doing a normal preview as well
@@ -229,7 +228,7 @@ module SensibleSwing
       increment_button_location
 
       @exit = new_jbutton("Exit", false, true).on_clicked {
-        #self.close
+        #self.close # don't waste time :P
         kill_processes
         java.lang.System.exit 0
       }
@@ -338,11 +337,11 @@ module SensibleSwing
     end
     
     def play_dvd_smplayer_unedited
-      drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
-      title_track = get_title_track(descriptors)
-      config = set_smplayer_opts " -nosub -sid 999 -dvd-device #{drive} -osd-fractions 2 -osdlevel 2 -nocache "
-      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
+      drive, dvd_volume_name, md5sum, edl_path_false, descriptors_false = choose_dvd_and_edl_for_it false
+      config = set_smplayer_opts " -dvd-device #{drive} -osd-fractions 2 -nocache " # smplayer doesn't take -osdlevel 2
+      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://" # smplayer doesn't take -dvd-device #{drive} sniff
       p command
+      @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:\n'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted before you can use them).\n'v' key: turn off subtitles.\n'.' key: step one frame.\nDouble click for full screen."
       system_non_blocking command
     end
 
@@ -364,7 +363,7 @@ module SensibleSwing
       File.write(EdlTempFile, edl_contents)
       title_track = get_title_track(descriptors)
       # oh the insanity of the console UI...LODO more user friendly player
-      @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
+      @popup ||= show_non_blocking_message_dialog("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
       play_this_mplayer ||= "mplayer dvdnav://#{title_track} -nocache "
       # macports' has no dvdnav ?? 
@@ -378,7 +377,7 @@ module SensibleSwing
       Thread.new { system_blocking command; @popup.dispose }
     end
       
-    def show_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
+    def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
         title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window.'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
@@ -460,12 +459,12 @@ module SensibleSwing
     def check_for_dependencies
       ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
       if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-        show_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
         download_zip_to "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
       end
       
       if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
-        show_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
+        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
       end
       
@@ -526,6 +525,12 @@ module SensibleSwing
       true
     end
     
+    # call dispose on this to close it if it hasn't been canceled yet...
+    def show_non_blocking_message_dialog message, close_button_text = 'Close'
+      # lodo NonBlockingDialog it can get to the top instead of being so buried...
+      NonBlockingDialog.new(message, close_button_text)
+    end
+    
     include_class javax.swing.UIManager
     
     def get_user_input(message, default = '')
@@ -542,31 +547,33 @@ module SensibleSwing
       JFile.new(File.dirname(path)).get_usable_space
     end
     
-    def choose_dvd_and_edl_for_it
+    def choose_dvd_and_edl_for_it choose_file = true
       drive, dvd_volume_name, md5sum = choose_dvd_drive
-      @_edit_list_path ||= 
-      begin
-        puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
-        edit_list_path = single_edit_list_matches_dvd(md5sum)
-        if !edit_list_path
-          fc = FileDialog.new(self)
-          fc.set_title "Please pick a DVD Delete List File (non matching found)"
-          fc.set_directory EDL_DIR
-          edit_list_path = fc.go
-        end
-        raise 'cancelled' unless edit_list_path
-        edit_list_path
-      end
-      
-      # reload it just in case it has changed on disk
-      descriptors = nil
-      while(!descriptors)
-          begin
-            descriptors = parse_edl @_edit_list_path
-          rescue SyntaxError => e
-            puts e
-            show_blocking_message_dialog("your file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+      if choose_file
+        @_edit_list_path ||= 
+        begin
+          puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
+          edit_list_path = single_edit_list_matches_dvd(md5sum)
+          if !edit_list_path
+            fc = FileDialog.new(self)
+            fc.set_title "Please pick a DVD Delete List File (non matching found)"
+            fc.set_directory EDL_DIR
+            edit_list_path = fc.go
           end
+          raise 'cancelled' unless edit_list_path
+          edit_list_path
+        end
+        
+        # reload it just in case it has changed on disk
+        descriptors = nil
+        while(!descriptors)
+            begin
+              descriptors = parse_edl @_edit_list_path
+            rescue SyntaxError => e
+              puts e
+              show_blocking_message_dialog("your file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+            end
+        end
       end
       [drive, dvd_volume_name, md5sum, @_edit_list_path, descriptors]
     end
@@ -668,7 +675,7 @@ module SensibleSwing
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
-      popup = NonBlockingDialog.new(
+      popup = show_non_blocking_message_dialog(
       "Applying #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
       "Copying to #{save_to}.\n" +
       "This could take quite awhile, and will prompt you and chime a noise when it is done.\n" +
@@ -712,7 +719,6 @@ module SensibleSwing
           set_smplayer_opts ''
           system_non_blocking "smplayer_portable #{saved_to}"
         else
-          # lodo NonBlockingDialog once it can get to the top instead of being so buried...
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
           system_blocking show_file # returns immediately
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
@@ -815,6 +821,7 @@ def kill_processes
     system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
     system_original("taskkill /f /im ffmpeg.exe 2>NUL")
     system_original("taskkill /f /im mplayer.exe 2>NUL")
+    system_original("taskkill /f /im smplayer.exe 2>NUL")
   end
 end
 
