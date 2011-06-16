@@ -98,7 +98,7 @@ module SensibleSwing
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
         show_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          'Sensible Cinema is distributed under the gplv3. BY CLICKING "accept" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT'
+          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
         show_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
           'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
@@ -469,10 +469,10 @@ module SensibleSwing
           path = RubyWhich.new.which('smplayer_portable')
           if(path.length == 0)
             # this one has its own installer...
-            show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer (MPUI).\n
-            Click ok to be directed to its download website, where you can download and install it (recommend: full package), then restart sensible cinema.", 
+            show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
+            Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
             "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-            system_non_blocking("start http://code.google.com/p/mulder/downloads/detail?name=MPUI.2011-06-09.Full-Package.exe&can=2&q=MPlayer&sort=-uploaded")
+            system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
             System.exit(1)
           end
         else
