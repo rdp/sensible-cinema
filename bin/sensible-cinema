@@ -323,7 +323,7 @@ module SensibleSwing
     end
     
     def system_non_blocking command
-     Thread.new { system_original command }
+      Thread.new { system_original command }
     end
     
     # make them choose which system call to use explicitly
@@ -336,10 +336,19 @@ module SensibleSwing
       writeOut.close
     end
     
+    def _dbg
+      require 'ruby-debug'
+      debugger
+    end
+    
     def play_dvd_smplayer_unedited
-      drive, dvd_volume_name, md5sum, edl_path_false, descriptors_false = choose_dvd_and_edl_for_it false
+      # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
+      drive, dvd_volume_name, md5sum, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_and_edl_for_it false
+      if descriptors_maybe_nil
+        title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
+      end
       config = set_smplayer_opts " -dvd-device #{drive} -osd-fractions 2 -nocache " # smplayer doesn't take -osdlevel 2
-      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://" # smplayer doesn't take -dvd-device #{drive} sniff
+      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track_maybe_nil}" # smplayer doesn't take -dvd-device #{drive} sniff
       p command
       @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:\n'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted before you can use them).\n'v' key: turn off subtitles.\n'.' key: step one frame.\nDouble click for full screen."
       system_non_blocking command
@@ -549,37 +558,37 @@ module SensibleSwing
     
     def choose_dvd_and_edl_for_it choose_file = true
       drive, dvd_volume_name, md5sum = choose_dvd_drive
-      if choose_file
-        @_edit_list_path ||= 
-        begin
-          puts "#{drive}, #{dvd_volume_name}, #{md5sum}"
-          edit_list_path = single_edit_list_matches_dvd(md5sum)
-          if !edit_list_path
-            fc = FileDialog.new(self)
-            fc.set_title "Please pick a DVD Delete List File (non matching found)"
-            fc.set_directory EDL_DIR
-            edit_list_path = fc.go
-          end
+      unless @_edit_list_path
+        edit_list_path = single_edit_list_matches_dvd(md5sum)
+        if !edit_list_path && choose_file
+          fc = FileDialog.new(self)
+          fc.set_title "Please pick a DVD Delete List File (non matching found)"
+          fc.set_directory EDL_DIR
+          edit_list_path = fc.go
           raise 'cancelled' unless edit_list_path
-          edit_list_path
         end
-        
+        @_edit_list_path = edit_list_path
+      end
+      
+      if @_edit_list_path
         # reload it just in case it has changed on disk
         descriptors = nil
         while(!descriptors)
-            begin
-              descriptors = parse_edl @_edit_list_path
-            rescue SyntaxError => e
-              puts e
-              show_blocking_message_dialog("your file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
-            end
+          begin
+            descriptors = parse_edl @_edit_list_path
+          rescue SyntaxError => e
+            puts e
+            show_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+          end
         end
       end
       [drive, dvd_volume_name, md5sum, @_edit_list_path, descriptors]
     end
     
-    def get_title_track descriptors
-      descriptors["dvd_title_track"] || "1"
+    def get_title_track descriptors, use_default_of_one = true
+      given = descriptors["dvd_title_track"] 
+      given ||= "1" if use_default_of_one
+      given
     end
     
     def get_save_to_filename dvd_title
