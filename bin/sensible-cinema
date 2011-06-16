@@ -49,8 +49,8 @@ if OS.windows?
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
-
-  installed_smplayer_folders = Dir['{c,d,e}:/program files*/SMPlayer']
+  
+  installed_smplayer_folders = Dir['{c,d,e}:/program files*/MPlayer for Windows']
 
   for folder in installed_smplayer_folders
     ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
@@ -185,11 +185,8 @@ module SensibleSwing
           end
           p.dispose # it will be active for sure
         end
-        smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
-        old_prefs = File.read(smplayer_prefs_file) rescue ''
-        new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=-edl #{EdlTempFile}")
-        File.write(smplayer_prefs_file, new_prefs)
-        thread = do_mplayer_edl( "smplayer #{nice_file}") # note the smplayer, but it's for the fast file...
+        set_smplayer_opts("-edl #{EdlTempFile}")
+        thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
         Thread.new { # XXX do we need this?
           begin
             thread.join
@@ -203,7 +200,7 @@ module SensibleSwing
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
         sleep 5 unless success_no_run
-        command = "smplayer #{wrote_to_here_fulli}"
+        command = "smplayer_portable #{wrote_to_here_fulli}"
         system_non_blocking command
       }
 
@@ -239,6 +236,17 @@ module SensibleSwing
       setSize @button_width+80, @starting_button_y
       setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
+    end
+    
+    def set_smplayer_opts to_this
+        smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
+        old_prefs = File.read(smplayer_prefs_file) rescue ''
+        old_prefs = '[advanced]\nmplayer_additional_options=' unless old_prefs.contain? 'mplayer_additional_options='
+        new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
+        File.write(smplayer_prefs_file, new_prefs)
+        p 'wrote', new_prefs
+        # no worky doze File.write(File.expand_path('~/.mplayer/config'), to_this)
+        smplayer_prefs_file
     end
     
     def create_brand_new_edl
@@ -326,7 +334,8 @@ module SensibleSwing
     def play_dvd_smplayer_unedited
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       title_track = get_title_track(descriptors)
-      command =  "smplayer dvdnav://#{title_track} -dvd-device #{drive}"
+      config = set_smplayer_opts "-dvd-device #{drive}"
+      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
       p command
       system_non_blocking command
     end
@@ -457,13 +466,13 @@ module SensibleSwing
       if ARGV.index('--create-mode')
         # they're going to want these dependencies
         if OS.windows?
-          path = RubyWhich.new.which('smplayer')
+          path = RubyWhich.new.which('smplayer_portable')
           if(path.length == 0)
             # this one has its own installer...
-            show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer.\n
-            Click ok to be directed to its download website, where you can download and install it (recommend webdl download), then restart sensible cinema.", 
+            show_blocking_message_dialog("It appears that you need to install a dependency: SMPlayer (MPUI).\n
+            Click ok to be directed to its download website, where you can download and install it (recommend: full package), then restart sensible cinema.", 
             "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-            system_non_blocking("start http://smplayer.sourceforge.net/downloads.php")
+            system_non_blocking("start http://code.google.com/p/mulder/downloads/detail?name=MPUI.2011-06-09.Full-Package.exe&can=2&q=MPlayer&sort=-uploaded")
             System.exit(1)
           end
         else
@@ -694,7 +703,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer
-          system_non_blocking "smplayer #{saved_to}"
+          system_non_blocking "smplayer_portable #{saved_to}"
         else
           # lodo NonBlockingDialog once it can get to the top instead of being so buried...
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
