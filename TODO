@@ -21,7 +21,8 @@
   high prio patents
   
 == yes do, un-ordered currently, from the various release options ==
-  
+  for now just make a "convert" timestamp button for mplayer OSD ?
+  if "play unedited with smplayer" should not guess the title if we don't know yet...
   if they disdain to choose a filename the whole thing exits.
   subtitles: impass assistance :)
     je.....

@@ -50,7 +50,7 @@ if OS.windows?
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
   
-  installed_smplayer_folders = Dir['{c,d,e}:/program files*/MPlayer for Windows']
+  installed_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/MPlayer for Windows*'] # sometimes ends with UI? huh?
 
   for folder in installed_smplayer_folders
     ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
@@ -146,11 +146,15 @@ module SensibleSwing
       }
       
       @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
-        play_dvd_smplayer_unedited
+        play_dvd_smplayer_unedited false
+      }
+      
+      @play_mplayer = new_jbutton( "Watch DVD unedited (realtime mplayer OSD)", true).on_clicked {
+        play_dvd_smplayer_unedited true
       }
       
 #      @watch_created_file = new_jbutton( "Watch edited file copy of DVD", false).on_clicked {
-#        raise 'todo'
+#        raise 'todo' # TODO 
 #      }
 
       @preview_section = new_jbutton( "Preview a certain time frame from file (edited)", true )
@@ -245,7 +249,7 @@ module SensibleSwing
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
         FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
         File.write(smplayer_prefs_file, new_prefs)
-        p 'wrote', new_prefs
+        p 'wrote', new_prefs.length, smplayer_prefs_file, to_this
         # no worky doze File.write(File.expand_path('~/.mplayer/config'), to_this)
         smplayer_prefs_file
     end
@@ -332,11 +336,16 @@ module SensibleSwing
       writeOut.close
     end
     
-    def play_dvd_smplayer_unedited
+    def play_dvd_smplayer_unedited should_use_mplayer
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       title_track = get_title_track(descriptors)
-      config = set_smplayer_opts "-dvd-device #{drive}"
-      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
+      mplayer_opts = " -sid 999 -dvd-device #{drive} -osd-fractions 2 -osdlevel 2 -nocache "
+      unless should_use_mplayer
+        config = set_smplayer_opts mplayer_opts
+        command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
+      else
+        command = "mplayer #{mplayer_opts} dvdnav://#{title_track}"
+      end
       p command
       system_non_blocking command
     end
@@ -361,9 +370,9 @@ module SensibleSwing
       # oh the insanity of the console UI...LODO more user friendly player
       @popup ||= NonBlockingDialog.new("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
-      play_this_mplayer ||= "mplayer dvd://#{title_track} "  # was dvdnav -nocache
-      # dvd:// bcause the bundled mplayer crashes with dvdnav LOL [also macports' has no dvdnav ? ]
-      # direct3d for windows 7 nvidia's sake yipes
+      play_this_mplayer ||= "mplayer dvdnav://#{title_track} -nocache "
+      # macports' has no dvdnav ?? 
+      # direct3d for windows 7 old nvidia's sake yipes
       command =  "#{play_this_mplayer} -vo direct3d -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       # -hardframedrop might help a bit but hurts too much
       unless OS.mac?
