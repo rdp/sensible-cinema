@@ -185,13 +185,13 @@ module SensibleSwing
           end
           p.dispose # it will be active for sure
         end
-        set_smplayer_opts("-edl #{EdlTempFile}")
+        set_smplayer_opts "-edl #{EdlTempFile}"
         thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
         Thread.new { # XXX do we need this?
           begin
             thread.join
           ensure
-            File.write(smplayer_prefs_file, old_prefs)
+            set_smplayer_opts ''
           end
         }
       }
@@ -237,12 +237,13 @@ module SensibleSwing
       setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
     end
-    
+    require 'fileutils'
     def set_smplayer_opts to_this
         smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
         old_prefs = File.read(smplayer_prefs_file) rescue ''
-        old_prefs = '[advanced]\nmplayer_additional_options=' unless old_prefs.contain? 'mplayer_additional_options='
+        old_prefs = "[advanced]\nmplayer_additional_options=" unless old_prefs.contain? 'mplayer_additional_options='
         new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
+        FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
         File.write(smplayer_prefs_file, new_prefs)
         p 'wrote', new_prefs
         # no worky doze File.write(File.expand_path('~/.mplayer/config'), to_this)
@@ -703,6 +704,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer
+          set_smplayer_opts ''
           system_non_blocking "smplayer_portable #{saved_to}"
         else
           # lodo NonBlockingDialog once it can get to the top instead of being so buried...
