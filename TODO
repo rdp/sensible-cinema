@@ -43,7 +43,6 @@
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?]
   check cp p.'s
   instructions: reference the sintel DVD :) (download it from my site here)
-  note to google group...
   add an mencoder convert with mplayer_breaks button :P
   youtube/hulu timings
   can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?

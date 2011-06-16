@@ -20,9 +20,9 @@ This file is part of Sensible Cinema.
 print 'Loading Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
-  require 'sane' # failure here means you haven't bundled your dependencies... [$ jruby -S rake bundle_dependencies after doing jruby -S gem install sensible-cinema ]
+  require 'sane' 
 rescue LoadError
-  p 'please run $ rake rebundle_dependencies first, as we dislike needing rubygems'
+  p 'please run $ rake rebundle_copy_in_dependencies first, as we dislike needing locally installed rubygems'
   raise
 end
 
@@ -408,7 +408,7 @@ module SensibleSwing
       Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
       unless File.exist? 'vendor/cache/7za.exe'
         Dir.chdir('vendor/cache') do
-          print 'downloading unzipper...'
+          print 'downloading unzipper (400K) ...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
@@ -432,7 +432,7 @@ module SensibleSwing
     def check_for_exe windows_loc, unix_name
       # in windows, that exe *at that location* must exist...
       if OS.windows?
-        File.exist?(loc)
+        File.exist?(windows_loc)
       else
         if !CheckInstalledMac.check_for_installed(unix_name)
           exit 1

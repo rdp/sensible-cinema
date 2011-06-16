@@ -65,15 +65,7 @@ def get_transitive_dependencies dependencies
   new_dependencies.flatten
 end
 
-desc 'collect binary and gem deps for distribution'
-task 'rebundle_dependencies' => 'gemspec' do
-   require 'whichr'
-   require 'fileutils'
-   require 'net/http'
-  
-   spec = eval File.read('sensible-cinema.gemspec')
-   dependencies = spec.runtime_dependencies
-   dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
+task 'clear_and_copy_vendor_cache' do
    system("rm -rf ../cache.bak")
    system("cp -r vendor/cache ../cache.bak") # for retrieval later
    Dir['vendor/cache/*'].each{|f|
@@ -81,13 +73,18 @@ task 'rebundle_dependencies' => 'gemspec' do
     raise 'unable to delete: ' + f if File.exist?(f)
    }
    FileUtils.mkdir_p 'vendor/cache'
+end
+
+desc 'collect binary and gem deps for distribution'
+task 'rebundle_copy_in_dependencies' => 'gemspec' do
+   spec = eval File.read('sensible-cinema.gemspec')
+   dependencies = spec.runtime_dependencies
+   dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
        system("#{OS.ruby_bin} -S gem unpack #{d.name}")
      }
    end
-  
-  
 end
 
 desc 'create distro zippable dir'
@@ -96,7 +93,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
-  FileUtils.rm_rf Dir['sensible-cinema-*'] # remove old versions
+  FileUtils.rm_rf Dir['sensible-cinema-*'] # remove old versions' distro files
   raise 'unable to delete...' if Dir[spec.name + '-*'].length > 0
   
   existing = Dir['*']
@@ -149,11 +146,11 @@ task 'gem_release' do
   FileUtils.rm_rf 'pkg'
 end
 
-desc 'j -S rake rebundle_dependencies create_distro_dir ... (releases with clean cache dir, which we need now)'
-task 'full_release' => [:rebundle_dependencies, :create_distro_dir] do # this is :release
+desc ' (releases with clean cache dir, which we need now)'
+task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
   raise unless system("git pull")
   raise unless system("git push origin master")
-#  Rake::Task["gem_release"].execute
+  Rake::Task["gem_release"].execute
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
