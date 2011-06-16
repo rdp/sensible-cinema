@@ -29,6 +29,7 @@ end
 raise 'need jruby' unless OS.java?
 raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many oddities :P
 
+alias system_original system
 require_relative '../lib/mencoder_wrapper'
 require_relative '../lib/storage'
 require_relative '../lib/edl_parser'
@@ -146,11 +147,8 @@ module SensibleSwing
       }
       
       @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
+        @play_smplayer_warn = show_non_blocking_message_dialog "Turn on OSD by using the 'o' key, Turn off subtitles by using the 'v' key."
         play_dvd_smplayer_unedited false
-      }
-      
-      @play_mplayer = new_jbutton( "Watch DVD unedited (realtime mplayer OSD)", true).on_clicked {
-        play_dvd_smplayer_unedited true
       }
       
 #      @watch_created_file = new_jbutton( "Watch edited file copy of DVD", false).on_clicked {
@@ -231,7 +229,9 @@ module SensibleSwing
       increment_button_location
 
       @exit = new_jbutton("Exit", false, true).on_clicked {
-        self.close
+        #self.close
+        kill_processes
+        java.lang.System.exit 0
       }
 
       increment_button_location
@@ -241,7 +241,9 @@ module SensibleSwing
       setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
     end
+    
     require 'fileutils'
+    
     def set_smplayer_opts to_this
         smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
         old_prefs = File.read(smplayer_prefs_file) rescue ''
@@ -286,7 +288,6 @@ module SensibleSwing
       open_file_to_edit_it filename
     end
      
-    alias system_original system
     
     def system_blocking command, low_prio = false
       return true if command =~ /^@rem/ # jruby+MRI bug, I think...
@@ -336,16 +337,11 @@ module SensibleSwing
       writeOut.close
     end
     
-    def play_dvd_smplayer_unedited should_use_mplayer
+    def play_dvd_smplayer_unedited
       drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
       title_track = get_title_track(descriptors)
-      mplayer_opts = " -sid 999 -dvd-device #{drive} -osd-fractions 2 -osdlevel 2 -nocache "
-      unless should_use_mplayer
-        config = set_smplayer_opts mplayer_opts
-        command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
-      else
-        command = "mplayer #{mplayer_opts} dvdnav://#{title_track}"
-      end
+      config = set_smplayer_opts " -nosub -sid 999 -dvd-device #{drive} -osd-fractions 2 -osdlevel 2 -nocache "
+      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track}" # smplayer no likey [?] -dvd-device #{drive}"
       p command
       system_non_blocking command
     end
@@ -809,18 +805,21 @@ class ShutdownHook
               end
 end
           
-          def at_exit2( &block)
-          	hook = ShutdownHook.new( &block)
-          	java.lang.Runtime.getRuntime.addShutdownHook(java.lang.Thread.new( hook ))
-          end
+def at_exit2( &block)
+   hook = ShutdownHook.new( &block)
+   java.lang.Runtime.getRuntime.addShutdownHook(java.lang.Thread.new( hook ))
+end
 
+def kill_processes
+  if OS.windows?
+    system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
+    system_original("taskkill /f /im ffmpeg.exe 2>NUL")
+    system_original("taskkill /f /im mplayer.exe 2>NUL")
+  end
+end
 
 at_exit2 {
-  if OS.windows?
-    system("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
-    system("taskkill /f /im ffmpeg.exe 2>NUL")
-    system("taskkill /f /im mplayer.exe 2>NUL")
-  end
+  kill_processes # just in case
 }
 
 if $0 == __FILE__
