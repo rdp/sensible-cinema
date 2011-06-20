@@ -25,6 +25,10 @@
 
   @macports: respond + "--random"  + " setup some checker proc for it?"
   @macports: libjpeg turbo
+  @macports: port search dvdnav
+libdvdnav @4.1.3 (devel, multimedia) (installed)
+    DVD navigation library
+
   for now just make a "convert" timestamp button for mplayer OSD ?
   if they disdain to choose a filename the whole thing exits.
   subtitles: impass assistance :)
