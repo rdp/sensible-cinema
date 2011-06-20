@@ -105,10 +105,9 @@
     7: Windows Live Movie Maker
     previous: Windows Movie Maker
   re-run with several DVD's
-  port to OS X--try everything out, make sure it works
+  port to mac OS X--try everything out, make sure it works
     check mplayerx, os x mplayer extended [?] dvdnav et al [?]
       appears that, for now, just use mplayer dvd:// [sniff]
-      ping macports on dvdnav lack [?]
   delete unedited.fulli file automatically
     except if it's a specific scene run test...
   investigate: can I use zoomplayer max?
