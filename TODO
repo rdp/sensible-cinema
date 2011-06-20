@@ -22,6 +22,9 @@
   
 == yes do, un-ordered currently, from the various release options ==
 
+
+  @macports: respond + "--random"  + " setup some checker proc for it?"
+  @macports: libjpeg turbo
   for now just make a "convert" timestamp button for mplayer OSD ?
   if they disdain to choose a filename the whole thing exits.
   subtitles: impass assistance :)
@@ -107,7 +110,7 @@
   re-run with several DVD's
   port to mac OS X--try everything out, make sure it works
     check mplayerx, os x mplayer extended [?] dvdnav et al [?]
-      appears that, for now, just use mplayer dvd:// [sniff]
+      appears that, for now, have to just use mplayer dvd:// [sniff]
   delete unedited.fulli file automatically
     except if it's a specific scene run test...
   investigate: can I use zoomplayer max?
