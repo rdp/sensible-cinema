@@ -107,6 +107,8 @@
   re-run with several DVD's
   port to OS X--try everything out, make sure it works
     check mplayerx, os x mplayer extended [?] dvdnav et al [?]
+      appears that, for now, just use mplayer dvd:// [sniff]
+      ping macports on dvdnav lack [?]
   delete unedited.fulli file automatically
     except if it's a specific scene run test...
   investigate: can I use zoomplayer max?
@@ -144,6 +146,7 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  @mplayer: double click default to full screen! :)
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
