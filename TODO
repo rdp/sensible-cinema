@@ -112,9 +112,10 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
     7: Windows Live Movie Maker
     previous: Windows Movie Maker
   re-run with several DVD's
-  port to mac OS X--try everything out, make sure it works
-    check mplayerx, os x mplayer extended [?] dvdnav et al [?]
+  port to mac OS X--try everything out (all buttons), make sure it works...
       appears that, for now, have to just use mplayer dvd:// [sniff]
+      ppc?
+      app store mplayer perhaps?  maybe tell the players to start supportin' dvdnav?
   delete unedited.fulli file automatically
     except if it's a specific scene run test...
   investigate: can I use zoomplayer max?
