@@ -19,7 +19,7 @@
 ],
 
 "name" => "Tron Legacy",
-"disk_unique_id" => "ec8f2ba8d8b4edd83e8fc60b63ca3236",
+# "disk_unique_id" => "",
 
 "not edited out stuff" => "some cyborg violence",
 "probable rating" => "still pg, age about 10",

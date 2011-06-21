@@ -106,7 +106,7 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
     http://www.chefelf.com/forums/index.php?showtopic=6176
     karlie?
   inventionzy: blu-ray OCR
-  calculating disk's unique id... -> have it note on gui...
+  accomodate 2 disk unique id's
   don't exit program if they don't select a disk originally :) e.g. if they cancel out of "Please pick a DVD Delete list file"
   tell them "you can open the file for more specific editing accuracy of timestamps via microsoft Windows Movie Maker" or whatever it is (try it out first :P)
     7: Windows Live Movie Maker
@@ -152,6 +152,7 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  also edit the trailers et al [?]
   @mplayer: double click default to full screen! :)
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?

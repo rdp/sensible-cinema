@@ -1,15 +1,13 @@
-# comments can go after a # on any line, for example this one.
-
 "mutes" => [
-  "0:00:01.0", "0:00:02.0", "profanity", "da..",
+  #"0:00:01.0", "0:00:02.0", "profanity", "da..",
 ],
 
 "blank_outs" => [
-  "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  #"00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "name" => "making_marriage_work",
-"disk_unique_id" => "718de056ba2a01ab8939a8e8f8cc3abc",
+#"disk_unique_id" => "",
 
 # "dvd_title_track" => "1", # most DVD's use title 1. Yours might not.  If it plays anything except the main title, see http://goo.gl/QHLIF
 # "not edited out stuff" => "",

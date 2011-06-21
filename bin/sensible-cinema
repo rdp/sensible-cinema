@@ -771,7 +771,6 @@ module SensibleSwing
 
       if selected_idx
         disk = opticals[selected_idx]
-        puts "calculating disk's unique id..."
         md5sum = DriveInfo.md5sum_disk(disk.MountPoint)
         @_choose_dvd_drive = [disk.MountPoint, opticals[selected_idx].VolumeName, md5sum]
         @saved_opticals = opticals # since we force them to have their disc already in there...guess this is ok for os x :)

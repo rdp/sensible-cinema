@@ -1,0 +1,20 @@
+# comments can go after a # on any line, for example this one.
+
+"mutes" => [
+  # example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+  # example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"name" => "Bambi",
+"volume_name" => "BAM0NNM1",
+"disk_unique_id" => "3121d937|cc97b745",
+
+# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.

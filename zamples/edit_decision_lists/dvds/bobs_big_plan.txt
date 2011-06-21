@@ -1,7 +1,7 @@
 "title" => "Bob's Big Plan",
 "dvd_title_track" => 1,
 "other notes" => "could use more nit-picking of the song, as some parts seem all right in the end",
-"disk_unique_id" => "259961ce38971cac3e28214ec4ec278b",
+#"disk_unique_id" => "",
 
 "mutes" => [
   "00:03.8" , "01:03", "theme song is a bit raucous at times",

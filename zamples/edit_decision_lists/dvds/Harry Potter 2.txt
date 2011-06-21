@@ -11,8 +11,7 @@
    "01:21:08", "01:21:09",  "profanity", "he..", # too easy to lip read :)
 ],
 
-"disk_unique_id" => "9a56136cdd5bc321ebff064cd59b8322",
+# "disk_unique_id" => "",
 "title" => "Harry Potter 2 Chamber of secrets",
-"grabbed_md5" => "2f0395de5eaf0c64eae859e17ba270fd",
-"mplayer_dvd_splits" => ["1:16:32"]
-#plenty of violence at the end with the snake, and also the spiders. hmmmm.
+"mplayer_dvd_splits" => ["1:16:32"],
+"not yet edited out" => "plenty of violence at the end with the snake, and also the spiders. hmmmm."
