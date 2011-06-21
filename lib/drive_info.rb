@@ -23,7 +23,12 @@ require 'ostruct'
 class DriveInfo
 
  def self.md5sum_disk(dir)
-   `#{__DIR__}/../vendor/dvdid.exe #{dir}`.strip
+   if OS.mac?
+     output = `#{__DIR__}/../vendor/mac_dvdid/bin/dvdid #{dir}`
+   else
+     output = `#{__DIR__}/../vendor/dvdid.exe #{dir}`
+   end
+   output.strip
  end
 
  def self.get_dvd_drives_as_openstruct

@@ -19,7 +19,7 @@ require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/drive_info'
 
 describe 'dvd_drive_info' do
-  it 'should be able to get an md5sum from the dvd' do
+  it 'should be able to get an md5sum from a dvd' do
     FileUtils.mkdir_p 'VIDEO_TS'
     Dir.chdir 'VIDEO_TS' do
       File.binwrite("VTS_01_0.IFO", "b")
