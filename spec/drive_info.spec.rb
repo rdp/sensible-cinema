@@ -25,7 +25,7 @@ describe 'dvd_drive_info' do
       File.binwrite("VTS_01_0.IFO", "b")
       File.binwrite("VIDEO_TS.IFO", "a")
     end
-    DriveInfo.md5sum_disk("./").should == Digest::MD5.hexdigest("ab")
+    DriveInfo.md5sum_disk("./").should ==  "ff83793c|dfaedb42" # hope this is right...
   end
   
   it "should be able to do it for real disc in the drive" do
@@ -43,7 +43,7 @@ describe 'dvd_drive_info' do
 
   it "should return a drive with most space" do
     space_drive = DriveInfo.get_drive_with_most_space_with_slash
-    space_drive[1..-1]..should == ":\\" if OS.windows?
+    space_drive[1..-1]..should == ":/" if OS.windows? # hope forward slash is ok...
     space_drive[0..0].should == "/" if !OS.windows?
     require 'fileutils'
     FileUtils.touch space_drive + 'touched_file'
