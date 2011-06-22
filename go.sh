@@ -1,0 +1,1 @@
+jruby bin/sensible-cinema

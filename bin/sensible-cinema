@@ -372,16 +372,20 @@ module SensibleSwing
       File.write(EdlTempFile, edl_contents)
       title_track = get_title_track(descriptors)
       # oh the insanity of the console UI...LODO more user friendly player
-      @popup ||= show_non_blocking_message_dialog("About to run mplayer DVD.  To control it, use space for pause, f to toggle full screen, arrow keys to seek.")
+      @popup ||= show_non_blocking_message_dialog("About to run mplayer DVD.  To control it, use\n space for pause,\n f for full screen,\n arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
-      play_this_mplayer ||= "mplayer dvdnav://#{title_track} -nocache "
-      # macports' has no dvdnav ?? 
-      # direct3d for windows 7 old nvidia's sake yipes
-      command =  "#{play_this_mplayer} -vo direct3d -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
-      # -hardframedrop might help a bit but hurts too much
-      unless OS.mac?
-         command += " -vo direct3d" # nvidia drivers for older cards yipes
+      if OS.windows?
+        play_this_mplayer ||= "mplayer -nocache dvdnav://#{title_track} "
+      else
+        # macports' has no dvdnav ?? 
+        play_this_mplayer ||= "mplayer dvd://#{title_track} "
       end
+      if OS.windows?
+        # direct3d for windows 7 old nvidia's sake yipes
+        play_this_mplayer += " -vo direct3d "
+      end
+      command =  "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      # -hardframedrop might help but hurts just too much
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
@@ -771,7 +775,6 @@ module SensibleSwing
 
       if selected_idx
         disk = opticals[selected_idx]
-        puts "calculating disk's unique id..."
         md5sum = DriveInfo.md5sum_disk(disk.MountPoint)
         @_choose_dvd_drive = [disk.MountPoint, opticals[selected_idx].VolumeName, md5sum]
         @saved_opticals = opticals # since we force them to have their disc already in there...guess this is ok for os x :)

@@ -1,0 +1,17 @@
+"mutes" => [
+  # she's clean!  At least nothing obvious...
+],
+
+"blank_outs" => [
+  # example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"name" => "kung fu panda 1",
+"volume_name" => "KUNG_FU_PANDA",
+#"disk_unique_id" => "",
+
+"dvd_title_track" => "16",
+"not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+# I think it had none... #"mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
