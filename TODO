@@ -13,21 +13,32 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-
-  
+      cheap minimize demo "fake auto" :)
+      cheap static-ify demo for mutes
+      also a straight "half mute" demo, using volume downs/ups     
+       cheap minimize via (probably foreground window + API real windows API) 
+       url -> url inference [hopefully this is cake...]
+       fix the failing 9 digit test the fancy shmancy way :P
+       can pass in a profanity command line
+       can handle dual md5's
+       youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
+         phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
+          just in case youtube takes over the world
+ 
 == yes do ordered ==
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
   subtitles: impass assistance :)
     je.....
-
-== yes do, un-ordered currently, from the various release options ==
-
 
   @macports: 
 $ port search dvdnav
 libdvdnav @4.1.3 (devel, multimedia) (installed)
     DVD navigation library
 
+
+== yes do, un-ordered currently, from the various release options ==
+  after remove the ability to "grab" update readme
+  check if tmdb uses the full DVDID [?]
   just tell mac users "use tsmuxer this way" http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
   for now just make a "convert timestamp" button for mplayer OSD conversion ?
   if they disdain to choose a filename the whole thing exits.
@@ -37,6 +48,8 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
   tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
     "just look at the title track in the EDL, then..."
   tell them "to edit easily..."
+    "for now just ignore any editors...they're just too fickle!"
+    double check--are my ffmpeg splits really really really the same as mplayer's EDL splits? really?
     "hardware DVD player/commercial DVD software"
     "you could watch it under mplayer with the OSD turned on" 
       [+ button for same?]
@@ -54,7 +67,7 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
   instructions: reference the sintel DVD :) (+download it from my site here)
   add an mencoder convert with mplayer_breaks button :P
     can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, after that?
-    maybe just under an "advanced" screen...
+    maybe just under an "advanced" window...
   youtube/hulu timings
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before a "real" domain name
@@ -118,6 +131,7 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
     except if it's a specific scene run test...
   investigate: can I use zoomplayer max?
   the final "edited.avi" really "could/should" be playable in WMP...
+  "profanity" => "language"
 
 == other lists ==
 
@@ -151,6 +165,7 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  allow for filter subtitles, a la "always skip" [?]
   C specific portion [A,B] player
   also edit the trailers et al [?]
   @mplayer: double click default to full screen! :)

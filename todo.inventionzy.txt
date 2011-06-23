@@ -1,16 +1,4 @@
   === patentzy yes actually do vaguely ordered ===
-      cheap minimize demo "fake auto" :)
-      cheap static-ify demo for mutes
-      also a straight "half mute" demo, using volume downs/ups     
-       cheap minimize via (probably foreground window + API real windows API) 
-       url -> url inference [hopefully this is cake...]
-       fix the failing 9 digit test the fancy shmancy way :P
-       can pass in a profanity command line
-       can handle dual md5's
-       youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
-         phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-          just in case youtube takes over the world
- 
     blu-ray OCR
     
     both mute and blank when blanking by default...

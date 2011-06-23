@@ -61,16 +61,15 @@ DO NOT MAKE ILLEGAL COPIES OF DVD's. See is_it_legal_to_copy_dvds.txt.
 == FAQ ==
 
 Q. How do I watch these on my TV, not just on my computer?
-A. You also might be able to move a laptop over to near your TV and hook it in from your laptop.
+A. One way is to plug your computer into your TV.
+  For instance, position a laptop near your TV and hook it in.  Newer TV's support this.
   Or buy a very long monitor cord and plug it in from your desktop/laptop.
-  You could also buy a projector, attach it to your laptop, and then use that to watch it.
+  You could also buy a projector, attach it to your computer, and then use that to watch it.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
   I might come up with a competitor to it if desired, as the existing one costs money).
-  If you're really ambitious and bleeding edge you could even try VGA over an Ethernet cable, too: 
-  http://ps3mediaserver.org/forum/viewtopic.php?f=6&t=5731#p34279
   You may be able to create your own edited DVD, see section "Creating an edited DVD"
-  You may be able to come up with some real-time player editor, too, see section "related works" et al
+  Another good option is to purchase a clearplay DVD player, though you must also retain a subscription for it to work.
 
 Q. I want to give an edited DVD to a friend, how do I do that well?
 A. Give them the original unedited DVD and a link to sensible-cinema's website.
@@ -101,37 +100,41 @@ I don't want those scenes, but still want to be able to enjoy said movies :)
 
 I once tried Clearplay (a "filter"ed DVD player)
 but (for me) it didn't cut it.  It costs money monthly (I'm too cheap to pay--and many
-many other people don't use it because of this...).  Their
-filters sometimes don't cut out all unwanted content (ex: Saints and
-Soldiers left profanity in...which wasn't what I had
-expected), so if they differ in standards somewhat, you're out of luck.  
+many other people don't use it because of this...).  Casual users no longer have the
+option to buy specific "filters" but are obliged to purchase a monthly subscription,
+so it doesn't work for many casual users.
+Their filters sometimes don't cut out all undesired content (ex: Saints and
+Soldiers left several profanities in...which wasn't what I had
+expected).  If your standards differ from theirs, you're out of luck.  
 Others have noted that sometimes their edit timings (or perhaps DVD players)
 are slightly mismatched so that it will end up muting sections just previous to profanity, while
 not muting the profanity itself, or so I've heard.  Clearplay apparently also runs a rather 
-confusing subscription policy, so I'm told [1], as well as selling DVD players that 
-are a bit lackluster at times [2].  Their DVD players aren't quite as readily accessible (read: 
-can't buy at walmart anymore), nor as cheap to buy as some out there.
-Clearplay also has little community collaboration/review (though you can email them feedback I suppose).
-They also don't have filters for all movies that I, at times, would like to watch edited (Condorman and Tron
+confusing subscription policy, or so I'm told [1], and their DVD players that 
+are a bit weak at times [2].  Their DVD players aren't quite as readily accessible (read: 
+can't buy at walmart), nor as cheap to buy as some others.
+Clearplay also has little community collaboration/review (though you can email them feedback).
+They also did't have filters for all movies that I, at times, wanted to watch edited (Condorman and Tron
 lacking last time I checked...probably because they are too
 obscure.) If there isn't one, you basically have to request one and then *hope* they get around to it.
-They might never get around to it, or it might take a bit longer than you'd hope.
+Until then, you are out of luck.
+They might never get around to it, or it might take a bit longer than you'd hope. Or they might never.
 Also, some people watch movies only on computer, and they
-no longer seem to offer a computer player, just hardware DVD players.  They also don't edit streamed
-online movies either (last time I checked, anyway), nor offer a blu-ray player.  
+no longer seem to offer a computer player, just hardware players.  They also don't edit streamed
+online movies either (last time I checked, anyway), nor offer an edited blu-ray player.
 I also emailed them once (2003?) to inform them I'd be making an open source
 equivalent, and haven't heard back, which I assume to mean implicitly
 they're all for it (in reality this project is more like in-home cleanflicks than clearplay, anyway) 
 Also clearplay isn't quite flexible enough, editing out only profanity/sex/violence et al (and based
 only on their own criteria).  Some users may want to,
-for example, skip the intro to specific movies (like older movies with long songs and no 
-content during the intro) because...it's deemed boring.  Or skip commercials in some recording.
-Or use it on their home dvd's.  Clearplay does not allow for that.  
+for example, skip the intro's to specific movies (like older movies with long songs and no 
+content during the intro) because...they want to get to the movie faster.  
+Or skip commercials in some personal DVD recording.
+Or use it on their home dvd's.  Clearplay does not allow for any of these.  
 Also clearplay doesn't seem to users for example leave comments on their filters, to improve them, etc.
 
-So overall I wanted to build my own that overcame some of these hurdles, hopefully.
+So overall I wanted to build my own that overcame some of these hurdles.
 
-I also wanted to get a prototype out there of some of these ideas so that
+I also wanted to get a prototype out there of some ideas so that
 others can't later patent them and pretend that they were first inventors later :)
 
 See also the "Overly Verbose History" section.
@@ -147,93 +150,98 @@ See also the "Overly Verbose History" section.
 
 == Overly Verbose History ==
 
-It was preceded/inspired by EDL's in editors in the 90's, cleanflicks (both analog and digital incantations late 90's), 
+Sensible Cinema was preceded/inspired by EDL's of editors in the 90's, cleanflicks (both analog and digital incantations, late 90's), 
 then mplayer began to support EDL, zoomplayer added a scene-cut editor, 
 http://code.google.com/p/movie-content-editor came along, and also many
 other editors have historically supported EDL for content creation and/or playback (see wikipedia's "edit decision list"),
-and also mythtv/XBMC's EDL support (as suggested by the phantom edit [1], oreillynet.com), 
+such as mythtv/XBMC's EDL support (as suggested by the phantom edit [1], oreillynet.com), 
 VLC also added playlists with optional start and stop positions per entry.
-I knew the right elements were ready for sensible cinema.
+Once I discovered all of these previously existing programs, I knew the right elements were ready for 
+something like sensible cinema.
 
 See also the "related" section, and "motivation" section.
 
 Originally the project started as a prototype to "watch hulu (online) and netflix instant movies
-edited" (it uses/used screen snap-shotting (of specific locations where the digits are, based on windows position) 
-and then tracks, using OCR of the on-screen timestamp of the player, to monitor it for specific times, and react appropriately.
+edited" (it uses/used screen snapshots (of specific locations where the digits are expected, based on windows position) 
+and then tracks, using OCR of the on-screen (convert to timestamp), to monitor it for specific times relative 
+to an EDL, and react appropriately.
 However, this functionality, though working and available, is disabled currently for potential patent
 issues.  Some older released versions had it enabled, but not the later releases.
-Then I realized I could basically create the same effect using the
-(possibly more patent friendly) pre-processing style, like cutting out bad scenes, like cleanflix did.
+Then I realized I could basically have the same effect by instructing a video player (VLC) to "play from second x to y"
+ok "now play from z to q muted" etc. (so kind of a stop and go video player, kind of like controlling the remote for you).
 It basically was implementing Edit Decision Lists (EDL's) using playlists and
-VLC.  I.e. play from second x to y, now play then from z to second mu, muted, now from q to r, etc.
-I just passed VLC a playlist, it did all the work for me, without any necessary real-time tracking.
-There are a few released versions with this feature enabled.  They avoid real-time tracking by specifying "play from here to here"
+VLC.  
+I just passed VLC a playlist, it did all the work for me, without any necessary real-time tracking.  This seemed patent friendly,
+so I went with this.  There are a few released versions with this feature enabled.  
+They avoid real-time tracking by specifying "play from here to here"
 not "skip from here to here" as some other editing players do.
-Then it occurred to me that you could grab the several clean segments
-off a DVD, and piece them together to create an edited version.  This also avoids 
-realtime tracking, so I included that ability.
-The playlist option is disabled in later releases, as it was deemed too user-non-friendly, because VLC timing
+
+Then it occurred to me that one could grab the several clean segments
+off a movie file, and piece them together to create an edited clean version ( a la cleanflix ).  This also avoids 
+realtime tracking, so I also included this ability.
+The playlist option is disabled in later releases, as it was deemed too user-non-friendly, and because VLC timing
 is "different" than standard DVD players, so I decided to just use standardized timing, though it worked fine
 for VLC playbacks.
-Many releases had built-in support for mplayer's EDL format, but I took it 
-out to concentrate on the cleanflicks side of things.
+I replaced it with support for mplayer's EDL format
 
 You can see a full list of other features that have been published and demonstrated
-in the accompanying change_log_with_feature_list.txt.  Each feature works in some released version of sensible-cinema
-though some features have been removed in later versions.
+in the accompanying file change_log_with_feature_list.txt.  Each feature mentioned works 
+in some released version of sensible-cinema though some features have been removed in subsequent versions
+(they're all available as rubygems).
+
+Who knows what the future will hold...
 
 [1] http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html
 
 == Related ==
 
-The concepts aren't novel.  Some other previously existing related type examples:
+The concepts I use aren't novel.  Some other previously existing related type examples:
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited) movies.
 http://en.wikipedia.org/wiki/Linear_video_editing
+http://en.wikipedia.org/wiki/Edit_decision_list#Systems_supporting_EDL_playback.2C_not_just_EDL_cutting lists a lot of players that support EDL DVD playback in some form or another.
 http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.
-Normal movies versus "directors cut" versions of movies (one is at times preferable, profanity wise)
+Normal DVD's versus "directors cut" versions of movies (one is at times preferable, content wise)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 Clean Flicks (used to) sell edited movies
 http://www.videoredo.com/en/index.htm lets you "cut out" offensive content (commercials et al) and burn DVD's from mpeg's/h264 streams
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile, with no complaints).
-http://clearplay.com a commercial editing player (tracks DVD's while they play--closed source, costs money, no user contribution possible), and only for DVD's.
-  It does offer a few features that sensible cinema disables, for patent reasons, like automatic (user flexible) content decisions.  Ours are manual.
-  Theirs is also a DVD "instant" player, which this is not, except on computer, though you must use theirs, etc (see motivation section, above).
+http://clearplay.com a commercial "filtering" DVD player See the "motivation" section for a description.
+  It does offer a few features that sensible cinema supports but disables, for patent reasons, like automatic (user flexible) content decisions.  Ours are manual, etc.
 http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
-http://www.inmatrix.com "scene cut editor" of the zoom player
+http://www.inmatrix.com zoom player's "scene cut editor"
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut supporter--also contains links to some other editors' support for EDL's)
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
 The VCR with its record button, coupled with the stop+rewind button.
 http://kb2.adobe.com/cps/191/tn_19151.html Adobe Director MX 2004 can "script" DVD playback.
-DVD's themselves allow for "scripted" playback of certain content, jumping from location to location, switching audio, etc.
-http://code.google.com/p/movie-content-editor (written in Python, controls VLC based on captions and edit decision lists, in realtime)
+DVD's themselves allow for "scripted" playback of certain content, allowing controls for jumping from location to location, switching audio/video tracks, etc.
+http://code.google.com/p/movie-content-editor (player written in Python, controls VLC based on subtitles and user-input, using edit decision lists in realtime)
 http://forums.gbpvr.com/showthread.php?10606-Automated-Cutting-and-Transcoding-Guide-Using-Mencoder/page45
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
-Using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of scene locations
+Old-school: using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of "questionable" scene locations
 The scissors and old VHS tapes (Clean Flicks' origin, if I remember correctly).  http://www.familysafemedia.com/home_movie_editor.html (was a helper kit for cutting VHS tape)
-Windows Movie Maker.  Allows for users to cut and copy scenes of movies to their heart's content.
+Windows Movie Maker.  Allows for users to cut and copy scenes of movies.  Really any editor can do this.
 http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's via playlists
 Corel WinDVD has "Quick Clip" settings for capturing from DVD.
-Microsoft's magnified basically copies DVD's screen output if mouse is placed over playing DVD.
+Microsoft's built-in magnifier basically copies DVD's screen output if mouse is placed over playing DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 AviSynth can script dvd playback http://forum.doom9.org/archive/index.php/t-109558.html
-ZoomPlayer MAX's scene cut editor
 Anydvd HD's "magic file replacement" for DVD's/blu-ray's
-RiffTrax
+RiffTrax allows for an audio "overlay" to a DVD playback, have their own player to coordinate the two.
 
 == License ==
 
 See the included LICENSE.TXT file for licensing and usage terms (basically it's released under gplv3).
 Some other programs are (distributed separately and) used, if present. These are
-typically released under their own copy of the gplv2 license.
+typically released under their own copy of the gplv2 license, though some have differing licenses.
 
-All files are (c) 2010 Roger Pack
-EDL files themselves are released under the Creative Commons License.
+EDL files themselves are released under the Creative Commons License, however.
+See first also the file "is_it_legal_to_copy_dvds.txt" for more information on legal use in your country.
 
 == Troubleshooting ==
 
@@ -251,6 +259,8 @@ so clean your discs and try again!
 
 Also make sure you aren't out of disk space.
 
+Try playback in VLC Media Player.
+
 Also you could try another computer (desktop computers' DVD drives seem to work better at times than laptops')
 
 You try to play back a sensible cinema-ized video file and it plays back without
@@ -262,8 +272,8 @@ You try to play back a sensible cinema-ized video file and it plays back without
    it should "just work."  You could also optionally just play the file in VLC Media Player or smplayer
    (there's a button for that).  Installing "AC3Filter" may help if you have no audio.
 
-If the picture is too grainy/pixelated or the process is too slow, let me know and I'll work on
-making it better.  No really, I have some ideas, but want to know if there's need first.
+If the end result picture is too grainy/pixelated or if the overall process is too slow, let me know and I'll work on
+making it better.  No really, I have some ideas, but want to see if there's need first for improvement in those areas.
 
 == Thanks ==
 
@@ -278,14 +288,16 @@ Feedback, including feature requests, comments, etc. welcome:
 Mailing List: http://groups.google.com/group/sensible-cinema
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
-See development.txt / github.com/rdp/sensible-cinema
+See development.txt : github.com/rdp/sensible-cinema
 
-If you want to donate something, please consider donating to a charity of your choice.  No really.  Do it for this!
+If you want to donate something, please consider donating to a charity of your choice.  
+No really.  Do it for this!
 
 == Competition/use of files ==
 
 Note that competition/use of files from sensible cinema is welcome!
 
-In fact, the current end goal is to publish the delete lists (EDL's) as a separate repository, under the creative
-commons license, meaning that even for profit users can use them for whatever other use they want, hopefully
-good uses :)  Even direct competitors welcome here.
+In fact, the current end goal is to publish the delete lists (EDL's) as a separate repository with its
+own API, meaning that even "for profit" users can use them for whatever other use they want, hopefully
+good uses :)  More direct direct competitors are also welcome here.  I only made this because I had to
+and nothing like it existed, so if something else springs up, I'm happy to use it instead.
