@@ -148,6 +148,7 @@ end
 
 desc ' (releases with clean cache dir, which we need now)'
 task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
+  p 'remember to run all the specs first!'
   raise unless system("git pull")
   raise unless system("git push origin master")
   Rake::Task["gem_release"].execute

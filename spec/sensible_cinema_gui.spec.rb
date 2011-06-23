@@ -15,10 +15,11 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-
 require 'ostruct'
 require File.expand_path(File.dirname(__FILE__) + '/common')
-load '../bin/sensible-cinema'
+
+Dir.chdir '..' # need to run in the main folder, common moves us to spec...
+load 'bin/sensible-cinema'
 
 module SensibleSwing
   describe MainWindow do
@@ -27,8 +28,10 @@ module SensibleSwing
       MainWindow.new.dispose# doesn't crash :)
     end
 
+    Sintel_ID = '79df7b12|8b27d001'
+    
     it "should auto-select a EDL if it matches a DVD's title" do
-      MainWindow.new.single_edit_list_matches_dvd("19d121ae8dc40cdd70b57ab7e8c74f76").should_not be nil
+      MainWindow.new.single_edit_list_matches_dvd(Sintel_ID).should_not be nil
     end
 
     it "should not auto-select if you pass it nil" do
@@ -113,7 +116,7 @@ module SensibleSwing
     before do
       @subject = MainWindow.new
       @subject.stub!(:choose_dvd_drive) {
-        ["mock_dvd_drive", "Volume", "19d121ae8dc40cdd70b57ab7e8c74f76"] # happiest baby on the block
+        ["mock_dvd_drive", "Volume", Sintel_ID] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-5].should match(/abc/)
@@ -391,7 +394,7 @@ module SensibleSwing
         count = 0
         DriveInfo.stub!(:md5sum_disk) {
           count += 1
-          '19d121ae8dc40cdd70b57ab7e8c74f76'
+          Sintel_ID
         }
         @subject.choose_dvd_and_edl_for_it
         @subject.choose_dvd_and_edl_for_it

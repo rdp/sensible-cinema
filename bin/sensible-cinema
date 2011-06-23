@@ -207,12 +207,12 @@ module SensibleSwing
 
 
       # until I can let them know *why* they would ever need this button...
-      # @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
-      #   drive, volume, md5 = choose_dvd_drive
-      #   # display it, allow them to copy and paste it out
-      #   get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)        \n
-      #   This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{md5}\",")
-      # }
+      @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
+        drive, volume, dvd_id = choose_dvd_drive
+        # display it, allow them to copy and paste it out
+        get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
+      }
       
       @upload = new_jbutton("Upload/E-mail suggestion/Submit anything", true).on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
@@ -256,7 +256,7 @@ module SensibleSwing
     end
     
     def create_brand_new_edl
-      drive, volume, md5 = choose_dvd_drive
+      drive, volume, dvd_id = choose_dvd_drive
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
@@ -273,7 +273,7 @@ module SensibleSwing
 
 "name" => "#{english_name}",
 "volume_name" => "#{volume}",
-"disk_unique_id" => "#{md5}",
+"disk_unique_id" => "#{dvd_id}",
 
 # "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
@@ -311,7 +311,7 @@ module SensibleSwing
               p 'unable to find to set priority ' + exe_name
             end
           rescue Exception => e
-            p 'warning, got exception trying to set PID [jruby...]', e
+            p 'warning, got exception trying to set priority [jruby? ...]', e
           end
         end
         print out.read # let it finish
@@ -343,7 +343,9 @@ module SensibleSwing
     
     def play_dvd_smplayer_unedited
       # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
-      drive, dvd_volume_name, md5sum, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_and_edl_for_it false
+      require 'ruby-debug'
+      debugger
+      drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
@@ -357,7 +359,7 @@ module SensibleSwing
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
     def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
-      drive, dvd_volume_name, md5sum, edl_path, descriptors = choose_dvd_and_edl_for_it
+      drive, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_and_edl_for_it
       descriptors = EdlParser.parse_file edl_path
       splits = descriptors['mplayer_dvd_splits']
       if splits == nil && !play_this_mplayer
@@ -504,10 +506,10 @@ module SensibleSwing
       system_non_blocking "notepad \"#{filename}\""
     end
 
-    def single_edit_list_matches_dvd md5
+    def single_edit_list_matches_dvd dvd_id
       matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
         begin
-          parse_edl(file)["disk_unique_id"] == md5
+          parse_edl(file)["disk_unique_id"] == dvd_id
         rescue SyntaxError
          # ignore poorly formed delete lists for the auto choose
           p 'warning, unable to parse:' + file
@@ -516,7 +518,7 @@ module SensibleSwing
       }
       if matching.length == 1
         file = matching[0]
-        p "selecting the one matching file #{file} #{md5}"
+        p "selecting the one matching file #{file} #{dvd_id}"
         file
       else
         nil
@@ -561,9 +563,9 @@ module SensibleSwing
     end
     
     def choose_dvd_and_edl_for_it choose_file = true
-      drive, dvd_volume_name, md5sum = choose_dvd_drive
+      drive, dvd_volume_name, dvd_id = choose_dvd_drive
       unless @_edit_list_path
-        edit_list_path = single_edit_list_matches_dvd(md5sum)
+        edit_list_path = single_edit_list_matches_dvd(dvd_id)
         if !edit_list_path && choose_file
           fc = FileDialog.new(self)
           fc.set_title "Please pick a DVD Delete List File (non matching found)"
@@ -586,7 +588,7 @@ module SensibleSwing
           end
         end
       end
-      [drive, dvd_volume_name, md5sum, @_edit_list_path, descriptors]
+      [drive, dvd_volume_name, dvd_id, @_edit_list_path, descriptors]
     end
     
     def get_title_track descriptors, use_default_of_one = true
@@ -618,7 +620,7 @@ module SensibleSwing
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
-      drive, dvd_volume_name, md5sum, edit_list_path, descriptors = choose_dvd_and_edl_for_it
+      drive, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
       if watch_unedited
@@ -742,7 +744,7 @@ module SensibleSwing
       end
     end
 
-    # returns e:\, volume, md5sum
+    # returns e:\, volume, dvd_id
     def choose_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_openstruct
       if @saved_opticals == opticals
@@ -775,8 +777,8 @@ module SensibleSwing
 
       if selected_idx
         disk = opticals[selected_idx]
-        md5sum = DriveInfo.md5sum_disk(disk.MountPoint)
-        @_choose_dvd_drive = [disk.MountPoint, opticals[selected_idx].VolumeName, md5sum]
+        dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+        @_choose_dvd_drive = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
         @saved_opticals = opticals # since we force them to have their disc already in there...guess this is ok for os x :)
         return @_choose_dvd_drive
       else
@@ -830,10 +832,10 @@ end
 
 def kill_processes
   if OS.windows?
-    system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a cleaner way?
+    system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a better way?
     system_original("taskkill /f /im ffmpeg.exe 2>NUL")
+    system_original("taskkill /f /im smplayer_portable.exe 2>NUL")
     system_original("taskkill /f /im mplayer.exe 2>NUL")
-    system_original("taskkill /f /im smplayer.exe 2>NUL")
   end
 end
 

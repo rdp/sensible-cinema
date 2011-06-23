@@ -28,7 +28,7 @@ require 'fileutils'
 require 'pathname'
 require 'java' if OS.java?
 
-Dir.chdir File.dirname(__FILE__) # always run from the right dir...
+Dir.chdir File.dirname(__FILE__) # always run from the spec dir...
 autoload :YAML, 'yaml'
 
 begin

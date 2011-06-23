@@ -16,26 +16,22 @@
   
 == high prio like blocking bugs ==  
   
-== up next release/very next task: ==
+== under next release specific items: ==
 
-  high prio patents
   
 == yes do, un-ordered currently, from the various release options ==
 
-
-  @macports: respond + "--random"  + " setup some checker proc for it?"
-  @macports: libjpeg turbo
-  @macports: port search dvdnav
+  @macports: 
+$ port search dvdnav
 libdvdnav @4.1.3 (devel, multimedia) (installed)
     DVD navigation library
 
-  for now just make a "convert" timestamp button for mplayer OSD ?
+  just tell mac users "use tsmuxer this way" http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
+  for now just make a "convert timestamp" button for mplayer OSD conversion ?
   if they disdain to choose a filename the whole thing exits.
   subtitles: impass assistance :)
     je.....
   note realtime: clearplay
-  analyze: should I use mulder for mplayer+-smplayer instead?
-    did his older versions...crash on dvdnav? huh?
   tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
     "just look at the title track in the EDL, then..."
   tell them "to edit easily..."
@@ -51,11 +47,12 @@ libdvdnav @4.1.3 (devel, multimedia) (installed)
   check with blu-ray...does it match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?]
   check cp p.'s
-  auto tsmuxer? 
+  auto tsmuxer/mediainfo [yikes]? 
     MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr  --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
   instructions: reference the sintel DVD :) (download it from my site here)
   add an mencoder convert with mplayer_breaks button :P
     can I just use mencoder -hr-edl-seek to avoid the fulli phase? please? does it work super-accurately?
+    maybe just under an "advanced" option
   youtube/hulu timings
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before a "real" domain name

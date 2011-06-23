@@ -10,7 +10,8 @@
 
 "name" => "sintel open source blender",
 "volume_name" => "Sintel_NTSC",
-# "disk_unique_id" => "",
+
+"disk_unique_id" => "79df7b12|8b27d001",
 
 "dvd_title_track" => "2",
 "not edited out stuff" => "some violence",
