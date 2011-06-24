@@ -14,6 +14,7 @@
   
 == under next release specific items: ==
       cheap minimize demo "fake auto" :)
+        friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
       cheap static-ify demo for mutes
       also a straight "half mute" demo, using volume downs/ups     
        cheap minimize via (probably foreground window + API real windows API) 
@@ -30,11 +31,7 @@
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
   subtitles: impass assistance :)
     je.....
-
-  @macports: 
-$ port search dvdnav
-libdvdnav @4.1.3 (devel, multimedia) (installed)
-    DVD navigation library
+  unit tests
 
 
 == yes do, un-ordered currently, from the various release options ==

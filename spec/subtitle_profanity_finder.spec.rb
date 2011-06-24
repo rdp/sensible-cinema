@@ -22,17 +22,31 @@ require 'sane'
 
 describe SubtitleProfanityFinder do
 
-  describe "should parse out heck" do
+  describe "should parse out various profanities" do
     
     output = SubtitleProfanityFinder.edl_output ['dragon.srt']
     
-    it "should include the bad line with timestamp" do
-      output.should match(/00:00:54.929.*"heck"/)
+    describe "heck" do
+      it "should include the bad line with timestamp" do
+        output.should match(/00:00:54.929.*"he\.\."/)
+      end
+    
+      it "should include the description in its output" do
+        output.should include("e he.. b")
+      end
     end
     
-    it "should include the description" do
-      output.should include("e heck b")
+    describe "deity" do
+      it "should parse output plural deity" do
+        output.should include("nordic [deity]s ")
+      end
+      
     end
+    
+  end
+  
+  describe "parse out deity" do
+    
     
   end
   
