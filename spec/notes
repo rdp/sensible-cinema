@@ -1,10 +1,12 @@
 up next:
-
+  lighning exact frame to compare the two fulli's...
+  
 == ? ==
   opensubtitles' viewer gets "nothing" for subtitles of DVD's...smplayer requires you to manually search, too...
   splayer doesn't seem to attempt auto-download either of subs for DVD's.  Feels so nice tho :P
   
-== true dvdid ==  
+== true dvdid ==
+
   dvdid /Volumes/BAM0NNM1
   3121d937|cc97b745 (seems consistent like a champ...)
   

@@ -8,7 +8,7 @@
   update todo/docu
   build library phase, 20 dvd's
   create web site/api-ify
-  more build library
+  more build library (external...)
   
 == high prio like blocking bugs ==  
   
@@ -36,7 +36,8 @@
 == yes do, un-ordered currently, from the various release options ==
 @macports: set notestxt \
 13	    "The MPlayer developers do not believe in making regular releases. \
-14	    You are likely better off using the mplayer-devel port." *before* and after (?)
+14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
+@macports: does mplayer-devel enable dvdnav correctly?
 
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
@@ -133,6 +134,7 @@
   investigate: can I use zoomplayer max?
   the final "edited.avi" really "could/should" be playable in WMP...
   "profanity" => "language"
+  check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
 
 == other lists ==
 
