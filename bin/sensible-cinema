@@ -343,8 +343,6 @@ module SensibleSwing
     
     def play_dvd_smplayer_unedited
       # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
-      require 'ruby-debug'
-      debugger
       drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
@@ -352,7 +350,11 @@ module SensibleSwing
       config = set_smplayer_opts " -dvd-device #{drive} -osd-fractions 2 -nocache " # smplayer doesn't take -osdlevel 2
       command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track_maybe_nil}" # smplayer doesn't take -dvd-device #{drive} sniff
       p command
-      @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:\n'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted before you can use them).\n'v' key: turn off subtitles.\n'.' key: step one frame.\nDouble click for full screen."
+      @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:
+      'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted to use).
+      'v' key: turn off subtitles.
+      '.' key: step one frame.
+      Double click for full screen."
       system_non_blocking command
     end
 
@@ -379,7 +381,7 @@ module SensibleSwing
       if OS.windows?
         play_this_mplayer ||= "mplayer -nocache dvdnav://#{title_track} "
       else
-        # macports' has no dvdnav ?? 
+        # macports' mplayer has no dvdnav ?? 
         play_this_mplayer ||= "mplayer dvd://#{title_track} "
       end
       if OS.windows?

@@ -33,8 +33,11 @@
     je.....
   unit tests
 
-
 == yes do, un-ordered currently, from the various release options ==
+@macports: set notestxt \
+13	    "The MPlayer developers do not believe in making regular releases. \
+14	    You are likely better off using the mplayer-devel port." *before* and after (?)
+
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
   just tell mac users "use tsmuxer this way" http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
@@ -58,7 +61,7 @@
     "VLC [or any GUI] is always slightly off."
   can I avoid requiring use of tsmuxer first?
   check with blu-ray...does it match timing-wise? sub-title wise?
-  donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?]
+  donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer
   check cp p.'s
   auto tsmuxer/mediainfo [yikes]? 
     MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
@@ -164,8 +167,9 @@
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
   allow for filter subtitles, a la "always skip" [?]
+  allow for AAF or OMF export, as well as EDL (?)
   C specific portion [A,B] player
-  also edit the trailers et al [?]
+  also edit the trailers et al [?] hmm...
   @mplayer: double click default to full screen! :)
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
