@@ -2,29 +2,31 @@
 
   release: cheap inventionzy, and medium inventionzy
   release: C EDL
-  === loose ordering/eventually ===
-  replace mplayer EDL with mine (mac users, just ffmpeg)
   compare netflix/blu-ray timings et al
-  update todo/docu
-  build library phase, 20 dvd's
-  create web site/api-ify
-  more build library (external...)
+  === loose ordering/eventually ===
+    supplement mplayer EDL with mine (mac users, just ffmpeg) ???
+    update todo/docu
+    build library phase, 20 dvd's
+    create web site/api-ify
+    LLC
+      if...back off to just the 1 (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
+    more build library (external...)
   
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-      cheap minimize demo "fake auto" :)
-        friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
-      cheap static-ify demo for mutes
-      also a straight "half mute" demo, using volume downs/ups     
-       cheap minimize via (probably foreground window + API real windows API) 
-       url -> url inference [hopefully this is cake...]
-       fix the failing 9 digit test the fancy shmancy way :P
-       can pass in a profanity command line
-       can handle dual md5's
-       youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
-         phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-          just in case youtube takes over the world
+  cheap minimize demo "fake auto" :)
+    friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
+  cheap static-ify demo for mutes
+  also a straight "half mute" demo, using volume downs/ups     
+   cheap minimize via (probably foreground window + API real windows API) 
+   url -> url inference [hopefully this is cake...]
+   fix the failing 9 digit test the fancy shmancy way :P
+   can pass in a profanity command line
+   can handle dual md5's
+   youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
+     phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
+      just in case youtube takes over the world
  
 == yes do ordered ==
   transfer from little stickie at....
@@ -63,7 +65,6 @@
   can I avoid requiring use of tsmuxer first?
   check with blu-ray...does it match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer
-  check cp p.'s
   auto tsmuxer/mediainfo [yikes]? 
     MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
   instructions: reference the sintel DVD :) (+download it from my site here)
@@ -134,7 +135,8 @@
   investigate: can I use zoomplayer max?
   the final "edited.avi" really "could/should" be playable in WMP...
   "profanity" => "language"
-  check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
+  it should clear old smplayer options on startup always, just in case, somehow
+  use smplayer with my mplayer always...unless I'm moving away from that...
 
 == other lists ==
 
@@ -146,28 +148,26 @@
 
 == DVD decide later to move up or down ==
 
-== DVD-realtime backlog do [?], unordered ==
+== DVD-realtime backlog once do, now not do, unordered ==
 
-  an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
-  mplayer EDL allow 
+  mplayer EDL allow this:
     got fatal exception in button
     detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
     SyntaxError
   accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
-  it should clear old smplayer options on startup always, just in case, somehow
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   mplayer EDL while grabbing, from grabbed :P
-  force them to use my bundled mplayer version (currently it doesn't install to vendor/cache if you have an mplayer in the path, then fails to start mplayer)
-    ideal would be use smplayer with my mplayer
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."
+  check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
   allow for filter subtitles, a la "always skip" [?]
   allow for AAF or OMF export, as well as EDL (?)
   C specific portion [A,B] player
