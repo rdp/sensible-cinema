@@ -36,20 +36,22 @@ describe SubtitleProfanityFinder do
       end
     end
     
-    describe "deity" do
+    describe "deity ... " do
       it "should parse output plural deity" do
         output.should include("nordic [deity]s ")
       end
       
       it "should parse out deity singular and at very end" do
         output = SubtitleProfanityFinder.edl_output ['deity_end.srt']
-        print output
         output.should include("fortress is our [deity]")
       end
       
-      it "should parse out <i> " do
+      it "should parse out <i> et al " do
         output = SubtitleProfanityFinder.edl_output ['deity_end.srt']
         output.should_not include(" i ")
+        output.should_not include("<i")
+        output.should_not include("huntingand")
+        output.should_not include("  ")
       end
       
     end

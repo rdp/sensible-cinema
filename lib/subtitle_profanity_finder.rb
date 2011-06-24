@@ -88,17 +88,17 @@ module SubtitleProfanityFinder
       for profanity, sanitized in profanities
         # dunno if we should force words to just start with this or contain it anywhere...
         # what about 'g..ly' for example?
-        # or 'un...ly' ?
+        # or 'un...ly' ? I think we're ok there...
 
         if glop =~ profanity
           # create english-ified version
           # take out timing line, number line
-          sanitized_glop = glop.lines.to_a[1..-1].join('')
+          sanitized_glop = glop.lines.to_a[1..-1].join(' ')
           sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
           sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # oddity
           sanitized_glop.gsub!(/[^a-zA-Z0-9]/, ' ') # kill weird stuff like ellipses
-
-
+          sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
+          
           # sanitize
           for (prof2, sanitized2) in profanities
             sanitized_glop.gsub!(prof2, sanitized2)
