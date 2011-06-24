@@ -40,6 +40,10 @@ describe SubtitleProfanityFinder do
       it "should parse output plural deity" do
         output.should include("nordic [deity]s ")
       end
+      print output
+      it "should parse out deity singular" do
+        output.should include("fortress is our [deity] ")
+      end
       
     end
     
