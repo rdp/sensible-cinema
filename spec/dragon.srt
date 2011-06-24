@@ -29,5 +29,3 @@
 7
 00:00:59,306 --> 00:01:02,298
 <i>The onIy probIems are the pests.</i>
-hymn title: a mighty fortress is our God.
-

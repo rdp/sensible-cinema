@@ -83,8 +83,8 @@ module SubtitleProfanityFinder
     profanities = profanities.to_a.sort.reverse.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
 
     output = ''
-    for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^\d+$/m)
-
+    # from a timestamp to a line with nothing :)
+    for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^$/m)
       for profanity, sanitized in profanities
         # dunno if we should force words to just start with this or contain it anywhere...
         # what about 'g..ly' for example?
@@ -93,9 +93,9 @@ module SubtitleProfanityFinder
         if glop =~ profanity
           # create english-ified version
           # take out timing line, number line
-          sanitized_glop = glop.lines.to_a[1..-2].join('')
+          sanitized_glop = glop.lines.to_a[1..-1].join('')
           sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
-          sanitized_glop.gsub!(/<i>/, '') # oddity
+          sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # oddity
           sanitized_glop.gsub!(/[^a-zA-Z0-9]/, ' ') # kill weird stuff like ellipses
 
 
