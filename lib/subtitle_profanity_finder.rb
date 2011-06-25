@@ -66,9 +66,9 @@ module SubtitleProfanityFinder
       'bi' +
       'tc' + 104.chr => 'b.....',
       'bas' +
-      'tar' + 100.chr => 'ba.....',
+      'ta' + 'r' + 100.chr => 'ba.....',
       ('a' +
-      's'*2) => 'a..',
+      's'*2) => ['a..', true],
       'breast' => 'br....'
     }
 
@@ -80,7 +80,11 @@ module SubtitleProfanityFinder
       profanities[prof] = sanitized
     end
 
-    profanities = profanities.to_a.sort.reverse.map!{|profanity, sanitized| [Regexp.new(profanity, Regexp::IGNORECASE), sanitized]}
+    profanities = profanities.to_a.sort.reverse.map!{|profanity, sanitized|
+      as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
+      sanitized = Array(sanitized)
+      [as_regexp, sanitized[0]]
+    }
 
     output = ''
     # from a timestamp to a line with nothing :)
