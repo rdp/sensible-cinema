@@ -388,7 +388,7 @@ module SensibleSwing
         # direct3d for windows 7 old nvidia's sake yipes
         play_this_mplayer += " -vo direct3d "
         # font TODO 
-        play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIALN.TTF}"
+        play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
       end
       command =  "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       # -hardframedrop might help but hurts just too much
@@ -776,7 +776,7 @@ module SensibleSwing
         end
       else
         selected_idx = 0
-        p 'selecting user\'s only disk drive ' + names[0]
+        p 'selecting user\'s only DVD drive ' + names[0]
       end
 
       if selected_idx

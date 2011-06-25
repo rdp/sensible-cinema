@@ -28,6 +28,7 @@ class DriveInfo
    else
      output = `#{__DIR__}/../vendor/dvdid.exe #{dir}`
    end
+   puts 'dvdid command failed?' unless $?.exitstatus == 0 # hope this accomodates for it barfing...
    output.strip
  end
 
