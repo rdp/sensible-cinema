@@ -28,6 +28,7 @@ describe SubtitleProfanityFinder do
     
     describe "heck" do
       it "should include the bad line with timestamp" do
+        print output
         output.should match(/00:00:54.929.*"he\.\."/)
       end
     

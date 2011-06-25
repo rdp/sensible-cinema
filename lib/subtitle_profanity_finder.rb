@@ -84,22 +84,27 @@ module SubtitleProfanityFinder
       profanities[prof] = sanitized
     end
 
-    profanities = profanities.to_a.sort.reverse.map!{|profanity, sanitized|
+    all_profanity_combinations = []
+
+    profanities.to_a.sort.reverse.each{|profanity, sanitized|
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
       sanitized = Array(sanitized)
-      if sanitized[1] # if so, want's to be single word...
-        as_regexp = Regexp.new("(\s|^)" + profanity + "\s", Regexp::IGNORECASE)
+      is_single_word_profanity = sanitized[1]
+      if is_single_word_profanity
+        as_regexp = Regexp.new("\s" + profanity + "\s", Regexp::IGNORECASE)
+        all_profanity_combinations << [as_regexp, ' ' + sanitized[0] + ' ']
+        as_regexp = Regexp.new("^" + profanity + "\s", Regexp::IGNORECASE)
+        all_profanity_combinations << [as_regexp, sanitized[0] + ' ']
       else
-        raise unless sanitized.length == 1
-        sanitized << false
+        raise unless sanitized.length == 1 # that would be weird elsewise...
+        all_profanity_combinations << [as_regexp, sanitized[0]]
       end
-      [as_regexp, sanitized]
     }
 
     output = ''
     # from a timestamp to a line with nothing :)
     for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^$/m)
-      for profanity, (sanitized, whole_word) in profanities
+      for profanity, (sanitized, whole_word) in all_profanity_combinations
         # dunno if we should force words to just start with this or contain it anywhere...
         # what about 'g..ly' for example?
         # or 'un...ly' ? I think we're ok there...
@@ -110,19 +115,25 @@ module SubtitleProfanityFinder
           sanitized_glop = glop.lines.to_a[1..-1].join(' ')
           sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
           sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
-          sanitized_glop.gsub!(/[^a-zA-Z0-9']/, ' ') # kill weird stuff like ellipses
+          sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipses
           sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
           
           # sanitize
-          for (prof2, (sanitized2, whole_word2)) in profanities
-            sanitized_glop.gsub!(prof2, sanitized2)
+          for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations
+            if sanitized_glop =~ prof2
+              require 'ruby-debug'
+              #debugger
+            end
+            if sanitized_glop =~ prof2
+              sanitized_glop.gsub!(prof2, sanitized2)
+            end
           end
 
           # extract timing info
           timing_line = glop.split("\n").first.strip
           timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
           # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-          output += %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized}", "#{sanitized_glop.strip}",\n!
+          output += %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized.strip}", "#{sanitized_glop.strip}",\n!
         end
 
       end
