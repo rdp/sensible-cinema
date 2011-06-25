@@ -72,7 +72,8 @@ module SubtitleProfanityFinder
       'breast' => 'br....',
       'jesus' => 'jes..',
       'chri' +
-      'st'=> ['chri..', true] # allow for christian [?]
+      'st'=> ['chri..', true], # allow for christian [?]
+      'a really bad word' => ['really bad word', true]
     }
 
     incoming = File.read(args.shift)
