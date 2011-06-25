@@ -6,12 +6,11 @@
   === loose ordering/eventually ===
     supplement mplayer EDL with mine (mac users, just ffmpeg) ???
     update todo/docu
-    build library phase, 20 dvd's
     create web site/api-ify
     LLC
       if...back off to just the 1 (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
-	no auto subtitles...
+	  no auto subtitles...
   
 == high prio like blocking bugs ==  
   
@@ -30,18 +29,17 @@
       just in case youtube takes over the world
  
 == yes do ordered ==
+  EDL for that fella...
   transfer from little stickie at....
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
-  subtitles: impass assistance :)
-    je.....
   unit tests
-  timing thing, from notes
+  timing thing (notes file)
 
 == yes do, un-ordered currently, from the various release options ==
-@macports: set notestxt \
-13	    "The MPlayer developers do not believe in making regular releases. \
-14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
-@macports: does mplayer-devel enable dvdnav correctly?
+  @macports: set notestxt \
+  13	    "The MPlayer developers do not believe in making regular releases. \
+  14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
+  @macports: does mplayer-devel enable dvdnav correctly?
 
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]

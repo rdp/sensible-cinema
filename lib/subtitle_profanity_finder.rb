@@ -91,7 +91,7 @@ module SubtitleProfanityFinder
       sanitized = Array(sanitized)
       is_single_word_profanity = sanitized[1]
       if is_single_word_profanity
-        # ughly...
+        # oh wow this is ughly...
         sanitized_version = sanitized[0]
         as_regexp = Regexp.new("\s" + profanity + "\s", Regexp::IGNORECASE)
         all_profanity_combinations << [as_regexp, ' ' + sanitized_version + ' ']
