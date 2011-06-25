@@ -13,4 +13,5 @@
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
 "mplayer_dvd_splits" => [],
-"subtitle" => "4139850"
+"subtitle" => "4139850",
+"dvd_title_track" => "1",

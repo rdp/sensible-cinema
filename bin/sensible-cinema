@@ -149,7 +149,11 @@ module SensibleSwing
       @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
         play_dvd_smplayer_unedited
       }
-      
+
+      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer--useful for subtitle timing)", true).on_clicked {
+        play_dvd_smplayer_unedited true
+      }
+
 #      @watch_created_file = new_jbutton( "Watch edited file copy of DVD", false).on_clicked {
 #        raise 'todo' # TODO 
 #      }
@@ -341,14 +345,20 @@ module SensibleSwing
       debugger
     end
     
-    def play_dvd_smplayer_unedited
+    def play_dvd_smplayer_unedited use_mplayer_instead = false
       # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
+      # lodo mac os x 'ify'
       drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
-      config = set_smplayer_opts " -dvd-device #{drive} -osd-fractions 2 -nocache " # smplayer doesn't take -osdlevel 2
-      command =  "smplayer_portable -config-path \"#{File.dirname config}\" dvdnav://#{title_track_maybe_nil}" # smplayer doesn't take -dvd-device #{drive} sniff
+      if use_mplayer_instead
+        exe = "mplayer"
+      else
+        config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
+        exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
+      end
+      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2 -nocache "
       p command
       @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:
       'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted to use).
