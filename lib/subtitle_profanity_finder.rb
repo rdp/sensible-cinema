@@ -89,14 +89,17 @@ module SubtitleProfanityFinder
       sanitized = Array(sanitized)
       if sanitized[1] # if so, want's to be single word...
         as_regexp = Regexp.new("(\s|^)" + profanity + "\s", Regexp::IGNORECASE)
+      else
+        raise unless sanitized.length == 1
+        sanitized << false
       end
-      [as_regexp, sanitized[0]]
+      [as_regexp, sanitized]
     }
 
     output = ''
     # from a timestamp to a line with nothing :)
     for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^$/m)
-      for profanity, sanitized in profanities
+      for profanity, (sanitized, whole_word) in profanities
         # dunno if we should force words to just start with this or contain it anywhere...
         # what about 'g..ly' for example?
         # or 'un...ly' ? I think we're ok there...
@@ -111,7 +114,7 @@ module SubtitleProfanityFinder
           sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
           
           # sanitize
-          for (prof2, sanitized2) in profanities
+          for (prof2, (sanitized2, whole_word2)) in profanities
             sanitized_glop.gsub!(prof2, sanitized2)
           end
 
