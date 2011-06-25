@@ -60,7 +60,8 @@ describe SubtitleProfanityFinder do
       it 'should not parse it if it\'s in other words' do
         output =  SubtitleProfanityFinder.edl_output ['arse.srt']
         output.should_not include "a..ume"
-        output.should include "don't" # different issue...
+        #output.should include "don't" # different issue...
+        output.should_not include "he..o" # todo: positive ex: ... :P
       end    
     end
     
