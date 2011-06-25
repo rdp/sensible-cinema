@@ -352,7 +352,7 @@ module SensibleSwing
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
       if use_mplayer_instead
-        exe = "mplayer 
+        exe = "mplayer "
         # maybe, maybe following would be useful for people just watching through the film (?)
         #"-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF "
       else
