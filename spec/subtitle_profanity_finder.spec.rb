@@ -66,6 +66,7 @@ describe SubtitleProfanityFinder do
       
       it 'should parse them at EOL' do
         output2.should include 'test bad word'
+        output2.should include "00:00:55.071" # full line...
       end
       
       it 'should keep apostrophes' do

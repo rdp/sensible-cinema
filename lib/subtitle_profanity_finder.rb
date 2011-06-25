@@ -88,7 +88,7 @@ module SubtitleProfanityFinder
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
       sanitized = Array(sanitized)
       if sanitized[1] # if so, want's to be single word...
-        as_regexp = Regexp.new(profanity + "\s", Regexp::IGNORECASE)
+        as_regexp = Regexp.new("(\s|^)" + profanity + "\s", Regexp::IGNORECASE)
       end
       [as_regexp, sanitized[0]]
     }
@@ -106,7 +106,7 @@ module SubtitleProfanityFinder
           # take out timing line, number line
           sanitized_glop = glop.lines.to_a[1..-1].join(' ')
           sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
-          sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # oddity
+          sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
           sanitized_glop.gsub!(/[^a-zA-Z0-9']/, ' ') # kill weird stuff like ellipses
           sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
           

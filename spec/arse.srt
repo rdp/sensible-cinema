@@ -3,8 +3,16 @@
 <i>don't assume anything at the impass ok
 
 6
+00:00:55,067 --> 00:00:59,164
+<i>don't assume anything at the impass
+
+6
 00:00:55,069 --> 00:00:59,164
-<i>at the very end of a line is a realllly bad word
+<i>at the very end of this line is a realllly bad word
+
+6
+00:00:55,071 --> 00:00:59,164
+a realllly bad word
 
 6
 00:00:55,070 --> 00:00:59,164
