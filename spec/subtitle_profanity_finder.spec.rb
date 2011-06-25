@@ -66,8 +66,9 @@ describe SubtitleProfanityFinder do
       end
       
       it 'should parse them at EOL' do
-        output2.should include 'test bad word'
+        output2.should include '00:00:55.069' # EOL
         output2.should include "00:00:55.071" # full line...
+        output2.should include '00:00:55.066' # BOL
       end
       
       it 'should keep apostrophes' do
@@ -75,9 +76,7 @@ describe SubtitleProfanityFinder do
       end
       
       it 'should not disdain impass' do
-        print output2
         output2.should_not include "impa.."
-        
       end
       
     end
