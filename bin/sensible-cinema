@@ -400,7 +400,7 @@ module SensibleSwing
         play_this_mplayer += " -vo direct3d "
         play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
       end
-      command =  "#{play_this_mplayer} -fs -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      command =  "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       # -hardframedrop might help but hurts just too much
       p command
       Thread.new { system_blocking command; @popup.dispose }
