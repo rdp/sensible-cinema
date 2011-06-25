@@ -56,14 +56,17 @@ describe SubtitleProfanityFinder do
       
     end
     
+    describe 'arse' do
+      it 'should not parse it if it\'s in other words' do
+        output =  SubtitleProfanityFinder.edl_output ['arse.srt']
+        output.should_not include "arse"
+        print output, 'yo'
+      end    
+    end
+    
   end
   
-  describe "parse out deity" do
-    
-    
-  end
-  
-  describe "it should take optional params" do
+  describe "it should take optional user params" do
     output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'word']
     
     it "should parse out the word word" do

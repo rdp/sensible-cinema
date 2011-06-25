@@ -11,6 +11,7 @@
     LLC
       if...back off to just the 1 (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
+	no auto subtitles...
   
 == high prio like blocking bugs ==  
   
@@ -167,6 +168,7 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  auto download subtitles from opensubtitles somehow err other...
   an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."
   check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
   allow for filter subtitles, a la "always skip" [?]
