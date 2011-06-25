@@ -52,10 +52,10 @@ module SubtitleProfanityFinder
 
     profanities = {'hell' => ['he..', true],
       'g' +
-      'o' + 100.chr => '[deity]', 'g' +
+      'o' + 100.chr => 'deity', 'g' +
       111.chr + 
       100.chr +
-      's' => '[deity]s',
+      's' => 'deitys',
       'lord' => 'lo..', 'da' +
       'mn' => 'da..', 
       'f' +

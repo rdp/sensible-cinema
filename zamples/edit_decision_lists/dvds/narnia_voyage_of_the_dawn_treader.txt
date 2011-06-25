@@ -2,8 +2,6 @@
 
 "mutes" => [
 
-00:25:38,492 --> 00:25:41,205
-
 "00:25:38.492" , "00:25:41.205", "profanity", "deity", "Oh [deity] I hope that wasn t the British Consul", # this one might not be accurate even...
 ],
 
@@ -18,4 +16,4 @@
 # "closing thoughts" => "still...",
 "mplayer_dvd_splits" => [],
 "subtitle" => "4139850", # though it missed the one profanity :P
-"dvd_title_track" => "1",
+"dvd_title_track" => "1"

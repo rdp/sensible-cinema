@@ -264,6 +264,7 @@ module SensibleSwing
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
+"name" => "#{english_name}",
 
 "mutes" => [
   # example line, uncomment the leading "#" to make it active
@@ -275,11 +276,9 @@ module SensibleSwing
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
-"name" => "#{english_name}",
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-
-# "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
@@ -400,7 +399,7 @@ module SensibleSwing
         # font TODO 
         play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
       end
-      command =  "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
+      command =  "#{play_this_mplayer} -fs -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
       # -hardframedrop might help but hurts just too much
       p command
       Thread.new { system_blocking command; @popup.dispose }
