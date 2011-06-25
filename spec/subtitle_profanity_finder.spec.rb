@@ -28,7 +28,6 @@ describe SubtitleProfanityFinder do
     
     describe "heck" do
       it "should include the bad line with timestamp" do
-        print output
         output.should match(/00:00:54.929.*"he\.\."/)
       end
     
@@ -37,7 +36,7 @@ describe SubtitleProfanityFinder do
       end
     end
     
-    describe "deity ... " do
+    describe "deity various" do
       it "should parse output plural deity" do
         output.should include("nordic [deity]s ")
       end
@@ -72,7 +71,7 @@ describe SubtitleProfanityFinder do
       end
       
       it 'should replace l for i' do
-        output2.should include "065"
+        output2.should include "065" # implies it got the substutition right...
       end
       
       it 'should keep apostrophes' do

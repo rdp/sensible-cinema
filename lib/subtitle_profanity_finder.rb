@@ -67,8 +67,11 @@ module SubtitleProfanityFinder
       'tc' + 104.chr => 'b.....',
       'bas' +
       'ta' + 'r' + 100.chr => 'ba.....',
-      ('a' +
-      's'*2) => ['a..', true],
+      ((arse = 'a' +
+      's'*2)) => ['a..', true],
+      arse + 'h' +
+      'ole' => 'a..h...',
+      arse + 'wipe' => 'a..w....',
       'breast' => 'br....',
       'jesus' => 'jes..',
       'chri' +
@@ -90,20 +93,32 @@ module SubtitleProfanityFinder
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
       sanitized = Array(sanitized)
       is_single_word_profanity = sanitized[1]
-      if is_single_word_profanity
-        # oh wow this is ughly...
-        sanitized_version = sanitized[0]
-        as_regexp = Regexp.new("\s" + profanity + "\s", Regexp::IGNORECASE)
-        all_profanity_combinations << [as_regexp, ' ' + sanitized_version + ' ']
-        as_regexp = Regexp.new("^" + profanity + "\s", Regexp::IGNORECASE)
-        all_profanity_combinations << [as_regexp, sanitized_version + ' ']
-        as_regexp = Regexp.new("\s" + profanity + "$", Regexp::IGNORECASE)
-        all_profanity_combinations << [as_regexp, ' ' + sanitized_version]
-        as_regexp = Regexp.new("^" + profanity + "$", Regexp::IGNORECASE)
-        all_profanity_combinations << [as_regexp, sanitized_version]
-      else
-        raise unless sanitized.length == 1 # that would be weird elsewise...
-        all_profanity_combinations << [as_regexp, sanitized[0]]
+      permutations = [profanity]
+      
+      if profanity =~ /l/
+        permutations << profanity.gsub(/l/i, 'i')
+      end
+      
+      if profanity =~ /i/
+        permutations << profanity.gsub(/i/i, 'l')
+      end
+      
+      for profanity in permutations
+        if is_single_word_profanity
+          # oh wow this is ughly...
+          sanitized_version = sanitized[0]
+          as_regexp = Regexp.new("\s" + profanity + "\s", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + sanitized_version + ' ']
+          as_regexp = Regexp.new("^" + profanity + "\s", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, sanitized_version + ' ']
+          as_regexp = Regexp.new("\s" + profanity + "$", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + sanitized_version]
+          as_regexp = Regexp.new("^" + profanity + "$", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, sanitized_version]
+        else
+          raise unless sanitized.length == 1 # that would be weird elsewise...
+          all_profanity_combinations << [as_regexp, sanitized[0]]
+        end
       end
     }
 
