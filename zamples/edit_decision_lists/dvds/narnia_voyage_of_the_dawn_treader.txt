@@ -1,6 +1,10 @@
 # comments can go after a # on any line, for example this one.
 
-"mutes" => ["00:24:35.800" , "00:24:38.030", "profanity", "[deity]", "Oh [deity] I hope that wasn t the British Consul", # this one might not be accurate even...
+"mutes" => [
+
+00:25:38,492 --> 00:25:41,205
+
+"00:25:38.492" , "00:25:41.205", "profanity", "deity", "Oh [deity] I hope that wasn t the British Consul", # this one might not be accurate even...
 ],
 
 "blank_outs" => [
@@ -10,8 +14,8 @@
 "volume_name" => "VOYAGE_OF_THE_DAWN_TREADER",
 "disk_unique_id" => "7e17bf0e|a78bf4bc",
 
-# "not edited out stuff" => "some violence",
+"not edited out stuff" => "some really scary stuff for kids at the end...",
 # "closing thoughts" => "still...",
 "mplayer_dvd_splits" => [],
-"subtitle" => "4139850",
+"subtitle" => "4139850", # though it missed the one profanity :P
 "dvd_title_track" => "1",

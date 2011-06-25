@@ -353,7 +353,7 @@ module SensibleSwing
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
       if use_mplayer_instead
-        exe = "mplayer"
+        exe = "mplayer -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF "
       else
         config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
