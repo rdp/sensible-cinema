@@ -155,7 +155,7 @@ then mplayer began to support EDL, zoomplayer added a scene-cut editor,
 http://code.google.com/p/movie-content-editor came along, and also many
 other editors have historically supported EDL for content creation and/or playback (see wikipedia's "edit decision list"),
 such as mythtv/XBMC's EDL support (as suggested by the phantom edit [1], oreillynet.com), 
-VLC also added playlists with optional start and stop positions per entry.
+VLC also added playlists with optional start and stop positions per entry.  Ffmpeg, mencoder were high quality video editing open source tools. 
 Once I discovered all of these previously existing programs, I knew the right elements were ready for 
 something like sensible cinema.
 
@@ -281,6 +281,7 @@ making it better.  No really, I have some ideas, but want to see if there's need
 Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
 The combination of these tools made programming this actually something of a pleasure, 
 and a breeze cross platform.
+Sensible Cinema leverages code from lots of other projects (see LICENSE.TXT)--many thanks to the authors and maintainers of said libraries, and anybody else I forgot to mention.
 
 == Feedback/Development ==
 
