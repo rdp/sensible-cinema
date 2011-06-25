@@ -56,11 +56,16 @@ describe SubtitleProfanityFinder do
       
     end
     
-    describe 'arse' do
+    describe 'full word only profanities' do
+      
       output2 =  SubtitleProfanityFinder.edl_output ['arse.srt']
       it 'should not parse it if it\'s in other words' do
         output2.should_not include "a..ume"
         output2.should_not include "he..o" # todo: positive ex: ... :P
+      end
+      
+      it 'should parse them at EOL' do
+        output2.should include 'test bad word'
       end
       
       it 'should keep apostrophes' do
