@@ -64,11 +64,12 @@ describe SubtitleProfanityFinder do
       end
       
       it 'should keep apostrophes' do
-        output2.should include "don't" # different issue...
+        output2.should include "don't"
       end
       
       it 'should not disdain impass' do
         print output2
+        output2.should_not include "impa.."
         
       end
       
