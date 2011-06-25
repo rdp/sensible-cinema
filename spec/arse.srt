@@ -1,8 +1,9 @@
 6
 00:00:55,068 --> 00:00:59,164
-<i>don't assume anything
+<i>don't assume anything at the impass
 
 67
 00:00:55,068 --> 00:00:59,164
 <i>hello
+shell
 

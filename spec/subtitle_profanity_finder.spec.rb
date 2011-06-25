@@ -57,12 +57,21 @@ describe SubtitleProfanityFinder do
     end
     
     describe 'arse' do
+      output2 =  SubtitleProfanityFinder.edl_output ['arse.srt']
       it 'should not parse it if it\'s in other words' do
-        output =  SubtitleProfanityFinder.edl_output ['arse.srt']
-        output.should_not include "a..ume"
-        #output.should include "don't" # different issue...
-        output.should_not include "he..o" # todo: positive ex: ... :P
-      end    
+        output2.should_not include "a..ume"
+        output2.should_not include "he..o" # todo: positive ex: ... :P
+      end
+      
+      it 'should keep apostrophes' do
+        output2.should include "don't" # different issue...
+      end
+      
+      it 'should not disdain impass' do
+        print output2
+        
+      end
+      
     end
     
   end
