@@ -71,6 +71,10 @@ describe SubtitleProfanityFinder do
         output2.should include '00:00:55.066' # BOL
       end
       
+      it 'should replace l for i' do
+        output2.should include "065"
+      end
+      
       it 'should keep apostrophes' do
         output2.should include "don't"
       end
