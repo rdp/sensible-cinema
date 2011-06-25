@@ -1,0 +1,16 @@
+# comments can go after a # on any line, for example this one.
+
+"mutes" => ["00:24:35.800" , "00:24:38.030", "profanity", "[deity]", "Oh [deity] I hope that wasn t the British Consul", # this one might not be accurate even...
+],
+
+"blank_outs" => [
+],
+
+"name" => "Narnia voyage of the dawn treader",
+"volume_name" => "VOYAGE_OF_THE_DAWN_TREADER",
+"disk_unique_id" => "7e17bf0e|a78bf4bc",
+
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+"mplayer_dvd_splits" => [],
+"subtitle" => "4139850"
