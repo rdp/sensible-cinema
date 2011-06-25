@@ -352,7 +352,9 @@ module SensibleSwing
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
       if use_mplayer_instead
-        exe = "mplayer -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF "
+        exe = "mplayer 
+        # maybe, maybe following would be useful for people just watching through the film (?)
+        #"-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF "
       else
         config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
@@ -363,7 +365,7 @@ module SensibleSwing
       'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted to use).
       'v' key: turn off subtitles.
       '.' key: step one frame.
-      Double click for full screen."
+      'f' for full screen."
       system_non_blocking command
     end
 
@@ -396,7 +398,6 @@ module SensibleSwing
       if OS.windows?
         # direct3d for windows 7 old nvidia's sake yipes
         play_this_mplayer += " -vo direct3d "
-        # font TODO 
         play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
       end
       command =  "#{play_this_mplayer} -fs -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive}"
