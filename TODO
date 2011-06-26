@@ -151,7 +151,7 @@
 == DVD decide later to move up or down ==
 
 == DVD-realtime backlog once do, now not do, unordered ==
-
+  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
   mplayer EDL allow this:
