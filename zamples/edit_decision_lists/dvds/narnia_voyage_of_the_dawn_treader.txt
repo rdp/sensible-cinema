@@ -1,19 +1,16 @@
-# comments can go after a # on any line, for example this one.
-
+"name" => "Narnia voyage of the dawn treader",
 "mutes" => [
-
-"00:25:38.492" , "00:25:41.205", "profanity", "deity", "Oh [deity] I hope that wasn t the British Consul", # this one might not be accurate even...
+  "00:25:38.492" , "00:25:41.205", "profanity", "deity", "Oh [deity] I hope that wasn t the British Consul", # this one might not be accurate even...
 ],
 
 "blank_outs" => [
 ],
 
-"name" => "Narnia voyage of the dawn treader",
 "volume_name" => "VOYAGE_OF_THE_DAWN_TREADER",
 "disk_unique_id" => "7e17bf0e|a78bf4bc",
 
-"not edited out stuff" => "some really scary stuff for kids at the end...",
+"not edited out stuff" => "some really scary stuff for kids at the end...basically after a little bit of the snake it starts to get somewhat gruesome",
 # "closing thoughts" => "still...",
-"mplayer_dvd_splits" => [],
-"subtitle" => "4139850", # though it missed the one profanity :P
+"mplayer_dvd_splits" => [], # it's clean
+"subtitle" => "4139850", # though it missed the one profanity in there :P
 "dvd_title_track" => "1"

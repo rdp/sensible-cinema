@@ -4,6 +4,7 @@
   release: C EDL
   compare netflix/blu-ray timings et al
   === loose ordering/eventually ===
+    linearize
     supplement mplayer EDL with mine (mac users, just ffmpeg) ???
     update todo/docu
     create web site/api-ify
