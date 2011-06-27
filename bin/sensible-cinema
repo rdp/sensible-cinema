@@ -99,17 +99,21 @@ module SensibleSwing
     def increment_button_location
       @starting_button_y += 30
     end
+    
+    def force_accept_license_first
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
+          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
+        Storage['main_license_accepted'] = VERSION
+    end
 
     Storage = Storage.new("sensible_cinema")
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
-          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
-        Storage['main_license_accepted'] = VERSION
+        force_accept_license_first
       end
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
@@ -122,7 +126,7 @@ module SensibleSwing
       jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for descriptions." : "")
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       jlabel.setFont(happy)
-      jlabel.set_bounds(44,44,160,14)
+      jlabel.set_bounds(44,44,360,14)
       panel.add jlabel
       @starting_button_y = 120
       @button_width = 400      
@@ -145,9 +149,9 @@ module SensibleSwing
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
       @create.tool_tip = <<-EOL
-      This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
-      The file you create will contain the whole movie edited.
-      It takes quite awhile maybe 2 hours.
+        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
+        The file you create will contain the whole movie edited.
+        It takes quite awhile maybe 2 hours.
       EOL
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
@@ -161,13 +165,13 @@ module SensibleSwing
       
       @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true)
       @play_smplayer.tool_tip = <<-EOL
-      This will play the DVD unedited within smplayer.
-      NB it will default to track 1, so updated your EDL file that matches this DVD with the proper track if this doesn't work for you 
-      i.e. if it just plays a single preview track or what not, and not the main title, you need to change this value.
-      This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
-      You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
-      (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
-      fps, so you'll need to convert it to be able to use it in a file.
+        This will play the DVD unedited within smplayer.
+        NB it will default to track 1, so updated your EDL file that matches this DVD with the proper track if this doesn't work for you 
+        i.e. if it just plays a single preview track or what not, and not the main title, you need to change this value.
+        This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
+        You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
+        (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
+        fps, so you'll need to convert it to be able to use it in a file.
       EOL
       @play_smplayer.on_clicked {
         play_dvd_smplayer_unedited
@@ -175,11 +179,11 @@ module SensibleSwing
 
       @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer)", true)
       @play_mplayer_raw.tool_tip = <<-EOL
-      This is also useful for comparing subtitle files to see
-      if they have accurate timings.
-      If you turn on subtitles (v button), then compare your file at say, the 1 hour mark, or 2 hour mark,
-      with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
-      like "A: 3600.0" should match your subtitle line of approximately "01:00:00,000"
+        This is also useful for comparing subtitle files to see
+        if they have accurate timings.
+        If you turn on subtitles (v button), then compare your file at say, the 1 hour mark, or 2 hour mark,
+        with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
+        like "A: 3600.0" should match your subtitle line of approximately "01:00:00,000"
       EOL
       @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true
@@ -220,10 +224,10 @@ module SensibleSwing
         nice_file = wrote_to_here_fulli #+ ".fast.mpg"
         if false#!File.exist?(nice_file)
           p = show_non_blocking_message_dialog("Creating quick lookup file--NB that for each changed deletion, 
-          you'll need to restart the fast preview SMplayer
-          Also note that the start and end times will be slightly off if reality [delayed]
-          Also note that while doing fast preview, it can be doing a normal preview as well
-          in the background, simultaneously.")
+            you'll need to restart the fast preview SMplayer
+            Also note that the start and end times will be slightly off if reality [delayed]
+            Also note that while doing fast preview, it can be doing a normal preview as well
+            in the background, simultaneously.")
           unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
             File.delete nice_file
             raise 'create ' 
@@ -262,10 +266,10 @@ module SensibleSwing
       
       @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
       @parse_srt.tool_tip = <<-EOL
-      You can download a .srt file and parse it to automaticaly search for profanities.
-      Basically download it from opensubtitles.org (possibly from other places, too),
-      (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
-      Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
+        You can download a .srt file and parse it to automaticaly search for profanities.
+        Basically download it from opensubtitles.org (possibly from other places, too),
+        (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
+        Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
       @parse_srt.on_clicked {
         fc = new_filechooser
@@ -596,7 +600,7 @@ module SensibleSwing
       }
       if matching.length == 1
         file = matching[0]
-        p "selecting the one matching file #{file} #{dvd_id}"
+        p "selecting the one only matching EDL #{file} for DVD ID: #{dvd_id}"
         file
       else
         nil
@@ -775,14 +779,15 @@ module SensibleSwing
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
-      popup = show_non_blocking_message_dialog(
-      "Applying #{File.basename edit_list_path} \n   to #{file_from} (#{dvd_title}).\n" +
-      "Copying to #{save_to}.\n" +
-      "This could take quite awhile, and will prompt you and chime a noise when it is done.\n" +
-      "You can close this window and continue working while it runs in the background.\n" +
-      "NB that the created file will be playable only with VLC (possibly with smplayer, possibly with\n" +
-      "Windows Media Player if you install ffdshow first with mpeg2 video checkbox checked.).",
-      "OK")
+      popup = show_non_blocking_message_dialog(<<-EOL, "OK")
+        "Applying #{File.basename edit_list_path} 
+           to #{file_from} (#{dvd_title}).
+        "Copying to #{save_to}.\n
+        "This could take quite awhile, and will prompt you and chime a noise when it is done.
+        "You can close this window and continue working while it runs in the background.
+        "NB that the created file will be playable only with VLC (possibly with smplayer, possibly with
+        "Windows Media Player if you install ffdshow first with mpeg2 video checkbox checked.).
+      EOL
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new {

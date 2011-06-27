@@ -441,7 +441,7 @@ module SensibleSwing
       end
    end
   
-   it "should parse an srt for ya" do
+   it "should be able to parse an srt for ya" do
      @subject.stub!(:new_filechooser) {
        fc = FakeFileChooser.new
        fc.stub!(:go) {
