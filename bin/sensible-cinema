@@ -232,13 +232,6 @@ module SensibleSwing
         end
         set_smplayer_opts "-edl #{EdlTempFile}"
         thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
-        Thread.new { # XXX do we need this?
-          begin
-            thread.join
-          ensure
-            set_smplayer_opts ''
-          end
-        }
       }
 
       # TODO remove me...
@@ -732,11 +725,12 @@ module SensibleSwing
         Storage['start_time'] = start_time
         Storage['end_time'] = end_time
       end
-      dvd_title = descriptors['name'] || dvd_volume_name
+      dvd_friendly_name = descriptors['name']
+      raise 'no name?' unless dvd_friendly_name
       
       # TODO get an input name here...
       
-      save_to = get_save_to_filename dvd_title
+      save_to = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_final_filename save_to
       if exit_early_if_fulli_exists
         if File.exist? fulli + ".done"
@@ -750,7 +744,7 @@ module SensibleSwing
       dvd_title_track = get_title_track(descriptors)
       should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
       require_deletion_entry = true unless watch_unedited
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
+      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
       [false, fulli] # false means it's running in a background thread :P
     end
 

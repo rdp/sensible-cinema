@@ -214,7 +214,7 @@ module SensibleSwing
      @system_non_blocking_command.should_not match /fulli/
     end
 
-    def prompt_for_start_and_end_times
+    def run_preview_section_button_successfully
       click_button(:@preview_section)
       join_background_thread
       @get_mencoder_commands_args[-2].should == "2"
@@ -223,7 +223,7 @@ module SensibleSwing
     end
 
     it "should prompt for start and end times" do
-      prompt_for_start_and_end_times
+      run_preview_section_button_successfully
     end
     
     temp_dir = Dir.tmpdir
@@ -250,7 +250,7 @@ module SensibleSwing
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
-      prompt_for_start_and_end_times
+      run_preview_section_button_successfully
       old_args = @get_mencoder_commands_args
       old_args.should_not == nil
       @get_mencoder_commands_args = nil
@@ -276,11 +276,10 @@ module SensibleSwing
     end
 
     it "should warn if you watch an edited time frame with no edits in it" do
-      @subject.unstub!(:get_mencoder_commands)
+      @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
       click_button(:@preview_section)
       @show_blocking_message_dialog_last_arg.should =~ /unable to/
-      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
-      # rspec bug: wrong'ish backtrace: proc { prompt_for_start_and_end_times #}.should_not raise_error LODO
+      @subject.stub!(:get_user_input).and_return('00:00', '01:00')
       click_button(:@preview_section)
       join_background_thread
       @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
