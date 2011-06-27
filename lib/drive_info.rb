@@ -56,16 +56,19 @@ class DriveInfo
      d2.Description = parsed['OpticalDeviceType']
      d2.MountPoint = parsed['MountPoint']
      if d2.MountPoint == '/'
-       d2.MountPoint = File.expand_path '~' # better ?
+       d2.MountPoint = File.expand_path '~' # better ? I guess?
      end
      d2
     }
   else
     require 'ruby-wmi'
     disks = WMI::Win32_LogicalDisk.find(:all)
-    disks.map{|d| d2 = OpenStruct.new; d2.Description = d.Description; d2.VolumeName = d.VolumeName; d2.Name = d.Name; 
+    disks.map{|d| d2 = OpenStruct.new
+      d2.Description = d.Description
+      d2.VolumeName = d.VolumeName
+      d2.Name = d.Name
       d2.FreeSpace = d.FreeSpace.to_i
-      d2.MountPoint = d.Name[0..2]
+      d2.MountPoint = d.Name[0..2] # needed...
       d2
     } 
   end

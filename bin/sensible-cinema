@@ -133,6 +133,12 @@ module SensibleSwing
       
       ## BUTTONS ##
       
+      @mplayer_edl = new_jbutton( "Watch DVD edited on computer (realtime -- mplayer EDL)", false)
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime on your computer while skipping/muting the questionable scenes."
+      @mplayer_edl.on_clicked {
+        do_mplayer_edl
+      }
+      
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
@@ -141,12 +147,6 @@ module SensibleSwing
       EOL
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
-      }
-      
-      @mplayer_edl = new_jbutton( "Watch DVD edited on computer (realtime -- mplayer EDL)", false)
-      @mplayer_edl.tool_tip = "This will watch your DVD in realtime on your computer while skipping/muting the questionable scenes."
-      @mplayer_edl.on_clicked {
-        do_mplayer_edl
       }
       
       @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
