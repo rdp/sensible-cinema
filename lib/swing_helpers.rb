@@ -48,9 +48,13 @@ module SensibleSwing
      self
    end
   
-  def simulate_click
-    @block.call
-  end
+   def simulate_click
+     @block.call
+   end
+  
+   def tool_tip= text
+     self.set_tool_tip_text text   
+   end
   
  end
 

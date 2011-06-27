@@ -73,8 +73,9 @@ module SensibleSwing
   class MainWindow < JFrame
 
     # currently advanced mode only *adds* buttons
-    def new_jbutton title, only_on_create_mode
+    def new_jbutton title, only_on_create_mode, tooltip = nil
       button = JButton.new title
+      button.tool_tip= tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       add = true
       if ARGV.index("--create-mode")
@@ -249,10 +250,10 @@ module SensibleSwing
       increment_button_location
 
       @exit = new_jbutton("Exit", false).on_clicked {
-        #self.close # don't waste time :P
+        Thread.new { self.close } # don't waste the time to close it :P
         kill_processes
         java.lang.System.exit 0
-      }
+      }.tool_tip="Exits the application and kills any background processes that are still running"
 
       increment_button_location
       increment_button_location
