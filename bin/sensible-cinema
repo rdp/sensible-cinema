@@ -155,6 +155,10 @@ module SensibleSwing
         create_brand_new_edl
       end
 
+      @open_help_file = new_jbutton("open how_to_get_files_from_dvd.txt file", false).on_clicked do
+        open_file_to_edit_it("how_to_get_files_from_dvd.txt")
+      end
+      
       @open_list = new_jbutton("Open/Edit a previously existing Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")

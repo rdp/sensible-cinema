@@ -4,9 +4,8 @@
   release: C EDL
   compare netflix/blu-ray timings et al
   === loose ordering/eventually ===
-    linearize
-    supplement mplayer EDL with mine (mac users, just ffmpeg) ???
-    update todo/docu
+    linearize [?] hmm...
+    re-update todo/docu
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
@@ -30,10 +29,9 @@
       just in case youtube takes over the world
  
 == yes do ordered ==
-  transfer from little stickie at....
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
-  unit tests
-  timing thing (notes file)
+  unit tests all
+  next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various release options ==
   @macports: set notestxt \
