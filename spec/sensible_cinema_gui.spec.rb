@@ -405,7 +405,7 @@ module SensibleSwing
       it "should prompt you if you need to insert a dvd" do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
           a = OpenStruct.new
-          #a.VolumeName = 'a dvd name'
+          #a.VolumeName = 'a dvd name' # we "don't have one" for this test...
           a.Name = 'a path location'
           [a] 
         }
