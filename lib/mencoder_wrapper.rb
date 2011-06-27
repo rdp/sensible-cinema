@@ -39,7 +39,7 @@ class MencoderWrapper
       out += "mencoder \"#{this_file.gsub('"', '\\"')}\" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_file} && echo done_grabbing > #{@big_temp}.done\n"
     end
     
-    def calculate_final_filename to_here_final_file
+    def calculate_fulli_filename to_here_final_file
       @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
     end
     
@@ -59,7 +59,7 @@ class MencoderWrapper
       else
         previous_end = 0
       end
-      calculate_final_filename to_here_final_file
+      calculate_fulli_filename to_here_final_file
       out = get_header this_drive, these_settings
       @idx = 0
       combined.each {|start, endy, type|
