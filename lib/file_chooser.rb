@@ -17,10 +17,8 @@ This file is part of Sensible Cinema.
 =end
 require 'java'
 
-module FileChooser
+module FileChooser # used in the cli only...
 
-  # show a popup dialog prompting for them to select a file
-  # pretty ugly
   def choose_file(title, use_this_dir = nil)
   
     fc = java.awt.FileDialog.new(nil, title)

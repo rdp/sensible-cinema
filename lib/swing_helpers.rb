@@ -61,6 +61,8 @@ module SensibleSwing
   end
   
   class JFileChooser
+    # also set_current_directory et al...
+    
     # raises on failure...
     def go
       success = show_open_dialog nil
@@ -79,8 +81,10 @@ module SensibleSwing
       set_selected_file JFile.new(f)
     end
     alias setFile set_file
+    
   end
   
+  # awt...
   class FileDialog
     def go
       show
@@ -123,6 +127,3 @@ class String
   end
  end
 end
-
-# code examples
-# JOptionPane.showInputDialog(nil, "not implemented yet", "not implemented yet", JOptionPane::ERROR_MESSAGE)

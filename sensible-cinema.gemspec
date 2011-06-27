@@ -139,7 +139,7 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/tron_legacy.txt",
     "zamples/edit_decision_lists/dvds/turn_around_alma_younger.txt",
     "zamples/edit_decision_lists/dvds/zz_example_delete_list_that_has_no_cuts_in_it.txt",
-    "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
+    "zamples/edit_decision_lists/netflix_instant/greatest_story_ever_told_netflix.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/youtube/gummy_bear_song_youtube.txt",
     "zamples/edit_decision_lists/youtube/demo_mutes.txt",
@@ -165,6 +165,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<os>, [">= 0.9.3"])
       s.add_runtime_dependency(%q<sane>, [">= 0.22.0"])
       s.add_runtime_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_runtime_dependency(%q<mini_magick>, [">= 3.1"])
@@ -182,6 +183,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
       s.add_runtime_dependency(%q<rake>, [">= 0"])
     else
+      s.add_dependency(%q<os>, [">= 0.9.3"])
       s.add_dependency(%q<sane>, [">= 0.22.0"])
       s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_dependency(%q<mini_magick>, [">= 3.1"])
@@ -200,6 +202,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
     end
   else
+    s.add_dependency(%q<os>, [">= 0.9.3"])
     s.add_dependency(%q<sane>, [">= 0.22.0"])
     s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
     s.add_dependency(%q<mini_magick>, [">= 3.1"])

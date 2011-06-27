@@ -35,6 +35,7 @@ require_relative '../lib/storage'
 require_relative '../lib/edl_parser'
 require_relative '../lib/mplayer_edl'
 require_relative '../lib/play_audio'
+require_relative '../lib/subtitle_profanity_finder'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -223,6 +224,21 @@ module SensibleSwing
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
+      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities (ex: opensubtitles.org)", true).on_clicked {
+        fc = new_filechooser
+        fc.set_title "Pick srt file:"
+        if old_dir = Storage['old_srt_dir']
+          fc.set_current_directory JFile.new(old_dir)
+        end
+        filename = fc.go
+        Storage['old_srt_dir'] = fc.get_current_directory.to_s
+        Storage['start_time']
+        
+        parsed = SubtitleProfanityFinder.edl_output [filename]
+        File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
+        open_file_to_edit_it EdlTempFile
+      }
+      
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
       @progress_bar.visible = false
@@ -267,23 +283,23 @@ module SensibleSwing
 "name" => "#{english_name}",
 
 "mutes" => [
-  # example line, uncomment the leading "#" to make it active
+  # an example line, uncomment the leading "#" to make it active
   # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
 ],
 
 "blank_outs" => [
-  # example line, uncomment the leading "#" to make it active
+  # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, it plays a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # in mplayer, the DVD timestamp "resets" to zero for some reason, see http://goo.gl/yMfqX to set this value right. Note that [] is valid, if there are no resets.
         EOL
-      # frame0 is the name of our window LOL tough to avoid that one...
+      # frame0 is the name of our window LOL tough to avoid that collision...hmm...
       filename = EDL_DIR + "\\" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
@@ -515,9 +531,13 @@ module SensibleSwing
         end
       end
     end
-
+    
     def open_file_to_edit_it filename
-      system_non_blocking "notepad \"#{filename}\""
+      if OS.windows?
+        system_non_blocking "notepad \"#{filename}\""
+      else
+        system_non_blocking "#{OS.open_file_command} \"#{filename}\""
+      end
     end
 
     def single_edit_list_matches_dvd dvd_id

@@ -434,6 +434,20 @@ module SensibleSwing
       end
    end
   
+   it "should parse an srt for ya" do
+     @subject.stub!(:new_filechooser) {
+       fc = FakeFileChooser.new
+       fc.stub!(:go) {
+         'spec/dragon.srt'
+       }
+       fc
+     }
+     file = SensibleSwing::MainWindow::EdlTempFile
+     FileUtils.rm_rf file
+     click_button(:@parse_srt)
+     assert File.read(file).contain? "deitys"
+   end
+  
   end # describe MainWindow
   
 end
