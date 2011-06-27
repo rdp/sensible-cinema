@@ -72,17 +72,18 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
-    def new_jbutton title, only_on_create_mode, always_add = false
+    # currently advanced mode only *adds* buttons
+    def new_jbutton title, only_on_create_mode
       button = JButton.new title
       button.set_bounds(44, @starting_button_y, @button_width, 23)
-      
+      add = true
       if ARGV.index("--create-mode")
-        always_add = true if only_on_create_mode
+        add = true
       else
-        always_add = true if !only_on_create_mode
+        add = false if only_on_create_mode
       end
          
-      if always_add
+      if add
         increment_button_location
         @panel.add button
         @buttons << button
@@ -142,7 +143,7 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime -- mplayer EDL)", false, true )
+      @mplayer_edl = new_jbutton( "Watch full DVD edited (realtime -- mplayer EDL)", false )
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
@@ -247,7 +248,7 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      @exit = new_jbutton("Exit", false, true).on_clicked {
+      @exit = new_jbutton("Exit", false).on_clicked {
         #self.close # don't waste time :P
         kill_processes
         java.lang.System.exit 0
