@@ -75,12 +75,10 @@
   youtube/hulu timings
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before a "real" domain name
-  add profanity filter this file button
-  remove some buttons by default ?
   always force them to have a DVD in the drive :P
   upconverter
   split LLC's website+consumer
-  employ: watch @ realtime after profanity filter first pass :P
+  employ instructions: watch @ realtime after profanity filter first pass :P
   
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
@@ -88,7 +86,7 @@
   try disney digital copy/amazon library "local download"...
   C player:
     use DVD navigator
-    just use mplayer EDL syntax, plus a title track :)
+    just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
@@ -169,6 +167,7 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
   can I train the ps3ms to play a real DVD, with EDL ?
   create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
   make a mymovies plugin to auto-use EDL's somehow... ?
