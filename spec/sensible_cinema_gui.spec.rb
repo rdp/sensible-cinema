@@ -176,11 +176,24 @@ module SensibleSwing
     def click_button(name)
       @subject.instance_variable_get(name).simulate_click
     end
+    
+    it "should be able to run system" do
+      @subject.system_non_blocking "ls"
+    end
 
     it "should be able to do a normal copy to hard drive, edited" do
-      @subject.system_non_blocking "ls"
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
+    end
+    
+    it "should prompt twice for filenames--once for the 'to' filename, once for the 'from' filename" do
+      count = 0
+      @subject.stub!(:new_filechooser) {
+        count += 1
+        FakeFileChooser.new
+      }
+      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      count.should == 2
     end
     
     it "should have a good default title of 1" do
