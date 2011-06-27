@@ -165,6 +165,7 @@
   mplayer EDL while grabbing, from grabbed :P
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
+  lua VLC EDL plugin? LOL yeah right.
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
