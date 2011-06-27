@@ -106,12 +106,10 @@ so it doesn't work for many casual users.
 Their filters sometimes don't cut out all undesired content (ex: Saints and
 Soldiers left several profanities in...which wasn't what I had
 expected).  If your standards differ from theirs, you're out of luck.  
-Others have noted that sometimes their edit timings (or perhaps DVD players)
-are slightly mismatched so that it will end up muting sections just previous to profanity, while
-not muting the profanity itself, or so I've heard.  Clearplay apparently also runs a rather 
+Clearplay apparently also runs a rather 
 confusing subscription policy, or so I'm told [1], and their DVD players that 
 are a bit weak at times [2].  Their DVD players aren't quite as readily accessible (read: 
-can't buy at walmart), nor as cheap to buy as some others.
+can't buy them at walmart), nor as cheap to buy as some others.
 Clearplay also has little community collaboration/review (though you can email them feedback).
 They also did't have filters for all movies that I, at times, wanted to watch edited (Condorman and Tron
 lacking last time I checked...probably because they are too
@@ -234,6 +232,7 @@ Microsoft's built-in magnifier basically copies DVD's screen output if mouse is 
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 AviSynth can script dvd playback http://forum.doom9.org/archive/index.php/t-109558.html
+ps3 media server has edl support: https://github.com/chocolateboy/PMS-EDL maybe would work with DVD's dunno
 Anydvd HD's "magic file replacement" for DVD's/blu-ray's
 RiffTrax allows for an audio "overlay" to a DVD playback, have their own player to coordinate the two.
 

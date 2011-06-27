@@ -1,12 +1,16 @@
 up next:
   lighning exact frame to compare the two fulli's...
 
+== XBMC not need a plugin? ==
+
+http://forum.xbmc.org/showthread.php?t=28795 XBMC doesn't support real-time DVD EDL playback at all <sniff>
+
 == subtitle accuracy ==
 
   narnia dawn treader had 1 subtitle that was "hand crafted", had the wrong timestamps, but was more accurate.  
     The several others were accurate though.
 
-== ? ==
+== auto subtitle download for a DVD ==
 
   opensubtitles' viewer gets "nothing" for subtitles of DVD's...smplayer requires you to manually search, too...
   splayer doesn't seem to attempt auto-download either of subs for DVD's.  Feels so nice tho :P
