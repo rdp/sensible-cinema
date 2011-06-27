@@ -479,12 +479,12 @@ module SensibleSwing
       # cancel button stays the same...
 
       message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
-      separately, or Sensible Cinema can download it for you.
-      By clicking accept, below, you are confirming that you have read and agree to be bound by the
-      terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
-      Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
-      separate program, with its own distribution, license, ownership and copyright.  
-      You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
+        separately, or Sensible Cinema can download it for you.
+        By clicking accept, below, you are confirming that you have read and agree to be bound by the
+        terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
+        Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
+        separate program, with its own distribution, license, ownership and copyright.  
+        You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       
       returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       # 1 is view button was clicked
@@ -523,15 +523,15 @@ module SensibleSwing
     end
     
     def download_zip_to english_name, url, to_this
-        download_7zip
-        Dir.chdir('vendor/cache') do
-          file_name = url.split('/')[-1]
-          print "downloading #{english_name} ..."
-          download(url, file_name)
-          system_blocking("7za e #{file_name} -y -o#{to_this}")
-          puts 'done ' + english_name
-          # creates vendor/cache/mencoder/mencoder.exe...
-        end
+      download_7zip
+      Dir.chdir('vendor/cache') do
+        file_name = url.split('/')[-1]
+        print "downloading #{english_name} ..."
+        download(url, file_name)
+        system_blocking("7za e #{file_name} -y -o#{to_this}")
+        puts 'done ' + english_name
+        # creates vendor/cache/mencoder/mencoder.exe...
+      end
     end
     
     require 'lib/check_installed_mac.rb'
@@ -594,13 +594,13 @@ module SensibleSwing
           parse_edl(file)["disk_unique_id"] == dvd_id
         rescue SyntaxError => e
           # ignore poorly formed delete lists for the auto choose phase...
-          p 'warning, unable to parse:' + file + " " + e.to_s
+          p 'warning, unable to parse a file:' + file + " " + e.to_s
           false
         end
       }
       if matching.length == 1
         file = matching[0]
-        p "selecting the one only matching EDL #{file} for DVD ID: #{dvd_id}"
+        p "selecting the one only matching EDL #{file} for this DVD ID: #{dvd_id}"
         file
       else
         nil
@@ -616,7 +616,7 @@ module SensibleSwing
     def new_filechooser default_dir = nil
       out = JFileChooser.new
       if default_dir
-        out.set_current_dir default_dir
+        out.set_current_directory JFile.new(default_dir)
       end
       out
     end
@@ -683,11 +683,11 @@ module SensibleSwing
       given
     end
     
-    def get_import_from_filename dvd_title
+    def get_import_from_filename dvd_title, dvd_title_track
       @_get_import_from_filename ||=
       begin
         file_from_chooser = new_filechooser Storage['get_import_from_filename_dir']
-        file_from_chooser.set_title "Please choose the file that represents the ripped version of #{dvd_title} (.mpg or .ts--see README)"
+        file_from_chooser.set_title "Please choose the file that is your ripped version of #{dvd_title} title ##{dvd_title_track} (.mpg or .ts--see README)"
         outgoing = file_from_chooser.go
         Storage['get_import_from_filename_dir'] = File.dirname(outgoing)
         outgoing
@@ -698,7 +698,7 @@ module SensibleSwing
       @_get_save_to_filename ||=
       begin
         fc = new_filechooser
-        fc.set_title "Pick where to save #{dvd_title} edited to"
+        fc.set_title "Pick where to save #{dvd_title} edited version as"
         save_to_file_name = dvd_title + ' edited version'
         save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation or spaces for now...
         fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
@@ -747,8 +747,8 @@ module SensibleSwing
       dvd_friendly_name = descriptors['name']
       raise 'no name?' unless dvd_friendly_name
       
-      # TODO get an input name here...
-      file_from = get_import_from_filename dvd_friendly_name
+      dvd_title_track = get_title_track(descriptors)
+      file_from = get_import_from_filename dvd_friendly_name, dvd_title_track
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
@@ -760,7 +760,6 @@ module SensibleSwing
         end_time = "00:01"
       end
       
-      dvd_title_track = get_title_track(descriptors)
       should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
       require_deletion_entry = true unless watch_unedited
       generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
@@ -792,13 +791,13 @@ module SensibleSwing
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
       popup = show_non_blocking_message_dialog(<<-EOL, "OK")
-        "Applying #{File.basename edit_list_path} 
+        Applying #{File.basename edit_list_path} 
            to #{file_from} (#{dvd_title}).
-        "Copying to #{save_to}.\n
-        "This could take quite awhile, and will prompt you and chime a noise when it is done.
-        "You can close this window and continue working while it runs in the background.
-        "NB that the created file will be playable only with VLC (possibly with smplayer, possibly with
-        "Windows Media Player if you install ffdshow first with mpeg2 video checkbox checked.).
+        Copying to #{save_to}.
+        This could take quite awhile, and will prompt you and chime a noise when it is done.
+        You can close this window and continue working while it runs in the background.
+        NB that the created file will be playable only with VLC (possibly with smplayer, possibly with
+        Windows Media Player if you install ffdshow first with mpeg2 video checkbox checked).
       EOL
 
       # allow our popups to still be serviced while it is running

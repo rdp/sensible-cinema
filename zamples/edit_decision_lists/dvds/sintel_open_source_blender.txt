@@ -5,7 +5,7 @@
 
 "blank_outs" => [
   "00:00:56.0" , "00:00:57.0", "violence", "knife stabbing",
-  "00:01:10.0" , "00:01:13.0", "violence", "stab through",
+  "00:01:05.0" , "00:01:13.0", "violence", "stab through",
 ],
 
 "name" => "sintel open source blender",
@@ -14,6 +14,6 @@
 "disk_unique_id" => "79df7b12|8b27d001",
 
 "dvd_title_track" => "2",
-"not edited out stuff" => "some violence",
+"not edited out stuff" => "quite a bit of violence",
 # "closing thoughts" => "still...",
 "mplayer_dvd_splits" => [], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.

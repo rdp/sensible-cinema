@@ -137,6 +137,7 @@
   "profanity" => "language"
   it should clear old smplayer options on startup always, just in case, somehow
   use smplayer with my mplayer always...unless I'm moving away from that...
+  @makemkv: show us the title numbers, and number them *by those*
 
 == other lists ==
 
