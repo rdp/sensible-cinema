@@ -388,9 +388,8 @@ module SensibleSwing
         count += 1
         FakeFileChooser.new
       }
-      @subject.get_save_to_filename 'yo'
-      @subject.get_save_to_filename 'yo'
-      count.should == 1
+      3.times { @subject.do_copy_dvd_to_hard_drive(false) }
+      count.should == 2 # else would have been 6...
     end
     
     describe 'with unstubbed choose_dvd_drive' do

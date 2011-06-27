@@ -679,6 +679,15 @@ module SensibleSwing
       given
     end
     
+    def get_import_from_filename
+      @_get_import_from_filename ||=
+      begin
+        file_from_chooser = new_filechooser
+        file_from_chooser.set_title "Please choose the file that represents the ripped version of this DVD (.mpg or .ts--see README)"
+        file_from_chooser.go
+      end
+    end
+    
     def get_save_to_filename dvd_title
       @_get_save_to_filename ||=
       begin
@@ -733,10 +742,7 @@ module SensibleSwing
       raise 'no name?' unless dvd_friendly_name
       
       # TODO get an input name here...
-      file_from_chooser = new_filechooser
-      file_from_chooser.set_title "Please choose the file that represents the ripped version of this DVD (.mpg or .ts--see README)"
-      file_from = file_from_chooser.go
-      
+      file_from = get_import_from_filename 
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
