@@ -72,13 +72,17 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
+    def we_are_in_create_mode
+     ARGV.index("--create-mode")
+    end
+    
     # currently advanced mode only *adds* buttons
     def new_jbutton title, only_on_create_mode, tooltip = nil
       button = JButton.new title
       button.tool_tip= tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       add = true
-      if ARGV.index("--create-mode")
+      if we_are_in_create_mode
         add = true
       else
         add = false if only_on_create_mode
@@ -115,7 +119,7 @@ module SensibleSwing
       panel.set_layout nil
       add panel # why can't I just slap these down?
 
-      jlabel = JLabel.new 'Welcome to Sensible Cinema!'
+      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for descriptions." : "")
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       jlabel.setFont(happy)
       jlabel.set_bounds(44,44,160,14)
@@ -125,12 +129,12 @@ module SensibleSwing
       
       ## BUTTONS ##
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true)
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, "If your DVD doesn't have an EDL created for it, this will be your first step--create a new EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
       end
 
-      @open_list = new_jbutton("Open/Edit a Delete List", true)
+      @open_list = new_jbutton("Open/Edit a Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR
@@ -139,21 +143,45 @@ module SensibleSwing
       }
       
 
-      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
+      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
+      @create.tool_tip = <<-EOL
+      This grabs from your DVD and creates a file on your hard disk like dvd_name_edited.mpg for you to watch later.
+      The file you create will contain the whole movie edited.
+      It takes quite awhile maybe 2 hours.
+      EOL
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
       }
       
-      @mplayer_edl = new_jbutton( "Watch full DVD edited (realtime -- mplayer EDL)", false )
+      @mplayer_edl = new_jbutton( "Watch full DVD edited (realtime -- mplayer EDL)", false)
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime while skipping/muting the questionable scenes."
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
       
-      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
+      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true)
+      @play_smplayer.tool_tip = <<-EOL
+      This will play the DVD unedited within smplayer.
+      NB it will default to track 1, so updated your EDL file that matches this DVD with the proper track if this doesn't work for you 
+      i.e. if it just plays a single preview track or what not, and not the main title, you need to change this value.
+      This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
+      You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
+      (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
+      fps, so you'll need to convert it to be able to use it in a file.
+      EOL
+      @play_smplayer.on_clicked {
         play_dvd_smplayer_unedited
       }
 
-      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer--useful for subtitle timing)", true).on_clicked {
+      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer)", true)
+      @play_mplayer_raw.tool_tip = <<-EOL
+      This is also useful for comparing subtitle files to see
+      if they have accurate timings.
+      If you turn on subtitles (v button), then compare your file at say, the 1 hour mark, or 2 hour mark,
+      with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
+      like "A: 3600.0" should match your subtitle line of approximately "01:00:00,000"
+      EOL
+      @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true
       }
 
@@ -162,21 +190,30 @@ module SensibleSwing
 #      }
 
       @preview_section = new_jbutton( "Preview a certain time frame from file (edited)", true )
+      @preview_section.tool_tip = <<-EOL
+      This allows you to preview an edit easily.
+      It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
+      Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
+      EOL
       @preview_section.on_clicked {
         do_copy_dvd_to_hard_drive true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame from file (unedited)", true)
+      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
+      @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
         do_copy_dvd_to_hard_drive true, false, true
       }
 
       @rerun_preview = new_jbutton( "Re-run most recently watched file preview time frame", true )
+      @rerun_preview.tool_tip = "This will re-run the preview that you most recently performed.  Great for checking to see if you last edits were successful or not."
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "fast preview all (smplayer EDL on file)", true).on_clicked {
+      @fast_preview = new_jbutton( "fast preview all (smplayer EDL on file)", true)
+      @fast_preview.tool_tip = "Plays smplayer with an EDL.  \nThis gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.\nThis is useful because you can't use mplayer on a DVD if it has any DVD timestamp splits in it [some DVD's are buggy]"
+      @fast_preview.on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
@@ -203,7 +240,8 @@ module SensibleSwing
           end
         }
       }
-      
+
+      # TODO remove me...
       @watch_unedited = new_jbutton("Watch full DVD unedited (while simultaneously grabbing file to hard drive)", true)
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
@@ -212,21 +250,31 @@ module SensibleSwing
         system_non_blocking command
       }
 
-
       # until I can let them know *why* they would ever need this button...
-      @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
+      @display_unique = new_jbutton( "Display a DVD's unique ID", true )
+      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it.  If your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to add it in."
+      @display_unique.on_clicked {
         drive, volume, dvd_id = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
       }
       
-      @upload = new_jbutton("Upload/E-mail suggestion/Submit anything", true).on_clicked {
+      @upload = new_jbutton("Upload/E-mail suggestion/Submit anything", true)
+      @upload.tool_tip = "We welcome all feedback!  For example if you create a new DVD EDL, please submit it back to us so that others can benefit from it!"
+      @upload.on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
-      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities (ex: opensubtitles.org)", true).on_clicked {
+      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
+      @parse_srt.tool_tip = <<-EOL
+      You can download a .srt file and parse it to automaticaly search for profanities.
+      Basically download it from opensubtitles.org (possibly from other places, too),
+      (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
+      Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
+      EOL
+      @parse_srt.on_clicked {
         fc = new_filechooser
         fc.set_title "Pick srt file:"
         if old_dir = Storage['old_srt_dir']
@@ -249,11 +297,12 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      @exit = new_jbutton("Exit", false).on_clicked {
+      @exit = new_jbutton("Exit", false, "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
+      @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         kill_processes
         java.lang.System.exit 0
-      }.tool_tip="Exits the application and kills any background processes that are still running"
+      }
 
       increment_button_location
       increment_button_location
@@ -515,7 +564,7 @@ module SensibleSwing
         download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
       end
       
-      if ARGV.index('--create-mode')
+      if we_are_in_create_mode
         # they're going to want these dependencies
         if OS.windows?
           path = RubyWhich.new.which('smplayer_portable')

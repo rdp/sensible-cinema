@@ -53,10 +53,16 @@ module SensibleSwing
    end
   
    def tool_tip= text
+      if text
+       text = "<html>" + text + "</html>"
+       text = text.gsub("\n", "<br/>")
+     end
      self.set_tool_tip_text text   
    end
   
  end
+
+ ToolTipManager.sharedInstance().setDismissDelay(java.lang.Integer::MAX_VALUE) # don't timeout tooltips...
 
  class JFrame
    def close

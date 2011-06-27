@@ -24,11 +24,12 @@ class DriveInfo
 
  def self.md5sum_disk(dir)
    if OS.mac?
-     output = `#{__DIR__}/../vendor/mac_dvdid/bin/dvdid #{dir}`
+     command = "#{__DIR__}/../vendor/mac_dvdid/bin/dvdid #{dir}"
    else
-     output = `#{__DIR__}/../vendor/dvdid.exe #{dir}`
+     command = "#{__DIR__}/../vendor/dvdid.exe #{dir}"
    end
-   puts 'dvdid command failed?' unless $?.exitstatus == 0 # hope this accomodates for it barfing...
+   output = `#{command}`
+   puts 'dvdid command failed?' + command unless $?.exitstatus == 0 # hope this accomodates for it barfing...
    output.strip
  end
 
@@ -73,6 +74,5 @@ class DriveInfo
 end
 
 if $0 == __FILE__
-  require 'pp'
   p DriveInfo.get_dvd_drives_as_openstruct
 end

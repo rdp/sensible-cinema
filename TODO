@@ -147,6 +147,7 @@
   todo.subtitle
 
 == DVD decide later to move up or down ==
+  canceling from the "dvd id" box exits the whole app LOL
 
 == DVD-realtime backlog once do, now not do, unordered ==
   can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
@@ -167,6 +168,7 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  we mistakenly count a blu-ray disk as a DVD, which then fails dvdid etc. etc.
   accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
   can I train the ps3ms to play a real DVD, with EDL ?
   create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
