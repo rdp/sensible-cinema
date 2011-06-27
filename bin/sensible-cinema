@@ -145,7 +145,7 @@ module SensibleSwing
 
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
       @create.tool_tip = <<-EOL
-      This grabs from your DVD and creates a file on your hard disk like dvd_name_edited.mpg for you to watch later.
+      This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
       The file you create will contain the whole movie edited.
       It takes quite awhile maybe 2 hours.
       EOL
@@ -154,7 +154,7 @@ module SensibleSwing
       }
       
       @mplayer_edl = new_jbutton( "Watch full DVD edited (realtime -- mplayer EDL)", false)
-      @mplayer_edl.tool_tip = "This will watch your DVD in realtime while skipping/muting the questionable scenes."
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime on your computer while skipping/muting the questionable scenes."
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
@@ -191,9 +191,9 @@ module SensibleSwing
 
       @preview_section = new_jbutton( "Preview a certain time frame from file (edited)", true )
       @preview_section.tool_tip = <<-EOL
-      This allows you to preview an edit easily.
-      It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
-      Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
+        This allows you to preview an edit easily.
+        It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
+        Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
       EOL
       @preview_section.on_clicked {
         do_copy_dvd_to_hard_drive true
@@ -595,9 +595,9 @@ module SensibleSwing
       matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
         begin
           parse_edl(file)["disk_unique_id"] == dvd_id
-        rescue SyntaxError
-         # ignore poorly formed delete lists for the auto choose
-          p 'warning, unable to parse:' + file
+        rescue SyntaxError => e
+          # ignore poorly formed delete lists for the auto choose phase...
+          p 'warning, unable to parse:' + file + " " + e.to_s
           false
         end
       }
@@ -733,6 +733,9 @@ module SensibleSwing
         Storage['end_time'] = end_time
       end
       dvd_title = descriptors['name'] || dvd_volume_name
+      
+      # TODO get an input name here...
+      
       save_to = get_save_to_filename dvd_title
       fulli = MencoderWrapper.calculate_final_filename save_to
       if exit_early_if_fulli_exists

@@ -120,7 +120,7 @@ module SensibleSwing
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-5].should match(/abc/)
-        @args = args
+        @get_mencoder_commands_args = args
         'fake get_mencoder_commands'
       }
       @subject.stub!(:new_filechooser) {
@@ -193,7 +193,7 @@ module SensibleSwing
       }
       @subject.do_copy_dvd_to_hard_drive(false)
       @subject.background_thread.join
-      @args[-4].should == nil
+      @get_mencoder_commands_args[-4].should == nil
       @system_blocking_command.should match /explorer/
       @system_blocking_command.should_not match /fulli/
       @played.should == true
@@ -208,8 +208,8 @@ module SensibleSwing
     it "should call explorer eventually, if it has to create the fulli file" do
      @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      join_background_thread
-     @args[-2].should == 1
-     @args[-3].should == "01:00"
+     @get_mencoder_commands_args[-2].should == "2"
+     @get_mencoder_commands_args[-3].should == "01:00"
      @system_non_blocking_command.should match /smplayer/
      @system_non_blocking_command.should_not match /fulli/
     end
@@ -217,8 +217,8 @@ module SensibleSwing
     def prompt_for_start_and_end_times
       click_button(:@preview_section)
       join_background_thread
-      @args[-2].should == 1
-      @args[-3].should == "01:00"
+      @get_mencoder_commands_args[-2].should == "2"
+      @get_mencoder_commands_args[-3].should == "01:00"
       @system_non_blocking_command.should match /smplayer/
     end
 
@@ -251,11 +251,11 @@ module SensibleSwing
     
     it "should be able to rerun the latest start and end times with the rerun button" do
       prompt_for_start_and_end_times
-      old_args = @args
+      old_args = @get_mencoder_commands_args
       old_args.should_not == nil
-      @args = nil
+      @get_mencoder_commands_args = nil
       click_button(:@rerun_preview).join
-      @args.should == old_args
+      @get_mencoder_commands_args.should == old_args
       @system_non_blocking_command.should match(/smplayer/)
     end
     
