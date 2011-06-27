@@ -206,6 +206,7 @@ Normal DVD's versus "directors cut" versions of movies (one is at times preferab
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 Clean Flicks (used to) sell edited movies
 http://www.videoredo.com/en/index.htm lets you "cut out" offensive content (commercials et al) and burn DVD's from mpeg's/h264 streams
+http://www.microsoft.com/windows/windowsmedia/howto/articles/device_control.aspx Windows Media Encoder supports EDL's by timestamp
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
 http://www.sharewareconnection.com/fast-compress-content-and-anti-profanity.htm replaces profanity in web pages with euphemized content.
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile, with no complaints).
@@ -223,6 +224,7 @@ http://code.google.com/p/movie-content-editor (player written in Python, control
 http://forums.gbpvr.com/showthread.php?10606-Automated-Cutting-and-Transcoding-Guide-Using-Mencoder/page45
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
+showanalyzer http://www.dragonglobal.biz/showanalyzer.html and comskip analyze videos to look for "segments to cut out" automatically (commercials, in this case, but the principle still applies) 
 Old-school: using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of "questionable" scene locations
 The scissors and old VHS tapes (Clean Flicks' origin, if I remember correctly).  http://www.familysafemedia.com/home_movie_editor.html (was a helper kit for cutting VHS tape)
 Windows Movie Maker.  Allows for users to cut and copy scenes of movies.  Really any editor can do this.

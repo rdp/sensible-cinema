@@ -124,19 +124,13 @@ end
 task 'deploy' do
   name = 'sensible-cinema-' + cur_ver + ".zip"
   p 'copying to ilab'
-  sys("scp #{name} rdp@ilab1.cs.byu.edu:~/incoming")
+  sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
   p 'creating sf dir'
+  sys "ssh rdp@ilab1.cs.byu.edu 'ssh -t rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to work.
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
   p 'copying into sf'
   sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
-  p 'copying over to rogerd...'
-  # ugh ugh ughly
-  c = "ssh rdp@ilab1.cs.byu.edu \"scp ~/incoming/#{name} wilkboar@freemusicformormons.com:~/www/rogerdpackt28/sensible-cinema/releases\""
-  sys(c)
-  p 'linking rogerd...'
-  sys("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"rm \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
-  sys("ssh rdp@ilab1.cs.byu.edu 'ssh wilkboar@freemusicformormons.com \\\"ln -s \\~/www/rogerdpackt28/sensible-cinema/releases/#{name} \\\\~/www/rogerdpackt28/sensible-cinema/releases/latest-sensible-cinema.zip\\\"'")
-  p 'successfully deployed! ' + cur_ver
+  p 'successfully deployed to sf only! ' + cur_ver
 end
 
 task 'gem_release' do

@@ -1,6 +1,15 @@
 == ==
 
-OS X compatibility.  Though not heavily used it *might* work.
+
+== 0.23.0 ==
+
+OS X compatibility.  Though not heavily used it might work.
+
+Subtitle parser/scanner: now it can scan for "complete" words (e.g. hello is no longer considered a profanity)
+even if they complete words are at the end of lines, middle, beginning, or the entire line.  With unit tests.
+
+Added a "play unedited with smplayer/mplayer" buttons that work better now.  These are useful for
+double checking the timestamps of subtitle files for accuracy.
 
 == 0.22.1 ==
 
