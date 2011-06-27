@@ -165,6 +165,8 @@ module SensibleSwing
     class FakeFileChooser
       def set_title x; end
       def set_file y; end
+      def set_current_directory x; end
+      def get_current_directory ; 'a great dir!'; end
       def go
         'abc'
       end
@@ -382,8 +384,8 @@ module SensibleSwing
       before do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
           a = OpenStruct.new
-          # NB no VolumeName set
-          a.Name = 'a name'
+          a.VolumeName = 'a dvd name'
+          a.Name = 'a path location'
           [a] 
         }
         @subject.unstub!(:choose_dvd_drive)
