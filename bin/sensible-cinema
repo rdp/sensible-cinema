@@ -729,6 +729,9 @@ module SensibleSwing
       raise 'no name?' unless dvd_friendly_name
       
       # TODO get an input name here...
+      file_from_chooser = new_filechooser
+      file_from_chooser.set_title "Please choose the file that represents the ripped version of this DVD (.mpg or .ts--see README)"
+      file_from = file_from_chooser.go
       
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
@@ -744,7 +747,7 @@ module SensibleSwing
       dvd_title_track = get_title_track(descriptors)
       should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
       require_deletion_entry = true unless watch_unedited
-      generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, drive, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
+      generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -752,16 +755,16 @@ module SensibleSwing
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
-    # stubbable :)
-    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
-      delete_partials = true unless start_time
-      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, delete_partials, require_deletion_entry # delete partials...
+    # to make it stubbable :)
+    def get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+      delete_partials = true unless start_time # in case anybody wants to look really really close [?]
+      MencoderWrapper.get_bat_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, delete_partials, require_deletion_entry
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
       begin
-        commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+        commands = get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
         show_blocking_message_dialog("Appears you chose a time frame with no deletion segment in it--please try again:" + e)
         return
@@ -773,7 +776,7 @@ module SensibleSwing
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
       popup = show_non_blocking_message_dialog(
-      "Applying #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
+      "Applying #{File.basename edit_list_path} \n   to #{file_from} (#{dvd_title}).\n" +
       "Copying to #{save_to}.\n" +
       "This could take quite awhile, and will prompt you and chime a noise when it is done.\n" +
       "You can close this window and continue working while it runs in the background.\n" +

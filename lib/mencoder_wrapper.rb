@@ -44,7 +44,7 @@ class MencoderWrapper
     end
     
     # called from the UI...
-    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
+    def get_bat_commands these_settings, this_from_file, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
       combined = EdlParser.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       assert dvd_title_track
@@ -60,7 +60,7 @@ class MencoderWrapper
         previous_end = 0
       end
       calculate_fulli_filename to_here_final_file
-      out = get_header this_drive, these_settings
+      out = get_header this_from_file, these_settings
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end
