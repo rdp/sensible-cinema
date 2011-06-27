@@ -28,10 +28,10 @@ module SensibleSwing
       MainWindow.new.dispose# doesn't crash :)
     end
 
-    Sintel_ID = '79df7b12|8b27d001'
+    Test_DVD_ID = 'deadbeef|8b27d001'
     
     it "should auto-select a EDL if it matches a DVD's title" do
-      MainWindow.new.single_edit_list_matches_dvd(Sintel_ID).should_not be nil
+      MainWindow.new.single_edit_list_matches_dvd(Test_DVD_ID).should_not be nil
     end
 
     it "should not auto-select if you pass it nil" do
@@ -116,7 +116,7 @@ module SensibleSwing
     before do
       @subject = MainWindow.new
       @subject.stub!(:choose_dvd_drive) {
-        ["mock_dvd_drive", "Volume", Sintel_ID] # happiest baby on the block
+        ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
         args[-5].should match(/abc/)
@@ -279,7 +279,7 @@ module SensibleSwing
       @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
       click_button(:@preview_section)
       @show_blocking_message_dialog_last_arg.should =~ /unable to/
-      @subject.stub!(:get_user_input).and_return('00:00', '01:00')
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
       click_button(:@preview_section)
       join_background_thread
       @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
@@ -288,7 +288,7 @@ module SensibleSwing
     it "if the .done files exists, watch unedited should call smplayer ja" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
       @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @system_non_blocking_command.should == "smplayer abc.fulli_unedited.tmp.mpg"
+      @system_non_blocking_command.should == "smplayer_portable abc.fulli_unedited.tmp.mpg"
       FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
@@ -331,7 +331,7 @@ module SensibleSwing
       @system_blocking_command.should match(/-dvd-device /)
     end
     
-    it "should play edl with elongated mutes" do
+    it "should play edl with extra time for the mutes because of the EDL aspect" do
       click_button(:@mplayer_edl).join
       wrote = File.read(MainWindow::EdlTempFile)
       # normally "378.0 379.1 1"
@@ -393,7 +393,7 @@ module SensibleSwing
         count = 0
         DriveInfo.stub!(:md5sum_disk) {
           count += 1
-          Sintel_ID
+          Test_DVD_ID
         }
         @subject.choose_dvd_and_edl_for_it
         @subject.choose_dvd_and_edl_for_it
@@ -407,9 +407,9 @@ module SensibleSwing
     end
     
     it "should not show the normal buttons in create mode" do
-      MainWindow.new.buttons.length.should == 3 # exit button, two normal buttons
+      MainWindow.new.buttons.length.should == 3 # exit button plus two normal buttons
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 12
+      MainWindow.new.buttons.length.should == 15 # all of them :P
       ARGV.pop # test cleanup--why not :)
     end
     
