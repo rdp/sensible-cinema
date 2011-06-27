@@ -15,7 +15,6 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-
 class EdlParser
 
   def self.parse_file filename, ignore_settings = false
@@ -64,6 +63,7 @@ class EdlParser
   # or just like 5057 s
   
   def self.extract_entry! from_this
+    p 'extract', from_this
     return nil if from_this.length == 0
     # two digits, then whatever else you see, that's not a digit...
     out = from_this.shift(2)
@@ -188,7 +188,7 @@ class EdlParser
   
 end
 
-# == 1.8.7 Symbol compat
+# == 1.8.7 1.9 Symbol compat
 
 class Symbol
   # Standard in ruby 1.9. See official documentation[http://ruby-doc.org/core-1.9/classes/Symbol.html]
@@ -198,6 +198,9 @@ class Symbol
   end unless method_defined? :"<=>"
 end
 
-if RUBY_VERSION < '1.8.7'
-  raise 'needs ruby 1.8.7 at least'
+if $0 == __FILE__
+  p 'syntax: filename'
+  require 'rubygems'
+  require 'sane'
+  p EdlParser.parse_file *ARGV
 end
