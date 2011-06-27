@@ -112,7 +112,6 @@ class EdlParser
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    p 'incoming', incoming, splits
     mutes = mutes.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:mute]}
     blanks = blanks.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:blank]}
     combined = (mutes+blanks).sort
