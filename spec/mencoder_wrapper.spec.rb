@@ -43,17 +43,18 @@ describe MencoderWrapper do
   end
   
   it "should have what looks like a working mencoder grab command" do
-    @out.should match(/mencoder dvdnav:/)
-    @out.should match(/dvdnav.*lavcopt.*keyint=1/)
+    @out.should_not match(/dvd:\//)
+    @out.should_not match(/dvdnav:\//)
+    @out.should match(/mencoder.*lavcopt.*keyint=1/)
     use_mpg2_fulli_unedited = true
     if use_mpg2_fulli_unedited
-      @out.should match(/dvdnav.*lavcopt.*mpeg2video/)
+      @out.should match(/mencoder.*lavcopt.*mpeg2video/)
       @out.should match(/autoaspect/) # try to preserve aspect
     else
-      @out.should match(/dvdnav.*-ovc copy/)
+      @out.should match(/mencoder.*-ovc copy/)
     end
     # "poor" audio for certain DVD's <sigh>
-    @out.should match(/dvdnav.*-oac lavc/)
+    @out.should match(/mencoder.*-oac lavc/)
   end
   
   it "should not double setting params" do
