@@ -60,13 +60,11 @@ describe EdlParser do
   
   it "should detect timestamps well" do
     t = EdlParser::TimeStamp
-   "2:01".should match(t)
-   "1:01.5".should match(t)
-   "00:00:00.5".should match(t)
-   "00:00:00".should match(t)
+    for ts in ["2:01", "1:01.5", "00:00:00.5","00:00:00", "1:23", "01:23"]
+      raise ts unless t =~ ts
+    end
    "5".should_not match(t)
    "category".should_not match(t)
-   "00:00".should match(t)
   end
   
   it "should parse a real file" do
