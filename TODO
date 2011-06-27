@@ -9,7 +9,7 @@
     update todo/docu
     create web site/api-ify
     LLC
-      if...back off to just the 1 (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
+      if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
 	  no auto subtitles...
   
@@ -78,7 +78,7 @@
   add profanity filter this file button
   remove some buttons by default ?
   always force them to have a DVD in the drive :P
-  cross platform discid
+  upconverter
   split LLC's website+consumer
   employ: watch @ realtime after profanity filter first pass :P
   
