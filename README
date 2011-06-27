@@ -13,19 +13,21 @@ It will pop up some windows where you choose what to do.
 Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
 and not from github's "download" button.  See the "install" section, below, for finer grained details.
 
-Sensible cinema basically allows you to create an edited video version of the DVD, onto your hard drive, and you can watch it there.
+Sensible cinema basically allows you to create an edited video version of the DVD, onto your hard drive, 
+and you can watch it there.  It also has some realtime playback support via the use of EDL playback in some
+popular video players.
 
 How? Sensible cinema basically takes the original DVD, slices out the bad parts, then combines it back
 into a new file and gives you the result.
-It is basically a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
+It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
 a few freely available open source programs [3] to accomplish the editing for you.
-It also has a few "realtime viewing" options available, again based on open source software [3].
+Note that the process can take several hours, so budget some time for it.
+It also has a few "realtime viewing" options available, again based on some freely available
+open source software [3].
 
-Note that the whole process can take several hours, so budget some time for it.
-
-Also note that just because an edited video lacks profanity...does not immediately make it an inspiring experience.
-I'd suggest carefully evaluating your real values, and going with those.
-Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not wholesome! Be nice to yourself!
+On a more moral note, just because an edited video lacks profanity/sex scenes...does not immediately make it an inspiring experience.
+I'd suggest carefully evaluating your real values/motives, and going with those.
+Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not uplifting! Be nice to yourself!
 
 dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].
 kids-in-mind.com is also a good reference for profanity levels, though sometimes it misses profanities,
@@ -180,7 +182,7 @@ realtime tracking, so I also included this ability.
 The playlist option is disabled in later releases, as it was deemed too user-non-friendly, and because VLC timing
 is "different" than standard DVD players, so I decided to just use standardized timing, though it worked fine
 for VLC playbacks.
-I replaced it with support for mplayer's EDL format
+I replaced it with support for mplayer's EDL format, which works better, and has consistent timing, though is still a bit buggy.
 
 You can see a full list of other features that have been published and demonstrated
 in the accompanying file change_log_with_feature_list.txt.  Each feature mentioned works 
@@ -247,23 +249,15 @@ See first also the file "is_it_legal_to_copy_dvds.txt" for more information on l
 
 == Troubleshooting ==
 
-If you run into some snag, it possibly could have failed in "grabbing" the DVD, and only got part of it.
-Try cleaning your DVD and starting over (delete all files, start again). 
+If you run into some snag, try cleaning your DVD and starting over (delete all files, start again). 
 Baking soda toothpaste might help with cleaning it.
 If it still errs, report it, along with a screen snapshot and steps of
 how to reproduce the problem, preferably.  See the feedback section.
 
 It can fail also because a deletion is past end of DVD, or 
-Also note that if your DVD has scratches that cause it to skip, the time signatures will be off after that point, 
-so clean your discs and try again!
-"DVDNAV stream read error!"
-  this typically means a dirty or scratched DVD.
-
 Also make sure you aren't out of disk space.
 
-Try playback in VLC Media Player.
-
-Also you could try another computer (desktop computers' DVD drives seem to work better at times than laptops')
+Try playback in "VLC Media Player"
 
 You try to play back a sensible cinema-ized video file and it plays back without
  audio or video (example: windows media player)?
@@ -272,17 +266,21 @@ You try to play back a sensible cinema-ized video file and it plays back without
    to handle this type of audio.  Not to fear, just download the "ffdshow tryouts" (google for it)
    and, when it gives you the option, be sure to check "mpeg2 video" and then
    it should "just work."  You could also optionally just play the file in VLC Media Player or smplayer
-   (there's a button for that).  Installing "AC3Filter" may help if you have no audio.
+   (there's a button for that).  Installing "AC3Filter" may help if you can hear no audio.  
+   Really VLC Media Player is your best bet though.
 
 If the end result picture is too grainy/pixelated or if the overall process is too slow, let me know and I'll work on
 making it better.  No really, I have some ideas, but want to see if there's need first for improvement in those areas.
+
+Finally, report back! If there are problems that arise, I want to hear about them so we can help you through it.
 
 == Thanks ==
 
 Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
 The combination of these tools made programming this actually something of a pleasure, 
 and a breeze cross platform.
-Sensible Cinema leverages code from lots of other projects (see LICENSE.TXT)--many thanks to the authors and maintainers of said libraries, and anybody else I forgot to mention.
+Sensible Cinema leverages code from lots of other projects (see LICENSE.TXT)--many thanks to 
+the authors and maintainers of said libraries, and anybody else I forgot to mention.
 
 == Feedback/Development ==
 

@@ -1,6 +1,8 @@
 (profanity parsing stuff is in other todo)
 tell them "exactly how to make super specific" cuts
 
+can associate with a subtitle file [?] number? real file?
+
 a wholesomeness/proclamation meter?
 
 they can add their own buffer time periods :P

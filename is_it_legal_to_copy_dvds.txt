@@ -15,33 +15,33 @@ and relies on you to use something else for that, on your own.
 
 It is controversial to use open source software to play/rip commercial DVD's.
 There are a few conflicting views.
-Sensible-cinema doesn't actually do any decryption or decoding, nor has any knowledge of it.  
-It doesn't even have knowledge
-as to whether the DVD was originally encrypted or not, we chose a "you have to do the ripping through
-some other means" philosophy.  
-You can ask the authors of the ripping programs if it is legal.  Apparently
+Sensible-cinema doesn't actually do any decryption or decoding, nor has any knowledge of how it occurred
+originally.  
+It doesn't even have knowledge as to whether the DVD was originally encrypted or not, we choose a 
+"you have to do the ripping through some other means" philosophy, to avoid legal issues.
+You can ask the authors of the ripping programs you use if their software is legal.  Apparently
 libdvdcss (which the other programs that it calls out to use) has never been legally challenged in court (or so they say), 
 and uses a slightly different algorithm than those that have, so the jury's still out.  Possibly
-it has been challenged in French courts and found legal so it might vary from country to country [4].
+it has been challenged in French courts and found legal so it might vary from country to country, as well [4].
 
 Using sensible-cinema also might not be more unethical than ripping your DVD collection to your hard
-drive so you can "keep your DVD's all in one place" or what not (which might even be termed fair use), since it
+drive so you can "keep your DVD's all in one place" or what not (which might perhaps be termed fair use), since it
 basically only saves parts from the original concatenated.  Only original content is saved.  It just happens to be bits and
 pieces that don't have the profanity.
 Note also that fair use at times does allow one to "record" things for personal use/backup (for example off the TV).
-Note that sensible cinema does require the original DVD to be present when using it, also, to help enforce copy protection,
-at least for watching it/using from within sensible cinema.  Certainly do not rip DVD's you don't own.
+Note also that sensible cinema does require the original DVD to be present when using it, to help enforce legality,
+at least for watching it/using from within sensible cinema.  Certainly, do not rip DVD's you don't own.
 
 If general, if it's not legal in your country, then don't use it!
 You are responsible for your actions and use of the program.
 It is possible that the authors of sensible-cinema are not cupable of anything
 regarding its use themselves, since they re-distribute no edited media, 
-nor distribute cracking codes.  Check your country's rules first.  Be warned.
+nor distribute cracking codes.  Check your country's rules first.  You have been warned.
 
-Note: do not redistribute or re-sell edited DVD's, certainly that is illegal.  
+Note: do not redistribute or re-sell edited DVD's, certainly that is illegal in the US.
 We have learned from clean flicks that redistributing 
 (well at least renting/selling) edited commercial DVD's is illegal in the US.
-Please don't redistribute.  Consult your lawyer.
+Please don't redistribute.  Consult your lawyer if you have any questions/concerns.
 DO NOT MAKE ILLEGAL COPIES.
 USE AT YOUR OWN RISK.
 

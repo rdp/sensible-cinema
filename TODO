@@ -30,7 +30,6 @@
       just in case youtube takes over the world
  
 == yes do ordered ==
-  EDL for that fella...
   transfer from little stickie at....
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
   unit tests
@@ -64,7 +63,7 @@
     "you could edit your file "raw" file "with avidemux, except video will be slightly off, but audio will be on"
     "VLC [or any GUI] is always slightly off."
   can I avoid requiring use of tsmuxer first?
-  check with blu-ray...does it match timing-wise? sub-title wise?
+  check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer
   auto tsmuxer/mediainfo [yikes]? 
     MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
@@ -99,10 +98,9 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-  if it doesn't parse something it loops *forever* "error pooping" "error pooping" [?]
   donate menumeter $
-  tool tips for all buttons...tweak naming, too :P do something!
-  fix/create the "play previously credited edited file for current DVD" button
+  tool tips for all buttons...tweak naming, too :P
+  fix/create the "play previously created edited file for current DVD" button
   vendorize smplayer * 2
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
@@ -111,8 +109,6 @@
   ask for more beta testers for use, ask for more beta testers for creation, too
   beta release: rinse and repeat with various ppl
   youtube videos -> new account name
-  vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe
-    and sanity
   note "pay us/somebody to do it for you on the google group"?
   note "this is the full list--your help is wanted/needed"
   create a semi-accurate phantom edit EDL
@@ -130,14 +126,13 @@
       ppc?
       app store mplayer perhaps?  maybe tell the players to start supportin' dvdnav?
       bundle a copy of smplayer locally? huh?
-  delete unedited.fulli file automatically
+  typically delete unedited.fulli file automatically
     except if it's a specific scene run test...
-  investigate: can I use zoomplayer max?
   the final "edited.avi" really "could/should" be playable in WMP...
-  "profanity" => "language"
   it should clear old smplayer options on startup always, just in case, somehow
   use smplayer with my mplayer always...unless I'm moving away from that...
   @makemkv: show us the title numbers, and number them *by those*
+  generic EDL run through should be through smplayer...do I need the other way around, even?
 
 == other lists ==
 
@@ -166,9 +161,11 @@
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
   lua VLC EDL plugin? LOL yeah right.
+  investigate: can I use zoomplayer max?
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  if it doesn't parse a file you choose it annoyingly loops *forever* "error pooping" "error pooping" [?]
   "real" dvdid for blu-ray, can work with them (once I figure out timing info...)
   accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
   can I train the ps3ms to play a real DVD, with EDL ?

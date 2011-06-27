@@ -1,6 +1,7 @@
   === patentzy yes actually do vaguely ordered ===
     blu-ray OCR
     
+    can pick specific profanities to avoid
     both mute and blank when blanking by default...
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 

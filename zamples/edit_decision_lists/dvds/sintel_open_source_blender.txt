@@ -5,7 +5,7 @@
 
 "blank_outs" => [
   "00:00:56.0" , "00:00:57.0", "violence", "knife stabbing",
-  "00:01:05.0" , "00:01:13.0", "violence", "stab through",
+  "00:01:05.0" , "00:01:14.5", "violence", "stab through",
 ],
 
 "name" => "sintel open source blender",
