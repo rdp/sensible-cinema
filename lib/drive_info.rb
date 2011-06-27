@@ -35,7 +35,7 @@ class DriveInfo
 
  def self.get_dvd_drives_as_openstruct
    disks = get_all_drives_as_ostructs
-   disks.select{|d| d.Description =~ /CD-ROM/}
+   disks.select{|d| d.Description =~ /CD-ROM/ && File.exist?(d.Name + "/VIDEO_TS")}
  end
   
  def self.get_drive_with_most_space_with_slash

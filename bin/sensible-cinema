@@ -133,20 +133,6 @@ module SensibleSwing
       
       ## BUTTONS ##
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, "If your DVD doesn't have an EDL created for it, this will be your first step--create a new EDL file for it.")
-      @create_new_edl_for_current_dvd.on_clicked do
-        create_brand_new_edl
-      end
-
-      @open_list = new_jbutton("Open/Edit a Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
-      @open_list.on_clicked {
-        dialog = FileDialog.new(self, "Pick file to edit")
-        dialog.set_directory EDL_DIR
-        filename = dialog.go
-        open_file_to_edit_it filename if filename
-      }
-      
-
       @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
@@ -161,6 +147,20 @@ module SensibleSwing
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime on your computer while skipping/muting the questionable scenes."
       @mplayer_edl.on_clicked {
         do_mplayer_edl
+      }
+      
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
+        "If your DVD doesn't have an EDL created for it, this will be your first step--create a new EDL file for it.")
+      @create_new_edl_for_current_dvd.on_clicked do
+        create_brand_new_edl
+      end
+
+      @open_list = new_jbutton("Open/Edit a Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list.on_clicked {
+        dialog = FileDialog.new(self, "Pick file to edit")
+        dialog.set_directory EDL_DIR
+        filename = dialog.go
+        open_file_to_edit_it filename if filename
       }
       
       @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true)
@@ -248,7 +248,7 @@ module SensibleSwing
       }
 
       # until I can let them know *why* they would ever need this button...
-      @display_unique = new_jbutton( "Display a DVD's unique ID", true )
+      @display_unique = new_jbutton( "Calculate DVD's unique ID", true )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it.  If your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to add it in."
       @display_unique.on_clicked {
         drive, volume, dvd_id = choose_dvd_drive

@@ -168,7 +168,6 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
-  we mistakenly count a blu-ray disk as a DVD, which then fails dvdid etc. etc.
   accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
   can I train the ps3ms to play a real DVD, with EDL ?
   create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
