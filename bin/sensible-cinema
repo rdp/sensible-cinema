@@ -36,6 +36,7 @@ require_relative '../lib/edl_parser'
 require_relative '../lib/mplayer_edl'
 require_relative '../lib/play_audio'
 require_relative '../lib/subtitle_profanity_finder'
+require_relative '../lib/convert_thirty_fps'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -123,10 +124,10 @@ module SensibleSwing
       panel.set_layout nil
       add panel # why can't I just slap these down?
 
-      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for descriptions." : "")
+      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for tooltip \"help\" descriptions." : "")
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       jlabel.setFont(happy)
-      jlabel.set_bounds(44,44,360,14)
+      jlabel.set_bounds(44,44,460,14)
       panel.add jlabel
       @starting_button_y = 120
       @button_width = 400      
@@ -175,7 +176,7 @@ module SensibleSwing
         This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
         You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
         (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
-        fps, so you'll need to convert it to be able to use it in a file.
+        fps, so you'll need to convert it (the convert timestamp button) to be able to use it in a file.
       EOL
       @play_smplayer.on_clicked {
         play_dvd_smplayer_unedited
@@ -219,13 +220,13 @@ module SensibleSwing
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton("fast preview all (smplayer EDL on fulli file)", false)
+      @fast_preview = new_jbutton("fast preview all (smplayer EDL on fulli file)", true)
       @fast_preview.tool_tip = <<-EOL
         Plays smplayer on a file with an EDL.
         This gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.
         This is useful because you can't use mplayer on a DVD for accurate timestamps if it has any 
         timestamp splits in it [because some DVD's are buggy]
-      <<EOL
+      EOL
       @fast_preview.on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
@@ -257,13 +258,35 @@ module SensibleSwing
       }
 
       # until I can let them know *why* they would ever need this button...
-      @display_unique = new_jbutton( "Calculate DVD's unique ID", true )
+      @display_unique = new_jbutton( "Calculate current DVD's unique ID", true )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it.  If your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to add it in."
       @display_unique.on_clicked {
         drive, volume, dvd_id = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
+      }
+      
+      @convert_timestamp = new_jbutton( "Convert from DVD player timestamp to EDL accurate timestamp", true)
+      @convert_timestamp.tool_tip=<<-EOL
+        Our EDL's are all assume 29.97 fps (which is what a DVD is).  Unfortunately most DVD players
+        assume that the DVD is 30 fps, which means that if you watch a movie with a DVD player, then use those timestamps
+        for your EDL file, you will be off, by the end of a 2 hour film, by 8 seconds.  So all your edits will be wrong.
+        How to fix: convert your times from "DVD player" time to "EDL accurate" time by using this button.
+        This is necessary for hardware DVD player timestamps, PowerDVD, Windows Media Player (playing a DVD),
+        but not necessary for smplayer timestamps (or mplayer's "V: 3600" in the command line), which are already 29.97.
+        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from dvd_mplayer_splits) 
+        but is 30 fps, so timestamps would need to be converted.
+        Dont use VLC for DVD timestamps at all--it can get up to 30s off!  VLC playing back a file is usually pretty accurate to 29.97.
+        In general, GUI's like VLC or smplayer are always a tidge off (maybe 0.3s) from the right timestamp, so take that into consideration.
+        Mplayers "V: 3600" is usually right on, however.
+      EOL
+      @convert_timestamp.on_clicked {
+        thirty_fps = get_user_input("Enter your DVD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
+        thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
+        twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
+        human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
+        get_user_input("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
       }
       
       @upload = new_jbutton("Upload/E-mail suggestion/Contact/Submit anything", true)

@@ -162,11 +162,11 @@ class EdlParser
     total
   end
   
-  def self.translate_time_to_human_readable seconds
+  def self.translate_time_to_human_readable seconds, force_hour_stamp = false
     # 3600 => "1:00:00"
     out = ''
     hours = seconds.to_i / 3600
-    if hours > 0
+    if hours > 0 || force_hour_stamp
       out << "%d" % hours
       out << ":"
     end
