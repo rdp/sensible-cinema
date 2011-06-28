@@ -34,6 +34,8 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various release options ==
+  add the "create .edl file for xbmc et al" button
+
   @macports: set notestxt \
   13	    "The MPlayer developers do not believe in making regular releases. \
   14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
@@ -144,7 +146,7 @@
   canceling from the "dvd id" box exits the whole app LOL
 
 == DVD-realtime backlog once do, now not do, unordered ==
-  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
+  investigate xbmc dvd edl
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
   mplayer EDL allow this:
@@ -163,6 +165,9 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  create plugins for boxee, XBMC et al
+  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
+  a new button (maybe just in advanced mode?) "play EDL mplayer from file (no transcoding)" [if anybody ever would want/need it--seems related to the new c-based player kind of...?]
   if it doesn't parse a file you choose it annoyingly loops *forever* "error pooping" "error pooping" [?]
   "real" dvdid for blu-ray, can work with them (once I figure out timing info...)
   accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
