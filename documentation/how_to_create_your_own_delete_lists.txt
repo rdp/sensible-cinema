@@ -56,3 +56,7 @@ A few pointers:
    button (or watch it in a hardware DVD player with the same effect).
    You could also get a similar effect by setting up your EDL with its mplayer_dvd_splits http://goo.gl/yMfqX ,
    then use math and smplayer's timestamps to get the right timestamps.  See also the tooltip to the "convert timestamp" button.
+ You could also edit the "video file" in basically any professional editor--they are usually pretty accurate to 29.97 fps, to get the edit timestamps.
+   Microsoft's editor actually doesn't work. PowerProducer (part of the powerdvd suite) does.  AVS Editor does.
+   You could use avidemux (set frame settings manually to "video" 24 fps if necessary) though video will be off, audio will be on.
+ You could ask on the mailing list if somebody else could do the EDL for you, or offer to pay somebody there, I guess.

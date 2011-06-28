@@ -27,7 +27,7 @@
    url -> url inference [hopefully this is cake...]
    fix the failing 9 digit test the fancy shmancy way :P
    can pass in a profanity command line
-   can handle dual md5's
+   can handle dual dvdid's
    youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
@@ -48,55 +48,37 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
   next timing thing (notes file)
+
+== yes do, un-ordered currently, from the various future release options ==
   warn/redirect if wrong file extension...
-
-== yes do, un-ordered currently, from the various release options ==
-
   add the "create .edl file for xbmc et al" button
   add a "watch edited from file" option...don't *force* too...
-  unit tests all
-  after remove the ability to "grab" update readme
+  check if some other buttons are outdated...
+  unit tests (all)
   check if tmdb uses the full DVDID [?]
-  just tell mac users "use tsmuxer this way" http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
-  for now just make a "convert timestamp" button for mplayer OSD conversion ?
-  if they disdain to choose a filename the whole thing exits.
-  an "advanced" screen for obscure things...
-    maybe after tooltips? I need some user feedback here...
-  note realtime: clearplay
-  tell them "I need it as a raw mpeg file, use makemkv with tsmuxer to transform it to an mpeg, or use mplayer to grab it" 
-    "just look at the title track in the EDL, then..."
+  if they disdain to choose a save to filename the whole thing exits.
   tell them "to edit easily..."
-    "for now just ignore any editors...they're just too fickle!"
-    double check--are my ffmpeg splits really really really the same as mplayer's EDL splits? really?
-    "hardware DVD player/commercial DVD software"
+    double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
     "you could watch it under mplayer with the OSD turned on" 
       [+ button for same?]
-      "you could watch it with a normal DVD player (hardware or software, a la powerDDVD et al)"
-        add button for "convert from DVD Player [mplayer OSD, commercial]" to accurate timestamp [single timestamp]
-    "you could edit it in basically any editor--they are usually pretty accurate"
-    "you could edit your file "raw" file "with avidemux, except video will be slightly off, but audio will be on"
-    "VLC [or any GUI] is always slightly off."
   can I avoid requiring use of tsmuxer first?
+    auto tsmuxer/mediainfo [yikes]? 
+      MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer
-  auto tsmuxer/mediainfo [yikes]? 
-    MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
-  instructions: reference the sintel DVD :) (+download it from my site here)
   add an mencoder convert with mplayer_breaks button :P
     can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, after that?
     maybe just under an "advanced" window...
   youtube/hulu timings
-  Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before a "real" domain name
-  always force them to have a DVD in the drive :P
+  always force them to have a DVD in the drive :P ?
   upconverter
   split LLC's website+consumer
-  employ instructions: watch @ realtime after profanity filter first pass :P
-  
+  employee instructions: watch @ realtime after profanity filter first pass :P  
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
-    me try my copy
-  try disney digital copy/amazon library "local download"...
+    me try
+  try disney digital copy
   C player:
     use DVD navigator
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
@@ -112,29 +94,16 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-  donate menumeter $
-  tool tips for all buttons...tweak naming, too :P
-  fix/create the "play previously created edited file for current DVD" button
-  vendorize smplayer * 2
-    test if latest smplayer can work with edl and seek [?]
-    be able to use smplayer, never just mplayer [yikes]
-    apparently just using webdl is like r30369 yipers
+  donate menumeter $ makemkv
+  reate the "play previously created edited file for current DVD" button
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
-  beta release: rinse and repeat with various ppl
+    beta release: rinse and repeat with various ppl
   youtube videos -> new account name
-  note "pay us/somebody to do it for you on the google group"?
-  note "this is the full list--your help is wanted/needed"
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
     karlie?
   inventionzy: blu-ray OCR
-  accomodate 2 disk unique id's...yeah
-  don't exit program if they don't select a disk originally :) e.g. if they cancel out of "Please pick a DVD Delete list file"
-  tell them "you can open the file for more specific editing accuracy of timestamps via microsoft Windows Movie Maker" or whatever it is (try it out first :P)
-    7: Windows Live Movie Maker
-    previous: Windows Movie Maker
-  re-run with several DVD's
   port to mac OS X--try everything out (all buttons), make sure all works...
       appears that, for now, have to just use mplayer dvd://
       ppc dvdid?
@@ -142,11 +111,8 @@
       bundle a copy of smplayer locally?
   typically delete unedited.fulli file automatically
     except if it's a specific scene run test...
-  the final "edited.avi" really "could/should" be playable in WMP...
-  it should clear old smplayer options on startup always, just in case, somehow
-  use smplayer with my mplayer always...unless I'm moving away from that...
-  @makemkv: show us the title numbers, and number them *by those*
-  generic EDL run through should be through smplayer...do I need the other way around, even?
+  the final "edited.avi" really "could/should" be playable in WMP...if possible
+  generic/consumer EDL run through should be through smplayer...do I need the other way around, even?
 
 == other lists ==
 
@@ -180,7 +146,7 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-
+  @makemkv: show us the title numbers, and number them *by those*
   @macports: set notestxt \
   13	    "The MPlayer developers do not believe in making regular releases. \
   14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)

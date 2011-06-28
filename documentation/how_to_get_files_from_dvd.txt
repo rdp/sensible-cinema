@@ -17,7 +17,9 @@ Sensible Cinema only accepts raw "unencrypted" movie streams,
 so you're going to have to get the movie file off the DVD somehow first.
 There are a few options available to you.
 Some options are described here http://wiki.videolan.org/Rip_DVD#Related
-(basically, use mplayer, or use both makemkv + tsmuxer)
+(basically, use mplayer, or use both makemkv + tsmuxer).
+Look for the "title track" setting in the EDL to see which you'll want, 
+usually the longest title.
 
 In the end, you want to have available an unencrypted "mpeg" or "mpeg-ts" file.
 
