@@ -15,7 +15,6 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-
 class EdlParser
 
   def self.parse_file filename, ignore_settings = false
@@ -59,9 +58,9 @@ class EdlParser
     out
   end
   
-  TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/
+  #TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/ # this one also allows for 4444 [?] and also weirdness like "don't kill the nice butterfly 2!" ...
+  TimeStamp = /^\d+:\d\d[\d:\.]*$/
   # starts with a digit, has at least one colon followed by two digits,then some combo of digits and colons and periods...
-  # or just like 5057 s
   
   def self.extract_entry! from_this
     return nil if from_this.length == 0
@@ -112,7 +111,6 @@ class EdlParser
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    p 'incoming', incoming, splits
     mutes = mutes.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:mute]}
     blanks = blanks.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:blank]}
     combined = (mutes+blanks).sort
@@ -189,7 +187,7 @@ class EdlParser
   
 end
 
-# == 1.8.7 Symbol compat
+# == 1.8.7 1.9 Symbol compat
 
 class Symbol
   # Standard in ruby 1.9. See official documentation[http://ruby-doc.org/core-1.9/classes/Symbol.html]
@@ -199,6 +197,9 @@ class Symbol
   end unless method_defined? :"<=>"
 end
 
-if RUBY_VERSION < '1.8.7'
-  raise 'needs ruby 1.8.7 at least'
+if $0 == __FILE__
+  p 'syntax: filename'
+  require 'rubygems'
+  require 'sane'
+  p EdlParser.parse_file *ARGV
 end

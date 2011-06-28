@@ -1,0 +1,55 @@
+You can create a delete list for sensible cinema to use against whatever DVD you want 
+
+A delete list (currently) lists sections you want muted or skipped.  Here is an example
+
+"mutes" => [
+  "02:02:15.0" , "02:02:25", "a muted demo section",
+],
+
+"blank_outs" => [
+  "02:02:00.0" , "02:02:10", "blanked out demo section",
+],
+
+"name" => "Greatest Story Ever Told",
+
+You can see more examples in the "edit decision list/dvds" folder, here: https://github.com/rdp/sensible-cinema/tree/master/zamples
+
+To create a new one, for a DVD, the steps typically look like this:
+
+open Sensible cinema (with "advanced--edit create mode...bat")
+
+insert your DVD, click "Create new delete list for DVD" button
+
+Now you want to add timestamps and then test them to make sure they're accurate, using the various buttons.
+Just edit the file, save it, then choose the button you want, to test out your new deletion.
+
+You can use the "Watch DVD unedited" button
+to save time, as it allows you to watch while it "grabs" it to the hard drive simultaneously (note: you'll
+probably need at least a dual core processor for this to work well).
+
+Note that you can also add timestamps then click "Watch DVD on computer realtime" to avoid having 
+to rip it to your hard drive ever.  This is slightly less accurate, though maybe faster.  See also "pointers" below.
+
+After you're done, you can submit your newly created delete list back to the project 
+(so others can use it) by using the Upload button and sending a message with it.
+Note also that if you know how, you could fork the code from github, commit changes, and 
+submit a pull request if you desire to contribute, as well (for example more delete lists, etc.)
+Email is probably easier though :)
+
+A few pointers:
+
+ You can make several different "delete lists" per DVD, just use different filenames.
+    For example one could take out all profanity, and another take out profanity and also remove violence, or whatever.
+    Basically different levels of deletion :)
+ You can also just watch a DVD (using any DVD player), and get timestamps that way, before creating a delete list.
+ A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, 
+   page up and page down buttons control seeking), and you can also turn on subtitles to help locate profanity.  
+   You can also do the same thing using VLC player, except note that VLC's timestamps are a bit inaccurate [1].
+ Also note that you should probably rewatch the whole thing when you're done, to double check and see 
+  if you got the time signatures right (using "create DVD file on local hard drive" button).
+ Also note that you can add your timing information to IMDB's parental guide pages about movies.  
+  This can help users of other than sensible cinema with editing their movies.
+ Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just setup the 
+  EDL to work right [ http://goo.gl/yMfqX ] then use math to setup the correct time signatures.
+
+[1] http://forum.videolan.org/viewtopic.php?f=2&t=81879

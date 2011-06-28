@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.23.0"
+  s.version = "0.23.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
     "goc.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
+    "how_to_get_files_from_dvd.txt",
     "is_it_legal_to_copy_dvds.txt",
     "legal/md5s.txt",
     "legal/transcript_mute_vlc.txt",
@@ -46,7 +47,6 @@ Gem::Specification.new do |s|
     "lib/check_installed_mac.rb",
     "lib/count_down_timer_jruby_swing.rb",
     "lib/drive_info.rb",
-    "lib/edl_converter.rb",
     "lib/edl_parser.rb",
     "lib/fake_blanker.rb",
     "lib/file_chooser.rb",
@@ -114,12 +114,13 @@ Gem::Specification.new do |s|
     "vendor/readme.txt",
     "www/index.html",
     "zamples/edit_decision_lists/category descriptions.txt",
-    "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
     "zamples/edit_decision_lists/dvds/Harry Potter 2.txt",
     "zamples/edit_decision_lists/dvds/bambi.txt",
     "zamples/edit_decision_lists/dvds/big_buck_bunny_dvd.txt",
     "zamples/edit_decision_lists/dvds/bob the builder pets in a pickle.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
+    "zamples/edit_decision_lists/dvds/cool runnings.txt",
+    "zamples/edit_decision_lists/dvds/edl_for_unit_tests.txt",
     "zamples/edit_decision_lists/dvds/example_delete_list.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
     "zamples/edit_decision_lists/dvds/how_to_train_your_dragon.txt",
@@ -139,7 +140,7 @@ Gem::Specification.new do |s|
     "zamples/edit_decision_lists/dvds/tron_legacy.txt",
     "zamples/edit_decision_lists/dvds/turn_around_alma_younger.txt",
     "zamples/edit_decision_lists/dvds/zz_example_delete_list_that_has_no_cuts_in_it.txt",
-    "zamples/edit_decision_lists/netflix/greatest_story_ever_told_netflix.txt",
+    "zamples/edit_decision_lists/netflix_instant/greatest_story_ever_told_netflix.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt",
     "zamples/edit_decision_lists/old_not_yet_updated/youtube/gummy_bear_song_youtube.txt",
     "zamples/edit_decision_lists/youtube/demo_mutes.txt",
@@ -165,6 +166,7 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<os>, [">= 0.9.3"])
       s.add_runtime_dependency(%q<sane>, [">= 0.22.0"])
       s.add_runtime_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_runtime_dependency(%q<mini_magick>, [">= 3.1"])
@@ -182,6 +184,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<jeweler>, [">= 0"])
       s.add_runtime_dependency(%q<rake>, [">= 0"])
     else
+      s.add_dependency(%q<os>, [">= 0.9.3"])
       s.add_dependency(%q<sane>, [">= 0.22.0"])
       s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
       s.add_dependency(%q<mini_magick>, [">= 3.1"])
@@ -200,6 +203,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
     end
   else
+    s.add_dependency(%q<os>, [">= 0.9.3"])
     s.add_dependency(%q<sane>, [">= 0.22.0"])
     s.add_dependency(%q<rdp-win32screenshot>, [">= 0.0.7.3"])
     s.add_dependency(%q<mini_magick>, [">= 3.1"])

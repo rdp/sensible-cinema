@@ -48,11 +48,21 @@ module SensibleSwing
      self
    end
   
-  def simulate_click
-    @block.call
-  end
+   def simulate_click
+     @block.call
+   end
+  
+   def tool_tip= text
+      if text
+       text = "<html>" + text + "</html>"
+       text = text.gsub("\n", "<br/>")
+     end
+     self.set_tool_tip_text text   
+   end
   
  end
+
+ ToolTipManager.sharedInstance().setDismissDelay(java.lang.Integer::MAX_VALUE) # don't timeout tooltips...
 
  class JFrame
    def close
@@ -61,6 +71,8 @@ module SensibleSwing
   end
   
   class JFileChooser
+    # also set_current_directory et al...
+    
     # raises on failure...
     def go
       success = show_open_dialog nil
@@ -79,8 +91,10 @@ module SensibleSwing
       set_selected_file JFile.new(f)
     end
     alias setFile set_file
+    
   end
   
+  # awt...
   class FileDialog
     def go
       show
@@ -123,6 +137,3 @@ class String
   end
  end
 end
-
-# code examples
-# JOptionPane.showInputDialog(nil, "not implemented yet", "not implemented yet", JOptionPane::ERROR_MESSAGE)

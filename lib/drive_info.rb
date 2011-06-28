@@ -24,17 +24,18 @@ class DriveInfo
 
  def self.md5sum_disk(dir)
    if OS.mac?
-     output = `#{__DIR__}/../vendor/mac_dvdid/bin/dvdid #{dir}`
+     command = "#{__DIR__}/../vendor/mac_dvdid/bin/dvdid #{dir}"
    else
-     output = `#{__DIR__}/../vendor/dvdid.exe #{dir}`
+     command = "#{__DIR__}/../vendor/dvdid.exe #{dir}"
    end
-   puts 'dvdid command failed?' unless $?.exitstatus == 0 # hope this accomodates for it barfing...
+   output = `#{command}`
+   puts 'dvdid command failed?' + command unless $?.exitstatus == 0 # hope this accomodates for it barfing...
    output.strip
  end
 
  def self.get_dvd_drives_as_openstruct
    disks = get_all_drives_as_ostructs
-   disks.select{|d| d.Description =~ /CD-ROM/}
+   disks.select{|d| d.Description =~ /CD-ROM/ && File.exist?(d.Name + "/VIDEO_TS")}
  end
   
  def self.get_drive_with_most_space_with_slash
@@ -55,16 +56,19 @@ class DriveInfo
      d2.Description = parsed['OpticalDeviceType']
      d2.MountPoint = parsed['MountPoint']
      if d2.MountPoint == '/'
-       d2.MountPoint = File.expand_path '~' # better ?
+       d2.MountPoint = File.expand_path '~' # better ? I guess?
      end
      d2
     }
   else
     require 'ruby-wmi'
     disks = WMI::Win32_LogicalDisk.find(:all)
-    disks.map{|d| d2 = OpenStruct.new; d2.Description = d.Description; d2.VolumeName = d.VolumeName; d2.Name = d.Name; 
+    disks.map{|d| d2 = OpenStruct.new
+      d2.Description = d.Description
+      d2.VolumeName = d.VolumeName
+      d2.Name = d.Name
       d2.FreeSpace = d.FreeSpace.to_i
-      d2.MountPoint = d.Name[0..2]
+      d2.MountPoint = d.Name[0..2] # needed...
       d2
     } 
   end
@@ -73,6 +77,5 @@ class DriveInfo
 end
 
 if $0 == __FILE__
-  require 'pp'
   p DriveInfo.get_dvd_drives_as_openstruct
 end

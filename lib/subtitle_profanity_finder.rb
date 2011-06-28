@@ -142,10 +142,6 @@ module SubtitleProfanityFinder
           # sanitize
           for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations
             if sanitized_glop =~ prof2
-              require 'ruby-debug'
-              #debugger
-            end
-            if sanitized_glop =~ prof2
               sanitized_glop.gsub!(prof2, sanitized2)
             end
           end

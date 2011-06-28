@@ -37,7 +37,7 @@ describe EdlParser do
     "missing_content"=>"this doesn't list some mild name calling", 
     "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
     "whatever_else_you_want"=>"this is the old version of the film",
-    "disk_unique_id"=>"19d131ae8dc40cdd70b57ab7e8c74f76"
+    "disk_unique_id"=>"1234|4678"
    }
    E.parse_string(string, nil).should == expected
   end
@@ -60,17 +60,16 @@ describe EdlParser do
   
   it "should detect timestamps well" do
     t = EdlParser::TimeStamp
-   "2:01".should match(t)
-   "1:01.5".should match(t)
-   "00:00:00.5".should match(t)
-   "00:00:00".should match(t)
+    for ts in ["2:01", "1:01.5", "00:00:00.5","00:00:00", "1:23", "01:23"]
+      raise ts unless t =~ ts
+    end
    "5".should_not match(t)
    "category".should_not match(t)
   end
   
   it "should parse a real file" do
    E.parse_file(File.expand_path(__dir__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
-     {"title"=>"Bob's Big Plan", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "disk_unique_id"=>"259961ce38971cac3e28214ec4ec278b", "mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["28:13.5", "29:40", "theme song again"], ["48:46", "49:08", "theme song again"]], "blank_outs"=>[]}
+     {"title"=>"Bob's Big Plan", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["28:13.5", "29:40", "theme song again"], ["48:46", "49:08", "theme song again"]], "blank_outs"=>[]}
   end
   
   it "should be able to use personal preferences to decide which edits to make" do

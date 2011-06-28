@@ -35,6 +35,7 @@ require_relative '../lib/storage'
 require_relative '../lib/edl_parser'
 require_relative '../lib/mplayer_edl'
 require_relative '../lib/play_audio'
+require_relative '../lib/subtitle_profanity_finder'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -71,17 +72,23 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
-    def new_jbutton title, only_on_create_mode, always_add = false
+    def we_are_in_create_mode
+     ARGV.index("--create-mode")
+    end
+    
+    # currently advanced mode only *adds* buttons
+    def new_jbutton title, only_on_create_mode, tooltip = nil
       button = JButton.new title
+      button.tool_tip= tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
-      
-      if ARGV.index("--create-mode")
-        always_add = true if only_on_create_mode
+      add = true
+      if we_are_in_create_mode
+        add = true
       else
-        always_add = true if !only_on_create_mode
+        add = false if only_on_create_mode
       end
          
-      if always_add
+      if add
         increment_button_location
         @panel.add button
         @buttons << button
@@ -92,17 +99,21 @@ module SensibleSwing
     def increment_button_location
       @starting_button_y += 30
     end
+    
+    def force_accept_license_first
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
+          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+        Storage['main_license_accepted'] = VERSION
+    end
 
-    Storage = Storage.new("sensible_cinema")
+    Storage = Storage.new("sensible_cinema_storage")
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
       if !(Storage['main_license_accepted'] == VERSION)
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../is_it_legal_to_copy_dvds.txt"), 
-          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the is_it_legal_to_copy_dvds.txt file'
-        Storage['main_license_accepted'] = VERSION
+        force_accept_license_first
       end
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
@@ -112,22 +123,43 @@ module SensibleSwing
       panel.set_layout nil
       add panel # why can't I just slap these down?
 
-      jlabel = JLabel.new 'Welcome to Sensible Cinema!'
+      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for descriptions." : "")
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       jlabel.setFont(happy)
-      jlabel.set_bounds(44,44,160,14)
+      jlabel.set_bounds(44,44,360,14)
       panel.add jlabel
       @starting_button_y = 120
       @button_width = 400      
       
       ## BUTTONS ##
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true)
+      @mplayer_edl = new_jbutton( "Watch DVD edited on computer (realtime -- mplayer EDL)", false)
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime on your computer while skipping/muting the questionable scenes."
+      @mplayer_edl.on_clicked {
+        do_mplayer_edl
+      }
+      
+      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
+      @create.tool_tip = <<-EOL
+        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
+        The file you create will contain the whole movie edited.
+        It takes quite awhile maybe 2 hours.
+      EOL
+      @create.on_clicked {
+        do_copy_dvd_to_hard_drive false
+      }
+      
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a new DVD", true, 
+        "If your DVD doesn't have an EDL created for it, this will be your first step--create a new EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
       end
 
-      @open_list = new_jbutton("Open/Edit a Delete List", true)
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
+        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # fails in error...
+      end
+      
+      @open_list = new_jbutton("Open/Edit a previously existing Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR
@@ -135,22 +167,29 @@ module SensibleSwing
         open_file_to_edit_it filename if filename
       }
       
-
-      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false )
-      @create.on_clicked {
-        do_copy_dvd_to_hard_drive false
-      }
-      
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime -- mplayer EDL)", false, true )
-      @mplayer_edl.on_clicked {
-        do_mplayer_edl
-      }
-      
-      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)", true).on_clicked {
+      @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)", true)
+      @play_smplayer.tool_tip = <<-EOL
+        This will play the DVD unedited within smplayer.
+        NB it will default to title 1, so updated your EDL file that matches this DVD with the proper title if this doesn't work for you 
+        i.e. if it just plays a single preview title or what not, and not the main title, you need to change this value.
+        This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
+        You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
+        (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
+        fps, so you'll need to convert it to be able to use it in a file.
+      EOL
+      @play_smplayer.on_clicked {
         play_dvd_smplayer_unedited
       }
 
-      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer--useful for subtitle timing)", true).on_clicked {
+      @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)", true)
+      @play_mplayer_raw.tool_tip = <<-EOL
+        This is also useful for comparing subtitle files to see
+        if they have accurate timings.
+        If you turn on subtitles (v button), then compare your file at say, the 1 hour mark, or 2 hour mark,
+        with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
+        like "A: 3600.0" should match your subtitle line of approximately "01:00:00,000"
+      EOL
+      @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true
       }
 
@@ -159,31 +198,45 @@ module SensibleSwing
 #      }
 
       @preview_section = new_jbutton( "Preview a certain time frame from file (edited)", true )
+      @preview_section.tool_tip = <<-EOL
+        This allows you to preview an edit easily.
+        It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
+        Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
+      EOL
       @preview_section.on_clicked {
         do_copy_dvd_to_hard_drive true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame from file (unedited)", true)
+      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
+      @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
         do_copy_dvd_to_hard_drive true, false, true
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched file preview time frame", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
+      @rerun_preview.tool_tip = "This will re-run the preview that you most recently performed.  Great for checking to see if you last edits were successful or not."
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      @fast_preview = new_jbutton( "fast preview all (smplayer EDL on file)", true).on_clicked {
+      @fast_preview = new_jbutton("fast preview all (smplayer EDL on fulli file)", false)
+      @fast_preview.tool_tip = <<-EOL
+        Plays smplayer on a file with an EDL.
+        This gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.
+        This is useful because you can't use mplayer on a DVD for accurate timestamps if it has any 
+        timestamp splits in it [because some DVD's are buggy]
+      <<EOL
+      @fast_preview.on_clicked {
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli #+ ".fast.mpg"
         if false#!File.exist?(nice_file)
           p = show_non_blocking_message_dialog("Creating quick lookup file--NB that for each changed deletion, 
-          you'll need to restart the fast preview SMplayer
-          Also note that the start and end times will be slightly off if reality [delayed]
-          Also note that while doing fast preview, it can be doing a normal preview as well
-          in the background, simultaneously.")
+            you'll need to restart the fast preview SMplayer
+            Also note that the start and end times will be slightly off if reality [delayed]
+            Also note that while doing fast preview, it can be doing a normal preview as well
+            in the background, simultaneously.")
           unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
             File.delete nice_file
             raise 'create ' 
@@ -192,15 +245,9 @@ module SensibleSwing
         end
         set_smplayer_opts "-edl #{EdlTempFile}"
         thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
-        Thread.new { # XXX do we need this?
-          begin
-            thread.join
-          ensure
-            set_smplayer_opts ''
-          end
-        }
       }
-      
+
+      # TODO remove me...
       @watch_unedited = new_jbutton("Watch full DVD unedited (while simultaneously grabbing file to hard drive)", true)
       @watch_unedited.on_clicked {
         success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
@@ -209,18 +256,43 @@ module SensibleSwing
         system_non_blocking command
       }
 
-
       # until I can let them know *why* they would ever need this button...
-      @display_unique = new_jbutton( "Display a DVD's unique ID", true ).on_clicked {
+      @display_unique = new_jbutton( "Calculate DVD's unique ID", true )
+      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it.  If your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to add it in."
+      @display_unique.on_clicked {
         drive, volume, dvd_id = choose_dvd_drive
         # display it, allow them to copy and paste it out
         get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
       }
       
-      @upload = new_jbutton("Upload/E-mail suggestion/Submit anything", true).on_clicked {
+      @upload = new_jbutton("Upload/E-mail suggestion/Contact/Submit anything", true)
+      @upload.tool_tip = "We welcome all feedback!  For example if you create a new DVD EDL, please submit it back to us so that others can benefit from it!"
+      @upload.on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
+      }
+      
+      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
+      @parse_srt.tool_tip = <<-EOL
+        You can download a .srt file and parse it to automaticaly search for profanities.
+        Basically download it from opensubtitles.org (possibly from other places, too),
+        (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
+        Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
+      EOL
+      @parse_srt.on_clicked {
+        fc = new_filechooser
+        fc.set_title "Pick srt file:"
+        if old_dir = Storage['old_srt_dir']
+          fc.set_current_directory JFile.new(old_dir)
+        end
+        filename = fc.go
+        Storage['old_srt_dir'] = fc.get_current_directory.to_s
+        Storage['start_time']
+        
+        parsed = SubtitleProfanityFinder.edl_output [filename]
+        File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
+        open_file_to_edit_it EdlTempFile
       }
       
       @progress_bar = JProgressBar.new(0, 100)
@@ -231,9 +303,11 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      @exit = new_jbutton("Exit", false, true).on_clicked {
-        #self.close # don't waste time :P
+      @exit = new_jbutton("Exit", false, "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
+      @exit.on_clicked {
+        Thread.new { self.close } # don't waste the time to close it :P
         kill_processes
+        puts 'Thank you for using Sensible Cinema.'
         java.lang.System.exit 0
       }
 
@@ -267,23 +341,23 @@ module SensibleSwing
 "name" => "#{english_name}",
 
 "mutes" => [
-  # example line, uncomment the leading "#" to make it active
+  # an example line, uncomment the leading "#" to make it active
   # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
 ],
 
 "blank_outs" => [
-  # example line, uncomment the leading "#" to make it active
+  # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, it plays a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # in mplayer, the DVD timestamp "resets" to zero for some reason, see http://goo.gl/yMfqX to set this value right. Note that [] is valid, if there are no resets.
         EOL
-      # frame0 is the name of our window LOL tough to avoid that one...
+      # frame0 is the name of our window LOL tough to avoid that collision...hmm...
       filename = EDL_DIR + "\\" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
@@ -411,16 +485,16 @@ module SensibleSwing
       puts 'Please confirm license agreement in open window.'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
-      UIManager.put("OptionPane.noButtonText", "View License (#{license_name})")
+      UIManager.put("OptionPane.noButtonText", "View File (#{license_name})")
       # cancel button stays the same...
 
       message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
-      separately, or Sensible Cinema can download it for you.
-      By clicking accept, below, you are confirming that you have read and agree to be bound by the
-      terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
-      Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
-      separate program, with its own distribution, license, ownership and copyright.  
-      You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
+        separately to the vendor/cache directory, or Sensible Cinema can download it for you.
+        By clicking accept, below, you are confirming that you have read and agree to be bound by the
+        terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
+        Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
+        separate program, with its own distribution, license, ownership and copyright.  
+        You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       
       returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       # 1 is view button was clicked
@@ -459,15 +533,15 @@ module SensibleSwing
     end
     
     def download_zip_to english_name, url, to_this
-        download_7zip
-        Dir.chdir('vendor/cache') do
-          file_name = url.split('/')[-1]
-          print "downloading #{english_name} ..."
-          download(url, file_name)
-          system_blocking("7za e #{file_name} -y -o#{to_this}")
-          puts 'done ' + english_name
-          # creates vendor/cache/mencoder/mencoder.exe...
-        end
+      download_7zip
+      Dir.chdir('vendor/cache') do
+        file_name = url.split('/')[-1]
+        print "downloading #{english_name} ..."
+        download(url, file_name)
+        system_blocking("7za e #{file_name} -y -o#{to_this}")
+        puts 'done ' + english_name
+        # creates vendor/cache/mencoder/mencoder.exe...
+      end
     end
     
     require 'lib/check_installed_mac.rb'
@@ -497,7 +571,7 @@ module SensibleSwing
         download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
       end
       
-      if ARGV.index('--create-mode')
+      if we_are_in_create_mode
         # they're going to want these dependencies
         if OS.windows?
           path = RubyWhich.new.which('smplayer_portable')
@@ -515,24 +589,28 @@ module SensibleSwing
         end
       end
     end
-
+    
     def open_file_to_edit_it filename
-      system_non_blocking "notepad \"#{filename}\""
+      if OS.windows?
+        system_non_blocking "notepad \"#{filename}\""
+      else
+        system_non_blocking "#{OS.open_file_command} \"#{filename}\""
+      end
     end
 
     def single_edit_list_matches_dvd dvd_id
       matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
         begin
           parse_edl(file)["disk_unique_id"] == dvd_id
-        rescue SyntaxError
-         # ignore poorly formed delete lists for the auto choose
-          p 'warning, unable to parse:' + file
+        rescue SyntaxError => e
+          # ignore poorly formed delete lists for the auto choose phase...
+          p 'warning, unable to parse a file:' + file + " " + e.to_s
           false
         end
       }
       if matching.length == 1
         file = matching[0]
-        p "selecting the one matching file #{file} #{dvd_id}"
+        p "selecting the one only matching EDL #{file} for this DVD ID: #{dvd_id}"
         file
       else
         nil
@@ -545,8 +623,12 @@ module SensibleSwing
       generate_and_run_bat_file *Storage['last_params']
     end
 
-    def new_filechooser
-      JFileChooser.new
+    def new_filechooser default_dir = nil
+      out = JFileChooser.new
+      if default_dir
+        out.set_current_directory JFile.new(default_dir)
+      end
+      out
     end
 
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
@@ -611,11 +693,22 @@ module SensibleSwing
       given
     end
     
+    def get_import_from_filename dvd_title, dvd_title_track
+      @_get_import_from_filename ||=
+      begin
+        file_from_chooser = new_filechooser Storage['get_import_from_filename_dir']
+        file_from_chooser.set_title "Please choose the file that is your ripped version of #{dvd_title} title ##{dvd_title_track} (.mpg or .ts--see documentation/how_to_get_files_from_dvd.txt file)"
+        outgoing = file_from_chooser.go
+        Storage['get_import_from_filename_dir'] = File.dirname(outgoing)
+        outgoing
+      end
+    end
+    
     def get_save_to_filename dvd_title
       @_get_save_to_filename ||=
       begin
         fc = new_filechooser
-        fc.set_title "Pick where to save #{dvd_title} edited to"
+        fc.set_title "Pick where to save #{dvd_title} edited version as"
         save_to_file_name = dvd_title + ' edited version'
         save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation or spaces for now...
         fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
@@ -644,8 +737,14 @@ module SensibleSwing
       # LODO allow for spaces in the save_to filename
       if should_prompt_for_start_and_end_times
         # only show this message once :)
-        @show_block ||= show_blocking_message_dialog("Ok, let's preview just a portion of it. \nNote that you'll want to preview a section that wholly includes a deleted section in it\n For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.\nAlso note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the video for previewing.\nSubsequent previews will be faster, though, as long as you use the same filename.\n
-        Also note that if you change your delete list, you'll need to close, and regenerate the video to see it with your new settings.", "Preview")
+        @show_block ||= show_blocking_message_dialog(<<-EOL, "Preview")
+          Ok, let's preview just a portion of it. 
+          Note that you'll want to preview a section that wholly includes a deleted section in it.
+          For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.
+          Also note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the entire video for processing.
+          Subsequent previews will be faster, though, as long as you use the same filename, as it won't have to re-set it up for processing.
+          Also note that if you change your delete list, you'll need to close, and restart the video to be able to see it with your new settings.
+        EOL
         old_start = Storage['start_time']
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
         default_end = Storage['end_time']
@@ -661,11 +760,15 @@ module SensibleSwing
         Storage['start_time'] = start_time
         Storage['end_time'] = end_time
       end
-      dvd_title = descriptors['name'] || dvd_volume_name
-      save_to = get_save_to_filename dvd_title
-      fulli = MencoderWrapper.calculate_final_filename save_to
+      dvd_friendly_name = descriptors['name']
+      raise 'no name?' unless dvd_friendly_name
+      
+      dvd_title_track = get_title_track(descriptors)
+      file_from = get_import_from_filename dvd_friendly_name, dvd_title_track
+      save_to_edited = get_save_to_filename dvd_friendly_name
+      fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
-        if File.exist? fulli + ".done"
+        if fulli_dot_done_file_exists
           return [true, fulli]
         end
         # make it create a dummy response file for us :)
@@ -673,10 +776,9 @@ module SensibleSwing
         end_time = "00:01"
       end
       
-      dvd_title_track = get_title_track(descriptors)
       should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
       require_deletion_entry = true unless watch_unedited
-      generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
+      generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
       [false, fulli] # false means it's running in a background thread :P
     end
 
@@ -684,16 +786,21 @@ module SensibleSwing
       DriveInfo.get_drive_with_most_space_with_slash
     end
     
-    # stubbable :)
-    def get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
-      delete_partials = true unless start_time
-      MencoderWrapper.get_bat_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, delete_partials, require_deletion_entry # delete partials...
+    def fulli_dot_done_file_exists? save_to_edited
+      fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
+      File.exist?(fulli + ".done") # stinky!
+    end
+    
+    # to make it stubbable :)
+    def get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+      delete_partials = true unless start_time # in case anybody wants to look really really close [?]
+      MencoderWrapper.get_bat_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, delete_partials, require_deletion_entry
     end
 
-    def generate_and_run_bat_file save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, drive, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+    def generate_and_run_bat_file save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
+      Storage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
       begin
-        commands = get_mencoder_commands descriptors, drive, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
+        commands = get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
         show_blocking_message_dialog("Appears you chose a time frame with no deletion segment in it--please try again:" + e)
         return
@@ -704,14 +811,23 @@ module SensibleSwing
       temp_dir = Dir.tmpdir
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
-      popup = show_non_blocking_message_dialog(
-      "Applying #{File.basename edit_list_path} \n   against #{drive} (#{dvd_title}).\n" +
-      "Copying to #{save_to}.\n" +
-      "This could take quite awhile, and will prompt you and chime a noise when it is done.\n" +
-      "You can close this window and continue working while it runs in the background.\n" +
-      "NB that the created file will be playable only with VLC (possibly with smplayer, possibly with\n" +
-      "Windows Media Player if you install ffdshow first with mpeg2 video checkbox checked.).",
-      "OK")
+      popup_message = <<-EOL
+        Applying #{File.basename edit_list_path} 
+           to #{file_from} (#{dvd_title}).
+        Copying to #{save_to}.
+      EOL
+      if !fulli_dot_done_file_exists save_to
+        popup_message += "This could take quite awhile (several hours), and will prompt you with a chime noise when it is done.\n
+        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background."
+      end
+      
+      if !start_time
+        # assume a full run..
+        popup_message += "\nNB that the created file will be playable only with VLC (possibly also with smplayer), but probably not with windows media player."
+      end
+
+      
+      popup = show_non_blocking_message_dialog(popup_message, "OK")
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new {
@@ -749,7 +865,10 @@ module SensibleSwing
           system_non_blocking "smplayer_portable #{saved_to}"
         else
           show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
-          system_blocking show_file # returns immediately
+          begin
+            system_blocking show_file # returns immediately tho...
+          rescue => why_does_this_happen_ignore_this_exception_it_actually_succeeded
+          end
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
           show_blocking_message_dialog "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
         end

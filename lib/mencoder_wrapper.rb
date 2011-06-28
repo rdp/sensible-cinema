@@ -35,16 +35,16 @@ class MencoderWrapper
       #   "This will result in a slightly bigger file, but will not cause problems when demuxing or remuxing into other container formats." LODO no harddup ok ???
       # lodo: can I use ffmpeg to unmux-ify/GOP'ify perhaps?
       # LODO 24000/1001 ?
-      video_opts = "-vf scale=pullup,softskip,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out += "mencoder \"#{this_file.gsub('"', '\\"')}\" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_drive} && echo done_grabbing > #{@big_temp}.done\n"
+      video_opts = "-vf scale=720:480,pullup,softskip,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
+      out += "mencoder \"#{this_file.gsub('"', '\\"')}\" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_file} && echo done_grabbing > #{@big_temp}.done\n"
     end
     
-    def calculate_final_filename to_here_final_file
+    def calculate_fulli_filename to_here_final_file
       @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
     end
     
     # called from the UI...
-    def get_bat_commands these_settings, this_drive, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
+    def get_bat_commands these_settings, this_from_file, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
       combined = EdlParser.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       assert dvd_title_track
@@ -59,8 +59,8 @@ class MencoderWrapper
       else
         previous_end = 0
       end
-      calculate_final_filename to_here_final_file
-      out = get_header this_drive, these_settings
+      calculate_fulli_filename to_here_final_file
+      out = get_header this_from_file, these_settings
       @idx = 0
       combined.each {|start, endy, type|
         if start > previous_end

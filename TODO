@@ -3,15 +3,18 @@
   release: cheap inventionzy, and medium inventionzy
   release: C EDL
   compare netflix/blu-ray timings et al
+  
   === loose ordering/eventually ===
-    linearize
-    supplement mplayer EDL with mine (mac users, just ffmpeg) ???
-    update todo/docu
+    linearize [?] hmm...
+    re-update todo/all docu
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
 	  no auto subtitles...
+    try out on people
+    fix VLC dvdnav
+    the upconverter [?]
   
 == high prio like blocking bugs ==  
   
@@ -29,19 +32,29 @@
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
  
-== yes do ordered ==
-  EDL for that fella...
-  transfer from little stickie at....
+== yes do ordered in conjunction with the above ==
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
-  unit tests
-  timing thing (notes file)
+    http://www.familysafemovies.com
+    cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
+    cougar video (that looks tough...)
+    http://www.cleanplaydvds.com
+    cleanfilms.com (now dead) "clean films"
+    that one on state street (John webster?)
+    http://www.edited-movies.com/buy-edited-movies/
+    http://www.clean-edited-movies.com/clean_flicks.htm ray lines ?
+    maybe more listed here: http://www.clean-edited-movies.com/clean_flicks.htm
+    Almost overnight, competitors to CleanFlicks popped up with twists on the CleanFlicks brand -- CleanFilms, Clean Flix, Clean-Flicks, Family Focus Films
+    family flix
+    http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
+  next timing thing (notes file)
+  warn/redirect if wrong file extension...
 
 == yes do, un-ordered currently, from the various release options ==
-  @macports: set notestxt \
-  13	    "The MPlayer developers do not believe in making regular releases. \
-  14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
-  @macports: does mplayer-devel enable dvdnav correctly?
 
+  docu button
+  add the "create .edl file for xbmc et al" button
+  add a "watch edited from file" option...don't *force* DVD uh guess...
+  unit tests all
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
   just tell mac users "use tsmuxer this way" http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
@@ -64,7 +77,7 @@
     "you could edit your file "raw" file "with avidemux, except video will be slightly off, but audio will be on"
     "VLC [or any GUI] is always slightly off."
   can I avoid requiring use of tsmuxer first?
-  check with blu-ray...does it match timing-wise? sub-title wise?
+  check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer
   auto tsmuxer/mediainfo [yikes]? 
     MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
@@ -75,12 +88,10 @@
   youtube/hulu timings
   Watch...unedited smplayer button doesn't play from the right device if you have two :P
   get LLC before a "real" domain name
-  add profanity filter this file button
-  remove some buttons by default ?
   always force them to have a DVD in the drive :P
   upconverter
   split LLC's website+consumer
-  employ: watch @ realtime after profanity filter first pass :P
+  employ instructions: watch @ realtime after profanity filter first pass :P
   
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
@@ -88,7 +99,7 @@
   try disney digital copy/amazon library "local download"...
   C player:
     use DVD navigator
-    just use mplayer EDL syntax, plus a title track :)
+    just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
@@ -101,10 +112,9 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-  if it doesn't parse something it loops *forever* "error pooping" "error pooping" [?]
   donate menumeter $
-  tool tips for all buttons...tweak naming, too :P do something!
-  fix/create the "play previously credited edited file for current DVD" button
+  tool tips for all buttons...tweak naming, too :P
+  fix/create the "play previously created edited file for current DVD" button
   vendorize smplayer * 2
     test if latest smplayer can work with edl and seek [?]
     be able to use smplayer, never just mplayer [yikes]
@@ -113,8 +123,6 @@
   ask for more beta testers for use, ask for more beta testers for creation, too
   beta release: rinse and repeat with various ppl
   youtube videos -> new account name
-  vendorize a copy of ffmpeg, then they don't have to install imagemagick...also then we'll have ffprobe
-    and sanity
   note "pay us/somebody to do it for you on the google group"?
   note "this is the full list--your help is wanted/needed"
   create a semi-accurate phantom edit EDL
@@ -127,18 +135,18 @@
     7: Windows Live Movie Maker
     previous: Windows Movie Maker
   re-run with several DVD's
-  port to mac OS X--try everything out (all buttons), make sure it works...
-      appears that, for now, have to just use mplayer dvd:// [sniff]
-      ppc?
-      app store mplayer perhaps?  maybe tell the players to start supportin' dvdnav?
-      bundle a copy of smplayer locally? huh?
-  delete unedited.fulli file automatically
+  port to mac OS X--try everything out (all buttons), make sure all works...
+      appears that, for now, have to just use mplayer dvd://
+      ppc dvdid?
+      app store mplayer perhaps?
+      bundle a copy of smplayer locally?
+  typically delete unedited.fulli file automatically
     except if it's a specific scene run test...
-  investigate: can I use zoomplayer max?
   the final "edited.avi" really "could/should" be playable in WMP...
-  "profanity" => "language"
   it should clear old smplayer options on startup always, just in case, somehow
   use smplayer with my mplayer always...unless I'm moving away from that...
+  @makemkv: show us the title numbers, and number them *by those*
+  generic EDL run through should be through smplayer...do I need the other way around, even?
 
 == other lists ==
 
@@ -149,9 +157,11 @@
   todo.subtitle
 
 == DVD decide later to move up or down ==
+  canceling from the "dvd id" box exits the whole app LOL
 
 == DVD-realtime backlog once do, now not do, unordered ==
-  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
+  investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
+  investigate xbmc dvd edl
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
   mplayer EDL allow this:
@@ -165,9 +175,26 @@
   mplayer EDL while grabbing, from grabbed :P
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
+  lua VLC EDL plugin? LOL yeah right.
+  investigate: can I use zoomplayer max?
+  investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  @macports: set notestxt \
+  13	    "The MPlayer developers do not believe in making regular releases. \
+  14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
+  can I use mplayer's "-edlout" to simplify something something, or maybe I should slave mode mplayer for my own means of the same?
+  create real plugins for boxee, XBMC et al
+  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
+  a new button (maybe just in advanced mode?) "play EDL mplayer from file (no transcoding)" [if anybody ever would want/need it--seems related to the new c-based player kind of...?]
+  if it doesn't parse a file you choose it annoyingly loops *forever* "error pooping" "error pooping" [?]
+  "real" dvdid for blu-ray, can work with them (once I figure out timing info...)
+  accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
+  can I train the ps3ms to play a real DVD, with EDL ?
+  create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
+    just create the side by side .EDL for various files for people.
+  make a mymovies plugin to auto-use EDL's somehow... ?
   auto download subtitles from opensubtitles somehow err other...
   an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."
   check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
@@ -337,7 +364,8 @@ warn when labels both exist and don't match...
 @mplayer warn before overwrite
 @mplayer you cannot convert mkv files correctly you silly!
 bounty dvdnav
-fix dvdnav?
+  fix dvdnav stuffs?
+ask swank if individuals can rent too?
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
