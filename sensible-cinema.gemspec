@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.23.0"
+  s.version = "0.23.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
     "goc.bat",
     "gplv3.txt",
     "how_to_create_your_own_delete_lists.txt",
+    "how_to_get_files_from_dvd.txt",
     "is_it_legal_to_copy_dvds.txt",
     "legal/md5s.txt",
     "legal/transcript_mute_vlc.txt",
@@ -46,7 +47,6 @@ Gem::Specification.new do |s|
     "lib/check_installed_mac.rb",
     "lib/count_down_timer_jruby_swing.rb",
     "lib/drive_info.rb",
-    "lib/edl_converter.rb",
     "lib/edl_parser.rb",
     "lib/fake_blanker.rb",
     "lib/file_chooser.rb",
@@ -114,12 +114,13 @@ Gem::Specification.new do |s|
     "vendor/readme.txt",
     "www/index.html",
     "zamples/edit_decision_lists/category descriptions.txt",
-    "zamples/edit_decision_lists/dvds/COOL_RUNNINGS.txt",
     "zamples/edit_decision_lists/dvds/Harry Potter 2.txt",
     "zamples/edit_decision_lists/dvds/bambi.txt",
     "zamples/edit_decision_lists/dvds/big_buck_bunny_dvd.txt",
     "zamples/edit_decision_lists/dvds/bob the builder pets in a pickle.txt",
     "zamples/edit_decision_lists/dvds/bobs_big_plan.txt",
+    "zamples/edit_decision_lists/dvds/cool runnings.txt",
+    "zamples/edit_decision_lists/dvds/edl_for_unit_tests.txt",
     "zamples/edit_decision_lists/dvds/example_delete_list.txt",
     "zamples/edit_decision_lists/dvds/happiest baby on the block.txt",
     "zamples/edit_decision_lists/dvds/how_to_train_your_dragon.txt",

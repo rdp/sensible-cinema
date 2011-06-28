@@ -3,14 +3,16 @@
   release: cheap inventionzy, and medium inventionzy
   release: C EDL
   compare netflix/blu-ray timings et al
+  
   === loose ordering/eventually ===
     linearize [?] hmm...
-    re-update todo/docu
+    re-update todo/all docu
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
 	  no auto subtitles...
+    try out on people
   
 == high prio like blocking bugs ==  
   
@@ -30,15 +32,11 @@
  
 == yes do ordered ==
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
-  unit tests all
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various release options ==
-  @macports: set notestxt \
-  13	    "The MPlayer developers do not believe in making regular releases. \
-  14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
-  @macports: does mplayer-devel enable dvdnav correctly?
 
+  unit tests all
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
   just tell mac users "use tsmuxer this way" http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
@@ -119,11 +117,11 @@
     7: Windows Live Movie Maker
     previous: Windows Movie Maker
   re-run with several DVD's
-  port to mac OS X--try everything out (all buttons), make sure it works...
-      appears that, for now, have to just use mplayer dvd:// [sniff]
-      ppc?
-      app store mplayer perhaps?  maybe tell the players to start supportin' dvdnav?
-      bundle a copy of smplayer locally? huh?
+  port to mac OS X--try everything out (all buttons), make sure all works...
+      appears that, for now, have to just use mplayer dvd://
+      ppc dvdid?
+      app store mplayer perhaps?
+      bundle a copy of smplayer locally?
   typically delete unedited.fulli file automatically
     except if it's a specific scene run test...
   the final "edited.avi" really "could/should" be playable in WMP...
@@ -163,11 +161,15 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  @macports: set notestxt \
+  13	    "The MPlayer developers do not believe in making regular releases. \
+  14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
   if it doesn't parse a file you choose it annoyingly loops *forever* "error pooping" "error pooping" [?]
   "real" dvdid for blu-ray, can work with them (once I figure out timing info...)
   accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
   can I train the ps3ms to play a real DVD, with EDL ?
   create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
+    just create the side by side .EDL for various files for people.
   make a mymovies plugin to auto-use EDL's somehow... ?
   auto download subtitles from opensubtitles somehow err other...
   an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."

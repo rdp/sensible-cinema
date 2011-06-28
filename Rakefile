@@ -119,17 +119,23 @@ task 'zip' do
 end
 
 def sys arg
- raise unless system arg
+ 3.times {
+  if system arg
+    return
+  end
+ }
+ raise arg + ' failed 3x!'
 end
 
 task 'deploy' do
   name = 'sensible-cinema-' + cur_ver + ".zip"
   p 'copying to ilab'
   sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
+  p 'creating sf shell'
+  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh -t rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to work.
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
-  p 'copying into sf'
+  p 'copying into sf from ilab'
   sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
   p 'successfully deployed to sf only! ' + cur_ver
 end
