@@ -1,0 +1,28 @@
+Warning: before grabbing any video files from your DVD's,
+please consult the is_it_legal_to_copy_dvds.txt file to 
+check for legal ramifications.  Don't do anything illegal in
+your country.
+
+Basically, sensible cinema affords you 2 options for watching an edited movie.
+
+Either stick the DVD in then click the "realtime play" button.
+Or you can "grab" a video file off a DVD through some "off-line means", 
+then Sensible Cinema can take that file and slice and dice out the profanity etc, 
+creating for you a new edited version of the video file
+
+For the latter, you could download the Big Buck Bunny DVD ISO, and try 
+it out on that [1].
+
+Sensible Cinema only accepts raw "unencrypted" movie streams, 
+so you're going to have to get the movie file off the DVD somehow first.
+There are a few options available to you.
+Some options are described here http://wiki.videolan.org/Rip_DVD#Related
+(basically, use mplayer, or use both makemkv + tsmuxer)
+
+In the end, you want to have available an unencrypted "mpeg" or "mpeg-ts" file.
+
+Slysoft AnyDVD might help out somehow, too, though you shouldn't need to.
+
+Report back if you have problems.  See README for contact info.
+
+[1] http://www.archive.org/details/BigBuckBunny

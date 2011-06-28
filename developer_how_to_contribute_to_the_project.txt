@@ -14,7 +14,8 @@ Or if you have a DVD that already has a delete list available for it, you could 
 The main development roadmap is in the TODO. If you have any feedback/feature requests, et al, post an
 issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
 
-Sensible cinema is written in jruby, and currently packages itself up as a zip with jruby-complete.jar with its required dependencies (see the Rakefile) for windows.
+Sensible cinema is written in jruby, and currently packages itself up as a zip with jruby-complete.jar 
+with its required dependencies (see the Rakefile) for windows.
 
 To run it from source, you may need to install a few gem dependencies (listed in the Rakefile)
 
@@ -25,27 +26,26 @@ Note that, in order to run the unit tests, you'll want to checkout the source fr
 
 The tests are in the spec directory, though some of them are out of date as development has focused in other areas.
 
-Currently it's windows only, ping me if you want that changed.
+Note: you transfer (c) of materials to sensible cinema when you submit patches.
 
-Note: you transfer (c) to copyrighted published of sensible cinema when you submit patches.
-
-To run:
+To run it via command line:
 $ jruby bin/sensible-cinema # DVD output "parser/cutter"
 $ jruby bin/sensible-cinema --create-mode # DVD output "parser/cutter" create mode [advanced]
 $ jruby bin/sensible-cinema-cli # the experimental OCR tracker for arbitrary online/local/internet players.
+  See "Advanced Usage"
+  
+See also the included rake file for bundling/running all the specs.
 
-See also the rake file for ability to bundle/run all the specs.
-
-All feedback/contribution welcome :)
+Feedback/contribution welcome :)
 
 == mac os x developers ==
 
-You'll have to install a few dependencies.  It will tell you which, or you can discover them by running lib/check_installed_xxx.rb
+You'll have to install a few dependencies.  It will tell you which at runtime, or check the README
 
 == Advanced Usage ==
 
-For the screen tracker (experimental version--see experimental.txt),
-you could specify the scene descriptions list and player list on the command-line, so you don't want to have
+For the screen tracker (the experimental version, see file experimental_online_player_ocr_readme.txt),
+you could optionally specify the scene descriptions list and player list on the command-line, so you don't want to have
 to re-select them like this will tell you how to run it from the command line:
 
 C:\sensible-cinema-git-clone>jruby bin\sensible-cinema-cli --help

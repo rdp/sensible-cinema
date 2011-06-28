@@ -15,4 +15,4 @@ unzip.exe is herein included, under the info-zip license: http://www.info-zip.or
 
 some binary builds of dvdid are also distributed here.  See http://www.srcf.ucam.org/~cjk32/dvdid
 
-See first also the file "is_it_legal_to_copy_dvds.txt" for more information on legal use in your country.
+See first also the file "documentation/is_it_legal_to_copy_dvds.txt" for more information on legal implications in your country.
