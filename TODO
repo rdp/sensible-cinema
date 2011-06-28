@@ -166,6 +166,7 @@
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  can I use mplayer's "-edlout" to simplify something something, or maybe I should slave mode mplayer for my own means of the same?
   create plugins for boxee, XBMC et al
   can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
   a new button (maybe just in advanced mode?) "play EDL mplayer from file (no transcoding)" [if anybody ever would want/need it--seems related to the new c-based player kind of...?]
