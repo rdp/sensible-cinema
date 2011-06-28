@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.23.2"
+  s.version = "0.23.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-06-27}
+  s.date = %q{2011-06-28}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
@@ -28,23 +28,24 @@ Gem::Specification.new do |s|
     "bin/sensible-cinema-cli",
     "business_ideas.txt",
     "change_log_with_feature_list.txt",
-    "development.txt",
-    "experimental_ocr_readme.txt",
+    "developer_how_to_contribute_to_the_project.txt",
+    "documentation/how_to_create_your_own_delete_lists.txt",
+    "documentation/how_to_get_files_from_dvd.txt",
+    "documentation/is_it_legal_to_copy_dvds.txt",
+    "experimental_online_player_ocr_readme.txt",
     "go.bat",
     "go.sh",
     "go_ocr_tracker.bat",
     "goc.bat",
     "gplv3.txt",
-    "how_to_create_your_own_delete_lists.txt",
-    "how_to_get_files_from_dvd.txt",
-    "is_it_legal_to_copy_dvds.txt",
+    "history_and_related_works_list.txt",
     "legal/md5s.txt",
     "legal/transcript_mute_vlc.txt",
     "legal2",
     "lib/add_any_bundled_gems_to_load_path.rb",
-    "lib/auto_convert.rb",
     "lib/blanker.rb",
     "lib/check_installed_mac.rb",
+    "lib/convert_thirty_fps.rb",
     "lib/count_down_timer_jruby_swing.rb",
     "lib/drive_info.rb",
     "lib/edl_parser.rb",
