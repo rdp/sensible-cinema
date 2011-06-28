@@ -469,7 +469,7 @@ module SensibleSwing
       command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2 -nocache "
       p command
       @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:
-      'o' key: turn on on-screen time stamps (note: these are 30 fps timestamps so will need to be converted to use).
+      'o' key: turn on on-screen-display timestamps (note: these are 30 fps timestamps so will need to be converted to use).
       'v' key: turn off subtitles.
       '.' key: step one frame.
       'f' for full screen."
@@ -806,7 +806,7 @@ module SensibleSwing
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
-        if fulli_dot_done_file_exists?
+        if fulli_dot_done_file_exists? save_to_edited
           return [true, fulli]
         end
         # make it create a dummy response file for us :)

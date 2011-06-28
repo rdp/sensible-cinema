@@ -300,23 +300,9 @@ module SensibleSwing
       @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
     end
     
-    it "if the .done files exists, watch unedited should call smplayer ja" do
+    it "if the .done files exists, do_copy... should call smplayer ja" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.instance_variable_get(:@watch_unedited).simulate_click
-      @system_non_blocking_command.should == "smplayer_portable abc.fulli_unedited.tmp.mpg"
-      FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
-    end
-    
-    it "if the .done file does not exist, watch unedited should call smplayer after x seconds" do
-      @subject.stub!(:sleep) {
-        @slept = true
-      } # speed this test up...
-      @subject.unstub!(:get_mencoder_commands)
-      click_button(:@watch_unedited).join
-      join_background_thread
-      @system_blocking_command.should_not == nil
-      @slept.should == true
-      @show_blocking_message_dialog_last_arg.should == nil
+      @subject.do_copy_dvd_to_hard_drive(false, true, true).should == [true, "abc.fulli_unedited.tmp.mpg"]
     end
     
     it "should create a new file for ya" do
