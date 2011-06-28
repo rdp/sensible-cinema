@@ -18,7 +18,9 @@ There are a few options.
 A couple of ways are to run something similar to that described here [2]
 (mplayer, or makemkv + tsmuxer)
 
-Good luck!
+Slysoft AnyDVD might help somehow, too.
+
+Report back if you have problems.
 
 [1] http://www.archive.org/details/BigBuckBunny
 [2] http://wiki.videolan.org/Rip_DVD#Related
