@@ -151,13 +151,13 @@ module SensibleSwing
       }
       
       @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a new DVD", true, 
-        "If your DVD doesn't have an EDL created for it, this will be your first step--create a new EDL file for it.")
+        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
       end
 
       @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
-        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # fails in error...
+        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # says it fails in error...
       end
       
       @open_list = new_jbutton("Open/Edit a previously existing Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
@@ -184,11 +184,10 @@ module SensibleSwing
 
       @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)", true)
       @play_mplayer_raw.tool_tip = <<-EOL
-        This is also useful for comparing subtitle files to see
-        if they have accurate timings.
-        If you turn on subtitles (v button), then compare your file at say, the 1 hour mark, or 2 hour mark,
+        This is also useful for comparing subtitle files to see if they have accurate timings.
+        If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
         with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
-        like "A: 3600.0" should match your subtitle line of approximately "01:00:00,000"
+        like "V: 3600.0" should match your subtitle line "01:00:00,000 --> ..."
       EOL
       @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true
@@ -248,26 +247,16 @@ module SensibleSwing
         thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
       }
 
-      # TODO remove me...
-      @watch_unedited = new_jbutton("Watch full DVD unedited (while simultaneously grabbing file to hard drive)", true)
-      @watch_unedited.on_clicked {
-        success_no_run, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true, true
-        sleep 5 unless success_no_run
-        command = "smplayer_portable #{wrote_to_here_fulli}"
-        system_non_blocking command
-      }
-
-      # until I can let them know *why* they would ever need this button...
       @display_unique = new_jbutton( "Calculate current DVD's unique ID", true )
-      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it.  If your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to add it in."
+      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_unique.on_clicked {
         drive, volume, dvd_id = choose_dvd_drive
         # display it, allow them to copy and paste it out
-        get_user_input("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
       }
       
-      @convert_timestamp = new_jbutton( "Convert from DVD player timestamp to EDL accurate timestamp", true)
+      @convert_timestamp = new_jbutton( "Convert a timestamp from DVD player time to EDL time", true)
       @convert_timestamp.tool_tip=<<-EOL
         Our EDL's are all assume 29.97 fps (which is what a DVD is).  Unfortunately most DVD players
         assume that the DVD is 30 fps, which means that if you watch a movie with a DVD player, then use those timestamps
@@ -286,7 +275,7 @@ module SensibleSwing
         thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
         twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
         human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
-        get_user_input("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
+        show_copy_pastable_string("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
       }
       
       @upload = new_jbutton("Upload/E-mail suggestion/Contact/Submit anything", true)
@@ -667,10 +656,14 @@ module SensibleSwing
     
     include_class javax.swing.UIManager
     
-    def get_user_input(message, default = '')
+    def get_user_input(message, default = '', cancel_ok = false)
       received = JOptionPane.showInputDialog(message, default)
-      raise 'user canceled' unless received
+      raise 'user canceled' unless received unless cancel_ok
       received
+    end
+    
+    def show_copy_pastable_string(message, value)
+      get_user_input message, value, true
     end
     
     def parse_edl path

@@ -40,9 +40,8 @@ module SensibleSwing
        begin
          block.call
        rescue Exception => e
-         puts 'got fatal exception in button', e, e.class
+         puts 'got fatal exception thrown in button [ignoring]', e, e.class
          puts e.backtrace.join("\n"), e
-         System.exit(1) # LODO no exit [?] once jruby cleans up their act...
        end        
      end
      self
