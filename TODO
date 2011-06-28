@@ -13,6 +13,8 @@
     no propaganda...
 	  no auto subtitles...
     try out on people
+    fix VLC dvdnav
+    the upconverter [?]
   
 == high prio like blocking bugs ==  
   
@@ -50,6 +52,7 @@
 
   docu button
   add the "create .edl file for xbmc et al" button
+  add a "watch edited from file" option...don't *force* DVD uh guess...
   unit tests all
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
