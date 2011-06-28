@@ -33,9 +33,12 @@
 == yes do ordered ==
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
   next timing thing (notes file)
+  docu button
+  add dvrmspds to the TODO to research/others to research..
 
 == yes do, un-ordered currently, from the various release options ==
 
+  add the "create .edl file for xbmc et al" button
   unit tests all
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
@@ -142,7 +145,8 @@
   canceling from the "dvd id" box exits the whole app LOL
 
 == DVD-realtime backlog once do, now not do, unordered ==
-  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
+  investigate boxee edl (just fer fun...maybe possible?)
+  investigate xbmc dvd edl
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
   mplayer EDL allow this:
@@ -158,12 +162,17 @@
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
   lua VLC EDL plugin? LOL yeah right.
   investigate: can I use zoomplayer max?
+  investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
   @macports: set notestxt \
   13	    "The MPlayer developers do not believe in making regular releases. \
   14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
+  can I use mplayer's "-edlout" to simplify something something, or maybe I should slave mode mplayer for my own means of the same?
+  create real plugins for boxee, XBMC et al
+  can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
+  a new button (maybe just in advanced mode?) "play EDL mplayer from file (no transcoding)" [if anybody ever would want/need it--seems related to the new c-based player kind of...?]
   if it doesn't parse a file you choose it annoyingly loops *forever* "error pooping" "error pooping" [?]
   "real" dvdid for blu-ray, can work with them (once I figure out timing info...)
   accept the "user inputable" profanities, based on the DVD (like "thor" or what not...)
