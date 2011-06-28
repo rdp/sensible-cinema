@@ -52,9 +52,8 @@
 
 == yes do, un-ordered currently, from the various release options ==
 
-  docu button
   add the "create .edl file for xbmc et al" button
-  add a "watch edited from file" option...don't *force* DVD uh guess...
+  add a "watch edited from file" option...don't *force* too...
   unit tests all
   after remove the ability to "grab" update readme
   check if tmdb uses the full DVDID [?]
