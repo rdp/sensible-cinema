@@ -81,7 +81,7 @@ module SensibleSwing
     # currently advanced mode only *adds* buttons
     def new_jbutton title, only_on_create_mode, tooltip = nil
       button = JButton.new title
-      button.tool_tip= tooltip
+      button.tool_tip = tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       add = true
       if we_are_in_create_mode
@@ -98,8 +98,18 @@ module SensibleSwing
       button
     end
     
-    def increment_button_location
-      @starting_button_y += 30
+    def add_text_line line
+      return unless we_are_in_create_mode
+      jlabel = JLabel.new line
+      happy = Font.new("Tahoma", Font::PLAIN, 11)
+      jlabel.setFont(happy)
+      jlabel.set_bounds(44,@starting_button_y ,460,14)
+      @panel.add jlabel
+      increment_button_location 18
+    end
+    
+    def increment_button_location how_much = 30
+      @starting_button_y += how_much
     end
     
     def force_accept_license_first
@@ -141,7 +151,7 @@ module SensibleSwing
         do_mplayer_edl
       }
       
-      @create = new_jbutton( "Create edited copy of DVD on Your Hard Drive, from a DVD", false)
+      @create = new_jbutton( "Create edited copy of a DVD file on Your Hard Drive", false)
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
         The file you create will contain the whole movie edited.
@@ -151,7 +161,7 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a new DVD", true, 
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
@@ -161,7 +171,9 @@ module SensibleSwing
         system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # says it fails in error...
       end
       
-      @open_list = new_jbutton("Open/Edit a previously existing Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      add_text_line 'Realtime create Options:'
+      
+      @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         dialog = FileDialog.new(self, "Pick file to edit")
         dialog.set_directory EDL_DIR
@@ -198,7 +210,64 @@ module SensibleSwing
 #        raise 'todo' # TODO 
 #      }
 
-      @preview_section = new_jbutton( "Preview a certain time frame from file (edited)", true )
+
+      @display_unique = new_jbutton( "Display current DVD's unique ID", true )
+      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
+      @display_unique.on_clicked {
+        drive, volume, dvd_id = choose_dvd_drive
+        # display it, allow them to copy and paste it out
+        show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
+      }
+      
+      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time to EDL time", true)
+      @convert_timestamp.tool_tip=<<-EOL
+        Our EDL's assume 29.97 fps (which is what a DVD is).  Unfortunately most hardware/commercial DVD players
+        assume that the DVD is 30 fps, which means that if you watch a movie with them, then use those timestamps
+        for your EDL file, you will be off, at the end of a 2 hour film, by 8 seconds.  So all your edits will be wrong.
+        How to fix: convert your times from "DVD player" time to "EDL accurate" time by using this button.
+        This is necessary for hardware DVD player timestamps, PowerDVD, Windows Media Player (playing a DVD),
+        but not necessary for smplayer timestamps (or mplayer's "V: 3600" in the command line), which are already 29.97.
+        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from dvd_mplayer_splits) 
+        but is 30 fps, so timestamps would need to be converted.
+        Dont use VLC for DVD timestamps at all--it can get up to 30s off!  VLC playing back a file is usually pretty accurate to 29.97.
+        In general, GUI's like VLC or smplayer are always a tidge off (maybe 0.3s) from the right timestamp, so take that into consideration.
+        Mplayers "V: 3600" is usually right on, however.
+      EOL
+      @convert_timestamp.on_clicked {
+        thirty_fps = get_user_input("Enter your DVD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
+        thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
+        twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
+        human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
+        show_copy_pastable_string("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
+      }
+      
+      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
+      @parse_srt.tool_tip = <<-EOL
+        You can download a .srt file and parse it to automaticaly search for profanities.
+        Basically download it from opensubtitles.org (possibly from other places, too),
+        (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
+        Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
+      EOL
+      @parse_srt.on_clicked {
+        fc = new_filechooser
+        fc.set_title "Pick srt file:"
+        if old_dir = Storage['old_srt_dir']
+          fc.set_current_directory JFile.new(old_dir)
+        end
+        filename = fc.go
+        Storage['old_srt_dir'] = fc.get_current_directory.to_s
+        Storage['start_time']
+        
+        parsed = SubtitleProfanityFinder.edl_output [filename]
+        File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
+        open_file_to_edit_it EdlTempFile
+      }
+
+
+      add_text_line 'Create Options that first create a local intermediary file unless it already exists:'
+
+      @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)", true )
       @preview_section.tool_tip = <<-EOL
         This allows you to preview an edit easily.
         It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
@@ -208,20 +277,20 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)", true)
+      @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)", true)
       @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
         do_copy_dvd_to_hard_drive true, false, true
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file", true )
       @rerun_preview.tool_tip = "This will re-run the preview that you most recently performed.  Great for checking to see if you last edits were successful or not."
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
       
       # Maybe this button should go too...
-      @fast_preview = new_jbutton("fast preview all (smplayer EDL on fulli file)", true)
+      @fast_preview = new_jbutton("fast preview all from fulli file (smplayer EDL)", true)
       @fast_preview.tool_tip = <<-EOL
         Plays smplayer on a file with an EDL.
         This gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.
@@ -248,66 +317,16 @@ module SensibleSwing
         set_smplayer_opts "-edl #{EdlTempFile}"
         thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
       }
+      
+      add_text_line 'Contact:'
 
-      @display_unique = new_jbutton( "Calculate current DVD's unique ID", true )
-      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
-      @display_unique.on_clicked {
-        drive, volume, dvd_id = choose_dvd_drive
-        # display it, allow them to copy and paste it out
-        show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
-      }
-      
-      @convert_timestamp = new_jbutton( "Convert a timestamp from DVD player time to EDL time", true)
-      @convert_timestamp.tool_tip=<<-EOL
-        Our EDL's are all assume 29.97 fps (which is what a DVD is).  Unfortunately most DVD players
-        assume that the DVD is 30 fps, which means that if you watch a movie with a DVD player, then use those timestamps
-        for your EDL file, you will be off, by the end of a 2 hour film, by 8 seconds.  So all your edits will be wrong.
-        How to fix: convert your times from "DVD player" time to "EDL accurate" time by using this button.
-        This is necessary for hardware DVD player timestamps, PowerDVD, Windows Media Player (playing a DVD),
-        but not necessary for smplayer timestamps (or mplayer's "V: 3600" in the command line), which are already 29.97.
-        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from dvd_mplayer_splits) 
-        but is 30 fps, so timestamps would need to be converted.
-        Dont use VLC for DVD timestamps at all--it can get up to 30s off!  VLC playing back a file is usually pretty accurate to 29.97.
-        In general, GUI's like VLC or smplayer are always a tidge off (maybe 0.3s) from the right timestamp, so take that into consideration.
-        Mplayers "V: 3600" is usually right on, however.
-      EOL
-      @convert_timestamp.on_clicked {
-        thirty_fps = get_user_input("Enter your DVD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
-        thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
-        twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
-        human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
-        show_copy_pastable_string("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
-      }
-      
-      @upload = new_jbutton("Upload/E-mail suggestion/Contact/Submit anything", true)
+      @upload = new_jbutton("Upload/E-mail suggestion/Contact/Submit anything", true) # keep this one last! :)
       @upload.tool_tip = "We welcome all feedback!  For example if you create a new DVD EDL, please submit it back to us so that others can benefit from it!"
       @upload.on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
-      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
-      @parse_srt.tool_tip = <<-EOL
-        You can download a .srt file and parse it to automaticaly search for profanities.
-        Basically download it from opensubtitles.org (possibly from other places, too),
-        (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
-        Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
-      EOL
-      @parse_srt.on_clicked {
-        fc = new_filechooser
-        fc.set_title "Pick srt file:"
-        if old_dir = Storage['old_srt_dir']
-          fc.set_current_directory JFile.new(old_dir)
-        end
-        filename = fc.go
-        Storage['old_srt_dir'] = fc.get_current_directory.to_s
-        Storage['start_time']
-        
-        parsed = SubtitleProfanityFinder.edl_output [filename]
-        File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
-        open_file_to_edit_it EdlTempFile
-      }
       
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)

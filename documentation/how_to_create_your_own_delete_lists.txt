@@ -28,7 +28,12 @@ Note that you can also add timestamps then click "Watch DVD on computer realtime
 to rip it to your hard drive ever.  This is slightly less accurate, but can be reasonably accurate.
 See also the "pointers" section, below.
 
-*** TODO describe the various buttons ***
+A big helper is the "parse subtitle" button.
+Basically download a subtitle file for your DVD from opensubtitles.org
+Then check that its timestamp matches (Watch full DVD unedited mplayer button, compare with "V: 3600" type output with your .srt file)
+Then parse it for known profanities (parse a subtitle... button) and copy and paste the appropriate entries to your EDL.
+
+For the rest of the buttons, just "mouse over"/"hover over" them for full descriptions of their potential uses.
 
 After you're done, you can submit your new delete list to the project 
 (so others can use it later) by using the Upload button and sending it as an attachment.

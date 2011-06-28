@@ -102,7 +102,7 @@ module SubtitleProfanityFinder
       if profanity =~ /i/
         permutations << profanity.gsub(/i/i, 'l')
       end
-      
+      sanitized[0] = '[' + sanitized[0] + ']'
       for profanity in permutations
         if is_single_word_profanity
           # oh wow this is ughly...
@@ -150,7 +150,7 @@ module SubtitleProfanityFinder
           timing_line = glop.split("\n").first.strip
           timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
           # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-          output += %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized.strip}", "#{sanitized_glop.strip}",\n!
+          output += %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
         end
 
       end

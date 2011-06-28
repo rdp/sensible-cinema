@@ -32,13 +32,13 @@ describe SubtitleProfanityFinder do
       end
     
       it "should include the description in its output" do
-        output.should include("e he.. b")
+        output.should include("e [he..] b")
       end
     end
     
     describe "deity various" do
       it "should parse output plural deity" do
-        output.should include("nordic [deity]s ")
+        output.should include("nordic [deitys] ")
       end
       
       it "should parse out deity singular and at very end" do
@@ -95,7 +95,7 @@ describe SubtitleProfanityFinder do
     
     it "should parse out and replace with euphemism" do
       output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'w...']
-      output.should match(/00:00:50.089.*In a w\.\.\./)
+      output.should match(/00:00:50.089.*In a \[w\.\.\.\]/)
     end
     
   end

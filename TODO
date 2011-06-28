@@ -6,15 +6,13 @@
   
   === loose ordering/eventually ===
     linearize [?] hmm...
-    re-update todo/all docu
+    re-update todo/all docu/user feedbacks
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
 	  no auto subtitles...
-    try out on people
     fix VLC dvdnav
-    the upconverter [?]
   
 == high prio like blocking bugs ==  
   
@@ -50,12 +48,11 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
-  warn/redirect if wrong file extension...
+  warn/redirect if wrong looking file extension...
   add the "create .edl file for xbmc et al" button
-  add a "watch edited from file" option...don't *force* too...
-  check if some other buttons are outdated...
+  add a "watch edited from file" option...don't *force* too...?
+    check if some other buttons are outdated...
   unit tests (all)
-  check if tmdb uses the full DVDID [?]
   if they disdain to choose a save to filename the whole thing exits.
   tell them "to edit easily..."
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
@@ -70,10 +67,10 @@
     can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, after that?
     maybe just under an "advanced" window...
   youtube/hulu timings
-  get LLC before a "real" domain name
+  split LLC's website+consumer
+    get LLC before a "real" domain name
   always force them to have a DVD in the drive :P ?
   upconverter
-  split LLC's website+consumer
   employee instructions: watch @ realtime after profanity filter first pass :P  
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
