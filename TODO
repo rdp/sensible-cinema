@@ -146,6 +146,7 @@
   canceling from the "dvd id" box exits the whole app LOL
 
 == DVD-realtime backlog once do, now not do, unordered ==
+  investigate boxee edl (just fer fun...maybe possible?)
   investigate xbmc dvd edl
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
