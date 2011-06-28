@@ -12,7 +12,7 @@
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
 	  no auto subtitles...
-    fix VLC dvdnav
+    fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
   
@@ -31,7 +31,6 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above ==
-  don't use eval!
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -48,6 +47,7 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
+  don't use eval!
   warn/redirect if wrong looking file extension...
   add the "create .edl file for xbmc et al" button
   add a "watch edited from file" option...don't *force* too...?

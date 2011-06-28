@@ -1,3 +1,7 @@
+== 0.23.3 ==
+
+Revamp look of the create mode, add some buttons, revamp some docu.
+
 == 0.23.{1,2} ==
 
 It now *requires* outside files as file input, instead of just raw DVD's ever.

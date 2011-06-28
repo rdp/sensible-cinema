@@ -206,9 +206,11 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
 
-#      @watch_created_file = new_jbutton( "Watch edited file copy of DVD", false).on_clicked {
+#      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
 #        raise 'todo' # TODO 
 #      }
+
+      # TODO "Watch a file using an EDL on it"
 
 
       @display_unique = new_jbutton( "Display current DVD's unique ID", true )
@@ -533,6 +535,7 @@ module SensibleSwing
       # 2 is cancel
       if returned == 1
         system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
+        puts "Please restart after reading license agreement, to be able to then accept it."
         System.exit 1
       end
       if returned == 2
@@ -803,7 +806,7 @@ module SensibleSwing
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
-        if fulli_dot_done_file_exists
+        if fulli_dot_done_file_exists?
           return [true, fulli]
         end
         # make it create a dummy response file for us :)
@@ -851,16 +854,15 @@ module SensibleSwing
            to #{file_from} (#{dvd_title}).
         Copying to #{save_to}.
       EOL
-      if !fulli_dot_done_file_exists save_to
+      if !fulli_dot_done_file_exists? save_to
         popup_message += "This could take quite awhile (several hours), and will prompt you with a chime noise when it is done.\n
         You can close this window and minimize sensible cinema and continue using your computer while it runs in the background."
       end
       
       if !start_time
         # assume a full run..
-        popup_message += "\nNB that the created file will be playable only with VLC (possibly also with smplayer), but probably not with windows media player."
+        popup_message += "NB that the created file will be playable only with VLC (possibly also with smplayer), but probably not with windows media player."
       end
-
       
       popup = show_non_blocking_message_dialog(popup_message, "OK")
 
