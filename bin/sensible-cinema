@@ -697,9 +697,9 @@ module SensibleSwing
     def choose_dvd_and_edl_for_it force_choose_edl_file = true
       drive, dvd_volume_name, dvd_id = choose_dvd_drive
       
-      unless @_edit_list_path # cache selection...
+      unless @_edit_list_path # cache file selection...
         edit_list_path = single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && forcee_choose_edl_file
+        if !edit_list_path && force_choose_edl_file
           fc = FileDialog.new(self)
           fc.set_title "Please pick a DVD Delete List File (none found that seem to match #{dvd_volume_name})--may need to create one for it"
           fc.set_directory EDL_DIR

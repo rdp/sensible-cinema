@@ -453,6 +453,16 @@ module SensibleSwing
      assert File.read(file).contain? "deitys"
    end
   
+  it "should have a created play unedited smplayer button" do
+    @subject.stub(:show_non_blocking_message_dialog) {
+       # don't display the message...
+    }
+    @subject.stub(:single_edit_list_matches_dvd) {
+      nil
+    }
+    click_button(:@play_smplayer)
+  end
+  
   end # describe MainWindow
   
 end
