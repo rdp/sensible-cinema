@@ -766,8 +766,6 @@ module SensibleSwing
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
-      require 'ruby-debug'
-      debugger
       drive, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)

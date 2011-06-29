@@ -126,6 +126,9 @@ module SensibleSwing
       @subject.stub!(:new_existing_file_selector) {
         FakeFileChooser.new
       }
+      @subject.stub!(:new_nonexisting_filechooser) {
+        FakeFileChooser.new
+      }
       @subject.stub!(:get_drive_with_most_space_with_slash) {
         "e:\\"
       }
@@ -186,13 +189,18 @@ module SensibleSwing
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
     
-    it "should prompt twice for filenames--once for the 'to' filename, once for the 'from' filename" do
+    it "should only prompt twice for filenames--once for the 'save to' filename, once for the 'from' filename" do
       count = 0
       @subject.stub!(:new_nonexisting_filechooser) {
         count += 1
         FakeFileChooser.new
       }
+      @subject.stub!(:new_existing_file_selector) {
+        count += 1
+        FakeFileChooser.new
+      }
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      3.times { @subject.do_copy_dvd_to_hard_drive(false) }
       count.should == 2
     end
     
@@ -368,16 +376,6 @@ module SensibleSwing
       @got_here.should == true
     end
     
-    it "should only prompt for save to filename once" do
-      count = 0
-      @subject.stub!(:new_nonexisting_filechooser) {
-        count += 1
-        FakeFileChooser.new
-      }
-      3.times { @subject.do_copy_dvd_to_hard_drive(false) }
-      count.should == 2 # else would have been 6...
-    end
-    
     describe 'with unstubbed choose_dvd_drive_or_file' do
       before do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
@@ -468,7 +466,7 @@ module SensibleSwing
    end
   
    it "should be able to parse an srt for ya" do
-     @subject.stub!(:new_nonexisting_filechooser) {
+     @subject.stub!(:new_existing_file_selector) {
        fc = FakeFileChooser.new
        fc.stub!(:go) {
          'spec/dragon.srt'
