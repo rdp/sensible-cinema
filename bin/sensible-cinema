@@ -361,8 +361,6 @@ module SensibleSwing
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
-      p 'wrote', new_prefs.length, smplayer_prefs_file, to_this
-      # no worky doze File.write(File.expand_path('~/.mplayer/config'), to_this)
       smplayer_prefs_file
     end
     
@@ -696,13 +694,14 @@ module SensibleSwing
       JFile.new(File.dirname(path)).get_usable_space
     end
     
-    def choose_dvd_and_edl_for_it choose_file = true
+    def choose_dvd_and_edl_for_it force_choose_edl_file = true
       drive, dvd_volume_name, dvd_id = choose_dvd_drive
-      unless @_edit_list_path
+      
+      unless @_edit_list_path # cache selection...
         edit_list_path = single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && choose_file
+        if !edit_list_path && forcee_choose_edl_file
           fc = FileDialog.new(self)
-          fc.set_title "Please pick a DVD Delete List File (none found that seem to match #{dvd_volume_name})--or create one for it"
+          fc.set_title "Please pick a DVD Delete List File (none found that seem to match #{dvd_volume_name})--may need to create one for it"
           fc.set_directory EDL_DIR
           edit_list_path = fc.go
           raise 'cancelled choosing an EDL' unless edit_list_path
@@ -711,7 +710,7 @@ module SensibleSwing
       end
       
       if @_edit_list_path
-        # reload it just in case it has changed on disk
+        # reload it every time just in case it has changed on disk
         descriptors = nil
         while(!descriptors)
           begin
@@ -914,8 +913,9 @@ module SensibleSwing
       end
     end
 
-    # returns e:\, volume, dvd_id
-    def choose_dvd_drive
+    # returns e:\, volume_name, dvd_id
+    # or full_path.mkv, filename, ''
+    def choose_dvd_drive#_or_file force_choose_only_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_openstruct
       if @saved_opticals == opticals
         # memoize...kind of :)
@@ -923,7 +923,7 @@ module SensibleSwing
       end
       unless opticals.find{|d| d.VolumeName }
         show_blocking_message_dialog 'insert a dvd first' 
-        exit 1
+        raise 'no dvd found'
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
 

@@ -403,11 +403,11 @@ module SensibleSwing
       it "should prompt you if you need to insert a dvd" do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
           a = OpenStruct.new
-          #a.VolumeName = 'a dvd name' # we "don't have one" for this test...
+          #a.VolumeName = 'a dvd name' # we "don't have a disk in" for this test...
           a.Name = 'a path location'
           [a] 
         }
-        proc {@subject.choose_dvd_drive}.should raise_error(SystemExit)
+        proc {@subject.choose_dvd_drive}.should raise_error(/no dvd found/)
         @show_blocking_message_dialog_last_arg.should_not be nil
       end
     end
