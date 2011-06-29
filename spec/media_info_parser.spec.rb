@@ -22,7 +22,7 @@ describe MediaInfoParser do
   
   it "should parse" do
     out = MediaInfoParser.parse_with_convert_command(File.read('tsmuxer.output'), "G:\\Video\\Sintel_NTSC\\title01.mkv")
-    out.should == "MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr  --vbv-len=500\nV_MPEG-2, \"G:\\Video\\Sintel_NTSC\\title01.mkv\", fps=29.970, track=1, lang=eng\nA_AC3, \"G:\\Video\\Sintel_NTSC\\title01.mkv\", track=2, lang=eng"
+    out.should == "MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr  --vbv-len=500\nV_MPEG-2, \"G:\\Video\\Sintel_NTSC\\title01.mkv\", fps=29.97, track=1, lang=eng\nA_AC3, \"G:\\Video\\Sintel_NTSC\\title01.mkv\", track=2, lang=eng"
     print out
   end
   

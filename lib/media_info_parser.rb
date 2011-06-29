@@ -2,11 +2,12 @@ module MediaInfoParser
   def self.parse_with_convert_command media_info, filename
     video = audio = nil
     media_info.split("Track ID").each{ |section|
-      section =~ /:(\w+)(\d+)/
+      section =~ /:(\W+)(\d+)/
       id = $2
-      section =~  /Stream ID:   (\w+)/ # like V_MPEG-2
+      section =~  /Stream ID:   (\S+)/ # like V_MPEG-2
       stream_type = $1
       if stream_type
+        raise unless id
         if section =~ /Frame rate/ && !video
           section =~ /Frame rate: ([\d\.]+)/
           fps = $1
