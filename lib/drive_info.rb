@@ -29,7 +29,7 @@ class DriveInfo
      command = "#{__DIR__}/../vendor/dvdid.exe #{dir}"
    end
    output = `#{command}`
-   puts 'dvdid command failed?' + command unless $?.exitstatus == 0 # hope this accomodates for it barfing...
+   raise 'dvdid command failed?' + command unless $?.exitstatus == 0
    output.strip
  end
 

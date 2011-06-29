@@ -48,23 +48,20 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   don't use eval!
+  can auto-use tsmuxer at all
+  add buttons for "convert 4945 to x" and vice versa...
   warn/redirect if wrong looking file extension...
+   mac just die with instructions to use tsmuxer first...
   add the "create .edl file for xbmc et al" button
   add a "watch edited from file" option...don't *force* too...?
     check if some other buttons are outdated...
   unit tests (all)
-  if they disdain to choose a save to filename the whole thing exits.
-  tell them "to edit easily..."
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-    "you could watch it under mplayer with the OSD turned on" 
-      [+ button for same?]
   can I avoid requiring use of tsmuxer first?
-    auto tsmuxer/mediainfo [yikes]? 
-      MUXOPT --no-pcr-on-video-pid --new-audio-pes --vbr --vbv-len=500 V_MPEG-2, "G:\Video\c\title00.mkv", fps=23.976, ar=As source, track=1, lang=eng A_AC3, "G:\Video\c\title00.mkv", track=2, lang=eng
   check with blu-ray...do they match timing-wise? sub-title wise?
-  donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer
+  donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
   add an mencoder convert with mplayer_breaks button :P
-    can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, after that?
+    can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
     maybe just under an "advanced" window...
   youtube/hulu timings
   split LLC's website+consumer
@@ -91,7 +88,7 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-  donate menumeter $ makemkv
+  donate menumeter $
   reate the "play previously created edited file for current DVD" button
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
@@ -106,10 +103,11 @@
       ppc dvdid?
       app store mplayer perhaps?
       bundle a copy of smplayer locally?
+      can use a working copy of tsmuxer with instructions :)
   typically delete unedited.fulli file automatically
     except if it's a specific scene run test...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
-  generic/consumer EDL run through should be through smplayer...do I need the other way around, even?
+  generic/consumer EDL run through should be through smplayer...do I need/want straight mplayer too?
 
 == other lists ==
 
@@ -120,7 +118,6 @@
   todo.subtitle
 
 == DVD decide later to move up or down ==
-  canceling from the "dvd id" box exits the whole app LOL
 
 == DVD-realtime backlog once do, now not do, unordered ==
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
