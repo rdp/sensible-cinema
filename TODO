@@ -47,6 +47,7 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
+  ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
   don't use eval!
   can auto-use tsmuxer at all
   add buttons for "convert 4945 to x" and vice versa...
