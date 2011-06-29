@@ -107,7 +107,7 @@
   typically delete unedited.fulli file automatically
     except if it's a specific scene run test...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
-  generic/consumer EDL run through should be through smplayer...do I need/want straight mplayer too?
+  generic/consumer EDL run through should be through smplayer...do I need/want straight mplayer option too though?
 
 == other lists ==
 
@@ -118,6 +118,8 @@
   todo.subtitle
 
 == DVD decide later to move up or down ==
+  add button "fast preview one" (from file)
+  add button "fast preview one" (from dvd)
 
 == DVD-realtime backlog once do, now not do, unordered ==
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
