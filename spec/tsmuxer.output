@@ -1,0 +1,33 @@
+SmartLabs tsMuxeR.  Version 1.10.6  http://www.smlabs.net
+Track ID:    1
+Stream type: MPEG-2
+Stream ID:   V_MPEG-2
+Stream info: Profile: Main@8. Resolution: 720:480i. Frame rate: 29.97
+Stream lang: eng
+Track ID:    2
+Stream type: AC3
+Stream ID:   A_AC3
+Stream info: Bitrate: 448Kbps Sample Rate: 48KHz Channels: 6
+Stream lang: eng
+Track ID:    3
+Can't detect stream type
+Track ID:    4
+Can't detect stream type
+Track ID:    5
+Can't detect stream type
+Track ID:    6
+Can't detect stream type
+Track ID:    7
+Can't detect stream type
+Track ID:    8
+Can't detect stream type
+Track ID:    9
+Can't detect stream type
+Track ID:    10
+Can't detect stream type
+Track ID:    11
+Can't detect stream type
+
+Marks: 00:00:00.000 00:01:42.669 00:02:29.215 00:05:50.383 00:07:14.967 
+Marks: 00:11:19.979 00:12:24.276 00:14:17.389 
+
