@@ -175,8 +175,7 @@ module SensibleSwing
       
       @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        dialog = FileDialog.new(self, "Pick file to edit")
-        dialog.set_directory EDL_DIR
+        dialog = new_existing_file_selector( "Pick file to edit", EDL_DIR )
         filename = dialog.go
         open_file_to_edit_it filename if filename
       }
@@ -216,7 +215,7 @@ module SensibleSwing
       @display_unique = new_jbutton( "Display current DVD's unique ID", true )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_unique.on_clicked {
-        drive, volume, dvd_id = choose_dvd_drive
+        drive, volume, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
         show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
@@ -252,8 +251,7 @@ module SensibleSwing
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
       @parse_srt.on_clicked {
-        fc = new_filechooser
-        fc.set_title "Pick srt file:"
+        fc = new_existing_file_selector "Pick srt file:"
         if old_dir = Storage['old_srt_dir']
           fc.set_current_directory JFile.new(old_dir)
         end
@@ -365,7 +363,7 @@ module SensibleSwing
     end
     
     def create_brand_new_edl
-      drive, volume, dvd_id = choose_dvd_drive
+      drive, volume, dvd_id = choose_dvd_drive_or_file true
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
@@ -655,8 +653,9 @@ module SensibleSwing
       generate_and_run_bat_file *Storage['last_params']
     end
 
-    def new_filechooser default_dir = nil
+    def new_nonexisting_filechooser title = nil, default_dir = nil
       out = JFileChooser.new
+      out.set_title title
       if default_dir
         out.set_current_directory JFile.new(default_dir)
       end
@@ -694,15 +693,20 @@ module SensibleSwing
       JFile.new(File.dirname(path)).get_usable_space
     end
     
+    def new_existing_file_selector title, dir
+      out = FileDialog.new(self)
+      out.set_title title
+      out.set_directory dir
+      out
+    end
+    
     def choose_dvd_and_edl_for_it force_choose_edl_file = true
-      drive, dvd_volume_name, dvd_id = choose_dvd_drive
+      drive, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false # TODO
       
       unless @_edit_list_path # cache file selection...
         edit_list_path = single_edit_list_matches_dvd(dvd_id)
         if !edit_list_path && force_choose_edl_file
-          fc = FileDialog.new(self)
-          fc.set_title "Please pick a DVD Delete List File (none found that seem to match #{dvd_volume_name})--may need to create one for it"
-          fc.set_directory EDL_DIR
+          fc = new_existing_file_selector("Please pick a DVD Delete List File (none were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
           edit_list_path = fc.go
           raise 'cancelled choosing an EDL' unless edit_list_path
         end
@@ -733,8 +737,7 @@ module SensibleSwing
     def get_import_from_filename dvd_title, dvd_title_track
       @_get_import_from_filename ||=
       begin
-        file_from_chooser = new_filechooser Storage['get_import_from_filename_dir']
-        file_from_chooser.set_title "Please choose the file that is your ripped version of #{dvd_title} title ##{dvd_title_track} (.mpg or .ts--see documentation/how_to_get_files_from_dvd.txt file)"
+        file_from_chooser = new_existing_file_selector "Please choose the file that is your ripped version of #{dvd_title} title ##{dvd_title_track} (.mpg or .ts--see documentation/how_to_get_files_from_dvd.txt file)", Storage['get_import_from_filename_dir']
         outgoing = file_from_chooser.go
         Storage['get_import_from_filename_dir'] = File.dirname(outgoing)
         outgoing
@@ -744,8 +747,7 @@ module SensibleSwing
     def get_save_to_filename dvd_title
       @_get_save_to_filename ||=
       begin
-        fc = new_filechooser
-        fc.set_title "Pick where to save #{dvd_title} edited version as"
+        fc = new_nonexisting_filechooser "Pick where to save #{dvd_title} edited version as"
         save_to_file_name = dvd_title + ' edited version'
         save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation or spaces for now...
         fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
@@ -764,6 +766,8 @@ module SensibleSwing
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
+      require 'ruby-debug'
+      debugger
       drive, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
@@ -912,45 +916,53 @@ module SensibleSwing
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
       end
     end
+    
+    def get_disk_chooser_window names
+      GetDisk.new(self, names)
+    end
 
     # returns e:\, volume_name, dvd_id
     # or full_path.mkv, filename, ''
-    def choose_dvd_drive#_or_file force_choose_only_dvd_drive
+    def choose_dvd_drive_or_file force_choose_only_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_openstruct
       if @saved_opticals == opticals
-        # memoize...kind of :)
-        return @_choose_dvd_drive
+        # memoize...if disks haven't changed :)
+        return @_choose_dvd_drive_or_file
       end
       unless opticals.find{|d| d.VolumeName }
         show_blocking_message_dialog 'insert a dvd first' 
         raise 'no dvd found'
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
-
-      if opticals.length != 1
-        count = 0
-        opticals.each{|d| count += 1 if d.VolumeName}
-        if count == 1
-         # just choose it if there's only one disk in there
-         p 'selecting only disk present in the various DVD drives'
-         selected_idx = opticals.index{|d| d.VolumeName}
-        else
-          dialog = GetDisk.new(self, names)
-          dialog.setSize 200,125
-          dialog.show
-          selected_idx = dialog.selected_idx
-        end
-      else
-        selected_idx = 0
-        p 'selecting user\'s only DVD drive ' + names[0]
+      if !force_choose_only_dvd_drive
+        names += ['Choose file']
       end
-
+      
+      count = 0
+      opticals.each{|d| count += 1 if d.VolumeName}
+      if count == 1 && force_choose_only_dvd_drive
+       # just choose it if there's only one disk in there
+       p 'selecting only disk present in the various DVD drives'
+       selected_idx = opticals.index{|d| d.VolumeName}
+      else
+        dialog = get_disk_chooser_window names
+        dialog.setSize 200, 125
+        dialog.show
+        selected_idx = dialog.selected_idx
+      end
+      
       if selected_idx
-        disk = opticals[selected_idx]
-        dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
-        @_choose_dvd_drive = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
-        @saved_opticals = opticals # since we force them to have their disc already in there...guess this is ok for os x :)
-        return @_choose_dvd_drive
+        if selected_idx == opticals.length && !force_choose_only_dvd_drive then # the last entry was the 'select file' option
+          filename = new_existing_file_selector("Select yer previously grabbed file").go
+          @_choose_dvd_drive_or_file = [filename, File.basename(filename), 'non dvd has no dvdid']
+        else
+          disk = opticals[selected_idx]
+          dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+          @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
+        end
+        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
+        # is this ok for os x?
+        return @_choose_dvd_drive_or_file
       else
         raise 'did not select a drive...'
       end

@@ -115,7 +115,7 @@ module SensibleSwing
     
     before do
       @subject = MainWindow.new
-      @subject.stub!(:choose_dvd_drive) {
+      @subject.stub!(:choose_dvd_drive_or_file) {
         ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
@@ -123,7 +123,7 @@ module SensibleSwing
         @get_mencoder_commands_args = args
         'fake get_mencoder_commands'
       }
-      @subject.stub!(:new_filechooser) {
+      @subject.stub!(:new_existing_file_selector) {
         FakeFileChooser.new
       }
       @subject.stub!(:get_drive_with_most_space_with_slash) {
@@ -188,7 +188,7 @@ module SensibleSwing
     
     it "should prompt twice for filenames--once for the 'to' filename, once for the 'from' filename" do
       count = 0
-      @subject.stub!(:new_filechooser) {
+      @subject.stub!(:new_nonexisting_filechooser) {
         count += 1
         FakeFileChooser.new
       }
@@ -343,7 +343,7 @@ module SensibleSwing
     def should_allow_for_changing_file corrupt_the_file = false
        with_clean_edl_dir_as 'temp' do
         File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        @subject.stub!(:choose_dvd_drive) {
+        @subject.stub!(:choose_dvd_drive_or_file) {
           ["mock_dvd_drive", "Volume", "abcdef1234"]
         }
         @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
@@ -370,7 +370,7 @@ module SensibleSwing
     
     it "should only prompt for save to filename once" do
       count = 0
-      @subject.stub!(:new_filechooser) {
+      @subject.stub!(:new_nonexisting_filechooser) {
         count += 1
         FakeFileChooser.new
       }
@@ -378,7 +378,7 @@ module SensibleSwing
       count.should == 2 # else would have been 6...
     end
     
-    describe 'with unstubbed choose_dvd_drive' do
+    describe 'with unstubbed choose_dvd_drive_or_file' do
       before do
         DriveInfo.stub!(:get_dvd_drives_as_openstruct) {
           a = OpenStruct.new
@@ -386,18 +386,46 @@ module SensibleSwing
           a.Name = 'a path location'
           [a] 
         }
-        @subject.unstub!(:choose_dvd_drive)
+        @subject.unstub!(:choose_dvd_drive_or_file)
       end
-      
-      it "should only prompt for drive once" do
+
+      def yo select_this_idx
         count = 0
         DriveInfo.stub!(:md5sum_disk) {
           count += 1
           Test_DVD_ID
         }
+        $select_thi
+        @subject.stub(:get_disk_chooser_window) {|names|
+          a = OpenStruct.new
+          def a.setSize x,y; end
+          a.stub(:selected_idx) { select_this_idx}
+          # ruby bug [?] always return nil
+          # def a.selected_idx; p 'returning', select_this_idx; select_this_idx; end
+          a
+        }
+        @subject.stub(:new_nonexisting_filechooser) {
+           a = ''
+           def a.go; 'selected_filename'; end
+           a
+        }
+        @subject.stub(:new_existing_file_selector) {
+          a = ''
+          def a.go; 'selected_edl'; end
+          a
+        }
+        FileUtils.touch 'selected_edl' # blank is ok :P
         @subject.choose_dvd_and_edl_for_it
         @subject.choose_dvd_and_edl_for_it
-        count.should == 1
+        count
+      end
+
+      it "should only prompt for disk selection once" do
+        yo( 0 ).should == 1 # choose the 'a dvd name' DVD
+      end
+
+      it "should only prompt for file selection once" do
+        yo( 1 ).should == 0 # choose a file, so never md5sum the file
       end
   
       it "should prompt you if you need to insert a dvd" do
@@ -405,9 +433,9 @@ module SensibleSwing
           a = OpenStruct.new
           #a.VolumeName = 'a dvd name' # we "don't have a disk in" for this test...
           a.Name = 'a path location'
-          [a] 
+          [a]
         }
-        proc {@subject.choose_dvd_drive}.should raise_error(/no dvd found/)
+        proc {@subject.choose_dvd_drive_or_file true}.should raise_error(/no dvd found/)
         @show_blocking_message_dialog_last_arg.should_not be nil
       end
     end
@@ -431,7 +459,7 @@ module SensibleSwing
     it "should warn if there are no DVD splits and you try to use EDL" do
       with_clean_edl_dir_as 'temp' do
         File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        @subject.stub!(:choose_dvd_drive) {
+        @subject.stub!(:choose_dvd_drive_or_file) {
            ["mock_dvd_drive", "mockVolume", "abcdef1234"]
         }
         @subject.do_mplayer_edl(nil, 0, 0)
@@ -440,7 +468,7 @@ module SensibleSwing
    end
   
    it "should be able to parse an srt for ya" do
-     @subject.stub!(:new_filechooser) {
+     @subject.stub!(:new_nonexisting_filechooser) {
        fc = FakeFileChooser.new
        fc.stub!(:go) {
          'spec/dragon.srt'
