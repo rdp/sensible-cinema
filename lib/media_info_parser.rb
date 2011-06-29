@@ -1,0 +1,3 @@
+module MediaInfoParser
+  
+end
