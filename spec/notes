@@ -2,7 +2,10 @@ up next:
   lighning exact frame to compare the two fulli's...
 
 
-upconvert mplayer:
+== ? ==
+http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL
+
+== upconvert mplayer ==
 
  is "-mc". It means "max A-V time correction per frame", and defaults to 0.01. For good input, you can go down even to 0.0001, but 0.001 i
   -vop denoise3d
