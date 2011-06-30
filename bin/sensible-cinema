@@ -921,13 +921,15 @@ module SensibleSwing
         # memoize...if disks haven't changed :)
         return @_choose_dvd_drive_or_file
       end
-      if !opticals.find{|d| d.VolumeName } && force_choose_only_dvd_drive
+      has_at_least_one_dvd_inserted = opticals.find{|d| d.VolumeName }
+      if !has_at_least_one_dvd_inserted && force_choose_only_dvd_drive
         show_blocking_message_dialog 'insert a dvd first' 
         raise 'no dvd found'
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
-      if !force_choose_only_dvd_drive
+      if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
         names += ['Local File']
+        used_local_file_option = true
       end
       
       count = 0
@@ -944,8 +946,9 @@ module SensibleSwing
       end
       
       if selected_idx
-        if selected_idx == opticals.length && !force_choose_only_dvd_drive then # the last entry was the 'select file' option
+        if used_local_file_option && selected_idx == names.length
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
+          show_blocking_message_dialog "Do you certify you own the DVD this came of and have it in your possession?"
           @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]

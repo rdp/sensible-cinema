@@ -393,7 +393,10 @@ module SensibleSwing
           count += 1
           Test_DVD_ID
         }
-        $select_thi
+        if !select_a_dvd
+          DriveInfo.stub!(:get_dvd_drives_as_openstruct) { [] } # no DVD disks inserted...        
+          p DriveInfo.get_dvd_drives_as_openstruct
+        end
         @subject.stub(:get_disk_chooser_window) {|names|
           a = OpenStruct.new
           def a.setSize x,y; end
@@ -410,7 +413,7 @@ module SensibleSwing
         @subject.stub(:new_existing_file_selector_and_select_file) {
           'selected_edl'
         }
-        FileUtils.touch 'selected_edl' # blank is ok :P
+        FileUtils.touch 'selected_edl' # blank file is ok :P
         @subject.choose_dvd_and_edl_for_it
         @subject.choose_dvd_and_edl_for_it
         count
@@ -422,6 +425,7 @@ module SensibleSwing
 
       it "should only prompt for file selection once" do
         yo( false ).should == 0 # choose a file, so never md5sum the file
+        @show_blocking_message_dialog_last_arg.should =~ /certify/i
       end
   
       it "should prompt you if you need to insert a dvd" do
