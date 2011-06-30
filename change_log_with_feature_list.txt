@@ -1,3 +1,7 @@
+== ==
+
+Note also that work has been to convert across a wide variety of EDL formats: https://gist.github.com/52f5c6386fc67e9e6b6b
+
 == 0.23.5 ==
 
 Cleanup some terminology/minor bug fix/usability fixes.

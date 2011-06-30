@@ -51,6 +51,7 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
+  can accept straight ".edl" files too
   bring to top after a conversion--we get hidden!
   ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
