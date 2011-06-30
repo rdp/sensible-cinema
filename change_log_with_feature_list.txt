@@ -1,6 +1,8 @@
 == ==
 
 Note also that work has been to convert across a wide variety of EDL formats: https://gist.github.com/52f5c6386fc67e9e6b6b
+See also the history_and_related_works_list.txt file for a long list of related, previously existing works, 
+to get the full list to there.
 
 == 0.23.5 ==
 

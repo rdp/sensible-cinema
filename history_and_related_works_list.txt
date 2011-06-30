@@ -10,7 +10,8 @@ VLC also added playlists with optional start and stop positions per entry.  Ffmp
 Once I discovered all of these previously existing programs, I knew the right elements were ready for 
 something like sensible cinema.
 
-See also the "related" section, and "motivation" section.
+See also the "related" section, and "motivation" section.  See also the change_log_with_feature_list.txt file, and several
+blog entries I've posted historically.
 
 Originally the project started as a prototype to "watch hulu (online) and netflix instant movies
 edited" (it uses/used screen snapshots (of specific locations where the digits are expected, based on windows position) 
