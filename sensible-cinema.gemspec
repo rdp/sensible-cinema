@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.23.4"
+  s.version = "0.23.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "TODO",
     "VERSION",
-    "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_RELEASE_ZIP_INSTEAD",
+    "_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_RELEASE_ZIP_FROM_SOURCEFORGE_INSTEAD",
     "bin/sensible-cinema",
     "bin/sensible-cinema-cli",
     "business_ideas.txt",
@@ -100,6 +100,7 @@ Gem::Specification.new do |s|
     "spec/tsmuxer.output",
     "spec/vlc_programmer.spec.rb",
     "template_bats/RUN SENSIBLE CINEMA CLICK HERE.bat",
+    "template_bats/_DO_NOT_RUN_IT_FROM_HERE_DOWNLOAD_THE_RELEASE_ZIP_FROM_SOURCEFORGE_INSTEAD",
     "template_bats/advanced--create or edit sensible cinema delete list files.bat",
     "todo.build_library.txt",
     "todo.inventionzy.txt",
