@@ -130,9 +130,10 @@
   add button "fast preview one" (from file)
   add button "fast preview one" (from dvd)
 
-== DVD-realtime backlog once do, now not do, unordered ==
+== DVD-realtime backlog once yes do, now not do, unordered ==
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
-  investigate xbmc dvd edl
+  investigate xbmc dvd edl how do you do that?
+  investigate WMC "call out to mplayer EDL" or the like...
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
   mplayer EDL allow this:
