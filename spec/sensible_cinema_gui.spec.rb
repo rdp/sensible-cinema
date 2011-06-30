@@ -52,7 +52,7 @@ module SensibleSwing
           "stuff"
         end
       }
-      @subject.choose_dvd_and_edl_for_it
+      @subject.choose_dvd_or_file_and_edl_for_it
       @show_blocking_message_dialog_last_arg.should_not be nil
     end
     
@@ -354,12 +354,12 @@ module SensibleSwing
         @subject.stub!(:choose_dvd_drive_or_file) {
           ["mock_dvd_drive", "Volume", "abcdef1234"]
         }
-        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should == []
+        @subject.choose_dvd_or_file_and_edl_for_it[4]['mutes'].should == []
         new_file_contents = '"disk_unique_id" => "abcdef1234","mutes"=>["0:33", "0:34"]'
         new_file_contents = '"a syntax error' if corrupt_the_file
         File.binwrite('temp/a.txt', new_file_contents)
         # file has been modified!
-        @subject.choose_dvd_and_edl_for_it[4]['mutes'].should_not == []
+        @subject.choose_dvd_or_file_and_edl_for_it[4]['mutes'].should_not == []
       end
     end
     
@@ -413,8 +413,8 @@ module SensibleSwing
           'selected_edl'
         }
         FileUtils.touch 'selected_edl' # blank file is ok :P
-        @subject.choose_dvd_and_edl_for_it
-        @subject.choose_dvd_and_edl_for_it
+        @subject.choose_dvd_or_file_and_edl_for_it
+        @subject.choose_dvd_or_file_and_edl_for_it
         count
       end
 

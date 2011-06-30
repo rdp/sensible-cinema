@@ -442,7 +442,7 @@ module SensibleSwing
     def play_dvd_smplayer_unedited use_mplayer_instead = false
       # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
       # lodo mac os x 'ify'
-      drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_and_edl_for_it false
+      drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
@@ -467,7 +467,7 @@ module SensibleSwing
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
     def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
-      drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_and_edl_for_it
+      drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       if dvd_id == NonDvd
         play_this_mplayer ||= "mplayer \"#{drive_or_file}\"" # play the file instead...
       end
@@ -696,7 +696,7 @@ module SensibleSwing
       got
     end
     
-    def choose_dvd_and_edl_for_it force_choose_edl_file = true
+    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
       
       unless @_edit_list_path # cache file selection...
@@ -758,7 +758,7 @@ module SensibleSwing
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
-      drive, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_and_edl_for_it
+      drive, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
       if watch_unedited
@@ -792,9 +792,11 @@ module SensibleSwing
         Storage['end_time'] = end_time
       end
       dvd_friendly_name = descriptors['name']
-      raise 'no name?' unless dvd_friendly_name
+      raise 'no dvd name in EDL?' unless dvd_friendly_name
       
       dvd_title_track = get_title_track(descriptors)
+      # if dvd_id == NonDvd
+      #   file_from = 
       file_from = get_import_from_filename dvd_friendly_name, dvd_title_track
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited

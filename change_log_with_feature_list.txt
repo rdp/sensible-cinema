@@ -1,6 +1,6 @@
 == ==
 
-Can process by file now.
+Can process by filename now.
 
 == 0.23.3 ==
 
