@@ -114,7 +114,7 @@ module SensibleSwing
     
     def force_accept_license_first
         require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          "Sensible Cinema is distributed under the gplv3.\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+          "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
         require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
           'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
         Storage['main_license_accepted'] = VERSION
@@ -503,7 +503,7 @@ module SensibleSwing
     
     def show_assert_dialog message
       returned = JOptionPane.showConfirmDialog self, message, message, JOptionPane::YES_NO_CANCEL_OPTION
-      assert_confirmed_dialog returned
+      assert_confirmed_dialog returned, nil
     end
       
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
@@ -511,7 +511,7 @@ module SensibleSwing
       puts 'Please confirm license agreement in open window.'
       old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
       UIManager.put("OptionPane.yesButtonText", 'Accept')
-      UIManager.put("OptionPane.noButtonText", "View File (#{license_name})")
+      UIManager.put("OptionPane.noButtonText", "View #{license_name}")
       # cancel button stays the same...
 
       message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
@@ -523,19 +523,21 @@ module SensibleSwing
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       
       returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
-      assert_confirmed_dialog returned
+      assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
       p 'confirmed license noted: ' + license_name
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
     
-    def assert_confirmed_dialog returned
+    def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
       # 1 is view button was clicked
       # 0 is accept
       # 2 is cancel
       if returned == 1
-        system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
-        puts "Please restart after reading license agreement, to be able to then accept it."
+        if license_url_should_also_be_embedded_by_you_in_message
+          system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
+          puts "Please restart after reading license agreement, to be able to then accept it."
+        end
         System.exit 1
       end
       if returned == 2
@@ -754,13 +756,20 @@ module SensibleSwing
         save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation or spaces for now...
         fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
         save_to = fc.go
+        begin
+          FileUtils.touch save_to
+          File.delete save_to
+        rescue Errno::EACCES => e
+          show_blocking_message_dialog "unable to write to that directory, please pick again: " + e.to_s
+          raise 'pick again!'
+        end
         a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
         a.close
         File.delete a.path
         freespace = get_freespace(save_to)
-        if freespace < 16_000_000_000
+        if freespace < 8_000_000_000
           show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
-          (depending on DVD size, you may need like 16G free, but typically will need around 10GB free--you have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
+          (depending on DVD size, you may need around 10G free--you have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
         end
         raise 'cannot save to filname with spaces yet (ask for it)' if save_to =~ / /
         save_to
