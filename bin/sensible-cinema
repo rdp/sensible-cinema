@@ -454,7 +454,7 @@ module SensibleSwing
         config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
       end
-      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2 -nocache "
+      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
       p command
       @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:
       'o' key: turn on on-screen-display timestamps (note: these are 30 fps timestamps so will need to be converted to use).
@@ -485,7 +485,7 @@ module SensibleSwing
       @popup ||= show_non_blocking_message_dialog("About to run mplayer EDL.  To control it, use\n space for pause,\n f for full screen,\n arrow keys to seek.")
       # LODO dry up mplayer dvd opts...
       if OS.windows?
-        play_this_mplayer ||= "mplayer -nocache dvdnav://#{title_track} "
+        play_this_mplayer ||= "mplayer  -mouse-movements -nocache dvdnav://#{title_track} "
       else
         # macports' mplayer has no dvdnav ?? 
         play_this_mplayer ||= "mplayer dvd://#{title_track} "
