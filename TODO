@@ -49,6 +49,7 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
+    fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
   don't use eval!
   can auto-use tsmuxer at all
   add buttons for "convert 4945 to x" and vice versa...

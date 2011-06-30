@@ -146,7 +146,7 @@ module SensibleSwing
       ## BUTTONS ##
       
       @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
-      @mplayer_edl.tool_tip = "This will watch your DVD in realtime on your computer while skipping/muting the questionable scenes."
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting the questionable scenes."
       @mplayer_edl.on_clicked {
         do_mplayer_edl
       }
