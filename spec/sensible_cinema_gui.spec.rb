@@ -395,12 +395,11 @@ module SensibleSwing
         }
         if !select_a_dvd
           DriveInfo.stub!(:get_dvd_drives_as_openstruct) { [] } # no DVD disks inserted...        
-          p DriveInfo.get_dvd_drives_as_openstruct
         end
         @subject.stub(:get_disk_chooser_window) {|names|
           a = OpenStruct.new
           def a.setSize x,y; end
-          a.stub(:selected_idx) { select_a_dvd ? 0 : 1}
+          a.stub(:selected_idx) { 0 } # first entry is either DVD name *or* file, and is apparently "0" weird weird weird
           # ruby bug [?] always return nil
           # def a.selected_idx; p 'returning', select_this_idx; select_this_idx; end
           a

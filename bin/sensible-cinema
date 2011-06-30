@@ -928,7 +928,7 @@ module SensibleSwing
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
       if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
-        names += ['Local File']
+        names += ['No DVD so choose Local File']
         used_local_file_option = true
       end
       
@@ -946,7 +946,8 @@ module SensibleSwing
       end
       
       if selected_idx
-        if used_local_file_option && selected_idx == names.length
+        if used_local_file_option
+          raise unless selected_idx == 0 # it was our only option...
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
           show_blocking_message_dialog "Do you certify you own the DVD this came of and have it in your possession?"
           @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
