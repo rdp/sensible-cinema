@@ -500,6 +500,11 @@ module SensibleSwing
       p command
       Thread.new { system_blocking command; @popup.dispose }
     end
+    
+    def show_assert_dialog message
+      returned = JOptionPane.showConfirmDialog self, message, message, JOptionPane::YES_NO_CANCEL_OPTION
+      assert_confirmed_dialog returned
+    end
       
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
         title = 'Confirm Acceptance of License Agreement', message = nil
@@ -517,7 +522,14 @@ module SensibleSwing
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       
-      returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      assert_confirmed_dialog returned
+      p 'confirmed license noted: ' + license_name
+      throw unless returned == 0
+      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+    end
+    
+    def assert_confirmed_dialog returned
       # 1 is view button was clicked
       # 0 is accept
       # 2 is cancel
@@ -534,10 +546,8 @@ module SensibleSwing
         p 'license exited early...exiting'
         System.exit 1
       end
-      p 'confirmed license noted: ' + license_name
-      throw unless returned == 0
-      old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
+
     
     def print *args
       Kernel.print *args # avoid bin\sensible-cinema.rb:83:in `system_blocking': cannot convert instance of class org.jruby.RubyString to class java.awt.Graphics (TypeError)
@@ -758,7 +768,7 @@ module SensibleSwing
     end
 
     def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
-      drive, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
+      drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
       if watch_unedited
@@ -795,9 +805,11 @@ module SensibleSwing
       raise 'no dvd name in EDL?' unless dvd_friendly_name
       
       dvd_title_track = get_title_track(descriptors)
-      # if dvd_id == NonDvd
-      #   file_from = 
-      file_from = get_import_from_filename dvd_friendly_name, dvd_title_track
+      if dvd_id == NonDvd
+         file_from = drive_or_file
+      else
+        file_from = get_import_from_filename dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
+      end
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
@@ -856,7 +868,10 @@ module SensibleSwing
       
       if !start_time
         # assume a full run..
-        popup_message += "NB that the created file will be playable only with VLC (possibly also with smplayer), but probably not with windows media player."
+        popup_message <<-EOL
+          NB that the created file will be playable only with VLC (possibly also with smplayer), 
+          but probably not with windows media player.
+        EOL
       end
       
       popup = show_non_blocking_message_dialog(popup_message, "OK")
@@ -951,7 +966,7 @@ module SensibleSwing
         if used_local_file_option
           raise unless selected_idx == 0 # it was our only option...
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
-          show_blocking_message_dialog "Do you certify you own the DVD this came of and have it in your possession?"
+          show_assert_dialog "Do you certify you own the DVD this came of and have it in your possession?"
           @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]

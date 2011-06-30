@@ -423,8 +423,12 @@ module SensibleSwing
       end
 
       it "should only prompt for file selection once" do
-        yo( false ).should == 0 # choose a file, so never md5sum the file
-        @show_blocking_message_dialog_last_arg.should =~ /certify/i
+        prompted = false
+        @subject.stub(:show_assert_dialog) {
+          prompted = true
+        }
+        yo( false ).should == 0 # choose a file, so never dvdid any dvd...
+        assert prompted
       end
   
       it "should prompt you if you need to insert a dvd" do
