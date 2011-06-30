@@ -929,7 +929,7 @@ module SensibleSwing
           show_blocking_message_dialog "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
         end
       else
-        show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the troubleshooting section of the README file.", "Failed", JOptionPane::ERROR_MESSAGE)
+        show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE)
       end
     end
     

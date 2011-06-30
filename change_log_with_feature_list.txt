@@ -1,6 +1,12 @@
+== 0.23.5 ==
+
+Cleanup some terminology/minor bug fix/usability fixes.
+
 == 0.23.4 ==
 
-Can process by filename now if no DVD is inserted (warns and asserts they must own it).
+Can process by filename now if no DVD is inserted (warns and asserts they must own it, then uses it).
+It also memorizes directory names auto-magically according to source line location.
+This one was quickly superceded by 0.23.5 to accomodate for some fatal bug.
 
 == 0.23.3 ==
 

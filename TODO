@@ -148,7 +148,8 @@
   investigate: can I use zoomplayer max?
   investigate dvdrsbvdl (windows media center edl plugin)
 
-== DVD/DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+== DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  the auto-matcher filename to subtitles [?]
   "media browser" plugin?
   @makemkv: show us the title numbers, and number them *by those*
   @macports: set notestxt \
@@ -339,6 +340,7 @@ ask swank if individuals can rent too?
 
 == random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
 
+@mplayer: you return the wrong return code, sillys! https://gist.github.com/1056292
 @smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]
   @mplayer is it really too slow [link], and there thus no hope for EDL working right? maybe it could change to be based off the get_time_pos ?
 Also things skip-worthy include The prefix/endfix of Netflix
