@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sensible-cinema}
-  s.version = "0.23.3"
+  s.version = "0.23.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Roger Pack"]
-  s.date = %q{2011-06-28}
+  s.date = %q{2011-06-30}
   s.email = %q{rogerdpack@gmail.com}
   s.executables = ["sensible-cinema", "sensible-cinema-cli"]
   s.extra_rdoc_files = [
@@ -29,9 +29,11 @@ Gem::Specification.new do |s|
     "business_ideas.txt",
     "change_log_with_feature_list.txt",
     "developer_how_to_contribute_to_the_project.txt",
+    "documentation/README.TXT",
     "documentation/how_to_create_your_own_delete_lists.txt",
     "documentation/how_to_get_files_from_dvd.txt",
     "documentation/is_it_legal_to_copy_dvds.txt",
+    "documentation/troubleshooting.txt",
     "experimental_online_player_ocr_readme.txt",
     "go.bat",
     "go.sh",
@@ -53,6 +55,7 @@ Gem::Specification.new do |s|
     "lib/file_chooser.rb",
     "lib/frame_accurate.rb",
     "lib/keyboard_input.rb",
+    "lib/media_info_parser.rb",
     "lib/mencoder_wrapper.rb",
     "lib/mouse.rb",
     "lib/mouse_forever.rb",
@@ -80,8 +83,8 @@ Gem::Specification.new do |s|
     "spec/edl_parser.spec.rb",
     "spec/frame_accurate.spec.rb",
     "spec/go_line.bat",
-    "spec/how_to",
     "spec/keyboard_input.spec.rb",
+    "spec/media_info_parser.spec.rb",
     "spec/mencoder_wrapper.spec.rb",
     "spec/mouse.spec.rb",
     "spec/mplayer_edl.spec.rb",
@@ -94,6 +97,7 @@ Gem::Specification.new do |s|
     "spec/subtitle_profanity_finder.spec.rb",
     "spec/swing_helpers.spec.rb",
     "spec/test_yaml.yml",
+    "spec/tsmuxer.output",
     "spec/vlc_programmer.spec.rb",
     "template_bats/RUN SENSIBLE CINEMA CLICK HERE.bat",
     "template_bats/advanced--create or edit sensible cinema delete list files.bat",
@@ -113,6 +117,7 @@ Gem::Specification.new do |s|
     "vendor/mac_dvdid/lib/libdvdid.la",
     "vendor/monkey.png",
     "vendor/readme.txt",
+    "vendor/tsmuxer_1.10.6/licence.txt",
     "www/index.html",
     "zamples/edit_decision_lists/category descriptions.txt",
     "zamples/edit_decision_lists/dvds/Harry Potter 2.txt",

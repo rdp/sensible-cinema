@@ -17,7 +17,9 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
+  mplayerx work?
   latest dir "conflict" for grabbing sintel from file
+  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   cheap minimize demo "fake auto" :)
     friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
   cheap static-ify demo for mutes
