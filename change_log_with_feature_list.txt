@@ -1,5 +1,7 @@
 == ==
 
+Can process by file now.
+
 == 0.23.3 ==
 
 Revamp look of the create mode, add some buttons, revamp some docu.

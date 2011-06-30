@@ -123,8 +123,8 @@ module SensibleSwing
         @get_mencoder_commands_args = args
         'fake get_mencoder_commands'
       }
-      @subject.stub!(:new_existing_file_selector) {
-        FakeFileChooser.new
+      @subject.stub!(:new_existing_file_selector_and_select_file) {
+        'abc'
       }
       @subject.stub!(:new_nonexisting_filechooser) {
         FakeFileChooser.new
@@ -195,9 +195,9 @@ module SensibleSwing
         count += 1
         FakeFileChooser.new
       }
-      @subject.stub!(:new_existing_file_selector) {
+      @subject.stub!(:new_existing_file_selector_and_select_file) {
         count += 1
-        FakeFileChooser.new
+        'abc'
       }
       @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       3.times { @subject.do_copy_dvd_to_hard_drive(false) }
@@ -387,7 +387,7 @@ module SensibleSwing
         @subject.unstub!(:choose_dvd_drive_or_file)
       end
 
-      def yo select_this_idx
+      def yo select_a_dvd
         count = 0
         DriveInfo.stub!(:md5sum_disk) {
           count += 1
@@ -397,20 +397,18 @@ module SensibleSwing
         @subject.stub(:get_disk_chooser_window) {|names|
           a = OpenStruct.new
           def a.setSize x,y; end
-          a.stub(:selected_idx) { select_this_idx}
+          a.stub(:selected_idx) { select_a_dvd ? 0 : 1}
           # ruby bug [?] always return nil
           # def a.selected_idx; p 'returning', select_this_idx; select_this_idx; end
           a
         }
-        @subject.stub(:new_nonexisting_filechooser) {
+        @subject.stub(:new_nonexisting_filechooser) {|a, b|
            a = ''
            def a.go; 'selected_filename'; end
            a
         }
-        @subject.stub(:new_existing_file_selector) {
-          a = ''
-          def a.go; 'selected_edl'; end
-          a
+        @subject.stub(:new_existing_file_selector_and_select_file) {
+          'selected_edl'
         }
         FileUtils.touch 'selected_edl' # blank is ok :P
         @subject.choose_dvd_and_edl_for_it
@@ -419,11 +417,11 @@ module SensibleSwing
       end
 
       it "should only prompt for disk selection once" do
-        yo( 0 ).should == 1 # choose the 'a dvd name' DVD
+        yo( true ).should == 1 # choose the 'a dvd name' DVD
       end
 
       it "should only prompt for file selection once" do
-        yo( 1 ).should == 0 # choose a file, so never md5sum the file
+        yo( false ).should == 0 # choose a file, so never md5sum the file
       end
   
       it "should prompt you if you need to insert a dvd" do
@@ -466,12 +464,8 @@ module SensibleSwing
    end
   
    it "should be able to parse an srt for ya" do
-     @subject.stub!(:new_existing_file_selector) {
-       fc = FakeFileChooser.new
-       fc.stub!(:go) {
-         'spec/dragon.srt'
-       }
-       fc
+     @subject.stub!(:new_existing_file_selector_and_select_file) {
+       'spec/dragon.srt'
      }
      file = SensibleSwing::MainWindow::EdlTempFile
      FileUtils.rm_rf file
@@ -481,7 +475,7 @@ module SensibleSwing
   
   it "should have a created play unedited smplayer button" do
     @subject.stub(:show_non_blocking_message_dialog) {
-       # don't display the message...
+       # don't display the popup message...
     }
     @subject.stub(:single_edit_list_matches_dvd) {
       nil
