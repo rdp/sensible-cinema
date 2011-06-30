@@ -51,7 +51,8 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
-  can accept straight ".edl" files too
+  can accept straight ".edl" files too, as my input
+  decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
   bring to top after a conversion--we get hidden!
   ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
@@ -131,8 +132,10 @@
   add button "fast preview one" (from dvd)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
+  
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   investigate xbmc dvd edl how do you do that?
+    maybe use smplayer full-screened, to avoid?
   investigate WMC "call out to mplayer EDL" or the like...
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
@@ -152,6 +155,7 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  ask mplayer "could you make the OSD available to smplayer so it can get the right timestamps at least for its display?"
   some way to hide spoilers, like soundtrack adds that ruin the movie for ya...
   decide on "community" -- should it be all my own community? mymovies community?
   the auto-matcher filename to subtitles [?]
@@ -343,7 +347,7 @@ bounty dvdnav
   fix dvdnav stuffs?
 ask swank if individuals can rent too?
 
-== random non-DVD backlog ... or never do DVD. note: just plow forward, to "grab" available ideas...except that for now, just what *I* plan on needing for myself (filters for what I need/want). ==
+== random non-DVD backlog ... or never do DVD. ==
 
 @mplayer: you return the wrong return code, sillys! https://gist.github.com/1056292
 @smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]
