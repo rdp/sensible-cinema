@@ -698,11 +698,11 @@ module SensibleSwing
     def new_existing_file_selector_and_select_file title, dir=nil
       out = FileDialog.new(self)
       out.set_title title
-      dir ||= Storage[caller[0]]
+      dir ||= Storage[caller.inspect]
       out.set_directory dir
       got = out.go
       raise 'cancelled choosing existing file' unless got # I think we always want to raise here...
-      Storage[caller[0]] = File.dirname(got) # I think these work...
+      Storage[caller.inspect] = File.dirname(got) # I think these work...
       got
     end
     
@@ -868,7 +868,7 @@ module SensibleSwing
       
       if !start_time
         # assume a full run..
-        popup_message <<-EOL
+        popup_message += <<-EOL
           NB that the created file will be playable only with VLC (possibly also with smplayer), 
           but probably not with windows media player.
         EOL

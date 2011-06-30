@@ -17,6 +17,7 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
+  latest dir "conflict" for grabbing sintel from file
   cheap minimize demo "fake auto" :)
     friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
   cheap static-ify demo for mutes
@@ -48,6 +49,7 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
+  bring to top after a conversion--we get hidden!
   ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
   don't use eval!

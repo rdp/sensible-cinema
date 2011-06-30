@@ -1,6 +1,6 @@
-== ==
+== 0.23.4 ==
 
-Can process by filename now.
+Can process by filename now if no DVD is inserted (warns and asserts they must own it).
 
 == 0.23.3 ==
 
