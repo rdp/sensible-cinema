@@ -13,7 +13,7 @@ Ffmpeg is included, under the GPLv2: http://www.ffmpeg.org/legal.html http://www
 
 unzip.exe is herein included, under the info-zip license: http://www.info-zip.org/license.html
 
-Some binary builds of dvdid are also distributed here.  See http://www.srcf.ucam.org/~cjk32/dvdid
+Some binary builds of dvdid are also distributed here.  See http://www.srcf.ucam.org/~cjk32/dvdid (in an email he said he'd release them under a BSD or other permissive type license)
 
 TsMuxer binaries are included, with their own license, see vendor/tsmuxer1.10.6/licence.txt (it allows for redistribution).
 

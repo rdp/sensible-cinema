@@ -115,6 +115,7 @@
     except if it's a specific scene run test...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   generic/consumer EDL run through should be through smplayer...do I need/want straight mplayer option too though?
+  do I need tsmuxer?
 
 == other lists ==
 
