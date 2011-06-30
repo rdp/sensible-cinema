@@ -119,7 +119,10 @@ task 'zip' do
 end
 
 def sys arg
- 3.times {
+ 3.times { |n|
+  if n > 0
+    p 'retrying ' + arg
+  end
   if system arg
     return
   end
