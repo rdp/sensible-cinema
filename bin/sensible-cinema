@@ -161,6 +161,24 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive false
       }
       
+      @create_dot_edl = new_jbutton( "Create moviefile.mpg.edl file to correspond to an existing moviefile.mpg file", false)
+      @create_dot_edl.tool_tip = <<-EOL
+        Create a moviefilename.ext.edl file, which corresponds to previously existing "moviefilename.ext" file.
+        XBMC/smplayer (which can be used by WMC plugins, etc.) "automagically", 
+        if it exists, they will automatically use the .edl file to show that movie edited when you play it back.
+      EOL
+      @create_dot_edl.on_clicked {
+        filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
+        edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
+        descriptors = EdlParser.parse_file edl_filename
+        # LODO these timings...DRY up...
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
+        output_file = filename_mpg + '.edl'
+        File.write(output_file, edl_contents)
+        raise unless File.exist?(output_file)
+        show_blocking_message_dialog("created #{output_file}")
+      }
+
       @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
@@ -255,7 +273,6 @@ module SensibleSwing
         File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
         open_file_to_edit_it EdlTempFile
       }
-
 
       add_text_line 'Create Options that first create a local intermediary file unless it already exists:'
 
@@ -701,10 +718,10 @@ module SensibleSwing
       out = FileDialog.new(self)
       out.set_title title
       dir ||= Storage[caller.inspect]
-      out.set_directory dir
+      out.set_directory dir.to_filename
       got = out.go
-      raise 'cancelled choosing existing file' unless got # I think we always want to raise here...
-      Storage[caller.inspect] = File.dirname(got) # I think these work...
+      raise 'cancelled choosing existing file method' unless got # I think we always want to raise...
+      Storage[caller.inspect] = File.dirname(got)
       got
     end
     

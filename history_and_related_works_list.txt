@@ -87,6 +87,7 @@ http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's
 Corel WinDVD has "Quick Clip" settings for capturing from DVD.
 Microsoft's built-in magnifier basically copies DVD's screen output if mouse is placed over playing DVD.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
+moviemask once had several advanced features: http://theeditedmovieencyclopedia.blogspot.com/2008/06/cleaning-up-movies-part-2.html
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
 AviSynth can script dvd playback http://forum.doom9.org/archive/index.php/t-109558.html
 ps3 media server has edl support: https://github.com/chocolateboy/PMS-EDL maybe would work with DVD's dunno

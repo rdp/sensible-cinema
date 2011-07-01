@@ -80,11 +80,9 @@ class EdlParser
   def self.get_secs timestamp_string_begin, timestamp_string_end, add_begin, add_end, splits
     answers = []
     unless timestamp_string_begin
-    p 'BAD'
       raise 'non begin' 
     end
     unless timestamp_string_end
-    p 'BAD2', '', ''
       raise 'non end' 
     end
     for type, offset, multiplier in [[timestamp_string_begin, add_begin, -1], [timestamp_string_end, add_end, 1]]

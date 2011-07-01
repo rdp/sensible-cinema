@@ -17,9 +17,6 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  mplayerx work?
-  latest dir "conflict" for grabbing sintel from file
-  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   cheap minimize demo "fake auto" :)
     friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
   cheap static-ify demo for mutes
@@ -34,6 +31,7 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above ==
+  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -47,22 +45,24 @@
     Almost overnight, competitors to CleanFlicks popped up with twists on the CleanFlicks brand -- CleanFilms, Clean Flix, Clean-Flicks, Family Focus Films
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
-    movie mask
+    movie mask wayback machine
   next timing thing (notes file)
+  add the "create .edl file for xbmc/smplayer" button
 
 == yes do, un-ordered currently, from the various future release options ==
+  mplayerx work?
+    if not, patch that fella...and tell them about it!
   can accept straight ".edl" files too, as my input
   decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
-  bring to top after a conversion--we get hidden!
+    don't use eval!
+  bring to top after a conversion, and for prompts...we get hidden!
   ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
-  don't use eval!
   can auto-use tsmuxer at all
   add buttons for "convert 4945 to x" and vice versa...
   warn/redirect if wrong looking file extension...
    mac just die with instructions to use tsmuxer first...
-  add the "create .edl file for xbmc et al" button
-  add a "watch edited from file" option...don't *force* too...?
+  add a "watch edited from local file" option...
     check if some other buttons are outdated...
   unit tests (all)
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
@@ -155,6 +155,8 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  make this thing load faster: don't require rubygems...uh...faster_require?
+  does xbmc need a "convert to 30fps edl" for DVD?
   @xbmc can you call out to another player prog plz?
   @xbmc "command line play this dvd with this EDL" :)
   ask mplayer "could you make the OSD available to smplayer so it can get the right timestamps at least for its display?"
