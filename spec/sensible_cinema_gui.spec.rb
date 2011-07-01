@@ -444,10 +444,10 @@ module SensibleSwing
     end
     
     it "should not show the normal buttons in create mode" do
-      MainWindow.new.buttons.length.should == 4
+      MainWindow.new.buttons.length.should == 5
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should == 17
-      ARGV.pop # test cleanup--why not :)
+      ARGV.pop # post-test cleanup--why not :)
     end
     
     it "should read splits from the file" do

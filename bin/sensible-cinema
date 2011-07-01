@@ -151,7 +151,6 @@ module SensibleSwing
         create_brand_new_edl
       end
       
-      
       @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file( "Pick file to edit", EDL_DIR)
@@ -187,7 +186,7 @@ module SensibleSwing
 #        raise 'todo' # TODO 
 #      }
 
-      # TODO "Watch a file using an EDL on it"
+      # TODO button "Watch a file using an EDL on it"
 
 
       @display_unique = new_jbutton( "Display current DVD's unique ID", true )
@@ -235,7 +234,7 @@ module SensibleSwing
         open_file_to_edit_it EdlTempFile
       }
 
-      add_text_line 'Create Options that first create a local intermediary file unless it already exists:'
+      add_text_line 'Create Options that first create/use a local intermediary file:'
 
       @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)", true )
       @preview_section.tool_tip = <<-EOL
@@ -288,15 +287,6 @@ module SensibleSwing
         thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
       }
       
-      add_text_line 'Contact:'
-
-      @upload = new_jbutton("Upload/E-mail suggestion/Contact/Submit anything", true) # keep this one last! :)
-      @upload.tool_tip = "We welcome all feedback!  For example if you create a new DVD EDL, please submit it back to us so that others can benefit from it!"
-      @upload.on_clicked {
-        system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
-        system_non_blocking("start http://groups.google.com/group/sensible-cinema")
-      }
-      
     end
     
     def initialize
@@ -343,6 +333,16 @@ module SensibleSwing
       end
       
       setup_advanced_buttons
+      
+      add_text_line 'Contact:'
+
+      @upload = new_jbutton("Submit feedback/Upload Anything/Request Help", false) # keep this one last! :)
+      @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
+      @upload.on_clicked {
+        system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
+        system_non_blocking("start http://groups.google.com/group/sensible-cinema")
+      }
+      
 
       
       @progress_bar = JProgressBar.new(0, 100)
@@ -726,7 +726,7 @@ module SensibleSwing
       out = FileDialog.new(self)
       out.set_title title
       dir ||= Storage[caller.inspect]
-      out.set_directory dir.to_filename
+      out.set_directory dir.to_filename if dir
       got = out.go
       raise 'cancelled choosing existing file method' unless got # I think we always want to raise...
       Storage[caller.inspect] = File.dirname(got)
