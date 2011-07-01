@@ -132,6 +132,8 @@ module SensibleSwing
         Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
         if it exists, and automatically use it .edl to show that file edited played back.
+        If you use smplayer, note that you'll need to download the "lord mulder mplayer"
+        version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
         filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
