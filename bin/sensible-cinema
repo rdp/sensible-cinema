@@ -135,6 +135,7 @@ module SensibleSwing
       EOL
       @create_dot_edl.on_clicked {
         filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
+        assert_ownership_dialog
         edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
         descriptors = EdlParser.parse_file edl_filename
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
@@ -526,8 +527,10 @@ module SensibleSwing
       Thread.new { system_blocking command; @popup.dispose }
     end
     
-    def show_assert_dialog message
-      returned = JOptionPane.showConfirmDialog self, message, message, JOptionPane::YES_NO_CANCEL_OPTION
+    def assert_ownership_dialog 
+      message = "Do you certify you own the DVD this came of and have it in your possession?"
+      title = "Verify ownership"
+      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       assert_confirmed_dialog returned, nil
     end
       
@@ -1000,7 +1003,7 @@ module SensibleSwing
         if used_local_file_option
           raise unless selected_idx == 0 # it was our only option...
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
-          show_assert_dialog "Do you certify you own the DVD this came of and have it in your possession?"
+          assert_ownership_dialog
           @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]

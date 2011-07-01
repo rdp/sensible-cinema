@@ -1,5 +1,11 @@
 == ==
 
+Added capability/functionality to create files used in other players to automatically cut out bad scenes.
+It now converts from one EDL format (ours) to another (mplayer), and saves it away as filename.mpg -> filename.edl
+Now other players, like Windows Media Center, can playback files edited.  Just use a plugin like mymovies,
+instruct it to use smplayer as the default file player, create these .edl files, and voila, realtime playback
+within a high quality media collection manager.
+
 Note also that work has been to convert across a wide variety of EDL formats: https://gist.github.com/52f5c6386fc67e9e6b6b
 See also the history_and_related_works_list.txt file for a long list of related, previously existing works, 
 to get the full list to there.

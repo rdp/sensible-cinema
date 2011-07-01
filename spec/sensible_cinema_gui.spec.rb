@@ -424,7 +424,7 @@ module SensibleSwing
 
       it "should only prompt for file selection once" do
         prompted = false
-        @subject.stub(:show_assert_dialog) {
+        @subject.stub(:assert_ownership_dialog) {
           prompted = true
         }
         yo( false ).should == 0 # choose a file, so never dvdid any dvd...
@@ -492,9 +492,14 @@ module SensibleSwing
   
   it "should create" do
     FileUtils.rm_rf 'yo.edl' # nothing up my sleeve.
+    prompted = false
+    @subject.stub(:assert_ownership_dialog) {
+      prompted = true
+    }
     @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/edl_for_unit_tests.txt")
     click_button(:@create_dot_edl)
     assert File.exist? 'yo.edl'
+    assert prompted
   end
   
   

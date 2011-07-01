@@ -1,12 +1,10 @@
 up next:
-  lighning exact frame to compare the two fulli's...
+  lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
 
-
-== ? ==
-http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL
+http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
 == upconvert mplayer ==
-
+ guess I prefer mplayer to VLC at this point anyway <sigh> EDL is just better...
  is "-mc". It means "max A-V time correction per frame", and defaults to 0.01. For good input, you can go down even to 0.0001, but 0.001 i
   -vop denoise3d
   -vop hqdn3d
