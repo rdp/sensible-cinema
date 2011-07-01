@@ -774,7 +774,7 @@ module SensibleSwing
     def get_import_from_filename dvd_title, dvd_title_track
       @_get_import_from_filename ||=
       begin
-        new_existing_file_selector_and_select_file "Please choose the file that is your ripped version of #{dvd_title} title ##{dvd_title_track} (.mpg or .ts--see documentation/how_to_get_files_from_dvd.txt file)"
+        new_existing_file_selector_and_select_file "Please choose the file that is your ripped equivalent of #{dvd_title} (title track #{dvd_title_track}) (.mpg or .ts--see file documentation/how_to_get_files_from_dvd.txt)"
       end
     end
     
