@@ -444,7 +444,7 @@ module SensibleSwing
     end
     
     it "should not show the normal buttons in create mode" do
-      MainWindow.new.buttons.length.should == 5
+      MainWindow.new.buttons.length.should == 4
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should == 17
       ARGV.pop # test cleanup--why not :)
@@ -491,10 +491,10 @@ module SensibleSwing
   end
   
   it "should create" do
-    FileUtils.rm_rf 'yo.mpg.edl' # nothing up my sleeve.
+    FileUtils.rm_rf 'yo.edl' # nothing up my sleeve.
     @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/edl_for_unit_tests.txt")
     click_button(:@create_dot_edl)
-    assert File.exist? 'yo.mpg.edl'
+    assert File.exist? 'yo.edl'
   end
   
   

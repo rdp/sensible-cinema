@@ -122,58 +122,24 @@ module SensibleSwing
 
     Storage = Storage.new("sensible_cinema_storage")
     
-    def initialize
-      super "Sensible-Cinema #{VERSION} (GPL)"
-      if !(Storage['main_license_accepted'] == VERSION)
-        force_accept_license_first
-      end
+    
+    def setup_advanced_buttons
+      
+      add_text_line 'Realtime create Options:'
 
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
-      panel = JPanel.new
-      @panel = panel
-      @buttons = []
-      panel.set_layout nil
-      add panel # why can't I just slap these down?
-
-      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for tooltip \"help\" descriptions." : "")
-      happy = Font.new("Tahoma", Font::PLAIN, 11)
-      jlabel.setFont(happy)
-      jlabel.set_bounds(44,44,460,14)
-      panel.add jlabel
-      @starting_button_y = 120
-      @button_width = 400      
-      
-      ## BUTTONS ##
-      
-      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
-      @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting the questionable scenes."
-      @mplayer_edl.on_clicked {
-        do_mplayer_edl
-      }
-      
-      @create = new_jbutton( "Create edited copy of a DVD's file on Your Hard Drive", false)
-      @create.tool_tip = <<-EOL
-        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
-        The file you create will contain the whole movie edited.
-        It takes quite awhile maybe 2 hours.
-      EOL
-      @create.on_clicked {
-        do_copy_dvd_to_hard_drive false
-      }
-      
-      @create_dot_edl = new_jbutton( "Create moviefile.mpg.edl file to correspond to an existing moviefile.mpg file", false)
+      @create_dot_edl = new_jbutton( "Create a moviefilename.edl file", true)
       @create_dot_edl.tool_tip = <<-EOL
-        Create a moviefilename.ext.edl file, which corresponds to previously existing "moviefilename.ext" file.
-        XBMC/smplayer (which can be used by WMC plugins, etc.) "automagically", 
-        if it exists, they will automatically use the .edl file to show that movie edited when you play it back.
+        Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
+        XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
+        if it exists, and automatically use it .edl to show that file edited played back.
       EOL
       @create_dot_edl.on_clicked {
         filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
         edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
         descriptors = EdlParser.parse_file edl_filename
-        # LODO these timings...DRY up...
+        # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
-        output_file = filename_mpg + '.edl'
+        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl'
         File.write(output_file, edl_contents)
         raise unless File.exist?(output_file)
         show_blocking_message_dialog("created #{output_file}")
@@ -184,12 +150,7 @@ module SensibleSwing
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
       end
-
-      @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
-        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # says it fails in error...
-      end
       
-      add_text_line 'Realtime create Options:'
       
       @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
@@ -336,6 +297,53 @@ module SensibleSwing
         system_non_blocking("start http://groups.google.com/group/sensible-cinema")
       }
       
+    end
+    
+    def initialize
+      super "Sensible-Cinema #{VERSION} (GPL)"
+      if !(Storage['main_license_accepted'] == VERSION)
+        force_accept_license_first
+      end
+
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
+      panel = JPanel.new
+      @panel = panel
+      @buttons = []
+      panel.set_layout nil
+      add panel # why can't I just slap these down?
+
+      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for tooltip \"help\" descriptions." : "")
+      happy = Font.new("Tahoma", Font::PLAIN, 11)
+      jlabel.setFont(happy)
+      jlabel.set_bounds(44,44,460,14)
+      panel.add jlabel
+      @starting_button_y = 120
+      @button_width = 400      
+      
+      ## BUTTONS ##
+      
+      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting the questionable scenes."
+      @mplayer_edl.on_clicked {
+        do_mplayer_edl
+      }
+      
+      @create = new_jbutton( "Create edited copy of a DVD's file on Your Hard Drive", false)
+      @create.tool_tip = <<-EOL
+        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
+        The file you create will contain the whole movie edited.
+        It takes quite awhile maybe 2 hours.
+      EOL
+      @create.on_clicked {
+        do_copy_dvd_to_hard_drive false
+      }
+      
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
+        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # declares it fails, in error...
+      end
+      
+      setup_advanced_buttons
+
       
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
