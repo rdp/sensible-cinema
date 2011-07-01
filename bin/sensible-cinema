@@ -126,6 +126,18 @@ module SensibleSwing
     def setup_advanced_buttons
       
       add_text_line 'Realtime create Options:'
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
+        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
+      @create_new_edl_for_current_dvd.on_clicked do
+        create_brand_new_edl
+      end
+      
+      @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list.on_clicked {
+        filename = new_existing_file_selector_and_select_file( "Pick file to edit", EDL_DIR)
+        open_file_to_edit_it filename
+      }
+      
 
       @create_dot_edl = new_jbutton( "Create a moviefilename.edl file", true)
       @create_dot_edl.tool_tip = <<-EOL
@@ -147,19 +159,8 @@ module SensibleSwing
         raise unless File.exist?(output_file)
         show_blocking_message_dialog("created #{output_file}")
       }
+      
 
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
-        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
-      @create_new_edl_for_current_dvd.on_clicked do
-        create_brand_new_edl
-      end
-      
-      @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
-      @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file( "Pick file to edit", EDL_DIR)
-        open_file_to_edit_it filename
-      }
-      
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)", true)
       @play_smplayer.tool_tip = <<-EOL
         This will play the DVD unedited within smplayer.
@@ -184,13 +185,6 @@ module SensibleSwing
       @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true
       }
-
-#      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
-#        raise 'todo' # TODO 
-#      }
-
-      # TODO button "Watch a file using an EDL on it"
-
 
       @display_unique = new_jbutton( "Display current DVD's unique ID", true )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
@@ -321,7 +315,7 @@ module SensibleSwing
         do_mplayer_edl
       }
       
-      @create = new_jbutton( "Create edited copy of a DVD's file on Your Hard Drive", false)
+      @create = new_jbutton( "Create edited copy of a DVD on Your Hard Drive", false)
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
         The file you create will contain the whole movie edited.
@@ -335,6 +329,13 @@ module SensibleSwing
         system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # declares it fails, in error...
       end
       
+      
+#      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
+#        raise 'todo' # TODO 
+#      }
+
+      # TODO button "Watch a file using an EDL on it"
+
       setup_advanced_buttons
       
       add_text_line 'Contact:'
@@ -781,28 +782,26 @@ module SensibleSwing
     def get_save_to_filename dvd_title
       @_get_save_to_filename ||=
       begin
-        fc = new_nonexisting_filechooser "Pick where to save #{dvd_title} edited version as"
+        fc = new_nonexisting_filechooser "Pick where to save #{dvd_title} edited version to"
         save_to_file_name = dvd_title + ' edited version'
-        save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation or spaces for now...
+        save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') + ".avi" # no punctuation or spaces for now, to not complicate...
         fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
         save_to = fc.go
+        raise 'no spaces allowed yet' if save_to =~ / /
         begin
-          FileUtils.touch save_to
-          File.delete save_to
+          a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
+          a.close
+          File.delete a.path
         rescue Errno::EACCES => e
           show_blocking_message_dialog "unable to write to that directory, please pick again: " + e.to_s
           raise 'pick again!'
         end
-        a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
-        a.close
-        File.delete a.path
         freespace = get_freespace(save_to)
         if freespace < 8_000_000_000
           show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
           (depending on DVD size, you may need around 10G free--you have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
         end
-        raise 'cannot save to filname with spaces yet (ask for it)' if save_to =~ / /
-        save_to
+        save_to.gsub(/\.avi$/, '')
       end
     end
 
@@ -1064,11 +1063,14 @@ def at_exit2( &block)
 end
 
 def kill_processes
+  
   if OS.windows?
-    system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a better way?
-    system_original("taskkill /f /im ffmpeg.exe 2>NUL")
-    system_original("taskkill /f /im smplayer_portable.exe 2>NUL")
-    system_original("taskkill /f /im mplayer.exe 2>NUL")
+    # LODO add button?
+    # this prevents people from having two processes going at once...kind of like queueing them up...
+    # system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a better way?
+    # system_original("taskkill /f /im ffmpeg.exe 2>NUL")
+    # system_original("taskkill /f /im smplayer_portable.exe 2>NUL")
+    # system_original("taskkill /f /im mplayer.exe 2>NUL")
   end
 end
 
