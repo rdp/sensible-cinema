@@ -101,7 +101,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.mkdir_p dir_out
   FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
-  FileUtils.cp(Dir["#{dir_out}/template_bats/*"], "#{dir_out}/..")
+  FileUtils.cp(Dir["#{dir_out}/template_bats/*.bat"], "#{dir_out}/..")
   p 'created (still need to zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end
