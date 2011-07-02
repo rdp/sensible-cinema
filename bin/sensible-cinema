@@ -340,7 +340,7 @@ module SensibleSwing
       
       add_text_line 'Contact:'
 
-      @upload = new_jbutton("Submit feedback/Upload Anything/Request Help", false) # keep this one last! :)
+      @upload = new_jbutton("Submit feedback/Upload/Request Help", false) # keep this one last! :)
       @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
       @upload.on_clicked {
         system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
