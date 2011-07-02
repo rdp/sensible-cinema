@@ -7,7 +7,7 @@ this works, 1:00 type timestamps are ignored
 # a comment
 10 15 0 # a comment2 also works
 
-mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac dvdnav (dvd ok)
+mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac/pc dvdnav (dvd ok) title 3
 
 ====
 
