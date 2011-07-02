@@ -49,6 +49,8 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
+  volume_name => dvd_volume_name
+  name => movie_name ?
   setpriority for the several :)
   why is the Sintel's EDL off?
   check with WME plugins, add instructions, then note in the README "support for x..."

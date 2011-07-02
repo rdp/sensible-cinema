@@ -132,9 +132,9 @@ module SensibleSwing
         create_brand_new_edl
       end
       
-      @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list = new_jbutton("Open/Edit a previously created EDL or .srt file", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file( "Pick file to edit", EDL_DIR)
+        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EDL_DIR)
         open_file_to_edit_it filename
       }
       
@@ -214,7 +214,7 @@ module SensibleSwing
         thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
         twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
         human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
-        show_copy_pastable_string("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
+        show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
       @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
@@ -227,7 +227,7 @@ module SensibleSwing
       @parse_srt.on_clicked {
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
         parsed = SubtitleProfanityFinder.edl_output [filename]
-        File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
+        File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
         open_file_to_edit_it EdlTempFile
       }
 
@@ -472,8 +472,7 @@ module SensibleSwing
       end
       if use_mplayer_instead
         exe = "mplayer "
-        # maybe, maybe following would be useful for people just watching through the film (?)
-        #"-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF "
+        exe += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # if there are too many mplayer splits, impossible to tell anything timewise...
       else
         config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
@@ -497,9 +496,9 @@ module SensibleSwing
       end
       descriptors = EdlParser.parse_file edl_path
       splits = descriptors['mplayer_dvd_splits']
-      if splits == nil && !play_this_mplayer
+      splits ||= []
+      if splits == [] && !play_this_mplayer
         show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
-        splits = []
       end
       splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
@@ -722,7 +721,7 @@ module SensibleSwing
     end
     
     def new_existing_file_selector_and_select_file title, dir=nil
-      out = FileDialog.new(self)
+      out = FileDialog.new(self, title, FileDialog::LOAD)
       out.set_title title
       dir ||= Storage[caller.inspect]
       out.set_directory dir.to_filename if dir
