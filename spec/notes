@@ -1,6 +1,13 @@
 up next:
   lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
 
+== mplayer EDL ==
+
+this works, 1:00 type timestamps are ignored
+# a comment
+10 15 0 # a comment2 also works
+====
+
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
 == upconvert mplayer ==
