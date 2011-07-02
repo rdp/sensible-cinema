@@ -1,13 +1,27 @@
 up next:
   lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
 
+== iq ==
+  mplayer for the mkv seemed to creep up?  somehow it seemed to get messed up...
+    TODO avidemux/quality editor for these various and its frames...what the?
+    replaying mkv might not work so hot...
+      maybe I can remux somehow first... [?]
+      maybe it's because of all those transitions which caused lossy-stuff within the mkv... [?]
+    
+  can I use hanbrake on mkv output? does it look better?  is it just this one dvd?
+    does the mkv match DVD
+    
+  mplayerdump.mencoderforidx sum: 1:39:17
+  DVD sum: 1:35:41
+  mkv sum: 1:35:49 [partially explained, partially huh?]
+  
 == mplayer EDL ==
 
 this works, 1:00 type timestamps are ignored
 # a comment
 10 15 0 # a comment2 also works
 
-mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac/pc dvdnav (dvd ok) title 3
+mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd ok) title 3
 
 ====
 
@@ -532,7 +546,7 @@ handbrake md5's/sizes don't match...
 109243 -rw-r--r--    1 packrd   Administ 223727993 May 25 13:20 Sintel_NTSC-2.dvdcss.2.m4v
 109243 -rw-r--r--    1 packrd   Administ 223728412 May 25 13:47 Sintel_NTSC-2.dvdcss.3.m4v
 
-== timing dvd player time versus clock time: ==
+== timing dvd player time versus clock/wall time: ==
 
 at 1:44:00 or so I seemed about 6s ahead. yup yup.
   at end, I had like 1:53:20'ish'ish [?] (ok probably like 1:53:11 but who knows for sure :P)

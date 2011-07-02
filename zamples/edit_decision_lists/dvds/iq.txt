@@ -3,10 +3,11 @@
 
 "mutes" => [
 "00:04:23.329" , "00:04:24.887", "profanity", "b.....", "Come on you little [b.....]",
-"00:09:24.564" , "00:09:27.624", "profanity", "deity", "that [deity] plays dice with the universe",
-"00:14:52.758" , "00:14:55.921", "profanity", "deity", "We threw [deity]el's cane up there to get the racket",
+# 14:15 genitals
+# 20:20 climax
 "00:25:28.327" , "00:25:31.057", "profanity", "deity", "My [deity] he's the head of the whole department",
-"00:28:45.123" , "00:28:47.614", "profanity", "deity", "Learn to drive for [deity]'s sake",
+# 25:30 giant tongue, 25:55 make love 
+"00:28:45.123" , "00:28:47.614", "profanity", "deity", "Learn to drive for [deity]'s sake", # TOO EARLY
 "00:44:30.300" , "00:44:32.598", "profanity", "deity", "My [deity] the mazes must be enormous",
 "00:46:27.317" , "00:46:28.614", "profanity", "deity", "Oh my [deity] that's you",
 "00:54:45.615" , "00:54:47.082", "profanity", "he..", "Who the [he..] are you",
