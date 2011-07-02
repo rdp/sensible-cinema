@@ -550,7 +550,7 @@ module SensibleSwing
       
       returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
-      p 'confirmed license noted: ' + license_name
+      p 'confirmation of sensible cinema related license noted of: ' + license_name
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
