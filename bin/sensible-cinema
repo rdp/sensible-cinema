@@ -477,7 +477,6 @@ module SensibleSwing
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
       end
       command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
-      p command
       @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
         'v' key: turn off subtitles.
@@ -516,12 +515,7 @@ module SensibleSwing
       title_track = get_title_track(descriptors)
       # oh the insanity of the console UI...LODO more user friendly player
       @popup ||=  show_mplayer_instructions # LODO dry up mplayer dvd opts...
-      if OS.windows?
-        play_this_mplayer ||= "mplayer  -mouse-movements -nocache dvdnav://#{title_track} "
-      else
-        # macports' mplayer has no dvdnav ?? 
-        play_this_mplayer ||= "mplayer dvd://#{title_track} "
-      end
+      play_this_mplayer ||= "mplayer  -mouse-movements -nocache dvdnav://#{title_track} "
       if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake yipes
         play_this_mplayer += " -vo direct3d "
@@ -618,7 +612,7 @@ module SensibleSwing
       else
         require 'lib/check_installed_mac.rb'
         if !CheckInstalledMac.check_for_installed(unix_name)
-          exit 1
+          exit 1 # it'll have already displayed a message...
         else
           true
         end
@@ -636,6 +630,10 @@ module SensibleSwing
         require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
       end
+
+      if OS.mac?
+        check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac...
+      end
       
       if we_are_in_create_mode
         # they're going to want these dependencies
@@ -650,8 +648,7 @@ module SensibleSwing
             System.exit(1)
           end
         else
-          check_for_exe("mplayer", "mplayer") # OS X ...
-          puts 'warning for OS X users--the smplayer-type buttons aren\'t going to work'
+          puts 'warning for OS X users--the smplayer-type buttons aren\'t working yet...'
         end
       end
     end
@@ -993,7 +990,7 @@ module SensibleSwing
       
       count = 0
       opticals.each{|d| count += 1 if d.VolumeName}
-      if count == 1 && force_choose_only_dvd_drive
+      if count == 1 && !used_local_file_option
        # just choose it if there's only one disk available..
        p 'selecting only disk present in the various DVD drives'
        selected_idx = opticals.index{|d| d.VolumeName}
