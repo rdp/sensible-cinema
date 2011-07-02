@@ -149,8 +149,8 @@ module SensibleSwing
       EOL
       @create_dot_edl.on_clicked {
         filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
-        assert_ownership_dialog
         edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
+        assert_ownership_dialog
         descriptors = EdlParser.parse_file edl_filename
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
@@ -479,15 +479,26 @@ module SensibleSwing
       end
       command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
       p command
-      @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:
-      'o' key: turn on on-screen-display timestamps (note: these are 30 fps timestamps so will need to be converted to use).
-      'v' key: turn off subtitles.
-      '.' key: step one frame.
-      'f' for full screen."
+      @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
+        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
+        'v' key: turn off subtitles.
+        '.' key: step one frame.
+      EOL
       system_non_blocking command
     end
 
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
+    
+    def show_mplayer_instructions extra = ''
+      show_non_blocking_message_dialog <<-EOL + extra
+        About to run mplayer.  
+        To control it, use
+        space for pause,
+        'f' key to toggle full screen,
+        arrow keys (left, right, up down) to seek
+        / and *	 for inc/dec volume.
+      EOL
+    end
     
     def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
       drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
@@ -505,8 +516,7 @@ module SensibleSwing
       File.write(EdlTempFile, edl_contents)
       title_track = get_title_track(descriptors)
       # oh the insanity of the console UI...LODO more user friendly player
-      @popup ||= show_non_blocking_message_dialog("About to run mplayer EDL.  To control it, use\n space for pause,\n f for full screen,\n arrow keys to seek.")
-      # LODO dry up mplayer dvd opts...
+      @popup ||=  show_mplayer_instructions # LODO dry up mplayer dvd opts...
       if OS.windows?
         play_this_mplayer ||= "mplayer  -mouse-movements -nocache dvdnav://#{title_track} "
       else
@@ -518,7 +528,7 @@ module SensibleSwing
         play_this_mplayer += " -vo direct3d "
         play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
       end
-      command =  "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive_or_file}"
+      command = "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive_or_file}"
       # -hardframedrop might help but hurts just too much
       p command
       Thread.new { system_blocking command; @popup.dispose }
