@@ -315,7 +315,7 @@ module SensibleSwing
         do_mplayer_edl
       }
       
-      @create = new_jbutton( "Create edited copy of a DVD on Your Hard Drive", false)
+      @create = new_jbutton( "Create edited copy version of video on Your Hard Drive", false)
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
         The file you create will contain the whole movie edited.
@@ -846,10 +846,11 @@ module SensibleSwing
       
       dvd_title_track = get_title_track(descriptors)
       if dvd_id == NonDvd
-         file_from = drive_or_file
+        file_from = drive_or_file
       else
         file_from = get_import_from_filename dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
+      show_blocking_message_dialog("warning: file is not a .mpg or .ts file--it may not work properly all the way--if it's mkv consider converting to ts with tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
