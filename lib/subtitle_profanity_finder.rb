@@ -73,9 +73,9 @@ module SubtitleProfanityFinder
       'ole' => 'a..h...',
       arse + 'wipe' => 'a..w....',
       'breast' => 'br....',
-      'jesus' => 'j....',
+      'jesus' => 'l...',
       'chri' +
-      'st'=> ['chr...', true], # allow for christian [?]
+      'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
       'a realllly bad word' => ['test bad word', true]
     }
 
