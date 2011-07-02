@@ -19,7 +19,7 @@ require 'digest/md5'
 require 'rubygems'
 require 'sane'
 require 'ostruct'
-
+require 'benchmark'
 class DriveInfo
 
  def self.md5sum_disk(dir)
@@ -28,7 +28,11 @@ class DriveInfo
    else
      command = "#{__DIR__}/../vendor/dvdid.exe #{dir}"
    end
-   output = `#{command}`
+   output = nil
+   elapsed = Benchmark.realtime {
+     output = `#{command}`
+   }
+   print 'dvdid done ', elapsed, ' s'
    raise 'dvdid command failed?' + command unless $?.exitstatus == 0
    output.strip
  end

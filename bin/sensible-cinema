@@ -299,7 +299,7 @@ module SensibleSwing
       panel.set_layout nil
       add panel # why can't I just slap these down?
 
-      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for tooltip \"help\" descriptions." : "")
+      jlabel = JLabel.new "Welcome to Sensible Cinema!  Rest mouse over buttons for \"help\" descriptions (tooltips)."      
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       jlabel.setFont(happy)
       jlabel.set_bounds(44,44,460,14)
@@ -988,6 +988,11 @@ module SensibleSwing
        # just choose it if there's only one disk available..
        p 'selecting only disk present in the various DVD drives'
        selected_idx = opticals.index{|d| d.VolumeName}
+       unless selected_idx
+         show_blocking_message_dialog "Please insert a disk first"
+         raise 'inset disk'
+       end
+
       else
         dialog = get_disk_chooser_window names
         dialog.setSize 200, 125
