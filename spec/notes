@@ -128,6 +128,11 @@ pp option:
 
 ummm...does lanczos accept  -ssf ls=75.0 -ssf cs=75.0 ?? or do I still need to add an unsharpen filter somehow?
 
+
+[swscaler @ 013a25f4]using unscaled yuv420p -> yuv420p special converter
+VO: [directx] 720x480 => 720x540 Planar YV12
+ is definitely bad :P
+
 === sum ===
 mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=-3:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
   how useful is post processing?
