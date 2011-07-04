@@ -194,6 +194,18 @@ module SensibleSwing
         show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
       }
+
+      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 timestamps", true )
+      @convert_seconds_to_ts.on_clicked {
+        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1")
+        if input =~ /:/
+          output = EdlParser.translate_string_to_seconds input
+        else
+          output = EdlParser.translate_time_to_human_readable input.to_f, true
+        end 
+        show_copy_pastable_string("Converted:", output)
+         
+      }
       
       @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time to EDL time", true)
       @convert_timestamp.tool_tip=<<-EOL

@@ -14,6 +14,18 @@ up next:
   mplayerdump.mencoderforidx sum: 1:39:17
   DVD sum: 1:35:41
   mkv sum: 1:35:49 [partially explained, partially huh?]
+  mkv mac vlc 1:25:20 ish [ugh]
+    originally reports it as 1:35:35, this is without daspi
+  mac 
+    DVD player: 1:35:41
+      converted: should be 1:35:46.7
+    mplayerx cannot play DVD/seek right
+    mpalyerx on makemkv sum: 1:35:53
+    vlc on makemkv sum 1:35:49
+    mplayer command line end TS: A:5749.5 == 1:35:49.5
+  what about mplayer on windows what the...?
+  what about ffmpeg against that thing?
+
   
 == mplayer EDL ==
 
