@@ -59,6 +59,85 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
   -vop hqdn3d
   http://freshmeat.net/articles/fine-tuning-mplayer
 
+ -sws 9 lancosz
+
+http://www.neowin.net/forum/topic/422992-a-how-to-guide-upconverting-video-using-ffdshow:
+  denoise3d hq
+    luma 7 chroma 7 time 5
+  "specify size 1280x768" "no auto aspect correction" TODO why?
+    might not matter? might let it "go full screen 4 sure"?
+  lancozsa 10
+    "Luma sharpen" and "Chroma sharpen" to 1.50
+  
+http://blog.thewombat.org/2008/11/how-to-use-vlc-096-as-upscaling-media.html  
+  "add a video post processing filter"
+  "add a video scaling filter"
+  "add sharpen as a filter" (manually)
+  set sharpen strength to 0.15 (0.25 for hq)
+  "set post processing strength to 6" (lower for lesser CPU)
+  
+  
+  
+"
+   use the following syntax to playback DVD movies.
+
+Code:
+mplayer -pp 0 -vf-clr -vf pullup,yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0 -ssf ls=100 dvd://
+For MPEG-2 content from a PVR card might be different on applying video filters. I suggest check the MPlayer manual to know how to use the video filter and know what they do.
+
+Let us assume that hqdn3d=2:1.5:3 is a good way to clean up MPEG-2 and yadif=1 is a good decent de-interlacer. I would say that the following should work ok for most content.
+
+Code:
+mplayer -vf yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0
+Maybe adding -ssf ls=100 will increase the sharpness of the content to bring out the details of the video. With mencoder, it is a little different on what options you can use compared to mplayer, so play around with the settings.
+"
+
+  
+  hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
+  
+http://forum.doom9.org/archive/index.php/t-79335.html lists some less aggressive hqdn3d options...
+
+
+#This sets the postprocessing into overdrive using all possible spare cpu cycles to make the movie look better
+autoq=100
+vf=pp=de,hqdn3d
+
+http://freshmeat.net/articles/fine-tuning-mplayer:
+  -mc 0.001 # except for slow CPU oh my! 0.5? seconds per frame...I guess this in conjunction with autosync...
+  hqdn3d=3.5:7:5 # never > 15 for the last number
+  -ssf
+  comment:
+     -vop pp=hb:y/vb:y and only on low rest (no post processing for HQ videos...hmm...)
+
+-autosync 1 might resync my cruddy DVD's... TODO
+  
+===
+ hqdn3d=7:7:5 # 3.5:7:5 for mpeg??
+ -sws 9
+   -vop scale=10 # lancosz inensity 10...I think...huh?
+ -ssf ls=75 # out of 100? scaling sharpen filter (luma) http://www.linuxquestions.org/questions/linux-software-2/how-can-i-get-top-quality-video-with-mencoder-636846/ uses 100 ...
+ -ssf cs=75 # scaling sharpen filter chroma
+
+pp option:
+  "-autoq -vop pp"
+  "-vop pp=ab/hl"
+  "-pp 6" # deprecated
+
+-vop is all under -vf now...
+
+
+ummm...does lanczos accept  -ssf ls=75.0 -ssf cs=75.0 ?? or do I still need to add an unsharpen filter somehow?
+
+=== sum ===
+mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=-3:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+  how useful is post processing?
+  do I run well on those images?
+
+
+==== prop ====
+"upscaling"
+http://www.neowin.net/forum/topic/615696-permanent-upconversion-in-software/
+
 == WMC/other EDL plugins ==
 
   http://superuser.com/questions/34128/xbmc-with-media-player-classic-home-cinema

@@ -139,7 +139,7 @@ module SensibleSwing
       }
       
 
-      @create_dot_edl = new_jbutton( "Create a moviefilename.edl file", true)
+      @create_dot_edl = new_jbutton( "Create an associated moviefilename.edl file", true)
       @create_dot_edl.tool_tip = <<-EOL
         Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
@@ -189,15 +189,15 @@ module SensibleSwing
       @display_unique = new_jbutton( "Display current DVD's unique ID", true )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_unique.on_clicked {
-        drive, volume, dvd_id = choose_dvd_drive_or_file true
+        drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
-        show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
+        show_copy_pastable_string("#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}")
       }
 
-      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 timestamps", true )
+      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps", true )
       @convert_seconds_to_ts.on_clicked {
-        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1")
+        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
         if input =~ /:/
           output = EdlParser.translate_string_to_seconds input
         else
@@ -207,7 +207,7 @@ module SensibleSwing
          
       }
       
-      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time to EDL time", true)
+      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time to EDL player (30fps -> 29.97)", true)
       @convert_timestamp.tool_tip=<<-EOL
         Our EDL's assume 29.97 fps (which is what a DVD is).  Unfortunately most hardware/commercial DVD players
         assume that the DVD is 30 fps, which means that if you watch a movie with them, then use those timestamps
