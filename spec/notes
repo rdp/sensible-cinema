@@ -22,10 +22,8 @@ up next:
     mplayerx cannot play DVD/seek right
     mpalyerx on makemkv sum: 1:35:53
     vlc on makemkv sum 1:35:49
-    mplayer command line end TS: A:5749.5 == 1:35:49.5
-  what about mplayer on windows what the...?
+    mplayer command line makemkv end TS: A:5749.5 == 1:35:49.5
   what about ffmpeg against that thing?
-
   
 == mplayer EDL ==
 
