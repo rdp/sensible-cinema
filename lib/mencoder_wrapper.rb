@@ -25,7 +25,7 @@ class MencoderWrapper
   
     def get_header this_file, these_settings
       out = ''
-      if File.exist?(@big_temp) && File.exist?(@big_temp + '.done')
+      if File.exist?(@big_temp_fulli) && File.exist?(@big_temp_fulli + '.done')
         out = '@rem ' # don't re-do this file if .done file already exists...
       end
       audio_codec = these_settings['audio_codec'] || 'mp3lame' # not copy...sniff...or you can't hear cars... LODO
@@ -36,11 +36,11 @@ class MencoderWrapper
       # lodo: can I use ffmpeg to unmux-ify/GOP'ify perhaps?
       # LODO 24000/1001 ?
       video_opts = "-vf scale=720:480,pullup,softskip,harddup -forceidx -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
-      out += "mencoder \"#{this_file.gsub('"', '\\"')}\" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_file} && echo done_grabbing > #{@big_temp}.done\n"
+      out += "mencoder \"#{this_file.gsub('"', '\\"')}\" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp_fulli} -dvd-device #{this_file} && echo done_grabbing > #{@big_temp_fulli}.done\n"
     end
     
     def calculate_fulli_filename to_here_final_file
-      @big_temp = to_here_final_file + ".fulli_unedited.tmp.mpg"
+      @big_temp_fulli = to_here_final_file + ".fulli_unedited.tmp.mpg"
     end
     
     # called from the UI...
@@ -74,18 +74,20 @@ class MencoderWrapper
         end
         previous_end = endy
       }
+      # trailer
       out += get_section previous_end, end_here || 1_000_000, false, to_here_final_file
       partials = (1..@idx).map{|n| "#{to_here_final_file}.#{n}.avi"}
       to_here_final_file = to_here_final_file + ".avi"
       if File.exist? to_here_final_file
-        FileUtils.rm to_here_final_file # raises on deletion failure...which is what we want I think...hopefully.
+        p 'warning, overwriting ' + to_here_final_file
+        FileUtils.rm to_here_final_file # raises on deletion failure...which is what we want I think...typicaly...early warning...
       end
       out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
       out += "@rem old DISABLED join way... call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
       
-      delete_prefix = ""#delete_partials ? "" : "@rem "
+      delete_prefix = delete_partials ? "" : "@rem "
 
-      out += "@rem del #{@big_temp}\n" # LODO no @rem
+      out += "#{delete_prefix} del #{@big_temp_fulli}\n"
       out += "#{delete_prefix} del " + partials.join(' ') + "\n"
       out += "echo wrote (probably successfully) to #{to_here_final_file}"
       out
@@ -102,7 +104,7 @@ class MencoderWrapper
       if File.exist? partial_filename
         FileUtils.rm partial_filename
       end
-      "ffmpeg -i #{@big_temp} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
+      "ffmpeg -i #{@big_temp_fulli} #{codecs} -ss #{start} -t #{endy} #{partial_filename}\n"
     end
   
   end

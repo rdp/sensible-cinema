@@ -928,7 +928,7 @@ module SensibleSwing
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new {
-        run_batch_file_commands commands, save_to, run_mplayer
+        run_batch_file_commands commands, save_to, file_from, run_mplayer
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end...
@@ -936,7 +936,7 @@ module SensibleSwing
     
     attr_accessor :background_thread, :buttons
 
-    def run_batch_file_commands batch_commands, save_to, run_mplayer
+    def run_batch_file_commands batch_commands, save_to, file_from, run_mplayer_after_done
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
@@ -957,10 +957,13 @@ module SensibleSwing
       @buttons.each{|b| b.set_enabled true}
       if success
         saved_to = save_to + '.avi'
-        if run_mplayer
+        if run_mplayer_after_done
           set_smplayer_opts ''
           system_non_blocking "smplayer_portable #{saved_to}"
         else
+          if File.size(saved_to).to_f/File.size(file_from) < 0.5 # less than 50% size?
+            show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
+          end            
           show_in_explorer saved_to
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
