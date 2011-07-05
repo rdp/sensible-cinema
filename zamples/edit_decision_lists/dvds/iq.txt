@@ -1,0 +1,33 @@
+# comments can go after a # on any line, for example this one.
+"name" => "iq",
+
+"mutes" => [
+"00:04:23.329" , "00:04:24.887", "profanity", "b.....", "Come on you little [b.....]",
+# 14:15 genitals
+# 20:20 climax
+"00:25:28.327" , "00:25:31.057", "profanity", "deity", "My [deity] he's the head of the whole department",
+# 25:30 giant tongue, 25:55 make love 
+"00:28:45.123" , "00:28:47.614", "profanity", "deity", "Learn to drive for [deity]'s sake", # TOO EARLY
+"00:44:30.300" , "00:44:32.598", "profanity", "deity", "My [deity] the mazes must be enormous",
+"00:46:27.317" , "00:46:28.614", "profanity", "deity", "Oh my [deity] that's you",
+"00:54:45.615" , "00:54:47.082", "profanity", "he..", "Who the [he..] are you",
+"01:16:25.513" , "01:16:27.447", "profanity", "deity", "Oh my [deity]",
+"01:19:20.254" , "01:19:22.586", "profanity", "deity", "Oh for [deity]'s sake",
+"01:20:29.957" , "01:20:32.721", "profanity", "he..", "What the [he..] does an automobile mechanic",
+#"01:28:24.831" , "01:28:27.925", "profanity", "deity", "[deity] does not play dice with the universe",
+"01:30:43.970" , "01:30:45.597", "profanity", "deity", "Oh my [deity]",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "IQ",
+"disk_unique_id" => "75ce05d8|9e597164",
+"dvd_title_track" => "1", 
+"opensubtitles_number" => "195359",
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+# "mplayer_dvd_splits" => [], # too many to count! Not worth it probably...

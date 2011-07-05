@@ -6,7 +6,7 @@
   
   === loose ordering/eventually ===
     linearize [?] hmm...
-    re-update todo/all docu/user feedbacks
+    re-update todo/all docu/user feedback etc.
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
@@ -47,35 +47,35 @@
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
   next timing thing (notes file)
-  add the "create .edl file for xbmc/smplayer" button
 
 == yes do, un-ordered currently, from the various future release options ==
+  @instructions "this is great for comparing srt's, except...then you have to..."
+  test with cars, mac
+  volume_name => dvd_volume_name
   make it load faster! this is cuh-razy!
   why is the Sintel's EDL seemingly off?
+    ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
+      fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
+      maybe search at end of movies for certain things?
+    double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   check with WME plugins, add instructions, then note in the README "support for x..."
   decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
     don't have to use eval!
+    EDL with JSON on top, full timestamps.
+  setpriority for the several :)
   bring to top after a conversion, and for prompts...we get hidden!
-  ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
-    fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
-  can auto-use tsmuxer at all
-  add buttons for "convert 4945 to x" and vice versa...
-  warn/redirect if wrong looking file extension...
-   mac just die with instructions to use tsmuxer first...
+  can auto-use tsmuxer at all [?]
+    mac just die with instructions to use tsmuxer first...
   add a "watch edited from local file" option...
     check if some other buttons are outdated...
-  unit tests (all)
-    double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  can I avoid requiring use of tsmuxer first?
+  unit tests (all pass)
+  can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
-  add an mencoder convert with mplayer_breaks button :P
-    can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
-    maybe just under an "advanced" window...
   youtube/hulu timings
+  @mplayer do you want a demo disk of how it fails edl dvdnav?
   split LLC's website+consumer
     get LLC before a "real" domain name
-  always don't use auto file hashes to discourage piracy
   upconverter
   employee instructions: watch @ realtime after profanity filter first pass :P  
   clear runnings
@@ -97,12 +97,10 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-  donate menumeter $
-  reate the "play previously created edited file for current DVD" button
+  create the "play previously created edited file for current DVD" button
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
     beta release: rinse and repeat with various ppl
-  youtube videos -> new account name
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
     karlie?
@@ -155,7 +153,17 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+<<<<<<< HEAD
   can accept straight ".edl" files too, as my input (?)
+=======
+  @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html
+  @mplayer: -edl nonexist should warn [?] also when it hits an EDL sector ouput something plz?
+  @mplayer: allow EDL to have full timestamps for ease of editing :)
+  youtube videos -> new account name
+  add an mencoder convert with mplayer_breaks button :P
+    can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
+    maybe just under an "advanced" window...
+>>>>>>> 979efc445a73b78a5cded2efb5d105e949c82fe1
   @mplayer homepage: list mulder's not smplayer's, plz?
     also smplayer advertise more prominently :P
   make this thing load faster: don't require rubygems...uh...faster_require?

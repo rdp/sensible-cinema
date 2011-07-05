@@ -63,6 +63,9 @@ module SubtitleProfanityFinder
       99.chr +
       107.chr =>
       'f...',
+      'genital' => 'genital', 'make love' => 'make love',
+      'making love' => 'making love', 
+      'love mak' => 'love mak',
       'bi' +
       'tc' + 104.chr => 'b.....',
       'bas' +
@@ -73,9 +76,9 @@ module SubtitleProfanityFinder
       'ole' => 'a..h...',
       arse + 'wipe' => 'a..w....',
       'breast' => 'br....',
-      'jesus' => 'jes..',
+      'jesus' => 'l...',
       'chri' +
-      'st'=> ['chri..', true], # allow for christian [?]
+      'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
       'a realllly bad word' => ['test bad word', true]
     }
 
