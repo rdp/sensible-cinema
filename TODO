@@ -50,13 +50,11 @@
   add the "create .edl file for xbmc/smplayer" button
 
 == yes do, un-ordered currently, from the various future release options ==
-  why is the Sintel off?
+  make it load faster! this is cuh-razy!
+  why is the Sintel's EDL seemingly off?
   check with WME plugins, add instructions, then note in the README "support for x..."
-  mplayerx work?
-    if not, patch that fella...and tell them to fix it!
   decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
     don't have to use eval!
-      can accept straight ".edl" files too, as my input (?)
   bring to top after a conversion, and for prompts...we get hidden!
   ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
@@ -157,7 +155,9 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  can accept straight ".edl" files too, as my input (?)
   @mplayer homepage: list mulder's not smplayer's, plz?
+    also smplayer advertise more prominently :P
   make this thing load faster: don't require rubygems...uh...faster_require?
   does xbmc need a "convert to 30fps edl" for DVD?
   @xbmc can you call out to another player prog plz?

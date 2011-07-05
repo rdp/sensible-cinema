@@ -319,16 +319,15 @@ module SensibleSwing
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
         The file you create will contain the whole movie edited.
-        It takes quite awhile maybe 2 hours.
+        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it will continue eventually.
       EOL
       @create.on_clicked {
         do_copy_dvd_to_hard_drive false
       }
       
       @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
-        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # declares it fails, in error...
-      end
-      
+        show_in_explorer __DIR__ + "/../documentation"
+      end      
       
 #      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
 #        raise 'todo' # TODO 
@@ -942,18 +941,22 @@ module SensibleSwing
           set_smplayer_opts ''
           system_non_blocking "smplayer_portable #{saved_to}"
         else
-          show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
-          begin
-            system_blocking show_file # returns immediately tho...
-          rescue => why_does_this_happen_ignore_this_exception_it_actually_succeeded
-          end
+          show_in_explorer saved_to
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
           puts msg
           show_blocking_message_dialog msg
+          show_in_explorer saved_to # and again :)
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE)
+      end
+    end
+    
+    def show_in_explorer filename
+      begin
+        system_blocking "explorer /e,/select,\"#{File.expand_path(filename).to_filename}\"" # command returns immediately...
+      rescue => why_does_this_happen_ignore_this_exception_it_probably_actually_succeeded
       end
     end
     

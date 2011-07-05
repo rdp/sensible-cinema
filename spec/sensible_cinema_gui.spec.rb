@@ -210,7 +210,7 @@ module SensibleSwing
      @subject.get_title_track(descriptors).should == "3"
     end
     
-    it "should call through to explorer for the full thing" do
+    it "should call through to explorer to display the final output file" do
       PlayAudio.stub!(:play) {
         @played = true
       }

@@ -35,7 +35,7 @@ class MencoderWrapper
       #   "This will result in a slightly bigger file, but will not cause problems when demuxing or remuxing into other container formats." LODO no harddup ok ???
       # lodo: can I use ffmpeg to unmux-ify/GOP'ify perhaps?
       # LODO 24000/1001 ?
-      video_opts = "-vf scale=720:480,pullup,softskip,harddup -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
+      video_opts = "-vf scale=720:480,pullup,softskip,harddup -forceidx -ovc lavc -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=1:vstrict=0:acodec=ac3:abitrate=192:autoaspect -ofps 30000/1001"
       out += "mencoder \"#{this_file.gsub('"', '\\"')}\" -of mpeg -mpegopts format=dvd:tsaf -alang en -nocache -sid 1000 -oac #{audio_codec} #{video_opts} -o #{@big_temp} -dvd-device #{this_file} && echo done_grabbing > #{@big_temp}.done\n"
     end
     
