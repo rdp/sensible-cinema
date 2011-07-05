@@ -1,6 +1,16 @@
 up next:
   lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
 
+== ts vs. mkv transcoding ==
+  mencoder fails c. mkv, succeeds c. ts (editing seems to succeed)
+  
+== C ==
+ mkv 02:11:03.84
+ ts  02:11:03.62
+ vob [ffmpeg?] 02:11:03.77
+ edited.avi 02:11:03.38
+   
+
 == snow white DVD ==
   VLC sum DVD: 1:23:28 sum (so should be...1:23:33.0 TS)
     makemkv: 1:23:28 sum
