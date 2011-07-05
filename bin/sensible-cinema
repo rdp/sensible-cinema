@@ -959,7 +959,7 @@ module SensibleSwing
           set_smplayer_opts ''
           system_non_blocking "smplayer_portable #{saved_to}"
         else
-          if File.size(saved_to).to_f/File.size(file_from) < 0.5 # less than 50% size?
+          if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
           end            
           show_in_explorer saved_to

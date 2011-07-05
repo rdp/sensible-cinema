@@ -114,7 +114,9 @@ module SensibleSwing
     end
     
     before do
+      ARGV << "--create-mode" # want all the buttons for some tests.
       @subject = MainWindow.new
+      ARGV.pop
       @subject.stub!(:choose_dvd_drive_or_file) {
         ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
@@ -177,7 +179,9 @@ module SensibleSwing
     
     # name like :@rerun_previous
     def click_button(name)
-      @subject.instance_variable_get(name).simulate_click
+      button = @subject.instance_variable_get(name)
+      raise 'button not found' + name.to_s unless button
+      button.simulate_click
     end
     
     it "should be able to run system" do
