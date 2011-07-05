@@ -105,6 +105,7 @@ module SensibleSwing
       jlabel.set_bounds(44,@starting_button_y ,460,14)
       @panel.add jlabel
       increment_button_location 18
+      jlabel
     end
     
     def increment_button_location how_much = 30
@@ -158,7 +159,6 @@ module SensibleSwing
         raise unless File.exist?(output_file)
         show_blocking_message_dialog("created #{output_file}")
       }
-      
 
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)", true)
       @play_smplayer.tool_tip = <<-EOL
@@ -1032,7 +1032,9 @@ module SensibleSwing
           @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]
+          out = show_non_blocking_message_dialog "calculating disk unique id..."
           dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+          out.dispose
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
         end
         @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
