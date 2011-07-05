@@ -153,6 +153,7 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html
   @mplayer: -edl nonexist should warn [?] also when it hits an EDL sector ouput something plz?
   @mplayer: allow EDL to have full timestamps for ease of editing :)
   youtube videos -> new account name

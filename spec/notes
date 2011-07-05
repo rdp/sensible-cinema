@@ -125,11 +125,10 @@ vf=pp=de,hqdn3d
 http://freshmeat.net/articles/fine-tuning-mplayer:
   -mc 0.001 # except for slow CPU oh my! 0.5? seconds per frame...I guess this in conjunction with autosync...
   hqdn3d=3.5:7:5 # never > 15 for the last number
-  -ssf
   comment:
      -vop pp=hb:y/vb:y and only on low rest (no post processing for HQ videos...hmm...)
 
--autosync 1 might resync my cruddy DVD's... TODO
+-autosync 1 might resync my cruddy DVD's... LODO
   
 ===
  hqdn3d=7:7:5 # 3.5:7:5 for mpeg??
@@ -138,26 +137,30 @@ http://freshmeat.net/articles/fine-tuning-mplayer:
  -ssf ls=75 # out of 100? scaling sharpen filter (luma) http://www.linuxquestions.org/questions/linux-software-2/how-can-i-get-top-quality-video-with-mencoder-636846/ uses 100 ...
  -ssf cs=75 # scaling sharpen filter chroma
 
-pp option:
+post processing options:
   "-autoq -vop pp"
   "-vop pp=ab/hl"
   "-pp 6" # deprecated
 
--vop is all under -vf now...
-
-
 ummm...does lanczos accept  -ssf ls=75.0 -ssf cs=75.0 ?? or do I still need to add an unsharpen filter somehow?
-
 
 [swscaler @ 013a25f4]using unscaled yuv420p -> yuv420p special converter
 VO: [directx] 720x480 => 720x540 Planar YV12
  is definitely bad :P
 
+none at all looks...pretty good...
+
+https://discussions.apple.com/thread/1771812?threadID=1771812
+  -zoom -sws 9 -vf scale=1280:720:::9:10 -ssf ls=74.0 -ssf cs=7.0
+  +- for audio: -ac hwac3 hwdts
+
 === sum ===
-mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=-3:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+or 
+-sws 9 -vf hqdn3d=7:7:5,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+
   how useful is post processing?
   do I run well on those images?
-
 
 ==== prop ====
 "upscaling"
