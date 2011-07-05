@@ -1,6 +1,6 @@
 up next:
   lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
-  check for telecine IQ
+  check for telecine IQ, Snow White
 
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
@@ -16,6 +16,7 @@ up next:
   makemkv is quite close to @29.97 fps
   ffprobe -show_packets title00.ts
      7391.234311 -> 2:03:11.2 # oh that's comforting LOL
+  only has one demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
   
 == C ==
   this one seems to show makemkv == (ts-0.2) == 29.97
@@ -236,14 +237,16 @@ none at all looks...pretty good...
 https://discussions.apple.com/thread/1771812?threadID=1771812
   -zoom -sws 9 -vf scale=1280:720:::9:10 -ssf ls=74.0 -ssf cs=7.0
   +- for audio: -ac hwac3 hwdts
+  how useful is post processing?
+  # do I need hqdn3d at all here?
+  do I run well on those images?
 
-=== sum ===
+=== current sum ===
 mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
 or 
 -sws 9 -vf hqdn3d=7:7:5,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
-
-  how useful is post processing?
-  do I run well on those images?
+or
+-sws 9 -vf hqdn3d=2:1.5:3,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
 
 ==== prop ====
 "upscaling"
