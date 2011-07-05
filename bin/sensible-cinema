@@ -675,7 +675,7 @@ module SensibleSwing
     end
 
     def single_edit_list_matches_dvd dvd_id
-      matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
+      matching =  Dir[EDL_DIR + '/**/*.txt'].select{|file|
         begin
           parse_edl(file)["disk_unique_id"] == dvd_id
         rescue SyntaxError => e
@@ -1001,7 +1001,7 @@ module SensibleSwing
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
       if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
-        names += ['No DVD so choose Local File']
+        names += ['No DVD mounted so choose Local File (or insert DVD, re-try)']
         used_local_file_option = true
       end
       
