@@ -89,9 +89,13 @@ up next:
  mpchc 1:23:28 sum mkv [huh? this mkv thing is confusing me...]
  check subtitiles +- file against file, DVD snow white
    ffmpeg ts: 01:23:32.49
-   ffmpeg mkv: 01:23:38.07 differs from mpchc ?
+   ffmpeg mkv: 01:23:38.07 differs from mpchc ? differs from VLC makemkv? TODO
 
 == iq ==
+  this one seems to have an extra second in there...
+  so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
+    so my files aren't precisely that...we shall see if this hypothesis holds true...
+
   mplayer for the mkv seemed to creep up?  somehow it seemed to get messed up...
     TODO avidemux/quality editor for these various and its frames...what the?
     replaying mkv might not work so hot...
