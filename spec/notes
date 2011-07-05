@@ -6,6 +6,7 @@ up next:
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
   
 == OSOH ==
+  this one seems to show that the makemkv == ts == 29.97
   01:53:11.31, start: 0.000000 mkv
   ts  01:53:11.26, start: 600.000000
   ?? huh ??
@@ -15,8 +16,6 @@ up next:
   makemkv is quite close to @29.97 fps
   ffprobe -show_packets title00.ts
      7391.234311 -> 2:03:11.2 # oh that's comforting LOL
-    
-  this one seems to show that the makemkv == ts == 29.97
   
 == C ==
   this one seems to show makemkv == (ts-0.2) == 29.97
