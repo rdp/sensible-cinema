@@ -9,7 +9,7 @@ other CC released licensed DVD's).
 
 You should be able to run the program and test it out against said DVD, put it through its paces to demo it, fix it, etc.
 
-Or if you have a DVD that already has a delete list available for it, you could use that, obviously.
+Or if you have a DVD that already has a edit list available for it, you could use that, obviously.
 
 The main development roadmap is in the TODO. If you have any feedback/feature requests, et al, post an
 issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema

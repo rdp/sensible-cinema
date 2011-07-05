@@ -2,7 +2,7 @@ All files (c) Roger Pack 2010-2011
 
 All files released under the GPLv3 license [1] unless otherwise specified.  Ping me if you want/need this changed at some point.
 
-EDL (delete list/edit list) files are released under the Creative Commons License, however.
+EDL (delete list/edit list/EDL) files are released under the Creative Commons License, however.
 
 Note: may call out to some 3rd party libraries/executables under their own (separate, open source) licenses and distributions, but they are contained
 within this package for convenience.

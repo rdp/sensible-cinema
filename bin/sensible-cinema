@@ -126,7 +126,7 @@ module SensibleSwing
     def setup_advanced_buttons
       
       add_text_line 'Realtime create Options:'
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", true, 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
@@ -518,7 +518,7 @@ module SensibleSwing
       splits = descriptors['mplayer_dvd_splits']
       splits ||= []
       if splits == [] && !play_this_mplayer
-        show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
+        show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
       end
       splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
@@ -679,7 +679,7 @@ module SensibleSwing
         begin
           parse_edl(file)["disk_unique_id"] == dvd_id
         rescue SyntaxError => e
-          # ignore poorly formed delete lists for the auto choose phase...
+          # ignore poorly formed edit lists for the auto choose phase...
           p 'warning, unable to parse a file:' + file + " " + e.to_s
           false
         end
@@ -756,7 +756,7 @@ module SensibleSwing
       unless @_edit_list_path # cache file selection...
         edit_list_path = single_edit_list_matches_dvd(dvd_id)
         if !edit_list_path && force_choose_edl_file
-          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Delete List File (none were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
+          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
           raise 'cancelled choosing an EDL' unless edit_list_path
         end
         @_edit_list_path = edit_list_path
@@ -833,7 +833,7 @@ module SensibleSwing
           For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.
           Also note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the entire video for processing.
           Subsequent previews will be faster, though, as long as you use the same filename, as it won't have to re-set it up for processing.
-          Also note that if you change your delete list, you'll need to close, and restart the video to be able to see it with your new settings.
+          Also note that if you change your edit list, you'll need to close, and restart the video to be able to see it with your new settings.
         EOL
         old_start = Storage['start_time']
         start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])

@@ -1,4 +1,4 @@
-Currently the experimental screen tracking edited player (bin\sensible-cinema-cli) prompts for a delete list
+Currently the experimental screen tracking edited player (bin\sensible-cinema-cli) prompts for an edit list
 and a player description.
 
 It then tracks whichever player you are using, by using OCR on its timestamps (
@@ -34,7 +34,7 @@ Q. What movies are freely available to watch online?
 
 A. Not many are available free (hulu, youtube have a few). Netflix has quite a few now for money.  
    You can of course use SC with DVD's, too, or rent or borrow DVD's.
-   (If they have a delete list (or you could create your own for them if not...).)
+   (If they have an edit list (or you could create your own for them if not...).)
 
 Q. Why does my mouse bounce up and down while sensible-cinema is going?
 

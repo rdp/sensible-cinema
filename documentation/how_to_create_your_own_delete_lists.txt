@@ -1,6 +1,6 @@
-You can create a delete list for sensible cinema to use against whatever DVD you want 
+You can create an edit list for sensible cinema to use against whatever DVD you want 
 
-A delete list (currently) lists sections you want muted or skipped.  Here is an example
+An edit list (currently) lists sections you want muted or skipped.  Here is an example
 
 "mutes" => [
   "02:02:15.0" , "02:02:25", "a muted demo section",
@@ -19,7 +19,7 @@ To create a new one, for a DVD, the steps typically look like this:
 
 open Sensible cinema (with "advanced--edit create mode...bat")
 
-insert your DVD, click "Create new delete list for DVD" button
+insert your DVD, click "Create new edit list for DVD" button
 
 Now detect timestamps for questionable content (some buttons may help you here),
 add timestamps to this file, save it, and then test them to make sure they're accurate, using the various buttons.
@@ -35,18 +35,18 @@ Then parse it for known profanities (parse a subtitle... button) and copy and pa
 
 For the rest of the buttons, just "mouse over"/"hover over" them for full descriptions of their potential uses.
 
-After you're done, you can submit your new delete list to the project 
+After you're done, you can submit your new edit list to the project 
 (so others can use it later) by using the Upload button and sending it as an attachment.
 Note also that if you know how, you could fork the code from github, commit changes, and 
-submit a pull request, as well (for example more delete lists, code changes, etc.)
+submit a pull request, as well (for example more edit lists, code changes, etc.)
 Email is probably easier though :)
 
 A few pointers:
 
- You can make several different "delete lists" per DVD, using different filenames.
+ You can make several different "edit lists" per DVD, using different filenames.
     For example one might take out all profanity, and a second take out profanity and also remove all violence, or whatever.
     Basically different levels :)
- You can also just watch a DVD (using any DVD player), and get timestamps that way, before creating a delete list.
+ You can also just watch a DVD (using any DVD player), and get timestamps that way, before creating an edit list.
    You'll have to convert them using the "convert timestamp" button.
  A good computer program for this is "smplayer" (the [ and ] keys control playback speed, and right and left, 
    page up and page down buttons control seeking), and you can also turn on subtitles to help locate profanity.  
