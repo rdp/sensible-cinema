@@ -497,7 +497,7 @@ module SensibleSwing
     @subject.stub(:assert_ownership_dialog) {
       prompted = true
     }
-    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/not_yet_finisheds/edl_for_unit_tests.txt")
+    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/edls_being_edited/edl_for_unit_tests.txt")
     click_button(:@create_dot_edl)
     assert File.exist? 'yo.edl'
     assert prompted

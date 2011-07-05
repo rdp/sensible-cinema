@@ -418,7 +418,7 @@ module SensibleSwing
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # in mplayer, the DVD timestamp "resets" to zero for some reason, see http://goo.gl/yMfqX to set this value right. Note that [] is valid, if there are no resets.
         EOL
       # frame0 is the name of our window LOL tough to avoid that collision...hmm...
-      filename = EDL_DIR + "\\" + english_name.gsub(' ', '_') + '.txt'
+      filename = EDL_DIR + "\\edls_being_edited\\" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
