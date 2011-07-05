@@ -2,14 +2,20 @@ up next:
   lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
 
 == ts vs. mkv transcoding ==
-  mencoder fails c. mkv, succeeds c. ts (editing seems to succeed)
+  mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
   
 == C ==
  mkv 02:11:03.84
  ts  02:11:03.62
  vob [ffmpeg?] 02:11:03.77
  edited.avi 02:11:03.38
-   
+  forceidx.yo.avi 02:11:03.40
+ vlc sum 2:10:56 (-> 2:11:03.9)
+   so this time mkv was 29.97 fps accurate? what the...
+ c.mplayerdump.mpg [in AVS] sum 2:11:04.89
+ HB on dvd: handbrakecli --scan -i e:\ 02:10:56
+ so makemkv is perfect on this one?
+   why is 
 
 == snow white DVD ==
   VLC sum DVD: 1:23:28 sum (so should be...1:23:33.0 TS)
@@ -83,6 +89,9 @@ mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd o
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
 == upconvert mplayer ==
+
+ TODO compare with mpc-hc with ffdshow...same?
+
  guess I prefer mplayer to VLC at this point anyway <sigh> EDL is just better...
  is "-mc". It means "max A-V time correction per frame", and defaults to 0.01. For good input, you can go down even to 0.0001, but 0.001 i
   -vop denoise3d
@@ -490,7 +499,7 @@ mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
   a147eb922cb00eff5d3a25e155390380 *mplayer.dumpstream.2.mpg
   total: 188687 frames 2:11:09.828
   fading in c: frame 111
-  lightning hits ground: 188106 02:10:45.595 0.375
+  lightning hits ground: 188106 02:10:45.595 (vlc off by 0.375 ?)
   
 they all have the beginning dot of the poof at 228...
 
@@ -513,7 +522,7 @@ makemkv -c-: 11 MB/s, [says 4.5x] no pauses, 13.5 MB/s, 14.5 MB/s, seems to grow
     opens very slowly in avidemux at home...feels longer...3 minutes to load each time?
     2:11:08.618 188658 frames total
     had to set it to 24 frames [? huh it worked once?]
-    no video, audio jerky r7149
+    no video, audio jerky, r7149
 
 makemkv -> tsmuxer -> avidemux:
   188657 frames total

@@ -911,7 +911,7 @@ module SensibleSwing
       EOL
       if !fulli_dot_done_file_exists? save_to
         popup_message += "This could take quite awhile (several hours), and will prompt you with a chime noise when it is done.\n
-        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background."
+        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background.\n"
       end
       
       if !start_time
@@ -1032,7 +1032,7 @@ module SensibleSwing
           @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]
-          out = show_non_blocking_message_dialog "calculating disk unique id..."
+          out = show_non_blocking_message_dialog "calculating disk's unique id..." # useful, believe it or not
           dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
           out.dispose
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
