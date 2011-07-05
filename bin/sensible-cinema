@@ -413,7 +413,7 @@ module SensibleSwing
 "dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, it plays a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # in mplayer, the DVD timestamp "resets" to zero for some reason, see http://goo.gl/yMfqX to set this value right. Note that [] is valid, if there are no resets.
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
         EOL
       # frame0 is the name of our window LOL tough to avoid that collision...hmm...
       filename = EDL_DIR + "\\edls_being_edited\\" + english_name.gsub(' ', '_') + '.txt'

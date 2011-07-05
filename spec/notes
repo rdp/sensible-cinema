@@ -1,24 +1,86 @@
 up next:
-  lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
+  lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
+  check for telecine IQ
 
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
   
+== OSOH ==
+  01:53:11.31, start: 0.000000 mkv
+  ts  01:53:11.26, start: 600.000000
+  ?? huh ??
+  makemkv11 01:53:11.31
+  ts 11:  01:53:11.26
+  VLC DVD sum: 1:53:05 -> 1:53:11.8
+  makemkv is quite close to @29.97 fps
+  ffprobe -show_packets title00.ts
+     7391.234311 -> 2:03:11.2 # oh that's comforting LOL
+    
+  this one seems to show that the makemkv == ts == 29.97
+  
 == C ==
- mkv 02:11:03.84
- ts  02:11:03.62
- vob [ffmpeg?] 02:11:03.77
- edited.avi 02:11:03.38
-  forceidx.yo.avi 02:11:03.40
- vlc sum 2:10:56 (-> 2:11:03.9)
-   so this time mkv was 29.97 fps accurate? what the...
- c.mplayerdump.mpg [in AVS] sum 2:11:04.89
- HB on dvd: handbrakecli --scan -i e:\ 02:10:56
- so makemkv is perfect on this one?
-   why is 
+  this one seems to show makemkv == (ts-0.2) == 29.97
 
+ vlc DVD sum 2:10:56 (-> 2:11:03.9)
+  so this time mkv was 29.97 fps accurate less 0.2s?
+  
+ mkv 02:11:03.84, start: 0.000000
+   AVS says it's 2:11:03.778
+   maybe lightning strike 2:11:45.096
+   720x480 [PAR 32:27 DAR 16:9], 8000 kb/s, PAR 186:157 DAR 279:157, 29.97 fps, 59.94 tbr, 1k tbn, 59.94 tbc (default)
+     you'd think that'd be ok...hmm...
+     or do the players trust it too mightily or something... [?]
+   mediainfo: Frame rate                       : 29.970 fps
+   mplayer: VIDEO:  [MPG2]  720x480  0bpp  59.940 fps  8000.0 kbps (976.6 kbyte/s)
+     with no switching content messages...so I'm guessing makemkv just maps the given frames into mkv slots [?]
+     that should be ok...unless it's getting its math wrong somehow...
+
+ NB: had 4 back and forths telecined to progressive [I imagine telecined...]
+    (also had at least one mplayer split)
+ 
+ ts forceidx: 02:24:10.50 # 12 minutes too far! gah!
+ ts idx:      02:24:10.50 # boo!
+
+ mkv11  02:11:03.84
+   mediainfo: 2h 11mn yea
+ ts11 
+   Processed 188659 video frames
+   02:11:03.62
+ ts 02:11:03.62, start: 600.000000
+    start 600? huh?
+ vob [ffmpeg?] 
+   02:11:03.77, start: 1.000000
+ edited.avi 02:11:03.38
+  forceidx.yo.avi (mencoder)
+    02:11:03.40, start: 0.000000
+ 
+ c.mplayerdump.mpg [in AVS] sum 2:11:04.89
+   lightning: 2:10:45.079 (non AviDemux, so might be spot on)
+ HB on dvd: handbrakecli --scan -i e:\ 
+   02:10:56
+ so makemkv is perfect @29.97 on this one?
+ fulli
+   title00.ts.edited.fulli_unedited.tmp.mpg 02:11:03.05, start: 0.233367
+ 
+ maybe some are stripping trailing blackness? (about 2s'ish)
+ mplayer dvd lightning: 2:10:36.0
+   Warning! FPS changed 23.976 -> 29.970
+   4364.7 it has a break in it though, looks like it anyway
+  
+ avi 02:11:03.38, start: 0.000000
+
+ apparently had 24 telecined frames (maybe some more at the very beginning...)
+   if those were assumed to have been 23.97fps, but were 29.97 fps 25% additive, or about 0.25s I guess
+      might explain difference mkv and ts...
+
+ lightning 
+   ts AVS: 02:10:45.302 ish
+   mkv avs: 02:10:45.0 ish
+   also avs says the mkv is 0.2s longer, really pretty close to ffmpeg's thing...
+    
 == snow white DVD ==
-  VLC sum DVD: 1:23:28 sum (so should be...1:23:33.0 TS)
+ VLC 
+    sum DVD: 1:23:28 sum (-> 1:23:33.0 TS)
     makemkv: 1:23:28 sum
  mplayer makemkv: 1:23:28 sum
   oh I feel strange...
@@ -26,11 +88,9 @@ up next:
  mpchc 1:23:28 sum DVD
  mpchc 1:23:28 sum mkv [huh? this mkv thing is confusing me...]
  check subtitiles +- file against file, DVD snow white
- mkv file seems to have perfect matching subtitles
-    ffmpeg ts: 01:23:32.49
-    ffmpeg mkv: 01:23:38.07
-    
-    
+   ffmpeg ts: 01:23:32.49
+   ffmpeg mkv: 01:23:38.07 differs from mpchc ?
+
 == iq ==
   mplayer for the mkv seemed to creep up?  somehow it seemed to get messed up...
     TODO avidemux/quality editor for these various and its frames...what the?
@@ -42,13 +102,14 @@ up next:
     does the mkv match DVD
     
   mplayerdump.mencoderforceidx sum: 1:39:17 (4 minutes extra...somethin went wrong...)
-  DVD sum: 1:35:41
+  DVD sum: 1:35:41 -> 1:35:46.7, maybe a bit higher
   mkv sum: 1:35:49 [partially expected, partially huh?]
   mkv mac vlc 1:25:20 ish [ugh]
-    originally reports it as 1:35:35, this is without daspi
+    originally reports it as 1:35:35 in its dashboard, this is without daspi
   mac 
     DVD player: 1:35:41
-      converted: sum should be 1:35:46.7 -> 1:35:52.4 [!]
+      converted: sum should be 1:35:46.7 
+      reconverted -> 1:35:52.4 [!]
     mplayerx cannot play DVD/seek right
     mplayerx on makemkv sum: 1:35:53
     vlc on makemkv sum 1:35:49
