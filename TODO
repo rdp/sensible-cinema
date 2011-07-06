@@ -1,6 +1,6 @@
 == roadmap [for just tasks, see below though] ==
 
-  release: cheap inventionzy, and medium inventionzy
+  release: cheap/mediumcheap inventionzy
   release: C EDL
   compare netflix/blu-ray timings et al
   
@@ -31,7 +31,6 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above ==
-  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -46,14 +45,14 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
-  next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
   don't cache selections if they choose a local file...hmm...
   @mplayer: do I need -zoom ?
   "save to" -> same dir as "get from" yeah
   @instructions "this is great for comparing srt's, except...then you have to..."
-  test with cars, mac
+  test with cars-ws, mac (to make sure volume name doesn't have spaces)
+  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   volume_name => dvd_volume_name
   make it load faster! this is cuh-razy! or splash screen! yes!
   why is the Sintel's EDL seemingly off?
@@ -85,6 +84,7 @@
     full
     use me [optionally? YAML]
   employee instructions: watch @ realtime after profanity filter first pass :P  
+  @makemkv: timing feels broken weird-like!
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try
@@ -158,6 +158,7 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+
   can accept straight ".edl" files too, as my input (?)
   @mplayer: after hitting split DVD sectors, the OSD fraction goes bonkers.
   @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html

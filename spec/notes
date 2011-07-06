@@ -1,8 +1,4 @@
 up next:
-  lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
-
-
-  snow white "a standard" .srt with ts versus mkv
   
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
