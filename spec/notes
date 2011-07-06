@@ -1,7 +1,9 @@
 up next:
   lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
-  check for wall clock length IQ, Snow White again WMP, end is what matters here..
 
+
+  snow white "a standard" .srt with ts versus mkv
+  
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
   
@@ -83,6 +85,8 @@ up next:
    also avs says the mkv is 0.2s longer, really pretty close to ffmpeg's thing...
     
 == snow white DVD ==
+  has a plus 5 freako
+
  VLC 
     sum DVD: 1:23:28 sum (-> 1:23:33.0 TS) -> 1:23:38.0 freako
  mplayer makemkv: A:5018.0 == 1:23:38 sum
@@ -95,30 +99,42 @@ up next:
    ffmpeg mkv: 01:23:38.07 differs from mpchc ? differs from VLC makemkv? TODO
  vlc mkv: 1:23:38
  vlc ts: no times
+ ffmpeg mkv: 01:23:38.07
  ffmpeg ts: 01:23:32.49
     It appears that makemkv is making certain assumptions that may not be true here?
 
   makemkv says "length shall be 1:23:11" (oopsy)
-  mediainfo mkv: 1h 23m
+  mediainfo mkv: 1h 23mn 38s 70ms
 
-demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. only one
 V:   0.0   0/  0 ??% ??% ??,?% 0 0
   
   hmm...I'm beginning to wonder if maybe some are more honest than others... ?
 
   mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, 
     either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
-    TODO redo wall clock time here...
-
+    
+  WMP wall time at one hour was 3s ahead of it now...
+    which doesn't agree with mac dvd player? when OSOH they *did* agree? huh?
+      how did this not agree with mac dvd player? what? that's not true, that's impossible LOL
+    end WMP wall time: 1:23:32.8'ish ... sniff ... what the...
+      WMP "says" sum is 1:23:28 -> 1:23:33.0'ish
+      
+      
+      
 == iq ==
 
   this one mkv seems to have an extra second in there...
+
+  wall time
 
   maybe sometimes mkv stretches it double in error somehow?
     maybe it has *both* problems...LOL
   
   wall time seems to be 29.97 (DVD player reports 30) first hour at least
     at 1:09 it appeared to be like 6s "back", though makemkv may have interfered slightly...
+    at 1:20 7s
+    sum: 1:35:49.14'ish walltime
   
   so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
     so my files aren't precisely that...we shall see if this hypothesis holds true...
@@ -159,15 +175,13 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
   what about ffmpeg against that thing?
   ffprobe mkv
     2810.792000 last video pts -> 46:50 or something [?]
-  ffmpeg ts file: 01:35:47.09
-  ffmpeg mkv: 01:35:49.59 * maybe just this one is messed up? *
+  ffmpeg mkv->ts file: 01:35:47.09
+  ffmpeg mkv: 01:35:49.59 
+    * maybe just this one is messed up? *
+    or maybe it's spot on, and the DVD is assuming more than 30 fps? oh my. oh my. The DVD timing is really messed?
 
-  AC3 can have 6 channels: Decoding AC3 stream (track 2): Bitrate: 448Kbps Sample Rate: 48KHz Channels: 6
-       Stream #0.1(eng): Audio: ac3, 48000 Hz, 5.1, s16, 448 kb/s
-    Metadata:
-      title           : 3/2+1
-            
-  mencoder reindex mkv?
+  AC3 can apparently have 6 channels: Decoding AC3 stream (track 2): Bitrate: 448Kbps Sample Rate: 48KHz Channels: 6
+       Stream #0.1(eng): Audio: ac3, 48000 Hz, 5.1, s16, 448 kb/s    Metadata:  title           : 3/2+1
 
   midentify mkv: 1:35:49.6
     midentify ts: 1:00:00
@@ -1248,7 +1262,7 @@ hulu
 youtube jonah: appears lower quality?
  15: wash your hands before you [eat]
  30: yes well [you] and ...
- 45: big smile, turns [to his right] after duck
+ 45: big smile, turns [to his right]
 
 powerdvd 8:
   15: wash your hands before you [eat] --- wash your hands [before] you eat --- wash your [hands] before you eat LOL
@@ -1290,8 +1304,7 @@ saints and soldiers (chrome work netflix):
  1:30: "copyright 2003...all rights reserved" is about in the middle, maybe barely above
 
 jonah if you watch it all the way through
-  30: my uncle [was] a big star 
-    
+  30: my uncle [was] a big star     
 
 VLC jonah_edit.tmp.mpg
  15: (on camel) do not fight, do not cheat [wash] your hands
