@@ -6,6 +6,7 @@ up next:
   
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
+  I think if I *assume* stretching...hmm...it'll probably be pretty close...hmm...
   
 == OSOH ==
   this one seems to show that the makemkv == ts == 29.97
@@ -21,11 +22,14 @@ up next:
     at the beginning
   
 == C ==
-  this one seems to show makemkv == (ts-0.2) == 29.97
+  this one seems to show makemkv == (ts+0.2s) == 29.97
 
  vlc DVD sum 2:10:56 (-> 2:11:03.9'ish)
   so this time mkv was 29.97 fps accurate less 0.2s?
   
+  
+ AVS says ts and mkv off by 0.2s
+
  mkv 02:11:03.84, start: 0.000000
    AVS says it's 2:11:03.778
    maybe lightning strike 2:11:45.096
@@ -86,6 +90,7 @@ up next:
     
 == snow white DVD ==
   has a plus 5 freako
+  the TS *might* be right on, which would imply ts == 29.97, mkmv = ts*30.03
 
  VLC 
     sum DVD: 1:23:28 sum (-> 1:23:33.0 TS) -> 1:23:38.0 freako
@@ -118,16 +123,21 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
     which doesn't agree with mac dvd player? when OSOH they *did* agree? huh?
       how did this not agree with mac dvd player? what? that's not true, that's impossible LOL
     end WMP wall time: 1:23:32.8'ish ... sniff ... what the...
-      WMP "says" sum is 1:23:28 -> 1:23:33.0'ish
+      WMP "says" sum is 1:23:28 -> 1:23:33.0'ish      
       
-      
-      
+  top of hill "Of one love" mplayer
+    mkv: 01:20:35.38
+    ts: 01:20:29.8 # 30.5 ? hard to tell... it's pretty close at least...
+      "should be" 01:20:30,831 NB the blu-ray subs seemed way different... blu-ray 01:20:14,276 whoa [3 different blu-ray subs agree...]
+    powerdvd: 1:20:26
+    
 == iq ==
 
   this one mkv seems to have an extra second in there...
-
-  wall time
-
+    1h 35mn 49s 596ms and "expected" it errantly to be: 1:35:52.4...it's like half and half!
+    ts is 1h 35mn 47s 41ms which might be right on compared to the DVD
+    so this one implies that makemkv is just messed up? huh? ts seems fine again...
+    
   maybe sometimes mkv stretches it double in error somehow?
     maybe it has *both* problems...LOL
   
@@ -155,7 +165,7 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
       maybe I can remux somehow first... [?]
       maybe it's because of all those transitions which caused lossy-stuff within the mkv... [?]
     
-  can I use hanbrake on mkv output? does it look better?  is it just this one dvd?
+  can I use handbrake on mkv output? does it look better?  is it just this one dvd?
     does the mkv match DVD
     
   mplayerdump.mencoderforceidx sum: 1:39:17 (4 minutes extra...somethin went wrong...)
@@ -176,9 +186,8 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
   ffprobe mkv
     2810.792000 last video pts -> 46:50 or something [?]
   ffmpeg mkv->ts file: 01:35:47.09
-  ffmpeg mkv: 01:35:49.59 
+  ffmpeg mkv: 01:35:49.59
     * maybe just this one is messed up? *
-    or maybe it's spot on, and the DVD is assuming more than 30 fps? oh my. oh my. The DVD timing is really messed?
 
   AC3 can apparently have 6 channels: Decoding AC3 stream (track 2): Bitrate: 448Kbps Sample Rate: 48KHz Channels: 6
        Stream #0.1(eng): Audio: ac3, 48000 Hz, 5.1, s16, 448 kb/s    Metadata:  title           : 3/2+1
@@ -236,13 +245,9 @@ http://blog.thewombat.org/2008/11/how-to-use-vlc-096-as-upscaling-media.html
   "add sharpen as a filter" (manually)
   set sharpen strength to 0.15 (0.25 for hq)
   "set post processing strength to 6" (lower for lesser CPU)
-  
-  
-  
 "
 No. As long as the GL renderer works with your hardware/driver combination, it's a lot better then the directx/overlay renderer.
 You might want to try "gl:yuv=4:cscale=5:lscale=5" for even better rendering quality...
-
 http://forum.doom9.org/showthread.php?p=1089768:
   hardware gl: gl:yuv=4:cscale=5:lscale=5
 
@@ -265,7 +270,7 @@ http://ubuntuforums.org/showthread.php?t=77329&page=6
   hqdn3d=2:2:3,pp=ac
      like this for anime...LOL I can see my jruby wrapper now...
   
-  hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
+hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
   
 http://forum.doom9.org/archive/index.php/t-79335.html lists some less aggressive hqdn3d options...
 
@@ -280,9 +285,10 @@ http://freshmeat.net/articles/fine-tuning-mplayer:
   comment:
      -vop pp=hb:y/vb:y and only on low rest (no post processing for HQ videos...hmm...)
 
--autosync 1 might resync my cruddy DVD's... LODO
+-autosync 1 (or more) might resync my cruddy DVD's... LODO
  
-  more gl: "use these options" http://forum.doom9.org/archive/index.php/t-132325.html hardware rendere 
+  more [open]gl: "use these options" http://forum.doom9.org/archive/index.php/t-132325.html hardware renderer
+  
 ===
  hqdn3d=7:7:5 # 3.5:7:5 for mpeg??
  -sws 9
@@ -316,7 +322,7 @@ mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=1280:-1:0:0:10  -ssf 
 or 
 -sws 9 -vf hqdn3d=7:7:5,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
 or
--sws 9 -vf hqdn3d=2:1.5:3,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+-sws 9 -vf hqdn3d=2:1.5:3,scale=1280:-1:0:0:10 -ssf ls=75.0 -ssf cs=75.0
 
 ==== prop ====
 "upscaling"
