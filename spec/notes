@@ -91,6 +91,8 @@ up next:
    ffmpeg ts: 01:23:32.49
    ffmpeg mkv: 01:23:38.07 differs from mpchc ? differs from VLC makemkv? TODO
 
+  mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
+
 == iq ==
   this one seems to have an extra second in there...
   so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
@@ -154,6 +156,7 @@ mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd o
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
 == upconvert mplayer ==
+  should I set it abovenormal too?
 
  TODO compare with mpc-hc with ffdshow...same?
 
@@ -164,6 +167,11 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
   http://freshmeat.net/articles/fine-tuning-mplayer
 
  -sws 9 lancosz
+
+http://forum.doom9.org/archive/index.php/t-140961.html:
+  says "if -ssf ls=90 doesn't sharpen, try a real unsharp filter"
+  http://web.archiveorange.com/archive/v/JbcLEyHOOOqckAEhZ7Hd says the same thing. broken?
+  LODO see if sharpen is working at all even
 
 http://www.neowin.net/forum/topic/422992-a-how-to-guide-upconverting-video-using-ffdshow:
   denoise3d hq
@@ -183,8 +191,16 @@ http://blog.thewombat.org/2008/11/how-to-use-vlc-096-as-upscaling-media.html
   
   
 "
-   use the following syntax to playback DVD movies.
+No. As long as the GL renderer works with your hardware/driver combination, it's a lot better then the directx/overlay renderer.
+You might want to try "gl:yuv=4:cscale=5:lscale=5" for even better rendering quality...
 
+http://forum.doom9.org/showthread.php?p=1089768:
+  hardware gl: gl:yuv=4:cscale=5:lscale=5
+
+This guy has some very aggressive sharpening parameters [LODO try out]:
+  http://www.nrtm.de/index.php/2010/09/11/mplayer-aggressives-scharfen/
+
+   "use the following syntax to playback DVD movies."
 Code:
 mplayer -pp 0 -vf-clr -vf pullup,yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0 -ssf ls=100 dvd://
 For MPEG-2 content from a PVR card might be different on applying video filters. I suggest check the MPlayer manual to know how to use the video filter and know what they do.
@@ -196,6 +212,9 @@ mplayer -vf yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0
 Maybe adding -ssf ls=100 will increase the sharpness of the content to bring out the details of the video. With mencoder, it is a little different on what options you can use compared to mplayer, so play around with the settings.
 "
 
+http://ubuntuforums.org/showthread.php?t=77329&page=6
+  hqdn3d=2:2:3,pp=ac
+     like this for anime...LOL I can see my jruby wrapper now...
   
   hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
   
@@ -213,7 +232,8 @@ http://freshmeat.net/articles/fine-tuning-mplayer:
      -vop pp=hb:y/vb:y and only on low rest (no post processing for HQ videos...hmm...)
 
 -autosync 1 might resync my cruddy DVD's... LODO
-  
+ 
+  more gl: "use these options" http://forum.doom9.org/archive/index.php/t-132325.html hardware rendere 
 ===
  hqdn3d=7:7:5 # 3.5:7:5 for mpeg??
  -sws 9
