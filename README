@@ -1,4 +1,4 @@
-Sensible-cinema [5] allows you to apply pre-programmed delete lists
+Sensible-cinema [5] allows you to apply pre-programmed edit lists
 (e.g. Edit Decision Lists [2]) to DVD's you own.  
 I.e. you can edit a DVD to "mute out" or skip certain scenes.
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
@@ -48,7 +48,7 @@ Enjoy your movies!
 Installation and usage instructions available here: http://rogerdpack.t28.net/sensible-cinema
 NB that you want to download it sourceforge, not from github downloads.
 
-== Creating Your Own Delete Lists, or modifying previously existing ones ==
+== Creating Your Own Edit Lists, or modifying previously existing ones ==
 
 See the accompanying documentation/how_to_create_your_own_delete_lists.txt file.
 
@@ -78,7 +78,7 @@ A. Give them the original unedited DVD and a link to sensible-cinema's website.
 
 == Caveats ==
 
-NB that "someone" has to first create a delete list, per DVD.
+NB that "someone" has to first create a edit list, per DVD.
 If one doesn't yet exist for the DVD you want edited,
 you could create it yourself, or employ somebody to create it.  Make sure to submit it
 back to us when you're done, so that the rest of the users can benefit from it.
@@ -86,7 +86,7 @@ Fortunately just one person has to do it, once, for everybody to benefit, and th
 editing process is not too bad.
 
 We also have a subtitle parser which really helps locate profanity more conveniently, so that will help you
-build your delete list.
+build your edit list.
 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off, 
 so we recommend to always clean your discs first!
@@ -198,7 +198,7 @@ No really.
 
 Note that competition/use of files from sensible cinema is welcome!
 
-In fact, the current end goal is to publish the delete lists (EDL's) to a separate repository with its
+In fact, the current end goal is to publish the edit lists (EDL's) to a separate repository with its
 own API under the CC license, meaning that even "for profit" users can use them for whatever other use they want, hopefully
 good uses :)  More direct direct competitors are also welcome here.  I only made this because I had to
 and nothing like it existed, so if something else springs up, I'm actually happy to use it instead, too.

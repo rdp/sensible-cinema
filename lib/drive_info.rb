@@ -28,11 +28,7 @@ class DriveInfo
    else
      command = "#{__DIR__}/../vendor/dvdid.exe #{dir}"
    end
-   output = nil
-   elapsed = Benchmark.realtime {
-     output = `#{command}`
-   }
-   print 'dvdid done ', elapsed, ' s'
+   output = `#{command}` # can take like 2.2s
    raise 'dvdid command failed?' + command unless $?.exitstatus == 0
    output.strip
  end

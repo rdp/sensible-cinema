@@ -43,7 +43,7 @@ def go_sc(args)
   
     syntax: [player_description.yml] [delete_list.txt|test] [-t -v --clear-cache] (or just nothing at all--it will prompt for all things needed)
     
-    If you specify "test" for the delete list, it will pause 4s, take a snapshot of the player, then exit.
+    If you specify "test" for the edit list, it will pause 4s, take a snapshot of the player, then exit.
     Useful for debugging your screen capture of the current player.
     You can also specify -v or -t if you want to enable more verbose (chatty) output.
     

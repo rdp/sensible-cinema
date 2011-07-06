@@ -6,7 +6,7 @@
   
   === loose ordering/eventually ===
     linearize [?] hmm...
-    re-update todo/all docu/user feedbacks
+    re-update todo/all docu/user feedback etc.
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
@@ -32,7 +32,7 @@
  
 == yes do ordered in conjunction with the above ==
   can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
-  try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
+  try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
     cougar video (that looks tough...)
@@ -49,11 +49,13 @@
   next timing thing (notes file)
 
 == yes do, un-ordered currently, from the various future release options ==
-  @instructions "this is great for comparing srt's, except..."
+  don't cache selections if they choose a local file...hmm...
+  "save to" -> same dir as "get from" yeah
+  @instructions "this is great for comparing srt's, except...then you have to..."
   test with cars, mac
   volume_name => dvd_volume_name
-  setpriority for the several :)
-  why is the Sintel's EDL off?
+  make it load faster! this is cuh-razy! or splash screen! yes!
+  why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
@@ -61,15 +63,15 @@
   check with WME plugins, add instructions, then note in the README "support for x..."
   decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
     don't have to use eval!
-      can accept straight ".edl" files too, as my input (?)
-      EDL with JSON on top, full timestamps.
+    EDL with JSON on top, full timestamps.
+  setpriority for several :)
   bring to top after a conversion, and for prompts...we get hidden!
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
   add a "watch edited from local file" option...
     check if some other buttons are outdated...
-  unit tests (all)
-  can I avoid requiring use of tsmuxer first?
+  unit tests (all pass)
+  can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
   youtube/hulu timings
@@ -77,6 +79,9 @@
   split LLC's website+consumer
     get LLC before a "real" domain name
   upconverter
+    command-line
+    full
+    use me [optionally? YAML]
   employee instructions: watch @ realtime after profanity filter first pass :P  
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
@@ -111,8 +116,6 @@
       app store mplayer perhaps?
       bundle a copy of smplayer locally?
       can use a working copy of tsmuxer with instructions :)
-  typically delete unedited.fulli file automatically
-    except if it's a specific scene run test...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   generic/consumer EDL run through should be through smplayer...do I need/want straight mplayer option too though?
   do I need tsmuxer?
@@ -153,6 +156,9 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+<<<<<<< HEAD
+  can accept straight ".edl" files too, as my input (?)
+=======
   @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html
   @mplayer: -edl nonexist should warn [?] also when it hits an EDL sector ouput something plz?
   @mplayer: allow EDL to have full timestamps for ease of editing :)
@@ -160,7 +166,9 @@
   add an mencoder convert with mplayer_breaks button :P
     can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
     maybe just under an "advanced" window...
+>>>>>>> 979efc445a73b78a5cded2efb5d105e949c82fe1
   @mplayer homepage: list mulder's not smplayer's, plz?
+    also smplayer advertise more prominently :P
   make this thing load faster: don't require rubygems...uh...faster_require?
   does xbmc need a "convert to 30fps edl" for DVD?
   @xbmc can you call out to another player prog plz?
@@ -216,7 +224,6 @@
   research the gplv3, add terms. Maybe want real lawyer, even?
   note "others are released under this license, that license"
   note/include jruby license, include gplv1 et al, note "also included locally"
-  check if md5 same mac versus PC for VLC/mplayer rips, VLC done several times/fix too
   disallow choosing empty drive? fail more gracefully when they do?
   sons of provo "music video" EDL
   it can "slow certain sections down" that might look way cool! LOL
@@ -282,8 +289,6 @@
   add button start EDL playback from dvd here [?] (for create mode)
   re-play as EDL button for both modes--describe on the how to better
   fix prio for first ffmpeg instance not being settable [huh?]
-  calculating md5...do this for each disc while they choose it [low prio] :)
-    if the dll fella is too slow, that is, like my current one is :P
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
   integrate sub-titles-zy-er auto-download 
     I could integrate discid => hashes => opensubtitles.org 
@@ -306,7 +311,6 @@
   .exe installer
     just unzips, runs the .bat file for them [?] :)
       full msi
-  add md5 "warning" when something (anything) had failed disc fails doesn't match because of DVD read failure...
   LLC before I ever pay anyone anything, if I ever do
   add some or any of the following "play now" options...without a true navigator of course :)
     "round conservatively, yes write inaccurate file straight from DVD in pieces" ?

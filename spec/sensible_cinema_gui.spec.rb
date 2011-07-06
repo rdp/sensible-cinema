@@ -114,7 +114,9 @@ module SensibleSwing
     end
     
     before do
+      ARGV << "--create-mode" # want all the buttons for some tests.
       @subject = MainWindow.new
+      ARGV.pop
       @subject.stub!(:choose_dvd_drive_or_file) {
         ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
@@ -177,7 +179,9 @@ module SensibleSwing
     
     # name like :@rerun_previous
     def click_button(name)
-      @subject.instance_variable_get(name).simulate_click
+      button = @subject.instance_variable_get(name)
+      raise 'button not found' + name.to_s unless button
+      button.simulate_click
     end
     
     it "should be able to run system" do
@@ -210,7 +214,7 @@ module SensibleSwing
      @subject.get_title_track(descriptors).should == "3"
     end
     
-    it "should call through to explorer for the full thing" do
+    it "should call through to explorer to display the final output file" do
       PlayAudio.stub!(:play) {
         @played = true
       }
@@ -314,7 +318,7 @@ module SensibleSwing
     end
     
     it "should create a new file for ya" do
-      out = MainWindow::EDL_DIR + "/sweetest_disc_ever.txt"
+      out = MainWindow::EDL_DIR + "/edls_being_edited/sweetest_disc_ever.txt"
       File.exist?( out ).should be_false
       @subject.stub!(:get_user_input) {'sweetest disc ever'}
       @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click
@@ -445,8 +449,9 @@ module SensibleSwing
     
     it "should not show the normal buttons in create mode" do
       MainWindow.new.buttons.length.should == 5
+      old_length = MainWindow.new.buttons.length
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 17
+      MainWindow.new.buttons.length.should be > (old_length + 5)
       ARGV.pop # post-test cleanup--why not :)
     end
     
@@ -496,7 +501,7 @@ module SensibleSwing
     @subject.stub(:assert_ownership_dialog) {
       prompted = true
     }
-    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/edl_for_unit_tests.txt")
+    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/edls_being_edited/edl_for_unit_tests.txt")
     click_button(:@create_dot_edl)
     assert File.exist? 'yo.edl'
     assert prompted
