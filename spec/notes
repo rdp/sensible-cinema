@@ -91,6 +91,8 @@ up next:
    ffmpeg ts: 01:23:32.49
    ffmpeg mkv: 01:23:38.07 differs from mpchc ? differs from VLC makemkv? TODO
 
+  mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
+
 == iq ==
   this one seems to have an extra second in there...
   so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
