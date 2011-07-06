@@ -240,7 +240,8 @@ https://discussions.apple.com/thread/1771812?threadID=1771812
   how useful is post processing?
   # do I need hqdn3d at all here?
   do I run well on those images?
-
+  lancosz 10 best?
+  
 === current sum ===
 mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
 or 

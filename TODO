@@ -50,6 +50,7 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   don't cache selections if they choose a local file...hmm...
+  @mplayer: do I need -zoom ?
   "save to" -> same dir as "get from" yeah
   @instructions "this is great for comparing srt's, except...then you have to..."
   test with cars, mac
