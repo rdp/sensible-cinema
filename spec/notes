@@ -1,6 +1,6 @@
 up next:
   lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
-  check for wall clock length IQ, Snow White again, end is what matters here..
+  check for wall clock length IQ, Snow White again WMP, end is what matters here..
 
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
@@ -115,8 +115,10 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
   this one mkv seems to have an extra second in there...
 
   maybe sometimes mkv stretches it double in error somehow?
+    maybe it has *both* problems...LOL
   
   wall time seems to be 29.97 (DVD player reports 30) first hour at least
+    at 1:09 it appeared to be like 6s "back", though makemkv may have interfered slightly...
   
   so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
     so my files aren't precisely that...we shall see if this hypothesis holds true...
@@ -141,7 +143,7 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
     does the mkv match DVD
     
   mplayerdump.mencoderforceidx sum: 1:39:17 (4 minutes extra...somethin went wrong...)
-  DVD sum: 1:35:41 -> 1:35:46.7, maybe a bit higher, like 1:35:47.7 so maybe we're close...round up LOL
+  DVD sum: 1:35:41 -> 1:35:46.7'ish, so maybe we're close...round up LOL
   mkv sum: 1:35:49 [partially expected, partially huh?]
   mkv mac vlc 1:25:20 ish [ugh]
     originally reports it as 1:35:35 in its dashboard, this is without daspi
