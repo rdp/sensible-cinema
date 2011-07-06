@@ -1,6 +1,6 @@
 up next:
   lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
-  check for telecine IQ, Snow White
+  check for wall clock length IQ, Snow White
 
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
@@ -9,7 +9,6 @@ up next:
   this one seems to show that the makemkv == ts == 29.97
   01:53:11.31, start: 0.000000 mkv
   ts  01:53:11.26, start: 600.000000
-  ?? huh ??
   makemkv11 01:53:11.31
   ts 11:  01:53:11.26
   VLC DVD sum: 1:53:05 -> 1:53:11.8
@@ -39,7 +38,7 @@ up next:
     (also had at least one mplayer split)
  
  ts forceidx: 02:24:10.50 # 12 minutes too far! gah!
- ts idx:      02:24:10.50 # boo!
+ ts idx:      02:24:10.50 # again!
 
  mkv11  02:11:03.84
    mediainfo: 2h 11mn yea
@@ -56,7 +55,7 @@ up next:
  
  c.mplayerdump.mpg [in AVS] sum 2:11:04.89
    lightning: 2:10:45.079 (non AviDemux, so might be spot on)
- HB on dvd: handbrakecli --scan -i e:\ 
+ HBcli on dvd: handbrakecli --scan -i e:\ 
    02:10:56
  so makemkv is perfect @29.97 on this one?
  fulli
@@ -72,6 +71,9 @@ up next:
  apparently had 24 telecined frames (maybe some more at the very beginning...)
    if those were assumed to have been 23.97fps, but were 29.97 fps 25% additive, or about 0.25s I guess
       might explain difference mkv and ts...
+
+  hb ffmpeg sum: 02:11:04.60 [ai ai]
+    lightning AVS: 2:10:44.9
 
  lightning 
    ts AVS: 02:10:45.302 ish
@@ -94,7 +96,11 @@ up next:
   mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
 
 == iq ==
+
   this one seems to have an extra second in there...
+  
+  wall time seems to be 29.97 (DVD player reports 30)
+  
   so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
     so my files aren't precisely that...we shall see if this hypothesis holds true...
 
@@ -115,7 +121,7 @@ up next:
   mac 
     DVD player: 1:35:41
       converted: sum should be 1:35:46.7 
-      reconverted -> 1:35:52.4 [!]
+        and if again reconverted -> 1:35:52.4 [!]
     mplayerx cannot play DVD/seek right
     mplayerx on makemkv sum: 1:35:53
     vlc on makemkv sum 1:35:49
@@ -125,7 +131,7 @@ up next:
   ffprobe mkv
     2810.792000 last video pts -> 46:50 or something [?]
   ffmpeg ts file: 01:35:47.09
-  ffmpeg mkv:  01:35:49.59 * maybe just this one is messed up? *
+  ffmpeg mkv: 01:35:49.59 * maybe just this one is messed up? *
 
   AC3 can have 6 channels: Decoding AC3 stream (track 2): Bitrate: 448Kbps Sample Rate: 48KHz Channels: 6
        Stream #0.1(eng): Audio: ac3, 48000 Hz, 5.1, s16, 448 kb/s
