@@ -1,6 +1,6 @@
 up next:
   lightning exact frame to compare the two fulli's...and the DVD, and mplayer :P
-  check for wall clock length IQ, Snow White
+  check for wall clock length IQ, Snow White again, end is what matters here..
 
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
@@ -16,11 +16,12 @@ up next:
   ffprobe -show_packets title00.ts
      7391.234311 -> 2:03:11.2 # oh that's comforting LOL
   only has one demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+    at the beginning
   
 == C ==
   this one seems to show makemkv == (ts-0.2) == 29.97
 
- vlc DVD sum 2:10:56 (-> 2:11:03.9)
+ vlc DVD sum 2:10:56 (-> 2:11:03.9'ish)
   so this time mkv was 29.97 fps accurate less 0.2s?
   
  mkv 02:11:03.84, start: 0.000000
@@ -30,6 +31,7 @@ up next:
      you'd think that'd be ok...hmm...
      or do the players trust it too mightily or something... [?]
    mediainfo: Frame rate                       : 29.970 fps
+
    mplayer: VIDEO:  [MPG2]  720x480  0bpp  59.940 fps  8000.0 kbps (976.6 kbyte/s)
      with no switching content messages...so I'm guessing makemkv just maps the given frames into mkv slots [?]
      that should be ok...unless it's getting its math wrong somehow...
@@ -73,7 +75,7 @@ up next:
       might explain difference mkv and ts...
 
   hb ffmpeg sum: 02:11:04.60 [ai ai]
-    lightning AVS: 2:10:44.9
+    lightning AVS: 2:10:44.9 (about 0.3 early ?)
 
  lightning 
    ts AVS: 02:10:45.302 ish
@@ -81,13 +83,11 @@ up next:
    also avs says the mkv is 0.2s longer, really pretty close to ffmpeg's thing...
     
 == snow white DVD ==
- TODO analyze, also clock/wall DVD time...with commercial grade player
- also mediainfo it
  VLC 
     sum DVD: 1:23:28 sum (-> 1:23:33.0 TS) -> 1:23:38.0 freako
- mplayer makemkv: 1:23:28 sum
+ mplayer makemkv: A:5018.0 == 1:23:38 sum
   oh I feel strange...
- too many mplayer splits here...
+ too many mplayer splits in this one...
  mpchc 1:23:28 sum DVD
  mpchc 1:23:28 sum mkv [huh? this mkv thing is confusing me...]
  check subtitiles +- file against file, DVD snow white
@@ -95,19 +95,28 @@ up next:
    ffmpeg mkv: 01:23:38.07 differs from mpchc ? differs from VLC makemkv? TODO
  vlc mkv: 1:23:38
  vlc ts: no times
+ ffmpeg ts: 01:23:32.49
+    It appears that makemkv is making certain assumptions that may not be true here?
+
+  makemkv says "length shall be 1:23:11" (oopsy)
+  mediainfo mkv: 1h 23m
 
 demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
 V:   0.0   0/  0 ??% ??% ??,?% 0 0
   
   hmm...I'm beginning to wonder if maybe some are more honest than others... ?
 
-  mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
+  mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, 
+    either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
+    TODO redo wall clock time here...
 
 == iq ==
 
-  this one seems to have an extra second in there...
+  this one mkv seems to have an extra second in there...
+
+  maybe sometimes mkv stretches it double in error somehow?
   
-  wall time seems to be 29.97 (DVD player reports 30)
+  wall time seems to be 29.97 (DVD player reports 30) first hour at least
   
   so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
     so my files aren't precisely that...we shall see if this hypothesis holds true...
@@ -138,12 +147,12 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
     originally reports it as 1:35:35 in its dashboard, this is without daspi
   mac 
     DVD player: 1:35:41
-      converted: sum should be 1:35:46.7 
+      converted: sum should be 1:35:46.7
         and if again reconverted -> 1:35:52.4 [!]
     mplayerx cannot play DVD/seek right
     mplayerx on makemkv sum: 1:35:53
     vlc on makemkv sum 1:35:49
-    mplayer command line makemkv end TS: A:5749.5 == 1:35:49.5
+    mplayer command line makemkv end/sum TS: A:5749.5 == 1:35:49.5
     seems zactly the same
   what about ffmpeg against that thing?
   ffprobe mkv
@@ -165,7 +174,7 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
  handbrake seems to be "smart" about it
   mkv "1:35:49" "results in 1:35:45"
   and ts "1:35:45" results in "1:35:45"
-    except transcoded is 49 and 47 s. What?
+    except transcoded is 49 and 47 s. What? (47 might be expected...hmm...)
 
 == mplayer EDL ==
 
