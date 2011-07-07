@@ -127,25 +127,45 @@ module SensibleSwing
 
     Storage = Storage.new("sensible_cinema_storage")
     UpConvertKey = 'upconvert_setting'
+    UpConvertKeyExtra = 'upconvert_setting_extra'
     
     def setup_upconvert_buttons
-      none = new_jbutton("reset upconvert options to nothing (which is reasonably good, uses directx scaling, good for slow cpu)", false) # LODO , don't need end param
+      none = new_jbutton("reset upconvert options to default (none)", false) # LODO , don't need end param
+      none.tool_tip = "Having no upconvert options is reasonably good, uses directx for scaling, nice for slow cpu's"
+      p 'upconvert options started as:', Storage[UpConvertKey]
       none.on_clicked {
         Storage[UpConvertKey] = nil
+        Storage[UpConvertKeyExtra] = nil
         show_blocking_message_dialog "reset them"
       }
-      medium_dvd = new_jbutton("set upconvert options to HQ DVD-style input", false)
+      medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)", false)
       medium_dvd.on_clicked {
-        Storage[UpConvertKey] = "-sws 9 -vf hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:10 -ssf ls=75.0 -ssf cs=75.0"
+        Storage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:5" # LODO 5 here...
+        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
         show_blocking_message_dialog "set them to HQ DVD"
       }
-      high_compression = new_jbutton("set upconvert options to playback highly compressed video", false)
+      high_compression = new_jbutton("set upconvert options for playing back highly compressed video", false)
       high_compression.on_clicked {
         # -autoq 6 -vf pp [?]
-         Storage[UpConvertKey] = "-sws 9 -vf hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0"
+        Storage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
+        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
       }
     end
     
+    def get_upconvert_settings
+      template = Storage[UpConvertKey]
+      p 'template', template
+      if template
+        x = java.awt.Toolkit.getDefaultToolkit().getScreenSize().get_width
+        template.gsub('SCREEN_X', x.to_s)
+      else
+        ''
+      end
+    end
+
+    def get_upconvert_secondary_settings
+      Storage[UpConvertKeyExtra]
+    end
     def setup_advanced_buttons
       
       add_text_line 'Realtime create Options:'
@@ -418,9 +438,10 @@ module SensibleSwing
     def set_smplayer_opts to_this, show_subs = false
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
-      old_prefs = "[advanced]\nmplayer_additional_options=\n[subtitles]\nautoload_sub=false" unless old_prefs.contain? 'mplayer_additional_options='
+      old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false" unless old_prefs.contain? 'mplayer_additional_options='
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
+      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=#{get_upconvert_settings}")
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
       smplayer_prefs_file
@@ -520,7 +541,7 @@ module SensibleSwing
         config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2, sniff...
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
       end
-      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
+      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2 -mouse-movements -nocache "
       
       # want this even with smplayer I guess...
       @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
@@ -547,7 +568,7 @@ module SensibleSwing
     def play_mplayer_edl drive_or_file_and_edl_path = nil
       add_secs_end = 0
       add_secs_beginning = 0.5 # LODO are these accurate for file based, as well?
-      extra_mplayer_commands = ''
+      extra_mplayer_commands = []
       if drive_or_file_and_edl_path
         drive_or_file, edl_path = drive_or_file_and_edl_path
         dvd_id = NonDvd # fake it out...
@@ -559,7 +580,7 @@ module SensibleSwing
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
-        extra_mplayer_commands += " -nocache "
+        extra_mplayer_commands << "-nocache"
         play_this = "dvdnav://#{title_track}/#{drive_or_file} "
       end
       
@@ -579,14 +600,17 @@ module SensibleSwing
       
       if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
-        extra_mplayer_commands += " -vo direct3d "
-        extra_mplayer_commands += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # LODO may no longer be needed...
+        extra_mplayer_commands << "-vo direct3d"
+        extra_mplayer_commands << "-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF" # LODO may no longer be needed... [?]
       end
       
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      config_path = set_smplayer_opts extra_mplayer_commands + " -framedrop -mc 0.016 -autosync 15 -alang en -sid 1000 -edl #{File.expand_path EdlTempFile}"
+      extra_mplayer_commands << "-framedrop -mc 0.016 -autosync 15"
+      extra_mplayer_commands << "-alang en -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default
+      extra_mplayer_commands << get_upconvert_secondary_settings
+      config_path = set_smplayer_opts extra_mplayer_commands.join(' ')
       
       command = "smplayer_portable -close-at-end -fullscreen #{play_this} -config-path \"#{File.dirname config_path}\" "
       p command

@@ -89,11 +89,18 @@ up next:
   the TS *might* be right on, which would imply ts == 29.97, mkmv = ts*30.03
 
  wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd)
+  1:23:32 sum powerDVD
+  *except* when you scan to the end, then it's 1:23:28 again
+  my guess is powerDVD isn't keeping track except internally...
+  seeking 1HR "good night" [good] night (her last one)
+  yep it's totally internally inconsistent. Fascinating.
+  
  TODO hb it straight [?]
 
   120180 frames in the ts
     -> 29.97 1:46:50 <sigh>.
-
+  120183 frames in the mkv <sigh> LOL
+  
  VLC 
     sum DVD: 1:23:28 sum (-> 1:23:33.0 TS) -> 1:23:38.0 freako
  mplayer makemkv: A:5018.0 == 1:23:38 sum
