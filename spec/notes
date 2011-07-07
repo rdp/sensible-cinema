@@ -91,6 +91,9 @@ up next:
  wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd)
  TODO hb it straight [?]
 
+  120180 frames in the ts
+    -> 29.97 1:46:50 <sigh>.
+
  VLC 
     sum DVD: 1:23:28 sum (-> 1:23:33.0 TS) -> 1:23:38.0 freako
  mplayer makemkv: A:5018.0 == 1:23:38 sum
@@ -326,6 +329,8 @@ or
 ==== prop ====
 "upscaling"
 http://www.neowin.net/forum/topic/615696-permanent-upconversion-in-software/
+http://forum.videohelp.com/threads/280895-Is-there-computer-dvd-software-that-will-upconvert-regular-dvds
+http://forums.cnet.com/7723-7596_102-285455.html
 
 == WMC/other EDL plugins ==
 
