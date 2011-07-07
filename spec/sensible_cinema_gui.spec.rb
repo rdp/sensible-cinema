@@ -449,7 +449,7 @@ module SensibleSwing
     end
     
     it "should show additional buttons in create mode" do
-      MainWindow.new.buttons.length.should == 5
+      MainWindow.new.buttons.length.should == 6
       old_length = MainWindow.new.buttons.length
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should be > (old_length + 5)
@@ -467,7 +467,7 @@ module SensibleSwing
       MplayerEdl.stub(:convert_to_edl) do |d,s,s,splits|
         splits1 = splits
       end
-      @subject.do_mplayer_edl
+      @subject.play_mplayer_edl
       splits1.should == []
     end
     
@@ -477,7 +477,7 @@ module SensibleSwing
         @subject.stub!(:choose_dvd_drive_or_file) {
            ["mock_dvd_drive", "mockVolume", "abcdef1234"]
         }
-        @subject.do_mplayer_edl
+        @subject.play_mplayer_edl
         @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
       end
    end

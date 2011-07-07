@@ -142,7 +142,9 @@ module SensibleSwing
     end
     
     def setup_advanced_buttons
+      
       add_text_line 'Realtime create Options:'
+      
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", true, 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
@@ -165,16 +167,7 @@ module SensibleSwing
         version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
-        filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
-        edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
-        assert_ownership_dialog
-        descriptors = EdlParser.parse_file edl_filename
-        # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
-        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl'
-        File.write(output_file, edl_contents)
-        raise unless File.exist?(output_file)
-        show_blocking_message_dialog("created #{output_file}")
+        choose_file_and_edl true
       }
 
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)", true)
@@ -208,7 +201,7 @@ module SensibleSwing
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
         show_copy_pastable_string("#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}")
+        This is USED eventually to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}")
       }
 
       @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps", true )
@@ -219,8 +212,7 @@ module SensibleSwing
         else
           output = EdlParser.translate_time_to_human_readable input.to_f, true
         end 
-        show_copy_pastable_string("Converted:", output)
-         
+        show_copy_pastable_string("Converted:", output)         
       }
       
       @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time (30 fps) to EDL player time (29.97 fps)", true)
@@ -300,14 +292,14 @@ module SensibleSwing
         system_blocking( "smplayer_portable #{nice_file}  -config-path \"#{File.dirname config_path}\" " )
       }
       
-    end
+    end # advanced buttons    
     
     def setup_normal_buttons
             
       @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
-        do_mplayer_edl 
+        play_mplayer_edl 
       }
       
       @create = new_jbutton( "Create edited copy version of video on Your Hard Drive", false)
@@ -325,10 +317,30 @@ module SensibleSwing
       end      
       
 #      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
-#        raise 'todo' # TODO 
+#        play_mplayer_edl  # TODO
 #      }
 
-      # TODO button "Watch a file using an EDL on it"
+      @watch_file_edl = new_jbutton( "Watch a file edited (realtime)", false) do
+        choose_file_and_edl false # TODO make not need hack-around for the first button, since have this one now...
+      end
+      
+    end
+    
+    def choose_file_and_edl just_create_dot_edl_file_instead_of_play
+      filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
+      edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
+      assert_ownership_dialog
+      if just_create_dot_edl_file_instead_of_play
+        descriptors = EdlParser.parse_file edl_filename
+        # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
+        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl'
+        File.write(output_file, edl_contents)
+        raise unless File.exist?(output_file)
+        show_blocking_message_dialog("created #{output_file}")
+      else
+        play_mplayer_edl [filename_mpg, edl_filename]
+      end
     end
     
     def we_are_in_upconvert_mode
@@ -503,6 +515,8 @@ module SensibleSwing
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
       end
       command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
+      
+      # want this even with smplayer I guess...
       @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
         'v' key: turn off subtitles.
@@ -524,28 +538,38 @@ module SensibleSwing
       EOL
     end
     
-    def do_mplayer_edl
+    def play_mplayer_edl drive_or_file_and_edl_path = nil
       add_secs_end = 0
-      add_secs_beginning = 0.5 # LODO are these accurate for file based, as well
+      add_secs_beginning = 0.5 # LODO are these accurate for file based, as well?
       
-      drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
-      if dvd_id == NonDvd
-        play_this = " \"#{drive_or_file}\" " # play straight file...
-        extra_mplayer_commands = ""
+      if !drive_or_file_and_edl_path
+        drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
+        if dvd_id == NonDvd
+          play_this = " \"#{drive_or_file}\" " # play straight file...
+          extra_mplayer_commands = ""
+        else
+          using_dvd = true
+          title_track = get_title_track(descriptors)
+          extra_mplayer_commands = " -nocache "
+          play_this = "dvdnav://#{title_track}/#{drive_or_file} "
+        end
       else
-        descriptors = EdlParser.parse_file edl_path
+        drive_or_file, edl_path = drive_or_file_and_edl_path[0]
+      end
+      
+      descriptors = EdlParser.parse_file edl_path
+      if using_dvd
         splits = descriptors['mplayer_dvd_splits']
         splits ||= []
         if splits == []
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
         end
         splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
-        File.write(EdlTempFile, edl_contents)
-        title_track = get_title_track(descriptors)
-        extra_mplayer_commands = " -nocache "
-        play_this = "dvdnav://#{title_track}/#{drive_or_file} "
+      else
+        splits = []
       end
+      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
+      File.write(EdlTempFile, edl_contents)
       
       if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
@@ -1015,10 +1039,14 @@ module SensibleSwing
     # or full_path.mkv, filename, ''
     def choose_dvd_drive_or_file force_choose_only_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_openstruct
-      if @saved_opticals == opticals
+      if @saved_opticals == opticals && @_choose_dvd_drive_or_file
         # memoize...if disks haven't changed :)
         return @_choose_dvd_drive_or_file
+      else
+        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
+        # is this ok for os x?
       end
+
       has_at_least_one_dvd_inserted = opticals.find{|d| d.VolumeName }
       if !has_at_least_one_dvd_inserted && force_choose_only_dvd_drive
         show_blocking_message_dialog 'insert a dvd first' 
@@ -1061,8 +1089,6 @@ module SensibleSwing
           out.dispose
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
         end
-        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
-        # is this ok for os x?
         return @_choose_dvd_drive_or_file
       else
         raise 'did not select a drive...'
