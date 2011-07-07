@@ -355,10 +355,11 @@ module SensibleSwing
         
       else
         setup_normal_buttons
-        if we_are_in_create_mode
-          setup_advanced_buttons
-          add_text_line 'Contact:'
-        end
+      end
+      
+      if we_are_in_create_mode
+        setup_advanced_buttons
+        add_text_line 'Contact:'
       end
       
       @upload = new_jbutton("Submit feedback/Upload/Request Help", false) # keep this one last! :)

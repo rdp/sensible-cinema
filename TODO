@@ -31,6 +31,10 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above ==
+  re-watch Snow White powerdvd
+  re-watch IQ powerdvd
+  add a "scan for expected title, times" (basically all titles, times...)
+    complain if times are wrong...
   next notes: lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -84,6 +88,7 @@
     command-line
     full
     use me [optionally? YAML]
+    check gl mac
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @makemkv: timing feels broken weird-like!
   clear runnings
@@ -160,6 +165,7 @@
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  @mplayer: gl shucks on windows 7!
   can accept straight ".edl" files too, as my input (?)
   @mplayer: after hitting split DVD sectors, the OSD fraction goes bonkers.
   @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html

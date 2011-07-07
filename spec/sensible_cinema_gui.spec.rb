@@ -180,7 +180,7 @@ module SensibleSwing
     # name like :@rerun_previous
     def click_button(name)
       button = @subject.instance_variable_get(name)
-      raise 'button not found' + name.to_s unless button
+      raise 'button not found: ' + name.to_s unless button
       button.simulate_click
     end
     
@@ -457,7 +457,7 @@ module SensibleSwing
 
     it "should show upconvert buttons" do
       ARGV << "--upconvert-mode"
-      MainWindow.new.buttons.length.should be > (old_length + 5)
+      MainWindow.new.buttons.length.should be > 3
       ARGV.pop 
     end 
     
