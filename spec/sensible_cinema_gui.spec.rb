@@ -447,13 +447,19 @@ module SensibleSwing
       end
     end
     
-    it "should not show the normal buttons in create mode" do
+    it "should show additional buttons in create mode" do
       MainWindow.new.buttons.length.should == 5
       old_length = MainWindow.new.buttons.length
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should be > (old_length + 5)
       ARGV.pop # post-test cleanup--why not :)
     end
+
+    it "should show upconvert buttons" do
+      ARGV << "--upconvert-mode"
+      MainWindow.new.buttons.length.should be > (old_length + 5)
+      ARGV.pop 
+    end 
     
     it "should read splits from the file" do
       splits1 = nil
