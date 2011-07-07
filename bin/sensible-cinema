@@ -95,6 +95,9 @@ module SensibleSwing
         @panel.add button
         @buttons << button
       end
+      if block_given?
+        button.on_clicked { yield }
+      end
       button
     end
     
@@ -541,20 +544,19 @@ module SensibleSwing
     def play_mplayer_edl drive_or_file_and_edl_path = nil
       add_secs_end = 0
       add_secs_beginning = 0.5 # LODO are these accurate for file based, as well?
-      
-      if !drive_or_file_and_edl_path
-        drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
-        if dvd_id == NonDvd
-          play_this = " \"#{drive_or_file}\" " # play straight file...
-          extra_mplayer_commands = ""
-        else
-          using_dvd = true
-          title_track = get_title_track(descriptors)
-          extra_mplayer_commands = " -nocache "
-          play_this = "dvdnav://#{title_track}/#{drive_or_file} "
-        end
+      extra_mplayer_commands = ''
+      if drive_or_file_and_edl_path
+        drive_or_file, edl_path = drive_or_file_and_edl_path
+        dvd_id = NonDvd # fake it out...
+      end
+      if dvd_id == NonDvd
+        play_this = " \"#{drive_or_file}\" " # play straight file...
       else
-        drive_or_file, edl_path = drive_or_file_and_edl_path[0]
+        drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
+        using_dvd = true
+        title_track = get_title_track(descriptors)
+        extra_mplayer_commands += " -nocache "
+        play_this = "dvdnav://#{title_track}/#{drive_or_file} "
       end
       
       descriptors = EdlParser.parse_file edl_path
@@ -579,10 +581,11 @@ module SensibleSwing
       
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
+      # -hardframedrop might help but hurts just too much
       config_path = set_smplayer_opts extra_mplayer_commands + " -framedrop -mc 0.016 -autosync 15 -alang en -sid 1000 -edl #{File.expand_path EdlTempFile}"
       
       command = "smplayer_portable -fullscreen #{play_this} -config-path \"#{File.dirname config_path}\" "
-      # -hardframedrop might help but hurts just too much
+      p command
       Thread.new { system_blocking command}
     end
     

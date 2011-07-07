@@ -41,7 +41,11 @@ module SensibleSwing
          block.call
        rescue Exception => e
          puts 'got fatal exception thrown in button [ignoring]', e, e.class
+        if $VERBOSE
+         puts e.backtrace, e
+        else
          puts e.backtrace[0], e
+        end
        end        
      end
      self
