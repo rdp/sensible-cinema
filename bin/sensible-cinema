@@ -548,11 +548,12 @@ module SensibleSwing
       if drive_or_file_and_edl_path
         drive_or_file, edl_path = drive_or_file_and_edl_path
         dvd_id = NonDvd # fake it out...
+      else
+        drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
       if dvd_id == NonDvd
         play_this = " \"#{drive_or_file}\" " # play straight file...
       else
-        drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
         using_dvd = true
         title_track = get_title_track(descriptors)
         extra_mplayer_commands += " -nocache "
