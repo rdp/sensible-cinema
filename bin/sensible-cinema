@@ -263,13 +263,13 @@ module SensibleSwing
         Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
       EOL
       @preview_section.on_clicked {
-        do_copy_dvd_to_hard_drive true
+        do_copy_dvd_to_hard_drive_via_file true
       }
       
       @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)", true)
       @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
-        do_copy_dvd_to_hard_drive true, false, true
+        do_copy_dvd_to_hard_drive_via_file true, false, true
       }
 
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file", true )
@@ -287,7 +287,7 @@ module SensibleSwing
         timestamp splits in it [because some DVD's are buggy]
       EOL
       @fast_preview.on_clicked {
-        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive_via_file false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
@@ -312,7 +312,7 @@ module SensibleSwing
         It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it will continue eventually.
       EOL
       @create.on_clicked {
-        do_copy_dvd_to_hard_drive false
+        do_copy_dvd_to_hard_drive_via_file false
       }
       
       @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
@@ -800,12 +800,12 @@ module SensibleSwing
       got
     end
     
-    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file = true
+    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
       
       unless @_edit_list_path # cache file selection...
         edit_list_path = single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && force_choose_edl_file
+        if !edit_list_path && force_choose_edl_file_if_no_easy_match
           edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
           raise 'cancelled choosing an EDL' unless edit_list_path
         end
@@ -866,7 +866,7 @@ module SensibleSwing
       end
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
+    def do_copy_dvd_to_hard_drive_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
       drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
