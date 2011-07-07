@@ -147,13 +147,9 @@ V:   0.0   0/  0 ??% ??% ??,?% 0 0
 
 V:   1.0  22/ 22 17302% 18%  0.0% 0 0
 
-demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
-V:   1.0  23/ 23 16582% 17%  0.0% 0 0
-Warning! FPS changed 23.976 -> 29.970  (-5.994005) [4]
-V:   1.1  26/ 25 15190% 16%  0.0% 0 0
 
-demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
-V:   0.0   0/  0 ??% ??% ??,?% 0 0
+demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
+V:   1.0  23/ 23 10748% 10%  0.0% 0 0                                          V:   1.0  24/ 24 10319%  9%  0.0% 0 0                                          V:   1.1  26/ 25 9846%  9%  0.0% 0 0                                           demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
 
   mplayer for the mkv seemed to creep up?  somehow it seemed to get messed up...
     TODO avidemux/quality editor for these various and its frames...what the?

@@ -297,29 +297,8 @@ module SensibleSwing
       
     end
     
-    def initialize
-      super "Sensible-Cinema #{VERSION} (GPL)"
-      if !(Storage['main_license_accepted'] == VERSION)
-        force_accept_license_first
-      end
-
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
-      panel = JPanel.new
-      @panel = panel
-      @buttons = []
-      panel.set_layout nil
-      add panel # why can't I just slap these down? panel? huh?
-      @starting_button_y = 40
-      @button_width = 400      
-      
-      add_text_line "Welcome to Sensible Cinema!"
-      @starting_button_y += 10 # kinder ugly...
-      add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      add_text_line ""
-      add_text_line ""
-      
-      ## BUTTONS ##
-      
+    def setup_normal_buttons
+            
       @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
@@ -345,10 +324,41 @@ module SensibleSwing
 #      }
 
       # TODO button "Watch a file using an EDL on it"
+    end
+    
+    def we_are_in_upconvert_mode
+       ARGV.index("--upconvert-mode")
+    end
+    
+    def initialize
+      super "Sensible-Cinema #{VERSION} (GPL)"
+      if !(Storage['main_license_accepted'] == VERSION)
+        force_accept_license_first
+      end
 
-      if we_are_in_create_mode
-        setup_advanced_buttons
-        add_text_line 'Contact:'
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
+      panel = JPanel.new
+      @panel = panel
+      @buttons = []
+      panel.set_layout nil
+      add panel # why can't I just slap these down? panel? huh?
+      @starting_button_y = 40
+      @button_width = 400      
+      
+      add_text_line "Welcome to Sensible Cinema!"
+      @starting_button_y += 10 # kinder ugly...
+      add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
+      add_text_line ""
+      add_text_line ""
+      
+      if we_are_in_upconvert_mode
+        
+      else
+        setup_normal_buttons
+        if we_are_in_create_mode
+          setup_advanced_buttons
+          add_text_line 'Contact:'
+        end
       end
       
       @upload = new_jbutton("Submit feedback/Upload/Request Help", false) # keep this one last! :)
