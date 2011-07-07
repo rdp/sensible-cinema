@@ -295,21 +295,9 @@ module SensibleSwing
         success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
-        nice_file = wrote_to_here_fulli #+ ".fast.mpg"
-        if false#!File.exist?(nice_file)
-          p = show_non_blocking_message_dialog("Creating quick lookup file--NB that for each changed deletion setting, 
-            you'll need to save your file and restart the fast preview SMplayer instance.
-            Also note that the start and end times will be slightly off if reality [delayed]
-            Also note that while doing fast preview, it can be doing a normal preview as well
-            in the background, simultaneously.")
-          unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
-            File.delete nice_file
-            raise 'create ' 
-          end
-          p.dispose # it will be active for sure
-        end
-        set_smplayer_opts "-edl #{EdlTempFile}"
-        thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
+        nice_file = wrote_to_here_fulli
+        config_path = set_smplayer_opts "-edl #{EdlTempFile}"
+        system_blocking( "smplayer_portable #{nice_file}  -config-path \"#{File.dirname config_path}\" " )
       }
       
     end
@@ -319,7 +307,7 @@ module SensibleSwing
       @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
-        do_mplayer_edl
+        do_mplayer_edl 
       }
       
       @create = new_jbutton( "Create edited copy version of video on Your Hard Drive", false)
@@ -409,11 +397,12 @@ module SensibleSwing
       check_for_dependencies
     end
     
-    def set_smplayer_opts to_this
+    def set_smplayer_opts to_this, show_subs = false
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
-      old_prefs = "[advanced]\nmplayer_additional_options=" unless old_prefs.contain? 'mplayer_additional_options='
+      old_prefs = "[advanced]\nmplayer_additional_options=\n[subtitles]\nautoload_sub=false" unless old_prefs.contain? 'mplayer_additional_options='
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
+      new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
       smplayer_prefs_file
@@ -510,7 +499,7 @@ module SensibleSwing
         exe = "mplayer "
         exe += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # if there are too many mplayer splits, impossible to tell anything timewise...
       else
-        config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
+        config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2, sniff...
         exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
       end
       command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
@@ -535,38 +524,42 @@ module SensibleSwing
       EOL
     end
     
-    def do_mplayer_edl play_this_mplayer_and_file = nil, add_secs_end = 0, add_secs_beginning = 0.5
+    def do_mplayer_edl
+      add_secs_end = 0
+      add_secs_beginning = 0.5 # LODO are these accurate for file based, as well
+      
       drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
-      if !play_this_mplayer_and_file
-        if dvd_id == NonDvd
-          play_this_mplayer_and_file ||= "mplayer \"#{drive_or_file}\"" # play straight file instead...
-        else
-          descriptors = EdlParser.parse_file edl_path
-          splits = descriptors['mplayer_dvd_splits']
-          splits ||= []
-          if splits == [] && !play_this_mplayer_and_file
-            show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
-          end
-          splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
-          edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
-          File.write(EdlTempFile, edl_contents)
-          title_track = get_title_track(descriptors)
-          play_this_mplayer_and_file ||= "mplayer  -mouse-movements -nocache dvdnav://#{title_track} "
+      if dvd_id == NonDvd
+        play_this = " \"#{drive_or_file}\" " # play straight file...
+        extra_mplayer_commands = ""
+      else
+        descriptors = EdlParser.parse_file edl_path
+        splits = descriptors['mplayer_dvd_splits']
+        splits ||= []
+        if splits == []
+          show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
         end
+        splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
+        File.write(EdlTempFile, edl_contents)
+        title_track = get_title_track(descriptors)
+        extra_mplayer_commands = " -nocache "
+        play_this = "dvdnav://#{title_track}/#{drive_or_file} "
       end
       
       if OS.windows?
-        # direct3d for windows 7 old nvidia cards' sake yipes
-        play_this_mplayer_and_file += " -vo direct3d "
-        play_this_mplayer_and_file += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
+        # direct3d for windows 7 old nvidia cards' sake [yipes]
+        extra_mplayer_commands += " -vo direct3d "
+        extra_mplayer_commands += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # LODO may no longer be needed...
       end
+      
       # -framedrop is for slow CPU's
-      # same with -autosync to try and help it stay in sync... -mc 0.03 is correct 1s audio per 2s video
-      command = "#{play_this_mplayer_and_file} -framedrop -mc 0.016 -autosync 15 -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive_or_file}"
+      # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
+      config_path = set_smplayer_opts extra_mplayer_commands + " -framedrop -mc 0.016 -autosync 15 -alang en -sid 1000 -edl #{File.expand_path EdlTempFile}"
+      
+      command = "smplayer_portable -fullscreen #{play_this} -config-path \"#{File.dirname config_path}\" "
       # -hardframedrop might help but hurts just too much
-      p command
-      @popup ||= show_mplayer_instructions # LODO dry up mplayer dvd opts...
-      Thread.new { system_blocking command; @popup.dispose }
+      Thread.new { system_blocking command}
     end
     
     def assert_ownership_dialog 

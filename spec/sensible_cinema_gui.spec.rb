@@ -269,11 +269,8 @@ module SensibleSwing
     end
     
     it "should call something for fast preview" do
-      click_button(:@fast_preview).join
-      join_background_thread
-      #XXXX @system_blocking_command.should =~ /ffmpeg.*ntsc-dvd/ # I think this is a timing thing...
+      click_button(:@fast_preview)
       @system_blocking_command.should =~ /smplayer/
-      @system_blocking_command.should_not =~ /mplayer.*fast/ # the old way
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
@@ -339,9 +336,13 @@ module SensibleSwing
     end
     
     it "should create an edl and pass it through to mplayer" do
+      smplayer_opts = nil
+      @subject.stub(:set_smplayer_opts) { |to_this|
+        smplayer_opts = to_this
+      }
       click_button(:@mplayer_edl).join
-      @system_blocking_command.should match(/mplayer.*-edl/)
-      @system_blocking_command.should match(/-dvd-device /)
+      smplayer_opts.should match(/-edl /)
+      @system_blocking_command.should match(/dvdnav/)
     end
     
     it "should play edl with extra time for the mutes because of the EDL aspect" do
@@ -466,7 +467,7 @@ module SensibleSwing
       MplayerEdl.stub(:convert_to_edl) do |d,s,s,splits|
         splits1 = splits
       end
-      @subject.do_mplayer_edl nil, 0, 0
+      @subject.do_mplayer_edl
       splits1.should == []
     end
     
@@ -476,7 +477,7 @@ module SensibleSwing
         @subject.stub!(:choose_dvd_drive_or_file) {
            ["mock_dvd_drive", "mockVolume", "abcdef1234"]
         }
-        @subject.do_mplayer_edl(nil, 0, 0)
+        @subject.do_mplayer_edl
         @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
       end
    end
