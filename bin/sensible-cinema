@@ -17,6 +17,8 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+# LODO dry up smplayer_portable calls
+
 print 'Loading Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
@@ -324,7 +326,8 @@ module SensibleSwing
 #      }
 
       @watch_file_edl = new_jbutton( "Watch a file edited (realtime)", false) do
-        choose_file_and_edl false # TODO make not need hack-around for the first button, since have this one now...
+        choose_file_and_edl false # LODO make not need hack-around for the first button, since have this one now...except that do we need it
+        # for convenience, say you want to go through your indexed apps and convert them all?
       end
       
     end
@@ -585,7 +588,7 @@ module SensibleSwing
       # -hardframedrop might help but hurts just too much
       config_path = set_smplayer_opts extra_mplayer_commands + " -framedrop -mc 0.016 -autosync 15 -alang en -sid 1000 -edl #{File.expand_path EdlTempFile}"
       
-      command = "smplayer_portable -fullscreen #{play_this} -config-path \"#{File.dirname config_path}\" "
+      command = "smplayer_portable -close-at-end -fullscreen #{play_this} -config-path \"#{File.dirname config_path}\" "
       p command
       Thread.new { system_blocking command}
     end
