@@ -122,7 +122,8 @@ module SensibleSwing
     def setup_upconvert_buttons
     
       @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
-        choose_file_and_edl false, false
+        filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
+        play_mplayer_edl [filename_mpg, nil]
       end
       
       @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
@@ -353,14 +354,9 @@ module SensibleSwing
       
     end
     
-    def choose_file_and_edl just_create_dot_edl_file_instead_of_play, should_choose_edl = true
-      filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
-      if should_choose_edl
-        edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
-      else
-        assert !just_create_dot_edl_file_instead_of_play # would be odd...
-        edl_filename = nil
-      end
+    def choose_file_and_edl just_create_dot_edl_file_instead_of_play
+      filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
+      edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
       assert_ownership_dialog
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
@@ -437,7 +433,7 @@ module SensibleSwing
       increment_button_location
 
       setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
-      check_for_dependencies
+      check_for_various_dependencies
     end
 
     def run_smplayer_blocking file, extra_options
@@ -734,7 +730,7 @@ module SensibleSwing
       end
     end
     
-    def check_for_dependencies
+    def check_for_various_dependencies
       if we_are_in_create_mode
         ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
         if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
