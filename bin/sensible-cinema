@@ -322,7 +322,9 @@ module SensibleSwing
     def run_smplayer_blocking file, options
       if OS.mac?
        @_run_smplayer_instructions ||= show_mplayer_instructions
-       c = "mplayer \"#{file}\" #{options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings}"
+       conf_file = File.expand_path('~') + '/.mplayer_input_conf'
+       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\n"
+       c = "mplayer \"#{file}\" #{options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\""
        puts c
        system_blocking c
       else
@@ -574,10 +576,10 @@ module SensibleSwing
       show_non_blocking_message_dialog <<-EOL + extra
         About to run mplayer.  
         To control it, use
-        space for pause,
-        'f' key to toggle full screen,
-        arrow keys (left, right, up down) to seek
-        / and *	 for inc/dec volume.
+        spacebar : pause,
+        double clicky : toggle full screen,
+        arrow keys (left, right, up down) to seek/scan
+        / and *	: inc/dec volume.
       EOL
     end
     
