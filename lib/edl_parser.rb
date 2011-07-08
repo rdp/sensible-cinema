@@ -137,7 +137,6 @@ class EdlParser
       end
       previous = current
     }
-    p combined.compact
     combined.compact
   end
   

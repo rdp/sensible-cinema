@@ -17,8 +17,6 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# LODO dry up smplayer_portable calls
-
 print 'Loading Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
@@ -81,25 +79,16 @@ module SensibleSwing
     end
     
     # currently advanced mode only *adds* buttons
-    def new_jbutton title, only_on_create_mode, tooltip = nil
+    def new_jbutton title, tooltip = nil
       button = JButton.new title
       button.tool_tip = tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
-      add = true
-      if we_are_in_create_mode
-        add = true
-      else
-        add = false if only_on_create_mode
-      end
-         
-      if add
-        increment_button_location
-        @panel.add button
-        @buttons << button
-      end
-      if block_given?
+      @panel.add button
+      @buttons << button
+      if block_given? # allow for new_jbutton("xx") do ... end [this works through some miraculous means LOL]
         button.on_clicked { yield }
       end
+      increment_button_location
       button
     end
     
@@ -115,6 +104,7 @@ module SensibleSwing
     
     def increment_button_location how_much = 30
       @starting_button_y += how_much
+      setSize @button_width+80, @starting_button_y
     end
     
     def force_accept_license_first
@@ -130,7 +120,19 @@ module SensibleSwing
     UpConvertKeyExtra = 'upconvert_setting_extra'
     
     def setup_upconvert_buttons
-      none = new_jbutton("reset upconvert options to default (none)", false) # LODO , don't need end param
+    
+      @watch_file_upconvert = new_jbutton( "Watch a file upconverted") do
+        choose_file_and_edl false, false
+      end
+      
+      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
+        setup_upconvert_options
+      end
+      
+    end
+    
+    def setup_upconvert_options
+      none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, uses directx for scaling, nice for slow cpu's"
       p 'upconvert options started as:', Storage[UpConvertKey]
       none.on_clicked {
@@ -138,13 +140,13 @@ module SensibleSwing
         Storage[UpConvertKeyExtra] = nil
         show_blocking_message_dialog "reset them"
       }
-      medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)", false)
+      medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)")
       medium_dvd.on_clicked {
         Storage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:5" # LODO 5 here...
         Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
         show_blocking_message_dialog "set them to HQ DVD"
       }
-      high_compression = new_jbutton("set upconvert options for playing back highly compressed video", false)
+      high_compression = new_jbutton("set upconvert options for playing back highly compressed video")
       high_compression.on_clicked {
         # -autoq 6 -vf pp [?]
         Storage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
@@ -171,20 +173,20 @@ module SensibleSwing
       
       add_text_line 'Realtime create Options:'
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", true, 
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
       end
       
-      @open_list = new_jbutton("Open/Edit a previously created EDL or .srt file", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list = new_jbutton("Open/Edit a previously created EDL or .srt file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EDL_DIR)
         open_file_to_edit_it filename
       }
       
 
-      @create_dot_edl = new_jbutton( "Create an associatable moviefilename.edl file", true)
+      @create_dot_edl = new_jbutton( "Create an associatable moviefilename.edl file")
       @create_dot_edl.tool_tip = <<-EOL
         Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
@@ -196,7 +198,7 @@ module SensibleSwing
         choose_file_and_edl true
       }
 
-      @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)", true)
+      @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
         This will play the DVD unedited within smplayer.
         NB it will default to title 1, so updated your EDL file that matches this DVD with the proper title if this doesn't work for you 
@@ -210,7 +212,7 @@ module SensibleSwing
         play_dvd_smplayer_unedited
       }
 
-      @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)", true)
+      @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)")
       @play_mplayer_raw.tool_tip = <<-EOL
         This is also useful for comparing subtitle files to see if they have accurate timings.
         If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
@@ -221,7 +223,7 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
 
-      @display_unique = new_jbutton( "Display current DVD's unique ID", true )
+      @display_unique = new_jbutton( "Display current DVD's unique ID" )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_unique.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true
@@ -230,7 +232,7 @@ module SensibleSwing
         This is USED eventually to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}")
       }
 
-      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps", true )
+      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
       @convert_seconds_to_ts.on_clicked {
         input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
         if input =~ /:/
@@ -241,7 +243,7 @@ module SensibleSwing
         show_copy_pastable_string("Converted:", output)         
       }
       
-      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time (30 fps) to EDL player time (29.97 fps)", true)
+      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time (30 fps) to EDL player time (29.97 fps)" )
       @convert_timestamp.tool_tip=<<-EOL
         Our EDL's assume 29.97 fps (which is what a DVD is).  Unfortunately most hardware/commercial DVD players
         assume that the DVD is 30 fps, which means that if you watch a movie with them, then use those timestamps
@@ -263,7 +265,7 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
+      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and parse it to automaticaly search for profanities.
         Basically download it from opensubtitles.org (possibly from other places, too),
@@ -279,7 +281,7 @@ module SensibleSwing
 
       add_text_line 'Create Options that first create/use a local intermediary file:'
 
-      @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)", true )
+      @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)" )
       @preview_section.tool_tip = <<-EOL
         This allows you to preview an edit easily.
         It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
@@ -289,20 +291,20 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive_via_file true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)", true)
+      @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)" )
       @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
         do_copy_dvd_to_hard_drive_via_file true, false, true
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file" )
       @rerun_preview.tool_tip = "This will re-run the preview that you most recently performed.  Great for checking to see if you last edits were successful or not."
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
       
       # Maybe this button should go too...
-      @fast_preview = new_jbutton("fast preview all from fulli file (smplayer EDL)", true)
+      @fast_preview = new_jbutton("fast preview all from fulli file (smplayer EDL)")
       @fast_preview.tool_tip = <<-EOL
         Plays smplayer on a file with an EDL.
         This gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.
@@ -319,29 +321,15 @@ module SensibleSwing
       
     end # advanced buttons
 
-    def run_smplayer_blocking file, options
-      if OS.mac?
-       @_run_smplayer_instructions ||= show_mplayer_instructions
-       conf_file = File.expand_path('~') + '/.mplayer_input_conf'
-       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\n"
-       c = "mplayer \"#{file}\" #{options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\""
-       puts c
-       system_blocking c
-      else
-        config_path = set_smplayer_opts options
-        system_blocking "smplayer_portable \"#{file}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
-      end
-    end
-    
     def setup_normal_buttons
             
-      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
+      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_mplayer_edl 
       }
       
-      @create = new_jbutton( "Create edited copy version of video on Your Hard Drive", false)
+      @create = new_jbutton( "Create edited copy version of video on Your Hard Drive" )
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
         The file you create will contain the whole movie edited.
@@ -351,7 +339,7 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive_via_file false
       }
       
-      @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
         show_in_explorer __DIR__ + "/../documentation"
       end      
       
@@ -359,16 +347,20 @@ module SensibleSwing
 #        play_mplayer_edl  # TODO
 #      }
 
-      @watch_file_edl = new_jbutton( "Watch a file edited (realtime)", false) do
-        choose_file_and_edl false # LODO make not need hack-around for the first button, since have this one now...except that do we need it
-        # for convenience, say you want to go through your indexed apps and convert them all?
+      @watch_file_edl = new_jbutton( "Watch a file edited (realtime)" ) do
+        choose_file_and_edl false 
       end
       
     end
     
-    def choose_file_and_edl just_create_dot_edl_file_instead_of_play
+    def choose_file_and_edl just_create_dot_edl_file_instead_of_play, should_choose_edl = true
       filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
-      edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
+      if should_choose_edl
+        edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
+      else
+        assert !just_create_dot_edl_file_instead_of_play # would be odd...
+        edl_filename = nil
+      end
       assert_ownership_dialog
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
@@ -412,29 +404,29 @@ module SensibleSwing
         setup_upconvert_buttons
       else
         setup_normal_buttons
+      
+        if we_are_in_create_mode
+          setup_advanced_buttons
+          add_text_line 'Contact:'
+        end
+      
+        @upload = new_jbutton("Submit feedback/Upload/Request Help") # keep this one last! :)
+        @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
+        @upload.on_clicked {
+          system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
+          system_non_blocking("start http://groups.google.com/group/sensible-cinema")
+        }
+
+        @progress_bar = JProgressBar.new(0, 100)
+        @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
+        @progress_bar.visible = false
+        panel.add @progress_bar
+  
+        increment_button_location
+
       end
-      
-      if we_are_in_create_mode
-        setup_advanced_buttons
-        add_text_line 'Contact:'
-      end
-      
-      @upload = new_jbutton("Submit feedback/Upload/Request Help", false) # keep this one last! :)
-      @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
-      @upload.on_clicked {
-        system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
-        system_non_blocking("start http://groups.google.com/group/sensible-cinema")
-      }
-      
 
-      @progress_bar = JProgressBar.new(0, 100)
-      @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
-      @progress_bar.visible = false
-      panel.add @progress_bar
-
-      increment_button_location
-
-      @exit = new_jbutton("Exit", false, "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
+      @exit = new_jbutton("Exit", "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Goodbye.'
@@ -444,9 +436,23 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      setSize @button_width+80, @starting_button_y
       setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
       check_for_dependencies
+    end
+
+    def run_smplayer_blocking file, extra_options
+      assert File.exist? file
+      if OS.mac?
+       @_run_smplayer_instructions ||= show_mplayer_instructions
+       conf_file = File.expand_path('~') + '/.mplayer_input_conf'
+       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\n"
+       c = "mplayer \"#{file}\" #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements "
+      else
+        config_path = set_smplayer_opts extra_options
+        c = "smplayer_portable \"#{file}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
+      end
+      puts c
+      system_blocking c
     end
     
     def set_smplayer_opts to_this, show_subs = false
@@ -601,8 +607,11 @@ module SensibleSwing
         extra_mplayer_commands << "-nocache"
         play_this = "dvdnav://#{title_track}/#{drive_or_file}"
       end
-      
-      descriptors = EdlParser.parse_file edl_path
+      if edl_path
+        descriptors = EdlParser.parse_file edl_path
+      else
+        descriptors = {}
+      end
       if using_dvd
         splits = descriptors['mplayer_dvd_splits']
         splits ||= []
@@ -1077,7 +1086,7 @@ module SensibleSwing
       GetDisk.new(self, names)
     end
     
-    NonDvd = 'non dvd has no dvdid'
+    NonDvd = 'non dvd has no dvdid' # we need it for convenience, say you want to go through your indexed vids and convert them all?
 
     # returns e:\, volume_name, dvd_id
     # or full_path.mkv, filename, ''
