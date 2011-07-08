@@ -157,7 +157,6 @@ module SensibleSwing
       if template
         x = java.awt.Toolkit.getDefaultToolkit().getScreenSize().get_width
         outgoing = template.gsub('SCREEN_X', x.to_i.to_s) # has to be an integer...
-        p outgoing
         outgoing
       else
         ''
@@ -603,8 +602,8 @@ module SensibleSwing
       
       if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
-        extra_mplayer_commands << "-vo direct3d"
-        extra_mplayer_commands << "-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF" # LODO may no longer be needed... [?]
+        #extra_mplayer_commands << "-vo direct3d" # directx ??
+        #extra_mplayer_commands << "-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF" # LODO may no longer be needed... [?] ALSO NEEDS EXTRA ESCAPING FOR SMPLAYER USE
       end
       
       # -framedrop is for slow CPU's
