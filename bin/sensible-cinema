@@ -122,11 +122,17 @@ module SensibleSwing
     def setup_upconvert_buttons
     
       @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
+        # ?? drive, volume, dvd_id = choose_dvd_drive_or_file true
         filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
       end
       
-      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
+      @watch_file_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
+        drive, volume, dvd_id = choose_dvd_drive_or_file true
+        play_mplayer_edl [drive, nil]
+      end
+      
+      @show_upconvert_options = new_jbutton( "Set upconvert options " + (Storage[UpConvertKey] ? "(set)" : "(not set yet)") ) do
         setup_upconvert_options
       end
       
@@ -437,7 +443,7 @@ module SensibleSwing
     end
 
     def run_smplayer_blocking file, extra_options
-      assert File.exist? file
+      raise file + ' not existing?' unless File.exist?(file + '/') # last bit is a jruby bug where D: never exists...
       if OS.mac?
        @_run_smplayer_instructions ||= show_mplayer_instructions
        conf_file = File.expand_path('~') + '/.mplayer_input_conf'
