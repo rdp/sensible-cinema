@@ -159,7 +159,7 @@ module SensibleSwing
         outgoing = template.gsub('SCREEN_X', x.to_i.to_s) # has to be an integer...
         outgoing
       else
-        ''
+        nil 
       end
     end
 
@@ -314,11 +314,22 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        config_path = set_smplayer_opts "-edl #{EdlTempFile}"
-        system_blocking( "smplayer_portable #{nice_file}  -config-path \"#{File.dirname config_path}\" " )
+        run_smplayer_blocking nice_file, "-edl \"#{EdlTempFile}\""
       }
       
-    end # advanced buttons    
+    end # advanced buttons
+
+    def run_smplayer_blocking file, options
+      if OS.mac?
+       @_run_smplayer_instructions ||= show_mplayer_instructions
+       c = "mplayer \"#{file}\" #{options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings}"
+       puts c
+       system_blocking c
+      else
+        config_path = set_smplayer_opts options
+        system_blocking "smplayer_portable \"#{file}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
+      end
+    end
     
     def setup_normal_buttons
             
@@ -537,22 +548,24 @@ module SensibleSwing
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
-      if use_mplayer_instead
-        exe = "mplayer "
-        exe += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # if there are too many mplayer splits, impossible to tell anything timewise...
-      else
-        config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2, sniff...
-        exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
-      end
-      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2 -mouse-movements -nocache "
-      
+      file_to_play = "dvdnav://#{title_track_maybe_nil}/#{drive}"
+      options = " -osd-fractions 2 -mouse-movements -nocache "
       # want this even with smplayer I guess...
       @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
         'v' key: turn off subtitles.
         '.' key: step one frame.
       EOL
-      system_non_blocking command
+
+      if use_mplayer_instead
+        exe = "mplayer "
+        exe += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # if there are too many mplayer splits, impossible to tell anything timewise...
+        full_command = "#{exe} #{file_to_play} #{options}"
+        system_non_blocking full_command
+      else
+        Thread.new { run_smplayer_blocking file_to_play, options }
+      end
+
     end
 
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
@@ -579,12 +592,12 @@ module SensibleSwing
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
       if dvd_id == NonDvd
-        play_this = " \"#{drive_or_file}\" " # play straight file...
+        play_this = drive_or_file # play straight file...
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
         extra_mplayer_commands << "-nocache"
-        play_this = "dvdnav://#{title_track}/#{drive_or_file} "
+        play_this = "dvdnav://#{title_track}/#{drive_or_file}"
       end
       
       descriptors = EdlParser.parse_file edl_path
@@ -611,13 +624,11 @@ module SensibleSwing
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
       extra_mplayer_commands << "-framedrop -mc 0.016 -autosync 15"
-      extra_mplayer_commands << "-alang en -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default
+      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
       extra_mplayer_commands << get_upconvert_secondary_settings
-      config_path = set_smplayer_opts extra_mplayer_commands.join(' ')
+      
       # LODO -fullscreen
-      command = "smplayer_portable -close-at-end #{play_this} -config-path \"#{File.dirname config_path}\" "
-      p command
-      Thread.new { system_blocking command}
+      Thread.new { run_smplayer_blocking play_this, extra_mplayer_commands.join(' ')}
     end
     
     def assert_ownership_dialog 
@@ -740,8 +751,6 @@ module SensibleSwing
             system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
             System.exit(1)
           end
-        else
-          puts 'warning for OS X users--the smplayer-type buttons aren\'t working yet...'
         end
       end
     end
@@ -1038,8 +1047,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          set_smplayer_opts ''
-          system_non_blocking "smplayer_portable #{saved_to}"
+          Thread.new { run_smplayer_blocking saved_to, ''}
         else
           if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
