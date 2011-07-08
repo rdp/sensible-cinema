@@ -104,7 +104,7 @@ module SensibleSwing
     
     def increment_button_location how_much = 30
       @starting_button_y += how_much
-      setSize @button_width+80, @starting_button_y
+      setSize @button_width+80, @starting_button_y + 50
     end
     
     def force_accept_license_first
@@ -121,7 +121,7 @@ module SensibleSwing
     
     def setup_upconvert_buttons
     
-      @watch_file_upconvert = new_jbutton( "Watch a file upconverted") do
+      @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
         choose_file_and_edl false, false
       end
       
