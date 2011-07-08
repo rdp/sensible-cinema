@@ -118,11 +118,11 @@ module SensibleSwing
     end
     
     def force_accept_license_first
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+      require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
           "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
+      require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
           'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
-        Storage['main_license_accepted'] = VERSION
+      Storage['main_license_accepted'] = VERSION
     end
 
     Storage = Storage.new("sensible_cinema_storage")
@@ -152,12 +152,13 @@ module SensibleSwing
       }
     end
     
-    def get_upconvert_settings
+    def get_upconvert_vf_settings
       template = Storage[UpConvertKey]
-      p 'template', template
       if template
         x = java.awt.Toolkit.getDefaultToolkit().getScreenSize().get_width
-        template.gsub('SCREEN_X', x.to_s)
+        outgoing = template.gsub('SCREEN_X', x.to_i.to_s) # has to be an integer...
+        p outgoing
+        outgoing
       else
         ''
       end
@@ -166,6 +167,7 @@ module SensibleSwing
     def get_upconvert_secondary_settings
       Storage[UpConvertKeyExtra]
     end
+    
     def setup_advanced_buttons
       
       add_text_line 'Realtime create Options:'
@@ -441,7 +443,8 @@ module SensibleSwing
       old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false" unless old_prefs.contain? 'mplayer_additional_options='
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=#{get_upconvert_settings}")
+      p 'put them in as vf', get_upconvert_vf_settings
+      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
       smplayer_prefs_file
@@ -611,8 +614,8 @@ module SensibleSwing
       extra_mplayer_commands << "-alang en -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default
       extra_mplayer_commands << get_upconvert_secondary_settings
       config_path = set_smplayer_opts extra_mplayer_commands.join(' ')
-      
-      command = "smplayer_portable -close-at-end -fullscreen #{play_this} -config-path \"#{File.dirname config_path}\" "
+      # LODO -fullscreen
+      command = "smplayer_portable -close-at-end #{play_this} -config-path \"#{File.dirname config_path}\" "
       p command
       Thread.new { system_blocking command}
     end
