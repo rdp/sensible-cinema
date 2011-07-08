@@ -435,7 +435,7 @@ module SensibleSwing
       @exit = new_jbutton("Exit", false, "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
-        puts 'Thank you for using Sensible Cinema.'
+        puts 'Thank you for using Sensible Cinema. Goodbye.'
         java.lang.System.exit 0
       }
 
