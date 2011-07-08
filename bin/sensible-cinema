@@ -735,33 +735,31 @@ module SensibleSwing
     end
     
     def check_for_dependencies
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
-      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
-      end
-      
-      if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
-        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
+      if we_are_in_create_mode
+        ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+        if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
+          require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+          download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
+        end
+        
+        if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
+          require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
+          download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
+        end
       end
 
+      # runtime dependencies, at least today...
       if OS.mac?
-        check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac...
-      end
-      
-      if we_are_in_create_mode
-        # they're going to want these dependencies
-        if OS.windows?
-          path = RubyWhich.new.which('smplayer_portable')
-          if(path.length == 0)
-            # this one has its own installer...
-            show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
-            Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
-            "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-            system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
-            System.exit(1)
-          end
+        check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
+      else      
+        path = RubyWhich.new.which('smplayer_portable')
+        if(path.length == 0)
+          # this one has its own installer...
+          show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
+          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
+          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
+          System.exit(1)
         end
       end
     end
