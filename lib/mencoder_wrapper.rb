@@ -45,12 +45,13 @@ class MencoderWrapper
     end
     
     # called from the UI...
+    # only for transcoding.
     def get_bat_commands these_settings, this_from_file, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
       combined = EdlParser.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       assert dvd_title_track
       if start_here || end_here
-        raise 'need end and start' unless end_here && start_here
+        raise 'need both end and start' unless end_here && start_here
         start_here = EdlParser.translate_string_to_seconds(start_here)
         end_here   = EdlParser.translate_string_to_seconds(end_here)
         combined.select!{|start, endy, type| start > start_here && endy < end_here }

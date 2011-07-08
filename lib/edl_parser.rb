@@ -17,13 +17,16 @@ This file is part of Sensible Cinema.
 =end
 class EdlParser
 
-  def self.parse_file filename, ignore_settings = false
-    parse_string File.read(filename), filename, [], ignore_settings
+  # returns {"mutes" => [["00:00", "00:00", string1, string2], ...], "blank_outs" -> [...]}  
+  def self.parse_file filename
+    parse_string File.read(filename), filename, [] # LODO categories stuff out...
   end
+  
+  private
   
   # better eye-ball these before letting people run them, eh? XXXX
   # but I couldn't think of any other way to parse the files tho
-  def self.parse_string string, filename, ok_categories_array = [], ignore_settings = false
+  def self.parse_string string, filename, ok_categories_array
     string = '{' + string + "\n}"
     if filename
      raw = eval(string, binding, filename)
@@ -36,9 +39,6 @@ class EdlParser
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []
     blanks = raw["blank_outs"] || []
-    if ignore_settings
-      mutes = blanks = []
-    end
     raw["mutes"] = convert_to_timestamp_arrays(mutes, ok_categories_array)
     raw["blank_outs"] = convert_to_timestamp_arrays(blanks, ok_categories_array)
     raw
@@ -100,8 +100,11 @@ class EdlParser
     answers
   end
   
+  public 
+  
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
-  # returns it like [[start,end,type], [s,e,t]...] type like :blank and :mute
+  # returns it like [[start,end,type], [s,e,t]...] type like either :blank and :mute
+  # [[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
   def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0, splits = []
     if splits != []
       # allow it to do all the double checks we later skip, just in case :)
@@ -113,6 +116,7 @@ class EdlParser
     blanks = blanks.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:blank]}
     combined = (mutes+blanks).sort
     
+    # detect overlap...
     previous = nil
     combined.each_with_index{|current, idx|
       s,e,t = current
@@ -123,7 +127,7 @@ class EdlParser
         ps, pe, pt = previous
         if (s < pe)
           raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}") unless splits.length > 0
-          # our start might be within the previous' in which case its their start, with (greater of our, their endig)
+          # our start might be within the previous' in which case its their start, with (greater of our, their ending)
           preferred_end = [e,pe].max
           preferred_type = [t,pt].detect{|t| t == :blank} || :mute # prefer blank to mute
           combined[idx-1] = [ps, preferred_end, preferred_type]
@@ -133,9 +137,10 @@ class EdlParser
       end
       previous = current
     }
+    p combined.compact
     combined.compact
   end
-
+  
   def self.translate_string_to_seconds s
     # might actually already be a float, or int, depending on the yaml
     # int for 8 => 9 and also for 1:09 => 1:10
