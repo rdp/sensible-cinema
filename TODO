@@ -31,11 +31,11 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above ==
-  re-watch Snow White powerdvd
-  re-watch IQ powerdvd
+  finalize IQ/subs
   add a "scan for expected title, times" (basically all titles, times...)
     complain if times are wrong...
-  next notes: lightning strike from various outlets...
+    complain [accomodate option] if start time off...
+  lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -53,11 +53,10 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   don't cache selections if they choose a local file...hmm...
-  @mplayer: do I need -zoom ?
   "save to" -> same dir as "get from" yeah
   @instructions "this is great for comparing srt's, except...then you have to..."
   test with cars-ws, mac (to make sure volume name doesn't have spaces)
-  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
+  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   volume_name => dvd_volume_name
   make it load faster! this is cuh-razy! or splash screen! yes!
   why is the Sintel's EDL seemingly off?
@@ -73,8 +72,7 @@
   bring to top after a conversion, and for prompts...we get hidden!
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
-  add a "watch edited from local file" option...
-    check if some other buttons are outdated...
+  check if some other buttons are outdated...
   unit tests (all pass)
   auto-copy to clipboard...should be cake, right?
   can I avoid requiring use of tsmuxer first? hmm...
@@ -85,10 +83,9 @@
   split LLC's website+consumer
     get LLC before a "real" domain name
   upconverter
-    command-line
-    full
-    use me [optionally? YAML]
     check gl mac
+    check permutations
+    easier use/"options" setting buttons, remove that one button...
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @makemkv: timing feels broken weird-like!
   clear runnings
@@ -165,6 +162,7 @@
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
 
+  @mplayer: do I need -zoom ?
   @smplayer: you don't capture stderr [?] ex -vf scale:1280.0
   @mplayer: http://www.infognition.com/VideoEnhancer/ can I do that through any means LOL?
   @mplayer: gl shucks on windows 7!

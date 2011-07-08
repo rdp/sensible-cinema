@@ -63,6 +63,7 @@ module SubtitleProfanityFinder
       99.chr +
       107.chr =>
       'f...',
+      'sex' => 'sex',
       'genital' => 'genital', 'make love' => 'make love',
       'making love' => 'making love', 
       'love mak' => 'love mak',
