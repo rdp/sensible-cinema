@@ -128,11 +128,13 @@ module SensibleSwing
       @watch_file_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         # this way wurx...
         #drive, volume, dvd_id = choose_dvd_drive_or_file false # will choose a DVD if mounted...
-        #run_smplayer_blocking "dvdnav:///#{drive}", "-nocache"
+        #run_smplayer_blocking "dvdnav:///#{drive}", "-nocache" # TODO dvdnav://1-60 is summarily ignored...sniff...
+        # LODO mplayer dvdnav:///e: seems really really hosed LOL, and also dvdnav input what the...
+        # plush crash smplayer "normal" selecting IQ Menu (ok snow white tho...odd...)
         play_dvd_smplayer_unedited
       end
       
-      @show_upconvert_options = new_jbutton( "Set upconvert options " + (Storage[UpConvertKey] ? "(set)" : "(not set yet)") ) do
+      @show_upconvert_options = new_jbutton( "Set upconvert options (currently #{Storage[UpConvertEnglish] || 'not set'})" ) do
         setup_upconvert_options
       end
       
@@ -140,6 +142,7 @@ module SensibleSwing
 
     UpConvertKey = 'upconvert_setting'
     UpConvertKeyExtra = 'upconvert_setting_extra'
+    UpConvertEnglish = 'upconvert_english_name'
 
     def setup_upconvert_options
       none = new_jbutton("reset upconvert options to default (none)")
@@ -148,17 +151,20 @@ module SensibleSwing
       none.on_clicked {
         Storage[UpConvertKey] = nil
         Storage[UpConvertKeyExtra] = nil
+        Storage[UpConvertEnglish] = nil
         show_blocking_message_dialog "reset them"
       }
       medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)")
       medium_dvd.on_clicked {
         Storage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:5" # LODO 5 here...
         Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
+        Storage[UpConvertEnglish] = "DVD/HQ"
         show_blocking_message_dialog "set them to HQ DVD"
       }
       high_compression = new_jbutton("set upconvert options for playing back highly compressed video")
       high_compression.on_clicked {
         # -autoq 6 -vf pp [?]
+        Storage[UpConvertEnglish] = "high compress"
         Storage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
         Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
       }
@@ -326,7 +332,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, "-edl \"#{EdlTempFile}\""
+        run_smplayer_blocking nice_file, "-edl \"#{EdlTempFile}\"", false
       }
       
     end # advanced buttons
@@ -445,11 +451,17 @@ module SensibleSwing
       check_for_various_dependencies
     end
 
-    def run_smplayer_blocking play_this, extra_options
-      if OS.mac?
+    def run_smplayer_blocking play_this, extra_options, force_use_mplayer
+      extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
+      if OS.mac? || force_use_mplayer
        @_run_smplayer_instructions ||= show_mplayer_instructions
        conf_file = File.expand_path('~') + '/.mplayer_input_conf'
-       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\n"
+       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
+       if OS.windows?
+        # direct3d for windows 7 old nvidia cards' sake [yipes]
+        extra_mplayer_commands << "-vo direct3d" # ?? directx ??
+        options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
+       end
        c = "mplayer \"#{play_this}\" #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements "
       else
         config_path = set_smplayer_opts extra_options
@@ -555,13 +567,12 @@ module SensibleSwing
     
     def play_dvd_smplayer_unedited use_mplayer_instead = false
       # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
-      # lodo mac os x 'ify'
       drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
       file_to_play = "dvdnav://#{title_track_maybe_nil}/#{drive}"
-      options = " -osd-fractions 2 -mouse-movements -nocache "
+      options = " -osd-fractions 2 -nocache "
       # want this even with smplayer I guess...
       @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
@@ -569,14 +580,7 @@ module SensibleSwing
         '.' key: step one frame.
       EOL
 
-      if use_mplayer_instead
-        exe = "mplayer "
-        exe += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # if there are too many mplayer splits, impossible to tell anything timewise...
-        full_command = "#{exe} #{file_to_play} #{options}"
-        system_non_blocking full_command
-      else
-        Thread.new { run_smplayer_blocking file_to_play, options }
-      end
+      Thread.new { run_smplayer_blocking file_to_play, options, use_mplayer_instead }
 
     end
 
@@ -630,21 +634,14 @@ module SensibleSwing
       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits#, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
       File.write(EdlTempFile, edl_contents)
       
-      if OS.windows?
-        # direct3d for windows 7 old nvidia cards' sake [yipes]
-        #extra_mplayer_commands << "-vo direct3d" # directx ??
-        #extra_mplayer_commands << "-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF" # LODO may no longer be needed... [?] ALSO NEEDS EXTRA ESCAPING FOR SMPLAYER USE
-      end
-      
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
       extra_mplayer_commands << "-framedrop -mc 0.016 -autosync 15"
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
-      extra_mplayer_commands << get_upconvert_secondary_settings
       
-      # LODO -fullscreen
-      Thread.new { run_smplayer_blocking play_this, extra_mplayer_commands.join(' ')}
+      # LODO -fullscreen ...
+      Thread.new { run_smplayer_blocking play_this, extra_mplayer_commands.join(' '), false}
     end
     
     def assert_ownership_dialog 
@@ -1061,7 +1058,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          Thread.new { run_smplayer_blocking saved_to, ''}
+          Thread.new { run_smplayer_blocking saved_to, '', false}
         else
           if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
