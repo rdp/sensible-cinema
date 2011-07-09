@@ -1,4 +1,11 @@
 up next:
+
+== upconverting to the huge one==
+ with the black laptop:
+   "normal" dvdnav seemed to work all right, slightly jerky at times.
+  I think that upconverting to the little monitor used more cpu.
+  Anything to the big screen maxed out the cpu.
+  I "think" it looked better upconverted than not, big screen too, though both really pretty good.  Except the computer not LOL.
   
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
