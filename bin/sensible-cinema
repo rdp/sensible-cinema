@@ -187,7 +187,8 @@ module SensibleSwing
     def get_upconvert_vf_settings
       template = Storage[UpConvertKey]
       if template
-        x = java.awt.Toolkit.getDefaultToolkit().getScreenSize().get_width
+        # choose width of widest monitor (why would they display it on the other?)
+        x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max
         outgoing = template.gsub('SCREEN_X', x.to_i.to_s) # has to be an integer...
         outgoing
       else
@@ -463,7 +464,7 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
+      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/monkey.png").getImage())
       check_for_various_dependencies
     end
 
@@ -478,7 +479,7 @@ module SensibleSwing
         extra_mplayer_commands << "-vo direct3d" # ?? directx ??
         options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
        end
-       c = "mplayer \"#{play_this}\" #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements "
+       c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
@@ -809,7 +810,7 @@ module SensibleSwing
       end
     end
 
-    EDL_DIR = File.expand_path(__dir__  + "/../zamples/edit_decision_lists/dvds").to_filename
+    EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
 
     def repeat_last_copy_dvd_to_hard_drive
       generate_and_run_bat_file *Storage['last_params']
