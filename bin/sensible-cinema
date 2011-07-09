@@ -187,7 +187,8 @@ module SensibleSwing
     def get_upconvert_vf_settings
       template = Storage[UpConvertKey]
       if template
-        x = java.awt.Toolkit.getDefaultToolkit().getScreenSize().get_width
+        # choose width of widest monitor (why would they display it on the other?)
+        x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max
         outgoing = template.gsub('SCREEN_X', x.to_i.to_s) # has to be an integer...
         outgoing
       else
