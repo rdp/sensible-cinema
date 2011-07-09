@@ -463,7 +463,7 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
+      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/monkey.png").getImage())
       check_for_various_dependencies
     end
 
@@ -809,7 +809,7 @@ module SensibleSwing
       end
     end
 
-    EDL_DIR = File.expand_path(__dir__  + "/../zamples/edit_decision_lists/dvds").to_filename
+    EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
 
     def repeat_last_copy_dvd_to_hard_drive
       generate_and_run_bat_file *Storage['last_params']
