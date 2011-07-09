@@ -32,6 +32,7 @@
  
 == yes do ordered in conjunction with the above probably ==
   always use -dvd-device [yikes]
+  fullscreen now
   subtitles 2 phase
   unit tests
   add a "scan for expected title, times" (basically all titles, times...)
@@ -54,7 +55,7 @@
     movie mask wayback machine
 
 == yes do, un-ordered currently, from the various future release options ==
-  upconvert better options
+  upconvert: display as text what it is, prompt if none
   SRT doubles up first IQ 
   don't cache selections if they choose a local file...hmm...
   "save to" -> same dir as "get from" yeah
