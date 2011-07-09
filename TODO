@@ -62,6 +62,7 @@
   @instructions "this is great for comparing srt's, except...then you have to..."
   test with cars-ws, mac (to make sure volume name doesn't have spaces)
   can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
+  add dvd_title_time option
   volume_name => dvd_volume_name
   make it load faster! this is cuh-razy! or splash screen! yes!
   why is the Sintel's EDL seemingly off?
