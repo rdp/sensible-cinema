@@ -11,7 +11,7 @@
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
-	  no auto subtitles...
+	  no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
@@ -25,13 +25,12 @@
    url -> url inference [hopefully this is cake...]
    fix the failing 9 digit test the fancy shmancy way :P
    can pass in a profanity command line
-   can handle multiple dvdid's
+   can handle multiple dvdid's et al
    youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above ==
-  finalize IQ/subs
   add a "scan for expected title, times" (basically all titles, times...)
     complain if times are wrong...
     complain [accomodate option] if start time off...
@@ -52,7 +51,8 @@
     movie mask wayback machine
 
 == yes do, un-ordered currently, from the various future release options ==
-  upconverter: can play DVD's
+  upconvert better options
+  SRT doubles up first IQ 
   don't cache selections if they choose a local file...hmm...
   "save to" -> same dir as "get from" yeah
   @instructions "this is great for comparing srt's, except...then you have to..."
@@ -108,6 +108,7 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
+    [A,B] [?]
   create the "play previously created edited file for current DVD" button
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
@@ -126,6 +127,7 @@
 
 == other lists ==
 
+  todo.upconvert
   todo.propaganda
   todo.inventionzy
   open_edl_list_org_todo.txt file

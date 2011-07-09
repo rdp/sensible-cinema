@@ -242,15 +242,15 @@ http://www.neowin.net/forum/topic/422992-a-how-to-guide-upconverting-video-using
   "specify size 1280x768" "no auto aspect correction" TODO why?
     might not matter? might let it "go full screen 4 sure"?
   lancozsa 10
-    "Luma sharpen" and "Chroma sharpen" to 1.50
+    "Luma sharpen" and "Chroma sharpen" to 1.50 (out of 2.0)
   
 http://blog.thewombat.org/2008/11/how-to-use-vlc-096-as-upscaling-media.html  
   "add a video post processing filter"
   "add a video scaling filter"
   "add sharpen as a filter" (manually)
   set sharpen strength to 0.15 (0.25 for hq)
-  "set post processing strength to 6" (lower for lesser CPU)
-"
+  "set post processing strength to 6" (lower for lesser CPU)"
+
 No. As long as the GL renderer works with your hardware/driver combination, it's a lot better then the directx/overlay renderer.
 You might want to try "gl:yuv=4:cscale=5:lscale=5" for even better rendering quality...
 http://forum.doom9.org/showthread.php?p=1089768:
@@ -262,14 +262,10 @@ This guy has some very aggressive sharpening parameters [LODO try out]:
    "use the following syntax to playback DVD movies."
 Code:
 mplayer -pp 0 -vf-clr -vf pullup,yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0 -ssf ls=100 dvd://
-For MPEG-2 content from a PVR card might be different on applying video filters. I suggest check the MPlayer manual to know how to use the video filter and know what they do.
 
 Let us assume that hqdn3d=2:1.5:3 is a good way to clean up MPEG-2 and yadif=1 is a good decent de-interlacer. I would say that the following should work ok for most content.
-
-Code:
 mplayer -vf yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0
-Maybe adding -ssf ls=100 will increase the sharpness of the content to bring out the details of the video. With mencoder, it is a little different on what options you can use compared to mplayer, so play around with the settings.
-"
+Maybe adding -ssf ls=100 will increase the sharpness of the content to bring out the details of the video. With mencoder, it is a little different on what options you can use compared to mplayer, so play around with the settings."
 
 http://ubuntuforums.org/showthread.php?t=77329&page=6
   hqdn3d=2:2:3,pp=ac
@@ -278,7 +274,6 @@ http://ubuntuforums.org/showthread.php?t=77329&page=6
 hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
   
 http://forum.doom9.org/archive/index.php/t-79335.html lists some less aggressive hqdn3d options...
-
 
 #This sets the postprocessing into overdrive using all possible spare cpu cycles to make the movie look better
 autoq=100

@@ -134,7 +134,12 @@ module SensibleSwing
         play_dvd_smplayer_unedited
       end
       
-      @show_upconvert_options = new_jbutton( "Set upconvert options (currently #{Storage[UpConvertEnglish] || 'not set'})" ) do
+      add_set_upconvert_options_button
+      
+    end
+    
+    def add_set_upconvert_options_button
+      @show_upconvert_options = new_jbutton( "Change upconvert options (started as #{Storage[UpConvertEnglish] || 'not set'})" ) do
         setup_upconvert_options
       end
       
@@ -152,22 +157,31 @@ module SensibleSwing
         Storage[UpConvertKey] = nil
         Storage[UpConvertKeyExtra] = nil
         Storage[UpConvertEnglish] = nil
-        show_blocking_message_dialog "reset them"
       }
-      medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)")
-      medium_dvd.on_clicked {
-        Storage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:5" # LODO 5 here...
-        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
+      medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)") {
+        Storage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:3"
+        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=50.0"
         Storage[UpConvertEnglish] = "DVD/HQ"
-        show_blocking_message_dialog "set them to HQ DVD"
+        display_current_upconvert_setting
       }
-      high_compression = new_jbutton("set upconvert options for playing back highly compressed video")
-      high_compression.on_clicked {
+      high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
         Storage[UpConvertEnglish] = "high compress"
         Storage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
         Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
+        display_current_upconvert_setting
       }
+      new_jbutton("set upconvert options to aggressive DVD/HQ-style playback") {
+        Storage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10"
+        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
+        Storage[UpConvertEnglish] = "Aggressive DVD/HQ"
+        display_current_upconvert_setting
+      }
+      display_current_upconvert_setting
+    end
+    
+    def display_current_upconvert_setting
+      show_blocking_message_dialog "Current upconvert options set to #{Storage[UpConvertEnglish] || 'none'}"
     end
     
     def get_upconvert_vf_settings
@@ -294,6 +308,8 @@ module SensibleSwing
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
         open_file_to_edit_it EdlTempFile
       }
+      
+      add_set_upconvert_options_button
 
       add_text_line 'Create Options that first create/use a local intermediary file:'
 

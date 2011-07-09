@@ -1,0 +1,13 @@
+lower cs?
+
+    -zoom -sws 9 -vf scale=1280:720:::9:10 -ssf ls=74.0 -ssf cs=7.0
+
+lanczos 10?
+
+hqdn3d settings?
+
+opengl?
+
+== never ==
+
+sharpen filter?

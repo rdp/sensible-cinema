@@ -3,16 +3,14 @@
 
 "mutes" => [
 "00:04:23.329" , "00:04:24.887", "profanity", "b.....", "Come on you little [b.....]",
-"00:14:00", "00:14:20", "profanity", "genitals",
-# 14:15 genitals LODO
-# 20:20 climax
+"00:14:35.574" , "00:14:40.136", "profanity", "genital", "He puts electrodes on the [genital]s of the rats",
+"00:20:15.747" , "00:20:17.772", "profanity", "sex", "that's something akin to [sex]ual climax",
 "00:25:28.327" , "00:25:31.057", "profanity", "deity", "My [deity] he's the head of the whole department",
-# 25:30 giant tongue, 25:55 make love, just latter
+"00:25:53.285" , "00:25:56.186", "profanity", "make love", "What because l won't [make love] to you in the middle",
 "00:28:45.123" , "00:28:47.614", "profanity", "deity", "Learn to drive for [deity]'s sake", # mkv...TOO EARLY
 "00:44:30.300" , "00:44:32.598", "profanity", "deity", "My [deity] the mazes must be enormous",
-"00:46:26.5" , "00:46:28.614", "profanity", "deity", "Oh my [deity] that's you", # off somehow?
+"00:46:26.5" , "00:46:28.614", "profanity", "deity", "Oh my [deity] that's you", # this one was off somehow?
 "00:54:45.615" , "00:54:47.082", "profanity", "he..", "Who the [he..] are you",
-"01:01:00", "01:01:10", "somefin",
 "01:16:25.513" , "01:16:27.447", "profanity", "deity", "Oh my [deity]",
 "01:19:20.254" , "01:19:22.586", "profanity", "deity", "Oh for [deity]'s sake",
 "01:20:29.957" , "01:20:32.721", "profanity", "he..", "What the [he..] does an automobile mechanic",
@@ -30,5 +28,5 @@
 "dvd_title_track" => "1", 
 "opensubtitles_number" => "195359",
 # "not edited out stuff" => "some violence",
-# "closing thoughts" => "still...",
+# "closing thoughts" => "",
 # "mplayer_dvd_splits" => [], # too many to count! Not worth it probably...

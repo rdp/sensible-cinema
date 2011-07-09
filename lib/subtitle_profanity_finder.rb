@@ -52,7 +52,7 @@ module SubtitleProfanityFinder
 
     profanities = {'hell' => ['he..', true],
       'g' +
-      'o' + 100.chr => 'deity', 'g' +
+      'o' + 100.chr => '...', 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
@@ -68,7 +68,7 @@ module SubtitleProfanityFinder
       'making love' => 'making love', 
       'love mak' => 'love mak',
       'bi' +
-      'tc' + 104.chr => 'b.....',
+      'tc' + 104.chr => 'b....',
       'bas' +
       'ta' + 'r' + 100.chr => 'ba.....',
       ((arse = 'a' +
@@ -149,7 +149,11 @@ module SubtitleProfanityFinder
               sanitized_glop.gsub!(prof2, sanitized2)
             end
           end
-
+          
+          # because we have duplicate's for the letter l/i, refactor [[[profanity]]]
+          sanitized_glop.gsub!(/\[+/, '[')
+          sanitized_glop.gsub!(/\]+/, ']')
+          
           # extract timing info
           timing_line = glop.split("\n").first.strip
           timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/

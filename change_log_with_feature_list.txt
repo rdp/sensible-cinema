@@ -1,6 +1,7 @@
 == 0.24.0 ==
 
 Now comes with an upconverting software player to play back DVD's/files.
+  This can used advanced deblocking, or hq denois3d, or lancosz filter, etc.
 Uses much better mplayer options for slow computers now.
 Added EDL for IQ.
 Added ability to "offset" timestamps by a set factor (ex: 600s).
