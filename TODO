@@ -31,6 +31,7 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above probably ==
+  start fullscreen
   subtitles 2 phase
   unit tests
   add a "scan for expected title, times" (basically all titles, times...)
@@ -53,7 +54,7 @@
     movie mask wayback machine
 
 == yes do, un-ordered currently, from the various future release options ==
-  upconvert better options
+  "advanced" upconvert, switch button order, warn if none
   SRT doubles up first IQ 
   don't cache selections if they choose a local file...hmm...
   "save to" -> same dir as "get from" yeah
@@ -141,7 +142,9 @@
   add button "fast preview one" (from dvd)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
+  @makemkv: show us drive letters, labels over hardware type, also an option to "ignore failure"
   
+  upconvert research options
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   investigate xbmc dvd edl how do you do that?
     maybe use smplayer full-screened, to avoid?
