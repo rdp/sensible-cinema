@@ -30,7 +30,8 @@
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
  
-== yes do ordered in conjunction with the above ==
+== yes do ordered in conjunction with the above probably ==
+  unit tests
   add a "scan for expected title, times" (basically all titles, times...)
     complain if times are wrong...
     complain [accomodate option] if start time off...
