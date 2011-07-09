@@ -31,6 +31,7 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above probably ==
+  always use -dvd-device [yikes]
   subtitles 2 phase
   unit tests
   add a "scan for expected title, times" (basically all titles, times...)
@@ -144,7 +145,6 @@
   
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   investigate xbmc dvd edl how do you do that?
-    maybe use smplayer full-screened, to avoid?
   investigate WMC "call out to mplayer EDL" or the like...
   for mplayer realtime it needs to start early, but end on time
   mplayer instructions are obscured
@@ -211,7 +211,7 @@
   allow for AAF or OMF export, as well as EDL (?)
   C specific portion [A,B] player
   also edit the trailers et al [?] hmm...
-  @mplayer: double click default to full screen! :)
+  @mplayer: double click default to full screen! :) and enter default to dvdnav select!
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940

@@ -479,7 +479,7 @@ module SensibleSwing
         extra_mplayer_commands << "-vo direct3d" # ?? directx ??
         options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
        end
-       c = "mplayer \"#{play_this}\" #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements "
+       c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
