@@ -1,4 +1,17 @@
-== ==
+== 0.24.0 ==
+
+Now comes with an upconverting software player to play back DVD's/files.
+Uses much better mplayer options for slow computers now.
+Added EDL for IQ.
+Added ability to "offset" timestamps by a set factor (ex: 600s).
+A few profanities added to the subtitler.
+Much more compatible with mac.
+Prompts users to assert they own disks for files they watch.
+Added new button "watch file edited"
+Now uses smplayer as the default player.
+Can differentiate cross platform to decide which player to use.
+Relies on mplayerx for mac now.
+Other minor cleanups.
 
 == 0.23.6 ==
 
