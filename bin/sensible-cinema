@@ -478,12 +478,13 @@ module SensibleSwing
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
       if OS.mac? || force_use_mplayer
        @_run_smplayer_instructions ||= show_mplayer_instructions
-       conf_file = File.expand_path('~') + '/.mplayer_input_conf'
-       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
+       conf_file = File.expand_path './mplayer_input_conf'
+       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
-        extra_mplayer_commands << "-vo direct3d" # ?? directx ??
-        options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
+        extra_options += " -vo direct3d " # ?? directx ??
+        extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
+        conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
        end
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
@@ -527,7 +528,7 @@ module SensibleSwing
 
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, it plays a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+"dvd_title_track" => "1", # the show info button will tell you title length (typically longest is main feature)
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
