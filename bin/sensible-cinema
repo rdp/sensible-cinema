@@ -362,13 +362,13 @@ module SensibleSwing
 
     def setup_normal_buttons
             
-      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- smplayer EDL)")
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_mplayer_edl 
       }
       
-      @create = new_jbutton( "Create edited copy version of video on Your Hard Drive" )
+      @create = new_jbutton( "Create edited copy of video on Your Hard Drive" )
       @create.tool_tip = <<-EOL
         This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
         The file you create will contain the whole movie edited.
@@ -378,17 +378,17 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive_via_file false
       }
       
+#      @watch_created_file = new_jbutton( "Watch the edited version of DVD file", false).on_clicked {
+#        play_mplayer_edl  # LODO
+#      }
+
+      @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
+        choose_file_and_edl false 
+      end      
+      
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
         show_in_explorer __DIR__ + "/../documentation"
       end      
-      
-#      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
-#        play_mplayer_edl  # TODO
-#      }
-
-      @watch_file_edl = new_jbutton( "Watch a file edited (realtime)" ) do
-        choose_file_and_edl false 
-      end
       
     end
     
@@ -482,13 +482,16 @@ module SensibleSwing
        File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
-        extra_options += " -vo direct3d " # ?? directx ??
+        extra_options += " -vo direct3d " # more mouse, less speed [?] less mouse ??
         extra_options += " -slang en "
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
        end
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
+        if OS.windows?
+          extra_options += " -vo direct3d " # more light nvidia...should be ok...
+        end
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
