@@ -302,7 +302,7 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities" )
+      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanity automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and parse it to automaticaly search for profanities.
         Basically download it from opensubtitles.org (possibly from other places, too),
@@ -362,7 +362,7 @@ module SensibleSwing
 
     def setup_normal_buttons
             
-      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)")
+      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- smplayer EDL)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_mplayer_edl 
@@ -483,6 +483,7 @@ module SensibleSwing
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
         extra_options += " -vo direct3d " # ?? directx ??
+        extra_options += " -slang en "
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
        end
@@ -531,7 +532,7 @@ module SensibleSwing
 "dvd_title_track" => "1", # the show info button will tell you title length (typically longest is main feature)
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  Additive currently.  In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
         EOL
       # frame0 is the name of our window LOL tough to avoid that collision...hmm...
       filename = EDL_DIR + "\\edls_being_edited\\" + english_name.gsub(' ', '_') + '.txt'
