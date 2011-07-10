@@ -254,13 +254,19 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
 
-      @display_unique = new_jbutton( "Display current DVD's unique ID" )
+      @display_unique = new_jbutton( "Display information about current DVD (ID, etc.)" )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_unique.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
-        show_copy_pastable_string("#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED eventually to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}")
+        out = nil
+        t = Thread.new {out= `mplayer dvdnav:///#{drive} -identify -frames 0 2>&1| grep LENGTH`}
+        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
+        show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        This is USED eventually to identify a disk to match it to its EDL, later.", id_string
+        t.join
+        File.write EdlTempFile, id_string + "\n" + out
+        open_file_to_edit_it EdlTempFile
       }
 
       @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
