@@ -628,8 +628,7 @@ module SensibleSwing
       extra_mplayer_commands = []
       if file_with_edl_path
         drive_or_file, edl_path = file_with_edl_path
-        dvd_id = NonDvd # fake it out...
-#        descriptors = {} # allow unkon
+        dvd_id = NonDvd # fake it out...LODO
       else
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
@@ -663,6 +662,7 @@ module SensibleSwing
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
       extra_mplayer_commands << "-framedrop -mc 0.016 -autosync 15"
+      # prefer english, attempt to disable subtitles, set edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
       
       # LODO -fullscreen ...
