@@ -1,7 +1,16 @@
+
 up next:
 
-== real time ==
-0.4 extra + 0.5 not nuf blacky, marked one
+== real time subtitle ==
+  0.4 extra + 0.5 not nuf blacky, marked one
+
+  flight:
+    first:  second 168.0 -> 00:02:48.03 sez: 00:02:47,668
+    last:  first 5151.2 -> 1:25:51.2 sez: 01:25:50,859
+
+    sum additive needed:
+      beginning: add to the end 0.25s
+      end: add to the begining 0.35s
 
 == upconverting to the huge monitor==
  with the black laptop:

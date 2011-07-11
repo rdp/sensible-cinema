@@ -409,7 +409,8 @@ module SensibleSwing
               #add_secs_end = 0
       #add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
 
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, MplayerBeginingBuffer, splits = []
+        # TODO do I want these added at file create time, not use time!
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
         raise unless File.exist?(output_file)
@@ -637,7 +638,8 @@ module SensibleSwing
       EOL
     end
     
-    MplayerBeginingBuffer = 1.0
+    MplayerBeginingBuffer = 1.0 + 0.25
+    MplayerEndBuffer = 0.0 + 0.3
     
     def play_mplayer_edl file_with_edl_path = nil
       extra_mplayer_commands = []
@@ -661,16 +663,23 @@ module SensibleSwing
         descriptors = {}
       end
       if using_dvd
+        p descriptors
         splits = descriptors['mplayer_dvd_splits']
-        splits ||= []
-        if splits == []
+        if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
+          splits = []
         end
         splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
       else
         splits = []
       end
-      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0, MplayerBeginingBuffer, splits #, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
+      edl_contents = nil
+      begin
+       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits #, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
+      rescue SyntaxError => e # overlaps et al
+        show_blocking_message_dialog 'fail:' + e.to_s
+        raise e
+      end
       File.write(EdlTempFile, edl_contents)
       
       # -framedrop is for slow CPU's
@@ -1224,6 +1233,5 @@ if $0 == __FILE__
     puts 'Please use the Sensible Cinema GUI window popup...'
   end
 end
-puts 33
 
 # icon derived from: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62
