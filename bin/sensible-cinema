@@ -400,8 +400,13 @@ module SensibleSwing
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 1.0, splits = []
-        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl'
+        # NB these are just for the SxS EDL!
+        
+              #add_secs_end = 0
+      #add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
+
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, MplayerBeginingBuffer, splits = []
+        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
         raise unless File.exist?(output_file)
         show_blocking_message_dialog("created #{output_file}")
@@ -626,9 +631,9 @@ module SensibleSwing
       EOL
     end
     
+    MplayerBeginingBuffer = 1.0
+    
     def play_mplayer_edl file_with_edl_path = nil
-      add_secs_end = 0
-      add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
       extra_mplayer_commands = []
       if file_with_edl_path
         drive_or_file, edl_path = file_with_edl_path
@@ -659,7 +664,7 @@ module SensibleSwing
       else
         splits = []
       end
-      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits#, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
+      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0, MplayerBeginingBuffer, splits #, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
       File.write(EdlTempFile, edl_contents)
       
       # -framedrop is for slow CPU's
