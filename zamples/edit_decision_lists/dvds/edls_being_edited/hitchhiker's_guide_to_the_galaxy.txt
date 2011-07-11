@@ -1,0 +1,32 @@
+# 3648747 comments can go after a # on any line, for example this one.
+"name" => "HitchHiker's guide to the galaxy",
+
+"mutes" => [
+
+"00:08:54.816" , "00:08:59.185", "profanity", "...", "All these people are idiots [...]",
+"00:09:55.811" , "00:10:00.705", "profanity", "...", "[...] you're serious Um I can't go to Madagascar", # failed default blacky 0.5s
+"00:12:43.912" , "00:12:45.880", "profanity", "he..", "What the [he..] are those things",
+"00:16:00.108" , "00:16:03.271", "profanity", "...", "of philosophical blockbusters Where [...] Went Wrong",
+"00:16:03.378" , "00:16:05.869", "profanity", "...", "Some More of [...]'s Greatest Mistakes",
+"00:16:05.947" , "00:16:08.279", "profanity", "...", "and Who Is This [...] Person Anyway",
+"00:17:11.746" , "00:17:16.308", "profanity", "...", "Oh [...] my home My home was demolished",
+"00:31:59.133" , "00:32:01.158", "profanity", "he..", "What the [he..] are you doing here",
+"00:46:11.084" , "00:46:14.349", "profanity", "...", "Many races believed it was created by some sort of [...]", # hmm...
+"00:52:50.198" , "00:52:54.464", "profanity", "he..", "Where the [he..] is Ford",
+"00:53:35.510" , "00:53:38.274", "profanity", "he..", "What the [he..] have you been doing",
+
+"01:04:09.076" , "01:04:12.705", "profanity", "he..", "Ow What the [he..] is that",
+"01:36:19.675" , "01:36:25.006", "profanity", "...", "For [...]'s sake stop Cease fire", # modified...
+
+],
+
+"blank_outs" => [
+  "00:21:02.5" , "00:21:08.5", "violence", "smashing crab",
+],
+
+"volume_name" => "HGG0NND1",
+"disk_unique_id" => "311b9d17|aef5cad0",
+"dvd_title_track" => "12", # 6520.833
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+"mplayer_dvd_splits" => ["3152.6", "4192.0"],

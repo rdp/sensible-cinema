@@ -309,12 +309,13 @@ module SensibleSwing
         (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
-      @parse_srt.on_clicked {
+      @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
         parsed = SubtitleProfanityFinder.edl_output [filename]
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
         open_file_to_edit_it EdlTempFile
-      }
+        open_file_to_edit_it filename
+      end
       
       add_set_upconvert_options_button
 
@@ -399,7 +400,7 @@ module SensibleSwing
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 1.0, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl'
         File.write(output_file, edl_contents)
         raise unless File.exist?(output_file)
@@ -627,7 +628,7 @@ module SensibleSwing
     
     def play_mplayer_edl file_with_edl_path = nil
       add_secs_end = 0
-      add_secs_beginning = 0.5 # LODO are these accurate for file based, as well?
+      add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
       extra_mplayer_commands = []
       if file_with_edl_path
         drive_or_file, edl_path = file_with_edl_path
