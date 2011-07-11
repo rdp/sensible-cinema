@@ -35,6 +35,7 @@
   fullscreen now
   subtitles 2 phase
   unit tests
+  auto-paste
   add a "scan for expected title, times" (basically all titles, times...)
     complain if times are wrong...
     complain [accomodate option] if start time off...
@@ -55,6 +56,7 @@
     movie mask wayback machine
 
 == yes do, un-ordered currently, from the various future release options ==
+  update descriptions everywhere LOL
   slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with upsampling?
   upconvert: display as text what it is, prompt if none
   SRT doubles up first IQ 
@@ -125,11 +127,12 @@
   inventionzy: blu-ray OCR
   port to mac OS X--try everything out (all buttons), make sure all works...
       ppc dvdid?
-      bundle a copy of smplayer locally?
       instructions for how to use mac ts muxer
+      use mplayerx well [?] like wrap it...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   do I need tsmuxer?
-  "guess" the best title...
+  auto-"guess" the best title...
+  add button "fast preview one" (from dvd)
 
 == other lists ==
 
@@ -142,12 +145,11 @@
 
 == DVD decide later to move up or down ==
   add button "fast preview one" (from file)
-  add button "fast preview one" (from dvd)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
   @makemkv: show us drive letters, labels over hardware type, also an option to "ignore failure"
   
-  upconvert research options
+  upconvert research/compare options
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   investigate xbmc dvd edl how do you do that?
   investigate WMC "call out to mplayer EDL" or the like...
@@ -169,7 +171,8 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  @mplayer: dvdnav:///e: should play the *menu* please? please?
+  @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
+  @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
   @mplayer: do I need -zoom ?
   @smplayer: you don't capture stderr [?] ex -vf scale:1280.0
   @mplayer: http://www.infognition.com/VideoEnhancer/ can I do that through any means LOL?

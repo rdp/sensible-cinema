@@ -3,7 +3,7 @@ Sensible-cinema [5] allows you to apply pre-programmed edit lists
 I.e. you can edit a DVD to "mute out" or skip certain scenes.
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
 
-It is currently in beta, though will always be free software, even after release.
+It is currently in alpha/beta, though will always be free software, even after releases.
 It also includes a library of EDL's that go along with various DVD's, we need volunteers
 to help it to grow!
 
@@ -58,7 +58,7 @@ I don't actually know how to do this I've never burned a DVD.
 See also is_it_legal_to_copy_dvds.txt for some caveats you should understand first.
 Windows DVD Maker might help, http://www.dvdflick.net might help.
 iDVD might help on mac.
-DO NOT MAKE ILLEGAL COPIES OF DVD's. See is_it_legal_to_copy_dvds.txt.
+DO NOT MAKE ILLEGAL COPIES OF DVD's. See also is_it_legal_to_copy_dvds.txt.
 
 == FAQ ==
 
@@ -71,10 +71,10 @@ A. One way is to plug your computer into your TV.
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
   I might come up with a competitor to it if desired, as the existing one costs money).
   You may be able to create your own edited DVD, see section "Creating an edited DVD"
-  Another good option is to purchase a clearplay DVD player, though you must also retain a subscription for it to work.
-
+  Another good option is to purchase  and use a clearplay player.
+  
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original unedited DVD and a link to sensible-cinema's website.
+A. Give them the original, non-edited DVD and email them a link to sensible-cinema's website :)
 
 == Caveats ==
 
@@ -95,10 +95,10 @@ so we recommend to always clean your discs first!
 
 The initial motivation for the project was that I dislike deity profanity in movies.
 And really any profanity is jarring, if you're not used to it in real life, and can
-put you a bit on edge when you watch a movie.
+put me a bit on edge when I watch an otherwise enjoyable movie.
 Also sometimes producers put in certain scenes (read: sex scenes) 
 just to get a desired rating.
-I don't want those scenes, but still want to be able to enjoy said movies :)
+I don't want those scenes, but still want to be able to enjoy more movies :)
 
 I once tried Clearplay (a "filter"ed DVD player)
 but (for me) it didn't cut it.  It costs money monthly (I'm too cheap to pay--and many
