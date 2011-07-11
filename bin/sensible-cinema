@@ -112,10 +112,10 @@ module SensibleSwing
           "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
       require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
           'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
-      Storage['main_license_accepted'] = VERSION
+      LocalStorage['main_license_accepted'] = VERSION
     end
 
-    Storage = Storage.new("sensible_cinema_storage")
+    LocalStorage = Storage.new("sensible_cinema_storage")
     
     def setup_upconvert_buttons
     
@@ -139,7 +139,7 @@ module SensibleSwing
     end
     
     def add_set_upconvert_options_button
-      @show_upconvert_options = new_jbutton( "Change upconvert options (started as #{Storage[UpConvertEnglish] || 'not set'})" ) do
+      @show_upconvert_options = new_jbutton( "Change upconvert options (started as #{LocalStorage[UpConvertEnglish] || 'not set'})" ) do
         setup_upconvert_options
       end
       
@@ -152,40 +152,40 @@ module SensibleSwing
     def setup_upconvert_options
       none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, uses directx for scaling, nice for slow cpu's"
-      p 'upconvert options started as:', Storage[UpConvertKey]
+      p 'upconvert options started as:', LocalStorage[UpConvertKey]
       none.on_clicked {
-        Storage[UpConvertKey] = nil
-        Storage[UpConvertKeyExtra] = nil
-        Storage[UpConvertEnglish] = nil
+        LocalStorage[UpConvertKey] = nil
+        LocalStorage[UpConvertKeyExtra] = nil
+        LocalStorage[UpConvertEnglish] = nil
       }
       medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)") {
-        Storage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:3"
-        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=50.0"
-        Storage[UpConvertEnglish] = "DVD/HQ"
+        LocalStorage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:3"
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=50.0"
+        LocalStorage[UpConvertEnglish] = "DVD/HQ"
         display_current_upconvert_setting
       }
       high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
-        Storage[UpConvertEnglish] = "high compress"
-        Storage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
-        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
+        LocalStorage[UpConvertEnglish] = "high compress"
+        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
         display_current_upconvert_setting
       }
       new_jbutton("set upconvert options to aggressive DVD/HQ-style playback") {
-        Storage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10"
-        Storage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
-        Storage[UpConvertEnglish] = "Aggressive DVD/HQ"
+        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10"
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
+        LocalStorage[UpConvertEnglish] = "Aggressive DVD/HQ"
         display_current_upconvert_setting
       }
       display_current_upconvert_setting
     end
     
     def display_current_upconvert_setting
-      show_blocking_message_dialog "Current upconvert options set to #{Storage[UpConvertEnglish] || 'none'}"
+      show_blocking_message_dialog "Current upconvert options set to #{LocalStorage[UpConvertEnglish] || 'none'}"
     end
     
     def get_upconvert_vf_settings
-      template = Storage[UpConvertKey]
+      template = LocalStorage[UpConvertKey]
       if template
         # choose width of widest monitor (why would they display it on the other?)
         x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max
@@ -197,7 +197,7 @@ module SensibleSwing
     end
 
     def get_upconvert_secondary_settings
-      Storage[UpConvertKeyExtra]
+      LocalStorage[UpConvertKeyExtra]
     end
     
     def setup_advanced_buttons
@@ -210,7 +210,7 @@ module SensibleSwing
         create_brand_new_edl
       end
       
-      @open_list = new_jbutton("Open/Edit a previously created EDL or .srt file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EDL_DIR)
         open_file_to_edit_it filename
@@ -302,10 +302,10 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanity automatically" )
+      @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
-        You can download a .srt file and parse it to automaticaly search for profanities.
-        Basically download it from opensubtitles.org (possibly from other places, too),
+        You can download a .srt file and use it to automatically search for profanities.
+        Basically download it from opensubtitles.org (possibly from other sites, too),
         (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
@@ -313,8 +313,8 @@ module SensibleSwing
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
         parsed = SubtitleProfanityFinder.edl_output [filename]
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
-        open_file_to_edit_it EdlTempFile
         open_file_to_edit_it filename
+        open_file_to_edit_it EdlTempFile
       end
       
       add_set_upconvert_options_button
@@ -358,6 +358,10 @@ module SensibleSwing
         nice_file = wrote_to_here_fulli
         run_smplayer_blocking nice_file, "-edl \"#{EdlTempFile}\"", false
       }
+      
+      @reload = new_jbutton("reload bin/sensible-cinema code") do
+        load $0
+      end
       
     end # advanced buttons
 
@@ -421,7 +425,7 @@ module SensibleSwing
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
-      if !(Storage['main_license_accepted'] == VERSION)
+      if !(LocalStorage['main_license_accepted'] == VERSION)
         force_accept_license_first
       end
 
@@ -469,7 +473,7 @@ module SensibleSwing
       @exit = new_jbutton("Exit", "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
-        puts 'Thank you for using Sensible Cinema. Goodbye.'
+        puts 'Thank you for using Sensible Cinema. Come again!'
         java.lang.System.exit 0
       }
 
@@ -488,7 +492,7 @@ module SensibleSwing
        File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes]
-        extra_options += " -vo direct3d " # more mouse, less speed [?] less mouse ??
+        # extra_options += " -vo direct3d " # more mouse, less speed [?] less mouse ??
         extra_options += " -slang en "
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
@@ -496,7 +500,7 @@ module SensibleSwing
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
         if OS.windows?
-          extra_options += " -vo direct3d " # more light nvidia...should be ok...
+          # extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
@@ -589,8 +593,10 @@ module SensibleSwing
       Thread.new { system_original command }
     end
     
-    # make them choose which system call to use explicitly
-    undef system
+    if respond_to?(:system)
+      # make them choose which system call to use explicitly
+      undef system
+    end
     
     def download full_url, to_here
       require 'open-uri'
@@ -830,7 +836,7 @@ module SensibleSwing
     EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
 
     def repeat_last_copy_dvd_to_hard_drive
-      generate_and_run_bat_file *Storage['last_params']
+      generate_and_run_bat_file *LocalStorage['last_params']
     end
 
     def new_nonexisting_filechooser title = nil, default_dir = nil
@@ -876,11 +882,11 @@ module SensibleSwing
     def new_existing_file_selector_and_select_file title, dir=nil
       out = FileDialog.new(self, title, FileDialog::LOAD)
       out.set_title title
-      dir ||= Storage[caller.inspect]
+      dir ||= LocalStorage[caller.inspect]
       out.set_directory dir.to_filename if dir
       got = out.go
       raise 'cancelled choosing existing file method' unless got # I think we always want to raise...
-      Storage[caller.inspect] = File.dirname(got)
+      LocalStorage[caller.inspect] = File.dirname(got)
       got
     end
     
@@ -969,9 +975,9 @@ module SensibleSwing
           Subsequent previews will be faster, though, as long as you use the same filename, as it won't have to re-set it up for processing.
           Also note that if you change your edit list, you'll need to close, and restart the video to be able to see it with your new settings.
         EOL
-        old_start = Storage['start_time']
-        start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
-        default_end = Storage['end_time']
+        old_start = LocalStorage['start_time']
+        start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", LocalStorage['start_time'])
+        default_end = LocalStorage['end_time']
         if start_time and start_time != old_start
           default_end = EdlParser.translate_string_to_seconds(start_time) + 10
           default_end = EdlParser.translate_time_to_human_readable(default_end)
@@ -981,8 +987,8 @@ module SensibleSwing
           JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
           return
         end
-        Storage['start_time'] = start_time
-        Storage['end_time'] = end_time
+        LocalStorage['start_time'] = start_time
+        LocalStorage['end_time'] = end_time
       end
       dvd_friendly_name = descriptors['name']
       raise 'no dvd name in EDL?' unless dvd_friendly_name
@@ -1027,7 +1033,7 @@ module SensibleSwing
     end
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+      LocalStorage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
       begin
         commands = get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
@@ -1218,5 +1224,6 @@ if $0 == __FILE__
     puts 'Please use the Sensible Cinema GUI window popup...'
   end
 end
+puts 33
 
 # icon derived from: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62
