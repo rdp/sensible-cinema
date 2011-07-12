@@ -37,8 +37,8 @@
   unit tests
   auto-paste
   add a "scan for expected title, times" (basically all titles, times...)
-    complain if times are wrong...
-    complain [accomodate option] if start time off...
+    complain if times looks wrong...
+    complain [accomodate option] if start time off...600
   lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -56,14 +56,14 @@
     movie mask wayback machine
 
 == yes do, un-ordered currently, from the various future release options ==
-  update descriptions everywhere LOL
-  slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with upsampling?
-  upconvert: display as text what it is, prompt if none
-  SRT doubles up first IQ 
+  "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
+  upconvert: warn if none
   don't cache selections if they choose a local file...hmm...
+  tighten splits
   "save to" -> same dir as "get from" yeah
-  @instructions "this is great for comparing srt's, except...then you have to..."
-  test with cars-ws, mac (to make sure volume name doesn't have spaces)
+  @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
+  @instructions: full srt how-to
+  test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
   can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   add dvd_title_time option
   volume_name => dvd_volume_name
@@ -78,10 +78,10 @@
     don't have to use eval!
     EDL with JSON on top, full timestamps.
   setpriority for several :)
-  bring to top after a conversion, and for prompts...we get hidden!
+  bring to top after a conversion, and for prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
-  check if some other buttons are outdated...
+  check if some other buttons are now outdated...
   unit tests (all pass)
   auto-copy to clipboard...should be cake, right?
   can I avoid requiring use of tsmuxer first? hmm...
@@ -94,7 +94,6 @@
   upconverter
     check gl mac
     check permutations
-    easier use/"options" setting buttons, remove that one button...
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @makemkv: timing feels broken weird-like!
   clear runnings
@@ -127,12 +126,11 @@
   inventionzy: blu-ray OCR
   port to mac OS X--try everything out (all buttons), make sure all works...
       ppc dvdid?
-      instructions for how to use mac ts muxer
       use mplayerx well [?] like wrap it...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   do I need tsmuxer?
   auto-"guess" the best title...
-  add button "fast preview one" (from dvd)
+  add button "fast preview segment" (from dvd)
 
 == other lists ==
 
@@ -148,7 +146,7 @@
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
   @makemkv: show us drive letters, labels over hardware type, also an option to "ignore failure"
-  
+  slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
   upconvert research/compare options
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   investigate xbmc dvd edl how do you do that?
