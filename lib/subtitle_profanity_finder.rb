@@ -153,7 +153,12 @@ module SubtitleProfanityFinder
           timing_line = glop.split("\n").first.strip
           timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
           # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-          output += %!"#{$2}.#{$3}" , "#{$4}.#{$5}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
+          ts_begin = "#{$2}.#{$3}"
+          ts_begin = EdlParser.translate_string_to_seconds ts_begin
+          ts_begin = EdlParser.
+          ts_end = "#{$4}.#{$5}"
+          output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
+          break
         end
 
       end
