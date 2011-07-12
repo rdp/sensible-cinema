@@ -172,6 +172,7 @@
   investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
   @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
   @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
   @mplayer: do I need -zoom ?
