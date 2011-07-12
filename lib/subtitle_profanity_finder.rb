@@ -47,7 +47,7 @@ module SubtitleProfanityFinder
 
 
 
-  # TODO butt, nimrod, ... retard, dumb, jerk 
+  # TODO butt, nimrod, ... retard, dumb, jerk, bloody
 
 
     profanities = {'hell' => ['he..', true],

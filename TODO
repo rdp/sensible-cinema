@@ -31,14 +31,12 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above probably ==
+  unit tests
+
   always use -dvd-device [yikes]
   fullscreen now
   subtitles 2 phase
-  unit tests
   auto-paste
-  add a "scan for expected title, times" (basically all titles, times...)
-    complain if times looks wrong...
-    complain [accomodate option] if start time off...600
   lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -56,8 +54,11 @@
     movie mask wayback machine
 
 == yes do, un-ordered currently, from the various future release options ==
+  play unedited doesn't use known title tracks
+  add a "scan for expected title, times" (basically all titles, times...)
+    complain if times looks wrong...
+    complain [accomodate option] if start time looks off...600
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
-  upconvert: warn if none
   don't cache selections if they choose a local file...hmm...
   tighten splits
   "save to" -> same dir as "get from" yeah

@@ -118,9 +118,11 @@ module SensibleSwing
     LocalStorage = Storage.new("sensible_cinema_storage")
     
     def setup_upconvert_buttons
+      
     
       @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
         # ?? drive, volume, dvd_id = choose_dvd_drive_or_file true
+        warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
       end
@@ -131,11 +133,18 @@ module SensibleSwing
         #run_smplayer_blocking "dvdnav:///#{drive}", "-nocache" # TODO dvdnav://1-60 is summarily ignored...sniff...
         # LODO mplayer dvdnav:///e: seems really really hosed LOL, and also dvdnav input what the...
         # plush crash smplayer "normal" selecting IQ Menu (ok snow white tho...odd...)
+        warn_if_no_upconvert_options_currently_selected
         play_dvd_smplayer_unedited
       end
       
       add_set_upconvert_options_button
       
+    end
+    
+    def warn_if_no_upconvert_options_currently_selected
+      if !LocalStorage[UpConvertEnglish]
+        show_blocking_message_dialog "Warning: upconvert options have not been set yet--please change upconvert options first, if desired."
+      end
     end
     
     def add_set_upconvert_options_button
@@ -181,7 +190,7 @@ module SensibleSwing
     end
     
     def display_current_upconvert_setting
-      show_blocking_message_dialog "Current upconvert options set to #{LocalStorage[UpConvertEnglish] || 'none'}"
+      show_blocking_message_dialog "Upconvert options are set to #{LocalStorage[UpConvertEnglish] || 'none'}"
     end
     
     def get_upconvert_vf_settings
@@ -311,7 +320,7 @@ module SensibleSwing
       EOL
       @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
-        parsed = SubtitleProfanityFinder.edl_output filename, {}, 0.35, 0.25
+        parsed = SubtitleProfanityFinder.edl_output filename, {}, 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET TIMINGS HERE
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
         open_file_to_edit_it filename
         open_file_to_edit_it EdlTempFile
@@ -811,9 +820,18 @@ module SensibleSwing
           show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
           Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
           "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
+          open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/detail?name=MPUI.2011-06-09.Full-Package.exe"
           System.exit(1)
         end
+      end
+    end
+    
+    def open_url_to_view_it_non_blocking url
+      if OS.windows?
+        system_non_blocking(c = "start #{url.gsub('&', '^&')}") # LODO would launchy help/work here with the full url?
+        p c
+      else
+        system_non_blocking "#{OS.open_file_command} \"#{url}\"" # LODO test
       end
     end
     

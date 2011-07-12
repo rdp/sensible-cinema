@@ -1,3 +1,10 @@
+== 0.24.1 ==
+
+A few more profanities/subtitle tweaks.
+Now can optionally "adjust" the auto-generated mutes from subtitles based on time 
+differences from the file versus from the movie file itself.
+Some minor upconverting tweaks
+
 == 0.24.0 ==
 
 Now comes with an upconverting software player to play back DVD's/files.
