@@ -2,7 +2,7 @@
 up next:
 
 == real time subtitle ==
-  0.4 extra + 0.5 not nuf blacky, marked one
+  0.4 extra + 0.5 not nuf blacky, marked one, hitchhikers
 
   flight:
     first:  second 168.0 -> 00:02:48.03 sez: 00:02:47,668
@@ -18,6 +18,8 @@ up next:
   I think that upconverting to the little monitor used more cpu.
   Anything to the big screen maxed out the cpu.
   I "think" it looked better upconverted than not, big screen too, though both really pretty good.  Except the computer not LOL.
+  
+  work comp. can scale snow white like 30% cpu [is that out of 50?] to 1680x ...
   
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
