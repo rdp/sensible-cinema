@@ -14,7 +14,8 @@ module SubtitleProfanityFinder
 
 
 
-  def self.edl_output args
+  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0
+     incoming = File.read(incoming_filename)
 
 
 
@@ -46,8 +47,7 @@ module SubtitleProfanityFinder
 
 
 
-
-
+  # TODO butt 
 
 
     profanities = {'hell' => ['he..', true],
@@ -80,16 +80,11 @@ module SubtitleProfanityFinder
       'jesus' => 'l...',
       'chri' +
       'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
+      'sh' +
+       'i' + 't' => 'sh..',
       'a realllly bad word' => ['test bad word', true]
     }
-
-    incoming = File.read(args.shift)
-
-    while args.length > 0
-      prof = args.shift
-      sanitized = args.shift
-      profanities[prof] = sanitized
-    end
+    profanities.merge! extra_profanity_hash
 
     all_profanity_combinations = []
 
@@ -174,6 +169,6 @@ if $0 == __FILE__
     p 'syntax: filename.srt [prof1 sanitized_equivalent1 prof2 sanitized_equivalent2 ...]'
     exit
   else
-    print SubtitleProfanityFinder.edl_output ARGV
+    print SubtitleProfanityFinder.edl_output ARGV.first
   end
 end

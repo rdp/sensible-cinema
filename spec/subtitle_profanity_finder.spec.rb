@@ -24,8 +24,8 @@ describe SubtitleProfanityFinder do
 
   describe "should parse out various profanities" do
     
-    output = SubtitleProfanityFinder.edl_output ['dragon.srt']
-    
+    output = SubtitleProfanityFinder.edl_output 'dragon.srt'
+    p output
     describe "heck" do
       it "should include the bad line with timestamp" do
         output.should match(/00:00:54.929.*"he\.\."/)
@@ -42,12 +42,12 @@ describe SubtitleProfanityFinder do
       end
       
       it "should parse out deity singular and at very end" do
-        output = SubtitleProfanityFinder.edl_output ['deity_end.srt']
-        output.should include("fortress is our [deity]")
+        output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
+        output.should include("fortress is our [goodness]")
       end
       
       it "should parse out <i> et al " do
-        output = SubtitleProfanityFinder.edl_output ['deity_end.srt']
+        output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
         output.should_not include(" i ")
         output.should_not include("<i")
         output.should_not include("huntingand")
@@ -58,7 +58,7 @@ describe SubtitleProfanityFinder do
     
     describe 'full word only profanities' do
       
-      output2 =  SubtitleProfanityFinder.edl_output ['arse.srt']
+      output2 =  SubtitleProfanityFinder.edl_output 'arse.srt'
       it 'should not parse it if it\'s in other words' do
         output2.should_not include "a..ume"
         output2.should_not include "he..o" # todo: positive ex: ... :P
@@ -87,14 +87,14 @@ describe SubtitleProfanityFinder do
   end
   
   describe "it should take optional user params" do
-    output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'word']
+    output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}
     
     it "should parse out the word word" do
       output.should match(/00:00:50.089.*"word"/)
     end
     
     it "should parse out and replace with euphemism" do
-      output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'w...']
+      output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'w...'}
       output.should match(/00:00:50.089.*In a \[w\.\.\.\]/)
     end
     
