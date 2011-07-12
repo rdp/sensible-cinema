@@ -311,7 +311,7 @@ module SensibleSwing
       EOL
       @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
-        parsed = SubtitleProfanityFinder.edl_output filename
+        parsed = SubtitleProfanityFinder.edl_output filename, {}, 
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
         open_file_to_edit_it filename
         open_file_to_edit_it EdlTempFile

@@ -25,8 +25,8 @@ describe SubtitleProfanityFinder do
   describe "should parse out various profanities" do
     
     output = SubtitleProfanityFinder.edl_output 'dragon.srt'
-    p output
-    describe "heck" do
+
+    describe "he.." do
       it "should include the bad line with timestamp" do
         output.should match(/00:00:54.929.*"he\.\."/)
       end

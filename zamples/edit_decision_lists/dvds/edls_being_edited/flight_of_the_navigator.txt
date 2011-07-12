@@ -1,0 +1,34 @@
+# comments can go after a # on any line, for example this one.
+"name" => "Flight of the Navigator",
+
+"mutes" => [
+
+"00:15:39.356" , "00:15:42.234", "profanity", "goodness", "Oh my [goodness]",
+"00:15:45.070" , "00:15:47.447", "profanity", "goodness", "Oh Thank [goodness]",
+"00:25:30.447" , "00:25:35.577", "profanity", "l...", "[l...] He's transmitting in alpha waves with complex frequency patterns in them",
+"00:25:47.749" , "00:25:51.718", "profanity", "he..", "How the [he..] is he doing that I have no idea",
+"00:33:31.803" , "00:33:33.145", "profanity", "sh..", "Don't take any [sh..] David",
+"00:35:44.811" , "00:35:49.024", "profanity", "goodness", "Oh my [goodness] This kid's head is full",
+"00:37:10.022" , "00:37:12.941", "profanity", "goodness", "My [goodness] These are uncharted systems",
+"00:47:30.851" , "00:47:32.728", "profanity", "goodness", "Oh my [goodness]",
+"00:48:23.445" , "00:48:26.698", "profanity", "goodness", "All right Get the [goodness][da..] door open Now",
+"00:48:57.521" , "00:49:01.316", "profanity", "sh..", "Holy [sh..] it's an alien No you idiot It's the kid",
+"00:54:10.792" , "00:54:14.094", "profanity", "da..", "[da..] How did that kid get outside",
+"00:56:55.457" , "00:56:58.001", "profanity", "goodness", "My [goodness] it changed shape",
+"01:03:53.709" , "01:03:57.671", "profanity", "goodness", "I swear to [goodness] if I was flying this thing we'd be home by now",
+"01:06:53.055" , "01:06:55.849", "profanity", "goodness", "Inside a spaceship Oh my [goodness]",
+"01:07:06.068" , "01:07:10.197", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
+"01:18:08.355" , "01:18:09.940", "profanity", "da..", "[da..]",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "FLIGHT_OF_THE_NAVIGATOR",
+"disk_unique_id" => "464df6bb|75753761",
+"dvd_title_track" => "1",
+# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+"mplayer_dvd_splits" => [], 
