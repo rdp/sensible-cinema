@@ -105,15 +105,17 @@ class EdlParser
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like either :blank and :mute
   # [[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
-  def self.convert_incoming_to_split_sectors incoming, add_this_to_mutes_end = 0, add_this_to_mutes_beginning = 0, splits = []
+  def self.convert_incoming_to_split_sectors incoming, add_this_to_all_ends = 0, subtract_this_from_beginnings = 0, splits = []
+    raise if subtract_this_from_beginnings < 0
+    raise if add_this_to_all_ends < 0
     if splits != []
       # allow it to do all the double checks we later skip, just in case :)
       self.convert_incoming_to_split_sectors incoming
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    mutes = mutes.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:mute]}
-    blanks = blanks.map{|k, v| get_secs(k, v, -add_this_to_mutes_beginning, add_this_to_mutes_end, splits) + [:blank]}
+    mutes = mutes.map{|k, v| get_secs(k, v, -subtract_this_from_beginnings, add_this_to_all_ends, splits) + [:mute]}
+    blanks = blanks.map{|k, v| get_secs(k, v, -subtract_this_from_beginnings, add_this_to_all_ends, splits) + [:blank]}
     combined = (mutes+blanks).sort
     
     # detect overlap...

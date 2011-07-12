@@ -638,8 +638,8 @@ module SensibleSwing
       EOL
     end
     
-    MplayerBeginingBuffer = 1.0 + 0.25
-    MplayerEndBuffer = 0.0 + 0.3
+    MplayerBeginingBuffer = 1.0
+    MplayerEndBuffer = 0.0
     
     def play_mplayer_edl file_with_edl_path = nil
       extra_mplayer_commands = []

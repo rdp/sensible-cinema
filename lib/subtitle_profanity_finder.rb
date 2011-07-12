@@ -16,6 +16,8 @@ module SubtitleProfanityFinder
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0
      incoming = File.read(incoming_filename)
+     raise if subtract_from_each_beginning_ts < 0
+     raise if add_to_end_each_ts < 0
 
 
 
@@ -45,9 +47,7 @@ module SubtitleProfanityFinder
 
 
 
-
-
-  # TODO butt 
+  # TODO butt, nimrod, ... retard, dumb, jerk 
 
 
     profanities = {'hell' => ['he..', true],
@@ -155,9 +155,11 @@ module SubtitleProfanityFinder
           # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
           ts_begin = "#{$2}.#{$3}"
           ts_begin = EdlParser.translate_string_to_seconds ts_begin
+          ts_begin  -= subtract_from_each_beginning_ts
           ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end = "#{$4}.#{$5}"
           ts_end = EdlParser.translate_string_to_seconds ts_end
+          ts_end += add_to_end_each_ts
           ts_end = EdlParser.translate_time_to_human_readable ts_end, true
           output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
           break

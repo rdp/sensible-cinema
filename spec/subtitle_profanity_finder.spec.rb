@@ -68,7 +68,6 @@ describe SubtitleProfanityFinder do
         output2.should include '0:00:55.069' # EOL
         output2.should include "0:00:55.071" # full line...
         output2.should include '0:00:55.066' # BOL
-        print output2
       end
       
       it 'should replace l for i' do
@@ -85,6 +84,12 @@ describe SubtitleProfanityFinder do
       
     end
     
+  end
+  
+  it 'should add to begin, end' do
+    out = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}, 1, 1.5
+    out.should include "45.460"
+    out.should include "51.589"
   end
   
   describe "it should take optional user params" do
