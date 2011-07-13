@@ -157,10 +157,10 @@ module SensibleSwing
         # during testing, we *always* have enough free space :)
         16_000_000_000
       }
+      
       # less chatty...
       @subject.stub!(:p) {}
       @subject.stub!(:puts) {}
-
     end
     
     after do
@@ -464,7 +464,7 @@ module SensibleSwing
     
     it "should read splits from the file" do
       splits1 = nil
-      MplayerEdl.stub(:convert_to_edl) do |d,s,s,splits|
+      MplayerEdl.stub(:convert_to_edl) do |d,s,s2,splits|
         splits1 = splits
       end
       @subject.play_mplayer_edl

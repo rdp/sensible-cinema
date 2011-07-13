@@ -8,8 +8,8 @@ class MainWindow < JFrame
 
   def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
 # I think I'm already on top...
-# setVisible(true);
-# toFront()
+ setVisible(true);
+ toFront()
     JOptionPane.showMessageDialog(nil, message, title, style)
     true
   end
