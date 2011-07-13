@@ -128,15 +128,12 @@ module SensibleSwing
       end
       
       @watch_file_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
-        # this way wurx...
-        #drive, volume, dvd_id = choose_dvd_drive_or_file false # will choose a DVD if mounted...
-        #run_smplayer_blocking "dvdnav:///#{drive}", "-nocache" # TODO dvdnav://1-60 is summarily ignored...sniff...
-        # LODO mplayer dvdnav:///e: seems really really hosed LOL, and also dvdnav input what the...
-        # plush crash smplayer "normal" selecting IQ Menu (ok snow white tho...odd...)
         warn_if_no_upconvert_options_currently_selected
         play_dvd_smplayer_unedited false, false
       end
       
+      @upconv_line = add_text_line ''
+      change_upconvert_line_to_current
       add_set_upconvert_options_button
       
     end
@@ -147,12 +144,15 @@ module SensibleSwing
       end
     end
     
+    def change_upconvert_line_to_current
+      @upconv_line.set_text get_current_upconvert_as_phrase
+    end
+      
+    
     def add_set_upconvert_options_button
-      add_text_line get_current_upconvert_as_phrase
       @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
         setup_upconvert_options
       end
-      
     end
 
     UpConvertKey = 'upconvert_setting'
@@ -168,30 +168,30 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = nil
       }
       medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
-        # garnered from http://forum.beyond3d.com/showthread.php?p=1008342
-        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:5,scale=SCREEN_X:-1:0:0:2"
+        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-1:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=0.0"
-        LocalStorage[UpConvertEnglish] = "DVD/HQ"
+        LocalStorage[UpConvertEnglish] = "DVD"
         display_current_upconvert_setting
       }
       high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
-        LocalStorage[UpConvertEnglish] = "high compress"
-        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
+        LocalStorage[UpConvertEnglish] = "high compressed"
+        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:3"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ??
       }
-      new_jbutton("set upconvert options to aggressive DVD/HQ-style playback") {
-        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10" # 2x screen resolution ?
+      new_jbutton("set upconvert options to experimental DVD/HQ-style playback") {
+        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
-        LocalStorage[UpConvertEnglish] = "Aggressive DVD/HQ"
+        LocalStorage[UpConvertEnglish] = "experimental DVD/HQ"
         display_current_upconvert_setting
       }      
     end
     
     def display_current_upconvert_setting
+      change_upconvert_line_to_current
       show_blocking_message_dialog get_current_upconvert_as_phrase
     end
     

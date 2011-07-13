@@ -12,14 +12,6 @@ up next:
       beginning: add to the end 0.25s
       end: add to the begining 0.35s
 
-== upconverting to the huge monitor==
- with the black laptop:
-   "normal" dvdnav seemed to work all right, slightly jerky at times.
-  I think that upconverting to the little monitor used more cpu.
-  Anything to the big screen maxed out the cpu.
-  I "think" it looked better upconverted than not, big screen too, though both really pretty good.  Except the computer not LOL.
-  
-  work comp. can scale snow white like 30% cpu [is that out of 50?] to 1680x ...
   
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
@@ -239,10 +231,35 @@ mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd o
 
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
+
+
 == upconvert mplayer ==
 
- TODO analyze: http://forum.beyond3d.com/showthread.php?p=1008342
-hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
+=== upconverting to the huge monitor===
+ with the black laptop:
+   "normal" dvdnav seemed to work all right, slightly jerky at times.
+  I think that upconverting to the little monitor used more cpu.
+  Anything to the big screen maxed out the cpu.
+  I "think" it looked better upconverted than not, big screen too, though both really pretty good.  Except the computer not LOL.
+  
+  work comp. can scale snow white like 30% cpu [is that out of 50?] to 1680x ...
+
+
+ http://forum.beyond3d.com/showthread.php?p=1008342
+    DVD: 
+      lanczos 2, -vf size=0:1 [accurate rounding] ...
+      3x resolution [!]
+      "Luma Sharpen to 1.00-1.50 and Chroma Sharpen to 0.00. Enable Accurate Rounding."
+         I don't know if accurate rounding is possible with mplayer+lanczos tho...
+      dn3dhq put Chroma to 1.00, Time to 4.00 and Luma to 0.00.
+        hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp] how?
+      deinterlacing [I don't think this matters, really I don't]
+    xvid:
+      Denoise3D settings, put Chroma to 1.00, Time to 4.00 and Luma to 0.00.
+      postprocessing "strongest" ("or SPP through usually broken")
+      mplayer accurate deblocking
+      lanczos luma 0.5-1.5 chroma 0, accurate rounding
+      deinterlacing: - Set it to Framerate doubler, and "no motion estimation - blend images"
 
  TODO compare with mpc-hc with ffdshow...same?
 
@@ -353,9 +370,12 @@ or
 
 ==== prop ====
 "upscaling"
+http://forum.videolan.org/viewtopic.php?f=14&t=23579&start=0&st=0&sk=t&sd=a
 http://www.neowin.net/forum/topic/615696-permanent-upconversion-in-software/
 http://forum.videohelp.com/threads/280895-Is-there-computer-dvd-software-that-will-upconvert-regular-dvds
 http://forums.cnet.com/7723-7596_102-285455.html
+http://www.avsforum.com/avs-vb/showthread.php?t=1060735
+http://forums.macrumors.com/showthread.php?t=1129925
 
 == WMC/other EDL plugins ==
 
