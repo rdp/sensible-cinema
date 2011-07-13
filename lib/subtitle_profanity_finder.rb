@@ -9,7 +9,7 @@ require_relative 'edl_parser'
 
 module SubtitleProfanityFinder
 
-   # splits into timestamps -> timestamps\ncontent
+   # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_glops subtitles
      subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
    end
@@ -133,12 +133,13 @@ module SubtitleProfanityFinder
       'idiot' => 'idiot',
     }
 
-    all_profanity_combinationss = [convert_to_regexps bad_profanities]
+    all_profanity_combinationss = [convert_to_regexps(bad_profanities), convert_to_regexps(semi_bad_profanities)]
     
     
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
+      p split_to_glops(subtitles)
       for glop in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
           # dunno if we should force words to just start with this or contain it anywhere...

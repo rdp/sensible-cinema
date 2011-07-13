@@ -92,6 +92,16 @@ describe SubtitleProfanityFinder do
     out.should include "51.589"
   end
   
+  it "should accomodate lesser profanities" do
+    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0
+6
+00:00:55,068 --> 00:00:59,164
+a butt
+
+    EOL
+    out.should include "55.0"
+  end
+  
   describe "it should take optional user params" do
     output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}
     
