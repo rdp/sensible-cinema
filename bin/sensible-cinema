@@ -206,6 +206,8 @@ module SensibleSwing
         # choose width of widest monitor (why would they display it on the other?)
         x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
         outgoing = template.gsub('SCREEN_X', (x*2).to_i.to_s) # has to be an integer...
+        outgoing = template.gsub('SCREEN_X', '3360')
+        
         outgoing
       else
         nil 
