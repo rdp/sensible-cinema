@@ -10,8 +10,46 @@ require_relative 'edl_parser'
 module SubtitleProfanityFinder
 
 
-
-
+   def self.convert_to_regexps profanity_hash
+    all_profanity_combinations = []
+    profanity_hash.to_a.sort.reverse.each{|profanity, sanitized|
+      as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
+      if sanitized.is_a? Array
+        is_single_word_profanity = true
+        raise unless sanitized[1]
+        raise unless sanitized.length == 2
+        sanitized = sanitized[0]
+      end
+      
+      permutations = [profanity]
+      if profanity =~ /l/
+        permutations << profanity.gsub(/l/i, 'i')
+      end
+      if profanity =~ /i/
+        permutations << profanity.gsub(/i/i, 'l')
+      end
+      
+      bracketized = '[' + sanitized + ']'
+      
+      for permutation in permutations
+        if is_single_word_profanity
+          # oh wow this is ughly...
+          sanitized_version = bracketized
+          as_regexp = Regexp.new("\s" + permutation + "\s", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + bracketized + ' ']
+          as_regexp = Regexp.new("^" + permutation + "\s", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, bracketized + ' ']
+          as_regexp = Regexp.new("\s" + permutation + "$", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + bracketized]
+          as_regexp = Regexp.new("^" + permutation + "$", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, bracketized]
+        else
+          all_profanity_combinations << [as_regexp, bracketized]
+        end
+      end
+    }
+    all_profanity_combinations
+   end
 
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0
@@ -82,48 +120,9 @@ module SubtitleProfanityFinder
        'i' + 't' => 'sh..',
       'a realllly bad word' => ['test edited bad word', true]
     }
-    bad_profanities.merge! extra_profanity_hash
-    
-    
-    all_profanity_combinations = []
+    bad_profanities.merge! extra_profanity_hash    
 
-    bad_profanities.to_a.sort.reverse.each{|profanity, sanitized|
-      as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
-      if sanitized.is_a? Array
-        is_single_word_profanity = true
-        raise unless sanitized[1]
-        raise unless sanitized.length == 2
-        sanitized = sanitized[0]
-      end
-      
-      permutations = [profanity]
-      if profanity =~ /l/
-        permutations << profanity.gsub(/l/i, 'i')
-      end
-      if profanity =~ /i/
-        permutations << profanity.gsub(/i/i, 'l')
-      end
-      
-      bracketized = '[' + sanitized + ']'
-      
-      for permutation in permutations
-        if is_single_word_profanity
-          # oh wow this is ughly...
-          sanitized_version = bracketized
-          as_regexp = Regexp.new("\s" + permutation + "\s", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + bracketized + ' ']
-          as_regexp = Regexp.new("^" + permutation + "\s", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, bracketized + ' ']
-          as_regexp = Regexp.new("\s" + permutation + "$", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + bracketized]
-          as_regexp = Regexp.new("^" + permutation + "$", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, bracketized]
-        else
-          all_profanity_combinations << [as_regexp, bracketized]
-        end
-      end
-    }
-
+   all_profanity_combinations = convert_to_regexps bad_profanities
     output = ''
     # from a timestamp to a line with nothing :)
     for glop in incoming.scan(/\d\d:\d\d:\d\d.*?^$/m)
