@@ -56,12 +56,14 @@ module SubtitleProfanityFinder
    end
 
 
+
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0
-     subtitles = File.read(incoming_filename)
-     raise if subtract_from_each_beginning_ts < 0
+    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
+  end
+  
+  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
+     raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
-
-
 
 
 
@@ -103,10 +105,6 @@ module SubtitleProfanityFinder
       99.chr +
       107.chr =>
       'f...',
-      'sex' => 'sex',
-      'genital' => 'genital', 'make love' => 'make love',
-      'making love' => 'making love', 
-      'love mak' => 'love mak',
       'bi' +
       'tc' + 104.chr => 'b....',
       'bas' +
@@ -116,7 +114,6 @@ module SubtitleProfanityFinder
       arse + 'h' +
       'ole' => 'a..h...',
       arse + 'wipe' => 'a..w....',
-      'breast' => 'br....',
       'jesus' => 'l...',
       'chri' +
       'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
@@ -126,12 +123,22 @@ module SubtitleProfanityFinder
     }
     bad_profanities.merge! extra_profanity_hash    
 
+    semi_bad_profanities = {
+      'butt' => 'butt',
+      'sex' => 'sex',
+      'genital' => 'genital', 'make love' => 'make love',
+      'making love' => 'making love', 
+      'love mak' => 'love mak',
+      'breast' => 'br....',
+      'idiot' => 'idiot',
+    }
+
     all_profanity_combinationss = [convert_to_regexps bad_profanities]
     
     
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
-      
+      output += "\n"
       for glop in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
           # dunno if we should force words to just start with this or contain it anywhere...
@@ -147,10 +154,12 @@ module SubtitleProfanityFinder
             sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipses
             sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
             
-            # sanitize
-            for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations
-              if sanitized_glop =~ prof2
-                sanitized_glop.gsub!(prof2, sanitized2)
+            # sanitize the subtitles themselves...
+            for all_profanity_combinations2 in all_profanity_combinationss
+              for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
+                if sanitized_glop =~ prof2
+                  sanitized_glop.gsub!(prof2, sanitized2)
+                end
               end
             end
             
@@ -173,11 +182,8 @@ module SubtitleProfanityFinder
             unless output.contain? ts_begin
               output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
             end
-            break
           end
-  
         end
-  
       end
     end
     output
