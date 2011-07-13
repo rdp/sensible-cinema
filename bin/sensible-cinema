@@ -204,10 +204,8 @@ module SensibleSwing
       template = LocalStorage[UpConvertKey]
       if template
         # choose width of widest monitor (why would they display it on the other?)
-        x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i
-        
+        x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
         outgoing = template.gsub('SCREEN_X', (x*2).to_i.to_s) # has to be an integer...
-#        outgoing = template.gsub('SCREEN_X', (x.to_i).to_s) # has to be an integer...
         outgoing
       else
         nil 
@@ -522,7 +520,7 @@ module SensibleSwing
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
        end
-       extra_options += " -fs " # full screen [sigh]
+       extra_options += " -fs " # full screen
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
         if OS.windows?

@@ -2,6 +2,11 @@ lower cs?
 
     -zoom -sws 9 -vf scale=1280:720:::9:10 -ssf ls=74.0 -ssf cs=7.0
 
+allow it "up to max x" resolution maybe? instead of 2x?
+
+experiment with 2x or not with various people...
+
+
 sinc filter?
 
 2x screen res?
