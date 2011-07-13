@@ -240,7 +240,9 @@ mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd o
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
 == upconvert mplayer ==
-  should I set it abovenormal too?
+
+ TODO analyze: http://forum.beyond3d.com/showthread.php?p=1008342
+hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
 
  TODO compare with mpc-hc with ffdshow...same?
 

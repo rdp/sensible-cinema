@@ -29,6 +29,7 @@ exi== roadmap [for just tasks, see below though] ==
    youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
+    more blu-ray stuff: can ID them, can playback (through...mkv? VLC?)
  
 == yes do ordered in conjunction with the above probably ==
   C player
@@ -52,10 +53,9 @@ exi== roadmap [for just tasks, see below though] ==
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
   make it load faster! this is cuh-razy! or splash screen! yes!
-  play unedited doesn't use known title tracks
-    neither does play dvd upconverted...
 
 == yes do, un-ordered currently, from the various future release options ==
+  if 2 EDL's, still choose title track
   add an auto "scan for expected title, times"
     add time to the generator EDL
     complain if times looks wrong...

@@ -134,7 +134,7 @@ module SensibleSwing
         # LODO mplayer dvdnav:///e: seems really really hosed LOL, and also dvdnav input what the...
         # plush crash smplayer "normal" selecting IQ Menu (ok snow white tho...odd...)
         warn_if_no_upconvert_options_currently_selected
-        play_dvd_smplayer_unedited
+        play_dvd_smplayer_unedited false, false
       end
       
       add_set_upconvert_options_button
@@ -148,7 +148,8 @@ module SensibleSwing
     end
     
     def add_set_upconvert_options_button
-      @show_upconvert_options = new_jbutton( "Change upconvert options (started as #{LocalStorage[UpConvertEnglish] || 'not set'})" ) do
+      add_text_line get_current_upconvert_as_phrase
+      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
         setup_upconvert_options
       end
       
@@ -160,16 +161,17 @@ module SensibleSwing
 
     def setup_upconvert_options
       none = new_jbutton("reset upconvert options to default (none)")
-      none.tool_tip = "Having no upconvert options is reasonably good, uses directx for scaling, nice for slow cpu's"
-      p 'upconvert options started as:', LocalStorage[UpConvertKey]
+      none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       none.on_clicked {
         LocalStorage[UpConvertKey] = nil
         LocalStorage[UpConvertKeyExtra] = nil
         LocalStorage[UpConvertEnglish] = nil
       }
-      medium_dvd = new_jbutton("set upconvert options to DVD-style input (high-quality input)") {
-        LocalStorage[UpConvertKey] = "hqdn3d=2:1.5:3,scale=SCREEN_X:-1:0:0:3"
-        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=50.0"
+      medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
+        # garnered from http://forum.beyond3d.com/showthread.php?p=1008342
+        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:5,scale=SCREEN_X:-1:0:0:2"
+        # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=0.0"
         LocalStorage[UpConvertEnglish] = "DVD/HQ"
         display_current_upconvert_setting
       }
@@ -179,18 +181,23 @@ module SensibleSwing
         LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,pp=hb:y/vb:y,scale=SCREEN_X:-1:0:0:5"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=75.0"
         display_current_upconvert_setting
+        # -Processing method: mplayer with accurate deblocking ??
       }
       new_jbutton("set upconvert options to aggressive DVD/HQ-style playback") {
-        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10"
+        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-1:0:0:10" # 2x screen resolution ?
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "Aggressive DVD/HQ"
         display_current_upconvert_setting
-      }
-      display_current_upconvert_setting
+      }      
     end
     
     def display_current_upconvert_setting
-      show_blocking_message_dialog "Upconvert options are set to #{LocalStorage[UpConvertEnglish] || 'none'}"
+      show_blocking_message_dialog get_current_upconvert_as_phrase
+    end
+    
+    def get_current_upconvert_as_phrase
+      settings = LocalStorage[UpConvertEnglish]
+      "Upconvert options #{  settings ? "are set to #{settings}" : "not currently set"}"
     end
     
     def get_upconvert_vf_settings
@@ -626,20 +633,17 @@ module SensibleSwing
       writeOut.close
     end
     
-    def play_dvd_smplayer_unedited use_mplayer_instead = false
-      # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
+    def play_dvd_smplayer_unedited use_mplayer_instead = false, show_instructions = true
       drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
       file_to_play = "dvdnav://#{title_track_maybe_nil}"
       options = " -osd-fractions 2 -nocache -dvd-device #{drive} "
-      # want this even with smplayer I guess...
-      @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
-        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
-        'v' key: turn off subtitles.
-        '.' key: step one frame.
-      EOL
+      if show_instructions
+        # want this even with smplayer sometimes I guess...
+        @play_smplayer_warn ||= show_mplayer_instructions
+      end
 
       run_smplayer_non_blocking file_to_play, options, use_mplayer_instead
 
@@ -647,14 +651,17 @@ module SensibleSwing
 
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
-    def show_mplayer_instructions extra = ''
-      show_non_blocking_message_dialog <<-EOL + extra
+    def show_mplayer_instructions
+      show_non_blocking_message_dialog <<-EOL
         About to run mplayer.  
         To control it, use
         spacebar : pause,
-        double clicky : toggle full screen,
+        double clicky/right click : toggle full screen,
         arrow keys (left, right, up down) to seek/scan
         / and *	: inc/dec volume.
+        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
+        'v' key: turn off subtitles.
+        '.' key: step one frame.
       EOL
     end
     
