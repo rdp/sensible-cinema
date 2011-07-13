@@ -5,6 +5,7 @@ In some recent version or other, added ability to start EDL's from an offset
 can auto-paste to clipboard
 auto-full screen now
 In some recent revision, added ability to set upconvert options, use them for any playbacks.
+Separates subtitles into "known profanities" and then "lesser" now.
 
 == 0.24.1 ==
 

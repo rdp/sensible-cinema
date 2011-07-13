@@ -121,25 +121,20 @@ module SubtitleProfanityFinder
        'i' + 't' => 'sh..',
       'a realllly bad word' => ['test edited bad word', true]
     }
-    bad_profanities.merge! extra_profanity_hash    
+    
+    bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
 
-    semi_bad_profanities = {
-      'butt' => 'butt',
-      'sex' => 'sex',
-      'genital' => 'genital', 'make love' => 'make love',
-      'making love' => 'making love', 
-      'love mak' => 'love mak',
-      'breast' => 'br....',
-      'idiot' => 'idiot',
+    semi_bad_profanities = {}
+    ['moron', 'idio', 'butt', 'sex', 'genital', 'make love', 'making love', 'love mak', 'breast', 'piss'].each{|name|
+      # butter?
+      semi_bad_profanities[name] = name
     }
-
     all_profanity_combinationss = [convert_to_regexps(bad_profanities), convert_to_regexps(semi_bad_profanities)]
     
     
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      p split_to_glops(subtitles)
       for glop in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
           # dunno if we should force words to just start with this or contain it anywhere...
