@@ -47,10 +47,8 @@ module SubtitleProfanityFinder
 
 
 
-  # TODO butt, nimrod, ... retard, dumb, jerk, bloody
 
-
-    profanities = {'hell' => ['he..', true],
+    bad_profanities = {'hell' => ['he..', true],
       'g' +
       'o' + 100.chr => 'goodness', 'g' +
       111.chr + 
@@ -82,41 +80,46 @@ module SubtitleProfanityFinder
       'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
       'sh' +
        'i' + 't' => 'sh..',
-      'a realllly bad word' => ['test bad word', true]
+      'a realllly bad word' => ['test edited bad word', true]
     }
-    profanities.merge! extra_profanity_hash
-
+    bad_profanities.merge! extra_profanity_hash
+    
+    
     all_profanity_combinations = []
 
-    profanities.to_a.sort.reverse.each{|profanity, sanitized|
+    bad_profanities.to_a.sort.reverse.each{|profanity, sanitized|
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
-      sanitized = Array(sanitized)
-      is_single_word_profanity = sanitized[1]
-      permutations = [profanity]
+      if sanitized.is_a? Array
+        is_single_word_profanity = true
+        raise unless sanitized[1]
+        raise unless sanitized.length == 2
+        sanitized = sanitized[0]
+      end
       
+      permutations = [profanity]
       if profanity =~ /l/
         permutations << profanity.gsub(/l/i, 'i')
       end
-      
       if profanity =~ /i/
         permutations << profanity.gsub(/i/i, 'l')
       end
-      sanitized[0] = '[' + sanitized[0] + ']'
-      for profanity in permutations
+      
+      bracketized = '[' + sanitized + ']'
+      
+      for permutation in permutations
         if is_single_word_profanity
           # oh wow this is ughly...
-          sanitized_version = sanitized[0]
-          as_regexp = Regexp.new("\s" + profanity + "\s", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + sanitized_version + ' ']
-          as_regexp = Regexp.new("^" + profanity + "\s", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, sanitized_version + ' ']
-          as_regexp = Regexp.new("\s" + profanity + "$", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + sanitized_version]
-          as_regexp = Regexp.new("^" + profanity + "$", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, sanitized_version]
+          sanitized_version = bracketized
+          as_regexp = Regexp.new("\s" + permutation + "\s", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + bracketized + ' ']
+          as_regexp = Regexp.new("^" + permutation + "\s", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, bracketized + ' ']
+          as_regexp = Regexp.new("\s" + permutation + "$", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + bracketized]
+          as_regexp = Regexp.new("^" + permutation + "$", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, bracketized]
         else
-          raise unless sanitized.length == 1 # that would be weird elsewise...
-          all_profanity_combinations << [as_regexp, sanitized[0]]
+          all_profanity_combinations << [as_regexp, bracketized]
         end
       end
     }

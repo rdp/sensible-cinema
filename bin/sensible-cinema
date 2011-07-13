@@ -38,6 +38,7 @@ require_relative '../lib/mplayer_edl'
 require_relative '../lib/play_audio'
 require_relative '../lib/subtitle_profanity_finder'
 require_relative '../lib/convert_thirty_fps'
+require_relative '../lib/ruby_clip'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -118,7 +119,6 @@ module SensibleSwing
     LocalStorage = Storage.new("sensible_cinema_storage")
     
     def setup_upconvert_buttons
-      
     
       @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
         # ?? drive, volume, dvd_id = choose_dvd_drive_or_file true
@@ -269,7 +269,7 @@ module SensibleSwing
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
         out = nil
-        t = Thread.new {out= `mplayer dvdnav:///#{drive} -identify -frames 0 2>&1| grep LENGTH`}
+        t = Thread.new {out= `mplayer dvdnav:// -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH`}
         id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
         show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED eventually to identify a disk to match it to its EDL, later.", id_string
@@ -513,13 +513,14 @@ module SensibleSwing
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
        end
+       extra_options += " -fs " # full screen [sigh]
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
       else
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
         config_path = set_smplayer_opts extra_options
-        c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname config_path}\" -close-at-end "
+        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
       puts c
       system_blocking c
@@ -631,8 +632,8 @@ module SensibleSwing
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
-      file_to_play = "dvdnav://#{title_track_maybe_nil}/#{drive}"
-      options = " -osd-fractions 2 -nocache "
+      file_to_play = "dvdnav://#{title_track_maybe_nil}"
+      options = " -osd-fractions 2 -nocache -dvd-device #{drive} "
       # want this even with smplayer I guess...
       @play_smplayer_warn ||= show_mplayer_instructions <<-EOL
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
@@ -673,8 +674,8 @@ module SensibleSwing
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
-        extra_mplayer_commands << "-nocache"
-        play_this = "dvdnav://#{title_track}/#{drive_or_file}"
+        extra_mplayer_commands << " -nocache -dvd-device #{drive_or_file} "
+        play_this = "dvdnav://#{title_track}"
       end
       if edl_path
         descriptors = EdlParser.parse_file edl_path
@@ -907,7 +908,8 @@ module SensibleSwing
     end
     
     def show_copy_pastable_string(message, value)
-      get_user_input message, value, true
+      RubyClip.set_clipboard value            
+      get_user_input message + " (has been copied to clipboard)", value, true
     end
     
     def parse_edl path
@@ -1186,7 +1188,7 @@ module SensibleSwing
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
       if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
-        names += ['No DVD mounted so choose Local File (or insert DVD, re-try)']
+        names += ['No DVD mounted so choose Local File (or insert DVD, re-try)'] # LODO cannot read it...
         used_local_file_option = true
       end
       
@@ -1249,7 +1251,7 @@ module SensibleSwing
         box.add_item drive
       }
       add box
-      pack
+      pack # how do you get this arbitrary size? what the...
     end
   end
 end

@@ -1,3 +1,11 @@
+== ==
+
+In some recent version or other, added ability to start EDL's from an offset
+(example: your video says it starts at 600s, it will add 600s to each EDL setting)
+can auto-paste to clipboard
+auto-full screen now
+In some recent revision, added ability to set upconvert options, use them for any playbacks.
+
 == 0.24.1 ==
 
 A few more profanities/subtitle tweaks.

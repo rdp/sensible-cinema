@@ -1,4 +1,4 @@
-== roadmap [for just tasks, see below though] ==
+exi== roadmap [for just tasks, see below though] ==
 
   release: cheap/mediumcheap inventionzy
   release: C EDL
@@ -31,13 +31,12 @@
       just in case youtube takes over the world
  
 == yes do ordered in conjunction with the above probably ==
-  unit tests
-  consistency for flight? huh?
-
-  always use -dvd-device [yikes]
-  fullscreen now
   subtitles 2 phase
-  auto-paste
+  C player
+  unit tests
+  release at some point...
+  
+  consistency for flight of nav. srt? huh?
   lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -53,25 +52,24 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
-
-== yes do, un-ordered currently, from the various future release options ==
-
+  make it load faster! this is cuh-razy! or splash screen! yes!
   play unedited doesn't use known title tracks
     neither does play dvd upconverted...
-  add a "scan for expected title, times" (basically all titles, times...)
+
+== yes do, un-ordered currently, from the various future release options ==
+  add an auto "scan for expected title, times"
+    add time to the generator EDL
     complain if times looks wrong...
-    complain [accomodate option] if start time looks off...600
+  complain [accomodate option] if start time looks off...600
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
-  don't cache selections if they choose a local file...hmm...
   tighten splits
   "save to" -> same dir as "get from" yeah
+  open EDL can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to
-  test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
   can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   add dvd_title_time option
   volume_name => dvd_volume_name
-  make it load faster! this is cuh-razy! or splash screen! yes!
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
@@ -87,7 +85,6 @@
     mac just die with instructions to use tsmuxer first...
   check if some other buttons are now outdated...
   unit tests (all pass)
-  auto-copy to clipboard...should be cake, right?
   can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
@@ -135,6 +132,7 @@
   do I need tsmuxer?
   auto-"guess" the best title...
   add button "fast preview segment" (from dvd)
+  upconvert research/compare various options
 
 == other lists ==
 
@@ -149,33 +147,32 @@
   add button "fast preview one" (from file)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
-  @makemkv: show us drive letters, labels over hardware type, also an option to "ignore failure"
-  slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
-  upconvert research/compare options
-  investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
-  investigate xbmc dvd edl how do you do that?
-  investigate WMC "call out to mplayer EDL" or the like...
-  for mplayer realtime it needs to start early, but end on time
-  mplayer instructions are obscured
-  mplayer EDL allow this:
-    got fatal exception in button
-    detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
-    SyntaxError
-  accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
+  investigate xbmc dvd edl how do you do that? [readl dvd]
+  investigate WMC "call out to smplayer EDL" or the like...
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   mplayer EDL while grabbing, from grabbed :P
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
-  lua VLC EDL plugin? LOL yeah right.
   investigate: can I use zoomplayer max?
-  investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  don't cache selection if they choose a local file...hmm...
+  slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
+  investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
+  mplayer EDL allow this:
+    got fatal exception in button
+    detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
+    SyntaxError
+  lua VLC EDL plugin? LOL yeah right.
+  test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
+  investigate dvdrsbvdl (windows media center edl plugin)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
   @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
   @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
+  @mplayer: that one [IQ? hitchhikers'?] fail fail fail until I used -dvd-device [?] huh?
+    try to reproduce...
   @mplayer: do I need -zoom ?
   @smplayer: you don't capture stderr [?] ex -vf scale:1280.0
   @mplayer: http://www.infognition.com/VideoEnhancer/ can I do that through any means LOL?
