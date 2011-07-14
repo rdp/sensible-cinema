@@ -168,7 +168,7 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = nil
       }
       medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
-        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
@@ -177,13 +177,13 @@ module SensibleSwing
       high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
-        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3"
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ??
       }
       new_jbutton("set upconvert options to experimental DVD/HQ-style playback") {
-        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental DVD/HQ"
         display_current_upconvert_setting
@@ -205,7 +205,7 @@ module SensibleSwing
       if template
         # choose width of widest monitor (why would they display it on the other?)
         x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
-        outgoing = template.gsub('SCREEN_X', (x*2).to_i.to_s) # has to be an integer...
+        outgoing = template.gsub('SCREEN_X', (x*1).to_i.to_s) # has to be an integer...
         outgoing
       else
         nil 
