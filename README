@@ -1,39 +1,45 @@
 Sensible-cinema [5] allows you to apply pre-programmed edit lists
-(e.g. Edit Decision Lists [2]) to DVD's you own.  
-I.e. you can edit a DVD to "mute out" or skip certain scenes.
+(e.g. Edit Decision Lists [2]) to the DVD's you own.  
+I.e. you can edit a DVD to "mute out" or skip certain scenes, deemed objectionable.
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
 
-It is currently in alpha/beta, though will always be free software, even after releases.
-It also includes a library of EDL's that go along with various DVD's, we need volunteers
-to help it to grow!
+It is currently in alpha/beta, and is free (probably forever, as it is gplv3 currently).
+It also includes a library of EDL's that go along with various DVD's.  We need volunteers/contributors
+to help it grow!
 
 To use, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
 It will pop up some windows where you choose what to do.
 
 Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
-and not from github's "download" button.  See the "install" section, below, for finer grained details.
+and not from github's "download" button.  See the "install" section, below, for fine-grained install details.
 
-Sensible cinema basically allows you to create an edited video version of the DVD, onto your hard drive, 
-and you can watch it there.  It also has some realtime playback support via the use of EDL playback in some
-popular video players.
+Sensible cinema basically allows you to either create an edited video version of the DVD, onto your hard drive, 
+and watch it there, or to playback a DVD or file (edited) via the use of EDL playback in some
+pre-existing popular video players.
 
 How? Sensible cinema basically takes the original DVD, slices out the bad parts, then combines it back
 into a new file and gives you the result.
 It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
 a few freely available open source programs [3] to accomplish the editing for you.
 Note that the process can take several hours, so budget some time for it.
-It also has a few "realtime viewing" options available, again based on some freely available
-open source software [3].
 
-On a more moral note, just because an edited video lacks profanity/sex scenes...does not immediately make it an inspiring experience.
-I'd suggest carefully evaluating your real values/motives, and going with those.
-Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not uplifting! Be nice to yourself!
+It also has a few "realtime viewing" options available, based on some freely available
+open source popular video players [3].  These don't have any startup time to wait at all.
+
+On a more moral note, just because an edited video lacks profanity/sex scenes...does not 
+automatically make it a wholesome experience.
+Sensible cinema does not a clean movie make of a dirty one, even without profanity.  
+Don't watch it if it's not uplifting! Be nice to yourself!
 
 dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].
 kids-in-mind.com is also a good reference for profanity levels, though sometimes it misses profanities,
-and it also lacks timestamps to know when the profanities occur.  Hence this project.
+and it also lacks timestamps to know when the profanities occur, and doesn't allow for community
+contribution.  Hence this project existing.
 Also note that even if you happen to have an edited copy of a DVD floating around, if you have kids, chances are they
 will eventually find (and watch) the unedited originals, so be careful there.
+
+That being said, some videos are quite enjoyable once you strip out profanity/questionable content.
+It's your call.
 
 Enjoy your movies!
 
@@ -41,7 +47,7 @@ Enjoy your movies!
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] mostly GPL programs, see http://www.gnu.org/licenses/ VLC Media Player, Mplayer/mencoder, ffmpeg, et al.
 [4] http://lds.org/library/display/0,4945,161-1-11-1,00.html search for the word "wholesome"
-[5] Also known to us as "paranoid cinema" (just an joke :).
+[5] Also known to us as "paranoid cinema" (just an joke :)
 
 == Installation ==
 

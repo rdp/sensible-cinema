@@ -249,7 +249,8 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
 
  roary, mac:
    1280: fine
-   1500: toast
+   1500: toast speed-wise
+   2500: fails
 
 === various options ===
 
