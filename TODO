@@ -99,6 +99,7 @@
     me try
   try disney digital copy
   C player:
+    folder, look for title.edl
     use DVD navigator
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
@@ -131,6 +132,7 @@
   auto-"guess" the best title...
   add button "fast preview segment" (from dvd)
   upconvert research/compare various options
+  investigate WMC "call out to smplayer EDL" or the like...
 
 == other lists ==
 
@@ -145,8 +147,7 @@
   add button "fast preview one" (from file)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
-  investigate xbmc dvd edl how do you do that? [readl dvd]
-  investigate WMC "call out to smplayer EDL" or the like...
+  investigate xbmc dvd edl how do you do that? [+- real dvd]
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
@@ -156,7 +157,6 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  don't cache selection if they choose a local file...hmm...
   slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   mplayer EDL allow this:
@@ -216,32 +216,23 @@
   allow for filter subtitles, a la "always skip" [?]
   allow for AAF or OMF export, as well as EDL (?)
   C specific portion [A,B] player
-  also edit the trailers et al [?] hmm...
+  also edit the playback of trailers et al [?] hmm...
   @mplayer: double click default to full screen! :) and enter default to dvdnav select!
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
   @makemkv: wrong title no:Title #0 was added (7 cell(s), 0:14:58)
      Title #1 was added (8 cell(s), 0:14:57), also give us title no's in the dialog :P
-  @mencoder: you don't rip DVD's quite right. But you try. Oh how you try.
-  @mpc: easier upconvert
+  @mencoder you lop off the end somehow (dvd rip)
   @VLC: plugin for EDL maybe? [when opening file/DVD look for .edl file?]
   blu ray timing
     my one, others.  Are they the same as DVD's?  They seem really close...
-  can I accomodate for m4v somehow? Is it consistent?
   pull in information from thetvdb to the GUI app
   create the following EDL: 10 commandments DVD to skip the intro music LOL
-  todo.subtitle
   @VLC you lop off the end, somehow, I guess...
-  make it not die if you have no DVD in there yet when you choose a drive...
-  the "frame accurate" splitter
+  create the "ffmpeg frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
-  @mencoder you lop off the end somehow
-  @VLC convert -> dump raw always displays--expected? also saves nothing?
   research the gplv3, add terms. Maybe want real lawyer, even?
-  note "others are released under this license, that license"
-  note/include jruby license, include gplv1 et al, note "also included locally"
-  disallow choosing empty drive? fail more gracefully when they do?
   sons of provo "music video" EDL
   it can "slow certain sections down" that might look way cool! LOL
   how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
@@ -254,7 +245,6 @@
   "release" it to more developers
     plug.org, more rubyists than urug?
     after OS X confidence :)
-  @VLC also tell them to tell people how to play hi-def better, when they try [?] if it shtinks
   an all online EDL editor
     flash canvas
     OCR?
@@ -271,14 +261,14 @@
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-feedback on crashes [?]
   publish new version of rdp-win32screenshot, if it ever existed
-  script avidemux, as a demo?
+  script avidemux, virtualdub, as a demo?
   accomodate failed deletes [files in use] better than dying with a backtrace
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
   @smplayer: why do you sometimes start with subtitles enabled?
-  don't need to package rdp-win32screenshot et al for just DVD work...
+  don't need to include in package rdp-win32screenshot et al for just DVD work...
   bring in batch file mplayer :)
   make my website slightly more "pictures-zy"
   check why out of sync my turn on earth on blacky MPH-HC
@@ -304,7 +294,6 @@
   re-look through all my old "thoughts" notes/blogs
   mplayer playlist mode possible, like real playlist?
   add button start EDL playback from dvd here [?] (for create mode)
-  re-play as EDL button for both modes--describe on the how to better
   fix prio for first ffmpeg instance not being settable [huh?]
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
   integrate sub-titles-zy-er auto-download 
@@ -318,7 +307,7 @@
   can watch conference like a music video :)
   can play "this section then that, with this one's audio [wow that is fringey]
   speedify things (the whole process takes approximately...eternity?)
-  can overlay with an arbitrary image
+  can overlay with an arbitrary image (I think mencoder can actually do this...)
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
   an 'always blank not skip the mutes' option for paranoid
   video on how to use imdb wiki
@@ -346,16 +335,14 @@
    instructions on how to do their own (private) DL or do one and submit it (public), or email their friends :P
       add an option "just save full disk (unedited) to hard drive..."
         note to people: can edit these to your liking, resubmit
-  DRY up dependency installation' code
   "Re-run most recent" disabled when there isn't one [?]
   can rip from a DVD-like local folder (would anybody ever need this?)
-  can parse IMDB
+  can parse IMDB parental guide
     add stuffs to imdb hmmm
     IMDB easy DVD mapping...
   can blank out the video, with audio continuing through...
-  @VLC: hard crash when ripping that one DVD...long one, about the constitution...
-    can use a fast temp drive, save through it to another :P
-      (when they have two...)
+  can use a fast temp drive, save through it to another :P
+    (when they have two...)
   blu-ray support somehow (OCR maybe)
   double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
     might not work for all modes tho...
@@ -376,9 +363,8 @@ warn when labels both exist and don't match...
 @mplayer you cannot convert mkv files correctly you silly!
 bounty dvdnav
   fix dvdnav stuffs?
-ask swank if individuals can rent too?
 
-== random non-DVD backlog ... or never do DVD. ==
+== random non-DVD/OCR backlog ... or never do DVD. ==
 
 @mplayer: you return the wrong return code, sillys! https://gist.github.com/1056292
 @smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]
