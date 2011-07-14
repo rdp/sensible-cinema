@@ -10,6 +10,10 @@ Separates subtitles into "known profanities" and then "lesser" now.
 It now has ability to "pre-tune" the OCR tracker with known images representing digits from known players.
 Like "training" it.
 
+Added video showing how the OCR tracker can use tracking+file selection+inline "send the window commands"
+through its UI in order to minimize, which simulates or is equivalent to blanking a section, 
+but in realtime, causes no interruption.
+
 == 0.24.1 ==
 
 A few more profanities/subtitle tweaks.

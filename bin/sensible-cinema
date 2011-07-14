@@ -330,6 +330,8 @@ module SensibleSwing
         parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
         open_file_to_edit_it filename
+        # allow it to open for a second, it takes a split second to open, and this forces the ordering of windows to be correct
+        sleep 0.3
         open_file_to_edit_it EdlTempFile
       end
       

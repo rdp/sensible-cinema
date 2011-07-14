@@ -123,8 +123,11 @@ def go_sc(args)
       Blanker.shutdown # lodo move this and the 'q' key to within overlayer
       OCR.serialize_cache_to_disk
     }
-    puts "syntax from command line: \"#{player_description}\" \"#{edit_decision_list}\""
-    key_input.handle_keystrokes_forever # blocking...
+    begin
+      key_input.handle_keystrokes_forever # blocking...
+    ensure
+      puts "syntax from command line: \"#{player_description}\" \"#{edit_decision_list}\""
+    end
     
   end
 end

@@ -126,7 +126,10 @@ module SubtitleProfanityFinder
     bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
 
     semi_bad_profanities = {}
-    ['moron', 'idio', 'butt', 'sex', 'genital', 'make love', 'making love', 'love mak', 'breast', 'piss'].each{|name|
+    ['moron', 'idiot', 'butt', 'sex', 'genital', 'make love', 'crap', 'suck', 
+      'making love', 'love mak', 
+      'breast', 
+      'piss'].each{|name|
       # butter?
       semi_bad_profanities[name] = name
     }

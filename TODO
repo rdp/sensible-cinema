@@ -17,8 +17,6 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  cheap minimize demo "fake auto" :)
-    VLC
   cheap static-ify demo for mutes
   also a straight "half mute" demo, using volume downs/ups     
    cheap minimize via (probably foreground window + API real windows API) 
