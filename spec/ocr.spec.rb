@@ -19,16 +19,19 @@ require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative "../lib/ocr"
 require 'benchmark'
 
-$OCR_NO_CACHE = true
-
 describe OCR do
   
   it "should be able to output help output" do
     OCR.version.should_not be_blank
   end
   
-  Dir['images/*netflix*[0-9].bmp'].sort_by{|f| File.stat(f).mtime}.reverse.each{ |file|
+  before do
+    OCR.clear_cache!
+  end
+  
+  Dir['images/*[0-9].bmp'].sort_by{|f| File.stat(f).mtime}.reverse.each{ |file|
     it "should be able to OCR #{file}" do
+      OCR.load_from_ocr_seed
       options = {}
       options[:should_invert] = true if file =~ /hulu|netflix/
       options[:sharpen] = true if file =~ /youtube/ && file !~ /light/
@@ -46,10 +49,10 @@ describe OCR do
       got_digit = OCR.identify_digit(File.binread(file), options)
       if got_digit != expected_digit
         begin
-          p 'digit failed'
+          p 'digit failed ' + file
           OCR::CACHE.clear
           require 'ruby-debug'
-          debugger # now step into the next call...
+          debugger # now allow to step into the same call...
           OCR.identify_digit(File.binread(file), options)
         rescue LoadError
           puts 'unable to load ruby-debug!' # until I can get 1.9.2 to compile it...
@@ -80,14 +83,9 @@ describe OCR do
   
    before do
      OCR.clear_cache!
-     $OCR_NO_CACHE = false
    end
   
-   after do
-     $OCR_NO_CACHE = true
-   end
-  
-    it "should cache results from one time to the next" do
+   it "should cache results from one time to the next" do
       original_time = Benchmark.realtime { read_digit }
       new_time = Benchmark.realtime { 3.times { read_digit } }
       new_time.should be < original_time

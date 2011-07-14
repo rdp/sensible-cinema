@@ -60,6 +60,7 @@ Clean Flicks (used to) sell edited movies
 http://college.swankmp.com/insti/edited.asp prisoners apparently have access to a few "edited" versions of movies (not many though, but there are some listed there)
 http://www.videoredo.com/en/index.htm lets you "cut out" offensive content (commercials et al) and burn DVD's from mpeg's/h264 streams
 http://www.microsoft.com/windows/windowsmedia/howto/articles/device_control.aspx Windows Media Encoder supports EDL's by timestamp
+http://cutlist.at shared "commercial skip" cutlists
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
 http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU
 http://www.sharewareconnection.com/fast-compress-content-and-anti-profanity.htm replaces profanity in web pages with euphemized content.

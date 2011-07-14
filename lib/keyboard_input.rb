@@ -36,7 +36,7 @@ class KeyboardInput
 
  def get_line_printout
     status  = @fella.status
-    # scary hard coded values here...
+    # some scary hard coded values here...LODO curses?
     " " * 20 + "\b"*150 + status
  end
 

@@ -179,11 +179,12 @@ class EdlParser
     out << "%02d" % minutes
     seconds = seconds - minutes * 60
     out << ":"
+    
     # avoid an ugly .0 at the end
-    if seconds != seconds.to_i
-      out << "%04.3f" % seconds
-    else
+    if seconds == seconds.to_i
       out << "%02d" % seconds
+    else
+      out << "%06.3f" % seconds # man that is tricky...
     end
   end
 

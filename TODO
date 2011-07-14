@@ -1,4 +1,4 @@
-exi== roadmap [for just tasks, see below though] ==
+== roadmap [for just tasks, see below though] ==
 
   release: cheap/mediumcheap inventionzy
   release: C EDL
@@ -18,18 +18,15 @@ exi== roadmap [for just tasks, see below though] ==
   
 == under next release specific items: ==
   cheap minimize demo "fake auto" :)
-    friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
+    VLC
   cheap static-ify demo for mutes
   also a straight "half mute" demo, using volume downs/ups     
    cheap minimize via (probably foreground window + API real windows API) 
    url -> url inference [hopefully this is cake...]
-   fix the failing 9 digit test the fancy shmancy way :P
-   can pass in a profanity command line
    can handle multiple dvdid's et al
    youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
-    more blu-ray stuff: can ID them, can playback (through...mkv? VLC?)
  
 == yes do ordered in conjunction with the above probably ==
   C player
@@ -84,6 +81,7 @@ exi== roadmap [for just tasks, see below though] ==
     mac just die with instructions to use tsmuxer first...
   check if some other buttons are now outdated...
   unit tests (all pass)
+  upconvert: a file
   can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
@@ -123,7 +121,8 @@ exi== roadmap [for just tasks, see below though] ==
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
     karlie?
-  inventionzy: blu-ray OCR
+  inventionzy: blu-ray stuff from todo.inventionzy
+
   port to mac OS X--try everything out (all buttons), make sure all works...
       ppc dvdid?
       use mplayerx well [?] like wrap it...

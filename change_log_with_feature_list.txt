@@ -7,6 +7,9 @@ auto-full screen now
 In some recent revision, added ability to set upconvert options, use them for any playbacks.
 Separates subtitles into "known profanities" and then "lesser" now.
 
+It now has ability to "pre-tune" the OCR tracker with known images representing digits from known players.
+Like "training" it.
+
 == 0.24.1 ==
 
 A few more profanities/subtitle tweaks.
