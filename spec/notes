@@ -258,6 +258,7 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
     does 3360 drop?
       A:  14.6 V:  10.0 A-V: yep (work comp.)
       still seemed to use 40% cpu when multi-cored (sounds like an apple)
+      -lavdopts threads=2 13.9 versus 14.2s for first 10s [yes! LOL]
     3360 seems smoother than 2880, like much less pixelated.
     
  roary, mac:
