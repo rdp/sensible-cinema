@@ -50,13 +50,20 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
         while(curDate-date < millis);
       }
 
+// we will mute from 2->10 seconds, and skip from second 13 to 18, wash and repeat
 
     function muteFromSecondTwoToTen() {
       ytplayer.mute();
             setTimeout(
               function() { 
                 ytplayer.unMute();
-              },  1000);
+                setTimeout(
+                 function() { 
+                   // here we're at second 13
+                   // so let's seek to...say...1
+                   ytplayer.seekTo(18, true);
+                }, 3000);
+              },  8000);
     }
       
       var madeFirstTrans = false;
@@ -74,7 +81,6 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
           if(ytplayer.getCurrentTime() > 2 && !madeFirstTrans) {
             muteFromSecondTwoToTen();
             madeFirstTrans = true;
-            // player.seekTo(seconds:Number, allowSeekAhead:Boolean):Void
           }
           updateHTML("bytesTotal", ytplayer.getVideoBytesTotal());
           updateHTML("startBytes", ytplayer.getVideoStartBytes());
