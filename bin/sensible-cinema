@@ -205,7 +205,7 @@ module SensibleSwing
       if template
         # choose width of widest monitor (why would they display it on the other?)
         x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
-        outgoing = template.gsub('SCREEN_X', (x*1).to_i.to_s) # has to be an integer...
+        outgoing = template.gsub('SCREEN_X', (x*2).to_i.to_s) # has to be an integer...
         outgoing
       else
         nil 
@@ -511,6 +511,7 @@ module SensibleSwing
 
     def run_smplayer_blocking play_this, extra_options, force_use_mplayer
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
       if OS.mac? || force_use_mplayer
        @_run_smplayer_instructions ||= show_mplayer_instructions
        conf_file = File.expand_path './mplayer_input_conf'
@@ -536,6 +537,7 @@ module SensibleSwing
     end
     
     def set_smplayer_opts to_this, show_subs = false
+      p 'set smplayer opts to this:' + to_this
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
       old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" unless old_prefs.contain? 'mplayer_additional_options='
@@ -720,7 +722,6 @@ module SensibleSwing
       # prefer english, attempt to disable subtitles, set edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
       
-      # LODO -fullscreen ...
       run_smplayer_non_blocking play_this, extra_mplayer_commands.join(' '), false
     end
     

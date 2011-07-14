@@ -16,10 +16,7 @@ class PlayAudio
   def self.loop filename
     i = java.io.FileInputStream.new(filename)
     a = AudioStream.new(i)
-    require 'rubygems'
-    require 'ruby-debug'
-    debugger
-    b = a.get_data
+    b = a.get_data # failing means too big of data...
     c = ContinuousAudioDataStream.new(b)
     AudioPlayer.player.start(c)
     c
@@ -51,13 +48,11 @@ if $0 == __FILE__ # unit tests :)
  puts 'syntax: filename.wav'
  a = PlayAudio.new ARGV[0]
  a.start
-require 'ruby-debug'
-debugger
  sleep 0.1
  a.stop
 
  a = PlayAudio.new ARGV[0]
  a.loop
- sleep 0.1
+ sleep 10
  a.stop
 end

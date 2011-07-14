@@ -14,6 +14,9 @@ Added video showing how the OCR tracker can use tracking+file selection+inline "
 through its UI in order to minimize, which simulates or is equivalent to blanking a section, 
 but in realtime, causes no interruption.
 
+Added a demonstration of using youtube javascript api's to control/monitor playback time and react appropriately.
+It even mutes and skips appropriately.  See demo (must be run from a web server to work). can_mute_youtube.avi
+
 == 0.24.1 ==
 
 A few more profanities/subtitle tweaks.
