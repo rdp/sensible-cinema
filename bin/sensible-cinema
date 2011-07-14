@@ -177,7 +177,7 @@ module SensibleSwing
       high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
-        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3"
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ??
