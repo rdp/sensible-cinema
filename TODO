@@ -17,14 +17,14 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  cheap static-ify demo for mutes
-  also a straight "half mute" demo, using volume downs/ups     
-   cheap minimize via (probably foreground window + API real windows API) 
-   url -> url inference [hopefully this is cake...]
-   can handle multiple dvdid's et al
    youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
      phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
       just in case youtube takes over the world
+  cheap static-ify demo for mutes
+  also a "half mute" demo, using volume downs/ups     
+   cheap minimize via (probably minimize foreground window/windows API) 
+   url -> url inference [hopefully this is cake...]
+   can handle multiple dvdid's et al
  
 == yes do ordered in conjunction with the above probably ==
   C player
