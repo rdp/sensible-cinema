@@ -52,7 +52,7 @@ module Muter
   end
   
   @@use_mouse = false # inventionzy
-  @@use_static_on_top = true
+  @@use_static_on_top = false # inventionzy
   
   def start_static
     @player = PlayAudio.new(__DIR__ + '/static.wav')

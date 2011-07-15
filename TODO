@@ -17,8 +17,7 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  cheap static-ify demo for mutes
-  also a "half mute" demo, using volume downs/ups     
+  a "half mute" demo, using volume downs/ups     
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
