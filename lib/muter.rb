@@ -50,26 +50,31 @@ module Muter
     keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
-  @@use_mouse = false # ai ai
+  @@use_mouse = false # inventionzy
+  @@use_static_on_top = true
   
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
     # anyway we just use a toggle for now...dangerous but works, if barely
-    if !@@use_mouse
-      hit_mute_key
-    else
+    if @@use_mouse
       Mouse.single_click_left_mouse_button
+    elsif @@use_static_on_top
+      raise 'todo'
+    else
+      hit_mute_key
     end
   end
 
-  # TODO better for doze 7...
+  # LODO better for doze 7/xp
   def unmute!
-    if !@@use_mouse
+    if @@use_mouse
+      Mouse.single_click_left_mouse_button
+    elsif @@use_static_on_top
+      raise 'todo'
+    else
       hit_mute_key # Windows XP...
       hit_volume_down_key
       hit_volume_up_key
-    else
-      Mouse.single_click_left_mouse_button
     end
     
   end
