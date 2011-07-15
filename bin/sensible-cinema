@@ -119,7 +119,7 @@ module SensibleSwing
     end
 
     LocalStorage = Storage.new("sensible_cinema_storage")
-    LocalStorage.set_default('multiple_half_screens', 4)
+    LocalStorage.set_default('screen_multiples', 2)
     
     def setup_upconvert_buttons
     
@@ -193,23 +193,40 @@ module SensibleSwing
       }
       
       slider = JSlider.new
-      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 4)"));
+      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 2x)"));
   
-      slider.maximum=6# LODO non 6 here...hmm...
-      slider.minimum=0
-      slider.setMajorTickSpacing(1) 
+      # I want tick for 1x, 1.5x, 2x, 2.5x, 3x
+      # so let's do 10 -> 30 
+      
+      labelTable = java.util.Hashtable.new
+      i = java.lang.Integer
+      l = JLabel
+      labelTable.put(i.new(10), l.new("1x"))
+      labelTable.put(i.new(15), l.new("1.5x"))
+      labelTable.put(i.new(20), l.new("2x"))
+      labelTable.put(i.new(25), l.new("2.5x"))
+      labelTable.put(i.new(30), l.new("3x"))
+      slider.setLabelTable( labelTable )
+  
+      slider.maximum=30
+      slider.minimum=10
+      slider.setMajorTickSpacing(10) 
+      slider.setMinorTickSpacing(5) 
       slider.setPaintTicks(true)
       slider.setPaintLabels(true)    
       slider.snap_to_ticks=true
       
-      slider.set_value LocalStorage['multiple_half_screens']
+      slider.set_value LocalStorage['screen_multiples'] * 10
       
       slider.add_change_listener { |event|
-        if slider.value >= 2
-          p 'set slider to', slider.value  # LODO tell them.
-          LocalStorage['multiple_half_screens'] = slider.value
-        else
-          show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
+        if !slider.value_is_adjusting
+          # they released their hold on it...
+          if slider.value >= 2
+            LocalStorage['screen_multiples'] = slider.value/10.0
+            show_blocking_message_dialog "set screen multiplier to #{LocalStorage['screen_multiples']}"
+          else
+            show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
+          end
         end
       }
       slider.set_bounds(44, @starting_button_y, @button_width, 56)
@@ -224,7 +241,7 @@ module SensibleSwing
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}."
+      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}. (multiplier #{LocalStorage['screen_multiples']})"
     end
     
     def get_upconvert_vf_settings
@@ -232,7 +249,7 @@ module SensibleSwing
       if template
         # choose width of widest monitor (why would they display it on the other?)
         screen_x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
-        screen_multiple = LocalStorage['multiple_half_screens']/2
+        screen_multiple = LocalStorage['screen_multiples']
         template.gsub('SCREEN_X', (screen_x*screen_multiple).to_i.to_s) # has to be an integer...
       else
         nil 

@@ -23,6 +23,7 @@
    can handle multiple dvdid's et al
  
 == yes do ordered in conjunction with the above probably ==
+new name upconvert mode
   mac bat files
   C player
   unit tests
@@ -48,7 +49,8 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   urug again?
-  subtitles: compare with powerdvd
+  netflix upconverter
+  upconv: compare with powerdvd
   if 2 EDL's, still choose title track
   add an auto "scan for expected title, times"
     add time to the generator EDL
