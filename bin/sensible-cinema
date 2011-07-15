@@ -134,8 +134,9 @@ module SensibleSwing
       
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
+      
       @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
-        setup_upconvert_options
+        add_setup_upconvert_options
       end
       
     end
@@ -150,15 +151,11 @@ module SensibleSwing
       @upconv_line.set_text get_current_upconvert_as_phrase
     end
       
-    
-    def add_set_upconvert_options_button
-    end
-
     UpConvertKey = 'upconvert_setting'
     UpConvertKeyExtra = 'upconvert_setting_extra'
     UpConvertEnglish = 'upconvert_english_name'
 
-    def setup_upconvert_options
+    def add_setup_upconvert_options
       none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       none.on_clicked {
@@ -187,7 +184,7 @@ module SensibleSwing
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental DVD/HQ"
         display_current_upconvert_setting
-      }      
+      }
     end
     
     def display_current_upconvert_setting

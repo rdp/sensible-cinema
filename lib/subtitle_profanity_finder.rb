@@ -115,7 +115,8 @@ module SubtitleProfanityFinder
       arse + 'h' +
       'ole' => 'a..h...',
       arse + 'wipe' => 'a..w....',
-      'jesus' => 'l...',
+      'jes' +
+      'u' + 's' => 'j....',
       'chri' +
       'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
       'sh' +
