@@ -163,6 +163,7 @@
   investigate dvdrsbvdl (windows media center edl plugin)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
   @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
+  @mplayer: could you umm...go ahead and support avisynth input pleaz, assuming you don't?
   @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
   @mplayer: that one [IQ? hitchhikers'?] fail fail fail until I used -dvd-device [?] huh?
     try to reproduce...
