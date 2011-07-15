@@ -223,7 +223,7 @@ module SensibleSwing
           # they released their hold on it...
           if slider.value >= 2
             LocalStorage['screen_multiples'] = slider.value/10.0
-            show_blocking_message_dialog "set screen multiplier to #{LocalStorage['screen_multiples']}"
+            display_current_upconvert_setting
           else
             show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
           end
