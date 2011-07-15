@@ -1,4 +1,4 @@
-== ==
+== 0.24.2 ==
 
 In some recent version or other, added ability to start EDL's from an offset
 (example: your video says it starts at 600s, it will add 600s to each EDL setting)
