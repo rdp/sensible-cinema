@@ -20,24 +20,25 @@
 
 <body>
 <html>
-<img src="monkey.png"/><h1>Sensible Cinema</h1>
+<img src="monkey.png"/><div style="float:left;"><h1>Sensible Cinema</h1></div>
 <pre>
 Welcome to the (work in progress) home page of Sensible Cinema, the free video scene skipper/muter.
-It Allows you watch edited movies by applying edit lists (EDL's) (i.e. "mute out" or "cut out" questionable scenes) to DVD's
-or movie files.
+Sensible Cinema allows you watch edited movies by applying edit lists (EDL's) 
+(i.e. "mute out" or "cut out" questionable scenes) to DVD's or movie files.
 
 A description and history/background of sensible-cinema can be found <a href="https://github.com/rdp/sensible-cinema/blob/master/README">here</a>.  
-Don't forget to come back to this page to download it, though (see "Download" section, below).
+Don't forget to come back to this page to download it, though (from the "Download" section).
 
 <h2 style="margin: 0px;">Download</h2>
-Please check the checkbox if you agree to the terms of the license agreement (<a href="http://www.gnu.org/licenses/gpl.html">gplv3</a>) and wish to download sensible cinema.  
+To download, please check the checkbox if you agree to the terms of the 
+license agreement (<a href="http://www.gnu.org/licenses/gpl.html">gplv3</a>) and wish to download and use sensible cinema.  
 
 <input type="checkbox" class="trigger" onClick="$('#comments').toggle(); $('#comments2').toggle();"/>  I have read and agree to the license terms and conditions.
 
 <div id="comments" style="display:none;  border-style:dotted; border-width:1px; border-color: #aaaaaa; padding: 5px;"> 
   Please download the latest version of sensible cinema from <a href="https://sourceforge.net/projects/sensible-cinema/files/">sourceforge</a>.
 </div>
-After downloading, unzip it.  For windows users, that's like: 
+After download, unzip it.  For windows users, that's like: 
    Reveal the file in explorer -> right click on the file -> Extract all -> Extract.  
 Now open the newly created sensible-cinema-x.x.x folder, and run the file "run sensible cinema.bat"
 You will be initially prompted to accept the license agreement(s) and also install a few 
@@ -51,7 +52,7 @@ There is more usage documentation within the "sensible-cinema/documentation" fol
 If you plan on watching any movies in "realtime" then you'll need to download <a href="http://mplayerx.org/#Download">mplayerx</a>.
 
 If you plan on doing any auto-video editing/saving then you'll need to install <a href="http://www.macports.org/">macports</a>.  
-Install macports, then afterward open the "terminal" Application and  execute the following command:
+Install macports, then afterward open the "terminal" Application and execute the following command:
 $ sudo port install mencoder ffmpeg gocr
 After this finishes (it will take awhile) you'll be ready to run Sensible Cinema.
 Note that by installing these, you're accepting their respective licenses/distributions.
@@ -75,13 +76,11 @@ Let me know via the <a href="http://groups.google.com/group/sensible-cinema?pli=
 <h3>Source code</h3>Source code is all available <a href="http://github.com/rdp/sensible-cinema">here</a>.  Notes for potential source code developers are <a href="https://github.com/rdp/sensible-cinema/blob/master/developer_how_to_contribute_to_the_project.txt">here</a>.  
 For (techy or non-techy) contributions, see the contact info in the README file, or write to the google group, above.
 
-Sensible cinema is currently windows only, ping me if you want this changed.
+You can see the <a href="source/change_log_with_feature_list.txt">change log with feature list</a>.
 
-You can see the <a href="source/change_log_with_feature_list.txt">change log with feature list</a> and also on github.
+You can get a list of DVD ISO's (creative commons licensed) <a href="releases/dvd_isos">here</a>, if you want to try them out for experimenting/development/research etc.
 
-You can get a list of "test" creative commons DVD ISO's <a href="releases/dvd_isos">here</a>, if you want to try them out for experimenting/development/research etc.
-
-Please click the license agreement checkbox at the top to see list of old releases (newer ones are found on sourceforge exclusively, as well as on rubygems).
+Please click the license agreement checkbox at the top to see a list of some old releases (newer ones are found on sourceforge exclusively, old ones here).
 <div id="comments2" style="display:none;">You can find an old list of older releases, as well as the MS based C <a href="releases/c_player">DVD player</a> listed <a href="releases">in the archives</a>.
 
 </div>
