@@ -1,5 +1,5 @@
 "mutes" => [
-  #"02:02:15.0" , "02:02:25", "a muted demo section",
+  "00:00:10.0" , "00:00:15", "mute demo section",
 ],
 
 "blank_outs" => [
