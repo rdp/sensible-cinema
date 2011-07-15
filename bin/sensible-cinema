@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-print 'Loading Sensible Cinema...'
+print 'Starting Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
   require 'sane' 
@@ -38,6 +38,7 @@ require_relative '../lib/mplayer_edl'
 require_relative '../lib/play_audio'
 require_relative '../lib/subtitle_profanity_finder'
 require_relative '../lib/convert_thirty_fps'
+require_relative '../lib/ruby_clip'
 
 require 'tmpdir'
 require_relative '../lib/swing_helpers'
@@ -79,86 +80,199 @@ module SensibleSwing
     end
     
     # currently advanced mode only *adds* buttons
-    def new_jbutton title, only_on_create_mode, tooltip = nil
+    def new_jbutton title, tooltip = nil
       button = JButton.new title
       button.tool_tip = tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
-      add = true
-      if we_are_in_create_mode
-        add = true
-      else
-        add = false if only_on_create_mode
+      @panel.add button
+      @buttons << button
+      if block_given? # allow for new_jbutton("xx") do ... end [this works through some miraculous means LOL]
+        button.on_clicked { yield }
       end
-         
-      if add
-        increment_button_location
-        @panel.add button
-        @buttons << button
-      end
+      increment_button_location
       button
     end
     
     def add_text_line line
-      return unless we_are_in_create_mode
       jlabel = JLabel.new line
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       jlabel.setFont(happy)
       jlabel.set_bounds(44,@starting_button_y ,460,14)
       @panel.add jlabel
       increment_button_location 18
+      jlabel
     end
     
     def increment_button_location how_much = 30
       @starting_button_y += how_much
+      setSize @button_width+80, @starting_button_y + 50
     end
     
     def force_accept_license_first
+      if !(LocalStorage['main_license_accepted'] == VERSION)
         require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+            "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
         require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
-          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
-        Storage['main_license_accepted'] = VERSION
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+        LocalStorage['main_license_accepted'] = VERSION
+      end
     end
 
-    Storage = Storage.new("sensible_cinema_storage")
+    LocalStorage = Storage.new("sensible_cinema_storage")
+    LocalStorage.set_default('multiple_half_screens', 4)
     
+    def setup_upconvert_buttons
+    
+      @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
+        warn_if_no_upconvert_options_currently_selected
+        filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
+        play_mplayer_edl [filename_mpg, nil]
+      end
+      
+      @watch_file_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
+        warn_if_no_upconvert_options_currently_selected
+        play_dvd_smplayer_unedited false, false
+      end
+      
+      @upconv_line = add_text_line ''
+      change_upconvert_line_to_current
+      
+      add_text_line ''
+      
+      @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
+        add_setup_upconvert_options
+      end
+      add_text_line "Note that sensible cinema will also upconvert when it plays back edited DVD's/files."
+      add_text_line ''
+      
+    end
+    
+    def warn_if_no_upconvert_options_currently_selected
+      if !LocalStorage[UpConvertEnglish]
+        show_blocking_message_dialog "Warning: upconvert options have not been set yet--set upconvert options first and restart, if desired."
+      end
+    end
+    
+    def change_upconvert_line_to_current
+      @upconv_line.set_text get_current_upconvert_as_phrase
+    end
+      
+    UpConvertKey = 'upconvert_setting'
+    UpConvertKeyExtra = 'upconvert_setting_extra'
+    UpConvertEnglish = 'upconvert_english_name'
+
+    def add_setup_upconvert_options
+      none = new_jbutton("reset upconvert options to default (none)")
+      none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
+      none.on_clicked {
+        LocalStorage[UpConvertKey] = nil
+        LocalStorage[UpConvertKeyExtra] = nil
+        LocalStorage[UpConvertEnglish] = nil
+        display_current_upconvert_setting
+      }
+      medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
+        # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
+        LocalStorage[UpConvertEnglish] = "DVD"
+        display_current_upconvert_setting
+      }
+      high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
+        # -autoq 6 -vf pp [?]
+        LocalStorage[UpConvertEnglish] = "high compressed"
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
+        display_current_upconvert_setting
+        # -Processing method: mplayer with accurate deblocking ???
+      }
+      new_jbutton("set upconvert options to experimental style playback") {
+        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
+        LocalStorage[UpConvertEnglish] = "experimental"
+        display_current_upconvert_setting
+      }
+      
+      slider = JSlider.new
+      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 4)"));
+  
+      slider.maximum=6# LODO non 6 here...hmm...
+      slider.minimum=0
+      slider.setMajorTickSpacing(1) 
+      slider.setPaintTicks(true)
+      slider.setPaintLabels(true)    
+      slider.snap_to_ticks=true
+      
+      slider.set_value LocalStorage['multiple_half_screens']
+      
+      slider.add_change_listener { |event|
+        if slider.value >= 2
+          p 'set slider to', slider.value  # LODO tell them.
+          LocalStorage['multiple_half_screens'] = slider.value
+        else
+          show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
+        end
+      }
+      slider.set_bounds(44, @starting_button_y, @button_width, 56)
+      2.times {increment_button_location}
+      @panel.add(slider)
+    end
+    
+    def display_current_upconvert_setting
+      change_upconvert_line_to_current
+      show_blocking_message_dialog get_current_upconvert_as_phrase
+    end
+    
+    def get_current_upconvert_as_phrase
+      settings = LocalStorage[UpConvertEnglish]
+      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}."
+    end
+    
+    def get_upconvert_vf_settings
+      template = LocalStorage[UpConvertKey]
+      if template
+        # choose width of widest monitor (why would they display it on the other?)
+        screen_x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
+        screen_multiple = LocalStorage['multiple_half_screens']/2
+        template.gsub('SCREEN_X', (screen_x*screen_multiple).to_i.to_s) # has to be an integer...
+      else
+        nil 
+      end
+    end
+
+    def get_upconvert_secondary_settings
+      LocalStorage[UpConvertKeyExtra]
+    end
     
     def setup_advanced_buttons
       
       add_text_line 'Realtime create Options:'
-
-      @create_dot_edl = new_jbutton( "Create a moviefilename.edl file", true)
-      @create_dot_edl.tool_tip = <<-EOL
-        Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
-        XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
-        if it exists, and automatically use it .edl to show that file edited played back.
-      EOL
-      @create_dot_edl.on_clicked {
-        filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like abc.mpg)")
-        assert_ownership_dialog
-        edl_filename = new_existing_file_selector_and_select_file( "Pick EDL file", EDL_DIR)
-        descriptors = EdlParser.parse_file edl_filename
-        # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, add_secs_beginning = 0.5, splits = []
-        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl'
-        File.write(output_file, edl_contents)
-        raise unless File.exist?(output_file)
-        show_blocking_message_dialog("created #{output_file}")
-      }
-
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Delete List for a DVD", true, 
+      
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
       end
       
-      @open_list = new_jbutton("Open/Edit a previously created Delete List", true, "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file( "Pick file to edit", EDL_DIR)
+        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EDL_DIR)
         open_file_to_edit_it filename
       }
       
-      @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)", true)
+
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file")
+      @create_dot_edl.tool_tip = <<-EOL
+        Create a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
+        XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
+        if it exists, and automatically use it .edl to show that file edited played back.
+        If you use smplayer, note that you'll need to download the "lord mulder mplayer"
+        version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
+      EOL
+      @create_dot_edl.on_clicked {
+        choose_file_and_edl true
+      }
+
+      @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
         This will play the DVD unedited within smplayer.
         NB it will default to title 1, so updated your EDL file that matches this DVD with the proper title if this doesn't work for you 
@@ -172,7 +286,7 @@ module SensibleSwing
         play_dvd_smplayer_unedited
       }
 
-      @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)", true)
+      @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)")
       @play_mplayer_raw.tool_tip = <<-EOL
         This is also useful for comparing subtitle files to see if they have accurate timings.
         If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
@@ -183,23 +297,33 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
 
-#      @watch_created_file = new_jbutton( "Watch the edited file version of DVD", false).on_clicked {
-#        raise 'todo' # TODO 
-#      }
-
-      # TODO button "Watch a file using an EDL on it"
-
-
-      @display_unique = new_jbutton( "Display current DVD's unique ID", true )
+      @display_unique = new_jbutton( "Display information about current DVD (ID, etc.)" )
       @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_unique.on_clicked {
-        drive, volume, dvd_id = choose_dvd_drive_or_file true
+        drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
-        show_copy_pastable_string("#{drive} #{volume} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED to identify a disk to match it to its EDL, later.", "\"disk_unique_id\" => \"#{dvd_id}\",")
+        out = nil
+        t = Thread.new {out= `mplayer dvdnav:// -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH`}
+        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
+        show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        This is USED eventually to identify a disk to match it to its EDL, later.", id_string
+        t.join
+        File.write EdlTempFile, id_string + "\n" + out
+        open_file_to_edit_it EdlTempFile
+      }
+
+      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
+      @convert_seconds_to_ts.on_clicked {
+        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
+        if input =~ /:/
+          output = EdlParser.translate_string_to_seconds input
+        else
+          output = EdlParser.translate_time_to_human_readable input.to_f, true
+        end 
+        show_copy_pastable_string("Converted:", output)         
       }
       
-      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time to EDL time", true)
+      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time (30 fps) to EDL player time (29.97 fps)" )
       @convert_timestamp.tool_tip=<<-EOL
         Our EDL's assume 29.97 fps (which is what a DVD is).  Unfortunately most hardware/commercial DVD players
         assume that the DVD is 30 fps, which means that if you watch a movie with them, then use those timestamps
@@ -218,49 +342,50 @@ module SensibleSwing
         thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
         twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
         human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
-        show_copy_pastable_string("29.97 (sensible cinema usable) value would be:                ", human_twenty_nine_seven)
+        show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @parse_srt = new_jbutton("Parse a subtitle file (.srt) to detect profanities", true)
+      @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
-        You can download a .srt file and parse it to automaticaly search for profanities.
-        Basically download it from opensubtitles.org (possibly from other places, too),
+        You can download a .srt file and use it to automatically search for profanities.
+        Basically download it from opensubtitles.org (possibly from other sites, too),
         (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
-      @parse_srt.on_clicked {
+      @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
-        parsed = SubtitleProfanityFinder.edl_output [filename]
-        File.write(EdlTempFile, "# add these into your mute section if they apply\n" + parsed)
+        parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
+        File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
+        open_file_to_edit_it filename, true
         open_file_to_edit_it EdlTempFile
-      }
-
+      end
+      
       add_text_line 'Create Options that first create/use a local intermediary file:'
 
-      @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)", true )
+      @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)" )
       @preview_section.tool_tip = <<-EOL
         This allows you to preview an edit easily.
         It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
         Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
       EOL
       @preview_section.on_clicked {
-        do_copy_dvd_to_hard_drive true
+        do_copy_dvd_to_hard_drive_via_file true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)", true)
+      @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)" )
       @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
-        do_copy_dvd_to_hard_drive true, false, true
+        do_copy_dvd_to_hard_drive_via_file true, false, true
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file", true )
+      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file" )
       @rerun_preview.tool_tip = "This will re-run the preview that you most recently performed.  Great for checking to see if you last edits were successful or not."
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
       }
       
       # Maybe this button should go too...
-      @fast_preview = new_jbutton("fast preview all from fulli file (smplayer EDL)", true)
+      @fast_preview = new_jbutton("fast preview all from fulli file (smplayer EDL)")
       @fast_preview.tool_tip = <<-EOL
         Plays smplayer on a file with an EDL.
         This gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.
@@ -268,113 +393,185 @@ module SensibleSwing
         timestamp splits in it [because some DVD's are buggy]
       EOL
       @fast_preview.on_clicked {
-        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive false, true
+        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive_via_file false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
-        nice_file = wrote_to_here_fulli #+ ".fast.mpg"
-        if false#!File.exist?(nice_file)
-          p = show_non_blocking_message_dialog("Creating quick lookup file--NB that for each changed deletion setting, 
-            you'll need to save your file and restart the fast preview SMplayer instance.
-            Also note that the start and end times will be slightly off if reality [delayed]
-            Also note that while doing fast preview, it can be doing a normal preview as well
-            in the background, simultaneously.")
-          unless system_blocking("ffmpeg -i #{wrote_to_here_fulli} -target ntsc-dvd #{nice_file}")
-            File.delete nice_file
-            raise 'create ' 
-          end
-          p.dispose # it will be active for sure
-        end
-        set_smplayer_opts "-edl #{EdlTempFile}"
-        thread = do_mplayer_edl( "smplayer_portable #{nice_file}") # note the smplayer, but it's for the fast file...
+        nice_file = wrote_to_here_fulli
+        run_smplayer_blocking nice_file, "-edl \"#{EdlTempFile}\"", false
       }
       
+      @reload = new_jbutton("reload bin/sensible-cinema code") do
+        load $0
+      end
+      
+    end # advanced buttons
+
+    def setup_normal_buttons
+            
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
+      @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
+      @mplayer_edl.on_clicked {
+        play_mplayer_edl 
+      }
+      
+      @create = new_jbutton( "Create edited copy of DVD/file on Your Hard Drive" )
+      @create.tool_tip = <<-EOL
+        This takes a file and creates a new file on your hard disk like dvd_name_edited.mpg that you can watch when it's done.
+        The file you create will contain the whole movie edited.
+        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
+      EOL
+      @create.on_clicked {
+        do_copy_dvd_to_hard_drive_via_file false
+      }
+      
+#      @watch_created_file = new_jbutton( "Watch the edited version of DVD file", false).on_clicked {
+#        play_mplayer_edl  # LODO
+#      }
+
+      @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
+        choose_file_and_edl false 
+      end      
+      
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
+        show_in_explorer __DIR__ + "/../documentation"
+      end      
+      
+    end
+    
+    def choose_file_and_edl just_create_dot_edl_file_instead_of_play
+      filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
+      edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
+      assert_ownership_dialog
+      if just_create_dot_edl_file_instead_of_play
+        descriptors = EdlParser.parse_file edl_filename
+        # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
+        # NB these are just for the SxS EDL!
+        
+              #add_secs_end = 0
+      #add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
+
+        # TODO do I want these added at file create time, not use time!
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
+        output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
+        File.write(output_file, edl_contents)
+        raise unless File.exist?(output_file)
+        show_blocking_message_dialog("created #{output_file}")
+      else
+        play_mplayer_edl [filename_mpg, edl_filename]
+      end
+    end
+    
+    def we_are_in_upconvert_mode
+       ARGV.index("--upconvert-mode")
     end
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
-      if !(Storage['main_license_accepted'] == VERSION)
-        force_accept_license_first
-      end
+      force_accept_license_first
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
       panel = JPanel.new
       @panel = panel
       @buttons = []
       panel.set_layout nil
-      add panel # why can't I just slap these down?
-
-      jlabel = JLabel.new 'Welcome to Sensible Cinema!' + (we_are_in_create_mode ? " Hover over buttons for tooltip \"help\" descriptions." : "")
-      happy = Font.new("Tahoma", Font::PLAIN, 11)
-      jlabel.setFont(happy)
-      jlabel.set_bounds(44,44,460,14)
-      panel.add jlabel
-      @starting_button_y = 120
+      add panel # why can't I just slap these down? panel? huh?
+      @starting_button_y = 40
       @button_width = 400      
       
-      ## BUTTONS ##
+      add_text_line "Welcome to Sensible Cinema!"
+      @starting_button_y += 10 # kinder ugly...
+      add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
+      add_text_line ""
+      add_text_line ""
       
-      @mplayer_edl = new_jbutton( "Watch DVD/file edited on computer (realtime -- mplayer EDL)", false)
-      @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting the questionable scenes."
-      @mplayer_edl.on_clicked {
-        do_mplayer_edl
-      }
+      if we_are_in_upconvert_mode
+        setup_upconvert_buttons
+      else
+        setup_normal_buttons
       
-      @create = new_jbutton( "Create edited copy of a DVD's file on Your Hard Drive", false)
-      @create.tool_tip = <<-EOL
-        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
-        The file you create will contain the whole movie edited.
-        It takes quite awhile maybe 2 hours.
-      EOL
-      @create.on_clicked {
-        do_copy_dvd_to_hard_drive false
-      }
+        if we_are_in_create_mode
+          setup_advanced_buttons
+          add_text_line 'Contact:'
+        end
       
-      @open_help_file = new_jbutton("View Sensible Cinema Documentation", false).on_clicked do
-        system_blocking("explorer \"#{__DIR__.to_filename}..\\documentation\"") rescue nil # declares it fails, in error...
+        @upload = new_jbutton("Submit feedback/Upload/Request Help") # keep this one last! :)
+        @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
+        @upload.on_clicked {
+          system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
+          system_non_blocking("start http://groups.google.com/group/sensible-cinema")
+        }
+
+        @progress_bar = JProgressBar.new(0, 100)
+        @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
+        @progress_bar.visible = false
+        panel.add @progress_bar
+  
+        increment_button_location
+
       end
-      
-      setup_advanced_buttons
-      
-      add_text_line 'Contact:'
 
-      @upload = new_jbutton("Submit feedback/Upload Anything/Request Help", false) # keep this one last! :)
-      @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
-      @upload.on_clicked {
-        system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
-        system_non_blocking("start http://groups.google.com/group/sensible-cinema")
-      }
-      
-
-      
-      @progress_bar = JProgressBar.new(0, 100)
-      @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
-      @progress_bar.visible = false
-      panel.add @progress_bar
-
-      increment_button_location
-      increment_button_location
-
-      @exit = new_jbutton("Exit", false, "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
+      @exit = new_jbutton("Exit", "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
-        kill_processes
-        puts 'Thank you for using Sensible Cinema.'
-        java.lang.System.exit 0
+        puts 'Thank you for using Sensible Cinema. Come again!'
+        System.exit 0
       }
 
       increment_button_location
       increment_button_location
 
-      setSize @button_width+80, @starting_button_y
-      setIconImage(ImageIcon.new(__dir__ + "/../vendor/monkey.png").getImage())
-      check_for_dependencies
+      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/monkey.png").getImage())
+      check_for_various_dependencies
     end
     
-    def set_smplayer_opts to_this
+    def run_smplayer_non_blocking *args
+      @background_thread = Thread.new {
+        run_smplayer_blocking *args
+      }
+    end
+
+    def run_smplayer_blocking play_this, extra_options, force_use_mplayer
+      extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
+      if OS.mac? || force_use_mplayer
+       @_run_smplayer_instructions ||= show_mplayer_instructions
+       conf_file = File.expand_path './mplayer_input_conf'
+       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
+       if OS.windows?
+        # direct3d for windows 7 old nvidia cards' sake [yipes]
+        extra_options += " -vo direct3d " # more mouse, less speed [?] less mouse ??
+        extra_options += " -slang en "
+        extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
+        conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
+       end
+       extra_options += " -fs " # full screen
+       c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
+      else
+        if OS.windows?
+          extra_options += " -vo direct3d " # more light nvidia...should be ok...
+        end
+        config_path = set_smplayer_opts extra_options
+        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
+      end
+      puts c
+      system_blocking c
+    end
+    
+    def set_smplayer_opts to_this, show_subs = false
+      p 'set smplayer opts to this:' + to_this
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
-      old_prefs = "[advanced]\nmplayer_additional_options=" unless old_prefs.contain? 'mplayer_additional_options='
+      old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" unless old_prefs.contain? 'mplayer_additional_options='
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
+      new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
+      upconvert_settings = get_upconvert_vf_settings
+      if upconvert_settings.present?
+        p 'put upconvert options in as vf', upconvert_settings
+      else
+        p 'not using upconvert'
+      end
+      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{upconvert_settings}\"")
+      new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
       smplayer_prefs_file
@@ -399,18 +596,17 @@ module SensibleSwing
 
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, it plays a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+"dvd_title_track" => "1", # the show info button will tell you title length (typically longest is main feature)
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # in mplayer, the DVD timestamp "resets" to zero for some reason, see http://goo.gl/yMfqX to set this value right. Note that [] is valid, if there are no resets.
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  Additive currently.  12345.6 ok. In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
         EOL
       # frame0 is the name of our window LOL tough to avoid that collision...hmm...
-      filename = EDL_DIR + "\\" + english_name.gsub(' ', '_') + '.txt'
+      filename = EDL_DIR + "\\edls_being_edited\\" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
-    end
-     
+    end     
     
     def system_blocking command, low_prio = false
       return true if command =~ /^@rem/ # jruby+MRI bug, I think...
@@ -429,13 +625,13 @@ module SensibleSwing
             if piddy
               # piddy.SetPriority low_prio # this call can seg fault at times...yikes...JRUBY-5422
               pid = piddy.ProcessId # this doesn't seg fault, tho
-              system_original("vendor\\setpriority -lowest #{pid}") # be able to use the PID on the command line
+              system_original("vendor\\setpriority -lowest #{pid}") # use the PID on the command line
             else
               # XXXX first one always fails [?] huh?
               p 'unable to find to set priority ' + exe_name
             end
           rescue Exception => e
-            p 'warning, got exception trying to set priority [jruby? ...]', e
+            p 'warning, got exception trying to set priority [jruby prob? ...]', e
           end
         end
         print out.read # let it finish
@@ -447,11 +643,13 @@ module SensibleSwing
     end
     
     def system_non_blocking command
-      Thread.new { system_original command }
+      @background_thread = Thread.new { system_original command }
     end
     
-    # make them choose which system call to use explicitly
-    undef system
+    if respond_to?(:system)
+      # make them choose which system call to use explicitly
+      undef system
+    end
     
     def download full_url, to_here
       require 'open-uri'
@@ -460,71 +658,92 @@ module SensibleSwing
       writeOut.close
     end
     
-    def _dbg
-      require 'ruby-debug'
-      debugger
-    end
-    
-    def play_dvd_smplayer_unedited use_mplayer_instead = false
-      # LODO really even if there are 2 it should still pick out the title track...hmm...on demand :P
-      # lodo mac os x 'ify'
+    def play_dvd_smplayer_unedited use_mplayer_instead = false, show_instructions = true
       drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
-      if use_mplayer_instead
-        exe = "mplayer "
-        # maybe, maybe following would be useful for people just watching through the film (?)
-        #"-font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF "
-      else
-        config_path = set_smplayer_opts "  " # smplayer doesn't take -osdlevel 2 sniff...
-        exe = "smplayer_portable -config-path \"#{File.dirname config_path}\" "
+      file_to_play = "dvdnav://#{title_track_maybe_nil}"
+      options = " -osd-fractions 2 -nocache -dvd-device #{drive} "
+      if show_instructions
+        # want this even with smplayer sometimes I guess...
+        @play_smplayer_warn ||= show_mplayer_instructions
       end
-      command = "#{exe} dvdnav://#{title_track_maybe_nil}/#{drive} -osd-fractions 2  -mouse-movements -nocache "
-      p command
-      @play_smplayer_warn ||= show_non_blocking_message_dialog "Directions:
-      'o' key: turn on on-screen-display timestamps (note: these are 30 fps timestamps so will need to be converted to use).
-      'v' key: turn off subtitles.
-      '.' key: step one frame.
-      'f' for full screen."
-      system_non_blocking command
+
+      run_smplayer_non_blocking file_to_play, options, use_mplayer_instead
+
     end
 
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
-    def do_mplayer_edl play_this_mplayer = nil, add_secs_end = 0, add_secs_beginning = 0.5
-      drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
-      if dvd_id == NonDvd
-        play_this_mplayer ||= "mplayer \"#{drive_or_file}\"" # play the file instead...
+    def show_mplayer_instructions
+      show_non_blocking_message_dialog <<-EOL
+        About to run mplayer.  
+        To control it, use
+        spacebar : pause,
+        double clicky/right click : toggle full screen,
+        arrow keys (left, right, up down) to seek/scan
+        / and *	: inc/dec volume.
+        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
+        'v' key: turn off subtitles.
+        '.' key: step one frame.
+      EOL
+    end
+    
+    MplayerBeginingBuffer = 1.0
+    MplayerEndBuffer = 0.0
+    
+    def play_mplayer_edl file_with_edl_path = nil
+      extra_mplayer_commands = []
+      if file_with_edl_path
+        drive_or_file, edl_path = file_with_edl_path
+        dvd_id = NonDvd # fake it out...LODO
+      else
+        drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
-      descriptors = EdlParser.parse_file edl_path
-      splits = descriptors['mplayer_dvd_splits']
-      if splits == nil && !play_this_mplayer
-        show_blocking_message_dialog("warning: delete list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
+      if dvd_id == NonDvd
+        play_this = drive_or_file # play straight file...
+      else
+        using_dvd = true
+        title_track = get_title_track(descriptors)
+        extra_mplayer_commands << " -nocache -dvd-device #{drive_or_file} "
+        play_this = "dvdnav://#{title_track}"
+      end
+      if edl_path
+        descriptors = EdlParser.parse_file edl_path
+      else
+        descriptors = {}
+      end
+      if using_dvd
+        p descriptors
+        splits = descriptors['mplayer_dvd_splits']
+        if splits == nil
+          show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
+          splits = []
+        end
+        splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
+      else
         splits = []
       end
-      splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
-      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_beginning, splits # add a sec to mutes to accomodate for mplayer's oddness...
+      edl_contents = nil
+      begin
+       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits #, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
+      rescue SyntaxError => e # overlaps et al
+        show_blocking_message_dialog 'fail:' + e.to_s
+        raise e
+      end
       File.write(EdlTempFile, edl_contents)
-      title_track = get_title_track(descriptors)
-      # oh the insanity of the console UI...LODO more user friendly player
-      @popup ||= show_non_blocking_message_dialog("About to run mplayer EDL.  To control it, use\n space for pause,\n f for full screen,\n arrow keys to seek.")
-      # LODO dry up mplayer dvd opts...
-      if OS.windows?
-        play_this_mplayer ||= "mplayer  -mouse-movements -nocache dvdnav://#{title_track} "
-      else
-        # macports' mplayer has no dvdnav ?? 
-        play_this_mplayer ||= "mplayer dvd://#{title_track} "
-      end
-      if OS.windows?
-        # direct3d for windows 7 old nvidia's sake yipes
-        play_this_mplayer += " -vo direct3d "
-        play_this_mplayer += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF"
-      end
-      command =  "#{play_this_mplayer} -framedrop -alang en -sid 1000 -edl #{File.expand_path EdlTempFile} -dvd-device #{drive_or_file}"
+      
+      # -framedrop is for slow CPU's
+      # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      p command
-      Thread.new { system_blocking command; @popup.dispose }
+      extra_mplayer_commands << "-framedrop "      
+      # ?? extra_mplayer_commands << " -mc 0.016 -autosync 15"
+      
+      # prefer english, attempt to disable subtitles, set edl...
+      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
+      
+      run_smplayer_non_blocking play_this, extra_mplayer_commands.join(' '), false
     end
     
     def assert_ownership_dialog 
@@ -552,7 +771,7 @@ module SensibleSwing
       
       returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
-      p 'confirmed license noted: ' + license_name
+      p 'confirmation of sensible cinema related license noted of: ' + license_name
       throw unless returned == 0
       old.each{|name, old_setting| UIManager.put(name, old_setting)}
     end
@@ -566,7 +785,7 @@ module SensibleSwing
           system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
           puts "Please restart after reading license agreement, to be able to then accept it."
         end
-        System.exit 1
+        System.exit 0
       end
       if returned == 2
         p 'license not accepted...exiting'
@@ -577,7 +796,6 @@ module SensibleSwing
         System.exit 1
       end
     end
-
     
     def print *args
       Kernel.print *args # avoid bin\sensible-cinema.rb:83:in `system_blocking': cannot convert instance of class org.jruby.RubyString to class java.awt.Graphics (TypeError)
@@ -594,7 +812,7 @@ module SensibleSwing
       end
     end
     
-    def download_zip_to english_name, url, to_this
+    def download_zip_file_and_extract english_name, url, to_this
       download_7zip
       Dir.chdir('vendor/cache') do
         file_name = url.split('/')[-1]
@@ -606,66 +824,78 @@ module SensibleSwing
       end
     end
     
-    require 'lib/check_installed_mac.rb'
-    
     def check_for_exe windows_loc, unix_name
       # in windows, that exe *at that location* must exist...
       if OS.windows?
         File.exist?(windows_loc)
       else
+        require 'lib/check_installed_mac.rb'
         if !CheckInstalledMac.check_for_installed(unix_name)
-          exit 1
+          exit 1 # it'll have already displayed a message...
         else
           true
         end
       end
     end
     
-    def check_for_dependencies
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
-      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_to "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
-      end
-      
-      if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
-        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        download_zip_to "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
-      end
-      
+    def check_for_various_dependencies
       if we_are_in_create_mode
-        # they're going to want these dependencies
-        if OS.windows?
-          path = RubyWhich.new.which('smplayer_portable')
-          if(path.length == 0)
-            # this one has its own installer...
-            show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
-            Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
-            "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-            system_non_blocking("start http://mulder.dummwiedeutsch.de/#mplayer") # LODO would launchy help/work here with the full url?
-            System.exit(1)
-          end
-        else
-          check_for_exe("mplayer", "mplayer") # OS X ...
-          puts 'warning for OS X users--the smplayer-type buttons aren\'t going to work'
+        ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+        if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
+          require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+          download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
+        end
+        
+        if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
+          require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
+          download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
+        end
+      end
+
+      # runtime dependencies, at least today...
+      if OS.mac?
+        check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
+      else      
+        path = RubyWhich.new.which('smplayer_portable')
+        if(path.length == 0)
+          # this one has its own installer...
+          show_blocking_message_dialog("It appears that you need to install a pre-requisite dependency: MPlayer for Windows (MPUI).
+          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-complete), 
+          then restart sensible cinema.  NB that it takes awhile to install MPUI.  Sorry about that.", 
+          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
+          open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/detail?name=MPUI.2011-06-09.Full-Package.exe"
+          System.exit 0
         end
       end
     end
     
-    def open_file_to_edit_it filename
+    def open_url_to_view_it_non_blocking url
       if OS.windows?
-        system_non_blocking "notepad \"#{filename}\""
+        system_non_blocking(c = "start #{url.gsub('&', '^&')}") # LODO would launchy help/work here with the full url?
+        p c
+      else
+        system_non_blocking "#{OS.open_file_command} \"#{url}\"" # LODO test
+      end
+    end
+    
+    def open_file_to_edit_it filename, start_minimized=false
+      if OS.windows?
+        if start_minimized
+          system_non_blocking "start /min notepad \"#{filename}\""
+        else
+          system_non_blocking "notepad \"#{filename}\""
+        end
       else
         system_non_blocking "#{OS.open_file_command} \"#{filename}\""
       end
     end
 
     def single_edit_list_matches_dvd dvd_id
-      matching =  Dir[EDL_DIR + '/*.txt'].select{|file|
+      matching =  Dir[EDL_DIR + '/**/*.txt'].select{|file|
         begin
           parse_edl(file)["disk_unique_id"] == dvd_id
         rescue SyntaxError => e
-          # ignore poorly formed delete lists for the auto choose phase...
+          # ignore poorly formed edit lists for the auto choose phase...
           p 'warning, unable to parse a file:' + file + " " + e.to_s
           false
         end
@@ -679,10 +909,10 @@ module SensibleSwing
       end
     end
 
-    EDL_DIR = File.expand_path(__dir__  + "/../zamples/edit_decision_lists/dvds").to_filename
+    EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
 
     def repeat_last_copy_dvd_to_hard_drive
-      generate_and_run_bat_file *Storage['last_params']
+      generate_and_run_bat_file *LocalStorage['last_params']
     end
 
     def new_nonexisting_filechooser title = nil, default_dir = nil
@@ -714,7 +944,8 @@ module SensibleSwing
     end
     
     def show_copy_pastable_string(message, value)
-      get_user_input message, value, true
+      RubyClip.set_clipboard value            
+      get_user_input message + " (has been copied to clipboard)", value, true
     end
     
     def parse_edl path
@@ -726,23 +957,23 @@ module SensibleSwing
     end
     
     def new_existing_file_selector_and_select_file title, dir=nil
-      out = FileDialog.new(self)
+      out = FileDialog.new(self, title, FileDialog::LOAD)
       out.set_title title
-      dir ||= Storage[caller.inspect]
+      dir ||= LocalStorage[caller.inspect]
       out.set_directory dir.to_filename if dir
       got = out.go
       raise 'cancelled choosing existing file method' unless got # I think we always want to raise...
-      Storage[caller.inspect] = File.dirname(got)
+      LocalStorage[caller.inspect] = File.dirname(got)
       got
     end
     
-    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file = true
+    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
       
       unless @_edit_list_path # cache file selection...
         edit_list_path = single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && force_choose_edl_file
-          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Delete List File (none were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
+        if !edit_list_path && force_choose_edl_file_if_no_easy_match
+          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
           raise 'cancelled choosing an EDL' unless edit_list_path
         end
         @_edit_list_path = edit_list_path
@@ -772,39 +1003,37 @@ module SensibleSwing
     def get_import_from_filename dvd_title, dvd_title_track
       @_get_import_from_filename ||=
       begin
-        new_existing_file_selector_and_select_file "Please choose the file that is your ripped version of #{dvd_title} title ##{dvd_title_track} (.mpg or .ts--see documentation/how_to_get_files_from_dvd.txt file)"
+        new_existing_file_selector_and_select_file "Please choose the file that is your ripped equivalent of #{dvd_title} (title track #{dvd_title_track}) (.mpg or .ts--see file documentation/how_to_get_files_from_dvd.txt)"
       end
     end
     
     def get_save_to_filename dvd_title
       @_get_save_to_filename ||=
       begin
-        fc = new_nonexisting_filechooser "Pick where to save #{dvd_title} edited version as"
+        fc = new_nonexisting_filechooser "Pick where to save #{dvd_title} edited version to"
         save_to_file_name = dvd_title + ' edited version'
-        save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') # no punctuation or spaces for now...
+        save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') + ".avi" # no punctuation or spaces for now, to not complicate...
         fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
         save_to = fc.go
+        raise 'no spaces allowed yet' if save_to =~ / /
         begin
-          FileUtils.touch save_to
-          File.delete save_to
+          a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
+          a.close
+          File.delete a.path
         rescue Errno::EACCES => e
           show_blocking_message_dialog "unable to write to that directory, please pick again: " + e.to_s
           raise 'pick again!'
         end
-        a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
-        a.close
-        File.delete a.path
         freespace = get_freespace(save_to)
         if freespace < 8_000_000_000
           show_blocking_message_dialog("Warning: there may not be enough space on the disk for #{save_to} 
           (depending on DVD size, you may need around 10G free--you have #{freespace/1_000_000_000}GB free).  Click OK to continue.")
         end
-        raise 'cannot save to filname with spaces yet (ask for it)' if save_to =~ / /
-        save_to
+        save_to.gsub(/\.avi$/, '')
       end
     end
 
-    def do_copy_dvd_to_hard_drive should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
+    def do_copy_dvd_to_hard_drive_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
       drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
@@ -821,11 +1050,11 @@ module SensibleSwing
           For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.
           Also note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the entire video for processing.
           Subsequent previews will be faster, though, as long as you use the same filename, as it won't have to re-set it up for processing.
-          Also note that if you change your delete list, you'll need to close, and restart the video to be able to see it with your new settings.
+          Also note that if you change your edit list, you'll need to close, and restart the video to be able to see it with your new settings.
         EOL
-        old_start = Storage['start_time']
-        start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", Storage['start_time'])
-        default_end = Storage['end_time']
+        old_start = LocalStorage['start_time']
+        start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", LocalStorage['start_time'])
+        default_end = LocalStorage['end_time']
         if start_time and start_time != old_start
           default_end = EdlParser.translate_string_to_seconds(start_time) + 10
           default_end = EdlParser.translate_time_to_human_readable(default_end)
@@ -835,18 +1064,19 @@ module SensibleSwing
           JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
           return
         end
-        Storage['start_time'] = start_time
-        Storage['end_time'] = end_time
+        LocalStorage['start_time'] = start_time
+        LocalStorage['end_time'] = end_time
       end
       dvd_friendly_name = descriptors['name']
       raise 'no dvd name in EDL?' unless dvd_friendly_name
       
       dvd_title_track = get_title_track(descriptors)
       if dvd_id == NonDvd
-         file_from = drive_or_file
+        file_from = drive_or_file
       else
         file_from = get_import_from_filename dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
+      show_blocking_message_dialog("warning: file is not a .mpg or .ts file--it may not work properly all the way--if it's mkv and fails consider first converting to ts by using tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
@@ -880,7 +1110,7 @@ module SensibleSwing
     end
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
-      Storage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+      LocalStorage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
       begin
         commands = get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
@@ -900,7 +1130,7 @@ module SensibleSwing
       EOL
       if !fulli_dot_done_file_exists? save_to
         popup_message += "This could take quite awhile (several hours), and will prompt you with a chime noise when it is done.\n
-        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background."
+        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background.\n"
       end
       
       if !start_time
@@ -915,7 +1145,7 @@ module SensibleSwing
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new {
-        run_create_commands commands, save_to, run_mplayer
+        run_batch_file_commands commands, save_to, file_from, run_mplayer
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end...
@@ -923,7 +1153,7 @@ module SensibleSwing
     
     attr_accessor :background_thread, :buttons
 
-    def run_create_commands batch_commands, save_to, run_mplayer
+    def run_batch_file_commands batch_commands, save_to, file_from, run_mplayer_after_done
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
@@ -944,20 +1174,28 @@ module SensibleSwing
       @buttons.each{|b| b.set_enabled true}
       if success
         saved_to = save_to + '.avi'
-        if run_mplayer
-          set_smplayer_opts ''
-          system_non_blocking "smplayer_portable #{saved_to}"
+        if run_mplayer_after_done
+          run_smplayer_non_blocking saved_to, '', false
         else
-          show_file = "explorer /e,/select,\"#{File.expand_path(saved_to).to_filename}\""
-          begin
-            system_blocking show_file # returns immediately tho...
-          rescue => why_does_this_happen_ignore_this_exception_it_actually_succeeded
-          end
+          if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
+            show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
+          end            
+          show_in_explorer saved_to
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
-          show_blocking_message_dialog "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
+          msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
+          puts msg
+          show_blocking_message_dialog msg
+          show_in_explorer saved_to # and again :)
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE)
+      end
+    end
+    
+    def show_in_explorer filename
+      begin
+        system_blocking "explorer /e,/select,\"#{File.expand_path(filename).to_filename}\"" # command returns immediately...
+      rescue => why_does_this_happen_ignore_this_exception_it_probably_actually_succeeded
       end
     end
     
@@ -965,16 +1203,20 @@ module SensibleSwing
       GetDisk.new(self, names)
     end
     
-    NonDvd = 'non dvd has no dvdid'
+    NonDvd = 'non dvd has no dvdid' # we need it for convenience, say you want to go through your indexed vids and convert them all?
 
     # returns e:\, volume_name, dvd_id
     # or full_path.mkv, filename, ''
     def choose_dvd_drive_or_file force_choose_only_dvd_drive
       opticals = DriveInfo.get_dvd_drives_as_openstruct
-      if @saved_opticals == opticals
+      if @saved_opticals == opticals && @_choose_dvd_drive_or_file
         # memoize...if disks haven't changed :)
         return @_choose_dvd_drive_or_file
+      else
+        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
+        # is this ok for os x?
       end
+
       has_at_least_one_dvd_inserted = opticals.find{|d| d.VolumeName }
       if !has_at_least_one_dvd_inserted && force_choose_only_dvd_drive
         show_blocking_message_dialog 'insert a dvd first' 
@@ -982,16 +1224,21 @@ module SensibleSwing
       end
       names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
       if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
-        names += ['No DVD so choose Local File']
+        names += ['No DVD mounted so choose Local File (or insert DVD, re-try)'] # LODO cannot read it...
         used_local_file_option = true
       end
       
       count = 0
       opticals.each{|d| count += 1 if d.VolumeName}
-      if count == 1 && force_choose_only_dvd_drive
+      if count == 1 && !used_local_file_option
        # just choose it if there's only one disk available..
        p 'selecting only disk present in the various DVD drives'
        selected_idx = opticals.index{|d| d.VolumeName}
+       unless selected_idx
+         show_blocking_message_dialog "Please insert a disk first"
+         raise 'inset disk'
+       end
+
       else
         dialog = get_disk_chooser_window names
         dialog.setSize 200, 125
@@ -1004,15 +1251,15 @@ module SensibleSwing
           raise unless selected_idx == 0 # it was our only option...
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
           assert_ownership_dialog
-          @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
+          return [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]
+          out = show_non_blocking_message_dialog "calculating disk's unique id..." # useful, believe it or not
           dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+          out.dispose
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
+          return @_choose_dvd_drive_or_file
         end
-        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
-        # is this ok for os x?
-        return @_choose_dvd_drive_or_file
       else
         raise 'did not select a drive...'
       end
@@ -1040,39 +1287,35 @@ module SensibleSwing
         box.add_item drive
       }
       add box
-      pack
+      pack # how do you get this arbitrary size? what the...
     end
   end
 end
 
-class ShutdownHook 
-  include java.lang.Runnable
-          	def initialize( &block)
-          		super()
-          		@block=block
-          	end
-              def run
-                  @block[]
-              end
-end
-          
-def at_exit2( &block)
-   hook = ShutdownHook.new( &block)
-   java.lang.Runtime.getRuntime.addShutdownHook(java.lang.Thread.new( hook ))
-end
-
-def kill_processes
-  if OS.windows?
-    system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a better way?
-    system_original("taskkill /f /im ffmpeg.exe 2>NUL")
-    system_original("taskkill /f /im smplayer_portable.exe 2>NUL")
-    system_original("taskkill /f /im mplayer.exe 2>NUL")
+class String
+  def present?
+    length > 0
   end
 end
 
-at_exit2 {
-  kill_processes # just in case
-}
+class NilClass
+  def present?
+    false
+  end
+end
+class Object
+  def present?
+    true
+  end
+end
+
+class Array
+  def present?
+    length > 0
+  end
+end
+    
+  
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')

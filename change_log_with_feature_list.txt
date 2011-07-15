@@ -1,4 +1,56 @@
-== ==
+== 0.24.3 ==
+
+Distribution cleanups
+polish up UI.
+
+== 0.24.2 ==
+
+In some recent version or other, added ability to start EDL's from an offset
+(example: your video says it starts at 600s, it will add 600s to each EDL setting)
+can auto-paste to clipboard
+auto-full screen now
+In some recent revision, added ability to set upconvert options, use them for any playbacks.
+Separates subtitles into "known profanities" and then "lesser" now.
+
+It now has ability to "pre-tune" the OCR tracker with known images representing digits from known players.
+Like "training" it.
+
+Added video showing how the OCR tracker can use tracking+file selection+inline "send the window commands"
+through its UI in order to minimize, which simulates or is equivalent to blanking a section, 
+but in realtime, causes no interruption.
+
+Added a demonstration of using youtube javascript api's to control/monitor playback time and react appropriately.
+It even mutes and skips appropriately.  See demo (must be run from a web server to work). can_mute_youtube.avi
+
+Added a demonstration of using "static overlay" as a form of muting.  Basically, play some static so that it obscures
+the current audio, instead of muting it. Actually works, though oddly.
+
+Subtitles now are split into "bad" profanities and "mild" profanities for easier parsing.
+
+Can use multiple threads to speedup playback.  Slight speedup for mpeg2.  Thanks mplayer guys!
+
+== 0.24.1 ==
+
+A few more profanities/subtitle tweaks.
+Now can optionally "adjust" the auto-generated mutes from subtitles based on time 
+differences from the file versus from the movie file itself.
+Some minor upconverting tweaks
+
+== 0.24.0 ==
+
+Now comes with an upconverting software player to play back DVD's/files.
+  This can used advanced deblocking, or hq denois3d, or lancosz filter, etc.
+Uses much better mplayer options for slow computers now.
+Added EDL for IQ.
+Added ability to "offset" timestamps by a set factor (ex: 600s).
+A few profanities added to the subtitler.
+Much more compatible with mac.
+Prompts users to assert they own disks for files they watch.
+Added new button "watch file edited"
+Now uses smplayer as the default player.
+Can differentiate cross platform to decide which player to use.
+Relies on mplayerx for mac now.
+Other minor cleanups.
 
 == 0.23.6 ==
 

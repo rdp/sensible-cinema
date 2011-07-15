@@ -19,6 +19,7 @@ require 'rubygems' # ugh
 require 'ffi'
 require 'sane'
 require_relative 'mouse'
+require_relative 'play_audio'
 
 module Muter
   # from msdn on keybd_event ...
@@ -50,26 +51,45 @@ module Muter
     keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
-  @@use_mouse = false # ai ai
+  @@use_mouse = false # inventionzy
+  @@use_static_on_top = false # inventionzy
+  
+  def start_static
+    @player = PlayAudio.new(__DIR__ + '/static.wav')
+    @player.loop
+    p 'STARTED STATIC'
+  end
+  
+  def stop_static
+    if @player
+      p 'STOPPED STATIC'
+      @player.stop
+      @player = nil
+    end
+  end
   
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
-    # anyway we just use a toggle for now...dangerous but works, if barely
-    if !@@use_mouse
-      hit_mute_key
-    else
+    # anyway we just use a toggle for now...dangerous but works hopefully
+    if @@use_mouse
       Mouse.single_click_left_mouse_button
+    elsif @@use_static_on_top
+      start_static
+    else
+      hit_mute_key
     end
   end
 
-  # TODO better for doze 7...
+  # LODO better for doze 7/xp
   def unmute!
-    if !@@use_mouse
+    if @@use_mouse
+      Mouse.single_click_left_mouse_button
+    elsif @@use_static_on_top
+      stop_static
+    else
       hit_mute_key # Windows XP...
       hit_volume_down_key
       hit_volume_up_key
-    else
-      Mouse.single_click_left_mouse_button
     end
     
   end

@@ -114,7 +114,9 @@ module SensibleSwing
     end
     
     before do
+      ARGV << "--create-mode" # want all the buttons for some tests.
       @subject = MainWindow.new
+      ARGV.pop
       @subject.stub!(:choose_dvd_drive_or_file) {
         ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
@@ -155,10 +157,10 @@ module SensibleSwing
         # during testing, we *always* have enough free space :)
         16_000_000_000
       }
+      
       # less chatty...
       @subject.stub!(:p) {}
       @subject.stub!(:puts) {}
-
     end
     
     after do
@@ -177,7 +179,9 @@ module SensibleSwing
     
     # name like :@rerun_previous
     def click_button(name)
-      @subject.instance_variable_get(name).simulate_click
+      button = @subject.instance_variable_get(name)
+      raise 'button not found: ' + name.to_s unless button
+      button.simulate_click
     end
     
     it "should be able to run system" do
@@ -185,7 +189,7 @@ module SensibleSwing
     end
 
     it "should be able to do a normal copy to hard drive, edited" do
-      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_copy_dvd_to_hard_drive_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
     
@@ -199,8 +203,8 @@ module SensibleSwing
         count += 1
         'abc'
       }
-      @subject.do_copy_dvd_to_hard_drive(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
-      3.times { @subject.do_copy_dvd_to_hard_drive(false) }
+      @subject.do_copy_dvd_to_hard_drive_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      3.times { @subject.do_copy_dvd_to_hard_drive_via_file(false) }
       count.should == 2
     end
     
@@ -210,11 +214,11 @@ module SensibleSwing
      @subject.get_title_track(descriptors).should == "3"
     end
     
-    it "should call through to explorer for the full thing" do
+    it "should call through to explorer to display the final output file" do
       PlayAudio.stub!(:play) {
         @played = true
       }
-      @subject.do_copy_dvd_to_hard_drive(false)
+      @subject.do_copy_dvd_to_hard_drive_via_file(false)
       @subject.background_thread.join
       @get_mencoder_commands_args[-4].should == nil
       @system_blocking_command.should match /explorer/
@@ -224,12 +228,12 @@ module SensibleSwing
     
     it "should be able to return the fulli name if it already exists" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.do_copy_dvd_to_hard_drive(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_copy_dvd_to_hard_drive_via_file(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
       FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
     it "should call explorer eventually, if it has to create the fulli file" do
-     @subject.do_copy_dvd_to_hard_drive(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
+     @subject.do_copy_dvd_to_hard_drive_via_file(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      join_background_thread
      @get_mencoder_commands_args[-2].should == "2"
      @get_mencoder_commands_args[-3].should == "01:00"
@@ -265,11 +269,8 @@ module SensibleSwing
     end
     
     it "should call something for fast preview" do
-      click_button(:@fast_preview).join
-      join_background_thread
-      #XXXX @system_blocking_command.should =~ /ffmpeg.*ntsc-dvd/ # I think this is a timing thing...
+      click_button(:@fast_preview)
       @system_blocking_command.should =~ /smplayer/
-      @system_blocking_command.should_not =~ /mplayer.*fast/ # the old way
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
@@ -310,11 +311,11 @@ module SensibleSwing
     
     it "if the .done files exists, do_copy... should call smplayer ja" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.do_copy_dvd_to_hard_drive(false, true, true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_copy_dvd_to_hard_drive_via_file(false, true, true).should == [true, "abc.fulli_unedited.tmp.mpg"]
     end
     
     it "should create a new file for ya" do
-      out = MainWindow::EDL_DIR + "/sweetest_disc_ever.txt"
+      out = MainWindow::EDL_DIR + "/edls_being_edited/sweetest_disc_ever.txt"
       File.exist?( out ).should be_false
       @subject.stub!(:get_user_input) {'sweetest disc ever'}
       @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click
@@ -335,9 +336,13 @@ module SensibleSwing
     end
     
     it "should create an edl and pass it through to mplayer" do
+      smplayer_opts = nil
+      @subject.stub(:set_smplayer_opts) { |to_this|
+        smplayer_opts = to_this
+      }
       click_button(:@mplayer_edl).join
-      @system_blocking_command.should match(/mplayer.*-edl/)
-      @system_blocking_command.should match(/-dvd-device /)
+      smplayer_opts.should match(/-edl /)
+      @system_blocking_command.should match(/dvdnav/)
     end
     
     it "should play edl with extra time for the mutes because of the EDL aspect" do
@@ -443,19 +448,26 @@ module SensibleSwing
       end
     end
     
-    it "should not show the normal buttons in create mode" do
-      MainWindow.new.buttons.length.should == 5
+    it "should show additional buttons in create mode" do
+      MainWindow.new.buttons.length.should == 6
+      old_length = MainWindow.new.buttons.length
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should == 17
+      MainWindow.new.buttons.length.should be > (old_length + 5)
       ARGV.pop # post-test cleanup--why not :)
     end
+
+    it "should show upconvert buttons" do
+      ARGV << "--upconvert-mode"
+      MainWindow.new.buttons.length.should be > 3
+      ARGV.pop 
+    end 
     
     it "should read splits from the file" do
       splits1 = nil
-      MplayerEdl.stub(:convert_to_edl) do |d,s,s,splits|
+      MplayerEdl.stub(:convert_to_edl) do |d,s,s2,splits|
         splits1 = splits
       end
-      @subject.do_mplayer_edl nil, 0, 0
+      @subject.play_mplayer_edl
       splits1.should == []
     end
     
@@ -465,7 +477,7 @@ module SensibleSwing
         @subject.stub!(:choose_dvd_drive_or_file) {
            ["mock_dvd_drive", "mockVolume", "abcdef1234"]
         }
-        @subject.do_mplayer_edl(nil, 0, 0)
+        @subject.play_mplayer_edl
         @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
       end
    end
@@ -496,7 +508,7 @@ module SensibleSwing
     @subject.stub(:assert_ownership_dialog) {
       prompted = true
     }
-    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples\\edit_decision_lists\\dvds/edl_for_unit_tests.txt")
+    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "zamples/edit_decision_lists/dvds/edls_being_edited/edl_for_unit_tests.txt")
     click_button(:@create_dot_edl)
     assert File.exist? 'yo.edl'
     assert prompted

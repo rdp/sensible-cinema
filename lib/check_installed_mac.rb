@@ -15,14 +15,26 @@ module CheckInstalledMac
     end
   end
 
-  command = {"gocr" => "gocr --help", "convert" => "convert --help", 
-    "mplayer" => "mplayer", "mencoder" => "fakey", "ffmpeg" => "ffmpeg -version"}[name]
+  if name == 'mplayer'
+    for path in ["/Applications/MPlayerX.app/Contents/Resources/binaries/m32", File.expand_path('~') + "/Downloads/MPlayerX.app/Contents/Resources/binaries/m32/"]
+      if File.exist? path + "/mplayer"
+        ENV['PATH'] = path + ':' + ENV['PATH']
+        return true
+      end
+    end
+    puts 'lacking mplayer! please install MPlayerX from the App Store first'
+    return false
+  end
 
-  raise 'unknown ' + name unless command # double check
+  # check for the others as generics
+
+  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version"}[name]
+
+  raise 'unknown ' + name unless command # sanity check
 
   unless system(command + " 1> " + OS.dev_null + " 2>" + OS.dev_null)
      name = 'ImageMagick' if name == 'convert' # special case...
-     puts 'lacking dependency! Please install ' + name + ' by running $ sudo port install ' + name
+     puts 'lacking dependency! Please install ' + name + ' by installing macports and running in terminal: $ sudo port install ' + name
      false
   else
     true

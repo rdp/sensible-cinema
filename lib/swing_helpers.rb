@@ -19,9 +19,9 @@ require 'java'
 module SensibleSwing 
  include_package 'javax.swing'
  [JProgressBar, JButton, JFrame, JLabel, JPanel, JOptionPane,
-   JFileChooser, JComboBox, JDialog, SwingUtilities] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
+   JFileChooser, JComboBox, JDialog, SwingUtilities, JSlider] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
  include_package 'java.awt'
- [FlowLayout, Font]
+ [FlowLayout, Font, BorderFactory, BorderLayout]
  include_class java.awt.event.ActionListener
  JFile = java.io.File
  include_class java.awt.FileDialog
@@ -41,7 +41,11 @@ module SensibleSwing
          block.call
        rescue Exception => e
          puts 'got fatal exception thrown in button [ignoring]', e, e.class
+        if $VERBOSE
+         puts e.backtrace, e
+        else
          puts e.backtrace[0], e
+        end
        end        
      end
      self

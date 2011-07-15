@@ -24,11 +24,11 @@ describe SubtitleProfanityFinder do
 
   describe "should parse out various profanities" do
     
-    output = SubtitleProfanityFinder.edl_output ['dragon.srt']
-    
-    describe "heck" do
+    output = SubtitleProfanityFinder.edl_output 'dragon.srt'
+
+    describe "he.." do
       it "should include the bad line with timestamp" do
-        output.should match(/00:00:54.929.*"he\.\."/)
+        output.should match(/0:00:54.929.*"he\.\."/)
       end
     
       it "should include the description in its output" do
@@ -42,12 +42,12 @@ describe SubtitleProfanityFinder do
       end
       
       it "should parse out deity singular and at very end" do
-        output = SubtitleProfanityFinder.edl_output ['deity_end.srt']
-        output.should include("fortress is our [deity]")
+        output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
+        output.should include("fortress is our [goodness]")
       end
       
       it "should parse out <i> et al " do
-        output = SubtitleProfanityFinder.edl_output ['deity_end.srt']
+        output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
         output.should_not include(" i ")
         output.should_not include("<i")
         output.should_not include("huntingand")
@@ -58,16 +58,16 @@ describe SubtitleProfanityFinder do
     
     describe 'full word only profanities' do
       
-      output2 =  SubtitleProfanityFinder.edl_output ['arse.srt']
+      output2 =  SubtitleProfanityFinder.edl_output 'arse.srt'
       it 'should not parse it if it\'s in other words' do
         output2.should_not include "a..ume"
         output2.should_not include "he..o" # todo: positive ex: ... :P
       end
       
       it 'should parse them at EOL' do
-        output2.should include '00:00:55.069' # EOL
-        output2.should include "00:00:55.071" # full line...
-        output2.should include '00:00:55.066' # BOL
+        output2.should include '0:00:55.069' # EOL
+        output2.should include "0:00:55.071" # full line...
+        output2.should include '0:00:55.066' # BOL
       end
       
       it 'should replace l for i' do
@@ -86,16 +86,32 @@ describe SubtitleProfanityFinder do
     
   end
   
+  it 'should add to begin, end' do
+    out = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}, 1, 1.5
+    out.should include "45.460"
+    out.should include "51.589"
+  end
+  
+  it "should accomodate lesser profanities" do
+    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0
+6
+00:00:55,068 --> 00:00:59,164
+a butt
+
+    EOL
+    out.should include "55.0"
+  end
+  
   describe "it should take optional user params" do
-    output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'word']
+    output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}
     
     it "should parse out the word word" do
-      output.should match(/00:00:50.089.*"word"/)
+      output.should match(/0:00:50.089.*"word"/)
     end
     
     it "should parse out and replace with euphemism" do
-      output = SubtitleProfanityFinder.edl_output ['dragon.srt', 'word', 'w...']
-      output.should match(/00:00:50.089.*In a \[w\.\.\.\]/)
+      output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'w...'}
+      output.should match(/0:00:50.089.*In a \[w\.\.\.\]/)
     end
     
   end

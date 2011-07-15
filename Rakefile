@@ -90,7 +90,7 @@ end
 
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
-  raise 'need  rebundle_dependencies first' unless File.directory? 'vendor/cache'
+  raise 'need rebundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
@@ -101,7 +101,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.mkdir_p dir_out
   FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
-  FileUtils.cp(Dir["#{dir_out}/template_bats/*"], "#{dir_out}/..")
+  FileUtils.cp(Dir["#{dir_out}/template_bats/*.bat"], "#{dir_out}/..")
   p 'created (still need to zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end
@@ -112,7 +112,7 @@ end
 
 task 'zip' do
   name = 'sensible-cinema-' + cur_ver
-  c = "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
+  raise unless File.directory? name
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
   FileUtils.rm_rf name
   p 'created ' + name + '.zip, and deleted its [from] folder'
@@ -137,7 +137,11 @@ task 'deploy' do
   p 'creating sf shell'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
+  begin
+    sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
+  rescue => ok_if_dir_already_existing
+    puts 'warning--dir already existing?' + ok_if_dir_already_existing.to_s
+  end
   p 'copying into sf from ilab'
   sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
   p 'successfully deployed to sf only! ' + cur_ver

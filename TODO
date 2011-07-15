@@ -1,38 +1,36 @@
 == roadmap [for just tasks, see below though] ==
 
-  release: cheap inventionzy, and medium inventionzy
+  release: cheap/mediumcheap inventionzy
   release: C EDL
   compare netflix/blu-ray timings et al
   
   === loose ordering/eventually ===
     linearize [?] hmm...
-    re-update todo/all docu/user feedbacks
+    re-update todo/all docu/user feedback etc.
     create web site/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
-	  no auto subtitles...
+	  no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  cheap minimize demo "fake auto" :)
-    friday 2: http://www.youtube.com/watch?v=SDeLjcTxMaM&feature=player_profilepage
-  cheap static-ify demo for mutes
-  also a straight "half mute" demo, using volume downs/ups     
-   cheap minimize via (probably foreground window + API real windows API) 
+  a "half mute" demo, using volume downs/ups     
+   cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
-   fix the failing 9 digit test the fancy shmancy way :P
-   can pass in a profanity command line
-   can handle dual dvdid's
-   youtube: use the javascript API somehow, like http://universalsubtitles.org/en does
-     phase 1: does they use inferred timestamp?  can I use that generally, too? [do phase 1--publish simple javascript demo of it muting for awhile after startup]
-      just in case youtube takes over the world
+   can handle multiple dvdid's et al
  
-== yes do ordered in conjunction with the above ==
-  can I just use ffmpeg for -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
-  try buy delete lists from all x,y,z [?] maybe ask for them for free first? ()
+== yes do ordered in conjunction with the above probably ==
+  mac bat files
+  C player
+  unit tests
+  release at some point...
+  mulder response
+  consistency for flight of nav. srt? huh?
+  lightning strike from various outlets...
+  try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
     cougar video (that looks tough...)
@@ -46,43 +44,59 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
-  next timing thing (notes file)
-  add the "create .edl file for xbmc/smplayer" button
+  make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
-  mplayerx work?
-    if not, patch that fella...and tell them to fix it!
-  can accept straight ".edl" files too, as my input
-  decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
-    don't use eval!
-  bring to top after a conversion, and for prompts...we get hidden!
-  ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
-    fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
-  can auto-use tsmuxer at all
-  add buttons for "convert 4945 to x" and vice versa...
-  warn/redirect if wrong looking file extension...
-   mac just die with instructions to use tsmuxer first...
-  add a "watch edited from local file" option...
-    check if some other buttons are outdated...
-  unit tests (all)
+  urug again?
+  subtitles: compare with powerdvd
+  if 2 EDL's, still choose title track
+  add an auto "scan for expected title, times"
+    add time to the generator EDL
+    complain if times looks wrong...
+  complain [accomodate option] if start time looks off...600
+  "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
+  tighten splits
+  "save to" -> same dir as "get from" yeah
+  open EDL can have a rememberable DIR
+  @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
+  @instructions: full srt how-to
+  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
+  add dvd_title_time option
+  volume_name => dvd_volume_name
+  why is the Sintel's EDL seemingly off?
+    ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
+      fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
+      maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  can I avoid requiring use of tsmuxer first?
+  check with WME plugins, add instructions, then note in the README "support for x..."
+  decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
+    don't have to use eval!
+    EDL with JSON on top, full timestamps.
+  setpriority for several :)
+  bring to top after a conversion, and for prompts...
+  can auto-use tsmuxer at all [?]
+    mac just die with instructions to use tsmuxer first...
+  check if some other buttons are now outdated...
+  unit tests (all pass)
+  upconvert: a file
+  can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
-  add an mencoder convert with mplayer_breaks button :P
-    can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
-    maybe just under an "advanced" window...
   youtube/hulu timings
+  @mplayer do you want a demo disk of how it fails edl dvdnav?
   split LLC's website+consumer
     get LLC before a "real" domain name
-  always don't use auto file hashes to discourage piracy
   upconverter
+    check gl mac
+    check permutations
   employee instructions: watch @ realtime after profanity filter first pass :P  
+  @makemkv: timing feels broken weird-like!
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try
   try disney digital copy
   C player:
+    folder, look for title.edl
     use DVD navigator
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
@@ -97,30 +111,29 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-  donate menumeter $
-  reate the "play previously created edited file for current DVD" button
+    [A,B] [?]
+  create the "play previously created edited file for current DVD" button
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
     beta release: rinse and repeat with various ppl
-  youtube videos -> new account name
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
     karlie?
-  inventionzy: blu-ray OCR
+  inventionzy: blu-ray stuff from todo.inventionzy
+
   port to mac OS X--try everything out (all buttons), make sure all works...
-      appears that, for now, have to just use mplayer dvd://
       ppc dvdid?
-      app store mplayer perhaps?
-      bundle a copy of smplayer locally?
-      can use a working copy of tsmuxer with instructions :)
-  typically delete unedited.fulli file automatically
-    except if it's a specific scene run test...
+      use mplayerx well [?] like wrap it...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
-  generic/consumer EDL run through should be through smplayer...do I need/want straight mplayer option too though?
   do I need tsmuxer?
+  auto-"guess" the best title...
+  add button "fast preview segment" (from dvd)
+  upconvert research/compare various options
+  investigate WMC "call out to smplayer EDL" or the like...
 
 == other lists ==
 
+  todo.upconvert
   todo.propaganda
   todo.inventionzy
   open_edl_list_org_todo.txt file
@@ -129,32 +142,49 @@
 
 == DVD decide later to move up or down ==
   add button "fast preview one" (from file)
-  add button "fast preview one" (from dvd)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
-  
-  investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
-  investigate xbmc dvd edl how do you do that?
-    maybe use smplayer full-screened, to avoid?
-  investigate WMC "call out to mplayer EDL" or the like...
-  for mplayer realtime it needs to start early, but end on time
-  mplayer instructions are obscured
-  mplayer EDL allow this:
-    got fatal exception in button
-    detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
-    SyntaxError
-  accept "mplayer_dvd_splits" => ["4749"] [large second integers...hmm...]
+  investigate xbmc dvd edl how do you do that? [+- real dvd]
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   mplayer EDL while grabbing, from grabbed :P
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
-  lua VLC EDL plugin? LOL yeah right.
   investigate: can I use zoomplayer max?
-  investigate dvdrsbvdl (windows media center edl plugin)
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  subtitle idio
+  slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
+  investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
+  mplayer EDL allow this:
+    got fatal exception in button
+    detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
+    SyntaxError
+  lua VLC EDL plugin? LOL yeah right.
+  test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
+  investigate dvdrsbvdl (windows media center edl plugin)
+  the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
+  @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
+  @mplayer: could you umm...go ahead and support avisynth input pleaz, assuming you don't?
+  @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
+  @mplayer: that one [IQ? hitchhikers'?] fail fail fail until I used -dvd-device [?] huh?
+    try to reproduce...
+  @mplayer: do I need -zoom ?
+  @smplayer: you don't capture stderr [?] ex -vf scale:1280.0
+  @mplayer: http://www.infognition.com/VideoEnhancer/ can I do that through any means LOL?
+  @mplayer: gl shucks on windows 7!
+  can accept straight ".edl" files too, as my input (?)
+  @mplayer: after hitting split DVD sectors, the OSD fraction goes bonkers.
+  @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html
+  @mplayer: -edl nonexist should warn [?] also when it hits an EDL sector ouput something plz?
+  @mplayer: allow EDL to have full timestamps for ease of editing :)
+  youtube videos -> new account name
+  add an mencoder convert with mplayer_breaks button :P
+    can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
+    maybe just under an "advanced" window...
+  @mplayer homepage: list mulder's not smplayer's, plz?
+    also smplayer advertise more prominently :P
   make this thing load faster: don't require rubygems...uh...faster_require?
   does xbmc need a "convert to 30fps edl" for DVD?
   @xbmc can you call out to another player prog plz?
@@ -185,33 +215,23 @@
   allow for filter subtitles, a la "always skip" [?]
   allow for AAF or OMF export, as well as EDL (?)
   C specific portion [A,B] player
-  also edit the trailers et al [?] hmm...
-  @mplayer: double click default to full screen! :)
+  also edit the playback of trailers et al [?] hmm...
+  @mplayer: double click default to full screen! :) and enter default to dvdnav select!
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
   @makemkv: wrong title no:Title #0 was added (7 cell(s), 0:14:58)
      Title #1 was added (8 cell(s), 0:14:57), also give us title no's in the dialog :P
-  @mencoder: you don't rip DVD's quite right. But you try. Oh how you try.
-  @mpc: easier upconvert
+  @mencoder you lop off the end somehow (dvd rip)
   @VLC: plugin for EDL maybe? [when opening file/DVD look for .edl file?]
   blu ray timing
     my one, others.  Are they the same as DVD's?  They seem really close...
-  can I accomodate for m4v somehow? Is it consistent?
   pull in information from thetvdb to the GUI app
   create the following EDL: 10 commandments DVD to skip the intro music LOL
-  todo.subtitle
   @VLC you lop off the end, somehow, I guess...
-  make it not die if you have no DVD in there yet when you choose a drive...
-  the "frame accurate" splitter
+  create the "ffmpeg frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
-  @mencoder you lop off the end somehow
-  @VLC convert -> dump raw always displays--expected? also saves nothing?
   research the gplv3, add terms. Maybe want real lawyer, even?
-  note "others are released under this license, that license"
-  note/include jruby license, include gplv1 et al, note "also included locally"
-  check if md5 same mac versus PC for VLC/mplayer rips, VLC done several times/fix too
-  disallow choosing empty drive? fail more gracefully when they do?
   sons of provo "music video" EDL
   it can "slow certain sections down" that might look way cool! LOL
   how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
@@ -224,7 +244,6 @@
   "release" it to more developers
     plug.org, more rubyists than urug?
     after OS X confidence :)
-  @VLC also tell them to tell people how to play hi-def better, when they try [?] if it shtinks
   an all online EDL editor
     flash canvas
     OCR?
@@ -241,14 +260,14 @@
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-feedback on crashes [?]
   publish new version of rdp-win32screenshot, if it ever existed
-  script avidemux, as a demo?
+  script avidemux, virtualdub, as a demo?
   accomodate failed deletes [files in use] better than dying with a backtrace
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
   @smplayer: why do you sometimes start with subtitles enabled?
-  don't need to package rdp-win32screenshot et al for just DVD work...
+  don't need to include in package rdp-win32screenshot et al for just DVD work...
   bring in batch file mplayer :)
   make my website slightly more "pictures-zy"
   check why out of sync my turn on earth on blacky MPH-HC
@@ -274,10 +293,7 @@
   re-look through all my old "thoughts" notes/blogs
   mplayer playlist mode possible, like real playlist?
   add button start EDL playback from dvd here [?] (for create mode)
-  re-play as EDL button for both modes--describe on the how to better
   fix prio for first ffmpeg instance not being settable [huh?]
-  calculating md5...do this for each disc while they choose it [low prio] :)
-    if the dll fella is too slow, that is, like my current one is :P
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
   integrate sub-titles-zy-er auto-download 
     I could integrate discid => hashes => opensubtitles.org 
@@ -290,7 +306,7 @@
   can watch conference like a music video :)
   can play "this section then that, with this one's audio [wow that is fringey]
   speedify things (the whole process takes approximately...eternity?)
-  can overlay with an arbitrary image
+  can overlay with an arbitrary image (I think mencoder can actually do this...)
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
   an 'always blank not skip the mutes' option for paranoid
   video on how to use imdb wiki
@@ -300,7 +316,6 @@
   .exe installer
     just unzips, runs the .bat file for them [?] :)
       full msi
-  add md5 "warning" when something (anything) had failed disc fails doesn't match because of DVD read failure...
   LLC before I ever pay anyone anything, if I ever do
   add some or any of the following "play now" options...without a true navigator of course :)
     "round conservatively, yes write inaccurate file straight from DVD in pieces" ?
@@ -319,16 +334,14 @@
    instructions on how to do their own (private) DL or do one and submit it (public), or email their friends :P
       add an option "just save full disk (unedited) to hard drive..."
         note to people: can edit these to your liking, resubmit
-  DRY up dependency installation' code
   "Re-run most recent" disabled when there isn't one [?]
   can rip from a DVD-like local folder (would anybody ever need this?)
-  can parse IMDB
+  can parse IMDB parental guide
     add stuffs to imdb hmmm
     IMDB easy DVD mapping...
   can blank out the video, with audio continuing through...
-  @VLC: hard crash when ripping that one DVD...long one, about the constitution...
-    can use a fast temp drive, save through it to another :P
-      (when they have two...)
+  can use a fast temp drive, save through it to another :P
+    (when they have two...)
   blu-ray support somehow (OCR maybe)
   double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
     might not work for all modes tho...
@@ -349,9 +362,8 @@ warn when labels both exist and don't match...
 @mplayer you cannot convert mkv files correctly you silly!
 bounty dvdnav
   fix dvdnav stuffs?
-ask swank if individuals can rent too?
 
-== random non-DVD backlog ... or never do DVD. ==
+== random non-DVD/OCR backlog ... or never do DVD. ==
 
 @mplayer: you return the wrong return code, sillys! https://gist.github.com/1056292
 @smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]

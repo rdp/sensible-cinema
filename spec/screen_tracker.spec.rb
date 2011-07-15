@@ -31,7 +31,7 @@ describe ScreenTracker do
         Win32::Screenshot.window(SILENCE, 0) {}
         raise Exception.new('must close existing vlcs first') # isn't caught
       rescue
-        silence = File.expand_path("./silence.wav").gsub("/", "\\")
+        silence = File.expand_path("../lib/silence.wav").gsub("/", "\\")
         vlc =  Dir['/program files*/videolan/VLC/vlc.exe'][0]
         Dir.chdir(File.dirname(vlc)) do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for JRUBY-4959 /4958
         

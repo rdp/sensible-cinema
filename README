@@ -1,39 +1,45 @@
-Sensible-cinema [5] allows you to apply pre-programmed delete lists
-(e.g. Edit Decision Lists [2]) to DVD's you own.  
-I.e. you can edit a DVD to "mute out" or skip certain scenes.
+Sensible-cinema [5] allows you to apply pre-programmed edit lists
+(e.g. Edit Decision Lists [2]) to the DVD's you own.  
+I.e. you can edit a DVD to "mute out" or skip certain scenes, deemed objectionable.
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
 
-It is currently in beta, though will always be free software, even after release.
-It also includes a library of EDL's that go along with various DVD's, we need volunteers
-to help it to grow!
+It is currently in alpha/beta, and is free (probably forever, as it is gplv3 currently).
+It also includes a library of EDL's that go along with various DVD's.  We need volunteers/contributors
+to help it grow!
 
 To use, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
 It will pop up some windows where you choose what to do.
 
 Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
-and not from github's "download" button.  See the "install" section, below, for finer grained details.
+and not from github's "download" button.  See the "install" section, below, for fine-grained install details.
 
-Sensible cinema basically allows you to create an edited video version of the DVD, onto your hard drive, 
-and you can watch it there.  It also has some realtime playback support via the use of EDL playback in some
-popular video players.
+Sensible cinema basically allows you to either create an edited video version of the DVD, onto your hard drive, 
+and watch it there, or to playback a DVD or file (edited) via the use of EDL playback in some
+pre-existing popular video players.
 
 How? Sensible cinema basically takes the original DVD, slices out the bad parts, then combines it back
 into a new file and gives you the result.
 It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
 a few freely available open source programs [3] to accomplish the editing for you.
 Note that the process can take several hours, so budget some time for it.
-It also has a few "realtime viewing" options available, again based on some freely available
-open source software [3].
 
-On a more moral note, just because an edited video lacks profanity/sex scenes...does not immediately make it an inspiring experience.
-I'd suggest carefully evaluating your real values/motives, and going with those.
-Sensible cinema does not a clean movie make of a dirty one.  Don't watch it if it's not uplifting! Be nice to yourself!
+It also has a few "realtime viewing" options available, based on some freely available
+open source popular video players [3].  These don't have any startup time to wait at all.
+
+On a more moral note, just because an edited video lacks profanity/sex scenes...does not 
+automatically make it a wholesome experience.
+Sensible cinema does not a clean movie make of a dirty one, even without profanity.  
+Don't watch it if it's not uplifting! Be nice to yourself!
 
 dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].
 kids-in-mind.com is also a good reference for profanity levels, though sometimes it misses profanities,
-and it also lacks timestamps to know when the profanities occur.  Hence this project.
+and it also lacks timestamps to know when the profanities occur, and doesn't allow for community
+contribution.  Hence this project existing.
 Also note that even if you happen to have an edited copy of a DVD floating around, if you have kids, chances are they
 will eventually find (and watch) the unedited originals, so be careful there.
+
+That being said, some videos are quite enjoyable once you strip out profanity/questionable content.
+It's your call.
 
 Enjoy your movies!
 
@@ -41,14 +47,14 @@ Enjoy your movies!
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
 [3] mostly GPL programs, see http://www.gnu.org/licenses/ VLC Media Player, Mplayer/mencoder, ffmpeg, et al.
 [4] http://lds.org/library/display/0,4945,161-1-11-1,00.html search for the word "wholesome"
-[5] Also known to us as "paranoid cinema" (our inside joke :).
+[5] Also known to us as "paranoid cinema" (just an joke :)
 
 == Installation ==
 
 Installation and usage instructions available here: http://rogerdpack.t28.net/sensible-cinema
 NB that you want to download it sourceforge, not from github downloads.
 
-== Creating Your Own Delete Lists, or modifying previously existing ones ==
+== Creating Your Own Edit Lists, or modifying previously existing ones ==
 
 See the accompanying documentation/how_to_create_your_own_delete_lists.txt file.
 
@@ -58,7 +64,7 @@ I don't actually know how to do this I've never burned a DVD.
 See also is_it_legal_to_copy_dvds.txt for some caveats you should understand first.
 Windows DVD Maker might help, http://www.dvdflick.net might help.
 iDVD might help on mac.
-DO NOT MAKE ILLEGAL COPIES OF DVD's. See is_it_legal_to_copy_dvds.txt.
+DO NOT MAKE ILLEGAL COPIES OF DVD's. See also is_it_legal_to_copy_dvds.txt.
 
 == FAQ ==
 
@@ -71,14 +77,14 @@ A. One way is to plug your computer into your TV.
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
   I might come up with a competitor to it if desired, as the existing one costs money).
   You may be able to create your own edited DVD, see section "Creating an edited DVD"
-  Another good option is to purchase a clearplay DVD player, though you must also retain a subscription for it to work.
-
+  Another good option is to purchase  and use a clearplay player.
+  
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original unedited DVD and a link to sensible-cinema's website.
+A. Give them the original, non-edited DVD and email them a link to sensible-cinema's website :)
 
 == Caveats ==
 
-NB that "someone" has to first create a delete list, per DVD.
+NB that "someone" has to first create a edit list, per DVD.
 If one doesn't yet exist for the DVD you want edited,
 you could create it yourself, or employ somebody to create it.  Make sure to submit it
 back to us when you're done, so that the rest of the users can benefit from it.
@@ -86,7 +92,7 @@ Fortunately just one person has to do it, once, for everybody to benefit, and th
 editing process is not too bad.
 
 We also have a subtitle parser which really helps locate profanity more conveniently, so that will help you
-build your delete list.
+build your edit list.
 
 Also note that if your DVD has scratches that cause it to skip, the time signatures will be off, 
 so we recommend to always clean your discs first!
@@ -95,10 +101,10 @@ so we recommend to always clean your discs first!
 
 The initial motivation for the project was that I dislike deity profanity in movies.
 And really any profanity is jarring, if you're not used to it in real life, and can
-put you a bit on edge when you watch a movie.
+put me a bit on edge when I watch an otherwise enjoyable movie.
 Also sometimes producers put in certain scenes (read: sex scenes) 
 just to get a desired rating.
-I don't want those scenes, but still want to be able to enjoy said movies :)
+I don't want those scenes, but still want to be able to enjoy more movies :)
 
 I once tried Clearplay (a "filter"ed DVD player)
 but (for me) it didn't cut it.  It costs money monthly (I'm too cheap to pay--and many
@@ -131,6 +137,8 @@ content during the intro) because...they want to get to the movie faster.
 Or skip commercials in some personal DVD recording.
 Or use it on their home dvd's.  Clearplay does not allow for any of these.  
 Also clearplay doesn't seem to users for example leave comments on their filters, to improve them, etc.
+Also you can't tell from clearplay's list whether a DVD is absent because it's clean, or because they
+haven't done a filter for it.
 
 So overall I wanted to build my own that overcame some of these hurdles.
 
@@ -196,7 +204,7 @@ No really.
 
 Note that competition/use of files from sensible cinema is welcome!
 
-In fact, the current end goal is to publish the delete lists (EDL's) to a separate repository with its
+In fact, the current end goal is to publish the edit lists (EDL's) to a separate repository with its
 own API under the CC license, meaning that even "for profit" users can use them for whatever other use they want, hopefully
 good uses :)  More direct direct competitors are also welcome here.  I only made this because I had to
 and nothing like it existed, so if something else springs up, I'm actually happy to use it instead, too.

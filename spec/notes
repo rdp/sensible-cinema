@@ -1,14 +1,419 @@
+
 up next:
-  lighning exact frame to compare the two fulli's...and the DVD, and mplayer :P
+
+== real time subtitle ==
+  0.4 extra + 0.5 not nuf blacky, marked one, hitchhikers
+
+  flight:
+    first:  second 168.0 -> 00:02:48.03 sez: 00:02:47,668
+    last:  first 5151.2 -> 1:25:51.2 sez: 01:25:50,859
+
+    sum additive needed:
+      beginning: add to the end 0.25s
+      end: add to the begining 0.35s
+
+  
+== ts vs. mkv transcoding ==
+  mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
+  I think if I *assume* stretching...hmm...it'll probably be pretty close...hmm...
+  
+== OSOH ==
+  this one seems to show that the makemkv == ts == 29.97
+  01:53:11.31, start: 0.000000 mkv
+  ts  01:53:11.26, start: 600.000000 (essentially the same as above)
+  makemkv11 01:53:11.31
+  ts 11:  01:53:11.26
+  VLC DVD sum: 1:53:05 -> 1:53:11.8
+  makemkv is quite close to @29.97 fps
+  ffprobe -show_packets title00.ts
+     7391.234311 -> 2:03:11.2 # oh that's comforting LOL
+  only has one demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+    at the beginning
+  
+== C ==
+  this one seems to show makemkv == (ts+0.2s) == 29.97
+
+ vlc DVD sum 2:10:56 (-> 2:11:03.9'ish)
+  so this time mkv was 29.97 fps accurate less 0.2s?
+  
+  
+ AVS says ts and mkv off by 0.2s
+
+ mkv 02:11:03.84, start: 0.000000
+   AVS says it's 2:11:03.778
+   maybe lightning strike 2:11:45.096
+   720x480 [PAR 32:27 DAR 16:9], 8000 kb/s, PAR 186:157 DAR 279:157, 29.97 fps, 59.94 tbr, 1k tbn, 59.94 tbc (default)
+     you'd think that'd be ok...hmm...
+     or do the players trust it too mightily or something... [?]
+   mediainfo: Frame rate                       : 29.970 fps
+
+   mplayer: VIDEO:  [MPG2]  720x480  0bpp  59.940 fps  8000.0 kbps (976.6 kbyte/s)
+     with no switching content messages...so I'm guessing makemkv just maps the given frames into mkv slots [?]
+     that should be ok...unless it's getting its math wrong somehow...
+
+ NB: had 4 back and forths telecined to progressive [I imagine telecined...]
+    (also had at least one mplayer split)
+ 
+ ts forceidx: 02:24:10.50 # 12 minutes too far! gah!
+ ts idx:      02:24:10.50 # again!
+
+ mkv11  02:11:03.84
+   mediainfo: 2h 11mn yea
+ ts11 
+   Processed 188659 video frames
+   02:11:03.62
+ ts 02:11:03.62, start: 600.000000
+    start 600? huh?
+ vob [ffmpeg?] 
+   02:11:03.77, start: 1.000000
+ edited.avi 02:11:03.38
+  forceidx.yo.avi (mencoder)
+    02:11:03.40, start: 0.000000
+ 
+ c.mplayerdump.mpg [in AVS] sum 2:11:04.89
+   lightning: 2:10:45.079 (non AviDemux, so might be spot on)
+ HBcli on dvd: handbrakecli --scan -i e:\ 
+   02:10:56
+ so makemkv is perfect @29.97 on this one?
+ fulli
+   title00.ts.edited.fulli_unedited.tmp.mpg 02:11:03.05, start: 0.233367
+ 
+ maybe some are stripping trailing blackness? (about 2s'ish)
+ mplayer dvd lightning: 2:10:36.0
+   Warning! FPS changed 23.976 -> 29.970
+   4364.7 it has a break in it though, looks like it anyway
+  
+ avi 02:11:03.38, start: 0.000000
+
+ apparently had 24 telecined frames (maybe some more at the very beginning...)
+   if those were assumed to have been 23.97fps, but were 29.97 fps 25% additive, or about 0.25s I guess
+      might explain difference mkv and ts...
+
+  hb ffmpeg sum: 02:11:04.60 [ai ai]
+    lightning AVS: 2:10:44.9 (about 0.3 early ?)
+
+ lightning 
+   ts AVS: 02:10:45.302 ish
+   mkv avs: 02:10:45.0 ish
+   also avs says the mkv is 0.2s longer, really pretty close to ffmpeg's thing...
+    
+== snow white DVD ==
+  has a plus 5 freako
+  the TS *might* be right on, which would imply ts == 29.97, mkmv = ts*30.03
+
+ wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd)
+  1:23:32 sum powerDVD
+  *except* when you scan to the end, then it's 1:23:28 again
+  my guess is powerDVD isn't keeping track except internally...
+  seeking 1HR "good night" [good] night (her last one)
+  yep it's totally internally inconsistent. Fascinating.
+  
+ TODO hb it straight [?]
+
+  120180 frames in the ts
+    -> 29.97 1:46:50 <sigh>.
+  120183 frames in the mkv <sigh> LOL
+  
+ VLC 
+    sum DVD: 1:23:28 sum (-> 1:23:33.0 TS) -> 1:23:38.0 freako
+ mplayer makemkv: A:5018.0 == 1:23:38 sum
+  oh I feel strange...
+ too many mplayer splits in this one...
+ mpchc 1:23:28 sum DVD
+ mpchc 1:23:28 sum mkv [huh? this mkv thing is confusing me...]
+ check subtitiles +- file against file, DVD snow white
+   ffmpeg ts time: 01:23:32.49
+   ffmpeg mkv: 01:23:38.07 differs from mpchc ? differs from VLC makemkv? TODO
+ vlc mkv: 1:23:38
+ vlc ts: no times
+ ffmpeg mkv: 01:23:38.07
+ ffmpeg ts: 01:23:32.49
+    It appears that makemkv is making certain assumptions that may not be true here?
+
+  makemkv says "length shall be 1:23:11" (oopsy)
+  mediainfo mkv: 1h 23mn 38s 70ms
+
+demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate. only one
+V:   0.0   0/  0 ??% ??% ??,?% 0 0
+  
+  hmm...I'm beginning to wonder if maybe some are more honest than others... ?
+
+  mac dvd player -> 1:23:38 "wall time" [?] anyway it was in lock step, 
+    either 28 or 38 yipes probably...28 I'm thinking bit discrepancy in there 
+    
+  WMP wall time at one hour was 3s ahead of it now...
+    which doesn't agree with mac dvd player? when OSOH they *did* agree? huh?
+      how did this not agree with mac dvd player? what? that's not true, that's impossible LOL
+    end WMP wall time: 1:23:32.8'ish ... sniff ... what the...
+      WMP "says" sum is 1:23:28 -> 1:23:33.0'ish      
+      
+  top of hill "Of one love" mplayer
+    mkv: 01:20:35.38
+    ts: 01:20:29.8 # 30.5 ? hard to tell... it's pretty close at least...
+      "should be" 01:20:30,831 NB the blu-ray subs seemed way different... blu-ray 01:20:14,276 whoa [3 different blu-ray subs agree...]
+    powerdvd: 1:20:26 for that one
+    
+== iq ==
+
+  this one mkv seems to have an extra second in there...
+    1h 35mn 49s 596ms and "expected" it errantly to be: 1:35:52.4...it's like half and half!
+    ts is 1h 35mn 47s 41ms which might be right on compared to the DVD
+    so this one implies that makemkv is just messed up? huh? ts seems fine again...
+    
+  maybe sometimes mkv stretches it double in error somehow?
+    maybe it has *both* problems...LOL
+  
+  wall time seems to be 29.97 (DVD player reports 30) first hour at least
+    at 1:09 it appeared to be like 6s "back", though makemkv may have interfered slightly...
+    at 1:20 7s
+    sum: 1:35:49.14'ish walltime
+  
+  so maybe normal subtitles are from rips, which have been transcoded to precisely 23.97 fps,
+    so my files aren't precisely that...we shall see if this hypothesis holds true...
+
+V:   1.0  22/ 22 17302% 18%  0.0% 0 0
+
+
+demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
+V:   1.0  23/ 23 10748% 10%  0.0% 0 0                                          V:   1.0  24/ 24 10319%  9%  0.0% 0 0                                          V:   1.1  26/ 25 9846%  9%  0.0% 0 0                                           demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+
+  mplayer for the mkv seemed to creep up?  somehow it seemed to get messed up...
+    TODO avidemux/quality editor for these various and its frames...what the?
+    replaying mkv might not work so hot...
+      maybe I can remux somehow first... [?]
+      maybe it's because of all those transitions which caused lossy-stuff within the mkv... [?]
+    
+  can I use handbrake on mkv output? does it look better?  is it just this one dvd?
+    does the mkv match DVD
+    
+  mplayerdump.mencoderforceidx sum: 1:39:17 (4 minutes extra...somethin went wrong...)
+  DVD sum: 1:35:41 -> 1:35:46.7'ish, so maybe we're close...round up LOL
+  mkv sum: 1:35:49 [partially expected, partially huh?]
+  mkv mac vlc 1:25:20 ish [ugh]
+    originally reports it as 1:35:35 in its dashboard, this is without daspi
+  mac 
+    DVD player: 1:35:41
+      converted: sum should be 1:35:46.7
+        and if again reconverted -> 1:35:52.4 [!]
+    mplayerx cannot play DVD/seek right
+    mplayerx on makemkv sum: 1:35:53
+    vlc on makemkv sum 1:35:49
+    mplayer command line makemkv end/sum TS: A:5749.5 == 1:35:49.5
+    seems zactly the same
+  what about ffmpeg against that thing?
+  ffprobe mkv
+    2810.792000 last video pts -> 46:50 or something [?]
+  ffmpeg mkv->ts file: 01:35:47.09
+  ffmpeg mkv: 01:35:49.59
+    * maybe just this one is messed up? *
+
+  AC3 can apparently have 6 channels: Decoding AC3 stream (track 2): Bitrate: 448Kbps Sample Rate: 48KHz Channels: 6
+       Stream #0.1(eng): Audio: ac3, 48000 Hz, 5.1, s16, 448 kb/s    Metadata:  title           : 3/2+1
+
+  midentify mkv: 1:35:49.6
+    midentify ts: 1:00:00
+    VLC doesn't get any timing info from it
+    
+ handbrake seems to be "smart" about it
+  mkv "1:35:49" "results in 1:35:45"
+  and ts "1:35:45" results in "1:35:45"
+    except transcoded is 49 and 47 s. What? (47 might be expected...hmm...)
+
+== mplayer EDL ==
+
+this works, 1:00 type timestamps are ignored
+# a comment
+10 15 0 # a comment2 also works
+
+mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd ok) title 3
+
+====
 
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
+
 == upconvert mplayer ==
- guess I prefer mplayer to VLC at this point anyway <sigh> EDL is just better...
+
+=== upconverting to the huge monitor===
+ with the black laptop:
+   "normal" dvdnav seemed to work all right, slightly jerky at times.
+  I think that upconverting to the little monitor used more cpu.
+  Anything to the big screen maxed out the cpu.
+  I "think" it looked better upconverted than not, big screen too, though both really pretty good.  Except the computer not LOL.
+  
+  work comp. can scale snow white like 30% cpu [is that out of 50?] to 1680...
+    25% cpu at 1680
+    1.5 res: 40%, tidge fuzzy
+      2520
+    2x res: 40%, awesome
+    2160 doesn't seem as good as 3360. I don't know why...
+    3360 -> 1680 in software is *way* too slow...
+      3360 seems better, anyway...
+    2160 versus 1680 didn't seem to make much difference...
+    2520 vs 2880 versus 3360
+    2520 38% cpu
+    2880 looks pretty close...
+      barely prefer 3360, but...it may have been a different frame
+    barely prefer 2880 to 2520
+    does 3360 drop?
+      A:  14.6 V:  10.0 A-V: yep (work comp.)
+      still seemed to use 40% cpu when multi-cored (sounds like an apple)
+      -lavdopts threads=2 13.9 versus 14.2s for first 10s [yes! LOL]
+    3360 seems smoother than 2880, like much less pixelated.
+  
+  TODO try various DVD's with 1680 versus 3360...are they all supah clear?
+  
+  
+  
+ roary, mac:
+   1280: fine
+   1500: toast speed-wise
+   2500: fails
+
+=== various options ===
+
+ 3360 looks quite crisp so far.
+ 3360 didn't seem to help 1024 [?]
+   maybe nothing can help 1024?
+   the book should have looked better than "normal" DVD
+   couple compare 3360 with 2048 in 1024, see what happens there...LODO
+
+ low cpu mode? unsharp filter without upscaling. [?]
+
+ http://forum.beyond3d.com/showthread.php?p=1008342
+    DVD: 
+      lanczos 2, -vf size=0:1 [accurate rounding] ...
+      3x resolution [!]
+      "Luma Sharpen to 1.00-1.50 and Chroma Sharpen to 0.00. Enable Accurate Rounding."
+         I don't know if accurate rounding is possible with mplayer+lanczos tho...
+      dn3dhq put Chroma to 1.00, Time to 4.00 and Luma to 0.00.
+        hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp] how?
+      deinterlacing [I don't think this matters, really I don't]
+    xvid:
+      Denoise3D settings, put Chroma to 1.00, Time to 4.00 and Luma to 0.00.
+      postprocessing "strongest" ("or SPP through usually broken")
+      mplayer accurate deblocking
+      lanczos luma 0.5-1.5 chroma 0, accurate rounding
+      deinterlacing: - Set it to Framerate doubler, and "no motion estimation - blend images"
+
+TODO http://lists.mplayerhq.hu/pipermail/mencoder-users/2009-May/010344.html says use pp=al after hqdn3d to help with trails/blurring
+
+ TODO compare with mpc-hc with ffdshow...same?
+
+ guess I prefer mplayer to VLC at this point anyway <sigh> EDL support is just better...
  is "-mc". It means "max A-V time correction per frame", and defaults to 0.01. For good input, you can go down even to 0.0001, but 0.001 i
   -vop denoise3d
   -vop hqdn3d
   http://freshmeat.net/articles/fine-tuning-mplayer
+
+ -sws 9 lancosz
+
+http://forum.doom9.org/archive/index.php/t-140961.html:
+  says "if -ssf ls=90 doesn't sharpen, try a real unsharp filter"
+  http://web.archiveorange.com/archive/v/JbcLEyHOOOqckAEhZ7Hd says the same thing. broken?
+  LODO see if sharpen is working at all even
+
+http://www.neowin.net/forum/topic/422992-a-how-to-guide-upconverting-video-using-ffdshow:
+  denoise3d hq
+    luma 7 chroma 7 time 5
+  "specify size 1280x768" "no auto aspect correction" TODO why?
+    might not matter? might let it "go full screen 4 sure"?
+  lancozsa 10
+    "Luma sharpen" and "Chroma sharpen" to 1.50 (out of 2.0)
+  
+http://blog.thewombat.org/2008/11/how-to-use-vlc-096-as-upscaling-media.html  
+  "add a video post processing filter"
+  "add a video scaling filter"
+  "add sharpen as a filter" (manually)
+  set sharpen strength to 0.15 (0.25 for hq)
+  "set post processing strength to 6" (lower for lesser CPU)"
+
+No. As long as the GL renderer works with your hardware/driver combination, it's a lot better then the directx/overlay renderer.
+You might want to try "gl:yuv=4:cscale=5:lscale=5" for even better rendering quality...
+http://forum.doom9.org/showthread.php?p=1089768:
+  hardware gl: gl:yuv=4:cscale=5:lscale=5
+
+This guy has some very aggressive sharpening parameters [LODO try out]:
+  http://www.nrtm.de/index.php/2010/09/11/mplayer-aggressives-scharfen/
+
+   "use the following syntax to playback DVD movies."
+Code:
+mplayer -pp 0 -vf-clr -vf pullup,yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0 -ssf ls=100 dvd://
+
+Let us assume that hqdn3d=2:1.5:3 is a good way to clean up MPEG-2 and yadif=1 is a good decent de-interlacer. I would say that the following should work ok for most content.
+mplayer -vf yadif=1,hqdn3d=2:1.5:3,scale=-1:-1:0
+Maybe adding -ssf ls=100 will increase the sharpness of the content to bring out the details of the video. With mencoder, it is a little different on what options you can use compared to mplayer, so play around with the settings."
+
+http://ubuntuforums.org/showthread.php?t=77329&page=6
+  hqdn3d=2:2:3,pp=ac
+     like this for anime...LOL I can see my jruby wrapper now...
+  
+hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
+  
+http://forum.doom9.org/archive/index.php/t-79335.html lists some less aggressive hqdn3d options...
+
+#This sets the postprocessing into overdrive using all possible spare cpu cycles to make the movie look better
+autoq=100
+vf=pp=de,hqdn3d
+
+http://freshmeat.net/articles/fine-tuning-mplayer:
+  -mc 0.001 # except for slow CPU oh my! 0.5? seconds per frame...I guess this in conjunction with autosync...
+  hqdn3d=3.5:7:5 # never > 15 for the last number
+  comment:
+     -vop pp=hb:y/vb:y and only on low-res (no post processing for HQ videos...hmm...)
+
+-autosync 1 (or more) might resync my cruddy DVD's... LODO
+ 
+  more [open]gl: "use these options" http://forum.doom9.org/archive/index.php/t-132325.html hardware renderer
+  
+  -vo gl by itself causes extreme stuttering and 100% cpu use on the work desktop...maybe not worth it, eh?
+  
+===
+ hqdn3d=7:7:5 # 3.5:7:5 for mpeg??
+ -sws 9
+   -vop scale=10 # lancosz inensity 10...I think...huh?
+ -ssf ls=75 # out of 100? scaling sharpen filter (luma) http://www.linuxquestions.org/questions/linux-software-2/how-can-i-get-top-quality-video-with-mencoder-636846/ uses 100 ...
+ -ssf cs=75 # scaling sharpen filter chroma
+
+post processing options:
+  "-autoq -vop pp"
+  "-vop pp=ab/hl"
+  "-pp 6" # deprecated
+
+ummm...does lanczos accept  -ssf ls=75.0 -ssf cs=75.0 ?? or do I still need to add an unsharpen filter somehow?
+
+[swscaler @ 013a25f4]using unscaled yuv420p -> yuv420p special converter
+  VO: [directx] 720x480 => 720x540 Planar YV12
+  is definitely bad :P
+
+none at all looks...pretty good...
+
+https://discussions.apple.com/thread/1771812?threadID=1771812
+  -zoom -sws 9 -vf scale=1280:720:::9:10 -ssf ls=74.0 -ssf cs=7.0
+  +- for audio: -ac hwac3 hwdts
+  how useful is post processing?
+  # do I need hqdn3d at all here?
+  do I run well on those images?
+  is lancosz 10 best?
+  
+  -vf spp might help, use lots of cpu [?]
+  
+=== current sum ===
+mplayer filename -autoq 6 -sws 9 -vf hqdn3d=7:7:5,pp,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+or 
+-sws 9 -vf hqdn3d=7:7:5,scale=1280:-1:0:0:10  -ssf ls=75.0 -ssf cs=75.0
+or
+-sws 9 -vf hqdn3d=2:1.5:3,scale=1280:-1:0:0:10 -ssf ls=75.0 -ssf cs=75.0
+
+==== prop ====
+"upscaling"
+http://forum.videolan.org/viewtopic.php?f=14&t=23579&start=0&st=0&sk=t&sd=a
+http://www.neowin.net/forum/topic/615696-permanent-upconversion-in-software/
+http://forum.videohelp.com/threads/280895-Is-there-computer-dvd-software-that-will-upconvert-regular-dvds
+http://forums.cnet.com/7723-7596_102-285455.html
+http://www.avsforum.com/avs-vb/showthread.php?t=1060735
+http://forums.macrumors.com/showthread.php?t=1129925
+wikipedia LOL
 
 == WMC/other EDL plugins ==
 
@@ -324,7 +729,7 @@ mplayer.raw: mplayer -dumpstream dvd://1 -dvd-device d: -dumpfile dvdout.mpg
   a147eb922cb00eff5d3a25e155390380 *mplayer.dumpstream.2.mpg
   total: 188687 frames 2:11:09.828
   fading in c: frame 111
-  lightning hits ground: 188106 02:10:45.595 0.375
+  lightning hits ground: 188106 02:10:45.595 (vlc off by 0.375 ?)
   
 they all have the beginning dot of the poof at 228...
 
@@ -347,7 +752,7 @@ makemkv -c-: 11 MB/s, [says 4.5x] no pauses, 13.5 MB/s, 14.5 MB/s, seems to grow
     opens very slowly in avidemux at home...feels longer...3 minutes to load each time?
     2:11:08.618 188658 frames total
     had to set it to 24 frames [? huh it worked once?]
-    no video, audio jerky r7149
+    no video, audio jerky, r7149
 
 makemkv -> tsmuxer -> avidemux:
   188657 frames total
@@ -522,7 +927,7 @@ handbrake md5's/sizes don't match...
 109243 -rw-r--r--    1 packrd   Administ 223727993 May 25 13:20 Sintel_NTSC-2.dvdcss.2.m4v
 109243 -rw-r--r--    1 packrd   Administ 223728412 May 25 13:47 Sintel_NTSC-2.dvdcss.3.m4v
 
-== timing dvd player time versus clock time: ==
+== timing dvd player time versus clock/wall time: ==
 
 at 1:44:00 or so I seemed about 6s ahead. yup yup.
   at end, I had like 1:53:20'ish'ish [?] (ok probably like 1:53:11 but who knows for sure :P)
@@ -950,7 +1355,7 @@ hulu
 youtube jonah: appears lower quality?
  15: wash your hands before you [eat]
  30: yes well [you] and ...
- 45: big smile, turns [to his right] after duck
+ 45: big smile, turns [to his right]
 
 powerdvd 8:
   15: wash your hands before you [eat] --- wash your hands [before] you eat --- wash your [hands] before you eat LOL
@@ -992,8 +1397,7 @@ saints and soldiers (chrome work netflix):
  1:30: "copyright 2003...all rights reserved" is about in the middle, maybe barely above
 
 jonah if you watch it all the way through
-  30: my uncle [was] a big star 
-    
+  30: my uncle [was] a big star     
 
 VLC jonah_edit.tmp.mpg
  15: (on camel) do not fight, do not cheat [wash] your hands
