@@ -414,11 +414,11 @@ module SensibleSwing
         play_mplayer_edl 
       }
       
-      @create = new_jbutton( "Create edited copy of video on Your Hard Drive" )
+      @create = new_jbutton( "Create edited copy of DVD/file on Your Hard Drive" )
       @create.tool_tip = <<-EOL
-        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
+        This takes a file and creates a new file on your hard disk like dvd_name_edited.mpg that you can watch when it's done.
         The file you create will contain the whole movie edited.
-        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it will continue eventually.
+        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
       EOL
       @create.on_clicked {
         do_copy_dvd_to_hard_drive_via_file false

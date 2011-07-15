@@ -1,6 +1,7 @@
-== ==
+== 0.24.3 ==
 
 Distribution cleanups
+polish up UI.
 
 == 0.24.2 ==
 
@@ -25,6 +26,8 @@ Added a demonstration of using "static overlay" as a form of muting.  Basically,
 the current audio, instead of muting it. Actually works, though oddly.
 
 Subtitles now are split into "bad" profanities and "mild" profanities for easier parsing.
+
+Can use multiple threads to speedup playback.  Slight speedup for mpeg2.  Thanks mplayer guys!
 
 == 0.24.1 ==
 
