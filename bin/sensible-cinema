@@ -124,7 +124,6 @@ module SensibleSwing
     def setup_upconvert_buttons
     
       @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
-        # ?? drive, volume, dvd_id = choose_dvd_drive_or_file true
         warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
@@ -138,9 +137,13 @@ module SensibleSwing
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
       
+      add_text_line ''
+      
       @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
         add_setup_upconvert_options
       end
+      add_text_line "Note that sensible cinema will also upconvert when it plays back edited DVD's/files."
+      add_text_line ''
       
     end
     
@@ -180,19 +183,19 @@ module SensibleSwing
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
         display_current_upconvert_setting
-        # -Processing method: mplayer with accurate deblocking ??
+        # -Processing method: mplayer with accurate deblocking ???
       }
-      new_jbutton("set upconvert options to experimental DVD/HQ-style playback") {
+      new_jbutton("set upconvert options to experimental style playback") {
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
-        LocalStorage[UpConvertEnglish] = "experimental DVD/HQ"
+        LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
       }
       
       slider = JSlider.new
-      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, but uses more cpu, default 4)"));
+      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 4)"));
   
-      slider.maximum=6# LODO non 6 here...
+      slider.maximum=6# LODO non 6 here...hmm...
       slider.minimum=0
       slider.setMajorTickSpacing(1) 
       slider.setPaintTicks(true)
@@ -203,6 +206,7 @@ module SensibleSwing
       
       slider.add_change_listener { |event|
         if slider.value >= 2
+          p 'set slider to', slider.value  # LODO tell them.
           LocalStorage['multiple_half_screens'] = slider.value
         else
           show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
@@ -210,7 +214,7 @@ module SensibleSwing
       }
       slider.set_bounds(44, @starting_button_y, @button_width, 56)
       2.times {increment_button_location}
-      @panel.add(slider); #//     content.add(slider, BorderLayout::SOUTH);
+      @panel.add(slider)
     end
     
     def display_current_upconvert_setting
@@ -220,7 +224,7 @@ module SensibleSwing
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      "Upconvert options #{  settings ? "are set to #{settings}" : "not currently set"}.\nNote that sensible cinema will also use these when it plays back edited DVD's/files."
+      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}."
     end
     
     def get_upconvert_vf_settings
@@ -477,11 +481,7 @@ module SensibleSwing
       add_text_line "Welcome to Sensible Cinema!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      if LocalStorage[UpConvertEnglish]
-        add_text_line "        Upconvert settings are at:" + LocalStorage[UpConvertEnglish]
-      else
-        add_text_line ""
-      end
+      add_text_line ""
       add_text_line ""
       
       if we_are_in_upconvert_mode
