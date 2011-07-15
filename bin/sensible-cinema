@@ -134,7 +134,9 @@ module SensibleSwing
       
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
-      add_set_upconvert_options_button
+      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
+        setup_upconvert_options
+      end
       
     end
     
@@ -150,9 +152,6 @@ module SensibleSwing
       
     
     def add_set_upconvert_options_button
-      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
-        setup_upconvert_options
-      end
     end
 
     UpConvertKey = 'upconvert_setting'
@@ -166,6 +165,7 @@ module SensibleSwing
         LocalStorage[UpConvertKey] = nil
         LocalStorage[UpConvertKeyExtra] = nil
         LocalStorage[UpConvertEnglish] = nil
+        display_current_upconvert_setting
       }
       medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
@@ -335,8 +335,6 @@ module SensibleSwing
         open_file_to_edit_it EdlTempFile
       end
       
-      add_set_upconvert_options_button
-
       add_text_line 'Create Options that first create/use a local intermediary file:'
 
       @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)" )
@@ -460,7 +458,11 @@ module SensibleSwing
       add_text_line "Welcome to Sensible Cinema!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      add_text_line ""
+      if LocalStorage[UpConvertEnglish]
+        add_text_line "        Upconvert settings are at:" + LocalStorage[UpConvertEnglish]
+      else
+        add_text_line ""
+      end
       add_text_line ""
       
       if we_are_in_upconvert_mode
