@@ -117,6 +117,8 @@ module SensibleSwing
     end
 
     LocalStorage = Storage.new("sensible_cinema_storage")
+    LocalStorage.set_default('multiple_half_screens', 4)
+
     
     def setup_upconvert_buttons
     
@@ -185,6 +187,29 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = "experimental DVD/HQ"
         display_current_upconvert_setting
       }
+      
+      slider = JSlider.new
+      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, but uses more cpu, default 4)"));
+  
+      slider.maximum=6# LODO non 6 here...
+      slider.minimum=0
+      slider.setMajorTickSpacing(1) 
+      slider.setPaintTicks(true)
+      slider.setPaintLabels(true)    
+      slider.snap_to_ticks=true
+      
+      slider.set_value LocalStorage['multiple_half_screens']
+      
+      slider.add_change_listener { |event|
+        if slider.value >= 2
+          LocalStorage['multiple_half_screens'] = slider.value
+        else
+          show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
+        end
+      }
+      slider.set_bounds(44, @starting_button_y, @button_width, 56)
+      2.times {increment_button_location}
+      @panel.add(slider); #//     content.add(slider, BorderLayout::SOUTH);
     end
     
     def display_current_upconvert_setting
@@ -201,9 +226,9 @@ module SensibleSwing
       template = LocalStorage[UpConvertKey]
       if template
         # choose width of widest monitor (why would they display it on the other?)
-        x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
-        outgoing = template.gsub('SCREEN_X', (x*2).to_i.to_s) # has to be an integer...
-        outgoing
+        screen_x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
+        screen_multiple = LocalStorage['multiple_half_screens']/2
+        template.gsub('SCREEN_X', (screen_x*screen_multiple).to_i.to_s) # has to be an integer...
       else
         nil 
       end
