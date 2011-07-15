@@ -1,5 +1,5 @@
 "mutes" => [
-  # she's clean!  At least nothing obvious...
+  # she's clean!  At least nothing obviously bad in there...
 ],
 
 "blank_outs" => [
