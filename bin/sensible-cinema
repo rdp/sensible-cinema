@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-print 'Loading Sensible Cinema...'
+print 'Starting Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
   require 'sane' 
@@ -109,23 +109,24 @@ module SensibleSwing
     end
     
     def force_accept_license_first
-      require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-      require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
-          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
-      LocalStorage['main_license_accepted'] = VERSION
+      if !(LocalStorage['main_license_accepted'] == VERSION)
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+            "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+        LocalStorage['main_license_accepted'] = VERSION
+      end
     end
 
     LocalStorage = Storage.new("sensible_cinema_storage")
     LocalStorage.set_default('multiple_half_screens', 4)
-
     
     def setup_upconvert_buttons
     
-      @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
+      @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
         # ?? drive, volume, dvd_id = choose_dvd_drive_or_file true
         warn_if_no_upconvert_options_currently_selected
-        filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
+        filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
       end
       
@@ -137,7 +138,7 @@ module SensibleSwing
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
       
-      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
+      @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
         add_setup_upconvert_options
       end
       
@@ -219,7 +220,7 @@ module SensibleSwing
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      "Upconvert options #{  settings ? "are set to #{settings}" : "not currently set"}"
+      "Upconvert options #{  settings ? "are set to #{settings}" : "not currently set"}.\nNote that sensible cinema will also use these when it plays back edited DVD's/files."
     end
     
     def get_upconvert_vf_settings
@@ -255,9 +256,9 @@ module SensibleSwing
       }
       
 
-      @create_dot_edl = new_jbutton( "Create an associatable moviefilename.edl file")
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file")
       @create_dot_edl.tool_tip = <<-EOL
-        Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
+        Create a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
         if it exists, and automatically use it .edl to show that file edited played back.
         If you use smplayer, note that you'll need to download the "lord mulder mplayer"
@@ -462,9 +463,7 @@ module SensibleSwing
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
-      if !(LocalStorage['main_license_accepted'] == VERSION)
-        force_accept_license_first
-      end
+      force_accept_license_first
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
       panel = JPanel.new
@@ -515,7 +514,7 @@ module SensibleSwing
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Come again!'
-        java.lang.System.exit 0
+        System.exit 0
       }
 
       increment_button_location
@@ -786,7 +785,7 @@ module SensibleSwing
           system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
           puts "Please restart after reading license agreement, to be able to then accept it."
         end
-        System.exit 1
+        System.exit 0
       end
       if returned == 2
         p 'license not accepted...exiting'
@@ -860,11 +859,12 @@ module SensibleSwing
         path = RubyWhich.new.which('smplayer_portable')
         if(path.length == 0)
           # this one has its own installer...
-          show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
-          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
+          show_blocking_message_dialog("It appears that you need to install a pre-requisite dependency: MPlayer for Windows (MPUI).
+          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-complete), 
+          then restart sensible cinema.  NB that it takes awhile to install MPUI.  Sorry about that.", 
           "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/detail?name=MPUI.2011-06-09.Full-Package.exe"
-          System.exit(1)
+          System.exit 0
         end
       end
     end

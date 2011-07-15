@@ -1,3 +1,7 @@
+== ==
+
+Distribution cleanups
+
 == 0.24.2 ==
 
 In some recent version or other, added ability to start EDL's from an offset
@@ -19,6 +23,8 @@ It even mutes and skips appropriately.  See demo (must be run from a web server 
 
 Added a demonstration of using "static overlay" as a form of muting.  Basically, play some static so that it obscures
 the current audio, instead of muting it. Actually works, though oddly.
+
+Subtitles now are split into "bad" profanities and "mild" profanities for easier parsing.
 
 == 0.24.1 ==
 
