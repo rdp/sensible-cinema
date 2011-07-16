@@ -371,12 +371,21 @@ module SensibleSwing
         Basically download it from opensubtitles.org (possibly from other sites, too),
         (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
+        NB that you'll first want/need to *carefully* double check your subtitle
+        file with the actual DVD.  (ex: smplayer, hit the 'o' button to display
+        the current timestamp, then go to the end, stop at some point with text
+        and hit the '.' key until a subtitle very first displays.
+        Next convert that number to 29.97 fps (using the button given).
+        The numbers should match precisely.  If they don't, edit this file
+        so that it will have some offsets given.
       EOL
 
       @parse_srt.on_clicked do
-        filename = new_existing_file_selector_and_select_file("Pick srt file:")
-        parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
-        File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
+        filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
+        add_to_beginning = get_user_input("How much time to subtract from the beginning of each subtitle entry (ex: 1:00 -> 1:01 becomes 0:59 -> 1:01)", "0.0")
+        add_to_end = get_user_input("How much time to add to the end of each subtitle entry (ex: 1:00 -> 1:01 becomes 1:00 -> 1:02)", "0.0")
+        parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f # flight: TODO necessary typically ??? 0.35, 0.25 
+        File.write(EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed)
         open_file_to_edit_it filename, true
         open_file_to_edit_it EdlTempFile
       end
@@ -618,12 +627,14 @@ module SensibleSwing
 
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-"dvd_title_track" => "1", # the show info button will tell you title length (typically longest is main feature)
-# "not edited out stuff" => "some violence",
-# "closing thoughts" => "still...",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "6095", # sum length, on the DVD, use the show DVD info button to retrieve it.
+# "opensubtitles_number" => "1234567",
+# "not edited out stuff" => "some violence left in...",
+# "closing thoughts" => "only did the...",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  Additive currently.  12345.6 ok. In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
         EOL
-      # frame0 is the name of our window LOL tough to avoid that collision...hmm...
+      # TODO auto-ify above, move docs to a file in documentation.
       filename = EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
@@ -965,7 +976,7 @@ module SensibleSwing
     
     def get_user_input(message, default = '', cancel_ok = false)
       received = JOptionPane.showInputDialog(message, default)
-      raise 'user canceled' unless received unless cancel_ok
+      raise 'user cancelled' unless received unless cancel_ok
       received
     end
     

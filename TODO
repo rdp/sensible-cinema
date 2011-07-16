@@ -21,16 +21,19 @@
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
+   VLC "insert missing scene" demo, overlay section with image (mplayer?)
  
 == yes do ordered in conjunction with the above probably ==
   mac court jester upconvert: without -nocache, with aggressive sync....
+    jester at work...still laggy lips?
   mac bat files
   C player
   unit tests
-  release at some point...
-  mulder response
+  subs: research if at beginning, add extra offset...hmm... 
+  release at some point...Jon?
+
   consistency for flight of nav. srt? huh?
-  consistency of others, also "DVD reported full-time versus ts time" for others...
+    consistency of others, also "DVD reported full-time versus ts time" for others...
   lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -198,6 +201,7 @@
   some way to hide spoilers, like soundtrack adds that ruin the movie for ya...
   decide on "community" -- should it be all my own community? mymovies community?
   the auto-matcher filename to subtitles [?]
+    auto-downloader based on filename/dvd name/md5 ?
   "media browser" plugin?
   @makemkv: show us the title numbers, and number them *by those*
   @macports: set notestxt \
@@ -214,13 +218,12 @@
   create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
     just create the side by side .EDL for various files for people.
   make a mymovies plugin to auto-use EDL's somehow... ?
-  auto download subtitles from opensubtitles somehow err other...
   an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."
   check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
-  allow for filter subtitles, a la "always skip" [?]
+  allow for filtered subtitles, a la "always skip" [?]
   allow for AAF or OMF export, as well as EDL (?)
-  C specific portion [A,B] player
   also edit the playback of trailers et al [?] hmm...
+    allow for mplayer too? hmm...
   @mplayer: double click default to full screen! :) and enter default to dvdnav select!
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
@@ -239,8 +242,6 @@
   research the gplv3, add terms. Maybe want real lawyer, even?
   sons of provo "music video" EDL
   it can "slow certain sections down" that might look way cool! LOL
-  how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
-    also xbmc has a plugin
   script powerdvd via keystrokes
   VLC: suggest uservoice
   can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
@@ -271,9 +272,9 @@
   machine learning for video analysis [?]
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
-  @smplayer: why do you sometimes start with subtitles enabled?
+  @mplayer: why do you sometimes start with subtitles enabled?
   don't need to include in package rdp-win32screenshot et al for just DVD work...
-  bring in batch file mplayer :)
+  bring back batch file mplayer :)
   make my website slightly more "pictures-zy"
   check why out of sync my turn on earth on blacky MPH-HC
     does it with other players...?
@@ -305,7 +306,6 @@
     http://themoviedb.lighthouseapp.com/projects/17044-themoviedborg/tickets/142
     their mkv player probably does some lookup 'er other...maybe...for dvd's
     I really need to tell tvdb to allow for discid, and/or themoviedb to allow for series'
-  @themoviedb: allow for series, also allow for subtitles?
   @mplayer: some way to not have to use phreaky phreaky pipes in doze ("+1")
   @ffmpeg: gop 12 for ntsc-dvd?
   can watch conference like a music video :)
