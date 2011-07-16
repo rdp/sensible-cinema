@@ -1,51 +1,45 @@
 A few notes for developers:
 
-You can test the program out out by (on windows) installing daemon tools, then mounting the DVD of "big buck bunny" (open source, freely available movie)
+You can test the DVD portion of the program out by mounting the DVD of "big buck bunny" 
+http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
+On windows daemon tools helps there, or "magic ISO" or the like.
+
 Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against (a slightly more cross platform approach).
 
-There are some demo DVD ISO's for development in 
-http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos (my own DVD, I release it under the CC license, as well as some
-other CC released licensed DVD's).
+Then rip it and use the output.
 
-You should be able to run the program and test it out against said DVD, put it through its paces to demo it, fix it, etc.
+Or if you have a DVD that already has a edit list available for it, you could use that, or create
+a new edit list for a DVD you own, etc.
 
-Or if you have a DVD that already has a edit list available for it, you could use that, obviously.
-
-The main development roadmap is in the TODO. If you have any feedback/feature requests, et al, post an
+The main development roadmap/backlog is in the TODO. 
+If you have any feedback/feature requests, et al, post an
 issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
-
-Sensible cinema is written in jruby, and currently packages itself up as a zip with jruby-complete.jar 
-with its required dependencies (see the Rakefile) for windows.
 
 To run it from source, you may need to install a few gem dependencies (listed in the Rakefile)
 
-or install them automatically:
+or to install them automatically:
 
 $ jruby -S gem install sensible-cinema # installs dev. dependencies
 Note that, in order to run the unit tests, you'll want to checkout the source from the repository to get all the test images
 
-The tests are in the spec directory, though some of them are out of date as development has focused in other areas.
+The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.  
 
-Note: you transfer (c) of materials to sensible cinema when you submit patches.
+Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
 
 To run it via command line:
 $ jruby bin/sensible-cinema # DVD output "parser/cutter"
 $ jruby bin/sensible-cinema --create-mode # DVD output "parser/cutter" create mode [advanced]
+$ jruby bin/sensible-cinema --upconvert-mode # DVD/video upconverting player
 $ jruby bin/sensible-cinema-cli # the experimental OCR tracker for arbitrary online/local/internet players.
   See "Advanced Usage"
   
-See also the included rake file for bundling/running all the specs.
-
 Feedback/contribution welcome :)
 
 == mac os x developers ==
 
-You'll have to install a few dependencies.  It will tell you which at runtime, or check the README
+You'll have to install a few dependencies.  It will tell you which at runtime, 
+or see the installation instructions: http://rogerdpack.t28.net/sensible-cinema/
 
-== Advanced Usage ==
+== OCR screen tracker ==
 
-For the screen tracker (the experimental version, see file experimental_online_player_ocr_readme.txt),
-you could optionally specify the scene descriptions list and player list on the command-line, so you don't want to have
-to re-select them like this will tell you how to run it from the command line:
-
-C:\sensible-cinema-git-clone>jruby bin\sensible-cinema-cli --help
+For the screen tracker (the experimental version, see file experimental_online_player_ocr_readme.txt).

@@ -387,6 +387,7 @@ module SensibleSwing
         parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f # flight: TODO necessary typically ??? 0.35, 0.25 
         File.write(EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed)
         open_file_to_edit_it filename, true
+        sleep 0.3 if OS.mac? # add delay...
         open_file_to_edit_it EdlTempFile
       end
       
