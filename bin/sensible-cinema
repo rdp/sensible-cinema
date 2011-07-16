@@ -127,13 +127,13 @@ module SensibleSwing
         warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
-      end
+      end.tool_tip= "This plays back a movie file, like moviefile.mpg, using your current upconverter settings"
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         warn_if_no_upconvert_options_currently_selected
         play_dvd_smplayer_unedited false, false
       end
-      @watch_dvd_upconvert.tool_tip = "If it fails, try setting upconvert options to less of a screen resolution multiple.\nOr try playing the DVD with VLC first, then it will work."
+      @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work."
       
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
@@ -142,7 +142,7 @@ module SensibleSwing
       
       @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
         add_setup_upconvert_options
-      end
+      end.tool_tip= "Allows you to set your upconvert options [ex: to be more aggressive, etc.]"
       add_text_line "Note that sensible cinema will also upconvert when it plays back edited DVD's/files."
       add_text_line ''
       
