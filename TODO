@@ -24,6 +24,7 @@
    VLC "insert missing scene" demo, overlay section with image (mplayer?)
  
 == yes do ordered in conjunction with the above probably ==
+  does a release work in mac?
   mac court jester upconvert: without -nocache, with aggressive sync....
     jester at work...still laggy lips?
   mac bat files
@@ -56,11 +57,9 @@
   urug again?
   netflix upconverter
   upconverter tooltips/new message :)
-  upconv: compare with powerdvd
-  if 2 EDL's, still choose title track
-  add an auto "scan for expected title, times"
-    add time to the generator EDL
-    complain if times looks wrong...
+  if 2 EDL's, still choose a title track, playback
+    add largest title to the generator EDL
+    complain if times looks wrong...on playback? sum time
   complain [accomodate option] if start time looks off...600
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
   tighten splits
@@ -68,8 +67,6 @@
   open EDL can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to
-  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
-  add dvd_title_time option
   volume_name => dvd_volume_name
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
@@ -86,7 +83,6 @@
     mac just die with instructions to use tsmuxer first...
   check if some other buttons are now outdated...
   unit tests (all pass)
-  upconvert: a file
   can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, mplayer, http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard/
@@ -94,15 +90,12 @@
   youtube/hulu timings
   split LLC's website+consumer
     get LLC before a "real" domain name
-  upconverter
-    check gl mac
-    check permutations
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @makemkv: timing feels broken weird-like!
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try
-  try disney digital copy
+  try out disney digital copy
   C player:
     folder, look for title.edl
     use DVD navigator
@@ -133,8 +126,8 @@
       use mplayerx well [?] like wrap it...
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   do I need tsmuxer?
-  auto-"guess" the best title...
   add button "fast preview segment" (from dvd)
+    add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
   investigate WMC "call out to smplayer EDL" or the like...
 
@@ -148,9 +141,9 @@
   todo.subtitle
 
 == DVD decide later to move up or down ==
-  add button "fast preview one" (from file)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
+  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   investigate xbmc dvd edl how do you do that? [+- real dvd]
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)

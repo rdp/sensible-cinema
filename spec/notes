@@ -272,6 +272,8 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
 
 === various options ===
 
+ -vo gl fails on a mac [huh?]
+
  3360 looks quite crisp so far.
  3360 didn't seem to help 1024 [?]
    maybe nothing can help 1024?
