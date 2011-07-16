@@ -270,6 +270,7 @@ module SensibleSwing
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
+        @display_unique.simulate_click # for now...
       end
       
       @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
@@ -372,33 +373,12 @@ module SensibleSwing
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
 
-
-
-require 'jruby/profiler'
-  
-  
-
       @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
-p 'here1', Time.now.to_f
-parsed = nil
-  profile_data = JRuby::Profiler.profile do
-p filename
         parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
-
-end
-p 'here2', Time.now.to_f
-
-  profile_printer = JRuby::Profiler::GraphProfilePrinter.new(profile_data)
-  profile_printer.printProfile(STDOUT)
-
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
-p 'here3', Time.now.to_f
         open_file_to_edit_it filename, true
-p 'here4', Time.now.to_f
         open_file_to_edit_it EdlTempFile
-p 'here5', Time.now.to_f
-
       end
       
       add_text_line 'Create Options that first create/use a local intermediary file:'
@@ -584,6 +564,8 @@ p 'here5', Time.now.to_f
         extra_options += " -slang en "
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
+       else
+        extra_options += " -font /Library/Fonts/Arial.ttf "
        end
        extra_options += " -fs " # full screen
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
@@ -920,7 +902,6 @@ p 'here5', Time.now.to_f
     end
     
     def open_file_to_edit_it filename, start_minimized=false
-     p 'opening...'
       if OS.windows?
         if start_minimized
           system_non_blocking "start /min notepad \"#{filename}\""
@@ -928,7 +909,7 @@ p 'here5', Time.now.to_f
           system_non_blocking "notepad \"#{filename}\""
         end
       else
-        system_non_blocking c = "open -a TextEdit \"#{filename}\""
+        system_non_blocking "open -a TextEdit \"#{filename}\""
       end
     end
 
