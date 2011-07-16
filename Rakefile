@@ -63,7 +63,7 @@ def get_transitive_dependencies dependencies
    transitive_deps = dependency_spec.runtime_dependencies
    new_dependencies << transitive_deps
   }
-  new_dependencies.flatten
+  new_dependencies.flatten.uniq
 end
 
 task 'clear_and_copy_vendor_cache' do
