@@ -371,12 +371,34 @@ module SensibleSwing
         (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
       EOL
+
+
+
+require 'jruby/profiler'
+  
+  
+
       @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
+p 'here1', Time.now.to_f
+parsed = nil
+  profile_data = JRuby::Profiler.profile do
+p filename
         parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
+
+end
+p 'here2', Time.now.to_f
+
+  profile_printer = JRuby::Profiler::GraphProfilePrinter.new(profile_data)
+  profile_printer.printProfile(STDOUT)
+
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
+p 'here3', Time.now.to_f
         open_file_to_edit_it filename, true
+p 'here4', Time.now.to_f
         open_file_to_edit_it EdlTempFile
+p 'here5', Time.now.to_f
+
       end
       
       add_text_line 'Create Options that first create/use a local intermediary file:'
@@ -898,6 +920,7 @@ module SensibleSwing
     end
     
     def open_file_to_edit_it filename, start_minimized=false
+     p 'opening...'
       if OS.windows?
         if start_minimized
           system_non_blocking "start /min notepad \"#{filename}\""
@@ -905,7 +928,7 @@ module SensibleSwing
           system_non_blocking "notepad \"#{filename}\""
         end
       else
-        system_non_blocking "#{OS.open_file_command} \"#{filename}\""
+        system_non_blocking c = "open -a TextEdit \"#{filename}\""
       end
     end
 
