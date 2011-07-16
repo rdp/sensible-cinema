@@ -1361,7 +1361,7 @@ end
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')
-    puts 'syntax: [--create-mode]'
+    puts 'syntax: [ --create-mode | --upconvert-mode ]'
   else
     a = SensibleSwing::MainWindow.new
     a.set_visible true
