@@ -81,6 +81,7 @@ task 'rebundle_copy_in_dependencies' => 'gemspec' do
    spec = eval File.read('sensible-cinema.gemspec')
    dependencies = spec.runtime_dependencies
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
+   FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
        system("#{OS.ruby_bin} -S gem unpack #{d.name}")
