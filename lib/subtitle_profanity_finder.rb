@@ -20,7 +20,7 @@ module SubtitleProfanityFinder
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
       if sanitized.is_a? Array
         is_single_word_profanity = true
-        raise unless sanitized[1]
+        raise unless sanitized[1] == :full_word
         raise unless sanitized.length == 2
         sanitized = sanitized[0]
       end
@@ -93,7 +93,7 @@ module SubtitleProfanityFinder
 
 
 
-    bad_profanities = {'hell' => ['he..', true],
+    bad_profanities = {'hell' => ['he..', :full_word],
       'g' +
       'o' + 100.chr => 'goodness', 'g' +
       111.chr + 
@@ -113,29 +113,31 @@ module SubtitleProfanityFinder
       'bas' +
       'ta' + 'r' + 100.chr => 'ba.....',
       ((arse = 'a' +
-      's'*2)) => ['a..', true],
+      's'*2)) => ['a..', :full_word],
       arse + 'h' +
       'ole' => 'a..h...',
       arse + 'wipe' => 'a..w....',
       'jes' +
       'u' + 's' => 'j....',
       'chri' +
-      'st'=> ['chr...', true], # allow for christian[ity] [good idea or not?]
+      'st'=> ['chr...', :full_word], # allow for christian[ity] [good idea or not?]
       'sh' +
        'i' + 't' => 'sh..',
-      'a realllly bad word' => ['test edited bad word', true]
+      'a realllly bad word' => ['test edited bad word', :full_word]
     }
     
     bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
 
     semi_bad_profanities = {}
-    ['bloody', 'moron', 'idiot', 'butt', 'sex', 'genital', 'make love', 'crap', 'suck', 
+    ['bloody', 'moron', 'idiot', 'butt', 'sex', 'genital', 'make love', 'suck', 
       'making love', 'love mak', 
       'breast', 
       'piss'].each{|name|
       # butter?
       semi_bad_profanities[name] = name
     }
+    semi_bad_profanities['crap'] = ['crap', :full_word]
+
     all_profanity_combinationss = [convert_to_regexps(bad_profanities), convert_to_regexps(semi_bad_profanities)]
     
     
