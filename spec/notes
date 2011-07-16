@@ -232,7 +232,6 @@ mplayer crash on edl 10 15 0 wordworld welcome to wordworld mac+pc dvdnav (dvd o
 http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparently (video editor)
 
 
-
 == upconvert mplayer ==
 
 === upconverting to the huge monitor===
@@ -245,11 +244,31 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
   work comp. can scale snow white like 30% cpu [is that out of 50?] to 1680...
     25% cpu at 1680
     1.5 res: 40%, tidge fuzzy
+      2520
     2x res: 40%, awesome
-
+    2160 doesn't seem as good as 3360. I don't know why...
+    3360 -> 1680 in software is *way* too slow...
+      3360 seems better, anyway...
+    2160 versus 1680 didn't seem to make much difference...
+    2520 vs 2880 versus 3360
+    2520 38% cpu
+    2880 looks pretty close...
+      barely prefer 3360, but...it may have been a different frame
+    barely prefer 2880 to 2520
+    does 3360 drop?
+      A:  14.6 V:  10.0 A-V: yep (work comp.)
+      still seemed to use 40% cpu when multi-cored (sounds like an apple)
+      -lavdopts threads=2 13.9 versus 14.2s for first 10s [yes! LOL]
+    3360 seems smoother than 2880, like much less pixelated.
+  
+  TODO try various DVD's with 1680 versus 3360...are they all supah clear?
+  
+  
+  
  roary, mac:
    1280: fine
-   1500: toast
+   1500: toast speed-wise
+   2500: fails
 
 === various options ===
 
@@ -276,6 +295,8 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
       mplayer accurate deblocking
       lanczos luma 0.5-1.5 chroma 0, accurate rounding
       deinterlacing: - Set it to Framerate doubler, and "no motion estimation - blend images"
+
+TODO http://lists.mplayerhq.hu/pipermail/mencoder-users/2009-May/010344.html says use pp=al after hqdn3d to help with trails/blurring
 
  TODO compare with mpc-hc with ffdshow...same?
 
@@ -392,6 +413,7 @@ http://forum.videohelp.com/threads/280895-Is-there-computer-dvd-software-that-wi
 http://forums.cnet.com/7723-7596_102-285455.html
 http://www.avsforum.com/avs-vb/showthread.php?t=1060735
 http://forums.macrumors.com/showthread.php?t=1129925
+wikipedia LOL
 
 == WMC/other EDL plugins ==
 

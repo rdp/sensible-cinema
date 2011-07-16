@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-print 'Loading Sensible Cinema...'
+print 'Starting Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
   require 'sane' 
@@ -109,21 +109,23 @@ module SensibleSwing
     end
     
     def force_accept_license_first
-      require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-          "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-      require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
-          'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
-      LocalStorage['main_license_accepted'] = VERSION
+      if !(LocalStorage['main_license_accepted'] == VERSION)
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+            "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../documentation/is_it_legal_to_copy_dvds.txt"), 
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+        LocalStorage['main_license_accepted'] = VERSION
+      end
     end
 
     LocalStorage = Storage.new("sensible_cinema_storage")
+    LocalStorage.set_default('screen_multiples', 2)
     
     def setup_upconvert_buttons
     
-      @watch_file_upconvert = new_jbutton( "Watch a file upconverted (unedited)") do
-        # ?? drive, volume, dvd_id = choose_dvd_drive_or_file true
+      @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
         warn_if_no_upconvert_options_currently_selected
-        filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
+        filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
       end
       
@@ -134,7 +136,14 @@ module SensibleSwing
       
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
-      add_set_upconvert_options_button
+      
+      add_text_line ''
+      
+      @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
+        add_setup_upconvert_options
+      end
+      add_text_line "Note that sensible cinema will also upconvert when it plays back edited DVD's/files."
+      add_text_line ''
       
     end
     
@@ -148,24 +157,18 @@ module SensibleSwing
       @upconv_line.set_text get_current_upconvert_as_phrase
     end
       
-    
-    def add_set_upconvert_options_button
-      @show_upconvert_options = new_jbutton( "Change upconvert options" ) do
-        setup_upconvert_options
-      end
-    end
-
     UpConvertKey = 'upconvert_setting'
     UpConvertKeyExtra = 'upconvert_setting_extra'
     UpConvertEnglish = 'upconvert_english_name'
 
-    def setup_upconvert_options
+    def add_setup_upconvert_options
       none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       none.on_clicked {
         LocalStorage[UpConvertKey] = nil
         LocalStorage[UpConvertKeyExtra] = nil
         LocalStorage[UpConvertEnglish] = nil
+        display_current_upconvert_setting
       }
       medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
@@ -180,14 +183,55 @@ module SensibleSwing
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
         display_current_upconvert_setting
-        # -Processing method: mplayer with accurate deblocking ??
+        # -Processing method: mplayer with accurate deblocking ???
       }
-      new_jbutton("set upconvert options to experimental DVD/HQ-style playback") {
+      new_jbutton("set upconvert options to experimental style playback") {
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
-        LocalStorage[UpConvertEnglish] = "experimental DVD/HQ"
+        LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
-      }      
+      }
+      
+      slider = JSlider.new
+      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 2x)"));
+  
+      # I want tick for 1x, 1.5x, 2x, 2.5x, 3x
+      # so let's do 10 -> 30 
+      
+      labelTable = java.util.Hashtable.new
+      i = java.lang.Integer
+      l = JLabel
+      labelTable.put(i.new(10), l.new("1x"))
+      labelTable.put(i.new(15), l.new("1.5x"))
+      labelTable.put(i.new(20), l.new("2x"))
+      labelTable.put(i.new(25), l.new("2.5x"))
+      labelTable.put(i.new(30), l.new("3x"))
+      slider.setLabelTable( labelTable )
+  
+      slider.maximum=30
+      slider.minimum=10
+      slider.setMajorTickSpacing(10) 
+      slider.setMinorTickSpacing(5) 
+      slider.setPaintTicks(true)
+      slider.setPaintLabels(true)    
+      slider.snap_to_ticks=true
+      
+      slider.set_value LocalStorage['screen_multiples'] * 10
+      
+      slider.add_change_listener { |event|
+        if !slider.value_is_adjusting
+          # they released their hold on it...
+          if slider.value >= 2
+            LocalStorage['screen_multiples'] = slider.value/10.0
+            display_current_upconvert_setting
+          else
+            show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
+          end
+        end
+      }
+      slider.set_bounds(44, @starting_button_y, @button_width, 66)
+      2.times {increment_button_location}
+      @panel.add(slider)
     end
     
     def display_current_upconvert_setting
@@ -197,16 +241,16 @@ module SensibleSwing
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      "Upconvert options #{  settings ? "are set to #{settings}" : "not currently set"}"
+      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}. (multiplier #{LocalStorage['screen_multiples']})"
     end
     
     def get_upconvert_vf_settings
       template = LocalStorage[UpConvertKey]
       if template
         # choose width of widest monitor (why would they display it on the other?)
-        x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
-        outgoing = template.gsub('SCREEN_X', (x*1).to_i.to_s) # has to be an integer...
-        outgoing
+        screen_x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
+        screen_multiple = LocalStorage['screen_multiples']
+        template.gsub('SCREEN_X', (screen_x*screen_multiple).to_i.to_s) # has to be an integer...
       else
         nil 
       end
@@ -233,9 +277,9 @@ module SensibleSwing
       }
       
 
-      @create_dot_edl = new_jbutton( "Create an associatable moviefilename.edl file")
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file")
       @create_dot_edl.tool_tip = <<-EOL
-        Create a moviefilename.edl file (corresponding to moviefilename.some_ext which already exists)
+        Create a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
         if it exists, and automatically use it .edl to show that file edited played back.
         If you use smplayer, note that you'll need to download the "lord mulder mplayer"
@@ -329,12 +373,10 @@ module SensibleSwing
         filename = new_existing_file_selector_and_select_file("Pick srt file:")
         parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
         File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
-        open_file_to_edit_it filename
+        open_file_to_edit_it filename, true
         open_file_to_edit_it EdlTempFile
       end
       
-      add_set_upconvert_options_button
-
       add_text_line 'Create Options that first create/use a local intermediary file:'
 
       @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)" )
@@ -389,11 +431,11 @@ module SensibleSwing
         play_mplayer_edl 
       }
       
-      @create = new_jbutton( "Create edited copy of video on Your Hard Drive" )
+      @create = new_jbutton( "Create edited copy of DVD/file on Your Hard Drive" )
       @create.tool_tip = <<-EOL
-        This grabs from your DVD and creates a new file on your hard disk like dvd_name_edited.mpg for you to watch later.
+        This takes a file and creates a new file on your hard disk like dvd_name_edited.mpg that you can watch when it's done.
         The file you create will contain the whole movie edited.
-        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it will continue eventually.
+        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
       EOL
       @create.on_clicked {
         do_copy_dvd_to_hard_drive_via_file false
@@ -442,9 +484,7 @@ module SensibleSwing
     
     def initialize
       super "Sensible-Cinema #{VERSION} (GPL)"
-      if !(LocalStorage['main_license_accepted'] == VERSION)
-        force_accept_license_first
-      end
+      force_accept_license_first
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
       panel = JPanel.new
@@ -491,7 +531,7 @@ module SensibleSwing
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Come again!'
-        java.lang.System.exit 0
+        System.exit 0
       }
 
       increment_button_location
@@ -509,6 +549,7 @@ module SensibleSwing
 
     def run_smplayer_blocking play_this, extra_options, force_use_mplayer
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
       if OS.mac? || force_use_mplayer
        @_run_smplayer_instructions ||= show_mplayer_instructions
        conf_file = File.expand_path './mplayer_input_conf'
@@ -534,6 +575,7 @@ module SensibleSwing
     end
     
     def set_smplayer_opts to_this, show_subs = false
+      p 'set smplayer opts to this:' + to_this
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
       old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" unless old_prefs.contain? 'mplayer_additional_options='
@@ -718,7 +760,6 @@ module SensibleSwing
       # prefer english, attempt to disable subtitles, set edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
       
-      # LODO -fullscreen ...
       run_smplayer_non_blocking play_this, extra_mplayer_commands.join(' '), false
     end
     
@@ -761,7 +802,7 @@ module SensibleSwing
           system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
           puts "Please restart after reading license agreement, to be able to then accept it."
         end
-        System.exit 1
+        System.exit 0
       end
       if returned == 2
         p 'license not accepted...exiting'
@@ -835,11 +876,12 @@ module SensibleSwing
         path = RubyWhich.new.which('smplayer_portable')
         if(path.length == 0)
           # this one has its own installer...
-          show_blocking_message_dialog("It appears that you need to install a dependency: MPlayer for Windows (MPUI).\n
-          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-package), then restart sensible cinema.", 
+          show_blocking_message_dialog("It appears that you need to install a pre-requisite dependency: MPlayer for Windows (MPUI).
+          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI Full-complete), 
+          then restart sensible cinema.  NB that it takes awhile to install MPUI.  Sorry about that.", 
           "Lacking dependency", JOptionPane::ERROR_MESSAGE)
           open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/detail?name=MPUI.2011-06-09.Full-Package.exe"
-          System.exit(1)
+          System.exit 0
         end
       end
     end
@@ -853,9 +895,13 @@ module SensibleSwing
       end
     end
     
-    def open_file_to_edit_it filename
+    def open_file_to_edit_it filename, start_minimized=false
       if OS.windows?
-        system_non_blocking "notepad \"#{filename}\""
+        if start_minimized
+          system_non_blocking "start /min notepad \"#{filename}\""
+        else
+          system_non_blocking "notepad \"#{filename}\""
+        end
       else
         system_non_blocking "#{OS.open_file_command} \"#{filename}\""
       end
@@ -1222,15 +1268,15 @@ module SensibleSwing
           raise unless selected_idx == 0 # it was our only option...
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
           assert_ownership_dialog
-          @_choose_dvd_drive_or_file = [filename, File.basename(filename), NonDvd]
+          return [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]
           out = show_non_blocking_message_dialog "calculating disk's unique id..." # useful, believe it or not
           dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
           out.dispose
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
+          return @_choose_dvd_drive_or_file
         end
-        return @_choose_dvd_drive_or_file
       else
         raise 'did not select a drive...'
       end

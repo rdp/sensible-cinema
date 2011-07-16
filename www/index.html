@@ -20,57 +20,68 @@
 
 <body>
 <html>
+<img src="monkey.png"/>
+<div style="float:left; margin-right: 50px; margin-left: 20px;"><h1>Sensible Cinema</h1></div>
 <pre>
 Welcome to the (work in progress) home page of Sensible Cinema, the free video scene skipper/muter.
-It Allows you watch edited movies by applying edit lists (EDL's) (i.e. "mute out" or "cut out" questionable scenes) to DVD's.
+Sensible Cinema allows you watch edited movies by applying edit lists (EDL's) 
+(i.e. "mute out" or "cut out" questionable scenes) to DVD's or movie files.
 
-A description and history/background of sensible-cinema can be found <a href="https://github.com/rdp/sensible-cinema/blob/master/README">here</a>.  Don't forget to come back to this page to download it, though (see below).
+A description and history/background of sensible-cinema can be found <a href="https://github.com/rdp/sensible-cinema/blob/master/README">here</a>.  
+Don't forget to come back to this page to download it, though (from the "Download" section).
 
 <h2 style="margin: 0px;">Download</h2>
-Please check the checkbox if you agree to the terms of the license agreement (<a href="http://www.gnu.org/licenses/gpl.html">gplv3</a>) and wish to download sensible cinema.  
+To download, please check the checkbox if you agree to the terms of the 
+license agreement (<a href="http://www.gnu.org/licenses/gpl.html">gplv3</a>) and wish to download and use sensible cinema.  
 
 <input type="checkbox" class="trigger" onClick="$('#comments').toggle(); $('#comments2').toggle();"/>  I have read and agree to the license terms and conditions.
 
 <div id="comments" style="display:none;  border-style:dotted; border-width:1px; border-color: #aaaaaa; padding: 5px;"> 
   Please download the latest version of sensible cinema from <a href="https://sourceforge.net/projects/sensible-cinema/files/">sourceforge</a>.
 </div>
-After downloading, unzip it (show in explorer -> right click on the .zip file -> Extract all -> Extract).  
-Now open the newly created sensible-cinema-x.x.x folder,
-and run the file "run sensible cinema.bat"
-You will be initially prompted to accept the license agreement(s) and also install a few (non included, separate ownership/distribution) dependencies.
+After download, unzip it.  For windows users, that's like: 
+   Reveal the file in explorer -> right click on the file -> Extract all -> Extract.  
+Now open the newly created sensible-cinema-x.x.x folder, and run the file "run sensible cinema.bat"
+You will be initially prompted to accept the license agreement(s) and also install a few 
+(non included, separate ownership/distribution) dependencies.
 Now insert a DVD you own, and restart sensible cinema to see available options.
 Note that you want to download from sourceforge not from github.com (github is just the raw source).
 There is more usage documentation within the "sensible-cinema/documentation" folder.
 
-<h3>Mac users prerequisites</h3>
-Mac users will need to install some programs first by using <a href="http://www.macports.org/">macports</a>.  Install it, then open "terminal" app and  execute the following:
-$ sudo port install mencoder mplayer ffmpeg gocr
+<h3>Mac user prerequisites</h3>Mac users will need to install some programs first.
+
+If you plan on watching any movies in "realtime" then you'll need to download <a href="http://mplayerx.org/#Download">mplayerx</a>.
+
+If you plan on doing any auto-video editing/saving then you'll need to install <a href="http://www.macports.org/">macports</a>.  
+Install macports, then afterward open the "terminal" Application and execute the following command:
+$ sudo port install mencoder ffmpeg gocr
 After this finishes (it will take awhile) you'll be ready to run Sensible Cinema.
 Note that by installing these, you're accepting their respective licenses/distributions.
 
-<h3>Available edit lists</h3>
-You can see the (small) current list of DVD edit lists thus far available <a href="https://github.com/rdp/sensible-cinema/tree/master/zamples/edit_decision_lists/dvds">here</a> (all of them created earlier by volunteers like you).  
-If yours is already there, then you should be good to go.
+<h3>Upconverting/upscaling DVD/video player</h3>Sensible Cinema comes with its own upscaling/upconverting software DVD/movie file player.
+This is designed to make playback on high resolution monitors look better by processing the image to sharpen it.
+Try it out and give feedback!
 
-If yours isn't there, then we'd ask you to help us by creating and submitting your own "edit list" for the DVD that doesn't have one yet, 
-see the <a href="https://github.com/rdp/sensible-cinema/blob/master/how_to_create_your_own_delete_lists.txt">how to create</a> file for instructions on creating a new edit list. <!-- this is actually a short line -->
-Then run the file "advanced-edit or create sensible cinema edit list files.bat" to create and edit your new edit list file.  
+<h3>Available edited movie lists</h3>You can see the (small) current list of DVD edit lists (EDL's) thus far available <a href="https://github.com/rdp/sensible-cinema/tree/master/zamples/edit_decision_lists/dvds">here</a> (all of them created previously by volunteers like you).  
+If yours is already there, then you might be good to go.  Just use it.
+
+If yours isn't there, then we'd ask you to help us by creating and submitting your own delete list for your DVD that doesn't have one yet, 
+see the <a href="https://github.com/rdp/sensible-cinema/blob/master/documentation">how to create</a> file for instructions on creating a new delete list. <!-- this is actually a short line -->
+Then run the file "advanced-edit or create sensible cinema delete list files.bat" to create and edit your new delete list.  
 Don't forget to upload your new file back to us when you're done, so others can benefit from your work (see "contact", below).
 
-This is the full list--your help is wanted/needed!
+That link is the full list--your help is wanted/needed to help it grow!
 
-<h2 style="margin: 0px;">Other Resources/Contact</h2>
-Let me know via the <a href="http://groups.google.com/group/sensible-cinema?pli=1">google group</a> or email sensible-cinema@googlegroups.com or rogerdpack@gmail.com if you have feedback or have any other ideas/suggestions.
-<h3>Source code</h3> Source code is available <a href="http://github.com/rdp/sensible-cinema">here</a>.  Notes for potential source code developers are <a href="https://github.com/rdp/sensible-cinema/blob/master/development.txt">here</a>.  
+<h2 style="margin: 0px;">Other Resources/Contact/Support</h2>
+Let me know via the <a href="http://groups.google.com/group/sensible-cinema?pli=1">google group</a> or email rogerdpack@gmail.com if you have feedback or have any other ideas/suggestions.
+<h3>Source code</h3>Source code is all available <a href="http://github.com/rdp/sensible-cinema">here</a>.  Notes for potential source code developers are <a href="https://github.com/rdp/sensible-cinema/blob/master/developer_how_to_contribute_to_the_project.txt">here</a>.  
 For (techy or non-techy) contributions, see the contact info in the README file, or write to the google group, above.
 
-Sensible cinema is currently windows only, ping me if you want this changed.
+You can see the <a href="source/change_log_with_feature_list.txt">change log with feature list</a>.
 
-You can see the <a href="source/change_log_with_feature_list.txt">change log with feature list</a> and also on github.
+You can get a list of DVD ISO's (creative commons licensed) <a href="releases/dvd_isos">here</a>, if you want to try them out for experimenting/development/research etc.
 
-You can get a list of "test" creative commons DVD ISO's <a href="releases/dvd_isos">here</a>, if you want to try them out for experimenting/development/research etc.
-
-Please click the license agreement checkbox at the top to see list of old releases (newer ones are found on sourceforge exclusively, as well as on rubygems).
+Please click the license agreement checkbox at the top to see a list of some old releases (newer ones are found on sourceforge exclusively, old ones here).
 <div id="comments2" style="display:none;">You can find an old list of older releases, as well as the MS based C <a href="releases/c_player">DVD player</a> listed <a href="releases">in the archives</a>.
 
 </div>

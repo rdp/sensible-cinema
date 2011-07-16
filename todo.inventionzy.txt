@@ -1,5 +1,7 @@
   === patentzy yes actually do vaguely ordered ===
     blu-ray OCR
+      more blu-ray stuff: can ID them, can playback (through...mkv? VLC?)
+      some blu-ray player descriptor somehow
     
     can pick specific profanities to avoid
     both mute and blank when blanking by default...
@@ -19,7 +21,6 @@
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
     can "control mouse" to drag it to change location
-    some blu-ray player descriptor somehow
     beep at them/warn when not tracking [?]
       default on...I think.
     can jerk mouse more often closer to failure sections...

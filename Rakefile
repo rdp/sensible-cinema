@@ -90,7 +90,7 @@ end
 
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
-  raise 'need  rebundle_dependencies first' unless File.directory? 'vendor/cache'
+  raise 'need rebundle_dependencies first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
@@ -112,7 +112,7 @@ end
 
 task 'zip' do
   name = 'sensible-cinema-' + cur_ver
-  c = "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
+  raise unless File.directory? name
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
   FileUtils.rm_rf name
   p 'created ' + name + '.zip, and deleted its [from] folder'

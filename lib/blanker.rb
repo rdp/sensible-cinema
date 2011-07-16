@@ -42,9 +42,9 @@ else
       
       @fr.set_resizable(false)
       @fr.set_visible(true) # have to do this once, to ever see the thing
-      # lodo does this really speed things up to pre-create it? that icon is a bit ugly...
+      # lodo does this really speed things up to pre-create it? that icon is a bit ugly in the taskbar...
       @fr.repaint
-      unblank_full_screen! # and hide it to start
+      @fr.set_visible(false) # hide it to start
     end
     
     @@use_mouse = true

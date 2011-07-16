@@ -48,8 +48,9 @@ module OCR
     else
       puts 'cache miss' if $DEBUG && $VERBOSE
     end
+    
     if options[:might_be_colon]
-      # do processing in-line <sigh>
+      # do special processing <sigh>
       total = (memory_bitmap.scan(/\x00{5}+/)).length
       if total >= 3 # really should be 4 for VLC
         # it had some darkness...therefore have been a colon!
@@ -107,7 +108,16 @@ module OCR
   def unserialize_cache_from_disk  
     if File.exist? CACHE_FILE
       CACHE.merge!(Marshal.load(File.binread(CACHE_FILE)))
-    end    
+    end
+  end
+  
+  def load_from_ocr_seed
+    for file in Dir[__DIR__ + "/ocr_seed/*.bmp"]
+      file =~ /(\d+)\.bmp/i
+      digit = $1.to_i
+      raise unless digit < 10
+      CACHE[File.binread(file)] = digit
+    end
   end
   
   extend self

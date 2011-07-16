@@ -19,7 +19,7 @@ This file is part of Sensible Cinema.
 def add_any_bundled_gems_to_load_path
   raise 'no vendor dir?' unless File.directory? 'vendor'
   if File.directory? 'vendor/cache'
-    Dir['vendor/cache/**/lib'].each{|lib_dir|
+    Dir['vendor/cache/**/lib'].sort.reverse.each{|lib_dir| # prefer newer versioned.
       $: << lib_dir
     }
   else
