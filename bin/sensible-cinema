@@ -289,7 +289,7 @@ module SensibleSwing
         version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
-        choose_file_and_edl true
+        choose_file_and_edl_and_create_sxs_or_play true
       }
 
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
@@ -450,7 +450,7 @@ module SensibleSwing
 #      }
 
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
-        choose_file_and_edl false 
+        choose_file_and_edl_and_create_sxs_or_play false 
       end      
       
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
@@ -459,7 +459,7 @@ module SensibleSwing
       
     end
     
-    def choose_file_and_edl just_create_dot_edl_file_instead_of_play
+    def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
       filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
       edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
       assert_ownership_dialog
@@ -468,10 +468,9 @@ module SensibleSwing
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
         # NB these are just for the SxS EDL!
         
-              #add_secs_end = 0
+      #add_secs_end = 0
       #add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
 
-        # TODO do I want these added at file create time, not use time!
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
@@ -577,7 +576,6 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
-      puts c
       system_blocking c
     end
     
@@ -718,16 +716,26 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl file_with_edl_path = nil
+    def play_mplayer_edl optional_file_with_edl_path = nil
       extra_mplayer_commands = []
-      if file_with_edl_path
-        drive_or_file, edl_path = file_with_edl_path
-        dvd_id = NonDvd # fake it out...LODO
+      if optional_file_with_edl_path
+        drive_or_file, edl_path = optional_file_with_edl_path
+        dvd_id = NonDvd # fake it out...LODO a bit smelly
       else
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
+      start_add_this_to_all_ts = 0
       if dvd_id == NonDvd
         play_this = drive_or_file # play straight file...
+        # Duration: 01:35:49.59, start: 600.000000
+        all =  `ffmpeg -i "#{play_this}" 2>&1`
+        all =~ /Duration.*start: ([\d\.]+)/
+        start = $1.to_f
+        if start > 0
+          show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
+            maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
+          start_add_this_to_all_ts = start
+        end
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
@@ -750,13 +758,7 @@ module SensibleSwing
       else
         splits = []
       end
-      edl_contents = nil
-      begin
-       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits , 600 # TODO # add a sec to mutes to accomodate for mplayer's oddness...
-      rescue SyntaxError => e # overlaps et al
-        show_blocking_message_dialog 'fail:' + e.to_s
-        raise e
-      end
+      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
       File.write(EdlTempFile, edl_contents)
       
       # -framedrop is for slow CPU's
@@ -864,13 +866,7 @@ module SensibleSwing
     end
     
     def check_for_various_dependencies
-      if we_are_in_create_mode
-        ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
-        if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-          require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-          download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
-        end
-        
+      if we_are_in_create_mode        
         if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
           require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
           download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
@@ -878,6 +874,11 @@ module SensibleSwing
       end
 
       # runtime dependencies, at least today...
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
+        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
+      end
       if OS.mac?
         check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
       else      
@@ -1349,6 +1350,9 @@ if $0 == __FILE__
     a = SensibleSwing::MainWindow.new
     a.set_visible true
     puts 'Please use the Sensible Cinema GUI window popup...'
+    if ARGV.index('--exit-immediately')
+      a.dispose
+    end
   end
 end
 
