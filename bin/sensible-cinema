@@ -552,6 +552,7 @@ module SensibleSwing
     end
 
     def run_smplayer_blocking play_this, extra_options, force_use_mplayer
+      extra_options += " -alang en " # for those that put french first...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
       if OS.mac? || force_use_mplayer
@@ -710,6 +711,7 @@ module SensibleSwing
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
         'v' key: turn off subtitles.
         '.' key: step one frame.
+        # key: switch audio language track
       EOL
     end
     
@@ -750,7 +752,7 @@ module SensibleSwing
       end
       edl_contents = nil
       begin
-       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits #, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
+       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits , 600 # TODO # add a sec to mutes to accomodate for mplayer's oddness...
       rescue SyntaxError => e # overlaps et al
         show_blocking_message_dialog 'fail:' + e.to_s
         raise e
