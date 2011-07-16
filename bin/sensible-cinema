@@ -139,13 +139,16 @@ module SensibleSwing
       change_upconvert_line_to_current
       
       add_text_line ''
-      
-      @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
-        add_setup_upconvert_options
-      end.tool_tip= "Allows you to set your upconvert options [ex: to be more aggressive, etc.]"
+      add_change_upconvert_options_button   
       add_text_line "Note that sensible cinema will also upconvert when it plays back edited DVD's/files."
       add_text_line ''
       
+    end
+
+    def add_change_upconvert_options_button
+      @show_upconvert_options = new_jbutton( "Change/Set upconverting playback options" ) do
+        add_setup_upconvert_options
+      end.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
     
     def warn_if_no_upconvert_options_currently_selected
@@ -466,7 +469,8 @@ module SensibleSwing
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
         show_in_explorer __DIR__ + "/../documentation"
       end      
-      
+      add_change_upconvert_options_button 
+
     end
     
     def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
