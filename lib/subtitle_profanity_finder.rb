@@ -58,7 +58,7 @@ module SubtitleProfanityFinder
 
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0
-    edl_output_from_string File.read(incoming_filename).gsub("\r\n", "\n"), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
+    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
   end
   
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
