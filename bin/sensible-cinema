@@ -229,7 +229,7 @@ module SensibleSwing
           end
         end
       }
-      slider.set_bounds(44, @starting_button_y, @button_width, 56)
+      slider.set_bounds(44, @starting_button_y, @button_width, 66)
       2.times {increment_button_location}
       @panel.add(slider)
     end
