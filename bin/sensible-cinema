@@ -129,10 +129,11 @@ module SensibleSwing
         play_mplayer_edl [filename_mpg, nil]
       end
       
-      @watch_file_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
+      @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         warn_if_no_upconvert_options_currently_selected
         play_dvd_smplayer_unedited false, false
       end
+      @watch_dvd_upconvert.tool_tip = "If it fails, try setting upconvert options to less of a screen resolution multiple.\nOr try playing the DVD with VLC first, then it will work."
       
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
@@ -191,12 +192,13 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
       }
-      
+      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is good)." 
+      add_text_line "If mplayer just dies or if it displays only a blank screen then lower this."
       slider = JSlider.new
-      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 2x)"));
+      slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
   
       # I want tick for 1x, 1.5x, 2x, 2.5x, 3x
-      # so let's do 10 -> 30 
+      # so let's do 10 -> 30 ... 
       
       labelTable = java.util.Hashtable.new
       i = java.lang.Integer
