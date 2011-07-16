@@ -11,13 +11,13 @@
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
-	  no auto subtitle downloads...
+    no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  a "half mute" demo, using volume downs/ups     
+   a "half mute" demo, using volume downs/ups     
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
@@ -28,7 +28,6 @@
   mac court jester upconvert: without -nocache, with aggressive sync....
     jester at work...still laggy lips?
   mac bat files
-  C player
   unit tests
   subs: research if at beginning, add extra offset...hmm... 
   release at some point...Jon?
@@ -55,10 +54,11 @@
 == yes do, un-ordered currently, from the various future release options ==
   @jruby scan court jester is *so* slow...what the...
   urug again?
+    after works in mac. Why not?
   netflix upconverter
   upconverter tooltips/new message :)
   if 2 EDL's, still choose a title track, playback
-    add largest title to the generator EDL
+  add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
   complain [accomodate option] if start time looks off...600
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
@@ -66,7 +66,7 @@
   "save to" -> same dir as "get from" yeah
   open EDL can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
-  @instructions: full srt how-to
+  @instructions: full srt how-to document instead of tooltip [?]
   volume_name => dvd_volume_name
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
@@ -78,20 +78,19 @@
     don't have to use eval!
     EDL with JSON on top, full timestamps.
   setpriority for several :)
-  bring to top after a conversion, and for prompts...
+  bring to top after a conversion, and before prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
   check if some other buttons are now outdated...
-  unit tests (all pass)
-  can I avoid requiring use of tsmuxer first? hmm...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, mplayer, http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard/
-  already donated: mac fan thing, open office, many sourceforge tops, 7zip, VLC, cannot donate: ffmpeg
+  already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, cannot donate: ffmpeg
   youtube/hulu timings
   split LLC's website+consumer
     get LLC before a "real" domain name
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @makemkv: timing feels broken weird-like!
+    try out libdvdcss + handbrake on the one that was totally broken...is it better?
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try
@@ -112,20 +111,17 @@
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-    [A,B] [?]
-  create the "play previously created edited file for current DVD" button
+    [A,B] 
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
-    beta release: rinse and repeat with various ppl
+    rinse and repeat with various ppl
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
   inventionzy: blu-ray stuff from todo.inventionzy
 
   port to mac OS X--try everything out (all buttons), make sure all works...
-      ppc dvdid?
-      use mplayerx well [?] like wrap it...
+    ppc dvdid?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
-  do I need tsmuxer?
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
@@ -154,6 +150,8 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  use mplayerx well [?] like wrap it...
+    could for files, not for dvd's yet tho...
   try to team up with fanedit.org ?
   slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
