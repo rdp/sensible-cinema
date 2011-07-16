@@ -590,6 +590,7 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
+      p c # for debugging...
       system_blocking c
     end
     
@@ -743,8 +744,9 @@ module SensibleSwing
       start_add_this_to_all_ts = 0
       if dvd_id == NonDvd
         play_this = drive_or_file # play straight file...
-        # Duration: 01:35:49.59, start: 600.000000
+        # check if starts offset...
         all =  `ffmpeg -i "#{play_this}" 2>&1`
+        # Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
         if start > 0
@@ -764,7 +766,6 @@ module SensibleSwing
         descriptors = {}
       end
       if using_dvd
-        p descriptors
         splits = descriptors['mplayer_dvd_splits']
         if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
@@ -780,11 +781,11 @@ module SensibleSwing
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      extra_mplayer_commands << "-framedrop "      
-      # ?? extra_mplayer_commands << " -mc 0.016 -autosync 15"
+      extra_mplayer_commands << " -framedrop "      
+      # ?? extra_mplayer_commands << " -mc 0.016 -autosync 15" ??
       
-      # prefer english, attempt to disable subtitles, set edl...
-      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
+      # prefer english, attempt to disable subtitles, pass in edl...
+      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
       
       run_smplayer_non_blocking play_this, extra_mplayer_commands.join(' '), false
     end
