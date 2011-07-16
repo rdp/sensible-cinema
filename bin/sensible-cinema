@@ -730,7 +730,8 @@ module SensibleSwing
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
         if start > 0
-          show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start} maybe not compatible with XBMC, if that's what you happen to be using" # TODO test it...
+          show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
+            maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
           start_add_this_to_all_ts = start
         end
       else
