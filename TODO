@@ -164,7 +164,7 @@
   test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
   investigate dvdrsbvdl (windows media center edl plugin)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
-  @mplayer: chooses wrong language ts from jester...
+  @mplayer: chooses wrong language ts from jester...sigh
   @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
   @mplayer: could you umm...go ahead and support avisynth input pleaz, assuming you don't?
   @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
