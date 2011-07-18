@@ -74,6 +74,7 @@ http://clearplay.com a commercial "filtering" DVD player See the "motivation" se
 http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
 http://www.inmatrix.com zoom player's "scene cut editor"
+edited released movies by the producer, like http://en.wikipedia.org/wiki/Seven_Samurai and http://www.swank.com/insti/studios.html and http://betterlogic.com/roger/2011/06/dove-edited-films
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut supporter--also contains links to some other editors' support for EDL's)
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
 The VCR with its record button, coupled with the stop+rewind button and a list of edits (if even in your head).
@@ -97,5 +98,4 @@ AviSynth can script dvd playback http://forum.doom9.org/archive/index.php/t-1095
 ps3 media server has edl support: https://github.com/chocolateboy/PMS-EDL maybe would work with DVD's dunno
 Anydvd HD's "magic file replacement" for DVD's/blu-ray's
 RiffTrax allows for an audio "overlay" to a DVD playback, have their own player to coordinate the two.
-dove.org worked with New Line Cinemas to release edited versions of a few films (the mask etc.) http://betterlogic.com/roger/2011/06/dove-edited-films/
 Avatar DVD was released with an audio track that was "euphemized" of the profanity.
