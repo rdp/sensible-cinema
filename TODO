@@ -155,6 +155,8 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz?
+  @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...
     could for files, not for dvd's yet tho...
   try to team up with fanedit.org ?
