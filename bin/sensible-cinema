@@ -216,20 +216,24 @@ module SensibleSwing
       i = java.lang.Integer
       l = JLabel
       
-      # allow for 0.75 too...
-      x = get_current_max_width_resolution
-      minimum = 100
-      (minimum..300).step(25) do |n|
-        if n % 100 == 0
-          labelTable.put(i.new(n), l.new("#{n/100}x")) # 1x
-        else
-          #labelTable.put(i.new(n), l.new("#{n/100.0}x")) # 1.5x
+      # allow for 0.75 too, if you have a large monitor, slower cpu...
+      local_minimum = (720.0/get_current_max_width_resolution)*100 # allow 1024 to use upscaling to 860 LOL
+      # => 70 for 1024 monitor, so we'll then allow for the 75 below...
+      label_minimum = nil
+      (0..300).step(25) do |n|
+        if n > local_minimum
+          label_minimum ||= n
+          if (n % 100 == 0)
+            labelTable.put(i.new(n), l.new("#{n/100}x")) # 1x
+          elsif n == label_minimum # just for the bottom label, rest too chatty
+            labelTable.put(i.new(n), l.new("#{n/100.0}x")) # 1.5x
+          end
         end
       end
       slider.setLabelTable( labelTable )
   
       slider.maximum=300
-      slider.minimum=minimum
+      slider.minimum=label_minimum
       slider.setMajorTickSpacing(100) 
       slider.setMinorTickSpacing(25) 
       slider.setPaintTicks(true)
@@ -246,6 +250,9 @@ module SensibleSwing
           LocalStorage['screen_multiples'] = new_value
           if new_value != old_value
             display_current_upconvert_setting
+            if slider.value == label_minimum
+              show_blocking_message_dialog "Setting it too low might make it not really do anything!"
+            end
           end
         end
       }
