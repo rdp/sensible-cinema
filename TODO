@@ -131,13 +131,14 @@
     http://www.chefelf.com/forums/index.php?showtopic=6176
   inventionzy: blu-ray stuff from todo.inventionzy
 
-  port to mac OS X--try everything out (all buttons), make sure all works...
+  port to mac OS X
     ppc dvdid?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
-  investigate WMC "call out to smplayer EDL" or the like...
+  investigate WMC "call out to smplayer + EDL" or the like...
+    add to docu
 
 == other lists ==
 
