@@ -215,11 +215,16 @@ module SensibleSwing
       labelTable = java.util.Hashtable.new
       i = java.lang.Integer
       l = JLabel
-      labelTable.put(i.new(10), l.new("1x"))
-      labelTable.put(i.new(15), l.new("1.5x"))
-      labelTable.put(i.new(20), l.new("2x"))
-      labelTable.put(i.new(25), l.new("2.5x"))
-      labelTable.put(i.new(30), l.new("3x"))
+      
+      # allow for 0.75 too...
+      x = get_current_max_width_resolution
+      (10..30).step(5) do |n|
+        if n % 10 == 0
+          labelTable.put(i.new(n), l.new("#{n/10}x")) # 1x
+        else
+          labelTable.put(i.new(n), l.new("#{n/10.0}x")) # 1.5x
+        end
+      end
       slider.setLabelTable( labelTable )
   
       slider.maximum=30
@@ -259,13 +264,16 @@ module SensibleSwing
       "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}. (multiplier #{LocalStorage['screen_multiples']})"
     end
     
+    def get_current_max_width_resolution
+      java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i
+    end
+    
     def get_upconvert_vf_settings
       template = LocalStorage[UpConvertKey]
       if template
         # choose width of widest monitor (why would they display it on the other?)
-        screen_x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
         screen_multiple = LocalStorage['screen_multiples']
-        template.gsub('SCREEN_X', (screen_x*screen_multiple).to_i.to_s) # has to be an integer...
+        template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
       else
         nil 
       end

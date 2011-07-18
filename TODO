@@ -18,6 +18,7 @@
   
 == under next release specific items: ==
    a "half mute" demo, using volume downs/ups     
+      plus one that also overlays an extra audio LOL
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
@@ -25,6 +26,7 @@
  
 == yes do ordered in conjunction with the above probably ==
   does a release work in mac?
+  allow
   mac court jester upconvert: without -nocache, with aggressive sync....
     jester at work...still laggy lips?
   mac bat files
@@ -52,6 +54,8 @@
   make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
+  dialog on button aborted, see if I like it :)
+  
   auto-update website on release.
   publish a ripped raw big bunny
     update development howto
