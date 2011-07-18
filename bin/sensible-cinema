@@ -31,21 +31,30 @@ raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not nee
 
 alias system_original system
 require 'fileutils'
-require_relative '../lib/mencoder_wrapper'
-require_relative '../lib/storage'
-require_relative '../lib/edl_parser'
-require_relative '../lib/mplayer_edl'
-require_relative '../lib/play_audio'
-require_relative '../lib/subtitle_profanity_finder'
-require_relative '../lib/convert_thirty_fps'
-require_relative '../lib/ruby_clip'
 
-require 'tmpdir'
+class String
+  def snake_case
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
 require_relative '../lib/swing_helpers'
-require_relative '../lib/drive_info'
+
+for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+  autoload kls, "../lib/#{kls.snake_case}"
+end
+
+# a few I'll need...
+require '../lib/storage'
+require 'tmpdir'
 require 'whichr'
 require 'os'
-require 'ruby-wmi' unless OS.mac?
+unless OS.mac?
+  autoload :WMI, 'ruby-wmi'
+end
 
 vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
 
@@ -757,7 +766,7 @@ module SensibleSwing
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
-        extra_mplayer_commands << " -nocache -dvd-device #{drive_or_file} "
+        extra_mplayer_commands << "-nocache -dvd-device #{drive_or_file}"
         play_this = "dvdnav://#{title_track}"
       end
       if edl_path
@@ -781,9 +790,9 @@ module SensibleSwing
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      extra_mplayer_commands << " -framedrop "      
-      # ?? extra_mplayer_commands << " -mc 0.016 " ??
-      extra_mplayer_commands << " -autosync 15" 
+      extra_mplayer_commands << "-framedrop"      
+      # ?? extra_mplayer_commands << "-mc 0.016" ??
+      extra_mplayer_commands << "-autosync 15" 
       
       # prefer english, attempt to disable subtitles, pass in edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
