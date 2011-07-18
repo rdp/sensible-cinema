@@ -237,6 +237,7 @@ module SensibleSwing
     def display_current_upconvert_setting
       change_upconvert_line_to_current
       show_blocking_message_dialog get_current_upconvert_as_phrase
+      p get_current_upconvert_as_phrase
     end
     
     def get_current_upconvert_as_phrase
