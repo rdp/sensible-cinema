@@ -218,34 +218,34 @@ module SensibleSwing
       
       # allow for 0.75 too...
       x = get_current_max_width_resolution
-      minimum = 10
-      (minimum..30).step(5) do |n|
-        if n % 10 == 0
-          labelTable.put(i.new(n), l.new("#{n/10}x")) # 1x
+      minimum = 100
+      (minimum..300).step(50) do |n|
+        if n % 100 == 0
+          labelTable.put(i.new(n), l.new("#{n/100}x")) # 1x
         else
-          labelTable.put(i.new(n), l.new("#{n/10.0}x")) # 1.5x
+          labelTable.put(i.new(n), l.new("#{n/100.0}x")) # 1.5x
         end
       end
       slider.setLabelTable( labelTable )
   
-      slider.maximum=30
+      slider.maximum=300
       slider.minimum=minimum
-      slider.setMajorTickSpacing(10) 
-      slider.setMinorTickSpacing(5) 
+      slider.setMajorTickSpacing(100) 
+      slider.setMinorTickSpacing(50) 
       slider.setPaintTicks(true)
       slider.setPaintLabels(true)    
       slider.snap_to_ticks=true
       
-      slider.set_value LocalStorage['screen_multiples'] * 10
+      slider.set_value LocalStorage['screen_multiples'] * 100
       
       slider.add_change_listener { |event|
         if !slider.value_is_adjusting
           # they released their hold on it...
-          if slider.value >= 2
-            LocalStorage['screen_multiples'] = slider.value/10.0
+          old_value = LocalStorage['screen_multiples']
+          new_value = slider.value/100.0
+          LocalStorage['screen_multiples'] = new_value
+          if new_value != old_value
             display_current_upconvert_setting
-          else
-            show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
           end
         end
       }
