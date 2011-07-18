@@ -1,4 +1,4 @@
-== ==
+== 0.24.4 ==
 
 Note that previous releases had the ability to "invert" skipping scenes,
 by specifically listing only the scenes *to* play, not the scenes *not* to
@@ -8,6 +8,7 @@ That's an extra audio file over the top of the original, while still playing
 (ex: rifftrax), to "fake" a mute section.
 
 Add an option for the upconverter to vary "strength" of screen size.
+A few more demo videos.
 
 == 0.24.3 ==
 
@@ -19,7 +20,7 @@ polish up UI.
 In some recent version or other, added ability to start EDL's from an offset
 (example: your video says it starts at 600s, it will add 600s to each EDL setting)
 can auto-paste to clipboard
-auto-full screen now
+auto-full screen now by default for playback
 In some recent revision, added ability to set upconvert options, use them for any playbacks.
 Separates subtitles into "known profanities" and then "lesser" now.
 
