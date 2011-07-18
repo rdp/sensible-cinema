@@ -62,6 +62,7 @@ http://www.videoredo.com/en/index.htm lets you "cut out" offensive content (comm
 http://www.microsoft.com/windows/windowsmedia/howto/articles/device_control.aspx Windows Media Encoder supports EDL's by timestamp
 http://cutlist.at shared "commercial skip" cutlists
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
+Time programmable VCR's (at the least, 'skip the first few minutes')
 http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU
 http://www.sharewareconnection.com/fast-compress-content-and-anti-profanity.htm replaces profanity in web pages with euphemized content.
 MovieMask apparently had capability of "overlaying" DVD playback, like adding new clothing to people, and other features.

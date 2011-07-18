@@ -22,17 +22,17 @@
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
-   VLC "insert missing scene" demo, overlay section with image (mplayer?)
- 
+   VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
+
 == yes do ordered in conjunction with the above probably ==
-  does a release work in mac?
-  allow
+  m4m: the play button, "regenerate" admin button, "click here x other arrangements of this hymn"
+  does a released version work in mac?
   mac court jester upconvert: without -nocache, with aggressive sync....
     jester at work...still laggy lips?
-  mac bat files
   unit tests
-  subs: research if at beginning, add extra offset...hmm... 
-  release at some point...Jon?
+  subs: if at beginning, add extra offset...hmm...why not?
+  release at some point...Jon? urug?
+    after check mac coiso...
 
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
@@ -54,9 +54,14 @@
   make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
+  facebook survey :)
+  "--developer" mode
+    export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
   dialog on button aborted, see if I like it :)
+  fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
+    "fan editor" .bat file LOL
+    
   new button "auto-test" a subtitles file for timing :)
-  new upconv button: "see if you are getting full keeping up" [except that doesn't really matter...]
   new upconv button: take some snapshots (just to straight mjpeg or jpeg or the what not)
   auto-update website on release.
   publish a ripped raw big bunny
