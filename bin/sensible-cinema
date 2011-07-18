@@ -44,11 +44,11 @@ end
 require_relative '../lib/swing_helpers'
 
 for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
-  autoload kls, "../lib/#{kls.snake_case}"
+  autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
 # a few I'll need...
-require '../lib/storage'
+require_relative '../lib/storage'
 require 'tmpdir'
 require 'whichr'
 require 'os'
@@ -450,7 +450,9 @@ module SensibleSwing
     end # advanced buttons
 
     def setup_normal_buttons
-            
+      if LocalStorage[UpConvertEnglish]
+        add_text_line get_current_upconvert_as_phrase
+      end
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
