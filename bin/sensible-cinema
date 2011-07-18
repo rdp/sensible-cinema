@@ -219,11 +219,11 @@ module SensibleSwing
       # allow for 0.75 too...
       x = get_current_max_width_resolution
       minimum = 100
-      (minimum..300).step(50) do |n|
+      (minimum..300).step(25) do |n|
         if n % 100 == 0
           labelTable.put(i.new(n), l.new("#{n/100}x")) # 1x
         else
-          labelTable.put(i.new(n), l.new("#{n/100.0}x")) # 1.5x
+          #labelTable.put(i.new(n), l.new("#{n/100.0}x")) # 1.5x
         end
       end
       slider.setLabelTable( labelTable )
@@ -231,7 +231,7 @@ module SensibleSwing
       slider.maximum=300
       slider.minimum=minimum
       slider.setMajorTickSpacing(100) 
-      slider.setMinorTickSpacing(50) 
+      slider.setMinorTickSpacing(25) 
       slider.setPaintTicks(true)
       slider.setPaintLabels(true)    
       slider.snap_to_ticks=true
