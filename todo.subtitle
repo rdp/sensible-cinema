@@ -6,23 +6,16 @@ avidemux can apparently do it, too
 subtitles hint: http://forum.videolan.org/viewtopic.php?f=7&t=48761&p=155667&hilit=clearplay#p155667 ?
 somehow map DVD's to the "subdownloader" style subtitles?
   use their md5 overall too
-  OCR the captioning as an auto profanity filter? (or perhaps download subtitles to be able to pre-screen), like the python fella does.
-
-what if VLC plays a dvd mp4 do the subtitle timings map?
 
 don't use as many..uh...large of spaces for mutes that was way wide...is that safe though?
 
-http://en.flossmanuals.net/Avidemux/ExtractingDVDSubtitles/
 
 it can use "two" .srt files [user generated versus original] and combine them both [?]
 
 is there a way to double check your .srt file is accurate?
   describe it...
   
-somehow interfact with md5/opensubtitles or someone else?  hmm..
+somehow interface with md5/opensubtitles or someone else?  hmm..
 
 Don't mute the whole line if not needed? [just end of it, etc...?]
-
-butt
-
-allow them to enter whatever they want as arbitrary search...
+allow them to enter whatever they want as arbitrary search...

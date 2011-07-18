@@ -64,7 +64,9 @@ http://cutlist.at shared "commercial skip" cutlists
 http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
 http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU
 http://www.sharewareconnection.com/fast-compress-content-and-anti-profanity.htm replaces profanity in web pages with euphemized content.
+MovieMask apparently had capability of "overlaying" DVD playback, like adding new clothing to people, and other features.
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile, with no complaints).
+http://fanedit.org/49 fanedits take the original and remix it through some means for more enjoyable playbacks.
 http://clearplay.com a commercial "filtering" DVD player See the "motivation" section for a description.
   It does offer a few features that sensible cinema supports but disables by default, for patent reasons, 
   like automatic (user flexible) content decisions.
@@ -73,7 +75,7 @@ http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-pla
 http://www.inmatrix.com zoom player's "scene cut editor"
 http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut supporter--also contains links to some other editors' support for EDL's)
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
-The VCR with its record button, coupled with the stop+rewind button.
+The VCR with its record button, coupled with the stop+rewind button and a list of edits (if even in your head).
 http://kb2.adobe.com/cps/191/tn_19151.html Adobe Director MX 2004 can "script" DVD playback.
 DVD's themselves allow for "scripted" playback of certain content, allowing controls for jumping from location to location, switching audio/video tracks, etc.
 http://code.google.com/p/movie-content-editor (player written in Python, controls VLC based on subtitles and user-input, using edit decision lists in realtime)

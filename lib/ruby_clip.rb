@@ -6,7 +6,7 @@ class RubyClip
 
   include java.awt.datatransfer.ClipboardOwner
   def self.set_clipboard to_this
-    stringSelection = StringSelection.new( to_this )
+    stringSelection = StringSelection.new( to_this.to_s )
     clipboard = Toolkit.getDefaultToolkit().getSystemClipboard()
     clipboard.setContents( stringSelection, self );
   end

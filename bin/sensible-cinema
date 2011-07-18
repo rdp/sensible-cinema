@@ -31,21 +31,30 @@ raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not nee
 
 alias system_original system
 require 'fileutils'
-require_relative '../lib/mencoder_wrapper'
-require_relative '../lib/storage'
-require_relative '../lib/edl_parser'
-require_relative '../lib/mplayer_edl'
-require_relative '../lib/play_audio'
-require_relative '../lib/subtitle_profanity_finder'
-require_relative '../lib/convert_thirty_fps'
-require_relative '../lib/ruby_clip'
 
-require 'tmpdir'
+class String
+  def snake_case
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
 require_relative '../lib/swing_helpers'
-require_relative '../lib/drive_info'
+
+for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+  autoload kls, "./lib/#{kls.to_s.snake_case}"
+end
+
+# a few I'll need...
+require_relative '../lib/storage'
+require 'tmpdir'
 require 'whichr'
 require 'os'
-require 'ruby-wmi' unless OS.mac?
+unless OS.mac?
+  autoload :WMI, 'ruby-wmi'
+end
 
 vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
 
@@ -127,24 +136,28 @@ module SensibleSwing
         warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
-      end
+      end.tool_tip= "This plays back a movie file, like moviefile.mpg, using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options." # LODO
       
-      @watch_file_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
+      @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         warn_if_no_upconvert_options_currently_selected
         play_dvd_smplayer_unedited false, false
       end
+      @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
       
       add_text_line ''
-      
-      @show_upconvert_options = new_jbutton( "Change/Set upconvert options" ) do
-        add_setup_upconvert_options
-      end
+      add_change_upconvert_options_button   
       add_text_line "Note that sensible cinema will also upconvert when it plays back edited DVD's/files."
       add_text_line ''
       
+    end
+
+    def add_change_upconvert_options_button
+      @show_upconvert_options = new_jbutton( "Change/Set upconverting playback options" ) do
+        add_setup_upconvert_options
+      end.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
     
     def warn_if_no_upconvert_options_currently_selected
@@ -191,12 +204,13 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
       }
-      
+      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is good)." 
+      add_text_line "If mplayer just dies or if it displays only a blank screen then lower this."
       slider = JSlider.new
-      slider.setBorder(BorderFactory.createTitledBorder("Multiple factor of half screen widths (higher is better, uses more cpu, default 2x)"));
+      slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
   
       # I want tick for 1x, 1.5x, 2x, 2.5x, 3x
-      # so let's do 10 -> 30 
+      # so let's do 10 -> 30 ... 
       
       labelTable = java.util.Hashtable.new
       i = java.lang.Integer
@@ -229,7 +243,7 @@ module SensibleSwing
           end
         end
       }
-      slider.set_bounds(44, @starting_button_y, @button_width, 56)
+      slider.set_bounds(44, @starting_button_y, @button_width, 66)
       2.times {increment_button_location}
       @panel.add(slider)
     end
@@ -269,6 +283,7 @@ module SensibleSwing
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
+        @display_unique.simulate_click # for now...
       end
       
       @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
@@ -287,7 +302,7 @@ module SensibleSwing
         version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
-        choose_file_and_edl true
+        choose_file_and_edl_and_create_sxs_or_play true
       }
 
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
@@ -369,12 +384,23 @@ module SensibleSwing
         Basically download it from opensubtitles.org (possibly from other sites, too),
         (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
         Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
+        NB that you'll first want/need to *carefully* double check your subtitle
+        file with the actual DVD.  (ex: smplayer, hit the 'o' button to display
+        the current timestamp, then go to the end, stop at some point with text
+        and hit the '.' key until a subtitle very first displays.
+        Next convert that number to 29.97 fps (using the button given).
+        The numbers should match precisely.  If they don't, edit this file
+        so that it will have some offsets given.
       EOL
+
       @parse_srt.on_clicked do
-        filename = new_existing_file_selector_and_select_file("Pick srt file:")
-        parsed = SubtitleProfanityFinder.edl_output filename, {}, 0, 0 # 0.35, 0.25 # PUT MOVIE SPECIFIC OFFSET SUBTITLE TIMINGS HERE LODO prompt :P
-        File.write(EdlTempFile, "# add these into your mute section if they are offensive\n" + parsed)
+        filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
+        add_to_beginning = get_user_input("How much time to subtract from the beginning of each subtitle entry (ex: 1:00 -> 1:01 becomes 0:59 -> 1:01)", "0.0")
+        add_to_end = get_user_input("How much time to add to the end of each subtitle entry (ex: 1:00 -> 1:01 becomes 1:00 -> 1:02)", "0.0")
+        parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f # flight: TODO necessary typically ??? 0.35, 0.25 
+        File.write(EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed)
         open_file_to_edit_it filename, true
+        sleep 0.3 if OS.mac? # add delay...
         open_file_to_edit_it EdlTempFile
       end
       
@@ -425,7 +451,9 @@ module SensibleSwing
     end # advanced buttons
 
     def setup_normal_buttons
-            
+      if LocalStorage[UpConvertEnglish]
+        add_text_line get_current_upconvert_as_phrase
+      end
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
@@ -447,16 +475,17 @@ module SensibleSwing
 #      }
 
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
-        choose_file_and_edl false 
+        choose_file_and_edl_and_create_sxs_or_play false 
       end      
       
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
         show_in_explorer __DIR__ + "/../documentation"
       end      
-      
+      add_change_upconvert_options_button 
+
     end
     
-    def choose_file_and_edl just_create_dot_edl_file_instead_of_play
+    def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
       filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
       edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
       assert_ownership_dialog
@@ -465,10 +494,9 @@ module SensibleSwing
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
         # NB these are just for the SxS EDL!
         
-              #add_secs_end = 0
+      #add_secs_end = 0
       #add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
 
-        # TODO do I want these added at file create time, not use time!
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
@@ -549,6 +577,7 @@ module SensibleSwing
     end
 
     def run_smplayer_blocking play_this, extra_options, force_use_mplayer
+      extra_options += " -alang en " # for those that put french first...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
       if OS.mac? || force_use_mplayer
@@ -561,6 +590,8 @@ module SensibleSwing
         extra_options += " -slang en "
         extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
+       else
+        extra_options += " -font /Library/Fonts/Arial.ttf "
        end
        extra_options += " -fs " # full screen
        c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
@@ -571,7 +602,7 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
-      puts c
+      p c # for debugging...
       system_blocking c
     end
     
@@ -614,13 +645,15 @@ module SensibleSwing
 
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
-"dvd_title_track" => "1", # the show info button will tell you title length (typically longest is main feature)
-# "not edited out stuff" => "some violence",
-# "closing thoughts" => "still...",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "6095", # sum length, on the DVD, use the show DVD info button to retrieve it.
+# "opensubtitles_number" => "1234567",
+# "not edited out stuff" => "some violence left in...",
+# "closing thoughts" => "only did the...",
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  Additive currently.  12345.6 ok. In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
         EOL
-      # frame0 is the name of our window LOL tough to avoid that collision...hmm...
-      filename = EDL_DIR + "\\edls_being_edited\\" + english_name.gsub(' ', '_') + '.txt'
+      # TODO auto-ify above, move docs to a file in documentation.
+      filename = EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
@@ -705,26 +738,38 @@ module SensibleSwing
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
         'v' key: turn off subtitles.
         '.' key: step one frame.
+        # key: switch audio language track
       EOL
     end
     
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl file_with_edl_path = nil
+    def play_mplayer_edl optional_file_with_edl_path = nil
       extra_mplayer_commands = []
-      if file_with_edl_path
-        drive_or_file, edl_path = file_with_edl_path
-        dvd_id = NonDvd # fake it out...LODO
+      if optional_file_with_edl_path
+        drive_or_file, edl_path = optional_file_with_edl_path
+        dvd_id = NonDvd # fake it out...LODO a bit smelly
       else
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
+      start_add_this_to_all_ts = 0
       if dvd_id == NonDvd
         play_this = drive_or_file # play straight file...
+        # check if starts offset...
+        all =  `ffmpeg -i "#{play_this}" 2>&1`
+        # Duration: 01:35:49.59, start: 600.000000
+        all =~ /Duration.*start: ([\d\.]+)/
+        start = $1.to_f
+        if start > 0
+          show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
+            maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
+          start_add_this_to_all_ts = start
+        end
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
-        extra_mplayer_commands << " -nocache -dvd-device #{drive_or_file} "
+        extra_mplayer_commands << "-nocache -dvd-device #{drive_or_file}"
         play_this = "dvdnav://#{title_track}"
       end
       if edl_path
@@ -733,7 +778,6 @@ module SensibleSwing
         descriptors = {}
       end
       if using_dvd
-        p descriptors
         splits = descriptors['mplayer_dvd_splits']
         if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
@@ -743,23 +787,18 @@ module SensibleSwing
       else
         splits = []
       end
-      edl_contents = nil
-      begin
-       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits #, 600 TODOS # add a sec to mutes to accomodate for mplayer's oddness...
-      rescue SyntaxError => e # overlaps et al
-        show_blocking_message_dialog 'fail:' + e.to_s
-        raise e
-      end
+      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
       File.write(EdlTempFile, edl_contents)
       
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      extra_mplayer_commands << "-framedrop "      
-      # ?? extra_mplayer_commands << " -mc 0.016 -autosync 15"
+      extra_mplayer_commands << "-framedrop"      
+      # ?? extra_mplayer_commands << "-mc 0.016" ??
+      extra_mplayer_commands << "-autosync 15" 
       
-      # prefer english, attempt to disable subtitles, set edl...
-      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" # some maybe no longer necessary, but avoid subtitles by default...
+      # prefer english, attempt to disable subtitles, pass in edl...
+      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
       
       run_smplayer_non_blocking play_this, extra_mplayer_commands.join(' '), false
     end
@@ -857,13 +896,7 @@ module SensibleSwing
     end
     
     def check_for_various_dependencies
-      if we_are_in_create_mode
-        ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
-        if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-          require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-          download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
-        end
-        
+      if we_are_in_create_mode        
         if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
           require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
           download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://downloads.sourceforge.net/project/mplayer-win32/MPlayer%20and%20MEncoder/revision%2033574/MPlayer-rtm-svn-33574.7z", "mencoder"
@@ -871,6 +904,11 @@ module SensibleSwing
       end
 
       # runtime dependencies, at least today...
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
+        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
+      end
       if OS.mac?
         check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
       else      
@@ -904,7 +942,7 @@ module SensibleSwing
           system_non_blocking "notepad \"#{filename}\""
         end
       else
-        system_non_blocking "#{OS.open_file_command} \"#{filename}\""
+        system_non_blocking "open -a TextEdit \"#{filename}\""
       end
     end
 
@@ -957,7 +995,7 @@ module SensibleSwing
     
     def get_user_input(message, default = '', cancel_ok = false)
       received = JOptionPane.showInputDialog(message, default)
-      raise 'user canceled' unless received unless cancel_ok
+      raise 'user cancelled' unless received unless cancel_ok
       received
     end
     
@@ -1337,11 +1375,14 @@ end
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')
-    puts 'syntax: [--create-mode]'
+    puts 'syntax: [ --create-mode | --upconvert-mode ]'
   else
     a = SensibleSwing::MainWindow.new
     a.set_visible true
     puts 'Please use the Sensible Cinema GUI window popup...'
+    if ARGV.index('--exit-immediately')
+      a.dispose
+    end
   end
 end
 

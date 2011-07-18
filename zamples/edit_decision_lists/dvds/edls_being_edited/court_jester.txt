@@ -1,0 +1,26 @@
+# comments can go after a # on any line, for example this one.
+"name" => "court jester",
+
+"mutes" => [
+
+"0:33:24.424" , "0:33:26.448", "profanity", "deitys", "Sent by the [deitys] and for you alone",
+"0:41:25.884" , "0:41:32.1", "profanity", "deitys", "that you have been sent here by the [deitys], To do that you must go to her room and [make love]",
+"0:45:28.670" , "0:45:30.578", "profanity", "deitys", "and lovers are not sent by the [deitys]",
+"0:45:43.037" , "0:45:46.298", "profanity", "deitys", "The [deitys] who sent you have also provided a means for our escape",
+"0:41:51.573" , "0:41:54.586", "profanity", "make love", "Not me you fool Now go [make love]",
+"1:07:55.761" , "1:07:58.782", "profanity", "idiot", "Eh don't tug it [idiot] Well that's very considerate of you my dear",
+"1:25:48.334" , "1:25:51.656", "profanity", "idiot", "Take that horse and put it back under that [idiot]",
+ 
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "JESTER",
+"disk_unique_id" => "a0eadedd|449cd867", # 6065.400 30 fps  subs 102393
+#-> 1:41:11.465, ts 01:41:10.94, mkv 01:41:13.01
+"dvd_title_track" => "1",# "not edited out stuff" => "some violence",
+# "closing thoughts" => "still...",
+# "mplayer_dvd_splits" => [lots...],

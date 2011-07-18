@@ -11,25 +11,29 @@
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
-	  no auto subtitle downloads...
+    no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  a "half mute" demo, using volume downs/ups     
+   a "half mute" demo, using volume downs/ups     
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
+   VLC "insert missing scene" demo, overlay section with image (mplayer?)
  
 == yes do ordered in conjunction with the above probably ==
-new name upconvert mode
+  does a release work in mac?
+  mac court jester upconvert: without -nocache, with aggressive sync....
+    jester at work...still laggy lips?
   mac bat files
-  C player
   unit tests
-  release at some point...
-  mulder response
+  subs: research if at beginning, add extra offset...hmm... 
+  release at some point...Jon?
+
   consistency for flight of nav. srt? huh?
+    consistency of others, also "DVD reported full-time versus ts time" for others...
   lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -48,22 +52,22 @@ new name upconvert mode
   make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
+  auto-update website on release.
+  publish a ripped raw big bunny
+    update development howto
+  @jruby scan court jester is *so* slow...what the...
   urug again?
+    after works in mac. Why not?
   netflix upconverter
-  upconv: compare with powerdvd
-  if 2 EDL's, still choose title track
-  add an auto "scan for expected title, times"
-    add time to the generator EDL
-    complain if times looks wrong...
-  complain [accomodate option] if start time looks off...600
+  if 2 EDL's, still choose a title track, playback
+  add largest title to the generator EDL
+    complain if times looks wrong...on playback? sum time
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
   tighten splits
   "save to" -> same dir as "get from" yeah
   open EDL can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
-  @instructions: full srt how-to
-  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
-  add dvd_title_time option
+  @instructions: full srt how-to document instead of tooltip [?]
   volume_name => dvd_volume_name
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
@@ -75,28 +79,23 @@ new name upconvert mode
     don't have to use eval!
     EDL with JSON on top, full timestamps.
   setpriority for several :)
-  bring to top after a conversion, and for prompts...
+  bring to top after a conversion, and before prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
-  check if some other buttons are now outdated...
-  unit tests (all pass)
-  upconvert: a file
-  can I avoid requiring use of tsmuxer first? hmm...
+  check if some buttons are now outdated...
   check with blu-ray...do they match timing-wise? sub-title wise?
-  donate tsmuxer, makemkv, http://ffmpeg.zeranoe.com/builds, mulder [?] smplayer menumeter
+  donate tsmuxer, mplayer, http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard/
+  already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, cannot donate: ffmpeg
   youtube/hulu timings
-  @mplayer do you want a demo disk of how it fails edl dvdnav?
   split LLC's website+consumer
     get LLC before a "real" domain name
-  upconverter
-    check gl mac
-    check permutations
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @makemkv: timing feels broken weird-like!
+    try out libdvdcss + handbrake on the one that was totally broken...is it better?
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try
-  try disney digital copy
+  try out disney digital copy
   C player:
     folder, look for title.edl
     use DVD navigator
@@ -113,23 +112,19 @@ new name upconvert mode
         can come out of full screen more easily :P
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
-    [A,B] [?]
-  create the "play previously created edited file for current DVD" button
+    [A,B] 
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
-    beta release: rinse and repeat with various ppl
+    rinse and repeat with various ppl
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
-    karlie?
   inventionzy: blu-ray stuff from todo.inventionzy
 
   port to mac OS X--try everything out (all buttons), make sure all works...
-      ppc dvdid?
-      use mplayerx well [?] like wrap it...
+    ppc dvdid?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
-  do I need tsmuxer?
-  auto-"guess" the best title...
   add button "fast preview segment" (from dvd)
+    add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
   investigate WMC "call out to smplayer EDL" or the like...
 
@@ -143,9 +138,9 @@ new name upconvert mode
   todo.subtitle
 
 == DVD decide later to move up or down ==
-  add button "fast preview one" (from file)
 
 == DVD-realtime backlog once yes do, now not do, unordered ==
+  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   investigate xbmc dvd edl how do you do that? [+- real dvd]
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
@@ -156,7 +151,9 @@ new name upconvert mode
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  subtitle idio
+  use mplayerx well [?] like wrap it...
+    could for files, not for dvd's yet tho...
+  try to team up with fanedit.org ?
   slow cpu: mater tall tales: are my av sync values better or worse than smplayer defaults, with/without upsampling, blacky?
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   mplayer EDL allow this:
@@ -167,6 +164,8 @@ new name upconvert mode
   test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
   investigate dvdrsbvdl (windows media center edl plugin)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
+  @mplayer: chooses wrong language ts from jester...sigh
+  @mplayer: crash: http://betterlogic.com/roger/2011/07/mplayer-mac-os-x-woe/
   @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
   @mplayer: could you umm...go ahead and support avisynth input pleaz, assuming you don't?
   @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
@@ -195,6 +194,7 @@ new name upconvert mode
   some way to hide spoilers, like soundtrack adds that ruin the movie for ya...
   decide on "community" -- should it be all my own community? mymovies community?
   the auto-matcher filename to subtitles [?]
+    auto-downloader based on filename/dvd name/md5 ?
   "media browser" plugin?
   @makemkv: show us the title numbers, and number them *by those*
   @macports: set notestxt \
@@ -211,13 +211,12 @@ new name upconvert mode
   create an XBMC plugin that auto-searches for...ummm...uh...filters for you? huh? some type of plugin?
     just create the side by side .EDL for various files for people.
   make a mymovies plugin to auto-use EDL's somehow... ?
-  auto download subtitles from opensubtitles somehow err other...
   an almost rifftrax that...says "here overlay x, change normal volume to 50% during that time..."
   check if tmdb needs some type of upload...hmm...to save them... ask that one guy if I can bribe him into doing it? dvdxml? dvdid.info?
-  allow for filter subtitles, a la "always skip" [?]
+  allow for filtered subtitles, a la "always skip" [?]
   allow for AAF or OMF export, as well as EDL (?)
-  C specific portion [A,B] player
   also edit the playback of trailers et al [?] hmm...
+    allow for mplayer too? hmm...
   @mplayer: double click default to full screen! :) and enter default to dvdnav select!
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
@@ -236,8 +235,6 @@ new name upconvert mode
   research the gplv3, add terms. Maybe want real lawyer, even?
   sons of provo "music video" EDL
   it can "slow certain sections down" that might look way cool! LOL
-  how does this one download subtitles? http://www.pcworld.com/article/227465/freebie_splayer_plays_almost_any_video_fileand_looks_good_doing_it.html
-    also xbmc has a plugin
   script powerdvd via keystrokes
   VLC: suggest uservoice
   can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
@@ -268,9 +265,9 @@ new name upconvert mode
   machine learning for video analysis [?]
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
-  @smplayer: why do you sometimes start with subtitles enabled?
+  @mplayer: why do you sometimes start with subtitles enabled?
   don't need to include in package rdp-win32screenshot et al for just DVD work...
-  bring in batch file mplayer :)
+  bring back batch file mplayer :)
   make my website slightly more "pictures-zy"
   check why out of sync my turn on earth on blacky MPH-HC
     does it with other players...?
@@ -302,7 +299,6 @@ new name upconvert mode
     http://themoviedb.lighthouseapp.com/projects/17044-themoviedborg/tickets/142
     their mkv player probably does some lookup 'er other...maybe...for dvd's
     I really need to tell tvdb to allow for discid, and/or themoviedb to allow for series'
-  @themoviedb: allow for series, also allow for subtitles?
   @mplayer: some way to not have to use phreaky phreaky pipes in doze ("+1")
   @ffmpeg: gop 12 for ntsc-dvd?
   can watch conference like a music video :)

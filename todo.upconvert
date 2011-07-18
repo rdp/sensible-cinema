@@ -1,22 +1,13 @@
-allow it "up to max x" resolution maybe? instead of 2x, if too large?
+compare with powerdvd/ffdshow
 
-
-what about dvd*3 (2160) versus 3360
-  windows/small
-  full screen
-  ?
+compare various computers/monitors...
 
 experiment with 2x or not with various people...
   also should I change screen resolution down to 800x600 then double upconvert? better?
 
-sinc filter?
-
-
 lanczos 10?
 
 hqdn3d settings?
-
-opengl?
 
 upconvert netflix instant yes!
 
@@ -24,4 +15,4 @@ upconvert netflix instant yes!
 
 add another sharpen filter?
 
-VLC version?
+add a VLC version?

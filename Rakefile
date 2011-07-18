@@ -63,7 +63,7 @@ def get_transitive_dependencies dependencies
    transitive_deps = dependency_spec.runtime_dependencies
    new_dependencies << transitive_deps
   }
-  new_dependencies.flatten
+  new_dependencies.flatten.uniq
 end
 
 task 'clear_and_copy_vendor_cache' do
@@ -81,6 +81,7 @@ task 'rebundle_copy_in_dependencies' => 'gemspec' do
    spec = eval File.read('sensible-cinema.gemspec')
    dependencies = spec.runtime_dependencies
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
+   FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
      dependencies.each{|d|
        system("#{OS.ruby_bin} -S gem unpack #{d.name}")
@@ -102,6 +103,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
   FileUtils.cp(Dir["#{dir_out}/template_bats/*.bat"], "#{dir_out}/..")
+  FileUtils.cp_r(dir_out + '/template_bats/mac', dir_out)
   p 'created (still need to zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end

@@ -3,26 +3,23 @@ So...is this legal?
 Unclear.  In general ripping personal DVD's is legal.
 
 Note also that if you don't feel it is legal in your country, you can still use the timing info given 
-to "manually" skip/mute scenes you dislike.  
-Also you may be able to hook up something that does the editing in "realtime" while playing it back (see README 
-for a list of related works that might help with this).  This would fall under the The Family Home Movie Act of 2005.
+to "manually" skip/mute scenes you dislike.
+Also the playback in "realtime" edited (see README 
+for a list of related works that might also do this) is probably legal
+under the The Family Home Movie Act of 2005.
 
 And making verbatim "backup copies" of commercial DVD's (I think--I'm no laywer) may fall under 
-fair use [3].
+fair use [3].  http://fanedit.org/49/ also lists some interesting copyright ideas in the footer.
 
 Sensible cinema doesn't include any ability to actually rip DVD's,
-and relies on you to use something else for that, on your own.
-
-It is controversial to use open source software to play/rip commercial DVD's.
-There are a few conflicting views.
-Sensible-cinema doesn't actually do any decryption or decoding, nor has any knowledge of how it occurred
-originally.  
-It doesn't even have knowledge as to whether the DVD was originally encrypted or not, we choose a 
+and relies on you to use something else for that, to avoid liability.
+We choose a 
 "you have to do the ripping through some other means" philosophy, to avoid legal issues.
 You can ask the authors of the ripping programs you use if their software is legal.  Apparently
-libdvdcss (which the other programs that it calls out to use) has never been legally challenged in court (or so they say), 
-and uses a slightly different algorithm than those that have, so the jury's still out.  Possibly
-it has been challenged in French courts and found legal so it might vary from country to country, as well [4].
+libdvdcss (which some programs use) has never been legally challenged in court (or so they say), 
+and uses a slightly different algorithm than those that have, so the jury's still out.
+It has been challenged in French courts and apparently found legal so this may vary 
+from country to country, as well [4].
 
 Using sensible-cinema also might not be more unethical than ripping your DVD collection to your hard
 drive so you can "keep your DVD's all in one place" or what not (which might perhaps be termed fair use), since it
