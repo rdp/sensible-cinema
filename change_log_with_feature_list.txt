@@ -7,6 +7,8 @@ Created demo of it playing back static instead of muting (to overlay).
 That's an extra audio file over the top of the original, while still playing
 (ex: rifftrax), to "fake" a mute section.
 
+Add an option for the upconverter to vary "strength" of screen size.
+
 == 0.24.3 ==
 
 Distribution cleanups

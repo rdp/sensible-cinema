@@ -251,7 +251,7 @@ module SensibleSwing
           if new_value != old_value
             display_current_upconvert_setting
             if slider.value == label_minimum
-              show_blocking_message_dialog "Setting it too low might make it not really do anything!"
+              show_blocking_message_dialog "Setting it too low like that might make it not really do much upconverting!"
             end
           end
         end
@@ -269,7 +269,7 @@ module SensibleSwing
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}. (multiplier #{LocalStorage['screen_multiples']})"
+      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"} (screen multiplier #{LocalStorage['screen_multiples']})."
     end
     
     def get_current_max_width_resolution
@@ -467,9 +467,7 @@ module SensibleSwing
     end # advanced buttons
 
     def setup_normal_buttons
-      if LocalStorage[UpConvertEnglish]
-        add_text_line get_current_upconvert_as_phrase
-      end
+      
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
@@ -486,17 +484,20 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive_via_file false
       }
       
-#      @watch_created_file = new_jbutton( "Watch the edited version of DVD file", false).on_clicked {
-#        play_mplayer_edl  # LODO
-#      }
-
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
         choose_file_and_edl_and_create_sxs_or_play false 
-      end      
+      end
       
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
         show_in_explorer __DIR__ + "/../documentation"
-      end      
+      end
+      
+      if LocalStorage[UpConvertEnglish]
+        @upconv_line = add_text_line "    #{get_current_upconvert_as_phrase}"
+      else
+        @upconv_line = add_text_line ''
+      end
+      
       add_change_upconvert_options_button 
 
     end
