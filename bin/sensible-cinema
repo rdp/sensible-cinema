@@ -156,7 +156,7 @@ module SensibleSwing
 
     def add_change_upconvert_options_button
       @show_upconvert_options = new_jbutton( "Change/Set upconverting playback options" ) do
-        add_setup_upconvert_options
+        add_setup_options_buttons
       end.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
     
@@ -169,12 +169,32 @@ module SensibleSwing
     def change_upconvert_line_to_current
       @upconv_line.set_text get_current_upconvert_as_phrase
     end
+    
+    def select_new_sxs_style
+      answer = show_select_buttons_prompt 'Select EDL file style creation for this program', :yes => 'Smplayer style', :no => 'XBMC style'
+      if answer == 0
+        LocalStorage[SideBySide] = 'smplayer'
+      elsif answer == 1
+        LocalStorage[SideBySide] = 'xbmc'
+      else
+        show_blocking_message_dialog 'please choose one--smplayer if you don\'t know'
+        select_new_sxs_style
+      end
+        
+    end
       
+    SideBySide = 'side_by_side' # 'xbmc' or 'smplayer'
     UpConvertKey = 'upconvert_setting'
     UpConvertKeyExtra = 'upconvert_setting_extra'
     UpConvertEnglish = 'upconvert_english_name'
 
-    def add_setup_upconvert_options
+
+
+    def add_setup_options_buttons
+      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
+        select_new_sxs_style
+      end
+      
       none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       none.on_clicked {
