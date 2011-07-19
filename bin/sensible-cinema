@@ -839,15 +839,32 @@ module SensibleSwing
       returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       assert_confirmed_dialog returned, nil
     end
+    
+    # returns 0,1,2 for yes, no, cancel equivs
+    def show_select_buttons_prompt message, names_hash
+      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
+      if names_hash[:yes]
+        UIManager.put("OptionPane.yesButtonText", names_hash[:yes])
+      end
+      if names_hash[:no]
+        UIManager.put("OptionPane.noButtonText", names_hash[:no])
+      end
+      # if names_hash[:ok] # ???
+      #   UIManager.put("OptionPane.okButtonText", names_hash[:ok])
+      # end
+      if names_hash[:cancel]
+        UIManager.put("OptionPane.noButtonText", names_hash[:cancel])
+      end
+      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+      returned
+    end
       
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
-        title = 'Confirm Acceptance of License Agreement', message = nil
+      title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window.'
-      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
-      UIManager.put("OptionPane.yesButtonText", 'Accept')
-      UIManager.put("OptionPane.noButtonText", "View #{license_name}")
       # cancel button stays the same...
-
+      
       message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
         separately to the vendor/cache directory, or Sensible Cinema can download it for you.
         By clicking accept, below, you are confirming that you have read and agree to be bound by the
@@ -855,12 +872,11 @@ module SensibleSwing
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      
-      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      returned = show_select_buttons_prompt message, :yes => 'Accept', :no => '"View #{license_name}"'
       assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
       p 'confirmation of sensible cinema related license saved of: ' + license_name
       throw unless returned == 0
-      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+      
     end
     
     def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message

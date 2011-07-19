@@ -25,6 +25,7 @@
    VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
+  XBMC mode doesn't mind the 600 starting offset...
   figure out if an offset of '1's should be accomodated for...
   m4m: the play button, "regenerate" admin button, "click here x other arrangements of this hymn"
   does a released version work in mac?
