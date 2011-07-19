@@ -494,6 +494,7 @@ module SensibleSwing
       end
       
       if LocalStorage[UpConvertEnglish]
+        add_text_line ''
         add_open_documentation_button
         @upconv_line = add_text_line "    #{get_current_upconvert_as_phrase}"
       else

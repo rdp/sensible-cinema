@@ -1,3 +1,8 @@
+== 0.24.5 ==
+
+Fix some options for advanced mode so that it can playback files better.
+Tweak upconvert to make it a bit more user friendly.
+
 == 0.24.4 ==
 
 Note that previous releases had the ability to "invert" skipping scenes,
