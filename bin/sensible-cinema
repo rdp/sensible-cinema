@@ -155,8 +155,8 @@ module SensibleSwing
     end
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Set Various Options") do
-        add_setup_options_buttons
+      @show_upconvert_options = new_jbutton("Set Upconvert Options") do
+        add_setup_upconvert_buttons
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
@@ -190,12 +190,7 @@ module SensibleSwing
     UpConvertEnglish = 'upconvert_english_name'
 
 
-
-    def add_setup_options_buttons
-      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
-        select_new_sxs_style
-      end
-      
+    def add_setup_upconvert_buttons
       none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       none.on_clicked {
@@ -346,6 +341,10 @@ module SensibleSwing
       @create_dot_edl.on_clicked {
         choose_file_and_edl_and_create_sxs_or_play true
       }
+      
+      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
+        select_new_sxs_style
+      end
 
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
