@@ -106,7 +106,7 @@ module SensibleSwing
     end
 
     it "should modify path to have mencoder available" do
-      ENV['PATH'].should include("mencoder")
+      RubyWhich.new.which('mencoder').length.should be > 0
     end
     
     it "should not modify path to have mplayer available" do
@@ -159,6 +159,7 @@ module SensibleSwing
       }
       
       # less chatty...
+      @subject.stub!(:print) {}
       @subject.stub!(:p) {}
       @subject.stub!(:puts) {}
     end
@@ -449,7 +450,8 @@ module SensibleSwing
     end
     
     it "should show additional buttons in create mode" do
-      MainWindow.new.buttons.length.should == 6
+      MainWindow.new.buttons.length.should be > 3
+      MainWindow.new.buttons.length.should be < 10
       old_length = MainWindow.new.buttons.length
       ARGV << "--create-mode"
       MainWindow.new.buttons.length.should be > (old_length + 5)

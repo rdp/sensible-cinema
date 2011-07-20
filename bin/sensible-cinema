@@ -482,7 +482,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, "-edl \"#{EdlTempFile}\"", false
+        run_smplayer_blocking nice_file, NonDvd, "-edl \"#{EdlTempFile}\"", false
       }
       
       @reload = new_jbutton("reload bin/sensible-cinema code") do
@@ -623,25 +623,25 @@ module SensibleSwing
       }
     end
 
-    def run_smplayer_blocking play_this, extra_options, force_use_mplayer
-      extra_options += " -alang en " # for those that put french first...
-      extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
+    def run_smplayer_blocking play_this, dvd_id, extra_options, force_use_mplayer
+      extra_options += " -alang en " # for those that put french first...though this doesn't help...
+      extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
       if OS.mac? || force_use_mplayer
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        if OS.windows?
-        # direct3d for windows 7 old nvidia cards' sake [yipes]
-        extra_options += " -vo direct3d " # more mouse, less speed [?] less mouse ??
+        # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
+        extra_options += " -vo direct3d "
         extra_options += " -slang en "
-        extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE
-        conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't like no sir
+        extra_options += " -font #{ENV['SystemRoot']}\\fonts\\ARIAL.TTF " # would need EXTRA ESCAPING FOR SMPLAYER USE LODO
+        conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        else
         extra_options += " -font /Library/Fonts/Arial.ttf "
        end
        extra_options += " -fs " # full screen
-       c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" -mouse-movements \"#{play_this}\" "
+       c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" \"#{play_this}\" "
       else
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
@@ -649,7 +649,7 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
-      print c # for debugging...
+      print c 
       system_blocking c
     end
     
@@ -755,7 +755,7 @@ module SensibleSwing
       writeOut.write(open(full_url).read)
       writeOut.close
     end
-    
+   
     def play_dvd_smplayer_unedited use_mplayer_instead = false, show_instructions = true
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
@@ -772,7 +772,7 @@ module SensibleSwing
         show_mplayer_instructions_once
       end
 
-      run_smplayer_non_blocking file_to_play, options, use_mplayer_instead
+      run_smplayer_non_blocking file_to_play, dvd_id, options, use_mplayer_instead
 
     end
 
@@ -850,7 +850,7 @@ module SensibleSwing
       # prefer english, attempt to disable subtitles, pass in edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
       
-      run_smplayer_non_blocking play_this, extra_mplayer_commands.join(' '), false
+      run_smplayer_non_blocking play_this, dvd_id, extra_mplayer_commands.join(' '), false
     end
     
     def assert_ownership_dialog 
@@ -1297,7 +1297,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          run_smplayer_non_blocking saved_to, '', false
+          run_smplayer_non_blocking saved_to, NonDvd, '', false
         else
           if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
