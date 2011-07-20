@@ -454,13 +454,13 @@ module SensibleSwing
         Typically if you want to test an edit, you can start a few seconds before, and end a few seconds after it, to test it precisely.
       EOL
       @preview_section.on_clicked {
-        do_copy_dvd_to_hard_drive_via_file true
+        do_create_edited_copy_via_file true
       }
       
       @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)" )
       @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
-        do_copy_dvd_to_hard_drive_via_file true, false, true
+        do_create_edited_copy_via_file true, false, true
       }
 
       @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file" )
@@ -478,7 +478,7 @@ module SensibleSwing
         timestamp splits in it [because some DVD's are buggy]
       EOL
       @fast_preview.on_clicked {
-        success, wrote_to_here_fulli = do_copy_dvd_to_hard_drive_via_file false, true
+        success, wrote_to_here_fulli = do_create_edited_copy_via_file false, true
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
@@ -506,7 +506,7 @@ module SensibleSwing
         It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
       EOL
       @create.on_clicked {
-        do_copy_dvd_to_hard_drive_via_file false
+        do_create_edited_copy_via_file false
       }
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
@@ -1154,7 +1154,7 @@ module SensibleSwing
       end
     end
 
-    def do_copy_dvd_to_hard_drive_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
+    def do_create_edited_copy_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
       drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
       
       descriptors = parse_edl(edit_list_path)
@@ -1249,7 +1249,7 @@ module SensibleSwing
            to #{file_from} (#{dvd_title}).
         Copying to #{save_to}.
       EOL
-      if !fulli_dot_done_file_exists? save_to
+      if !fulli_dot_done_file_exists?(save_to)
         popup_message += "This could take quite awhile (several hours), and will prompt you with a chime noise when it is done.\n
         You can close this window and minimize sensible cinema and continue using your computer while it runs in the background.\n"
       end
@@ -1266,7 +1266,7 @@ module SensibleSwing
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new {
-        run_batch_file_commands commands, save_to, file_from, run_mplayer
+        run_batch_file_commands_and_use_output_somehow commands, save_to, file_from, run_mplayer
         popup.dispose
       }
       # LODO warn if they will overwrite a file in the end...
@@ -1274,7 +1274,7 @@ module SensibleSwing
     
     attr_accessor :background_thread, :buttons
 
-    def run_batch_file_commands batch_commands, save_to, file_from, run_mplayer_after_done
+    def run_batch_file_commands_and_use_output_somehow batch_commands, save_to, file_from, run_mplayer_after_done
       @buttons.each{|b| b.set_enabled false}
       success = true
       lines = batch_commands.lines.to_a
@@ -1306,7 +1306,7 @@ module SensibleSwing
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
           puts msg
           show_blocking_message_dialog msg
-          show_in_explorer saved_to # and again :)
+          show_in_explorer saved_to # and again, just for kicks :)
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE)

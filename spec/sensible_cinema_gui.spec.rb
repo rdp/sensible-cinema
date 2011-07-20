@@ -190,7 +190,7 @@ module SensibleSwing
     end
 
     it "should be able to do a normal copy to hard drive, edited" do
-      @subject.do_copy_dvd_to_hard_drive_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_create_edited_copy_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
     
@@ -204,8 +204,8 @@ module SensibleSwing
         count += 1
         'abc'
       }
-      @subject.do_copy_dvd_to_hard_drive_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
-      3.times { @subject.do_copy_dvd_to_hard_drive_via_file(false) }
+      @subject.do_create_edited_copy_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      3.times { @subject.do_create_edited_copy_via_file(false) }
       count.should == 2
     end
     
@@ -219,7 +219,7 @@ module SensibleSwing
       PlayAudio.stub!(:play) {
         @played = true
       }
-      @subject.do_copy_dvd_to_hard_drive_via_file(false)
+      @subject.do_create_edited_copy_via_file(false)
       @subject.background_thread.join
       @get_mencoder_commands_args[-4].should == nil
       @system_blocking_command.should match /explorer/
@@ -229,17 +229,19 @@ module SensibleSwing
     
     it "should be able to return the fulli name if it already exists" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.do_copy_dvd_to_hard_drive_via_file(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_create_edited_copy_via_file(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
       FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
     end
     
-    it "should call explorer eventually, if it has to create the fulli file" do
-     @subject.do_copy_dvd_to_hard_drive_via_file(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
+    it "should call explorer eventually, even if it has to create the fulli file"
+    
+    it "should play the edited file" do
+     @subject.do_create_edited_copy_via_file(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
      join_background_thread
      @get_mencoder_commands_args[-2].should == "2"
      @get_mencoder_commands_args[-3].should == "01:00"
-     @system_non_blocking_command.should match /smplayer/
-     @system_non_blocking_command.should_not match /fulli/
+     @system_blocking_command.should =~ /smplayer/
+     @system_blocking_command.should_not match /fulli/
     end
 
     def run_preview_section_button_successfully
@@ -247,7 +249,7 @@ module SensibleSwing
       join_background_thread
       @get_mencoder_commands_args[-2].should == "2"
       @get_mencoder_commands_args[-3].should == "01:00"
-      @system_non_blocking_command.should match /smplayer/
+      @system_blocking_command.should match /smplayer/
     end
 
     it "should prompt for start and end times" do
@@ -257,7 +259,8 @@ module SensibleSwing
     temp_dir = Dir.tmpdir
     
     def join_background_thread
-      @subject.background_thread.join # must be running...
+      @subject.background_thread.join # force it to have been started at least
+      Thread.join_all_others # just in case...
     end
     
     it "should be able to preview unedited" do
@@ -281,7 +284,7 @@ module SensibleSwing
       @get_mencoder_commands_args = nil
       click_button(:@rerun_preview).join
       @get_mencoder_commands_args.should == old_args
-      @system_non_blocking_command.should match(/smplayer/)
+      @system_blocking_command.should match(/smplayer/)
     end
     
     it "should not die if you pass it the same start and end time frames--graceful acceptance" do
@@ -312,7 +315,7 @@ module SensibleSwing
     
     it "if the .done files exists, do_copy... should call smplayer ja" do
       FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.do_copy_dvd_to_hard_drive_via_file(false, true, true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_create_edited_copy_via_file(false, true, true).should == [true, "abc.fulli_unedited.tmp.mpg"]
     end
     
     it "should create a new file for ya" do
