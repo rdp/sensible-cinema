@@ -649,12 +649,12 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
-      p c # for debugging...
+      print c # for debugging...
       system_blocking c
     end
     
     def set_smplayer_opts to_this, show_subs = false
-      p 'set smplayer opts to this:' + to_this
+      p 'set smplayer extra opts to this:' + to_this
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
       old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" unless old_prefs.contain? 'mplayer_additional_options='
@@ -1414,6 +1414,7 @@ module SensibleSwing
   end
 end
 
+# LODO move to sane :) also remove the andand dep.
 class String
   def present?
     length > 0
