@@ -164,7 +164,12 @@ module SensibleSwing
         @subject.stub!(:puts) {}
       end
       
-      @subject.stub!(:show_non_blocking_message_dialog) {}
+      @subject.stub(:show_non_blocking_message_dialog) {
+         # don't display the popup message...
+        fake_window = OpenStruct.new
+        fake_window.dispose = :ok
+        fake_window
+      }
     end
     
     after do
@@ -383,6 +388,8 @@ module SensibleSwing
       @subject.run_smplayer_blocking f, 3, '', true
       @system_blocking_command.should =~ /dvdnav:\/\/3/
       @system_blocking_command.should =~ /VIDEO_TS\/\.\./
+      @system_blocking_command.should =~ / -alang/ # preceding space :)
+      
     end
       
     it "should play edl with extra time for the mutes because of the EDL aspect" do
@@ -533,9 +540,6 @@ module SensibleSwing
    end
   
   it "should have a created play unedited smplayer button" do
-    @subject.stub(:show_non_blocking_message_dialog) {
-       # don't display the popup message...
-    }
     @subject.stub(:single_edit_list_matches_dvd) {
       nil
     }

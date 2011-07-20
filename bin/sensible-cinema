@@ -136,7 +136,7 @@ module SensibleSwing
         warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
-      end.tool_tip= "This plays back a movie file, like moviefile.mpg, using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options." # LODO
+      end.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options." # LODO
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         warn_if_no_upconvert_options_currently_selected
@@ -534,7 +534,7 @@ module SensibleSwing
     end
     
     def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
-      filename_mpg = new_existing_file_selector_and_select_file( "pick moviefile (like moviename.mpg)")
+      filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or VIDEO_TS/vts_01_0.vob)")
       edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
       assert_ownership_dialog
       if just_create_dot_edl_file_instead_of_play
@@ -629,15 +629,15 @@ module SensibleSwing
       parent_parent = File.basename(File.dirname(play_this))
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
-        extra_options += " -nocache -dvd-device \"#{File.dirname(play_this) }/..\""
+        extra_options += " -dvd-device \"#{File.dirname(play_this)}/..\""
         play_this = "dvdnav://#{title_track_maybe_nil}"
       elsif File.exist?(play_this + '/VIDEO_TS')
-        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive]
+        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive] or mac's /Volumes/YO
         extra_options += " -nocache -dvd-device \"#{play_this}\""
         play_this = "dvdnav://#{title_track_maybe_nil}"
       else
         # case g:\video\filename.mpg
-        # leave as same...
+        # leave same...
       end
       
       extra_options += " -alang en " # for those that put french first...though this doesn't help...
