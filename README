@@ -1,4 +1,4 @@
-Sensible-cinema [5] allows you to apply pre-programmed edit lists
+Sensible-cinema allows you to apply pre-programmed edit lists
 (e.g. Edit Decision Lists [2]) to the DVD's you own.  
 I.e. you can edit a DVD to "mute out" or skip certain scenes, deemed objectionable.
 This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
@@ -47,7 +47,6 @@ Enjoy your movies!
 [2] http://www.mplayerhq.hu/DOCS/HTML/en/edl.html and http://en.wikipedia.org/wiki/Edit_decision_list
 [3] mostly GPL programs, see http://www.gnu.org/licenses/ VLC Media Player, Mplayer/mencoder, ffmpeg, et al.
 [4] http://lds.org/library/display/0,4945,161-1-11-1,00.html search for the word "wholesome"
-[5] Also known to us as "paranoid cinema" (just an joke :)
 
 == Installation ==
 

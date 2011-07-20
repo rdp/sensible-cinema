@@ -320,7 +320,7 @@ module SensibleSwing
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
-        @display_unique.simulate_click # for now...
+        @display_dvd_info.simulate_click # for now...
       end
       
       @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
@@ -371,19 +371,20 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
 
-      @display_unique = new_jbutton( "Display information about current DVD (ID, etc.)" )
-      @display_unique.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
-      @display_unique.on_clicked {
+      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
+      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
+      @display_dvd_info.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
-        out = nil
-        t = Thread.new {out= `mplayer dvdnav:// -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH`}
+        title_lengths = nil
+        t = Thread.new { title_lengths= `mplayer dvdnav:// -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
         id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
         show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED eventually to identify a disk to match it to its EDL, later.", id_string
         t.join
-        File.write EdlTempFile, id_string + "\n" + out
+        File.write EdlTempFile, id_string + "\n" + title_lengths
         open_file_to_edit_it EdlTempFile
+        id_string
       }
 
       @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
@@ -613,7 +614,7 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/monkey.png").getImage())
+      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
       check_for_various_dependencies
     end
     
@@ -1197,7 +1198,7 @@ module SensibleSwing
       else
         file_from = get_import_from_filename dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
-      show_blocking_message_dialog("warning: file is not a .mpg or .ts file--it may not work properly all the way--if it's mkv and fails consider first converting to ts by using tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
+      show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way--if it's mkv and fails consider first converting to ts by using tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists

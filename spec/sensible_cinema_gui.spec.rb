@@ -126,7 +126,7 @@ module SensibleSwing
         'fake get_mencoder_commands'
       }
       @subject.stub!(:new_existing_file_selector_and_select_file) {
-        'abc'
+        'selected_file'
       }
       @subject.stub!(:new_nonexisting_filechooser) {
         FakeFileChooser.new
@@ -306,11 +306,25 @@ module SensibleSwing
     it "should warn if you watch an edited time frame with no edits in it" do
       @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
       click_button(:@preview_section)
-      @show_blocking_message_dialog_last_arg.should =~ /unable to/
+      @show_blocking_message_dialog_last_arg.should =~ /unable to find/
+    end
+    
+    it "should warn if you give it an mkv file, just in case" do
+      @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
       click_button(:@preview_section)
       join_background_thread
-      @system_blocking_command.should == "echo wrote (probably successfully) to abc.avi"
+      @show_blocking_message_dialog_last_arg.should =~ /is not a/
+    end
+    
+    it "should not warn if things go well" do
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      @subject.stub!(:new_existing_file_selector_and_select_file) {
+        'selected_file.mpg'
+      }
+      click_button(:@preview_section)
+      join_background_thread
+      @show_blocking_message_dialog_last_arg.should =~ /preview just a portion/
     end
     
     it "if the .done files exists, do_copy... should call smplayer ja" do
@@ -336,7 +350,7 @@ module SensibleSwing
     end
     
     it "should display unique disc in an input box" do
-      @subject.instance_variable_get(:@display_unique).simulate_click.should == "01:00"
+      click_button(:@display_dvd_info).should =~ /deadbeef/
     end
     
     it "should create an edl and pass it through to mplayer" do
@@ -354,7 +368,7 @@ module SensibleSwing
       wrote = File.read(MainWindow::EdlTempFile)
       # normally "378.0 379.1 1"
       p wrote
-      wrote.should include("377.5 379.1 1")
+      wrote.should include("377.0 379.1 1")
     end
     
     def should_allow_for_changing_file corrupt_the_file = false
