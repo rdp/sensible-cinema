@@ -58,7 +58,6 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   some upconvert specs
-  new icon plz
   facebook survey :)
   "--developer" mode
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
@@ -170,6 +169,7 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  new icon plz
   @ffmpeg: bounty/plz multi-thread the lanczos filter? plz?
   @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...
