@@ -360,14 +360,15 @@ module SensibleSwing
       }
       click_button(:@mplayer_edl).join
       smplayer_opts.should match(/-edl /)
-      @system_blocking_command.should match(/dvdnav/)
+      @system_blocking_command.should match(/mock_dvd_drive/) # 
+      @system_blocking_command.should_not =~ /dvdnav/ # file based, so no dvdvnav
+      @system_blocking_command.should_not =~ /-nocache/ # file based, so no -nocache
     end
     
     it "should play edl with extra time for the mutes because of the EDL aspect" do
       click_button(:@mplayer_edl).join
       wrote = File.read(MainWindow::EdlTempFile)
       # normally "378.0 379.1 1"
-      p wrote
       wrote.should include("377.0 379.1 1")
     end
     

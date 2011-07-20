@@ -377,7 +377,7 @@ module SensibleSwing
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true
         # display it, allow them to copy and paste it out
         title_lengths = nil
-        t = Thread.new { title_lengths= `mplayer dvdnav:// -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
+        t = Thread.new { title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
         id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
         show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED eventually to identify a disk to match it to its EDL, later.", id_string
@@ -624,10 +624,25 @@ module SensibleSwing
       }
     end
 
-    def run_smplayer_blocking play_this, title_track, extra_options, force_use_mplayer
+    def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer
+      
+      parent_parent = File.basename(File.dirname(play_this))
+      if parent_parent == 'VIDEO_TS'
+        # case d:\yo\VIDEO_TS\title0.vob
+        play_this = "dvdnav://#{title_track_maybe_nil}"
+        extra_options += " -nocache -dvd-device \"#{parent_parent}\""
+      elsif File.exist?(play_this + '/VIDEO_TS')
+        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive]
+        play_this = "dvdnav://#{title_track_maybe_nil}"
+        extra_options += " -nocache -dvd-device \"#{play_this}\""
+      else
+        # case g:\video\filename.mpg
+        # leave as same...
+      end
+      
       extra_options += " -alang en " # for those that put french first...though this doesn't help...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
-      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264]
       if OS.mac? || force_use_mplayer
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
@@ -761,18 +776,11 @@ module SensibleSwing
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
-      if dvd_id == NonDvd # TODO smelly...this if statement all over the place...
-        file_to_play = drive_or_file
-      else
-        file_to_play = "dvdnav://#{title_track_maybe_nil}"
-      end
-      options = " -osd-fractions 2 -nocache -dvd-device #{drive_or_file} "
       if show_instructions
         # want this even with smplayer sometimes I guess...
         show_mplayer_instructions_once
       end
-
-      run_smplayer_non_blocking file_to_play, title_track_maybe_nil, options, use_mplayer_instead
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead
 
     end
 
@@ -805,9 +813,8 @@ module SensibleSwing
       end
       start_add_this_to_all_ts = 0
       if dvd_id == NonDvd
-        play_this = drive_or_file # play straight file...
         # check if starts offset...
-        all =  `ffmpeg -i "#{play_this}" 2>&1`
+        all =  `ffmpeg -i "#{drive_or_file}" 2>&1`
         # Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
@@ -819,8 +826,6 @@ module SensibleSwing
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
-        extra_mplayer_commands << "-nocache -dvd-device #{drive_or_file}"
-        play_this = "dvdnav://#{title_track}"
       end
       if edl_path
         descriptors = EdlParser.parse_file edl_path
@@ -850,7 +855,7 @@ module SensibleSwing
       # prefer english, attempt to disable subtitles, pass in edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
       
-      run_smplayer_non_blocking play_this, title_track, extra_mplayer_commands.join(' '), false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands.join(' '), false
     end
     
     def assert_ownership_dialog 
@@ -1305,9 +1310,9 @@ module SensibleSwing
           show_in_explorer saved_to
           PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
-          puts msg
+          puts msg # for being able to tell it's done on the command line
           show_blocking_message_dialog msg
-          show_in_explorer saved_to # and again, just for kicks :)
+          show_in_explorer saved_to # and again, just for kicks [?]
         end
       else
         show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE)
