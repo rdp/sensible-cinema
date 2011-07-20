@@ -235,6 +235,12 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
 
 == upconvert mplayer ==
 
+=== upconvert screen ===
+  http://lists.mplayerhq.hu/pipermail/mplayer-users/2005-June/053776.html
+  umm...mplayer doesn't seem to support directshow very well...as in, at all LOL.
+  VLC at least *tries* to support it <sigh>. Oh give me a break. Oh well.
+  I could either go with avisynth + MPC (I think)
+
 === upconverting to the huge monitor===
  with the black laptop:
    "normal" dvdnav seemed to work all right, slightly jerky at times.
@@ -272,6 +278,8 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
    2500: fails
 
 === various options ===
+
+  an avisynth upconvert howto: http://avisynth.org/mediawiki/Enhancing_dvd_videos
 
  -vo gl fails on a mac [huh?]
 

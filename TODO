@@ -18,19 +18,24 @@
   
 == under next release specific items: ==
    a "half mute" demo, using volume downs/ups     
+      plus one that also overlays an extra audio LOL
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
-   VLC "insert missing scene" demo, overlay section with image (mplayer?)
- 
+   VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
+
 == yes do ordered in conjunction with the above probably ==
-  does a release work in mac?
+  XBMC mode doesn't mind the 600 starting offset...
+    oh wait we weren't even using it right to begin with LOL
+  figure out if an offset of '1's should be accomodated for...
+  m4m: the play button, "regenerate" admin button, "click here x other arrangements of this hymn"
+  does a released version work in mac?
   mac court jester upconvert: without -nocache, with aggressive sync....
-    jester at work...still laggy lips?
-  mac bat files
+    jester at home...still laggy at end?
   unit tests
-  subs: research if at beginning, add extra offset...hmm... 
-  release at some point...Jon?
+  subs: if at beginning, add extra offset...hmm...why not?
+  release at some point...Jon? urug?
+    after check mac coiso...
 
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
@@ -52,10 +57,22 @@
   make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
+  new icon plz
+  facebook survey :)
+  "--developer" mode
+    export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
+  dialog on button aborted, see if I like it :)
+  fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
+    "fan editor" .bat file LOL
+    
+  upconvert 4200 known to fail...
+  
+  new button "auto-test" a subtitles file for timing :)
+  new upconv button: take some snapshots (just to straight mjpeg or jpeg or the what not)
   auto-update website on release.
   publish a ripped raw big bunny
     update development howto
-  @jruby scan court jester is *so* slow...what the...
+  @jruby scan court jester is *so* slow...what the...[mac at least...]
   urug again?
     after works in mac. Why not?
   netflix upconverter
@@ -120,13 +137,14 @@
     http://www.chefelf.com/forums/index.php?showtopic=6176
   inventionzy: blu-ray stuff from todo.inventionzy
 
-  port to mac OS X--try everything out (all buttons), make sure all works...
+  port to mac OS X
     ppc dvdid?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
-  investigate WMC "call out to smplayer EDL" or the like...
+  investigate WMC "call out to smplayer + EDL" or the like...
+    add to docu
 
 == other lists ==
 
@@ -151,6 +169,8 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz?
+  @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...
     could for files, not for dvd's yet tho...
   try to team up with fanedit.org ?
@@ -164,7 +184,8 @@
   test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
   investigate dvdrsbvdl (windows media center edl plugin)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
-  @mplayer: chooses wrong language ts from jester...
+  @mplayer: chooses wrong language ts from jester...sigh
+  @mplayer: crash: http://betterlogic.com/roger/2011/07/mplayer-mac-os-x-woe/
   @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
   @mplayer: could you umm...go ahead and support avisynth input pleaz, assuming you don't?
   @mplayer: dvdnav:///e: should play the *menu* please? please? [???]

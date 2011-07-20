@@ -31,21 +31,30 @@ raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not nee
 
 alias system_original system
 require 'fileutils'
-require_relative '../lib/mencoder_wrapper'
-require_relative '../lib/storage'
-require_relative '../lib/edl_parser'
-require_relative '../lib/mplayer_edl'
-require_relative '../lib/play_audio'
-require_relative '../lib/subtitle_profanity_finder'
-require_relative '../lib/convert_thirty_fps'
-require_relative '../lib/ruby_clip'
 
-require 'tmpdir'
+class String
+  def snake_case
+    self.gsub(/::/, '/').
+    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+    gsub(/([a-z\d])([A-Z])/,'\1_\2').
+    tr("-", "_").
+    downcase
+  end
+end
 require_relative '../lib/swing_helpers'
-require_relative '../lib/drive_info'
+
+for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+  autoload kls, "./lib/#{kls.to_s.snake_case}"
+end
+
+# a few I'll need...
+require_relative '../lib/storage'
+require 'tmpdir'
 require 'whichr'
 require 'os'
-require 'ruby-wmi' unless OS.mac?
+unless OS.mac?
+  autoload :WMI, 'ruby-wmi'
+end
 
 vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
 
@@ -146,9 +155,10 @@ module SensibleSwing
     end
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton( "Change/Set upconverting playback options" ) do
-        add_setup_upconvert_options
-      end.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
+      @show_upconvert_options = new_jbutton("Set Upconvert Options") do
+        add_setup_upconvert_buttons
+      end
+      @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
     
     def warn_if_no_upconvert_options_currently_selected
@@ -160,12 +170,27 @@ module SensibleSwing
     def change_upconvert_line_to_current
       @upconv_line.set_text get_current_upconvert_as_phrase
     end
+    
+    def select_new_sxs_style
+      answer = show_select_buttons_prompt 'Select EDL file style creation for this program', :yes => 'Smplayer style', :no => 'XBMC style'
+      if answer == 0
+        LocalStorage[SideBySide] = 'smplayer'
+      elsif answer == 1
+        LocalStorage[SideBySide] = 'xbmc'
+      else
+        show_blocking_message_dialog 'please choose one--smplayer if you don\'t know'
+        select_new_sxs_style
+      end
+        
+    end
       
+    SideBySide = 'side_by_side' # 'xbmc' or 'smplayer'
     UpConvertKey = 'upconvert_setting'
     UpConvertKeyExtra = 'upconvert_setting_extra'
     UpConvertEnglish = 'upconvert_english_name'
 
-    def add_setup_upconvert_options
+
+    def add_setup_upconvert_buttons
       none = new_jbutton("reset upconvert options to default (none)")
       none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       none.on_clicked {
@@ -174,14 +199,14 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = nil
         display_current_upconvert_setting
       }
-      medium_dvd = new_jbutton("set upconvert options to DVD-style input") {
+      medium_dvd = new_jbutton("Change upconvert options to DVD-style input") {
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
         display_current_upconvert_setting
       }
-      high_compression = new_jbutton("set upconvert options for playing back highly compressed video") {
+      high_compression = new_jbutton("Change upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
@@ -189,7 +214,7 @@ module SensibleSwing
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ???
       }
-      new_jbutton("set upconvert options to experimental style playback") {
+      new_jbutton("Change upconvert options to experimental style playback") {
         LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental"
@@ -206,31 +231,44 @@ module SensibleSwing
       labelTable = java.util.Hashtable.new
       i = java.lang.Integer
       l = JLabel
-      labelTable.put(i.new(10), l.new("1x"))
-      labelTable.put(i.new(15), l.new("1.5x"))
-      labelTable.put(i.new(20), l.new("2x"))
-      labelTable.put(i.new(25), l.new("2.5x"))
-      labelTable.put(i.new(30), l.new("3x"))
+      
+      # allow for 0.75 too, if you have a large monitor, slower cpu...
+      local_minimum = (720.0/get_current_max_width_resolution)*100 # allow 1024 to use upscaling to 860 LOL
+      # => 70 for 1024 monitor, so we'll then allow for the 75 below...
+      label_minimum = nil
+      (0..300).step(25) do |n|
+        if n > local_minimum
+          label_minimum ||= n
+          if (n % 100 == 0)
+            labelTable.put(i.new(n), l.new("#{n/100}x")) # 1x
+          elsif n == label_minimum # just for the bottom label, rest too chatty
+            labelTable.put(i.new(n), l.new("#{n/100.0}x")) # 1.5x
+          end
+        end
+      end
       slider.setLabelTable( labelTable )
   
-      slider.maximum=30
-      slider.minimum=10
-      slider.setMajorTickSpacing(10) 
-      slider.setMinorTickSpacing(5) 
+      slider.maximum=300
+      slider.minimum=label_minimum
+      slider.setMajorTickSpacing(100) 
+      slider.setMinorTickSpacing(25) 
       slider.setPaintTicks(true)
       slider.setPaintLabels(true)    
       slider.snap_to_ticks=true
       
-      slider.set_value LocalStorage['screen_multiples'] * 10
+      slider.set_value LocalStorage['screen_multiples'] * 100
       
       slider.add_change_listener { |event|
         if !slider.value_is_adjusting
           # they released their hold on it...
-          if slider.value >= 2
-            LocalStorage['screen_multiples'] = slider.value/10.0
+          old_value = LocalStorage['screen_multiples']
+          new_value = slider.value/100.0
+          LocalStorage['screen_multiples'] = new_value
+          if new_value != old_value
             display_current_upconvert_setting
-          else
-            show_blocking_message_dialog "you can't set it lower than 2 that wouldn't make any sense, since that's screen width"
+            if slider.value == label_minimum
+              show_blocking_message_dialog "Setting it too low like that might make it not really do much upconverting!"
+            end
           end
         end
       }
@@ -241,21 +279,30 @@ module SensibleSwing
     
     def display_current_upconvert_setting
       change_upconvert_line_to_current
-      show_blocking_message_dialog get_current_upconvert_as_phrase
+      @display_current_upconvert_setting_dialog
+      @display_current_upconvert_setting_dialog = show_non_blocking_message_dialog get_current_upconvert_as_phrase
+      p get_current_upconvert_as_phrase
     end
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}. (multiplier #{LocalStorage['screen_multiples']})"
+      out = "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}"
+      if settings
+       out += " (screen multiplier #{LocalStorage['screen_multiples']})."
+      end
+      out
+    end
+    
+    def get_current_max_width_resolution
+      java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i
     end
     
     def get_upconvert_vf_settings
       template = LocalStorage[UpConvertKey]
       if template
         # choose width of widest monitor (why would they display it on the other?)
-        screen_x = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getScreenDevices.map{|gd| gd.display_mode.width}.max.to_i        
         screen_multiple = LocalStorage['screen_multiples']
-        template.gsub('SCREEN_X', (screen_x*screen_multiple).to_i.to_s) # has to be an integer...
+        template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
       else
         nil 
       end
@@ -294,6 +341,10 @@ module SensibleSwing
       @create_dot_edl.on_clicked {
         choose_file_and_edl_and_create_sxs_or_play true
       }
+      
+      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
+        select_new_sxs_style
+      end
 
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
@@ -441,7 +492,7 @@ module SensibleSwing
     end # advanced buttons
 
     def setup_normal_buttons
-            
+      
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
@@ -458,19 +509,27 @@ module SensibleSwing
         do_copy_dvd_to_hard_drive_via_file false
       }
       
-#      @watch_created_file = new_jbutton( "Watch the edited version of DVD file", false).on_clicked {
-#        play_mplayer_edl  # LODO
-#      }
-
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
         choose_file_and_edl_and_create_sxs_or_play false 
-      end      
+      end
       
-      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
-        show_in_explorer __DIR__ + "/../documentation"
-      end      
+      if LocalStorage[UpConvertEnglish]
+        add_text_line ''
+        add_open_documentation_button
+        @upconv_line = add_text_line "    #{get_current_upconvert_as_phrase}"
+      else
+        @upconv_line = add_text_line ''
+        add_open_documentation_button
+      end
+      
       add_change_upconvert_options_button 
 
+    end
+    
+    def add_open_documentation_button
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
+        show_in_explorer __DIR__ + "/../documentation" # TODO mac :)
+      end
     end
     
     def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
@@ -569,7 +628,7 @@ module SensibleSwing
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :)
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
       if OS.mac? || force_use_mplayer
-       @_run_smplayer_instructions ||= show_mplayer_instructions
+       show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        if OS.windows?
@@ -698,15 +757,19 @@ module SensibleSwing
     end
     
     def play_dvd_smplayer_unedited use_mplayer_instead = false, show_instructions = true
-      drive, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
+      drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
-      file_to_play = "dvdnav://#{title_track_maybe_nil}"
-      options = " -osd-fractions 2 -nocache -dvd-device #{drive} "
+      if dvd_id == NonDvd # TODO smelly...this if statement all over the place...
+        file_to_play = drive_or_file
+      else
+        file_to_play = "dvdnav://#{title_track_maybe_nil}"
+      end
+      options = " -osd-fractions 2 -nocache -dvd-device #{drive_or_file} "
       if show_instructions
         # want this even with smplayer sometimes I guess...
-        @play_smplayer_warn ||= show_mplayer_instructions
+        show_mplayer_instructions_once
       end
 
       run_smplayer_non_blocking file_to_play, options, use_mplayer_instead
@@ -715,18 +778,17 @@ module SensibleSwing
 
     EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     
-    def show_mplayer_instructions
-      show_non_blocking_message_dialog <<-EOL
-        About to run mplayer.  
-        To control it, use
+    def show_mplayer_instructions_once
+      @_show_mplayer_instructions_once ||= show_non_blocking_message_dialog <<-EOL
+        About to run mplayer.  To control it, use
         spacebar : pause,
         double clicky/right click : toggle full screen,
-        arrow keys (left, right, up down) to seek/scan
+        arrow keys (left, right, up down, pg up, pg dn) to seek/scan
         / and *	: inc/dec volume.
         'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
         'v' key: turn off subtitles.
         '.' key: step one frame.
-        # key: switch audio language track
+         # key: change audio language track
       EOL
     end
     
@@ -757,7 +819,7 @@ module SensibleSwing
       else
         using_dvd = true
         title_track = get_title_track(descriptors)
-        extra_mplayer_commands << " -nocache -dvd-device #{drive_or_file} "
+        extra_mplayer_commands << "-nocache -dvd-device #{drive_or_file}"
         play_this = "dvdnav://#{title_track}"
       end
       if edl_path
@@ -781,8 +843,9 @@ module SensibleSwing
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      extra_mplayer_commands << " -framedrop "      
-      # ?? extra_mplayer_commands << " -mc 0.016 -autosync 15" ??
+      extra_mplayer_commands << "-framedrop"      
+      # ?? extra_mplayer_commands << "-mc 0.016" ??
+      extra_mplayer_commands << "-autosync 15" 
       
       # prefer english, attempt to disable subtitles, pass in edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
@@ -796,15 +859,32 @@ module SensibleSwing
       returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
       assert_confirmed_dialog returned, nil
     end
+    
+    # returns 0,1,2 for yes, no, cancel equivs
+    def show_select_buttons_prompt message, names_hash
+      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
+      if names_hash[:yes]
+        UIManager.put("OptionPane.yesButtonText", names_hash[:yes])
+      end
+      if names_hash[:no]
+        UIManager.put("OptionPane.noButtonText", names_hash[:no])
+      end
+      # if names_hash[:ok] # ???
+      #   UIManager.put("OptionPane.okButtonText", names_hash[:ok])
+      # end
+      if names_hash[:cancel]
+        UIManager.put("OptionPane.noButtonText", names_hash[:cancel])
+      end
+      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+      returned
+    end
       
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
-        title = 'Confirm Acceptance of License Agreement', message = nil
+      title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window.'
-      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
-      UIManager.put("OptionPane.yesButtonText", 'Accept')
-      UIManager.put("OptionPane.noButtonText", "View #{license_name}")
       # cancel button stays the same...
-
+      
       message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
         separately to the vendor/cache directory, or Sensible Cinema can download it for you.
         By clicking accept, below, you are confirming that you have read and agree to be bound by the
@@ -812,12 +892,11 @@ module SensibleSwing
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      
-      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      returned = show_select_buttons_prompt message, :yes => 'Accept', :no => '"View #{license_name}"'
       assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
-      p 'confirmation of sensible cinema related license noted of: ' + license_name
+      p 'confirmation of sensible cinema related license saved of: ' + license_name
       throw unless returned == 0
-      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+      
     end
     
     def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
