@@ -629,12 +629,12 @@ module SensibleSwing
       parent_parent = File.basename(File.dirname(play_this))
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
+        extra_options += " -nocache -dvd-device \"#{File.dirname(play_this) }/..\""
         play_this = "dvdnav://#{title_track_maybe_nil}"
-        extra_options += " -nocache -dvd-device \"#{parent_parent}\""
       elsif File.exist?(play_this + '/VIDEO_TS')
         # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive]
-        play_this = "dvdnav://#{title_track_maybe_nil}"
         extra_options += " -nocache -dvd-device \"#{play_this}\""
+        play_this = "dvdnav://#{title_track_maybe_nil}"
       else
         # case g:\video\filename.mpg
         # leave as same...
@@ -664,7 +664,7 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
       end
-      print c 
+      puts c 
       system_blocking c
     end
     

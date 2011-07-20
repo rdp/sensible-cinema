@@ -206,5 +206,5 @@ if $0 == __FILE__
   p 'syntax: filename'
   require 'rubygems'
   require 'sane'
-  p EdlParser.parse_file *ARGV
+  p EdlParser.parse_file(*ARGV)
 end

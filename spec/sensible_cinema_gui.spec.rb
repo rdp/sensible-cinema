@@ -157,11 +157,14 @@ module SensibleSwing
         # during testing, we *always* have enough free space :)
         16_000_000_000
       }
+      unless $VERBOSE
+        # less chatty...
+        @subject.stub!(:print) {}
+        @subject.stub!(:p) {}
+        @subject.stub!(:puts) {}
+      end
       
-      # less chatty...
-      @subject.stub!(:print) {}
-      @subject.stub!(:p) {}
-      @subject.stub!(:puts) {}
+      @subject.stub!(:show_non_blocking_message_dialog) {}
     end
     
     after do
@@ -365,6 +368,26 @@ module SensibleSwing
       @system_blocking_command.should_not =~ /-nocache/ # file based, so no -nocache
     end
     
+    it "should handle dvd drive -> dvdnav" do
+      for drive in ['d:', 'e:', 'f:', 'g:']
+        if File.exist?(drive + '/VIDEO_TS')
+          @subject.run_smplayer_blocking drive, nil, '', true
+          @system_blocking_command.should =~ /dvdnav/
+          @system_blocking_command.should =~ /-dvd-device/
+         # p @system_blocking_command
+          p 'got one'
+        end
+      end
+    end
+    
+    it 'should handle a/b/VIDEO_TS/yo.vob' do
+      FileUtils.mkdir_p f = 'a/b/VIDEO_TS/yo.vob'
+      @subject.run_smplayer_blocking f, 3, '', true
+      @system_blocking_command.should =~ /dvdnav:\/\/3/
+      p @system_blocking_command
+
+    end
+      
     it "should play edl with extra time for the mutes because of the EDL aspect" do
       click_button(:@mplayer_edl).join
       wrote = File.read(MainWindow::EdlTempFile)
