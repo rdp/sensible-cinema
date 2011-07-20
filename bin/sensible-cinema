@@ -483,7 +483,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, NonDvd, nil, "-edl \"#{EdlTempFile}\"", false
+        run_smplayer_blocking nice_file, nil, "-edl \"#{EdlTempFile}\"", false
       }
       
       @reload = new_jbutton("reload bin/sensible-cinema code") do
@@ -624,7 +624,7 @@ module SensibleSwing
       }
     end
 
-    def run_smplayer_blocking play_this, dvd_id, title_track, extra_options, force_use_mplayer
+    def run_smplayer_blocking play_this, title_track, extra_options, force_use_mplayer
       extra_options += " -alang en " # for those that put french first...though this doesn't help...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with H.264] :)
@@ -772,7 +772,7 @@ module SensibleSwing
         show_mplayer_instructions_once
       end
 
-      run_smplayer_non_blocking file_to_play, dvd_id, title_track_maybe_nil, options, use_mplayer_instead
+      run_smplayer_non_blocking file_to_play, title_track_maybe_nil, options, use_mplayer_instead
 
     end
 
@@ -850,7 +850,7 @@ module SensibleSwing
       # prefer english, attempt to disable subtitles, pass in edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
       
-      run_smplayer_non_blocking play_this, dvd_id, title_track, extra_mplayer_commands.join(' '), false
+      run_smplayer_non_blocking play_this, title_track, extra_mplayer_commands.join(' '), false
     end
     
     def assert_ownership_dialog 
@@ -1297,7 +1297,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          run_smplayer_non_blocking saved_to, NonDvd, nil, '', false
+          run_smplayer_non_blocking saved_to, nil, '', false
         else
           if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
