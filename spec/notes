@@ -12,6 +12,7 @@ up next:
       beginning: add to the end 0.25s
       end: add to the begining 0.35s
 
+  mplayer uses  -framedrop -autosync 30 (no -mc) by default [!]
   
 == ts vs. mkv transcoding ==
   mencoder fails c. mkv, succeeds c. ts (editing seems to succeed overall [?])
