@@ -374,8 +374,6 @@ module SensibleSwing
           @subject.run_smplayer_blocking drive, nil, '', true
           @system_blocking_command.should =~ /dvdnav/
           @system_blocking_command.should =~ /-dvd-device/
-         # p @system_blocking_command
-          p 'got one'
         end
       end
     end
@@ -384,8 +382,7 @@ module SensibleSwing
       FileUtils.mkdir_p f = 'a/b/VIDEO_TS/yo.vob'
       @subject.run_smplayer_blocking f, 3, '', true
       @system_blocking_command.should =~ /dvdnav:\/\/3/
-      p @system_blocking_command
-
+      @system_blocking_command.should =~ /VIDEO_TS\/\.\./
     end
       
     it "should play edl with extra time for the mutes because of the EDL aspect" do
