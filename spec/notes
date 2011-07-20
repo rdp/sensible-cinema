@@ -373,7 +373,8 @@ http://freshmeat.net/articles/fine-tuning-mplayer:
   comment:
      -vop pp=hb:y/vb:y and only on low-res (no post processing for HQ videos...hmm...)
 
--autosync 1 (or more) might resync my cruddy DVD's... LODO
+-autosync 1 (or more) might resync my cruddy DVD's...
+  seems to work! (mac)
  
   more [open]gl: "use these options" http://forum.doom9.org/archive/index.php/t-132325.html hardware renderer
   
