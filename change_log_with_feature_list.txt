@@ -1,3 +1,9 @@
+== 0.24.6 ==
+
+Make it so it can load VIDEO_TS style directories, too.
+Make it work better on slow machines.
+Tweak upconvert.
+
 == 0.24.5 ==
 
 Fix some options for advanced mode so that it can playback files better.
