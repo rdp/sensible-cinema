@@ -248,7 +248,11 @@ module SensibleSwing
      join_background_thread
      @get_mencoder_commands_args[-2].should == "2"
      @get_mencoder_commands_args[-3].should == "01:00"
-     @system_blocking_command.should =~ /smplayer/
+     if OS.doze?
+       @system_blocking_command.should =~ /smplayer/
+     else
+       @system_blocking_command.should =~ /mplayer/
+     end
      @system_blocking_command.should_not match /fulli/
     end
 
@@ -257,7 +261,11 @@ module SensibleSwing
       join_background_thread
       @get_mencoder_commands_args[-2].should == "2"
       @get_mencoder_commands_args[-3].should == "01:00"
-      @system_blocking_command.should match /smplayer/
+      if OS.doze?
+        @system_blocking_command.should match /smplayer/
+      else
+        @system_blocking_command.should match /mplayer/
+      end
     end
 
     it "should prompt for start and end times" do
@@ -282,7 +290,12 @@ module SensibleSwing
     
     it "should call something for fast preview" do
       click_button(:@fast_preview)
-      @system_blocking_command.should =~ /smplayer/
+      if OS.doze?
+        @system_blocking_command.should =~ /smplayer/
+      else
+        @system_blocking_command.should =~ /mplayer/
+      end
+
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
