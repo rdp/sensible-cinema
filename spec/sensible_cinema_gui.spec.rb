@@ -305,6 +305,7 @@ module SensibleSwing
       @get_mencoder_commands_args = nil
       click_button(:@rerun_preview).join
       @get_mencoder_commands_args.should == old_args
+      join_background_thread
       @system_blocking_command.should match(/smplayer/)
     end
     
