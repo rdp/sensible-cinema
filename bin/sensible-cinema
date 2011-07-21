@@ -128,7 +128,7 @@ module SensibleSwing
     end
 
     LocalStorage = Storage.new("sensible_cinema_storage")
-    LocalStorage.set_default('screen_multiples', 2)
+    LocalStorage.set_default('screen_multiples', 1.5) # high compatibility :)
     
     def setup_upconvert_buttons
     
