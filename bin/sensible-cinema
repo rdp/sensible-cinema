@@ -657,6 +657,9 @@ module SensibleSwing
         # case g:\video\filename.mpg
         # leave same...
       end
+      if play_this =~ /dvdnav/ && title_track_maybe_nil
+        extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's 4
+      end
       
       extra_options += " -alang en " # for those that put french first...though this doesn't help...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
@@ -696,11 +699,16 @@ module SensibleSwing
       unless old_prefs.contain? 'mplayer_additional_options='
         old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
       end
+      raise if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       upconvert_settings = 
       new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
+      
+      # enable dvdnav navigation, just for kicks I guess.
+      new_prefs.gsub!(/use_dvdnav=.*$/, "use_dvdnav=true")
+      
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
       smplayer_prefs_file
