@@ -117,11 +117,13 @@ module SensibleSwing
       ARGV << "--create-mode" # want all the buttons for some tests.
       @subject = MainWindow.new
       ARGV.pop
+      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done" # a few of them need this...
+      FileUtils.touch 'selected_file.avi'
       @subject.stub!(:choose_dvd_drive_or_file) {
         ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-5].should match(/abc/)
+        args[-5].should match(/selected_file/)
         @get_mencoder_commands_args = args
         'fake get_mencoder_commands'
       }
@@ -173,7 +175,7 @@ module SensibleSwing
     end
     
     after do
-      @subject.background_thread.join if @subject.background_thread
+      Thread.join_all_others
     end
 
     class FakeFileChooser
@@ -182,7 +184,7 @@ module SensibleSwing
       def set_current_directory x; end
       def get_current_directory ; 'a great dir!'; end
       def go
-        'abc'
+        'selected_file'
       end
     end
     
@@ -198,23 +200,26 @@ module SensibleSwing
     end
 
     it "should be able to do a normal copy to hard drive, edited" do
-      @subject.do_create_edited_copy_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      @subject.do_create_edited_copy_via_file(false).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
       File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
     end
     
     it "should only prompt twice for filenames--once for the 'save to' filename, once for the 'from' filename" do
-      count = 0
-      @subject.stub!(:new_nonexisting_filechooser) {
-        count += 1
+      count1=count2=0
+      @subject.stub!(:new_nonexisting_filechooser) { # save to
+        count1 += 1
         FakeFileChooser.new
       }
-      @subject.stub!(:new_existing_file_selector_and_select_file) {
-        count += 1
-        'abc'
+      @subject.stub!(:new_existing_file_selector_and_select_file) { # get from
+        count2 += 1
+        FileUtils.touch 'selected_file'
+        'selected_file'
       }
-      @subject.do_create_edited_copy_via_file(false).should == [false, "abc.fulli_unedited.tmp.mpg"]
+      
+      @subject.do_create_edited_copy_via_file(false).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
       3.times { @subject.do_create_edited_copy_via_file(false) }
-      count.should == 2
+      count1.should == 1
+      count2.should == 1
     end
     
     it "should have a good default title of 1" do
@@ -236,15 +241,14 @@ module SensibleSwing
     end
     
     it "should be able to return the fulli name if it already exists" do
-      FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.do_create_edited_copy_via_file(false,true).should == [true, "abc.fulli_unedited.tmp.mpg"]
-      FileUtils.rm "abc.fulli_unedited.tmp.mpg.done"
+      @subject.do_create_edited_copy_via_file(false,true).should == [true, "selected_file.fulli_unedited.tmp.mpg"]
+      FileUtils.rm "selected_file.fulli_unedited.tmp.mpg.done"
     end
     
     it "should call explorer eventually, even if it has to create the fulli file"
     
     it "should play the edited file" do
-     @subject.do_create_edited_copy_via_file(true).should == [false, "abc.fulli_unedited.tmp.mpg"]
+     @subject.do_create_edited_copy_via_file(true).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
      join_background_thread
      @get_mencoder_commands_args[-2].should == "2"
      @get_mencoder_commands_args[-3].should == "01:00"
@@ -281,6 +285,7 @@ module SensibleSwing
     
     it "should be able to preview unedited" do
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      @subject.stub!(:run_smplayer_blocking) {} # stub this out
       @subject.unstub!(:get_mencoder_commands)
       click_button(:@preview_section_unedited)
       join_background_thread # scary timing spec
@@ -288,7 +293,8 @@ module SensibleSwing
       File.read(temp_file).should include("59.99")
     end
     
-    it "should call something for fast preview" do
+    it "should do something for fast preview" do
+      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg"
       click_button(:@fast_preview)
       if OS.doze?
         @system_blocking_command.should =~ /smplayer/
@@ -327,11 +333,13 @@ module SensibleSwing
 
     it "should warn if you watch an edited time frame with no edits in it" do
       @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
+      @subject.stub!(:run_smplayer_blocking) {} # avoid liveness check
       click_button(:@preview_section)
       @show_blocking_message_dialog_last_arg.should =~ /unable to find/
     end
     
     it "should warn if you give it an mkv file, just in case" do
+      @subject.stub!(:run_smplayer_blocking) {} # stub this out
       @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
       click_button(:@preview_section)
@@ -350,8 +358,8 @@ module SensibleSwing
     end
     
     it "if the .done files exists, do_copy... should call smplayer ja" do
-      FileUtils.touch "abc.fulli_unedited.tmp.mpg.done"
-      @subject.do_create_edited_copy_via_file(false, true, true).should == [true, "abc.fulli_unedited.tmp.mpg"]
+      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done"
+      @subject.do_create_edited_copy_via_file(false, true, true).should == [true, "selected_file.fulli_unedited.tmp.mpg"]
     end
     
     it "should create a new file for ya" do
@@ -417,6 +425,7 @@ module SensibleSwing
        with_clean_edl_dir_as 'temp' do
         File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
         @subject.stub!(:choose_dvd_drive_or_file) {
+          FileUtils.touch 'mock_dvd_drive'
           ["mock_dvd_drive", "Volume", "abcdef1234"]
         }
         @subject.choose_dvd_or_file_and_edl_for_it[4]['mutes'].should == []

@@ -49,7 +49,12 @@ This file is part of Sensible Cinema.
       def rollback
         if File.exists?(path)
           @storage = YAML.load_file(path)
-          raise 'storage file is corrupted--please delete ' + path unless @storage.is_a? Hash
+          unless @storage.is_a? Hash
+            
+            $stderr.puts 'storage file is corrupted--deleting ' + path 
+            @storage = {}
+            File.delete path
+          end
           update_timestamp
         else
           @storage = {}

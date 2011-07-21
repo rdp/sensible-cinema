@@ -29,7 +29,7 @@ end
 raise 'need jruby' unless OS.java?
 raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many oddities :P
 
-alias systefm_original system
+alias system_original system
 require 'fileutils'
 
 class String
@@ -43,7 +43,7 @@ class String
 end
 require_relative '../lib/swing_helpers'
 
-for kls in [:MencoderWrapper, :EightThree, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
@@ -52,8 +52,9 @@ require_relative '../lib/storage'
 require 'tmpdir'
 require 'whichr'
 require 'os'
-unless OS.mac?
+if OS.doze?
   autoload :WMI, 'ruby-wmi'
+  autoload :EightThree, './lib/eight_three'
 end
 
 vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
@@ -628,7 +629,10 @@ module SensibleSwing
     end
 
     def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer
-      
+      unless File.exist?(File.expand_path(play_this))
+        _dbg
+        raise play_this 
+      end
       parent_parent = File.basename(File.dirname(play_this))
       force_use_mplayer ||= OS.mac?
       if parent_parent == 'VIDEO_TS'
@@ -636,7 +640,6 @@ module SensibleSwing
         dvd_device_dir = File.dirname(play_this)
         if OS.doze?
           dvd_device_dir = EightThree.convert_path_to_8_3 dvd_device_dir
-          raise unless dvd_device_dir.present?
         end
         if force_use_mplayer
           extra_options += " -dvd-device \"#{dvd_device_dir}/..\""
@@ -736,7 +739,7 @@ module SensibleSwing
     end     
     
     def system_blocking command, low_prio = false
-      return true if command =~ /^@rem/ # jruby+MRI bug, I think...
+      return true if command =~ /^@rem/ # JRUBY-5890 bug
       if low_prio
         out = IO.popen(command) # + " 2>&1"
         low_prio = 64 # from msdn
@@ -748,7 +751,7 @@ module SensibleSwing
           begin
             p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
             piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-            # but the first time through this still inexplicably fails... LODO
+            # but the first time through this still inexplicably fails all 3... LODO
             if piddy
               # piddy.SetPriority low_prio # this call can seg fault at times...yikes...JRUBY-5422
               pid = piddy.ProcessId # this doesn't seg fault, tho
@@ -826,6 +829,8 @@ module SensibleSwing
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
       start_add_this_to_all_ts = 0
+      descriptors = EdlParser.parse_file edl_path
+      title_track = get_title_track(descriptors)
       if dvd_id == NonDvd
         # check if starts offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1`
@@ -839,12 +844,6 @@ module SensibleSwing
         end
       else
         using_dvd = true
-        title_track = get_title_track(descriptors)
-      end
-      if edl_path
-        descriptors = EdlParser.parse_file edl_path
-      else
-        descriptors = {}
       end
       if using_dvd
         splits = descriptors['mplayer_dvd_splits']
