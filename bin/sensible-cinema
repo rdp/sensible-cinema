@@ -487,7 +487,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, nil, "-edl \"#{EdlTempFile}\"", false
+        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false
       }
       
       @reload = new_jbutton("reload bin/sensible-cinema code") do
@@ -495,6 +495,12 @@ module SensibleSwing
       end
       
     end # advanced buttons
+    
+    # converts to full path, 8.3 if on doze
+    def normalize_path path
+      path = File.expand_path path
+      path = EightThree.convert_path_to_8_3 path if OS.doze?
+    end
 
     def setup_normal_buttons
       
@@ -637,13 +643,11 @@ module SensibleSwing
       force_use_mplayer ||= OS.mac?
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
-        dvd_device_dir = File.dirname(play_this)
-        if OS.doze?
-          dvd_device_dir = EightThree.convert_path_to_8_3 dvd_device_dir
-        end
+        dvd_device_dir = normalize_path(File.dirname(play_this))
         if force_use_mplayer
           extra_options += " -dvd-device \"#{dvd_device_dir}/..\""
-        else
+        else 
+          # smplayer
           raise if dvd_device_dir =~ / / && OS.mac? # not accomodated <sniff>
           extra_options += " -dvd-device #{dvd_device_dir}/.."
         end
@@ -699,7 +703,7 @@ module SensibleSwing
       unless old_prefs.contain? 'mplayer_additional_options='
         old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
       end
-      raise if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
+      raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       upconvert_settings = 

@@ -294,7 +294,6 @@ module SensibleSwing
     end
     
     it "should do something for fast preview" do
-      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg"
       click_button(:@fast_preview)
       if OS.doze?
         @system_blocking_command.should =~ /smplayer/
