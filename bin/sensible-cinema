@@ -128,7 +128,7 @@ module SensibleSwing
     end
 
     LocalStorage = Storage.new("sensible_cinema_storage")
-    LocalStorage.set_default('screen_multiples', 2)
+    LocalStorage.set_default('screen_multiples', 1.5) # high compatibility :)
     
     def setup_upconvert_buttons
     
@@ -220,7 +220,7 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
       }
-      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is good)." 
+      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is typically good)." 
       add_text_line "If mplayer just dies or if it displays only a blank screen then lower this."
       slider = JSlider.new
       slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
