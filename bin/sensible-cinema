@@ -1460,7 +1460,15 @@ end
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')
-    puts 'syntax: [ --create-mode | --upconvert-mode ]'
+    puts <<-EOL
+     # jruby bin/sensible-cinema                    # DVD/file EDL player
+     $ jruby bin/sensible-cinema --create-mode      # DVD output "parser/cutter" create mode [advanced]
+     $ jruby bin/sensible-cinema --upconvert-mode   # DVD/video upconverting player
+     $ jruby bin/sensible-cinema-cli                # the experimental OCR tracker for arbitrary online/local/internet players.
+         See "Advanced" section in the developer_how_to.txt file.
+        
+      --exit-immediately [don't show the GUI, for benchmarking startup times]
+    EOL
   else
     a = SensibleSwing::MainWindow.new
     a.set_visible true

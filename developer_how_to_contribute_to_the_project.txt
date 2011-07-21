@@ -27,11 +27,7 @@ The tests are in the spec directory, though some of them are out of date as deve
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
 
 To run it via command line:
-$ jruby bin/sensible-cinema # DVD/file EDL player
-$ jruby bin/sensible-cinema --create-mode # DVD output "parser/cutter" create mode [advanced]
-$ jruby bin/sensible-cinema --upconvert-mode # DVD/video upconverting player
-$ jruby bin/sensible-cinema-cli # the experimental OCR tracker for arbitrary online/local/internet players.
-  See "Advanced Usage"
+$ jruby bin/sensible-cinema --help # tells you all available options
   
 Feedback/contribution welcome :)
 
