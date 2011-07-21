@@ -305,7 +305,7 @@ module SensibleSwing
         screen_multiple = LocalStorage['screen_multiples']
         upc = template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
         p 'using upconvert settings ' + upc
-        upc
+        'pullup,softskip,' + upc
       else
         p 'not using any upconversion'
         "pullup,softskip"
