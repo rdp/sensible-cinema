@@ -642,7 +642,7 @@ module SensibleSwing
       
       extra_options += " -alang en " # for those that put french first...though this doesn't help...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
-      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264]
+      extra_options += " -lavdopts fast:threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264]
       if OS.mac? || force_use_mplayer
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
