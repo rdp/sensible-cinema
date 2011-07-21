@@ -544,7 +544,7 @@ module SensibleSwing
     end
     
     def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
-      filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or VIDEO_TS/vts_01_0.vob)")
+      filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or video_ts/anything.ext)")
       edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
       assert_ownership_dialog
       if just_create_dot_edl_file_instead_of_play
