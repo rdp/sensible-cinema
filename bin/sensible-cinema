@@ -200,7 +200,7 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = nil
         display_current_upconvert_setting
       }
-      medium_dvd = new_jbutton("Change upconvert options to DVD-style input") {
+      medium_dvd = new_jbutton("Change upconvert options to DVD-style video") {
         LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
@@ -650,7 +650,8 @@ module SensibleSwing
         play_this = "dvdnav://#{title_track_maybe_nil}"
       elsif File.exist?(play_this + '/VIDEO_TS')
         # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive] or mac's /Volumes/YO
-        extra_options += " -nocache -dvd-device \"#{play_this}\""
+        raise if play_this =~ / / # unexpected
+        extra_options += " -nocache -dvd-device #{play_this}"
         play_this = "dvdnav://#{title_track_maybe_nil}"
       else
         # case g:\video\filename.mpg
@@ -681,7 +682,7 @@ module SensibleSwing
         config_path = set_smplayer_opts extra_options
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" " 
         if !we_are_in_create_mode
-          c += " -close-at-end "
+          #c += " -close-at-end "
         end
       end
       puts c 
