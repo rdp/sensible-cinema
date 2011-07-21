@@ -27,9 +27,8 @@
 == yes do ordered in conjunction with the above probably ==
   XBMC mode doesn't mind the 600 starting offset...
     oh wait we weren't even using it right to begin with LOL
-  figure out if an offset of '1's should be accomodated for...
-  m4m: the play button, "regenerate" admin button, "click here x other arrangements of this hymn"
-  does a released version work in mac?
+  m4m: 
+    the play button, "regenerate" admin button, "click here x other arrangements of this hymn"
   mac court jester upconvert: without -nocache, with aggressive sync....
     jester at home...still laggy at end?
   unit tests
@@ -57,7 +56,11 @@
   make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
+  figure out if an offset of '1's should be accomodated for...
+    0.3 ...
   some upconvert specs
+  fix released version work in mac?
+    distro
   facebook survey :)
   "--developer" mode
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
