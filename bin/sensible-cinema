@@ -29,7 +29,7 @@ end
 raise 'need jruby' unless OS.java?
 raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many oddities :P
 
-alias system_original system
+alias systefm_original system
 require 'fileutils'
 
 class String
@@ -43,7 +43,7 @@ class String
 end
 require_relative '../lib/swing_helpers'
 
-for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+for kls in [:MencoderWrapper, :EightThree, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
@@ -200,7 +200,7 @@ module SensibleSwing
         display_current_upconvert_setting
       }
       medium_dvd = new_jbutton("Change upconvert options to DVD-style input") {
-        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
+        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
@@ -209,13 +209,13 @@ module SensibleSwing
       high_compression = new_jbutton("Change upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
-        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
+        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ???
       }
       new_jbutton("Change upconvert options to experimental style playback") {
-        LocalStorage[UpConvertKey] = "pullup,softskip,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
+        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
@@ -302,9 +302,12 @@ module SensibleSwing
       if template
         # choose width of widest monitor (why would they display it on the other?)
         screen_multiple = LocalStorage['screen_multiples']
-        template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
+        upc = template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
+        p 'using upconvert settings ' + upc
+        upc
       else
-        nil 
+        p 'not using any upconversion'
+        "pullup,softskip"
       end
     end
 
@@ -374,7 +377,7 @@ module SensibleSwing
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
-        drive, volume_name, dvd_id = choose_dvd_drive_or_file true
+        drive, volume_name, dvd_id = choose_dvd_drive_or_file true # real DVD disk
         # display it, allow them to copy and paste it out
         title_lengths = nil
         t = Thread.new { title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
@@ -627,9 +630,20 @@ module SensibleSwing
     def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer
       
       parent_parent = File.basename(File.dirname(play_this))
+      force_use_mplayer ||= OS.mac?
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
-        extra_options += " -dvd-device \"#{File.dirname(play_this)}/..\""
+        dvd_device_dir = File.dirname(play_this)
+        if OS.doze?
+          dvd_device_dir = EightThree.convert_path_to_8_3 dvd_device_dir
+          raise unless dvd_device_dir.present?
+        end
+        if force_use_mplayer
+          extra_options += " -dvd-device \"#{dvd_device_dir}/..\""
+        else
+          raise if dvd_device_dir =~ / / && OS.mac? # not accomodated <sniff>
+          extra_options += " -dvd-device #{dvd_device_dir}/.."
+        end
         play_this = "dvdnav://#{title_track_maybe_nil}"
       elsif File.exist?(play_this + '/VIDEO_TS')
         # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive] or mac's /Volumes/YO
@@ -642,8 +656,8 @@ module SensibleSwing
       
       extra_options += " -alang en " # for those that put french first...though this doesn't help...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
-      extra_options += " -lavdopts fast:threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264]
-      if OS.mac? || force_use_mplayer
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
+      if force_use_mplayer
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
@@ -656,13 +670,16 @@ module SensibleSwing
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
        extra_options += " -fs " # full screen
-       c = "mplayer #{extra_options} #{"-vf " + get_upconvert_vf_settings if get_upconvert_vf_settings} -input conf=\"#{conf_file}\" \"#{play_this}\" "
+       c = "mplayer #{extra_options} -vf #{get_upconvert_vf_settings} -input conf=\"#{conf_file}\" \"#{play_this}\" "
       else
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
         config_path = set_smplayer_opts extra_options
-        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" -close-at-end "
+        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" " 
+        if !we_are_in_create_mode
+          c += " -close-at-end "
+        end
       end
       puts c 
       system_blocking c
@@ -672,16 +689,13 @@ module SensibleSwing
       p 'set smplayer extra opts to this:' + to_this
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
-      old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" unless old_prefs.contain? 'mplayer_additional_options='
+      unless old_prefs.contain? 'mplayer_additional_options='
+        old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
+      end
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      upconvert_settings = get_upconvert_vf_settings
-      if upconvert_settings.present?
-        p 'put upconvert options in as vf', upconvert_settings
-      else
-        p 'not using upconvert'
-      end
-      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{upconvert_settings}\"")
+      upconvert_settings = 
+      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
@@ -818,7 +832,7 @@ module SensibleSwing
         # Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
-        if start > 0
+        if start > 1 # LODO huh? dvd's themselves start at 0.3 [sintel]?
           show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
             maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
           start_add_this_to_all_ts = start
