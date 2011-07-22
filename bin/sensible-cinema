@@ -308,8 +308,9 @@ module SensibleSwing
         'pullup,softskip,' + upc
       else
         p 'not using any upconversion'
-        '' # TODO not for straight mplayer [?] tangled fails mac
+        # TODO not for straight mplayer [?] tangled fails mac
         #"pullup,softskip"
+        ''
       end
     end
 
@@ -635,7 +636,7 @@ module SensibleSwing
       }
     end
 
-    def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer
+    def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer, show_subs = false
       unless File.exist?(File.expand_path(play_this))
         _dbg
         raise play_this 
@@ -647,6 +648,11 @@ module SensibleSwing
       extra_options << " -framedrop "      
       # ?? extra_mplayer_commands << "-mc 0.016" ??
       extra_options << " -autosync 15 " 
+      
+      unless show_subs
+        # disable subtitles
+        extra_options << " -alang en -nosub -noautosub -forcedsubsonly -sid 1000 "
+      end
 
       parent_parent = File.basename(File.dirname(play_this))
       force_use_mplayer ||= OS.mac?
@@ -674,7 +680,6 @@ module SensibleSwing
         extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's 4
       end
       
-      extra_options += " -alang en " # for those that put french first...though this doesn't help...
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
       if force_use_mplayer
@@ -684,10 +689,10 @@ module SensibleSwing
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        extra_options += " -font #{File.expand_path('subfont.ttf')} "
        extra_options += " -volume 100 " # why start low? mplayer why oh why
+       extra_options += " -slang en "
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
         extra_options += " -vo direct3d "
-        extra_options += " -slang en "
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
        extra_options += " -fs " # full screen
@@ -698,7 +703,7 @@ module SensibleSwing
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
-        config_path = set_smplayer_opts extra_options
+        config_path = set_smplayer_opts extra_options, show_subs
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" " 
         if !we_are_in_create_mode
           #c += " -close-at-end "
@@ -718,7 +723,6 @@ module SensibleSwing
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      upconvert_settings = 
       new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       
@@ -883,9 +887,8 @@ module SensibleSwing
       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
       File.write(EdlTempFile, edl_contents)
       
-      
       # prefer english, attempt to disable subtitles, pass in edl...
-      extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
+      extra_mplayer_commands << "-edl #{File.expand_path EdlTempFile}" 
       
       run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands.join(' '), false
     end

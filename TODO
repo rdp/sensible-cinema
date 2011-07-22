@@ -25,8 +25,7 @@
    VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
-  we're not aggressive against subtitles in upconv... [tangled]
-  -vf fails mac?
+  -vf pullup fails mac?
   XBMC mode doesn't mind the 600 starting offset...
     oh wait we weren't even using it right to begin with LOL
   m4m: 
@@ -199,7 +198,6 @@
   @mplayer: that one [IQ? hitchhikers'?] fail fail fail until I used -dvd-device [?] huh?
     try to reproduce...
   @mplayer: do I need -zoom ?
-  @smplayer: you don't capture stderr [?] ex -vf scale:1280.0
   @mplayer: http://www.infognition.com/VideoEnhancer/ can I do that through any means LOL?
   @mplayer: gl shucks on windows 7!
   can accept straight ".edl" files too, as my input (?)

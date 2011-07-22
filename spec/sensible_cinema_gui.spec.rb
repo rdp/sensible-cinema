@@ -384,7 +384,7 @@ module SensibleSwing
     
     it "should create an edl and pass it through to mplayer" do
       smplayer_opts = nil
-      @subject.stub(:set_smplayer_opts) { |to_this|
+      @subject.stub(:set_smplayer_opts) { |to_this, show_subs|
         smplayer_opts = to_this
       }
       click_button(:@mplayer_edl).join
