@@ -25,6 +25,8 @@
    VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
+  we're not aggressive against subtitles in upconv... [tangled]
+  -vf fails mac?
   XBMC mode doesn't mind the 600 starting offset...
     oh wait we weren't even using it right to begin with LOL
   m4m: 

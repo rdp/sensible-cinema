@@ -65,7 +65,7 @@ module SensibleSwing
   
  end
 
- ToolTipManager.sharedInstance().setDismissDelay(java.lang.Integer::MAX_VALUE) # don't timeout tooltips...
+ ToolTipManager.sharedInstance().setDismissDelay(10000)
 
  class JFrame
    def close

@@ -308,7 +308,8 @@ module SensibleSwing
         'pullup,softskip,' + upc
       else
         p 'not using any upconversion'
-        "pullup,softskip"
+        '' # TODO not for straight mplayer [?] tangled fails mac
+        #"pullup,softskip"
       end
     end
 
@@ -639,6 +640,14 @@ module SensibleSwing
         _dbg
         raise play_this 
       end
+
+      # -framedrop is for slow CPU's
+      # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
+      # -hardframedrop might help but hurts just too much
+      extra_options << " -framedrop "      
+      # ?? extra_mplayer_commands << "-mc 0.016" ??
+      extra_options << " -autosync 15 " 
+
       parent_parent = File.basename(File.dirname(play_this))
       force_use_mplayer ||= OS.mac?
       if parent_parent == 'VIDEO_TS'
@@ -671,7 +680,8 @@ module SensibleSwing
       if force_use_mplayer
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
-       File.write conf_file, "MOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
+
+       File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        extra_options += " -font #{File.expand_path('subfont.ttf')} "
        extra_options += " -volume 100 " # why start low? mplayer why oh why
        if OS.windows?
@@ -681,7 +691,9 @@ module SensibleSwing
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
        extra_options += " -fs " # full screen
-       c = "mplayer #{extra_options} -vf #{get_upconvert_vf_settings} -input conf=\"#{conf_file}\" \"#{play_this}\" "
+       upconv = get_upconvert_vf_settings
+       upconv = "-vf #{upconv}" if upconv.present?
+       c = "mplayer #{extra_options} #{upconv} -input conf=\"#{conf_file}\" \"#{play_this}\" "
       else
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
@@ -871,12 +883,6 @@ module SensibleSwing
       edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
       File.write(EdlTempFile, edl_contents)
       
-      # -framedrop is for slow CPU's
-      # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
-      # -hardframedrop might help but hurts just too much
-      extra_mplayer_commands << "-framedrop"      
-      # ?? extra_mplayer_commands << "-mc 0.016" ??
-      extra_mplayer_commands << "-autosync 15" 
       
       # prefer english, attempt to disable subtitles, pass in edl...
       extra_mplayer_commands << "-alang en -nosub -noautosub -forcedsubsonly -sid 1000 -edl #{File.expand_path EdlTempFile}" 
