@@ -289,7 +289,8 @@ module SensibleSwing
       settings = LocalStorage[UpConvertEnglish]
       out = "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}"
       if settings
-       out += " (screen multiplier #{LocalStorage['screen_multiples']})."
+        multiple = LocalStorage['screen_multiples']
+       out += " (screen multiplier #{multiple} => #{multiple * get_current_max_width_resolution})."
       end
       out
     end
@@ -741,8 +742,6 @@ module SensibleSwing
       
       FileUtils.mkdir_p File.dirname(SMPlayerIniFile) # case it doesn't yet exist
       File.write(SMPlayerIniFile, new_prefs)
-      puts 'wrote to', SMPlayerIniFile
-      p 'filters', video_filters
       new_prefs.each_line{|l| print l if l =~ /additional_video/}
     end
     
