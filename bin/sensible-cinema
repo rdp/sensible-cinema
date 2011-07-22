@@ -289,9 +289,7 @@ module SensibleSwing
     
     def display_current_upconvert_setting
       change_upconvert_line_to_current
-      @display_current_upconvert_setting_dialog
-      @display_current_upconvert_setting_dialog = show_non_blocking_message_dialog get_current_upconvert_as_phrase
-      p get_current_upconvert_as_phrase
+      show_non_blocking_message_dialog get_current_upconvert_as_phrase
     end
     
     def get_current_upconvert_as_phrase
@@ -1327,10 +1325,8 @@ module SensibleSwing
       popup = show_non_blocking_message_dialog(popup_message, "OK")
 
       # allow our popups to still be serviced while it is running
-      @background_thread = Thread.new {
-        run_batch_file_commands_and_use_output_somehow commands, save_to, file_from, run_mplayer
-        popup.dispose
-      }
+      @background_thread = Thread.new { run_batch_file_commands_and_use_output_somehow commands, save_to, file_from, run_mplayer }
+      close_when_done(@background_thread, popup)
       # LODO warn if they will overwrite a file in the end...
     end
     
