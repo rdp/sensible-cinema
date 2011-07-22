@@ -544,7 +544,7 @@ module SensibleSwing
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
       @progress_bar.visible = false
-      panel.add @progress_bar
+      @panel.add @progress_bar
 
     end
     
@@ -585,11 +585,10 @@ module SensibleSwing
       force_accept_license_first
 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
-      panel = JPanel.new
-      @panel = panel
+      @panel = JPanel.new
       @buttons = []
-      panel.set_layout nil
-      add panel # why can't I just slap these down? panel? huh?
+      @panel.set_layout nil
+      add @panel # why can't I just slap these down? panel? huh?
       @starting_button_y = 40
       @button_width = 400      
       
@@ -635,7 +634,7 @@ module SensibleSwing
 
       increment_button_location
       increment_button_location
-
+      self
 
     end
     

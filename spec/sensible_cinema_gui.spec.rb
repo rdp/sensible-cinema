@@ -115,7 +115,7 @@ module SensibleSwing
     
     before do
       ARGV << "--create-mode" # want all the buttons for some tests.
-      @subject = MainWindow.new
+      @subject = MainWindow.new.setup_default_buttons
       ARGV.pop
       FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done" # a few of them need this...
       FileUtils.touch 'selected_file.avi'
@@ -517,17 +517,17 @@ module SensibleSwing
     end
     
     it "should show additional buttons in create mode" do
-      MainWindow.new.buttons.length.should be > 3
-      MainWindow.new.buttons.length.should be < 10
-      old_length = MainWindow.new.buttons.length
+      MainWindow.new.setup_default_buttons.buttons.length.should be > 3
+      MainWindow.new.setup_default_buttons.buttons.length.should be < 10
+      old_length = MainWindow.new.setup_default_buttons.buttons.length
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should be > (old_length + 5)
+      MainWindow.new.setup_default_buttons.buttons.length.should be > (old_length + 5)
       ARGV.pop # post-test cleanup--why not :)
     end
 
     it "should show upconvert buttons" do
       ARGV << "--upconvert-mode"
-      MainWindow.new.buttons.length.should be > 3
+      MainWindow.new.setup_default_buttons.buttons.length.should be > 3
       ARGV.pop 
     end 
     
@@ -582,7 +582,7 @@ module SensibleSwing
   
   it "should be able to upconvert at all" do
     ARGV << "--upconvert-mode"
-    @subject = MainWindow.new
+    @subject = MainWindow.new.setup_default_buttons
     ARGV.pop
     click_button(:@show_upconvert_options) # reveal buttons...
     @subject.stub(:display_current_upconvert_setting) {} # no popup ;)
