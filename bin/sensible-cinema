@@ -540,6 +540,11 @@ module SensibleSwing
       end
       
       add_change_upconvert_options_button 
+      
+      @progress_bar = JProgressBar.new(0, 100)
+      @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
+      @progress_bar.visible = false
+      panel.add @progress_bar
 
     end
     
@@ -594,6 +599,13 @@ module SensibleSwing
       add_text_line ""
       add_text_line ""
       
+      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
+      check_for_various_dependencies
+    end
+    
+    
+    def setup_default_buttons
+      
       if we_are_in_upconvert_mode
         setup_upconvert_buttons
       else
@@ -610,16 +622,10 @@ module SensibleSwing
           system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
           system_non_blocking("start http://groups.google.com/group/sensible-cinema")
         }
-
-        @progress_bar = JProgressBar.new(0, 100)
-        @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
-        @progress_bar.visible = false
-        panel.add @progress_bar
-  
         increment_button_location
 
       end
-
+      
       @exit = new_jbutton("Exit", "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
@@ -630,8 +636,7 @@ module SensibleSwing
       increment_button_location
       increment_button_location
 
-      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
-      check_for_various_dependencies
+
     end
     
     def run_smplayer_non_blocking *args
@@ -724,21 +729,22 @@ module SensibleSwing
       p 'set smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
-        # LODO double check :)
+        # LODO double check the rest here...
         old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
       end
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
-      new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
-      new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_filters}\"")
+      assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
+      assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
+      assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_filters}\"")
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
-      
       # enable dvdnav navigation, just for kicks I guess.
       new_prefs.gsub!(/use_dvdnav=.*$/, "use_dvdnav=true")
       
       FileUtils.mkdir_p File.dirname(SMPlayerIniFile) # case it doesn't yet exist
       File.write(SMPlayerIniFile, new_prefs)
-      p 'wrote to', SMPlayerIniFile, new_prefs.each_line{|l| print l if l =~ /additional_video/}
+      puts 'wrote to', SMPlayerIniFile
+      p 'filters', video_filters
+      new_prefs.each_line{|l| print l if l =~ /additional_video/}
     end
     
     def create_brand_new_edl
@@ -1500,6 +1506,7 @@ if $0 == __FILE__
     EOL
   else
     a = SensibleSwing::MainWindow.new
+    a.setup_default_buttons
     a.set_visible true
     puts 'Please use the Sensible Cinema GUI window popup...'
     if ARGV.index('--exit-immediately')
