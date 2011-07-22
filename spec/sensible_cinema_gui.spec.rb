@@ -580,6 +580,21 @@ module SensibleSwing
     assert prompted
   end
   
+  it "should be able to upconvert at all" do
+    ARGV << "--upconvert-mode"
+    @subject = MainWindow.new
+    ARGV.pop
+    click_button(:@show_upconvert_options) # reveal buttons...
+    @subject.stub!(:display_current_upconvert_setting) {} # no popup ;)
+    click_button(:@medium_dvd)
+    storage = MainWindow::LocalStorage
+    key = MainWindow::UpConvertKey
+    storage[key].should =~ /hqdn3d/
+    click_button(:@none)
+    storage[key].should be_nil
+    
+  end
+  
   
   end # describe MainWindow
   

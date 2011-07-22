@@ -192,15 +192,15 @@ module SensibleSwing
 
 
     def add_setup_upconvert_buttons
-      none = new_jbutton("reset upconvert options to default (none)")
-      none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
-      none.on_clicked {
+      @none = new_jbutton("reset upconvert options to default (none)")
+      @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
+      @none.on_clicked {
         LocalStorage[UpConvertKey] = nil
         LocalStorage[UpConvertKeyExtra] = nil
         LocalStorage[UpConvertEnglish] = nil
         display_current_upconvert_setting
       }
-      medium_dvd = new_jbutton("Change upconvert options to DVD-style video") {
+      @medium_dvd = new_jbutton("Change upconvert options to DVD-style video") {
         LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
@@ -304,10 +304,10 @@ module SensibleSwing
         # choose width of widest monitor (why would they display it on the other?)
         screen_multiple = LocalStorage['screen_multiples']
         upc = template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
+        upc = 'pullup,softskip,' + upc
         p 'using upconvert settings ' + upc
-        'pullup,softskip,' + upc
       else
-        p 'not using any upconversion'
+        p 'not using any specific upconversion'
         # TODO not for straight mplayer [?] tangled fails mac
         if OS.mac?
           '' # avoid odd message try appending the scale filter <sigh> I don't *want* the scale filter with no upconversion gah.
@@ -706,7 +706,7 @@ module SensibleSwing
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
-        config_path = set_smplayer_opts extra_options, show_subs
+        config_path = set_smplayer_opts extra_options, get_upconvert_vf_settings, show_subs
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" " 
         if !we_are_in_create_mode
           #c += " -close-at-end "
@@ -716,17 +716,18 @@ module SensibleSwing
       system_blocking c
     end
     
-    def set_smplayer_opts to_this, show_subs = false
+    def set_smplayer_opts to_this, video_filters, show_subs = false
       p 'set smplayer extra opts to this:' + to_this
       smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
       old_prefs = File.read(smplayer_prefs_file) rescue ''
-      unless old_prefs.contain? 'mplayer_additional_options='
+      unless old_prefs.length > 0
+        # LODO double check :)
         old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
       end
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
+      new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_filters}\"")
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       
       # enable dvdnav navigation, just for kicks I guess.
@@ -734,6 +735,7 @@ module SensibleSwing
       
       FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
       File.write(smplayer_prefs_file, new_prefs)
+      p 'wrote to', smplayer_prefs_file, new_prefs.each_line{|l| print l if l =~ /additional_video/}
       smplayer_prefs_file
     end
     
