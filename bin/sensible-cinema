@@ -309,8 +309,11 @@ module SensibleSwing
       else
         p 'not using any upconversion'
         # TODO not for straight mplayer [?] tangled fails mac
-        #"pullup,softskip"
-        ''
+        if OS.mac?
+          '' # avoid odd message try appending the scale filter <sigh> I don't *want* the scale filter with no upconversion gah.
+        else
+          "pullup,softskip"
+        end
       end
     end
 
