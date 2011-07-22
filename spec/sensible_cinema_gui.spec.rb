@@ -585,14 +585,30 @@ module SensibleSwing
     @subject = MainWindow.new
     ARGV.pop
     click_button(:@show_upconvert_options) # reveal buttons...
-    @subject.stub!(:display_current_upconvert_setting) {} # no popup ;)
+    @subject.stub(:display_current_upconvert_setting) {} # no popup ;)
+    @subject.stub(:show_mplayer_instructions_once) {}
     click_button(:@medium_dvd)
     storage = MainWindow::LocalStorage
     key = MainWindow::UpConvertKey
     storage[key].should =~ /hqdn3d/
     click_button(:@none)
     storage[key].should be_nil
+    click_button(:@medium_dvd)
     
+    # now it should use them on mplayer
+    got = nil
+    @subject.stub(:system_blocking) { |c|
+      got = c
+    }
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", true
+    assert got =~ /hqdn3d/
+    
+    # and on smplayer
+    MainWindow::SMPlayerIniFile.gsub!(/^.*$/, File.expand_path('./smplayer_ini_file')) # don't overwrite the real one...
+    p MainWindow::SMPlayerIniFile, File.expand_path('./smplayer_ini_file')
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false
+    assert got =~ /smplayer/
+    assert File.read(MainWindow::SMPlayerIniFile) =~ /hqdn3d/
   end
   
   

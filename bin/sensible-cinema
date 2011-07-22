@@ -306,6 +306,7 @@ module SensibleSwing
         upc = template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
         upc = 'pullup,softskip,' + upc
         p 'using upconvert settings ' + upc
+        upc
       else
         p 'not using any specific upconversion'
         # TODO not for straight mplayer [?] tangled fails mac
@@ -699,6 +700,7 @@ module SensibleSwing
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
        extra_options += " -fs " # full screen
+      
        upconv = get_upconvert_vf_settings
        upconv = "-vf #{upconv}" if upconv.present?
        c = "mplayer #{extra_options} #{upconv} -input conf=\"#{conf_file}\" \"#{play_this}\" "
@@ -706,8 +708,8 @@ module SensibleSwing
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
-        config_path = set_smplayer_opts extra_options, get_upconvert_vf_settings, show_subs
-        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname config_path}\" " 
+        set_smplayer_opts extra_options, get_upconvert_vf_settings, show_subs
+        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname SMPlayerIniFile}\" " 
         if !we_are_in_create_mode
           #c += " -close-at-end "
         end
@@ -716,10 +718,11 @@ module SensibleSwing
       system_blocking c
     end
     
+    SMPlayerIniFile = File.expand_path("~/.smplayer/smplayer.ini")
+    
     def set_smplayer_opts to_this, video_filters, show_subs = false
       p 'set smplayer extra opts to this:' + to_this
-      smplayer_prefs_file = File.expand_path("~/.smplayer/smplayer.ini")
-      old_prefs = File.read(smplayer_prefs_file) rescue ''
+      old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
         # LODO double check :)
         old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
@@ -733,10 +736,9 @@ module SensibleSwing
       # enable dvdnav navigation, just for kicks I guess.
       new_prefs.gsub!(/use_dvdnav=.*$/, "use_dvdnav=true")
       
-      FileUtils.mkdir_p File.dirname(smplayer_prefs_file) # case it doesn't exist'
-      File.write(smplayer_prefs_file, new_prefs)
-      p 'wrote to', smplayer_prefs_file, new_prefs.each_line{|l| print l if l =~ /additional_video/}
-      smplayer_prefs_file
+      FileUtils.mkdir_p File.dirname(SMPlayerIniFile) # case it doesn't yet exist
+      File.write(SMPlayerIniFile, new_prefs)
+      p 'wrote to', SMPlayerIniFile, new_prefs.each_line{|l| print l if l =~ /additional_video/}
     end
     
     def create_brand_new_edl
