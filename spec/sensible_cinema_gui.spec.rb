@@ -252,12 +252,16 @@ module SensibleSwing
      join_background_thread
      @get_mencoder_commands_args[-2].should == "2"
      @get_mencoder_commands_args[-3].should == "01:00"
-     if OS.doze?
-       @system_blocking_command.should =~ /smplayer/
-     else
-       @system_blocking_command.should =~ /mplayer/
-     end
      @system_blocking_command.should_not match /fulli/
+    end
+    
+    def assert_played_mplayer
+      Thread.join_all_others
+      if OS.doze?
+        @system_blocking_command.should =~ /smplayer/
+      else
+        @system_blocking_command.should =~ /mplayer/
+      end
     end
 
     def run_preview_section_button_successfully
@@ -265,11 +269,7 @@ module SensibleSwing
       join_background_thread
       @get_mencoder_commands_args[-2].should == "2"
       @get_mencoder_commands_args[-3].should == "01:00"
-      if OS.doze?
-        @system_blocking_command.should match /smplayer/
-      else
-        @system_blocking_command.should match /mplayer/
-      end
+      assert_played_mplayer
     end
 
     it "should prompt for start and end times" do
@@ -295,12 +295,7 @@ module SensibleSwing
     
     it "should do something for fast preview" do
       click_button(:@fast_preview)
-      if OS.doze?
-        @system_blocking_command.should =~ /smplayer/
-      else
-        @system_blocking_command.should =~ /mplayer/
-      end
-
+      assert_played_mplayer
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
@@ -311,7 +306,7 @@ module SensibleSwing
       click_button(:@rerun_preview).join
       @get_mencoder_commands_args.should == old_args
       join_background_thread
-      @system_blocking_command.should match(/smplayer/)
+      assert_played_mplayer      
     end
     
     it "should not die if you pass it the same start and end time frames--graceful acceptance" do
@@ -605,16 +600,17 @@ module SensibleSwing
     
     # and on smplayer
     MainWindow::SMPlayerIniFile.gsub!(/^.*$/, File.expand_path('./smplayer_ini_file')) # don't overwrite the real one...
-    p MainWindow::SMPlayerIniFile, File.expand_path('./smplayer_ini_file')
     @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false
-    assert got =~ /smplayer/
+    assert got =~ /mplayer/
     assert File.read(MainWindow::SMPlayerIniFile) =~ /hqdn3d/
   end
   
-  it "should be able to play upconverted" do
+  it "should be able to play upconverted stuff" do
     @subject.setup_upconvert_buttons
     click_button(:@watch_file_upconvert)
+    assert_played_mplayer
     click_button(:@watch_dvd_upconvert)
+    assert_played_mplayer
   end
   
  end # describe MainWindow
