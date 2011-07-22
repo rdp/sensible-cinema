@@ -131,18 +131,26 @@ module SensibleSwing
     LocalStorage = Storage.new("sensible_cinema_storage")
     LocalStorage.set_default('screen_multiples', 1.5) # high compatibility :)
     
+    def close_when_done thread, jitem
+      if jitem
+        Thread.new { thread.join; jitem.dispose }
+      end
+    end
+    
     def setup_upconvert_buttons
     
       @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
-        warn_if_no_upconvert_options_currently_selected
+        popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
-        play_mplayer_edl [filename_mpg, nil]
+        thread = play_mplayer_edl_non_blocking [filename_mpg, nil]
+        close_when_done(thread, popup)
       end
       @watch_file_upconvert.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options." # LODO
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
-        warn_if_no_upconvert_options_currently_selected
-        play_dvd_smplayer_unedited false, false
+        popup = warn_if_no_upconvert_options_currently_selected
+        thread = play_dvd_smplayer_unedited false, false
+        close_when_done(thread, popup)
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
@@ -515,7 +523,7 @@ module SensibleSwing
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
-        play_mplayer_edl 
+        play_mplayer_edl_non_blocking 
       }
       
       @create = new_jbutton( "Create edited copy of DVD/file on Your Hard Drive" )
@@ -574,7 +582,7 @@ module SensibleSwing
         raise unless File.exist?(output_file)
         show_blocking_message_dialog("created #{output_file}")
       else
-        play_mplayer_edl [filename_mpg, edl_filename]
+        play_mplayer_edl_non_blocking [filename_mpg, edl_filename]
       end
     end
     
@@ -862,7 +870,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl optional_file_with_edl_path = nil
+    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil
       extra_mplayer_commands = []
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
