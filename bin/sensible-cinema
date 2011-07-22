@@ -164,7 +164,7 @@ module SensibleSwing
     
     def warn_if_no_upconvert_options_currently_selected
       if !LocalStorage[UpConvertEnglish]
-        show_blocking_message_dialog "Warning: upconvert options have not been set yet--set upconvert options first and restart, if desired."
+        show_non_blocking_message_dialog "Warning: upconvert options have not been set yet--set upconvert options first and restart, if desired."
       end
     end
     

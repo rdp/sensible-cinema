@@ -1,3 +1,8 @@
+== 0.24.7 ==
+
+Tweak upconvert for when it has nothing set, and to not show subtitles.
+Tooltip down down from infinity.
+
 == 0.24.6 ==
 
 Make it so it can load VIDEO_TS style directories, too.
