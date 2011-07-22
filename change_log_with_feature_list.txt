@@ -1,3 +1,7 @@
+== 0.24.8 ==
+
+Fix some bugs in upconverting playback, cleanup UI.
+
 == 0.24.7 ==
 
 Tweak upconvert for when it has nothing set, and to not show subtitles.

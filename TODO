@@ -150,6 +150,8 @@
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
+    test it out (+- with people)
+    propaganda it
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
 

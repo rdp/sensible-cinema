@@ -164,7 +164,7 @@ module SensibleSwing
     end
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Set Upconvert Options") do
+      @show_upconvert_options = new_jbutton("Change Upconvert Options") do
         add_setup_upconvert_buttons
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."

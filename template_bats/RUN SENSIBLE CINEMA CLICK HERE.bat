@@ -1,6 +1,7 @@
 @echo Welcome to Sensible Cinema...
 @IF NOT EXIST sensible-cinema\VENDOR\CACHE GOTO NOVENDORDIR
-@echo This window will display lots of debug output (you can just ignore this window or minimize it)
+@echo This window will display lots of debug output 
+@echo (you can just ignore this window or minimize it, but should leave it open)
 @setlocal
 @rem disable any local rubyopt settings, just in case...
 @set RUBYOPT=
