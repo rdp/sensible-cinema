@@ -611,7 +611,12 @@ module SensibleSwing
     assert File.read(MainWindow::SMPlayerIniFile) =~ /hqdn3d/
   end
   
+  it "should be able to play upconverted" do
+    @subject.setup_upconvert_buttons
+    click_button(:@watch_file_upconvert)
+    click_button(:@watch_dvd_upconvert)
+  end
   
-  end # describe MainWindow
+ end # describe MainWindow
   
 end

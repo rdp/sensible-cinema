@@ -137,7 +137,8 @@ module SensibleSwing
         warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         play_mplayer_edl [filename_mpg, nil]
-      end.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options." # LODO
+      end
+      @watch_file_upconvert.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options." # LODO
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         warn_if_no_upconvert_options_currently_selected
@@ -268,7 +269,7 @@ module SensibleSwing
           if new_value != old_value
             display_current_upconvert_setting
             if slider.value == label_minimum
-              show_blocking_message_dialog "Setting it too low like that might make it not really do much upconverting!"
+              show_blocking_message_dialog "Setting it too low like that might make it not do much upconverting (DVD's, are 720px)"
             end
           end
         end
@@ -290,7 +291,7 @@ module SensibleSwing
       out = "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}"
       if settings
         multiple = LocalStorage['screen_multiples']
-       out += " (screen multiplier #{multiple} => #{multiple * get_current_max_width_resolution})."
+       out += " (screen multiplier #{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
       end
       out
     end
@@ -725,7 +726,7 @@ module SensibleSwing
     
     SMPlayerIniFile = File.expand_path("~/.smplayer/smplayer.ini")
     
-    def set_smplayer_opts to_this, video_filters, show_subs = false
+    def set_smplayer_opts to_this, video_, show_subs = false
       p 'set smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
@@ -735,7 +736,8 @@ module SensibleSwing
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_filters}\"")
+      raise if get_upconvert_vf_settings =~ /"/
+      assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=#{get_upconvert_vf_settings}")
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       # enable dvdnav navigation, just for kicks I guess.
       new_prefs.gsub!(/use_dvdnav=.*$/, "use_dvdnav=true")
@@ -869,8 +871,12 @@ module SensibleSwing
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
       start_add_this_to_all_ts = 0
-      descriptors = EdlParser.parse_file edl_path
-      title_track = get_title_track(descriptors)
+      if edl_path # some don't care...
+        descriptors = EdlParser.parse_file edl_path
+        title_track = get_title_track(descriptors)
+        splits = descriptors['mplayer_dvd_splits']
+      end
+      
       if dvd_id == NonDvd
         # check if starts offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1`
@@ -882,24 +888,20 @@ module SensibleSwing
             maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
           start_add_this_to_all_ts = start
         end
+        splits = []
       else
-        using_dvd = true
-      end
-      if using_dvd
-        splits = descriptors['mplayer_dvd_splits']
         if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
           splits = []
         end
-        splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
-      else
-        splits = []
       end
-      edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
-      File.write(EdlTempFile, edl_contents)
       
-      # prefer english, attempt to disable subtitles, pass in edl...
-      extra_mplayer_commands << "-edl #{File.expand_path EdlTempFile}" 
+      if edl_path
+        splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
+        File.write(EdlTempFile, edl_contents)
+        extra_mplayer_commands << "-edl #{File.expand_path EdlTempFile}" 
+      end
       
       run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands.join(' '), false
     end
