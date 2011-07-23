@@ -115,7 +115,7 @@ module SensibleSwing
     
     before do
       ARGV << "--create-mode" # want all the buttons for some tests.
-      @subject = MainWindow.new
+      @subject = MainWindow.new.setup_default_buttons
       ARGV.pop
       FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done" # a few of them need this...
       FileUtils.touch 'selected_file.avi'
@@ -252,12 +252,16 @@ module SensibleSwing
      join_background_thread
      @get_mencoder_commands_args[-2].should == "2"
      @get_mencoder_commands_args[-3].should == "01:00"
-     if OS.doze?
-       @system_blocking_command.should =~ /smplayer/
-     else
-       @system_blocking_command.should =~ /mplayer/
-     end
      @system_blocking_command.should_not match /fulli/
+    end
+    
+    def assert_played_mplayer
+      Thread.join_all_others
+      if OS.doze?
+        @system_blocking_command.should =~ /smplayer/
+      else
+        @system_blocking_command.should =~ /mplayer/
+      end
     end
 
     def run_preview_section_button_successfully
@@ -265,11 +269,7 @@ module SensibleSwing
       join_background_thread
       @get_mencoder_commands_args[-2].should == "2"
       @get_mencoder_commands_args[-3].should == "01:00"
-      if OS.doze?
-        @system_blocking_command.should match /smplayer/
-      else
-        @system_blocking_command.should match /mplayer/
-      end
+      assert_played_mplayer
     end
 
     it "should prompt for start and end times" do
@@ -295,12 +295,7 @@ module SensibleSwing
     
     it "should do something for fast preview" do
       click_button(:@fast_preview)
-      if OS.doze?
-        @system_blocking_command.should =~ /smplayer/
-      else
-        @system_blocking_command.should =~ /mplayer/
-      end
-
+      assert_played_mplayer
     end
     
     it "should be able to rerun the latest start and end times with the rerun button" do
@@ -311,7 +306,7 @@ module SensibleSwing
       click_button(:@rerun_preview).join
       @get_mencoder_commands_args.should == old_args
       join_background_thread
-      @system_blocking_command.should match(/smplayer/)
+      assert_played_mplayer      
     end
     
     it "should not die if you pass it the same start and end time frames--graceful acceptance" do
@@ -517,17 +512,17 @@ module SensibleSwing
     end
     
     it "should show additional buttons in create mode" do
-      MainWindow.new.buttons.length.should be > 3
-      MainWindow.new.buttons.length.should be < 10
-      old_length = MainWindow.new.buttons.length
+      MainWindow.new.setup_default_buttons.buttons.length.should be > 3
+      MainWindow.new.setup_default_buttons.buttons.length.should be < 10
+      old_length = MainWindow.new.setup_default_buttons.buttons.length
       ARGV << "--create-mode"
-      MainWindow.new.buttons.length.should be > (old_length + 5)
+      MainWindow.new.setup_default_buttons.buttons.length.should be > (old_length + 5)
       ARGV.pop # post-test cleanup--why not :)
     end
 
     it "should show upconvert buttons" do
       ARGV << "--upconvert-mode"
-      MainWindow.new.buttons.length.should be > 3
+      MainWindow.new.setup_default_buttons.buttons.length.should be > 3
       ARGV.pop 
     end 
     
@@ -536,7 +531,7 @@ module SensibleSwing
       MplayerEdl.stub(:convert_to_edl) do |d,s,s2,splits|
         splits1 = splits
       end
-      @subject.play_mplayer_edl
+      @subject.play_mplayer_edl_non_blocking
       splits1.should == []
     end
     
@@ -546,7 +541,7 @@ module SensibleSwing
         @subject.stub!(:choose_dvd_drive_or_file) {
            ["mock_dvd_drive", "mockVolume", "abcdef1234"]
         }
-        @subject.play_mplayer_edl
+        @subject.play_mplayer_edl_non_blocking
         @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
       end
    end
@@ -580,7 +575,44 @@ module SensibleSwing
     assert prompted
   end
   
+  it "should be able to upconvert at all" do
+    ARGV << "--upconvert-mode"
+    @subject = MainWindow.new.setup_default_buttons
+    ARGV.pop
+    click_button(:@show_upconvert_options) # reveal buttons...
+    @subject.stub(:display_current_upconvert_setting) {} # no popup ;)
+    @subject.stub(:show_mplayer_instructions_once) {}
+    click_button(:@medium_dvd)
+    storage = MainWindow::LocalStorage
+    key = MainWindow::UpConvertKey
+    storage[key].should =~ /hqdn3d/
+    click_button(:@none)
+    storage[key].should be_nil
+    click_button(:@medium_dvd)
+    
+    # now it should use them on mplayer
+    got = nil
+    @subject.stub(:system_blocking) { |c|
+      got = c
+    }
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", true
+    assert got =~ /hqdn3d/
+    
+    # and on smplayer
+    MainWindow::SMPlayerIniFile.gsub!(/^.*$/, File.expand_path('./smplayer_ini_file')) # don't overwrite the real one...
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false
+    assert got =~ /mplayer/
+    assert File.read(MainWindow::SMPlayerIniFile) =~ /hqdn3d/
+  end
   
-  end # describe MainWindow
+  it "should be able to play upconverted stuff" do
+    @subject.setup_upconvert_buttons
+    click_button(:@watch_file_upconvert)
+    assert_played_mplayer
+    click_button(:@watch_dvd_upconvert)
+    assert_played_mplayer
+  end
+  
+ end # describe MainWindow
   
 end

@@ -26,20 +26,10 @@
    VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
-  -vf pullup fails mac?
-  XBMC mode doesn't mind the 600 starting offset...
-    oh wait we weren't even using it right to begin with LOL
   m4m: 
     the play button, "regenerate" admin button, "click here x other arrangements of this hymn"
-  mac court jester upconvert: without -nocache, with aggressive sync....
-    jester at home...still laggy at end?
-  unit tests
-  subs: if at beginning, add extra offset...hmm...why not?
-  release at some point...Jon? urug?
-    after check mac coiso...
-
-  consistency for flight of nav. srt? huh?
-    consistency of others, also "DVD reported full-time versus ts time" for others...
+  release at some point...Jon?
+  snapshots of snow white, deploy pics
   lightning strike from various outlets...
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -58,6 +48,20 @@
   make it load faster! this is cuh-razy! or splash screen! yes!
 
 == yes do, un-ordered currently, from the various future release options ==
+  advanced buttons should allow for subs :)
+  research VOB
+  research XBMC
+  split into various separate windows themselves...
+  on mac at home: Constitution: is it 'tresor national'? if yes, submit bug report.
+  call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
+  consistency for flight of nav. srt? huh?
+    consistency of others, also "DVD reported full-time versus ts time" for others...
+  XBMC mode doesn't mind the 600 starting offset...
+    oh wait we weren't even using it right to begin with LOL
+  unit tests
+  subs: if at beginning of a line, add extra offset...hmm...why not?
+  release urug?
+    after check mac coiso...
   say something if the EDL is blank :)
   rename EDL's to clean-as-a-whistle too why not?
   figure out if an offset of '1's should be accomodated for...
@@ -148,6 +152,8 @@
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
   upconvert research/compare various options
+    test it out (+- with people)
+    propaganda it
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
 
