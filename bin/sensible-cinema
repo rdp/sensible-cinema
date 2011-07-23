@@ -309,8 +309,8 @@ module SensibleSwing
       else
         p 'not using any upconversion'
         # TODO not for straight mplayer [?] tangled fails mac
-        #"pullup,softskip"
-        ''
+       "pullup,softskip"
+        #''
       end
     end
 

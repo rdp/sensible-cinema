@@ -17,6 +17,7 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
+  does TANGLED not play at work?
    a "half mute" demo, using volume downs/ups     
       plus one that also overlays an extra audio LOL
    cheap minimize via (probably minimize foreground window/windows API) 
