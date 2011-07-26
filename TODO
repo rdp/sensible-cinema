@@ -29,6 +29,8 @@
   release at some point...Oliver? facebook?
   snapshots of snow white, deploy pics
   lightning strike from various outlets...
+
+== yes do, un-ordered currently, from the various future release options ==
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -44,51 +46,44 @@
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
   make it load faster! this is cuh-razy! or splash screen! yes!
-
-== yes do, un-ordered currently, from the various future release options ==
-  m4m: "regenerate" admin button
+  netflix upconverter, if only for inventionzy sake
   advanced buttons should allow for subs :)
+  
   research VOB
+    timesplits?
   research XBMC
+    @XBMC: your stuff is broken in at least these two ways (bug reports)
+    also are they 30fps or not? and how do they handle timesplits?
   split into various separate windows themselves...
-  on mac at home: Constitution: is it 'tresor national'? if yes, submit bug report.
+  on mac at home: Constitution: is it 'tresor national'? if yes, submit bug report uh guess...
   call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
   XBMC mode doesn't mind the 600 starting offset...
     oh wait we weren't even using it right to begin with LOL
-  unit tests
+  all unit tests
   subs: if at beginning of a line, add extra offset...hmm...why not?
-  release urug?
-    after check mac coiso...
   say something if the EDL is blank :)
   rename EDL's to clean-as-a-whistle too why not?
-  figure out if an offset of '1's should be accomodated for...
-    0.3 ...
-  some upconvert specs
+  figure out if an offset of '1s' should be accomodated for...
+    0.3 ... ?
   fix released version downloadable and work in mac?
-    distro
-  facebook survey :)
   "--developer" mode
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
   dialog on button aborted, see if I like it :)
-  fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
-    "fan editor" .bat file LOL
-    
   new button "auto-test" a subtitles file for timing :)
-  new upconv button: take some snapshots (just to straight mjpeg or jpeg or the what not)
+  new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not)
   auto-update website on release.
   publish a ripped raw big bunny
     update development howto
   @jruby scan court jester is *so* slow...what the...[mac at least...]
   urug again?
     after works in mac. Why not?
-  netflix upconverter
   if 2 EDL's, still choose a title track, playback
-  add largest title to the generator EDL
+  auto-add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
-  tighten splits
+  tighten old splits...
   "save to" -> same dir as "get from" yeah
   open EDL can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
@@ -179,8 +174,10 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
+    "fan editor" .bat file LOL
   highlighting doesn't work (upconvert DVD with no title track)
-  new icon plz
+  yet another icon plz
   @ffmpeg: bounty/plz multi-thread the lanczos filter? plz?
   @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...

@@ -32,6 +32,8 @@ A big helper is the "parse subtitle" button.
 Basically download a subtitle file for your DVD from opensubtitles.org
 Then check that its timestamp matches (Watch full DVD unedited mplayer button, compare with "V: 3600" type output with your .srt file)
 Then parse it for known profanities (parse a subtitle... button) and copy and paste the appropriate entries to your EDL.
+You can also generate your own (super accurate) subtitle .srt file by using the SubtitleEdit to parse them from (unencrypted) DVD or file,
+or avisynth can also extract subtitles.
 
 For the rest of the buttons, just "mouse over"/"hover over" them for full descriptions of their potential uses.
 

@@ -848,7 +848,11 @@ module SensibleSwing
 
     end
 
-    EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
+    if OS.doze? # avoid spaces :)
+      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir + '/mplayer.temp.edl')
+    else
+      EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
+    end
     
     def show_mplayer_instructions_once
       @_show_mplayer_instructions_once ||= show_non_blocking_message_dialog <<-EOL
