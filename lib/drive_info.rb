@@ -44,7 +44,7 @@ class DriveInfo
   most_space.MountPoint + "/"
  end
 
- def self.get_all_drives_as_ostructs
+ def self.get_all_drives_as_ostructs # not just DVD drives...
   if OS.mac?
     require 'plist'
     Dir['/Volumes/*'].map{|dir|

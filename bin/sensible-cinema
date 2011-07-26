@@ -882,7 +882,7 @@ module SensibleSwing
         splits = descriptors['mplayer_dvd_splits']
       end
       
-      if dvd_id == NonDvd
+      if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS') # VOB's...always start at 0
         # check if starts offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1`
         # Duration: 01:35:49.59, start: 600.000000
