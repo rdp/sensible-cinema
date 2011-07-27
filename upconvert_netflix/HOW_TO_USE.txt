@@ -12,7 +12,11 @@ Now start your "subject" to upconvert (ex: hulu, or netflix instant).  You can p
 
 Next you'll need dual monitor, ex: laptop screen plus the VGA out on the laptop
 
-Position your "subject" in the top right of either monitor.  Now in virtualdub, open the file upconvert_from_screen.avs.
+Position your "subject" movie so that it is flush in the top right of either monitor.
+See the file "position_window.png" for an example.
+Installing NiftyWindows then "right mouse button+drag" can help you reposition it to be just right.
+
+Now in virtualdub, open the file upconvert_from_screen.avs.
 
 Click the "play" bottom left button.
 See if it is capturing the right monitor, how much of the screen it is capturing.
@@ -25,3 +29,7 @@ Adjust the properties so that it captures the region you desire, by editing valu
 then click the "save" icon within graphedit.  Then reopen the file within virtualdub to test your new settings.
 
 Note the x and y values.
+
+Now edit the upconvert_from_screen.avs and fill in appropriate values.
+
+Now run it in virtualdub again, move virtualdub to your output display, enjoy watching it.
