@@ -71,15 +71,24 @@ Q. How do I watch these on my TV, not just on my computer?
 A. One way is to plug your computer into your TV.
   For instance, position a laptop near your TV and hook it in.  Newer TV's support this.
   Or buy a very long monitor cord and plug it in from your desktop/laptop.
-  You could also buy a projector, attach it to your computer, and then use that to watch it.
+  You could also buy a projector, attach it to your computer/laptop, and then use that to watch it.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
   I might come up with a competitor to it if desired, as the existing one costs money).
-  You may be able to create your own edited DVD, see section "Creating an edited DVD"
-  Another good option is to purchase  and use a clearplay player.
+  You may be able to create your own edited version of a DVD, see section "Creating an edited DVD"
+  Another good option is to purchase and use a clearplay player, with accompanying subscription.
   
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original, non-edited DVD and email them a link to sensible-cinema's website :)
+A. Give them the original, non-edited DVD and then email them a link to sensible-cinema's website :)
+
+Q. Can I use this with Windows Media Center?
+A. Yes, just use some WMC plugin that allows you to "call out" to a 3rd party software to play your files.
+   Then use the "advanced" mode "create side-by-side EDL file" to create an EDL for your previously existing file.
+   Then make your WMC plugin "call out" to smplayer to play those files (through whatever means it necessary), and
+   it will automatically pick up and use the EDL file.
+   You could also use the same side-by-side EDL file with XBMC, which also honors them, though
+   mutes are broken currently, so it will set it to just always skip. [note: this may not be implemented all the
+   way yet ask on the mailing list if it is or not, for XBMC]
 
 == Caveats ==
 

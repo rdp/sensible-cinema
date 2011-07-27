@@ -25,12 +25,15 @@
    VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
-  does TANGLED not play at work?
   release at some point...Oliver? facebook?
-  snapshots of snow white, deploy pics
+  snapshots of snow white "normal", then deploy pics
   lightning strike from various outlets...
+  research VOB
+    timesplits?
+  advanced buttons should allow for subs :)
 
 == yes do, un-ordered currently, from the various future release options ==
+
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -47,30 +50,25 @@
     movie mask wayback machine
   make it load faster! this is cuh-razy! or splash screen! yes!
   netflix upconverter, if only for inventionzy sake
-  advanced buttons should allow for subs :)
-  
-  research VOB
-    timesplits?
   research XBMC
     @XBMC: your stuff is broken in at least these two ways (bug reports)
     also are they 30fps or not? and how do they handle timesplits?
+    is there another format that will actually mute?
   split into various separate windows themselves...
-  on mac at home: Constitution: is it 'tresor national'? if yes, submit bug report uh guess...
-  call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
   XBMC mode doesn't mind the 600 starting offset...
     oh wait we weren't even using it right to begin with LOL
+    plus it needs to "always just skip instead of mute" for now I guess
+    report XBMC bugs, too.
   all unit tests
-  subs: if at beginning of a line, add extra offset...hmm...why not?
-  say something if the EDL is blank :)
-  rename EDL's to clean-as-a-whistle too why not?
-  figure out if an offset of '1s' should be accomodated for...
-    0.3 ... ?
-  fix released version downloadable and work in mac?
+  subs: if at beginning of a sub, add extra offset...hmm...why not?
+  say something if the EDL is "blank" :)
+  figure out if an offset of '1s' should also be accomodated for...
+    0.3 ... ? huh?
+  fix released version to work in mac
   "--developer" mode
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
-  dialog on button aborted, see if I like it :)
   new button "auto-test" a subtitles file for timing :)
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not)
   auto-update website on release.
@@ -79,25 +77,21 @@
   @jruby scan court jester is *so* slow...what the...[mac at least...]
   urug again?
     after works in mac. Why not?
-  if 2 EDL's, still choose a title track, playback
+  if 2 EDL's, still can choose a title track
   auto-add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
-  "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
-  tighten old splits...
+  tighten old splits... [remove, really, I guess...sure while I only have few...and also add better instructions...]
   "save to" -> same dir as "get from" yeah
   open EDL can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
-  @instructions: full srt how-to document instead of tooltip [?]
+  @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_name
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  check with WME plugins, add instructions, then note in the README "support for x..."
-  decide if I want to just use edl's or my fancy-shmancy, or maybe my fancy-shmancy to wrap EDL's?
-    don't have to use eval!
-    EDL with JSON on top, full timestamps.
+  linearize: EDL with JSON on top, full timestamps.
   setpriority for several :)
   bring to top after a conversion, and before prompts...
   can auto-use tsmuxer at all [?]
@@ -141,7 +135,7 @@
   inventionzy: blu-ray stuff from todo.inventionzy
 
   port to mac OS X
-    ppc dvdid?
+    ppc dvdid? documentation button?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
@@ -150,6 +144,10 @@
     propaganda it
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
+  be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
+    I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
+    or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
+    call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
 
 == other lists ==
 
@@ -174,6 +172,9 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  check with WME plugins, add instructions, then note in the README "support for x..."
+  "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
+    should have dots uh guess...
   fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
     "fan editor" .bat file LOL
   highlighting doesn't work (upconvert DVD with no title track)
@@ -268,7 +269,7 @@
   can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
   port to linux
-  "release" it to more developers
+  "release" it to even more developers
     plug.org, more rubyists than urug?
     after OS X confidence :)
   an all online EDL editor
@@ -368,7 +369,6 @@
   can blank out the video, with audio continuing through...
   can use a fast temp drive, save through it to another :P
     (when they have two...)
-  blu-ray support somehow (OCR maybe)
   double buffering hard drive/incoming copying from DVD might speed things, if your HD is fast.
     might not work for all modes tho...
   make the progress bar map "better" to the actual time that each section should take...

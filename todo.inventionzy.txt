@@ -1,6 +1,6 @@
   === patentzy yes actually do vaguely ordered ===
     blu-ray OCR
-      more blu-ray stuff: can ID them, can playback (through...mkv? VLC?)
+      more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
       some blu-ray player descriptor somehow
     
     can pick specific profanities to avoid
