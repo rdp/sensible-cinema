@@ -7,6 +7,7 @@ media player classic appears to have no cache.
 "uscreencapture settings" appears to be per app, so lost with a .grf file save [?]
   or maybe appear to be overridden...by WMC, mplayer10, not virtualdub, not ffmpeg, yes mplayer
   works for a demo, long term probably will need my own filter :)
+    though for now I could just tell them "ok download graphedit too LOL, run this in virtualdub, position your window up there"
 
 == phreaky mplayer dvdnav ==
 
