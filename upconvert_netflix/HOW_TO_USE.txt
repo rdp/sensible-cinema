@@ -1,0 +1,8 @@
+To use this:
+
+download/install uscreencapture: http://www.umediaserver.net/umediaserver/download.html
+
+download+install "windows sdk" http://msdn.microsoft.com/en-us/windows/bb980924 (rather big one here :) )
+
+download virtualdub: http://www.virtualdub.org/download.html
+
