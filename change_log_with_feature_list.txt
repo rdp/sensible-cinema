@@ -1,6 +1,8 @@
-== ==
+== 0.24.9 ==
 
-NB that mplayer2 can pull in from multiple source locations for its new EDL format: http://lists.mplayer2.org/pipermail/mplayer2-git/2011-April/000068.html
+Fix so that mplayer can display subtitles again in advanced mode.  Hopefully only in advanced mode :)
+
+NB that already mplayer2 can pull in from multiple source locations for its new EDL format: http://lists.mplayer2.org/pipermail/mplayer2-git/2011-April/000068.html
 
 Added experimental support for upconverting {youtube, netflix instant, whatever}, complete with demo video even.
 It tracks exact screen coordinates (if entered manually), and upconverts through a way of a 3rd party upconverter, to another 3rd party player.

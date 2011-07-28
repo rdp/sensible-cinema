@@ -1,4 +1,4 @@
-== roadmap [for just tasks, see below though] ==
+== roadmap [for just tasks, see below though] == 
 
   release: cheap/mediumcheap inventionzy
   release: C EDL
@@ -20,7 +20,8 @@
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
-   VLC "insert foreign missing scene" supah easy demo, overlay section with image (mplayer?)
+   VLC "insert foreign missing scene" supah easy demo
+   overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
   release at some point...Oliver? facebook?
@@ -28,7 +29,6 @@
   lightning strike from various outlets...
   research VOB
     timesplits?
-  advanced buttons should allow for subs :)
 
 == yes do, un-ordered currently, from the various future release options ==
   split out the "dependency" code from main.

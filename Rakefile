@@ -157,6 +157,15 @@ task 'gem_release' do
   FileUtils.rm_rf 'pkg'
 end
 
+def on_wbo command
+  sys "ssh rdp@ilab1.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
+  
+end
+
+task 'update wbo' do
+  on_wbo 'cd ~/sensible-cinema/source && git pull'
+end
+
 desc ' (releases with clean cache dir, which we need now)'
 task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
   p 'remember to run all the specs first!'
