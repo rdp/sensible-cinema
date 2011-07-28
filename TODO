@@ -17,12 +17,10 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-   a "half mute" demo, using volume downs/ups     
-      plus one that also overlays an extra audio LOL
    cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
-   VLC "insert foreign missing scene" demo, overlay section with image (mplayer?)
+   VLC "insert foreign missing scene" supah easy demo, overlay section with image (mplayer?)
 
 == yes do ordered in conjunction with the above probably ==
   release at some point...Oliver? facebook?
@@ -33,7 +31,7 @@
   advanced buttons should allow for subs :)
 
 == yes do, un-ordered currently, from the various future release options ==
-
+  split out the "dependency" code from main.
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)

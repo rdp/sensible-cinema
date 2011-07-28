@@ -294,6 +294,7 @@ module SensibleSwing
     end
     
     it "should do something for fast preview" do
+      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg"
       click_button(:@fast_preview)
       assert_played_mplayer
     end
@@ -392,7 +393,7 @@ module SensibleSwing
     it "should handle dvd drive -> dvdnav" do
       for drive in ['d:', 'e:', 'f:', 'g:']
         if File.exist?(drive + '/VIDEO_TS')
-          @subject.run_smplayer_blocking drive, nil, '', true
+          @subject.run_smplayer_blocking drive, nil, '', true, true
           @system_blocking_command.should =~ /dvdnav/
           @system_blocking_command.should =~ /-dvd-device/
         end
@@ -401,10 +402,14 @@ module SensibleSwing
     
     it 'should handle a/b/VIDEO_TS/yo.vob' do
       FileUtils.mkdir_p f = 'a/b/VIDEO_TS/yo.vob'
-      @subject.run_smplayer_blocking f, 3, '', true
+      @subject.run_smplayer_blocking f, 3, '', true, false
       @system_blocking_command.should =~ /dvdnav:\/\/3/
       @system_blocking_command.should =~ /VIDEO_TS\/\.\./
       @system_blocking_command.should =~ / -alang/ # preceding space :)
+      
+      # exercise the yes subtitle options...
+      @subject.run_smplayer_blocking f, 3, '', true, true
+      @system_blocking_command.should_not =~ /-nosub/
       
     end
       
@@ -595,12 +600,12 @@ module SensibleSwing
     @subject.stub(:system_blocking) { |c|
       got = c
     }
-    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", true
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", true, true
     assert got =~ /hqdn3d/
     
     # and on smplayer
     MainWindow::SMPlayerIniFile.gsub!(/^.*$/, File.expand_path('./smplayer_ini_file')) # don't overwrite the real one...
-    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false, true
     assert got =~ /mplayer/
     assert File.read(MainWindow::SMPlayerIniFile) =~ /hqdn3d/
   end

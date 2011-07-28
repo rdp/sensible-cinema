@@ -9,7 +9,8 @@ With variable settings for upconversion.
 Added support for using volume keys to "mute" or "partial" mute (equivalent of hitting down volume key on keyboard) of any 3rd party application.
 With video.
 
-
+Note also that the previous video of how to overlay "static" for muting is also a demonstration of how to overlay any arbitrary audio file
+over any video file/player, at a given time (example: scene-based audio overlays, fan edit comment tracks, etc.) similar to RiffTrax.
 
 == 0.24.8 ==
 

@@ -149,7 +149,7 @@ module SensibleSwing
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
-        thread = play_dvd_smplayer_unedited false, false
+        thread = play_dvd_smplayer_unedited false, false, false
         close_when_done(thread, popup)
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
@@ -374,7 +374,7 @@ module SensibleSwing
         fps, so you'll need to convert it (the convert timestamp button) to be able to use it in a file.
       EOL
       @play_smplayer.on_clicked {
-        play_dvd_smplayer_unedited
+        play_dvd_smplayer_unedited false, true, true
       }
 
       @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)")
@@ -385,7 +385,7 @@ module SensibleSwing
         like "V: 3600.0" should match your subtitle line "01:00:00,000 --> ..."
       EOL
       @play_mplayer_raw.on_clicked {
-        play_dvd_smplayer_unedited true
+        play_dvd_smplayer_unedited true, true, true
       }
 
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
@@ -500,7 +500,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false
+        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true
       }
       
       @reload = new_jbutton("reload bin/sensible-cinema code") do
@@ -651,10 +651,10 @@ module SensibleSwing
       }
     end
 
-    def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer, show_subs = false
+    def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer, show_subs
       unless File.exist?(File.expand_path(play_this))
-        _dbg
-        raise play_this 
+        #_dbg
+        raise play_this + ' non existing?' # till these go away in mac :)
       end
 
       # -framedrop is for slow CPU's
@@ -666,8 +666,10 @@ module SensibleSwing
       
       unless show_subs
         # disable subtitles
-        extra_options << " -alang en -nosub -noautosub -forcedsubsonly -sid 1000 "
+        extra_options << " -nosub -noautosub -forcedsubsonly -sid 1000 "
       end
+      extra_options << " -alang en "
+      extra_options += " -slang en "
 
       parent_parent = File.basename(File.dirname(play_this))
       force_use_mplayer ||= OS.mac?
@@ -689,10 +691,10 @@ module SensibleSwing
         play_this = "dvdnav://#{title_track_maybe_nil}"
       else
         # case g:\video\filename.mpg
-        # leave same...
+        # leave it the same...
       end
       if play_this =~ /dvdnav/ && title_track_maybe_nil
-        extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's 4
+        extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
       end
       
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
@@ -704,7 +706,6 @@ module SensibleSwing
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # dvdnav doesn't work here...
        extra_options += " -font #{File.expand_path('subfont.ttf')} "
        extra_options += " -volume 100 " # why start low? mplayer why oh why
-       extra_options += " -slang en "
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
         extra_options += " -vo direct3d "
@@ -722,7 +723,7 @@ module SensibleSwing
         set_smplayer_opts extra_options, get_upconvert_vf_settings, show_subs
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname SMPlayerIniFile}\" " 
         if !we_are_in_create_mode
-          #c += " -close-at-end "
+          #c += " -close-at-end " # we're still too unstable...
         end
       end
       puts c 
@@ -835,7 +836,7 @@ module SensibleSwing
       writeOut.close
     end
    
-    def play_dvd_smplayer_unedited use_mplayer_instead = false, show_instructions = true
+    def play_dvd_smplayer_unedited use_mplayer_instead, show_instructions, show_subs
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
       if descriptors_maybe_nil
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
@@ -844,7 +845,7 @@ module SensibleSwing
         # want this even with smplayer sometimes I guess...
         show_mplayer_instructions_once
       end
-      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead, show_subs
 
     end
 
@@ -912,7 +913,7 @@ module SensibleSwing
         extra_mplayer_commands << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands.join(' '), false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands.join(' '), false, false
     end
     
     def assert_ownership_dialog 
@@ -1357,7 +1358,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          run_smplayer_non_blocking saved_to, nil, '', false
+          run_smplayer_non_blocking saved_to, nil, '', false, false
         else
           if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
