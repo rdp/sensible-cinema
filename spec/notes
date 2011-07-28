@@ -9,6 +9,24 @@ media player classic appears to have no cache.
   works for a demo, long term probably will need my own filter :)
     though for now I could just tell them "ok download graphedit too LOL, run this in virtualdub, position your window up there"
 
+virtualdub seems to get way behind...maybe it doesn't have the "framedrop" options that mplayer does?
+"desktop source" does seem to work well mplayer, though perhaps still a bit jerky...
+do I need to add a sleep in there? 
+  http://www.eggheadcafe.com/microsoft/Win32-DirectX-Video/31543477/csourcestream-fillbuffer--settime.aspx seems to imply that I should...I think.
+What matters is the delta from when the graph started running. http://msdn.microsoft.com/en-us/library/dd377506(v=vs.85).aspx
+
+maybe VLC is just a lot more stingey...hmm...it's because it's the only fella I have actually trying to mix and match audio+video
+
+160'ish fps capturing at 1680x1050 (no memcpy though!)
+
+I think I need to set mine to basically sleep until "almost it's time to do this" type of thing...maybe?
+
+It only seems to make sense to me to go "only as fast as x fps" otherwise...you'll be giving them bogus data!  I cannot
+imagine that you can depend on the renderer to "backlog" you to exactly as many fps as you need.
+However, this doesn't explain VLC accepting these in such an awful way LOL.
+Also, maybe implementing IAMLiveSource would help even VLC...maybe...?
+
+
 == phreaky mplayer dvdnav ==
 
 Tangled seemed to "not play without VLC help" at work, but not at home mac where it failed.

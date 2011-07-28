@@ -14,7 +14,10 @@ upconvert netflix instant yes!
 do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&postid=4760581#post4760581
 
 my own Dshow input filter, which also has a "command line" way of configuring it, for ease of use.
-
+  could "just" use the push source + mplayer maybe [?]
+  would be nice to retrofit it with real "video capture source" to see if it works well with VLC or not...
+  assume it would similarly fail LOL.  I think what you need is either sleeps or...or...IAmPushSource I guess.
+  
 == never ==
 
 add another sharpen filter?
