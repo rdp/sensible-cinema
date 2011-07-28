@@ -174,6 +174,7 @@ task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependen
   Rake::Task["gem_release"].execute
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
+  Rake::Task["update wbo"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
   system("rm -rf ../cache.bak")
 end

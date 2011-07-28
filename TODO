@@ -69,7 +69,6 @@
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
   new button "auto-test" a subtitles file for timing :)
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not)
-  auto-update website on release.
   publish a ripped raw big bunny
     update development howto
   @jruby scan court jester is *so* slow...what the...[mac at least...]
