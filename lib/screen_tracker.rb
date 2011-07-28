@@ -75,15 +75,19 @@ class ScreenTracker
       @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
     end
 
-    # allow ourselves the 'found it message' selectively
+    # display the 'found it message' only if it was previously lost...
     unless @hwnd
       until @hwnd
         print 'unable to find the player window currently [%s] (maybe need to start program or move mouse over it)' % @name_or_regex.inspect
         sleep 1
         STDOUT.flush
-        @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
+
+        hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
+        width, height = Win32::Screenshot::Util.dimensions_for(hwnd)
+        p width, height
+        @hwnd = hwnd
       end
-      puts 're-found window'
+      puts 're-established contact with window'
     end
 
   end
@@ -175,7 +179,8 @@ class ScreenTracker
         sleep 0.02
         if(Time.now - time_since_last_screen_change > 2.0)
           # display a warning
-          p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet, or paused?]'
+          p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet, or paused?] ' + @hwnd.to_s
+          p Win32::Screenshot::Util.dimensions_for(hwnd)
           @previously_displayed_warning = true
           time_since_last_screen_change = Time.now
           # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)

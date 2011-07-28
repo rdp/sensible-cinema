@@ -42,25 +42,28 @@ module Muter
   end
   
   def hit_volume_up_key
+    p 'hitting up volume key'
     keybd_event(VK_VOLUME_UP, 0, 0, nil)
     keybd_event(VK_VOLUME_UP, 0, KEYEVENTF_KEYUP, nil)
   end
   
   def hit_volume_down_key
+    p 'hitting down volume key'
     keybd_event(VK_VOLUME_DOWN, 0, 0, nil)
     keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
   @@use_mouse = false # inventionzy
   @@use_static_on_top = false # inventionzy
+  @@use_down_volume_button = true
   
-  def start_static
+  def start_playing_static
     @player = PlayAudio.new(__DIR__ + '/static.wav')
     @player.loop
     p 'STARTED STATIC'
   end
   
-  def stop_static
+  def stop_playing_static
     if @player
       p 'STOPPED STATIC'
       @player.stop
@@ -68,13 +71,17 @@ module Muter
     end
   end
   
+  @@use_down_volume_button_number = 3
+  
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
     # anyway we just use a toggle for now...dangerous but works hopefully
     if @@use_mouse
       Mouse.single_click_left_mouse_button
     elsif @@use_static_on_top
-      start_static
+      start_playing_static
+    elsif @@use_down_volume_button
+      @@use_down_volume_button_number.times { hit_volume_down_key }
     else
       hit_mute_key
     end
@@ -85,7 +92,9 @@ module Muter
     if @@use_mouse
       Mouse.single_click_left_mouse_button
     elsif @@use_static_on_top
-      stop_static
+      stop_playing_static
+    elsif @@use_down_volume_button
+      @@use_down_volume_button_number.times { hit_volume_up_key }
     else
       hit_mute_key # Windows XP...
       hit_volume_down_key
