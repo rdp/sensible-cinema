@@ -26,6 +26,7 @@ imagine that you can depend on the renderer to "backlog" you to exactly as many 
 However, this doesn't explain VLC accepting these in such an awful way LOL.
 Also, maybe implementing IAMLiveSource would help even VLC...maybe...?
 
+It hates my filter! The only one it loves is that other one... <sigh>. Hacky work around it is then...
 
 == phreaky mplayer dvdnav ==
 
