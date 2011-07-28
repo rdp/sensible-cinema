@@ -2,7 +2,14 @@
 
 NB that mplayer2 can pull in from multiple source locations for its new EDL format: http://lists.mplayer2.org/pipermail/mplayer2-git/2011-April/000068.html
 
-Added experimental support for upconverting {youtube, netflix instant, whatever}, complete with demo video.
+Added experimental support for upconverting {youtube, netflix instant, whatever}, complete with demo video even.
+It tracks exact screen coordinates (if entered manually), and upconverts through a way of a 3rd party upconverter, to another 3rd party player.
+With variable settings for upconversion.
+
+Added support for using volume keys to "mute" or "partial" mute (equivalent of hitting down volume key on keyboard) of any 3rd party application.
+With video.
+
+
 
 == 0.24.8 ==
 
