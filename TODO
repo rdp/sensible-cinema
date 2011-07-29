@@ -48,6 +48,7 @@
     movie mask wayback machine
   make it load faster! this is cuh-razy! or splash screen! yes!
   netflix quality upconverter
+    want a prototype mplayer upconverter...I guess... 
   research XBMC
     @XBMC: your stuff is broken in at least these two ways (bug reports)
     also are they 30fps or not? and how do they handle timesplits?
@@ -61,10 +62,14 @@
     report XBMC bugs, too.
   all unit tests
   subs: if at beginning of a sub, add extra offset...hmm...why not?
-  say something if the EDL is "blank" :)
+  say something if the EDL is actually "blank" :)
   figure out if an offset of '1s' should also be accomodated for...
     0.3 ... ? huh?
   fix released version to work in mac
+  release capture filter, advertise it :)
+  note "you want to optimize your reverse blitting first... :)"
+    test speed of from DESKTOP versus HWND.
+    can use hwnd.  Somehow automated.
   "--developer" mode
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
   new button "auto-test" a subtitles file for timing :)

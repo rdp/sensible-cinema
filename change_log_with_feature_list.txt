@@ -1,3 +1,9 @@
+== 0.25.0 ==
+
+Created my own directshow screen capture filter to go along with netflix instant upconvert, 
+easier configurable, controllable at all LOL.
+https://rdp:githubrox@github.com/rdp/open-source-directshow-screen-capture-filter.git
+
 == 0.24.9 ==
 
 Fix so that mplayer can display subtitles again in advanced mode.  Hopefully only in advanced mode :)
