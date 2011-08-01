@@ -18,6 +18,10 @@ my own Dshow input filter, which also has a "command line" way of configuring it
   would be nice to retrofit it with real "video capture source" to see if it works well with VLC or not...
   assume it would similarly fail LOL.  I think what you need is either sleeps or...or...IAmPushSource I guess.
   
+  
+It probably needs to send out input "only if it's changed" I'm thinkin..." 
+  
+  
 == never ==
 
 add another sharpen filter?

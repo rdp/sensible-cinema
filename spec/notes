@@ -17,7 +17,6 @@ What matters is the delta from when the graph started running. http://msdn.micro
 
 maybe VLC is just a lot more stingey...hmm...it's because it's the only fella I have actually trying to mix and match audio+video
 
-160'ish fps capturing at 1680x1050 (no memcpy though!)
 
 I think I need to set mine to basically sleep until "almost it's time to do this" type of thing...maybe?
 
@@ -27,6 +26,14 @@ However, this doesn't explain VLC accepting these in such an awful way LOL.
 Also, maybe implementing IAMLiveSource would help even VLC...maybe...?
 
 It hates my filter! The only one it loves is that other one... <sigh>. Hacky work around it is then...
+
+=== blttest ===
+  one monitor: 160'ish fps capturing at 1680x1050 (no memcpy though!)
+    same with aero on or off
+    
+  dual monitor: 640x480 800fps (no aero) 750fps with aero.
+    however with mplayer it was like 14fps with aero, 53 without, and 55 with single monitor (?)
+    TODO can I get that 800fps somehow? can I live without it?
 
 == phreaky mplayer dvdnav ==
 
