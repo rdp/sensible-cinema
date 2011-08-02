@@ -3,6 +3,11 @@
 Created my own directshow screen capture filter to go along with netflix instant upconvert, 
 easier configurable, controllable at all LOL.
 https://rdp:githubrox@github.com/rdp/open-source-directshow-screen-capture-filter.git
+Version bumped some dependencies.
+I can adjust programmatically where the window is "grabbed" from, and also already have
+code in the base to find the correct hwnd, so could theoretically look up its coords and thus
+automatically it adjust to find the right window in (hulu, netflix instant, etc), since
+I already have programmed players for the same.
 
 == 0.24.9 ==
 
