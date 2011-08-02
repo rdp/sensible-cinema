@@ -198,7 +198,6 @@ module SensibleSwing
     UpConvertKeyExtra = 'upconvert_setting_extra'
     UpConvertEnglish = 'upconvert_english_name'
 
-
     def add_setup_upconvert_buttons
       @none = new_jbutton("reset upconvert options to default (none)")
       @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
@@ -218,7 +217,7 @@ module SensibleSwing
       high_compression = new_jbutton("Change upconvert options for playing back highly compressed video") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
-        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # ordering?
+        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # pp should be after hqdn3d I think... and hqdn3d should be before scale...
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ???
@@ -947,8 +946,8 @@ module SensibleSwing
       puts 'Please confirm license agreement in open window.'
       # cancel button stays the same...
       
-      message ||= "Sensible Cinema requires a separately installed program (#{program}).  You can install this program
-        separately to the vendor/cache directory, or Sensible Cinema can download it for you.
+      message ||= "Sensible Cinema requires a separately installed program (#{program}), not yet installed.
+        You can install this program manually to the vendor/cache subdirectory, or Sensible Cinema can download it for you.
         By clicking accept, below, you are confirming that you have read and agree to be bound by the
         terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
@@ -1009,10 +1008,10 @@ module SensibleSwing
       end
     end
     
-    def check_for_exe windows_loc, unix_name
+    def check_for_exe windows_full_loc, unix_name
       # in windows, that exe *at that location* must exist...
       if OS.windows?
-        File.exist?(windows_loc)
+        File.exist?(windows_full_loc)
       else
         require 'lib/check_installed_mac.rb'
         if !CheckInstalledMac.check_for_installed(unix_name)
@@ -1031,11 +1030,11 @@ module SensibleSwing
         end
       end
 
-      # runtime dependencies, at least today...
+      # runtime dependencies, at least as of today...
       ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
       if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
         require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/shared/ffmpeg-git-1929807-win32-shared.7z", "ffmpeg"
+        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
       end
       if OS.mac?
         check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
@@ -1055,8 +1054,7 @@ module SensibleSwing
     
     def open_url_to_view_it_non_blocking url
       if OS.windows?
-        system_non_blocking(c = "start #{url.gsub('&', '^&')}") # LODO would launchy help/work here with the full url?
-        p c
+        system_non_blocking("start #{url.gsub('&', '^&')}") # LODO would launchy help/work here with the full url?
       else
         system_non_blocking "#{OS.open_file_command} \"#{url}\"" # LODO test
       end

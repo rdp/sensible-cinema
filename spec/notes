@@ -27,6 +27,44 @@ Also, maybe implementing IAMLiveSource would help even VLC...maybe...?
 
 It hates my filter! The only one it loves is that other one... <sigh>. Hacky work around it is then...
 
+
+53 fps with "straight" mplayer go_raw
+36.7 at upscale 1280 (1024?) (warmup?)
+31.7 at upscale 1680
+15.0'ish at upscale 3360
+1280 27 fps
+
+*maybe* hulu needs higher hqdn3d
+
+ringing not caused by -ssf ls=75.0 -ssf cs=7.0, yes ringing with filter length 1
+ no ringing if you double the screen res :) LOL
+
+basically 100% cpu at 2x screen res fps or what not...kind of 100%...kind of not...
+  13.3 fps 2048
+  
+1280 16 fps
+
+hqdn3d,scale,hqdn3d = weird streaking stars!
+
+-sws 2 2500 16 fps
+  has striations :(
+  
+-sws 2 2500 hqdn3d after: 6fps, before: 22 fps
+
+-sws 9 hqdn3d,2500 16.5 fps
+  teeny striations
+  
+-sws 9 1024 24.6 fps
+  not many striations...
+  teeny but visible.
+  1280 25 fps
+    not many striations...yet visible indeed...
+  seem to be better at 1024 than 1280...
+  
+flash can be made faster? http://forum.xda-developers.com/archive/index.php/t-1164908.html
+
+it chooses 32 bits every time, even if I'm in 16-bit mode LODO
+
 === blttest ===
   one monitor: 160'ish fps capturing at 1680x1050 (no memcpy though!)
     same with aero on or off
@@ -34,6 +72,9 @@ It hates my filter! The only one it loves is that other one... <sigh>. Hacky wor
   dual monitor: 640x480 800fps (no aero) 750fps with aero.
     however with mplayer it was like 14fps with aero, 53 without, and 55 with single monitor (?)
     TODO can I get that 800fps somehow? or can I live without it?
+
+  350 fps aero dual monitor work desktop
+  383/700 at times fps non-aero same [?] [just disabling aero auto-made my thing faster LOL]
 
 == phreaky mplayer dvdnav ==
 
@@ -282,6 +323,7 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
   I could either go with avisynth + MPC (I think)
 
 === upconverting to the huge monitor===
+
  with the black laptop:
    "normal" dvdnav seemed to work all right, slightly jerky at times.
   I think that upconverting to the little monitor used more cpu.
@@ -310,8 +352,6 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
   
   TODO try various DVD's with 1680 versus 3360...are they all supah clear?
   
-  
-  
  roary, mac:
    1280: fine
    1500: toast speed-wise
@@ -320,6 +360,7 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
 === various options ===
 
   an avisynth upconvert howto: http://avisynth.org/mediawiki/Enhancing_dvd_videos
+  http://web.archiveorange.com/archive/v/JbcLEih3ZwhZlMuTkxzR says "if you're upscaling [to grow the image] then do denoise before scale"
 
  -vo gl fails on a mac [huh?]
 
