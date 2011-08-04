@@ -32,6 +32,7 @@
     timesplits?
 
 == yes do, un-ordered currently, from the various future release options ==
+  overlapping mute failure when you hit the "watch edited realtime" should popup.
   split out the "dependency" code from main.
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
