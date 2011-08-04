@@ -32,6 +32,8 @@
     timesplits?
 
 == yes do, un-ordered currently, from the various future release options ==
+  new open button "edit the one for current DVD"
+  the other button should open in the "editing" EDL dir.
   overlapping mute failure when you hit the "watch edited realtime" should popup.
   split out the "dependency" code from main.
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()

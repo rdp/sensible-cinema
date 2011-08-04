@@ -116,6 +116,7 @@ module SubtitleProfanityFinder
       's'*2)) => ['a..', :full_word],
       arse + 'h' +
       'ole' => 'a..h...',
+      'dieu' => ['deity', :full_word], # TODO fails...
       arse + 'wipe' => 'a..w....',
       'jes' +
       'u' + 's' => 'j....',
