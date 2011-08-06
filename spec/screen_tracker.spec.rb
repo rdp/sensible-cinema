@@ -83,7 +83,7 @@ describe ScreenTracker do
 
   it "should have different bmp if sizes different" do
     a = ScreenTracker.new("VLC",10,10,5,5)
-    assert a.get_relative_coords == [10,10,15,15]
+    assert a.get_relative_coords_of_timestamp_window == [10,10,15,15]
     b = ScreenTracker.new("VLC",10,10,50,50)
     assert a.get_bmp != b.get_bmp
   end
@@ -106,7 +106,7 @@ describe ScreenTracker do
     it "should assign right offsets" do
       a = ScreenTracker.new("VLC",-10,-10,5,5)
       a.get_bmp
-      x,y,x2,y2=a.get_relative_coords
+      x,y,x2,y2=a.get_relative_coords_of_timestamp_window
       hwnd = Win32::Screenshot::BitmapMaker.hwnd("VLC")
       max_x, max_y = Win32::Screenshot::Util.dimensions_for(hwnd)
       x.should == max_x-10
@@ -120,7 +120,7 @@ describe ScreenTracker do
       b = ScreenTracker.new("VLC",10,10,50,50)
       c = ScreenTracker.new("VLC",-99,-99,50,50)
       assert a.get_bmp == b.get_bmp
-      assert c.get_relative_coords != b.get_relative_coords
+      assert c.get_relative_coords_of_timestamp_window != b.get_relative_coords_of_timestamp_window
       cb = c.get_bmp
       bb = b.get_bmp
       c.get_bmp.length == b.get_bmp.length
@@ -160,7 +160,7 @@ describe ScreenTracker do
       - 7
     YAML
     a = ScreenTracker.new_from_yaml(yaml,nil)
-    a.get_relative_coords.should == [32,34,132,54]
+    a.get_relative_coords_of_timestamp_window.should == [32,34,132,54]
   end
 
   it "should be able to dump images it uses" do

@@ -94,10 +94,10 @@ def go_sc(args)
       screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
       does_not_need_mouse_jerk = YAML.load_file(player_description)["does_not_need_mouse_movement"]
       unless does_not_need_mouse_jerk
-        p 'yes mouse jitter' if $VERBOSE or $DEBUG
+        p 'yes using mouse jitter' if $VERBOSE or $DEBUG
         Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
       else
-        p 'no mouse jitter' if $VERBOSE or $DEBUG
+        p 'not using mouse jitter' if $VERBOSE or $DEBUG
       end
       
       # exit early if we just wanted a screen dump...a little kludgey...
@@ -105,7 +105,7 @@ def go_sc(args)
         puts 'warning--only doing screen dump in t-minus 2s...'      
         sleep 2
         puts 'snap!'
-        screen_tracker.dump_bmp
+        screen_tracker.dump_bmps
         exit 1
       end
       screen_tracker.process_forever_in_thread
@@ -115,7 +115,7 @@ def go_sc(args)
     
     OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
   
-    puts "Opening the curtains... (please play in your other player now)"
+    puts "Opening the curtains... (please play in your other video player now)"
     overlay.start_thread true
     key_input = KeyboardInput.new overlay
     key_input.start_thread # status thread

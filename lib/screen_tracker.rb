@@ -19,10 +19,17 @@ require 'win32/screenshot'
 require 'sane'
 require 'yaml'
 require File.dirname(__FILE__)+ '/ocr'
+require 'ffi'
 
 class ScreenTracker
   
-  def self.new_from_yaml yaml, callback
+  extend FFI::Library
+  ffi_lib 'user32'
+  # second parameter, pointer, LPRECT is FFI::MemoryPointer.new(:long, 4)
+  # read it like rect.read_array_of_long(4)
+  attach_function :GetWindowRect, [:long, :pointer], :int # returns a BOOL
+  
+  def self.new_from_yaml yaml, callback # callback can be nil, is used for timestamp changed stuff
     settings = YAML.load yaml
     return new(settings["name"], settings["x"], settings["y"], settings["width"], 
         settings["height"], settings["use_class_name"], settings["digits"], callback)
@@ -32,13 +39,13 @@ class ScreenTracker
   
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
-  def initialize name_or_regex,x,y,width,height,use_class_name=nil,digits=nil,callback=nil
+  def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, callback=nil
     # cache to save us 0.00445136 per time LOL
     @name_or_regex = name_or_regex
     @use_class_name = use_class_name
-    get_hwnd
     pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
+    get_hwnd_loop_forever
     max_x, max_y = Win32::Screenshot::Util.dimensions_for(@hwnd)
     if(x < 0 || y < 0)
       if x < 0
@@ -48,7 +55,6 @@ class ScreenTracker
         y = max_y + y
       end
     end
-    @height = height
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
     @max_x = max_x
     raise "poor width or wrong window #{@x2} #{max_x} #{x}" if @x2 > max_x  || @x2 == x
@@ -65,7 +71,7 @@ class ScreenTracker
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits.inspect if $VERBOSE
   end
   
-  def get_hwnd
+  def get_hwnd_loop_forever
     if @name_or_regex.to_s.downcase == 'desktop'
       # full screen option
       assert !@use_class_name # not an option
@@ -89,7 +95,7 @@ class ScreenTracker
       end
       puts 're-established contact with window'
     end
-
+    true
   end
   
   # gets the snapshot of "all the digits together"
@@ -104,7 +110,7 @@ class ScreenTracker
   end
 
   # writes out all screen tracking info to various files in the current pwd
-  def dump_bmp filename = 'dump.bmp'
+  def dump_bmps filename = 'dump.bmp'
     File.binwrite filename, get_bmp
     File.binwrite 'all.' + filename, get_full_bmp
     dump_digits(get_digits_as_bitmaps, 'dump_bmp') if @digits
@@ -144,10 +150,16 @@ class ScreenTracker
     out
   end
   
-  def get_relative_coords
+  def get_relative_coords_of_timestamp_window
     [@x,@y,@x2,@y2]
   end
   
+  def get_coords_of_window_on_display # yea
+    out = FFI::MemoryPointer.new(:long, 4)
+    ScreenTracker.GetWindowRect @hwnd, out
+    out.read_array_of_long(4)
+  end
+
   def identify_digit bitmap
     OCR.identify_digit(bitmap, @digits)
   end
@@ -184,7 +196,7 @@ class ScreenTracker
           @previously_displayed_warning = true
           time_since_last_screen_change = Time.now
           # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
-          get_hwnd
+          get_hwnd_loop_forever
         end
       end
     }
