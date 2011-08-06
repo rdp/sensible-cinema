@@ -25,6 +25,6 @@ setter = SetupDirectshowFilterParams.new
 setter.set_single_setting 'height', y2 - y
 setter.set_single_setting 'width', x2 - x
 setter.set_single_setting 'start_x', x
-setter.set_single_setting 'start_y', x
+setter.set_single_setting 'start_y', y
 
 screen_tracker.dump_bmps
