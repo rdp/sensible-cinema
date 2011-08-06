@@ -1,0 +1,43 @@
+# comments can go after a # on any line, for example this one.
+"name" => "if a man answers",
+
+"mutes" => [
+
+"00:15:02.167", "00:15:04.692", "profanity", "deity", "mon [deity]",
+# got weird overlapping subtitles in this one...
+#"0:35:54.318" , "0:35:59.515", "profanity", "goodness", "Maman thank [goodness] for you",
+#"0:35:57.588" , "0:35:59.613", "profanity", "goodness", "Thank [goodness] for love",
+"0:35:54.318" , "0:35:59.615", "profanity", "goodness", "Maman thank [goodness] for you",
+"1:35:39.834" , "1:35:43.326", "profanity", "he..", "A little [he..] to make those two devils feel at home",
+
+# put back this once blank outs are more precise
+# "0:03:17.630" , "0:03:23.500", "profanity", "sex", "In the beglnnlng Father consldered Me Tarzan you Jane an adequate [sex] educatlon",
+"0:05:50.249" , "0:05:54.743", "profanity", "make love", "And maman says that the only thing a man would rather do than [make love] is talk about himself",
+"0:08:01.714" , "0:08:05.707", "profanity", "make love", "Chuckles So they won't [make love] to me all the time",
+"0:24:46.017" , "0:24:50.579", "profanity", "sex", "Imagine our daughter alone with that seedy poverty stricken [sex] maniac",
+"0:39:27.465" , "0:39:29.933", "profanity", "sex", "and keep an eye on daddy with all those [sex]y models",
+"0:43:15.960" , "0:43:19.293", "profanity", "sex", "and keep an eye on daddy wlth all those [sex]y models",
+"0:46:22.980" , "0:46:27.440", "profanity", "sex", "He just pooh poohed me but I know when one of my own [sex] has known love",
+"0:25:05", "0:25:10", "sex", "mention nude",
+"0:25:18", "0:25:21", "sex", "mention nude",
+ 
+],
+
+"blank_outs" => [
+ # 1:46 2:00
+ # 2:25 2:50
+ # 3:06 3:43
+ # 4:45 5:05
+ "1:46", "5:05", "scantily clad pictures, could be split up more precisely", # TODO
+ "20:58", "21:20", "lingerie putting on",
+ "22:35", "22:43", "lingerie pics",
+],
+
+"volume_name" => "IF_A_MAN_ANSWERS",
+"disk_unique_id" => "270df07b|62294c73",
+"dvd_title_track" => "1",
+"dvd_title_track_length" => "6104.2", # sum length, on the DVD, use the show DVD info button to retrieve it.
+"opensubtitles_number" => "238037",
+# "not edited out stuff" => "some violence left in...",
+"closing thoughts" => "definitely some adult themes in this one, but a fun flick",
+"mplayer_dvd_splits" => [],

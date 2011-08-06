@@ -1,0 +1,6 @@
+"commercial" players, like windows media player, will "seek" based on 30 fps, even if
+  the underlying is 29.97
+  however if you allow them to just continue playing, they use wall time, which is 29.97 fps
+  
+makemkv can give you streams that are up to like 2s out of whack with the DVD.  tsmuxer
+ seems to fix those though, if you unmux them.

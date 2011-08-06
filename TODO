@@ -32,6 +32,9 @@
     timesplits?
 
 == yes do, un-ordered currently, from the various future release options ==
+  new open button "edit the one for current DVD"
+  the other button should open in the "editing" EDL dir.
+  overlapping mute failure when you hit the "watch edited realtime" should popup.
   split out the "dependency" code from main.
   try buy edit lists from all x,y,z [?] maybe ask for them for free first? ()
     http://www.familysafemovies.com
@@ -69,6 +72,7 @@
     0.3 ... ? huh?
   fix released version to work in mac
   release capture filter, advertise it :)
+  report ffmpeg bug, mplayer various :P
   note "you want to optimize your reverse blitting first... :)"
     test speed of from DESKTOP versus HWND.
     can use hwnd.  Somehow automated.
