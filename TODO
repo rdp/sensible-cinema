@@ -71,6 +71,7 @@
     0.3 ... ? huh?
   fix released version to work in mac
   release capture filter, advertise it :)
+  report ffmpeg bug, mplayer various :P
   note "you want to optimize your reverse blitting first... :)"
     test speed of from DESKTOP versus HWND.
     can use hwnd.  Somehow automated.
