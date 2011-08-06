@@ -50,6 +50,7 @@
   make it load faster! this is cuh-razy! or splash screen! yes!
   netflix quality upconverter
     want a prototype mplayer upconverter...I guess... 
+  add back in scale for OS X, see if it's expensive or not...I'd guess not though...
   research XBMC
     @XBMC: your stuff is broken in at least these two ways (bug reports)
     also are they 30fps or not? and how do they handle timesplits?
@@ -81,6 +82,7 @@
   urug again?
     after works in mac. Why not?
   if 2 EDL's, still can choose a title track
+  advertise virtual audio
   auto-add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
   tighten old splits... [remove, really, I guess...sure while I only have few...and also add better instructions...]

@@ -1,5 +1,11 @@
-
 up next:
+
+== ==
+desktop filter:
+ 1024x1024:
+   15% one cpu used by the capture utility (0.013ms per capture)
+   good for now I guess (no transparency visible...)
+   12 fps <sigh>
 
 == upconvert netflix ==
 

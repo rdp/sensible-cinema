@@ -1,6 +1,8 @@
+== dvd ==
+
 compare with powerdvd/ffdshow
 
-compare various computers/monitors...
+compare (DVD) various computers/monitors...
 
 experiment with 2x or not with various people...
   also should I change screen resolution down to 800x600 then double upconvert? better?
@@ -9,31 +11,30 @@ lanczos 10? is filter length 4 better? huh? what?
 
 hqdn3d settings?
 
-upconvert netflix instant yes!
-
 do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&postid=4760581#post4760581
 
-my own Dshow input filter, which also has a "command line" way of configuring it, for ease of use.
-  could "just" use the push source + mplayer maybe [?]
-  would be nice to retrofit it with real "video capture source" to see if it works well with VLC or not...
-  assume it would similarly fail LOL.  I think what you need is either sleeps or...or...IAmPushSource I guess.
-  
-It probably needs to send out input "only if it's changed" I'm thinkin..." 
+== OS dshow ==
+
+ It probably needs to send out input "only if it's changed" I'm thinkin..." 
+ VLC compatible'ify it..
+
+ === some day ===
+    threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
+    can I live with aero wasn't bitblt getting like 800fps *with* aero?
+    more efficient by skipping an extra copy (we're already pretty fast though...)
 
 === netflix/OS screen capture ===
 
-  update the OS README file
-    warn on aero (dual monitor?)
-    troubleshooting: tell them to use the BitTest, reverse should be at least 200 fps I guess...
+  note: Also you "may" need to insert a sleep in your fillBuffer method, for the case of renderers that just request 
+
   make it able to grab from a window, and work when dragged too...
   can I make it look awesome?
+  switch monitors?
+  
   ==== some day ====
-  more precise timing...why not?
-  can I live with aero wasn't bitblt getting like 800fps *with* aero?
-  threading
-  shearing
-  perfect looks LOL
-  make really low q stuff like youtube 360 look good
+    shearing
+    perfect looks of absolutely everything upconverted LOL
+    make really low q stuff like youtube less than even 360 look good
   
 == never ==
 
