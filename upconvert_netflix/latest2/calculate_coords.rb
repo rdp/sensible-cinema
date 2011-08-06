@@ -18,8 +18,6 @@ x,y,x2,y2 = screen_tracker.get_coords_of_window_on_display
 # all right, except, for youtube, the y2 is too high, includes the red at the bottom 
 # TODO cut off black edges too...why not, eh?
 y2 -= 50
-#require 'ruby-debug'
-#debugger
 p 'setting to', x, y, x2, y2
 setter = SetupDirectshowFilterParams.new
 setter.set_single_setting 'height', y2 - y
@@ -27,4 +25,4 @@ setter.set_single_setting 'width', x2 - x
 setter.set_single_setting 'start_x', x
 setter.set_single_setting 'start_y', y
 
-screen_tracker.dump_bmps
+#screen_tracker.dump_bmps
