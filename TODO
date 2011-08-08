@@ -95,6 +95,7 @@
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_name
+  C-based stuff cleanup loose ends
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?

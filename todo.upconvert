@@ -13,10 +13,14 @@ hqdn3d settings?
 
 do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&postid=4760581#post4760581
 
-== OS dshow ==
+== OS dshow screen tracker ==
 
- It probably needs to send out input "only if it's changed" I'm thinkin..." 
+ It probably needs to send out input "only if it's changed" I'm thinkin..."
  VLC compatible'ify it..
+ can limit it to only 5 fps [?]
+  @ avisynth wiki: max fps
+  is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
+ 
 
  === some day ===
     threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
