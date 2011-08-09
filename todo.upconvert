@@ -13,33 +13,30 @@ hqdn3d settings?
 
 do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&postid=4760581#post4760581
 
-== OS dshow screen tracker ==
-
- It probably needs to send out input "only if it's changed" I'm thinkin..."
- VLC compatible'ify it..
- can limit it to only 5 fps [?]
-  @ avisynth wiki: max fps
-  is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
- bounty multi-thread scaling, iff it seems helpful-er for quad core.
- 
-
- === some day ===
-    threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
-    can I live with aero wasn't bitblt getting like 800fps *with* aero?
-    more efficient by skipping an extra copy (we're already pretty fast though...)
-
 === netflix/OS screen capture ===
-
-  note: Also you "may" need to insert a sleep in your fillBuffer method, for the case of renderers that just request 
 
   make it able to grab from a window, and work when dragged too...
   can I make it look awesome?
-  switch monitors?
   
   ==== some day ====
     shearing
     perfect looks of absolutely everything upconverted LOL
     make really low q stuff like youtube less than even 360 look good
+
+== OS dshow screen tracker ==
+
+ It probably needs to send out input "only if it's changed" I'm thinkin..." for my purposes anyway...
+ VLC compatible'ify it..
+ can limit it to only 5 fps [?]
+  @ avisynth wiki: max fps
+  is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
+ 
+
+ === some day ===
+    bounty multi-thread scaling, iff it seems helpful-er for quad core.
+    threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
+    can I live with aero wasn't bitblt getting like 800fps *with* aero?
+    more efficient by skipping an extra copy (we're already pretty fast though...)
   
 == never ==
 
