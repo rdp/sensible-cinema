@@ -24,3 +24,4 @@ setter.set_single_setting 'width', x2 - x
 setter.set_single_setting 'start_x', x
 setter.set_single_setting 'start_y', y
 p 'set it to', x, y, x2, y2
+screen_tracker.dump_bmps

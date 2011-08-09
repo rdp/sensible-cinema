@@ -9,6 +9,18 @@ desktop filter:
 
 == upconvert netflix ==
 
+=== mplayer avisynth ===
+  http://www.youtube.com/watch?v=hkOnH36S_pY&feature=player_profilepage
+    mplayer's default upscaling seems to introduce wild dots...maybe?  
+    I think "magnifier" does some internal smudging for me, otherwise it would look awful
+    mplayer at default seems to be doing weird things?
+    paint.net on the win32::screenshot capture seemed to match quite well what the screen had.
+    ffplay seems to show an exact verbatim copy...
+    actually mplayer seems to be a good exact duplicate...
+    
+=== other ===
+
+
 media player classic appears to have no cache.
 "uscreencapture settings" appears to be per app, so lost with a .grf file save [?]
   or maybe appear to be overridden...by WMC, mplayer10, not virtualdub, not ffmpeg, yes mplayer
