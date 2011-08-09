@@ -321,7 +321,9 @@ module SensibleSwing
         if OS.mac?
           '' # avoid odd message try appending the scale filter <sigh> I don't *want* the scale filter with no upconversion gah.
         else
-          "pullup,softskip"
+          # until I find out if they were making me too slow on older comps'
+          # "pullup,softskip"
+          ''
         end
       end
     end
