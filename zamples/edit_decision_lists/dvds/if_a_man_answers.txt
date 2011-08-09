@@ -39,5 +39,5 @@
 "dvd_title_track_length" => "6104.2", # sum length, on the DVD, use the show DVD info button to retrieve it.
 "opensubtitles_number" => "238037",
 # "not edited out stuff" => "some violence left in...",
-"closing thoughts" => "definitely some adult themes in this one, but a fun flick",
+"closing thoughts" => "a fun flick. this EDL needs to be double checked a bit still",
 "mplayer_dvd_splits" => [],
