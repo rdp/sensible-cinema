@@ -23,5 +23,5 @@ setter.set_single_setting 'height', y2 - y
 setter.set_single_setting 'width', x2 - x
 setter.set_single_setting 'start_x', x
 setter.set_single_setting 'start_y', y
-p 'set it to', x, y, x2, y2
+p 'set it to', x, y, x2, y2, 'width', x2-x, 'height', y2-y
 screen_tracker.dump_bmps

@@ -12,7 +12,7 @@ class SetupDirectshowFilterParams
   def set_single_setting name, value
     raise unless Settings.include?(name)
     raise unless value.is_a? Fixnum
-    raise value.to_s if value < 0
+#    raise value.to_s if value < 0
     @screen_reg.write(name, Win32::Registry::REG_DWORD, value.to_i)
   end
   
