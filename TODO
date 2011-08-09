@@ -184,6 +184,7 @@
   investigate: can I use zoomplayer max?
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  @ffdshow-tryouts: don't crash me!
   conference it can "pick out songs" (like a music video? mp3's?)
   check with WME plugins, add instructions, then note in the README "support for x..."
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
