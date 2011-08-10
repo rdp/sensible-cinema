@@ -47,11 +47,17 @@ else
       @fr.set_visible(false) # hide it to start
     end
     
-    @@use_mouse = true
+    @@use_mouse = false
+    @@use_foreground_window_minimize = true
+    
+    
 
     def self.blank_full_screen! seconds
+      
       if @@use_mouse
         Mouse.single_click_left_mouse_button
+      elsif @@use_foreground_window_minimize
+        raise 'todo'
       else
         # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
         @fr.setAlwaysOnTop(false) 
@@ -69,6 +75,8 @@ else
     def self.unblank_full_screen!
       if @@use_mouse
         Mouse.single_click_left_mouse_button
+      elsif @@use_foreground_window_minimize
+        raise 'todo'
       else
         # just move it off screen...lodo
         @fr.set_location(-2100, -2100)
