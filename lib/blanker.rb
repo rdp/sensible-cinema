@@ -49,15 +49,26 @@ else
     
     @@use_mouse = false
     @@use_foreground_window_minimize = true
+    if @@use_foreground_window_minimize
+      require 'win32/screenshot'
+      SW_MINIMIZE = 6
+    end
     
+    def self.minimize_hwnd hwnd
+      Win32::Screenshot::BitmapMaker.show_window(hwnd, SW_MINIMIZE)
+    end
     
+    def self.restore_hwnd hwnd
+      Win32::Screenshot::BitmapMaker.restore(hwnd)
+    end
 
     def self.blank_full_screen! seconds
       
       if @@use_mouse
         Mouse.single_click_left_mouse_button
       elsif @@use_foreground_window_minimize
-        raise 'todo'
+        @foreground_hwnd ||= Win32::Screenshot::BitmapMaker.foreground_window
+        minimize_hwnd @foreground_hwnd
       else
         # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
         @fr.setAlwaysOnTop(false) 
@@ -76,7 +87,7 @@ else
       if @@use_mouse
         Mouse.single_click_left_mouse_button
       elsif @@use_foreground_window_minimize
-        raise 'todo'
+        restore_hwnd @foreground_hwnd
       else
         # just move it off screen...lodo
         @fr.set_location(-2100, -2100)

@@ -1,5 +1,9 @@
 == 0.25.1 ==
-Added ability to dynamically "find" which window contained the playing movie, and capture it, for upscaling or otherwise.
+
+Added ability to dynamically "find" which window contained the playing movie, and capture it, from desktop, 
+for upscaling or capturing.
+
+added ability to "minimize" and "unminimize" a movie player window in order to "simulate" blanking.
 
 == 0.25.0 ==
 
