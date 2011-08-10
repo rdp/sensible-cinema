@@ -33,6 +33,7 @@
 == yes do, un-ordered currently, from the various future release options ==
   todo.upconvert
     except I'm really close [?] with netflix instant upconverter...hmm...
+  netflix instant for OS X
   new open button "edit the one for current DVD"
   the other button should open in the "editing" EDL dir.
   overlapping mute failure when you hit the "watch edited realtime" should popup.
@@ -88,6 +89,7 @@
     after works in mac. Why not?
   if 2 EDL's, still can choose a title track
   advertise virtual audio
+  mplayer directx check it...
   auto-add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
   tighten old splits... [remove, really, I guess...sure while I only have few...and also add better instructions...]
