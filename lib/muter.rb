@@ -53,38 +53,10 @@ module Muter
     keybd_event(VK_VOLUME_DOWN, 0, KEYEVENTF_KEYUP, nil)
   end
   
-  @@use_mouse = false # inventionzy
-  @@use_static_on_top = false # inventionzy
-  @@use_down_volume_button = true
-  
-  def start_playing_static
-    @player = PlayAudio.new(__DIR__ + '/static.wav')
-    @player.loop
-    p 'STARTED STATIC'
-  end
-  
-  def stop_playing_static
-    if @player
-      p 'STOPPED STATIC'
-      @player.stop
-      @player = nil
-    end
-  end
-  
-  @@use_down_volume_button_number = 3
-  
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
-    # anyway we just use a toggle for now...dangerous but works hopefully
-    if @@use_mouse
-      Mouse.single_click_left_mouse_button
-    elsif @@use_static_on_top
-      start_playing_static
-    elsif @@use_down_volume_button
-      @@use_down_volume_button_number.times { hit_volume_down_key }
-    else
-      hit_mute_key
-    end
+    # anyway we just use a toggle for now...dangerous but works hopefully...
+    hit_mute_key
   end
 
   # LODO better for doze 7/xp
