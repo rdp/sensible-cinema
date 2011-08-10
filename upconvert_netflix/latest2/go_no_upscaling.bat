@@ -1,0 +1,1 @@
+mplayer -nocache -vo direct3d   upconvert_from_screen_me2.avs

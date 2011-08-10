@@ -11,8 +11,8 @@ desktop filter:
 
 === mplayer avisynth ===
   http://www.youtube.com/watch?v=hkOnH36S_pY&feature=player_profilepage
-    mplayer's default upscaling seems to introduce wild dots...maybe?  
-    I think "magnifier" does some internal smudging for me, otherwise it would look awful
+    mplayer's default upscaling seems to introduce wild dots..probably
+    I think MS's bundled "magnifier" does some internal smudging for me, otherwise it would look awful
     mplayer at default seems to be doing weird things?
     paint.net on the win32::screenshot capture seemed to match quite well what the screen had.
     ffplay seems to show an exact verbatim copy...
