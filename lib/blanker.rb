@@ -48,7 +48,7 @@ else
     end
     
     @@use_mouse = false
-    @@use_foreground_window_minimize = true
+    @@use_foreground_window_minimize = false
     if @@use_foreground_window_minimize
       require 'win32/screenshot'
       SW_MINIMIZE = 6

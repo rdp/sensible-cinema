@@ -5,6 +5,8 @@ for upscaling or capturing.
 
 added ability to "minimize" and "unminimize" a movie player window in order to "simulate" blanking.
 
+possible speedup for slower systems without upconversion
+
 == 0.25.0 ==
 
 Created my own directshow screen capture filter to go along with netflix instant upconvert, 

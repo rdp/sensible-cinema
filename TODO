@@ -17,11 +17,10 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-   cheap minimize via (probably minimize foreground window/windows API) 
    url -> url inference [hopefully this is cake...]
    can handle multiple dvdid's et al
    VLC "insert foreign missing scene" supah easy demo
-   overlay section with image (mplayer?)
+   overlay section with image (mplayer? vlc supah easy?)
   add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
 
 == yes do ordered in conjunction with the above probably ==
