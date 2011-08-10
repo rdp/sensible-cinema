@@ -116,7 +116,7 @@ module Mouse
     VK_LBUTTON = 0x01 # mouse left button for GetAsyncKeyState
     
     def left_mouse_button_state
-      GetAsyncKeyState(VK_LBUTTON) # ignore a first call, which also tells us if it has changed at all since last call
+      GetAsyncKeyState(VK_LBUTTON) # ignore a first response, which also tells us if it has changed at all since last call
       if GetAsyncKeyState(VK_LBUTTON) == 0 # zero means up
         :up
       else
