@@ -17,7 +17,6 @@ do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&
 
   make it able to grab from a window, and work when dragged too...
   can I make it look awesome?
-  tell mplayer how to fix directx :)
   
   ==== some day ====
     shearing (?) compared to itself upscreened...
@@ -29,14 +28,10 @@ do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&
     the "drag to select window" seter-zy-upperzy
 
  is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
+
 == OS dshow screen tracker ==
 
- It probably needs to send out input "only if it's changed" I'm thinkin..." for my purposes anyway...
- VLC compatible'ify it..
-  threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
-    more efficient by skipping an extra copy (we're already pretty fast though...)
-  ideal: dual-threaded, and when it comes by you say "ok, use this one without a copy" LOL
- 
+  see its TODO, things I actually want to do add here.
 
  === some day ===
     bounty multi-thread scaling, iff it seems helpful-er for quad core.
@@ -47,6 +42,5 @@ do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&
 add another sharpen filter?
 
 add a VLC version?
-
 
 prop: http://ubuntuforums.org/showthread.php?t=804537 didn't I have another list somewhere... ?
