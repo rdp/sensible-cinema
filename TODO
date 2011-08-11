@@ -18,10 +18,13 @@
   
 == under next release specific items: ==
    url -> url inference [hopefully this is cake...]
+     url -> file too :P
    can handle multiple dvdid's et al
    VLC "insert foreign missing scene" supah easy demo
    overlay section with image (mplayer? vlc supah easy?)
-  add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
+   add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
+   it can filter out specific profanities even, too :P
+  @changelog: super profanity finder LOL
 
 == yes do ordered in conjunction with the above probably ==
   release at some point...Oliver? facebook? (one at a time...)
@@ -302,7 +305,6 @@
   forever strong DVD timestamps [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-feedback on crashes [?]
-  publish new version of rdp-win32screenshot, if it ever existed
   script avidemux, virtualdub, as a demo?
   accomodate failed deletes [files in use] better than dying with a backtrace
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
