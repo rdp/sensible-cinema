@@ -188,26 +188,42 @@ class EdlParser
     end
   end
   
-  def self.single_edit_list_matches_dvd edl_dir, dvd_id
-      matching =  Dir[edl_dir + '/**/*.txt'].select{|file|
+  def self.all_edl_files_parsed edl_dir
+    Dir[edl_dir + '/**/*.txt'].map{|filename|
         begin
-          parse_file(file)["disk_unique_id"] == dvd_id
+          parsed = parse_file(filename)
+          [filename, parsed]
         rescue SyntaxError => e
           # ignore poorly formed edit lists for the auto choose phase...
-          p 'warning, unable to parse a file:' + file + " " + e.to_s
-          false
+          p 'warning, unable to parse a file:' + filename + " " + e.to_s
+          nil
         end
-      }
-      if matching.length == 1
-        file = matching[0]
-        p "selecting the one only matching EDL #{file} for this DVD ID: #{dvd_id}"
-        file
-      else
-        nil
-      end
+     }.compact
+  end
+  
+  # returns single matching filename
+  def self.find_single_edit_list_matching edl_dir
+    matching = all_edl_files_parsed(edl_dir).map{|filename, parsed|
+      yield(parsed) ? filename : nil
+    }.compact
+    if matching.length == 1
+      file = matching[0]
+      p "selecting the one only matching EDL: #{file}"
+      file
+    elsif matching.length > 1
+      p "found multiple matches for media? #{matching.inspect}"
+      nil
+    else
+      nil
     end
-
-
+  end
+  
+  def self.single_edit_list_matches_dvd edl_dir, dvd_id
+    return nil unless dvd_id
+    return find_single_edit_list_matching(edl_dir){|parsed|
+      parsed["disk_unique_id"] == dvd_id
+    }
+  end
 
   
 end

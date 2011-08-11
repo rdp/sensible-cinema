@@ -11,23 +11,19 @@ class AutoWindowFinder
   
   
   def self.search_for_single_url_match edl_dir
-    winners = []
-    for file in Dir[edl_dir + '/**/*']
-      next unless File.file? file
-      hash = EdlParser.parse_file file
-      if hash["url"]
-        window = RAutomation::Window.new(:title => Regexp.new(hash["url"]))
-        if window.exist?
-          winners << file
-        end
+    matching = EdlParser.all_edl_files_parsed(edl_dir).select{|filename, parsed|
+      if parsed["url"]
+        window = RAutomation::Window.new(:title => Regexp.new(parsed["url"]))
+        window.exist?
       end
-    end
-    if winners.length == 1
-      winners[0]
-    elsif winners.length > 1
+    }.compact
+    p matching
+    if matching.length == 1
+      matching[0]
+    elsif matching.length > 1
+      p 'multiple open windows match a known url?'
       nil
     else
-      # empty
       nil
     end
   end

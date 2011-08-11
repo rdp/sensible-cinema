@@ -189,13 +189,15 @@ describe EdlParser do
   end
   
   it "should return false if two EDL's match a DVD title" do
-      FileUtils.mkdir 'test_edls'
+      FileUtils.mkdir_p 'test_edls'
       begin
+        require 'ruby-debug'
         EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should be nil
         File.binwrite('test_edls/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+#        debugger
         EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should == "test_edls/a.txt"
         File.binwrite('test_edls/b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        EdlParser.single_edit_list_matches_dvd("abcdef1234").should be nil
+        EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should be nil
       ensure
         FileUtils.rm_rf 'test_edls'
       end
