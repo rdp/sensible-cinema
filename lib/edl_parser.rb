@@ -220,7 +220,7 @@ class EdlParser
   
   def self.single_edit_list_matches_dvd edl_dir, dvd_id
     return nil unless dvd_id
-    return find_single_edit_list_matching(edl_dir){|parsed|
+    find_single_edit_list_matching(edl_dir){|parsed|
       parsed["disk_unique_id"] == dvd_id
     }
   end

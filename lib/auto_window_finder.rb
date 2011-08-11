@@ -9,23 +9,13 @@ class AutoWindowFinder
   # and it is mentioned in a file
   # it should find it
   
-  
   def self.search_for_single_url_match edl_dir
-    matching = EdlParser.all_edl_files_parsed(edl_dir).select{|filename, parsed|
-      if parsed["url"]
-        window = RAutomation::Window.new(:title => Regexp.new(parsed["url"]))
+    EdlParser.find_single_edit_list_matching(edl_dir){|parsed|
+      if url = parsed["url"]
+        window = RAutomation::Window.new(:title => Regexp.new(url)) # can this even work though? Do I need a title?
         window.exist?
       end
-    }.compact
-    p matching
-    if matching.length == 1
-      matching[0]
-    elsif matching.length > 1
-      p 'multiple open windows match a known url?'
-      nil
-    else
-      nil
-    end
+    }
   end
   
 end
