@@ -78,6 +78,7 @@ class ScreenTracker
       @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
       return
     else
+      raise if OS.mac?
       @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
     end
 

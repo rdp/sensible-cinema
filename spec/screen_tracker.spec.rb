@@ -23,7 +23,7 @@ describe ScreenTracker do
 
   SILENCE = /silence.*VLC/
 
-  def start_vlc
+  def start_vlc_windowed_doze
     unless $pid1
       assert !$pid1
       # enforce that we only have at most one running...
@@ -44,8 +44,19 @@ describe ScreenTracker do
     end
   end
 
+  def start_vlc_full_screen_mac
+    a = IO.popen "/Applications/VLC.app/Contents/MacOS/VLC --fullscreen --play-and-exit ../lib/silence.wav"
+    $pid1 = a.pid
+  end
+
   before(:all) do
-    start_vlc
+    if OS.doze?
+      start_vlc_windowed_doze
+    elsif OS.mac?
+      start_vlc_full_screen_mac
+    else
+      raise 'unsupported'
+    end
   end
 
   before do

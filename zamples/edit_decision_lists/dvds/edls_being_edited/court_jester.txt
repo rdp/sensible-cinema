@@ -16,6 +16,8 @@
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+# 1358 1452
+# 4730 - 600 -<  4837 - 600
 ],
 
 "volume_name" => "JESTER",
