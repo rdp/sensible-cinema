@@ -993,7 +993,7 @@ module SensibleSwing
       Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
       unless File.exist? 'vendor/cache/7za.exe'
         Dir.chdir('vendor/cache') do
-          print 'downloading unzipper (400K) ...'
+          print 'downloading unzipper (7zip--400K) ...'
           download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
