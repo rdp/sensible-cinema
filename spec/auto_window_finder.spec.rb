@@ -33,12 +33,12 @@ describe AutoWindowFinder do
     context "it is mentioned in a file" do
       
       before do
-        out =  "files/edls/sweetest_disc_ever.txt"
+        out =  "files/edls/auto_url.txt"
         File.write out, %!"url" => "http://www.youtube.com/watch?v=xd12hR68sWM"!
       end
       
       it "should connect the two automagically" do
-        AutoWindowFinder.search_for_url_match('files/edls').should == [MainWindow::EDL_DIR + "/sweetest_disc_ever.txt"]
+        AutoWindowFinder.search_for_url_match('files/edls').should == ["edls/auto_url.txt"]
       end
       
       it "should search automatically iff the player specifies it to"

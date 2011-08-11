@@ -1,5 +1,5 @@
-require_relative '../bin/sensible-cinema'
 require 'rautomation'
+require_relative 'edl_parser'
 
 class AutoWindowFinder
   
@@ -12,6 +12,7 @@ class AutoWindowFinder
   
   def self.search_for_url_match edl_dir
     for file in Dir[edl_dir + '/**/*']
+      next unless File.file? file
       hash = EdlParser.parse_file file
       winners = []
       if hash[:url]
