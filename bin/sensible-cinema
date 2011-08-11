@@ -1076,7 +1076,6 @@ module SensibleSwing
       end
     end
 
-
     EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
 
     def repeat_last_copy_dvd_to_hard_drive

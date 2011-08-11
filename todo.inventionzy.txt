@@ -3,8 +3,9 @@
       more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
       some blu-ray player descriptor somehow
     
+    don't even need to select a player...it just knows
     can pick specific profanities to avoid
-    both mute and blank when blanking by default...
+    both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)

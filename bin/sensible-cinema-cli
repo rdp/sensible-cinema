@@ -20,9 +20,7 @@ This file is part of Sensible Cinema.
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
-Thread.abort_on_exception=true # gah
-
-for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser', 'ocr', 'vlc_programmer']
+for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder']
   require_relative '../lib/' + file
 end
 
@@ -31,7 +29,7 @@ def go_sc(args)
   $VERBOSE = 1 if args.delete('-v')
   $DEBUG = 1 if args.delete('-d')
   if args.delete('--clear-cache')
-    OCR.clear_cache! 
+    OCR.clear_cache!
     puts 'cleared cache'
   end
   
@@ -41,9 +39,9 @@ def go_sc(args)
   
     puts <<-END
   
-    syntax: [player_description.yml] [delete_list.txt|test] [-t -v --clear-cache] (or just nothing at all--it will prompt for all things needed)
+    syntax: [player_description.yml] [delete_list.txt|test] [-t, -v, --clear-cache] (or just nothing at all--it will prompt for all things it needs)
     
-    If you specify "test" for the edit list, it will pause 4s, take a snapshot of the player, then exit.
+    If you specify "test" for the edit list, it will pause 2s, take a single snapshot of the selected player, then exit.
     Useful for debugging your screen capture of the current player.
     You can also specify -v or -t if you want to enable more verbose (chatty) output.
     
@@ -65,16 +63,21 @@ def go_sc(args)
       player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
     end
   
-    edit_decision_list	 = args.shift.to_s
+    edit_decision_list = args.shift.to_s
   
     if edit_decision_list	 == 'test'
       overlay = nil
       p 'got test...just doing screen dump'
       $VERBOSE=true # adds some extra output
     else
+      
+      # assume they want an online player, right? LODO player can tell us...
+      auto_found = AutoWindowFinder.search_for_single_url_match('files/edls').should == "files/edls/auto_url.txt"
+
+      
       if !File.exist? edit_decision_list	
         puts 'Select Edit Decision List'
-        edit_decision_list	 = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __dir__  + "/../zamples/edit_decision_lists")
+        edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __dir__  + "/../zamples/edit_decision_lists")
       end
       
       if !edit_decision_list	
