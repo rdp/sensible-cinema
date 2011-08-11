@@ -26,7 +26,7 @@ class EdlParser
   
   # better eye-ball these before letting people run them, eh? XXXX
   # but I couldn't think of any other way to parse the files tho
-  def self.parse_string string, filename, ok_categories_array
+  def self.parse_string string, filename, ok_categories_array = []
     string = '{' + string + "\n}"
     if filename
      raw = eval(string, binding, filename)
@@ -187,6 +187,26 @@ class EdlParser
       out << "%06.3f" % seconds # man that is tricky...
     end
   end
+  
+  def self.single_edit_list_matches_dvd edl_dir, dvd_id
+      matching =  Dir[edl_dir + '/**/*.txt'].select{|file|
+        begin
+          parse_file(file)["disk_unique_id"] == dvd_id
+        rescue SyntaxError => e
+          # ignore poorly formed edit lists for the auto choose phase...
+          p 'warning, unable to parse a file:' + file + " " + e.to_s
+          false
+        end
+      }
+      if matching.length == 1
+        file = matching[0]
+        p "selecting the one only matching EDL #{file} for this DVD ID: #{dvd_id}"
+        file
+      else
+        nil
+      end
+    end
+
 
 
   

@@ -27,7 +27,7 @@ describe EdlParser do
   end
   
   it "should get mutes and blank_outs" do
-   string = File.read(__dir__ + "/../zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt")
+   string = File.read(__DIR__ + "/../zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt")
    expected = 
    {
     "mutes"=>[["00:00:01", "00:00:02"], 
@@ -68,7 +68,7 @@ describe EdlParser do
   end
   
   it "should parse a real file" do
-   E.parse_file(File.expand_path(__dir__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
+   E.parse_file(File.expand_path(__DIR__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
      {"title"=>"Bob's Big Plan", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["28:13.5", "29:40", "theme song again"], ["48:46", "49:08", "theme song again"]], "blank_outs"=>[]}
   end
   
@@ -96,10 +96,6 @@ describe EdlParser do
   it "should reject misformatted files" do
     proc {E.parse_string 'mutes=>["0:33", "0:34"]', 'filename'}.should raise_error(SyntaxError)
     proc {E.parse_string '"mutes"=>["0:33", "0:34"]', 'filename'}.should_not raise_error
-  end
-  
-  it "should be able to optionally ignore settings" do
-    E.parse_string('"mutes"=>["0:33", "0:34"]', 'filename', [], true)['mutes'].should == []
   end
   
   it "should sort exactly overlapping segments" do
@@ -170,11 +166,39 @@ describe EdlParser do
   
   it "should translate ints to english timestamps well" do
     english(60).should == "01:00"
-    english(60.1).should == "01:00.1"
+    english(60.1).should == "01:00.100"
     english(3600).should == "1:00:00"
     english(3599).should == "59:59"
     english(3660).should == "1:01:00"
-    english(3660 + 0.1).should == "1:01:00.1"
+    english(3660 + 0.1).should == "1:01:00.100"
   end
+  
+  it "should auto-select a EDL if it matches a DVD's title" do
+    EdlParser.single_edit_list_matches_dvd('files/edls', "deadbeef|8b27d001").should_not be nil
+  end
+  
+  it "should not auto-select if you pass it nil" do
+    EdlParser.single_edit_list_matches_dvd('files/edls', nil).should be nil
+  end
+  
+  it "should not select a file if poorly formed" do
+    EdlParser.stub!(:parse_file) {
+      eval("a----")
+    }
+    EdlParser.single_edit_list_matches_dvd('files/edls', 'fake md5') # doesn't choke
+  end
+  
+  it "should return false if two EDL's match a DVD title" do
+      FileUtils.mkdir 'test_edls'
+      begin
+        EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should be nil
+        File.binwrite('test_edls/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should == "test_edls/a.txt"
+        File.binwrite('test_edls/b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        EdlParser.single_edit_list_matches_dvd("abcdef1234").should be nil
+      ensure
+        FileUtils.rm_rf 'test_edls'
+      end
+    end
   
 end

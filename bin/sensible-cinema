@@ -1076,24 +1076,6 @@ module SensibleSwing
       end
     end
 
-    def single_edit_list_matches_dvd dvd_id
-      matching =  Dir[EDL_DIR + '/**/*.txt'].select{|file|
-        begin
-          parse_edl(file)["disk_unique_id"] == dvd_id
-        rescue SyntaxError => e
-          # ignore poorly formed edit lists for the auto choose phase...
-          p 'warning, unable to parse a file:' + file + " " + e.to_s
-          false
-        end
-      }
-      if matching.length == 1
-        file = matching[0]
-        p "selecting the one only matching EDL #{file} for this DVD ID: #{dvd_id}"
-        file
-      else
-        nil
-      end
-    end
 
     EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
 
@@ -1157,7 +1139,7 @@ module SensibleSwing
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
       
       unless @_edit_list_path # cache file selection...
-        edit_list_path = single_edit_list_matches_dvd(dvd_id)
+        edit_list_path = EdlParser.single_edit_list_matches_dvd(EDL_DIR, dvd_id)
         if !edit_list_path && force_choose_edl_file_if_no_easy_match
           edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
           raise 'cancelled choosing an EDL' unless edit_list_path

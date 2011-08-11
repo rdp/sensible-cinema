@@ -31,18 +31,10 @@ module SensibleSwing
 
     Test_DVD_ID = 'deadbeef|8b27d001'
     
-    it "should auto-select a EDL if it matches a DVD's title" do
-      MainWindow.new.single_edit_list_matches_dvd(Test_DVD_ID).should_not be nil
-    end
-
-    it "should not auto-select if you pass it nil" do
-      MainWindow.new.single_edit_list_matches_dvd(nil).should be nil
-    end
-    
     it "should not die if you choose a poorly formed edl (should warn)" do
       time_through = 0
-      @subject.stub!(:single_edit_list_matches_dvd) {
-        'fake filename doesnt matter because we fake its being parsed'
+      EdlParser.stub!(:single_edit_list_matches_dvd) { |dir, md5|
+        'fake filename doesnt matter what we return here because we fake its parsing later'
       }
       
       @subject.stub!(:parse_edl) {
@@ -75,13 +67,6 @@ module SensibleSwing
       @show_blocking_message_dialog_last_arg.should be nil
     end
     
-    it "should not select a file if poorly formed" do
-      @subject.stub!(:parse_edl) {
-        eval("a----")
-      }
-      @subject.single_edit_list_matches_dvd('fake md5') # doesn't die
-    end
-    
     def with_clean_edl_dir_as this
       FileUtils.rm_rf 'temp'
       Dir.mkdir 'temp'
@@ -94,18 +79,6 @@ module SensibleSwing
       end
     end
     
-    it "should prompt if two EDL's match a DVD title" do
-      MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
-      with_clean_edl_dir_as 'temp' do
-        MainWindow.new.single_edit_list_matches_dvd("BOBS_BIG_PLAN").should be nil
-        Dir.chdir 'temp' do
-          File.binwrite('a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-          File.binwrite('b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        end
-        MainWindow.new.single_edit_list_matches_dvd("abcdef1234").should be nil
-      end
-    end
-
     it "should modify path to have mencoder available" do
       RubyWhich.new.which('mencoder').length.should be > 0
     end
@@ -552,7 +525,7 @@ module SensibleSwing
       end
    end
   
-   it "should be able to parse an srt for ya" do
+  it "should be able to parse an srt for ya" do
      @subject.stub!(:new_existing_file_selector_and_select_file) {
        'spec/dragon.srt'
      }
@@ -560,12 +533,9 @@ module SensibleSwing
      FileUtils.rm_rf file
      click_button(:@parse_srt)
      assert File.read(file).contain? "deitys"
-   end
+  end
   
   it "should have a created play unedited smplayer button" do
-    @subject.stub(:single_edit_list_matches_dvd) {
-      nil
-    }
     click_button(:@play_smplayer)
   end
   

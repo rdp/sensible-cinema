@@ -10,13 +10,13 @@ class AutoWindowFinder
   # it should find it
   
   
-  def self.search_for_url_match edl_dir
+  def self.search_for_single_url_match edl_dir
+    winners = []
     for file in Dir[edl_dir + '/**/*']
       next unless File.file? file
       hash = EdlParser.parse_file file
-      winners = []
-      if hash[:url]
-        window = RAutomation::Window.new(:title => Regexp.new(hash[:url]))
+      if hash["url"]
+        window = RAutomation::Window.new(:title => Regexp.new(hash["url"]))
         if window.exist?
           winners << file
         end
@@ -24,7 +24,10 @@ class AutoWindowFinder
     end
     if winners.length == 1
       winners[0]
+    elsif winners.length > 1
+      nil
     else
+      # empty
       nil
     end
   end
