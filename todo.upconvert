@@ -28,21 +28,19 @@ do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&
     better benchmarker (windows vs. desktop, just show reverse)
     the "drag to select window" seter-zy-upperzy
 
+ is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
 == OS dshow screen tracker ==
 
  It probably needs to send out input "only if it's changed" I'm thinkin..." for my purposes anyway...
  VLC compatible'ify it..
- can limit it to only 5 fps [?]
-  @ avisynth wiki: max fps
-  is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
+  threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
+    more efficient by skipping an extra copy (we're already pretty fast though...)
+  ideal: dual-threaded, and when it comes by you say "ok, use this one without a copy" LOL
  
- jruby "drag to select"
 
  === some day ===
     bounty multi-thread scaling, iff it seems helpful-er for quad core.
-    threading the input [?] (a bit complicated because of the "only if it's changed" mantra)
     can I live with aero wasn't bitblt getting like 800fps *with* aero?
-    more efficient by skipping an extra copy (we're already pretty fast though...)
   
 == never ==
 
