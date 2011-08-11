@@ -1,3 +1,6 @@
+require_relative '../bin/sensible-cinema'
+require 'rautomation'
+
 class AutoWindowFinder
   
   # when they select a file, it contains a...url say...
@@ -7,6 +10,22 @@ class AutoWindowFinder
   # it should find it
   
   
-  
+  def self.search_for_url_match edl_dir
+    for file in Dir[edl_dir + '/**/*']
+      hash = EdlParser.parse_file file
+      winners = []
+      if hash[:url]
+        window = RAutomation::Window.new(:title => Regexp.new(hash[:url]))
+        if window.exist?
+          winners << file
+        end
+      end
+    end
+    if winners.length == 1
+      winners[0]
+    else
+      nil
+    end
+  end
   
 end
