@@ -8,7 +8,8 @@ Added ability to "auto-select" player based on what is running, browser windows 
 Added the above, without file download (earlier commit could do them both however).
 
 Added a demo of VLC doing "transparent" and "opaque" overlays on another running image, based on timing.
-
+NB That I already have shown a demo of adjusting volume and/or overlaying new audio on top of existing
+media (a la rifftrax) previously.
 
 == 0.25.1 ==
 

@@ -17,13 +17,15 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-   add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
-   can handle multiple dvdid's et al
-   VLC "insert foreign missing scene" supah easy demo (off DVD)
-   it can filter out specific profanities even, too :P
+   can play other *video* on top. (transparent video overlay?) avisynth WITH desktop LOL :)
   
-   can overlay on online too
+  can handle multiple dvdid's et al
+  add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
+   it can filter out specific profanities even, too :P
+  maybes:
+   can overlay over online too
    control VLC RC to overlay a logo dynamically
+   can control volume *and* play other audio
 
 == yes do ordered in conjunction with the above probably ==
   release at some point...Oliver? facebook? (one at a time...)
