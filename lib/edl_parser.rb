@@ -26,7 +26,11 @@ class EdlParser
 
   # returns {"mutes" => [["00:00", "00:00", string1, string2], ...], "blank_outs" -> [...], "url" => ...}  
   def self.parse_file filename
-    parse_string File.read(filename), filename, [] # LODO categories stuff out...
+    output = parse_string File.read(filename), filename, []
+    if output["take_from_relative_file"]
+      #output.merge parse_string(F
+    end
+    output
   end
   
   private
