@@ -172,11 +172,11 @@ class ScreenTracker
     time_since_last_screen_change = Time.now
     loop {
       # save away the current time to try and be most accurate...
-      time_before_scan = Time.now
+      time_before_current_scan = Time.now
       current = get_bmp
       if current != original
         if @digits
-          got = attempt_to_get_time_from_screen time_before_scan
+          got = attempt_to_get_time_from_screen time_before_current_scan
           if @previously_displayed_warning && got
             # reassure user :)
             p 'tracking it successfully again' 
@@ -184,22 +184,24 @@ class ScreenTracker
           end
           return got
         else
-          puts 'screen time change only detected... [unexpected]' # unit tests do this still
+          puts 'screen time change only detected... [unexpected]' # unit tests do this still <sigh>
           return
         end
       else
-        # no screen change detected ...
-        sleep 0.02
         if(Time.now - time_since_last_screen_change > 2.0)
-          # display a warning
-          p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet, or paused?] ' + @hwnd.to_s
-          p Win32::Screenshot::Util.dimensions_for(hwnd)
-          @previously_displayed_warning = true
+          got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
+          if got_implies_able_to_still_ocr
+            return got_implies_able_to_still_ocr
+          else
+            p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] ' + @hwnd.to_s
+            @previously_displayed_warning = true
+            # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
+            get_hwnd_loop_forever
+          end
           time_since_last_screen_change = Time.now
-          # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
-          get_hwnd_loop_forever
         end
       end
+      sleep 0.02
     }
   end
   

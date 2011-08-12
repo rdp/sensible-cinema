@@ -212,7 +212,6 @@ class EdlParser
   # returns single matching filename
   def self.find_single_edit_list_matching use_all = false
     matching = all_edl_files_parsed(use_all).map{|filename, parsed|
-      p 'processing' + filename
       yield(parsed) ? filename : nil
     }.compact
     if matching.length == 1

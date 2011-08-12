@@ -73,15 +73,13 @@ def go_sc(args)
       # accept it from the command line
     else
       # assume they want an online player, right? LODO player can tell us...
-      require 'ruby-debug'
-      debugger
-      #EdlParser::EDL_DIR.replace_all! "temp"
       auto_found = AutoWindowFinder.search_for_single_url_match
-      unless auto_found
-        puts 'Select Edit Decision List'
-        edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
-      else
+      if auto_found
         p 'auto-discovered open window for EDL, using it ' + auto_found
+        edit_decision_list = auto_found
+      else
+        puts 'Select Edit Decision List to use'
+        edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
       end
       
       if !edit_decision_list	
