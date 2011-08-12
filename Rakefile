@@ -11,7 +11,7 @@ Jeweler::Tasks.new do |s|
     s.authors = ["Roger Pack"]
     s.add_dependency 'os', '>= 0.9.4'
     s.add_dependency 'sane', '>= 0.24.2'
-    s.add_dependency 'rdp-win32screenshot', '>= 0.0.8'
+    s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
     s.add_dependency 'rautomation', '> 0.6.3'
