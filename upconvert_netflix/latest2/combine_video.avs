@@ -5,7 +5,7 @@
 #Video1 = DirectShowSource("push2.GRF", fps=35, audio=False, framecount=1000000) # fps appears to be a "max" fps
 Video1 = DirectShowSource("g:\Video\Sintel_NTSC\title01a.ts", fps=25)
 Video2 = DirectShowSource("push2.GRF", fps=35, audio=False, framecount=1000000) # fps appears to be a "max" fps
-Return Overlay(Video1, Video2)
+Return Overlay(Video1, Video2, 100, 100,opacity=0.5)
 
 # 
 # these are the size of your monitor that the output is displayed on.  Unless it lags too much, then try experimenting with smaller values
