@@ -7,7 +7,6 @@
     
 
     can overlay over online films too
-    ratings "if you do this, then it's this, else it's this" (compound EDL uh guess)
     control VLC RC to overlay a logo dynamically
     can control volume *and* play other audio
     can pick specific profanities to avoid
