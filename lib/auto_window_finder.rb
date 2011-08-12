@@ -14,7 +14,12 @@ class AutoWindowFinder
       if url = parsed["url"]
         window = RAutomation::Window.new(:title => regexp)
         if window.exist? 
-          window.text =~ Regexp.new(Regexp.escape url.gsub("http://", ""))
+          if window.text =~ Regexp.new(Regexp.escape url.gsub(/http(s|):\/\//, ""))
+            p 'got match' + url
+            true
+          else
+            false
+          end
         end
       end
     }
@@ -24,7 +29,7 @@ class AutoWindowFinder
     for filename in Dir[player_root_dir + '/*/*.txt']
       settings = YAML.load_file filename
       if regex = settings["window_title"] # assume regex :)
-        p 'searching for', regex
+        p 'searching for player regex', regex
         if search_for_single_url_match regex # applies the regex X url
           return filename
         end
