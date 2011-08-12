@@ -174,30 +174,33 @@ describe EdlParser do
   end
   
   it "should auto-select a EDL if it matches a DVD's title" do
-    EdlParser.single_edit_list_matches_dvd('files/edls', "deadbeef|8b27d001").should_not be nil
+    EdlParser.single_edit_list_matches_dvd("deadbeef|8b27d001").should_not be nil
   end
   
   it "should not auto-select if you pass it nil" do
-    EdlParser.single_edit_list_matches_dvd('files/edls', nil).should be nil
+    EdlParser.single_edit_list_matches_dvd(nil).should be nil
   end
   
+
+  EdlParser::EDL_DIR.gsub!(/^.*$/, 'files/edls')
+
   it "should not select a file if poorly formed" do
     EdlParser.stub!(:parse_file) {
       eval("a----")
     }
-    EdlParser.single_edit_list_matches_dvd('files/edls', 'fake md5') # doesn't choke
+    EdlParser.single_edit_list_matches_dvd('fake md5') # doesn't choke
   end
   
   it "should return false if two EDL's match a DVD title" do
-      FileUtils.mkdir_p 'test_edls'
       begin
-        EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should be nil
-        File.binwrite('test_edls/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should == "test_edls/a.txt"
-        File.binwrite('test_edls/b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        EdlParser.single_edit_list_matches_dvd('test_edls', "abcdef1234").should be nil
+        EdlParser.single_edit_list_matches_dvd("abcdef1234").should be nil
+        File.binwrite('files/edls/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        EdlParser.single_edit_list_matches_dvd("abcdef1234").should == "files/edls/a.txt"
+        File.binwrite('files/edls//b.txt', "\"disk_unique_id\" => \"abcdef1234\"")
+        EdlParser.single_edit_list_matches_dvd("abcdef1234").should be nil
       ensure
-        FileUtils.rm_rf 'test_edls'
+        FileUtils.rm_rf 'files/edls/a.txt'
+        FileUtils.rm_rf 'files/edls/b.txt'
       end
     end
   
