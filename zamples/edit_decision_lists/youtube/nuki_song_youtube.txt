@@ -9,6 +9,6 @@
 ],
 
 "title" => "Nuki Song",
-"rating_with_this_edl" => "PG-6"
+"rating_with_this_edl" => {"violence" => "PG", "language" => "PG-13"},
 "source" => "youtube",
 "url" => "http://www.youtube.com/watch?v=xd12hR68sWM"
