@@ -2,7 +2,8 @@
 
 It tracks better now if the current OCR tracked player is paused, reverting back to its current timestamp.
 Added ability to "auto-select" based on the url of currently open browsers, the right EDL.
-Added ability to "auto-download" an EDL based on the current movie playing in the browser.
+Added ability to "auto-download" an EDL based on the current movie playing in the browser.  Video also shows
+retraining when window changes.
 
 
 == 0.25.1 ==
