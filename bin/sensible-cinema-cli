@@ -56,16 +56,16 @@ def go_sc(args)
   
   players_root_dir = __DIR__ + "/../zamples/players"
   # allow for command line filenames
-    _dbg
   player_description = args.shift
   unless player_description
     player_description = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
     if player_description
       p 'auto selected player ' + player_description 
     else
-      p 'non match'
+      player_description = ''
     end
   end
+  
   if !File.exist?(player_description)    
     puts 'Please Select Computer Player'
     player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", players_root_dir)

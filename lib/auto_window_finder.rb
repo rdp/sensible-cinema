@@ -24,6 +24,7 @@ class AutoWindowFinder
     for filename in Dir[player_root_dir + '/*/*.txt']
       settings = YAML.load_file filename
       if regex = settings["window_title"] # assume regex :)
+        p 'searching for', regex
         if search_for_single_url_match regex # applies the regex X url
           return filename
         end
