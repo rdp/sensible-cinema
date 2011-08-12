@@ -6,6 +6,7 @@ Added ability to "auto-download" an EDL based on the current movie playing in th
 retraining when window changes.
 Added ability to "auto-select" player based on what is running, browser windows up, crossed with movies running.
 Added the above, without file download (earlier commit could do them both however).
+Note that this also means that it can scan over several player descriptions to "pick the right one" automatically.
 
 Added a demo of VLC doing "transparent" and "opaque" overlays on another running image, based on timing.
 NB That I already have shown a demo of adjusting volume and/or overlaying new audio on top of existing

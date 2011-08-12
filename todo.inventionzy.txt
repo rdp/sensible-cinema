@@ -1,37 +1,37 @@
   === patentzy yes actually do vaguely ordered ===
+    can handle multiple dvdid's et al (same EDL)
+    make it suck in large list of EDL's from imdb at build time
     blu-ray OCR
       more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
       some blu-ray player descriptor somehow
     
-    don't even need to select a player...it just knows
+
+    can overlay over online films too
+    control VLC RC to overlay a logo dynamically
+    can control volume *and* play other audio
     can pick specific profanities to avoid
-    both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
       or even just suck in any web file, for starters
-    make it so it can "auto-download" based on DVD
     space -> advance from pause until next edit item?
     add fine grained "new ratings" to some demo EDL
-    infer edl from url for netflix
     amazon player descriptor, just in case ;P
     can jerk mouse only every so often (cheap would be to just arbitrarily have it from x to y, demo that)
-    can scan several player descriptors to "pick the right one"
+    can scan several player descriptors to "pick the right one" (kind of already showed this one)
     edited streamer screencast demo (the rumor guy demo, like zediva)
-    incorporate the DL translator from the BYU-I fella
+    incorporate the EDL translator from the BYU-I fella
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
-    can "control mouse" to drag it to change location
+    can "control mouse" to drag it to change location (ex: "move down 10 pixels at beginning of movie" LOL)
     beep at them/warn when not tracking [?]
       default on...I think.
     can jerk mouse more often closer to failure sections...
     can pull one from imdb at all, video "show it creates a file"
-    make it suck in large list of EDL's from imdb at build time
     C player: minimize instead of skip :P
     C player: don't mute, just almost mute LOL or almost mute and static-ify
     can suck it in "in realtime" from online, and parse it, for demo purposes
     a UI to select categories, works
-    4 point editor
     edited blu ray movie playback screencast, as that's apparently not in the patent...
     don't use timecodes, use "% of the movie" and "total length" perhaps?
     look at their patents for other ideas? [all patents, nissim patents?]
@@ -42,11 +42,9 @@
       phase 2: I can accomodate for pauses, too.
       phase 3: I can re-train based on events of stoppage
       phase 4: I can constantly poll and react
-    post a demo of it streaming to a console device
+    post video demo of it streaming to a console device
     categories filterable by "level" "profanity level 2 and below is ok for me and my kids"
     maybe could just "play from x to y" [no exclude info?] 
     stage one: query, auto-download when they hit a netflix movie of some type
-      stage two: chrome plugin for the same
-    editor that can use OCR, too :P
-    can insert deleted scenes et al [even external scenes :P]
-    can have user submittable bookmarks, kind of like how espn3 does their playbacks...hmm...
+      stage two: chrome plugin for the same :)
+    can insert deleted scenes et al [even external scenes :P] (already showed it)

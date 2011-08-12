@@ -17,18 +17,13 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  can handle multiple dvdid's et al (same EDL)
   add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
   it can filter out specific profanities even, too :P
-  maybes:
-   can overlay over online too
-   control VLC RC to overlay a logo dynamically
-   can control volume *and* play other audio
 
 == yes do ordered in conjunction with the above probably ==
-  setpriority for several :)
 
 == yes do, un-ordered currently, from the various future release options ==
+  both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
   snapshots of Sintel "normal", then deploy the various comparison pics
   lightning strike from various outlets...
   release at some point...Oliver? facebook? (one at a time...)
