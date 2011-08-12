@@ -42,7 +42,7 @@ describe AutoWindowFinder do
       end
       
       it "should connect the two automagically" do
-        AutoWindowFinder.search_for_single_url_match().should == "files/edls/auto_url.txt"
+        AutoWindowFinder.search_for_single_url_match().should == "files/edls/../edls/auto_url.txt"
       end
       
       it "should search automatically iff the player specifies it to"

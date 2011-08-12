@@ -47,7 +47,7 @@ def go_sc(args)
     
     END
       
-    for file in Dir[__dir__ + '../zamples/mute*/*']
+    for file in Dir[__DIR__ + '../zamples/mute*/*']
        puts "\n", "Example file:", file + "\n\n", File.read(file)
     end
     
@@ -60,7 +60,7 @@ def go_sc(args)
     player_description = args.shift.to_s
     if !File.exist?(player_description)    
       puts 'Please Select Computer Player'
-      player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __dir__ + "/../zamples/players")
+      player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __DIR__ + "/../zamples/players")
     end
   
     edit_decision_list = args.shift.to_s
@@ -69,15 +69,19 @@ def go_sc(args)
       overlay = nil
       p 'got test...just doing screen dump'
       $VERBOSE=true # adds some extra output
+    elsif File.exist? edit_decision_list
+      # accept it from the command line
     else
-      
       # assume they want an online player, right? LODO player can tell us...
-      auto_found = AutoWindowFinder.search_for_single_url_match('files/edls').should == "files/edls/auto_url.txt"
-
-      
-      if !File.exist? edit_decision_list	
+      require 'ruby-debug'
+      debugger
+      #EdlParser::EDL_DIR.replace_all! "temp"
+      auto_found = AutoWindowFinder.search_for_single_url_match
+      unless auto_found
         puts 'Select Edit Decision List'
-        edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __dir__  + "/../zamples/edit_decision_lists")
+        edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
+      else
+        p 'auto-discovered open window for EDL, using it ' + auto_found
       end
       
       if !edit_decision_list	

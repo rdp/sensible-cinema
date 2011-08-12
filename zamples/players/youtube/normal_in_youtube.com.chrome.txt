@@ -20,3 +20,4 @@ digits:
       - 250
       - 200
 does_not_need_mouse_movement: true
+# TODO window_title: ""

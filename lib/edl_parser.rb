@@ -18,18 +18,19 @@ This file is part of Sensible Cinema.
 class EdlParser
 
   EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds")
+  
   if File::ALT_SEPARATOR
     EDL_DIR.gsub! File::SEPARATOR, File::ALT_SEPARATOR # to_filename...
   end
 
-  # returns {"mutes" => [["00:00", "00:00", string1, string2], ...], "blank_outs" -> [...]}  
+  # returns {"mutes" => [["00:00", "00:00", string1, string2], ...], "blank_outs" -> [...], "url" => ...}  
   def self.parse_file filename
     parse_string File.read(filename), filename, [] # LODO categories stuff out...
   end
   
   private
   
-  # better eye-ball these before letting people run them, eh? XXXX
+  # better eye-ball these before letting people run them, eh? TODO
   # but I couldn't think of any other way to parse the files tho
   def self.parse_string string, filename, ok_categories_array = []
     string = '{' + string + "\n}"
@@ -193,8 +194,10 @@ class EdlParser
     end
   end
   
-  def self.all_edl_files_parsed
-    Dir[EDL_DIR + '/**/*.txt'].map{|filename|
+  def self.all_edl_files_parsed use_all_not_just_dvds
+    dir = EDL_DIR
+    dir += "/.." if use_all_not_just_dvds
+    Dir[dir + '/**/*.txt'].map{|filename|
         begin
           parsed = parse_file(filename)
           [filename, parsed]
@@ -207,8 +210,9 @@ class EdlParser
   end
   
   # returns single matching filename
-  def self.find_single_edit_list_matching
-    matching = all_edl_files_parsed.map{|filename, parsed|
+  def self.find_single_edit_list_matching use_all = false
+    matching = all_edl_files_parsed(use_all).map{|filename, parsed|
+      p 'processing' + filename
       yield(parsed) ? filename : nil
     }.compact
     if matching.length == 1
