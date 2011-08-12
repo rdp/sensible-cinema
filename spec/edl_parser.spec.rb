@@ -203,5 +203,15 @@ describe EdlParser do
         FileUtils.rm_rf 'files/edls/b.txt'
       end
     end
+
+
+   it "should merge two files if one specifies another" do
+     begin
+       File.binwrite('files/edls/a.txt', %!"add_this_relative_file" => "b.txt"!)
+       File.binwrite('files/edls/b.txt', %!!)
+       EdlParser.parse_file('files/edls/a.txt').should == {"add_this_relative_file" => "b.txt", "mutes" => [], "blank_outs" => []}
+     ensure
+     end
+   end
   
 end
