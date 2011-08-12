@@ -5,7 +5,8 @@ Added ability to "auto-select" based on the url of currently open browsers, the 
 Added ability to "auto-download" an EDL based on the current movie playing in the browser.  Video also shows
 retraining when window changes.
 Added ability to "auto-select" player based on what is running, browser windows up, crossed with movies running.
-Added the above, without file download.
+Added the above, without file download (earlier commit could do them both however).
+
 
 == 0.25.1 ==
 
@@ -164,7 +165,7 @@ Also fixed up some unit tests.
 
 OS X compatibility.  Though not heavily used it might work.
 
-Subtitle parser/scanner: now it can scan for "complete" words (e.g. hello is no longer considered a profanity)
+Subtitle parser/scanner: now it can scan for "complete" and "incomplete" words (e.g. hello is no longer considered a profanity)
 even if they complete words are at the end of lines, middle, beginning, or the entire line.  With unit tests.
 
 Added a "play unedited with smplayer/mplayer" buttons that work better now.  These are useful for

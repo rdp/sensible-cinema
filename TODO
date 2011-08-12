@@ -17,13 +17,14 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-   auto-select player too :)
-   can handle multiple dvdid's et al
-   VLC "insert foreign missing scene" supah easy demo
    overlay section with image (mplayer? vlc supah easy?)
    add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
+
+   can handle multiple dvdid's et al
+   VLC "insert foreign missing scene" supah easy demo (off DVD)
    it can filter out specific profanities even, too :P
-  @changelog: super profanity finder LOL
+  
+   can overlay on online too
 
 == yes do ordered in conjunction with the above probably ==
   release at some point...Oliver? facebook? (one at a time...)
