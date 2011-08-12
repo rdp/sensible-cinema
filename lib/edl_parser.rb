@@ -30,7 +30,6 @@ class EdlParser
     if relative = output["take_from_relative_file"]
       new_filename = File.dirname(filename) + '/' + relative
       new_input = parse_file new_filename
-p 'got new input', new_input, new_filename
       output.merge! new_input
     end
     output
