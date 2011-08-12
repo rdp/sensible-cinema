@@ -17,6 +17,11 @@ This file is part of Sensible Cinema.
 =end
 class EdlParser
 
+  EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds")
+  if File::ALT_SEPARATOR
+    EDL_DIR.gsub! File::SEPARATOR, File::ALT_SEPARATOR # to_filename...
+  end
+
   # returns {"mutes" => [["00:00", "00:00", string1, string2], ...], "blank_outs" -> [...]}  
   def self.parse_file filename
     parse_string File.read(filename), filename, [] # LODO categories stuff out...
@@ -188,8 +193,8 @@ class EdlParser
     end
   end
   
-  def self.all_edl_files_parsed edl_dir
-    Dir[edl_dir + '/**/*.txt'].map{|filename|
+  def self.all_edl_files_parsed
+    Dir[EDL_DIR + '/**/*.txt'].map{|filename|
         begin
           parsed = parse_file(filename)
           [filename, parsed]
@@ -202,8 +207,8 @@ class EdlParser
   end
   
   # returns single matching filename
-  def self.find_single_edit_list_matching edl_dir
-    matching = all_edl_files_parsed(edl_dir).map{|filename, parsed|
+  def self.find_single_edit_list_matching
+    matching = all_edl_files_parsed.map{|filename, parsed|
       yield(parsed) ? filename : nil
     }.compact
     if matching.length == 1
@@ -218,9 +223,9 @@ class EdlParser
     end
   end
   
-  def self.single_edit_list_matches_dvd edl_dir, dvd_id
+  def self.single_edit_list_matches_dvd dvd_id
     return nil unless dvd_id
-    find_single_edit_list_matching(edl_dir){|parsed|
+    find_single_edit_list_matching {|parsed|
       parsed["disk_unique_id"] == dvd_id
     }
   end

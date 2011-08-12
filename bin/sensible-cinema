@@ -45,12 +45,13 @@ end
 require_relative '../lib/swing_helpers'
 
 # attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :EdlParser, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
-# a few I'll need...
+# a few I'll always need eventually...
 require_relative '../lib/storage'
+require_relative '../lib/edl_parser'
 require 'tmpdir'
 require 'whichr'
 require 'os'
@@ -345,7 +346,7 @@ module SensibleSwing
       
       @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EDL_DIR)
+        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EdlParser::EDL_DIR)
         open_file_to_edit_it filename
       }
       
@@ -566,7 +567,7 @@ module SensibleSwing
     
     def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
       filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or video_ts/anything.ext)")
-      edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EDL_DIR)
+      edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EdlParser::EDL_DIR)
       assert_ownership_dialog
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
@@ -656,7 +657,6 @@ module SensibleSwing
 
     def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer, show_subs
       unless File.exist?(File.expand_path(play_this))
-        #_dbg
         raise play_this + ' non existing?' # till these go away in mac :)
       end
 
@@ -782,7 +782,7 @@ module SensibleSwing
 # "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  Additive currently.  12345.6 ok. In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
         EOL
       # TODO auto-ify above, move docs to a file in documentation.
-      filename = EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
+      filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
       open_file_to_edit_it filename
@@ -854,6 +854,7 @@ module SensibleSwing
     if OS.doze? # avoid spaces :)
       EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir + '/mplayer.temp.edl')
     else
+      raise if Dir.tmpdir =~ / / # that would be odd...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
@@ -1076,8 +1077,6 @@ module SensibleSwing
       end
     end
 
-    EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds").to_filename
-
     def repeat_last_copy_dvd_to_hard_drive
       generate_and_run_bat_file *LocalStorage['last_params']
     end
@@ -1138,9 +1137,9 @@ module SensibleSwing
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
       
       unless @_edit_list_path # cache file selection...
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(EDL_DIR, dvd_id)
+        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if !edit_list_path && force_choose_edl_file_if_no_easy_match
-          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EDL_DIR)
+          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EdlParser::EDL_DIR)
           raise 'cancelled choosing an EDL' unless edit_list_path
         end
         @_edit_list_path = edit_list_path
@@ -1205,6 +1204,7 @@ module SensibleSwing
       
       descriptors = parse_edl(edit_list_path)
       if watch_unedited
+        # reset them
         descriptors['mutes'] = descriptors['blank_outs'] = []
       end
       
@@ -1235,7 +1235,13 @@ module SensibleSwing
         LocalStorage['end_time'] = end_time
       end
       dvd_friendly_name = descriptors['name']
-      raise 'no dvd name in EDL?' unless dvd_friendly_name
+      unless dvd_friendly_name
+        _dbg
+              drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
+
+        descriptors = parse_edl(edit_list_path)
+        raise 'no dvd name in EDL?' 
+      end
       
       dvd_title_track = get_title_track(descriptors)
       if dvd_id == NonDvd

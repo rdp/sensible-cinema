@@ -20,14 +20,18 @@ require_relative '../lib/auto_window_finder'
 
 describe AutoWindowFinder do
 
+  EdlParser::EDL_DIR.gsub!(/^.*$/, 'files/edls')
+  
   context "a browser window is open" do
     before do
       fake_window = ''
       def fake_window.exist?
         true
       end
+      def fake_window.text
+        "www.youtube.com/watch?v=xd12hR68sWM"
+      end
       RAutomation::Window.stub!(:new).and_return(fake_window)
-      
     end
     
     context "it is mentioned in a file" do
@@ -38,7 +42,7 @@ describe AutoWindowFinder do
       end
       
       it "should connect the two automagically" do
-        AutoWindowFinder.search_for_single_url_match('files/edls').should == "files/edls/auto_url.txt"
+        AutoWindowFinder.search_for_single_url_match().should == "files/edls/auto_url.txt"
       end
       
       it "should search automatically iff the player specifies it to"

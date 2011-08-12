@@ -20,18 +20,18 @@ require File.expand_path(File.dirname(__FILE__) + '/common')
 
 Dir.chdir '..' # need to run in the main folder, common moves us to spec...
 load 'bin/sensible-cinema'
+#require_relative 'lib/edl_parser' # to avoid having require_relative collide with autoload <sigh>
 
 module SensibleSwing
   describe MainWindow do
-    MainWindow::EDL_DIR.gsub!(/^.*$/, 'spec/files/edls')
-
+    EdlParser::EDL_DIR.gsub!(/^.*$/, 'spec/files/edls')
     it "should be able to start up" do
       MainWindow.new.dispose# doesn't crash :)
     end
 
     Test_DVD_ID = 'deadbeef|8b27d001'
     
-    it "should not die if you choose a poorly formed edl (should warn)" do
+    it "should not die if you file select a poorly formed edl (should warn though)" do
       time_through = 0
       EdlParser.stub!(:single_edit_list_matches_dvd) { |dir, md5|
         'fake filename doesnt matter what we return here because we fake its parsing later'
@@ -70,12 +70,12 @@ module SensibleSwing
     def with_clean_edl_dir_as this
       FileUtils.rm_rf 'temp'
       Dir.mkdir 'temp'
-      old_edl = MainWindow::EDL_DIR.dup
-      MainWindow::EDL_DIR.sub!(/.*/, 'temp')
+      old_edl = EdlParser::EDL_DIR.dup
+      EdlParser::EDL_DIR.sub!(/.*/, 'temp')
       begin
         yield
       ensure
-        MainWindow::EDL_DIR.sub!(/.*/, old_edl)
+        EdlParser::EDL_DIR.sub!(/.*/, old_edl)
       end
     end
     
@@ -332,7 +332,7 @@ module SensibleSwing
     end
     
     it "should create a new file for ya" do
-      out = MainWindow::EDL_DIR + "/edls_being_edited/sweetest_disc_ever.txt"
+      out = EdlParser::EDL_DIR + "/edls_being_edited/sweetest_disc_ever.txt"
       File.exist?( out ).should be_false
       @subject.stub!(:get_user_input) {'sweetest disc ever'}
       @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click

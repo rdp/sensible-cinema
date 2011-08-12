@@ -9,11 +9,11 @@ class AutoWindowFinder
   # and it is mentioned in a file
   # it should find it
   
-  def self.search_for_single_url_match edl_dir
-    EdlParser.find_single_edit_list_matching(edl_dir){|parsed|
+  def self.search_for_single_url_match
+    EdlParser.find_single_edit_list_matching {|parsed|
       if url = parsed["url"]
-        window = RAutomation::Window.new(:title => Regexp.new(url)) # can this even work though? Do I need a title?
-        window.exist?
+        window = RAutomation::Window.new(:title => /Chrome/) # can this even work though? Do I need a title?
+        window.exist? && window.text =~ Regexp.new(Regexp.escape url.gsub("http://", ""))
       end
     }
   end
