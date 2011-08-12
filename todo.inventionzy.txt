@@ -9,6 +9,7 @@
     can overlay over online films too
     control VLC RC to overlay a logo dynamically
     can control volume *and* play other audio
+    can add to to supplement EDL + EDL timestamps
     can pick specific profanities to avoid
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 

@@ -208,11 +208,13 @@ describe EdlParser do
    it "should merge two files if one specifies another" do
      begin
        File.binwrite('files/edls/a.txt', %!"take_from_relative_file" => "b.txt"!)
-       File.binwrite('files/edls/b.txt', %!!)
+       File.binwrite('files/edls/b.txt', %!!) # empty to start out with ...nothing up my sleeve...
        EdlParser.parse_file('files/edls/a.txt').should == {"take_from_relative_file" => "b.txt", "mutes" => [], "blank_outs" => []}
-       File.binwrite('files/edls/b.txt', %!"blanks_outs" => ["00:01", "00:03", "violence"], "yo" => "33"!)
-       EdlParser.parse_file('files/edls/a.txt').should == {"take_from_relative_file" => "b.txt", "mutes" => [], "blank_outs" => ["00:01", "00:03"], "yo" => "33"}
+       File.binwrite('files/edls/b.txt', %!"blank_outs" => ["00:01", "00:03", "violence"], "yo" => "33"!)
+       EdlParser.parse_file('files/edls/a.txt').should == {"take_from_relative_file" => "b.txt", "mutes" => [], "blank_outs" => [["00:01", "00:03", "violence"]], "yo" => "33"}
      ensure
+       FileUtils.rm_rf 'files/edls/a.txt'
+       FileUtils.rm_rf 'files/edls/b.txt'
      end
    end
   
