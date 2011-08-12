@@ -1,8 +1,9 @@
 == roadmap [for just tasks, see below though] == 
 
-  release: cheap/mediumcheap inventionzy
+  netflix instant for OS X
   release: C EDL
   compare netflix/blu-ray timings et al
+  upconvert DVD/netflix
   
   === loose ordering/eventually ===
     linearize [?] hmm...
@@ -20,22 +21,25 @@
   it can filter out specific profanities even, too :P
 
 == yes do ordered in conjunction with the above probably ==
+  finish court jester
 
 == yes do, un-ordered currently, from the various future release options ==
+  test court jester
   both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
-  cars EDL x2
-  snapshots of Sintel "normal", then deploy the various comparison pics
   lightning strike from various outlets...
   release at some point...Oliver? facebook? (one at a time...)
   research VOB
-    timesplits?
+    still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
     netflix quality upconverter
-  netflix instant for OS X
+    have people test it
+    me test it
+      1x, 2x Sintel
+      snapshots of Sintel "normal", then deploy the various comparison pics
   add new open button "edit the one for current DVD"
   the open button should open in the "editing" EDL dir.
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
-  split out the "dependency" code from main.
+  split out the "dependency" code
   try buy edit lists from all x,y,z [?] offer them money LOL
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
@@ -55,36 +59,31 @@
     @XBMC: your stuff is broken in at least these two ways (bug reports)
     also are they 30fps or not? and how do they handle timesplits?
     is there another format that will actually mute?
+    XBMC mode doesn't mind the 600 starting offset...
+      oh wait we weren't even using it right to begin with LOL
+      plus it needs to "always just skip instead of mute" for now I guess
+      report XBMC bugs, too.
   split into various separate windows themselves...
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
-  XBMC mode doesn't mind the 600 starting offset...
-    oh wait we weren't even using it right to begin with LOL
-    plus it needs to "always just skip instead of mute" for now I guess
-    report XBMC bugs, too.
-  subs: if at beginning of a sub, add extra offset...hmm...why not?
-  say something if the EDL is actually "blank" :)
+  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
   fix released version to downloadable work in mac
-  report ffmpeg bug, mplayer various :P
-  note "you want to optimize your reverse blitting first... :)"
-    test speed of from DESKTOP versus HWND.
-    can use hwnd.  Somehow automated.
+  report ffmpeg bug, mplayer various (as bugs):P
   "--developer" mode
     export JSON command line, note it in the docu, show it in --developer mode, no new bat file for developer mode
   new button "auto-test" a subtitles file for timing :)
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not)
-  publish a ripped raw big bunny
-    update development howto
   @jruby scan court jester is *so* slow...what the...[mac at least...]
-  urug again?
+  advertise urug again?
     after works in mac. Why not?
   advertise virtual audio
+  advertise virtual desktop :)
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
   tighten old splits... [remove, really, I guess...sure while I only have few...and also add better instructions...]
   "save to" -> same dir as "get from" yeah
-  open EDL can have a rememberable DIR
+  open EDL to edit it can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_name
@@ -97,10 +96,10 @@
   bring to top after a conversion, and before prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
+    actually don't do this, just make sure to warn them if they pass us an mkv...indeed.
   check if some create buttons are now outdated...
   check with blu-ray...do they match timing-wise? sub-title wise?
-  donate tsmuxer, mplayer, http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard/
-  already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, cannot donate: ffmpeg
+  donate tsmuxer (sent email), http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
   youtube/hulu timings
   split LLC's website+consumer
     get LLC before a "real" domain name
@@ -158,10 +157,14 @@
   open_edl_list_org_todo.txt file
   todo.build_library
   todo.subtitle
+  todo.virtual_audio
 
 == DVD decide later to move up or down ==
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  say something if the EDL is actually "empty" :)
+  already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg
+  note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title track
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)

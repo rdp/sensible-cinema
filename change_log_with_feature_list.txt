@@ -16,7 +16,8 @@ Added demo of merging two video clips, with or without opacity/user configurable
 Added some demo commits showing how it could assign new/improved/user configurable/
 ratings to EDL's and/or pieces of them.
 
-Added ability to have one EDL "refer" to another..allowing multiple DVD's/dvd-id's to use the same EDL.
+Added ability to have one EDL "refer" to another..allowing multiple DVD's/dvd-id's to re-utilize the same EDL,
+and even add more settings of their own, if desired.
 
 == 0.25.1 ==
 

@@ -1,11 +1,10 @@
   === patentzy yes actually do vaguely ordered ===
-    can handle multiple dvdid's et al (same EDL)
     make it suck in large list of EDL's from imdb at build time
     blu-ray OCR
       more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
       some blu-ray player descriptor somehow
-    
 
+    can handle multiple dvdid's et al (same EDL) (kind of already shown)
     can overlay over online films too
     control VLC RC to overlay a logo dynamically
     can control volume *and* play other audio
