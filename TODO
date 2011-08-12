@@ -17,11 +17,11 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-   can play other *video* on top. (transparent video overlay?) avisynth WITH desktop LOL :)
+  can play other *video* on top. (transparent video overlay?) avisynth WITH desktop LOL :)
   
-  can handle multiple dvdid's et al
+  can handle multiple dvdid's et al (same EDL)
   add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
-   it can filter out specific profanities even, too :P
+  it can filter out specific profanities even, too :P
   maybes:
    can overlay over online too
    control VLC RC to overlay a logo dynamically
