@@ -24,11 +24,14 @@ class EdlParser
     EDL_DIR.gsub! File::SEPARATOR, File::ALT_SEPARATOR # to_filename...
   end
 
-  # returns {"mutes" => [["00:00", "00:00", string1, string2], ...], "blank_outs" -> [...], "url" => ...}  
+  # returns {"mutes" => [["00:00", "00:00", string1, string2, ...], ...], "blank_outs" -> [...], "url" => ...}  
   def self.parse_file filename
     output = parse_string File.read(filename), filename, []
-    if output["take_from_relative_file"]
-      #output.merge parse_string(F
+    if relative = output["take_from_relative_file"]
+      new_filename = File.dirname(filename) + '/' + relative
+      new_input = parse_file new_filename
+p 'got new input', new_input, new_filename
+      output.merge! new_input
     end
     output
   end
