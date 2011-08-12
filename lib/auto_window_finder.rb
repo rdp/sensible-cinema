@@ -9,17 +9,27 @@ class AutoWindowFinder
   # and it is mentioned in a file
   # it should find it
   
-  def self.search_for_single_url_match
+  def self.search_for_single_url_match regexp = /Chrome/
     EdlParser.find_single_edit_list_matching(true) {|parsed|
       if url = parsed["url"]
-        window = RAutomation::Window.new(:title => /Chrome/) # can this even work though? Do I need a title?
+        window = RAutomation::Window.new(:title => regexp)
         if window.exist? 
-          
-#          _dbg
           window.text =~ Regexp.new(Regexp.escape url.gsub("http://", ""))
         end
       end
     }
+  end
+  
+  def self.search_for_player_and_url_match player_root_dir
+    for filename in Dir[player_root_dir + '/*/*.txt']
+      settings = YAML.load_file filename
+      if regex = settings["window_title"] # assume regex :)
+        if search_for_single_url_match regex # applies the regex X url
+          return filename
+        end
+      end
+    end
+    nil
   end
   
 end

@@ -45,17 +45,21 @@ describe AutoWindowFinder do
         AutoWindowFinder.search_for_single_url_match().should == "files/edls/../edls/auto_url.txt"
       end
       
-      it "should search automatically iff the player specifies it to"
+      it "should search automatically iff the player specifies it to" # ?
       
-      it "should not match if 2 exist"
+      it "should be able to find with browser and url" do
+        FileUtils.mkdir_p 'temp/players'
+        File.write('temp/players/go.txt', "window_title: !ruby/regexp /Chrome/")
+        AutoWindowFinder.search_for_player_and_url_match('temp').should == "temp/players/go.txt"
+        File.write('temp/players/go.txt', "window_title: !ruby/regexp /asdf/")
+        RAutomation::Window.unstub!(:new)
+        AutoWindowFinder.search_for_player_and_url_match('temp').should be nil
+      end
       
     end
   
   
   end
-    # so basically, if a browser window is "open" to such and such a url
-  # and it is mentioned in a file
-  # it should find it
-
+   
   
 end

@@ -52,98 +52,106 @@ def go_sc(args)
     end
     
     exit 1
-    
-  else
-   
-    # allow for command line filenames
-  
-    player_description = args.shift.to_s
-    if !File.exist?(player_description)    
-      puts 'Please Select Computer Player'
-      player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", __DIR__ + "/../zamples/players")
-    end
-  
-    edit_decision_list = args.shift.to_s
-  
-    if edit_decision_list	 == 'test'
-      overlay = nil
-      p 'got test...just doing screen dump'
-      $VERBOSE=true # adds some extra output
-    elsif File.exist? edit_decision_list
-      # accept it from the command line
-    else
-      # assume they want an online player, right? LODO player can tell us...
-      auto_found = AutoWindowFinder.search_for_single_url_match
-      if auto_found
-        p 'auto-discovered open window for EDL, using it ' + auto_found
-        settings = EdlParser.parse_file auto_found
-        if settings["from_url"]
-           require 'tempfile'
-           to = Tempfile.new 'abc'
-           require_relative 'sensible-cinema-dependencies'
-           SensibleSwing::MainWindow.download(settings["from_url"], to.path)
-           edit_decision_list = to.path
-        else
-          edit_decision_list = auto_found
-        end
-      else
-        puts 'Select Edit Decision List to use'
-        edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
-      end
-      
-      if !edit_decision_list	
-        puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
-        exit 1
-      end
-      
-      puts 'Selected scene descriptions file ' + File.basename(edit_decision_list) + "\n\t(full path: #{edit_decision_list})"
-      Blanker.startup
-      # todo start it late as it has an annoying startup blip
-      overlay = OverLayer.new(edit_decision_list	)    
-    end  
-    
-    if File.exist? player_description.to_s
-      puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
-      # this one doesn't use any updates, so just pass in file contents, not filename
-      screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
-      does_not_need_mouse_jerk = YAML.load_file(player_description)["does_not_need_mouse_movement"]
-      unless does_not_need_mouse_jerk
-        p 'yes using mouse jitter' if $VERBOSE or $DEBUG
-        Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
-      else
-        p 'not using mouse jitter' if $VERBOSE or $DEBUG
-      end
-      
-      # exit early if we just wanted a screen dump...a little kludgey...
-      unless overlay
-        puts 'warning--only doing screen dump in t-minus 2s...'      
-        sleep 2
-        puts 'snap!'
-        screen_tracker.dump_bmps
-        exit 1
-      end
-      screen_tracker.process_forever_in_thread
-    else
-      puts 'warning--not using any screen tracking...'
-    end
-    
-    OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
-  
-    puts "Opening the curtains... (please play in your other video player now)"
-    overlay.start_thread true
-    key_input = KeyboardInput.new overlay
-    key_input.start_thread # status thread
-    at_exit {
-      Blanker.shutdown # lodo move this and the 'q' key to within overlayer
-      OCR.serialize_cache_to_disk
-    }
-    begin
-      key_input.handle_keystrokes_forever # blocking...
-    ensure
-      puts "syntax from command line: \"#{player_description}\" \"#{edit_decision_list}\""
-    end
-    
   end
+  
+  players_root_dir = __DIR__ + "/../zamples/players"
+  # allow for command line filenames
+    _dbg
+  player_description = args.shift
+  unless player_description
+    player_description = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
+    if player_description
+      p 'auto selected player ' + player_description 
+    else
+      p 'non match'
+    end
+  end
+  if !File.exist?(player_description)    
+    puts 'Please Select Computer Player'
+    player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", players_root_dir)
+    raise unless player_description
+  end
+
+  edit_decision_list = args.shift.to_s
+
+  if edit_decision_list == 'test'
+    overlay = nil
+    p 'got test...just doing screen dump'
+    $VERBOSE=true # adds some extra output
+  elsif File.exist? edit_decision_list
+    # accept it from the command line
+  else
+    # assume they want an online player, right? LODO player can tell us...
+    auto_found = AutoWindowFinder.search_for_single_url_match
+    if auto_found
+      p 'auto-discovered open window for EDL, using it ' + auto_found
+      settings = EdlParser.parse_file auto_found
+      if settings["from_url"]
+         require 'tempfile'
+         to = Tempfile.new 'abc'
+         require_relative 'sensible-cinema-dependencies'
+         SensibleSwing::MainWindow.download(settings["from_url"], to.path)
+         edit_decision_list = to.path
+      else
+        edit_decision_list = auto_found
+      end
+    else
+      puts 'Select Edit Decision List to use'
+      edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
+    end
+    
+    if !edit_decision_list	
+      puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
+      exit 1
+    end
+    
+    puts 'Selected scene descriptions file ' + File.basename(edit_decision_list) + "\n\t(full path: #{edit_decision_list})"
+    Blanker.startup
+    # todo start it late as it has an annoying startup blip
+    overlay = OverLayer.new(edit_decision_list	)    
+  end  
+  
+  if File.exist? player_description.to_s
+    puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
+    # this one doesn't use any updates, so just pass in file contents, not filename
+    screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
+    does_not_need_mouse_jerk = YAML.load_file(player_description)["does_not_need_mouse_movement"]
+    unless does_not_need_mouse_jerk
+      p 'yes using mouse jitter' if $VERBOSE or $DEBUG
+      Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
+    else
+      p 'not using mouse jitter' if $VERBOSE or $DEBUG
+    end
+    
+    # exit early if we just wanted a screen dump...a little kludgey...
+    unless overlay
+      puts 'warning--only doing screen dump in t-minus 2s...'      
+      sleep 2
+      puts 'snap!'
+      screen_tracker.dump_bmps
+      exit 1
+    end
+    screen_tracker.process_forever_in_thread
+  else
+    puts 'warning--not using any screen tracking...'
+  end
+  
+  OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
+
+  puts "Opening the curtains... (please play in your other video player now)"
+  overlay.start_thread true
+  key_input = KeyboardInput.new overlay
+  key_input.start_thread # status thread
+  at_exit {
+    Blanker.shutdown # lodo move this and the 'q' key to within overlayer
+    OCR.serialize_cache_to_disk
+  }
+  begin
+    key_input.handle_keystrokes_forever # blocking...
+  ensure
+    puts "syntax from command line: \"#{player_description}\" \"#{edit_decision_list}\""
+  end
+    
 end
 
 if __FILE__ == $0
