@@ -79,6 +79,7 @@ else
 end
 
 import 'javax.swing.ImageIcon'
+require_relative 'sensible-cinema-dependencies'
 
 module SensibleSwing
   VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip
@@ -87,7 +88,7 @@ module SensibleSwing
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # sigh
   
   class MainWindow < JFrame
-
+    
     def we_are_in_create_mode
      ARGV.index("--create-mode")
     end
@@ -831,12 +832,6 @@ module SensibleSwing
       undef system
     end
     
-    def download full_url, to_here
-      require 'open-uri'
-      writeOut = open(to_here, "wb")
-      writeOut.write(open(full_url).read)
-      writeOut.close
-    end
    
     def play_dvd_smplayer_unedited use_mplayer_instead, show_instructions, show_subs
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
@@ -995,7 +990,7 @@ module SensibleSwing
       unless File.exist? 'vendor/cache/7za.exe'
         Dir.chdir('vendor/cache') do
           print 'downloading unzipper (7zip--400K) ...'
-          download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
+          MainWindow.download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
           system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
         end
       end
@@ -1006,7 +1001,7 @@ module SensibleSwing
       Dir.chdir('vendor/cache') do
         file_name = url.split('/')[-1]
         print "downloading #{english_name} ..."
-        download(url, file_name)
+        MainWindow.download(url, file_name)
         system_blocking("7za e #{file_name} -y -o#{to_this}")
         puts 'done ' + english_name
         # creates vendor/cache/mencoder/mencoder.exe...
