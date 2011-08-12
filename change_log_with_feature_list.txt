@@ -10,6 +10,7 @@ Added the above, without file download (earlier commit could do them both howeve
 Added a demo of VLC doing "transparent" and "opaque" overlays on another running image, based on timing.
 NB That I already have shown a demo of adjusting volume and/or overlaying new audio on top of existing
 media (a la rifftrax) previously.
+Added demo of merging two video clips, with or without opacity/user configurable locations/dynamic ok too.
 
 == 0.25.1 ==
 

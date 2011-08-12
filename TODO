@@ -17,8 +17,6 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  can play other *video* on top. (transparent video overlay?) avisynth WITH desktop LOL :)
-  
   can handle multiple dvdid's et al (same EDL)
   add some "fake" "now pg" "now pg-12" "violence for age y" +- with edits at all even.
   it can filter out specific profanities even, too :P
@@ -28,19 +26,20 @@
    can control volume *and* play other audio
 
 == yes do ordered in conjunction with the above probably ==
-  release at some point...Oliver? facebook? (one at a time...)
-  snapshots of snow white "normal", then deploy the various pics
-  lightning strike from various outlets...
-  research VOB
-    timesplits?
+  setpriority for several :)
 
 == yes do, un-ordered currently, from the various future release options ==
+  snapshots of Sintel "normal", then deploy the various comparison pics
+  lightning strike from various outlets...
+  release at some point...Oliver? facebook? (one at a time...)
+  research VOB
+    timesplits?
   todo.upconvert
-    except I'm really close [?] with netflix instant upconverter...hmm...
+    netflix quality upconverter
   netflix instant for OS X
   new open button "edit the one for current DVD"
   the other button should open in the "editing" EDL dir.
-  overlapping mute failure when you hit the "watch edited realtime" should popup.
+  an overlapping mute failure when you hit the "watch edited realtime" should popup.
   split out the "dependency" code from main.
   try buy edit lists from all x,y,z [?] offer them money LOL
     http://www.familysafemovies.com
@@ -56,10 +55,7 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
-  make it load faster! this is cuh-razy! or splash screen! yes!
-  netflix quality upconverter
-    want a prototype mplayer upconverter...I guess... 
-  add back in scale for OS X, see if it's expensive or not...I'd guess not though...
+  make it load faster! this is cuh-razy! or at least splash screen! yes!
   research XBMC
     @XBMC: your stuff is broken in at least these two ways (bug reports)
     also are they 30fps or not? and how do they handle timesplits?
@@ -71,13 +67,9 @@
     oh wait we weren't even using it right to begin with LOL
     plus it needs to "always just skip instead of mute" for now I guess
     report XBMC bugs, too.
-  all unit tests
   subs: if at beginning of a sub, add extra offset...hmm...why not?
   say something if the EDL is actually "blank" :)
-  figure out if an offset of '1s' should also be accomodated for...
-    0.3 ... ? huh?
-  fix released version to work in mac
-  release capture filter, advertise it :)
+  fix released version to downloadable work in mac
   report ffmpeg bug, mplayer various :P
   note "you want to optimize your reverse blitting first... :)"
     test speed of from DESKTOP versus HWND.
@@ -102,18 +94,16 @@
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_name
-  C-based stuff cleanup loose ends
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   linearize: EDL with JSON on top, full timestamps.
-  setpriority for several :)
   bring to top after a conversion, and before prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
-  check if some buttons are now outdated...
+  check if some create buttons are now outdated...
   check with blu-ray...do they match timing-wise? sub-title wise?
   donate tsmuxer, mplayer, http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard/
   already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, cannot donate: ffmpeg
@@ -121,8 +111,9 @@
   split LLC's website+consumer
     get LLC before a "real" domain name
   employee instructions: watch @ realtime after profanity filter first pass :P  
-  @makemkv: timing feels broken weird-like!
+  @makemkv: timing feels broken weird-like! I'll donate you more money if you fix it <sniff>
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
+    it should work like a champ shouldn't it?
   clear runnings
     have ben and chris test it out, have it work, then ask about video quality
     me try
@@ -150,9 +141,8 @@
   create a semi-accurate phantom edit EDL
     http://www.chefelf.com/forums/index.php?showtopic=6176
   inventionzy: blu-ray stuff from todo.inventionzy
-
   port to mac OS X
-    ppc dvdid? documentation button?
+    ppc dvdid? documentation button? notepad?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
@@ -166,7 +156,7 @@
     or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
     call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
 
-== other lists ==
+== other lists to do ==
 
   todo.upconvert
   todo.propaganda
@@ -177,18 +167,18 @@
 
 == DVD decide later to move up or down ==
 
-== DVD-realtime backlog once yes do, now not do, unordered ==
-  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
-  investigate xbmc dvd edl how do you do that? [+- real dvd]
+== DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
-  mplayer EDL while grabbing, from grabbed :P
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
-  can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter?
   investigate: can I use zoomplayer max?
 
-== DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter? It does jerk a bit doesn't it, on slower?
+  mplayer EDL while grabbing, from grabbed :P
+  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
+  investigate xbmc dvd edl how do you do that? [+- real dvd]
+  release capture filter, advertise it :)
   @ffdshow-tryouts: don't crash me!
   conference it can "pick out songs" (like a music video? mp3's?)
   check with WME plugins, add instructions, then note in the README "support for x..."
