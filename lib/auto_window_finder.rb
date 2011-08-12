@@ -14,6 +14,8 @@ class AutoWindowFinder
       if url = parsed["url"]
         window = RAutomation::Window.new(:title => /Chrome/) # can this even work though? Do I need a title?
         if window.exist? 
+          
+          _dbg
           window.text =~ Regexp.new(Regexp.escape url.gsub("http://", ""))
         end
       end

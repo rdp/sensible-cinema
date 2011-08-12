@@ -81,7 +81,7 @@ def go_sc(args)
            require 'tempfile'
            to = Tempfile.new 'abc'
            require_relative 'sensible-cinema-dependencies'
-           File.write(to, SensibleSwing::MainWindow.download(settings("from_url")))
+           File.write(to, SensibleSwing::MainWindow.download(settings["from_url"]))
            edit_decision_list = to
         else
           edit_decision_list = auto_found

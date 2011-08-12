@@ -18,7 +18,6 @@
   
 == under next release specific items: ==
    url -> url inference [hopefully this is cake...]
-     url -> file too :P
    can handle multiple dvdid's et al
    VLC "insert foreign missing scene" supah easy demo
    overlay section with image (mplayer? vlc supah easy?)

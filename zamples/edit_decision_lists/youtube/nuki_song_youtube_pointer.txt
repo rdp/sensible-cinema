@@ -1,2 +1,2 @@
-"url" => "http://www.youtube.com/watch?v=xd12hR68sWM"
+"url" => "http://www.youtube.com/watch?v=xd12hR68sWM",
 "from_url" => "https://github.com/rdp/sensible-cinema/raw/master/zamples/edit_decision_lists/youtube/nuki_song_youtube.txt"
