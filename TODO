@@ -18,20 +18,20 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  it can filter out specific profanities even, too :P
 
 == yes do ordered in conjunction with the above probably ==
-  finish court jester
+  finish court jester EDL
 
 == yes do, un-ordered currently, from the various future release options ==
-  test court jester
+  test court jester :)
+  can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
   both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
   lightning strike from various outlets...
   release at some point...Oliver? facebook? (one at a time...)
   research VOB
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
-    netflix quality upconverter
+    netflix quality upconverter, have a go at it
     have people test it
     me test it
       1x, 2x Sintel
@@ -77,7 +77,6 @@
   advertise urug again?
     after works in mac. Why not?
   advertise virtual audio
-  advertise virtual desktop :)
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
     complain if times looks wrong...on playback? sum time
@@ -113,13 +112,14 @@
   try out disney digital copy
   C player:
     folder, look for title.edl
-    use DVD navigator
+    use DVD navigator (check)
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
     allow it to "just play from X to Y exactly" ...
+    can start fullscreen
     does this line up right/perfect? can it work, at all?
       lodo:
         update its semi-bad error messages...
@@ -128,28 +128,29 @@
     note pay for XP http://windows.microsoft.com/en-US/windows/downloads/windows-media-player/plug-ins search for the cheapest
     note to them windows vista/7: use ac3filter [?]
     [A,B] 
+    once I can jump around, advertise as a phantom editor :)
   note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
     rinse and repeat with various ppl
-  create a semi-accurate phantom edit EDL
+  create a semi-accurate phantom edit EDL [?] just with splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
   inventionzy: blu-ray stuff from todo.inventionzy
-  port to mac OS X
-    ppc dvdid? documentation button? notepad?
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   add button "fast preview segment" (from dvd)
     add button "fast preview one" (from file) smplayer
-  upconvert research/compare various options
-    test it out (+- with people)
-    propaganda it
+  upconvert 
+    test it out (+- with others)
+    propaganda when good...
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
   be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
     I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
     or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
     call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
+ virtual desktop -> real input
+ make it suck in large list of EDL's from imdb at build time
 
-== other lists to do ==
+== other lists to not do (duplicate the todo here if want to actually do it though) ==
 
   todo.upconvert
   todo.propaganda
@@ -162,6 +163,10 @@
 == DVD decide later to move up or down ==
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
+  advertise virtual desktop :)
+  port to mac OS X
+    ppc dvdid? documentation button? notepad?
   say something if the EDL is actually "empty" :)
   already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg
   note "you want to optimize your reverse blitting first... :)"
@@ -458,10 +463,8 @@ fix:
 
 byu.tv descriptor
 youtube non full screen: work with all browsers
-easier "here's how on the command line, BTW"
 amazon player
-a netflix player descriptor
-  "just choose VLCx55" LOL
+"just choose VLCx55" LOL
 
 Just fold if s....
 
@@ -568,8 +571,6 @@ control volume programmatically (using mouse) on the player itself.
 control mute programmatically (using mouse) on the player itself.
 control location programmatically (using mouse) on the player itself.
 
-compare VLC (and other) timings with a real DVD player, and with netflix instant, etc.
-
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
   or known parseable imdb's
 
@@ -639,7 +640,7 @@ maybe require them to rip their stuff "through some means or other" and we'll op
 give money to nomachine--wow!
 
 a boxee api? 
-I *could* record netflix movies, then edit those manually (or mapped-ly)...meh clearplay needs some niche--we don't have each other after all.
+I *could* record netflix movies, then edit those manually (or mapped-ly)...meh clearplay needs some niche--we don't have each other after all, plus legality
 donate to the top 25 sourceforge's that don't look illegal, esp. if haven't before
 @mplayer: allow the equals in this: mplayer dvdnav:// -dvd-device=f:
 
@@ -656,4 +657,3 @@ create a "map" of VLC DVD timings to "real" timings via tracking.  Hopefully nev
 if it looks paused I should basically pause my tracking [if it looks nothing, then keep going with my tracking]
 it fails on "friday" tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
-figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL

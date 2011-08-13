@@ -1,3 +1,47 @@
+== ==
+
+Add abiliy to filter whole categories of content (allow/disallow them), or levels of content, based on
+user perceived level/user desired, including opposite.
+
+Note also that we have successfully discovered how to integrate with playing through peoples'
+portable playing devices/consoles (windows media center--use plugins, XBMC, use its EDL's, ps3ms, use EDL's),
+see mailing list.
+
+Also a lot of work has been done on upconverting screen capture, which can also similarly be
+applied to edited movie content, with DVD and/or/ blu-ray and/or online based streaming media.
+
+Also we have fairly sophisticated algorithms for determining the correct time to actually do or trust the
+OCR readout, ex:  checking for screen change frequently before doing any actual digit detection,
+using third party OCR software reader software, checking to coordinate timestamp signatures when 
+"09" goes to "10" or the like.  To help the timing needs there.  Also we can detect
+arbitrary players, and warn when detect fails/ceases, and detect when it pauses but doesn't fail, et al.
+See also more comments below, etc.
+
+Also sensible cinema has been shown to work with 3rd party "subtitle detection" software, run that against
+the film, and it works splendidly.  There has also been some experimentation with leveraging 3rd party
+(read: Microsoft) DVD player software/API's/internals in order to effect an appropriate EDL playback,
+with and without messages being sent back and forth between the two programs.
+
+We've also experimented with capturing virtual audio (audio out), as well as combining it with
+virtual camera (desktop screen shot capture), in order to be able to beam out what is playing on the
+computer to available devices.  This also could be made to work for edited content output, ex: netflix instant
+and since it can select the exact coordinates it needs, it could thus be made to avoid the timestamp
+signature while still being able to keep it on-screen to OCR while the content edited movie is playing.
+Also I have experimented slightly with keeping parts of a window "off screen" but still being able to OCR them
+(windows 7 aero allows this).
+
+There is also lots of subtitle comparison helpers, etc., and edited movie segment "checking EDL settings"
+helpers that have been integrated along the way, like a good ol' editing movie software might do.
+We leverage all sorts of nifty things like bringing windows to the top, internal audio api's, all the
+good stuff.
+
+Since we integrate with VLC, we already have edited blu-ray playback implicitly, by playing them back
+through slysoft hd-dvd.
+
+Note also that I recently showed demos of how an edited player can jump around/skip to scenes within a movie,
+not just playback linear "skipping" content.
+
+
 == 0.25.2 ==
 
 It tracks better now if the current OCR tracked player is paused, reverting back to its current timestamp.

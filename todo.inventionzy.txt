@@ -3,8 +3,9 @@
     blu-ray OCR
       more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
       some blu-ray player descriptor somehow
+    can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
 
-    can handle multiple dvdid's et al (same EDL) (kind of already shown)
+    can handle multiple dvdid's et al (same EDL) (mostly do already though)
     can overlay over online films too
     control VLC RC to overlay a logo dynamically
     can control volume *and* play other audio
