@@ -75,7 +75,7 @@ class EdlParser
             # check for a number? 
             if category_number.to_i.to_s == category_number
               as_number = category_number.to_i
-              if as_number > setting
+              if as_number < setting
                 include = false
               end
             end
