@@ -96,7 +96,7 @@ describe EdlParser do
 
     # now with...just saying "levels below this are ok"
     parsed = E.parse_string(out, nil, [["test category", 2]])
-    parsed["mutes"].length.should == 1
+    parsed["mutes"].length.should == 2
 
   end
   
