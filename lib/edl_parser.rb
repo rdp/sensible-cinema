@@ -57,16 +57,33 @@ class EdlParser
     raw
   end
   
-  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though disabled
+  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though disabled for production
   def self.convert_to_timestamp_arrays array, ok_categories_array
     out = []
     while(single_element = extract_entry!(array))
-      # assume that it's always start_time, end_time, category, number
+      # assume that it (could be, at least) start_time, end_time, category, number
       category = single_element[-2]
       category_number = single_element[-1]
-      unless ok_categories_array.index([category, category_number])
-        out << single_element
+      include = true
+      if ok_categories_array.index([category, category_number])
+       include = false
+      elsif ok_categories_array.index([category])
+       include = false
+      elsif ok_categories_array.detect{|cat, setting| setting.is_a? Fixnum}
+       for cat, setting in ok_categories_array
+         if cat == category && setting.is_a?(Fixnum)
+            # check for a number? 
+            if category_number.to_i.to_s == category_number
+              as_number = category_number.to_i
+              if as_number < setting
+                include = false
+              end
+            end
+         end
+       end
+
       end
+      out << single_element if include
     end
     out
   end

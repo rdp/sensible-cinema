@@ -76,16 +76,28 @@ describe EdlParser do
    out = <<-EOL
       "mutes" => [
       "00:10", "00:15", "test category", "1",
-      "00:20", "00:25", "test category", "2"
+      "00:20", "00:25", "test category", "2",
+      "00:30", "00:35", "test category", "3"
       ]
     EOL
     parsed = E.parse_string out, nil
-    parsed["mutes"].length.should == 2 # has them both
+    parsed["mutes"].length.should == 3 # has all of them
 
     1.upto(2) do |n|
       parsed = E.parse_string(out, nil, [["test category", n.to_s]] )
-      parsed["mutes"].length.should == 1 # has them both
+      parsed["mutes"].length.should == 2 # excludes one
     end
+    parsed = E.parse_string(out, nil, [["test category", "1"], ["test category", "2"]] )
+    parsed["mutes"].length.should == 1 # excludes two
+
+    # now with...just saying "this entire category is fine"
+    parsed = E.parse_string(out, nil, [["test category"]])
+    parsed["mutes"].length.should == 0
+
+    # now with...just saying "levels below this are ok"
+    parsed = E.parse_string(out, nil, [["test category", 2]])
+    parsed["mutes"].length.should == 1
+
   end
   
   it "should parse mplayer_dvd_splits as floats" do
