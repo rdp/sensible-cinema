@@ -46,6 +46,9 @@ We have many timing conversion utility helpers (see source for details).
 Also have ability to auto-generate EDL files based on current DVD et al., and use DVD ID
 generator software, basically from Microsoft, to auto-recognize inserted DVD's. 
 
+Also note that there was a case recently demoing a new style of skipping: it pauses, then the user
+basically fast forwards or "skips it forward" themself, thus jumping over the questionable scenes.
+
 == 0.25.2 ==
 
 It tracks better now if the current OCR tracked player is paused, reverting back to its current timestamp.
