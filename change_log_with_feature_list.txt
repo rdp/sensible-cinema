@@ -49,6 +49,9 @@ generator software, basically from Microsoft, to auto-recognize inserted DVD's.
 Also note that there was a case recently demoing a new style of skipping: it pauses, then the user
 basically fast forwards or "skips it forward" themself, thus jumping over the questionable scenes.
 
+Also note that mine currently allows for "unlimited" levels of detail/categorization of media, it can parse
+it all, and even use it in a limited manner.
+
 == 0.25.2 ==
 
 It tracks better now if the current OCR tracked player is paused, reverting back to its current timestamp.
