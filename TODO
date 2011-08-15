@@ -38,6 +38,7 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
   add new open button "edit the one for current DVD"
   the open button should open in the "editing" EDL dir.
+  warn against makemkv (and check it, too, and offer a bounty! :)
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
   split out the "dependency" code
   try buy edit lists from all x,y,z [?] offer them money LOL
