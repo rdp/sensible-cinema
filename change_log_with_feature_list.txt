@@ -52,6 +52,8 @@ basically fast forwards or "skips it forward" themself, thus jumping over the qu
 Also note that mine currently allows for "unlimited" levels of detail/categorization of media, it can parse
 it all, and even use it in a limited manner.
 
+Note that we can also copy to the clipboard
+
 == 0.25.2 ==
 
 It tracks better now if the current OCR tracked player is paused, reverting back to its current timestamp.
