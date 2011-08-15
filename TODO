@@ -28,7 +28,7 @@
   test court jester :)
   lightning strike from various outlets...
   release at some point...Oliver? facebook? (one at a time...)
-  research VOB
+  research VOB dirs
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
     netflix quality upconverter, have a go at it
@@ -264,7 +264,6 @@
   @makemkv: wrong title no:Title #0 was added (7 cell(s), 0:14:58)
      Title #1 was added (8 cell(s), 0:14:57), also give us title no's in the dialog :P
   @mencoder you lop off the end somehow (dvd rip)
-  @VLC: plugin for EDL maybe? [when opening file/DVD look for .edl file?]
   blu ray timing
     my one, others.  Are they the same as DVD's?  They seem really close...
   pull in information from thetvdb to the GUI app
