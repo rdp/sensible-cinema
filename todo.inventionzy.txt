@@ -38,16 +38,16 @@
     edited blu ray movie playback screencast, as that's apparently not in the patent...
     don't use timecodes, use "% of the movie" and "total length" perhaps?
     look at their patents for other ideas? [+- nissim patents?]
-    just pause it, tell them how far to fast forward at that point :P
+    just pause it, tell them how far to fast forward at that point :P [somewhat already done]
+    
     have the user forced to tell me what each digit is, themselves :P
     the online edl stuff itself (its todo list)
     javascript API
       phase 2: I can accomodate for pauses, too.
       phase 3: I can re-train based on events of stoppage
-      phase 4: I can constantly poll and react
+      phase 4: I can constantly poll and react appropriately to current timestamp
     post video demo of it streaming to a console device
-    categories filterable by "level" "profanity level 2 and below is ok for me and my kids"
-    maybe could just "play from x to y" [no exclude info?] 
+    maybe could just "play from x to y" [no exclude info?] instead of "here are the bad parts"
     stage one: query, auto-download when they hit a netflix movie of some type
-      stage two: chrome plugin for the same :)
-    can insert deleted scenes et al [even external scenes :P] (already showed it)
+      stage two: chrome plugin for the same, auto-detect, auto-user, auto-download, auto-watch edited :)
+    can insert deleted scenes et al [even external scenes :P] (already showed it somewhat)
