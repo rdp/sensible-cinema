@@ -41,6 +41,10 @@ through slysoft hd-dvd.
 Note also that I recently showed demos of how an edited player can jump around/skip to scenes within a movie,
 not just playback linear "skipping" content.
 
+We have many timing conversion utility helpers (see source for details).
+
+Also have ability to auto-generate EDL files based on current DVD et al., and use DVD ID
+generator software, basically from Microsoft, to auto-recognize inserted DVD's. 
 
 == 0.25.2 ==
 

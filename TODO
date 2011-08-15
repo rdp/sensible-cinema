@@ -1,11 +1,11 @@
 == roadmap [for just tasks, see below though] == 
 
   netflix instant for OS X
-  release: C EDL
-  compare netflix/blu-ray timings et al
   upconvert DVD/netflix
+  C EDL
   
   === loose ordering/eventually ===
+    compare netflix/blu-ray timings et al
     linearize [?] hmm...
     re-update todo/all docu/user feedback etc.
     create web site/api-ify
@@ -23,9 +23,9 @@
   finish court jester EDL
 
 == yes do, un-ordered currently, from the various future release options ==
-  test court jester :)
   can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
   both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
+  test court jester :)
   lightning strike from various outlets...
   release at some point...Oliver? facebook? (one at a time...)
   research VOB
