@@ -168,7 +168,7 @@ module SensibleSwing
     end
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Change Upconvert Options") do
+      @show_upconvert_options = new_jbutton("Set Playback Upconversion Options") do
         upconvert_window = MainWindow.new
         upconvert_window.add_setup_upconvert_buttons
         upconvert_window.show
@@ -338,8 +338,12 @@ module SensibleSwing
     end
     
     def setup_advanced_buttons
-      
-      add_text_line 'Realtime create Options:'
+    
+      new_jbutton("Display the standard buttons") do
+        setup_normal_buttons
+      end
+    
+      add_text_line 'Realtime/Create Options:'
       
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", 
         "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
@@ -348,29 +352,12 @@ module SensibleSwing
         @display_dvd_info.simulate_click # for now...
       end
       
-      @open_list = new_jbutton("Open/Edit a previously created EDL file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list = new_jbutton("Open/Edit a previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EdlParser::EDL_DIR)
         open_file_to_edit_it filename
       }
       
-
-      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file")
-      @create_dot_edl.tool_tip = <<-EOL
-        Create a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
-        XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
-        if it exists, and automatically use it .edl to show that file edited played back.
-        If you use smplayer, note that you'll need to download the "lord mulder mplayer"
-        version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
-      EOL
-      @create_dot_edl.on_clicked {
-        choose_file_and_edl_and_create_sxs_or_play true
-      }
-      
-      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
-        select_new_sxs_style
-      end
-
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
         This will play the DVD unedited within smplayer.
@@ -394,55 +381,6 @@ module SensibleSwing
       EOL
       @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true, true, true
-      }
-
-      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
-      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
-      @display_dvd_info.on_clicked {
-        drive, volume_name, dvd_id = choose_dvd_drive_or_file true # real DVD disk
-        # display it, allow them to copy and paste it out
-        title_lengths = nil
-        t = Thread.new { title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
-        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
-        show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED eventually to identify a disk to match it to its EDL, later.", id_string
-        t.join
-        File.write EdlTempFile, id_string + "\n" + title_lengths
-        open_file_to_edit_it EdlTempFile
-        id_string
-      }
-
-      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
-      @convert_seconds_to_ts.on_clicked {
-        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
-        if input =~ /:/
-          output = EdlParser.translate_string_to_seconds input
-        else
-          output = EdlParser.translate_time_to_human_readable input.to_f, true
-        end 
-        show_copy_pastable_string("Converted:", output)         
-      }
-      
-      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time (30 fps) to EDL player time (29.97 fps)" )
-      @convert_timestamp.tool_tip=<<-EOL
-        Our EDL's assume 29.97 fps (which is what a DVD is).  Unfortunately most hardware/commercial DVD players
-        assume that the DVD is 30 fps, which means that if you watch a movie with them, then use those timestamps
-        for your EDL file, you will be off, at the end of a 2 hour film, by 8 seconds.  So all your edits will be wrong.
-        How to fix: convert your times from "DVD player" time to "EDL accurate" time by using this button.
-        This is necessary for hardware DVD player timestamps, PowerDVD, Windows Media Player (playing a DVD),
-        but not necessary for smplayer timestamps (or mplayer's "V: 3600" in the command line), which are already 29.97.
-        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from dvd_mplayer_splits) 
-        but is 30 fps, so timestamps would need to be converted.
-        Dont use VLC for DVD timestamps at all--it can get up to 30s off!  VLC playing back a file is usually pretty accurate to 29.97.
-        In general, GUI's like VLC or smplayer are always a tidge off (maybe 0.3s) from the right timestamp, so take that into consideration.
-        Mplayers "V: 3600" is usually right on, however.
-      EOL
-      @convert_timestamp.on_clicked {
-        thirty_fps = get_user_input("Enter your DVD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
-        thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
-        twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
-        human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
-        show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
@@ -471,6 +409,90 @@ module SensibleSwing
         open_file_to_edit_it EdlTempFile
       end
       
+
+
+      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
+      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
+      @display_dvd_info.on_clicked {
+        drive, volume_name, dvd_id = choose_dvd_drive_or_file true # real DVD disk
+        # display it, allow them to copy and paste it out
+        title_lengths = nil
+        t = Thread.new { title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
+        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
+        show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        This is USED eventually to identify a disk to match it to its EDL, later.", id_string
+        t.join
+        File.write EdlTempFile, id_string + "\n" + title_lengths
+        open_file_to_edit_it EdlTempFile
+        id_string
+      }
+
+      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
+      @convert_seconds_to_ts.on_clicked {
+        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
+        while(input)
+          if input =~ /:/
+            output = EdlParser.translate_string_to_seconds input
+          else
+            output = EdlParser.translate_time_to_human_readable input.to_f, true
+          end 
+          input = show_copy_pastable_string("Converted:", output)         
+        end
+      }
+      
+      @convert_timestamp = new_jbutton( "Convert timestamp from DVD player time to EDL time (30->29.97 fps)" )
+      @convert_timestamp.tool_tip=<<-EOL
+        Our EDL's assume 29.97 fps (which is what a DVD actually has).  Unfortunately most hardware or commercial DVD players
+        think that the DVD is 30 fps, which means that if you use them for timestamps for your EDL's,
+        you will be slightly off (at the end of a 2 hour film, by 8 seconds).  So all your edits will be wrong.
+        How to fix: convert your times from "DVD player" time to "EDL accurate" time by using this button.
+        This is necessary for hardware DVD player timestamps, PowerDVD, Windows Media Player (playing a DVD),
+        but not necessary for smplayer timestamps (or mplayer's "V: 3600" in the command line), which are already 29.97.
+        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from dvd_mplayer_splits) 
+        but is 30 fps, so timestamps would need to be converted.
+        Dont use VLC for DVD timestamps at all--it can get up to 30s off!  VLC playing back a file is usually pretty accurate to 29.97.
+        In general, GUI's like VLC or smplayer are always a tidge off (maybe 0.3s) from the right timestamp, so take that into consideration.
+        Mplayers "V: 3600" is usually right on (29.97 fps), however.
+      EOL
+      @convert_timestamp.on_clicked {
+        thirty_fps = get_user_input("Enter your DVD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
+        thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
+        twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
+        human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
+        show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
+      }
+      
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file")
+      @create_dot_edl.tool_tip = <<-EOL
+        Creates a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
+        XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
+        if it exists, and automatically use it .edl to show that file edited played back.
+        If you use smplayer, note that you'll need to download the "lord mulder mplayer"
+        version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
+      EOL
+      @create_dot_edl.on_clicked {
+        choose_file_and_edl_and_create_sxs_or_play true
+      }
+      
+#      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
+#        select_new_sxs_style # TODO
+#      end
+
+      
+      add_text_line 'Create Options that first create/use a local intermediary file:'
+      
+      new_jbutton("Show options that first create/use a local intermediary file") do
+        window = MainWindow.new
+        window.add_options_that_use_local_files # join! LODO figure out
+      end
+      
+#      @reload = new_jbutton("reload bin/sensible-cinema code") do
+#        load $0
+#      end
+      
+    end # advanced buttons
+    
+    def add_options_that_use_local_files
       add_text_line 'Create Options that first create/use a local intermediary file:'
 
       @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)" )
@@ -510,13 +532,8 @@ module SensibleSwing
         nice_file = wrote_to_here_fulli
         run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true
       }
-      
-      @reload = new_jbutton("reload bin/sensible-cinema code") do
-        load $0
-      end
-      
-    end # advanced buttons
-    
+    end
+   
     # converts to full path, 8.3 if on doze
     def normalize_path path
       path = File.expand_path path
@@ -524,7 +541,8 @@ module SensibleSwing
     end
 
     def setup_normal_buttons
-      
+      add_text_line ""
+  
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
@@ -599,7 +617,7 @@ module SensibleSwing
       super "Sensible-Cinema #{VERSION} (GPL)"
       force_accept_license_first
 
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # LODO not for child windows...
       @panel = JPanel.new
       @buttons = []
       @panel.set_layout nil
@@ -610,7 +628,6 @@ module SensibleSwing
       add_text_line "Welcome to Sensible Cinema!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      add_text_line ""
       add_text_line ""
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
@@ -623,14 +640,15 @@ module SensibleSwing
       if we_are_in_upconvert_mode
         setup_upconvert_buttons
       else
-        setup_normal_buttons
       
         if we_are_in_create_mode
           setup_advanced_buttons
           add_text_line 'Contact:'
+        else
+          setup_normal_buttons
         end
       
-        @upload = new_jbutton("Submit feedback/Upload/Request Help") # keep this one last! :)
+        @upload = new_jbutton("Submit Feedback/Upload new EDL's/Request Help") # keeps this one last! :)
         @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
         @upload.on_clicked {
           system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
@@ -1101,7 +1119,9 @@ module SensibleSwing
     
     def get_user_input(message, default = '', cancel_ok = false)
       received = JOptionPane.showInputDialog(message, default)
-      raise 'user cancelled' unless received unless cancel_ok
+      unless cancel_ok
+        raise 'user cancelled' unless received
+      end
       received
     end
     
