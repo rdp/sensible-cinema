@@ -169,7 +169,10 @@ module SensibleSwing
 
     def add_change_upconvert_options_button
       @show_upconvert_options = new_jbutton("Change Upconvert Options") do
-        add_setup_upconvert_buttons
+        upconvert_window = MainWindow.new
+        upconvert_window.add_setup_upconvert_buttons
+        upconvert_window.show
+        # now join it, oops that isn't possible [?]
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
@@ -181,7 +184,7 @@ module SensibleSwing
     end
     
     def change_upconvert_line_to_current
-      @upconv_line.set_text get_current_upconvert_as_phrase
+      @upconv_line.set_text get_current_upconvert_as_phrase if @upconv_line
     end
     
     def select_new_sxs_style
@@ -612,8 +615,8 @@ module SensibleSwing
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
       check_for_various_dependencies
+      set_visible true
     end
-    
     
     def setup_default_buttons
       
@@ -1496,7 +1499,6 @@ if $0 == __FILE__
   else
     a = SensibleSwing::MainWindow.new
     a.setup_default_buttons
-    a.set_visible true
     puts 'Please use the Sensible Cinema GUI window popup...'
     if ARGV.index('--exit-immediately')
       a.dispose

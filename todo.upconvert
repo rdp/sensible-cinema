@@ -15,32 +15,24 @@ do I need double tapping? http://archive2.avsforum.com/avs-vb/showthread.php?s=&
 
 === netflix/OS screen capture ===
 
-  make it able to grab from a window, and work when dragged too...
   can I make it look awesome?
+  pushdesktop\TODO high prio
   
   ==== some day ====
-    shearing (?) compared to itself upscreened...
-    perfect looks of absolutely everything upconverted LOL
+    perfect the looks of absolutely everything upconverted LOL
     # TODO cut off all black edges too...why not, eh? mplayer has crop detect...
     make really low q stuff like youtube less than even 360 look good
-    # TODO can align better youtube
-    better benchmarker (windows vs. desktop, just show reverse)
-    the "drag to select window" seter-zy-upperzy
+    # can align better youtube
 
  is ffplay on avisynth piece of crud compared to the other? vs. mplayer? why only like 10 fps? what the...
 
-== OS dshow screen tracker ==
-
-  see its TODO, things I actually want to do add here.
-
  === some day ===
-    bounty multi-thread scaling, iff it seems helpful-er for quad core.
-    can I live with aero wasn't bitblt getting like 800fps *with* aero?
+  bounty multi-thread scaling, iff it seems helpful-er for quad core.
   
 == never ==
 
 add another sharpen filter?
 
-add a VLC version?
+create a VLC version?
 
-prop: http://ubuntuforums.org/showthread.php?t=804537 didn't I have another list somewhere... ?
+propaganda: http://ubuntuforums.org/showthread.php?t=804537 
