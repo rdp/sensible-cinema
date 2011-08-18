@@ -88,10 +88,10 @@ module SensibleSwing
     end
     
     before do
-      ARGV << "--create-mode" # want all the buttons for some tests.
       @subject = MainWindow.new false # false to speedup tests
-      @subject.setup_default_buttons
-      ARGV.pop
+      # want lots of buttons :)
+      @subject.setup_advanced_buttons
+      @subject.setup_normal_buttons
       FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done" # a few of them need this...
       FileUtils.touch 'selected_file.avi'
       @subject.stub!(:choose_dvd_drive_or_file) {

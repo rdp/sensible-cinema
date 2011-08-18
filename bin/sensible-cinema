@@ -579,7 +579,8 @@ module SensibleSwing
         add_open_documentation_button
       end
       
-      add_change_upconvert_options_button 
+      add_change_upconvert_options_button
+      p 'normal butons'
       
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
@@ -643,7 +644,6 @@ module SensibleSwing
     end
     
     def setup_default_buttons
-      
       if we_are_in_upconvert_mode
         setup_upconvert_buttons
       else
