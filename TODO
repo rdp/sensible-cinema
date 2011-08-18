@@ -38,8 +38,9 @@
     me test it
       1x, 2x Sintel
       snapshots of Sintel "normal", then deploy the various comparison pics
+    DVD test it out (+- with others)
   add new open button "edit the one for current DVD"
-  "fix" mplayer EDL pausing [?]
+  "fix" mplayer EDL pausing
   the open button should open in the "editing" EDL dir.
   warn against makemkv (and check it, too, and offer a bounty! :)
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
@@ -70,8 +71,7 @@
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
-  fix released version to downloadable work in mac
-  report ffmpeg bugs as real bugs, mplayer various (as bugs):P
+  fix released version to downloadable work in mac [7zip won't cut it]
   "--developer" mode
     has "export JSON command line, reload code" , note it in the docu
   new button "auto-test" a subtitles file for timing :)
@@ -80,6 +80,7 @@
     after works in mac. Why not?
   advertise virtual audio
   advertise screen capture
+  create skype fella...hmm...
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
     complain if times look wrong...on playback? sum time
@@ -134,14 +135,8 @@
   create a semi-accurate phantom edit EDL [?] just with splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
   add button "fast preview segment" (mplayer from dvd)
-  upconvert 
-    DVD test it out (+- with others)
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
-  be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
-    I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
-    or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
-    call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
 
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
 
@@ -156,6 +151,11 @@
 == DVD decide later to move up or down ==
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
+    I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
+    or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
+    call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
+  report ffmpeg bugs as real bugs, mplayer various (as bugs):P
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   note better to previewer "you are about to preview these specific edits..." ?
   "save to" -> same dir as "get from" yeah
