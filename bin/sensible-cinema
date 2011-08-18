@@ -166,10 +166,16 @@ module SensibleSwing
       add_text_line ''
       
     end
+    
+    def self.new_child_window
+      out = MainWindow.new
+      out.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
+      out
+    end
 
     def add_change_upconvert_options_button
       @show_upconvert_options = new_jbutton("Set Playback Upconversion Options") do
-        upconvert_window = MainWindow.new
+        upconvert_window = MainWindow.new_child_window
         upconvert_window.add_setup_upconvert_buttons
         upconvert_window.show
         # now join it, oops that isn't possible [?]
@@ -483,7 +489,7 @@ module SensibleSwing
       add_text_line 'Create Options that first create/use a local intermediary file:'
       
       new_jbutton("Show options that first create/use a local intermediary file") do
-        window = MainWindow.new
+        window = MainWindow.new_child_window
         window.add_options_that_use_local_files # join! LODO figure out
       end
       
@@ -618,7 +624,7 @@ module SensibleSwing
       super "Sensible-Cinema #{VERSION} (GPL)"
       force_accept_license_first
 
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # LODO not for child windows...
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # default
       @panel = JPanel.new
       @buttons = []
       @panel.set_layout nil
