@@ -92,6 +92,7 @@ module SensibleSwing
       # want lots of buttons :)
       @subject.setup_advanced_buttons
       @subject.setup_normal_buttons
+      @subject.add_options_that_use_local_files
       FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done" # a few of them need this...
       FileUtils.touch 'selected_file.avi'
       @subject.stub!(:choose_dvd_drive_or_file) {
@@ -139,6 +140,7 @@ module SensibleSwing
         @subject.stub!(:print) {}
         @subject.stub!(:p) {}
         @subject.stub!(:puts) {}
+        EdlParser.stub!(:p) {}
       end
       
       @subject.stub(:show_non_blocking_message_dialog) {
@@ -553,10 +555,8 @@ module SensibleSwing
   end
   
   it "should be able to upconvert at all" do
-    ARGV << "--upconvert-mode"
-    @subject = MainWindow.new.setup_default_buttons
-    ARGV.pop
-    click_button(:@show_upconvert_options) # reveal buttons...
+    @subject = MainWindow.new false
+    @subject.add_setup_upconvert_buttons
     @subject.stub(:display_current_upconvert_setting) {} # no popup ;)
     @subject.stub(:show_mplayer_instructions_once) {}
     click_button(:@medium_dvd)

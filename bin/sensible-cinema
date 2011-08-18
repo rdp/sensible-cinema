@@ -177,7 +177,6 @@ module SensibleSwing
       @show_upconvert_options = new_jbutton("Set Playback Upconversion Options") do
         upconvert_window = MainWindow.new_child_window
         upconvert_window.add_setup_upconvert_buttons
-        upconvert_window.show
         # now join it, oops that isn't possible [?]
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
@@ -490,7 +489,7 @@ module SensibleSwing
       
       new_jbutton("Show options that first create/use a local intermediary file") do
         window = MainWindow.new_child_window
-        window.add_options_that_use_local_files # join! LODO figure out
+        window.add_options_that_use_local_files
       end
       
 #      @reload = new_jbutton("reload bin/sensible-cinema code") do
@@ -580,7 +579,6 @@ module SensibleSwing
       end
       
       add_change_upconvert_options_button
-      p 'normal butons'
       
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
