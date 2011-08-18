@@ -20,6 +20,7 @@
 == under next release specific items: ==
 
 == yes do ordered in conjunction with the above probably ==
+  deploy pushdesktop
 
 == yes do, un-ordered currently, from the various future release options ==
   can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
@@ -70,7 +71,7 @@
     consistency of others, also "DVD reported full-time versus ts time" for others...
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
   fix released version to downloadable work in mac
-  report ffmpeg bug, mplayer various (as bugs):P
+  report ffmpeg bugs as real bugs, mplayer various (as bugs):P
   "--developer" mode
     has "export JSON command line, reload code" , note it in the docu
   new button "auto-test" a subtitles file for timing :)
@@ -81,9 +82,8 @@
   advertise screen capture
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
-    complain if times looks wrong...on playback? sum time
-  tighten old splits... [remove, really, I guess...sure while I only have few...and also add better instructions...]
-  "save to" -> same dir as "get from" yeah
+    complain if times look wrong...on playback? sum time
+  splits... [add better instructions...]
   open EDL to edit it can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
@@ -99,8 +99,7 @@
     mac just die with instructions to use tsmuxer first...
     actually don't do this, just make sure to warn them if they pass us an mkv...indeed.
   check if some create buttons are now outdated...
-  check with blu-ray...do they match timing-wise? sub-title wise?
-  donate tsmuxer (sent email), http://ffmpeg.zeranoe.com/builds, mulder +- [?] smplayer menumeter http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard
+  check with blu-rays...do they match timing-wise? sub-title wise?
   youtube/hulu timings
   split LLC's website+consumer
     get LLC before a "real" domain name
@@ -109,17 +108,17 @@
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
     it should work like a champ shouldn't it?
   clear runnings
-    have ben and chris test it out, have it work, then ask about video quality
     me try
+    have ben and chris test it out [realtime?]
   try out disney digital copy
   C player:
-    folder, look for title.edl
     use DVD navigator (check)
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
     http://msdn.microsoft.com/en-us/library/ms787412(VS.85).aspx
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
+    folder, look for title.edl
     allow it to "just play from X to Y exactly" ...
     can start fullscreen
     does this line up right/perfect? can it work, at all?
@@ -131,22 +130,18 @@
     note to them windows vista/7: use ac3filter [?]
     [A,B] 
     once I can jump around, advertise as a phantom editor :)
-  note better to previewer "you are about to preview these specific edits..." ?
   ask for more beta testers for use, ask for more beta testers for creation, too
-    rinse and repeat with various ppl
   create a semi-accurate phantom edit EDL [?] just with splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
-  the final "edited.avi" really "could/should" be playable in WMP...if possible
-  add button "fast preview segment" (from dvd)
+  add button "fast preview segment" (mplayer from dvd)
   upconvert 
-    test it out (+- with others)
+    DVD test it out (+- with others)
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
   be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
     I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
     or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
     call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
- virtual desktop -> real input
 
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
 
@@ -161,13 +156,15 @@
 == DVD decide later to move up or down ==
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  the final "edited.avi" really "could/should" be playable in WMP...if possible
+  note better to previewer "you are about to preview these specific edits..." ?
+  "save to" -> same dir as "get from" yeah
   inventionzy: blu-ray stuff from todo.inventionzy
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
-  advertise virtual desktop :)
   port to mac OS X
     ppc dvdid? documentation button? notepad?
   say something if the EDL is actually "empty" :)
-  already donated: unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg
+  already donated: mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5)
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title track
   fast preview: change it to be aggressive sometimes yes, other times no

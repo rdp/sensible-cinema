@@ -23,5 +23,4 @@
 
 "not edited out stuff" => "some cyborg violence",
 "probable rating" => "still pg, age about 10",
-"mplayer_dvd_splits" => ["1:19:09"]
-# 4749
+#"mplayer_dvd_splits" => ["1:19:09"] # inaccurate slightly
