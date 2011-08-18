@@ -14,7 +14,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
-    s.add_dependency 'rautomation', '> 0.6.3'
+    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO
     s.add_dependency 'rdp-ruby-wmi' # for windows
     s.add_dependency 'plist' # for mac
     s.add_dependency 'ffi' # mouse, etc. needed at least for windows MRI

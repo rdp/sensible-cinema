@@ -1,5 +1,6 @@
-== ==
+== 0.25.3 ==
 
+Mostly explore some more "inventionzy" ideas.
 Add abiliy to filter whole categories of content (allow/disallow them), or levels of content, based on
 user perceived level/user desired, including opposite.
 
