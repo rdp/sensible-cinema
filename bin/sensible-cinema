@@ -620,11 +620,11 @@ module SensibleSwing
        ARGV.index("--upconvert-mode")
     end
     
-    def initialize
+    def initialize be_visible = true
       super "Sensible-Cinema #{VERSION} (GPL)"
       force_accept_license_first
 
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # default
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # default is exit on close
       @panel = JPanel.new
       @buttons = []
       @panel.set_layout nil
@@ -639,7 +639,7 @@ module SensibleSwing
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
       check_for_various_dependencies
-      set_visible true
+      set_visible be_visible
     end
     
     def setup_default_buttons
