@@ -1,5 +1,4 @@
-# comments can go after a # on any line, for example this one.
-"name" => "crz0nnw7                        ",
+"name" => "cars disney",
 
 "mutes" => [
   
@@ -8,7 +7,7 @@
 
 "0:07:26.363" , "0:07:28.448", "profanity", "idiot", "You need tires you [idiot]",
 "0:14:57.105" , "0:14:59.274", "profanity", "piss", "That race was a [piss]er You were booking",
-"0:23:27.991" , "0:23:30.619", "profanity", "moron", "Turn on your lights you [moron]",
+"0:23:25.991" , "0:23:30.619", "profanity", "moron", "fer dang sake, Turn on your lights you [moron]",
 "0:35:29.546" , "0:35:33.509", "profanity", "dumb", "Boy we ain't as [dumb] as you think we are",
 "0:36:00.202" , "0:36:03.038", "profanity", "sex", "I want to get a look at that [sex]y hot rod",
 "0:49:56.914" , "0:50:00.334", "profanity", "idiot", "Crazy grandpa car What an [idiot]",
@@ -17,11 +16,12 @@
 
 "00:30:06.849" , "00:30:10.185", "profanity", "May [deity] have mercy on your soul",
 "01:28:01.615", "01:28:06.119", "profanity", "Thank the manufacturer",
+"00:31:42.319", "00:31:46.406", "profanity", "innuendo", "Nah, I'm just kiddin'. She just likes me fer muh body.",
 
-
+# 28:30 mumble [?]
 ],
 
-# CRZ0NNF1 track 21 "disk_unique_id" => "aa06ad1c|e1e62ad0"
+# sister DVD: CRZ0NNF1 track 21 "disk_unique_id" => "aa06ad1c|e1e62ad0"
 
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
