@@ -4,6 +4,7 @@
   
 "0:51:00.310" , "0:51:02.312", "profanity", "lo..", "Oh [lo..]",
 "0:52:41.745" , "0:52:44.289", "profanity", "he..", "'Cause even in hillbilly [he..] we have standards",
+"00:40:14.957", "00:40:18.126", "profanity", "he..", "I'm in hillbilly [he..]! My IQ's dropping by the second!",
 
 "0:07:26.363" , "0:07:28.448", "profanity", "idiot", "You need tires you [idiot]",
 "0:14:57.105" , "0:14:59.274", "profanity", "piss", "That race was a [piss]er You were booking",
@@ -17,13 +18,14 @@
 "00:30:06.849" , "00:30:10.185", "profanity", "May [deity] have mercy on your soul",
 "01:28:01.615", "01:28:06.119", "profanity", "Thank the manufacturer",
 "00:31:42.319", "00:31:46.406", "profanity", "innuendo", "Nah, I'm just kiddin'. She just likes me fer muh body.",
-
+"52:52", "52:57", "profanity", "innuendo", "not with me but with me",
 # 28:30 mumble [?]
 ],
 
 # sister DVD: CRZ0NNF1 track 21 "disk_unique_id" => "aa06ad1c|e1e62ad0"
 
 "blank_outs" => [
+  "39:22", "39:29", "lewd", "look honey, von dutch",
   # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
@@ -32,7 +34,7 @@
 "disk_unique_id" => "f5751899|2862d307",
 "dvd_title_track" => "23",
 "dvd_title_track_length" => "6985.700",
-# "opensubtitles_number" => "1234567",
+# "opensubtitles_number" => "4022054",
 # "not edited out stuff" => "some violence left in...",
 # "closing thoughts" => "only did the...",
 "mplayer_dvd_splits" => ["3767.35", " 6490.35"], 
