@@ -19,7 +19,7 @@
 "01:28:01.615", "01:28:06.119", "profanity", "Thank the manufacturer",
 "00:31:42.319", "00:31:46.406", "profanity", "innuendo", "Nah, I'm just kiddin'. She just likes me fer muh body.",
 "52:52", "52:57", "profanity", "innuendo", "not with me but with me",
-# 28:30 mumble [?]
+"28:00", "28:08", "profanity", "mumble l...",
 ],
 
 # sister DVD: CRZ0NNF1 track 21 "disk_unique_id" => "aa06ad1c|e1e62ad0"

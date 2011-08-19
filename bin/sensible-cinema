@@ -345,7 +345,8 @@ module SensibleSwing
     def setup_advanced_buttons
     
       new_jbutton("Display the standard buttons") do
-        setup_normal_buttons
+        window = MainWindow.new_child_window
+        window.setup_normal_buttons
       end
     
       add_text_line 'Realtime/Create Options:'
@@ -413,8 +414,6 @@ module SensibleSwing
         sleep 0.3 if OS.mac? # add delay...
         open_file_to_edit_it EdlTempFile
       end
-      
-
 
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
@@ -485,9 +484,9 @@ module SensibleSwing
 #      end
 
       
-      add_text_line 'Create Options that first create/use a local intermediary file:'
+      add_text_line 'Create Options with local intermediary file:'
       
-      new_jbutton("Show options that first create/use a local intermediary file") do
+      new_jbutton("Show options with local intermediary file") do
         window = MainWindow.new_child_window
         window.add_options_that_use_local_files
       end
