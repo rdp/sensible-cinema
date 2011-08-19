@@ -61,13 +61,11 @@ module Mouse
     
     def jitter_forever_in_own_thread
   
-      old_x = get_mouse_location.x
-      old_y = get_mouse_location.y
+      old_x, old_y = get_mouse_location
       Thread.new {
         loop {
           move_y = 8 # just enough for VLC when full screened...
-          cur_x = get_mouse_location.x
-          cur_y = get_mouse_location.y
+          cur_x, cur_y = get_mouse_location
           if(cur_x == old_x && cur_y == old_y)
             @total_movements += 1
             # blit it up
@@ -75,13 +73,11 @@ module Mouse
             move_mouse_relative(0, move_y * -1)
             # let it move it back
             sleep 0.05
-            old_x = get_mouse_location.x
-            old_y = get_mouse_location.y            
+            old_x, old_y = get_mouse_location
             sleep 0.75
           else
             # user has been moving the mouse around, so we don't need to, to not annoy them
-            old_x = get_mouse_location.x
-            old_y = get_mouse_location.y
+            old_x, old_y = get_mouse_location
             sleep 3
           end
         }
@@ -127,8 +123,10 @@ module Mouse
       end
     end
     
+    # [x, y]
     def get_mouse_location
-      MouseInfo.getPointerInfo.getLocation
+      loc = MouseInfo.getPointerInfo.getLocation
+      [loc.x, loc.y]
     end
     
     attr_accessor :total_movements

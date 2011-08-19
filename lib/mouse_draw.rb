@@ -30,6 +30,7 @@ class MouseDraw
   while(Mouse.left_mouse_button_state == :down)
     # set_size
     p 'waiting for end'
+    p Mouse.get_mouse_location
   end
   f.dispose
 end
