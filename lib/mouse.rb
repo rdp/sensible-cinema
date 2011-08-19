@@ -60,18 +60,6 @@ module Mouse
   class << self
     
     def jitter_forever_in_own_thread
-      
-      myinput = Mouse::Input.new
-      myinput[:type] = Mouse::INPUT_MOUSE
-  
-      in_evt = myinput[:evt][:mi]
-  
-      in_evt[:mouse_data] = 0 # null it out
-      in_evt[:flags] = Mouse::MOUSEEVENTF_MOVE
-      in_evt[:time] = 0
-      in_evt[:extra] = 0
-      in_evt[:dx] = 0
-      in_evt[:dy] = 8 # just enough for VLC when full screened...
   
       old_x = get_mouse_location.x
       old_y = get_mouse_location.y
@@ -79,13 +67,15 @@ module Mouse
         loop {
           cur_x = get_mouse_location.x
           cur_y = get_mouse_location.y
+          move_y = 8 # just enough for VLC when full screened...
           if(cur_x == old_x && cur_y == old_y)
             @total_movements += 1
-            in_evt[:dy] *= -1
-            SendInput(1, myinput, Mouse::Input.size)
-            in_evt[:dy] *= -1
+            # blit it up
+            move_mouse(0, move_y *= -1)
+            move_mouse(0, move_y *= -1)
             sleep 0.05
-            SendInput(1, myinput, Mouse::Input.size)
+            # move it back
+            move_mouse(0, move_y *= -1)
             old_x = get_mouse_location.x
             old_y = get_mouse_location.y            
             sleep 0.75
@@ -99,6 +89,19 @@ module Mouse
       
     end
     
+    def move_mouse dx, dy
+      myinput = Mouse::Input.new
+      myinput[:type] = Mouse::INPUT_MOUSE
+      in_evt = myinput[:evt][:mi]
+      in_evt[:mouse_data] = 0 # null it out
+      in_evt[:flags] = Mouse::MOUSEEVENTF_MOVE
+      in_evt[:time] = 0
+      in_evt[:extra] = 0
+      in_evt[:dx] = dx
+      in_evt[:dy] = dy
+      SendInput(1, myinput, Mouse::Input.size)
+    end
+    
     def single_click_left_mouse_button
       left_mouse_down!
       left_mouse_up!
@@ -106,14 +109,14 @@ module Mouse
     end
     
     def left_mouse_down!
-      change_left_mouse_button MOUSEEVENTF_LEFTDOWN
+      send_left_mouse_button MOUSEEVENTF_LEFTDOWN
     end
     
     def left_mouse_up!
-      change_left_mouse_button MOUSEEVENTF_LEFTUP
+      send_left_mouse_button MOUSEEVENTF_LEFTUP
     end
 
-    VK_LBUTTON = 0x01 # mouse left button for GetAsyncKeyState
+    VK_LBUTTON = 0x01 # mouse left button for GetAsyncKeyState (seeing if mouse down currently or not)
     
     def left_mouse_button_state
       GetAsyncKeyState(VK_LBUTTON) # ignore a first response, which also tells us if it has changed at all since last call
@@ -132,7 +135,7 @@ module Mouse
     
     private
     
-    def change_left_mouse_button action_type
+    def send_left_mouse_button action_type
       myinput = Mouse::Input.new
       myinput[:type] = Mouse::INPUT_MOUSE
       in_evt = myinput[:evt][:mi]
@@ -144,4 +147,4 @@ module Mouse
   end
     
 end
-Mouse.total_movements = 0
+Mouse.total_movements=0 # ruby is a bit freaky with these...

@@ -1,3 +1,10 @@
+== ==
+
+Also note experimented with diferent frequencies of mouse jitter at one point,
+to preserve that the timestamp be available on screen, and also it
+avoids annoying the user with mouse jerks when the user has been moving it,
+and several other advanced features.
+
 == 0.25.3 ==
 
 Mostly explore some more "inventionzy" ideas.

@@ -56,12 +56,18 @@ module Muter
   def mute!
     #unmute! # just in case...somehow this was causing problems...windows 7 perhaps? VLC? 
     # anyway we just use a toggle for now...dangerous but works hopefully...
-    hit_mute_key
+    if @@use_mouse_click
+      Mouse.single_click_left_mouse_button
+    else
+      hit_mute_key
+    end
   end
+  
+  @@use_mouse_click = true
 
   # LODO better for doze 7/xp
   def unmute!
-    if @@use_mouse
+    if @@use_mouse_click
       Mouse.single_click_left_mouse_button
     elsif @@use_static_on_top
       stop_playing_static
