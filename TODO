@@ -137,7 +137,8 @@
   add button "fast preview segment" (mplayer from dvd)
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
-
+  refresh bug
+  
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
 
   todo.upconvert
