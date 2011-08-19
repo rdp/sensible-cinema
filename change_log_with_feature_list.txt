@@ -1,3 +1,9 @@
+== ==
+
+Also note the existence of these files and their implication:
+...\sensible-cinema>ls legal
+control_youtube.html  md5s.txt  serve.rb  transcript_mute_vlc.txt
+
 == 0.25.4 ==
 
 Also note experimented with diferent frequencies of mouse jitter at one point,

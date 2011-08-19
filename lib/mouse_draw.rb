@@ -20,7 +20,7 @@ class MouseDraw
   # wait till mouse goes down...
   while(Mouse.left_mouse_button_state == :up)
     sleep 0.05
-    print '.'
+    print 'waiting'
   end
   f.undecorated = true
   f.default_close_operation = JFrame::EXIT_ON_CLOSE
@@ -29,8 +29,9 @@ class MouseDraw
   f.set_location(Mouse.get_mouse_location)
   while(Mouse.left_mouse_button_state == :down)
     # set_size
+    p 'waiting for end'
   end
-  #f.close
+  f.dispose
 end
   
 end
