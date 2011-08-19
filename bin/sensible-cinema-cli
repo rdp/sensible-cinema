@@ -139,7 +139,7 @@ def go_sc(args)
   OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
 
   p 'moving mouse to align it for muting down 10'
-  Mouse.move_mouse_relative 0, 10
+  Mouse.move_mouse_relative 0, 10 # LODO 
   puts "Opening the curtains... (please play in your other video player now)"
   overlay.start_thread true
   key_input = KeyboardInput.new overlay

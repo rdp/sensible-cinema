@@ -19,3 +19,4 @@ digits:
       - 7
       :levels:
       - 130
+does_not_need_mouse_movement: true

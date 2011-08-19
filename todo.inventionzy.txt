@@ -51,3 +51,4 @@
     stage one: query, auto-download when they hit a netflix movie of some type
       stage two: chrome plugin for the same, auto-detect, auto-user, auto-download, auto-watch edited :)
     can insert deleted scenes et al [even external scenes :P] (already showed it somewhat)
+    many others were already completed and done from this list and removed

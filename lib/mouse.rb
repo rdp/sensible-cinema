@@ -65,17 +65,16 @@ module Mouse
       old_y = get_mouse_location.y
       Thread.new {
         loop {
+          move_y = 8 # just enough for VLC when full screened...
           cur_x = get_mouse_location.x
           cur_y = get_mouse_location.y
-          move_y = 8 # just enough for VLC when full screened...
           if(cur_x == old_x && cur_y == old_y)
             @total_movements += 1
             # blit it up
-            move_mouse_relative(0, move_y *= -1)
-            move_mouse_relative(0, move_y *= -1)
+            move_mouse_relative(0, move_y)
+            move_mouse_relative(0, move_y * -1)
+            # let it move it back
             sleep 0.05
-            # move it back
-            move_mouse_relative(0, move_y *= -1)
             old_x = get_mouse_location.x
             old_y = get_mouse_location.y            
             sleep 0.75

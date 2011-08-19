@@ -353,6 +353,7 @@ class OverLayer
     
     if should_be_blank && !blank?
       blank! "%.02f" % (next_point - cur_time)
+      mute! # mute with blanks currently...
       display_change 'blanked'
     end
 
