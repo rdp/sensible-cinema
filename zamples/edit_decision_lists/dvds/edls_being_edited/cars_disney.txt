@@ -21,6 +21,8 @@
 "52:52", "52:57", "profanity", "innuendo", "not with me but with me",
 "28:00", "28:08", "profanity", "mumble l...",
 ],
+# 00:48:09,264 --> 00:48:11,934
+#That crazy old devil woman.
 
 # sister DVD: CRZ0NNF1 track 21 "disk_unique_id" => "aa06ad1c|e1e62ad0"
 
