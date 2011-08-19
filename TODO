@@ -22,10 +22,11 @@
 == yes do ordered in conjunction with the above probably ==
 
 == yes do, un-ordered currently, from the various future release options ==
-  witch lady
-  both mute and blank when blanking by default... (add the other type in there, esp. if a man answers)
   make it suck in single EDL from imdb based on a list 
-  test court jester :)
+  (add the other type in there, esp. if a man answers, can parse it)
+    add to the template, DVD can use it
+  is there a bug if you switch DVD's
+  real docu on how to use the scanner
   lightning strike from various outlets...
   release at some point...Oliver? facebook? (one at a time...)
   research VOB dirs
@@ -37,12 +38,14 @@
     me test it
       1x, 2x Sintel
       snapshots of Sintel "normal", then deploy the various comparison pics
-    DVD test it out (+- with others)
-  add new open button "edit the one for current DVD"
-  "fix" mplayer EDL pausing
+    DVD test it (+- with others testing it for me too)
+  add new open button "edit the EDL for current DVD"
+  "fix" mplayer EDL pausing their code
   the open button should open in the "editing" EDL dir.
+  test court jester :)
   warn against makemkv (and check it, too, and offer a bounty! :)
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
+  witch lady
   split out the "dependency" code
   try buy edit lists from all x,y,z [?] offer them money LOL
     http://www.familysafemovies.com
@@ -118,6 +121,7 @@
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
+    use 29.97 fps
     folder, look for title.edl
     allow it to "just play from X to Y exactly" ...
     can start fullscreen
@@ -151,7 +155,8 @@
 == DVD decide later to move up or down ==
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  fix ffmpeg's "red hue"
+  make OCR actually use blanks versus skip
+  fix ffmpeg's "red hue" within their code
   be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
     I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
     or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
