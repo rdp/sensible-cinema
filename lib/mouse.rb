@@ -71,15 +71,16 @@ module Mouse
           if(cur_x == old_x && cur_y == old_y)
             @total_movements += 1
             # blit it up
-            move_mouse(0, move_y *= -1)
-            move_mouse(0, move_y *= -1)
+            move_mouse_relative(0, move_y *= -1)
+            move_mouse_relative(0, move_y *= -1)
             sleep 0.05
             # move it back
-            move_mouse(0, move_y *= -1)
+            move_mouse_relative(0, move_y *= -1)
             old_x = get_mouse_location.x
             old_y = get_mouse_location.y            
             sleep 0.75
           else
+            # user has been moving the mouse around, so we don't need to, to not annoy them
             old_x = get_mouse_location.x
             old_y = get_mouse_location.y
             sleep 3
@@ -89,7 +90,7 @@ module Mouse
       
     end
     
-    def move_mouse dx, dy
+    def move_mouse_relative dx, dy
       myinput = Mouse::Input.new
       myinput[:type] = Mouse::INPUT_MOUSE
       in_evt = myinput[:evt][:mi]

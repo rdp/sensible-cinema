@@ -84,7 +84,7 @@ def go_sc(args)
     # assume they want an online player, right? LODO player can tell us...
     auto_found = AutoWindowFinder.search_for_single_url_match
     if auto_found
-      p 'auto-discovered open window for EDL, using it ' + auto_found
+      p 'auto-discovered open window for player x EDL, using it ' + auto_found
       settings = EdlParser.parse_file auto_found
       if settings["from_url"]
          require 'tempfile'
@@ -108,8 +108,8 @@ def go_sc(args)
     puts 'Selected scene descriptions file ' + File.basename(edit_decision_list) + "\n\t(full path: #{edit_decision_list})"
     Blanker.startup
     # todo start it late as it has an annoying startup blip
-    overlay = OverLayer.new(edit_decision_list	)    
-  end  
+  end
+  overlay = OverLayer.new(edit_decision_list) if edit_decision_list
   
   if File.exist? player_description.to_s
     puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
@@ -138,6 +138,8 @@ def go_sc(args)
   
   OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
 
+  p 'moving mouse to align it for muting down 10'
+  Mouse.move_mouse_relative 0, 10
   puts "Opening the curtains... (please play in your other video player now)"
   overlay.start_thread true
   key_input = KeyboardInput.new overlay
