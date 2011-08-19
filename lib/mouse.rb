@@ -90,7 +90,7 @@ module Mouse
       
     end
     
-    def move_mouse_relative dx, dy
+    def move_mouse_relative dx, dy 
       myinput = Mouse::Input.new
       myinput[:type] = Mouse::INPUT_MOUSE
       in_evt = myinput[:evt][:mi]
