@@ -33,6 +33,7 @@ describe ScreenTracker do
       rescue
         silence = File.expand_path("../lib/silence.wav").gsub("/", "\\")
         vlc =  Dir['/program files*/videolan/VLC/vlc.exe'][0]
+# /Applications/VLC.app/Contents/MacOS/VLC   lib/silence.wav -f
         Dir.chdir(File.dirname(vlc)) do; IO.popen("vlc.exe #{silence}").pid; end # includes a work around for JRUBY-4959 /4958
         
         # now also work around JRUBY-5756

@@ -1,7 +1,7 @@
 == roadmap [for just tasks, see below though] == 
 
-  netflix instant for OS X
   upconvert DVD/netflix
+  tweaks/docu
   C EDL
   
   === loose ordering/eventually ===
@@ -22,6 +22,7 @@
 == yes do ordered in conjunction with the above probably ==
 
 == yes do, un-ordered currently, from the various future release options ==
+  netflix instant for OS X
   make it suck in single EDL from imdb based on a list 
   (add the other type in there, esp. if a man answers, can parse it)
     add to the template, DVD can use it
