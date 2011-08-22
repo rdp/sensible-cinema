@@ -1,8 +1,11 @@
-== ==
+== 025.5==
+
+Cleaned up upconverting options to hopefully cause less confusion. Until somebody complains otherwise.
 
 Also note the existence of these files and their implication:
 ...\sensible-cinema>ls legal
 control_youtube.html  md5s.txt  serve.rb  transcript_mute_vlc.txt
+
 
 == 0.25.4 ==
 
