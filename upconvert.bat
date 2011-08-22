@@ -1,1 +1,1 @@
-j bin/sensible-cinema --upconvert-mode
+j %* bin/sensible-cinema --upconvert-mode

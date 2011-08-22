@@ -93,14 +93,13 @@ module SensibleSwing
      ARGV.index("--create-mode")
     end
     
-    # currently advanced mode only *adds* buttons
     def new_jbutton title, tooltip = nil
       button = JButton.new title
       button.tool_tip = tooltip
       button.set_bounds(44, @starting_button_y, @button_width, 23)
       @panel.add button
       @buttons << button
-      if block_given? # allow for new_jbutton("xx") do ... end [this works through some miraculous means LOL]
+      if block_given? # allow for new_jbutton("xx") do ... end [this is possible through some miraculous means LOL]
         button.on_clicked { yield }
       end
       increment_button_location
@@ -134,9 +133,9 @@ module SensibleSwing
 
     LocalStorage = Storage.new("sensible_cinema_storage")
     
-    def close_when_done thread, jitem
-      if jitem
-        Thread.new { thread.join; jitem.dispose }
+    def close_when_done thread, j_item
+      if j_item
+        Thread.new { thread.join; j_item.dispose }
       end
     end
     
@@ -167,14 +166,14 @@ module SensibleSwing
     end
     
     # a window that when closed doesn't bring the whole app down
-    def self.new_child_window
-      out = MainWindow.new
-      out.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
-      out.parent=self
-      out
+    def new_child_window
+      child = MainWindow.new
+      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
+      child.parent=self # this should have failed in the PPL
+      child
     end
     
-    attr_accessor :parent
+    attr_accessor :parent, :upconv_line
 
     def add_change_upconvert_options_button
       @show_upconvert_options = new_jbutton("Set Playback Upconversion Quality Options") do
@@ -190,7 +189,7 @@ module SensibleSwing
           LocalStorage['screen_multiples'] = 2.0
         end
         
-        upconvert_window = MainWindow.new_child_window
+        upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
@@ -203,7 +202,13 @@ module SensibleSwing
     end
     
     def change_upconvert_line_to_current
-      @upconv_line.set_text get_current_upconvert_as_phrase if @upconv_line # LODO ...
+      current = get_current_upconvert_as_phrase
+      if @upconv_line
+        @upconv_line.set_text current
+      end
+      if @parent && @parent.upconv_line
+        @parent.upconv_line.set_text current
+      end # LODO we want both [?]
     end
     
     def select_new_sxs_style
@@ -361,7 +366,7 @@ module SensibleSwing
     def setup_advanced_buttons
     
       new_jbutton("Display the standard buttons") do
-        window = MainWindow.new_child_window
+        window = new_child_window
         window.setup_normal_buttons
       end
     
@@ -503,7 +508,7 @@ module SensibleSwing
       add_text_line 'Create Options with local intermediary file:'
       
       new_jbutton("Show options with local intermediary file") do
-        window = MainWindow.new_child_window
+        window = new_child_window
         window.add_options_that_use_local_files
       end
       
