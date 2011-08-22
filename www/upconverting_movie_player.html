@@ -1,19 +1,51 @@
 <html>
-<body>
+<head>
 
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"  type="text/javascript"></script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-4531218-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<h1>Upconverting Software DVD/Video Player</h1>
 <pre>
       Sensible Cinema can playback your DVD's or Movie files in upscaled goodness.  This means they look
       awesome on higher resolution monitors and it really brings out the details in the movie.
       
       You can use this to play it back in high-res on your monitor, or attach your computer to your projector
-      or TV to get back the equivalent of a hardware "DVD upscaler" playback, but for free.
-      Try it out, you won't be disappointed.
+      or TV to get back the equivalent of a hardware "DVD upscaler" playback, but for free, no extra
+      hardware necessary.
 
-      1) installation: download the latest version from http://sourceforge.net/projects/sensible-cinema/files
+      How:
+
+      1) installation: download the latest version from <a href="http://sourceforge.net/projects/sensible-cinema/files">http://sourceforge.net/projects/sensible-cinema/files</a>.  
+         Note that you must accept the terms of the gplv3 in order to use this software.
       2) unzip it
-      3) run "advanced--upconverter"
-      4) click setup upconverting options, choose "DVD style playback"
-      5) close the setup window, insert DVD, click "watch DVD upconverted (unedited)"
+      3) run "advanced--upconverter.bat" file
+      4) click setup upconverting options button, choose "DVD style playback"
+      5) close the setup window, insert DVD, click "watch DVD upconverted (unedited)" button
+   
+      Enjoy your film.  Feedback welcome rogerdpack@gmail.com
+
+      How does it do this?  It uses a high quality software upscaling algorithm (lanczos)
+      along with some denoise and sharpening filters, via ffmpeg/mplayer programs.
+      This is (arguably) better than some hardware DVD upscalers.  It's still a work in progress
+      but seems to be working well.
+
+      See also the various other things that sensible cinema does <a href="..">here</a>.
+     
 </pre>
 </body>
 </html>
