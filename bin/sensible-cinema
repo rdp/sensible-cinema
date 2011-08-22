@@ -179,12 +179,13 @@ module SensibleSwing
       @show_upconvert_options = new_jbutton("Set Playback Upconversion Quality Options") do
         
         unless LocalStorage[ScreenMultipleFactor]
-          show_blocking_message_dialog <<-EOL
+=begin          show_blocking_message_dialog <<-EOL
           With upconversion, if your monitor is 1024 pixels wide and you upconvert to 2048 pixels then display it on 1024, it looks better.
           Sensible Cinema sets the default default resolution to be 2x your screen resolution, which is better for high end cpu's.
           If you have a low powered system or laptop you may need to change it (drag the slider) lower to avoid it displaying only a black or white screen, as your system can't handle it,
           so adjust accordingly if you have a lesser system.  Also changing this setting can make it use more or less CPU overall.
           EOL
+=end
           # LODO make into tooltip too [?]
           LocalStorage['screen_multiples'] = 2.0
         end
@@ -232,7 +233,7 @@ module SensibleSwing
 
     def add_change_upconvert_buttons
       raise 'should have already been set for us' unless LocalStorage[ScreenMultipleFactor]
-      @none = new_jbutton("reset upconvert options to default (none)")
+      @none = new_jbutton("Reset upconvert options to default (no upconversion)")
       @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       @none.on_clicked {
         LocalStorage[UpConvertKey] = nil
@@ -261,8 +262,8 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
       }
-      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is typically good)." 
-      add_text_line "If mplayer just dies or if it displays only a blank screen then lower this."
+      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is good for high-end)." 
+      add_text_line "If mplayer just dies or displays only a black or white screen then lower this setting."
       slider = JSlider.new
       slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
   
