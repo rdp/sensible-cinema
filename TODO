@@ -82,6 +82,7 @@
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not [?])
   advertise urug again?
     after works in mac. Why not?
+	@ffmpeg windows builds += mulder +- VLC : libjpegturbo :)
   advertise virtual audio
   advertise screen capture
   create skype fella...hmm...

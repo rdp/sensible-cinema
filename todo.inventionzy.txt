@@ -4,6 +4,8 @@
       some blu-ray player descriptor somehow
     can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
 
+	EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
+	allow for extra start time offset for videos, if netflix instant has any
     can "suck in" a large list of EDL's from imdb at build time, and/or from a wiki (github wiki in this case), and a "resync" button?
     can handle multiple dvdid's et al (same EDL) (mostly do already though)
     can overlay over online films too
@@ -12,6 +14,9 @@
     can control volume *and* play other audio
     can add to to supplement EDL + EDL timestamps
     can pick specific profanities to avoid
+    it can scan "playing" instant streaming titles, and/or OCR or take the audio and look for words, to check for profanity.
+      it can examine "output volume level" to auto-detects violence.
+      similarly for "questionable" content
     manual select which to include into an EDL
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
