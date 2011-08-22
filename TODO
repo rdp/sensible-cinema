@@ -86,7 +86,6 @@
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not [?])
   advertise urug again?
     after works in mac. Why not?
-	@ffmpeg windows builds += mulder +- VLC : libjpegturbo :)
   advertise virtual audio
   advertise screen capture
   create skype fella...hmm...
@@ -147,7 +146,7 @@
   add button "fast preview segment" (mplayer from dvd)
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
-  refresh bug
+  refresh bug try to reproduce
   can edit books, too.
   
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
@@ -162,6 +161,8 @@
 
 == DVD decide later to move up or down ==
 
+  ffmpeg compile it, see if it runs dshow windows
+  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
   accomodate ISO's as input as if they were DVD's themselves
   make OCR actually use blanks versus skip
