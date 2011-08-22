@@ -5,6 +5,7 @@
     can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
 
 	EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
+    with several, or start one, end one, etc.
 	allow for extra start time offset for videos, if netflix instant has any
     can "suck in" a large list of EDL's from imdb at build time, and/or from a wiki (github wiki in this case), and a "resync" button?
     can handle multiple dvdid's et al (same EDL) (mostly do already though)
