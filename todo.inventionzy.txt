@@ -18,6 +18,7 @@
       it can examine "output volume level" to auto-detects violence.
       similarly for "questionable" content
     manual select which to include into an EDL
+    use multiple filters/complex mapping graphs to overlay just the correct frameage: http://ffmpeg.org/libavfilter.html
     user preference "how many down clicks on volume for profanity"? 
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
       or even just suck in any web file, for starters
