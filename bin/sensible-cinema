@@ -329,7 +329,7 @@ module SensibleSwing
       out = "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}"
       if settings
         multiple = LocalStorage[ScreenMultipleFactor]
-       out += " (screen multiplier #{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
+       out += " (screen multiplier #{get_current_max_width_resolution}*#{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
       end
       out
     end

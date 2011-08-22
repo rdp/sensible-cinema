@@ -6,6 +6,7 @@
   C EDL
   
   === loose ordering/eventually ===
+    create a skype recorder
     compare netflix/blu-ray timings et al
     linearize [?] hmm...
     re-update todo/all docu/user feedback etc.
@@ -27,7 +28,7 @@
   change upconvert options needs its own "close" button
   netflix instant for OS X
 
-  tweak web stuff/propaganda for upconvert
+  tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
   is there a bug if you switch DVD's
   lightning strike from various outlets...
@@ -45,7 +46,6 @@
   add new open button "edit the EDL for current DVD"
   "fix" mplayer EDL pausing their code
   the open button should open in the "editing" EDL dir.
-  test court jester :)
   warn against makemkv (and check it, too, and offer a bounty! :)
   (add the other type in there, esp. if a man answers, can parse it)
     add to the template, DVD can use it
@@ -160,12 +160,13 @@
   todo.virtual_audio
 
 == DVD decide later to move up or down ==
-
   ffmpeg compile it, see if it runs dshow windows
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  test court jester :)
   accomodate ISO's as input as if they were DVD's themselves
   make OCR actually use blanks versus skip
+  fix the audio timestamps for my capturer...
   fix ffmpeg's "red hue" within their code
   be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
     I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
