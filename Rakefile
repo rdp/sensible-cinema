@@ -162,6 +162,7 @@ def on_wbo command
   
 end
 
+desc 'sync website'
 task 'update wbo' do
   on_wbo 'cd ~/sensible-cinema/source && git pull'
 end
