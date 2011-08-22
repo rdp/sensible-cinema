@@ -556,7 +556,8 @@ module SensibleSwing
   
   it "should be able to upconvert at all" do
     @subject = MainWindow.new false
-    @subject.add_setup_upconvert_buttons
+    MainWindow::LocalStorage['screen_multiples'] = 2.0 # default so it won't fail us...
+    @subject.add_change_upconvert_buttons
     @subject.stub(:display_current_upconvert_setting) {} # no popup ;)
     @subject.stub(:show_mplayer_instructions_once) {}
     click_button(:@medium_dvd)
@@ -583,7 +584,7 @@ module SensibleSwing
   end
   
   it "should be able to play upconverted stuff" do
-    @subject.setup_upconvert_buttons
+    @subject.add_play_upconvert_buttons
     click_button(:@watch_file_upconvert)
     assert_played_mplayer
     click_button(:@watch_dvd_upconvert)

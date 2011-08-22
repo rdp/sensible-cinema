@@ -15,7 +15,8 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-# use it like
+
+# shamelessly stolen from the redcar project
 
     class Storage
       class << self
@@ -23,7 +24,7 @@ This file is part of Sensible Cinema.
       end
     
       def self.storage_dir
-        @user_dir ||= File.join(File.expand_path('~'), ".storage")
+        @user_dir ||= File.join(File.expand_path('~'), ".sensible_cinema_storage")
       end
 
       # Open a storage file or create it if it doesn't exist.
