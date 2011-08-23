@@ -1,7 +1,21 @@
 == ==
 
-Note that Sensible Cinema can also convert times back and forth, using the command line,
-to convert its own EDL's into a format that is copy and pastable into a wiki page on IMDB.
+It can now parse out (screen scraping), at runtime, EDL information from a user editable online 3rd party wiki 
+(imdb parent guide), including property timestamp conversions and making it easy to read, etc., and doing all the various
+sections to an appropriate category.
+So it binds the DVD's unique ID with its imdb database.
+
+Note that Sensible Cinema can convert timestamps back and forth, using the command line,
+to convert its own EDL's into a format that is copy and pastable into a wiki page on IMDB. (30 to 29.97 fps)
+
+Note also that it could just as easily parse from a wiki, parse out timestamps, including +- descriptions,
+and save that away to be distributable by the program at compile time, as well.
+
+Note also that it is basically almost a "universal" player at this point, because it has been made to work
+with demos of already several various online/local program playing video players.
+
+Note that it already demo'ed being able to have "user customizable" volume level for muted sections 
+(i.e. not mute it all the way, if desired)
 
 == 0.25.5==
 

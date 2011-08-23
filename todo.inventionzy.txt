@@ -1,35 +1,36 @@
   === patentzy yes actually do vaguely ordered ===
-    blu-ray OCR
-      more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
-      some blu-ray player descriptor somehow
-    can move the mouse 10 pixels down at the beginning, in order to...put it in the right place.
-
-	EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
-    with several, or start one, end one, etc.
-	allow for extra start time offset for videos, if netflix instant has any
-    can "suck in" a large list of EDL's from imdb at build time, and/or from a wiki (github wiki in this case), and a "resync" button?
-    can handle multiple dvdid's et al (same EDL) (mostly do already though)
-    can overlay over online films too
-    it can pull in a DVD based just on the dvd-id "query id, not local? go get it from online"
+      blu-ray OCR
+        more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
+        some blu-ray player descriptor somehow
+      blank_outs => special class for 'em :P
+      
+    post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
+	  EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
+      with several, or start one, end one, etc.
+	    allow for extra start time offset for videos, if netflix instant has any
+    a way to integrate with cable TV, ex: "this show we know started at 1:01, and its offsets should be this after that point"
+    can "suck in" a large list of EDL's from imdb at build time, 
+      and/or a "resync" button, to re-download just the list of updated EDL's/IMDB wiki settings [?]
+    can handle multiple dvdid's et al (same EDL) (mostly done already)
+    it can pull in a DVD based just on the dvd-id "query id, not local? go get it from online to see if the list has been updated since"
     control VLC RC to overlay a logo dynamically
     can control volume *and* play other audio
+    can permanently black out certain coords to keep things prettier...et al
+    remove black when they really move the mouse?
     can add to to supplement EDL + EDL timestamps
-    can pick specific profanities to avoid
+    can pick specific profanities to avoid (I think I demo'ed this already actually)
     it can scan "playing" instant streaming titles, and/or OCR or take the audio and look for words, to check for profanity.
-      it can examine "output volume level" to auto-detects violence.
+      it can examine "output volume level" to auto-detect violence scenes.
       similarly for "questionable" content
-    manual select which to include into an EDL
-    use multiple filters/complex mapping graphs to overlay just the correct frameage: http://ffmpeg.org/libavfilter.html
-    user preference "how many down clicks on volume for profanity"? 
+      it can detect from subtitles (and/or OCR, same thing), questionable content, or violence, based on words used
+    use multiple filters/complex mapping graphs to overlay just the exactly correct overlay: http://ffmpeg.org/libavfilter.html
+    user preference "how many down clicks on volume for profanity" (already possible)
     make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
       or even just suck in any web file, for starters
     space -> advance from pause until next edit item?
     amazon player descriptor, just in case ;P
     can jerk mouse only every so often (cheap would be to just arbitrarily have it from x to y, demo that)
-    can scan several player descriptors to "pick the right one" (kind of already showed this one)
-    edited streamer screencast demo (the rumor guy demo, like zediva)
-    incorporate the EDL translator from the BYU-I fella
-    post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
+    can scan several player descriptors to "pick the right one" (kind of already showed/did this one)
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
     can "control mouse" to drag it to change location (ex: "move down 10 pixels at beginning of movie" LOL)
     beep at them/warn when not tracking [?]
@@ -41,17 +42,17 @@
     don't mute, just almost mute LOL or almost mute and static-ify
       or combine the two
     can suck it in "in realtime" from online, and parse it +- from a user editable wiki
-    a UI to select categories, works
-    edited blu ray movie playback screencast, as that's apparently not in the patent...
+    a UI to select categories, save as preference, apply it each time at DVD selection time
     don't use timecodes, use "% of the movie" and "total length" perhaps?
-    look at their patents for other ideas? [+- nissim patents?]
-    just pause it, tell them how far to fast forward at that point :P [somewhat already done]
+    look at patents for other ideas? [+- nissim patents?]
+    just pause it, tell them how far to fast forward at that point :P [somewhat already done/showed actually, thanks to mplayer]
     
-    have the user forced to tell me what each digit is, themselves :P
+    have the user forced to tell me what each digit is, themselves, at runtime, for OCR :P
     the online edl stuff itself (its todo list)
     javascript API
-      phase 2: I can accomodate for pauses, too.
-      phase 3: I can re-train based on events of stoppage
+      phase 1: done
+      phase 2: I can accomodate for pausing, too.
+      phase 3: I can re-train based on events of stoppage (buffering et al)
       phase 4: I can constantly poll and react appropriately to current timestamp
     post video demo of it streaming to a console device
     maybe could just "play from x to y" [no exclude info?] instead of "here are the bad parts"
@@ -59,3 +60,4 @@
       stage two: chrome plugin for the same, auto-detect, auto-user, auto-download, auto-watch edited :)
     can insert deleted scenes et al [even external scenes :P] (already showed it somewhat)
     many others were already completed and done from this list and removed
+    there are some more ideas in the TODO file itself, and/or on the blog sites where I have posted other ideas too

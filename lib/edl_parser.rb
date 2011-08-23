@@ -56,10 +56,7 @@ class EdlParser
       end
       # blank_outs or mutes for each...
       # TODO make -> optional
-      # TODO handle all sections
-      # violence => blank_outs
       split_into_timestamps = /([\d:]+(?:\.\d+|))\W*-&gt;\W*([\d:]+(?:\.\d+|))([^\d\n]+)/
-      p output
       for type, settings in all
         settings.scan(split_into_timestamps) do |begin_ts, end_ts, description|
           puts "parsing from wiki imdb  entry violence: #{begin_ts} #{end_ts} #{description} #{type}"

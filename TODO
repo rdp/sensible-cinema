@@ -8,7 +8,7 @@
   tweaks/docu
   C EDL
   
-  === loose ordering/eventually ===
+  === non ordered/eventually ===
     create a skype recorder
     compare netflix/blu-ray timings et al
     linearize [?] hmm...
@@ -23,17 +23,15 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  make it suck in single EDL from imdb based on a list 
-  note universal
 
 == yes do ordered in conjunction with the above probably ==
 
 == yes do, un-ordered currently, from the various future release options ==
+  netflix instant descriptor for OS X
   change upconvert options needs its own "close" button
-  propaganda the upconverting DVD player once it works
+  propaganda the upconverting DVD player
   tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
-  test is there a bug if you switch DVD's
   blank_outs => special class for 'em :P
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
@@ -54,7 +52,6 @@
   warn against makemkv (and check it, too, and offer a bounty! :)
   (add the other type in there, esp. if a man answers, can parse it)
     add to the template, DVD can use it
-    release
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
   witch lady
   split out the "dependency" code
@@ -155,6 +152,11 @@
   refresh bug try to reproduce
   can edit books, too.
     +- list/publish :)
+  create the following EDL: 10 commandments DVD to skip the intro music LOL
+  inventionzy: blu-ray stuff from todo.inventionzy
+  sons of provo "music video" EDL
+  port to mac OS X PPC
+    documentation button? notepad?
   
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
 
@@ -167,14 +169,12 @@
   todo.virtual_audio
 
 == DVD decide later to move up or down ==
-  ffmpeg compile it, see if it runs dshow windows
+  ffmpeg compile it mingw, see if it runs dshow windows
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  netflix instant for OS X
   test court jester :)
+  ppc dvdid work?
   accomodate ISO's as input as if they were DVD's themselves
-  make OCR actually use blanks versus skip
-  fix the audio timestamps for my capturer...
   fix ffmpeg's "red hue" within their code
   be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
     I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
@@ -184,14 +184,11 @@
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   note better to previewer "you are about to preview these specific edits..." ?
   "save to" -> same dir as "get from" yeah
-  inventionzy: blu-ray stuff from todo.inventionzy
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
-  port to mac OS X
-    ppc dvdid? documentation button? notepad?
-  say something if the EDL is actually "empty" :)
-  already donated: rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5)
+  prompt something if the EDL is actually "empty" :)
+  already donated: rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox
   note "you want to optimize your reverse blitting first... :)"
-  if 2 EDL's, still can choose a title track
+  if 2 EDL's, still can choose a title trackfor automatically playing it right.
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
@@ -199,20 +196,15 @@
   investigate: can I use zoomplayer max?
 
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter? It does jerk a bit doesn't it, on slower?
-  mplayer EDL while grabbing, from grabbed :P
   can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   investigate xbmc dvd edl how do you do that? [+- real dvd]
-  release capture filter, advertise it :)
-  @ffdshow-tryouts: don't crash me!
   conference it can "pick out songs" (like a music video? mp3's?)
-  check with WME plugins, add instructions, then note in the README "support for x..."
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
     should have dots uh guess...
   fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
     "fan editor" .bat file LOL
-  highlighting doesn't work (upconvert DVD with no title track)
-  yet another icon plz
-  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz?
+  @mplayer: highlighting doesn't work (at least with upconvert DVD)
+  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz? [is this necessary]
   @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...
     could for files, not for dvd's yet tho...
@@ -223,18 +215,13 @@
     got fatal exception in button
     detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
     SyntaxError
-  lua VLC EDL plugin? LOL yeah right.
+  lua VLC EDL plugin?
   test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
-  investigate dvdrsbvdl (windows media center edl plugin)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
   @mplayer: chooses wrong language ts from jester...sigh
   @mplayer: crash: http://betterlogic.com/roger/2011/07/mplayer-mac-os-x-woe/
-  @mplayer: crash IQ nav, keys dont' work in windows, prolly dvdcss doesn't cache in windows, can't pass parameter in windows LOL
-  @mplayer: could you umm...go ahead and support avisynth input pleaz, assuming you don't?
-  @mplayer: dvdnav:///e: should play the *menu* please? please? [???]
   @mplayer: that one [IQ? hitchhikers'?] fail fail fail until I used -dvd-device [?] huh?
     try to reproduce...
-  @mplayer: do I need -zoom ?
   @mplayer: http://www.infognition.com/VideoEnhancer/ can I do that through any means LOL?
   @mplayer: gl shucks on windows 7!
   can accept straight ".edl" files too, as my input (?)
@@ -242,22 +229,17 @@
   @mplayer: dump core needs a better message..could use one http://lists.mplayerhq.hu/pipermail/mplayer-users/2007-February/065420.html
   @mplayer: -edl nonexist should warn [?] also when it hits an EDL sector ouput something plz?
   @mplayer: allow EDL to have full timestamps for ease of editing :)
-  youtube videos -> new account name
   add an mencoder convert with mplayer_breaks button :P
     can I just use mencoder -hr-edl-seek (off mpeg) to avoid the fulli phase? please? does it work super-accurately, though, off fulli? off other?
     maybe just under an "advanced" window...
   @mplayer homepage: list mulder's not smplayer's, plz?
-    also smplayer advertise more prominently :P
+    also smplayer advertise it even more prominently :P
+  ask mplayer "could you make the OSD available to smplayer so it can get the right timestamps at least for its display?"
   make this thing load faster: don't require rubygems...uh...faster_require?
   does xbmc need a "convert to 30fps edl" for DVD?
   @xbmc can you call out to another player prog plz?
   @xbmc "command line play this dvd with this EDL" :)
-  ask mplayer "could you make the OSD available to smplayer so it can get the right timestamps at least for its display?"
-  some way to hide spoilers, like soundtrack adds that ruin the movie for ya...
-  decide on "community" -- should it be all my own community? mymovies community?
-  the auto-matcher filename to subtitles [?]
-    auto-downloader based on filename/dvd name/md5 ?
-  "media browser" plugin?
+  add some way to hide spoilers, like soundtrack adds that ruin the movie for ya...
   @makemkv: show us the title numbers, and number them *by those*
   @macports: set notestxt \
   13	    "The MPlayer developers do not believe in making regular releases. \
@@ -289,37 +271,27 @@
   blu ray timing
     my one, others.  Are they the same as DVD's?  They seem really close...
   pull in information from thetvdb to the GUI app
-  create the following EDL: 10 commandments DVD to skip the intro music LOL
-  @VLC you lop off the end, somehow, I guess...
   create the "ffmpeg frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
   research the gplv3, add terms. Maybe want real lawyer, even?
-  sons of provo "music video" EDL
   it can "slow certain sections down" that might look way cool! LOL
+  it can "speed up" certain [scary/frightening] sections, to make them less tense
   script powerdvd via keystrokes
   VLC: suggest uservoice
   can I just use mencoder with an EDL parameter to possibly split/join more quickly or something?
   10 minute splits for much faster viewage [edl fast preview seems way too lossy ?]
-  port to linux
-  "release" it to even more developers
-    plug.org, more rubyists than urug?
-    after OS X confidence :)
-  an all online EDL editor
+  an all online EDL editor+publisher
     flash canvas
     OCR?
     hotkeys
     advanced editing, like sub-parts of frames, with each way to specify the sub-parts
-  donate http://lame.buanzo.com.ar
-  donate winscp, sox
-  do todo.inventionzy.txt all
   an "automatic mplayer split finder" :)
   buy forever strong in italian, compare... :P
   mac version of the C player 
     "just play from X to Y exactly" [?]
   forever strong DVD timestamps [and other?], compare timestamps with amazon VoD, too, also jonah amazon VoD [if desired?]
   take out the extra console window box output :) [scary, and closing it closes SC!]
-  auto-feedback on crashes [?]
-  script avidemux, virtualdub, as a demo?
+  auto-emailed feedback on crashes [?]
   accomodate failed deletes [files in use] better than dying with a backtrace
   vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
@@ -332,27 +304,25 @@
   check why out of sync my turn on earth on blacky MPH-HC
     does it with other players...?
   super spiffy editor that tracks timestamps for you for new lines
-  create a uservoice/uservoice+
+  create a uservoice/uservoice+ for my own [?]
   note that I might be able to make a half and half player that just "sleeps"...if I can get the timing just right...(is this what mplayer does)
   don't exit if a timestamps has same beginning as end, but do warn (is this a problem still?)
   mpeg is lossy (at least my current one pass conversion still is...) and smplayer can't play it right unedited
     only if asked?
-  alpha transparent "grey" overlay (for partial parts of the window)
   certain sections: can speed them up, to make them less scary or what not, but you can still see what's happening. Not sure how audio could/should apply here.
-  google android TV app/iTV ?
   advertise related bounties to their various groups
   create a really snazzy pro looking website
   can I use ffmpeg to re-sync audio, and be able to re-play the edited copy, and thus avoid the small but extra harddup overhead (basically "just avoid")?
     I can live with "watching while grabbing" being lack luster...or maybe I can grab it with acodec copy (typically), then reencode it somehow later into something that is friendlier to computer players...or is it encoders?
       appears the only messed up audio one is smplayer...and probably mplayer with DVD's [?]
         do this after frame accurate
-  better program exe icon
-  @mplayer: seeking to within EDL failz
+  @mplayer: seeking to within an EDL failz 
   can make community overlay "comments" somehow or other/whatever cyberlink does :)
+    based on timestamps, transparent overlay
   re-look through all my old "thoughts" notes/blogs
   mplayer playlist mode possible, like real playlist?
   add button start EDL playback from dvd here [?] (for create mode)
-  fix prio for first ffmpeg instance not being settable [huh?]
+  fix prio for very first ffmpeg instance not being settable [huh?]
   check if a newer version of smplayer (+- forum links) can replace raw usage of mplayer now?
   integrate sub-titles-zy-er auto-download 
     I could integrate discid => hashes => opensubtitles.org 
@@ -366,7 +336,7 @@
   speedify things (the whole process takes approximately...eternity?)
   can overlay with an arbitrary image (I think mencoder can actually do this...)
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
-  an 'always blank not skip the mutes' option for paranoid
+  an 'always blank not skip the mutes' option for hard core
   video on how to use imdb wiki
   accomodate alternate endings et al
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
@@ -394,9 +364,6 @@
         note to people: can edit these to your liking, resubmit
   "Re-run most recent" disabled when there isn't one [?]
   can rip from a DVD-like local folder (would anybody ever need this?)
-  can parse IMDB parental guide
-    add stuffs to imdb hmmm
-    IMDB easy DVD mapping...
   can blank out the video, with audio continuing through...
   can use a fast temp drive, save through it to another :P
     (when they have two...)
@@ -417,10 +384,11 @@ warn when labels both exist and don't match...
 
 @mplayer warn before overwrite
 @mplayer you cannot convert mkv files correctly you silly!
-bounty dvdnav
-  fix dvdnav stuffs?
 
-== random non-DVD/OCR backlog ... or never do DVD. ==
+== random non-DVD/OCR backlog ... or a few never do DVD. ==
+
+auto-mute during hulu commercials [annoying!]
+fix the audio timestamps for my capturer...
 
 @mplayer: you return the wrong return code, sillys! https://gist.github.com/1056292
 @smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]
@@ -429,8 +397,8 @@ Also things skip-worthy include The prefix/endfix of Netflix
 series' that they run together( ex: Dr. Who has 4 episodes in a row, with 4 jarring
 main-title themes between them all.)   This type of thing
 
-timing all dogs go to heaven--way off in hulu? huh?
 some low level frame hijacker for incoming cable movies, too? ... hmm...
+  not hijacker, but monitor to detect location/position
 
 can die when doesn't start well:
 
@@ -442,28 +410,22 @@ C:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:37:in `initialize': poor width
         from bin\sensible-cinema-cli:73:in `go_sc'
         from bin\sensible-cinema-cli:107
 
-misses digits: vlc non full screened 18:00 in...
-misses digits: youtube friday somewhere along there...40 or so [or maybe it got them fine actually...]
-
 can synchronize hulu/netflix instant play, for girlfriends
 create avisynth realtime EDL'er
 
-when mouse jerks the "first" time--don't count it!  It's the next transition that matters..I think so...
-  or count it as "worst possible" ?
+when mouse jerks the "first" time--don't count the next reading!  It's the next transition that matters..I think so...
+  or count it as "worst possible"?
+  it's off by up to 1s, at the least...hmm...
 
 @mplayer: why you can't play some sound files when VLC can? huh? (audio sync) (mpeg issues, probably...yikes mplayer...could file a bounty for us maybe? inquity?)
 advertise my "splitting joining" google doc page. also test the other various options there for accurateness :)
 use voice recognition for profanity [?]
 take out use_class_name for descriptors
 
-after 2020: DVD Navigator in C++ ?
-
-something that works with cable TV, too, somehow?
-
 if sued, could use straight mplayer -ss (+- one at a time, or possibly in a playlist [?] like VLC can...)
   -hr-edl-seek ?
 
-fade in/fade out volume, video
+fade in/fade out volume, video, instead of just hard muting it as it does currently, or hard overlay blanking it, or skipping.
 make the other stuff work again, since I no longer use YAML...
 
 pass all unit tests again jruby
@@ -486,8 +448,6 @@ amazon player
 
 Just fold if s....
 
-a descriptor for some closed source app player...
-
 can "overlay-audio/video"
 
 blanker: allow for one side of the screen or another...
@@ -500,15 +460,7 @@ PISH
 
 check that youtube is working well again for all screen resolutions...
 
-run it off a normal person (hulu, DVD). rinse and repeat
-
 advertise on ruby flow
-
-"ripperzy-ize" (low prio)
-    can record from online [huh? do I even want this?]
-      maybe can record something, then extract the bad...
-      low prio
-      remove commercials?
 
 DRY up :levels--it's in the ocr spec as well as the others...
 
@@ -519,15 +471,13 @@ back off on mouse jerking...only every so often?
 
 preference for beeping at them, et al
 
-itunes video on demand player
+itunes video on demand player description
 
-blockbuster "rent" on demand player
+blockbuster "rent" on demand player description
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
     probably only possible after creating the desktop streamer hmm
-
-no releasing experimental for now, I guess
 
 integrate with librivox' audio so you can avoid profanity in classics.  Somehow.  This would be nice for portable players.
   You know, for static things like this, a 'pre-cutter' would sure be convenient...
@@ -535,45 +485,29 @@ integrate with librivox' audio so you can avoid profanity in classics.  Somehow.
   
 itunes player for profanity (music)?
 
-make a list of "known clean" movies...hmm...
-
 an "online anybody can chat while watching this movie" (or anybody can edit this wav and listen to it as overlay...) prefer the latter.
 
 an online applet web runnable? Why not?
   click here to watch your favorite film edited on hulu! Just click! [* yea!]
   
-code refactors: "screen time change", order should be swapped in bin/x output (just cleanup)
-
 easier installation for windows: self-extracting exe's :)
   later: .msi?
 
-can blank overlay with added text like "and you are one awesome klingon"
-
-ability to record it from online/live, then apply edits.
-
-add my stuff to imdb...? make a wiki?
+can blank overlay with specifiable text like "and you are one awesome klingon"
 
 user customizable levels...
-  maybe even "I don't like ones that are x, y, z", or "boring level x"
+  maybe even "I don't like ones that are x, y, z", and/oor "boring level x or greater"
 
 with VLC/youtube non full screen, it does the annoying mouse thing needlessly (which doesn't bug as much these days...)
 
-can overlay with wav file (would work already for VLC [?], could also "click to mute" for others...hmm...)
-
 the muting currently is so togglesy...if VLC ever fixes itself, fix this! 
 
-fix any/all pending tests...
-
-can permanently black out certain coords to keep things prettier...et al
-  remove black when they really move the mouse?
-
 Linux port (call that good enough for usability on TV's...), should be...
-  OS X port
 
 blanker outer with user specifiable color
   better default color?
 
-Auto mute/blank commercials?
+Can auto mute/blank/skip  commercials?
 
 transfer ownership to a single LLC
   new github username
@@ -585,41 +519,15 @@ overlay/replace current playback with some url of audio or video
   user editable joke overlays (like a wiki...)
   realtime overlays (like group chat for those watching the film...)
 
-control volume programmatically (using mouse) on the player itself.
-control mute programmatically (using mouse) on the player itself.
-control location programmatically (using mouse) on the player itself.
-
 Have a "list of all known movies (url's)" and be able to open (IE et al) to the correct part, and start playing them, and they work...
-  or known parseable imdb's
 
 does my sweet heart have any suggestions? (make it work well for laymen)
 
-web browser plugin?
-  popups *inside* netflix "play this edited" ?
-
-Programmatically do all of the above, by driving VLC with libvlc (its API).
-  So this would be basically tracking VLC using its libvlc callbacks, instead of screen times
-  fork the Python project?
-  VLC
-    use VLC's web interface? telnet?
-    optimize it with best appropriate iframes (LOL)
-
 integrate with google TV...bravia...maybe...somehow...boxxee? roku?
   itunes TV? apple tv? ps3?
+  probably via broadcast...
 
---server?  optionally higher prio?
-
-@MRI:
-
-irb(main):001:0> a = File.open('big1', 'w')
-=> #<File:big1>
-irb(main):002:0> a.seek 10_000_000_000
-=> 0
-irb(main):003:0> a.write 'b'
-=> 1
-irb(main):004:0> a.close # very slow mri 1.9.2
-=======
-take out all require 'rubygems'ses...
+take out all various require 'rubygems'ses...
 
 warn them when it looks like screen capture is very painful/expensive [is it too bad anyway, though] ? iff necessary
 
@@ -634,7 +542,7 @@ create a "book edit list" (word x is at position y...)
 @mencoder: can't split
 something like you watch it *with* you friends and can all chat together...hmm...
 
-do the same, but for books...also optimize them for reading through full volumes...you don't want a summary...don't want the title, know it's librivox...maybe say chapter x, that's it.  Probably start by just editing out the profanity, though :P Also do the Book of Mormon
+do the same, but for audio books...also optimize them for reading through full volumes...you don't want a summary...don't want the title, know it's librivox...maybe say chapter x, that's it.  Probably start by just editing out the profanity, though :P Also do the Book of Mormon
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
@@ -645,22 +553,8 @@ a DVD burner for ISO, then it can "burn over" some bad sectors? or you can grab 
 
 maybe require them to rip their stuff "through some means or other" and we'll operate on the product based on an EDL list :) [could be more legal]
 
-
-@rspec:   
-1) EdlParser should raise for end before beginning
-     Failure/Error: proc{ go({"mutes"=>{105=>104.9}})}.should raise_error(/SyntaxError/)
-     expected Exception with message matching /SyntaxError/, got #<SyntaxError: warning--detected an end before a start 104.9 < 105.0>
-     # edl_parser.spec.rb:115
-     # :1
-    
-    message confusing :)
-
-give money to nomachine--wow!
-
 a boxee api? 
 I *could* record netflix movies, then edit those manually (or mapped-ly)...meh clearplay needs some niche--we don't have each other after all, plus legality
-donate to the top 25 sourceforge's that don't look illegal, esp. if haven't before
-@mplayer: allow the equals in this: mplayer dvdnav:// -dvd-device=f:
 
 opening youtube, if not already opened, choose chrome in plugin, get this:
 RuntimeError: poor width or wrong window 94 1 71
@@ -671,6 +565,7 @@ RuntimeError: poor width or wrong window 94 1 71
         [hard exit]
 
 create a "map" of VLC DVD timings to "real" timings via tracking.  Hopefully never necessary...
+  hopefully I can really fix VLC instead
         
-it fails on "friday" tracks 0:48 as 1:48
+it fails on "friday" it tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
