@@ -1,6 +1,9 @@
 == roadmap [for just tasks, see below though] == 
 
-  upconvert DVD/netflix
+  inventionzy
+  upconvert DVD
+  upconv netflix
+  mac'ify
   srt release
   tweaks/docu
   C EDL
@@ -21,17 +24,18 @@
   
 == under next release specific items: ==
   make it suck in single EDL from imdb based on a list 
+  note universal
 
 == yes do ordered in conjunction with the above probably ==
 
 == yes do, un-ordered currently, from the various future release options ==
   change upconvert options needs its own "close" button
-  netflix instant for OS X
-
+  propaganda the upconverting DVD player once it works
   tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
-  is there a bug if you switch DVD's
+  test is there a bug if you switch DVD's
   lightning strike from various outlets...
+  accomodate splits vs. blanks and work
   release at some point...Oliver? facebook? (one at a time...)
   research VOB dirs
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
@@ -69,6 +73,7 @@
     movie mask wayback machine
   make it load faster! this is cuh-razy! or at least splash screen! yes!
   research XBMC
+    break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
     also are they 30fps or not? and how do they handle timesplits?
     is there another format that will actually mute?
@@ -88,7 +93,7 @@
     after works in mac. Why not?
   advertise virtual audio
   advertise screen capture
-  create skype fella...hmm...
+  create skype recorder windows
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
     complain if times look wrong...on playback? sum time
@@ -103,7 +108,7 @@
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   linearize: EDL with JSON on top, full timestamps.
-  bring to top after a conversion, and before prompts...
+  also bring to top after a conversion, and before prompts/file prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
     actually don't do this, just make sure to warn them if they pass us an mkv...indeed.
@@ -148,6 +153,7 @@
     add to docu
   refresh bug try to reproduce
   can edit books, too.
+    +- list/publish :)
   
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
 
@@ -163,6 +169,7 @@
   ffmpeg compile it, see if it runs dshow windows
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  netflix instant for OS X
   test court jester :)
   accomodate ISO's as input as if they were DVD's themselves
   make OCR actually use blanks versus skip
