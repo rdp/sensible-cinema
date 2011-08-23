@@ -1,5 +1,7 @@
 require 'java'
 
+require 'sane'
+
 module SensibleSwing
   
   class MainWindow < javax.swing.JFrame
@@ -11,5 +13,15 @@ module SensibleSwing
       writeOut.write(open(full_url).read)
       writeOut.close
     end
+    
+    def self.download_to_string full_url
+       require 'tempfile'
+       to = Tempfile.new 'abc'
+       download(full_url, to.path)
+       out = File.binread(to.path)
+       to.delete
+       out
+    end
+    
   end
 end

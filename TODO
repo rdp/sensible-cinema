@@ -34,6 +34,7 @@
   tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
   test is there a bug if you switch DVD's
+  blank_outs => special class for 'em :P
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
   release at some point...Oliver? facebook? (one at a time...)
@@ -188,7 +189,7 @@
   port to mac OS X
     ppc dvdid? documentation button? notepad?
   say something if the EDL is actually "empty" :)
-  already donated: mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5)
+  already donated: rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5)
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title track
   fast preview: change it to be aggressive sometimes yes, other times no

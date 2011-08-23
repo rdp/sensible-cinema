@@ -185,14 +185,16 @@ describe EdlParser do
     english(3660 + 0.1).should == "1:01:00.100"
   end
   
-  it "should auto-select a EDL if it matches a DVD's title" do
+  it "should auto-select a (nested) EDL if it matches a DVD's id" do
+    FileUtils.mkdir_p 'files/edls/a/b/c'
+    File.write('files/edls/a/b/c/yo.txt', %!"disk_unique_id" => "deadbeef|8b27d001"!)
     EdlParser.single_edit_list_matches_dvd("deadbeef|8b27d001").should_not be nil
   end
   
   it "should not auto-select if you pass it nil" do
+    File.write('files/edls/yo', %!"disk_unique_id" => "deadbeef|8b27d001"!)
     EdlParser.single_edit_list_matches_dvd(nil).should be nil
   end
-  
 
   EdlParser::EDL_DIR.gsub!(/^.*$/, 'files/edls')
 
@@ -229,10 +231,17 @@ describe EdlParser do
        FileUtils.rm_rf 'files/edls/b.txt'
      end
    end
+  
+    before do
+      FileUtils.mkdir_p 'files/edls'
+    end
+    after do
+      FileUtils.rm_rf 'files/edls'
+    end
 
    it "should download from imdb if specified and merge" do
      File.binwrite('files/edls/a.txt', %!"imdb_id" => "tt1727587"!)
-     EdlParser.parse_file('files/edls/a.txt').should == {"mutes" => ["56.0", "57.0"], "blank_outs" => [], "imdb_id" => "t1727587"}
+     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.500"]], "mutes" => [], "imdb_id" => "tt1727587"}
    end
   
 end

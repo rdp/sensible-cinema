@@ -1,4 +1,9 @@
-== 025.5==
+== ==
+
+Note that Sensible Cinema can also convert times back and forth, using the command line,
+to convert its own EDL's into a format that is copy and pastable into a wiki page on IMDB.
+
+== 0.25.5==
 
 Cleaned up upconverting options to hopefully cause less confusion. Until somebody complains otherwise.
 

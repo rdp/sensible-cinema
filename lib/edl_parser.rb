@@ -32,15 +32,56 @@ class EdlParser
       new_input = parse_file new_filename
       output.merge! new_input
     end
+    require_relative 'sensible-cinema-dependencies'
     
     if output["from_url"] # like replacement [?]
-       require 'tempfile'
-       to = Tempfile.new 'abc'
-       require_relative 'sensible-cinema-dependencies'
-       SensibleSwing::MainWindow.download(settings["from_url"], to.path)
-       output = parse_file to.path
+      downloaded = SensibleSwing::MainWindow.download_to_string(settings["from_url"])
+      output = parse_string downloaded # full replacement
     end
     
+    if imdb_id = output["imdb_id"]
+      require_relative 'convert_thirty_fps'
+      url = "http://www.imdb.com/title/#{imdb_id}/parentalguide"
+      all = SensibleSwing::MainWindow.download_to_string(url)
+      
+      header, violence_word, violence_section, profanity_word, profanity_section, alcohol_word, alcohol_section, frightening_word, frightening_section = 
+      sections = all.split(/<span>(Violence|Profanity|Alcohol|Frightening)/)
+      header = sections.shift
+      all ={}
+      while(!sections.empty?) # my klugey to_hash method
+        word_type = sections.shift
+        settings = sections.shift
+        assert word_type.in? ['Violence', 'Profanity', 'Alcohol', 'Frightening']
+        all[word_type] = settings
+      end
+      # blank_outs or mutes for each...
+      # TODO make -> optional
+      # TODO handle all sections
+      # violence => blank_outs
+      split_into_timestamps = /([\d:]+(?:\.\d+|))\W*-&gt;\W*([\d:]+(?:\.\d+|))([^\d\n]+)/
+      p output
+      for type, settings in all
+        settings.scan(split_into_timestamps) do |begin_ts, end_ts, description|
+          puts "parsing from wiki imdb  entry violence: #{begin_ts} #{end_ts} #{description} #{type}"
+          start_seconds = translate_string_to_seconds begin_ts
+          end_seconds = translate_string_to_seconds end_ts
+          # convert from 30 to 29.97 fps ... we presume ...
+          start_seconds = ConvertThirtyFps.from_twenty_nine_nine_seven start_seconds
+          start_seconds = ("%.02f" % start_seconds).to_f # round
+          start_seconds = translate_time_to_human_readable start_seconds, true
+          end_seconds = ConvertThirtyFps.from_twenty_nine_nine_seven end_seconds
+          end_seconds = ("%.02f" % end_seconds).to_f # round
+          end_seconds = translate_time_to_human_readable end_seconds, true
+          p end_seconds
+          if type == 'Profanity'
+            output['mutes'] << [start_seconds, end_seconds]
+          else
+            output['blank_outs'] << [start_seconds, end_seconds]
+          end
+        end
+      end
+      
+    end
     
     output
   end
@@ -149,6 +190,7 @@ class EdlParser
   
   public 
   
+  # called later, from external
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like either :blank and :mute
   # [[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
@@ -189,6 +231,7 @@ class EdlParser
     combined.compact
   end
   
+  # its reverse: translate_time_to_human_readable
   def self.translate_string_to_seconds s
     # might actually already be a float, or int, depending on the yaml
     # int for 8 => 9 and also for 1:09 => 1:10
@@ -213,6 +256,7 @@ class EdlParser
     total
   end
   
+  # its reverse: translate_string_to_seconds
   def self.translate_time_to_human_readable seconds, force_hour_stamp = false
     # 3600 => "1:00:00"
     out = ''
