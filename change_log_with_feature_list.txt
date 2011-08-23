@@ -12,7 +12,8 @@ Note also that it could just as easily parse from a wiki, parse out timestamps, 
 and save that away to be distributable by the program at compile time, as well.
 
 Note also that it is basically almost a "universal" player at this point, because it has been made to work
-with demos of already several various online/local program playing video players.
+with demos of already several various online/local program playing video players.  
+Including software blu-ray players etc.
 
 Note that it already demo'ed being able to have "user customizable" volume level for muted sections 
 (i.e. not mute it all the way, if desired)
