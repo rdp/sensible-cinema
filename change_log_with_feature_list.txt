@@ -18,6 +18,9 @@ Including software blu-ray players etc.
 Note that it already demo'ed being able to have "user customizable" volume level for muted sections 
 (i.e. not mute it all the way, if desired)
 
+Note also that it can be used by hooking to a projector or from computer -> tv so we have this unofficially
+in the living room or across several devices or the like.
+
 == 0.25.5==
 
 Cleaned up upconverting options to hopefully cause less confusion. Until somebody complains otherwise.
