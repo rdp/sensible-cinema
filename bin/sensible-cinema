@@ -79,7 +79,7 @@ else
 end
 
 import 'javax.swing.ImageIcon'
-require_relative 'sensible-cinema-dependencies'
+require_relative '../lib/sensible-cinema-dependencies'
 
 module SensibleSwing
   VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip

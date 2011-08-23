@@ -86,15 +86,6 @@ def go_sc(args)
     if auto_found
       p 'auto-discovered open window for player x EDL, using it ' + auto_found
       settings = EdlParser.parse_file auto_found
-      if settings["from_url"]
-         require 'tempfile'
-         to = Tempfile.new 'abc'
-         require_relative 'sensible-cinema-dependencies'
-         SensibleSwing::MainWindow.download(settings["from_url"], to.path)
-         edit_decision_list = to.path
-      else
-        edit_decision_list = auto_found
-      end
     else
       puts 'Select Edit Decision List to use'
       edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
