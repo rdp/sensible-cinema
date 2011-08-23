@@ -85,11 +85,12 @@ def go_sc(args)
     auto_found = AutoWindowFinder.search_for_single_url_match
     if auto_found
       p 'auto-discovered open window for player x EDL, using it ' + auto_found
-      settings = EdlParser.parse_file auto_found
+      edit_decision_list = auto_found
     else
       puts 'Select Edit Decision List to use'
       edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
     end
+    settings = EdlParser.parse_file auto_found
     
     if !edit_decision_list	
       puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"

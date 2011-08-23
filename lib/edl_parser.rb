@@ -32,6 +32,16 @@ class EdlParser
       new_input = parse_file new_filename
       output.merge! new_input
     end
+    
+    if output["from_url"] # like replacement [?]
+       require 'tempfile'
+       to = Tempfile.new 'abc'
+       require_relative 'sensible-cinema-dependencies'
+       SensibleSwing::MainWindow.download(settings["from_url"], to.path)
+       output = parse_file to.path
+    end
+    
+    
     output
   end
   
