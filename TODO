@@ -1,6 +1,5 @@
 == roadmap [for just tasks, see below though] == 
 
-  inventionzy
   upconvert DVD
   upconv netflix
   mac'ify
@@ -32,10 +31,8 @@
   propaganda the upconverting DVD player
   tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
-  blank_outs => special class for 'em :P
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
-  release at some point...Oliver? facebook? (one at a time...)
   research VOB dirs
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
@@ -88,7 +85,7 @@
   new button "auto-test" a subtitles file for timing :)
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not [?])
   advertise urug again?
-    after works in mac. Why not?
+    after works in mac for capture+overlay :)
   advertise virtual audio
   advertise screen capture
   create skype recorder windows

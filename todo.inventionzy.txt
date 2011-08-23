@@ -2,7 +2,7 @@
       blu-ray OCR
         more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
         some blu-ray player descriptor somehow
-      blank_outs => special class for 'em :P
+      accomodate splits vs. blanks and work
       
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
 	  EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
