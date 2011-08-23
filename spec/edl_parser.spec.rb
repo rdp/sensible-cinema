@@ -229,5 +229,11 @@ describe EdlParser do
        FileUtils.rm_rf 'files/edls/b.txt'
      end
    end
+
+   it "should download from imdb if specified and merge" do
+       File.binwrite('files/edls/a.txt', %!"imdb_id" => "tt1727587"!)
+       EdlParser.parse_file('files/edls/a.txt').should == {"mutes" => ["56.0", "57.0"], "blank_outs" => [], "imdb_id" => "t1727587"}
+
+   end
   
 end

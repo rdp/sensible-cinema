@@ -36,6 +36,13 @@ class EdlParser
   end
   
   private
+
+  def self.download full_url, to_here
+    require 'open-uri'
+    writeOut = open(to_here, "wb")
+    writeOut.write(open(full_url).read)
+    writeOut.close
+  end
   
   # better eye-ball these before letting people run them, eh? TODO
   # but I couldn't think of any other way to parse the files tho
