@@ -1,4 +1,4 @@
-== ==
+== 0.26.0 ==
 
 It can now parse out (screen scraping), at runtime, EDL information from a user editable online 3rd party wiki 
 (imdb parent guide), including property timestamp conversions and making it easy to read, etc., and doing all the various
