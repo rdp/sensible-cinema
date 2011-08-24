@@ -5,6 +5,7 @@
       accomodate splits vs. blanks and work
       
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
+    could add dragging since we already control the mouse up and down, and movements etc., for example to skip forward etc.
     a little robot demo thingy that can "click" your remote (or hardware) to fast forward through certain scenes, et al
 	  EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
       with several, or start one, end one, etc.
