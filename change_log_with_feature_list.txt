@@ -21,6 +21,13 @@ Note that it already demo'ed being able to have "user customizable" volume level
 Note also that it can be used by hooking to a projector or from computer -> tv so we have this unofficially
 in the living room or across several devices or the like.
 
+Note that the various video screenshots recorded imply that one would be able to 
+readily stream sensible cinema via screenshot capture to any device ready to receive it.
+See also coupling it with [1] and [2].
+
+[1] https://github.com/rdp/virtual-audio-capture-grabber-device
+[2] https://github.com/rdp/screen-capture-recorder-program
+
 == 0.25.5==
 
 Cleaned up upconverting options to hopefully cause less confusion. Until somebody complains otherwise.
