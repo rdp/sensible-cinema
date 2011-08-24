@@ -621,11 +621,8 @@ module SensibleSwing
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        # NB these are just for the SxS EDL!
+        # NB these are just for the Side by side EDL's!
         
-      #add_secs_end = 0
-      #add_secs_beginning = 0.5 # LODO are these accurate for file based, as well? slow cpu versus fast?
-
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)

@@ -44,6 +44,7 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
   add new open button "edit the EDL for current DVD"
+  bouhty ffmpeg stuff (motion detect, directshow)
   "fix" mplayer EDL pausing their code
   the open button should open in the "editing" EDL dir.
   warn against makemkv (and check it, too, and offer a bounty! :)
