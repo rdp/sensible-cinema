@@ -118,7 +118,7 @@
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
     use 29.97 fps
-    folder, look for title.edl
+    folder, look for title_number.edl
     allow it to "just play from X to Y exactly" ...
     can start fullscreen
     does this line up right/perfect? can it work, at all?
@@ -130,6 +130,7 @@
     note to them windows vista/7: use ac3filter [?]
     [A,B] 
     once I can jump around, advertise as a phantom editor :)
+      maybe even before?
   ask for more beta testers for use, ask for more beta testers for creation, too
   create a semi-accurate phantom edit EDL [?] just with splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
@@ -142,11 +143,12 @@
   create the following EDL: 10 commandments DVD to skip the intro music LOL
   inventionzy: blu-ray stuff from todo.inventionzy
   sons of provo "music video" EDL
-  port to mac OS X PPC
+  port to mac OS X
+    PPC dvdid
     documentation button? notepad?
   ffmpeg compile it mingw, see if it runs dshow windows
   
-== other lists to not do (duplicate the todo here if want to actually do it though) ==
+== other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
   todo.upconvert
   todo.propaganda
@@ -159,6 +161,7 @@
 == DVD decide later to move up or down ==
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  local cache volume_name -> dvd id, in case that can speed things up
   check if some create buttons are now outdated...
   make it load faster! this is cuh-razy! or at least splash screen! yes!
   try buy edit lists from all x,y,z [?] offer them money LOL

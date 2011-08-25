@@ -133,26 +133,43 @@ module SensibleSwing
 
     LocalStorage = Storage.new("sensible_cinema_storage")
     
-    def close_when_thread_done thread, j_item
-      if j_item
-        Thread.new { thread.join; j_item.dispose }
-      end
+    def when_thread_done(thread)
+      Thread.new {thread.join; yield }
     end
     
+    class ::File
+      def self.get_root_dir this_path
+        this_path = File.expand_path this_path
+        if OS.doze?
+          this_path[0..2]
+        else
+          this_path.split('/')[0]
+        end
+      end
+      
+      def self.strip_drive_windows this_complete_path
+        if OS.doze?
+          this_complete_path[2..-1]
+        else
+          this_complete_path
+        end
+      end
+    end
+      
     def add_play_upconvert_buttons
     
       @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
-        thread = play_mplayer_edl_non_blocking [filename_mpg, nil] 
-        close_when_thread_done(thread, popup)
+        thread = play_mplayer_edl_non_blocking [filename_mpg, nil]
+        when_thread_done(thread) { popup.dispose }
       end
       @watch_file_upconvert.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options.\n" # LODO
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
         thread = play_dvd_smplayer_unedited false, false, false
-        close_when_thread_done(thread, popup)
+        when_thread_done(thread) { popup.dispose }
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
@@ -176,7 +193,7 @@ module SensibleSwing
     LocalStorage.set_default('screen_multiples', 2.0)
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Set Playback Upconversion Quality Options") do
+      @show_upconvert_options = new_jbutton("Change Playback Upconversion Quality Options") do
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
@@ -189,16 +206,19 @@ module SensibleSwing
       child = MainWindow.new
       child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
       child.parent=self # this should have failed in the PPL
-      # make both windows visible
+      # make both windows visible z-wise
       x, y = self.get_location.x, self.get_location.y
       child.set_location(x + 100, y + 100)
       child
     end
     
     attr_accessor :parent, :upconv_line
+    
     def warn_if_no_upconvert_options_currently_selected
-      if !LocalStorage[UpConvertEnglish]
+      if !upconvert_set_to_anything?
         show_non_blocking_message_dialog "Warning: upconvert options have not been set yet--set upconvert options first and restart, if desired."
+      else
+        JFrame.new # something it can call dispose on :P
       end
     end
     
@@ -238,39 +258,40 @@ module SensibleSwing
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
-        display_current_upconvert_setting
+        display_current_upconvert_setting_and_close_window
       }
       high_compression = new_jbutton("Set upconvert options to high compressed video file playback") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
         LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # pp should be after hqdn3d I think... and hqdn3d should be before scale...
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
-        display_current_upconvert_setting
+        display_current_upconvert_setting_and_close_window
         # -Processing method: mplayer with accurate deblocking ???
       }
       new_jbutton("Set upconvert options to experimental style playback") {
-        LocalStorage[UpConvertKey] = "" # hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
+        LocalStorage[UpConvertKey] = "scale" # hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental"
-        display_current_upconvert_setting
+        display_current_upconvert_setting_and_close_window
       }
       
-      # TODO tooltip from docu here
-      add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is good for high-end)." 
-      add_text_line "If mplayer just dies or displays only a black or white screen then lower this setting."
+      # TODO tooltip from docu here +- this into tooltip
+      # TODO "click here" link for more docu [?]
+      add_text_line "Multiple factor screen widths"
+      add_text_line "   (higher is better, but uses more cpu, 2x is good for high-end)." 
+      add_text_line "   If mplayer just dies or displays only a black or white screen then lower this setting."
       slider = JSlider.new
       slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
   
       # I want tick for 1x, 1.5x, 2x, 2.5x, 3x
-      # so let's do 10 -> 30 ... 
+      # so let's do marker values of 10 -> 30, since it requires integers...
       
       labelTable = java.util.Hashtable.new
       i = java.lang.Integer
       l = JLabel
       
       # allow for 0.75 too, if you have a large monitor, slower cpu...
-      local_minimum = (720.0/get_current_max_width_resolution)*100 # allow 1024 to use upscaling to 860 LOL
-      # => 70 for 1024 monitor, so we'll then allow for the 75 below...
+      local_minimum = (720.0/get_current_max_width_resolution)*100 # allows 1024 to use upscaling to 860, but we warn when they do this
       label_minimum = nil
       (0..300).step(25) do |n|
         if n > local_minimum
@@ -301,10 +322,10 @@ module SensibleSwing
           new_value = slider.value/100.0
           LocalStorage[ScreenMultipleFactor] = new_value
           if new_value != old_value
-            display_current_upconvert_setting
             if slider.value == label_minimum
               show_blocking_message_dialog "Setting it too low like that might make it not do much upconverting (DVD's, are 720px, you're setting it to upconvert to #{new_value * get_current_max_width_resolution})"
             end
+            display_current_upconvert_setting_and_close_window
           end
         end
       }
@@ -320,11 +341,22 @@ module SensibleSwing
         LocalStorage[UpConvertKey] = nil
         LocalStorage[UpConvertKeyExtra] = nil
         LocalStorage[UpConvertEnglish] = nil
-        display_current_upconvert_setting
+        display_current_upconvert_setting_and_close_window
       }
       
       @generate_images = new_jbutton("Test current configuration by writing some images from playing a video file") do
-        raise 'todo'
+        popup = warn_if_no_upconvert_options_currently_selected
+        filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
+        
+        output_dir = Dir.tmpdir
+        if File.get_root_dir(output_dir) != File.get_root_dir(Dir.pwd) # you are hosed!
+          output_dir = File.get_root_dir(Dir.pwd) # and hope it's writable...
+        end
+        output_dir = output_dir + '/temp_upscaled_video_out'
+        Dir.mkdir output_dir unless File.directory? output_dir
+        output_command = '-ss 2:30 -frames 100 -vo jpeg:outdir="' + File.strip_drive_windows(output_dir) + '"'
+        thread = play_mplayer_edl_non_blocking [filename_mpg, nil], [output_command], true
+        when_thread_done(thread) { popup.dispose if popup; show_in_explorer(output_dir) }
       end
       
       @generate_images.tool_tip = "This creates "
@@ -332,17 +364,18 @@ module SensibleSwing
       
     end
     
-    def display_current_upconvert_setting
+    def display_current_upconvert_setting_and_close_window
       change_upconvert_line_to_current
-      show_non_blocking_message_dialog get_current_upconvert_as_phrase
+      show_blocking_message_dialog get_current_upconvert_as_phrase
+      self.dispose
     end
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      out = "Upconvert options are now #{  settings ? " set to #{settings} style" : "NOT SET"}"
+      out = "Upconvert options are now #{  settings ? "set to #{settings} style" : "NOT SET"}"
       if settings
         multiple = LocalStorage[ScreenMultipleFactor]
-       out += " (screen multiplier #{get_current_max_width_resolution}*#{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
+        out += " (screen multiplier #{get_current_max_width_resolution}*#{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
       end
       out
     end
@@ -713,11 +746,12 @@ module SensibleSwing
       }
     end
 
-    def run_smplayer_blocking play_this, title_track_maybe_nil, extra_options, force_use_mplayer, show_subs
+    def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs
       unless File.exist?(File.expand_path(play_this))
         raise play_this + ' non existing?' # till these go away in mac :)
       end
 
+      extra_options = ""
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
@@ -775,15 +809,15 @@ module SensibleSwing
       
        upconv = get_upconvert_vf_settings
        upconv = "-vf #{upconv}" if upconv.present?
-       c = "mplayer #{extra_options} #{upconv} -input conf=\"#{conf_file}\" \"#{play_this}\" "
+       c = "mplayer #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
-        set_smplayer_opts extra_options, get_upconvert_vf_settings, show_subs
+        set_smplayer_opts extra_options + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
         c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname SMPlayerIniFile}\" " 
         if !we_are_in_create_mode
-          #c += " -close-at-end " # we're still too unstable...
+          #c += " -close-at-end " # we're still too unstable, mate...
         end
       end
       puts c 
@@ -925,8 +959,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = []
-      extra_mplayer_commands_array = []
+    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly
@@ -966,7 +999,7 @@ module SensibleSwing
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), false, false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false
     end
     
     def assert_ownership_dialog 
@@ -1370,7 +1403,7 @@ module SensibleSwing
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new { run_batch_file_commands_and_use_output_somehow commands, save_to, file_from, run_mplayer }
-      close_when_thread_done(@background_thread, popup)
+      when_thread_done(@background_thread) { popup.dispose }
       # LODO warn if they will overwrite a file in the end...
     end
     
@@ -1415,9 +1448,11 @@ module SensibleSwing
       end
     end
     
+    # reveals My Documents if file/folder doesn't exist
     def show_in_explorer filename
       begin
-        system_blocking "explorer /e,/select,\"#{File.expand_path(filename).to_filename}\"" # command returns immediately...
+        c = "explorer /e,/select,\"#{File.expand_path(filename).to_filename}\"" # command returns immediately...
+        system_blocking c
       rescue => why_does_this_happen_ignore_this_exception_it_probably_actually_succeeded
       end
     end
