@@ -1,5 +1,33 @@
 up next:
 
+
+== compare upscaling settings ==
+
+regular pullup not very good :P
+just with hqdn3d, same low res, seemed not very good
+I seem to slightly prefer DVD to directx upscaling (at least).  More detail.
+  more hair detail, wood has more detail
+    
+with qt viewer:
+
+  with 0001:
+    1x and 2x seem same
+      like identical
+  with 26
+    seem identical
+  99: 
+    2x seems to barely pull out more detail out of the metal...interesting...
+    
+with mplayer to view the jpg (direct3d)
+  01:
+    wow looks igualzinho weird
+  26: 
+    igualzinho
+  99:
+    igualzinho
+    
+  TODO more hair, afterward...
+  
 == ==
 desktop filter:
  1024x1024:
