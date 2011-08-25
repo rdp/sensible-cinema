@@ -133,7 +133,7 @@ module SensibleSwing
 
     LocalStorage = Storage.new("sensible_cinema_storage")
     
-    def close_when_done thread, j_item
+    def close_when_thread_done thread, j_item
       if j_item
         Thread.new { thread.join; j_item.dispose }
       end
@@ -144,15 +144,15 @@ module SensibleSwing
       @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
-        thread = play_mplayer_edl_non_blocking [filename_mpg, nil]
-        close_when_done(thread, popup)
+        thread = play_mplayer_edl_non_blocking [filename_mpg, nil] 
+        close_when_thread_done(thread, popup)
       end
       @watch_file_upconvert.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options.\n" # LODO
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
         thread = play_dvd_smplayer_unedited false, false, false
-        close_when_done(thread, popup)
+        close_when_thread_done(thread, popup)
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
@@ -249,7 +249,7 @@ module SensibleSwing
         # -Processing method: mplayer with accurate deblocking ???
       }
       new_jbutton("Set upconvert options to experimental style playback") {
-        LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
+        LocalStorage[UpConvertKey] = "" # hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
@@ -312,6 +312,7 @@ module SensibleSwing
       2.times {increment_button_location}
       @panel.add(slider)
       
+      increment_button_location
       
       @none = new_jbutton("Reset upconvert options to none (no upconversion)")
       @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
@@ -321,6 +322,12 @@ module SensibleSwing
         LocalStorage[UpConvertEnglish] = nil
         display_current_upconvert_setting
       }
+      
+      @generate_images = new_jbutton("Test current configuration by writing some images from playing a video file") do
+        raise 'todo'
+      end
+      
+      @generate_images.tool_tip = "This creates "
 
       
     end
@@ -918,8 +925,8 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil
-      extra_mplayer_commands = []
+    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = []
+      extra_mplayer_commands_array = []
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly
@@ -956,10 +963,10 @@ module SensibleSwing
         splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
-        extra_mplayer_commands << "-edl #{File.expand_path EdlTempFile}" 
+        extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands.join(' '), false, false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), false, false
     end
     
     def assert_ownership_dialog 
@@ -1363,7 +1370,7 @@ module SensibleSwing
 
       # allow our popups to still be serviced while it is running
       @background_thread = Thread.new { run_batch_file_commands_and_use_output_somehow commands, save_to, file_from, run_mplayer }
-      close_when_done(@background_thread, popup)
+      close_when_thread_done(@background_thread, popup)
       # LODO warn if they will overwrite a file in the end...
     end
     
