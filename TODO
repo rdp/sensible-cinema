@@ -1,9 +1,9 @@
 == roadmap [for just tasks, see below though] == 
 
+  upconvert DVD
   netflix
     upconv netflix
     mac'ify OCR
-  upconvert DVD
   srt release
   tweaks/docu
   C EDL
@@ -23,14 +23,18 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  netflix instant descriptor for OS X
+  propaganda the upconverting DVD player
+    after testing it out uh guess
+      just hqdn3d, no super scale (or lowest)?
 
 == yes do ordered in conjunction with the above probably ==
 
 == yes do, un-ordered currently, from the various future release options ==
+  netflix instant descriptor for OS X
+  investigate the srt morpher...
   srt/parsing buttons new window [?]
+  post release notes to the google group
   change upconvert options needs its own "close" button
-  propaganda the upconverting DVD player
   tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
   lightning strike from various outlets...
@@ -40,13 +44,12 @@
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer
-    have people test it
     me test it
       1x, 2x Sintel
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
   add new open button "edit the EDL for current DVD"
-  bouhty ffmpeg stuff (motion detect, directshow)
+  bounty ffmpeg stuff (motion detect, directshow)
   "fix" mplayer EDL pausing their code
   the open button should open in the "editing" EDL dir.
   warn against makemkv (and check vs. handbrake, and offer a bounty)
@@ -80,7 +83,7 @@
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
     complain if times look wrong...on playback? sum time
-  splits... [add better instructions...]
+  splits... [add better instructions on how to be precise...]
   open EDL to edit it can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
@@ -95,8 +98,7 @@
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
     actually don't do this, just make sure to warn them if they pass us an mkv...indeed.
-  check if some create buttons are now outdated...
-  check with blu-rays...do they match timing-wise? sub-title wise?
+  check with blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
   youtube/hulu timings
   split LLC's website+consumer
     get LLC before a "real" domain name
@@ -142,6 +144,7 @@
   sons of provo "music video" EDL
   port to mac OS X PPC
     documentation button? notepad?
+  ffmpeg compile it mingw, see if it runs dshow windows
   
 == other lists to not do (duplicate the todo here if want to actually do it though) ==
 
@@ -154,9 +157,9 @@
   todo.virtual_audio
 
 == DVD decide later to move up or down ==
-  ffmpeg compile it mingw, see if it runs dshow windows
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  check if some create buttons are now outdated...
   make it load faster! this is cuh-razy! or at least splash screen! yes!
   try buy edit lists from all x,y,z [?] offer them money LOL
     http://www.familysafemovies.com

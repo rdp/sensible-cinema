@@ -160,42 +160,42 @@ module SensibleSwing
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
       
-      add_change_upconvert_options_button   
+      add_change_upconvert_options_button
+      if !upconvert_set_to_anything?
+        show_blocking_message_dialog 'please configure your upconvert settings first'
+        @show_upconvert_options.simulate_click # make them choose one
+      end
       add_text_line ''
       
     end
     
-    # a window that when closed doesn't bring the whole app down
-    def new_child_window
-      child = MainWindow.new
-      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
-      child.parent=self # this should have failed in the PPL
-      child
+    def upconvert_set_to_anything?
+      LocalStorage[UpConvertEnglish].present?
     end
     
-    attr_accessor :parent, :upconv_line
+    LocalStorage.set_default('screen_multiples', 2.0)
 
     def add_change_upconvert_options_button
       @show_upconvert_options = new_jbutton("Set Playback Upconversion Quality Options") do
-        
-        unless LocalStorage[ScreenMultipleFactor]
-=begin          show_blocking_message_dialog <<-EOL
-          With upconversion, if your monitor is 1024 pixels wide and you upconvert to 2048 pixels then display it on 1024, it looks better.
-          Sensible Cinema sets the default default resolution to be 2x your screen resolution, which is better for high end cpu's.
-          If you have a low powered system or laptop you may need to change it (drag the slider) lower to avoid it displaying only a black or white screen, as your system can't handle it,
-          so adjust accordingly if you have a lesser system.  Also changing this setting can make it use more or less CPU overall.
-          EOL
-=end
-          # LODO make into tooltip too [?]
-          LocalStorage['screen_multiples'] = 2.0
-        end
-        
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
     end
+
+
+    # a window that when closed doesn't bring the whole app down
+    def new_child_window
+      child = MainWindow.new
+      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
+      child.parent=self # this should have failed in the PPL
+      # make both windows visible
+      x, y = self.get_location.x, self.get_location.y
+      child.set_location(x + 100, y + 100)
+      child
+    end
     
+    attr_accessor :parent, :upconv_line
     def warn_if_no_upconvert_options_currently_selected
       if !LocalStorage[UpConvertEnglish]
         show_non_blocking_message_dialog "Warning: upconvert options have not been set yet--set upconvert options first and restart, if desired."
@@ -233,22 +233,14 @@ module SensibleSwing
 
     def add_change_upconvert_buttons
       raise 'should have already been set for us' unless LocalStorage[ScreenMultipleFactor]
-      @none = new_jbutton("Reset upconvert options to default (no upconversion)")
-      @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
-      @none.on_clicked {
-        LocalStorage[UpConvertKey] = nil
-        LocalStorage[UpConvertKeyExtra] = nil
-        LocalStorage[UpConvertEnglish] = nil
-        display_current_upconvert_setting
-      }
-      @medium_dvd = new_jbutton("Change upconvert options for DVD-style video") {
+      @medium_dvd = new_jbutton("Set upconvert options to DVD-style video") {
         LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
         display_current_upconvert_setting
       }
-      high_compression = new_jbutton("Change upconvert options for playing high compressed video files") {
+      high_compression = new_jbutton("Set upconvert options to high compressed video file playback") {
         # -autoq 6 -vf pp [?]
         LocalStorage[UpConvertEnglish] = "high compressed"
         LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,pp=hb:y/vb:y,scale=SCREEN_X:-10:0:0:3" # pp should be after hqdn3d I think... and hqdn3d should be before scale...
@@ -256,12 +248,14 @@ module SensibleSwing
         display_current_upconvert_setting
         # -Processing method: mplayer with accurate deblocking ???
       }
-      new_jbutton("Change upconvert options to experimental style playback") {
+      new_jbutton("Set upconvert options to experimental style playback") {
         LocalStorage[UpConvertKey] = "hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting
       }
+      
+      # TODO tooltip from docu here
       add_text_line "Multiple factor screen widths (higher is better, but uses more cpu, 2x is good for high-end)." 
       add_text_line "If mplayer just dies or displays only a black or white screen then lower this setting."
       slider = JSlider.new
@@ -309,7 +303,7 @@ module SensibleSwing
           if new_value != old_value
             display_current_upconvert_setting
             if slider.value == label_minimum
-              show_blocking_message_dialog "Setting it too low like that might make it not do much upconverting (DVD's, are 720px)"
+              show_blocking_message_dialog "Setting it too low like that might make it not do much upconverting (DVD's, are 720px, you're setting it to upconvert to #{new_value * get_current_max_width_resolution})"
             end
           end
         end
@@ -317,6 +311,18 @@ module SensibleSwing
       slider.set_bounds(44, @starting_button_y, @button_width, 66)
       2.times {increment_button_location}
       @panel.add(slider)
+      
+      
+      @none = new_jbutton("Reset upconvert options to none (no upconversion)")
+      @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
+      @none.on_clicked {
+        LocalStorage[UpConvertKey] = nil
+        LocalStorage[UpConvertKeyExtra] = nil
+        LocalStorage[UpConvertEnglish] = nil
+        display_current_upconvert_setting
+      }
+
+      
     end
     
     def display_current_upconvert_setting
@@ -326,7 +332,7 @@ module SensibleSwing
     
     def get_current_upconvert_as_phrase
       settings = LocalStorage[UpConvertEnglish]
-      out = "Upconvert options currently #{  settings ? "are set to #{settings} style" : "are NOT SET"}"
+      out = "Upconvert options are now #{  settings ? " set to #{settings} style" : "NOT SET"}"
       if settings
         multiple = LocalStorage[ScreenMultipleFactor]
        out += " (screen multiplier #{get_current_max_width_resolution}*#{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
