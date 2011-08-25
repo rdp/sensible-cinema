@@ -354,7 +354,9 @@ module SensibleSwing
         end
         output_dir = output_dir + '/temp_upscaled_video_out'
         Dir.mkdir output_dir unless File.directory? output_dir
+        
         output_command = '-ss 2:30 -frames 100 -vo jpeg:outdir="' + File.strip_drive_windows(output_dir) + '"'
+        output_command += " -noframedrop" # don't want them to skip frames on cpu's without enough power to keep up
         thread = play_mplayer_edl_non_blocking [filename_mpg, nil], [output_command], true
         when_thread_done(thread) { popup.dispose if popup; show_in_explorer(output_dir) }
       end
@@ -916,11 +918,8 @@ module SensibleSwing
       @background_thread = Thread.new { system_original command }
     end
     
-    if respond_to?(:system)
       # make them choose which system call to use explicitly
       undef system
-    end
-    
    
     def play_dvd_smplayer_unedited use_mplayer_instead, show_instructions, show_subs
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
@@ -928,14 +927,14 @@ module SensibleSwing
         title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
       end
       if show_instructions
-        # want this even with smplayer sometimes I guess...
+        # want these even with smplayer sometimes I guess, if in power user mode anyway
         show_mplayer_instructions_once
       end
       run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead, show_subs
 
     end
 
-    if OS.doze? # avoid spaces :)
+    if OS.doze? # avoids spaces in filenames :)
       EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir + '/mplayer.temp.edl')
     else
       raise if Dir.tmpdir =~ / / # that would be odd...
