@@ -26,17 +26,15 @@ with mplayer to view the jpg (direct3d)
   99:
     igualzinho (too dark to tell...kind of weird there) -- ffmpeg bug?
     
-  TODO more hair, afterward...
+  more hair, afterward...
     I guess the same way, -> jpg, compare the jpgs in quicktime
       then tweak it be able to screen scrape it to compare [?]
   
-== ==
-desktop filter:
- 1024x1024:
-   15% one cpu used by the capture utility (0.013ms per capture)
-   good for now I guess (no transparency visible...)
-   12 fps <sigh>
-
+    2x takes *way* way longer...
+    
+    00:
+      if there's a difference, I can't easily see it in picture viewer
+  
 == upconvert netflix ==
 
 === mplayer avisynth ===
@@ -46,7 +44,7 @@ desktop filter:
     mplayer at default seems to be doing weird things?
     paint.net on the win32::screenshot capture seemed to match quite well what the screen had.
     ffplay seems to show an exact verbatim copy...
-    actually mplayer seems to be a good exact duplicate...
+    actually mplayer seems to be a good exact duplicate...maybe resizing hurt it though?
     
 === other ===
 

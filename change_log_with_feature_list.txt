@@ -1,9 +1,9 @@
 == ==
 
-Cleaned up the upconvert interface, added a way for easier testing.
+Cleaned up the upconvert interface, added a way for easier comparison of upconversion settings (automated-ly-zy).
 
-Note that we also use a simplified for editing EDL file format for easier consumption, and yes, it
-does include timestamps.
+Note that we also use a simplified (for editing) EDL file format for easier human consumption, 
+including timestamps.
 
 == 0.26.0 ==
 

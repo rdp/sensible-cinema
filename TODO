@@ -162,6 +162,7 @@
 == DVD decide later to move up or down ==
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  sout-keep for VLC EDL'ish?
   local cache volume_name -> dvd id, in case that can speed things up
   check if some create buttons are now outdated...
   make it load faster! this is cuh-razy! or at least splash screen! yes!
