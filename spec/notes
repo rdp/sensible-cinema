@@ -425,7 +425,7 @@ http://www.kdenlive.org/forum/xml-format-and-edls kdenlive supports EDL, apparen
    mplayer defaults were: hqdn3d=4:3:6 hqdn3d[=luma:chroma:time]
 
 
--vf hqdn3d=2:1:2 ("conservative" from http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-dvd-mpeg4.html)
+   -vf hqdn3d=2:1:2 ("conservative" from http://www.mplayerhq.hu/DOCS/HTML/en/menc-feat-dvd-mpeg4.html)
 
   an avisynth upconvert howto: http://avisynth.org/mediawiki/Enhancing_dvd_videos
   http://web.archiveorange.com/archive/v/JbcLEih3ZwhZlMuTkxzR says "if you're upscaling [to grow the image] then do denoise before scale"

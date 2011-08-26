@@ -33,6 +33,7 @@
     after new upconvert stuff
 
 == yes do, un-ordered currently, from the various future release options ==
+  TODO test it at 720*x resolution too...
   investigate the srt morpher...
   srt/parsing buttons new window [?]
   change upconvert options needs its own "close" button
