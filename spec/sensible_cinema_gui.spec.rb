@@ -24,7 +24,6 @@ load 'bin/sensible-cinema'
 
 module SensibleSwing
   describe MainWindow do
-    EdlParser::EDL_DIR.gsub!(/^.*$/, 'spec/files/edls')
     it "should be able to start up" do
       MainWindow.new.dispose# doesn't crash :)
     end
@@ -88,6 +87,10 @@ module SensibleSwing
     end
     
     before do
+      File.write('selected_file', '"name" => "a dvd name to satisfy internal assertion", "dvd_title_track" => "2", "mutes" => ["06:10", "06:15"]')
+    end
+    
+    before do
       @subject = MainWindow.new false # false to speedup tests
       # want lots of buttons :)
       @subject.setup_advanced_buttons
@@ -99,7 +102,7 @@ module SensibleSwing
         ["mock_dvd_drive", "Volume", Test_DVD_ID] # happiest baby on the block
       }
       @subject.stub!(:get_mencoder_commands) { |*args|
-        args[-5].should match(/selected_file/)
+        args[-5].should == 'selected_file'
         @get_mencoder_commands_args = args
         'fake get_mencoder_commands'
       }
@@ -151,8 +154,14 @@ module SensibleSwing
       }
     end
     
+    before do
+      EdlParser::EDL_DIR.gsub!(/^.*$/, 'spec/files/edls')
+    end
+    
     after do
       Thread.join_all_others
+      FileUtils.rm_rf EdlParser::EDL_DIR
+      Dir.mkdir EdlParser::EDL_DIR
     end
 
     class FakeFileChooser
@@ -183,20 +192,22 @@ module SensibleSwing
     
     it "should only prompt twice for filenames--once for the 'save to' filename, once for the 'from' filename" do
       count1=count2=0
-      @subject.stub!(:new_nonexisting_filechooser) { # save to
-        count1 += 1
-        FakeFileChooser.new
-      }
-      @subject.stub!(:new_existing_file_selector_and_select_file) { # get from
+      @subject.stub!(:new_existing_file_selector_and_select_file) { # get from filename
         count2 += 1
-        FileUtils.touch 'selected_file'
         'selected_file'
       }
       
+      @subject.stub!(:new_nonexisting_filechooser) { # save to filename
+        count1 += 1
+        FakeFileChooser.new
+      }
+      
       @subject.do_create_edited_copy_via_file(false).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
-      3.times { @subject.do_create_edited_copy_via_file(false) }
+      5.times { 
+        @subject.do_create_edited_copy_via_file(false)
+      }
       count1.should == 1
-      count2.should == 1
+      count2.should == 2 # once for from filename, once for [tell us where you grabbed it to] filename
     end
     
     it "should have a good default title of 1" do
@@ -227,7 +238,7 @@ module SensibleSwing
     it "should play the edited file" do
      @subject.do_create_edited_copy_via_file(true).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
      join_background_thread
-     @get_mencoder_commands_args[-2].should == "2"
+     @get_mencoder_commands_args[-2].should == "2" # title track
      @get_mencoder_commands_args[-3].should == "01:00"
      @system_blocking_command.should_not match /fulli/
     end
@@ -303,39 +314,38 @@ module SensibleSwing
       @show_blocking_message_dialog_last_arg.should =~ /a file/
     end
 
-    it "should warn if you watch an edited time frame with no edits in it" do
+    it "should warn if you watch an edited time frame with no edits within thatin it" do
       @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
-      @subject.stub!(:run_smplayer_blocking) {} # avoid liveness check
       click_button(:@preview_section)
       @show_blocking_message_dialog_last_arg.should =~ /unable to find/
     end
     
     it "should warn if you give it an mkv file, just in case" do
-      @subject.stub!(:run_smplayer_blocking) {} # stub this out
-      @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
+      @subject.stub!(:run_smplayer_blocking) {} # avoid check for file existence
+      @subject.unstub!(:get_mencoder_commands) # this time through, let it really check for existence of edits...
       @subject.stub!(:get_user_input).and_return('06:00', '07:00')
       click_button(:@preview_section)
-      join_background_thread
       @show_blocking_message_dialog_last_arg.should =~ /is not a/
-    end
-    
-    it "should not warn if things go well" do
-      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
-      @subject.stub!(:new_existing_file_selector_and_select_file) {
-        'selected_file.mpg'
-      }
-      click_button(:@preview_section)
       join_background_thread
-      @show_blocking_message_dialog_last_arg.should =~ /preview just a portion/
     end
     
-    it "if the .done files exists, do_copy... should call smplayer ja" do
+    it "should not warn if a ts file, and has appropriate entries within timeframe" do
+      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
+      @subject.stub!(:new_existing_file_selector_and_select_file).and_return('selected_file', 'selected_file.mpg')
+      click_button(:@preview_section)
+      
+      @show_blocking_message_dialog_last_arg.should =~ /preview just a portion/
+      join_background_thread # weird...rspec you should do my after blocks before you'n... LODO
+    end
+    
+    it "if the .done files exists, do_copy... should just call smplayer ja" do
       FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done"
       @subject.do_create_edited_copy_via_file(false, true, true).should == [true, "selected_file.fulli_unedited.tmp.mpg"]
     end
     
-    it "should create a new file for ya" do
+    it "should create a new file based on stats of current disc" do
       out = EdlParser::EDL_DIR + "/edls_being_edited/sweetest_disc_ever.txt"
+      FileUtils.mkdir_p File.dirname(out)
       File.exist?( out ).should be_false
       @subject.stub!(:get_user_input) {'sweetest disc ever'}
       @subject.instance_variable_get(:@create_new_edl_for_current_dvd).simulate_click
@@ -393,8 +403,7 @@ module SensibleSwing
     it "should play edl with extra time for the mutes because of the EDL aspect" do
       click_button(:@mplayer_edl).join
       wrote = File.read(MainWindow::EdlTempFile)
-      # normally "378.0 379.1 1"
-      wrote.should include("377.0 379.1 1")
+      wrote.should include("369.0 375.0 1") # right numbers, except first -= 1
     end
     
     def should_allow_for_changing_file corrupt_the_file = false
@@ -542,23 +551,23 @@ module SensibleSwing
     click_button(:@play_smplayer)
   end
   
-  it "should create" do
+  it "should create an sxs file" do
     FileUtils.rm_rf 'yo.edl' # nothing up my sleeve.
     prompted = false
     @subject.stub(:assert_ownership_dialog) {
       prompted = true
     }
-    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "spec/files/edls/edls_being_edited/edl_for_unit_tests.txt")
+    @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "selected_file")
     click_button(:@create_dot_edl)
     assert File.exist? 'yo.edl'
     assert prompted
   end
   
   it "should be able to upconvert at all" do
+    MainWindow.any_instance.stub(:display_current_upconvert_setting_and_close_window) {} # TRY it out
     @subject = MainWindow.new false
     MainWindow::LocalStorage['screen_multiples'] = 2.0 # default so it won't fail us...
     @subject.add_change_upconvert_buttons
-    @subject.stub(:display_current_upconvert_setting) {} # no popup ;)
     @subject.stub(:show_mplayer_instructions_once) {}
     click_button(:@medium_dvd)
     storage = MainWindow::LocalStorage

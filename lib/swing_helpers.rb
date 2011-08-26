@@ -101,7 +101,7 @@ module SensibleSwing
   class FileDialog
     def go
       show
-      File.expand_path(get_directory + '/' + get_file) if get_file
+      File.expand_path(get_directory + '/' + get_file) if get_file # get_file implies they picked something
     end
   end
   
@@ -127,16 +127,4 @@ module SensibleSwing
       setLocationRelativeTo nil # center it on the screen
     end
   end
-end
-
-require 'os'
-
-class String
- def to_filename
-   if OS.windows?
-     self.gsub('/', "\\")
-   else
-    self
-  end
- end
 end

@@ -1,3 +1,10 @@
+== ==
+
+Cleaned up the upconvert interface, added a way for easier testing.
+
+Note that we also use a simplified for editing EDL file format for easier consumption, and yes, it
+does include timestamps.
+
 == 0.26.0 ==
 
 It can now parse out (screen scraping), at runtime, EDL information from a user editable online 3rd party wiki 

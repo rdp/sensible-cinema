@@ -17,7 +17,12 @@ DWORD WINAPI GetShortPathName(
   def self.convert_path_to_8_3 path
     out = FFI::MemoryPointer.new 256 # bytes
     path_to_8_3(path, out, out.length)
-    out.get_string
+    out = out.get_string
+    if out.size == 0
+      raise 'unable to convert--probably file does not exist yet ' + path
+    else
+     out
+    end
   end
 
 end
