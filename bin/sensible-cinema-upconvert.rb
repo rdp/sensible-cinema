@@ -176,7 +176,7 @@ module SensibleSwing
         FileUtils.rm_rf output_dir
         Dir.mkdir output_dir
         
-        output_command = '-ss 2:42 -frames 100 -vo png:outdir="' + File.strip_drive_windows(output_dir) + '"'
+        output_command = '-ss 2:44 -frames 300 -vo png:outdir="' + File.strip_drive_windows(output_dir) + '"'
         output_command += " -noframedrop" # don't want them to skip frames on cpu's without enough power to keep up
         thread = play_mplayer_edl_non_blocking [filename_mpg, nil], [output_command], true
         when_thread_done(thread) { popup.dispose if popup; show_in_explorer(output_dir) }
