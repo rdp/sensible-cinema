@@ -74,7 +74,12 @@ module SensibleSwing
     def add_change_upconvert_buttons
       raise 'should have already been set for us' unless LocalStorage[ScreenMultipleFactor]
       @medium_dvd = new_jbutton("Set upconvert options to DVD-style video") {
-        LocalStorage[UpConvertKey] = "hqdn3d=0:1:4:4,scale=SCREEN_X:-10:0:0:2"
+        luma_spatial = 0
+        chroma_spatial = 1
+        luma_tmp = 4
+        chroma_tmp = 4
+        LocalStorage[UpConvertKey] = "hqdn3d=%s:%s:%s:%s,scale=SCREEN_X:-10:0:0:2" % [luma_spatial, chroma_spatial, luma_tmp, chroma_tmp]
+p         LocalStorage[UpConvertKey]
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
