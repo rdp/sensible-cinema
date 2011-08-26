@@ -503,17 +503,17 @@ module SensibleSwing
     end
     
     it "should show additional buttons in create mode" do
-      MainWindow.new.setup_default_buttons.buttons.length.should be > 3
-      MainWindow.new.setup_default_buttons.buttons.length.should be < 10
-      old_length = MainWindow.new.setup_default_buttons.buttons.length
+      MainWindow.new(false).setup_default_buttons.buttons.length.should be > 3
+      MainWindow.new(false).setup_default_buttons.buttons.length.should be < 10
+      old_length = MainWindow.new(false).setup_default_buttons.buttons.length
       ARGV << "--create-mode"
-      MainWindow.new.setup_default_buttons.buttons.length.should be > (old_length + 5)
+      MainWindow.new(false).setup_default_buttons.buttons.length.should be > (old_length + 5)
       ARGV.pop # post-test cleanup--why not :)
     end
 
     it "should show upconvert buttons" do
       ARGV << "--upconvert-mode"
-      MainWindow.new.setup_default_buttons.buttons.length.should be > 3
+      MainWindow.new(false).setup_default_buttons.buttons.length.should be > 3
       ARGV.pop 
     end 
     
@@ -565,7 +565,7 @@ module SensibleSwing
   
   it "should be able to upconvert at all" do
     MainWindow.any_instance.stub(:display_current_upconvert_setting_and_close_window) {} # TRY it out
-    @subject = MainWindow.new false
+    @subject = MainWindow.new(false)
     MainWindow::LocalStorage['screen_multiples'] = 2.0 # default so it won't fail us...
     @subject.add_change_upconvert_buttons
     @subject.stub(:show_mplayer_instructions_once) {}
