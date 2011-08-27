@@ -20,6 +20,8 @@
     can control volume *and* play other audio
     can permanently black out certain coords to keep things prettier...et al
     remove black when they really move the mouse?
+    a transport schema talking from a sensible cinema database "to" a player which uses it, and/or has selection options for levels of (content category) or can pick options they want, stored in sensible cinema database or in the "player" side, with transfer/communication between the two.  Ex: XML as a transport, oauth for authentication, etc. etc.
+      or they could transmit a time signature "across the wire" somehow (ex: every second), which could be used to react to time events (skip, mute) appropriately.  Or allow for programatic callbacks "call me at this time" or "at this time do this action" or the like, and/or accomodate for buffers/freezing etc. [kind of already demo'ed this one]
     can add to to supplement EDL + EDL timestamps
     can pick specific profanities to avoid (I think I demo'ed this already actually)
     it can scan "playing" instant streaming titles, and/or OCR or take the audio and look for words, to check for profanity.
