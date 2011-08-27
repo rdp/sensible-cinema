@@ -33,6 +33,7 @@
     after new upconvert stuff
 
 == yes do, un-ordered currently, from the various future release options ==
+  that extra .5s DVD reports for file size...
   TODO test it at 720*x resolution too...
   investigate the srt morpher...
   EDL gottman
@@ -198,14 +199,14 @@
   "save to" -> same dir as "get from" yeah
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
   prompt something if the EDL is actually "empty" :)
-  already donated: rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox
+  already donated: rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac)
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title trackfor automatically playing it right.
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
   note to them [in how_to_create]: can do the two types of preview at same time...concurrently...to save time...
-  investigate: can I use zoomplayer max?
+  investigate: use zoomplayer max cutscene support?
 
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter? It does jerk a bit doesn't it, on slower?
   can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
