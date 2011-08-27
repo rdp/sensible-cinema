@@ -34,6 +34,7 @@
 
 == yes do, un-ordered currently, from the various future release options ==
   investigate the "auto" srt parser...
+  from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too
   netflix HD versus none...
   rename sanitizer
