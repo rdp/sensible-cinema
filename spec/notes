@@ -19,7 +19,7 @@ accept my
 
 seemed end of 12
 
-
+this one seemed to match up really well just about 1.5s "late" the whole time...
 
 == compare upscaling settings ==
 
@@ -67,7 +67,7 @@ with mplayer to view the jpg (direct3d)
       raw looks BETTER wood-wise hmm...
       
     really need a better way to record maybe?
-    make mplayer go really slow, and have ffmpeg record it from screen [?] -> jpg  
+    make mplayer go really slow, and have ffmpeg record it from screen [?] -> jpg and hopefully it will catch everything...
       
 == upconvert netflix ==
 

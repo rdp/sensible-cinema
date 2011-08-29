@@ -2,9 +2,9 @@
 
   netflix
     upconv netflix
-    mac'ify OCR
+    mac'ify OCR/Mouse
   upconvert DVD
-  srt release
+  srt expand, release
   tweaks/docu
   C EDL
   
@@ -33,15 +33,18 @@
     after new upconvert stuff
 
 == yes do, un-ordered currently, from the various future release options ==
-  Ben's DVD's
+  Ben's DVD hook
+  Ben's other DVD's
   investigate the "auto" srt parser...
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too
   netflix HD versus none...
-  rename sanitizer
+  rename as sanitizer
+    note "we are in the creation phase and need your help"
   that extra .5s DVD reports for file size...
-  TODO test it at 720*x resolution too...
+  TODO test DVD upconv it at 720*x resolution too...
   investigate the srt morpher...
+  new button "creat for netflix"
   EDL gottman
   Greg's DVD's
   srt/parsing buttons new window [?]
@@ -50,6 +53,7 @@
   real docu on how to use the srt scanner
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
+  todo.
   research VOB dirs
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
@@ -164,19 +168,21 @@
   todo.upconvert
   todo.propaganda
   todo.inventionzy
-  open_edl_list_org_todo.txt file
+  todo.open_edl_list_org_todo
   todo.build_library
   todo.subtitle
-  todo.virtual_audio
+  virtual_audio TODO
+  screen_capture TODO
 
 == DVD decide later to move up or down ==
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  virtual audio TS's line up
   sout-keep for VLC EDL'ish?
-  local cache volume_name -> dvd id, in case that can speed things up
+  local cache volume_name -> dvd id's, in case that can speed things up
   check if some create buttons are now outdated...
-  make it load faster! this is cuh-razy! or at least splash screen! yes!
-  try buy edit lists from all x,y,z [?] offer them money LOL
+  make it load faster! this is cuh-razy! or at least splash screen!
+  try buy edit lists from all x,y,z [?]
     http://www.familysafemovies.com
     cleanflix (earl? that guy [John webster http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU]?)
     cougar video (that looks tough...)
@@ -190,8 +196,7 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
-  test court jester :)
-  ppc dvdid work?
+  test court jester watch it :)
   accomodate ISO's as input as if they were DVD's themselves
   fix ffmpeg's "red hue" within their code
   be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
