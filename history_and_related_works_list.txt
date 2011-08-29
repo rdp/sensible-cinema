@@ -98,4 +98,5 @@ AviSynth can script dvd playback http://forum.doom9.org/archive/index.php/t-1095
 ps3 media server has edl support: https://github.com/chocolateboy/PMS-EDL maybe would work with DVD's dunno
 Anydvd HD's "magic file replacement" for DVD's/blu-ray's
 RiffTrax allows for an audio "overlay" to a DVD playback, have their own player to coordinate the two.
+"fan subs" are edited subtitles, displayed overlaid on the original track/video
 Avatar DVD was released with an audio track that was "euphemized" of the profanity.

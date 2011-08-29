@@ -5,9 +5,12 @@ Cleaned up the upconvert interface, added a way for easier comparison of upconve
 Note that we also use a simplified (for editing) EDL file format for easier human consumption, 
 including timestamps.
 
+Note also that you can screen capture a playing video using my other project to project it "edited" to some device.
+Also you can capture the audio and "manipulate it" using my other project.
+
 == 0.26.0 ==
 
-It can now parse out (screen scraping), at runtime, EDL information from a user editable online 3rd party wiki 
+It can now parse out (screen scraping from web page), at runtime, EDL information from a user editable online 3rd party wiki 
 (imdb parent guide), including property timestamp conversions and making it easy to read, etc., and doing all the various
 sections to an appropriate category.
 So it binds the DVD's unique ID with its imdb database.
