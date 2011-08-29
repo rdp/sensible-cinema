@@ -1,9 +1,9 @@
 == ==
 
-Cleaned up the upconvert interface, added a way for easier comparison of upconversion settings (automated-ly-zy).
+Cleaned up the upconvert interface, added a way for easier comparison of different upconversion settings (automated-ly-zy).
 
 Note that we also use a simplified (for editing) EDL file format for easier human consumption, 
-including timestamps.
+including use of timestamps.
 
 Note also that you can screen capture a playing video using my other project to project it "edited" to some device.
 Also you can capture the audio and "manipulate it" using my other project.
