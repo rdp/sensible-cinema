@@ -33,6 +33,7 @@
     after new upconvert stuff
 
 == yes do, un-ordered currently, from the various future release options ==
+  Ben's DVD's
   investigate the "auto" srt parser...
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too
@@ -42,7 +43,6 @@
   TODO test it at 720*x resolution too...
   investigate the srt morpher...
   EDL gottman
-  Ben's DVD's
   Greg's DVD's
   srt/parsing buttons new window [?]
   change upconvert options needs its own "close" button
@@ -150,7 +150,7 @@
     add to docu
   refresh bug try to reproduce
   can edit books, too.
-    +- list/publish :)
+    +- list/publish :) [like a manual list et al]
   create the following EDL: 10 commandments DVD to skip the intro music LOL
   inventionzy: blu-ray stuff from todo.inventionzy
   sons of provo "music video" EDL
