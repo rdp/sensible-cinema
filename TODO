@@ -33,11 +33,14 @@
     after new upconvert stuff
 
 == yes do, un-ordered currently, from the various future release options ==
+  test mplayer -vo gl at home
   Ben's DVD hook
   Ben's other DVD's
   investigate the "auto" srt parser...
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too
+    add netflix instant instructions,
+      then add a blog post comment after releasing it as template
   netflix HD versus none...
   rename as sanitizer
     note "we are in the creation phase and need your help"
@@ -46,6 +49,7 @@
   investigate the srt morpher...
   new button "creat for netflix"
   EDL gottman
+  bounty hqdn3d for ffmpeg
   Greg's DVD's
   srt/parsing buttons new window [?]
   change upconvert options needs its own "close" button
@@ -53,7 +57,7 @@
   real docu on how to use the srt scanner
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
-  todo.
+  re-advertise bounty on ffmpeg-devel
   research VOB dirs
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
