@@ -36,6 +36,7 @@ add srt instructions to docu, release
   netflix instant descriptor for OS X/work at all
   post release notes to the google group
     after new upconvert stuff
+  compare timing of subs windows to mac
 
 == yes do, un-ordered currently, from the various future release options ==
   test mplayer -vo gl at home
