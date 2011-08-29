@@ -197,6 +197,7 @@ class ScreenTracker
             @previously_displayed_warning = true
             # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
             get_hwnd_loop_forever
+            # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al
           end
           time_since_last_screen_change = Time.now
         end
