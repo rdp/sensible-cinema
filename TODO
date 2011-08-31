@@ -33,6 +33,7 @@
 add srt instructions to docu, release
 
 == yes do ordered  ==
+fake "tenseness"
   netflix instant descriptor for OS X/work at all
   post release notes to the google group
     after new upconvert stuff
@@ -59,6 +60,7 @@ add srt instructions to docu, release
   bounty hqdn3d for ffmpeg
   Greg's DVD's
   srt/parsing buttons new window [?]
+  demo of conference "music video from file"
   change upconvert options needs its own "close" button
   tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
