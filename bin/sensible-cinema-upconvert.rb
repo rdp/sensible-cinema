@@ -40,7 +40,7 @@ module SensibleSwing
     LocalStorage.set_default('screen_multiples', 2.0)
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Change Playback Upconversion Quality Options") do
+      @show_upconvert_options = new_jbutton("Change/Test Playback Upconversion Quality Options") do
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
@@ -184,10 +184,12 @@ module SensibleSwing
         popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         output_dir = get_same_drive_friendly_clean_temp_dir 'temp_screencast_dir'
-        thread1 = play_mplayer_edl_non_blocking [filename_mpg, nil]
+        thread1 = play_mplayer_edl_non_blocking [filename_mpg, nil], [" -ss 2:44 -endpos 11"]
         # screen capture for 10s
-        thread2 = Thread.new {  c = %!ffmpeg -f dshow -i video="screen-capture-recorder" -r 10 -vframes 100 -y #{File.strip_drive_windows(output_dir)}/%d.png!; system_blocking c }
+        fps_to_grab = 5
+        thread2 = Thread.new {  c = %!ffmpeg -f dshow -i video="screen-capture-recorder" -r #{fps_to_grab} -vframes #{fps_to_grab*10} -y #{File.strip_drive_windows(output_dir)}/%d.png!; system_blocking c }
         thread2.join
+        show_blocking_message_dialog "ffmpeg done, close mplayer now!"
         thread1.join
         popup.dispose # just in case :P
         show_in_explorer(output_dir)
