@@ -26,6 +26,7 @@ class EdlParser
 
   # returns {"mutes" => [["00:00", "00:00", string1, string2, ...], ...], "blank_outs" -> [...], "url" => ...}  
   def self.parse_file filename, expand = true
+  p filename
     output = parse_string File.read(filename), filename, []
     if relative = output["take_from_relative_file"]
       new_filename = File.dirname(filename) + '/' + relative

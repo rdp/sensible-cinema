@@ -41,6 +41,7 @@ fake "tenseness"
 
 == yes do, un-ordered currently, from the various future release options ==
   test mplayer -vo gl at home
+  extra printf's for scanign for matching
   Ben's DVD hook
   Ben's other DVD's
   investigate the "auto" srt parser...
@@ -58,6 +59,7 @@ fake "tenseness"
   new button "creat for netflix"
   EDL gottman
   bounty hqdn3d for ffmpeg
+  note we require "DVD matching" srt's huh
   Greg's DVD's
   srt/parsing buttons new window [?]
   demo of conference "music video from file"
@@ -190,6 +192,7 @@ fake "tenseness"
 == DVD decide later to move up or down ==
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  @avisynth: 6 fps from 2? huh? also why are some progs [ffmpeg] seemingly resetting the graphedit pins? huh? also tell that one already logged bug how I work around it...
   virtual audio TS's line up
   sout-keep for VLC EDL'ish?
   local cache volume_name -> dvd id's, in case that can speed things up
