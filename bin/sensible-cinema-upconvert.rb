@@ -172,21 +172,39 @@ module SensibleSwing
         popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         
-        output_dir = Dir.tmpdir
-        if File.get_root_dir(output_dir) != File.get_root_dir(Dir.pwd) # you are hosed!
-          output_dir = File.get_root_dir(Dir.pwd) # and hope it's writable...
-        end
-        output_dir = output_dir + '/temp_upscaled_video_out'
-        FileUtils.rm_rf output_dir
-        Dir.mkdir output_dir
-        
+        output_dir = get_same_drive_friendly_clean_temp_dir 'temp_upscaled_video_out'
         output_command = '-ss 2:44 -frames 300 -vo png:outdir="' + File.strip_drive_windows(output_dir) + '"'
         output_command += " -noframedrop" # don't want them to skip frames on cpu's without enough power to keep up
         thread = play_mplayer_edl_non_blocking [filename_mpg, nil], [output_command], true
-        when_thread_done(thread) { popup.dispose if popup; show_in_explorer(output_dir) }
+        when_thread_done(thread) { popup.dispose; show_in_explorer(output_dir) }
       end
       @generate_images.tool_tip = "This creates a folder with images upconverted from some DVD or file, so you can tweak settings and compare." # TODO more tooltips
 
+      @generate_screen_cast = new_jbutton("Test current configuration by watching video file and recording screen") do
+        popup = warn_if_no_upconvert_options_currently_selected
+        filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
+        output_dir = get_same_drive_friendly_clean_temp_dir 'temp_screencast_dir'
+        thread1 = play_mplayer_edl_non_blocking [filename_mpg, nil]
+        # screen capture for 10s
+        thread2 = Thread.new {  c = %!ffmpeg -f dshow -i video="screen-capture-recorder" -r 10 -vframes 100 -y #{File.strip_drive_windows(output_dir)}/%d.png!; system_blocking c }
+        thread2.join
+        thread1.join
+        popup.dispose # just in case :P
+        show_in_explorer(output_dir)
+      end
+
+
+    end
+    
+    def get_same_drive_friendly_clean_temp_dir suffix
+        output_dir = Dir.tmpdir
+        if File.get_root_dir(output_dir) != File.get_root_dir(Dir.pwd) # you are hosed!
+          output_dir = File.get_root_dir(Dir.pwd) # we'll raise if it's not writable...
+        end
+        output_dir = output_dir + '/' + suffix
+        FileUtils.rm_rf output_dir
+        Dir.mkdir output_dir
+        output_dir
     end
     
     def display_current_upconvert_setting_and_close_window
