@@ -11,6 +11,10 @@
       with several, or start one, end one, etc.
 	    allow for extra start time offset for videos, if netflix instant has any
     a way to integrate with cable TV, ex: "this show we know started at 1:01, and its offsets should be this after that point"
+    it can "infer" where the thumb slider would be, and "drag" it to where it infers the new timestamp location shoudl be.
+	  or with youtube, use the api to fast forwarrd there
+	    and if it isn't already loaded, display an extra notice "forwarding" or what not.
+		and/or display some other overlay and or audio in place of the video or audio, or supplementing it.
     a video of "recording to broadcast it" (or save it one by one)
     can "suck in" a large list of EDL's from imdb at build time, 
       and/or a "resync" button, to re-download just the list of updated EDL's/IMDB wiki settings [?]
