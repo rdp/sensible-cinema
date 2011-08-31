@@ -90,7 +90,7 @@ def go_sc(args)
       puts 'Select Edit Decision List to use'
       edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
     end
-    settings = EdlParser.parse_file auto_found
+    settings = EdlParser.parse_file edit_decision_list
     
     if !edit_decision_list	
       puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"

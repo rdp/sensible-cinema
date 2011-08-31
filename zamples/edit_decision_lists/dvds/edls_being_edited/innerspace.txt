@@ -1,0 +1,61 @@
+# comments can go after a # on any line, for example this one.
+"name" => "InnerSpace",
+
+"mutes" => [
+# add these into your mute section if you deem them mute-worthy
+
+"0:02:34.489" , "0:02:38.659", "profanity", "da..", "Well [da..] if we're not balls to the wall",
+"0:03:27.834" , "0:03:30.586", "profanity", "sh..", "[sh..] I spilled my drink",
+"0:07:36.875" , "0:07:39.793", "profanity", "a..", "I make an [a..] out of myself",
+"0:11:34.279" , "0:11:37.906", "profanity", "da..", "[da..] this traffic We're gonna be late",
+"0:28:45.727" , "0:28:49.354", "profanity", "he..", "What the [he..] are these things Fat cells",
+"0:28:53.193" , "0:28:56.570", "profanity", "he..", "What the [he..] is going on out there",
+"0:29:12.170" , "0:29:15.964", "profanity", "sh..", "How do I look Like [sh..]",
+"0:31:30.433" , "0:31:34.728", "profanity", "goodness", "Oh my [goodness] he's completely spaced out",
+"0:31:40.777" , "0:31:44.071", "profanity", "he..", "What the [he..] is that Ozzie",
+"0:33:59.666" , "0:34:03.043", "profanity", "he..", "Come on where the [he..] is the picture",
+"0:34:07.507" , "0:34:12.344", "profanity", "he..", "That's not Oz Who the [he..] is that Where's the lab technician",
+"0:34:21.104" , "0:34:23.689", "profanity", "goodness", "Oh [goodness]",
+"0:34:40.290" , "0:34:44.209", "profanity", "b....", "I'm in a strange man I'll be a son of a [b....]",
+"0:38:26.724" , "0:38:28.976", "profanity", "goodness", "Oh [goodness]",
+"0:39:09.934" , "0:39:13.478", "profanity", "goodness", "Thank [goodness] A doctor Somebody who'll understand",
+"0:39:31.539" , "0:39:36.750", "profanity", "goodness", "I'm blind Oh [goodness]",
+#"0:39:33.833" , "0:39:36.585", "profanity", "goodness", "Now it's talking about [goodness]",
+"0:40:34.269" , "0:40:37.271", "profanity", "goodness", "Thank [goodness] I can see",
+"0:42:11.699" , "0:42:14.034", "profanity", "goodness", "Oh [goodness]",
+"0:44:38.346" , "0:44:40.514", "profanity", "sh..", "[sh..]",
+"0:45:59.928" , "0:46:03.263", "profanity", "he..", "You've got one [he..] of a pump Jack",
+"0:47:00.488" , "0:47:04.032", "profanity", "b....", "You better you two faced son of a [b....]",
+"0:51:32.135" , "0:51:37.389", "profanity", "a..", "A good man who tried to save my [a..] by injecting me into yours",
+"0:55:27.328" , "0:55:29.830", "profanity", "goodness", "[goodness] help us",
+"1:04:30.496" , "1:04:35.709", "profanity", "sh..", "Frankly I don't rive a [sh..] I'm only in this for the money",
+"1:13:24.572" , "1:13:27.824", "profanity", "goodness", "It's Wendy My [goodness] Jack",
+"1:15:22.398" , "1:15:26.568", "profanity", "make love", "One I [make love] with my boots on",
+"1:15:33.535" , "1:15:38.747", "profanity", "sh..", "I know I've been mean to you Jack I can be such a [sh..] sometimes",
+"1:17:19.724" , "1:17:23.894", "profanity", "goodness", "[goodness] I can't believe how hostile I feel towards you right now",
+"1:18:11.693" , "1:18:14.152", "profanity", "b....", "Duke the son of a [b....]",
+"1:20:41.634" , "1:20:44.553", "profanity", "goodness", "Jack My [goodness]",
+"1:26:16.845" , "1:26:20.180", "profanity", "goodness", "[goodness] in heaven deliver us from Satan",
+"1:30:33.977" , "1:30:37.312", "profanity", "he..", "Jack Where the [he..] am I",
+"1:36:14.359" , "1:36:17.027", "profanity", "sh..", "Maybe it's one of these [sh..]",
+"1:36:45.056" , "1:36:47.808", "profanity", "goodness", "Oh my [goodness] cover your eyes",
+"1:36:52.105" , "1:36:55.649", "profanity", "da..", "Come on rive me the [da..] chip",
+"1:38:52.183" , "1:38:54.184", "profanity", "sh..", "Oh [sh..]",
+"1:46:19.297" , "1:46:22.382", "profanity", "goodness", "There's a phone thank [goodness]",
+"1:53:12.460" , "1:53:15.629", "profanity", "he..", "we sure made one [he..] of a team",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "INNERSPACE",
+"disk_unique_id" => "703ca989|09797818",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "6095", # sum length, on the DVD, use the show DVD info button to retrieve it.
+"opensubtitles_number" => "http://www.opensubtitles.org/en/subtitles/3264986/innerspace-en",
+# "not edited out stuff" => "some violence left in...",
+# "closing thoughts" => "only did the...",
+"mplayer_dvd_splits" => ["3304.04", "1:04:59"],
