@@ -40,6 +40,7 @@ add srt instructions to docu, release
 
 == yes do, un-ordered currently, from the various future release options ==
   test mplayer -vo gl at home
+  extra printf's for scanign for matching
   Ben's DVD hook
   Ben's other DVD's
   investigate the "auto" srt parser...
