@@ -72,8 +72,6 @@ fake "tenseness"
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
   re-advertise bounty on ffmpeg-devel
-  research VOB dirs
-    still needs timesplits? what about in XBMC? what about XBMC with DVD's
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer
@@ -82,6 +80,8 @@ fake "tenseness"
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
   add new open button "edit the EDL for current DVD"
+  add "play at 1.5x speed" mplayer button, I guess
+  play in mplayer unedited button should display OSD by default
   bounty ffmpeg stuff (motion detect, directshow)
   "fix" mplayer EDL pausing their code
   the open button should open in the "editing" EDL dir.
@@ -91,15 +91,6 @@ fake "tenseness"
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
   witch lady
   split out the "dependency" codes
-  research XBMC
-    break out into its own separate window?
-    @XBMC: your stuff is broken in at least these two ways (bug reports)
-    also are they 30fps or not? and how do they handle timesplits?
-    is there another format that will actually mute?
-    XBMC mode doesn't mind the 600 starting offset...
-      oh wait we weren't even using it right to begin with LOL
-      plus it needs to "always just skip instead of mute" for now I guess
-      report XBMC bugs, too.
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
@@ -195,6 +186,17 @@ fake "tenseness"
 == DVD decide later to move up or down ==
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  research XBMC
+    break out into its own separate window?
+    @XBMC: your stuff is broken in at least these two ways (bug reports)
+    also are they 30fps or not? and how do they handle timesplits?
+    is there another format that will actually mute?
+    XBMC mode doesn't mind the 600 starting offset...
+      oh wait we weren't even using it right to begin with LOL
+      plus it needs to "always just skip instead of mute" for now I guess
+      report XBMC bugs, too.
+  research VOB dirs
+    still needs timesplits? what about in XBMC? what about XBMC with DVD's
   @avisynth: 6 fps from 2? huh? also why are some progs [ffmpeg] seemingly resetting the graphedit pins? huh? also tell that one already logged bug how I work around it...
   virtual audio TS's line up
   sout-keep for VLC EDL'ish?

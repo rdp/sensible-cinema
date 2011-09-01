@@ -21,21 +21,6 @@ module SensibleSwing
   
   class MainWindow < JFrame
 
-    SideBySide = 'side_by_side' # 'xbmc' or 'smplayer'
-    
-    def select_new_sxs_style
-      answer = show_select_buttons_prompt 'Select EDL file style creation for this program', :yes => 'Smplayer style', :no => 'XBMC style'
-      if answer == 0
-        LocalStorage[SideBySide] = 'smplayer'
-      elsif answer == 1
-        LocalStorage[SideBySide] = 'xbmc'
-      else
-        show_blocking_message_dialog 'please choose one--smplayer if you don\'t know'
-        select_new_sxs_style
-      end
-        
-    end
-      
     attr_accessor :parent, :upconv_line
     
     def setup_advanced_buttons
@@ -174,11 +159,6 @@ module SensibleSwing
       @create_dot_edl.on_clicked {
         choose_file_and_edl_and_create_sxs_or_play true
       }
-      
-#      new_jbutton("Select side by side EDL file style (smplayer vs. XBMC)") do
-#        select_new_sxs_style # TODO
-#      end
-
       
       add_text_line 'Create Options with local intermediary file:'
       
