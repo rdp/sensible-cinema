@@ -241,6 +241,8 @@ module SensibleSwing
         extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
       end
       
+      start_full_screen = true
+      
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
       if force_use_mplayer
@@ -248,13 +250,13 @@ module SensibleSwing
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
        extra_options += " -font #{File.expand_path('subfont.ttf')} "
-       extra_options += " -volume 100 " # why start low? mplayer why oh why
+       extra_options += " -volume 100 " # why start low? mplayer why oh why LODO
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
         extra_options += " -vo direct3d "
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
-       extra_options += " -fs " # full screen
+       extra_options += " -fs " if start_full_screen
       
        upconv = get_upconvert_vf_settings
        upconv = "-vf #{upconv}" if upconv.present?
@@ -264,7 +266,8 @@ module SensibleSwing
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
         end
         set_smplayer_opts extra_options + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
-        c = "smplayer_portable \"#{play_this}\" -fullscreen -config-path \"#{File.dirname SMPlayerIniFile}\" " 
+        c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname SMPlayerIniFile}\" " 
+        c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode
           #c += " -close-at-end " # we're still too unstable, mate...
         end
@@ -293,7 +296,7 @@ module SensibleSwing
       
       FileUtils.mkdir_p File.dirname(SMPlayerIniFile) # case it doesn't yet exist
       File.write(SMPlayerIniFile, new_prefs)
-      new_prefs.each_line{|l| print l if l =~ /additional_video/}
+      new_prefs.each_line{|l| print l if l =~ /additional_video/} # debug
     end
     
     def create_brand_new_edl
@@ -365,8 +368,8 @@ module SensibleSwing
       @background_thread = Thread.new { system_original command }
     end
     
-      # make them choose which system call to use explicitly
-      undef system
+    # make them choose which system call to use explicitly
+    undef system
    
     def play_dvd_smplayer_unedited use_mplayer_instead, show_instructions, show_subs
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
@@ -445,7 +448,7 @@ module SensibleSwing
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), true, false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false
     end
     
     def assert_ownership_dialog 

@@ -31,6 +31,8 @@
 "mutes" => [
 # add these into your mute section if you deem them mute-worthy
 
+"0:05:45.80", "348.8", "profanity", "sh..",
+
 "0:02:34.489" , "0:02:38.659", "profanity", "da..", "Well [da..] if we're not balls to the wall",
 "0:03:27.834" , "0:03:30.586", "profanity", "sh..", "[sh..] I spilled my drink",
 "0:07:36.875" , "0:07:39.793", "profanity", "a..", "I make an [a..] out of myself",
@@ -76,6 +78,8 @@
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "310.3", "323.3", "lewd", "some sexual tension",
+  
 ],
 
 "volume_name" => "INNERSPACE",
