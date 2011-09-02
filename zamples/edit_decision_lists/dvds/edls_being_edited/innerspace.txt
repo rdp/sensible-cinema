@@ -3,6 +3,30 @@
 
 # 5:00'ish cleavage/s. tension, 'shoot' [?]
 # 8:00 butt, nighter
+# leak, oh loh
+# 23 khe..
+#1930.1 he, 2113.7, 3276.0
+#31:00 g,  
+
+# transition + 36.4
+#small forever  292.5
+#warm up  494.5
+# he..  680.1
+
+#
+#01:06:22,942 --> 01:06:24,318
+#You're scaring me, Jack.
+
+##
+#01:07:35,723 --> 01:07:37,391
+#You can do it!
+#730
+#01:07:47,526 --> 01:07:48,944
+#Jack, I love you!
+
+#:1260.9 haven't slept with
+
+# skeleton :3125.5
 
 "mutes" => [
 # add these into your mute section if you deem them mute-worthy
@@ -60,5 +84,5 @@
 # "dvd_title_track_length" => "6095", # sum length, on the DVD, use the show DVD info button to retrieve it.
 "opensubtitles_number" => "http://www.opensubtitles.org/en/subtitles/3264986/innerspace-en",
 # "not edited out stuff" => "some violence left in...",
-# "closing thoughts" => "only did the...",
-"mplayer_dvd_splits" => ["3304.04", "1:04:59"],
+# "closing thoughts" => "pretty mature movie",
+"mplayer_dvd_splits" => ["3304.04"], # TODO lacking one

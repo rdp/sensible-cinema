@@ -184,6 +184,8 @@ fake "tenseness"
   screen_capture TODO
 
 == DVD decide later to move up or down ==
+  add option "just skip don't mute"
+  add play option "play in just mplayer"
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
   research XBMC

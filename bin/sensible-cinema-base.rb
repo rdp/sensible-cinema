@@ -316,7 +316,7 @@ module SensibleSwing
 "volume_name" => "#{volume}",
 "disk_unique_id" => "#{dvd_id}",
 "dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
-# "dvd_title_track_length" => "6095", # sum length, on the DVD, use the show DVD info button to retrieve it.
+# "dvd_title_track_length" => "9999", # sum length, on the DVD, use the show DVD info button to retrieve it.
 # "opensubtitles_number" => "1234567",
 # "not edited out stuff" => "some violence left in...",
 # "closing thoughts" => "only did the...",
@@ -445,7 +445,7 @@ module SensibleSwing
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), true, false
     end
     
     def assert_ownership_dialog 
