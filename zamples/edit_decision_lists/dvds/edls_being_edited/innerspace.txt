@@ -1,7 +1,6 @@
 # comments can go after a # on any line, for example this one.
 "name" => "InnerSpace",
 
-# 5:00'ish cleavage/s. tension, 'shoot' [?]
 # 8:00 butt, nighter
 # leak, oh loh
 # 23 khe..

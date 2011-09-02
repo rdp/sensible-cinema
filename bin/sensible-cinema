@@ -32,10 +32,10 @@ end
 raise 'need jruby' unless OS.java?
 raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many...oddities in it :P
 
-require_relative 'sensible-cinema-base'
-require_relative 'sensible-cinema-normal'
-require_relative 'sensible-cinema-create'
-require_relative 'sensible-cinema-upconvert'
+require_relative '../lib/gui/sensible-cinema-base'
+require_relative '../lib/gui/sensible-cinema-normal'
+require_relative '../lib/gui/sensible-cinema-create'
+require_relative '../lib/gui/sensible-cinema-upconvert'
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')

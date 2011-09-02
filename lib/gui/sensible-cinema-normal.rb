@@ -165,8 +165,8 @@ module SensibleSwing
           begin
             descriptors = parse_edl @_edit_list_path
           rescue SyntaxError => e
-            puts e
             show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+            raise e
           end
         end
       end

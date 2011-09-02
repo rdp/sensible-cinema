@@ -31,7 +31,7 @@ class String
   end
 end
 
-require_relative '../lib/swing_helpers'
+require_relative '../swing_helpers'
 
 # attempt to load on demand...i.e. faster...
 for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
@@ -39,8 +39,8 @@ for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder,
 end
 
 # a few I'll always need eventually...
-require_relative '../lib/storage'
-require_relative '../lib/edl_parser'
+require_relative '../storage'
+require_relative '../edl_parser'
 require 'tmpdir'
 require 'whichr'
 require 'os'
@@ -48,9 +48,6 @@ if OS.doze?
   autoload :WMI, 'ruby-wmi'
   autoload :EightThree, './lib/eight_three'
 end
-
-vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
-
 
 class String
  def to_filename
@@ -63,6 +60,7 @@ class String
 end
 
 if OS.windows?
+  vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
   for name in ['.', 'mencoder', 'ffmpeg']
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
@@ -79,10 +77,10 @@ else
 end
 
 import 'javax.swing.ImageIcon'
-require_relative '../lib/sensible-cinema-dependencies'
+require_relative './sensible-cinema-dependencies'
 
 module SensibleSwing
-  VERSION = File.read(File.dirname(__FILE__) + "/../VERSION").strip
+  VERSION = File.read(File.dirname(__FILE__) + "/../../VERSION").strip
   puts "v. " + VERSION
   
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # sigh

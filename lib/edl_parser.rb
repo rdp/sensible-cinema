@@ -276,7 +276,7 @@ class EdlParser
     if seconds == seconds.to_i
       out << "%02d" % seconds
     else
-      out << "%06.3f" % seconds # man that is tricky...
+      out << "%06.2f" % seconds # man that printf syntax is tricky...
     end
   end
   
