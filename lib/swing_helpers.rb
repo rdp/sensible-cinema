@@ -16,7 +16,9 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 require 'java'
-module SensibleSwing 
+
+module SwingHelpers 
+  
  include_package 'javax.swing'
  [JProgressBar, JButton, JFrame, JLabel, JPanel, JOptionPane,
    JFileChooser, JComboBox, JDialog, SwingUtilities, JSlider] # grab these constants (http://jira.codehaus.org/browse/JRUBY-5107)
@@ -26,6 +28,34 @@ module SensibleSwing
  JFile = java.io.File
  include_class java.awt.FileDialog
  include_class java.lang.System
+ UIManager
+
+ class JOptionPane
+    JOptionReturnValuesTranslator = {0 => :yes, 1 => :no, 2 => :cancel, -1 => :exited}
+    
+    # accepts :yes => "yes text", :no => "no text"
+    # returns  :yes :no :cancel: or :exited
+    def self.show_select_buttons_prompt message, names_hash = {}
+      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
+      if names_hash[:yes]
+        UIManager.put("OptionPane.yesButtonText", names_hash[:yes])
+      end
+      if names_hash[:no]
+        UIManager.put("OptionPane.noButtonText", names_hash[:no])
+      end
+      # if names_hash[:ok] # ???
+      #   UIManager.put("OptionPane.okButtonText", names_hash[:ok])
+      # end
+      if names_hash[:cancel]
+        UIManager.put("OptionPane.noButtonText", names_hash[:cancel])
+      end
+      title = message.split(' ')[0..5].join(' ')
+      returned = JOptionPane.showConfirmDialog nil, message, title, JOptionPane::YES_NO_CANCEL_OPTION # LODO self?
+      old.each{|name, old_setting| UIManager.put(name, old_setting)}
+      JOptionReturnValuesTranslator[returned]
+    end
+    
+end
 
  class JButton
    def initialize *args
@@ -73,6 +103,7 @@ module SensibleSwing
    end
   end
   
+  # wrapped in sensible-cinema-base
   class JFileChooser
     # also set_current_directory et al...
     
@@ -85,7 +116,7 @@ module SensibleSwing
       get_selected_file.get_absolute_path
     end
     
-    # match FileDialog
+    # match FileDialog methods...
     def set_title x
       set_dialog_title x
     end
@@ -93,16 +124,48 @@ module SensibleSwing
     def set_file f
       set_selected_file JFile.new(f)
     end
+    
     alias setFile set_file
+
+    # choose a file that may or may not exist yet...
+    def self.new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
+      out = JFileChooser.new
+      out.set_title title
+      if default_dir
+        out.set_current_directory JFile.new(default_dir)
+      end
+      if default_file
+        out.set_file default_file
+      end
+      out.go
+    end
     
   end
   
-  # awt...
+  # awt...the native looking one...
   class FileDialog
     def go
       show
-      File.expand_path(get_directory + '/' + get_file) if get_file # get_file implies they picked something
+      File.expand_path(get_directory + '/' + get_file) if get_file # get_file implies they picked something...
     end
+    
+    # this actually allows for non existing files [oopsy] LODO
+    def self.new_previously_existing_file_selector_and_go title, use_this_dir = nil
+      out = FileDialog.new(nil, title, FileDialog::LOAD) # LODO no self in here... ?
+      out.set_title title
+      if use_this_dir
+        # FileDialog only accepts paths a certain way...
+        dir = File.expand_path(use_this_dir).gsub(File::Separator, File::ALT_SEPARATOR)
+        out.setDirectory(dir) 
+      end
+      Thread.new { sleep 2; out.to_front } # it gets hidden, unfortunately, so try and bring it again to the front...
+      #out.remove_notify # allow our app to exit [?]
+      got = out.go
+      raise 'must exist' unless File.exist? go
+      raise 'cancelled choosing existing file' unless got # I think we always want to raise...
+      got
+    end
+    
   end
   
   class NonBlockingDialog < JDialog
@@ -127,4 +190,32 @@ module SensibleSwing
       setLocationRelativeTo nil # center it on the screen
     end
   end
+  
+  def self.get_user_input(message, default = '', cancel_ok = false)
+    received = javax.swing.JOptionPane.showInputDialog(message, default)
+    unless cancel_ok
+      raise 'user cancelled' unless received
+    end
+    received
+  end
+  
+  def self.show_in_explorer filename_or_path
+    raise 'nonexist' unless File.exist?(filename_or_path)
+    begin
+        c = "explorer /e,/select,\"#{File.expand_path(filename_or_path).to_filename}\"" 
+        system c # command returns immediately...so system is ok
+    rescue => why_does_this_happen_ignore_this_exception_it_probably_actually_succeeded
+    end
+  end
+
+end
+
+class String
+ def to_filename
+  if File::ALT_SEPARATOR
+    self.gsub('/', File::ALT_SEPARATOR)
+  else
+    self
+  end
+ end
 end

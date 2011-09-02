@@ -49,15 +49,6 @@ if OS.doze?
   autoload :EightThree, './lib/eight_three'
 end
 
-class String
- def to_filename
-   if OS.windows?
-     self.gsub('/', "\\")
-   else
-    self
-  end
- end
-end
 
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
@@ -80,17 +71,19 @@ import 'javax.swing.ImageIcon'
 require_relative './sensible-cinema-dependencies'
 
 module SensibleSwing
+  include SwingHelpers # various swing classes
+  JFrame
   VERSION = File.read(File.dirname(__FILE__) + "/../../VERSION").strip
   puts "v. " + VERSION
   
-  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # sigh
+  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # <sigh>
   
   class MainWindow < JFrame
+    include SwingHelpers # work-around?
     
     def initialize be_visible = true
       super "Sensible-Cinema #{VERSION} (GPL)"
       force_accept_license_first
-
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # default is exit on close
       @panel = JPanel.new
       @buttons = []
@@ -157,24 +150,6 @@ module SensibleSwing
       Thread.new {thread.join; yield }
     end
     
-    class ::File
-      def self.get_root_dir this_path
-        this_path = File.expand_path this_path
-        if OS.doze?
-          this_path[0..2]
-        else
-          this_path.split('/')[0]
-        end
-      end
-      
-      def self.strip_drive_windows this_complete_path
-        if OS.doze?
-          this_complete_path[2..-1]
-        else
-          this_complete_path
-        end
-      end
-    end
 
     # a window that when closed doesn't bring the whole app down
     def new_child_window
@@ -188,12 +163,13 @@ module SensibleSwing
     end
     
     def run_smplayer_non_blocking *args
+      pp caller
       @background_thread = Thread.new {
         run_smplayer_blocking *args
       }
     end
 
-    def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs
+    def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen
       unless File.exist?(File.expand_path(play_this))
         raise play_this + ' non existing?' # till these go away in mac :)
       end
@@ -238,8 +214,6 @@ module SensibleSwing
       if play_this =~ /dvdnav/ && title_track_maybe_nil
         extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
       end
-      
-      start_full_screen = true
       
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
@@ -406,7 +380,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false
+    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly
@@ -446,36 +420,16 @@ module SensibleSwing
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false, start_full_screen
     end
     
     def assert_ownership_dialog 
       message = "Do you certify you own the DVD this came of and have it in your possession?"
       title = "Verify ownership"
-      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
+      returned = JOptionPane.show_select_buttons_prompt(message, {})
       assert_confirmed_dialog returned, nil
     end
     
-    # returns 0,1,2 for yes, no, cancel equivs
-    def show_select_buttons_prompt message, names_hash
-      old = ['no', 'yes', 'ok'].map{|name| 'OptionPane.' + name + 'ButtonText'}.map{|name| [name, UIManager.get(name)]}
-      if names_hash[:yes]
-        UIManager.put("OptionPane.yesButtonText", names_hash[:yes])
-      end
-      if names_hash[:no]
-        UIManager.put("OptionPane.noButtonText", names_hash[:no])
-      end
-      # if names_hash[:ok] # ???
-      #   UIManager.put("OptionPane.okButtonText", names_hash[:ok])
-      # end
-      if names_hash[:cancel]
-        UIManager.put("OptionPane.noButtonText", names_hash[:cancel])
-      end
-      returned = JOptionPane.showConfirmDialog self, message, title, JOptionPane::YES_NO_CANCEL_OPTION
-      old.each{|name, old_setting| UIManager.put(name, old_setting)}
-      returned
-    end
-      
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
       title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window.'
@@ -488,31 +442,34 @@ module SensibleSwing
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      returned = show_select_buttons_prompt message, :yes => 'Accept', :no => "View #{license_name}"
-      assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
+      answer = JOptionPane.show_select_buttons_prompt message, :yes => 'Accept', :no => "View #{license_name}"
+      assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
       p 'confirmation of sensible cinema related license saved of: ' + license_name
       throw unless returned == 0
       
     end
     
-    def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
+    def assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
+      # :yes, :no, :cancel
       # 1 is view button was clicked
       # 0 is accept
       # 2 is cancel
-      if returned == 1
+      if returned == :no
         if license_url_should_also_be_embedded_by_you_in_message
           system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
           puts "Please restart after reading license agreement, to be able to then accept it."
         end
         System.exit 0
-      end
-      if returned == 2
+      elsif returned == :cancel
         p 'license not accepted...exiting'
         System.exit 1
-      end
-      if returned == -1
+      elsif returned == :exited
         p 'license exited early...exiting'
         System.exit 1
+      elsif returned == :yes
+        # ok
+      else
+        raise 'unknown'
       end
     end
     
@@ -607,18 +564,13 @@ module SensibleSwing
       end
     end
     
-    def new_nonexisting_filechooser title = nil, default_dir = nil
-      out = JFileChooser.new
-      out.set_title title
-      if default_dir
-        out.set_current_directory JFile.new(default_dir)
-      end
-      out
+    def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
+      JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
       JOptionPane.showMessageDialog(nil, message, title, style)
-      true
+      true # memoize uses this once or twice...
     end
     
     # call dispose on this to close it if it hasn't been canceled yet...
@@ -630,11 +582,7 @@ module SensibleSwing
     include_class javax.swing.UIManager
     
     def get_user_input(message, default = '', cancel_ok = false)
-      received = JOptionPane.showInputDialog(message, default)
-      unless cancel_ok
-        raise 'user cancelled' unless received
-      end
-      received
+      SensibleSwing.get_user_input message, default, cancel_ok
     end
     
     def show_copy_pastable_string(message, value)
@@ -642,32 +590,21 @@ module SensibleSwing
       get_user_input message + " (has been copied to clipboard)", value, true
     end
     
-    
-    def new_existing_file_selector_and_select_file title, dir=nil
-      out = FileDialog.new(self, title, FileDialog::LOAD)
-      out.set_title title
-      dir ||= LocalStorage[caller.inspect]
-      out.set_directory dir.to_filename if dir
-      got = out.go
-      raise 'cancelled choosing existing file method' unless got # I think we always want to raise...
+    # also caches directory previously selected ...
+    def new_existing_file_selector_and_select_file title, dir = nil
+      dir ||= LocalStorage[caller.inspect] = File.dirname(got)
+      got = FileDialog.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[caller.inspect] = File.dirname(got)
       got
     end
     
-    
-    # reveals My Documents if file/folder doesn't exist
     def show_in_explorer filename
-      begin
-        c = "explorer /e,/select,\"#{File.expand_path(filename).to_filename}\"" # command returns immediately...
-        system_blocking c
-      rescue => why_does_this_happen_ignore_this_exception_it_probably_actually_succeeded
-      end
+      SwingHelpers.show_in_explorer filename
     end
     
     def get_disk_chooser_window names
       GetDisk.new(self, names)
     end
-    
 
   end
 
@@ -720,4 +657,22 @@ class Array
   end
 end
 
-# icon derived from: http://www.threes.com/index.php?option=com_content&view=article&id=1800:three-wise-monkeys&catid=82:mythology&Itemid=62
+
+class File
+      def self.get_root_dir this_path
+        this_path = File.expand_path this_path
+        if OS.doze?
+          this_path[0..2]
+        else
+          this_path.split('/')[0]
+        end
+      end
+      
+      def self.strip_drive_windows this_complete_path
+        if OS.doze?
+          this_complete_path[2..-1]
+        else
+          this_complete_path
+        end
+      end
+end

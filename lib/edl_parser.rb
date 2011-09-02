@@ -26,14 +26,14 @@ class EdlParser
 
   # returns {"mutes" => [["00:00", "00:00", string1, string2, ...], ...], "blank_outs" -> [...], "url" => ...}  
   def self.parse_file filename, expand = true
-  p filename
     output = parse_string File.read(filename), filename, []
     if relative = output["take_from_relative_file"]
       new_filename = File.dirname(filename) + '/' + relative
       new_input = parse_file new_filename
       output.merge! new_input
     end
-    require_relative 'sensible-cinema-dependencies'
+    
+    require_relative 'gui/sensible-cinema-dependencies' # for download method...
     
     if expand
     
@@ -276,7 +276,7 @@ class EdlParser
     if seconds == seconds.to_i
       out << "%02d" % seconds
     else
-      out << "%06.2f" % seconds # man that printf syntax is tricky...
+      out << "%05.2f" % seconds # man that printf syntax is tricky...
     end
   end
   

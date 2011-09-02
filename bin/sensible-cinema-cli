@@ -20,8 +20,13 @@ This file is part of Sensible Cinema.
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
-for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'file_chooser', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder']
+for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'mouse', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'swing_helpers']
   require_relative '../lib/' + file
+end
+
+
+def choose_file title, dir
+  SwingHelpers::FileDialog.new_previously_existing_file_selector_and_go title, dir
 end
 
 def go_sc(args)
@@ -68,7 +73,7 @@ def go_sc(args)
   
   if !File.exist?(player_description)    
     puts 'Please Select Computer Player'
-    player_description = FileChooser.choose_file("     SELECT COMPUTER PLAYER", players_root_dir)
+    player_description = choose_file("     SELECT COMPUTER PLAYER", players_root_dir)
     raise unless player_description
   end
 
@@ -88,7 +93,7 @@ def go_sc(args)
       edit_decision_list = auto_found
     else
       puts 'Select Edit Decision List to use'
-      edit_decision_list = FileChooser.choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
+      edit_decision_list = choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
     end
     settings = EdlParser.parse_file edit_decision_list
     

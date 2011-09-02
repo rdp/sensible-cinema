@@ -11,7 +11,7 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer)")
       @mplayer_edl.on_clicked {
-        play_mplayer_edl_non_blocking nil, [], true
+        play_mplayer_edl_non_blocking nil, [], true, false
       }
     
       add_text_line 'Realtime/Create Options:'
@@ -195,7 +195,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true
+        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true, false
       }
     end
   end

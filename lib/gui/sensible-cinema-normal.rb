@@ -36,7 +36,7 @@ module SensibleSwing
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
-        play_mplayer_edl_non_blocking 
+        play_mplayer_edl_non_blocking
       }
       
       @create = new_jbutton( "Create edited copy of DVD/file on Your Hard Drive" )
@@ -189,11 +189,9 @@ module SensibleSwing
     def get_save_to_filename dvd_title
       @_get_save_to_filename ||=
       begin
-        fc = new_nonexisting_filechooser "Pick where to save #{dvd_title} edited version to"
         save_to_file_name = dvd_title + ' edited version'
         save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') + ".avi" # no punctuation or spaces for now, to not complicate...
-        fc.set_file(get_drive_with_most_space_with_slash + save_to_file_name)
-        save_to = fc.go
+        save_to = new_nonexisting_filechooser_and_go "Pick where to save #{dvd_title} edited version to", nil, get_drive_with_most_space_with_slash + save_to_file_name
         raise 'no spaces allowed yet' if save_to =~ / /
         begin
           a = File.open(File.dirname(save_to) + "/test_file_to_see_if_we_have_permission_to_write_to_this_folder", "w")
@@ -356,7 +354,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          run_smplayer_non_blocking saved_to, nil, '', false, false
+          run_smplayer_non_blocking saved_to, nil, '', false, false, true
         else
           if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
             show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
@@ -424,7 +422,7 @@ module SensibleSwing
           return [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]
-          out = show_non_blocking_message_dialog "calculating current disk's unique id...if this freezes clean your disk..." # useful, believe it or not
+          out = show_non_blocking_message_dialog "calculating current disk's unique id...if this pauses more than 10s then clean your DVD..."
           dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
           out.dispose
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]

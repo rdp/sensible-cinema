@@ -7,9 +7,9 @@ module SensibleSwing
     
     def select_new_sxs_style
       answer = show_select_buttons_prompt 'Select EDL file style creation for this program', :yes => 'Smplayer style', :no => 'XBMC style'
-      if answer == 0
+      if answer == :yes
         LocalStorage[SideBySide] = 'smplayer'
-      elsif answer == 1
+      elsif answer == :no
         LocalStorage[SideBySide] = 'xbmc'
       else
         show_blocking_message_dialog 'please choose one--smplayer if you don\'t know'

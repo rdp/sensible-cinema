@@ -30,22 +30,19 @@ module SensibleSwing
 
     Test_DVD_ID = 'deadbeef|8b27d001'
     
-    it "should not die if you file select a poorly formed edl (should warn though)" do
+    it "should die if you file select a poorly formed edl" do
       time_through = 0
       EdlParser.stub!(:single_edit_list_matches_dvd) { |dir, md5|
-        'fake filename doesnt matter what we return here because we fake its parsing later'
+        'fake filename doesnt matter what we return here because we fake its parsing later anyway'
       }
       
       @subject.stub!(:parse_edl) {
-        if time_through == 0
-          time_through += 1
-          eval("a-----") # force it to throw a Syntax Error first time
-        else
-          "stuff"
-        end
+        time_through += 1
+        eval("a-----") # force it to throw a Syntax Error first time
       }
-      @subject.choose_dvd_or_file_and_edl_for_it
-      @show_blocking_message_dialog_last_arg.should_not be nil
+      proc { @subject.choose_dvd_or_file_and_edl_for_it}.should raise_exception(SyntaxError)
+      @show_blocking_message_dialog_last_arg.should be nil
+      time_through.should == 1
     end
     
     it "should warn if you don't have enough disk space" do
@@ -109,8 +106,8 @@ module SensibleSwing
       @subject.stub!(:new_existing_file_selector_and_select_file) {
         'selected_file'
       }
-      @subject.stub!(:new_nonexisting_filechooser) {
-        FakeFileChooser.new
+      @subject.stub!(:new_nonexisting_filechooser_and_go) {
+        'selected_file' # TODO do we need FakefileChooser anymore?
       }
       @subject.stub!(:get_drive_with_most_space_with_slash) {
         "e:\\"
@@ -138,6 +135,7 @@ module SensibleSwing
         # during testing, we *always* have enough free space :)
         16_000_000_000
       }
+      @subject.stub!(:show_in_explorer) {|filename|}
       unless $VERBOSE
         # less chatty...
         @subject.stub!(:print) {}
@@ -197,9 +195,9 @@ module SensibleSwing
         'selected_file'
       }
       
-      @subject.stub!(:new_nonexisting_filechooser) { # save to filename
+      @subject.stub!(:new_nonexisting_filechooser_and_go) { # save to filename
         count1 += 1
-        FakeFileChooser.new
+        'selected_file'
       }
       
       @subject.do_create_edited_copy_via_file(false).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
@@ -380,7 +378,7 @@ module SensibleSwing
     it "should handle dvd drive -> dvdnav" do
       for drive in ['d:', 'e:', 'f:', 'g:']
         if File.exist?(drive + '/VIDEO_TS')
-          @subject.run_smplayer_blocking drive, nil, '', true, true
+          @subject.run_smplayer_blocking drive, nil, '', true, true, true
           @system_blocking_command.should =~ /dvdnav/
           @system_blocking_command.should =~ /-dvd-device/
         end
@@ -389,13 +387,13 @@ module SensibleSwing
     
     it 'should handle a/b/VIDEO_TS/yo.vob' do
       FileUtils.mkdir_p f = 'a/b/VIDEO_TS/yo.vob'
-      @subject.run_smplayer_blocking f, 3, '', true, false
+      @subject.run_smplayer_blocking f, 3, '', true, false, true
       @system_blocking_command.should =~ /dvdnav:\/\/3/
       @system_blocking_command.should =~ /VIDEO_TS\/\.\./
       @system_blocking_command.should =~ / -alang/ # preceding space :)
       
       # exercise the yes subtitle options...
-      @subject.run_smplayer_blocking f, 3, '', true, true
+      @subject.run_smplayer_blocking f, 3, '', true, true, true
       @system_blocking_command.should_not =~ /-nosub/
       
     end
@@ -463,10 +461,8 @@ module SensibleSwing
           # def a.selected_idx; p 'returning', select_this_idx; select_this_idx; end
           a
         }
-        @subject.stub(:new_nonexisting_filechooser) {|a, b|
-           a = ''
-           def a.go; 'selected_filename'; end
-           a
+        @subject.stub(:new_nonexisting_filechooser_and_go) {|a, b|
+           'selected_filename'
         }
         @subject.stub(:new_existing_file_selector_and_select_file) {
           'selected_edl'
@@ -582,12 +578,12 @@ module SensibleSwing
     @subject.stub(:system_blocking) { |c|
       got = c
     }
-    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", true, true
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", true, true, false
     assert got =~ /hqdn3d/
     
     # and on smplayer
     MainWindow::SMPlayerIniFile.gsub!(/^.*$/, File.expand_path('./smplayer_ini_file')) # don't overwrite the real one...
-    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false, true
+    @subject.run_smplayer_blocking 'selected_file.avi', nil, "", false, true, false
     assert got =~ /mplayer/
     assert File.read(MainWindow::SMPlayerIniFile) =~ /hqdn3d/
   end
