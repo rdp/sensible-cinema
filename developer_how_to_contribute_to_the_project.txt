@@ -2,10 +2,9 @@ A few notes for developers:
 
 You can test the DVD portion of the program out by mounting the DVD of "big buck bunny" 
 http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
-On windows daemon tools helps there, or "magic ISO" or the like.
+On windows daemon tools helps there, or "magic ISO" or the like, may be helpful to avoid having to burn disks.
 
 Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against (a slightly more cross platform approach).
-Or http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has an extra copy of the file and you can just use the "file based" options.
 
 Then rip it and use the output.
 
@@ -26,6 +25,8 @@ Note that, in order to run the unit tests, you'll want to checkout the source fr
 The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.  
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
+
+Also you'll need to run git submodule init && git submodule update (possibly modify .gitsubmodules to be the open one, or ask me to)
 
 To run it via command line:
 $ jruby bin/sensible-cinema --help # tells you all available options

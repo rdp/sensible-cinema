@@ -31,7 +31,7 @@ class String
   end
 end
 
-require_relative '../swing_helpers'
+require_relative '../jruby-swing-helpers/swing_helpers'
 
 # attempt to load on demand...i.e. faster...
 for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]

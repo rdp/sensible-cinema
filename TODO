@@ -25,29 +25,26 @@
 == high prio like blocking bugs ==  
   
 == under next release specific items: ==
-  propaganda the upconverting DVD player
-    after testing it out uh guess
-      just hqdn3d, no super scale (or lowest)?
+  test out DVD upscale
+    no super scale res?
       
 == next things I was working on ==
   .srt comparison for netflix instant versus the DVD (mplayer)
   unit tests work
   innerspace
   
-== yes do ordered  ==
+== yes do ordered for release  ==
   add srt instructions to docu, release
   fake "tenseness" metric
   netflix instant descriptor for OS X/work at all
   post release notes to the google group
-    after new upconvert stuff
-  compare timing of subs windows to mac
   real "screen record" of upconverting sintel, see if it shows a difference
     then see if I need to fix my receiver...
 
 == yes do, un-ordered currently, from the various future release options ==
   warn other wordpresses
   test mplayer -vo gl at home
-  extra printf's for scanign for matching
+  extra printf's for scanning for matching
   Ben's DVD (hook)
   Ben's other DVD's
   investigate the "auto" srt parser...

@@ -1,9 +1,9 @@
 require 'rubygems'
 require 'sane'
-require_relative '../lib/swing_helpers'
+require_relative 'jruby-swing-helpers/swing_helpers'
 
-module SensibleSwing
-
+include SwingHelpers
+  
 class MainWindow < JFrame
 
   def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
@@ -53,4 +53,3 @@ class MainWindow < JFrame
 
   MainWindow.new.show
 
-end
