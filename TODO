@@ -9,13 +9,13 @@
   tweaks/docu
   C EDL
   
-  === non ordered/eventually ===
+  === non ordered/eventually (also add line items for them) ===
     create a skype recorder
     compare netflix/blu-ray timings et al
-    netflix/skype "disable screen saver while running"
+    netflix/skype "disable screen saver while running" program [?]
     linearize [?] hmm...
     re-update todo/all docu/user feedback etc.
-    create web site/api-ify
+    create openedls.org/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
@@ -30,20 +30,25 @@
       just hqdn3d, no super scale (or lowest)?
       
 == next things I was working on ==
-
-add srt instructions to docu, release
-
+  .srt comparison for netflix instant versus the DVD (mplayer)
+  unit tests work
+  innerspace
+  
 == yes do ordered  ==
-fake "tenseness"
+  add srt instructions to docu, release
+  fake "tenseness" metric
   netflix instant descriptor for OS X/work at all
   post release notes to the google group
     after new upconvert stuff
   compare timing of subs windows to mac
+  real "screen record" of upconverting sintel, see if it shows a difference
+    then see if I need to fix my receiver...
 
 == yes do, un-ordered currently, from the various future release options ==
+  warn other wordpresses
   test mplayer -vo gl at home
   extra printf's for scanign for matching
-  Ben's DVD hook
+  Ben's DVD (hook)
   Ben's other DVD's
   investigate the "auto" srt parser...
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
@@ -54,6 +59,8 @@ fake "tenseness"
   prototype new style EDL
   "note" competitor upconverters
     propaganda DVD upconverter
+  make virtual audio time stamps right
+  add a "record start stop" + record x time for the virtual audio
   rename as sanitizer
     note "we are in the creation phase and need your help"
   that extra .5s DVD reports for file size...
@@ -63,7 +70,6 @@ fake "tenseness"
   bounty hqdn3d for ffmpeg
   note we require "DVD matching" srt's huh
   Greg's DVD's
-  check ffmpeg for "red hue"
   srt/parsing buttons new window [?]
   demo of conference "music video from file"
   change upconvert options needs its own "close" button
@@ -71,7 +77,6 @@ fake "tenseness"
   real docu on how to use the srt scanner
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
-  re-advertise bounty on ffmpeg-devel
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer

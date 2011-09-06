@@ -1,0 +1,3 @@
+[submodule "lib/jruby-swing-helpers"]
+	path = lib/jruby-swing-helpers
+	url = https://rdp@github.com/rdp/jruby-swing-helpers.git

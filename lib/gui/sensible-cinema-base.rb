@@ -228,10 +228,13 @@ module SensibleSwing
         extra_options += " -vo direct3d "
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
-       extra_options += " -fs " if start_full_screen
-      
-       upconv = get_upconvert_vf_settings
-       upconv = "-vf #{upconv}" if upconv.present?
+       if start_full_screen
+         extra_options += " -fs "
+         upconv = get_upconvert_vf_settings
+         upconv = "-vf #{upconv}" if upconv.present?
+       else
+        upconv = ""
+       end
        c = "mplayer #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
@@ -352,8 +355,7 @@ module SensibleSwing
         # want these even with smplayer sometimes I guess, if in power user mode anyway
         show_mplayer_instructions_once
       end
-      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead, show_subs
-
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead, show_subs, false
     end
 
     if OS.doze? # avoids spaces in filenames :)
@@ -569,8 +571,7 @@ module SensibleSwing
     end
 
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
-      JOptionPane.showMessageDialog(nil, message, title, style)
-      true # memoize uses this once or twice...
+      SwingHelpers.show_blockiing_message_dialog message, title, style
     end
     
     # call dispose on this to close it if it hasn't been canceled yet...
@@ -582,7 +583,7 @@ module SensibleSwing
     include_class javax.swing.UIManager
     
     def get_user_input(message, default = '', cancel_ok = false)
-      SensibleSwing.get_user_input message, default, cancel_ok
+      SwingHelpers.get_user_input message, default, cancel_ok
     end
     
     def show_copy_pastable_string(message, value)

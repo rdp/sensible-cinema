@@ -1427,7 +1427,7 @@ are all windows GUI wrapper players internally inconsistent, except maybe VLC wh
   VLC reading dvdoutmplayer.mpg, handbrake m4v:
       1:00:00 accurate wa[a]s lost
 
-=== All DVD playing below this ===
+=== All DVD players' comparison below this ===
 
   Mac's DVD Player total:
     1:53:04 (almost 5 I think) [barely shows 5 at the beginning]
@@ -1523,10 +1523,13 @@ VLC
  30: something about nineveh makes you feel sad [I dont' really ] want to talk about it [?]
  45: fire 3, I'm coming traveling buddy [flash back to them] (in wmp this is at 44:27) 
 
-smplayer, mplayer 30369
+smplayer, mplayer r30369
  15: wash your hands [before] you eat
  30: a man that .. can count on to deliver his message yes [well]
  45: big smile from after duck
+
+mplayer
+ 45: middle of squeak of duck
 
 hulu
  15: wash your hands [before] you eat
@@ -1550,26 +1553,42 @@ wmp windows 7: [wmp feels slightly unstable timing-wise]
   
 LODO jonah blu ray timings
 
-netflix jonah
+netflix instant jonah
 
  15: be a friend say your prayers, heavens knows a heart that cares, taht is why I've come to share a mes[sage] from the Lord (at times it's [mes]sage, once it was [from])
-     chrome at work: a[]message, a messa[ge] from the Lord, message [] from the Lord, [share] a message from the Lord, a message[] from the Lord
-     IE at work: [fr]om the Lord, a [mes]sage from the Lord, [fr]om the Lord.
+     chrome at work: 
+        a[]message, 
+        a messa[ge] from the Lord
+        message [] from the Lord
+        [share] a message from the Lord
+        a message[] from the Lord
+        me[ss]age from the Lord [HD]
+     IE at work: 
+       [fr]om the Lord
+        a [mes]sage from the Lord
+        [fr]om the Lord.
+        me[ss]age from the Lord [HD]
+        
+ conclusion: browser doesn't matter, at lesat for HD streams, at work
+        
  30: like two humps on a camel, you always sway the same way, humor runs in my family, my uncle was a [big] star
-     IE at work:  humor runs very deep in my family[] my uncle was, my uncle was[] a big star, my [uncle] was a big star
+     IE at work: humor runs very deep in my family[] my uncle was, my uncle was[] a big star, my [uncle] was a big star
 
  45: (LIKE 12 seconds after the big grin) (big smile, next scene) blue fades in [oooh]
      IE at work: 2 seconds after blue light fades in * 3
      chrome: 1.5 seconds as blue light fades in
+     it's like 10 seconds in...
 
-forever strong (chrome work netflix):
+ conclusion: netflix varies pretty widely from instance to instance of playing back (same computer, same movie, same browser).
+
+forever strong (chrome work netflix instant):
 
  15: I'm sorry, are you in the home add me now ... []almost, almost(two spaces)[], almost(one space)[]
  30: (ambulance...) let's go guys keep it tight (3 secs or so), same at 57-58, tight right on 58
  45: we stand on this field ready for battle []*2
  1:30 where I was 40 years ago...[don't] spend another, don't [spend] another minute being angry
 
-saints and soldiers (chrome work netflix):
+saints and soldiers (chrome work netflix instant):
 
  15: is the squarest guy I know...[he's] from some little backwards,  [] he's from some little
  30: flirting with the girl at my dad's store...[] what's her name*2

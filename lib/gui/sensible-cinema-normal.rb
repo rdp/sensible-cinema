@@ -210,70 +210,6 @@ module SensibleSwing
       end
     end
 
-    def do_create_edited_copy_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
-      drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
-      
-      descriptors = parse_edl(edit_list_path)
-      if watch_unedited
-        # reset them
-        descriptors['mutes'] = descriptors['blank_outs'] = []
-      end
-      
-      # LODO allow for spaces in the save_to filename
-      if should_prompt_for_start_and_end_times
-        # only show this message once :)
-        @show_block ||= show_blocking_message_dialog(<<-EOL, "Preview")
-          Ok, let's preview just a portion of it. 
-          Note that you'll want to preview a section that wholly includes a deleted section in it.
-          For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.
-          Also note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the entire video for processing.
-          Subsequent previews will be faster, though, as long as you use the same filename, as it won't have to re-set it up for processing.
-          Also note that if you change your edit list, you'll need to close, and restart the video to be able to see it with your new settings.
-        EOL
-        old_start = LocalStorage['start_time']
-        start_time = get_user_input("At what point in the video would you like to start your preview? (like 01:00 for starting at 1 minute)", LocalStorage['start_time'])
-        default_end = LocalStorage['end_time']
-        if start_time and start_time != old_start
-          default_end = EdlParser.translate_string_to_seconds(start_time) + 10
-          default_end = EdlParser.translate_time_to_human_readable(default_end)
-        end
-        end_time = get_user_input("At what point in the video would you like to finish your preview? (like 02:00 for ending at the 2 minute mark)", default_end)
-        unless start_time and end_time
-          JOptionPane.showMessageDialog(nil, " Please choose start and end", "Failed", JOptionPane::ERROR_MESSAGE)
-          return
-        end
-        LocalStorage['start_time'] = start_time
-        LocalStorage['end_time'] = end_time
-      end
-      dvd_friendly_name = descriptors['name']
-      unless dvd_friendly_name
-        drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
-        descriptors = parse_edl(edit_list_path)
-        raise 'no dvd name in EDL?' + edit_list_path + File.read(edit_list_path)
-      end
-      
-      dvd_title_track = get_title_track(descriptors)
-      if dvd_id == NonDvd
-        file_from = drive_or_file
-      else
-        file_from = get_grabbed_equivalent_filename_once dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
-      end
-      show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way--if it's mkv and fails consider first converting to ts by using tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
-      save_to_edited = get_save_to_filename dvd_friendly_name
-      fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
-      if exit_early_if_fulli_exists
-        if fulli_dot_done_file_exists? save_to_edited
-          return [true, fulli]
-        end
-        # make it create a dummy response file for us :)
-        start_time = "00:00"
-        end_time = "00:01"
-      end
-      should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
-      require_deletion_entry = true unless watch_unedited
-      generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
-      [false, fulli] # false means it's running in a background thread :P
-    end
 
     def get_drive_with_most_space_with_slash
       DriveInfo.get_drive_with_most_space_with_slash
@@ -367,7 +303,7 @@ module SensibleSwing
           show_in_explorer saved_to # and again, just for kicks [?]
         end
       else
-        show_blocking_message_dialog("Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE)
+        SwingHelpers.show_blocking_message_dialog "Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE
       end
     end
     
