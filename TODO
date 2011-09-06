@@ -29,9 +29,12 @@
     no super scale res?
       
 == next things I was working on ==
-  .srt comparison for netflix instant versus the DVD (mplayer)
+  a srt that works with my DVD...does it match netflix instant jonah?
   unit tests work
   innerspace
+  screen recording
+  more netflix instant timing
+    bluray jonah
   
 == yes do ordered for release  ==
   add srt instructions to docu, release
@@ -47,7 +50,6 @@
   extra printf's for scanning for matching
   Ben's DVD (hook)
   Ben's other DVD's
-  investigate the "auto" srt parser...
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too "create for netflix"
     add netflix instant instructions,
@@ -55,9 +57,7 @@
   netflix HD versus none...
   prototype new style EDL
   "note" competitor upconverters
-    propaganda DVD upconverter
-  make virtual audio time stamps right
-  add a "record start stop" + record x time for the virtual audio
+  add a "record start stop" + record x time for the virtual audio and other
   rename as sanitizer
     note "we are in the creation phase and need your help"
   that extra .5s DVD reports for file size...
@@ -65,12 +65,10 @@
   investigate the srt morpher...
   EDL gottman
   bounty hqdn3d for ffmpeg
-  note we require "DVD matching" srt's huh
   Greg's DVD's
   srt/parsing buttons new window [?]
   demo of conference "music video from file"
   change upconvert options needs its own "close" button
-  tweak web stuff/propaganda for upconverter filenames et al
   real docu on how to use the srt scanner
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
@@ -103,8 +101,6 @@
   new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not [?])
   advertise urug again?
     after works in mac for capture+overlay :)
-  advertise virtual audio
-  advertise screen capture
   create skype recorder windows
   mplayer directx patch check it...
   auto-add largest title to the generator EDL
@@ -187,9 +183,14 @@
 
 == DVD decide later to move up or down ==
   add option "just skip don't mute"
-  add play option "play in just mplayer"
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  tweak web stuff/propaganda for upconverter filenames et al
+  propaganda DVD upconverter
+  advertise virtual audio
+  advertise screen capture
+  report ffplay -t 6 doesn't stop bug
+    report ffplay -vol 1 doesn't work
   research XBMC
     break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
