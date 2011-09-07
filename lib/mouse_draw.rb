@@ -18,9 +18,9 @@ class MouseDraw
   AWTUtilities.set_window_opacity(f, 0.5)
   
   # wait till mouse goes down...
+  print 'drag mouse to draw'
   while(Mouse.left_mouse_button_state == :up)
     sleep 0.05
-    print 'waiting'
   end
   f.undecorated = true
   f.default_close_operation = JFrame::EXIT_ON_CLOSE
@@ -30,17 +30,19 @@ class MouseDraw
   f.set_location(start_x, start_y)
   while(Mouse.left_mouse_button_state == :down)
     # set_size
-    p 'waiting for end'
+    p 'waiting for drag to end'
     x, y = Mouse.get_mouse_location
     width = [x-start_x, 20].max
     height = [y-start_y, 20].max
     f.set_size width, height
+    sleep 0
   end
   f.dispose
+  {:x => start_x, :y => start_y, :width => width, :height => height}
 end
   
 end
 
 if $0 == __FILE__
-  MouseDraw.go
+  p MouseDraw.go
 end
