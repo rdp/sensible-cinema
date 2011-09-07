@@ -1,32 +1,7 @@
 # comments can go after a # on any line, for example this one.
 "name" => "InnerSpace",
 
-# leak, oh loh [?]
-
-# 23 he..
-
-#1930.1 he, 2113.7, 3276.0
-#31:00 g,  
-
-# transitionbreak + 36.4
-#small forever  292.5
-#warm up  494.5
-# he..  680.1
-
-#
-#01:06:22,942 --> 01:06:24,318
-#You're scaring me, Jack.
-
-##
-#01:07:35,723 --> 01:07:37,391
-#You can do it!
-#730
-#01:07:47,526 --> 01:07:48,944
-#Jack, I love you!
-
-#:1260.9 haven't slept with
-
-# skeleton :3125.5
+#31:00 g,
 
 "mutes" => [
 # add these into your mute section if you deem them mute-worthy
@@ -41,7 +16,7 @@
 "0:28:53.193" , "0:28:56.570", "profanity", "he..", "What the [he..] is going on out there",
 "0:29:12.170" , "0:29:15.964", "profanity", "sh..", "How do I look Like [sh..]",
 "0:31:30.433" , "0:31:34.728", "profanity", "goodness", "Oh my [goodness] he's completely spaced out",
-"0:31:40.777" , "0:31:44.071", "profanity", "he..", "What the [he..] is that Ozzie",
+"0:31:39.777" , "0:31:44.071", "profanity", "he..", "What the [he..] is that Ozzie",
 "0:33:59.666" , "0:34:03.043", "profanity", "he..", "Come on where the [he..] is the picture",
 "0:34:07.507" , "0:34:12.344", "profanity", "he..", "That's not Oz Who the [he..] is that Where's the lab technician",
 "0:34:21.104" , "0:34:23.689", "profanity", "goodness", "Oh [goodness]",
@@ -73,16 +48,23 @@
 "1:46:19.297" , "1:46:22.382", "profanity", "goodness", "There's a phone thank [goodness]",
 "1:53:12.460" , "1:53:15.629", "profanity", "he..", "we sure made one [he..] of a team",
 
-"1905", "1910", "profanity", "he..", "2222222ozzie I can't hear you I hope the [he..] you can hear me",
+"1848.0", "1851.0", "profanity", "deity",
+"1905.0", "1910.0", "profanity", "he..", "ozzie I can't hear you I hope the [he..] you can hear me",
+"2105.5", "2108.5", "profanity", "he..", "how the [he..] can I be inside of a man",
+"3257.4", "3260.4", "profanity", "he..", "I don't know what the [he..] you look like",
 
+"3980.5", "3983.5", "profanity", "he..",
+"4062.5", "4066.5", "profanity", "deity", # 761.5
+"4551.0", "4556.04", "lewd", "haven't slept with",
 ],
 
 "blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
   "310.3", "323.3", "lewd", "some sexual-y tension",
   "381.6", "413.7", "lewd", "implied sleepover",
   "482.5", "488.0", "nudity", "bum",
+  "3582.04", "3593.04", "vulgar", "bathroom humor don't talk to it",
+  "3788.04", "3793.84", "lewd", "warm him up", # untested
+  "6361.84", "6374.04", "gross", "human skeleton",
 ],
 
 "volume_name" => "INNERSPACE",
@@ -91,5 +73,5 @@
 "dvd_title_track_length" => "7176.233",
 "opensubtitles_number" => "http://www.opensubtitles.org/en/subtitles/3264986/innerspace-en",
 # "not edited out stuff" => "some violence left in...",
-"closing thoughts" => "mature elements have mostly been removed, needs a double check",
+"closing thoughts" => "mature elements have mostly been removed, needs a third check",
 "mplayer_dvd_splits" => ["3304.04"], # TODO lacking one but I think it's ok
