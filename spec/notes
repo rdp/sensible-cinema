@@ -1541,17 +1541,28 @@ youtube jonah: appears lower quality?
  30: yes well [you] and ...
  45: big smile, turns [to his right]
 
-powerdvd 8:
-  15: wash your hands before you [eat] --- wash your hands [before] you eat --- wash your [hands] before you eat LOL
-  30: can count on to deliver his messages yes [] well  ---  yes well ... you and [] ... are like peas in a pod ai ai 
-  45: big smile [] he turns to his right  --- turns [to his right] -- [] turns to his right
+powerdvd 8 (DVD):
+  15: 
+    wash your hands before you [eat] 
+    wash your hands [before] you eat
+    wash your [hands] before you eat LOL
+  30: 
+    can count on to deliver his messages yes [] well  
+    yes well ... you and [] ... are like peas in a pod
+  45: 
+    big smile [] he turns to his right
+    turns [to his right] 
+    [] turns to his right
 
 wmp windows 7: [wmp feels slightly unstable timing-wise]
   15:  before [] you eat --- before [you] eat
   30:  yes []well --- yes well[]
   45:  turns [to his right] --- turns to his right[]
   
-LODO jonah blu ray timings
+blu-ray poweredvd:
+  30: deep in my family [] my uncle * 2
+  45: blue light shines down 44:58 or 59
+    duck 44:47 look left about 44:48      
 
 netflix instant jonah
 
@@ -1569,7 +1580,7 @@ netflix instant jonah
         [fr]om the Lord.
         me[ss]age from the Lord [HD]
         
- conclusion: browser doesn't matter, at lesat for HD streams, at work
+ conclusion: browser doesn't matter, (at least for HD stream at work)
         
  30: like two humps on a camel, you always sway the same way, humor runs in my family, my uncle was a [big] star
      IE at work: humor runs very deep in my family[] my uncle was, my uncle was[] a big star, my [uncle] was a big star
@@ -1579,7 +1590,11 @@ netflix instant jonah
      chrome: 1.5 seconds as blue light fades in
      it's like 10 seconds in...
      same with mac
+     47 duck
      conclusion: netflix doesn't care about mac versus pc timing-wise
+     59 blu ray how apropo
+    
+     conclusion (based on this compared with the blu-ray): netflix instant seems to match pretty close, within 1s to the blu-ray
 
  conclusion: netflix varies pretty widely from instance to instance of playing back (same computer, same movie, same browser).
 

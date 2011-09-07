@@ -24,18 +24,16 @@
   
 == high prio like blocking bugs ==  
   
-== under next release specific items: ==
+== next things I was working on ==
+  unit tests work
+  screen recording sintel
+  more netflix instant timing
+    bluray jonah total time vs. other
+  
+== yes do ordered for release  ==
   test out DVD upscale
     no super scale res?
       
-== next things I was working on ==
-  unit tests work
-  screen recording
-  more netflix instant timing
-    bluray jonah
-    
-  
-== yes do ordered for release  ==
   add srt instructions to docu, release
   fake "tenseness" metric
   netflix instant descriptor for OS X/work at all
