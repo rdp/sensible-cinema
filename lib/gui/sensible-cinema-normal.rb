@@ -146,32 +146,6 @@ module SensibleSwing
       JFile.new(File.dirname(path)).get_usable_space
     end
 
-    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
-      drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
-      
-      unless @_edit_list_path # cache file selection...
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && force_choose_edl_file_if_no_easy_match
-          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EdlParser::EDL_DIR)
-          raise 'cancelled choosing an EDL' unless edit_list_path
-        end
-        @_edit_list_path = edit_list_path
-      end
-      
-      if @_edit_list_path
-        # reload it every time just in case it has changed on disk
-        descriptors = nil
-        while(!descriptors)
-          begin
-            descriptors = parse_edl @_edit_list_path
-          rescue SyntaxError => e
-            show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
-            raise e
-          end
-        end
-      end
-      [drive_or_file, dvd_volume_name, dvd_id, @_edit_list_path, descriptors]
-    end
     
     def get_title_track descriptors, use_default_of_one = true
       given = descriptors["dvd_title_track"] 

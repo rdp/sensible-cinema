@@ -42,6 +42,12 @@ describe EdlParser do
    E.parse_string(string, nil).should == expected
   end
   
+  it "should disallow full digits" do
+    proc {E.parse_string(%!"mutes" => ["1234", "1235", "profanity", "yo"]!, nil) }.should raise_exception SyntaxError    
+    proc {E.parse_string(%!"mutes" => ["0.0", "1.1", "profanity", "yo"]!, nil) }.should_not raise_exception    
+    proc {E.parse_string(%!"mutes" => ["0.0", "1.1", "profanity", "yo", "1234", "1235", "bad entry"]!, nil) }.should raise_exception SyntaxError    
+  end
+  
   it "should extract digits well" do
     out = ["00:00:01.1", "00:00:01"]
     EdlParser.extract_entry!(out).should == ["00:00:01.1", "00:00:01"]

@@ -27,6 +27,7 @@ class EdlParser
   # returns {"mutes" => [["00:00", "00:00", string1, string2, ...], ...], "blank_outs" -> [...], "url" => ...}  
   def self.parse_file filename, expand = true
     output = parse_string File.read(filename), filename, []
+    # now respect a few options
     if relative = output["take_from_relative_file"]
       new_filename = File.dirname(filename) + '/' + relative
       new_input = parse_file new_filename
@@ -43,6 +44,13 @@ class EdlParser
       end
       
       if imdb_id = output["imdb_id"]
+        parse_imdb output, imdb_id
+      end
+    end
+    output
+  end
+  
+  def self.parse_imdb output, imdb_id
         require_relative 'convert_thirty_fps'
         url = "http://www.imdb.com/title/#{imdb_id}/parentalguide"
         all = SensibleSwing::MainWindow.download_to_string(url)
@@ -58,7 +66,7 @@ class EdlParser
           all[word_type] = settings
         end
         # blank_outs or mutes for each...
-        # TODO make -> optional
+        # TODO make the -> optional
         split_into_timestamps = /([\d:]+(?:\.\d+|))\W*-&gt;\W*([\d:]+(?:\.\d+|))([^\d\n]+)/
         for type, settings in all
           settings.scan(split_into_timestamps) do |begin_ts, end_ts, description|
@@ -80,11 +88,6 @@ class EdlParser
             end
           end
         end
-        
-      end
-    end
-    
-    output
   end
   
   private
@@ -131,7 +134,7 @@ class EdlParser
       elsif ok_categories_array.detect{|cat, setting| setting.is_a? Fixnum}
        for cat, setting in ok_categories_array
          if cat == category && setting.is_a?(Fixnum)
-            # check for a number? 
+            # check for a number for filtering out based on level
             if category_number.to_i.to_s == category_number
               as_number = category_number.to_i
               if as_number < setting
@@ -148,7 +151,8 @@ class EdlParser
   end
   
   #TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/ # this one also allows for 4444 [?] and also weirdness like "don't kill the nice butterfly 2!" ...
-  TimeStamp = /^\d+:\d\d[\d:\.]*$/
+  TimeStamp = /(^\d+:\d\d[\d:\.]*|\d+\.\d+)$/ # allow 00:00:00 00:00:00.0 1222.4
+  # disallow 1905 too but in the code
   # starts with a digit, has at least one colon followed by two digits,then some combo of digits and colons and periods...
   
   def self.extract_entry! from_this
@@ -161,6 +165,7 @@ class EdlParser
       end
     }
     while(from_this[0] && from_this[0] !~ TimeStamp)
+      raise SyntaxError.new('straight digits not allowed use 1000.0 instead') if from_this[0] =~ /^\d+$/
       out << from_this.shift
     end
     out

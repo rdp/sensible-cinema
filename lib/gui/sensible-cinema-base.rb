@@ -51,7 +51,7 @@ end
 
 
 if OS.windows?
-  vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../vendor/cache'
+  vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
   for name in ['.', 'mencoder', 'ffmpeg']
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
@@ -335,7 +335,7 @@ module SensibleSwing
         out.close
         $?.exitstatus == 0 # 0 means success
       else
-        raise command + ' failed' unless system_original command
+        raise command + " failed env #{ENV['PATH']}" unless system_original command
       end
     end
     
@@ -377,6 +377,32 @@ module SensibleSwing
         '.' key: step one frame.
          # key: change audio language track
       EOL
+    end
+    
+    
+    def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
+      drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
+      
+      unless @_edit_list_path # cache file selection...
+        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
+        if !edit_list_path && force_choose_edl_file_if_no_easy_match
+          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EdlParser::EDL_DIR)
+          raise 'cancelled choosing an EDL' unless edit_list_path
+        end
+        @_edit_list_path = edit_list_path
+      end
+      p 'reloading'
+      if @_edit_list_path
+        # reload it every time just in case it has changed on disk
+        descriptors = nil
+        begin
+          descriptors = parse_edl @_edit_list_path
+        rescue SyntaxError => e
+          show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+          raise e
+        end
+      end
+      [drive_or_file, dvd_volume_name, dvd_id, @_edit_list_path, descriptors]
     end
     
     MplayerBeginingBuffer = 1.0

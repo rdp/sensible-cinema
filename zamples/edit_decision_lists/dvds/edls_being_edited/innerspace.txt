@@ -1,13 +1,14 @@
 # comments can go after a # on any line, for example this one.
 "name" => "InnerSpace",
 
-# 8:00 butt, nighter
-# leak, oh loh
-# 23 khe..
+# leak, oh loh [?]
+
+# 23 he..
+
 #1930.1 he, 2113.7, 3276.0
 #31:00 g,  
 
-# transition + 36.4
+# transitionbreak + 36.4
 #small forever  292.5
 #warm up  494.5
 # he..  680.1
@@ -72,20 +73,23 @@
 "1:46:19.297" , "1:46:22.382", "profanity", "goodness", "There's a phone thank [goodness]",
 "1:53:12.460" , "1:53:15.629", "profanity", "he..", "we sure made one [he..] of a team",
 
+"1905", "1910", "profanity", "he..", "2222222ozzie I can't hear you I hope the [he..] you can hear me",
+
 ],
 
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-  "310.3", "323.3", "lewd", "some sexual tension",
-  
+  "310.3", "323.3", "lewd", "some sexual-y tension",
+  "381.6", "413.7", "lewd", "implied sleepover",
+  "482.5", "488.0", "nudity", "bum",
 ],
 
 "volume_name" => "INNERSPACE",
 "disk_unique_id" => "703ca989|09797818",
-"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
-# "dvd_title_track_length" => "6095", # sum length, on the DVD, use the show DVD info button to retrieve it.
+"dvd_title_track" => "1",
+"dvd_title_track_length" => "7176.233",
 "opensubtitles_number" => "http://www.opensubtitles.org/en/subtitles/3264986/innerspace-en",
 # "not edited out stuff" => "some violence left in...",
-# "closing thoughts" => "pretty mature movie",
-"mplayer_dvd_splits" => ["3304.04"], # TODO lacking one
+"closing thoughts" => "mature elements have mostly been removed, needs a double check",
+"mplayer_dvd_splits" => ["3304.04"], # TODO lacking one but I think it's ok
