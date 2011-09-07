@@ -26,17 +26,20 @@ class MouseDraw
   f.default_close_operation = JFrame::EXIT_ON_CLOSE
   f.always_on_top = true
   f.visible = true
-  f.set_location(Mouse.get_mouse_location)
+  start_x, start_y = Mouse.get_mouse_location
+  f.set_location(start_x, start_y)
   while(Mouse.left_mouse_button_state == :down)
     # set_size
     p 'waiting for end'
-    p Mouse.get_mouse_location
+    x, y = Mouse.get_mouse_location
+    width = [x-start_x, 20].max
+    height = [y-start_y, 20].max
+    f.set_size width, height
   end
   f.dispose
 end
   
 end
-
 
 if $0 == __FILE__
   MouseDraw.go

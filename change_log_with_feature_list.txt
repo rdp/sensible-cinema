@@ -1,4 +1,4 @@
-== ==
+== 0.26.1 ==
 
 Cleaned up the upconvert interface, added a way for easier comparison of different upconversion settings (automated-ly-zy).
 
@@ -7,6 +7,8 @@ including use of timestamps.
 
 Note also that you can screen capture a playing video using my other project to project it "edited" to some device.
 Also you can capture the audio and "manipulate it" using my other project.
+
+Add some EDL's
 
 == 0.26.0 ==
 
@@ -27,6 +29,8 @@ Including software blu-ray players etc.
 
 Note that it already demo'ed being able to have "user customizable" volume level for muted sections 
 (i.e. not mute it all the way, if desired)
+
+Also included "leveling" (if above x level, then allow or the like) demo'ed.
 
 Note also that it can be used by hooking to a projector or from computer -> tv so we have this unofficially
 in the living room or across several devices or the like.
