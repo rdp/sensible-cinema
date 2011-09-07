@@ -266,7 +266,7 @@
     detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
     SyntaxError
   lua VLC EDL plugin?
-  test with cars-ws (at work), mac (to make sure volume name doesn't have spaces)
+  test with cars-ws, mac (to make sure volume name doesn't have spaces)
   the distro could be made smaller yet [at least not as many gem deps needed...maybe more possible...]
   @mplayer: chooses wrong language ts from jester...sigh
   @mplayer: crash: http://betterlogic.com/roger/2011/07/mplayer-mac-os-x-woe/

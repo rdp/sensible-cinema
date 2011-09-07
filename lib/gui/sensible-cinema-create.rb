@@ -265,5 +265,40 @@ module SensibleSwing
       [false, fulli] # false means it's running in a background thread :P
     end
     
+    def create_brand_new_edl
+      drive, volume, dvd_id = choose_dvd_drive_or_file true
+      english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
+      input = <<-EOL
+# comments can go after a # on any line, for example this one.
+"name" => "#{english_name}",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "#{volume}",
+"disk_unique_id" => "#{dvd_id}",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+# "subtitle_url" => "1234567",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only...",
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], # or [] if there are none.  Additive currently.  12345.6 ok. 
+        EOL
+      # TODO auto-ify above, move docs to a file in documentation.
+      filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
+      filename.downcase!
+      File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
+      open_file_to_edit_it filename
+    end     
+    
+    
   end
 end
