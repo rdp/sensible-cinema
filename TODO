@@ -6,7 +6,6 @@
     mac'ify OCR/Mouse
   upconvert DVD
   srt expand, release
-  tweaks/docu
   C EDL
   
   === non ordered/eventually (also add line items for them) ===
@@ -27,9 +26,7 @@
 == next things I was working on ==
   unit tests work
   screen recording sintel
-  more netflix instant timing
-    bluray jonah total time vs. other
-  
+ 
 == yes do ordered for release  ==
   test out DVD upscale
     no super scale res?
@@ -42,6 +39,9 @@
     then see if I need to fix my receiver...
 
 == yes do, un-ordered currently, from the various future release options ==
+  respond ffmpeg bug
+  more netflix instant timing
+    bluray jonah total time vs. other
   warn other wordpresses
   legal2
   test mplayer -vo gl at home
