@@ -427,7 +427,6 @@ module SensibleSwing
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
       title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window.'
-      # cancel button stays the same...
       
       message ||= "Sensible Cinema requires a separately installed program (#{program}), not yet installed.
         You can install this program manually to the vendor/cache subdirectory, or Sensible Cinema can download it for you.
@@ -438,12 +437,11 @@ module SensibleSwing
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       answer = JOptionPane.show_select_buttons_prompt message, :yes => 'Accept', :no => "View #{license_name}"
       assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
-      p 'confirmation of sensible cinema related license saved of: ' + license_name
-      throw unless returned == 0
-      
+      p 'confirmation of sensible cinema related license noted of: ' + license_name # LODO require all licenses together :P
+      throw unless answer == :yes
     end
     
-    def assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
+    def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
       # :yes, :no, :cancel
       # 1 is view button was clicked
       # 0 is accept
