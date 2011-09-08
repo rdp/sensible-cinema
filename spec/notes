@@ -1,5 +1,39 @@
 up next:
 
+curious george 2 http://movies.netflix.com/WiPlayer?trkid=805148&movieid=70130481 37:35 has an accomplish oh my g
+
+== netflix upscale notes ==
+
+ :width=>657 for "HD" that said it was playing in HD, eh? ... hmm...
+
+ hulu has "up to 480p" as options...hmm...
+  360p speedracer displays as {:start_x=>535, :start_y=>328, :width=>542, :height=>410}
+  480p speedracer displays as {:start_x=>524, :start_y=>331, :width=>550, :height=>408} (same)
+    and always the same size minimzed eh...
+    
+ netflix instant 
+    default minimum size is {:start_x=>38, :start_y=>109, :width=>649, :height=>372}
+    Jonah is in hd 
+     http://blog.netflix.com/2011/03/netflix-lowers-data-usage-by-23-for.html 1080p possible, typically it's 720p apparently [?]
+     720p:
+        2200 kbps/192 kbps
+    while "buffering hd" it looks a bit jagged...hmm...
+    if you drag, it loses and discards all buffering. yipes.
+    "DIS" allowing HD at first looks junky, then looks really good LOL
+    HD looks basically perfect, though maybe some sharpening or what not could help still...
+      the lines look awesome to good (this is "apparently probably" 1080p
+    non HD, with their upconversion
+      lines look pretty good, maybe a teeny touchup
+      coloring maybe a bit weak
+      maybe barely non sharp lines
+      no artifacts that I can tell
+        might not need hqdn3d?
+        unless they have/use their own...
+      
+    TODO CGI netflix instant 1080p
+      compare HD and non...
+      
+    
 == netflix instant vs srt ==
 
 00:02:34,427 --> 00:02:36,361
@@ -1535,11 +1569,15 @@ hulu
  15: wash your hands [before] you eat
  30: a man that .. can count on to deliver his message yes [well]
  45: just before the big grin from duck
+ sum: 1:22:51 1:22:52 in thing, seems to get that far... hmm...
+
 
 youtube jonah: appears lower quality?
  15: wash your hands before you [eat]
  30: yes well [you] and ...
  45: big smile, turns [to his right]
+ sum: (says 1:22:59 for pay version [?]) says 1:22:54  in index, and on vid, felt really like 1:22:52 or so
+
 
 powerdvd 8 (DVD):
   15: 
@@ -1559,10 +1597,12 @@ wmp windows 7: [wmp feels slightly unstable timing-wise]
   30:  yes []well --- yes well[]
   45:  turns [to his right] --- turns to his right[]
   
-blu-ray poweredvd:
+blu-ray powerdvd:
   30: deep in my family [] my uncle * 2
   45: blue light shines down 44:58 or 59
     duck 44:47 look left about 44:48      
+  1:22:45 sum, seems to have the same closing credits et al...
+  totally uses 100% cpu
 
 netflix instant jonah
 
