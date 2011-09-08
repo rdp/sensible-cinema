@@ -155,7 +155,6 @@
   add button "fast preview segment" (mplayer from dvd)
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
-  refresh bug try to reproduce
   can edit books, too.
     +- list/publish :) [like a manual list et al]
   create the following EDL: 10 commandments DVD to skip the intro music LOL
@@ -165,6 +164,8 @@
     PPC dvdid
     documentation button? notepad?
   ffmpeg compile it mingw, see if it runs dshow windows
+  monty python EDL
+  LOTR
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -181,6 +182,7 @@
   add option "just skip don't mute"
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  refresh bug try to reproduce
   rename "something" (edited movie player?)
   if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
