@@ -12,7 +12,7 @@
   === non ordered/eventually (also add line items for them) ===
     create a skype recorder
     compare netflix/blu-ray timings et al
-    netflix/skype "disable screen saver while running" program [?]
+    a netflix/skype "disable screen saver while running" program [?]
     linearize [?] hmm...
     re-update todo/all docu/user feedback etc.
     create openedls.org/api-ify
@@ -27,8 +27,7 @@
 == next things I was working on ==
   unit tests work
   screen recording sintel
-  more netflix instant timing
-    bluray jonah total time vs. other
+  netflix instant CGI how good is their HD?
   
 == yes do ordered for release  ==
   test out DVD upscale
@@ -233,7 +232,7 @@
   "save to" -> same dir as "get from" yeah
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
   prompt something if the EDL is actually "empty" :)
-  already donated: rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac)
+  already donated: sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac)
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title trackfor automatically playing it right.
   fast preview: change it to be aggressive sometimes yes, other times no

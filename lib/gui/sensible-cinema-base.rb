@@ -31,10 +31,12 @@ class String
   end
 end
 
+# shared
 require_relative '../jruby-swing-helpers/swing_helpers'
+require_relative '../jruby-swing-helpers/drive_info'
 
 # attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip, :DriveInfo]
+for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 

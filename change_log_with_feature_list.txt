@@ -1,3 +1,7 @@
+== 0.26.2 ==
+
+Fix license acceptance code, quick redeploy
+
 == 0.26.1 ==
 
 Cleaned up the upconvert interface, added a way for easier comparison of different upconversion settings (automated-ly-zy).
