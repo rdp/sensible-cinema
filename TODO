@@ -6,21 +6,19 @@
     mac'ify OCR/Mouse
   upconvert DVD
   srt expand, release
-  tweaks/docu
   C EDL
   
   === non ordered/eventually (also add line items for them) ===
     create a skype recorder
-    compare netflix/blu-ray timings et al
-    a netflix/skype "disable screen saver while running" program [?]
+    netflix/skype "disable screen saver while running" program [?]
     linearize [?] hmm...
     re-update todo/all docu/user feedback etc.
-    create openedls.org/api-ify
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
     no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
+  	fix mplayer broken EDL
   
 == high prio like blocking bugs ==  
   
@@ -28,31 +26,32 @@
   unit tests work
   screen recording sintel
   netflix instant CGI how good is their HD?
-  
+  Ben's DVD (hook)
 == yes do ordered for release  ==
   test out DVD upscale
+    real "screen record" of upconverting sintel, see if it shows a difference
+      see if I need to fix my capturer...
     no super scale res?
       
-  add srt instructions to docu, release
   fake "tenseness" metric
   netflix instant descriptor for OS X/work at all
-  post release notes to the google group
-  real "screen record" of upconverting sintel, see if it shows a difference
-    then see if I need to fix my receiver...
   ri_for updatez
 
 == yes do, un-ordered currently, from the various future release options ==
+  add srt instructions to docu, release
+  complain to jruby folks
+  respond ffmpeg bug
+  more netflix instant timing
+    bluray jonah total time vs. other
   warn other wordpresses
   legal2
   test mplayer -vo gl at home
   extra printf's for scanning for matching
-  Ben's DVD (hook)
   Ben's other DVD's
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too "create for netflix"
     add netflix instant instructions,
       then add a blog post comment after releasing it as template
-  netflix HD versus none...
   prototype new style EDL
   "note" competitor upconverters
   add a "record start stop" + record x time for the virtual audio and other
@@ -62,7 +61,7 @@
   TODO test DVD upconv it at 720*x resolution too...
   investigate the srt morpher...
   EDL gottman
-  bounty hqdn3d for ffmpeg
+  bounty hqdn3d for ffmpeg [?]
   Greg's DVD's
   srt/parsing buttons new window [?]
   demo of conference "music video from file"
@@ -81,13 +80,12 @@
   add "play at 1.5x speed" mplayer button, I guess
   play in mplayer unedited button should display OSD by default
   bounty ffmpeg stuff (motion detect, directshow)
-  "fix" mplayer EDL pausing their code
+  "fix" mplayer EDL pausing their code itself
   the open button should open in the "editing" EDL dir.
   warn against makemkv (and check vs. handbrake, and offer a bounty)
   add the other type in there, esp. if a man answers
     add to the template, various can use it
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
-  witch lady
   split out the "dependency" codes
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
@@ -184,6 +182,7 @@
   
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
   rename "something" (edited movie player?)
+  if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
   propaganda DVD upconverter
   advertise virtual audio
