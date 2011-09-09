@@ -1,6 +1,7 @@
 == roadmap [for just tasks, see below though] == 
 
   remember this stuff is all "oh gosh I have to do that too?" crud time, don't even want it.
+    and "won't even be useful to people in the end so why bother?"
   netflix
     upconv netflix
     mac'ify OCR/Mouse
@@ -18,7 +19,7 @@
     no propaganda...
     no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
-  	fix mplayer broken EDL
+    fix mplayer broken DVD EDL
   
 == high prio like blocking bugs ==  
   
@@ -27,6 +28,7 @@
   screen recording sintel
   netflix instant CGI how good is their HD?
   Ben's DVD (hook)
+
 == yes do ordered for release  ==
   test out DVD upscale
     real "screen record" of upconverting sintel, see if it shows a difference
@@ -38,15 +40,17 @@
   ri_for updatez
 
 == yes do, un-ordered currently, from the various future release options ==
-  add srt instructions to docu, release
+  ruby_prof stuff
+  add real srt instructions to docu, release
   complain to jruby folks
-  respond ffmpeg bug
+  respond ffmpeg trac bug
   more netflix instant timing
     bluray jonah total time vs. other
   warn other wordpresses
   legal2
   test mplayer -vo gl at home
-  extra printf's for scanning for matching
+  add button for play with netflix "experimentally"
+  remove extra printf's for scanning for matching
   Ben's other DVD's
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too "create for netflix"
@@ -61,12 +65,10 @@
   TODO test DVD upconv it at 720*x resolution too...
   investigate the srt morpher...
   EDL gottman
-  bounty hqdn3d for ffmpeg [?]
   Greg's DVD's
   srt/parsing buttons new window [?]
   demo of conference "music video from file"
   change upconvert options needs its own "close" button
-  real docu on how to use the srt scanner
   lightning strike from various outlets...
   accomodate splits vs. blanks and work
   todo.upconvert
@@ -79,7 +81,6 @@
   add new open button "edit the EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
   play in mplayer unedited button should display OSD by default
-  bounty ffmpeg stuff (motion detect, directshow)
   "fix" mplayer EDL pausing their code itself
   the open button should open in the "editing" EDL dir.
   warn against makemkv (and check vs. handbrake, and offer a bounty)
@@ -94,7 +95,6 @@
   "--developer" mode
     has "export JSON command line, reload code" , note it in the docu
   new button "auto-test" a subtitles file for timing :)
-  new upconv button: auto-take some snapshots (just to straight mjpeg or jpeg or the what not [?])
   advertise urug again?
     after works in mac for capture+overlay :)
   create skype recorder windows
@@ -127,7 +127,6 @@
   clear runnings
     me try
     have ben and chris test it out [realtime?]
-  try out disney digital copy
   C player:
     use DVD navigator (check)
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
@@ -164,8 +163,8 @@
     PPC dvdid
     documentation button? notepad?
   ffmpeg compile it mingw, see if it runs dshow windows
-  monty python EDL
-  LOTR
+  netflix instant: "try" this srt" ok now "try" this other srt"
+  create book list, add current books to it
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -179,18 +178,26 @@
   screen_capture TODO
 
 == DVD decide later to move up or down ==
-  add option "just skip don't mute"
-  
+ 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  add option "just skip don't mute always instead of muting"
+  bounty hqdn3d for ffmpeg [?]
+  try out disney digital copy
+  EDL's (if not lewd)
+    monty python
+    LOTR
+    forever strong
+    MOTAB music videos :P
+  bounty ffmpeg stuff (motion detect, audio)
   refresh bug try to reproduce
-  rename "something" (edited movie player?)
+  rename project "something" (edited movie player?)
   if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
   propaganda DVD upconverter
   advertise virtual audio
   advertise screen capture
   report ffplay -t 6 doesn't stop bug
-    report ffplay -vol 1 doesn't work
+  report ffplay -vol 1 doesn't work
   research XBMC
     break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
