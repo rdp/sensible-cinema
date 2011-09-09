@@ -155,7 +155,7 @@
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
   can edit books, too.
-    +- list/publish :) [like a manual list et al]
+    +- list/publish mine so far :)
   create the following EDL: 10 commandments DVD to skip the intro music LOL
   inventionzy: blu-ray stuff from todo.inventionzy
   sons of provo "music video" EDL
@@ -164,7 +164,6 @@
     documentation button? notepad?
   ffmpeg compile it mingw, see if it runs dshow windows
   netflix instant: "try" this srt" ok now "try" this other srt"
-  create book list, add current books to it
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -180,6 +179,8 @@
 == DVD decide later to move up or down ==
  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  ffmpeg bounty motion detect
+  ffmpeg bounty audio mixer
   add option "just skip don't mute always instead of muting"
   bounty hqdn3d for ffmpeg [?]
   try out disney digital copy
