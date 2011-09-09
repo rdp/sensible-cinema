@@ -40,12 +40,12 @@
   ri_for updatez
 
 == yes do, un-ordered currently, from the various future release options ==
-  ruby_prof stuff
+  ruby_prof stuff, other emails
   add real srt instructions to docu, release
   complain to jruby folks
   respond ffmpeg trac bug
   more netflix instant timing
-    bluray jonah total time vs. other
+    bluray jonah total time vs. other [DVD*2]
   warn other wordpresses
   legal2
   test mplayer -vo gl at home
