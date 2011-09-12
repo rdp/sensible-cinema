@@ -61,7 +61,7 @@ module SubtitleProfanityFinder
     edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, multiply_by_this_factor
   end
   
-  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, multiply_by_this_factor
+  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, multiply_by_this_factor#starting_timestamp_given, starting_timestamp_actual, ending_timestamp_given, ending_timestamp_actual
      subtitles.gsub!("\r\n", "\n")
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0

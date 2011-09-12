@@ -73,7 +73,7 @@ module SensibleSwing
         filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
         add_to_beginning = get_user_input("How much time to subtract from the beginning of each subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = get_user_input("How much time to add to the end of each subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
-        numerator = get_user_input("multiple factor: numerator seconds (like of 3650/3600 the 3650) [subtract others first", "1.0") 
+        numerator = get_user_input("multiple factor: numerator seconds (like of actual/in_srt the actual) [subtract others first", "1.0") 
         denominator = get_user_input("multiple factor: numerator seconds (like of 3650/3600 the 3600) [subtract others first", "1.0") 
         parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f, numerator.to_f/denominator.to_f
         File.write(EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed)
