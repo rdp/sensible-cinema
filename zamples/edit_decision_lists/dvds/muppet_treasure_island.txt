@@ -3,6 +3,8 @@
 
 "mutes" => [
   "4254.7", "4275.9", "the red gates of he.. are waiting for you...and beg for deliverance from [da..]ation",
+  "5383.4", "5386.0", "profanity", "aww [he..] Jim",
+
 ],
 
 "blank_outs" => [
