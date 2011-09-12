@@ -16,6 +16,6 @@
 "dvd_title_track_length" => "5977.666", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
 # "subtitle_url" => "1234567",
 # "not edited out stuff" => "some...",
-# "closing thoughts" => "only...",
+"closing thoughts" => "lacks some references to bloody...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
 "mplayer_dvd_splits" => [],
