@@ -117,12 +117,31 @@ a butt
     
   end
 
+  S = SubtitleProfanityFinder
+
   describe "it should let you re-factor the timestamps on the fly if desired"  do
 
-    
 #  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given, starting_timestamp_actual, ending_timestamp_given, ending_timestamp_actual^M
 
-    it "should subtract from beginning etc. etc."
+    it "should subtract from beginning etc. etc." do
+       normal = S.edl_output 'dragon.srt'
+       normal.should =~ /0:00:50.23/
+       normal.should =~ /0:00:54.93/
+       subtract = S.edl_output 'dragon.srt', {}, 1.0
+       subtract.should =~ /0:00:49.23/
+       normal.should =~ /0:00:54.93/
+       add = S.edl_output 'dragon.srt', {}, 0.0, 1.0
+       add.should =~ /0:00:55.93/
+       add.should =~ /0:00:50.23/
+    end
+
+    it "should compensate for differing start timestamps" do
+       starts_ten_later = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
+       p starts_ten_later
+       starts_ten_later.should =~ /0:01:00.23/
+       starts_ten_later.should =~ /0:01:04.93/
+
+    end
 
   end
   
