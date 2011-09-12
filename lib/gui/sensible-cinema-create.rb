@@ -96,7 +96,7 @@ module SensibleSwing
         id_string
       }
 
-      @convert_seconds_to_ts = new_jbutton( "Convert 3600 <-> 1:00:00 style timestamps" )
+      @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
       @convert_seconds_to_ts.on_clicked {
         input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
         while(input)

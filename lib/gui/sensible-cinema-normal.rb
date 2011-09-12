@@ -332,8 +332,14 @@ module SensibleSwing
         else
           disk = opticals[selected_idx]
           out = show_non_blocking_message_dialog "calculating current disk's unique id...if this pauses more than 10s then clean your DVD..."
-          dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
-          out.dispose
+          begin
+		    dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+          rescue Exception => e
+		    show_blocking_message_dialog e.to_s # todo a bit ugly...
+			raise
+		  ensure
+		    out.dispose
+		  end
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
           return @_choose_dvd_drive_or_file
         end
