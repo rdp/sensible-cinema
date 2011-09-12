@@ -28,7 +28,7 @@ describe SubtitleProfanityFinder do
 
     describe "he.." do
       it "should include the bad line with timestamp" do
-        output.should match(/0:00:54.929.*"he\.\."/)
+        output.should match(/0:00:54.93.*"he\.\."/)
       end
     
       it "should include the description in its output" do
@@ -71,7 +71,7 @@ describe SubtitleProfanityFinder do
       end
       
       it 'should replace l for i' do
-        output2.should include "065" # implies it got the substutition right...
+        output2.should include "07" # implies it got the substutition right...
       end
       
       it 'should keep apostrophes' do
@@ -93,7 +93,7 @@ describe SubtitleProfanityFinder do
   end
   
   it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0
+    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 1.0
 6
 00:00:55,068 --> 00:00:59,164
 a butt
@@ -107,12 +107,12 @@ a butt
     output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}
     
     it "should parse out the word word" do
-      output.should match(/0:00:50.089.*"word"/)
+      output.should match(/0:00:50.09.*"word"/)
     end
     
     it "should parse out and replace with euphemism" do
       output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'w...'}
-      output.should match(/0:00:50.089.*In a \[w\.\.\.\]/)
+      output.should match(/0:00:50.09.*In a \[w\.\.\.\]/)
     end
     
   end
