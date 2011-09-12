@@ -33,13 +33,15 @@
   test out DVD upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
-    no super scale res?
+    no super scale res necessary?
       
   fake "tenseness" metric
   netflix instant descriptor for OS X/work at all
-  ri_for updatez
+  netflix upconvert
+  do another srt comparison with netflix...see if it matches less 1s
 
 == yes do, un-ordered currently, from the various future release options ==
+  ri_for updatez
   handle gates of he.....
   ruby_prof stuff, other emails
   add real srt instructions to docu, release
