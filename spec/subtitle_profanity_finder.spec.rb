@@ -136,12 +136,24 @@ a butt
     end
 
     it "should compensate for differing start timestamps" do
-       starts_ten_later = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
-       p starts_ten_later
-       starts_ten_later.should =~ /0:01:00.23/
-       starts_ten_later.should =~ /0:01:04.93/
-
+       starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
+       starts_ten_later_than_srt.should =~ /0:01:00.23/
+       starts_ten_later_than_srt.should =~ /0:01:04.93/
     end
+
+   it "should compensate for differing end timestamps with a multiple" do
+     lasts_longer = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:00", "01:00", "01:30" # actual ends 50% later
+     lasts_longer.should =~ /0:01:15.34/
+     lasts_longer.should =~ /0:01:22.39/
+   end
+
+   it "should combine different initial time offset with different total time" do
+     lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:10", "01:00", "01:30" 
+     lasts_longer_with_initial_add.should =~ /0:01:25.34/
+     lasts_longer_with_initial_add.should =~ /0:01:32.39/
+
+   end
+    
 
   end
   

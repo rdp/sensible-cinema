@@ -57,11 +57,11 @@ module SubtitleProfanityFinder
 
 
 
-  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_given = "00:00", beginning_actual = "00:00"
-    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_given, beginning_actual
+  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = "00:00", beginning_actual_movie = "00:00", ending_srt = "1:00:00", ending_actual = "1:00:00"
+    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual
   end
   
-  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given_srt, starting_timestamp_actual#, ending_timestamp_given, ending_timestamp_actual
+  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given_srt, starting_timestamp_actual, ending_srt, ending_actual
      subtitles.gsub!("\r\n", "\n")
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
@@ -69,6 +69,8 @@ module SubtitleProfanityFinder
      difference = EdlParser.translate_string_to_seconds(starting_timestamp_given_srt) - EdlParser.translate_string_to_seconds(starting_timestamp_actual)
      subtract_from_each_beginning_ts += difference
      add_to_end_each_ts -= difference
+     difference = difference.abs
+     multiply_by_this_factor = (EdlParser.translate_string_to_seconds(ending_actual)-difference)/(EdlParser.translate_string_to_seconds(ending_srt)-difference)
 
 
 
@@ -185,12 +187,12 @@ module SubtitleProfanityFinder
             ts_begin = "#{$2}.#{$3}"
             ts_begin = EdlParser.translate_string_to_seconds ts_begin
             ts_begin  -= subtract_from_each_beginning_ts
-            #ts_begin *= multiply_by_this_factor
+            ts_begin *= multiply_by_this_factor
             ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
             ts_end = "#{$4}.#{$5}"
             ts_end = EdlParser.translate_string_to_seconds ts_end
             ts_end += add_to_end_each_ts
-            #ts_end *= multiply_by_this_factor
+            ts_end *= multiply_by_this_factor
             ts_end = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin
               output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
