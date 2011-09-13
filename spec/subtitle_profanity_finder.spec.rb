@@ -147,12 +147,31 @@ a butt
      lasts_longer.should =~ /0:01:22.39/
    end
 
-   it "should combine different initial time offset with different total time" do
-     lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:10", "01:00", "01:30" 
-     lasts_longer_with_initial_add.should =~ /0:01:25.34/
-     lasts_longer_with_initial_add.should =~ /0:01:32.39/
+   describe "combining different initial time offsets with total times" do
 
-   end
+    it "should combine different initial time offset with different total time" do
+     lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "00:55" 
+     # this one starts off weird, but then ends at almost exactly the same!
+     # so the formula for knowing 0:55 maps about the same should be...
+#     you minus the initial srt times...
+#     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial) plus initial actual
+#     55 - (begin_srt = 0) 
+#     (55 - 10)/(55-0) = 0.8181
+#     and 25 should map a little above 25 
+#    25-0*(.8181)+10
+     lasts_longer_with_initial_add.should =~ //
+     lasts_longer_with_initial_add.should =~ //
+     pp lasts_longer_with_initial_add
+    end
+
+    it "should be ok if they line up perfectly with just an offset" do
+      plus_ten = S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "01:05"
+      plus_ten.should =~ /0:01:00.23/
+      plus_ten.should =~ /0:01:04.93/
+    end
+
+
+  end
     
 
   end

@@ -66,11 +66,27 @@ module SubtitleProfanityFinder
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
 
-     difference = EdlParser.translate_string_to_seconds(starting_timestamp_given_srt) - EdlParser.translate_string_to_seconds(starting_timestamp_actual)
-     subtract_from_each_beginning_ts += difference
-     add_to_end_each_ts -= difference
-     difference = difference.abs
-     multiply_by_this_factor = (EdlParser.translate_string_to_seconds(ending_actual)-difference)/(EdlParser.translate_string_to_seconds(ending_srt)-difference)
+     starting_timestamp_given_srt = EdlParser.translate_string_to_seconds(starting_timestamp_given_srt)
+     starting_timestamp_actual = EdlParser.translate_string_to_seconds(starting_timestamp_actual)
+     ending_srt = EdlParser.translate_string_to_seconds(ending_srt)
+     ending_actual = EdlParser.translate_string_to_seconds ending_actual
+
+     # accomodate for both styles of rewrite, except it messes up the math, so just leave it separate:
+     # difference = starting_timestamp_given_srt - starting_timestamp_actual
+     # subtract_from_each_beginning_ts += difference
+     # add_to_end_each_ts -= difference
+
+#     you minus the initial srt time... (given)
+#     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
+     multiply_by_this_factor = (ending_actual - starting_timestamp_actual)/(ending_srt - starting_timestamp_given_srt)
+
+     multiply_proc = proc {|you|
+      ((you - starting_timestamp_given_srt) * multiply_by_this_factor) + starting_timestamp_actual
+    }  
+require 'ruby-debug'
+debugger
+3
+
 
 
 
@@ -187,12 +203,12 @@ module SubtitleProfanityFinder
             ts_begin = "#{$2}.#{$3}"
             ts_begin = EdlParser.translate_string_to_seconds ts_begin
             ts_begin  -= subtract_from_each_beginning_ts
-            ts_begin *= multiply_by_this_factor
+            ts_begin = multiply_proc.call(ts_begin)
             ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
             ts_end = "#{$4}.#{$5}"
             ts_end = EdlParser.translate_string_to_seconds ts_end
             ts_end += add_to_end_each_ts
-            ts_end *= multiply_by_this_factor
+            ts_end = multiply_proc.call(ts_end)
             ts_end = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin
               output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
