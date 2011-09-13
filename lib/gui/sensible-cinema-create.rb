@@ -71,11 +71,13 @@ module SensibleSwing
 
       @parse_srt.on_clicked do
         filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
-        add_to_beginning = get_user_input("How much time to subtract from the beginning of each subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
-        add_to_end = get_user_input("How much time to add to the end of each subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
-        numerator = get_user_input("multiple factor: numerator seconds (like of actual/in_srt the actual) [subtract others first", "1.0") 
-        denominator = get_user_input("multiple factor: numerator seconds (like of 3650/3600 the 3600) [subtract others first", "1.0") 
-        parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f, numerator.to_f/denominator.to_f
+        add_to_beginning = get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
+        add_to_end = get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
+        start_srt = get_user_input("timestamp of init srt", "00:00")
+        start_movie_ts = get_user_input("timestamp of initial subtitle in movie itself", "00:00")
+        end_srt = get_user_input("timestamp of near end subtitle srt", "10:00:00")
+        end_movie_ts  = get_user_input("timestamp of near end subtitle in movie itself", "10:00:00")
+        parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
         File.write(EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed)
         open_file_to_edit_it filename, true
         sleep 0.3 if OS.mac? # add delay...
