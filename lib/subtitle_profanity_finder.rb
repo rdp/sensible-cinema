@@ -57,7 +57,7 @@ module SubtitleProfanityFinder
 
 
 
-  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = "00:00", beginning_actual_movie = "00:00", ending_srt = "1:00:00", ending_actual = "1:00:00"
+  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = "00:00", beginning_actual_movie = "00:00", ending_srt = "10:00:00", ending_actual = "10:00:00"
     edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual
   end
   
@@ -83,9 +83,6 @@ module SubtitleProfanityFinder
      multiply_proc = proc {|you|
       ((you - starting_timestamp_given_srt) * multiply_by_this_factor) + starting_timestamp_actual
     }  
-require 'ruby-debug'
-debugger
-3
 
 
 
