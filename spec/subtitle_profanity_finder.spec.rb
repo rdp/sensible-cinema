@@ -28,7 +28,7 @@ describe SubtitleProfanityFinder do
 
     describe "he.." do
       it "should include the bad line with timestamp" do
-        output.should match(/0:00:54.929.*"he\.\."/)
+        output.should match(/0:00:54.93.*"he\.\."/)
       end
     
       it "should include the description in its output" do
@@ -65,13 +65,13 @@ describe SubtitleProfanityFinder do
       end
       
       it 'should parse them at EOL' do
-        output2.should include '0:00:55.069' # EOL
-        output2.should include "0:00:55.071" # full line...
-        output2.should include '0:00:55.066' # BOL
+        output2.should include '0:00:55.07' # EOL
+        output2.should include "0:00:55.07" # full line...
+        output2.should include '0:00:55.07' # BOL TODO fix spec :P
       end
       
       it 'should replace l for i' do
-        output2.should include "065" # implies it got the substutition right...
+        output2.should include "07" # implies it got the substutition right...
       end
       
       it 'should keep apostrophes' do
@@ -88,32 +88,82 @@ describe SubtitleProfanityFinder do
   
   it 'should add to begin, end' do
     out = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}, 1, 1.5
-    out.should include "45.460"
-    out.should include "51.589"
+    out.should include "45.46"
+    out.should include "51.59"
   end
   
   it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0
+    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 1.0
 6
 00:00:55,068 --> 00:00:59,164
 a butt
 
     EOL
     out.should include "55.0"
+
   end
   
   describe "it should take optional user params" do
     output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'word'}
     
     it "should parse out the word word" do
-      output.should match(/0:00:50.089.*"word"/)
+      output.should match(/0:00:50.09.*"word"/)
     end
     
     it "should parse out and replace with euphemism" do
       output = SubtitleProfanityFinder.edl_output 'dragon.srt', {'word' => 'w...'}
-      output.should match(/0:00:50.089.*In a \[w\.\.\.\]/)
+      output.should match(/0:00:50.09.*In a \[w\.\.\.\]/)
     end
     
+  end
+
+  S = SubtitleProfanityFinder
+
+  describe "it should let you re-factor the timestamps on the fly if desired"  do
+
+#  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given, starting_timestamp_actual, ending_timestamp_given, ending_timestamp_actual^M
+
+    it "should subtract from beginning etc. etc." do
+       normal = S.edl_output 'dragon.srt'
+       normal.should =~ /0:00:50.23/
+       normal.should =~ /0:00:54.93/
+       subtract = S.edl_output 'dragon.srt', {}, 1.0
+       subtract.should =~ /0:00:49.23/
+       normal.should =~ /0:00:54.93/
+       add = S.edl_output 'dragon.srt', {}, 0.0, 1.0
+       add.should =~ /0:00:55.93/
+       add.should =~ /0:00:50.23/
+    end
+
+    it "should compensate for differing start timestamps" do
+       starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
+       starts_ten_later_than_srt.should =~ /0:01:00.23/
+       starts_ten_later_than_srt.should =~ /0:01:04.93/
+    end
+
+   it "should compensate for differing end timestamps with a multiple" do
+     lasts_longer = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:00", "01:00", "01:30" # actual ends 50% later
+     lasts_longer.should =~ /0:01:15.34/
+     lasts_longer.should =~ /0:01:22.39/
+   end
+
+    describe "combining different initial time offsets with total times" do
+
+     it "should combine different initial time offset with different total time" do
+      lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "00:55" 
+      # this one starts off weird, but then ends at almost exactly the same!
+      lasts_longer_with_initial_add.should =~ /0:00:51.10/
+      lasts_longer_with_initial_add.should =~ /0:00:54.94/ # note--almost on
+     end
+
+     it "should be ok if they line up perfectly with just an offset" do
+       plus_ten = S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "01:05"
+       plus_ten.should =~ /0:01:00.23/
+       plus_ten.should =~ /0:01:04.93/
+     end
+
+    end
+
   end
   
 end

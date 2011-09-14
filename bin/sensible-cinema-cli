@@ -20,7 +20,7 @@ This file is part of Sensible Cinema.
 require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'sane'
 
-for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'swing_helpers']
+for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'jruby-swing-helpers/swing_helpers']
   require_relative '../lib/' + file
 end
 

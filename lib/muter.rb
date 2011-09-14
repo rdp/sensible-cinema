@@ -18,7 +18,7 @@ This file is part of Sensible Cinema.
 require 'rubygems' # ugh
 require 'ffi'
 require 'sane'
-require_relative 'mouse'
+require_relative 'jruby-swing-helpers/mouse'
 require_relative 'play_audio'
 
 module Muter

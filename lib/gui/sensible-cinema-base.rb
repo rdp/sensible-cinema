@@ -563,7 +563,7 @@ module SensibleSwing
     end
 
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
-      SwingHelpers.show_blockiing_message_dialog message, title, style
+      SwingHelpers.show_blocking_message_dialog message, title, style
     end
     
     # call dispose on this to close it if it hasn't been canceled yet...
@@ -585,7 +585,7 @@ module SensibleSwing
     
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
-      dir ||= LocalStorage[caller.inspect] = File.dirname(got)
+      dir ||= LocalStorage[caller.inspect]
       got = FileDialog.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[caller.inspect] = File.dirname(got)
       got

@@ -57,14 +57,33 @@ module SubtitleProfanityFinder
 
 
 
-  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0
-    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
+  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = "00:00", beginning_actual_movie = "00:00", ending_srt = "10:00:00", ending_actual = "10:00:00"
+    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual
   end
   
-  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts
+  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given_srt, starting_timestamp_actual, ending_srt, ending_actual
      subtitles.gsub!("\r\n", "\n")
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
+
+     starting_timestamp_given_srt = EdlParser.translate_string_to_seconds(starting_timestamp_given_srt)
+     starting_timestamp_actual = EdlParser.translate_string_to_seconds(starting_timestamp_actual)
+     ending_srt = EdlParser.translate_string_to_seconds(ending_srt)
+     ending_actual = EdlParser.translate_string_to_seconds ending_actual
+
+     # accomodate for both styles of rewrite, except it messes up the math, so just leave it separate:
+     # difference = starting_timestamp_given_srt - starting_timestamp_actual
+     # subtract_from_each_beginning_ts += difference
+     # add_to_end_each_ts -= difference
+
+#     you minus the initial srt time... (given)
+#     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
+     multiply_by_this_factor = (ending_actual - starting_timestamp_actual)/(ending_srt - starting_timestamp_given_srt)
+
+     multiply_proc = proc {|you|
+      ((you - starting_timestamp_given_srt) * multiply_by_this_factor) + starting_timestamp_actual
+    }  
+
 
 
 
@@ -181,10 +200,12 @@ module SubtitleProfanityFinder
             ts_begin = "#{$2}.#{$3}"
             ts_begin = EdlParser.translate_string_to_seconds ts_begin
             ts_begin  -= subtract_from_each_beginning_ts
+            ts_begin = multiply_proc.call(ts_begin)
             ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
             ts_end = "#{$4}.#{$5}"
             ts_end = EdlParser.translate_string_to_seconds ts_end
             ts_end += add_to_end_each_ts
+            ts_end = multiply_proc.call(ts_end)
             ts_end = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin
               output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!

@@ -1,0 +1,21 @@
+# comments can go after a # on any line, for example this one.
+"name" => "muppet treasure island",
+
+"mutes" => [
+  "4254.7", "4275.9", "the red gates of he.. are waiting for you...and beg for deliverance from [da..]ation",
+  "5383.4", "5386.0", "profanity", "aww [he..] Jim",
+
+],
+
+"blank_outs" => [
+],
+
+"volume_name" => "MUPPET_TREASURE_ISLAND",
+"disk_unique_id" => "aac1bc79|734cd8e4",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+"dvd_title_track_length" => "5977.666", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+# "subtitle_url" => "1234567",
+# "not edited out stuff" => "some...",
+"closing thoughts" => "lacks some references to bloody...",
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+"mplayer_dvd_splits" => [],

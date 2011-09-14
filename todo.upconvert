@@ -1,5 +1,8 @@
 == dvd upconvert ==
 
+
+ask mplayer "can you use accurate rounding with lanczos? I don't think you can..."
+
 compare with powerdvd/ffdshow
 
 compare (DVD) various computers/monitors...
