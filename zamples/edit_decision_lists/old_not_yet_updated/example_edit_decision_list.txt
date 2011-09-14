@@ -9,5 +9,6 @@
 # }
 
 # theme song is a bit raucous at times
-3.8 10 1 # theme song is a bit raucous at times
-1693.5 1780.0 0 # theme song again, skip this time
+000:03.8 01:03 mute
+# theme song again
+28:13.5 29:40 skip
