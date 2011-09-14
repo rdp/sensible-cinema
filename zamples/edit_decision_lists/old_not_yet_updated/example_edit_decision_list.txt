@@ -1,26 +1,14 @@
 # {
 #    "dvd_title_track":1,
 #    "title":"Bob's Big Plan",
-#    "mutes":[
-#       [
-#          "00:03.8",
-#          "01:03",
-#          "theme song is a bit raucous at times"
-#       ],
-#       [
-#          "28:13.5",
-#          "29:40",
-#          "theme song again"
-#       ],
-#       [
-#          "48:46",
-#          "49:08",
-#          "theme song again"
-#       ]
-#    ],
 #    "blank_outs":[
 # 
 #    ],
 #    "other notes":"could use more nit-picking of the
 # song, as some parts seem all right in the end"
 # }
+
+# theme song is a bit raucous at times
+00:03.8 01:03 mute
+# theme song again
+28:13.5 29:40 skip

@@ -5,6 +5,8 @@ whichever player you're using now.
 
 Includes a means of coordinating across different time signatures based on start time and length.
 
+Had a git commit with an example pure JSON EDL.
+
 == 0.26.2 ==
 
 Fix license acceptance code, quick redeploy.
