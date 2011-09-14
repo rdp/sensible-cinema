@@ -80,6 +80,7 @@
   add "play at 1.5x speed" mplayer button, I guess
   play in mplayer unedited button should display OSD by default
   bounty ffmpeg stuff (motion detect, directshow)
+  short todo's for screen capture
   "fix" mplayer EDL pausing their code itself
   the open button should open in the "editing" EDL dir.
   warn against makemkv (and check vs. handbrake, and offer a bounty)
