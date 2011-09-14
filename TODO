@@ -6,7 +6,6 @@
     upconv netflix
     mac'ify OCR/Mouse
   upconvert DVD
-  srt expand, release
   C EDL
   
   === non ordered/eventually (also add line items for them) ===
@@ -39,7 +38,10 @@
   netflix instant descriptor for OS X/work at all
   netflix upconvert
   do another srt comparison with netflix...see if it matches less 1s
-  C player message
+  C player feedback message
+  nextsprocket...
+  more netflix instant timing
+    bluray jonah total time vs. other [DVD*2]
 
 == yes do, un-ordered currently, from the various future release options ==
   todo.upconvert
@@ -56,36 +58,30 @@
   english name (movie name) mass everywhere
   handle gates of he.....
   ruby_prof stuff
-  add real srt instructions to docu, release
-    maybe after DVD
-  complain to jruby folks
-  more netflix instant timing
-    bluray jonah total time vs. other [DVD*2]
   warn other wordpresses
   legal2
   test mplayer -vo gl at home
-  add button for play with netflix "experimentally"
-  remove extra printf's for scanning for matching
+  add new batch file for play with netflix OCR
+  remove those extra printf's for scanning for matching
   Ben's other DVD's
   template-ify for netflix too "create for netflix"
     add netflix instant instructions,
-  add a prototype new style EDL
   "note" competitor upconverters
-  add a "record start stop"
+  add a "record start stop" for screen capture
   that extra .5s DVD reports for file size...
-  TODO test DVD upconv it at 720*x resolution too...
+  test DVD upconv it at 720*x resolution too...
   EDL gottman
   EDL Greg's DVD's
-  srt/parsing manipulation buttons -> new window [?]
+  srt/parsing manipulation buttons -> new window somehow [?]
   add a demo of conference "music video from local file"
   change upconvert options needs its own "close" button
     and status field?
   lightning strike from various outlets...
   accomodate splits vs. blanks and work everywhere
-  linearize: EDL with JSON on top, full timestamps.
+  linearize: EDL with JSON on top, full timestamps. hmm...
   add new open button "edit EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
-  short todo's for screen capture
+  short list of todo's for screen capture
   "fix" mplayer EDL pausing (within the mplayer code itself)
     bounty it for now
   the open button should open in the "editing" EDL dir.
@@ -117,10 +113,6 @@
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  also bring to top after a conversion, and before prompts/file prompts...
-  can auto-use tsmuxer at all [?]
-    mac just die with instructions to use tsmuxer first...
-    actually don't do this, just make sure to warn them if they pass us an mkv...indeed.
   check with blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
   youtube/hulu timings
   split LLC's website+consumer
@@ -151,7 +143,7 @@
     once I can jump around, advertise as a phantom editor :)
       maybe even before?
   ask for more beta testers for use, ask for more beta testers for creation, too
-  create a semi-accurate phantom edit EDL [?] just with splits
+  create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
   add button "fast preview segment" (mplayer from dvd)
   investigate WMC "call out to smplayer + EDL" or the like...
@@ -161,10 +153,7 @@
   create the following EDL: 10 commandments DVD to skip the intro music LOL
   inventionzy: blu-ray stuff from todo.inventionzy
   sons of provo "music video" EDL
-  port to mac OS X
-    documentation button? notepad?
   ffmpeg compile it in mingw, see if it runs dshow windows
-  cleanup srt code to accept a full one
   clarify input for srt (remove those other ones, that's lame-o)
     it needs to remember the timings "start timing" and text, "end timing" and text
     also double check unit tests, and if I do one in the middle does it still work?
@@ -184,7 +173,12 @@
 == DVD decide later to move up or down ==
  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  PPC dvdid work?
+  can auto-use tsmuxer at all [?]
+    mac just die with instructions to use tsmuxer first...
+  port to mac OS X
+    documentation button?
+    PPC dvdid work?
+  .srt input auto-scan from a "full two entries from the .srt file"
   rename as sanitizer, or something else SEO friendlier or something like that
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   add button "re-order srt"

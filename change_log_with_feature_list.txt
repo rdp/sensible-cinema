@@ -5,7 +5,7 @@ whichever player you're using now.
 
 Includes a means of coordinating across different time signatures based on start time and length.
 
-Had a git commit with an example pure JSON EDL.
+Had a git commit with an example pure JSON EDL, and several other mixed/mplayer compatible styles.
 
 == 0.26.2 ==
 
