@@ -252,7 +252,13 @@ module SensibleSwing
       else
         file_from = get_grabbed_equivalent_filename_once dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
-      show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way--if it's mkv and fails consider first converting to ts by using tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
+      if file_from =~ /\.mkv/i
+        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it came from makemkv"
+      end
+      if file_from !~ /\.(ts|mpg|mpeg)$/i
+        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll try...") 
+      end
+      
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
