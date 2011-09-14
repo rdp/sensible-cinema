@@ -14,7 +14,8 @@
     it can query the currently open browser window, check to see which movie it's playing, and auotmatically spawn off a correct player instance with EDL for that movie
       based on title or url.
     netflix "try this srt, does it match?" no "what about this one, now?"
-    it can "infer" where the thumb slider would be, and "drag" it to where it infers the new timestamp location shoudl be.
+    it can "infer" where the thumb slider would be, and "drag" it to where it infers the new timestamp location should likely be, for skipping et al.
+    I can imagine a system that scans incoming audio, does voice recognition sofware analysis on it, search for (angry tones, profanities, "questionable" tones/text like making love), and excludes them from output [search forward, skip forward, just display nothing, either one, mute audio, decrease audio et al].
     make an API web service that can search for EDL's
 	  or with youtube, use the api to fast forwarrd there
 	    and if it isn't already loaded, display an extra notice "forwarding" or what not.
