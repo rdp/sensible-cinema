@@ -105,10 +105,11 @@
   new button "auto-test" a subtitles file for timing :)
   advertise urug again?
     after works in mac for capture+overlay :)
-  create skype recorder windows
-  mplayer directx patch check it...
+  create skype/google+ hangouts recorder windows
+  mplayer directx fix patch check it...
   auto-add largest title to the generator EDL
     complain if times look wrong...on playback? sum time
+  mv jruby-swing-helpers to lib
   splits... [add better instructions on how to be precise...]
   open EDL to edit it can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
