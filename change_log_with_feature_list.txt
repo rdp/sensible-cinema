@@ -1,6 +1,13 @@
+== ==
+
+Make it so that it can modify timestamps from .srt files programmatically in order to ensure that time signatures match
+whichever player you're using now.
+
+Includes a means of coordinating across different time signatures based on start time and length.
+
 == 0.26.2 ==
 
-Fix license acceptance code, quick redeploy
+Fix license acceptance code, quick redeploy.
 
 == 0.26.1 ==
 

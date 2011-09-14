@@ -546,28 +546,32 @@ module SensibleSwing
       end
     end
     
-    def open_file_to_edit_it filename, start_minimized=false
+    def open_file_to_edit_it filename, options = {} # :start_minimized
       if OS.windows?
-        if start_minimized
+        if options[:start_minimized]
           system_non_blocking "start /min notepad \"#{filename}\""
         else
           system_non_blocking "notepad \"#{filename}\""
         end
       else
+        # ignore minimized :P
         system_non_blocking "open -a TextEdit \"#{filename}\""
       end
     end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
+      bring_to_front
       JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
+      bring_to_front
       SwingHelpers.show_blocking_message_dialog message, title, style
     end
     
     # call dispose on this to close it if it hasn't been canceled yet...
     def show_non_blocking_message_dialog message, close_button_text = 'Close'
+      bring_to_front
       # lodo NonBlockingDialog it can get to the top instead of being so buried...
       NonBlockingDialog.new(message, close_button_text)
     end
@@ -575,16 +579,19 @@ module SensibleSwing
     include_class javax.swing.UIManager
     
     def get_user_input(message, default = '', cancel_ok = false)
+      bring_to_front
       SwingHelpers.get_user_input message, default, cancel_ok
     end
     
     def show_copy_pastable_string(message, value)
+      bring_to_front
       RubyClip.set_clipboard value            
       get_user_input message + " (has been copied to clipboard)", value, true
     end
     
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
+      bring_to_front
       dir ||= LocalStorage[caller.inspect]
       got = FileDialog.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[caller.inspect] = File.dirname(got)

@@ -87,7 +87,6 @@
     DVD test it (+- with others testing it for me too)
   add new open button "edit the EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
-  play in mplayer unedited button should display OSD by default
   bounty ffmpeg stuff to ffmpeg-devel (motion-detect, audio)
   short todo's for screen capture
   "fix" mplayer EDL pausing (within the mplayer code itself)
@@ -189,9 +188,10 @@
 == DVD decide later to move up or down ==
  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  add button "fix srt"
-  @makemkv: timing feels broken weird-like! I'll donate you more money if you fix it <sniff>
+  add button "re-order srt"
+  @makemkv: 
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
+    can I reproduce it this days?
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
   add option "just skip don't mute always instead of muting"
   bounty/ask hqdn3d for ffmpeg

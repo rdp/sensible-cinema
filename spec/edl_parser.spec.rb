@@ -182,13 +182,21 @@ describe EdlParser do
     translate("1:01:01").should == 60*61+1
   end
   
+  it "should translate subtitle type timestamps" do
+    translate("00:00:34,451").should == 34.451
+  end
+  
+  it "should disallow malformed" do
+    proc {translate("00:00:34,45a")}.should raise_exception
+  end
+  
   it "should translate ints to english timestamps well" do
     english(60).should == "01:00"
-    english(60.1).should == "01:00.100"
+    english(60.1).should == "01:00.10"
     english(3600).should == "1:00:00"
     english(3599).should == "59:59"
     english(3660).should == "1:01:00"
-    english(3660 + 0.1).should == "1:01:00.100"
+    english(3660 + 0.1).should == "1:01:00.10"
   end
   
   it "should auto-select a (nested) EDL if it matches a DVD's id" do
