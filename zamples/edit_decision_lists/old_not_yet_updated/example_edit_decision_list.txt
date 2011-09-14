@@ -10,4 +10,4 @@
 
 000:03.8 01:03 mute # theme song is a bit raucous at times
 28:13.5 29:40 skip # theme song again
-29:00 30:00 blank #
+29:00 30:00 blank # category: profanity, level: 3, type: "da..", details: "that beaver da.. better hold!"
