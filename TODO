@@ -42,14 +42,22 @@
   C player message
 
 == yes do, un-ordered currently, from the various future release options ==
+  todo.upconvert
+    netflix quality upconverter, have a go at it
+      finalize screen capturer
+    me test it
+      1x, 2x Sintel
+      snapshots of Sintel "normal", then deploy the various comparison pics
+    DVD test it (+- with others testing it for me too)
   releases that include Debug, python too :)
 
   ri_for updatez
   subtitle -> url everywhere
   english name (movie name) mass everywhere
   handle gates of he.....
-  ruby_prof stuff, other emails
+  ruby_prof stuff
   add real srt instructions to docu, release
+    maybe after DVD
   complain to jruby folks
   more netflix instant timing
     bluray jonah total time vs. other [DVD*2]
@@ -59,35 +67,24 @@
   add button for play with netflix "experimentally"
   remove extra printf's for scanning for matching
   Ben's other DVD's
-  from an EDL, it can "just play" for netflix (auto-open browser etc.)
   template-ify for netflix too "create for netflix"
     add netflix instant instructions,
-      then add a blog post comment after releasing it as template
-  prototype new style EDL
+  add a prototype new style EDL
   "note" competitor upconverters
-  add a "record start stop" + record x time for the virtual audio and other
-  rename as sanitizer
-    note "we are in the creation phase and need your help"
+  add a "record start stop"
   that extra .5s DVD reports for file size...
   TODO test DVD upconv it at 720*x resolution too...
-  investigate the srt morpher...
   EDL gottman
-  Greg's DVD's
-  srt/parsing buttons new window [?]
-  demo of conference "music video from file"
+  EDL Greg's DVD's
+  srt/parsing manipulation buttons -> new window [?]
+  add a demo of conference "music video from local file"
   change upconvert options needs its own "close" button
+    and status field?
   lightning strike from various outlets...
-  accomodate splits vs. blanks and work
-  todo.upconvert
-    netflix quality upconverter, have a go at it
-      finalize screen capturer
-    me test it
-      1x, 2x Sintel
-      snapshots of Sintel "normal", then deploy the various comparison pics
-    DVD test it (+- with others testing it for me too)
-  add new open button "edit the EDL for current DVD"
+  accomodate splits vs. blanks and work everywhere
+  linearize: EDL with JSON on top, full timestamps.
+  add new open button "edit EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
-  bounty ffmpeg stuff to ffmpeg-devel (motion-detect, audio)
   short todo's for screen capture
   "fix" mplayer EDL pausing (within the mplayer code itself)
     bounty it for now
@@ -109,7 +106,7 @@
   mplayer directx fix patch check it...
   auto-add largest title to the generator EDL
     complain if times look wrong...on playback? sum time
-  mv jruby-swing-helpers to lib
+  mv jruby-swing-helpers to lib dir
   splits... [add better instructions on how to be precise...]
   open EDL to edit it can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
@@ -120,7 +117,6 @@
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  linearize: EDL with JSON on top, full timestamps.
   also bring to top after a conversion, and before prompts/file prompts...
   can auto-use tsmuxer at all [?]
     mac just die with instructions to use tsmuxer first...
@@ -166,9 +162,9 @@
   inventionzy: blu-ray stuff from todo.inventionzy
   sons of provo "music video" EDL
   port to mac OS X
-    PPC dvdid
     documentation button? notepad?
   ffmpeg compile it in mingw, see if it runs dshow windows
+  cleanup srt code to accept a full one
   clarify input for srt (remove those other ones, that's lame-o)
     it needs to remember the timings "start timing" and text, "end timing" and text
     also double check unit tests, and if I do one in the middle does it still work?
@@ -188,6 +184,9 @@
 == DVD decide later to move up or down ==
  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  PPC dvdid work?
+  rename as sanitizer, or something else SEO friendlier or something like that
+  from an EDL, it can "just play" for netflix (auto-open browser etc.)
   add button "re-order srt"
   @makemkv: 
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
@@ -198,6 +197,7 @@
     bounty /ask mplayer OS X screen capture input can I use it in ffmpeg?
     ask dll
     bounty ffmpeg server for doze
+    bounty motion-detect, audio)
   try out disney digital copy
   EDL's (if not lewd) (only after can do propaganda, really)
     monty python

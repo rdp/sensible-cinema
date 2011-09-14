@@ -1,40 +1,26 @@
-# comments can go after a # on each line.
-
-"mutes" => [
-  "00:00:01", "00:00:02", # mute from second 1 to second 2
-  # so an example would be:  
-  "00:00:01", "00:00:02", "profanity", "dang",
-  "01:01:00", "01:02:00"  # another example:mute from one hour one minute to one hour two minutes
-],
-
-# So it would like like this:
-
-"mutes" => [
-  "00:00:01", "00:00:02", 
-  "00:00:01", "00:00:02", "profanity", "dang",
-  "01:01:00", "01:02:00" 
-],
-  
-# note: items can be out of chronological order, that's ok
-
-# you can also have blank outs
-# example:
-
-"blank_outs" => [
-  # this first one blanks (by overlaying *over* the video, a black window)
-  # from one hour one minute to one hour two minutes, like:
-  "01:01:00" , "01:02:00", "nudity", "...",
-  # you can also always optionally use decimals, like 3 minutes 3 seconds and a half to 3 minutes 4 seconds and a half (one second blank out):
-  "00:03:03.5", "00:03:04.5",
-],
-  
-# you can also add other notes, too, like title, source, whatever you want
-# these are basically free form and not used for anything else yet
-"missing_content" => "this doesn't list some mild name calling",
-"title" => "Forever Strong",
-"source" => "Hulu",
-"url" => "http://www.byutv.org/watch/1790-100",
-"whatever_else_you_want" => "this is the old version of the film",
-"disk_unique_id" => "1234|4678", # allow DVD's to be able to differentiate (and auto select) themselves.
-
-# NB that you have to put commas just about everywhere. That might help...
+# {
+#    "dvd_title_track":1,
+#    "title":"Bob's Big Plan",
+#    "mutes":[
+#       [
+#          "00:03.8",
+#          "01:03",
+#          "theme song is a bit raucous at times"
+#       ],
+#       [
+#          "28:13.5",
+#          "29:40",
+#          "theme song again"
+#       ],
+#       [
+#          "48:46",
+#          "49:08",
+#          "theme song again"
+#       ]
+#    ],
+#    "blank_outs":[
+# 
+#    ],
+#    "other notes":"could use more nit-picking of the
+# song, as some parts seem all right in the end"
+# }

@@ -11,6 +11,8 @@
       with several, or start one, end one, etc.
 	    allow for extra start time offset for videos, if netflix instant has any
     a way to integrate with cable TV, ex: "this show we know started at 1:01, and its offsets should be this after that point"
+    it can query the currently open browser window, check to see which movie it's playing, and auotmatically spawn off a correct player instance with EDL for that movie
+      based on title or url.
     netflix "try this srt, does it match?" no "what about this one, now?"
     it can "infer" where the thumb slider would be, and "drag" it to where it infers the new timestamp location shoudl be.
     make an API web service that can search for EDL's
