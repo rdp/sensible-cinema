@@ -8,7 +8,6 @@
 # song, as some parts seem all right in the end"
 # }
 
-# theme song is a bit raucous at times
-000:03.8 01:03 mute
-# theme song again
-28:13.5 29:40 skip
+000:03.8 01:03 mute # theme song is a bit raucous at times
+28:13.5 29:40 skip # theme song again
+29:00 30:00 blank #
