@@ -58,15 +58,16 @@ module SensibleSwing
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
         Basically download it from opensubtitles.org (or engsub.net et al),
-        (for opensubtitles.org enter dvd title in the search box, click on a result, click one from the list with an English flag, then choose 'Download(zip)')
-        NB that you'll want/need to *carefully* double check your subtitle file for accuracy. Here's how.
-        Once you download the zip, unzip it, and then carefully compare a beginning timestamp in it with the actual (see the button "Watch DVD unedited (realtime mplayer)")
-        file with the actual DVD.  (ex: smplayer, hit the 'o' button to display
-        the current timestamp, then go to the end, stop at some point with text
-        and hit the '.' key until a subtitle very first displays.
-        Next convert that number to 29.97 fps (using the button given).
-        The numbers should match precisely.  If they don't, edit this file
-        so that it will have some offsets given.
+        (for opensubtitles.org enter dvd title in the search box, click on a result, click one from the list with an English flag, 
+        then choose 'Download(zip)', then unzip the file)
+        NB that you'll want/need to *carefully* double check your subtitle file for accuracy. Here's how:
+        Now carefully compare a beginning timestamp in it with the actual words in the .srt file 
+        with the actual DVD.
+        (see the button "Watch DVD unedited (realtime mplayer)")
+        (smplayer can kind of do it, too, play it, hit the 'o' button to display
+        the OSD timestamp, then go to just before the verbiage, 
+        and hit the '.' key until a subtitle very first appears.
+        Next convert that number to 29.97 fps (using the button for that).
       EOL
 
       @parse_srt.on_clicked do
