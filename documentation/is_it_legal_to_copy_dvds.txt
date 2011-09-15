@@ -72,6 +72,8 @@ NB: YOU MUST AGREE TO THE gplv3 in order to use this software.  See LICENSE.TXT 
 [3] http://www.macworld.com/article/150731/2010/04/dvdripping_faqs.html
 [4] http://www.videolan.org/legal.html
 
-note also http://en.wikipedia.org/wiki/DVD_Decrypter for some more legal interestingnss.
+http://en.wikipedia.org/wiki/DVD_Decrypter mentions fair use a bit, though in context of a different program, still interesting nonetheless.
 
-Also note that this project was done under the gplv3 in Roger's jurisdiction, not a product of anybody else or any other owner.
+Also note that this project was done under the gplv3 in Roger's jurisdiction, not a product of anybody else or any other owner, nor copyright elsewise.
+
+Also the footnotes to fanedit.org have some related and applicable discussion of legal issues.

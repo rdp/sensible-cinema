@@ -5,7 +5,7 @@ All files released under the GPLv3 license [1] unless otherwise specified.  Ping
 EDL (delete list/edit list/EDL) files are released under the Creative Commons License, however.
 
 Note: may call out to some 3rd party libraries/executables under their own (separate, open source) licenses and distributions, but they are contained
-within this package for convenience.
+packaged for convenience.  They have their own source codes available.
 
 Note also that we used parts of the 7-Zip program, that 7-Zip is licensed under the GNU LGPL license, see http://www.7-zip.org, where its source code can be found.
 
