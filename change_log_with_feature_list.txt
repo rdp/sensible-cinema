@@ -1,3 +1,10 @@
+== 0.27.0 ==
+
+Added support for Microsoft DVD Player style playback codes.
+This one uses the built in DVD player interface, which is typically licensed,
+and also performs quite well.  It also respects UOP's et al.
+It involves interaction back and forth to control playback/monitor.
+
 == 0.26.3 ==
 
 Make it so that it can modify timestamps from .srt files programmatically in order to ensure that time signatures match
