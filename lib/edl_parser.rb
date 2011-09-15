@@ -237,7 +237,8 @@ class EdlParser
     combined.compact
   end
   
-  # its reverse: translate_time_to_human_readable
+  # this one is 1:01:02.0 => 36692.0
+  # its reverse is: translate_time_to_human_readable
   def self.translate_string_to_seconds s
     # might actually already be a float, or int, depending on the yaml
     # int for 8 => 9 and also for 1:09 => 1:10
@@ -254,6 +255,8 @@ class EdlParser
      p 'failed!', s
      raise e
     end
+    raise unless seconds =~ /^\d+(|[,.]\d+)$/
+    seconds.gsub!(',', '.')
     total += seconds.to_f
     minutes = s.split(":")[-2] || "0"
     total += 60 * minutes.to_i

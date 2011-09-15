@@ -56,11 +56,11 @@ module SensibleSwing
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
-        You can download a .srt file and use it to automatically search for profanities.
-        Basically download it from opensubtitles.org (possibly from other sites, too),
-        (enter dvd name in the search box, click a result, click one from the list with an English flag, then click 'Download(zip)')
-        Once you download the zip, unzip it, and then compare the timestamps in it with those on the DVD (see the button "Watch DVD unedited (realtime mplayer)")
-        NB that you'll first want/need to *carefully* double check your subtitle
+        You can download a .srt file and use it to programmatically search for the location of various profanities.
+        Basically download it from opensubtitles.org (or engsub.net et al),
+        (for opensubtitles.org enter dvd title in the search box, click on a result, click one from the list with an English flag, then choose 'Download(zip)')
+        NB that you'll want/need to *carefully* double check your subtitle file for accuracy. Here's how.
+        Once you download the zip, unzip it, and then carefully compare a beginning timestamp in it with the actual (see the button "Watch DVD unedited (realtime mplayer)")
         file with the actual DVD.  (ex: smplayer, hit the 'o' button to display
         the current timestamp, then go to the end, stop at some point with text
         and hit the '.' key until a subtitle very first displays.
@@ -70,17 +70,27 @@ module SensibleSwing
       EOL
 
       @parse_srt.on_clicked do
-        filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
-        add_to_beginning = get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
-        add_to_end = get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
-        start_srt = get_user_input("timestamp of init srt", "00:00")
-        start_movie_ts = get_user_input("timestamp of initial subtitle in movie itself", "00:00")
-        end_srt = get_user_input("timestamp of near end subtitle srt", "10:00:00")
-        end_movie_ts  = get_user_input("timestamp of near end subtitle in movie itself", "10:00:00")
-        parsed = SubtitleProfanityFinder.edl_output filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
-        File.write(EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed)
-        open_file_to_edit_it filename, true
-        sleep 0.3 if OS.mac? # add delay...
+        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
+        # TODO nuke
+        add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
+        add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
+        
+        @show_parse_instructions ||= show_blocking_message_dialog "Now enter some values which will adjust the .srt time signatures\nso that it matches the movie more precisely.\nWe also need these values to coordinate it with other devices that may have different timestamps.\nFor DVD playback this will be the timestamps mplayer shows within the console window [the mplayer unedited button]."
+        open_file_to_edit_it srt_filename
+        sleep 0.5 # let it open first
+        bring_to_front
+        start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]", "...")
+        start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"", "00:00:00,000")
+        start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
+        
+        end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie", "...")
+        end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"", "02:30:00,000")
+        end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
+        
+        parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
+        File.write EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
+          %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
+           %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
         open_file_to_edit_it EdlTempFile
       end
 
@@ -252,7 +262,13 @@ module SensibleSwing
       else
         file_from = get_grabbed_equivalent_filename_once dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
-      show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way--if it's mkv and fails consider first converting to ts by using tsmuxer.") unless file_from =~ /\.(ts|mpg|mpeg)$/i
+      if file_from =~ /\.mkv/i
+        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it came from makemkv"
+      end
+      if file_from !~ /\.(ts|mpg|mpeg)$/i
+        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll try...") 
+      end
+      
       save_to_edited = get_save_to_filename dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists

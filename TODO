@@ -6,7 +6,6 @@
     upconv netflix
     mac'ify OCR/Mouse
   upconvert DVD
-  srt expand, release
   C EDL
   
   === non ordered/eventually (also add line items for them) ===
@@ -39,45 +38,13 @@
   netflix instant descriptor for OS X/work at all
   netflix upconvert
   do another srt comparison with netflix...see if it matches less 1s
-
-== yes do, un-ordered currently, from the various future release options ==
-  @audio "here's how to have both:" plus instructions from http://camstudio.org/forum/discussion/33/waveoutgetselectcontrol-failed/p2
-  ri_for updatez
-  subtitle -> url
-  english name [movie name?
-  bounty ffmpeg server for doze
-  handle gates of he.....
-  ruby_prof stuff, other emails
-  add real srt instructions to docu, release
-  complain to jruby folks
-  respond ffmpeg trac bug
+  C player feedback message
+  nextsprocket...
   more netflix instant timing
     bluray jonah total time vs. other [DVD*2]
-  warn other wordpresses
-  legal2
-  test mplayer -vo gl at home
-  add button for play with netflix "experimentally"
-  remove extra printf's for scanning for matching
-  Ben's other DVD's
-  from an EDL, it can "just play" for netflix (auto-open browser etc.)
-  template-ify for netflix too "create for netflix"
-    add netflix instant instructions,
-      then add a blog post comment after releasing it as template
-  prototype new style EDL
-  "note" competitor upconverters
-  add a "record start stop" + record x time for the virtual audio and other
-  rename as sanitizer
-    note "we are in the creation phase and need your help"
-  that extra .5s DVD reports for file size...
-  TODO test DVD upconv it at 720*x resolution too...
-  investigate the srt morpher...
-  EDL gottman
-  Greg's DVD's
-  srt/parsing buttons new window [?]
-  demo of conference "music video from file"
-  change upconvert options needs its own "close" button
-  lightning strike from various outlets...
-  accomodate splits vs. blanks and work
+
+== yes do, un-ordered currently, from the various future release options ==
+  releases that include Debug, python too :)
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer
@@ -85,52 +52,72 @@
       1x, 2x Sintel
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
-  add new open button "edit the EDL for current DVD"
+
+  ri_for updatez
+  subtitle -> url everywhere
+  english name (movie name) mass everywhere
+  handle gates of he.....
+  ruby_prof stuff
+  warn other wordpresses
+  legal2
+  test mplayer -vo gl at home
+  add new batch file for play with netflix OCR
+  remove those extra printf's for scanning for matching
+  Ben's other DVD's
+  template-ify for netflix too "create for netflix"
+    add netflix instant instructions,
+  "note" competitor upconverters
+  add a "record start stop" for screen capture
+  that extra .5s DVD reports for file size...
+  test DVD upconv it at 720*x resolution too...
+  EDL gottman
+  EDL Greg's DVD's
+  srt/parsing manipulation buttons -> new window somehow [?]
+  add a demo of conference "music video from local file"
+  change upconvert options needs its own "close" button
+    and status field?
+  lightning strike from various outlets...
+  accomodate splits vs. blanks and work everywhere
+  linearize: EDL with JSON on top, full timestamps. hmm...
+  add new open button "edit EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
-  play in mplayer unedited button should display OSD by default
-  "fix" mplayer EDL pausing their code itself
+  short list of todo's for screen capture
+  "fix" mplayer EDL pausing (within the mplayer code itself)
+    bounty it for now/test with latest ffmpeg et al, maybe on mac with source [?
   the open button should open in the "editing" EDL dir.
-  warn against makemkv (and check vs. handbrake, and offer a bounty)
   add the other type in there, esp. if a man answers
     add to the template, various can use it
   an overlapping mute failure when you hit the "watch edited realtime" should popup.
   split out the "dependency" codes
   consistency for flight of nav. srt? huh?
     consistency of others, also "DVD reported full-time versus ts time" for others...
-  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
+  subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
+    and end too why not?
   fix released version to downloadable work in mac [7zip won't cut it]
   "--developer" mode
     has "export JSON command line, reload code" , note it in the docu
-  new button "auto-test" a subtitles file for timing :)
   advertise urug again?
     after works in mac for capture+overlay :)
-  create skype recorder windows
-  mplayer directx patch check it...
+  create skype/google+ hangouts recorder windows
+  mplayer directx fix patch check it...
   auto-add largest title to the generator EDL
     complain if times look wrong...on playback? sum time
+  mv jruby-swing-helpers to lib dir
   splits... [add better instructions on how to be precise...]
   open EDL to edit it can have a rememberable DIR
   @instructions "this is great for comparing srt's, except...when it isn't, then you have to..."
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
-  volume_name => dvd_volume_name
+  volume_name => dvd_volume_label
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  linearize: EDL with JSON on top, full timestamps.
-  also bring to top after a conversion, and before prompts/file prompts...
-  can auto-use tsmuxer at all [?]
-    mac just die with instructions to use tsmuxer first...
-    actually don't do this, just make sure to warn them if they pass us an mkv...indeed.
   check with blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
   youtube/hulu timings
   split LLC's website+consumer
     get LLC before a "real" domain name
   employee instructions: watch @ realtime after profanity filter first pass :P  
-  @makemkv: timing feels broken weird-like! I'll donate you more money if you fix it <sniff>
-    try out libdvdcss + handbrake on the one that was totally broken...is it better?
-    it should work like a champ shouldn't it?
   clear runnings
     me try
     have ben and chris test it out [realtime?]
@@ -156,7 +143,7 @@
     once I can jump around, advertise as a phantom editor :)
       maybe even before?
   ask for more beta testers for use, ask for more beta testers for creation, too
-  create a semi-accurate phantom edit EDL [?] just with splits
+  create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
   add button "fast preview segment" (mplayer from dvd)
   investigate WMC "call out to smplayer + EDL" or the like...
@@ -166,11 +153,11 @@
   create the following EDL: 10 commandments DVD to skip the intro music LOL
   inventionzy: blu-ray stuff from todo.inventionzy
   sons of provo "music video" EDL
-  port to mac OS X
-    PPC dvdid
-    documentation button? notepad?
-  ffmpeg compile it mingw, see if it runs dshow windows
-  netflix instant: "try" this srt" ok now "try" this other srt"
+  ffmpeg compile it in mingw, see if it runs dshow windows
+  clarify input for srt (remove those other ones, that's lame-o)
+    it needs to remember the timings "start timing" and text, "end timing" and text
+    also double check unit tests, and if I do one in the middle does it still work?
+    and why was there an extra uncaught profanity in wrinkle in time?
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -186,26 +173,41 @@
 == DVD decide later to move up or down ==
  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  "srt" double checker "ok now at exactly this time this should be here."
+   java webstart for being able to playback netflix instant edited "automagically"
+    also it can uses key presses/buttons to log keystrokes to know when edits should occur/associate them with timestamps
+      it can publish them easily/share them easily with friends. Oh boy.
+  can auto-use tsmuxer at all
+  port to mac OS X
+    documentation button?
+    PPC dvdid work?
+  .srt input auto-scan from a "full two entries from the .srt file" (easier)
+  rename as sanitizer, or something else SEO friendlier or something like that
+  from an EDL, it can "just play" for netflix (auto-open browser etc.)
+  add button "re-order srt"
+  @makemkv: 
+    can I reproduce it this days?
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
-  ffmpeg bounty audio mixer
   add option "just skip don't mute always instead of muting"
-  bounty hqdn3d for ffmpeg [?]
+  bounty/ask hqdn3d for ffmpeg
+    bounty /ask mplayer OS X screen capture input can I use it in ffmpeg?
+    ask dll, say, for pausing [?]
+      ask if I can make a pausing filter, to start paused...hmm... [?]
+    bounty ffmpeg server for doze
+    bounty motion-detect, audio
   try out disney digital copy
-  EDL's (if not lewd)
+  EDL's (if not lewd) (only after can do propaganda, really)
     monty python
     LOTR
     forever strong
     MOTAB music videos :P
-  bounty ffmpeg stuff (motion detect, audio)
   refresh bug try to reproduce
-  rename project "something" (edited movie player?)
   if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
   propaganda DVD upconverter
-  advertise virtual audio
-  advertise screen capture
+  propaganda virtual audio
+  propaganda screen capture
   report ffplay -t 6 doesn't stop bug
-  report ffplay -vol 1 doesn't work
   research XBMC
     break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
@@ -218,8 +220,7 @@
   research VOB dirs
     still needs timesplits? what about in XBMC? what about XBMC with DVD's
   @avisynth: 6 fps from 2? huh? also why are some progs [ffmpeg] seemingly resetting the graphedit pins? huh? also tell that one already logged bug how I work around it...
-  virtual audio TS's line up
-  sout-keep for VLC EDL'ish?
+  sout-keep for VLC EDL'ish or playlist?
   local cache volume_name -> dvd id's, in case that can speed things up
   check if some create buttons are now outdated...
   make it load faster! this is cuh-razy! or at least splash screen!

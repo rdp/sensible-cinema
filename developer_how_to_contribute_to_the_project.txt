@@ -33,6 +33,8 @@ $ jruby bin/sensible-cinema --help # tells you all available options
   
 Feedback/contribution welcome :)
 
+Ex: want JSON'ified output somehow? Just ask.
+
 == mac os x developers ==
 
 You'll have to install a few dependencies.  It will tell you which at runtime, 
