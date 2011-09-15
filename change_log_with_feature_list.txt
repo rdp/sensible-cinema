@@ -1,4 +1,4 @@
-== 0.27.1 ==
+== 0.28.0 ==
 
 Includes vendored support (experimental) for EDL playback via VLC via its internal libVLC control API
 includes parsing of srt files to detect subtitle profanity time, merging
