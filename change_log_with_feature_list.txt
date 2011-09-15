@@ -17,6 +17,9 @@ Also includes work toward a directshow DVD player employing its API's
 (in separate project) for playback/skipping/muting/pausing et al.
 and basically progammatic control of a playing back DVD player.
 
+example EDL with a tenseness metric by level
+example EDL with a tenseness metric by age commits
+
 == 0.26.2 ==
 
 Fix license acceptance code (quick redeploy).
