@@ -1,4 +1,4 @@
-== ==
+== 0.26.3 ==
 
 Make it so that it can modify timestamps from .srt files programmatically in order to ensure that time signatures match
 whichever player you're using now.
