@@ -7,6 +7,9 @@ Includes a means of coordinating across different time signatures based on start
 
 Had a git commit with an example pure JSON EDL, and several other mixed/mplayer compatible styles.
 
+NB that sensible cinema can use a directshow capture device and pin it to the location of a given window to be able to 
+stream/upconvert.
+
 == 0.26.2 ==
 
 Fix license acceptance code, quick redeploy.

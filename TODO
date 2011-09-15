@@ -53,6 +53,7 @@
     DVD test it (+- with others testing it for me too)
   releases that include Debug, python too :)
 
+  "open EDL" should save dir
   ri_for updatez
   subtitle -> url everywhere
   english name (movie name) mass everywhere
@@ -72,13 +73,13 @@
   test DVD upconv it at 720*x resolution too...
   EDL gottman
   EDL Greg's DVD's
-  srt/parsing manipulation buttons -> new window somehow [?]
+  opening/creating buttons -> new separate sub-window
   add a demo of conference "music video from local file"
   change upconvert options needs its own "close" button
     and status field?
   lightning strike from various outlets...
   accomodate splits vs. blanks and work everywhere
-  linearize: EDL with JSON on top, full timestamps. hmm...
+  linearize: full EDL with JSON on top, full timestamps. or something I like...
   add new open button "edit EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
   short list of todo's for screen capture
@@ -184,7 +185,7 @@
   add button "re-order srt"
   @makemkv: 
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
-    can I reproduce it this days?
+    can I reproduce it this days? double check OSOH, repost to forum
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
   add option "just skip don't mute always instead of muting"
   bounty/ask hqdn3d for ffmpeg
