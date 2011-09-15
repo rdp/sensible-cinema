@@ -7,9 +7,16 @@ Includes a means of coordinating across different time signatures based on start
 
 Had a git commit with an example pure JSON EDL, and several other mixed/mplayer compatible styles.
 
+Note that we have an optimized routine for taking screen captures so as to not
+use up as much cpu by sampling/doing them less frequently et all.
+
+Also includes work toward a directshow DVD player employing its API's
+(in separate project) for playback/skipping/muting/pausing et al.
+and basically progammatic control of a playing back DVD player.
+
 == 0.26.2 ==
 
-Fix license acceptance code, quick redeploy.
+Fix license acceptance code (quick redeploy).
 
 == 0.26.1 ==
 
