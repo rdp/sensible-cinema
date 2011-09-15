@@ -450,7 +450,7 @@ module SensibleSwing
       # 2 is cancel
       if returned == :no
         if license_url_should_also_be_embedded_by_you_in_message
-          system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}")
+          system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}") # guess this is url's too, eh?
           puts "Please restart after reading license agreement, to be able to then accept it."
         end
         System.exit 0
@@ -532,17 +532,9 @@ module SensibleSwing
           Click ok to be directed to its download website, where you can download and install it (recommend: MPUI....Full-Package.exe), 
           then restart sensible cinema.  NB that it takes awhile to install.  Sorry about that.", 
           "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/list?can=2&q=MPlayer&sort=-uploaded&colspec=Filename%20Summary%20Type%20Uploaded%20Size%20DownloadCount"
+          SwingHelpers.open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/list?can=2&q=MPlayer&sort=-uploaded&colspec=Filename%20Summary%20Type%20Uploaded%20Size%20DownloadCount"
           System.exit 0
         end
-      end
-    end
-    
-    def open_url_to_view_it_non_blocking url
-      if OS.windows?
-        system_non_blocking("start #{url.gsub('&', '^&')}") # LODO would launchy help/work here with the full url?
-      else
-        system_non_blocking "#{OS.open_file_command} \"#{url}\"" # LODO test
       end
     end
     
@@ -560,7 +552,7 @@ module SensibleSwing
     end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
-      bring_to_front
+      bring_to_front # LODO not need...
       JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
