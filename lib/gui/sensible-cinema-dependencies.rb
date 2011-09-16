@@ -5,6 +5,7 @@ require 'sane'
 module SensibleSwing
   
   class MainWindow < javax.swing.JFrame
+    
     def self.download full_url, to_here
       require 'open-uri'
       require 'openssl'

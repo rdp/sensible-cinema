@@ -10,3 +10,4 @@
 "name" => "The Last Airbender", 
 "url" => "http://movies.netflix.com/WiMovie/The_Last_Airbender/70119441?trkid=496624",
 "subtitle_url" => "http://www.engsub.net/97528/", 
+"tenseness_metric" => "99"
