@@ -344,6 +344,7 @@ module SensibleSwing
         'v' key: turn off subtitles.
         '.' key: step one frame.
          # key: change audio language track
+		 [ and ] make playback faster
       EOL
     end
     
