@@ -12,10 +12,9 @@
 #"0:29:20.82" , "0:29:23.53", "profanity", "idiot", "What [idiot] designed this thing",
 #"0:57:33.40" , "0:57:34.75", "profanity", "idiot", "[idiot]",
 
+],
 
 "blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
 "volume_name" => "MONSTERS_VS_ALIENS",
