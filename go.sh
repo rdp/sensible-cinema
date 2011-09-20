@@ -1,1 +1,1 @@
-jruby bin/sensible-cinema $1 $2 $3 $4 $5 # --create-mode just realize that most buttons in create mode probably don't work yet in os x
+jruby bin/sensible-cinema $1 $2 $3 $4 $5

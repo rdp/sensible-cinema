@@ -1,0 +1,33 @@
+# comments can go after a # on any line, for example this one.
+"name" => "monsters vs aliens",
+
+"mutes" => [
+
+"0:01:55.37" , "0:01:58.38", "profanity", "j....", "Holy [j....] what do we do No one ever told us what to do",
+"0:08:08.77" , "0:08:11.89", "profanity", "goodness", "Thank [goodness] I have wet wipes",
+"0:15:51.62" , "0:15:54.32", "profanity", "goodness", "Oh please [goodness] please tell me this isn't real",
+"0:53:55.81" , "0:53:58.41", "profanity", "goodness", "Oh my [goodness] Is that better",
+
+#"0:14:12.81" , "0:14:15.30", "profanity", "suck", "[suck] in Bob",
+#"0:29:20.82" , "0:29:23.53", "profanity", "idiot", "What [idiot] designed this thing",
+#"0:57:33.40" , "0:57:34.75", "profanity", "idiot", "[idiot]",
+
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "MONSTERS_VS_ALIENS",
+"disk_unique_id" => "69df400d|01558084",
+"dvd_title_track" => "9",
+# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+"subtitle_url" => "http://www.opensubtitles.org/en/subtitles/3968186/monsters-vs-aliens-en",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only...",
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+"mplayer_dvd_splits" => [],
+
+#Also add these two lines for later coordination:
+"beginning_subtitle" => ["Hey, Jerry.", "98.42"],
+"ending_subtitle_entry" => ["That two-timing jerk!", "5105.1"]],
