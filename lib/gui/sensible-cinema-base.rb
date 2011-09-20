@@ -223,7 +223,7 @@ module SensibleSwing
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
-       extra_options += " -font #{File.expand_path('subfont.ttf')} "
+       extra_options += " -font #{File.expand_path('vendor/subfont.ttf')} "
        extra_options += " -volume 100 " # why start low? mplayer why oh why LODO
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
