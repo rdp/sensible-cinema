@@ -168,14 +168,14 @@ module Win32
           hmemBM = create_compatible_bitmap(hScreenDC, w, h)
           select_object(hmemDC, hmemBM)
         #  p (SRCCOPY|CAPTUREBLT).to_s(16), 'hello'
-          bit_blt(hmemDC, 0, 0, w, h, hScreenDC, x1, y1, SRCCOPY|  CAPTUREBLT)
-          bitmap_size = w * h * 3 + w % 4 * h
+          bit_blt(hmemDC, 0, 0, w, h, hScreenDC, x1, y1, SRCCOPY)
+          bitmap_size = w * h * 3 + w % 4 * h # assumes 24 bit, funky math LOL
           lpvpxldata = FFI::MemoryPointer.new(bitmap_size)
 
           # Bitmap header
           # http://www.fortunecity.com/skyscraper/windows/364/bmpffrmt.html
           bmInfo = [40, w, h, 1, 24, 0, 0, 0, 0, 0, 0, 0].pack('L3S2L6')
-          di_bits(hmemDC, hmemBM, 0, h, lpvpxldata, bmInfo, DIB_RGB_COLORS)
+          di_bits(hmemDC, hmemBM, 0, h, lpvpxldata, bmInfo, DIB_RGB_COLORS) # converts to 24 bit here...
 
           bmFileHeader = [
                   19778,
@@ -184,8 +184,9 @@ module Win32
                   0,
                   54
           ].pack('SLSSL')
-
+p 'header length', bmFileHeader.size, 'info length', bmInfo.size, 'data length', lpvpxldata.read_string(bitmap_size).length
           bmp_data = bmFileHeader + bmInfo + lpvpxldata.read_string(bitmap_size)
+          p 'total', bmp_data.size
           yield(w, h, bmp_data)
         ensure
           lpvpxldata.free
