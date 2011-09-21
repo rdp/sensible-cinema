@@ -1,0 +1,41 @@
+# comments can go after a # on any line, for example this one.
+"name" => "monsters vs aliens",
+
+"mutes" => [
+
+"0:01:55.37" , "0:01:58.38", "profanity", "j....", "Holy [j....] what do we do No one ever told us what to do",
+"0:08:08.77" , "0:08:11.89", "profanity", "goodness", "Thank [goodness] I have wet wipes",
+"0:15:51.62" , "0:15:54.32", "profanity", "goodness", "Oh please [goodness] please tell me this isn't real",
+"0:53:55.81" , "0:53:58.41", "profanity", "goodness", "Oh my [goodness] Is that better",
+"00:14:51,280", "00:14:53,464", "profanity", "b....", "at his b.....s",
+"01:06:30,241", "01:06:37,209", "language", "bathroom humor", "code brown change my pants",
+
+
+#"0:29:20.82" , "0:29:23.53", "profanity", "idiot", "What [idiot] designed this thing",
+#"0:57:33.40" , "0:57:34.75", "profanity", "idiot", "[idiot]",
+ "1:27:15", "1:27:20", "profanity", "deity", "my [goodness]",
+ "1:14:05", "1:14:12", "profanity", "oh my [goodness]",
+ 
+],
+
+"blank_outs" => [
+ "0:22:08.84", "0:22:48.37", "innuendo", "kissing in car",
+],
+
+"black_outs" => [
+ "0:23:08.09", "0:23:12.94", "grotesque", "broken ankle",
+],
+
+"volume_name" => "MONSTERS_VS_ALIENS",
+"disk_unique_id" => "69df400d|01558084",
+"dvd_title_track" => "9",
+# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+"subtitle_url" => "http://www.opensubtitles.org/en/subtitles/3968186/monsters-vs-aliens-en", # right on...
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only...",
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+"mplayer_dvd_splits" => [],
+
+#Also add these two lines for later coordination:
+"beginning_subtitle" => ["Hey, Jerry.", "98.42"],
+"ending_subtitle_entry" => ["That two-timing jerk!", "5105.1"],
