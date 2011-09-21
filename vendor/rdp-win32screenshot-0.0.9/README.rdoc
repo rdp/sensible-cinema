@@ -1,0 +1,95 @@
+= Win32::Screenshot (old name win32screenshot)
+
+* http://github.com/jarmo/win32screenshot
+
+== DESCRIPTION
+
+Capture Screenshots on Windows with Ruby. This library captures
+screenshots in bmp format, but you may use RMagick to convert these to some
+other formats like png.
+
+== SYNOPSIS
+
+  require 'win32/screenshot'
+ 
+  # take a screenshot of the foreground window
+  Win32::Screenshot.foreground do |width, height, bmp|
+    File.open("picture1.bmp", "wb") {|file| file.puts bmp}
+  end
+
+  # take a screenshot of the area of the foreground where upper left x and y
+  # coordinates are 0 and 10, width is 100 and height is 200
+  Win32::Screenshot.foreground_area(0, 10, 100, 200) do |width, height, bmp|
+    File.open("picture2.bmp", "wb") {|file| file.puts bmp}
+  end
+
+  # take a screenshot of the screen
+  Win32::Screenshot.desktop do |width, height, bmp|
+    File.open("picture3.bmp", "wb") {|file| file.puts bmp}
+  end
+
+  # take a screenshot of the area of the desktop where upper left x and y
+  # coordinates are 0 and 10, width is 100 and height is 200
+  Win32::Screenshot.desktop_area(0, 10, 100, 200) do |width, height, bmp|
+    File.open("picture4.bmp", "wb") {|file| file.puts bmp}
+  end
+  
+  # take a screenshot of the window, which has a text part of it's title
+  Win32::Screenshot.window("Internet Explorer") do |width, height, bmp|
+    File.open("picture5.bmp", "wb") {|file| file.puts bmp}
+  end
+  
+  # take a screenshot of the window, which matches regexp against it's title
+  Win32::Screenshot.window(/Internet Explorer/) do |width, height, bmp|
+    File.open("picture6.bmp", "wb") {|file| file.puts bmp}
+  end
+
+  # take a screenshot of the area of the window where upper left x and y
+  # coordinates are 0 and 10, width is 100 and height is 200
+  Win32::Screenshot.window_area("Internet Explorer", 0, 10, 100, 200) do |width, height, bmp|
+    File.open("picture7.bmp", "wb") {|file| file.puts bmp}
+  end
+  
+  # take a screenshot of the window with specified window handle
+  Win32::Screenshot.hwnd(window_handle) do |width, height, bmp|
+    File.open("picture8.bmp", "wb") {|file| file.puts bmp}
+  end
+
+  # take a screenshot of the area of the window with a window handle
+  # where upper left x and y
+  # coordinates are 0 and 10, width is 100 and height is 200
+  Win32::Screenshot.hwnd_area(window_handle, 0, 10, 100, 200) do |width, height, bmp|
+    File.open("picture9.bmp", "wb") {|file| file.puts bmp}
+  end
+
+  # convert a screenshot to the png format with RMagick
+  require 'rmagick'
+  
+  Win32::Screenshot.hwnd(window_handle) do |width, height, bmp|
+    img = Magick::Image.from_blob(bmp)
+    png = img[0].to_blob {self.format = 'PNG'}
+    File.open("picture10.png", "wb") {|file| file.puts png}
+  end
+
+  #
+  # Win32::Screenshot has also some utility methods which can be used for various needs
+
+  # enumerate all windows and return their titles and handles
+  Win32::Screenshot::Util.all_windows # => [["title1", 2345], ["title2", 3456]]
+
+  # retrieve window title for the specified window handle
+  Win32::Screenshot::Util.window_title(2345) # => "title1"
+
+  # retrieve window handle for the specified title
+  Win32::Screenshot::Util.window_hwnd("title1") # => 2345
+
+  # title can be also a regular expression with first matching window retrieved
+  Win32::Screenshot::Util.window_hwnd(/tit.*1/) # => 2345
+
+  # retrive dimensions of a window with specified handle in an Array of [width, height]
+  # might be useful for using with different capture_area methods
+  Win32::Screenshot::Util.dimensions_for(2345) # => [100, 200]
+
+== Copyright
+
+Copyright (c) 2010 Jarmo Pertman, Aslak Hellesøy. See LICENSE for details.
