@@ -1,3 +1,8 @@
+== ==
+
+NB that we have auto-coordinating subtitle morphing software now
+to automagically align it with the actual audio/video tracks.
+
 == 0.28.0 ==
 
 Includes vendored support (experimental) for EDL playback via VLC via its internal libVLC control API

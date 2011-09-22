@@ -249,7 +249,7 @@ module SensibleSwing
           #c += " -close-at-end " # we're still too unstable, mate...
         end
       end
-      puts c 
+      puts c
       system_blocking c
     end
     
