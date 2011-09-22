@@ -30,6 +30,9 @@
     can "obscure" full frames [sections of frames] and/or "partial" frames or sections of frames (ex: lips, nudity)
     can add extra overlays of text (personalized subtitles, like)
     some tie in with blog posts
+      some tie in with google +/facebook for community viewing/editing/realtime collaboration/editing/vieweing.
+    track the audio noise level, use that to auto-scan for violence
+    use the descriptive captioing audio to discover violent scenes (she says "he hits her" or what not), or for other questionable scenes.
     ratings system, where users can rate based on various criteria/statistics, each EDL, and it aggregates them to display/obtain/use a sum rating metric
     can 'remove' or 'obscure' CC or subtitles deemed offensive
     it can pull in a DVD based just on the dvd-id "query id, not local? go get it from online to see if the list has been updated since"
