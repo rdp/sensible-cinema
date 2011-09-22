@@ -25,12 +25,10 @@
 == next things I was working on ==
   gui/edl parser unit tests work
   screen recording sintel
-  netflix instant CGI how crisp is their HD?
   Ben's DVD (hook)
 
 == yes do ordered for release/other projects ja  ==
   rubyinline :P
-  
   test out DVD upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
@@ -40,10 +38,17 @@
     maybe get it to work with say VLC full screen first?
   netflix upconvert
     after get DVD down
-  C player feedback message
+    after get hulu down
   nextsprocket...
 
 == yes do, un-ordered currently, from the various future release options ==
+  netflix instant CGI how crisp is their HD?
+  C player feedback message
+    convert to 29.97 [at least this]
+    just with the "next" frame button I guess...
+      test if I have the same problem...
+  popup_text in EDL's
+    speed racer
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer
@@ -57,6 +62,7 @@
   english name (movie name) mass everywhere
   handle gates of he.....
   ruby_prof stuff
+  !additive for mplayer_dvd_splits 
   warn other wordpresses
   test mplayer -vo gl at home
   add new batch file for play with netflix OCR

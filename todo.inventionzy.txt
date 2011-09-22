@@ -24,6 +24,8 @@
 	    and if it isn't already loaded, display an extra notice "forwarding" or what not.
 		and/or display some other overlay and or audio in place of the video or audio, or supplementing it.
     a video of "recording to broadcast it" (or save it one by one)
+    can parse a screenplay et al to look for violence/profanity/sex
+      can parse/detect "innuendo" based on natural language semantics, from subtitles et al.
     can "suck in" a large list of EDL's from imdb at build time, 
       and/or a "resync" button, to re-download just the list of updated EDL's/IMDB wiki settings [?]
     can handle multiple dvdid's et al (same EDL) (mostly done already)
