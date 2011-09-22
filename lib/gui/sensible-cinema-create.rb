@@ -322,7 +322,7 @@ module SensibleSwing
       # TODO auto-ify above, move docs to a file in documentation.
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
-      File.write(filename, input) unless File.exist?(filename) # lodo let them choose name (?)
+      File.write(filename, input) unless File.exist?(filename)
       open_file_to_edit_it filename
     end     
     

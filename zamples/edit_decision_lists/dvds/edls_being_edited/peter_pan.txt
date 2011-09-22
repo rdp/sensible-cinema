@@ -8,20 +8,20 @@
 ],
 
 "blank_outs" => [
- 
+ "2808.0", "2813.7", "violence", "gunshot wound",
+ "5086.0", "5089.0", "violence", "skewer",
+ "5602.7", "5605.4", "violence", "he was et", 
 ],
 
 "volume_name" => "PETER_PAN",
 "disk_unique_id" => "6dc655aa|7e23c7ba",
 "dvd_title_track" => "1",
-"dvd_title_track_length" => "6798.400"
+"dvd_title_track_length" => "6798.400",
 "subtitle_url" => "http://www.opensubtitles.org/en/subtitles/3345334/peter-pan-en",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
 "mplayer_dvd_splits" => [], 
-
-#"0:45:52.60" , "0:45:56.22", "profanity", "idiot", "I don't know what he wants but I'm just an [idiot] aren't I",
 
 
 #Also add these two lines for later coordination:
