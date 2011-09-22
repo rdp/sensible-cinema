@@ -150,10 +150,11 @@ module SubtitleProfanityFinder
 
     semi_bad_profanities = {}
     ['bloody', 'moron', 'breast', 'idiot', 
-      'sex', 'genital', 'make love', 
+      'sex', 'genital', 'boob', 'make love', 
       'making love', 'love mak', 
       'dumb', 'suck', 
-      'piss'].each{|name|
+      'piss'
+	  ].each{|name|
       # butter?
       semi_bad_profanities[name] = name
     }

@@ -76,18 +76,24 @@ module SensibleSwing
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
         
-        @show_parse_instructions ||= show_blocking_message_dialog "Now enter some values which will adjust the .srt time signatures\nso that it matches the movie more precisely.\nWe also need these values to coordinate it with other devices that may have different timestamps.\nFor DVD playback this will be the timestamps mplayer shows within the console window [the mplayer unedited button]."
         open_file_to_edit_it srt_filename
         sleep 0.5 # let it open first
-        bring_to_front
-        start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]", "...")
-        start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"", "00:00:00,000")
-        start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
+		bring_to_front
+ 
+		if JOptionPane.show_select_buttons_prompt('Would you like to enter timing adjust information on the .srt file? [final pass should, even if it matches]') == :yes
+          start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]", "...")
+          start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"", "00:00:00,000")
+          start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
         
-        end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie", "...")
-        end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"", "02:30:00,000")
-        end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
-        
+          end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie", "...")
+          end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"", "02:30:00,000")
+          end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
+        else
+		 start_srt = 0
+		 start_movie_ts =0
+		 end_srt = 1000
+		 end_movie_ts = 1000
+		end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
         File.write EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
           %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
