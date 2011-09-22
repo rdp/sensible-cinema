@@ -11,13 +11,14 @@ Jeweler::Tasks.new do |s|
     s.authors = ["Roger Pack"]
     s.add_dependency 'os', '>= 0.9.4'
     s.add_dependency 'sane', '>= 0.24.2'
-    s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
+    # vendored s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
     s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO
     s.add_dependency 'rdp-ruby-wmi' # for windows
     s.add_dependency 'plist' # for mac
-    s.add_dependency 'ffi' # mouse, etc. needed at least for windows MRI
+	# win32ole?
+    s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
     s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
     s.add_development_dependency 'hitimes' # now jruby compat!
     s.add_development_dependency 'rspec', '> 2'
