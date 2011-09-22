@@ -595,35 +595,11 @@ module SensibleSwing
       SwingHelpers.show_in_explorer filename
     end
     
-    def get_disk_chooser_window names
-      GetDisk.new(self, names)
-    end
 
   end
-
-  class GetDisk < JDialog
-    attr_reader :selected_idx
-    def initialize parent, options_array
-      super parent, true
-
-      box = JComboBox.new
-      box.add_action_listener do |e|
-        idx = box.get_selected_index
-        if idx != 0
-          # don't count choosing the first as a real entry
-          @selected_idx = box.get_selected_index - 1
-          dispose
-        end
-      end
-
-      box.add_item "Click to select DVD drive" # put something in index 0
-      options_array.each{|drive|
-        box.add_item drive
-      }
-      add box
-      pack # how do you get this arbitrary size? what the...
-    end
-  end
+  
+  
+  
 end
 
 # LODO move to sane :) also remove the andand dep.

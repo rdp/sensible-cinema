@@ -318,14 +318,11 @@ module SensibleSwing
 
       else
         dialog = get_disk_chooser_window names
-        dialog.setSize 200, 125
-        dialog.show
-        selected_idx = dialog.selected_idx
+        selected_idx = dialog.go
       end
       
-      if selected_idx
         if used_local_file_option
-          raise unless selected_idx == 0 # it was our only option...
+          raise unless selected_idx == 0 # it was our only option...they must have selected it!
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
           assert_ownership_dialog
           return [filename, File.basename(filename), NonDvd]
@@ -333,21 +330,21 @@ module SensibleSwing
           disk = opticals[selected_idx]
           out = show_non_blocking_message_dialog "calculating current disk's unique id...if this pauses more than 10s then clean your DVD..."
           begin
-		    dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+		        dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
           rescue Exception => e
-		    show_blocking_message_dialog e.to_s # todo a bit ugly...
-			raise
-		  ensure
-		    out.dispose
-		  end
+		        show_blocking_message_dialog e.to_s # todo a bit ugly...
+			      raise
+		      ensure
+		      out.dispose
+		      end
           @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
           return @_choose_dvd_drive_or_file
         end
-      else
-        raise 'did not select a drive...'
-      end
     end
 
+    def get_disk_chooser_window names
+      DropDownSelector.new(self, names, "Click to select DVD drive")
+    end
     
   end
 end
