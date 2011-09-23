@@ -19,7 +19,7 @@ require 'rubygems' # ugh
 require 'ffi'
 require 'sane'
 require_relative 'jruby-swing-helpers/mouse'
-require_relative 'play_audio'
+require_relative 'jruby-swing-helpers/play_audio'
 
 module Muter
   # from msdn on keybd_event ...
