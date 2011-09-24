@@ -62,6 +62,10 @@
   ri_for updatez
   add button "check if EDL has valid syntax" ?
   subtitle -> url everywhere
+  they need/want to realize it's for contribution, not just use...
+    ooh here's a good idea.  
+    force them to create any new EDL's on the wiki, and just read them, always, straight from there.
+    or some online gui thing, that would work too...prefer the latter
   english name (movie name) mass everywhere
   handle gates of he.....
   ruby_prof stuff
