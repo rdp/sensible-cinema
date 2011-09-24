@@ -1,0 +1,47 @@
+
+"mutes" => [
+ # an example line, uncomment the leading "#" to make it active
+# "0:16:38.333" , "0:16:42.873", "profanity", "da..", "you can bet your [a..] he's [da..] proud of his little brother",
+"0:32:50.800" , "0:32:52.643", "profanity", "goodness", "Oh [goodness]
+it's him",
+"0:38:19.367" , "0:38:22.473", "profanity", "goodness", "SPRITLE Oh
+[goodness] I'm gonna hull",
+"0:49:57.800" , "0:50:00.872", "profanity", "goodness", "Oh but the
+fans love it don't they They do [goodness] help them",
+"1:05:21.367" , "1:05:24.348", "profanity", "he..", "What Like [he..]
+they are",
+"1:11:57.367" , "1:12:01.008", "profanity", "goodness", "Oh my
+[goodness] did I just see that A rear single set jump into a
+
+flying kick",
+"1:17:05.467" , "1:17:09.609", "profanity", "goodness", "[goodness]
+you sound like Rex You wanna die like him too Will that
+
+make you happy",
+"1:21:59.234" , "1:22:01.111", "profanity", "goodness", "Oh my
+[goodness] Was that a ninja",
+"1:26:07.267" , "1:26:09.008", "profanity", "goodness", "Oh [goodness]
+Speed",
+"1:37:08.167" , "1:37:12.445", "profanity", "j....", "[j....] kid you
+can drive I haven't been thrown like that in years",
+"1:40:13.400" , "1:40:16.643", "profanity", "a..", "Your mother
+usually protects me from making an [a..] out of myself",
+"1:55:34.601" , "1:55:36.410", "profanity", "sh..", "Get that weak
+[sh..] off my track",
+],
+
+"blank_outs" => [
+ # an example line, uncomment the leading "#" to make it active
+ # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+ "00:16:37.0" , "00:16:41.0" , "profanity", "a..",
+# "00:16:40.0" , "00:16:41.0" , "profanity", "da..",
+],
+
+"volume_name" => "SPEED_RACER",
+"disk_unique_id" => "bc9ac14e|cb4231c9",
+"dvd_title_track" => "1", 
+# "dvd_title_track_length" => "6095", 
+# "opensubtitles_number" => "1234567",
+# "not edited out stuff" => "some violence left in...",
+# "closing thoughts" => "only did the...",
+# "mplayer_dvd_splits" => ["59:59", "1:04:59"], 

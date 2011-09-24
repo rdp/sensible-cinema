@@ -57,7 +57,10 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
 
+  popup text for EDL's
+
   ri_for updatez
+  add button "check if EDL has valid syntax" ?
   subtitle -> url everywhere
   english name (movie name) mass everywhere
   handle gates of he.....
@@ -86,6 +89,7 @@
   add new open button "edit EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
   short list of todo's for screen capture
+  @mplayer: Mutes on windows shtink
   "fix" mplayer EDL pausing (within the mplayer code itself)
     bounty it for now/test with latest ffmpeg et al, maybe on mac with source [?
   the open button should open in the "editing" EDL dir + save.

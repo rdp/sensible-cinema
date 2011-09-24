@@ -15,6 +15,7 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
+
 require 'sane'
 class EdlParser
 
@@ -345,4 +346,5 @@ if $0 == __FILE__
   require 'rubygems'
   require 'sane'
   p EdlParser.parse_file(*ARGV)
+  p 'parsed well'
 end
