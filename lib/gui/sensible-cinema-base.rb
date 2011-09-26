@@ -566,7 +566,7 @@ module SensibleSwing
     def show_non_blocking_message_dialog message, close_button_text = 'Close'
       bring_to_front
       # lodo NonBlockingDialog it can get to the top instead of being so buried...
-      NonBlockingDialog.new(message, close_button_text)
+      SwingHelpers.show_non_blocking_message_dialog message, close_button_text
     end
     
     include_class javax.swing.UIManager
@@ -595,37 +595,9 @@ module SensibleSwing
       SwingHelpers.show_in_explorer filename
     end
     
-
   end
   
-  
-  
 end
-
-# LODO move to sane :) also remove the andand dep.
-class String
-  def present?
-    length > 0
-  end
-end
-
-class NilClass
-  def present?
-    false
-  end
-end
-class Object
-  def present?
-    true
-  end
-end
-
-class Array
-  def present?
-    length > 0
-  end
-end
-
 
 class File
       def self.get_root_dir this_path
