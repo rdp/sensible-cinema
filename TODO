@@ -42,6 +42,8 @@
   nextsprocket...
 
 == yes do, un-ordered currently, from the various future release options ==
+  note...how to screen live movies :)
+  fix dropdown
   netflix instant CGI how crisp is their HD?
   C player feedback message
     convert to 29.97 [at least this]
@@ -57,8 +59,15 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
 
+  popup text for EDL's
+
   ri_for updatez
+  add button "check if EDL has valid syntax" ?
   subtitle -> url everywhere
+  they need/want to realize it's for contribution, not just use...
+    ooh here's a good idea.  
+    force them to create any new EDL's on the wiki, and just read them, always, straight from there.
+    or some online gui thing, that would work too...prefer the latter
   english name (movie name) mass everywhere
   handle gates of he.....
   ruby_prof stuff
@@ -86,6 +95,7 @@
   add new open button "edit EDL for current DVD"
   add "play at 1.5x speed" mplayer button, I guess
   short list of todo's for screen capture
+  @mplayer: Mutes on windows shtink
   "fix" mplayer EDL pausing (within the mplayer code itself)
     bounty it for now/test with latest ffmpeg et al, maybe on mac with source [?
   the open button should open in the "editing" EDL dir + save.
@@ -259,7 +269,7 @@
   "save to" -> same dir as "get from" yeah
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
   prompt something if the EDL is actually "empty" :)
-  already donated: sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac)
+  already donated: sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC
     todo: audacity, windirstat
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title trackfor automatically playing it right.
