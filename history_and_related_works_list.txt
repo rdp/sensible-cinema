@@ -100,3 +100,5 @@ Anydvd HD's "magic file replacement" for DVD's/blu-ray's
 RiffTrax allows for an audio "overlay" to a DVD playback, have their own player to coordinate the two.
 "fan subs" are edited subtitles, displayed overlaid on the original track/video
 Avatar DVD was released with an audio track that was "euphemized" of the profanity.
+
+BYU's Varsity theater used to edit movies, and show them.

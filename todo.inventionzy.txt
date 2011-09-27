@@ -14,6 +14,7 @@
       with several, or start one, end one, etc.
 	    allow for extra start time offset for videos, if netflix instant has any
     a way to integrate with cable TV, ex: "this show we know started at 1:01, and its offsets should be this after that point"
+    make it so an EDL can be "split" (or subtitles split, same way) so that it can span across multiple youtube videos that have been divided in some way.
     it can query the currently open browser window, check to see which movie it's playing, and auotmatically spawn off a correct player instance with EDL for that movie
       based on title or url.
     netflix "try this srt, does it match?" no "what about this one, now?"

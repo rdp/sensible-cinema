@@ -78,7 +78,7 @@
   remove those extra printf's for scanning for matching
   Ben's other DVD's
   template-ify for netflix too "create for netflix"
-    add netflix instant instructions,
+  add netflix instant instructions
   "note" competitor upconverters
   add a "record start stop" for screen capture
   that extra .5s DVD reports for file size...
@@ -182,10 +182,11 @@
   screen_capture TODO
 
 == DVD decide later to move up or down ==
-  A netflix instant "coordinator" so you can watch a movie while on the phone et al :P (/hulu etc.)
+  super subtitle parser watcher for netflix instant...like on-demand...
  
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  bounty qtcapture for ffmpeg LOL
+  A netflix instant "coordinator" so you can watch a movie while on the phone et al :P (/hulu etc.)
+  bounty qtcapture for ffmpeg LOL/fix VLC
   compare netflix instant HD to a blu-ray...same?
   split out the "dependency" codes
   more netflix instant timing
