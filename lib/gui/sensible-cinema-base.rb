@@ -34,9 +34,10 @@ end
 # shared
 require_relative '../jruby-swing-helpers/swing_helpers'
 require_relative '../jruby-swing-helpers/drive_info'
+require_relative '../jruby-swing-helpers/ruby_clip'
 
 # attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps, :RubyClip]
+for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
