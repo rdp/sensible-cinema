@@ -41,6 +41,7 @@
   nextsprocket...
 
 == yes do, un-ordered currently, from the various future release options ==
+  @ffplay: diagonal bug
   fix surveillance for dual cams.
     delete old files :P
       re-encode them to maybe -r 0.5 ?
