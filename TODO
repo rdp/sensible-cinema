@@ -2,6 +2,7 @@
 
   remember this stuff is all "oh gosh I have to do that too?" crud time, don't even want it.
     and "won't even be useful to people in the end so why bother?"
+    "just for fun"
   netflix
     upconv netflix
     mac'ify OCR/Mouse
@@ -40,6 +41,9 @@
   nextsprocket...
 
 == yes do, un-ordered currently, from the various future release options ==
+  fix surveillance for dual cams.
+    delete old files :P
+      re-encode them to maybe -r 0.5 ?
   note...how to screen live movies :)
   fix dropdown
   netflix instant CGI how crisp is their HD?
@@ -58,6 +62,7 @@
     DVD test it (+- with others testing it for me too)
 
   popup text for EDL's
+  inet22.net
 
   ri_for updatez
   add button "check if EDL has valid syntax" ?
@@ -83,6 +88,7 @@
   test DVD upconv it at 720*x resolution too...
   EDL gottman
   EDL Greg's DVD's
+  minor redcar tweaks
   opening/creating buttons -> new separate sub-window
   add a demo of conference "music video from local file"
   change upconvert options needs its own "close" button
