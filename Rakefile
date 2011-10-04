@@ -107,6 +107,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   root_distro =  "#{dir_out}/.."
   FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through somehow..
   FileUtils.cp_r(dir_out + '/template_bats/pc', root_distro) # the executable bit carries through somehow..
+  FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
   FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
   p 'created (still need to zips it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
@@ -167,12 +168,12 @@ task 'deploy' do
   p 'successfully deployed to sf! ' + cur_ver
 end
 
-task 'gem_release' do
-  FileUtils.rm_rf 'pkg'
-  Rake::Task["build"].execute
-  sys("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
-  FileUtils.rm_rf 'pkg'
-end
+# task 'gem_release' do
+#   FileUtils.rm_rf 'pkg'
+#   Rake::Task["build"].execute
+#   sys("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
+#   FileUtils.rm_rf 'pkg'
+# end
 
 def on_wbo command
   sys "ssh rdp@ilab1.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
@@ -189,7 +190,7 @@ task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependen
   p 'remember to run all the specs first!'
   raise unless system("git pull")
   raise unless system("git push origin master")
-  Rake::Task["gem_release"].execute
+  #Rake::Task["gem_release"].execute
   Rake::Task["zip"].execute
   Rake::Task["deploy"].execute
   Rake::Task["update wbo"].execute
