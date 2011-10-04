@@ -14,10 +14,10 @@ Jeweler::Tasks.new do |s|
     # vendored s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
-    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO
+    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with next release, though I can't remember why
     s.add_dependency 'rdp-ruby-wmi' # for windows
     s.add_dependency 'plist' # for mac
-	# win32ole?
+  	# jruby-win32ole?
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
     s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
     s.add_development_dependency 'hitimes' # now jruby compat!
@@ -67,6 +67,7 @@ def get_transitive_dependencies dependencies
   new_dependencies.flatten.uniq
 end
 
+desc 'clear_and_copy_vendor_cache'
 task 'clear_and_copy_vendor_cache' do
    system("rm -rf ../cache.bak")
    system("cp -r vendor/cache ../cache.bak") # for retrieval later
@@ -103,24 +104,37 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.mkdir_p dir_out
   FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
-  FileUtils.cp(Dir["#{dir_out}/template_bats/*.bat"], "#{dir_out}/..")
-  puts 'still not mac compatible OOTB'
-#  FileUtils.cp_r(dir_out + '/template_bats/mac', dir_out)
-  p 'created (still need to zip it) ' + dir_out
+  root_distro =  "#{dir_out}/.."
+  FileUtils.cp(Dir["#{dir_out}/template_bats/*.bat"], root_distro)
+  FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through somehow..
+  FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
+  p 'created (still need to zips it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
+end
+
+def set_executable_bit filename
+  FileUtils.chmod 0755, filename
 end
 
 def cur_ver
   File.read('VERSION').strip
 end
 
+def delete_now_packaged_dir name
+  FileUtils.rm_rf name
+end
+
+desc 'create *.zip,tgz'
 task 'zip' do
   name = 'sensible-cinema-' + cur_ver
-  raise unless File.directory? name
+  raise 'doesnt exist yet to zip?' unless File.directory? name
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
-  FileUtils.rm_rf name
-  p 'created ' + name + '.zip, and deleted its [from] folder'
+  raise unless system("tar -cvzf #{name}.tgz #{name}")
+  delete_now_packaged_dir name
+  p 'created ' + name + '.zip,tgz and deleted its [create from] folder'
 end
+
+
 
 def sys arg
  3.times { |n|

@@ -6,10 +6,10 @@
   netflix
     upconv netflix
     mac'ify OCR/Mouse
-  upconvert DVD
-  C EDL
   
   === non ordered/eventually (also add line items for them) ===
+    upconvert DVD
+    C EDL
     create a skype recorder
     netflix/skype "disable screen saver while running" program [?]
     linearize [?] hmm...
@@ -50,6 +50,7 @@
       re-encode them to maybe -r 0.5 ?
   note...how to screen live movies :)
   fix dropdown
+  note "netflix instant" on the www stuff once it works
   netflix instant CGI how crisp is their HD?
   C player feedback message
     convert to 29.97 [at least this]
