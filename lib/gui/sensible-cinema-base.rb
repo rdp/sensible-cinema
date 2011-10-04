@@ -31,17 +31,8 @@ class String
   end
 end
 
-# shared
+# a few I'll always need no matter what...
 require_relative '../jruby-swing-helpers/swing_helpers'
-require_relative '../jruby-swing-helpers/drive_info'
-require_relative '../jruby-swing-helpers/ruby_clip'
-
-# attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
-  autoload kls, "./lib/#{kls.to_s.snake_case}"
-end
-
-# a few I'll always need eventually...
 require_relative '../storage'
 require_relative '../edl_parser'
 require 'tmpdir'
@@ -50,6 +41,15 @@ require 'os'
 if OS.doze?
   autoload :WMI, 'ruby-wmi'
   autoload :EightThree, './lib/eight_three'
+end
+
+# attempt to load on demand...i.e. faster...
+for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
+  autoload kls, "./lib/#{kls.to_s.snake_case}"
+end
+
+for kls in [:PlayAudio, :RubyClip, :DriveInfo]
+  autoload kls, "./lib/jruby-swing-helpers/#{kls.to_s.snake_case}"
 end
 
 
@@ -166,7 +166,6 @@ module SensibleSwing
     end
     
     def run_smplayer_non_blocking *args
-      pp caller
       @background_thread = Thread.new {
         run_smplayer_blocking *args
       }
