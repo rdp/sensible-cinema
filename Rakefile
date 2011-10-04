@@ -149,7 +149,7 @@ def sys arg
 end
 
 task 'deploy' do
-  for suffix in [ '.zip', '.tgz']
+  for suffix in [ '.tgz', '.zip']
     name = 'sensible-cinema-' + cur_ver + suffix
     p 'copying to ilab'
     sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"

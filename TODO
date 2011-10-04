@@ -43,11 +43,11 @@
   nextsprocket...
 
 == yes do, un-ordered currently, from the various future release options ==
-
+  srt add option "pick coordinating one from the middle, or from the end?"
   @ffplay: diagonal bug
   fix surveillance for dual cams.
     delete old files :P
-      re-encode them to maybe -r 0.5 ?
+      re-encode them to maybe -r 0.5 high encoding? :P
   note...how to screen live movies :)
   fix dropdown
   note "netflix instant" on the www stuff once it works

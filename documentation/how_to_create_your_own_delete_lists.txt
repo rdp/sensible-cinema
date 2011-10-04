@@ -13,38 +13,36 @@ An edit list (currently) lists sections you want muted or skipped.  Here is an e
 "name" => "Greatest Story Ever Told",
 
 You can see more examples in the "edit decision list/dvds" folder: https://github.com/rdp/sensible-cinema/tree/master/zamples
-There are a few more specs not mentioned above, that you can have in there.
+There are a few other things you can have in there too.
 
 To create a new one, for a DVD, the steps typically look like this:
 
 open Sensible cinema (with "advanced--edit create mode...bat")
 
-insert your DVD, click "Create new edit list for DVD" button
+insert your DVD, click "Create new edit list for DVD" button (advanced/create mode).
 
-Now detect timestamps for questionable content (some buttons may help you here),
-add timestamps to this file, save it, and then test them to make sure they're accurate, using the various buttons.
+Then download a subtitle file for your movie, 
+Basically download a subtitle file for your DVD from opensubtitles.org or the like (if you can figure out how to navigate their site)
+then use the "advanced create" mode and have it parse the subtitle for profanities, using the "parse srt" button
 
-Note that you can also add timestamps then click "Watch DVD on computer realtime" to avoid having 
-to rip it to your hard drive ever.  This is slightly less accurate, but can be reasonably accurate.
-See also the "pointers" section, below.
+Current problem with it is it's not super user friendly yet (hopes to be at some point), requiring you to copy and paste values very carefully,
+and also when you synchronize the .srt file you can't actually do that easily with some DVD's (if you're using mplayer to play them), because of this weird
+PTS timestamp reset half way through, so that makes it hard to calculate timestamps, but not impossible.  I'm working on a player to make that easier for windows,
+for linux you can use mplayer's "on screen display" then just convert that timestamp from (the 30fps it is to 29.97 fps) using another of the buttons provided.
 
-A big helper is the "parse subtitle" button.
-Basically download a subtitle file for your DVD from opensubtitles.org
-Then check that its timestamp matches (Watch full DVD unedited mplayer button, compare with "V: 3600" type output with your .srt file)
-Then parse it for known profanities (parse a subtitle... button) and copy and paste the appropriate entries to your EDL.
-You can also generate your own (super accurate) subtitle .srt file by using the SubtitleEdit to parse them from (unencrypted) DVD or file,
-or avisynth can also extract subtitles.
+That gets you going, then you watch it and add any other "questionable" scenes to your EDL.
 
 For the rest of the buttons, just "mouse over"/"hover over" them for full descriptions of their potential uses.
 
-After you're done, you can submit your new edit list to the project 
-(so others can use it later) by using the Upload button and sending it as an attachment.
-Note also that if you know how, you could fork the code from github, commit changes, and 
-submit a pull request, as well (for example more edit lists, code changes, etc.)
-Email is probably easier though :)
+After you're done, you can submit your new edit list to us at sensible cinema
+(so others can use it later) by using the Upload button and sending an attachment, or send an attachment to rogerdpack@gmail.com
 
 A few pointers:
 
+  Some other helper programs like SubtitleEdit (windows) or jubler (multi-platform) might help with synchronizing the subtitles, 
+
+ You can also generate your own (super accurate) subtitle .srt file by using the SubtitleEdit to parse them from (unencrypted) DVD or file,
+   or avisynth can also extract subtitles.
  You can make several different "edit lists" per DVD, using different filenames.
     For example one might take out all profanity, and a second take out profanity and also remove all violence, or whatever.
     Basically different levels :)
@@ -58,12 +56,11 @@ A few pointers:
  Also note that you could also add your timing information to IMDB's parental guide wiki pages about movies.  
   This can help users of other than sensible cinema with editing their movies, or at least knowing the content.
   You can even add timestamps there.
- Also note that you don't need to "grab" the DVD to your hard drive to edit.  You can just 
+ Also note that you don't need to "grab" the DVD to your hard drive at all to edit.  You can just 
    watch it in smplayer with 'on-screen-display' enabled (o key), then convert the timestamps to 29.97 with the "convert timestamp"
    button (or watch it in a hardware DVD player with the same effect).
    You could also get a similar effect by setting up your EDL with its mplayer_dvd_splits http://goo.gl/yMfqX ,
    then use math and smplayer's timestamps to get the right timestamps.  See also the tooltip to the "convert timestamp" button.
- You could also edit the "video file" in basically any professional editor--they are usually pretty accurate to 29.97 fps, to get the edit timestamps.
-   Microsoft's editor actually doesn't work. PowerProducer (part of the powerdvd suite) does.  AVS Editor does.
-   You could use avidemux (set frame settings manually to "video" 24 fps if necessary) though video will be off, audio will be on.
  You could ask on the mailing list if somebody else could do the EDL for you, or offer to pay somebody there, I guess.
+ If you have watched a DVD with your hardware DVD player, then realize that the timestamps will probably be slightly off.
+    The DVD player has timestamps in "30 fps" while we use the (slightly more accurate) 29.97 fps for the EDL's, so use the convert button there.
