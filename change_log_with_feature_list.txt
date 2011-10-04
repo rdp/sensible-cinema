@@ -1,4 +1,4 @@
-== ==
+== 0.28.1 ==
 
 NB that we have auto-coordinating subtitle morphing software now
 to automagically align it with the actual audio/video tracks.
@@ -7,6 +7,8 @@ Note also that it's possible to actually programmatically set the master volume 
 (viz: Tron), see http://stackoverflow.com/questions/3249550/is-there-a-way-in-java-jna-to-set-the-master-system-volume-reliably-in-xpvi/7550110#7550110
 and/or set it per application, through Windows Vista+
 Also in XP: http://blogs.msdn.com/b/larryosterman/archive/2007/03/06/how-do-i-change-the-master-volume-in-windows-vista.aspx
+
+First attempt at mac friendly release.
 
 == 0.28.0 ==
 

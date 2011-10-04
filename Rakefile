@@ -149,20 +149,22 @@ def sys arg
 end
 
 task 'deploy' do
-  name = 'sensible-cinema-' + cur_ver + ".zip"
-  p 'copying to ilab'
-  sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
-  p 'creating sf shell'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
-  p 'creating sf dir'
-  begin
-    sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
-  rescue => ok_if_dir_already_existing
-    puts 'warning--dir already existing?' + ok_if_dir_already_existing.to_s
+  for suffix in [ '.zip', '.tgz']
+    name = 'sensible-cinema-' + cur_ver + suffix
+    p 'copying to ilab'
+    sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
+    p 'creating sf shell'
+    sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
+    p 'creating sf dir'
+    begin
+      sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
+    rescue => ok_if_dir_already_existing
+      puts 'warning--dir already existing?' + ok_if_dir_already_existing.to_s
+    end
+    p 'copying into sf from ilab'
+    sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
   end
-  p 'copying into sf from ilab'
-  sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
-  p 'successfully deployed to sf only! ' + cur_ver
+  p 'successfully deployed to sf! ' + cur_ver
 end
 
 task 'gem_release' do
