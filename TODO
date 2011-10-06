@@ -26,6 +26,7 @@
   
 == very next things I was working on ==
   gui/edl parser unit tests work
+    added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   screen recording sintel, see below
   distro work windows/mac
 
@@ -46,6 +47,7 @@
   ffplay diagonal bug
 
 == yes do, un-ordered currently, from the various future release options ==
+  advertise wait as pwait for windows/linux/cygwin :) I guess just one will do probably :)
   Linux port (call that good enough for usability on TV's...), should be...
   srt add option "pick coordinating one from the middle, or from the end?"
   @ffplay: diagonal bug

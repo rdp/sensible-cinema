@@ -87,7 +87,7 @@ module SensibleSwing
     def initialize be_visible = true
       super "Sensible-Cinema #{VERSION} (GPL)"
       force_accept_license_first
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # default is exit on close
+      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
       @buttons = []
       @panel.set_layout nil
