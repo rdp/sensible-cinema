@@ -3,12 +3,13 @@
   remember this stuff is all "oh gosh I have to do that too?" crud time, don't even want it.
     and "won't even be useful to people in the end so why bother?"
     "just for fun"
+    
   netflix
-    upconv netflix
     mac'ify OCR/Mouse
-  
+  upconvert DVD
+  upconvert Netflix
+
   === non ordered/eventually (also add line items for them) ===
-    upconvert DVD
     C EDL
     create a skype recorder
     netflix/skype "disable screen saver while running" program [?]
@@ -23,13 +24,14 @@
   
 == high prio like blocking bugs ==  
   
-== next things I was working on ==
+== very next things I was working on ==
   gui/edl parser unit tests work
-  screen recording sintel
+  screen recording sintel, see below
+  distro work windows/mac
 
 == yes do ordered for release/other projects ja  ==
   OSOH DVD timing for forum
-  test out DVD upscale
+  test out DVD style upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
     no super scale res necessary?
@@ -40,9 +42,11 @@
   netflix upconvert
     after get DVD down
     after get hulu down
-  nextsprocket...
+  nextsprocket...release as is :)
+  ffplay diagonal bug
 
 == yes do, un-ordered currently, from the various future release options ==
+  Linux port (call that good enough for usability on TV's...), should be...
   srt add option "pick coordinating one from the middle, or from the end?"
   @ffplay: diagonal bug
   fix surveillance for dual cams.
@@ -597,7 +601,6 @@ with VLC/youtube non full screen, it does the annoying mouse thing needlessly (w
 
 the muting currently is so togglesy...if VLC ever fixes itself, fix this! 
 
-Linux port (call that good enough for usability on TV's...), should be...
 
 blanker outer with user specifiable color
   better default color?

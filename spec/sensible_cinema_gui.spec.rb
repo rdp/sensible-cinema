@@ -337,6 +337,8 @@ module SensibleSwing
     end
     
     it "if the .done files exists, do_copy... should just call smplayer ja" do
+      require 'tracer'
+#      Tracer.on
       FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done"
       @subject.do_create_edited_copy_via_file(false, true, true).should == [true, "selected_file.fulli_unedited.tmp.mpg"]
     end

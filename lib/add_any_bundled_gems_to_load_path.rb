@@ -17,9 +17,10 @@ This file is part of Sensible Cinema.
 =end
 
 def add_any_bundled_gems_to_load_path
-  raise 'no vendor dir?' unless File.directory? 'vendor'
-  if File.directory? 'vendor/cache'
-    Dir['vendor/**/lib'].sort.reverse.each{|lib_dir| # prefers newer versioned copies of gems in case I have duplicates
+  vendor_dir = File.dirname(__FILE__) +  '/../vendor'
+  raise 'no vendor dir?' unless File.directory?(vendor_dir)
+  if File.directory? vendor_dir + '/cache'
+    Dir[vendor_dir + '/**/lib'].sort.reverse.each{|lib_dir| # prefers newer versioned copies of gems in case I have duplicates
       $: << lib_dir
     }
   else
