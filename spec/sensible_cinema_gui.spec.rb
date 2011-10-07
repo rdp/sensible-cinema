@@ -157,7 +157,8 @@ module SensibleSwing
     end
     
     after do
-      Thread.join_all_others
+      # too dangerous...if it ever joins on a swing thread lights out!
+      #Thread.join_all_others
       FileUtils.rm_rf EdlParser::EDL_DIR
       Dir.mkdir EdlParser::EDL_DIR
     end

@@ -4,8 +4,9 @@
     and "won't even be useful to people in the end so why bother?"
     "just for fun"
     
-  netflix
+  netflix instant
     mac'ify OCR/Mouse
+
   upconvert DVD
   upconvert Netflix
 
@@ -20,33 +21,32 @@
     no propaganda...
     no auto subtitle downloads...
     fix VLC dvdnav itself +- mplayer DVD EDL
-    fix mplayer broken DVD EDL
   
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  screen recording sintel, see below
   distro work windows/mac
 
 == yes do ordered for release/other projects ja  ==
   OSOH DVD timing for forum
-  test out DVD style upscale
-    real "screen record" of upconverting sintel, see if it shows a difference
-      see if I need to fix my capturer...
-    no super scale res necessary?
       
   netflix instant descriptor for OS X/work at all
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
-  netflix upconvert
-    after get DVD down
-    after get hulu down
   nextsprocket...release as is :)
   ffplay diagonal bug
 
 == yes do, un-ordered currently, from the various future release options ==
+  test out DVD style upscale
+    real "screen record" of upconverting sintel, see if it shows a difference
+      see if I need to fix my capturer...
+    no super scale res necessary?
+  netflix upconvert
+    after get DVD down
+    after get hulu down
+  screen recording sintel, see below
   advertise wait as pwait for windows/linux/cygwin :) I guess just one will do probably :)
   Linux port (call that good enough for usability on TV's...), should be...
   srt add option "pick coordinating one from the middle, or from the end?"
