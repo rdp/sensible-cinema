@@ -37,6 +37,9 @@
     it may need the "50% adjuster" fella...
   nextsprocket...release as is :)
   ffplay diagonal bug
+  gstreamer backtrace
+  deploy nextsprocket
+  VLC bug report FLAC
 
 == yes do, un-ordered currently, from the various future release options ==
   test out DVD style upscale
