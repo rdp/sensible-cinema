@@ -25,21 +25,18 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
+
+== yes do ordered for release/other projects ja  ==
+  ffplay diagonal bug
+  gstreamer backtrace
+  ramiro
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   distro work windows/mac
-
-== yes do ordered for release/other projects ja  ==
   OSOH DVD timing for forum
-      
   netflix instant descriptor for OS X/work at all
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
-  nextsprocket...release as is :)
-  ffplay diagonal bug
-  gstreamer backtrace
-  deploy nextsprocket
-  VLC bug report FLAC
 
 == yes do, un-ordered currently, from the various future release options ==
   test out DVD style upscale
@@ -202,7 +199,10 @@
 
 == DVD decide later to move up or down ==
   super subtitle parser watcher for netflix instant...like on-demand...
- 
+  spork
+  VLC fixes
+  ruby-debug sampler
+
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
   A netflix instant "coordinator" so you can watch a movie while on the phone et al :P (/hulu etc.)
   bounty qtcapture for ffmpeg LOL/fix VLC
