@@ -1,0 +1,20 @@
+"name" => "condor man widescreen",
+
+"mutes" => [
+  # "0:11:29.0", "0:11:35.0", "lewd comment",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "CONDOR_MAN_LB_PROJECT",
+"disk_unique_id" => "7cde4a1b|6c57c31e",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+# "subtitle_url" => "1234567", # has none that I could find...
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only...",
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+"mplayer_dvd_splits" => [], 
