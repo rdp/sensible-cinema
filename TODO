@@ -27,9 +27,10 @@
 == very next things I was working on ==
 
 == yes do ordered for release/other projects ja  ==
+  ffmpeg add subs
+  fix dirt :)
   ffplay diagonal bug
   gstreamer backtrace
-  ramiro
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   distro work windows/mac
