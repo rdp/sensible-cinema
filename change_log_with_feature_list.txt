@@ -3,9 +3,6 @@
 NB that you can run VobSub Ripper to extract subtitles from DVD's, then use
 those for editing purposes, without ever extracting images/video from the DVD.
 
-
-== 0.28.1 ==
-
 NB that we have auto-coordinating subtitle morphing software now
 to automagically align it with the actual audio/video tracks.
 
