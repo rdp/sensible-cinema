@@ -13,6 +13,8 @@ Also in XP: http://blogs.msdn.com/b/larryosterman/archive/2007/03/06/how-do-i-ch
 
 First attempt at mac friendly release.
 
+Also has normal "user ratings" like x stars out of y.
+
 == 0.28.0 ==
 
 Includes vendored support (experimental) for EDL playback via VLC via its internal libVLC control API

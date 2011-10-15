@@ -8,7 +8,6 @@
  "10:26", "10:36", "some lewd'ish dancing",
 ],
 
-
 # TODO add other side:
 # "disk_unique_id" => "e75236da|39c26c9b", # CONDOR_MAN_FF_PROJECT
 "volume_name" => "CONDOR_MAN_LB_PROJECT",
