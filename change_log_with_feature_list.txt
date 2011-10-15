@@ -15,6 +15,10 @@ First attempt at mac friendly release.
 
 Also has normal "user ratings" like x stars out of y.
 
+Added also an example of "binding" or "associating" it with various review sites online/information sites about the DVD.
+
+Also "could" use opensubtitles to auto-download subtitles, test with or without user feedback, and/or parse.
+
 == 0.28.0 ==
 
 Includes vendored support (experimental) for EDL playback via VLC via its internal libVLC control API
