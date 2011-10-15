@@ -25,8 +25,11 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
+  mac release
+  unit tests
+  
+== yes do ordered for this release/other projects ja  ==
 
-== yes do ordered for release/other projects ja  ==
   ffmpeg add subs
   fix dirt :)
   ffplay diagonal bug
