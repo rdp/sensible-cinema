@@ -1,4 +1,4 @@
-== ==
+== 0.28.{1,2} ==
 
 NB that you can run VobSub Ripper to extract subtitles from DVD's, then use
 those for editing purposes, without ever extracting images/video from the DVD.

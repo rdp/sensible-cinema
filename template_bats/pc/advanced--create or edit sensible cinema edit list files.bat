@@ -1,1 +1,2 @@
-@"RUN SENSIBLE CINEMA CLICK HERE.bat" --create-mode
+@cd ..
+@"RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat" --create-mode

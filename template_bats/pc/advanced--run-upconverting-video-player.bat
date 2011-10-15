@@ -1,1 +1,2 @@
-@"RUN SENSIBLE CINEMA CLICK HERE.bat" --upconvert-mode
+@cd ..
+@"RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat" --upconvert-mode
