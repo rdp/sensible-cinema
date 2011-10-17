@@ -23,4 +23,7 @@
 
 "not edited out stuff" => "some cyborg violence",
 "probable rating" => "still pg, age about 10",
-#"mplayer_dvd_splits" => ["1:19:09"] # inaccurate slightly
+#"mplayer_dvd_splits" => ["1:19:09"] # inaccurate slightly, needs to be fixed...
+"imdb_url" => "http://www.imdb.com/title/tt1104001",
+"various_review_urls" => ["http://www.imdb.com/title/tt1104001", "http://www.kids-in-mind.com/t/tronlegacy.htm", "http://www.commonsensemedia.org/movie-reviews/tron-legacy"],
+"info_urls" => ["http://www.dvdxml.com/download/view.php?xml_id=91520"],

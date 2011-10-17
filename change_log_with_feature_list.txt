@@ -1,10 +1,8 @@
-== ==
+== 0.28.{1,2} ==
 
 NB that you can run VobSub Ripper to extract subtitles from DVD's, then use
 those for editing purposes, without ever extracting images/video from the DVD.
-
-
-== 0.28.1 ==
+run vsrip, choose F:\VIDEO_TS\VTS_01_0.IFO
 
 NB that we have auto-coordinating subtitle morphing software now
 to automagically align it with the actual audio/video tracks.
@@ -15,6 +13,12 @@ and/or set it per application, through Windows Vista+
 Also in XP: http://blogs.msdn.com/b/larryosterman/archive/2007/03/06/how-do-i-change-the-master-volume-in-windows-vista.aspx
 
 First attempt at mac friendly release.
+
+Also has normal "user ratings" like x stars out of y.
+
+Added also an example of "binding" or "associating" it with various review sites online/information sites about the DVD.
+
+Also "could" use opensubtitles to auto-download subtitles, test with or without user feedback, and/or parse.
 
 == 0.28.0 ==
 

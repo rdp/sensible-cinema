@@ -28,6 +28,15 @@
   undefined method `go' for #<SwingHelpers::DropDownSelector:0x4ea20232>
 
 == yes do ordered for release/other projects ja  ==
+  mac release
+  unit tests
+  ffmpeg call out to system
+  @todo: different speeded up overlay videos, edited overlay videos themselves (meta), plus or minus edited audio overlays, +- sped up et al.
+    also can super impose audiobooks et al.
+  
+== yes do ordered for this release/other projects ja  ==
+  note some better than others blog
+  
   ffmpeg add subs
   fix dirt :)
   ffplay diagonal bug
@@ -45,6 +54,7 @@
 == yes do, un-ordered currently, from the various future release options ==
   real mac app
   use more modern mplayer with smplayer...
+  fix 2 broken EDL's
   test out DVD style upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
@@ -78,6 +88,7 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
 
+  add custom profanity option
   popup text for EDL's
   inet22.net
   screencast for creating using srt [after it's user friendly?]

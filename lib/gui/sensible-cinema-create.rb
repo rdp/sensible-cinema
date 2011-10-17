@@ -72,6 +72,9 @@ module SensibleSwing
 
       @parse_srt.on_clicked do
         srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
+		if(srt_filename =~ /utf16/)
+		  show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't parse"
+	    end
         # TODO nuke
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
