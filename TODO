@@ -25,6 +25,7 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
+  undefined method `go' for #<SwingHelpers::DropDownSelector:0x4ea20232>
 
 == yes do ordered for release/other projects ja  ==
   ffmpeg add subs
@@ -39,8 +40,11 @@
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
   ask msdn single source capture
+  meta domain
 
 == yes do, un-ordered currently, from the various future release options ==
+  real mac app
+  use more modern mplayer with smplayer...
   test out DVD style upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...

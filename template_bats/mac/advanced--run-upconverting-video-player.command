@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-"./RUN SENSIBLE CINEMA CLICK HERE.sh" --upconvert-mode
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+"$DIR/RUN SENSIBLE CINEMA CLICK HERE.command" --upconvert-mode
