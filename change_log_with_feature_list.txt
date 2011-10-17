@@ -1,3 +1,7 @@
+== 0.28.3 ==
+
+Fix typo.  Small other notes added.
+
 == 0.28.{1,2} ==
 
 NB that you can run VobSub Ripper to extract subtitles from DVD's, then use
