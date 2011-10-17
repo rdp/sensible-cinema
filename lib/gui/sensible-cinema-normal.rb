@@ -315,12 +315,10 @@ module SensibleSwing
          show_blocking_message_dialog "Please insert a disk first"
          raise 'inset disk'
        end
-
       else
         dialog = get_disk_chooser_window names
-        selected_idx = dialog.go
+        selected_idx = dialog.go_selected_index
       end
-      
         if used_local_file_option
           raise unless selected_idx == 0 # it was our only option...they must have selected it!
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")

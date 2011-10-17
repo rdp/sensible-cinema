@@ -10,7 +10,7 @@
   upconvert DVD
   upconvert Netflix
 
-  === non ordered/eventually (also add line items for them) ===
+  === non ordered/eventually (also add line items for these) roadmaps ===
     C EDL
     create a skype recorder
     netflix/skype "disable screen saver while running" program [?]
@@ -25,10 +25,8 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
-  undefined method `go' for #<SwingHelpers::DropDownSelector:0x4ea20232>
 
 == yes do ordered for release/other projects ja  ==
-  mac release
   unit tests
   ffmpeg call out to system
   @todo: different speeded up overlay videos, edited overlay videos themselves (meta), plus or minus edited audio overlays, +- sped up et al.
