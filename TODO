@@ -28,9 +28,6 @@
 
 == yes do ordered for release/other projects ja  ==
   unit tests
-  ffmpeg call out to system
-  @todo: different speeded up overlay videos, edited overlay videos themselves (meta), plus or minus edited audio overlays, +- sped up et al.
-    also can super impose audiobooks et al.
   
 == yes do ordered for this release/other projects ja  ==
   note some better than others blog

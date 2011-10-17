@@ -88,6 +88,15 @@
     maybe could just "play from x to y" [no exclude info?] instead of "here are the bad parts"
     stage one: query, auto-download when they hit a netflix movie of some type
       stage two: chrome plugin for the same, auto-detect, auto-user, auto-download, auto-watch edited :)
-    can insert deleted scenes et al [even external scenes :P] (already showed it somewhat)
+    can insert deleted scenes et al [even external scenes :P] (already showed it able to even do this somewhat)
+    can overlay with an alpha transparent other video, which video is sped up from its original form.
+      or which video is itself edited for content, or displayed with realtime content editing/edited movies.
+         it can overlay with enhanced/modified "other video image" files.
+      it can overlay audiobooks
+        it can overlay it with edited audiobooks/sped up/modified somehow audiobooks
+   it can "enhance" movies, like sharpen them, magnify, zoom, et al   
+   it can jump/insert a pre-recorded"clean" version of a certain scene.
+    
     many others were already completed and done from this list and removed
     there are some more ideas in the TODO file itself, and/or on the blog sites where I have posted other ideas too
+    
