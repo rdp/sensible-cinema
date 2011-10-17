@@ -30,23 +30,19 @@
   unit tests
   
 == yes do ordered for this release/other projects ja  ==
-  note some better than others blog
-  
   ffmpeg add subs
   fix dirt :)
   ffplay diagonal bug
   gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  distro work windows/mac
   OSOH DVD timing for forum
   netflix instant descriptor for OS X/work at all
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
-  ask msdn single source capture
-  meta domain
 
 == yes do, un-ordered currently, from the various future release options ==
+  meta domain
   real mac app
   use more modern mplayer with smplayer...
   fix 2 broken EDL's
