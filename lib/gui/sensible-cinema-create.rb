@@ -19,7 +19,6 @@ module SensibleSwing
       @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
         times = get_start_stop_times_strings
         times.map!{|t| EdlParser.translate_string_to_seconds t}
-        times.map!{|t| ConvertThirtyFps.from_twenty_nine_nine_seven t}
         start_time = times[0]
         end_time = times[1]
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]

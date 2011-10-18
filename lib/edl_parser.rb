@@ -259,7 +259,7 @@ class EdlParser
      p 'failed!', s
      raise e
     end
-    raise unless seconds =~ /^\d+(|[,.]\d+)$/
+    raise 'failed to parse?' + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
     seconds.gsub!(',', '.')
     total += seconds.to_f
     minutes = s.split(":")[-2] || "0"

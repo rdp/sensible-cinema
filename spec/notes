@@ -8,6 +8,8 @@ curious george 2 http://movies.netflix.com/WiPlayer?trkid=805148&movieid=7013048
 
 if you pass it -ss 1:00:00 it seeks to 3604, i.e. it seeks I think to the 30 fps spot :P
 
+But that's just with dvd:// with dvanav:// it seems to be right on...maybe it has smart seeking in it or something?
+
 == netflix upscale notes ==
 
   netflix :width=>657 for "HD" that said it was playing in HD, eh? ... hmm...
