@@ -11,7 +11,7 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer)")
       @mplayer_edl.on_clicked {
-        play_mplayer_edl_non_blocking nil, [], true, false
+        play_mplayer_edl_non_blocking nil, [], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
       }
     
       add_text_line 'Realtime/Create Options:'
