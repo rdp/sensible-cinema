@@ -106,7 +106,7 @@ describe EdlParser do
 
   end
   
-  it "should parse mplayer_dvd_splits as floats" do
+  it "should parse mplayer_dvd_splits as strings" do
     E.parse_string('"mplayer_dvd_splits" => []', 'fakename')['mplayer_dvd_splits'].should == []
     E.parse_string('"mplayer_dvd_splits" => ["123.5","124.5"]', 'fakename')['mplayer_dvd_splits'].should == ["123.5","124.5"]
   end

@@ -377,7 +377,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true
+    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly
@@ -392,14 +392,13 @@ module SensibleSwing
       end
       
       if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS') # VOB's...always start at 0
-        # check if starts offset...
-        all =  `ffmpeg -i "#{drive_or_file}" 2>&1`
-        # Duration: 01:35:49.59, start: 600.000000
+        # check if it has a start offset...
+        all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
         if start > 1 # LODO huh? dvd's themselves start at 0.3 [sintel]?
           show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
-            maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
+            maybe not compatible with XBMC, if that's what you use, and you probably don't" # LODO test it XBMC...
           start_add_this_to_all_ts = start
         end
         splits = []
@@ -407,12 +406,15 @@ module SensibleSwing
         if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
           splits = []
+        else
+          # make additive :)
+          previous = 0
+          splits.map!{|s| current = EdlParser.translate_string_to_seconds(s) + previous; previous = current; current }
         end
       end
       
       if edl_path
-        splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
