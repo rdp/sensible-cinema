@@ -49,7 +49,7 @@ describe EdlParser do
    E.parse_string(string, nil).should == expected
   end
   
-  it "should disallow full digits" do
+  it "should disallow full digits only" do
     proc {E.parse_string(%!"mutes" => ["1234", "1235", "profanity", "yo"]!, nil) }.should raise_exception SyntaxError    
     proc {E.parse_string(%!"mutes" => ["0.0", "1.1", "profanity", "yo"]!, nil) }.should_not raise_exception    
     proc {E.parse_string(%!"mutes" => ["0.0", "1.1", "profanity", "yo", "1234", "1235", "bad entry"]!, nil) }.should raise_exception SyntaxError    
@@ -88,29 +88,30 @@ describe EdlParser do
   it "should be able to use personal preferences to decide which edits to make" do
    out = <<-EOL
       "mutes" => [
-      "00:10", "00:15", "test category", "1",
-      "00:20", "00:25", "test category", "2",
-      "00:30", "00:35", "test category", "3"
+      "00:10", "00:15", "test category", "cat1",
+      "00:20", "00:25", "test category", "cat2",
+      "00:30", "00:35", "test category", "cat3"
       ]
     EOL
     parsed = E.parse_string out, nil
     parsed["mutes"].length.should == 3 # has all of them
 
     1.upto(2) do |n|
-      parsed = E.parse_string(out, nil, [["test category", n.to_s]] )
+      parsed = E.parse_string(out, nil, [["test category", "cat" + n.to_s]] )
       parsed["mutes"].length.should == 2 # excludes one
     end
-    parsed = E.parse_string(out, nil, [["test category", "1"], ["test category", "2"]] )
+    parsed = E.parse_string(out, nil, [["test category", "cat1"], ["test category", "cat2"]] )
     parsed["mutes"].length.should == 1 # excludes two
 
     # now with...just saying "this entire category is fine"
     parsed = E.parse_string(out, nil, [["test category"]])
     parsed["mutes"].length.should == 0
 
-    # now with...just saying "levels below this are ok"
-    parsed = E.parse_string(out, nil, [["test category", 2]])
-    parsed["mutes"].length.should == 2
-
+    pending do
+      # now with...just saying "levels below this are ok"
+      parsed = E.parse_string(out, nil, [["test category", 2]])
+      parsed["mutes"].length.should == 2
+    end
   end
   
   it "should parse mplayer_dvd_splits as strings" do
@@ -165,8 +166,8 @@ describe EdlParser do
     go({ "blank_outs"=>{5=>10}, "mutes" => {103=>110}}, 0, 0, [100]).should == [[2.0, 11.0, :blank]]
   end
   
-  it "should accomodate well for multiples, and zero" do
-    go({ "mutes"=>{5=>10, 75 => 76, 101 => 102}}, 0, 0, [50, 100]).should == 
+  it "should accomodate well for multiple mplayer_dvd_splits, and one edge case [zero]" do
+    go({ "mutes"=>{5=>10, 75 => 76, 101 => 102}}, 0, 0, [50, 50]).should == 
       [[0.0, 4.0, :mute], [5.0, 10.0, :mute], [24.0, 27.0, :mute]]
   end
   

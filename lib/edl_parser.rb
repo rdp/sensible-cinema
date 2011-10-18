@@ -120,7 +120,7 @@ class EdlParser
     raw
   end
   
-  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though disabled for production
+  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though not used in production
   def self.convert_to_timestamp_arrays array, ok_categories_array
     out = []
     while(single_element = extract_entry!(array))
