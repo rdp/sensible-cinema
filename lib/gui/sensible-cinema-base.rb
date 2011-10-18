@@ -407,9 +407,7 @@ module SensibleSwing
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
           splits = []
         else
-          # make additive :)
-          previous = 0
-          splits.map!{|s| current = EdlParser.translate_string_to_seconds(s) + previous; previous = current; current }
+          splits.map!{|s| EdlParser.translate_string_to_seconds(s)}
         end
       end
       

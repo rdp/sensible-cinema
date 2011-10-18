@@ -205,8 +205,11 @@ class EdlParser
     raise if subtract_this_from_beginnings < 0
     raise if add_this_to_all_ends < 0
     if splits != []
-      # allow it to do all the double checks we later skip, just in case :)
-      self.convert_incoming_to_split_sectors incoming
+      # allow it to do all the double checks we later skip, just for sanity :)
+      self.convert_incoming_to_split_sectors incoming, 0, 0, []
+      # make them additive now...
+      previous = 0
+      splits = splits.map{|s| current = s + previous; previous = current; current}
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}

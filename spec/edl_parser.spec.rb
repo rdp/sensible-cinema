@@ -18,6 +18,8 @@ This file is part of Sensible Cinema.
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/edl_parser'
 
+# MplayerEdl spec also exercises this pretty good...
+
 describe EdlParser do
   
   E = EdlParser
@@ -27,17 +29,22 @@ describe EdlParser do
   end
   
   it "should get mutes and blank_outs" do
-   string = File.read(__DIR__ + "/../zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt")
+    string = <<-EOL
+      "mutes" => [
+        "00:00:01", "00:00:02",
+        "00:00:01", "00:00:02", "profanity", "dang",
+      ],
+      "blank_outs" => [
+        "01:01:00", "01:02:00", "nudity", "...",
+      ],
+      "missing_content" => "some stuff"
+    EOL
    expected = 
    {
     "mutes"=>[["00:00:01", "00:00:02"], 
-    ["00:00:01", "00:00:02", "profanity", "dang"], 
-    ["01:01:00", "01:02:00"]], 
-    "blank_outs"=>[["01:01:00", "01:02:00", "nudity", "..."], ["00:03:03.5", "00:03:04.5"]], 
-    "missing_content"=>"this doesn't list some mild name calling", 
-    "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
-    "whatever_else_you_want"=>"this is the old version of the film",
-    "disk_unique_id"=>"1234|4678"
+    ["00:00:01", "00:00:02", "profanity", "dang"]], 
+    "blank_outs"=>[["01:01:00", "01:02:00", "nudity", "..."], ], 
+    "missing_content"=>"some stuff", 
    }
    E.parse_string(string, nil).should == expected
   end
