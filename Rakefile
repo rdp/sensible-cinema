@@ -149,6 +149,7 @@ def sys arg
  raise arg + ' failed 3x!'
 end
 
+desc 'deploy to sourceforge'
 task 'deploy' do
   for suffix in [ '.zip', '.tgz']
     name = 'sensible-cinema-' + cur_ver + suffix
