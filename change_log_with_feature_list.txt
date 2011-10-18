@@ -1,3 +1,7 @@
+== 0.28.4 ==
+
+Add button for "fast preview" with mplayer.  Attempt simplify UI.
+
 == 0.28.3 ==
 
 Fix typo.  Small other notes added.
