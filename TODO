@@ -4,9 +4,7 @@
     and "won't even be useful to people in the end so why bother?"
     "just for fun"
     
-  netflix instant
-    mac'ify OCR/Mouse
-
+  netflix instant go live/mac
   upconvert DVD
   upconvert Netflix
 
@@ -19,35 +17,35 @@
     LLC
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
-    no auto subtitle downloads...
+    no auto subtitle downloaders...
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
 
-== yes do ordered for release/other projects ja  ==
-  unit tests
-  
 == yes do ordered for this release/other projects ja  ==
   ffmpeg add subs
   advertise to my ML 'wurx in mac' :)
   fix dirt :)
-    delete old files :P
-      re-encode them to maybe -r 0.5 high encoding? :P
+  background thread { delete or re-encode them to maybe -r 0.5 high compression }
   ffplay diagonal bug
   gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   OSOH DVD timing for forum
-  netflix instant descriptor for OS X/work at all
-    maybe get it to work with say VLC full screen first?
-    it may need the "50% adjuster" fella...
 
 == yes do, un-ordered currently, from the various future release options ==
+  netflix instant:
+      add new batch file for play with netflix OCR
+      note on the www stuff once it works
+    mac'ify OCR/Mouse
+  netflix instant descriptor work at all
+    OS X check it
+    maybe get it to work with say VLC full screen first?
+    it may need the "50% adjuster" fella...
   meta domain
   use more modern mplayer with smplayer...
-  fix 2 broken EDL's
   test out DVD style upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
@@ -61,8 +59,6 @@
   srt add option "pick coordinating one from the middle, or from the end?" [?]
   @ffplay: diagonal bug
   note...here's how to screen live movies :)
-  add new batch file for play with netflix OCR
-  note "netflix instant" on the www stuff once it works
   research VLC softskip ?
   netflix instant CGI how crisp is their HD?
   C player feedback message
@@ -89,7 +85,6 @@
   test mplayer -vo gl at home
   Ben's other DVD's
   template-ify for netflix too "create for netflix"
-  add netflix instant instructions
   that extra .5s DVD reports for file size...
   EDL gottman
   EDL Greg's DVD's
@@ -189,7 +184,6 @@
   add new open button "edit EDL for current DVD"
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  add a demo EDL of conference "music video from local file"
   add custom profanity option
   you can mark where the starts and stop are, then hit a button 'test my latest marks' and then edit them and retest...hmm...
   add "play at 1.5x speed" mplayer button, I guess
