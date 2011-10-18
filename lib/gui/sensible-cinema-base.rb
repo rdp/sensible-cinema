@@ -220,7 +220,6 @@ module SensibleSwing
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
       if force_use_mplayer
-       show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
        extra_options += " -font #{File.expand_path('vendor/subfont.ttf')} "
@@ -348,6 +347,20 @@ module SensibleSwing
       EOL
     end
     
+    def show_mplayer_instructions
+      show_non_blocking_message_dialog <<-EOL
+        About to run mplayer.  To control it, use
+        spacebar : pause,
+        double clicky/right click : toggle full screen,
+        arrow keys (left, right, up down, pg up, pg dn) to seek/scan
+        / and *	: inc/dec volume.
+        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
+        'v' key: turn off subtitles.
+        '.' key: step one frame.
+         # key: change audio language track
+		 [ and ] make playback faster
+      EOL
+    end
     
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false

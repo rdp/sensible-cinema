@@ -9,7 +9,7 @@ module SensibleSwing
         window.setup_normal_buttons
       end
       
-      add_text_line 'Create Watch Options:'
+      add_text_line 'Create: View Options:'
       
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer)")
       @mplayer_edl.on_clicked {
@@ -21,9 +21,9 @@ module SensibleSwing
         times.map!{|t| EdlParser.translate_string_to_seconds t}
         times.map!{|t| ConvertThirtyFps.from_twenty_nine_nine_seven t}
         start_time = times[0]
-        end_pos = times[1] - times[0]
-        extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_pos}"]
-        play_mplayer_edl_non_blocking nil, [], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        end_time = times[1]
+        extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
+        play_mplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
       end
       
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
@@ -50,6 +50,10 @@ module SensibleSwing
       @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true, true, true
       }
+      
+      new_jbutton("Display mplayer control instructions/help/howto") do
+        show_mplayer_instructions
+      end
 
       add_text_line 'Create Edit Options:'
       
