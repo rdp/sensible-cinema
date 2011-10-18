@@ -17,6 +17,7 @@ This file is part of Sensible Cinema.
 =end
 
 require 'sane'
+
 class EdlParser
 
   EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds")
@@ -348,6 +349,9 @@ if $0 == __FILE__
   p 'syntax: filename'
   require 'rubygems'
   require 'sane'
-  p EdlParser.parse_file(*ARGV)
+  parsed = EdlParser.parse_file(*ARGV)
   p 'parsed well'
+  p parsed
+  require 'yaml'
+  print Yaml.dump parsed
 end

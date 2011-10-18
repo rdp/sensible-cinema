@@ -65,10 +65,10 @@ module SensibleSwing
       
       @open_list = new_jbutton("Open/Edit a previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EdlParser::EDL_DIR)
+        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
+        LocalStorage['edit_from_here'] = File.dirname(filename)
         open_file_to_edit_it filename
       }
-      
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
