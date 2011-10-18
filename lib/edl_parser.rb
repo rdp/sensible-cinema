@@ -353,5 +353,5 @@ if $0 == __FILE__
   p 'parsed well'
   p parsed
   require 'yaml'
-  print Yaml.dump parsed
+  print YAML.dump parsed
 end
