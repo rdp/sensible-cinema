@@ -29,4 +29,4 @@
 "dvd_title_track" => "12", # 6520.833
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-"mplayer_dvd_splits" => ["3152.6", "4192.0"],
+"mplayer_dvd_splits" => ["3152.6", "1039.4"],

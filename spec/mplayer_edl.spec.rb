@@ -75,7 +75,26 @@ describe MplayerEdl do
 5.0 6.0 1
 10.0 13.0 1
     EOL
+  end
     
+  it "should combine overlaps" do
+    mplayer_dvd_splits = [103, 12]
+    a = MplayerEdl.convert_to_edl({ "mutes"=>{5=>6, 105 => 106, 120=>121}}, 0, 0, mplayer_dvd_splits )
+    a.should == <<-EOL
+1.0 8.0 1
+    EOL
+    
+  end
+  
+  it "should use non additive mplayer_dvd_splits 2" do
+    mplayer_dvd_splits = [103, 47]
+    a = MplayerEdl.convert_to_edl({ "mutes"=>{5=>6,124=>125, 185 => 190}}, 0, 0, mplayer_dvd_splits )
+    a.should == <<-EOL
+5.0 6.0 1
+20.0 23.0 1
+33.0 42.0 1
+    EOL
+
   end
   
 end

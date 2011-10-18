@@ -217,7 +217,7 @@ class EdlParser
     blanks = blanks.map{|k, v| get_secs(k, v, -subtract_this_from_beginnings, add_this_to_all_ends, splits) + [:blank]}
     combined = (mutes+blanks).sort
     
-    # detect overlap...
+    # detect and combine overlap...
     previous = nil
     combined.each_with_index{|current, idx|
       s,e,t = current

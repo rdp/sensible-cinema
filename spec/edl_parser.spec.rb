@@ -263,7 +263,7 @@ describe EdlParser do
 
    it "should download from imdb if specified and merge" do
      File.binwrite('files/edls/a.txt', %!"imdb_id" => "tt1727587"!)
-     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.500"]], "mutes" => [], "imdb_id" => "tt1727587"}
+     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.50"]], "mutes" => [], "imdb_id" => "tt1727587"}
    end
   
 end
