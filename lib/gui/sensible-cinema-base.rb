@@ -173,7 +173,7 @@ module SensibleSwing
 
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen
       unless File.exist?(File.expand_path(play_this))
-        raise play_this + ' non existing?' # till these go away in mac :)
+        raise play_this + ' non existing?' # sanity check, I get these in mac :)
       end
 
       extra_options = ""

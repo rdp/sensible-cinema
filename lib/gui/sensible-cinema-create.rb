@@ -9,25 +9,22 @@ module SensibleSwing
         window.setup_normal_buttons
       end
       
+      add_text_line 'Create Watch Options:'
+      
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer)")
       @mplayer_edl.on_clicked {
         play_mplayer_edl_non_blocking nil, [], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
       }
-    
-      add_text_line 'Realtime/Create Options:'
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for a DVD", 
-        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
-      @create_new_edl_for_current_dvd.on_clicked do
-        create_brand_new_edl
-        @display_dvd_info.simulate_click # for now...
+      @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
+        times = get_start_stop_times_strings
+        times.map!{|t| EdlParser.translate_string_to_seconds t}
+        times.map!{|t| ConvertThirtyFps.from_twenty_nine_nine_seven t}
+        start_time = times[0]
+        end_pos = times[1] - times[0]
+        extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_pos}"]
+        play_mplayer_edl_non_blocking nil, [], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
       end
-      
-      @open_list = new_jbutton("Open/Edit a previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
-      @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EdlParser::EDL_DIR)
-        open_file_to_edit_it filename
-      }
       
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
@@ -53,6 +50,22 @@ module SensibleSwing
       @play_mplayer_raw.on_clicked {
         play_dvd_smplayer_unedited true, true, true
       }
+
+      add_text_line 'Create Edit Options:'
+      
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
+        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
+      @create_new_edl_for_current_dvd.on_clicked do
+        create_brand_new_edl
+        @display_dvd_info.simulate_click # for now...
+      end
+      
+      @open_list = new_jbutton("Open/Edit a previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list.on_clicked {
+        filename = new_existing_file_selector_and_select_file( "Pick any file to open in editor", EdlParser::EDL_DIR)
+        open_file_to_edit_it filename
+      }
+      
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
@@ -72,18 +85,18 @@ module SensibleSwing
 
       @parse_srt.on_clicked do
         srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
-		if(srt_filename =~ /utf16/)
-		  show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't parse"
-	    end
+		    if(srt_filename =~ /utf16/)
+		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't parse"
+	      end
         # TODO nuke
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
         
         open_file_to_edit_it srt_filename
         sleep 0.5 # let it open first
-		bring_to_front
+		    bring_to_front
  
-		if JOptionPane.show_select_buttons_prompt('Would you like to enter timing adjust information on the .srt file? [final pass should, even if it matches]') == :yes
+		    if JOptionPane.show_select_buttons_prompt('Would you like to enter timing adjust information on the .srt file? [final pass should, even if it matches]') == :yes
           start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]", "...")
           start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"", "00:00:00,000")
           start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
@@ -92,11 +105,11 @@ module SensibleSwing
           end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"", "02:30:00,000")
           end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
         else
-		 start_srt = 0
-		 start_movie_ts =0
-		 end_srt = 1000
-		 end_movie_ts = 1000
-		end
+		      start_srt = 0
+          start_movie_ts =0
+          end_srt = 1000
+    		  end_movie_ts = 1000
+		    end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
         File.write EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
           %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
@@ -122,7 +135,7 @@ module SensibleSwing
 
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
       @convert_seconds_to_ts.on_clicked {
-        input = get_user_input("Enter \"from\" timestamps, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
+        input = get_user_input("Enter \"from\" timestamp, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
         while(input)
           if input =~ /:/
             output = EdlParser.translate_string_to_seconds input
@@ -149,7 +162,7 @@ module SensibleSwing
         Mplayers "V: 3600" is usually right on (29.97 fps), however.
       EOL
       @convert_timestamp.on_clicked {
-        thirty_fps = get_user_input("Enter your DVD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
+        thirty_fps = get_user_input("Enter your DVD/hardware/OSD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
         thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
         twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
         human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
@@ -223,21 +236,11 @@ module SensibleSwing
       }
     end
     
-    def do_create_edited_copy_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
-      drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
-      
-      descriptors = parse_edl(edit_list_path)
-      if watch_unedited
-        # reset them
-        descriptors['mutes'] = descriptors['blank_outs'] = []
-      end
-      
-      # LODO allow for spaces in the save_to filename
-      if should_prompt_for_start_and_end_times
+    def get_start_stop_times_strings
         # only show this message once :)
         @show_block ||= show_blocking_message_dialog(<<-EOL, "Preview")
           Ok, let's preview just a portion of it. 
-          Note that you'll want to preview a section that wholly includes a deleted section in it.
+          Note that you'll want to preview a section that wholly includes an edit section within it.
           For example, if it mutes from second 1 to second 10, you'll want to play from 00:00 to 00:12 or what not.
           Also note that the first time you preview a section of a video, it will take a long time (like an hour) as it sets up the entire video for processing.
           Subsequent previews will be faster, though, as long as you use the same filename, as it won't have to re-set it up for processing.
@@ -258,6 +261,21 @@ module SensibleSwing
         end
         LocalStorage['start_time'] = start_time
         LocalStorage['end_time'] = end_time
+        [start_time, end_time]
+    end
+    
+    def do_create_edited_copy_via_file should_prompt_for_start_and_end_times, exit_early_if_fulli_exists = false, watch_unedited = false
+      drive_or_file, dvd_volume_name, dvd_id, edit_list_path, descriptors = choose_dvd_or_file_and_edl_for_it
+      
+      descriptors = parse_edl(edit_list_path)
+      if watch_unedited
+        # reset them
+        descriptors['mutes'] = descriptors['blank_outs'] = []
+      end
+      
+      # LODO allow for spaces in the save_to filename
+      if should_prompt_for_start_and_end_times
+        start_time, end_time = get_start_stop_times_strings
       end
       dvd_friendly_name = descriptors['name']
       unless dvd_friendly_name
@@ -273,10 +291,10 @@ module SensibleSwing
         file_from = get_grabbed_equivalent_filename_once dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
       if file_from =~ /\.mkv/i
-        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it came from makemkv"
+        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
       end
       if file_from !~ /\.(ts|mpg|mpeg)$/i
-        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll try...") 
+        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll can try...") 
       end
       
       save_to_edited = get_save_to_filename dvd_friendly_name
@@ -289,9 +307,9 @@ module SensibleSwing
         start_time = "00:00"
         end_time = "00:01"
       end
-      should_run_mplayer = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
       require_deletion_entry = true unless watch_unedited
-      generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer, require_deletion_entry
+      should_run_mplayer_after = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
+      generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer_after, require_deletion_entry
       [false, fulli] # false means it's running in a background thread :P
     end
     

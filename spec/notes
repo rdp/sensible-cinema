@@ -4,6 +4,10 @@ http://movies.netflix.com/WiMovie/On_the_Double/70135642?trkid=496624 On the Dou
 
 curious george 2 http://movies.netflix.com/WiPlayer?trkid=805148&movieid=70130481 37:35 has an accomplish oh my g
 
+== mplayer dvd seeking ==
+
+if you pass it -ss 1:00:00 it seeks to 3604, i.e. it seeks I think to the 30 fps spot :P
+
 == netflix upscale notes ==
 
   netflix :width=>657 for "HD" that said it was playing in HD, eh? ... hmm...
