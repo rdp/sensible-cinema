@@ -218,7 +218,7 @@ module SensibleSwing
       end
       
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
-      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
       if force_use_mplayer
        show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
@@ -256,7 +256,7 @@ module SensibleSwing
     SMPlayerIniFile = File.expand_path("~/.smplayer/smplayer.ini")
     
     def set_smplayer_opts to_this, video_, show_subs = false
-      p 'set smplayer extra opts to this:' + to_this
+      p 'setting smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
         # LODO double check the rest here...
@@ -275,6 +275,7 @@ module SensibleSwing
       File.write(SMPlayerIniFile, new_prefs)
       new_prefs.each_line{|l| print l if l =~ /additional_video/} # debug
     end
+	
     def system_blocking command, low_prio = false
       return true if command =~ /^@rem/ # JRUBY-5890 bug
       if low_prio
@@ -346,8 +347,7 @@ module SensibleSwing
          # key: change audio language track
 		 [ and ] make playback faster
       EOL
-    end
-    
+    end    
     
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
