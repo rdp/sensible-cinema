@@ -24,6 +24,7 @@ print 'Starting Sensible Cinema...'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
   require 'sane'
+  require 'whichr'
 rescue LoadError
   p 'please run $ rake rebundle_copy_in_dependencies first, as we dislike needing locally installed rubygems'
   raise
