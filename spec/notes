@@ -229,8 +229,8 @@ Snow White apparently failed quite well at work, however.  Man this is really re
   ts  01:53:11.26, start: 600.000000 (essentially the same as above)
   makemkv11 01:53:11.31
   ts 11:  01:53:11.26
-  VLC DVD sum: 1:53:05 -> 1:53:11.8
-  makemkv is quite close to @29.97 fps
+  VLC DVD sum: 1:53:05 -> 1:53:11.8 # rounding error?
+  makemkv is quite close to @29.97 fps, which I think is "right"
   ffprobe -show_packets title00.ts
      7391.234311 -> 2:03:11.2 # oh that's comforting LOL
   only has one demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
@@ -305,7 +305,7 @@ Snow White apparently failed quite well at work, however.  Man this is really re
     
 == snow white DVD ==
   has a plus 5 freako
-  the TS *might* be right on, which would imply ts == 29.97, mkmv = ts*30.03
+  the TS *might* be right on, which would imply ts == 29.97, makemkv = ts*30.03
 
  wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd)
   1:23:32 sum powerDVD
@@ -314,8 +314,6 @@ Snow White apparently failed quite well at work, however.  Man this is really re
   seeking 1HR "good night" [good] night (her last one)
   yep it's totally internally inconsistent. Fascinating.
   
- TODO hb it straight [?]
-
   120180 frames in the ts
     -> 29.97 1:46:50 <sigh>.
   120183 frames in the mkv <sigh> LOL

@@ -252,28 +252,36 @@ module SensibleSwing
       system_blocking c
     end
     
-    SMPlayerIniFile = File.expand_path("~/.smplayer/smplayer.ini")
+    SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
     
     def set_smplayer_opts to_this, video_, show_subs = false
       p 'set smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
         # LODO double check the rest here...
-        old_prefs = "[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
+        old_prefs = "[%General]\nmplayer_bin=\n[advanced]\nmplayer_additional_options=\nmplayer_additional_video_filters=\n[subtitles]\nautoload_sub=false\n[performance]\npriority=3" 
       end
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      raise if get_upconvert_vf_settings =~ /"/
+      raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
+      new_value = "\"" + 'vendor/cache/mencoder/mplayer.exe'.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
+      require '_dbg'
+      p 'new value', new_value
+      puts new_value
+      assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
+      puts new_prefs
+      # now some less important ones...
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       # enable dvdnav navigation, just for kicks I guess.
       new_prefs.gsub!(/use_dvdnav=.*$/, "use_dvdnav=true")
       
-      FileUtils.mkdir_p File.dirname(SMPlayerIniFile) # case it doesn't yet exist
+      FileUtils.mkdir_p File.dirname(SMPlayerIniFile)
       File.write(SMPlayerIniFile, new_prefs)
       new_prefs.each_line{|l| print l if l =~ /additional_video/} # debug
     end
+    
     def system_blocking command, low_prio = false
       return true if command =~ /^@rem/ # JRUBY-5890 bug
       if low_prio
@@ -526,7 +534,7 @@ module SensibleSwing
       if we_are_in_create_mode        
         if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
           require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-          download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2033883/MPlayer-rtm-svn-33883.7z", "mencoder"
+          download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
         end
       end
 
