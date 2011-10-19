@@ -1,39 +1,34 @@
 up next:
 
-== ffmpeg compared with ripped ==
-
-0.5 to 0.43 (0.07)
-.1'ish to 0.08 (0.02)
-
-
 === close eyes (OSOH) ===
 
 mplayer full mkv:
   A:3600.0 V:3600.0
   A:3600.0 V:3600.0
-  A:3600.0
+  A:3600.0 V:3600 [?] => 0.08
 
 ffmpeg -ss 3600
-  0.05 in avidemux (even), 3rd frame
+  0.05 in avidemux (even), 3rd frame in, just about right...
 
 avidemux on full ts:
-  0.433 # avidemux might not be reliable tho...
-  
+  1:00:00.433 # avidemux might not be reliable tho... this one seems freaky...
+              # actually this might match the initial offset, but if it does...huh? 0.28 still a bit off...
+              # maybe avidemux skips duplicate frames or something?
+              # something is very bad here perhaps, also...probably that :P
+    
 mplayer full ts
-
   A:4200.0 V:4199.9
   A:4200.0 V:4200.0
-  A:4200.0
+  A:4200.0 V:4200.0 [?]
   seems to match the mkv
 
 mplayer on dvd +- dvdnav
-  A:3600.2 V:3600.2 A-V:  0.010 ct: -0.261 374/371  8%  6% 39.5% 21 0
-  A:3600.3 V:3600.3 A-V:  0.009 ct: -0.260 375/372  8%  6% 39.6% 21 0
-  A:3600.3 V:3600.3 A-V: -0.003 ct: -0.261 376/373  8%  6% 39.5% 21 0
-
-    gah! nooo!
-  the video seems to always start at 0.3  eh?
-  A:   0.3 V:   0.3
+  A:3600.2 V:3600.2
+  A:3600.3 V:3600.3
+  A:3600.3 V:3600.3 => .35 => seems to corroborate...mplayer on the DVD's, at least, seems to have that extra timestamp in there.
+    
+  the DVD video seems to always start at 0.3  eh?
+     A:   0.3 V:   0.3
      audio is typically 0.1s ahead, so not sure what's going on here...unless audio itself doesn't "start" until 0.9 for real...
      dvd/dvdnav both, and both audio and video seem to start at 0.3, though audio shoots up to 0.9 quickly [?]
   
@@ -42,24 +37,37 @@ mplayer on dvd +- dvdnav
          i should see this on other DVD's
          the initial frames should already be off, time-wise
 
-initial fade in, dvdnav:
+dvdout.mpg (mplayer dumpstream)
+  A:3600.2 V:3600.3
+  A:3600.3 V:3600.3
+  A:3600.3 V:3600.3
+  
+== initial fade in ==
+
+dvdnav:
   A:   1.3 V:   1.3 A-V: 
   A:   1.3 V:   1.3 A-V: 
   A:   1.3 V:   1.3   => 1.37
 
-initial fade in, avidemux on ts 1.376
+dvdout.mpg (mplayer dumpstream)
+  A:   1.3 V:   1.3 A-V: 
+  A:   1.3 V:   1.3 A-V: 
+  A:   1.3 V:   1.3 A-V: 
+
+avidemux on ts 1.376
   except avidemux was way ahead with the other one, too...
     except its first frame starts at 00.000 , then 00.041, then 00.082 ...
       and ffmpeg says the ts starts at 600.000
   
-initial fade in, mplayer on ts:
+mplayer on {ts,mkv}:
   A: 601.0 V: 601.0 
   A: 601.0 V: 601.0 
   A: 601.0 V: 601.1
-    => 1.1, which "might" be close to my original hypothesis...
-
+    => 1.10, which "might" corroborate ...
+    
 mplayer dumpstream:
-  start: 0.280633
+  ffmpeg start: 0.280633
+  mplayer says it starts 0.3 => seems to corroborate ...
   
 what about handbrake? starts at 0?
 
@@ -68,8 +76,124 @@ makemkv (ripper) was heading me south, perhaps?
   
 This might explain DVD times not syncing right, as well... (the extra 0.5s it "says" it has, but then doesn't)
 
+0.28 is not accomodated in sums:
 
-== mplayer dvd seeking ==
+handbrake 5fps:
+  Duration: 01:53:11.60, start: 0.000000, bitrate: 223 kb/s
+  A:   1.1 V:   1.0
+  A:   1.2 V:   1.2
+  A:   1.3 V:   1.2 => 1.25 but only 5 fps so POOR TEST
+
+handbrake real:
+  A:   1.0 V:   1.0
+  A:   1.0 V:   1.0
+  A:   1.1 V:   1.1 => 1.10 => corroborate, 
+  conclusion: handbrake seems to be the same "resetting" it back to 0 from 0.3
+  
+G:\Video\OTHER_SIDE_OF_HEAVEN>ffmpeg -i title00.mkv 2>&1| grep Duration
+  Duration: 01:53:11.31, start: 0.000000, bitrate: 7900 kb/s
+    last frame: 01:53:11.708 162838
+    first frame: 00:00.000
+    
+G:\Video\OTHER_SIDE_OF_HEAVEN>ffmpeg -i dvdout.mpg 2>&1| grep Duration
+  Duration: 01:53:11.26, start: 0.280633, bitrate: 8202 kb/s
+  avidemux says it starts at 0:00.000 and has 162740 frames [fewer frames?]
+    seems to get to the end though...
+    close eyes: 00:59:56.262 frame 86224 [this seems messed-ier-than messed ... does this DVD have some progressive/non progressive skipping?] TODO
+    
+G:\Video\OTHER_SIDE_OF_HEAVEN>ffmpeg -i title00.ts 2>&1| grep Duration
+  Duration: 01:53:11.26, start: 600.000000, bitrate: 8126 kb/s
+  
+G:\>ffmpeg -i OTHER_SIDE_OF_HEAVEN-1.m4v 2>&1| grep Duration # 5 fps, so poor check...
+  Duration: 01:53:11.60, start: 0.000000, bitrate: 223 kb/s # this one is elongated? huh?
+  
+avidemux says title00.ts versus dvdout.mpeg (OSOH) is 3 seconds longer.
+  I wonder if it (has anything besides progressive but even more) has some frames that don't match perfectly
+  which somebody is messing with? huh?
+  
+=== Monster's Inc. ===
+
+{dvd,dvdnav}: A:   1.1 V:   0.3
+
+castle:
+  DVD
+    A:   2.2 V:   2.2 
+    A:   2.3 V:   2.3 => 2.30
+ 
+ffmpeg on mplayer dump:
+  Duration: 00:00:24.15, start: 0.280633
+
+ffmpeg on mplayer dump, title 3, just a piece mind you :):
+   Duration: 00:00:03.55, start: 0.280633
+  
+== Sintel ==
+
+A:   0.4 V:   0.4
+
+landscape: 
+  DVD
+    A:   3.3 V:   3.2 
+    A:   3.3 V:   3.3 
+    A:   3.3 V:   3.3 => 3.35
+  handbrake:
+    A:   2.9 V:   2.9
+    A:   3.0 V:   3.0
+    A:   3.0 V:   3.0 => 3.05
+    
+ffmpeg on dump:
+    Duration: 00:01:00.62, start: 0.300300 (for OSOH dump was 0.280633)
+  title 3:
+    Duration: 00:00:21.22, start: 0.367033 [interrupted or not either way same, so can interrupt mplayer dumpstreams all right]
+
+  0.08 variance so far?
+
+
+  It seems that the start time "doesn't effect" the sum?
+
+
+title 5, mouse teeny moveleft of box:
+ sintel.5.mpg
+                1.1
+  A:   1.2 V:   1.1 A-V:  0.137 ct: -0.027 240/240  6%  2%  1.1% 0 0
+  A:   1.3 V:   1.1 A-V:  0.124 ct: -0.023 241/241  6%  1%  1.0% 0 0 => 1.18
+
+ title03.ts
+
+  A: 600.8 V: 600.8
+  A: 600.8 V: 600.8
+  A: 600.8 V: 600.8 => 0.88
+
+title03.mkv sum:
+ mplayer A: 216.7 V: 216.7
+
+
+does the grabber fill in blanks at the end or something?
+  here's a clue, on the TS:
+    A: 815.8 V: 815.7 A-V:  0.005 ct:  0.100 630/630 11% 44%  1.3% 56 0
+    TS_PARSE: COULDN'T SYNC
+    A: 816.7 V: 816.7 A-V: -0.013 ct:  0.079 659/659 11% 40%  1.4% 56 0
+  except mkv seems to actually go through all the way.
+  
+is the 0.3 evident near the end?
+thumbprint
+  title03.mkv:
+    A: 210.4 V: 210.4 
+    A: 213.6 V: 213.6 
+    A: 213.6 V: 213.6 => 213.63
+    (which is around 3:33)
+    
+  dump.mpg
+    A: 213.9 V: 213.9
+    A: 213.9 V: 213.9
+    A: 213.9 V: 213.9 => 213.98 => corroborate!
+
+  powerdvd:
+    3:33.8 27 frames, 33 total? huh?
+    anticipate 0:03:33.84*29.97/30
+    
+TODO long movie, ending timestamps similar?
+
+== mplayer dvd -ss seeking ==
 
 if you pass it -ss 1:00:00 it seeks to 3604, i.e. it seeks I think to the 30 fps spot :P
 
