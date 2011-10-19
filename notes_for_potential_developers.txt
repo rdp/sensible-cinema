@@ -22,6 +22,8 @@ $ jruby -S rake install # create gem
 $ jruby -S gem install pkg\*.gem
 $ jruby -S gem uninstall -x sensible-cinema
  
+You'll have to install some git submodules, too.
+
 The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
