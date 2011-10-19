@@ -4,33 +4,33 @@ You can test the DVD portion of the program out by mounting the DVD of "big buck
 http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
 On windows daemon tools helps there, or "magic ISO" or the like, may be helpful to avoid having to burn disks.
 
-Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against (a slightly more cross platform approach).
+Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against 
+(a slightly more cross platform approach I guess).
 
-Then rip it and use the output.
+Then rip it and use the output, or use it as your DVD.
 
 Or if you have a DVD that already has a edit list available for it, you could use that, or create
 a new edit list for a DVD you own, etc.
 
-The main development roadmap/backlog is in the TODO. 
 If you have any feedback/feature requests, et al, post an
 issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
 
-To run it from source, you may need to install a few gem dependencies (listed in the Rakefile)
+To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
 or to install them automatically:
+$ jruby -S rake gemspec
+$ jruby -S gem install *.gemspec
 
-$ jruby -S gem install sensible-cinema # installs dev. dependencies
-Note that, in order to run the unit tests, you'll want to checkout the source from the repository to get all the test images
-
-The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.  
+The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
 
 Also you'll need to run git submodule init && git submodule update (possibly modify .gitsubmodules to be the open one, or ask me to)
 
 To run it via command line:
+
 $ jruby bin/sensible-cinema --help # tells you all available options
-  
+$ jruby lib/edl_parser edl_filename.txt # outputs the file, but parsed, and in YAML, useful for porting to other programming languages.
 Feedback/contribution welcome :)
 
 Ex: want JSON'ified output somehow? Just ask.

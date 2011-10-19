@@ -1,3 +1,11 @@
+== ==
+
+Included EDL file that represents keeping things "in" instead of cutting things "out" only.  And file md5sum et al.
+
+== 0.28.4 ==
+
+Add button for "fast preview" with mplayer.  Attempt simplify UI.
+
 == 0.28.3 ==
 
 Fix typo.  Small other notes added.

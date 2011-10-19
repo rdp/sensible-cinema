@@ -6,17 +6,17 @@
 
 "blank_outs" => [
   "437.0", "454.5", "dead people lying around",
-  " 519.4", " 535.2", "killing the priests",
+  "519.4", "535.2", "killing the priests",
   "588.0", "599.2", "dead priests",
-  "760.3", 775", "burning people",
- "1096", "1104", "killing babies",
- "1111.8", 1118.8", "screaming babies",
+  "760.3", "775.0", "burning people",
+ "1096.0", "1104.0", "killing of infants",
+ "1111.8", "1118.8", "screaming babies",
  "1773.7", "1863.7", "killing fighting",
  "1880.9", "1969.0", "kill someoen, some random struggles",
  "4536.6", "4668.3", "dancing daughter",
 
  "1455.7", "1736.7", "intermission",
- "2098.8",  "2111.1", "initial killings",
+ "2098.8", "2111.1", "initial killings",
  "2175.9", "2333.0", "big battle to storm castle, much killing",
 ],
 

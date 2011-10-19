@@ -17,6 +17,7 @@ This file is part of Sensible Cinema.
 =end
 
 require 'sane'
+
 class EdlParser
 
   EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds")
@@ -120,7 +121,7 @@ class EdlParser
     raw
   end
   
-  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though disabled for production
+  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays, also filters based on category, though not used in production
   def self.convert_to_timestamp_arrays array, ok_categories_array
     out = []
     while(single_element = extract_entry!(array))
@@ -205,8 +206,11 @@ class EdlParser
     raise if subtract_this_from_beginnings < 0
     raise if add_this_to_all_ends < 0
     if splits != []
-      # allow it to do all the double checks we later skip, just in case :)
-      self.convert_incoming_to_split_sectors incoming
+      # allow it to do all the double checks we later skip, just for sanity :)
+      self.convert_incoming_to_split_sectors incoming, 0, 0, []
+      # make them additive now...
+      previous = 0
+      splits = splits.map{|s| current = s + previous; previous = current; current}
     end
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
@@ -214,7 +218,7 @@ class EdlParser
     blanks = blanks.map{|k, v| get_secs(k, v, -subtract_this_from_beginnings, add_this_to_all_ends, splits) + [:blank]}
     combined = (mutes+blanks).sort
     
-    # detect overlap...
+    # detect and combine overlap...
     previous = nil
     combined.each_with_index{|current, idx|
       s,e,t = current
@@ -256,7 +260,7 @@ class EdlParser
      p 'failed!', s
      raise e
     end
-    raise unless seconds =~ /^\d+(|[,.]\d+)$/
+    raise 'failed to parse?' + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
     seconds.gsub!(',', '.')
     total += seconds.to_f
     minutes = s.split(":")[-2] || "0"
@@ -345,6 +349,9 @@ if $0 == __FILE__
   p 'syntax: filename'
   require 'rubygems'
   require 'sane'
-  p EdlParser.parse_file(*ARGV)
+  parsed = EdlParser.parse_file(*ARGV)
   p 'parsed well'
+  p parsed
+  require 'yaml'
+  print YAML.dump parsed
 end

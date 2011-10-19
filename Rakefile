@@ -149,19 +149,16 @@ def sys arg
  raise arg + ' failed 3x!'
 end
 
+desc 'deploy to sourceforge'
 task 'deploy' do
+  p 'creating sf shell'
+  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
+  p 'creating sf dir'
+  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
   for suffix in [ '.zip', '.tgz']
     name = 'sensible-cinema-' + cur_ver + suffix
-    p 'copying to ilab'
+    p 'copying to ilab ' + name
     sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
-    p 'creating sf shell'
-    sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
-    p 'creating sf dir'
-    begin
-      sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
-    rescue => ok_if_dir_already_existing
-      puts 'warning--dir already existing?' + ok_if_dir_already_existing.to_s
-    end
     p 'copying into sf from ilab'
     sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
   end

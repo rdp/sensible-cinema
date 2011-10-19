@@ -18,6 +18,8 @@ This file is part of Sensible Cinema.
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/edl_parser'
 
+# MplayerEdl spec also exercises this pretty good...
+
 describe EdlParser do
   
   E = EdlParser
@@ -27,22 +29,27 @@ describe EdlParser do
   end
   
   it "should get mutes and blank_outs" do
-   string = File.read(__DIR__ + "/../zamples/edit_decision_lists/old_not_yet_updated/example_edit_decision_list.txt")
+    string = <<-EOL
+      "mutes" => [
+        "00:00:01", "00:00:02",
+        "00:00:01", "00:00:02", "profanity", "dang",
+      ],
+      "blank_outs" => [
+        "01:01:00", "01:02:00", "nudity", "...",
+      ],
+      "missing_content" => "some stuff"
+    EOL
    expected = 
    {
     "mutes"=>[["00:00:01", "00:00:02"], 
-    ["00:00:01", "00:00:02", "profanity", "dang"], 
-    ["01:01:00", "01:02:00"]], 
-    "blank_outs"=>[["01:01:00", "01:02:00", "nudity", "..."], ["00:03:03.5", "00:03:04.5"]], 
-    "missing_content"=>"this doesn't list some mild name calling", 
-    "title"=>"Forever Strong", "source"=>"Hulu", "url"=>"http://www.byutv.org/watch/1790-100", 
-    "whatever_else_you_want"=>"this is the old version of the film",
-    "disk_unique_id"=>"1234|4678"
+    ["00:00:01", "00:00:02", "profanity", "dang"]], 
+    "blank_outs"=>[["01:01:00", "01:02:00", "nudity", "..."], ], 
+    "missing_content"=>"some stuff", 
    }
    E.parse_string(string, nil).should == expected
   end
   
-  it "should disallow full digits" do
+  it "should disallow full digits only" do
     proc {E.parse_string(%!"mutes" => ["1234", "1235", "profanity", "yo"]!, nil) }.should raise_exception SyntaxError    
     proc {E.parse_string(%!"mutes" => ["0.0", "1.1", "profanity", "yo"]!, nil) }.should_not raise_exception    
     proc {E.parse_string(%!"mutes" => ["0.0", "1.1", "profanity", "yo", "1234", "1235", "bad entry"]!, nil) }.should raise_exception SyntaxError    
@@ -81,32 +88,33 @@ describe EdlParser do
   it "should be able to use personal preferences to decide which edits to make" do
    out = <<-EOL
       "mutes" => [
-      "00:10", "00:15", "test category", "1",
-      "00:20", "00:25", "test category", "2",
-      "00:30", "00:35", "test category", "3"
+      "00:10", "00:15", "test category", "cat1",
+      "00:20", "00:25", "test category", "cat2",
+      "00:30", "00:35", "test category", "cat3"
       ]
     EOL
     parsed = E.parse_string out, nil
     parsed["mutes"].length.should == 3 # has all of them
 
     1.upto(2) do |n|
-      parsed = E.parse_string(out, nil, [["test category", n.to_s]] )
+      parsed = E.parse_string(out, nil, [["test category", "cat" + n.to_s]] )
       parsed["mutes"].length.should == 2 # excludes one
     end
-    parsed = E.parse_string(out, nil, [["test category", "1"], ["test category", "2"]] )
+    parsed = E.parse_string(out, nil, [["test category", "cat1"], ["test category", "cat2"]] )
     parsed["mutes"].length.should == 1 # excludes two
 
     # now with...just saying "this entire category is fine"
     parsed = E.parse_string(out, nil, [["test category"]])
     parsed["mutes"].length.should == 0
 
-    # now with...just saying "levels below this are ok"
-    parsed = E.parse_string(out, nil, [["test category", 2]])
-    parsed["mutes"].length.should == 2
-
+    pending do
+      # now with...just saying "levels below this are ok"
+      parsed = E.parse_string(out, nil, [["test category", 2]])
+      parsed["mutes"].length.should == 2
+    end
   end
   
-  it "should parse mplayer_dvd_splits as floats" do
+  it "should parse mplayer_dvd_splits as strings" do
     E.parse_string('"mplayer_dvd_splits" => []', 'fakename')['mplayer_dvd_splits'].should == []
     E.parse_string('"mplayer_dvd_splits" => ["123.5","124.5"]', 'fakename')['mplayer_dvd_splits'].should == ["123.5","124.5"]
   end
@@ -158,8 +166,8 @@ describe EdlParser do
     go({ "blank_outs"=>{5=>10}, "mutes" => {103=>110}}, 0, 0, [100]).should == [[2.0, 11.0, :blank]]
   end
   
-  it "should accomodate well for multiples, and zero" do
-    go({ "mutes"=>{5=>10, 75 => 76, 101 => 102}}, 0, 0, [50, 100]).should == 
+  it "should accomodate well for multiple mplayer_dvd_splits, and one edge case [zero]" do
+    go({ "mutes"=>{5=>10, 75 => 76, 101 => 102}}, 0, 0, [50, 50]).should == 
       [[0.0, 4.0, :mute], [5.0, 10.0, :mute], [24.0, 27.0, :mute]]
   end
   
@@ -255,7 +263,7 @@ describe EdlParser do
 
    it "should download from imdb if specified and merge" do
      File.binwrite('files/edls/a.txt', %!"imdb_id" => "tt1727587"!)
-     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.500"]], "mutes" => [], "imdb_id" => "tt1727587"}
+     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.50"]], "mutes" => [], "imdb_id" => "tt1727587"}
    end
   
 end

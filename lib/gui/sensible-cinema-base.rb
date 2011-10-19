@@ -173,7 +173,7 @@ module SensibleSwing
 
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen
       unless File.exist?(File.expand_path(play_this))
-        raise play_this + ' non existing?' # till these go away in mac :)
+        raise play_this + ' non existing?' # sanity check, I get these in mac :)
       end
 
       extra_options = ""
@@ -220,7 +220,6 @@ module SensibleSwing
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
       if force_use_mplayer
-       show_mplayer_instructions_once
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
        extra_options += " -font #{File.expand_path('vendor/subfont.ttf')} "
@@ -347,7 +346,22 @@ module SensibleSwing
          # key: change audio language track
 		 [ and ] make playback faster
       EOL
-    end    
+    end
+    
+    def show_mplayer_instructions
+      show_non_blocking_message_dialog <<-EOL
+        About to run mplayer.  To control it, use
+        spacebar : pause,
+        double clicky/right click : toggle full screen,
+        arrow keys (left, right, up down, pg up, pg dn) to seek/scan
+        / and *	: inc/dec volume.
+        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
+        'v' key: turn off subtitles.
+        '.' key: step one frame.
+         # key: change audio language track
+		 [ and ] make playback faster
+      EOL
+    end
     
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
@@ -377,7 +391,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true
+    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly
@@ -392,14 +406,13 @@ module SensibleSwing
       end
       
       if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS') # VOB's...always start at 0
-        # check if starts offset...
-        all =  `ffmpeg -i "#{drive_or_file}" 2>&1`
-        # Duration: 01:35:49.59, start: 600.000000
+        # check if it has a start offset...
+        all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
         if start > 1 # LODO huh? dvd's themselves start at 0.3 [sintel]?
           show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
-            maybe not compatible with XBMC, if that's what you use, and you probably don't" # TODO test it XBMC...
+            maybe not compatible with XBMC, if that's what you use, and you probably don't" # LODO test it XBMC...
           start_add_this_to_all_ts = start
         end
         splits = []
@@ -407,12 +420,13 @@ module SensibleSwing
         if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
           splits = []
+        else
+          splits.map!{|s| EdlParser.translate_string_to_seconds(s)}
         end
       end
       
       if edl_path
-        splits.map!{|s|  EdlParser.translate_string_to_seconds(s) }
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end

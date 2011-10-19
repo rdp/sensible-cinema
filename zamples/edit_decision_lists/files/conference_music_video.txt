@@ -1,0 +1,10 @@
+"webpage" => "http://lds.org/general-conference/sessions/2011/10?lang=eng",
+"name" => "Oct 2011 General Conference music video",
+"md5" => "a1cf4cd76536a79f17bd6af055364ad2",
+"download_url" => "http://media2.ldscdn.org/assets/general-conference/october-2011-general-conference/2011-10-1000-saturday-morning-session-360p-eng.mp4?download=true",
+
+"blanks" => [
+ "0:00" , "2:00", "precedes first song",
+ "5:00", "55:00", "between first song and second song",
+ "57:00", "9:00:00", "skip all after second song"
+]

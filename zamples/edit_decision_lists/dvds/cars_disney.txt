@@ -37,4 +37,4 @@
 "opensubtitles_number" => "4022054",
 # "not edited out stuff" => "...",
 # "closing thoughts" => "...",
-"mplayer_dvd_splits" => ["3767.35", " 6490.35"], 
+"mplayer_dvd_splits" => ["3767.35", "2723.0"], 

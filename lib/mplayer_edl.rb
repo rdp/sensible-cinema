@@ -20,6 +20,7 @@ require_relative 'edl_parser'
 
 class MplayerEdl
   def self.convert_to_edl specs, add_this_many_to_end = 0, add_this_many_to_beginning = 0, splits = [], extra_time_to_all = 0.0
+    
     # simple re-map to EDL style output
     combined = EdlParser.convert_incoming_to_split_sectors specs, add_this_many_to_end, add_this_many_to_beginning, splits
     
