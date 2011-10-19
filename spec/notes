@@ -1,5 +1,18 @@
 up next:
 
+== start times ==
+titles 7,23 el materdor
+7: 
+ Duration: 00:00:02.05, start: 0.207756, bitrate: 79689 kb/s
+23:
+  Duration: 00:00:00.79, start: 0.203833, bitrate: 64868 kb/s
+    not sure what this one means... hmm...
+Duration: 00:00:05.18, start: 0.203833, bitrate: 14484 kb/s
+
+it seemed to have 0.0's for video when seeking in mplayer, but...umm...I'm not totally sure...
+
+
+
 === close eyes (OSOH) ===
 
 mplayer full mkv:
