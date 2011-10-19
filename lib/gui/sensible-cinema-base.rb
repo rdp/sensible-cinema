@@ -17,7 +17,6 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-
 alias system_original system
 require 'fileutils'
 
