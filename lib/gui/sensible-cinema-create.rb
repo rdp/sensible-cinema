@@ -114,10 +114,11 @@ module SensibleSwing
     		  end_movie_ts = 1000
 		    end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
-        File.write EdlTempFile, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
+        filename = EdlTempFile + '.parsed.txt'
+        File.write filename, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
           %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
            %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
-        open_file_to_edit_it EdlTempFile
+        open_file_to_edit_it filename
       end
 
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
@@ -126,14 +127,21 @@ module SensibleSwing
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # real DVD disk
         # display it, allow them to copy and paste it out
         title_lengths = nil
-        t = Thread.new { title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1| grep LENGTH` }
-        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # #{volume_name}"
+        t = Thread.new { 
+          # mplayer -benchmark -endpos 10 dvdnav://1/d: -vo null -nosound 2>&1 > output2.txt
+          title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1`
+        }
+        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # label: #{volume_name}"
         show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED eventually to identify a disk to match it to its EDL, later.", id_string
+        p 'joining'
         t.join
-        File.write EdlTempFile, id_string + "\n" + title_lengths
-        open_file_to_edit_it EdlTempFile
-        id_string
+        p 'done'
+        titles_lengths = title_lengths.split("\n").select{|line| line =~ /LENGTH/}
+        filename = EdlTempFile + '.disk_info.txt'
+        File.write filename, id_string + "\n" + titles_lengths
+        open_file_to_edit_it filename
+        id_string # for unit tests :)
       }
 
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
@@ -342,6 +350,7 @@ module SensibleSwing
 # "closing thoughts" => "only...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
 # "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just  [] if there are none. Not additive, so this means "a split at 3600.15 and at second 4044.35"
+# "start_dvd_offset" => "0.30", # most DVD's start a tidge after 0:00:00.0s so if it's a file instead of a DVD, we need this number. Run mplayer -benchmark -endpos 10 dvdnav://2/d: -vo null -nosound 2>&1 >output2.txt and examine output2.txt for the first V:  0.30 and put that number here
         EOL
       # TODO auto-ify above, move docs to a file in documentation.
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
