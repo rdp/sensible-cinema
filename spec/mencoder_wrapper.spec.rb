@@ -34,6 +34,7 @@ describe MencoderWrapper do
     FileUtils.rm 'to_here.fulli_unedited.tmp.mpg.done' rescue nil
     FileUtils.rm 'to_here.fulli_unedited.tmp.mpg' rescue nil
     @a = EdlParser.parse_file "../zamples/edit_decision_lists/dvds/bobs_big_plan.txt"
+    @a["dvd_start_offset"] = 0
     @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
   end
   
@@ -170,7 +171,7 @@ describe MencoderWrapper do
   end
   
   def setup
-    @settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}}
+    @settings = {"mutes"=>{1=>2, 7=>12}, "blank_outs"=>{"2"=>"3"}, "dvd_start_offset" => 0}
     @out = MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here.avi'
   end
   
@@ -201,7 +202,7 @@ describe MencoderWrapper do
   
   context 'pinpointing sections' do
     before do
-     settings = {"mutes"=>{15=>20, 30 => 35}}
+     settings = {"mutes"=>{15=>20, 30 => 35}, "dvd_start_offset" => 0}
      @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'  
     end
     

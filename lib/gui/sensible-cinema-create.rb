@@ -263,7 +263,7 @@ module SensibleSwing
 # "closing thoughts" => "only...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
 # "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just  [] if there are none. Not additive, so this means "a split at 3600.15 and at second 4044.35"
-# "start_dvd_offset" => "0.30", # most DVD's start a tidge after 0:00:00.0s so if it's a file instead of a DVD, we need this number. Run mplayer -benchmark -endpos 10 dvdnav://2/d: -vo null -nosound 2>&1 >output2.txt and examine output2.txt for the first V:  0.30 and put that number here
+"dvd_start_offset" => "0.28", # most DVD's start a tidge after 0:00:00.0s so if it's a file instead of a DVD, we need this number. Run mplayer -benchmark -endpos 10 dvdnav://2/d: -vo null -nosound 2>&1 >output2.txt and examine output2.txt for the first V:  0.30 and put that number here
         EOL
       # TODO auto-ify above, move docs to a file in documentation.
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'

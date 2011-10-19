@@ -47,6 +47,10 @@ class MencoderWrapper
     # called from the UI...
     # only for transcoding.
     def get_bat_commands these_settings, this_from_file, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
+      
+#      def self.convert_incoming_to_split_sectors incoming, add_this_to_all_ends = 0, subtract_this_from_beginnings = 0, splits = []
+
+      
       combined = EdlParser.convert_incoming_to_split_sectors these_settings
       @dvd_title_track = dvd_title_track
       assert dvd_title_track

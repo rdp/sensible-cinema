@@ -69,16 +69,12 @@ module SensibleSwing
       if dvd_id == NonDvd
         file_from = drive_or_file
       else
-        file_from = get_grabbed_equivalent_filename_once dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
-      end
-      if file_from =~ /\.mkv/i
-        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
-      end
-      if file_from !~ /\.(ts|mpg|mpeg)$/i
-        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll can try...") 
+        file_from = get_ripped_filename_once dvd_friendly_name, dvd_title_track # we don't even care about the drive letter anymore...
       end
       
-      save_to_edited = get_save_to_filename dvd_friendly_name
+      sanity_check_file file_from
+      
+      save_to_edited = get_save_to_filename_from_user dvd_friendly_name
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
       if exit_early_if_fulli_exists
         if fulli_dot_done_file_exists? save_to_edited
@@ -94,19 +90,30 @@ module SensibleSwing
       [false, fulli] # false means it's running in a background thread :P
     end 
     
+    def sanity_check_file filename
+      out = `ffmpeg -i #{filename}`
+      raise 'file must start at zero huh?' unless out =~ /Duration.*start: 0.00/
+      if file_from =~ /\.mkv/i
+        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
+      end
+      if file_from !~ /\.(ts|mpg|mpeg)$/i
+        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll can try...") 
+      end
+    end
+    
     def repeat_last_copy_dvd_to_hard_drive
       generate_and_run_bat_file *LocalStorage['last_params']
     end
 
-    def get_grabbed_equivalent_filename_once dvd_title, dvd_title_track
-      @_get_grabbed_equivalent_filename_once ||=
+    def get_ripped_filename_once dvd_title, dvd_title_track
+      @_get_ripped_filename_once ||=
       begin
         new_existing_file_selector_and_select_file "Please choose the file that is your ripped equivalent of #{dvd_title} (title track #{dvd_title_track}) (.mpg or .ts--see file documentation/how_to_get_files_from_dvd.txt)"
       end
     end
     
-    def get_save_to_filename dvd_title
-      @_get_save_to_filename ||=
+    def get_save_to_filename_from_user dvd_title
+      @_get_save_to_filename_from_user ||=
       begin
         save_to_file_name = dvd_title + ' edited version'
         save_to_file_name = save_to_file_name.gsub(' ', '_').gsub( /\W/, '') + ".avi" # no punctuation or spaces for now, to not complicate...
@@ -129,20 +136,20 @@ module SensibleSwing
       end
     end
     
-    
     def fulli_dot_done_file_exists? save_to_edited
       fulli = MencoderWrapper.calculate_fulli_filename save_to_edited
-      File.exist?(fulli + ".done") # stinky!
+      File.exist?(fulli + ".done")
     end
     
     # to make it stubbable :)
     def get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
-      delete_partials = true unless start_time # in case anybody wants to look really really close [?]
+      delete_partials = true unless start_time # in case anybody wants to look really really close for now
       MencoderWrapper.get_bat_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, delete_partials, require_deletion_entry
     end
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
       LocalStorage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
+      initial_offset
       begin
         commands = get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
