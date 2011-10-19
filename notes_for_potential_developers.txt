@@ -18,9 +18,10 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
 or to install them automatically:
-$ jruby -S rake gemspec
-$ jruby -S gem install *.gemspec
-
+$ jruby -S rake install # create gem
+$ jruby -S gem install pkg\*.gem
+$ jruby -S gem uninstall -x sensible-cinema
+ 
 The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
