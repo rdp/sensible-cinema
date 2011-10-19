@@ -314,8 +314,11 @@ module SensibleSwing
       @background_thread = Thread.new { system_original command }
     end
     
-    # make them choose which system call to use explicitly
-    undef system
+    # force them choose which system call to use explicitly
+    if respond_to? :system
+      undef system
+    else # it's a reload
+    end
    
     def play_dvd_smplayer_unedited use_mplayer_instead, show_instructions, show_subs
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
