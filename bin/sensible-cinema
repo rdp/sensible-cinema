@@ -36,6 +36,7 @@ raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not nee
 require_relative '../lib/gui/sensible-cinema-base'
 require_relative '../lib/gui/sensible-cinema-normal'
 require_relative '../lib/gui/sensible-cinema-create'
+require_relative '../lib/gui/sensible-cinema-create-file'
 require_relative '../lib/gui/sensible-cinema-upconvert'
 
 if $0 == __FILE__
