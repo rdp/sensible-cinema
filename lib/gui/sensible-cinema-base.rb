@@ -218,7 +218,7 @@ module SensibleSwing
       end
       
       extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
-      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # fast *crashes* doze...
+      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
       if force_use_mplayer
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
@@ -255,7 +255,7 @@ module SensibleSwing
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
     
     def set_smplayer_opts to_this, video_, show_subs = false
-      p 'set smplayer extra opts to this:' + to_this
+      p 'setting smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
         # LODO double check the rest here...
