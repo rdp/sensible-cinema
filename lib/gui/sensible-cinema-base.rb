@@ -267,9 +267,6 @@ module SensibleSwing
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
       new_value = "\"" + 'vendor/cache/mencoder/mplayer.exe'.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
-      require '_dbg'
-      p 'new value', new_value
-      puts new_value
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
       puts new_prefs
       # now some less important ones...
