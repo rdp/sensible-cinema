@@ -528,11 +528,13 @@ module SensibleSwing
     end
     
     def check_for_various_dependencies
-      if we_are_in_create_mode        
-        if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder')
-          require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-          download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
-        end
+      
+      if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder') # both use it now, since we have to use our own mplayer.exe for now...
+        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
+        download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
+        old = File.binread 'vendor/cache/mencoder/mplayer.exe'
+        old.gsub! "V:%6.1f", "V:%6.2f" # better precision! :)
+        File.binwrite('vendor/cache/mencoder/mplayer.exe', old)
       end
 
       # runtime dependencies, at least as of today...

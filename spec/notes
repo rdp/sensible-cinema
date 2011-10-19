@@ -8,7 +8,8 @@ titles 7,23 el materdor
 23:
   Duration: 00:00:00.79, start: 0.203833, bitrate: 64868 kb/s
     not sure what this one means... hmm...
-Duration: 00:00:05.18, start: 0.203833, bitrate: 14484 kb/s
+??
+  Duration: 00:00:05.18, start: 0.203833, bitrate: 14484 kb/s
 
 it seemed to have 0.0's for video when seeking in mplayer, but...umm...I'm not totally sure...
 
@@ -23,10 +24,10 @@ monster's inc:
   
 guess: progressive "standard" is 0.28, 0.30 is "standard" for true 29.97 
   
-  
 Jonah:
   track 1: Duration: 00:00:23.36, start: 0.060000 (mplayer says it's 0.1)
-  dang :P
+    dang no standard! :P
+    playing with patched: A:   0.4 V:  0.06 A-V:  0.353 ct:  0.000   1/  3 ??% ??% ??,?% 3 0               
   
 === close eyes (OSOH) ===
 
