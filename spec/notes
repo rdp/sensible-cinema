@@ -99,7 +99,9 @@ G:\Video\OTHER_SIDE_OF_HEAVEN>ffmpeg -i dvdout.mpg 2>&1| grep Duration
   Duration: 01:53:11.26, start: 0.280633, bitrate: 8202 kb/s
   avidemux says it starts at 0:00.000 and has 162740 frames [fewer frames?]
     seems to get to the end though...
-    close eyes: 00:59:56.262 frame 86224 [this seems messed-ier-than messed ... does this DVD have some progressive/non progressive skipping?] TODO
+    close eyes: 00:59:56.262 frame 86224 [this seems messed...]
+    
+NB OSOH appears to be all 23.97 fps    
     
 G:\Video\OTHER_SIDE_OF_HEAVEN>ffmpeg -i title00.ts 2>&1| grep Duration
   Duration: 01:53:11.26, start: 600.000000, bitrate: 8126 kb/s
