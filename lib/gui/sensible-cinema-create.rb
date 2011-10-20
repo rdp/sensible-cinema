@@ -126,28 +126,22 @@ module SensibleSwing
       @display_dvd_info.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk
         # display it, allow them to copy and paste it out
-        title_lengths = nil
-        t = Thread.new { 
-          # TODO mplayer -benchmark -endpos 10 dvdnav://1/d: -vo null -nosound 2>&1 > output2.txt
-          command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
-          p command
-          title_lengths = `#{command}`
-        }
-        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # label #{volume_name}"
-        show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        This is USED eventually to identify a disk to match it to its EDL, later.", id_string
-        popup = show_non_blocking_message_dialog "calculating title info"
-        t.join
+        id_string = "\"disk_unique_id\" => \"#{dvd_id}\",\n # label #{volume_name}"
+        #show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
+        #This is USED eventually to identify a disk to match it to its EDL, later.", id_string
+        popup = show_non_blocking_message_dialog "calculating title info..."
+        command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
+        title_lengths = `#{command}`
         popup.close
+        
         title_lengths = title_lengths.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
         # ID_DVD_TITLE_4_LENGTH=365.000
         
-        largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}
-        
-        start_offset = calculate_dvd_start_offset(largest_title[0], drive)
+        largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}[0]
+        start_offset = calculate_dvd_start_offset(largest_title, drive)
         
         filename = EdlTempFile + '.disk_info.txt'
-        File.write filename, id_string + "\n" + title_lengths.join("\n") + "\n" + "dvd_start_offset => #{start_offset}"
+        File.write filename, id_string + "\n" + title_lengths.join("\n") + "\n" + "dvd_start_offset for title #{largest_title} => #{start_offset}"
         open_file_to_edit_it filename
         id_string # for unit tests :)
       }
