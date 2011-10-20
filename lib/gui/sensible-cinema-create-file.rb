@@ -86,7 +86,7 @@ module SensibleSwing
       end
       
       if !fulli_dot_done_file_exists? save_to_edited
-        show_blocking_message_dialog "Warning, the first pass through when editing file-wise, S-cinema\nneeds to create a large temporary file that it can divide up easily.\nThis takes awhile, so you may need to get comfortable."
+        show_blocking_message_dialog "Warning, the first pass through when editing file-wise, Sensible Cinema\nfirst needs to create a large temporary file that it can divide up easily.\nThis takes awhile, so you may need to get comfortable."
       end
 
       require_deletion_entry = true unless watch_unedited
