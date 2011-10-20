@@ -171,13 +171,13 @@ module SensibleSwing
       temp_file = temp_dir + '/vlc.temp.bat'
       File.write(temp_file, commands)
       popup_message = <<-EOL
-        Applying #{File.basename edit_list_path} 
-           to #{file_from} (#{dvd_title}).
-        Copying to #{save_to}.
+        Applying EDL #{File.basename edit_list_path} 
+           to movie file #{file_from} (#{dvd_title}).
+        Saving to #{save_to}.
       EOL
       if !fulli_dot_done_file_exists?(save_to)
-        popup_message += "This could take quite awhile (several hours), and will prompt you with a chime noise when it is done.\n
-        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background.\n"
+        popup_message += "This will take quite awhile (several hours), since it needs the intermediate file\nit will prompt you with a chime noise when it is done.\n
+        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background.\nYou can track progress via the progress bar."
       end
       
       if !start_time

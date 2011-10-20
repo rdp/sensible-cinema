@@ -67,8 +67,8 @@ module SensibleSwing
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
       @progress_bar.visible = false
-      @panel.add @progress_bar
-
+      @panel.add @progress_bar 
+      add_text_line ""# spacing
     end
     
     def add_open_documentation_button
