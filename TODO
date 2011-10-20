@@ -23,9 +23,13 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
-   edlout
 
 == yes do ordered for this release/other projects ja  ==
+  why is the Sintel's EDL seemingly off?
+    ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
+      fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
+      maybe search at end of movies for certain things?
+    double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   ffmpeg add subs
   advertise to my ML 'wurx in mac' :)
   ffplay diagonal bug
@@ -33,6 +37,7 @@
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   auto-start audio fella
+  check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
   humanize/release DIRT
@@ -64,12 +69,11 @@
   research VLC softskip ?
   netflix instant CGI how crisp is their HD?
   note "Ooh that is clever.  Slow motion to find it! yes!"
-  C player feedback message
+  C player just better feedback message
     convert to 29.97 [at least this]
     just with the "next" frame button I guess...
       test if I have the same problem...
   popup_text in EDL's
-    speed racer
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer
@@ -87,12 +91,12 @@
   warn other wordpresses
   test mplayer -vo gl at home
   Ben's other DVD's
-  template-ify for netflix too "create for netflix"
+  template-ify for netflix too "create for netflix" button
   that extra .5s DVD reports for file size...
   EDL gottman
   EDL Greg's DVD's
   minor redcar tweaks
-  opening/create buttons [?] -> new separate sub-window
+  opening/create buttons [?] -> new separate sub-window, or something like that
   change upconvert options needs its own "close" button
     and status field?
   lightning strike from various outlets...
@@ -111,23 +115,16 @@
     and end too why not?
   "--developer" mode (reload)
   advertise urug
-  macify work minor things it doesn't :)
+  macify work minor things it doesn't currently :)
   create skype/google+ hangouts recorder windows
   mplayer directx fix patch check it...
   auto-add largest title to the generator EDL
-    complain if times look wrong...on playback? sum time
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_label
-  why is the Sintel's EDL seemingly off?
-    ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
-      fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
-      maybe search at end of movies for certain things?
-    double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  check with blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
+  check with/rent blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
   youtube/hulu timings different?
   split LLC's website+consumer
     get LLC before a "real" domain name
-  employee instructions: watch @ realtime after profanity filter first pass :P  
   clear runnings
     me try [just watch it, maybe rip [?]]
     have ben and chris test it out [realtime?]
@@ -158,10 +155,9 @@
     http://www.chefelf.com/forums/index.php?showtopic=6176
   can edit books, too.
     +- list/publish mine so far :)
-  create the following EDL: 10 commandments DVD to skip the intro music LOL
+  create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
-  why was there an extra uncaught profanity in wrinkle in time at the end?
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -189,7 +185,9 @@
       or add button "reveal advanced" with this new button on it...
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
-  rent a few blu-ray's, see if timings matter
+  why was there an extra uncaught profanity in wrinkle in time at the end?
+  employee instructions: watch @ realtime after profanity filter first pass :P  
+  @mplayer: use libdvdnav cache!
   add custom profanity option
   you can mark where the starts and stop are, then hit a button 'test my latest marks' and then edit them and retest...more easily, that is
   add "play at 1.5x speed" mplayer button, I guess
