@@ -1,6 +1,8 @@
-== ==
+== 0.29.0 ==
 
-Included EDL file that represents keeping things "in" instead of cutting things "out" only.  And file md5sum et al.
+Included EDL file that represents keeping things "in" instead of cutting things "out" only.  And file md5sum et al, regarding said file.
+Big change: if you want to edit a file, it now requires a "dvd_start_offset" so that it can coordinate between DVD's and files themselves.
+I hope this coordinates "enough" or "right" anyway.
 
 == 0.28.4 ==
 
