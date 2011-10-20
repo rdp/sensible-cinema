@@ -210,7 +210,8 @@ module SensibleSwing
       if ARGV.detect{|a| a == '--developer-mode'}
        @reload = new_jbutton("reload bin/sensible-cinema code") do
          for file in Dir[__DIR__ + '/*.rb']
-           load file
+           p file
+           eval(File.read(file), TOPLEVEL_BINDING, file)
          end
        end
       end
@@ -218,9 +219,9 @@ module SensibleSwing
     end # advanced buttons
     
     
-    def calculate_dvd_start_offset title, drive
+    def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...
       popup = show_non_blocking_message_dialog "calculating start info for largest title #{title}"
-      command = "mplayer -benchmark -endpos 4 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
+      command = "mplayer -benchmark -frames 1 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
       out = `#{command}`
       #V:  0.37
