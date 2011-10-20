@@ -70,6 +70,12 @@ module SensibleSwing
         open_file_to_edit_it filename
       }
       
+      @open_current = new_jbutton("Open EDL for currently inserted DVD") do
+        drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
+        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
+        open_file_to_edit_it edit_list_path
+      end
+      
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
