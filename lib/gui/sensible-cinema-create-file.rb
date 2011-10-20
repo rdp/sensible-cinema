@@ -3,7 +3,7 @@ module SensibleSwing
   class MainWindow
     
     def add_options_that_use_local_files
-      add_text_line 'Create Options that first create/use a local intermediary file:'
+      add_text_line 'These are Create Options that operate on a file:'
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)" )
       @preview_section.tool_tip = <<-EOL
@@ -27,8 +27,8 @@ module SensibleSwing
         repeat_last_copy_dvd_to_hard_drive
       }
       
-      # Maybe this button should go too...
-      @fast_preview = new_jbutton("fast preview all from fulli file (smplayer EDL)")
+      # I think this is still useful...
+      @fast_preview = new_jbutton("fast preview EDL from fulli file (smplayer EDL)")
       @fast_preview.tool_tip = <<-EOL
         Plays smplayer on a file with an EDL.
         This gives you a rough estimate to see if your edits are accurate, and is really fast to seek, etc.
@@ -97,7 +97,7 @@ module SensibleSwing
     
     def sanity_check_file filename
       out = `ffmpeg -i #{filename}`
-      raise 'file must start at zero huh?' unless out =~ /Duration.*start: 0.00/
+      raise 'file must start at zero unexpected?' + out unless out =~ /Duration.*start: 0.00/
       if file_from =~ /\.mkv/i
         show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
       end

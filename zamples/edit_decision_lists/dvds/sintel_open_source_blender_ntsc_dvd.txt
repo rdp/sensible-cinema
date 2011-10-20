@@ -15,5 +15,6 @@
 
 "dvd_title_track" => "2",
 "not edited out stuff" => "quite a bit of violence",
+#"dvd_start_offset" => "0.37",
 # "closing thoughts" => "still...",
 "mplayer_dvd_splits" => [], # these are where, in mplayer, the DVD timestamp "resets" to zero for some reason (bug) http://goo.gl/yMfqX . [] is a valid option, if there are none.
