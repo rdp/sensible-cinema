@@ -23,13 +23,14 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
-
-== yes do ordered for this release/other projects ja  ==
+  clarify how to do timestamps with broken mplayer
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
+  
+== yes do ordered for this release/other projects ja  ==
   ffmpeg add subs
   advertise to my ML 'wurx in mac' :)
   ffplay diagonal bug
@@ -38,6 +39,7 @@
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   auto-start audio fella
   check if smplayer is "off way more" than mplayer
+  advertise urug
 
 == yes do, un-ordered currently, from the various future release options ==
   humanize/release DIRT
@@ -113,8 +115,6 @@
     does my fixer fix it?
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
-  "--developer" mode (reload)
-  advertise urug
   macify work minor things it doesn't currently :)
   create skype/google+ hangouts recorder windows
   mplayer directx fix patch check it...
