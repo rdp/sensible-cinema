@@ -1,6 +1,52 @@
 
 up next:
 
+== times ==
+
+It "might" round up the times.
+  13 clicks to get to 00:01
+  then like 30 to 00:01
+     inconsistent?
+    
+dvdsample.exe 
+  57:50 f10 (57:53.89)
+was like 2 seconds ahead at =c= car turning left, front tire visible
+  and like 3 seconds ahead at the very beinning?
+
+mplayer:
+  3471.92 console (57:51.92)
+  54:47.92 OSD -> 3467.92 30 fps (29.92: 0:57:51.39 )
+     no hiccups...
+    
+    mplayer OSD math might be messed up, it keeps jumping all around...
+      these v bad:  Sherpya-SVN-r33574-4.2.5, and r Sherpya-SVN-r34118-4.2.5
+      also with monster's inc.
+      mplayer bug :P
+      at least it's "always" 1s off.
+      I think it's just with dvd's {both dvd:// and dvdnav://}
+      
+=c= offset:  start: 0.280633
+  OSD seemed to start at 0.28, too, which is good/right
+
+mpc-hc
+ 10 clicks per second [?]
+  car 57:52 even
+  
+== c bright light on W ==
+  10 f12
+   6.37 mplayer
+   OSD 7.37 huh?
+  
+ mpc-hc 08
+  
+dvdsample 14 f12 + 2 clicks to 14 f25, one click 15 f18, 
+16 f12 + 8 clicks -> 16 f25
+
+18 f17 + 58 clicks -> 20 f2
+ this one is *way* too many clicks...maybe the update time is some type of suggestion?  Maybe it's off by negative one VOB unit?
+
+ it "appears" to be advancing by one frame at a time, but its numbers are way whacked compared to powerdvd. Sorry!
+
 == start times ==
 titles 7,23 el materdor
 7: 
