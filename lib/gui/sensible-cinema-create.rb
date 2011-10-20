@@ -124,26 +124,34 @@ module SensibleSwing
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
-        drive, volume_name, dvd_id = choose_dvd_drive_or_file true # real DVD disk
+        drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk
         # display it, allow them to copy and paste it out
         title_lengths = nil
         t = Thread.new { 
-          # mplayer -benchmark -endpos 10 dvdnav://1/d: -vo null -nosound 2>&1 > output2.txt
-          title_lengths= `mplayer dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1`
+          # TODO mplayer -benchmark -endpos 10 dvdnav://1/d: -vo null -nosound 2>&1 > output2.txt
+          command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
+          p command
+          title_lengths = `#{command}`
         }
-        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # label: #{volume_name}"
+        id_string = "\"disk_unique_id\" => \"#{dvd_id}\", # label #{volume_name}"
         show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         This is USED eventually to identify a disk to match it to its EDL, later.", id_string
-        p 'joining'
+        popup = show_non_blocking_message_dialog "calculating title info"
         t.join
-        p 'done'
-        titles_lengths = title_lengths.split("\n").select{|line| line =~ /LENGTH/}
+        popup.close
+        title_lengths = title_lengths.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+        # ID_DVD_TITLE_4_LENGTH=365.000
+        
+        largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}
+        
+        start_offset = calculate_dvd_start_offset(largest_title[0], drive)
+        
         filename = EdlTempFile + '.disk_info.txt'
-        File.write filename, id_string + "\n" + titles_lengths
+        File.write filename, id_string + "\n" + title_lengths.join("\n") + "\n" + "dvd_start_offset => #{start_offset}"
         open_file_to_edit_it filename
         id_string # for unit tests :)
       }
-
+      
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
       @convert_seconds_to_ts.on_clicked {
         input = get_user_input("Enter \"from\" timestamp, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
@@ -209,6 +217,23 @@ module SensibleSwing
       
     end # advanced buttons
     
+    
+    def calculate_dvd_start_offset title, drive
+      popup = show_non_blocking_message_dialog "calculating start info for largest title #{title}"
+      command = "mplayer -benchmark -endpos 4 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
+      puts command
+      out = `#{command}`
+      #V:  0.37
+      popup.close
+      out.each_line{|l|
+        if l =~  /V:\s+([\d\.]+)/
+          return $1.to_f
+        end
+      }
+      show_blocking_message_dialog "unable to calculate time?"
+      return 0.0
+    end
+    
     def get_start_stop_times_strings
         # only show this message once :)
         @show_block ||= show_blocking_message_dialog(<<-EOL, "Preview")
@@ -263,9 +288,9 @@ module SensibleSwing
 # "closing thoughts" => "only...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
 # "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just  [] if there are none. Not additive, so this means "a split at 3600.15 and at second 4044.35"
-"dvd_start_offset" => "0.28", # most DVD's start a tidge after 0:00:00.0s so if it's a file instead of a DVD, we need this number. Run mplayer -benchmark -endpos 10 dvdnav://2/d: -vo null -nosound 2>&1 >output2.txt and examine output2.txt for the first V:  0.30 and put that number here
+# "dvd_start_offset" => "0.28", # most DVD's start a tidge after 0:00:00.0s so if it's a file instead of a DVD, we need this number. Run mplayer -benchmark -endpos 10 dvdnav://2/d: -vo null -nosound 2>&1 >output2.txt and examine output2.txt for the first V:  0.30 and put that number here
         EOL
-      # TODO auto-ify above, move docs to a file in documentation.
+      # TODO auto-ify above, move docs to a file within documentation folder
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       File.write(filename, input) unless File.exist?(filename)
