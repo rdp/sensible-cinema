@@ -177,20 +177,22 @@
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
-  super subtitle parser watcher for netflix instant...like on-demand...
-  spork
+  spork stuffs
   VLC UI fixes
   ruby-debug sample profiler
-  librivox EDL's or speedups :P
+  librivox EDL's and/or speedups :P
     "process them at home, or download them here"
   add new open button "edit EDL for current DVD"
+  super subtitle parser watcher for netflix instant...like on-demand...
+    without download, though...they download it, I let them use it, like a medium button?
+      or add button "reveal advanced" with this new button on it...
 
 == DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  rent a few blu-ray's, see if timings matter
   add custom profanity option
-  you can mark where the starts and stop are, then hit a button 'test my latest marks' and then edit them and retest...hmm...
+  you can mark where the starts and stop are, then hit a button 'test my latest marks' and then edit them and retest...more easily, that is
   add "play at 1.5x speed" mplayer button, I guess
   screencast for creating using srt [after it's user friendly?]
-    why not?
   linearize: full EDL with JSON on top, full timestamps. or something I like...
   test DVD upconv it at 720*x resolution too...
   they need/want to realize it's for contribution, not just use...
