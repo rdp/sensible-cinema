@@ -1,6 +1,6 @@
 This is a README description for the Sensible Cinema edited movie playback portion of the player
 for its other aspects like upconverting DVD/Netflix Instant please see 
-http://rogerdpack.t28.net/sensible-cinema for a description.
+http://rogerdpack.t28.net/sensible-cinema for descriptions.
 
 For installation/download instructions, see http://rogerdpack.t28.net/sensible-cinema
 
@@ -67,11 +67,12 @@ See the accompanying documentation/how_to_create_your_own_delete_lists.txt file.
 
 == Creating an edited DVD ==
 
-I don't actually know how to do this I've never burned a DVD.
 See also is_it_legal_to_copy_dvds.txt for some caveats you should understand first.
+I don't actually know how to do this I've never burned a video DVD.
 Windows DVD Maker might help, http://www.dvdflick.net might help.
 iDVD might help on mac.
 DO NOT MAKE ILLEGAL COPIES OF DVD's. See also is_it_legal_to_copy_dvds.txt.
+Watching edited movies may be legal in the US under the Family Protection Act.
 
 == FAQ ==
 
