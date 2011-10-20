@@ -3,6 +3,31 @@ up next:
 
 == times ==
 
+=c lightning =
+
+dvdsampler
+ 25.57
+ 25 f13
+ 26 f7
+ 27 f13 + 4
+ 25 f13
+   what in the heck?
+ 26 f7
+ 24 f20...if I hadn't seen it with my own eyes... LOL
+
+ok now 
+
+mpc-hc
+ 25 f6'ish
+ 25 f4'ish
+ 26 even.
+    bworked again <sigh>.
+
+mplayer raw, OSD corrected:
+ 23.22
+
+====
+
 It "might" round up the times.
   13 clicks to get to 00:01
   then like 30 to 00:01
