@@ -126,7 +126,7 @@ module SensibleSwing
       @display_dvd_info.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk
         # display it, allow them to copy and paste it out
-        id_string = "\"disk_unique_id\" => \"#{dvd_id}\",\n # label #{volume_name}"
+        id_string = %!"disk_unique_id" => "#{dvd_id}",\n"volume_name" => "#{volume_name}","!
         #show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         #This is USED eventually to identify a disk to match it to its EDL, later.", id_string
         popup = show_non_blocking_message_dialog "calculating title info..."
