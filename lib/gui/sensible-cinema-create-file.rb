@@ -230,7 +230,6 @@ module SensibleSwing
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
           puts msg # for being able to tell it's done on the command line
           show_blocking_message_dialog msg
-          show_in_explorer saved_to # and again, just for kicks [?]
         end
       else
         SwingHelpers.show_blocking_message_dialog "Failed--please examine console output and report back!\nAlso consult the documentation/troubleshooting file.", "Failed", JOptionPane::ERROR_MESSAGE

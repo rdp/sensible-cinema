@@ -221,12 +221,11 @@
     can I reproduce it this days? double check OSOH, repost to forum
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
   add option "just skip don't mute always instead of muting"
-  bounty/ask hqdn3d for ffmpeg
-    bounty /ask mplayer OS X screen capture input can I use it in ffmpeg?
-    ask dll, say, for pausing [?]
-      ask if I can make a pausing filter, to start paused...hmm... [?]
-    bounty ffmpeg server for doze
-    bounty motion-detect, audio
+  bounty /ask mplayer OS X screen capture input can I use it in ffmpeg?
+   ask dll, say, for pausing [?]
+     ask if I can make a pausing filter, to start paused...hmm... [?]
+   bounty ffmpeg server for doze
+   bounty motion-detect, audio
   try out disney digital copy
   EDL's (if not lewd) (only after can do propaganda, really)
     monty python
@@ -294,7 +293,6 @@
   investigate: use zoomplayer max cutscene support?
 
   can I make playback more smooth by upping mplayer cache? does smplayer pass it a parameter? It does jerk a bit doesn't it, on slower?
-  can I just use ffmpeg for an initial -> ts ? http://eotmsnotes.wordpress.com/2011/04/25/tsmuxer-notes/
   investigate xbmc dvd edl how do you do that? [+- real dvd]
   conference it can "pick out songs" (like a music video? mp3's?)
   "1:07:5.718" , "1:07:10.447", "profanity", "ba.....", "Faraday that [ba.....] That ba He's gonna wish he never met us",
@@ -302,7 +300,7 @@
   fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
     "fan editor" .bat file LOL
   @mplayer: highlighting doesn't work (at least with upconvert DVD)
-  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz? [is this necessary]
+  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz? [if it looks like it would be helpful]
   @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...
     could for files, not for dvd's yet tho...
@@ -363,6 +361,7 @@
   add button "play from exactly here to here" in [mplayer uh guess?] :P
     what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
+    there's a bug report somewhere
   @makemkv: wrong title no:Title #0 was added (7 cell(s), 0:14:58)
      Title #1 was added (8 cell(s), 0:14:57), also give us title no's in the dialog :P
   @mencoder you lop off the end somehow (dvd rip)
@@ -391,7 +390,6 @@
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-emailed feedback on crashes [?]
   accomodate failed deletes [files in use] better than dying with a backtrace
-  vendorize ffmpeg, to avoid "scary" warning on install of imagemagick/scary active x
   machine learning for video analysis [?]
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
