@@ -561,7 +561,7 @@ module SensibleSwing
       end
     end
     
-    def open_file_to_edit_it filename, options = {} # :start_minimized
+    def open_file_to_edit_it filename, options = {} # :start_minimized is the only option
       if OS.windows?
         if options[:start_minimized]
           system_non_blocking "start /min notepad \"#{filename}\""
@@ -615,6 +615,10 @@ module SensibleSwing
     
     def show_in_explorer filename
       SwingHelpers.show_in_explorer filename
+    end
+    
+    def show_select_buttons_prompt message, names
+      JOptionPane.show_select_buttons_prompt(message, names)
     end
     
   end

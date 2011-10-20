@@ -2,6 +2,13 @@ module SensibleSwing
   
   class MainWindow
 
+    def open_edl_file_when_done thred, filename
+      Thread.new {
+        thred.join
+        open_file_to_edit_it filename
+      }
+    end
+
     def setup_advanced_buttons
     
       new_jbutton("Display the standard buttons") do
@@ -13,7 +20,22 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer)")
       @mplayer_edl.on_clicked {
-        play_mplayer_edl_non_blocking nil, [], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        edl_out_instructions = ""
+        answer = show_select_buttons_prompt <<-EOL, {}
+          Would you like to create an .edl outfile as it plays?
+          As mplayer goes through the video, when you see a scene you want to edit or skip, 
+          hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
+          hit 'i' again to end the edited/skipped scene, within that file.
+          EOL
+        if answer == :yes
+          edlout_filename =  new_nonexisting_filechooser_and_go "pick edlout filename"
+          edl_out_instructions = "-edlout #{edlout_filename}"
+        end
+        
+        thred = play_mplayer_edl_non_blocking nil, [edl_out_instructions], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        if(edl_out_instructions.present?)
+          open_edl_file_when_done thred, edlout_filename
+        end
       }
       
       @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
