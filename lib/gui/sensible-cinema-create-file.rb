@@ -5,7 +5,7 @@ module SensibleSwing
     def add_options_that_use_local_files
       add_text_line 'Create Options that first create/use a local intermediary file:'
 
-      @preview_section = new_jbutton( "Preview a certain time frame from fulli file (edited)" )
+      @preview_section = new_jbutton( "Preview a certain time frame (edited)" )
       @preview_section.tool_tip = <<-EOL
         This allows you to preview an edit easily.
         It is the equivalent of saying \"watch this file edited from exactly minute x second y to minute z second q"
@@ -15,13 +15,13 @@ module SensibleSwing
         do_create_edited_copy_via_file true
       }
       
-      @preview_section_unedited = new_jbutton("Preview a certain time frame from fulli file (unedited)" )
+      @preview_section_unedited = new_jbutton("Preview a certain time frame (unedited)" )
       @preview_section.tool_tip = "Allows you to view a certain time frame unedited (ex: 10:00 to 10:05), so you can narrow down to pinpoint where questionable scenes are, etc. This is the only way to view a specific scene if there are not cuts within that scene yet."
       @preview_section_unedited.on_clicked {
         do_create_edited_copy_via_file true, false, true
       }
 
-      @rerun_preview = new_jbutton( "Re-run most recently watched preview time frame from fulli file" )
+      @rerun_preview = new_jbutton( "Re-run most recently watched previewed time frame" )
       @rerun_preview.tool_tip = "This will re-run the preview that you most recently performed.  Great for checking to see if you last edits were successful or not."
       @rerun_preview.on_clicked {
         repeat_last_copy_dvd_to_hard_drive
@@ -84,6 +84,11 @@ module SensibleSwing
         start_time = "00:00"
         end_time = "00:01"
       end
+      
+      if !fulli_dot_done_file_exists? save_to_edited
+        show_blocking_message_dialog "Warning, the first pass through when editing file-wise, S-cinema\nneeds to create a large temporary file that it can divide up easily.\nThis takes awhile, so you may need to get comfortable."
+      end
+
       require_deletion_entry = true unless watch_unedited
       should_run_mplayer_after = should_prompt_for_start_and_end_times || exit_early_if_fulli_exists
       generate_and_run_bat_file save_to_edited, edit_list_path, descriptors, file_from, dvd_friendly_name, start_time, end_time, dvd_title_track, should_run_mplayer_after, require_deletion_entry

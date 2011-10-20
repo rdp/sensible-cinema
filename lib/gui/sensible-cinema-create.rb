@@ -129,7 +129,7 @@ module SensibleSwing
         id_string = %!"disk_unique_id" => "#{dvd_id}",\n"volume_name" => "#{volume_name}","!
         #show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         #This is USED eventually to identify a disk to match it to its EDL, later.", id_string
-        popup = show_non_blocking_message_dialog "calculating title info..."
+        popup = show_non_blocking_message_dialog "calculating titles info..."
         command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
         title_lengths = `#{command}`
         popup.close
