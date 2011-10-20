@@ -23,21 +23,19 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
- edlout
+   edlout
 
 == yes do ordered for this release/other projects ja  ==
   ffmpeg add subs
   advertise to my ML 'wurx in mac' :)
-  fix dirt :)
-  background thread { delete or re-encode them to maybe -r 0.5 high compression }
   ffplay diagonal bug
   gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  OSOH DVD timing for forum/Snow White
   auto-start audio fella
 
 == yes do, un-ordered currently, from the various future release options ==
+  OSOH DVD timing for forum/Snow White
   netflix instant:
       add new batch file for play with netflix OCR
       note on the www stuff once it works
