@@ -289,10 +289,10 @@ module SensibleSwing
           # unfortunately have to check for nil because it could exit too early [?]
           exe_name = $1 + '.exe'
           begin
-            p = proc{ ole = WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
+            p = proc{ ole = ::WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
             piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
             # but the first time through this still inexplicably fails all 3...odd
-            piddys = WMI::Win32_Process.find(:all,  :conditions => {'Name' => exe_name})
+            piddys = ::WMI::Win32_Process.find(:all,  :conditions => {'Name' => exe_name})
             for piddy in piddys
               # piddy.SetPriority low_prio # this call can seg fault at times...JRUBY-5422
               pid = piddy.ProcessId # this doesn't seg fault, tho
