@@ -33,13 +33,13 @@ module SensibleSwing
     def setup_normal_buttons
       add_text_line ""
   
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)")
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)" )
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_mplayer_edl_non_blocking
       }
       
-      @create = new_jbutton( "Create edited copy of DVD/file on Your Hard Drive" )
+      @create = new_jbutton( "Create edited version of a file on Your Hard Drive" )
       @create.tool_tip = <<-EOL
         This takes a file and creates a new file on your hard disk like dvd_name_edited.mpg that you can watch when it's done.
         The file you create will contain the whole movie edited.

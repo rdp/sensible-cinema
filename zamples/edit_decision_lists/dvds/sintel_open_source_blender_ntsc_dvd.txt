@@ -12,7 +12,7 @@
 "volume_name" => "Sintel_NTSC",
 
 "disk_unique_id" => "79df7b12|8b27d001",
-"dvd_start_offset" => "0.37" # for title 2
+"dvd_start_offset" => "0.37", # for title 2
 "dvd_title_track" => "2",
 "not edited out stuff" => "quite a bit of violence",
  

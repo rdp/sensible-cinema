@@ -96,13 +96,16 @@ module SensibleSwing
     end 
     
     def sanity_check_file filename
-      out = `ffmpeg -i #{filename}`
-      raise 'file must start at zero unexpected?' + out unless out =~ /Duration.*start: 0.00/
-      if file_from =~ /\.mkv/i
-        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
+      out = `ffmpeg -i #{filename} 2>&1`
+      unless out =~ /Duration.*start: 0.00/ || out =~ /Duration.*start: 600/
+        raise 'file must start at zero unexpected?' + out
       end
-      if file_from !~ /\.(ts|mpg|mpeg)$/i
-        show_blocking_message_dialog("warning: file #{file_from} is not a .mpg or .ts file--it may not work properly all the way, but we'll can try...") 
+      if filename =~ /\.mkv/i
+        show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
+      else
+        if filename !~ /\.(ts|mpg|mpeg)$/i
+          show_blocking_message_dialog("warning: file #{filename} is not a .mpg or .ts file--it may not work properly all the way, but we'll can try...") 
+        end
       end
     end
     
@@ -154,7 +157,6 @@ module SensibleSwing
 
     def generate_and_run_bat_file save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry
       LocalStorage['last_params'] = [save_to, edit_list_path, descriptors, file_from, dvd_title, start_time, end_time, dvd_title_track, run_mplayer, require_deletion_entry]
-      initial_offset
       begin
         commands = get_mencoder_commands descriptors, file_from, save_to, start_time, end_time, dvd_title_track, require_deletion_entry
       rescue MencoderWrapper::TimingError => e
