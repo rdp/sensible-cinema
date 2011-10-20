@@ -20,6 +20,34 @@ require 'sane'
 
 class EdlParser
 
+  # this one is 1:01:02.0 => 36692.0
+  # its reverse is: translate_time_to_human_readable
+  def self.translate_string_to_seconds s
+    # might actually already be a float, or int, depending on the yaml
+    # int for 8 => 9 and also for 1:09 => 1:10
+    if s.is_a? Numeric
+      return s.to_f
+    end
+    
+    # s is like 1:01:02.0
+    total = 0.0
+    seconds = nil
+    begin
+      seconds = s.split(":")[-1]
+    rescue Exception => e
+     p 'failed!', s
+     raise e
+    end
+    raise 'failed to parse?' + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
+    seconds.gsub!(',', '.')
+    total += seconds.to_f
+    minutes = s.split(":")[-2] || "0"
+    total += 60 * minutes.to_i
+    hours = s.split(":")[-3] || "0"
+    total += 60* 60 * hours.to_i
+    total
+  end
+
   EDL_DIR = File.expand_path(__DIR__  + "/../zamples/edit_decision_lists/dvds")
   
   if File::ALT_SEPARATOR
@@ -202,9 +230,11 @@ class EdlParser
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like either :blank and :mute
   # [[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
-  def self.convert_incoming_to_split_sectors incoming, add_this_to_all_ends = 0, subtract_this_from_beginnings = 0, splits = []
+  def self.convert_incoming_to_split_sectors incoming, add_this_to_all_ends = 0, subtract_this_from_beginnings = 0, splits = [], subtract_this_from_ends = 0
     raise if subtract_this_from_beginnings < 0
     raise if add_this_to_all_ends < 0
+    raise if subtract_this_from_ends < 0
+    add_this_to_all_ends -= subtract_this_from_ends # now we allow negative :)
     if splits != []
       # allow it to do all the double checks we later skip, just for sanity :)
       self.convert_incoming_to_split_sectors incoming, 0, 0, []
@@ -242,33 +272,6 @@ class EdlParser
     combined.compact
   end
   
-  # this one is 1:01:02.0 => 36692.0
-  # its reverse is: translate_time_to_human_readable
-  def self.translate_string_to_seconds s
-    # might actually already be a float, or int, depending on the yaml
-    # int for 8 => 9 and also for 1:09 => 1:10
-    if s.is_a? Numeric
-      return s.to_f
-    end
-    
-    # s is like 1:01:02.0
-    total = 0.0
-    seconds = nil
-    begin
-      seconds = s.split(":")[-1]
-    rescue Exception => e
-     p 'failed!', s
-     raise e
-    end
-    raise 'failed to parse?' + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
-    seconds.gsub!(',', '.')
-    total += seconds.to_f
-    minutes = s.split(":")[-2] || "0"
-    total += 60 * minutes.to_i
-    hours = s.split(":")[-3] || "0"
-    total += 60* 60 * hours.to_i
-    total
-  end
   
   # its reverse: translate_string_to_seconds
   def self.translate_time_to_human_readable seconds, force_hour_stamp = false

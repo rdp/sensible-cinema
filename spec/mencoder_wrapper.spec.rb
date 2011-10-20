@@ -35,7 +35,7 @@ describe MencoderWrapper do
     FileUtils.rm 'to_here.fulli_unedited.tmp.mpg' rescue nil
     @a = EdlParser.parse_file "../zamples/edit_decision_lists/dvds/bobs_big_plan.txt"
     @a["dvd_start_offset"] = 0
-    @out = MencoderWrapper.get_bat_commands @a, "e:\\", 'to_here'
+    go
   end
   
   it "should be able to convert" do      
@@ -165,7 +165,7 @@ describe MencoderWrapper do
   
   it "should accept audio_code" do
     # for the audio philes, I guess..
-    settings = {"audio_codec"=>"copy2"}
+    settings = {"audio_codec"=>"copy2", 'dvd_start_offset' => 0.0}
     out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
     out.should include("-oac copy2")
   end
@@ -200,30 +200,36 @@ describe MencoderWrapper do
     @out.scan(/(ffmpeg|mencoder).*to_here.avi.2.avi/).length.should be >= 1
   end
   
-  context 'pinpointing sections' do
+  context 'telling it to only go from here to there' do
     before do
-     settings = {"mutes"=>{15=>20, 30 => 35}, "dvd_start_offset" => 0}
-     @out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi', '00:14', '00:25'  
+     @settings = {"mutes"=>{15=>20, 30 => 35}, "dvd_start_offset" => 0}
+     @out2 = MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here.avi', '00:14', '00:25'  
     end
     
     it "should always somewhat grab the whole thing, no endpos" do
-      @out.should_not match(/mencoder dvd.*endpos/)
+      @out2.should_not match(/mencoder dvd.*endpos/)
     end
     
     it "should contain the included subsections" do
-     @out.should_not include("-t 34.99")
-     @out.should include("14.0")
-     @out.should_not include("99999")
-     @out.should include(" 0 ") # no start at 0 even
-     @out.should match(/-ss 14.0.*0.999/)
-     @out.should match(/-ss 15.0.*4.999/)
-  end
+     @out2.should_not include("-t 34.99")
+     @out2.should include("14.0")
+     @out2.should_not include("99999")
+     @out2.should include(" 0 ") # no start at 0 even
+     @out2.should match(/-ss 14.0.*0.999/)
+     @out2.should match(/-ss 15.0.*4.999/)
+    end
   
-  it "should allow you to play something even if there's no edit list, just for examination sake" do
-    setup
-    proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15', "1", false, true}.should raise_error(/unable/)
+    it "should allow you to play something even if there's no edit list, just for examination sake" do
+      setup
+      proc { MencoderWrapper.get_bat_commands @settings, "e:\\", 'to_here', '00:14', '00:15', "1", false, true}.should raise_error(/unable/)
+    end
   end
-  
-end
+
+  it "should allow one to specify some dvd_start_offsets" do
+    settings = {"mutes"=>{15=>20, 30 => 35}, "dvd_start_offset" => '0.36'}
+    out = MencoderWrapper.get_bat_commands settings, "e:\\", 'to_here.avi'
+    out.should match(/-vol 0  -ss 14.64 -t 4.999/) # mute
+    out.should match(/-ss 19.64 -t 9.999/) # unmute
+  end
   
 end

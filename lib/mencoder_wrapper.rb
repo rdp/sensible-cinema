@@ -48,10 +48,11 @@ class MencoderWrapper
     # only for transcoding.
     def get_bat_commands these_settings, this_from_file, to_here_final_file, start_here = nil, end_here = nil, dvd_title_track = "1", delete_partials = false, require_deletion_entry = false
       
-#      def self.convert_incoming_to_split_sectors incoming, add_this_to_all_ends = 0, subtract_this_from_beginnings = 0, splits = []
-
+      dvd_start_offset = these_settings['dvd_start_offset'] # assume we prefer DVD timings which...we do :P
+      raise 'EDL must have a dvd_start_offset, even if just 0.0 (or better yet, 0.28 is a common one), as we use this to translate from DVD to file times' unless dvd_start_offset
+      dvd_start_offset = EdlParser.translate_string_to_seconds(dvd_start_offset)
       
-      combined = EdlParser.convert_incoming_to_split_sectors these_settings
+      combined = EdlParser.convert_incoming_to_split_sectors these_settings, 0, dvd_start_offset, [], dvd_start_offset
       @dvd_title_track = dvd_title_track
       assert dvd_title_track
       if start_here || end_here
