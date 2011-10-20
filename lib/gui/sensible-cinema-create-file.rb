@@ -97,6 +97,7 @@ module SensibleSwing
     
     def sanity_check_file filename
       out = `ffmpeg -i #{filename} 2>&1`
+      print out
       unless out =~ /Duration.*start: 0.00/ || out =~ /Duration.*start: 600/
         raise 'file must start at zero unexpected?' + out
       end
@@ -219,11 +220,13 @@ module SensibleSwing
         if run_mplayer_after_done
           run_smplayer_non_blocking saved_to, nil, '', false, false, true
         else
-          if File.exist?(saved_to) && (File.size(saved_to).to_f/File.size(file_from) < 0.5) # less than 50% size is suspicious...indeed...check if exists for unit tests.
-            show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow")
+          size_original = File.size(saved_to).to_f
+          size_edited_version = File.size(file_from).to_f
+          if File.exist?(saved_to) && (size_edited_version/size_original < 0.5)
+            show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow #{size_original} #{size_edited_version}")
           end            
           show_in_explorer saved_to
-          PlayAudio.play(File.expand_path(File.dirname(__FILE__)) + "/../vendor/music.wav")
+          PlayAudio.new(File.expand_path(File.dirname(__FILE__)) + "/../../vendor/music.wav").start # let it finish on its own :P
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
           puts msg # for being able to tell it's done on the command line
           show_blocking_message_dialog msg
