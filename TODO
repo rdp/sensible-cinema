@@ -29,17 +29,18 @@
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
+  talk to lucas
   
 == yes do ordered for this release/other projects ja  ==
   ffmpeg add subs
   advertise to my ML 'wurx in mac' :)
+  advertise urug
   ffplay diagonal bug
   gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   auto-start audio fella
   check if smplayer is "off way more" than mplayer
-  advertise urug
 
 == yes do, un-ordered currently, from the various future release options ==
   humanize/release DIRT
@@ -71,10 +72,8 @@
   research VLC softskip ?
   netflix instant CGI how crisp is their HD?
   note "Ooh that is clever.  Slow motion to find it! yes!"
-  C player just better feedback message
+  C player just use 29.97, that's it
     convert to 29.97 [at least this]
-    just with the "next" frame button I guess...
-      test if I have the same problem...
   popup_text in EDL's
   todo.upconvert
     netflix quality upconverter, have a go at it
@@ -135,7 +134,8 @@
   	http://msdn.microsoft.com/en-us/library/dd407175(v=VS.85).aspx can be synchronous? might be a good first pass...
     PlayPeriodInTitleAutoStop EC_DVD_PLAYPERIOD_AUTOSTOP
     make it frame accurate output text :)
-    use 29.97 fps
+    test if I have the same problem with non-accurate timestamps...
+      if so, update timestamp on "next" button clicks
     folder, look for title_number.edl
     allow it to "just play from X to Y exactly" ...
     can start fullscreen
