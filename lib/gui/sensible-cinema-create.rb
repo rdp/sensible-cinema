@@ -121,7 +121,7 @@ module SensibleSwing
         open_file_to_edit_it filename
       end
 
-      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, etc.)" )
+      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing...)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk
