@@ -1,4 +1,7 @@
 == 0.29.1 ==
+allow for creating edlout file on the fly via button
+
+== 0.29.1 ==
 
 Fix bugs so that file based processing will work again, attempt to humanize it a little better.
 
