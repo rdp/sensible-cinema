@@ -23,15 +23,18 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
-  clarify how to do timestamps with broken mplayer
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   talk to lucas
+  fix mplayer
+  genealogy intro :P
   
 == yes do ordered for this release/other projects ja  ==
+
+  note wiki pages in the docu/helps
   ffmpeg add subs
   advertise to my ML 'wurx in mac' :)
   advertise urug
@@ -41,8 +44,11 @@
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   auto-start audio fella
   check if smplayer is "off way more" than mplayer
+  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
+  is powerdvd off by 0.5s?
 
 == yes do, un-ordered currently, from the various future release options ==
+  screen saver production-ize :)
   mplayer: fix DVD OSD being off
     negative, too?
   humanize/release DIRT

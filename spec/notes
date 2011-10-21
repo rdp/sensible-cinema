@@ -26,6 +26,8 @@ mpc-hc
 mplayer raw, OSD corrected:
  23.22
 
+somehow I "thought" maybe powerdvd was accurate but off by 0.5s?
+
 ====
 
 It "might" round up the times.
