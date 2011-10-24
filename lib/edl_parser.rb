@@ -294,6 +294,7 @@ class EdlParser
     else
       out << "%05.2f" % seconds # man that printf syntax is tricky...
     end
+    
   end
   
   def self.all_edl_files_parsed use_all_not_just_dvds

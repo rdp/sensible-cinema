@@ -184,7 +184,7 @@ module SensibleSwing
       opticals.each{|d| count += 1 if d.VolumeName}
       if count == 1 && !used_local_file_option
        # just choose it if there's only one disk available..
-       p 'selecting only disk present in the various DVD drives'
+       p 'selecting only disk currently present in the various DVD drives [if you have more than one, that is]'
        selected_idx = opticals.index{|d| d.VolumeName}
        unless selected_idx
          show_blocking_message_dialog "Please insert a disk first"

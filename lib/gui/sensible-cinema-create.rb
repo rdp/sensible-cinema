@@ -157,8 +157,9 @@ module SensibleSwing
         id_string = %!"disk_unique_id" => "#{dvd_id}",\n"volume_name" => "#{volume_name}","!
         #show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
         #This is USED eventually to identify a disk to match it to its EDL, later.", id_string
-        popup = show_non_blocking_message_dialog "calculating titles info..."
+        popup = show_non_blocking_message_dialog "calculating title sizes..."
         command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
+        puts command
         title_lengths = `#{command}`
         popup.close
         
@@ -186,6 +187,7 @@ module SensibleSwing
         while(input)
           if input =~ /:/
             output = EdlParser.translate_string_to_seconds input
+            output = "%.02f" % output # so they know we're not rounding for example 6.10 not 6.1
           else
             output = EdlParser.translate_time_to_human_readable input.to_f, true
           end 
@@ -252,7 +254,7 @@ module SensibleSwing
       command = "mplayer -benchmark -frames 1 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
       out = `#{command}`
-      #V:  0.37
+      #search for V:  0.37
       popup.close
       out.each_line{|l|
         if l =~  /V:\s+([\d\.]+)/

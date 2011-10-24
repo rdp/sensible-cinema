@@ -41,7 +41,9 @@ with my stuff and dvd://, it shows the same "update only at 0.5s"
      V:3597.71'ish huh? implementation detail?
   
   should some stuff be moved to libdvdread from stream_dvd.c ?
-  
+
+=== workaround nav packets ===
+  =osoh=
     NAV packet was 0.000000, mpeg at 0.033367 now 0.033367
     NAV packet was 0.000000, mpeg at 0.280633 now 0.280633
     NAV packet was 0.000000, mpeg at 0.314000 now 0.314000?% ??,?% 1 0
@@ -67,7 +69,58 @@ with my stuff and dvd://, it shows the same "update only at 0.5s"
     NAV packet was 0.400000, mpeg at 0.647667 now 0.433367
     A:   0.7 V:  0.65 A-V:  0.006 ct:  0.021  13/ 13 ??% ??% ??,?% 1 0
     seems those NAV packets are like 0.21 behind?
+      so now they *match* the file based ones, that require an offset.  Oh man this is nuts!
+      But the only way I guess...
+      OSOH ffmpeg start: 0.280633
+      still a couple of frames off though...
+      mplayer: "0.28"
+  =c=
+    NAV packet was 0.400000, mpeg at 0.614300 now 0.400000  => 0.21
+    "0.28"
+    
+  =jonah=
+    "0.06"
+    NAV packet was 0.866667, mpeg at 0.944217 now 0.866667 => 0.08 ? wow that is really late...
+    
+    NAV packet was 6.066667, mpeg at 6.983578 now 6.9508839% 13.5% 1 0
+    NAV packet was 6.933333, mpeg at 7.000261 now 6.9333338% 13.6% 1 0
+    
+    clue! start: 0.060000
+    
+    so nav packets appear to suffer from that pesky offset....?
+    
+  =sintel=
+   NAV packet was 0.500000, mpeg at 0.734067 now 0.500000 => .23 behind
+   start: 0.300300 => seems to corrobrate...
+     (unfortunately mplayer reports this one as "0.37" hmm... )
+    
+   NAV packet was 3.000000, mpeg at 3.503500 now 3.2669336%  7.6% 0 0 # 0.24 off
   
+   @ 10 min's'ish
+   NAV packet was 604.000000, mpeg at 604.837769 now 604.0000009 -> 604.60 # 0.23 off
+  
+   might be able to peel off more accuracy via
+  
+    sintel:
+      NAV packet was 0.000000, mpeg at 0.033367 now 0.033367
+      NAV packet was 0.000000, mpeg at 0.367033 now 0.367033  # we already get this one...
+        and ffmpeg is at 0.30? huh?
+      AVS says it starts at 0.40, which kind of corroborates mplayer...
+      I'm ok with 0.07 missing I guess...they all seem to have this don't they?
+        should I always subtract an extra 0.08 from it tho? yeah, really why would that be?
+        0.28 -> 0.21?
+        Jonah no, sintel yes, OSOH yes, c yes. I guess inferring is all right here?
+        
+        So basically, for me to currently accomodate for this, I'd need to pass it into mplayer, and it would have to add it back in.
+          Until EDL tracks the accurate DVD time I guess.
+          I'm good with being 1/10th out. No worries there :P
+      
+    OSOH:
+      NAV packet was 0.000000, mpeg at 0.033367 now 0.033367
+      NAV packet was 0.000000, mpeg at 0.280633 now 0.280633 # except it got this one right...
+    
+    
+    
 =c lightning =
 
 dvdsampler

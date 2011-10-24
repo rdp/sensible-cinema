@@ -191,6 +191,9 @@ module SensibleSwing
       extra_options += " -slang en "
 
       parent_parent = File.basename(File.dirname(play_this))
+      if force_use_mplayer
+        extra_options << "-osdlevel 2" # assume create mode wants this, but maybe not mac
+      end
       force_use_mplayer ||= OS.mac?
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
