@@ -521,7 +521,7 @@ module SensibleSwing
       MplayerEdl.stub(:convert_to_edl) do |d,s,s2,splits|
         splits1 = splits
       end
-      @subject.play_mplayer_edl_non_blocking
+      @subject.play_smplayer_edl_non_blocking
       splits1.should == []
     end
     
@@ -531,7 +531,7 @@ module SensibleSwing
         @subject.stub!(:choose_dvd_drive_or_file) {
            ["mock_dvd_drive", "mockVolume", "abcdef1234"]
         }
-        @subject.play_mplayer_edl_non_blocking
+        @subject.play_smplayer_edl_non_blocking
         @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
       end
    end

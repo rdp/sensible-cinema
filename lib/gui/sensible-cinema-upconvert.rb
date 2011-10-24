@@ -8,7 +8,7 @@ module SensibleSwing
       @watch_file_upconvert = new_jbutton( "Watch a movie file upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
-        thread = play_mplayer_edl_non_blocking [filename_mpg, nil]
+        thread = play_smplayer_edl_non_blocking [filename_mpg, nil]
         when_thread_done(thread) { popup.dispose }
       end
       @watch_file_upconvert.tool_tip= "This plays back a movie file, like moviefile.mpg, or moviename.vob using your current upconverter settings.\nTo playback a file edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options.\n" # LODO
@@ -175,7 +175,7 @@ module SensibleSwing
         output_dir = get_same_drive_friendly_clean_temp_dir 'temp_upscaled_video_out'
         output_command = '-ss 2:44 -frames 300 -vo png:outdir="' + File.strip_drive_windows(output_dir) + '"'
         output_command += " -noframedrop" # don't want them to skip frames on cpu's without enough power to keep up
-        thread = play_mplayer_edl_non_blocking [filename_mpg, nil], [output_command], true
+        thread = play_smplayer_edl_non_blocking [filename_mpg, nil], [output_command], true
         when_thread_done(thread) { popup.dispose; show_in_explorer(output_dir) }
       end
       @generate_images.tool_tip = "This creates a folder with images upconverted from some DVD or file, so you can tweak settings and compare." # TODO more tooltips
@@ -184,7 +184,7 @@ module SensibleSwing
         popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         output_dir = get_same_drive_friendly_clean_temp_dir 'temp_screencast_dir'
-        thread1 = play_mplayer_edl_non_blocking [filename_mpg, nil], [" -ss 2:44 -endpos 11"]
+        thread1 = play_smplayer_edl_non_blocking [filename_mpg, nil], [" -ss 2:44 -endpos 11"]
         # screen capture for 10s
         fps_to_grab = 5
         thread2 = Thread.new {  c = %!ffmpeg -f dshow -i video="screen-capture-recorder" -r #{fps_to_grab} -vframes #{fps_to_grab*10} -y #{File.strip_drive_windows(output_dir)}/%d.png!; system_blocking c }

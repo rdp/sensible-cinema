@@ -397,7 +397,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_mplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer
+    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly

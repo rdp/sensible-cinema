@@ -32,7 +32,7 @@ module SensibleSwing
           edl_out_instructions = "-edlout #{edlout_filename}"
         end
         
-        thred = play_mplayer_edl_non_blocking nil, [edl_out_instructions], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        thred = play_smplayer_edl_non_blocking nil, [edl_out_instructions], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
         if(edl_out_instructions.present?)
           open_edl_file_when_done thred, edlout_filename
         end
@@ -44,7 +44,7 @@ module SensibleSwing
         start_time = times[0]
         end_time = times[1]
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
-        play_mplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
       end
       
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")

@@ -1,8 +1,73 @@
 
 up next:
 
+mplayer2 seems dead...yipes
+
 == times ==
 
+== 3600 dvdnav OSD ==
+
+fascinatingly, playing dvdout seems to have exactly "on" OSD to the standard time on the console.  Exactly.
+  Dunno
+  then the OSD actually resets after the shift at 25:46.  Fascinating.  It's just using the mpeg for the OSD I guess (including its opening 0.28 extra secs)
+
+ with -ss 3600 dvdnav://, it seeks me to V:3597.7 (should have 3.6 second diff) hmm...
+    how does it do seeking today, dvdnav
+    
+    59:56.96, should be 59:56.4
+      exhibits the weird freaky roundingness...almost a full second of it [?]
+    maybe off then...
+    
+    
+    that 0.96 could be coming off the 'real' stream
+    YES IT'S LOCK STEP
+
+with my stuff and dvd://, it shows the same "update only at 0.5s"
+  hmm <sigh>
+  with or without my patches, it sucks like that.
+  and its seeking speed is abysmal... hmm...maybe that's just in debug mode? huh?
+  but maybe accurate?
+  
+  so it's exactly the same fix...
+  
+  My easy fix would be to "remember" the last spot in the demuxer...maybe...
+    The real fix would be to fix dvdnav
+    
+  dvd:// had the same "we're using the exactly wrong extension"
+  
+  dvd:// on seek to 3600:
+     V:3604.21'ish [kind'er close to DVD time?]
+  dvdnav:// on seek to 3600:
+     V:3597.71'ish huh? implementation detail?
+  
+  should some stuff be moved to libdvdread from stream_dvd.c ?
+  
+    NAV packet was 0.000000, mpeg at 0.033367 now 0.033367
+    NAV packet was 0.000000, mpeg at 0.280633 now 0.280633
+    NAV packet was 0.000000, mpeg at 0.314000 now 0.314000?% ??,?% 1 0
+    A:   0.6 V:  0.31 A-V:  0.297 ct:  0.003   3/  3 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.347367 now 0.347367
+    A:   0.6 V:  0.35 A-V:  0.264 ct:  0.006   4/  4 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.380733 now 0.380733
+    A:   0.6 V:  0.38 A-V:  0.231 ct:  0.009   5/  5 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.414100 now 0.414100
+    A:   0.6 V:  0.41 A-V:  0.197 ct:  0.011   6/  6 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.447467 now 0.447467
+    A:   0.6 V:  0.45 A-V:  0.164 ct:  0.013   7/  7 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.480833 now 0.480833
+    A:   0.6 V:  0.48 A-V:  0.130 ct:  0.015   8/  8 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.514200 now 0.514200
+    A:   0.6 V:  0.51 A-V:  0.097 ct:  0.017   9/  9 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.547567 now 0.547567
+    A:   0.6 V:  0.55 A-V:  0.085 ct:  0.018  10/ 10 ??% ??% ??,?% 1 0
+    NAV packet was 0.000000, mpeg at 0.580933 now 0.580933
+    A:   0.6 V:  0.58 A-V:  0.052 ct:  0.020  11/ 11 ??% ??% ??,?% 1 0
+    NAV packet was 0.400000, mpeg at 0.614300 now 0.400000                **** BEHIND 0.21, though you'll notice 0.31 compared to 0.28 from the dumpstream...
+    A:   0.6 V:  0.61 A-V:  0.018 ct:  0.021  12/ 12 ??% ??% ??,?% 1 0
+    NAV packet was 0.400000, mpeg at 0.647667 now 0.433367
+    A:   0.7 V:  0.65 A-V:  0.006 ct:  0.021  13/ 13 ??% ??% ??,?% 1 0
+    seems those NAV packets are like 0.21 behind?
+  
 =c lightning =
 
 dvdsampler

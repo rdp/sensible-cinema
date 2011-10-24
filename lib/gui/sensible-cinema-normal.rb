@@ -36,7 +36,7 @@ module SensibleSwing
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)" )
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
-        play_mplayer_edl_non_blocking
+        play_smplayer_edl_non_blocking
       }
       
       @create = new_jbutton( "Create edited version of a file on Your Hard Drive" )
@@ -93,7 +93,7 @@ module SensibleSwing
         raise unless File.exist?(output_file)
         show_blocking_message_dialog("created #{output_file}")
       else
-        play_mplayer_edl_non_blocking [filename_mpg, edl_filename]
+        play_smplayer_edl_non_blocking [filename_mpg, edl_filename]
       end
     end
     
