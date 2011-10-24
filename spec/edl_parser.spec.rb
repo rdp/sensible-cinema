@@ -62,12 +62,16 @@ describe EdlParser do
   end
   
   it "should extract digits plus 'stuff' well" do
-    out = ["1:01", "1:01", "a", "2:01", "2:02", "b"]
+    out = ["1:01", "1:01", "a", "2:01", " 2:02", "b"]
     EdlParser.extract_entry!(out).should == ["1:01", "1:01", "a"]
-    EdlParser.extract_entry!(out).should == ["2:01", "2:02", "b"]
+    EdlParser.extract_entry!(out).should == ["2:01", " 2:02", "b"]
   end
   
-  it "should raise if the first two aren't digits" do
+  it "should parse with spaces ok" do
+    EdlParser.translate_string_to_seconds(" 2:02").should == 60*2+2
+  end
+  
+  it "should raise if the first two aren't digits, which is unexpected" do
     proc { EdlParser.extract_entry!(["a"])}.should raise_exception(SyntaxError) 
   end
   

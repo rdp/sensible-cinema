@@ -26,9 +26,10 @@ class EdlParser
     # might actually already be a float, or int, depending on the yaml
     # int for 8 => 9 and also for 1:09 => 1:10
     if s.is_a? Numeric
-      return s.to_f
+      return s.to_f # easy out.
     end
     
+    s = s.strip
     # s is like 1:01:02.0
     total = 0.0
     seconds = nil
@@ -180,10 +181,9 @@ class EdlParser
     out
   end
   
-  #TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/ # this one also allows for 4444 [?] and also weirdness like "don't kill the nice butterfly 2!" ...
-  TimeStamp = /(^\d+:\d\d[\d:\.]*|\d+\.\d+)$/ # allow 00:00:00 00:00:00.0 1222.4
-  # disallow 1905 too but in the code
-  # starts with a digit, has at least one colon followed by two digits,then some combo of digits and colons and periods...
+  # TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/ # this one also allows for 4444 [?] and also weirdness like "don't kill the nice butterfly 2!" ...
+  TimeStamp = /^\s*(\d+:\d\d[\d:\.]*|\d+\.\d+)\s*$/ # allow 00:00:00 00:00:00.0 1222.4 " 2:04 "
+  # disallow's 1905 too but elsewhere in the code
   
   def self.extract_entry! from_this
     return nil if from_this.length == 0
@@ -191,7 +191,7 @@ class EdlParser
     out = from_this.shift(2)
     out.each{|d|
       unless d =~ TimeStamp
-        raise SyntaxError.new('non timestamp? ' + d) 
+        raise SyntaxError.new('non timestamp? ' + d.inspect) 
       end
     }
     while(from_this[0] && from_this[0] !~ TimeStamp)
