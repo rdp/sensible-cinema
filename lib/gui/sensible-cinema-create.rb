@@ -56,9 +56,10 @@ module SensibleSwing
         You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
         (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
         fps, so you'll need to convert it (the convert timestamp button) to be able to use it in a file.
+        NB That you can get the mplayer keyboard control instructions with the show instructions button.
       EOL
       @play_smplayer.on_clicked {
-        play_dvd_smplayer_unedited false, true, true
+        play_dvd_smplayer_unedited false, true
       }
 
       @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)")
@@ -67,9 +68,10 @@ module SensibleSwing
         If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
         with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
         like "V: 3600.0" should match your subtitle line "01:00:00,000 --> ..."
+        NB That you can get the mplayer keyboard control instructions with the show instructions button.
       EOL
       @play_mplayer_raw.on_clicked {
-        play_dvd_smplayer_unedited true, true, true
+        play_dvd_smplayer_unedited true, true
       }
       
       new_jbutton("Display mplayer control instructions/help/howto") do
@@ -95,7 +97,11 @@ module SensibleSwing
       @open_current = new_jbutton("Open EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        open_file_to_edit_it edit_list_path
+        if edit_list_path
+          open_file_to_edit_it edit_list_path
+        else
+          show_blocking_message_dialog "EDL for this dvd doesn't exist yet, maybe create it first? #{volume_name}"
+        end
       end
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
@@ -317,9 +323,9 @@ module SensibleSwing
 # "subtitle_url" => "1234567",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only...",
-# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
-# "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just  [] if there are none. Not additive, so this means "a split at 3600.15 and at second 4044.35"
-# "dvd_start_offset" => "0.28", # see get info button
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See https://github.com/rdp/sensible-cinema/wiki/Detecting-mplayer-dvd-reset-times
+# "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just  [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
+# "dvd_start_offset" => "0.28", # use get info button to calculate this number, copy and paste it here.
         EOL
       # TODO auto-ify above, move docs to a file within documentation folder
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'

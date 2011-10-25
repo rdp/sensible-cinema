@@ -170,10 +170,12 @@ module SensibleSwing
       }
     end
 
+    # basically run mplayer/smplayer on a file or DVD
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen
       unless File.exist?(File.expand_path(play_this))
         raise play_this + ' non existing?' # sanity check, I get these in mac :)
       end
+            
 
       extra_options = ""
       # -framedrop is for slow CPU's
@@ -191,9 +193,6 @@ module SensibleSwing
       extra_options += " -slang en "
 
       parent_parent = File.basename(File.dirname(play_this))
-      if force_use_mplayer
-        extra_options << "-osdlevel 2" # assume create mode wants this, but maybe not mac
-      end
       force_use_mplayer ||= OS.mac?
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
@@ -238,7 +237,11 @@ module SensibleSwing
        else
         upconv = ""
        end
-       c = "mplayer #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
+       mplayer_loc = "mplayer"
+       if OS.doze?
+         mplayer_loc = LocalMplayer
+       end
+       c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
           extra_options += " -vo direct3d " # more light nvidia...should be ok...
@@ -255,6 +258,7 @@ module SensibleSwing
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
+    LocalMplayer = "vendor/cache/mplayer_me/mplayer.exe"
     
     def set_smplayer_opts to_this, video_, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
@@ -268,7 +272,8 @@ module SensibleSwing
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
-      new_value = "\"" + 'vendor/cache/mencoder/mplayer.exe'.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
+      raise unless OS.doze?
+      new_value = "\"" + LocalMplayer.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
       puts new_prefs
       # now some less important ones...
@@ -323,16 +328,15 @@ module SensibleSwing
     else # it's a reload
     end
    
-    def play_dvd_smplayer_unedited use_mplayer_instead, show_instructions, show_subs
-      drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors_maybe_nil = choose_dvd_or_file_and_edl_for_it false
-      if descriptors_maybe_nil
-        title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
-      end
-      if show_instructions
-        # want these even with smplayer sometimes I guess, if in power user mode anyway
-        show_mplayer_instructions_once
-      end
-      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, "-osd-fractions 2", use_mplayer_instead, show_subs, false
+    def play_dvd_smplayer_unedited use_mplayer_instead
+      drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
+      title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, show_subs, false
+    end
+    
+    def get_dvd_playback_options descriptors
+#      if descriptors['']
+      "-osdlevel 2 -osd-fractions 2"
     end
 
     if OS.doze? # avoids spaces in filenames :)
@@ -426,12 +430,14 @@ module SensibleSwing
         end
         splits = []
       else
+        # it's a DVD
         if splits == nil
           show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
           splits = []
         else
           splits.map!{|s| EdlParser.translate_string_to_seconds(s)}
         end
+        extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       end
       
       if edl_path

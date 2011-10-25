@@ -5,6 +5,50 @@ mplayer2 seems dead...yipes
 
 == times ==
 
+== converting dvdnav OSD ==
+
+=c= 
+A:3460.9 V:3460.85 A-V:  0.002 ct: -0.245 133/130 11%  5% 21.8% 0 0
+NAV packet was 3456.800049, mpeg at 3460.896240 after -> 29.97 3460.256836
+adding 0.210000 to 3460.715332
+final: 3460.925293
+A:3460.9 V:3460.90 A-V:  0.003 ct: -0.244 134/131 11%  5% 21.7% 0 0  => 0.025 off...
+
+
+NAV packet was 3457.300049 (0:57:37.30, 3457.30), mpeg at 3460.937988 after -> 29.97 3460.757324 [           0:57:40.76 => 
+adding 0.210000 to 3460.757324
+final: 3460.967285 3460.967324 # math is ok... to 0.0001
+A:3460.9 V:3460.94 A-V:  0.004 ct: -0.244 135/132 11%  5% 21.5% 0 0
+
+ => 0.03 even
+
+at beginning:
+ mpeg at 76.314934 == 76.311020 => 0.003
+
+=osoh=
+ mpeg 72.853134 => my  72.865906 => 0.01
+ 73.437057 => my 73.449829 => 0.0128 too high 0.197228000000002 so maybe 0.19 maybe, from 0.28? from 
+
+ at an hour about 0.01 ahead
+
+ last NAV packet was 6001.466797, mpeg at 6007.647461 after -> 29.97 6007.468262
+ adding 0.210000 to 6007.468262
+ final: 6007.678223 => 0.03 ahead. hmm...
+
+I wonder if it adds in the equivalent of the initial 0.28 back in by the end of the film. Oh man LOL.
+  nope
+  
+last NAV packet was 6589.966797, mpeg at 6597.194336 after -> 29.97 6596.556641
+adding difference 0.458984 adding 0.210000 to 6597.015625
+final: 6597.225586
+
+still 0.03 too high now.
+I have no idea.
+
+
+If I'm low, then just use theirs.
+Else, add 0.
+
 == 3600 dvdnav OSD ==
 
 fascinatingly, playing dvdout seems to have exactly "on" OSD to the standard time on the console.  Exactly.
