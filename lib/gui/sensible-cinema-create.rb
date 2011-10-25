@@ -26,6 +26,8 @@ module SensibleSwing
           As mplayer goes through the video, when you see a scene you want to edit or skip, 
           hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
           hit 'i' again to end the edited/skipped scene, within that file.
+          NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
+          78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
           EOL
         if answer == :yes
           edlout_filename =  new_nonexisting_filechooser_and_go "pick edlout filename"
@@ -59,7 +61,7 @@ module SensibleSwing
         NB That you can get the mplayer keyboard control instructions with the show instructions button.
       EOL
       @play_smplayer.on_clicked {
-        play_dvd_smplayer_unedited false, true
+        play_dvd_smplayer_unedited false
       }
 
       @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)")
@@ -71,7 +73,7 @@ module SensibleSwing
         NB That you can get the mplayer keyboard control instructions with the show instructions button.
       EOL
       @play_mplayer_raw.on_clicked {
-        play_dvd_smplayer_unedited true, true
+        play_dvd_smplayer_unedited true
       }
       
       new_jbutton("Display mplayer control instructions/help/howto") do

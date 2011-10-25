@@ -48,6 +48,8 @@
   is powerdvd off by 0.5s?
 
 == yes do, un-ordered currently, from the various future release options ==
+  automate some more creation things
+  create button "detect fellas :P"
   maybe button "play mplayer from exactly here to here?"
   
   screen saver production-ize :)
@@ -169,6 +171,7 @@
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
+  @mplayer: patch to show V: better
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -182,6 +185,8 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  @mplayer: -osdlevel dunno wurk, at least with dvdnav...
+  playing from 55 to 65 with dvdnav:// goes way forward [?]
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)

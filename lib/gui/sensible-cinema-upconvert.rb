@@ -15,7 +15,7 @@ module SensibleSwing
       
       @watch_dvd_upconvert = new_jbutton( "Watch a DVD upconverted (unedited)") do
         popup = warn_if_no_upconvert_options_currently_selected
-        thread = play_dvd_smplayer_unedited false, false
+        thread = play_dvd_smplayer_unedited false
         when_thread_done(thread) { popup.dispose }
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."

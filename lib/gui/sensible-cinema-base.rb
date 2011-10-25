@@ -181,7 +181,10 @@ module SensibleSwing
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts just too much
-      extra_options << " -framedrop "      
+      unless we_are_in_create_mode
+        # avoid in create mode...for accuracy sake, until I hear otherwise
+        extra_options << " -framedrop "
+      end
       # ?? extra_mplayer_commands << "-mc 0.016" ??
       extra_options << " -autosync 15 " 
       
@@ -261,6 +264,7 @@ module SensibleSwing
     LocalMplayer = "vendor/cache/mplayer_me/mplayer.exe"
     
     def set_smplayer_opts to_this, video_, show_subs = false
+      raise 'disallowed until I can compile mplayer with fontconfig' if show_subs
       p 'setting smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
@@ -273,7 +277,7 @@ module SensibleSwing
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
       raise unless OS.doze?
-      new_value = "\"" + LocalMplayer.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
+      new_value = "\"" + 'vendor/cache/mencoder/mplayer.exe'.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
       puts new_prefs
       # now some less important ones...
@@ -330,8 +334,8 @@ module SensibleSwing
    
     def play_dvd_smplayer_unedited use_mplayer_instead
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
-      title_track_maybe_nil = get_title_track(descriptors_maybe_nil, false)
-      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, show_subs, false
+      title_track_maybe_nil = get_title_track(descriptors, false)
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false
     end
     
     def get_dvd_playback_options descriptors
@@ -339,7 +343,7 @@ module SensibleSwing
       
       if OS.doze? 
         if offset = descriptors['dvd_start_offset']
-          out += " -osd-add #{offset.to_f - 0.09}" # 0.28 -> 0.19
+          out += " -osd-add #{offset.to_f - 0.105}" # 0.28 -> 0.19, ok to overshoot a bit since the initial ones are "fixed" while the mpeg is still going strong...
         else
           show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your OSD timestamps will probably be 0.19s too small"
         end
