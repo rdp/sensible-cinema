@@ -3,6 +3,18 @@ up next:
 
 mplayer2 seems dead...yipes
 
+== DVDNAV weirdness/search times ==
+
+  http://forum.doom9.org/showthread.php?t=140995&highlight=nav+mpeg
+    mentions that you can parse the IFO for information [?]
+
+  http://forum.doom9.org/showthread.php?t=141169&highlight=nav+mpeg "you can just read through the NAV packs"
+    "NAV packets just go forward, you can parse them or look in the IFO files"
+
+  http://forum.doom9.org/showthread.php?t=111436&highlight=nav+mpeg
+
+  mentions VTS_TMAPTI table...hmm...that might still be a grande clue, for determining precision...or maybe not...
+
 == times ==
 
 =c with new mplayer=

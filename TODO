@@ -47,6 +47,7 @@
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
 
 == yes do, un-ordered currently, from the various future release options ==
+  ffmpeg dshow can I move audio along anyway?
   is powerdvd off by exactly 0.5s (rounds up)?
   update wiki index page
     link somewhere "here's how to create" that takes them somewhere...
