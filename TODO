@@ -23,33 +23,36 @@
 == high prio like blocking bugs ==  
   
 == very next things I was working on ==
+  genealogy intro :P
+  test my hypotheses about NAV timing
+    0.10 ?
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   talk to lucas
-  fix mplayer
-  genealogy intro :P
   
 == yes do ordered for this release/other projects ja  ==
-
+  auto-start audio fella
   note wiki pages in the docu/helps
-  ffmpeg add subs
+  ffmpeg add subs demo
   advertise to my ML 'wurx in mac' :)
   advertise urug
   ffplay diagonal bug
   gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  auto-start audio fella
   check if smplayer is "off way more" than mplayer
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
-  is powerdvd off by 0.5s?
 
 == yes do, un-ordered currently, from the various future release options ==
-  automate some more creation things
-  create button "detect fellas :P"
+  is powerdvd off by exactly 0.5s (rounds up)?
+  update wiki index page
+    link somewhere "here's how to create" that takes them somewhere...
+  automate more creation things
+  create button "detect mplayer resets :P"
+    dvdnav:// -vo null , +1 frame
   maybe button "play mplayer from exactly here to here?"
   
   screen saver production-ize :)
@@ -72,16 +75,12 @@
       see if I need to fix my capturer...
     no super scale res necessary?
   "overwrite?" prompt
-  netflix upconvert
-    after get DVD down
-    after get hulu/youtube down, uh guess
-  screen recording sintel, see below
+  screen recording sintel, see below (for upconvert)
   advertise wait as pwait for windows/linux/cygwin :) I guess just one will do probably :)
   Linux port for SC (call that good enough for usability on TV's...), should be...
   srt add option "pick coordinating one from the middle, or from the end?" [?]
   @ffplay: diagonal bug
   note...here's how to screen live movies :)
-  research VLC softskip ?
   netflix instant CGI how crisp is their HD?
   note "Ooh that is clever.  Slow motion to find it! yes!"
   C player just use 29.97, that's it
@@ -95,7 +94,7 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
 
-  dvdnav sync with the old stuff
+  dvdnav sync with the old stuff (old mailing lists)
   popup text for EDL's
   ri_for updatez
   subtitle -> url everywhere
@@ -140,6 +139,51 @@
   clear runnings
     me try [just watch it, maybe rip [?]]
     have ben and chris test it out [realtime?]
+  ask for more beta testers for use, ask for more beta testers for creation, too
+  create a semi-accurate phantom edit EDL [?] with just splits
+    http://www.chefelf.com/forums/index.php?showtopic=6176
+  can edit books, too.
+    +- list/publish mine so far :)
+  inventionzy: blu-ray stuffs from todo.inventionzy
+  sons of provo "music video" EDL
+  @mplayer: patch to show V: better
+  C player:
+    double check if it timing shucks
+  fix mplayer dvdnav OSD
+  
+== other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
+
+  todo.upconvert
+  todo.propaganda
+  todo.inventionzy
+  todo.open_edl_list_org_todo
+  todo.build_library
+  todo.subtitle
+  virtual_audio TODO
+  screen_capture TODO
+
+== decide later to move up or down ==
+  create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
+  @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
+  playing from 55 to 65 with dvdnav:// goes way forward [?]
+  investigate WMC "call out to smplayer + EDL" or the like...
+    add to docu
+    maybe add "is this for XBMC"? to the create .edl file button :)
+  spork stuffs
+  VLC UI fixes
+  ruby-debug sample profiler
+  librivox EDL's and/or speedups :P
+    "process them at home, or download them here"
+  add new open button "edit EDL for current DVD"
+  super subtitle parser watcher for netflix instant...like on-demand...
+    without download, though...they download it, I let them use it, like a medium button?
+      or add button "reveal advanced" with this new button on it...
+  research VLC softskip ?
+
+== DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  netflix upconvert
+    after get DVD down
+    after get hulu/youtube down, uh guess
   C player:
     use DVD navigator (check)
     just use mplayer EDL syntax, plus a title track (or just detect track change, if long enough, assume... :P) :)
@@ -163,46 +207,9 @@
     once I can jump around, advertise as a phantom editor :)
       maybe even before?
     can hit 'i' to save current timestamp :)
-  ask for more beta testers for use, ask for more beta testers for creation, too
-  create a semi-accurate phantom edit EDL [?] with just splits
-    http://www.chefelf.com/forums/index.php?showtopic=6176
-  can edit books, too.
-    +- list/publish mine so far :)
-  create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
-  inventionzy: blu-ray stuffs from todo.inventionzy
-  sons of provo "music video" EDL
-  @mplayer: patch to show V: better
-  
-== other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
-
-  todo.upconvert
-  todo.propaganda
-  todo.inventionzy
-  todo.open_edl_list_org_todo
-  todo.build_library
-  todo.subtitle
-  virtual_audio TODO
-  screen_capture TODO
-
-== decide later to move up or down ==
-  @mplayer: -osdlevel dunno wurk, at least with dvdnav...
-  playing from 55 to 65 with dvdnav:// goes way forward [?]
-  investigate WMC "call out to smplayer + EDL" or the like...
-    add to docu
-    maybe add "is this for XBMC"? to the create .edl file button :)
-  spork stuffs
-  VLC UI fixes
-  ruby-debug sample profiler
-  librivox EDL's and/or speedups :P
-    "process them at home, or download them here"
-  add new open button "edit EDL for current DVD"
-  super subtitle parser watcher for netflix instant...like on-demand...
-    without download, though...they download it, I let them use it, like a medium button?
-      or add button "reveal advanced" with this new button on it...
-
-== DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+  @mplayer the cross compile instructions are owd
+  @mplayer the error message for fonts is poor. and misleading?
   support VLC as an EDL for files
-  why was there an extra uncaught profanity in wrinkle in time at the end?
   employee instructions: watch @ realtime after profanity filter first pass :P  
   @mplayer: use libdvdnav cache!
   add custom profanity option
