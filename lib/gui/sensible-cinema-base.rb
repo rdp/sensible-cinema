@@ -335,8 +335,18 @@ module SensibleSwing
     end
     
     def get_dvd_playback_options descriptors
-#      if descriptors['']
-      "-osdlevel 2 -osd-fractions 2"
+      out = "-osdlevel 2 -osd-fractions 1"
+      
+      if OS.doze? 
+        if offset = descriptors['dvd_start_offset']
+          out += " -osd-add #{offset.to_f - 0.09}" # 0.28 -> 0.19
+        else
+          show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your OSD timestamps will probably be 0.19s too small"
+        end
+      else
+        show_blocking_message_dialog "warning, since we're not in windows with a patched mplayer OSD timestamps will probably be 0.19s too small,\n and their fraction past the decimal point will be off.\nPing me for instructions to build a patched mplayer."
+      end
+      out
     end
 
     if OS.doze? # avoids spaces in filenames :)
@@ -437,7 +447,9 @@ module SensibleSwing
         else
           splits.map!{|s| EdlParser.translate_string_to_seconds(s)}
         end
-        extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
+        if we_are_in_create_mode
+          extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
+        end
       end
       
       if edl_path
