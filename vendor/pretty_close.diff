@@ -19371,9 +19371,11 @@ Index: mplayer.c
  
      // A-V sync
      if (mpctx->sh_audio && sh_video)
-@@ -1580,12 +1581,21 @@
+@@ -1579,13 +1580,26 @@
+ 
      if (mpctx->sh_video) {
          // fallback on the timer
++        printf("\nosd_level %d osd_fractions %d \n", osd_level, osd_fractions);
          if (osd_level >= 2) {
 -            int len = demuxer_get_time_length(mpctx->demuxer);
 +            double double_len = demuxer_get_time_length(mpctx->demuxer);
@@ -19390,22 +19392,25 @@ Index: mplayer.c
 +            printf("adding %f to %f \n", osd_add_this_much, pts); // cannot figure it out <sniff>
 +            pts += osd_add_this_much;
 +            printf("final: %f\n", pts);
-+            
++            if((pts - 10) < mpctx->sh_video->pts) {
++              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 10\n", mpctx->sh_video->pts, pts);
++              pts = mpctx->sh_video->pts;
++            }
 +            int seconds = (int) pts;
 +            
              if (mpctx->osd_show_percentage)
                  percentage = demuxer_get_percent_pos(mpctx->demuxer);
  
-@@ -1597,7 +1607,7 @@
+@@ -1597,7 +1611,7 @@
              if (osd_fractions == 1) {
                  // print fractions as sub-second timestamp
                  snprintf(fractions_text, sizeof(fractions_text), ".%02d",
 -                         (int)((mpctx->sh_video->pts - pts) * 100 + 0.5)
-+                         (int)((pts - seconds)*100 + 0.5)
++                         (int)((pts - seconds)*100)
                           % 100);
              } else if (osd_fractions == 2) {
                  // print fractions by estimating the frame count within the
-@@ -1608,24 +1618,24 @@
+@@ -1608,24 +1622,24 @@
                  // whose first frame is not exactly at timestamp 0. Therefore,
                  // we add 0.2 and cut off at the decimal point, which proved
                  // as good heuristic
@@ -19422,10 +19427,11 @@ Index: mplayer.c
  
 -            if (osd_level == 3)
 -                snprintf(osd_text_timer, 63,
+-                         "%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
+-                         mpctx->osd_function, pts / 3600, (pts / 60) % 60, pts % 60,
 +if (osd_level == 3) 
 +snprintf(osd_text_timer, 63,
-                          "%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
--                         mpctx->osd_function, pts / 3600, (pts / 60) % 60, pts % 60,
++                         "s-cinema:%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
 +                         mpctx->osd_function, (int)pts / 3600, (int)(pts / 60) % 60, (int)pts % 60,
                           fractions_text, len / 3600, (len / 60) % 60, len % 60,
 -                         percentage_text);
@@ -19496,7 +19502,7 @@ Index: libmpdemux/demuxer.c
  /**
   * \brief demuxer_get_current_time() returns the time of the current play in three possible ways:
   *        either when the stream reader satisfies STREAM_CTRL_GET_CURRENT_TIME (e.g. dvd)
-@@ -1480,15 +1482,38 @@
+@@ -1480,15 +1482,43 @@
   *        0 otherwise
   * \return the current play time
   */
@@ -19520,18 +19526,23 @@ Index: libmpdemux/demuxer.c
 +      if(get_time_ans != last_dvd_update_pos) {
 +        last_dvd_update_pos = get_time_ans;
 +        last_stream_pos_at_that_dvd_time = sh_video->pts;
++        printf("new NAV packet %f at %f ", get_time_ans, sh_video->pts);
 +      } else {
 +        double difference = (sh_video->pts - last_stream_pos_at_that_dvd_time);
-+        printf("adding difference %f ", difference);
-+        get_time_ans += difference; // add the latest difference, already in 29.97 so not morphing needed. weird-z-o
++        if(difference > 0) {
++          printf("adding difference %f ", difference);
++          get_time_ans += difference; // add the latest difference, already in 29.97 so not morphing needed. weird-z-o
++        } else {
++          printf("not adding negative diff %f", difference);
++        }
 +        if(get_time_ans < 0)
 +          get_time_ans = 0;
-+       }
++        }
 +      
 +    }
 +    else if (sh_video) {
-+        printf("weird fella");
-+      // we never get here
++        printf("weird fella mpeg at %f ", sh_video->pts);
++      // we get here at the mpeg "splits" within them...
          get_time_ans = sh_video->pts;
 -    return (int) get_time_ans;
 +        
