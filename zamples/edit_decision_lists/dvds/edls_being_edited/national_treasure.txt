@@ -1,0 +1,22 @@
+# comments can go after a # on any line, for example this one.
+"name" => "national treasure",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"volume_name" => "NATIONAL_TREASURE",
+"disk_unique_id" => "91a5aeec|5178a204",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+# "subtitle_url" => "1234567",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only...",
+"mplayer_dvd_splits" => ["3499.07"],  # better than 3499.4 with audio only which is like 0.4 too far?
+"dvd_start_offset" => "0.28",
