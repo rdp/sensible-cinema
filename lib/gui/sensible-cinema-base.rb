@@ -242,7 +242,7 @@ module SensibleSwing
        end
        mplayer_loc = "mplayer"
        if OS.doze?
-         mplayer_loc = LocalMplayer
+         mplayer_loc = LocalModifiedMplayer
        end
        c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -261,10 +261,9 @@ module SensibleSwing
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    LocalMplayer = "vendor/cache/mplayer_me/mplayer.exe"
+    LocalModifiedMplayer = "vendor/cache/mplayer_me/mplayer.exe"
     
-    def set_smplayer_opts to_this, video_, show_subs = false
-      raise 'disallowed until I can compile mplayer with fontconfig' if show_subs
+    def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
       old_prefs = File.read(SMPlayerIniFile) rescue ''
       unless old_prefs.length > 0
@@ -275,9 +274,11 @@ module SensibleSwing
       assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
-      assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{get_upconvert_vf_settings}\"")
+      assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise unless OS.doze?
-      new_value = "\"" + 'vendor/cache/mencoder/mplayer.exe'.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
+      mplayer_to_use = 'vendor/cache/mencoder/mplayer.exe'
+      mplayer_to_use = LocalModifiedMplayer if show_subs
+      new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
       puts new_prefs
       # now some less important ones...

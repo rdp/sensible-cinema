@@ -5,6 +5,34 @@ mplayer2 seems dead...yipes
 
 == times ==
 
+=c with new mplayer=
+
+split 3499.07
+
+before the split, 
+last NAV packet was 3411.699951, mpeg at 3415.309326 after -> 29.97 3415.111572
+adding 0.175000 to 3415.111572
+final: 3415.286621  => 0.02 short
+using mpeg
+
+
+after split
+last NAV packet was 3496.533447, mpeg at 1.310520 after -> 29.97 3500.030029
+adding difference 0.325325 adding 0.175000 to 3500.355469
+final: 3500.530518
+
+split  3498.984619 this time [?] huh?
+
+with mpeg at 1.31, I'd expect...final to be...350.38
+
+dvd:
+V:3499.48 1095/1092  4%  0%  0.0% 0 0                                          V:  0.25 1096/1093  4%  0%  0.0% 0 0  
+
+V:3499.48 1095/1092  4%  0%  0.0% 0 0                                          V:  0.25 1096/1093  4%  0%  0.0% 0 0                                           
+dvdnav:
+
+V:3499.40 1057/1054  4%  0%  0.0% 0 0                                          V:  0.04   0/  0 ??% ??% ??,?% 0 0                                             
+V:3499.40 1055/1052  4%  0%  0.0% 0 0                                          V:  0.04   0/  0 ??% ??% ??,?% 0 0                                             
 == converting dvdnav OSD ==
 
 =c= 
