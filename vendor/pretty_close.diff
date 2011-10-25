@@ -19431,7 +19431,7 @@ Index: mplayer.c
 -                         mpctx->osd_function, pts / 3600, (pts / 60) % 60, pts % 60,
 +if (osd_level == 3) 
 +snprintf(osd_text_timer, 63,
-+                         "s-cinema:%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
++                         "edl-accurater:%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
 +                         mpctx->osd_function, (int)pts / 3600, (int)(pts / 60) % 60, (int)pts % 60,
                           fractions_text, len / 3600, (len / 60) % 60, len % 60,
 -                         percentage_text);
