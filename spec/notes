@@ -26,6 +26,7 @@ split  3498.984619 this time [?] huh?
 with mpeg at 1.31, I'd expect...final to be...350.38
 
 ===detect split ===
+
 dvd:
 V:3499.48 1095/1092  4%  0%  0.0% 0 0                                          V:  0.25 1096/1093  4%  0%  0.0% 0 0  
 
@@ -47,7 +48,7 @@ adding 0.175000 to 3499.229248
 final: 3499.404297
 A:   0.5 V:  0.42 A-V:  0.094 ct: -0.231  10/ 10 ??% ??% ??,?% 0 0
 
-so this seems to impliy the split should have been at 3498.98
+so this seems to impliy the split should have been at 3498.98, timing-wise...
 
 osd_level 3 osd_fractions 1
 last NAV packet was 3494.833252, mpeg at 3498.984619 after -> 29.97 3498.328125
@@ -68,9 +69,9 @@ A:3499.4 V:  0.00 A-V:3499.362 ct: -0.272   0/  0 ??% ??% ??,?% 0 0
 
 which is what dvdnav gave us *when played* ?
 
+old mplayer:
 A:3498.3 V:3498.36 A-V: -0.034 ct: -0.292 164/164  9%  4% 27.9% 0 0
 A:3499.3 V:  0.00 A-V:3499.321 ct: -0.288   0/  0 ??% ??% ??,?% 0 0
-
 A:3498.3 V:3498.36 A-V: -0.034 ct: -0.292 164/164  9%  4% 27.9% 0 0
 A:3499.3 V:  0.00 A-V:3499.321 ct: -0.288   0/  0 ??% ??% ??,?% 0 0
 A:  -0.7 V:  0.04 A-V: -0.708 ct: -0.288   1/  1 ??% ??% ??,?% 0 0
@@ -108,14 +109,11 @@ A:   1.3 V:3499.49 A-V:-3498.231 ct: -0.329  26/ 26 53% 128% 194.6% 34 0
 A:   1.3 V:  0.25 A-V:  1.021 ct: -0.324  27/ 27 52% 123% 188.7% 34 0
 A:   1.4 V:  0.29 A-V:  1.061 ct: -0.320  28/ 28 50% 119% 185.4% 34 0
 
-
 you can infer from that that it's 3498.36 + 7 frames, which is close'ish-er...
 
-ooh checkout the audio...
+ooh checkout the audio...thankfully don't have to worry about this:
 
-maybe the split is 
-HOW CAN THE SPLIT BE DIFFERENT!
- no audio: V:3499.40 1057/1054  5% 17%  0.0% 0 0                                          
+ without audio: V:3499.40 1057/1054  5% 17%  0.0% 0 0                                          
 A:3499.3 V:  0.00 A-V:3499.299 ct: -0.262   0/  0 ??% ??% ??,?% 0 0
 A:   0.1 V:  0.00 A-V:  0.115 ct: -0.257   0/  0 ??% ??% ??,?% 0 0
 
@@ -134,13 +132,95 @@ A:   0.2 V:  0.08 A-V:  0.141 ct: -0.208   2/  2 ??% ??% ??,?% 0 0
 A:   0.3 V:  0.13 A-V:  0.129 ct: -0.204   3/  3 ??% ??% ??,?% 0 0
 A:   0.3 V:  0.17 A-V:  0.097 ct: -0.200   4/  4 ??% ??% ??,?% 0 0
 
+mine (extracted): no audio (with audio: 3499.401611)
+  V:3499.03
 
-mine (extracted):
-V:3499.03
+mine (cleaned up): no audio
+  SVN-r34234-4.5.1
+  A:3498.9 V:3498.90 A-V: -0.007 ct: -0.213 108/105 14%  5% 28.1% 0 0
+  A:3498.9 V:3498.94 A-V: -0.006 ct: -0.214 109/106 14%  5% 27.8% 0 0
+  A:3498.9 V:3498.98 A-V: -0.038 ct: -0.218 110/107 14%  5% 27.6% 0 0
+  A:3499.0 V:3499.03 A-V: -0.037 ct: -0.222 111/108 14%  5% 27.4% 0 0
+  A:3499.3 V:  0.00 A-V:3499.299 ct: -0.222   0/  0 ??% ??% ??,?% 0 0
+  A:   0.1 V:  0.00 A-V:  0.115 ct: -0.217   0/  0 ??% ??% ??,?% 0 0
+  A:   0.2 V:  0.04 A-V:  0.138 ct: -0.213   1/  1 ??% ??% ??,?% 0 0
 
+except not cleaned up, when really played, stepping through:
+
+  osd_level 1 osd_fractions 0
+  A:3499.0 V:3498.98 A-V: -0.016 ct: -0.212 110/107 13%  7% 28.8% 0 0
+    =====  PAUSE  =====
+  osd_level 1 osd_fractions 0
+  A:3499.3 V:  0.00 A-V:3499.299 ct: -0.212   0/  0 ??% ??% ??,?% 0 0
+  A:   0.1 V:  0.00 A-V:  0.094 ct: -0.208   0/  0 ??% ??% ??,?% 0 0
+    =====  PAUSE  =====
+  
+  -vo null seemed to not make a difference. (it was the pausing that mattered)
+  
+  however, *only when stepping through it with frame pause* ! which seems pretty reliable...except that?
+
+== which is better, pause-wise or straight-through, with parsing? ==
+  in this case, we had  3499.4043-0.375 => 3499.0293 somehow :P
+    except that we were (mpeg - me) 0.02
+  @ 0.33 past:
+    (3499.03+0.333)-3499.4043
+     => -0.0412999999998647
+     which is about one frame off...how bad it was before anyway
+    
+    started  5.819495 -5.780600
+      => 0.0388950000000001
+      
+    middle 3460.812546 -  3460.631919
+     [erroneous]  => 0.180627000000186 # oops, was missing my -osd-add parameter :P
+    
+    middle  3483.010254 -  3482.987549
+      0.0227049999998599
+    
+    post middle  11.120322 + 3499.03 -  3510.339844
+      -0.18952199999967 + 0.175 = -0.01452199999967
+      
+    end @ 3499.03 : (4208.937500 + 3499.03) -  7708.158691
+      -0.19119099999898 + 0.175 = -0.01619099999898
+      + 0.04 0.02380900000102
+      yes!
+      
+newer mplayer does it?
+newer ffmpeg causes it?
+
+mine (SVN-r34234-4.5.1) without audio:
+V:3499.23 116/113 12% 15%  0.0% 0 0
+V:3499.28 117/114 12% 15%  0.0% 0 0
+V:3499.32 118/115 12% 15%  0.0% 0 0
+V:3499.36 119/116 12% 15%  0.0% 0 0
+V:3499.40 120/117 12% 15%  0.0% 0 0 # wrong-o I wager...
+V:  0.04   0/  0 ??% ??% ??,?% 0 0
+
+
+Sherpya-SVN-r33574-4.2.5 with audio
+A:3498.3 V:3498.3 A-V:  0.005 ct: -0.247  92/ 89  7%  1% 33.1% 0 0
+A:3498.3 V:3498.3 A-V: -0.017 ct: -0.248  93/ 90  7%  1% 32.7% 0 0
+A:3498.3 V:3498.3 A-V: -0.041 ct: -0.252  94/ 91  7%  1% 32.4% 0 0
+A:3499.3 V:   0.0 A-V:3499.279 ct: -0.248   0/  0 ??% ??% ??,?% 0 0
+A:  -0.7 V:   0.1 A-V: -0.769 ct: -0.248   1/  1 ??% ??% ??,?% 0 0
+A:  -0.6 V:   0.1 A-V: -0.639 ct: -0.248   1/  1 ??% ??% ??,?% 0 0
+ does have the freaky back and forth thing though...
+
+ ===== blink @ =c= 105'ish comparing mplayer versions =====
+   A: 106.1 V:106.12 A-V: for *both*  Sherpya-SVN-r34118-4.2.5,  SVN-r34234-4.5.1 (mine)
+     phew!
+
+  I think I can "assume" that mine is better? ... ?
+
+== how to tell an audio packet came through ==
+  osd_level 1 osd_fractions 0
+  A:3499.0 V:3499.03 A-V: -0.069 ct: -0.296 192/192  7%  5% 25.5% 0 0 # real video packet
+    =====  PAUSE  =====
+  osd_level 1 osd_fractions 0
+  A:3499.3 V:  0.00 A-V:3499.299 ct: -0.296   0/  0 ??% ??% ??,?% 0 0 # AUDIO PACKET you can tell because it doesn't say "pause", also V doesn't advance
+  A:   0.1 V:  0.00 A-V:  0.094 ct: -0.292   0/  0 ??% ??% ??,?% 0 0 # real video packet then I guess...the above didn't count I guess, or maybetwo came in at once.
+    => I think you can add one frame to the last v., or 3499.07 ?
 
 === other ===
-
 
 hmm, basically...the same-ish LOL. prefere dvdnav barely...
 
