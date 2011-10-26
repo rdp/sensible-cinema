@@ -1,9 +1,101 @@
 
 up next:
 
-=c=
+=snow white=
 
-switches [!]
+ 0.4 start
+ 7.120795 -  6.923583 = 0.1972120000000004
+ fascinating. nothing in common with start times, perhaps?
+ 
+ and at end:
+   it's borked
+   
+=mtoe=
+
+ 4.137467 - (mineE)  3.903900 => 0.23350000000000026
+  from 0.3 even
+  yep, this is bizarre
+  
+  and at end...
+  4820.248047 -  4819.983398 0.2646489999997357
+  
+ =all dogs go to heaven=
+ start "0.3" (probable 0.28)
+ 
+  4.010844 -  3.837166  0.17367799999999978
+  
+  demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+
+ 594.200256 - 603.069153 -8.86889700000006
+ 
+  3033.053955 -  3041.922363  -8.868408000000272
+  oh oops had a split at 9.266098 - 0.34 somehow...
+
+ = little mermaid =
+  0.28
+  
+  4.993670 -  6.998652
+   had an early split:
+    mpeg at 0.814500,  mpeg at 0.280633 
+            V:   1.4 A-V:  0.193 ct:  0.032  36/ 36 31%  7% 55.7% 3 0
+   A:   1.7 V:   0.3
+   
+   # TODO DISALLOW TOO EARLY OF SPLITS ? WARN [?]
+   
+   A:   0.8 V:  0.81 A-V:  0.031 ct:  0.053  19/ 19 45% 21% 29.0% 4 0             
+
+osd_level 2 osd_fractions 2 
+last NAV packet was 1.066667, mpeg at 0.280633 after -> 29.97 1.067733
+not adding negative diff -0.533867adding 0.000000 to 1.067733 
+final: 1.067733
+A:   0.9 V:  0.28 A-V:  0.587 ct:  0.056  20/ 20 44% 21% 27.6% 4 0             
+
+then again:
+
+ 0.81 A-V:  0.543 ct:  0.109  36/ 36 34% 20% 22.3% 4 0             
+
+osd_level 2 osd_fractions 2 
+last NAV packet was 1.633333, mpeg at 0.280633 after -> 29.97 1.634967
+not adding negative diff -0.533867adding 0.000000 to 1.634967 
+final: 1.634967
+using mpeg ts appears larger, which if true is definitely better 0.280633 > 1.634967 - 10
+A:   1.4 V:  0.28 A-V:  1.099 ct:  0.113  37/ 37 34% 19% 22.1% 4 0             
+
+
+MAYBE IT NEEDS TO EQUAL THE ACKET BEFORE THE NEXT RESTART PACKET...
+  or maybe it really actually means...add one frame tho :P
+  thinking the 0.28 is to allow for an easier "seamless" transition from one to the next...maybe?
+
+  just subtract one, I'm thinking?
+0.814500 -  1.067733 -0.25
+
+too hard to tell LOL. (right on a split, might have been whacked out somehow...)
+
+last NAV packet was 2.200000, mpeg at 0.814500 (equiv. to 2.4 about), so we lost 1.6
+we have 
+
+ 0.81
+ 0.28
+ ...
+ 0.81
+ 0.28
+
+ so if we had split twice at 0.81, we'd be close...
+   now I'm torn :P
+
+ mpeg 7.245920 -  9.250908  -2.004988000000001
+ 
+ I'm guessing 0.85 is good for now...
+   hmm...actually it might be...and this is one phreaky DVD...hmm...sure :P
+   
+=nanny mcphee=
+0.28
+  2.733078 - 2.519184 => 0.213
+   4797.554688 -  4797.359375 =>  0.19531300000016927
+   
+=c has some inline=
+
+has some inline switches 30 <-> 29.97 [!]
 
 Warning! FPS changed 23.976 -> 29.970  (-5.994005) [4]
 

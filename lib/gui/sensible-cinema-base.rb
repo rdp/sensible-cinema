@@ -104,6 +104,12 @@ module SensibleSwing
       set_visible be_visible
     end
     
+    def get_title_track descriptors, use_default_of_one = true
+      given = descriptors["dvd_title_track"] 
+      given ||= "1" if use_default_of_one
+      given
+    end
+
     def we_are_in_create_mode
      ARGV.index("--create-mode")
     end
