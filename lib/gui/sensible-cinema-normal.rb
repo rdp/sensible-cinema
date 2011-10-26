@@ -143,11 +143,6 @@ module SensibleSwing
       JFile.new(File.dirname(path)).get_usable_space
     end
     
-    def get_title_track descriptors, use_default_of_one = true
-      given = descriptors["dvd_title_track"] 
-      given ||= "1" if use_default_of_one
-      given
-    end
 
     def get_drive_with_most_space_with_slash
       DriveInfo.get_drive_with_most_space_with_slash

@@ -175,10 +175,15 @@ module SensibleSwing
         # ID_DVD_TITLE_4_LENGTH=365.000
         
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        if edit_list_path
-          title_to_get_offset_of = get_title_track(parse_edl edit_list_path)
+        largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}
+		if !largest_title
+		  show_blocking_message_dialog "unable to parse lengths? #{title_lengths}"
+		end
+		largest_title = largest_title[0]
+		if edit_list_path
+		  parsed = parse_edl edit_list_path
+          title_to_get_offset_of = get_title_track(parsed)
         else
-          largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}[0]
           title_to_get_offset_of = largest_title
         end
         start_offset = calculate_dvd_start_offset(title_to_get_offset_of, drive)

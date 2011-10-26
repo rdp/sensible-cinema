@@ -1,9 +1,31 @@
 
 up next:
 
+=snow white=
+
+ 0.4 start
+ 7.120795 -  6.923583 = 0.1972120000000004
+ fascinating. nothing to do with start times?
+ 
+ and at end:
+   it's borked
+   
+=mtoe=
+
+ 4.137467 - (mineE)  3.903900 => 0.23350000000000026
+  from 0.3 even
+  yep, this is bizarre
+  
+  and at end...
+  4820.248047 -  4819.983398 0.2646489999997357
+  
+ =all dogs go to heaven=
+ 
+ 
+ 
 =c=
 
-switches [!]
+has some inline switches 30 <-> 29.97 [!]
 
 Warning! FPS changed 23.976 -> 29.970  (-5.994005) [4]
 
