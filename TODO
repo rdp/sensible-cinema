@@ -24,8 +24,8 @@
   
 == very next things I was working on ==
   genealogy intro :P
-  test my hypotheses about NAV timing
-    0.10 ?
+  add a ~
+  hard-code NAV offset in ruby :P
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
@@ -35,7 +35,6 @@
   
 == yes do ordered for this release/other projects ja  ==
   auto-start audio fella
-  note wiki pages in the docu/helps
   ffmpeg add subs demo
   advertise to my ML 'wurx in mac' :)
   advertise urug
@@ -47,6 +46,8 @@
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
 
 == yes do, un-ordered currently, from the various future release options ==
+  note wiki pages in the docu/helps
+  mplayer patch for sanity
   ffmpeg dshow can I move audio along anyway?
   is powerdvd off by exactly 0.5s (rounds up)?
   update wiki index page
