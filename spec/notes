@@ -1107,7 +1107,7 @@ Snow White apparently failed quite well at work, however.  Man this is really re
     
 == snow white DVD ==
   has a plus 5 freako
-  the TS *might* be right on, which would imply ts == 29.97, makemkv = ts*30.03
+  the TS *might* be right on, which would imply ts == 29.97, makemkv = ts*30.03, which somehow feels wrong...
 
  wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd)
   1:23:32 sum powerDVD
@@ -1117,7 +1117,7 @@ Snow White apparently failed quite well at work, however.  Man this is really re
   yep it's totally internally inconsistent. Fascinating.
   
   120180 frames in the ts
-    -> 29.97 1:46:50 <sigh>.
+    -> 29.97 1:46:50 <sigh> (totally off)
   120183 frames in the mkv <sigh> LOL
   
  VLC 
