@@ -343,8 +343,13 @@ module SensibleSwing
       out = "-osdlevel 2 -osd-fractions 1"
       
       if OS.doze? 
+        offset_time = "0.20" # 0.21 0.18 0.23 0.21  they're almost all right there...
         if offset = descriptors['dvd_start_offset']
-          out += " -osd-add #{offset.to_f - 0.105}" # 0.28 -> 0.19, ok to overshoot a bit since the initial ones are "fixed" while the mpeg is still going strong...
+          if offset && offset.to_f < 0.10
+            offset_time = offset
+            puts 'using small osd offset' + offset_time
+          end
+          out += " -osd-add #{offset_time}"
         else
           show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your OSD timestamps will probably be 0.19s too small"
         end

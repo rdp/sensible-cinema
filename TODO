@@ -24,8 +24,9 @@
   
 == very next things I was working on ==
   genealogy intro :P
-  test my hypotheses about NAV timing
-    0.10 ?
+  ~, ~~ if no -sub-add
+  can deploy it again :P
+   with mencoder
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
