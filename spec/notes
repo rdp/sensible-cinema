@@ -20,9 +20,18 @@ up next:
   4820.248047 -  4819.983398 0.2646489999997357
   
  =all dogs go to heaven=
+ start "0.3"
  
+  4.010844 -  3.837166  0.17367799999999978
+  
+  demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+
+ 594.200256 - 603.069153 -8.86889700000006
  
- 
+  3033.053955 -  3041.922363  -8.868408000000272
+  oh oops had a split at 9.266098 - 0.34 somehow...
+  
+  
 =c=
 
 has some inline switches 30 <-> 29.97 [!]

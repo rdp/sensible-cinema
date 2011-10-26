@@ -168,16 +168,16 @@ module SensibleSwing
         popup = show_non_blocking_message_dialog "calculating title sizes..."
         command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
         puts command
-        title_lengths = `#{command}`
+        title_lengths_output = `#{command}`
         popup.close
-        
-        title_lengths = title_lengths.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+        puts 'done'
+        title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
         # ID_DVD_TITLE_4_LENGTH=365.000
         
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}
 		if !largest_title
-		  show_blocking_message_dialog "unable to parse lengths? #{title_lengths}"
+		  show_blocking_message_dialog "unable to parse lengths? maybe need to clean disk? #{title_lengths_output}"
 		end
 		largest_title = largest_title[0]
 		if edit_list_path
