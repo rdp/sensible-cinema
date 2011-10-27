@@ -1,8 +1,12 @@
+== 0.30.1 ==
+
 == 0.30.0 ==
 
 have it use (on windows) a more powerful mplayer-edl!
   cleanup UI a bit
-  
+
+NB that we have examplars of not doing muting all the way, but just "almost muting" or "obscuring" volume
+
 == 0.29.1 ==
 
 allow for creating edlout file on the fly via button

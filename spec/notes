@@ -3,6 +3,18 @@ up next:
 
 == older mplayers split it differently ==
 
+mplayer -volume 0 -nocache dvdnav://1 2>&1 >me_c_volume0_nocache_dvdnav_full.txt
+weird restarting?
+
+osd_level 1 osd_fractions 0 
+A:3223.0 V:3223.03 A-V:  0.010 ct:  2.258 11234/11234 34%  2% 150.4% 659 0     
+osd_level 1 osd_fractions 0 
+A:3223.4 V:  0.00 A-V:3223.363 ct:  2.258   0/  0 ??% ??% ??,?% 659 0          A:   0.3 V:  0.00 A-V:  0.313 ct:  2.262   0/  0 ??% ??% ??,?% 659 0           
+osd_level 1 osd_fractions 0 
+A:   0.4 V:  0.04 A-V:  0.356 ct:  2.266   1/  1 ??% ??% ??,?% 659 0           
+osd_level 1 osd_fractions 0 
+
+
 >mplayer -volume 0 -nocache dvdnav://1 -vo null 2>&1 >me_c_dvdnav_full_vo_null.txt
 
 osd_level 1 osd_fractions 0 
