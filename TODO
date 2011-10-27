@@ -43,6 +43,8 @@
   check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
+  how to automate discovery of splits
+    can I use some speedup thing?
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
     C player:
@@ -53,9 +55,8 @@
   create button "detect mplayer resets :P"
     dvdnav:// -vo null , +1 frame
   screen saver production-ize :)
-  mplayer: fix DVD OSD being off
-    negative, too?
-    basically the "first round" of patches for it :)
+  mplayer:
+    basically the "first round" of patches for it, not for mine :P
     also patch for V:DD
   humanize/release DIRT
   OSOH DVD timing for forum/Snow White
