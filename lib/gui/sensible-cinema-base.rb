@@ -349,11 +349,11 @@ module SensibleSwing
       out = "-osdlevel 2 -osd-fractions 1"
       
       if OS.doze? 
-        offset_time = "0.20" # 0.21 0.18 0.23 0.21  they're almost all right there...
+        offset_time = "0.20" # 0.213  0.173 0.233 0.21 0.18 0.197  they're almost all right around 0.20...we can guess come on everyone's doing it...
         if offset = descriptors['dvd_start_offset']
           if offset && offset.to_f < 0.10
             offset_time = offset
-            puts 'using small osd offset' + offset_time
+            puts 'using a small osd offset, which almost never happens ' + offset_time
           end
           out += " -osd-add #{offset_time}"
         else
@@ -372,19 +372,8 @@ module SensibleSwing
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
-    def show_mplayer_instructions_once
-      @_show_mplayer_instructions_once ||= show_non_blocking_message_dialog <<-EOL
-        About to run mplayer.  To control it, use
-        spacebar : pause,
-        double clicky/right click : toggle full screen,
-        arrow keys (left, right, up down, pg up, pg dn) to seek/scan
-        / and *	: inc/dec volume.
-        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
-        'v' key: turn off subtitles.
-        '.' key: step one frame.
-         # key: change audio language track
-		 [ and ] make playback faster
-      EOL
+    def show_mplayer_instructions_once # used anymore?
+      @_show_mplayer_instructions_once ||= show_mplayer_instructions
     end
     
     def show_mplayer_instructions
@@ -409,11 +398,11 @@ module SensibleSwing
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if !edit_list_path && force_choose_edl_file_if_no_easy_match
           edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EdlParser::EDL_DIR)
-          raise 'cancelled choosing an EDL' unless edit_list_path
+          raise 'cancelled choosing EDL...' unless edit_list_path
         end
         @_edit_list_path = edit_list_path
       end
-      p 'reloading'
+      p 're/loading ' + @_edit_list_path
       if @_edit_list_path
         # reload it every time just in case it has changed on disk
         descriptors = nil
@@ -477,125 +466,8 @@ module SensibleSwing
       run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false, start_full_screen
     end
     
-    def assert_ownership_dialog 
-      message = "Do you certify you own the DVD this came of and have it in your possession?"
-      title = "Verify ownership"
-      returned = JOptionPane.show_select_buttons_prompt(message, {})
-      assert_confirmed_dialog returned, nil
-    end
-    
-    def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
-      title = 'Confirm Acceptance of License Agreement', message = nil
-      puts 'Please confirm license agreement in open window.'
-      
-      message ||= "Sensible Cinema requires a separately installed program (#{program}), not yet installed.
-        You can install this program manually to the vendor/cache subdirectory, or Sensible Cinema can download it for you.
-        By clicking accept, below, you are confirming that you have read and agree to be bound by the
-        terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
-        Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
-        separate program, with its own distribution, license, ownership and copyright.  
-        You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      answer = JOptionPane.show_select_buttons_prompt message, :yes => 'Accept', :no => "View #{license_name}"
-      assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
-      p 'confirmation of sensible cinema related license noted of: ' + license_name # LODO require all licenses together :P
-      throw unless answer == :yes
-    end
-    
-    def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
-      # :yes, :no, :cancel
-      # 1 is view button was clicked
-      # 0 is accept
-      # 2 is cancel
-      if returned == :no
-        if license_url_should_also_be_embedded_by_you_in_message
-          system_non_blocking("start #{license_url_should_also_be_embedded_by_you_in_message}") # guess this is url's too, eh?
-          puts "Please restart after reading license agreement, to be able to then accept it."
-        end
-        System.exit 0
-      elsif returned == :cancel
-        p 'license not accepted...exiting'
-        System.exit 1
-      elsif returned == :exited
-        p 'license exited early...exiting'
-        System.exit 1
-      elsif returned == :yes
-        # ok
-      else
-        raise 'unknown'
-      end
-    end
-    
     def print *args
       Kernel.print *args # avoid bin\sensible-cinema.rb:83:in `system_blocking': cannot convert instance of class org.jruby.RubyString to class java.awt.Graphics (TypeError)
-    end
-    
-    def download_7zip
-      Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]
-      unless File.exist? 'vendor/cache/7za.exe'
-        Dir.chdir('vendor/cache') do
-          print 'downloading unzipper (7zip--400K) ...'
-          MainWindow.download("http://downloads.sourceforge.net/project/sevenzip/7-Zip/9.20/7za920.zip", "7za920.zip")
-          system_blocking("../unzip.exe -o 7za920.zip") # -o means "overwrite" without prompting
-        end
-      end
-    end
-    
-    def download_zip_file_and_extract english_name, url, to_this
-      download_7zip
-      Dir.chdir('vendor/cache') do
-        file_name = url.split('/')[-1]
-        print "downloading #{english_name} ..."
-        MainWindow.download(url, file_name)
-        system_blocking("7za e #{file_name} -y -o#{to_this}")
-        puts 'done ' + english_name
-        # creates vendor/cache/mencoder/mencoder.exe...
-      end
-    end
-    
-    def check_for_exe windows_full_loc, unix_name
-      # in windows, that exe *at that location* must exist...
-      if OS.windows?
-        File.exist?(windows_full_loc)
-      else
-        require 'lib/check_installed_mac.rb'
-        if !CheckInstalledMac.check_for_installed(unix_name)
-          exit 1 # it'll have already displayed a message...
-        else
-          true
-        end
-      end
-    end
-    
-    def check_for_various_dependencies
-      
-      if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder') # both use it now, since we have to use our own mplayer.exe for now...
-        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
-        old = File.binread 'vendor/cache/mencoder/mplayer.exe'
-        old.gsub! "V:%6.1f", "V:%6.2f" # better precision! :)
-        File.binwrite('vendor/cache/mencoder/mplayer.exe', old)
-      end
-
-      # runtime dependencies, at least as of today...
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
-      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
-      end
-      if OS.mac?
-        check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
-      else      
-        path = RubyWhich.new.which('smplayer_portable')
-        if(path.length == 0)
-          # this one has its own installer...
-          show_blocking_message_dialog("It appears that you need to install a pre-requisite dependency: MPlayer for Windows (MPUI).
-          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI....Full-Package.exe), 
-          then restart sensible cinema.  NB that it takes awhile to install.  Sorry about that.", 
-          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          SwingHelpers.open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/list?can=2&q=MPlayer&sort=-uploaded&colspec=Filename%20Summary%20Type%20Uploaded%20Size%20DownloadCount"
-          System.exit 0
-        end
-      end
     end
     
     def open_file_to_edit_it filename, options = {} # :start_minimized is the only option
@@ -662,7 +534,8 @@ module SensibleSwing
   
 end
 
-class File
+
+class ::File
       def self.get_root_dir this_path
         this_path = File.expand_path this_path
         if OS.doze?

@@ -152,7 +152,6 @@
   @mplayer: patch to show V: better
   C player:
     double check if it timing shucks
-  fix mplayer dvdnav OSD
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -166,7 +165,7 @@
   screen_capture TODO
 
 == decide later to move up or down ==
-  create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
+  can custom pass in an -osd-add, for the little mermaid
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   playing from 55 to 65 with dvdnav:// goes way forward [?]
   investigate WMC "call out to smplayer + EDL" or the like...
@@ -181,9 +180,10 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  research VLC softskip ?
 
-== DVD+-DVD-realtime backlog (totally unordered, some very low prio, basically all never do) ==
+== DVD+-DVD-realtime basically never do backlog (unordered) ==
+  research VLC softskip at home?
+  create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   netflix upconvert
     after get DVD down
     after get hulu/youtube down, uh guess

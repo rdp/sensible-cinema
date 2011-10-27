@@ -2,13 +2,15 @@ Index: stream/stream_dvd.c
 ===================================================================
 --- stream/stream_dvd.c	(revision 34234)
 +++ stream/stream_dvd.c	(working copy)
-@@ -587,11 +587,13 @@
+@@ -586,12 +586,14 @@
+           continue;
          tm += d->cell_times_table[i];
      }
-     tm += mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm);
+-    tm += mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm);
 -
++    tm += mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm); // probably the VOBU start time...
 +    //if(tm/1000.0 > 3500.0) {
-+      printf("time %f ", tm/1000.0);
++//      printf("time %f ", tm/1000.0); // it's just the last NAV time, except we get called here over and over again when searching...hmm...
 +    //}
      return (double)tm/1000.0;
  }
@@ -18,7 +20,31 @@ Index: stream/stream_dvd.c
  {
      unsigned int i, j, k, timeunit, ac_time, tmap_sector=0, cell_sector=0, vobu_sector=0;
      int t=0;
-@@ -627,20 +629,20 @@
+@@ -607,7 +609,8 @@
+     if(sec > duration)
+       return 0;
+ 
+-    i=d->cur_pgc_idx;
++
++    i=d->cur_pgc_idx; // USES CURRENT pgc_idx ?
+     timeunit = vts_tmapt->tmap[i].tmu;
+     for(j = 0; j < vts_tmapt->tmap[i].nr_of_entries; j++) {
+       ac_time = timeunit * (j + 1);
+@@ -622,12 +625,21 @@
+         break;
+       }
+     }
++    
++    if( cell_sector == 0 ) {
++      printf("didnt find this cell...hmm...\n");
++      //d->cur_pgc_idx = pgc_id-1;
++      //d->cur_pgc = vts_file->vts_pgcit->pgci_srp[pgc_id-1].pgc;
+ 
++    }
++    
++
++    // seek to beginning of vobu ??
+     pos = ((off_t)cell_sector)<<11;
      stream_seek(stream, pos);
      do {
        stream_skip(stream, 2048);
@@ -27,14 +53,14 @@ Index: stream/stream_dvd.c
      } while(!t);
      tm = dvd_get_current_time(stream, -1);
  
--    pos = ((off_t)tmap_sector)<<11;
-+    pos = ((off_t)tmap_sector)<<11; 
+@@ -635,12 +647,12 @@
      stream_seek(stream, pos);
      //now get current time in terms of the cell+cell time offset
      memset(&d->dsi_pack.dsi_gi.c_eltm, 0, sizeof(dvd_time_t));
 -    while(tm <= sec) {
+-        if(!stream_skip(stream, 2048))
 +    while(tm <= sec) { // TAKES FOREVER?
-         if(!stream_skip(stream, 2048))
++        if(!stream_skip(stream, 2048)) // skip to next NAV packet [?] shouldn't it have already been able to look this up and skip straight there?
            break;
 -        tm = dvd_get_current_time(stream, -1);
 +        tm = dvd_get_current_time(stream, -1); 
@@ -19371,8 +19397,12 @@ Index: mplayer.c
  
      // A-V sync
      if (mpctx->sh_audio && sh_video)
-@@ -1579,13 +1580,26 @@
+@@ -1577,15 +1578,36 @@
+         return;
+     }
  
++    char osd_accuracy_level[128] = "";
++    
      if (mpctx->sh_video) {
          // fallback on the timer
 +        printf("\nosd_level %d osd_fractions %d \n", osd_level, osd_fractions);
@@ -19388,20 +19418,26 @@ Index: mplayer.c
 +            double pts = demuxer_get_current_time(mpctx->demuxer);
 +            
 +            // TODO raise if no osd_add_this_much, sim?
-+            // TODO prefer the larger versus adding here...uh guess LOL
 +            printf("adding %f to %f \n", osd_add_this_much, pts); // cannot figure it out <sniff>
 +            pts += osd_add_this_much;
 +            printf("final: %f\n", pts);
-+            if((pts - 10) < mpctx->sh_video->pts) {
-+              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 10\n", mpctx->sh_video->pts, pts);
++            if((pts - 3) < mpctx->sh_video->pts) {
++              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 3\n", mpctx->sh_video->pts, pts);
 +              pts = mpctx->sh_video->pts;
++              snprintf(osd_accuracy_level, 100, "EDL-high-accurate");
++            } else {
++              if(osd_add_this_much > 0) {
++                snprintf(osd_accuracy_level, 100,"EDL-medium-accurate");
++              } else {
++                snprintf(osd_accuracy_level, 100,"EDL-low-accurate");
++              }
 +            }
 +            int seconds = (int) pts;
 +            
              if (mpctx->osd_show_percentage)
                  percentage = demuxer_get_percent_pos(mpctx->demuxer);
  
-@@ -1597,7 +1611,7 @@
+@@ -1597,9 +1619,12 @@
              if (osd_fractions == 1) {
                  // print fractions as sub-second timestamp
                  snprintf(fractions_text, sizeof(fractions_text), ".%02d",
@@ -19409,8 +19445,13 @@ Index: mplayer.c
 +                         (int)((pts - seconds)*100)
                           % 100);
              } else if (osd_fractions == 2) {
++                int a = 0/0; // teach them a lesson :P
++                // phreaky, infer frame count past the second...
++                
                  // print fractions by estimating the frame count within the
-@@ -1608,24 +1622,24 @@
+                 // second
+ 
+@@ -1608,24 +1633,25 @@
                  // whose first frame is not exactly at timestamp 0. Therefore,
                  // we add 0.2 and cut off at the decimal point, which proved
                  // as good heuristic
@@ -19426,25 +19467,34 @@ Index: mplayer.c
              }
  
 -            if (osd_level == 3)
--                snprintf(osd_text_timer, 63,
++            if (osd_level == 3) 
+                 snprintf(osd_text_timer, 63,
 -                         "%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
 -                         mpctx->osd_function, pts / 3600, (pts / 60) % 60, pts % 60,
-+if (osd_level == 3) 
-+snprintf(osd_text_timer, 63,
-+                         "edl-accurater:%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
-+                         mpctx->osd_function, (int)pts / 3600, (int)(pts / 60) % 60, (int)pts % 60,
++                         "%s:%c %02d:%02d:%02d%s / %02d:%02d:%02d%s",
++                         osd_accuracy_level, mpctx->osd_function, (int)pts / 3600, (int)(pts / 60) % 60, (int)pts % 60,
                           fractions_text, len / 3600, (len / 60) % 60, len % 60,
 -                         percentage_text);
 -            else
 -                snprintf(osd_text_timer, 63, "%c %02d:%02d:%02d%s%s",
-+percentage_text);
-+            else {}
++                          percentage_text);
++            else {
 +            /*snprintf(osd_text_timer, 63, "%c %02d:%02d:%02d%s%s",
                           mpctx->osd_function, pts / 3600, (pts / 60) % 60,
 -                         pts % 60, fractions_text, percentage_text);
 +            pts % 60, fractions_text, percentage_text);*/
++          }
          } else
              osd_text_timer[0] = 0;
+ 
+@@ -1643,7 +1669,7 @@
+     // Clear the term osd line
+     if (term_osd && osd_text[0]) {
+         osd_text[0] = 0;
+-        printf("%s\n", term_osd_esc);
++        printf("OSD:%s\n", term_osd_esc);
+     }
+ }
  
 Index: cfg-mplayer.h
 ===================================================================

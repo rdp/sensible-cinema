@@ -1,7 +1,85 @@
 
 up next:
 
-=snow white=
+== older mplayers split it differently ==
+
+my_mplayer -autosync 30 -nocache -ss 3450 dvdnav://1
+
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3498.9 V:3498.86 A-V:  0.003 ct: -0.267 404/404  6%  6% 23.0% 0 0
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3498.9 V:3498.90 A-V: -0.029 ct: -0.269 405/405  6%  6% 22.9% 0 0
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3499.4 V:  0.00 A-V:3499.362 ct: -0.265   0/  0 ??% ??% ??,?% 0 0
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:   0.2 V:  0.04 A-V:  0.132 ct: -0.261   1/  1 ??% ??% ??,?% 0 0
+  =====  PAUSE  =====
+  
+osd_level 1 osd_fractions 0
+A:3499.0 V:3498.98 A-V: -0.028 ct: -0.270 239/239  9%  5% 23.8% 0 0
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3499.4 V:  0.00 A-V:3499.362 ct: -0.266   0/  0 ??% ??% ??,?% 0 0
+  =====  PAUSE  =====
+
+old_mplayer's, notice how it's whackedby like 0.4'ish:
+that is nuts.
+Maybe it's a bug then, and we're right now :P
+
+A:3498.2 V:3498.23 A-V:  0.003 ct: -0.260 149/149  8%  7% 28.5% 0 0
+A:3498.2 V:3498.28 A-V: -0.029 ct: -0.263 150/150  8%  7% 28.3% 0 0
+A:3499.4 V:  0.00 A-V:3499.362 ct: -0.259   0/  0 ??% ??% ??,?% 0 0
+A:   0.2 V:  0.04 A-V:  0.132 ct: -0.255   1/  1 ??% ??% ??,?% 0 0
+A:   0.2 V:  0.08 A-V:  0.127 ct: -0.251   2/  2 ??% ??% ??,?% 0 0
+A:   0.2 V:  0.13 A-V:  0.123 ct: -0.251   3/  3 ??% ??% ??,?% 0 0
+A:   0.2 V:  0.13 A-V:  0.123 ct: -0.247   3/  3 ??% ??% ??,?% 0 0
+A:   0.3 V:  0.17 A-V:  0.119 ct: -0.247   4/  4 ??% ??% ??,?% 0 0
+A:   0.3 V:  0.17 A-V:  0.119 ct: -0.242   4/  4 ??% ??% ??,?% 0 0
+A:   0.3 V:  0.21 A-V:  0.115 ct: -0.238   5/  5 ??% ??% ??,?% 0 0
+A:   0.4 V:  0.25 A-V:  0.111 ct: -0.234   6/  6 ??% ??% ??,?% 0 0
+A:   0.4 V:  0.29 A-V:  0.107 ct: -0.230   7/  7 ??% ??% ??,?% 0 0
+A:   0.4 V:  0.33 A-V:  0.102 ct: -0.226   8/  8 ??% ??% ??,?% 0 0
+A:   0.5 V:3498.69 A-V:-3498.219 ct: -0.230   9/  9 ??% ??% ??,?% 0 0
+A:   0.5 V:3498.73 A-V:-3498.214 ct: -0.234  10/ 10 ??% ??% ??,?% 0 0
+A:   0.5 V:3498.78 A-V:-3498.242 ct: -0.238  11/ 11 109% 99% 396.2% 0 0
+A:   0.6 V:3498.82 A-V:-3498.206 ct: -0.242  12/ 12 101% 91% 370.3% 0 0
+A:   0.7 V:3498.86 A-V:-3498.202 ct: -0.247  13/ 13 94% 85% 348.0% 0 0
+A:   0.7 V:3498.90 A-V:-3498.198 ct: -0.251  14/ 14 88% 80% 328.6% 0 0
+A:   0.7 V:3498.94 A-V:-3498.194 ct: -0.255  15/ 15 83% 75% 309.0% 0 0
+A:   0.8 V:3498.98 A-V:-3498.190 ct: -0.259  16/ 16 78% 71% 293.9% 0 0
+A:   0.8 V:3499.03 A-V:-3498.186 ct: -0.263  17/ 17 74% 67% 280.5% 0 0
+A:   0.9 V:3499.07 A-V:-3498.181 ct: -0.267  18/ 18 71% 63% 267.4% 0 0
+A:   0.9 V:3499.11 A-V:-3498.177 ct: -0.272  19/ 19 67% 61% 257.1% 0 0
+A:   1.0 V:3499.15 A-V:-3498.173 ct: -0.276  20/ 20 64% 58% 248.0% 0 0
+A:   1.0 V:3499.19 A-V:-3498.169 ct: -0.280  21/ 21 62% 55% 239.5% 0 0
+A:   1.1 V:3499.23 A-V:-3498.165 ct: -0.284  22/ 22 59% 53% 231.7% 0 0
+A:   1.1 V:3499.28 A-V:-3498.160 ct: -0.288  23/ 23 57% 51% 223.0% 0 0
+A:   1.1 V:3499.32 A-V:-3498.188 ct: -0.292  24/ 24 55% 49% 214.1% 0 0
+A:   1.2 V:3499.36 A-V:-3498.152 ct: -0.297  25/ 25 53% 48% 207.0% 0 0
+A:   1.3 V:3499.40 A-V:-3498.148 ct: -0.301  26/ 26 51% 46% 202.6% 0 0
+A:   1.3 V:3499.44 A-V:-3498.144 ct: -0.305  27/ 27 50% 45% 197.5% 0 0
+A:   1.3 V:3499.49 A-V:-3498.140 ct: -0.309  28/ 28 48% 43% 191.6% 0 0
+A:   1.4 V:  0.25 A-V:  1.140 ct: -0.305  29/ 29 47% 42% 185.2% 0 0
+A:   1.4 V:  0.29 A-V:  1.136 ct: -0.301  30/ 30 45% 41% 181.3% 0 0
+A:   1.5 V:  0.33 A-V:  1.132 ct: -0.297  31/ 31 44% 39% 176.7% 0 0
+A:   1.5 V:  0.38 A-V:  1.128 ct: -0.292  32/ 32 43% 38% 171.5% 0 0
+
+so just trust mine LOL.
+ they do match up *past* that so I think mine is indeed better. FWIW.
+
+mine, with noaudio:
+
+
+osd_level 1 osd_fractions 0
+V:3499.40 549/549  7%  5%  0.0% 0 0
+osd_level 1 osd_fractions 0
+V:  0.04   0/  0 ??% ??% ??,?% 0 0
+
+=snow white 0.2=
 
  0.4 start
  7.120795 -  6.923583 = 0.1972120000000004
@@ -10,7 +88,7 @@ up next:
  and at end:
    it's borked
    
-=mtoe=
+=mtoe 0.2=
 
  4.137467 - (mineE)  3.903900 => 0.23350000000000026
   from 0.3 even
@@ -19,7 +97,7 @@ up next:
   and at end...
   4820.248047 -  4819.983398 0.2646489999997357
   
- =all dogs go to heaven=
+ =all dogs go to heaven 0.2=
  start "0.3" (probable 0.28)
  
   4.010844 -  3.837166  0.17367799999999978
@@ -88,6 +166,11 @@ we have
  I'm guessing 0.85 is good for now...
    hmm...actually it might be...and this is one phreaky DVD...hmm...sure :P
    
+  I'm guessing this one is actually "those each were 1.0s each, and we don't have a new starting 0.2 at all" however, the "add one frame"
+    thing actually almost gets us close...plus we can warn if we're past a split...
+    should be 0.81 + 0.04+0.24
+  
+  
 =nanny mcphee=
 0.28
   2.733078 - 2.519184 => 0.213
@@ -109,6 +192,10 @@ mplayer2 seems dead...yipes
 
 == DVDNAV weirdness/search times ==
 
+    // XXX the current version of libdvdnav can't seek outside the current
+    // PGC. Check if the place we're seeking to is in a different
+    // PGC. Position there & adjust the offset if so.
+
   http://forum.doom9.org/showthread.php?t=140995&highlight=nav+mpeg
     mentions that you can parse the IFO for information [?]
 
@@ -119,6 +206,8 @@ mplayer2 seems dead...yipes
 
   mentions VTS_TMAPTI table...hmm...that might still be a grande clue, for determining precision...or maybe not...
 
+https://github.com/HandBrake/HandBrake/blob/master/libhb/dvdnav.c
+  
 == times ==
 
 
@@ -140,7 +229,50 @@ final: 3500.530518
 
 split  3498.984619 this time [?] huh?
 
+old mplayer -nocache dvdnav://1:
+
+A:3498.3 V:3498.36 A-V: -0.036 ct: -0.301 176/176  8%  4% 27.5r% 0 0
+A:3499.3 V:  0.00 A-V:3499.321 ct: -0.297   0/  0 ??% ??% ??,?% 0 0
+A:  -0.7 V:  0.04 A-V: -0.738 ct: -0.297   1/  1 ??% ??% ??,?% 0 0
+A:  -0.6 V:  0.04 A-V: -0.598 ct: -0.297   1/  1 ??% ??% ??,?% 0 0
+
+oh great, it seems to agree with straight dvd:// huh?
+  this sucks
+  assume mine is newer and somehow better...
+
+mplayer_34118
+  A:3499.0 V:3499.0 A-V: -0.026 ct: -0.301 396/396  6%  4% 23.2% 0 0
+  A:3499.3 V:   0.0 A-V:3499.299 ct: -0.301   0/  0 ??% ??% ??,?% 0 0
+  A:   0.1 V:   0.0 A-V:  0.115 ct: -0.297   0/  0 ??% ??% ??,?% 0 0
+  
+  just because of a newer ffmpeg maybe?
+    ffmpeg 1d186e9e120d777cc9f5e68d2974d48bfbdd528e
+   mpegts: Fix for continuity counter ?
+  I hope newer is better...
+    I'm using 51bfaa21c8'ish v of ffmpeg
+    I guess I really do need to add 0.5 per split wowza
+
+linux
+    A:   1.2 V:3499.6 A-V:-3498.380 ct: -0.379  18/ 18 514% 561% 33.2% 0 0 
+then it starts at 0.3
+   but it feels messed...like really messed up...the DVD might not be coming through clear...
+    
 ===detect split ===
+
+me dvdnav://, with pauses
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3499.0 V:3499.03 A-V: -0.037 ct: -0.294 624/624  6%  5% 24.6% 0 0
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3499.3 V:  0.00 A-V:3499.299 ct: -0.294   0/  0 ??% ??% ??,?% 0 0 # audio packet
+A:   0.1 V:  0.00 A-V:  0.094 ct: -0.290   0/  0 ??% ??% ??,?% 0 0
+
+shooting through:
+A:3499.0 V:3499.03 A-V: -0.036 ct: -0.278 216/216  9%  4% 25.2% 0 0
+osd_level 1 osd_fractions 0
+A:   0.1 V:  0.00 A-V:  0.115 ct: -0.274   0/  0 ??% ??% ??,?% 0 0
+ I think this is right LOL
 
 dvdout, theirs, dvd://
 bizarre
