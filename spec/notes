@@ -3,6 +3,19 @@ up next:
 
 == older mplayers split it differently ==
 
+
+>mplayer -volume 0 -nocache dvdnav://1 -vo null 2>&1 >me_c_dvdnav_full_vo_null.txt
+
+osd_level 1 osd_fractions 0 
+A:3223.0 V:3222.99 A-V:  0.009 ct:  2.210 11233/11233 34%  0% 148.6% 68 0      
+osd_level 1 osd_fractions 0 
+A:3223.0 V:3223.03 A-V:  0.010 ct:  2.211 11234/11234 34%  0% 148.6% 68 0      
+osd_level 1 osd_fractions 0 
+A:3223.4 V:  0.00 A-V:3223.363 ct:  2.211   0/  0 ??% ??% ??,?% 68 0           A:   0.3 V:  0.00 A-V:  0.313 ct:  2.215   0/  0 ??% ??% ??,?% 68 0            
+osd_level 1 osd_fractions 0 
+A:   0.4 V:  0.04 A-V:  0.356 ct:  2.219   1/  1 ??% ??% ??,?% 68 0            
+wow I don't know how to desribe this.
+
 my_mplayer -autosync 30 -nocache -ss 3450 dvdnav://1
 
   =====  PAUSE  =====

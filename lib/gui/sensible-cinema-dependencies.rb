@@ -72,11 +72,11 @@ module SensibleSwing
         File.binwrite('vendor/cache/mencoder/mplayer.exe', old)
       end
       
-      if OS.doze? && we_are_in_create_mode && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe')
-        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
+      if OS.doze? && we_are_in_create_mode && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil)
+        require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
         puts 'downloading mplayer edl [10 MB]'
-        download('https://sourceforge.net/projects/mplayer-edl/files/mplayer.exe', 'vendor/cache/mplayer_edl')
+        MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
       end
         
 

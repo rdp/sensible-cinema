@@ -249,6 +249,7 @@ module SensibleSwing
        mplayer_loc = "mplayer"
        if OS.doze?
          mplayer_loc = LocalModifiedMplayer
+         assert File.exist?(mplayer_loc)
        end
        c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -267,7 +268,7 @@ module SensibleSwing
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    LocalModifiedMplayer = "vendor/cache/mplayer_me/mplayer.exe"
+    LocalModifiedMplayer = "vendor/cache/mplayer_edl/mplayer.exe"
     
     def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
@@ -283,7 +284,10 @@ module SensibleSwing
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise unless OS.doze?
       mplayer_to_use = 'vendor/cache/mencoder/mplayer.exe'
-      mplayer_to_use = LocalModifiedMplayer if show_subs
+      if show_subs
+        mplayer_to_use = LocalModifiedMplayer 
+        assert File.exist?(mplayer_to_use)
+      end
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
       puts new_prefs

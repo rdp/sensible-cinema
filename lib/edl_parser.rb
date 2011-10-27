@@ -65,7 +65,7 @@ class EdlParser
       output.merge! new_input
     end
     
-    require_relative 'gui/sensible-cinema-dependencies' # for download method...
+    require_relative 'gui/sensible-cinema-dependencies' # for download methods...
     
     if expand
     
@@ -124,10 +124,7 @@ class EdlParser
   private
 
   def self.download full_url, to_here
-    require 'open-uri'
-    writeOut = open(to_here, "wb")
-    writeOut.write(open(full_url).read)
-    writeOut.close
+    ::SwingHelpers::MainWindow.download full_url, to_here
   end
   
   # better eye-ball these before letting people run them, eh? TODO

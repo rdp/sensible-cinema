@@ -22,14 +22,18 @@ module SensibleSwing
       @mplayer_edl.on_clicked {
         edl_out_instructions = ""
         answer = show_select_buttons_prompt <<-EOL, {}
-          Would you like to create an .edl outfile as it plays?
+          Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
+          EOL
+        if answer == :yes
+          show_non_blocking_message_dialog <<-EOL
+          EDL outfile:
           As mplayer goes through the video, when you see a scene you want to edit or skip, 
           hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
           hit 'i' again to end the edited/skipped scene, within that file.
           NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
           78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
           EOL
-        if answer == :yes
+
           edlout_filename =  new_nonexisting_filechooser_and_go "pick edlout filename"
           edl_out_instructions = "-edlout #{edlout_filename}"
         end
