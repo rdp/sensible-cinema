@@ -3,7 +3,6 @@ up next:
 
 == older mplayers split it differently ==
 
-
 >mplayer -volume 0 -nocache dvdnav://1 -vo null 2>&1 >me_c_dvdnav_full_vo_null.txt
 
 osd_level 1 osd_fractions 0 
