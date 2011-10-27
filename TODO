@@ -24,65 +24,57 @@
   
 == very next things I was working on ==
   genealogy intro :P
-  ~, ~~ if no -sub-add
-  can deploy it again :P
-   with mencoder
+  
+== yes do ordered for this release/other projects ja  ==
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  talk to lucas
-  
-== yes do ordered for this release/other projects ja  ==
   auto-start audio fella
   ffmpeg add subs demo
+  test distro various buttons on mac
+    advertise urug
   advertise to my ML 'wurx in mac' :)
-  advertise urug
   ffplay diagonal bug
   gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   check if smplayer is "off way more" than mplayer
-  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
 
 == yes do, un-ordered currently, from the various future release options ==
-  note wiki pages in the docu/helps
-  mplayer patch for sanity
-  ffmpeg dshow can I move audio along anyway?
-  is powerdvd off by exactly 0.5s (rounds up)?
-  update wiki index page
-    link somewhere "here's how to create" that takes them somewhere...
-  automate more creation things
+  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
+    is powerdvd off by exactly 0.5s (rounds up)?
+    C player:
+      double check if it timing shucks, though I think it does...
+  ffmpeg dshow input can I move audio along anyway, or with different metric?
+  automate more creation things...
+    prompt if they want to auto-search for splits :P
   create button "detect mplayer resets :P"
     dvdnav:// -vo null , +1 frame
-  maybe button "play mplayer from exactly here to here?"
-  
   screen saver production-ize :)
   mplayer: fix DVD OSD being off
     negative, too?
+    basically the "first round" of patches for it :)
+    also patch for V:DD
   humanize/release DIRT
   OSOH DVD timing for forum/Snow White
-  netflix instant:
-      add new batch file for play with netflix OCR
-      note on the www stuff once it works
-    mac'ify OCR/Mouse
   netflix instant descriptor work at all
     OS X check it
+      mac'ify OCR/Mouse
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
+    add new batch file for play with netflix OCR
+    note on the www stuff once it works
   meta domain
-  use more modern mplayer with smplayer...
   test out DVD style upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
     no super scale res necessary?
-  "overwrite?" prompt
+  "overwrite?" prompt for files
   screen recording sintel, see below (for upconvert)
-  advertise wait as pwait for windows/linux/cygwin :) I guess just one will do probably :)
   Linux port for SC (call that good enough for usability on TV's...), should be...
-  srt add option "pick coordinating one from the middle, or from the end?" [?]
-  @ffplay: diagonal bug
+  srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
   note...here's how to screen live movies :)
   netflix instant CGI how crisp is their HD?
   note "Ooh that is clever.  Slow motion to find it! yes!"
@@ -97,7 +89,7 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
 
-  dvdnav sync with the old stuff (old mailing lists)
+  dvdnav sync with the old stuff (its old mailing lists...)
   popup text for EDL's
   ri_for updatez
   subtitle -> url everywhere
@@ -108,35 +100,31 @@
   test mplayer -vo gl at home
   Ben's other DVD's
   template-ify for netflix too "create for netflix" button
-  that extra .5s DVD reports for file size...
   EDL gottman
   EDL Greg's DVD's
   minor redcar tweaks
   opening/create buttons [?] -> new separate sub-window, or something like that
   change upconvert options needs its own "close" button
     and status field?
-  lightning strike from various outlets...
+  lightning strike from various outlets...=c=
   accomodate splits vs. blanks and work everywhere
   short list of todo's for screen capture
   short list of todo's for virtual audio
   @mplayer: Mutes on windows shtink
-  "fix" mplayer EDL pausing (within the mplayer code itself)
-    bounty it for now/test with latest ffmpeg et al, maybe on mac with source [?
+  "fix" mplayer EDL skips pausing (within the mplayer code itself
   add the other type in there, esp. if a man answers
     add to the template, make it so that various can use it
-  an overlapping mute type failure when you hit the "watch edited realtime" should popup.
+  a real overlapping mute type failure when you hit the "watch edited realtime" should popup.
   consistency for flight of nav. srt? huh?
     does my fixer fix it?
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
   macify work minor things it doesn't currently :)
   create skype/google+ hangouts recorder windows
-  mplayer directx fix patch check it...
   auto-add largest title to the generator EDL
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_label
   check with/rent blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
-  youtube/hulu timings different?
   split LLC's website+consumer
     get LLC before a "real" domain name
   clear runnings
@@ -149,9 +137,6 @@
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
-  @mplayer: patch to show V: better
-  C player:
-    double check if it timing shucks
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -165,6 +150,7 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  youtube/hulu timings different?
   can custom pass in an -osd-add, for the little mermaid
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   playing from 55 to 65 with dvdnav:// goes way forward [?]
