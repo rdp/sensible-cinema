@@ -1,6 +1,10 @@
-== ==
+== 0.30.0 ==
 
+have it use (on windows) a more powerful mplayer-edl!
+  cleanup UI a bit
+  
 == 0.29.1 ==
+
 allow for creating edlout file on the fly via button
 
 == 0.29.1 ==

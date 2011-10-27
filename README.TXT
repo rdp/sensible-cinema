@@ -63,7 +63,7 @@ NB that you want to download it sourceforge, not from github downloads.
 
 == Creating Your Own Edit Lists, or modifying previously existing ones ==
 
-See the accompanying documentation/how_to_create_your_own_delete_lists.txt file.
+See https://github.com/rdp/sensible-cinema/wiki/How-to-create-your-own-EDL's
 
 == Creating an edited DVD ==
 
