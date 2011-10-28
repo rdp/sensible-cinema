@@ -3,7 +3,12 @@
         more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
         some blu-ray player descriptor somehow
       accomodate splits vs. blanks and work
-      
+
+    it can "resync" based on lipsync'ing or some user input (back, forward buttons to subtly resync edits with a currently playing back video) or
+      with user input "tell me where this subtitle is, for you, and also this one" to synchronize it (+- auto-playing to "around" that level so they can check more easily), 
+       or you can ask them manually for time entry for the same.
+    OCR'ing subtitles on the fly (or, cache'd OCR'ing them on the fly, to give it time to process) to synchronize or check for profanity or other "questionable" content
+    
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
     I can forsee some browser window that pulls up some sweet player [mod vlc plugin?] somehow something quality anyway, to play local media, or remote
       or same thing but for upconverting...but how?
