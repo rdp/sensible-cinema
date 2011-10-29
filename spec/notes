@@ -3,9 +3,92 @@ up next:
 
 ==  mplayers split it differently ==
 
+TODO:
+  low prio: my gcc, his patches [his configure? modified?]
+  TODO: mine straight, with a single early seek...
+    VLC straight through
+    does it use yasm anyway?
+    that malloc patch looks intriguing...
+    his gcc, my config params :)
+    
+linux, with yasm, no configure options, updated "lib"
+Thread model: posix
+gcc version 4.5.2 (Ubuntu/Linaro 4.5.2-8ubuntu4)
+interestingly, even if you pause, or seek, it still seems to display the same overlaps.
+What could this ever mean?
+  1b) it also freezes if you step frame through it LOL.
+
+A:3498.7 V:3498.7 A-V:  0.003 ct:  4.084 5563/5563 141% 14% 25.1% 166 0 ^[[J
+A:3498.7 V:3498.8 A-V: -0.029 ct:  4.081 5564/5564 141% 14% 25.1% 166 0 ^[[J
+A:3498.8 V:3498.8 A-V: -0.027 ct:  4.078 5565/5565 141% 14% 25.1% 166 0 ^[[J
+A:3499.3 V:   0.0 A-V:3499.321 ct:  4.082   0/  0 ??% ??% ??,?% 166 0 ^[[J
+A:   0.2 V:   0.0 A-V:  0.139 ct:  4.087   1/  1 ??% ??% ??,?% 166 0 ^[[J
+A:   0.2 V:   0.1 A-V:  0.131 ct:  4.091   2/  2 ??% ??% ??,?% 166 0 ^[[J
+A:   0.3 V:   0.1 A-V:  0.125 ct:  4.095   3/  3 ??% ??% ??,?% 166 0 ^[[J
+A:   0.3 V:   0.2 A-V:  0.122 ct:  4.099   4/  4 ??% ??% ??,?% 166 0 ^[[J
+A:   0.3 V:   0.2 A-V:  0.085 ct:  4.103   5/  5 ??% ??% ??,?% 166 0 ^[[J
+A:   0.3 V:   0.3 A-V:  0.080 ct:  4.107   6/  6 ??% ??% ??,?% 166 0 ^[[J
+A:   0.4 V:   0.3 A-V:  0.109 ct:  4.112   7/  7 ??% ??% ??,?% 166 0 ^[[J
+A:   0.4 V:3499.2 A-V:-3498.756 ct:  4.107   8/  8 ??% ??% ??,?% 166 0 ^[[J
+A:   0.5 V:3499.2 A-V:-3498.752 ct:  4.103   9/  9 ??% ??% ??,?% 166 0 ^[[J
+A:   0.5 V:3499.3 A-V:-3498.748 ct:  4.099  10/ 10 ??% ??% ??,?% 166 0 ^[[J
+A:   0.6 V:3499.3 A-V:-3498.743 ct:  4.095  11/ 11 65755% 6508% 11638.3% 166 0 ^[[J
+A:   0.6 V:3499.4 A-V:-3498.739 ct:  4.091  12/ 12 60697% 6008% 10743.1% 166 0 ^[[J
+A:   0.7 V:3499.4 A-V:-3498.736 ct:  4.087  13/ 13 56362% 5578% 9975.8% 166 0 ^[[J
+A:   0.7 V:3499.4 A-V:-3498.732 ct:  4.082  14/ 14 52606% 5207% 9310.7% 166 0 ^[[J
+A:   0.8 V:3499.5 A-V:-3498.728 ct:  4.078  15/ 15 49318% 4881% 8729.0% 166 0 ^[[J
+A:   0.8 V:   0.3 A-V:  0.552 ct:  4.082  16/ 16 46418% 4594% 8215.9% 166 0 ^[[J
+A:   0.8 V:   0.3 A-V:  0.549 ct:  4.087  17/ 17 43840% 4339% 7759.4% 166 0 ^[[J
+A:   0.9 V:   0.3 A-V:  0.545 ct:  4.091  18/ 18 41533% 4110% 7351.0% 166 0 ^[[J
+A:   0.9 V:   0.4 A-V:  0.507 ct:  4.095  19/ 19 39456% 3905% 6983.6% 166 0 ^[[J
+A:   0.9 V:   0.4 A-V:  0.503 ct:  4.099  20/ 20 37578% 3719% 6651.1% 166 0 ^[[J
+
+
+
+mplayer_svn_sherpya_gcc_with_my_configure
+A-V:  0.004 ct:  7.246 5565/5565 81%  7% 324.8% 113 0       
+osd_level 1 osd_fractions 0 
+A:3498.3 V:3498.36 A-V: -0.020 ct:  7.244 5566/5566 81%  7% 324.8% 113 0       
+osd_level 1 osd_fractions 0 
+A:3499.3 V:  0.00 A-V:3499.321 ct:  7.248   0/  0 ??% ??% ??,?% 113 0          
+osd_level 1 osd_fractions 0 
+A:   0.2 V:  0.04 A-V:  0.132 ct:  7.252   1/  1 ??% ??% ??,?% 113 0      
+(with the freaky overlap)
+  => esems to imply that it's not a configure issue. Either a library or gcc issue? I'm using all the same ffmpeg's...
+  
+mplayer_svn_with_my_changes_only_sherpya_gcc_sherpya_configure_nocache_dvdnav
+doesn't loop at least :P
+  seems to imply the patches don't matter, and the ffmpeg doesn't amtter
+osd_level 1 osd_fractions 0 
+A:3498.3 V:3498.32 A-V: -0.028 ct:  7.237 5565/5565 78%  6% 325.5% 100 0       
+osd_level 1 osd_fractions 0 
+A:3498.3 V:3498.36 A-V: -0.030 ct:  7.234 5566/5566 78%  6% 325.4% 100 0       
+osd_level 1 osd_fractions 0 
+A:3499.3 V:  0.00 A-V:3499.321 ct:  7.238   0/  0 ??% ??% ??,?% 100 0          
+osd_level 1 osd_fractions 0 
+A:   0.2 V:  0.04 A-V:  0.132 ct:  7.242   1/  1 ??% ??% ??,?% 100 0           ...
+V:3498.78
+
+what if it includes a search or two?
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3498.3 V:3498.32 A-V: -0.034 ct: -0.277 655/655  5% 10% 23.3% 0 0
+  =====  PAUSE  =====
+osd_level 1 osd_fractions 0
+A:3499.3 V:  0.00 A-V:3499.321 ct: -0.273   0/  0 ??% ??% ??,?% 0 0
+  =====  PAUSE  =====
+so this one matches, with search...fascinating. with the *same* super updated ffmpeg version. oh man...
+also this still shows that freaky "oh I'm back to 3498.78, or wait now I'm not" thing LOL
+However, for now the automated way could (I must suppose) just use the old mplayer, or...
+
 they may have used this ffmpeg:
  Download FFmpeg git rev N-32754-g936d4d4 - 09/21/2011
  use his build environment :P
+
+me building his build environment--it worked! phew
+A:3498.3 V:3498.3 A-V:  0.004 ct:  7.253 5565/5565 80% 12% 347.1% 837 0        A:3498.3 V:3498.4 A-V: -0.040 ct:  7.249 5566/5566 80% 12% 347.1% 837 0        A:3499.3 V:   0.0 A-V:3499.321 ct:  7.253   0/  0 ??% ??% ??,?% 837 0          A:   0.3 V:   0.0 A-V:  0.232 ct:  7.258   1/  1 ??% ??% ??,?% 838 0           A:   0.3 V:   0.1 A-V:  0.251 ct:  7.262   2/  2 ??% ??% ??,?% 839 0           A:   0.4 V:   0.1 A-V:  0.239 ct:  7.266   3/  3 ??% ??% ??,?% 839 0           A:   0.4 V:   0.2 A-V:  0.197 ct:  7.270   4/  4 ??% ??% ??,?% 840 0           A:   0.4 V:   0.2 A-V:  0.166 ct:  7.274   5/  5 ??% ??% ??,?% 840 0           A:   0.4 V:   0.3 A-V:  0.124 ct:  7.278   6/  6 ??% ??% ??,?% 840 0           A:   0.4 V:3498.7 A-V:-3498.288 ct:  7.274   7/  7 ??% ??% ??,?% 840 0         A:   0.4 V:3498.7 A-V:-3498.322 ct:  7.270   8/  8 ??% ??% ??,?% 840 0         A:   0.5 V:3498.8 A-V:-3498.281 ct:  7.266   9/  9 ??% ??% ??,?% 840 0         A:   0.5 V:3498.8 A-V:-3498.273 ct:  7.262  10/ 10 ??% ??% ??,?% 840 0         A:   0.6 V:3498.9 A-V:-3498.275 ct:  7.258  11/ 11 37484% 5782% 161090.3% 840 A:   0.6 V:3498.9 A-V:-3498.277 ct:  7.253  12/ 12 34601% 5337% 148701.2% 840 A:   0.7 V:3498.9 A-V:-3498.268 ct:  7.249  13/ 13 32130% 4956% 138081.2% 840 A:   0.7 V:3499.0 A-V:-3498.260 ct:  7.245  14/ 14 29988% 4626% 128875.9% 840 A:   0.8 V:3499.0 A-V:-3498.242 ct:  7.241  15/ 15 28114% 4337% 120823.3% 840 A:   0.8 V:3499.1 A-V:-3498.243 ct:  7.237  16/ 16 26461% 4081% 113721.4% 840 A:   0.9 V:3499.1 A-V:-3498.255 ct:  7.232  17/ 17 24991% 3855% 107405.4% 840 A:   0.9 V:3499.2 A-V:-3498.247 ct:  7.228  18/ 18 23676% 3652% 101754.1% 840 A:   1.0 V:3499.2 A-V:-3498.239 ct:  7.224  19/ 19 22493% 3469% 96666.8% 840 0A:   1.0 V:3499.2 A-V:-3498.240 ct:  7.220  20/ 20 21422% 3304% 92064.5% 840 0A:   1.0 V:3499.3 A-V:-3498.264 ct:  7.216  21/ 21 20448% 3154% 87881.2% 840 0A:   1.1 V:3499.3 A-V:-3498.234 ct:  7.212  22/ 22 19559% 3017% 84063.0% 840 0A:   1.1 V:3499.4 A-V:-3498.236 ct:  7.207  23/ 23 18745% 2891% 80560.5% 840 0A:   1.2 V:3499.4 A-V:-3498.227 ct:  7.203  24/ 24 17995% 2775% 77338.3% 840 0A:   1.2 V:3499.4 A-V:-3498.219 ct:  7.199  25/ 25 17303% 2669% 74364.1% 840 0A:   1.3 V:3499.5 A-V:-3498.221 ct:  7.195  26/ 26 16663% 2570% 71611.1% 840 0A:   1.3 V:   0.3 A-V:  1.031 ct:  7.199  27/ 27 16068% 2478% 69054.7% 840 0   A:   1.4 V:   0.3 A-V:  1.061 ct:  7.203  28/ 28 15514% 2392% 66674.6% 840 0   A:   1.4 V:   0.3 A-V:  1.060 ct:  7.207  29/ 29 14997% 2313% 64454.1% 840 0   A:   1.4 V:   0.4 A-V:  1.048 ct:  7.212  30/ 30 14513% 2238% 62376.2% 840 0   A:   1.5 V:   0.4 A-V:  1.046 ct:  7.216  31/ 31 14060% 2168% 60427.6% 840 0   A:   1.5 V:   0.5 A-V:  1.044 ct:  7.220  32/ 32 13634% 2102% 58597.3% 840 0   A:   1.5 V:   0.5 A-V:  1.043 ct:  7.224  33/ 33 13233% 2041% 56874.7% 840 0   A:   1.6 V:   0.5 A-V:  1.031 ct:  7.228  34/ 34 12855% 1982% 55249.7% 840 0   A:   1.6 V:   0.6 A-V:  0.997 ct:  7.232  35/ 35 12498% 1927% 53715.8% 840 0   A:   1.7 V:   0.6 A-V:  1.028 ct:  7.237  36/ 36 12160% 1875% 52264.2% 840 0   A:   1.7 V:   0.7 A-V:  1.026 ct:  7.241  37/ 37 11841% 1826% 50888.8% 840 0   
+
+
 
 his "get key" is benign
 

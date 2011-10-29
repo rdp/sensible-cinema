@@ -24,8 +24,10 @@
   
 == very next things I was working on ==
   genealogy intro :P
+    semi-blocked
   
 == yes do ordered for this release/other projects ja  ==
+  nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
@@ -169,7 +171,8 @@
       or add button "reveal advanced" with this new button on it...
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
-  research VLC softskip at home?
+  see if all those patches have been applied (sherpya's).
+  research VLC softskip at home/slow cpu?
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   netflix upconvert
     after get DVD down
