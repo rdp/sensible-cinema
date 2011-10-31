@@ -5,10 +5,10 @@
     "just for fun"
     
   netflix instant go live/mac
-  upconvert DVD
-  upconvert Netflix
 
   === non ordered/eventually (also add line items for these) roadmaps ===
+    upconvert DVD
+    upconvert Netflix
     C EDL
     create a skype recorder
     netflix/skype "disable screen saver while running" program [?]
@@ -24,9 +24,11 @@
   
 == very next things I was working on ==
   genealogy intro :P
-    semi-blocked
   
 == yes do ordered for this release/other projects ja  ==
+  mplayer-edl isn't accurate after an hour on a file...hmm...
+    fix mplayer-edl at all LOL/re-deploy
+  push a rubyprof v. :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
@@ -34,17 +36,16 @@
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   auto-start audio fella
-  ffmpeg add subs demo
+  ffmpeg how to add subs demo
   test distro various buttons on mac
     advertise urug
-  advertise to my ML 'wurx in mac' :)
   ffplay diagonal bug
-  gstreamer backtrace
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
+  @mingw: large file handlez plz?
   how to automate discovery of splits
     can I use some speedup thing?
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -169,8 +170,10 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-
+  ffmpeg internal compile should be with the memalign hack [?]
+  
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  gstreamer backtrace
   see if all those patches have been applied (sherpya's).
   research VLC softskip at home/slow cpu?
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
