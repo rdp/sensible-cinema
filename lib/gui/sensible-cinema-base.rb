@@ -247,9 +247,9 @@ module SensibleSwing
         upconv = ""
        end
        mplayer_loc = "mplayer"
-       if OS.doze?
+       if extra_options =~ /-osd-add/
          mplayer_loc = LocalModifiedMplayer
-         assert File.exist?(mplayer_loc)
+         raise mplayer_loc unless File.exist?(mplayer_loc)
        end
        c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -353,11 +353,15 @@ module SensibleSwing
       out = "-osdlevel 2 -osd-fractions 1"
       
       if OS.doze? 
-        offset_time = "0.20" # 0.213  0.173 0.233 0.21 0.18 0.197  they're almost all right around 0.20...we can guess come on everyone's doing it...
+        offset_time = "0.20" # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
         if offset = descriptors['dvd_start_offset']
-          if offset && offset.to_f < 0.10
+          offset = offset.to_f
+          if offset < 0.10
             offset_time = offset
             puts 'using a small osd offset, which almost never happens ' + offset_time
+          end
+          if offset == 0
+            offset = 0.001 # so it knows we really do know what we're doing :)
           end
           out += " -osd-add #{offset_time}"
         else
