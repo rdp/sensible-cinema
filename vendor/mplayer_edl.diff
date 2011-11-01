@@ -149,9 +149,9 @@ Index: mplayer.c
 +              // typically only DVD gets here...
 +              // hmm...
 +              if(osd_add_this_much > 0) {
-+                snprintf(osd_accuracy_level, 100,"EDL-medium-accurate");
++                snprintf(osd_accuracy_level, 100,"EDL-medium-DVD-accurate");
 +              } else {
-+                snprintf(osd_accuracy_level, 100,"EDL-low-accurate");
++                snprintf(osd_accuracy_level, 100,"EDL-low-DVD-accurate");
 +              }
 +            }
 +            int seconds = (int) pts;
