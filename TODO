@@ -28,10 +28,6 @@
     release new version
   
 == yes do ordered for this release/other projects ja  ==
-  mplayer-edl test speed w, w/o debugs on blacky
-  ask xbmc how they use nav packets...
-  push a rubyprof v. :P
-  nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
@@ -47,6 +43,12 @@
   check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
+  call lawyer
+  mplayer-edl test speed w, w/o debugs on blacky
+  ask xbmc how they use nav packets...
+  push a rubyprof v. :P
+  nextsprocket the "camtwist for windows" avisynth+webcam as one part input
+  blog "dvd nav packets don't start at 0"
   fix mplayer EDL's
     mplayer: do you seek right at the end of long DVD's?
       if not, patch :P
