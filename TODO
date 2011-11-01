@@ -43,6 +43,7 @@
   check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
+  VLC subtitles grey issue
   call lawyer
   mplayer-edl test speed w, w/o debugs on blacky
   ask xbmc how they use nav packets...
@@ -184,7 +185,6 @@
   ffmpeg internal compile should be with the memalign hack [?]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
-  gstreamer backtrace
   see if all those patches have been applied (sherpya's).
   research VLC softskip at home/slow cpu?
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
