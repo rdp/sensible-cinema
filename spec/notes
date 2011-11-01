@@ -1,6 +1,26 @@
 
 up next:
 
+
+== mplayer build speedz ==
+
+with "little/default console output", --enable-debug
+  4% total cpu -> 23% cpu, with -march=runtime, work, stripped
+
+disable debug?
+
+cpu runtime?
+
+w, w/o tons of output, doze
+
+sherpya's various, at home?
+
+sherpya rtm:
+ 4% -> 13% (no scrolling console output tho)
+
+sherpya athlon:
+    -> 11/13%
+    
 ==  mplayers split it differently ==
 
     http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...

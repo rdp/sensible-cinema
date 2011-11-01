@@ -24,8 +24,11 @@
   
 == very next things I was working on ==
   genealogy intro :P
+  push new mplayer runtime version
+    release new version
   
 == yes do ordered for this release/other projects ja  ==
+  mplayer-edl test speed w, w/o debugs on blacky
   ask xbmc how they use nav packets...
   push a rubyprof v. :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
@@ -44,6 +47,10 @@
   check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
+  fix mplayer EDL's
+    mplayer: do you seek right at the end of long DVD's?
+      if not, patch :P
+    osd-fractions patch
   @mingw: large file handlez plz?
   how to automate discovery of splits
     can I use some speedup thing?
@@ -51,6 +58,7 @@
     is powerdvd off by exactly 0.5s (rounds up)?
     C player:
       double check if it timing shucks, though I think it does...
+        also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   ffmpeg dshow input can I move audio along anyway, or with different metric?
   automate more creation things...
     prompt if they want to auto-search for splits :P
@@ -60,7 +68,7 @@
   mplayer:
     basically the "first round" of patches for it, not for mine :P
     also patch for V:DD
-  humanize/release DIRT
+  DIRT short list
   OSOH DVD timing for forum/Snow White
   netflix instant descriptor work at all
     OS X check it
@@ -92,7 +100,8 @@
       snapshots of Sintel "normal", then deploy the various comparison pics
     DVD test it (+- with others testing it for me too)
 
-  dvdnav sync with the old stuff (its old mailing lists...)
+  dvdnav sync with the old stuff (its old mailing lists...I guess...and that one guy...)
+    maybe dvdread add some methods? [ask]
   popup text for EDL's
   ri_for updatez
   subtitle -> url everywhere
@@ -140,6 +149,7 @@
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
+  do we do the right -osd-add for VOB folders?
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
