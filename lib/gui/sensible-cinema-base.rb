@@ -247,9 +247,10 @@ module SensibleSwing
         upconv = ""
        end
        mplayer_loc = "mplayer"
-       if extra_options =~ /-osd-add/
+       if OS.doze? && we_are_in_create_mode
+         # we want this even if we don't have -osd-add, since it adds confidence :)
          mplayer_loc = LocalModifiedMplayer
-         raise mplayer_loc unless File.exist?(mplayer_loc)
+         assert File.exist?(mplayer_loc)
        end
        c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -260,7 +261,7 @@ module SensibleSwing
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname SMPlayerIniFile}\" " 
         c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode
-          #c += " -close-at-end " # we're still too unstable, mate...
+          c += " -close-at-end "
         end
       end
       puts c
@@ -282,15 +283,14 @@ module SensibleSwing
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
-      raise unless OS.doze?
+      raise 'smplayer on non doze not expected...' unless OS.doze?
       mplayer_to_use = 'vendor/cache/mencoder/mplayer.exe'
-      if show_subs
+      if show_subs # implies create mode :)
         mplayer_to_use = LocalModifiedMplayer 
         assert File.exist?(mplayer_to_use)
       end
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
-      puts new_prefs
       # now some less important ones...
       new_prefs.gsub!(/priority=.*$/, "priority=3") # normal priority...scary otherwise! lodo tell smplayer...
       # enable dvdnav navigation, just for kicks I guess.
