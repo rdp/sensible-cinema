@@ -3,15 +3,17 @@ up next:
 
 ==  mplayers split it differently ==
 
-TODO:
-    mine straight, with a single early seek...
-    VLC straight through
-    that malloc patch looks intriguing...
-    http://oss.netfarm.it/mplayer/misc/mingwrt_file64.diff also looks interesting...hmm...
     http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
       and says you need that mingw patch...
-      
-      
+
+demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
+  can mean "we hit the trailer, or the preview section, in that DVD"
+
+mplayer_svn_my_configure_devkit_patched:
+A:3498.8 V:3498.8 A-V:  0.001 ct:  2.535 5561/5561 85% 45% 313.6% 30 0         A:3498.9 V:3498.9 A-V:  0.024 ct:  2.538 5562/5562 85% 45% 313.6% 30 0         A:3498.9 V:3498.9 A-V:  0.003 ct:  2.538 5563/5563 85% 45% 313.5% 30 0         A:3498.9 V:3498.9 A-V:  0.004 ct:  2.538 5564/5564 85% 45% 313.5% 30 0         A:3498.9 V:3499.0 A-V: -0.048 ct:  2.534 5565/5565 85% 45% 313.4% 30 0         A:3499.0 V:3499.0 A-V: -0.026 ct:  2.532 5566/5566 85% 45% 313.4% 30 0         A:3499.3 V:   0.0 A-V:3499.299 ct:  2.532   0/  0 ??% ??% ??,?% 30 0           A:   0.1 V:   0.0 A-V:  0.094 ct:  2.536   0/  0 ??% ??% ??,?% 30 0            A:   0.2 V:   0.0 A-V:  0.116 ct:  2.540   1/  1 ??% ??% ??,?% 30 0            A:   0.2 V:   0.1 A-V:  0.117 ct:  2.544   2/  2 ??% ??% ??,?% 30 0            A:   0.2 V:   0.1 A-V:  0.086 ct:  2.548   3/  3 ??% ??% ??,?% 30 0            
+
+worked perfect
+
 updated gcc with yasm, TRUNK:
    A:3223.0 V:3223.0 A-V:  0.010 ct:  2.300 11234/11234 38% 32% 145.5% 37 0       A:3223.4 V:   0.0 A-V:3223.363 ct:  2.300   0/  0 ??% ??% ??,?% 37 0           A:   0.3 V:   0.0 A-V:  0.313 ct:  2.304   0/  0 ??% ??% ??,?% 37 0            A:   0.4 V:   0.0 A-V:  0.335 ct:  2.308   1/  1 ??% ??% ??,?% 37 0        
   with the freaky "repeater-oo" right there...

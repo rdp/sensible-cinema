@@ -361,7 +361,7 @@ module SensibleSwing
           end
           out += " -osd-add #{offset_time}"
         else
-          show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your OSD timestamps will probably be 0.19s too small"
+          show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your mplayer on screen display timestamp will probably be 0.20s too small, add 0.20 to match DVD time"
         end
       else
         show_blocking_message_dialog "warning, since we're not in windows with a patched mplayer OSD timestamps will probably be 0.19s too small,\n and their fraction past the decimal point will be off.\nPing me for instructions to build a patched mplayer."
