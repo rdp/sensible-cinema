@@ -1,6 +1,7 @@
 == 0.30.1 ==
 
   There has been a user-submitted "upload/download/differentiate" location created.
+  new mplayer-edl was released
   
 == 0.30.0 ==
 

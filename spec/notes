@@ -7,19 +7,20 @@ up next:
 with "little/default console output", --enable-debug
   4% total cpu -> 23% cpu, with -march=runtime, work, stripped
 
-disable debug?
+with "--enable-debug, stripped, -march=generic" low/default console 
+  6% -> 27% cpu
 
-cpu runtime?
+disable debug?
 
 w, w/o tons of output, doze
 
 sherpya's various, at home?
 
 sherpya rtm:
- 4% -> 13% (no scrolling console output tho)
+ 4% -> 13% (has no scrolling console output tho)
 
 sherpya athlon:
-    -> 11/13%
+ 4% -> 11/13%
     
 ==  mplayers split it differently ==
 

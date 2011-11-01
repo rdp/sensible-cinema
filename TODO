@@ -26,6 +26,7 @@
   genealogy intro :P
   push new mplayer runtime version
     release new version
+  timings at home too slow?
   
 == yes do ordered for this release/other projects ja  ==
   why is the Sintel's EDL seemingly off?
@@ -43,6 +44,8 @@
   check if smplayer is "off way more" than mplayer
 
 == yes do, un-ordered currently, from the various future release options ==
+  mplayer check if dvdnav cache can/should work [?]
+    compare with VLC does it do any special cacheing? huh? what?
   VLC subtitles grey issue
   call lawyer
   mplayer-edl test speed w, w/o debugs on blacky
@@ -166,8 +169,9 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  maintain smplayer :P
   youtube/hulu timings different?
-  can custom pass in an -osd-add, for the little mermaid
+  can custom pass in an per EDL -osd-add, for the little mermaid, for instance
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   playing from 55 to 65 with dvdnav:// goes way forward [?]
   investigate WMC "call out to smplayer + EDL" or the like...
