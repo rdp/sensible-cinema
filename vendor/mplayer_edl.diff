@@ -1,6 +1,6 @@
 Index: stream/stream_dvd.c
 ===================================================================
---- stream/stream_dvd.c	(revision 34234)
+--- stream/stream_dvd.c	(revision 34269)
 +++ stream/stream_dvd.c	(working copy)
 @@ -586,12 +586,14 @@
            continue;
@@ -72,7 +72,7 @@ Index: stream/stream_dvd.c
      k=(vts_file->vts_vobu_admap->last_byte + 1 - VOBU_ADMAP_SIZE)/4; //entries in the vobu admap
 Index: libvo/vo_direct3d.c
 ===================================================================
---- libvo/vo_direct3d.c	(revision 34234)
+--- libvo/vo_direct3d.c	(revision 34269)
 +++ libvo/vo_direct3d.c	(working copy)
 @@ -916,7 +916,7 @@
  
@@ -94,13 +94,13 @@ Index: libvo/vo_direct3d.c
      if (vo_osd_changed(0)) {
 Index: mplayer.c
 ===================================================================
---- mplayer.c	(revision 34234)
+--- mplayer.c	(revision 34269)
 +++ mplayer.c	(working copy)
 @@ -144,6 +144,7 @@
  int enable_mouse_movements;
  float start_volume = -1;
  double start_pts   = MP_NOPTS_VALUE;
-+float osd_add_this_much = 0.2;
++float osd_add_this_much = 0.0;
  char *heartbeat_cmd;
  static int max_framesize;
  
@@ -113,7 +113,7 @@ Index: mplayer.c
  
      // A-V sync
      if (mpctx->sh_audio && sh_video)
-@@ -1577,15 +1578,36 @@
+@@ -1577,15 +1578,42 @@
          return;
      }
  
@@ -140,8 +140,14 @@ Index: mplayer.c
 +            if((pts - 3) < mpctx->sh_video->pts) {
 +              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 3\n", mpctx->sh_video->pts, pts);
 +              pts = mpctx->sh_video->pts;
-+              snprintf(osd_accuracy_level, 100, "EDL-high-accurate");
++              if(osd_add_this_much > 0) {
++                snprintf(osd_accuracy_level, 100, "EDL-high-DVD-accurate");
++              } else {
++                snprintf(osd_accuracy_level, 100, "EDL-high-File-accurate");
++              }
 +            } else {
++              // typically only DVD gets here...
++              // hmm...
 +              if(osd_add_this_much > 0) {
 +                snprintf(osd_accuracy_level, 100,"EDL-medium-accurate");
 +              } else {
@@ -153,7 +159,7 @@ Index: mplayer.c
              if (mpctx->osd_show_percentage)
                  percentage = demuxer_get_percent_pos(mpctx->demuxer);
  
-@@ -1597,9 +1619,12 @@
+@@ -1597,9 +1625,12 @@
              if (osd_fractions == 1) {
                  // print fractions as sub-second timestamp
                  snprintf(fractions_text, sizeof(fractions_text), ".%02d",
@@ -167,7 +173,7 @@ Index: mplayer.c
                  // print fractions by estimating the frame count within the
                  // second
  
-@@ -1608,24 +1633,25 @@
+@@ -1608,24 +1639,25 @@
                  // whose first frame is not exactly at timestamp 0. Therefore,
                  // we add 0.2 and cut off at the decimal point, which proved
                  // as good heuristic
@@ -203,7 +209,7 @@ Index: mplayer.c
          } else
              osd_text_timer[0] = 0;
  
-@@ -1643,7 +1669,7 @@
+@@ -1643,7 +1675,7 @@
      // Clear the term osd line
      if (term_osd && osd_text[0]) {
          osd_text[0] = 0;
@@ -214,7 +220,7 @@ Index: mplayer.c
  
 Index: cfg-mplayer.h
 ===================================================================
---- cfg-mplayer.h	(revision 34234)
+--- cfg-mplayer.h	(revision 34269)
 +++ cfg-mplayer.h	(working copy)
 @@ -86,6 +86,7 @@
      {"softvol", &soft_vol, CONF_TYPE_FLAG, 0, 0, 1, NULL},
@@ -236,7 +242,7 @@ Index: cfg-mplayer.h
  #ifdef CONFIG_MENU
 Index: mplayer.h
 ===================================================================
---- mplayer.h	(revision 34234)
+--- mplayer.h	(revision 34269)
 +++ mplayer.h	(working copy)
 @@ -27,6 +27,7 @@
  extern char **audio_driver_list;
@@ -248,7 +254,7 @@ Index: mplayer.h
  extern int frame_dropping;
 Index: libmpdemux/demuxer.c
 ===================================================================
---- libmpdemux/demuxer.c	(revision 34234)
+--- libmpdemux/demuxer.c	(revision 34269)
 +++ libmpdemux/demuxer.c	(working copy)
 @@ -493,7 +493,6 @@
          //codec_id = CODEC_ID_DNET;
@@ -319,7 +325,7 @@ Index: libmpdemux/demuxer.c
  int demuxer_get_percent_pos(demuxer_t *demuxer)
 Index: libmpdemux/demuxer.h
 ===================================================================
---- libmpdemux/demuxer.h	(revision 34234)
+--- libmpdemux/demuxer.h	(revision 34269)
 +++ libmpdemux/demuxer.h	(working copy)
 @@ -437,8 +437,8 @@
  int demux_info_print(demuxer_t *demuxer);
