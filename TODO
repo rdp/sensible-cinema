@@ -4,9 +4,9 @@
     and "won't even be useful to people in the end so why bother?"
     "just for fun"
     
-  netflix instant go live/mac
+  netflix instant EDL go live/mac
 
-  === non ordered/eventually (also add line items for these) roadmaps ===
+  === non ordered/maybe eventually (also add line items for these) roadmaps ===
     upconvert DVD
     upconvert Netflix
     C EDL
@@ -24,17 +24,13 @@
   
 == very next things I was working on ==
   genealogy intro :P
-  push new mplayer runtime version
-    release new version
-  timings at home too slow?
-  sintel should be spot on now :P
-  
-== yes do ordered for this release/other projects ja  ==
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
       fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
       maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
+  
+== yes do ordered for this release/other projects ja  ==
   auto-start audio fella
   ffmpeg how to add subs demo
   test distro various buttons on mac
@@ -42,15 +38,14 @@
   ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  check if smplayer is "off way more" than mplayer
+  ask xbmc how they use nav packets...
+  check if smplayer is "off way more" than mplayer with EDL's
 
 == yes do, un-ordered currently, from the various future release options ==
+  mplayer-edl test speed w, w/o debugs on blacky
   mplayer check if dvdnav cache can/should work [?]
     compare with VLC does it do any special cacheing? huh? what?
   VLC subtitles grey issue
-  call lawyer
-  mplayer-edl test speed w, w/o debugs on blacky
-  ask xbmc how they use nav packets...
   push a rubyprof v. :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   blog "dvd nav packets don't start at 0"
