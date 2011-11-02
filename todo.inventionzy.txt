@@ -107,3 +107,9 @@
    fan editor, that can jump positions within the same DVD/insert audio overlays/insert videos et al
    voice recognition for detection of profanity/violence/etc. etc.
    detect subtitles for "what appears to be suggestive" content or lewd scenes, etc., based on the text, +- natural language processing
+   overlay with transparent movies (other movies)
+   "double check synchronize" button for making sure the edits line up, with or without text saved of subtitles, et al
+   auto-detect "dark scenes" or "skin tones" or "noises" or the like
+   can "fast forward" through scary/otherwise questionable scenes
+   
+   
