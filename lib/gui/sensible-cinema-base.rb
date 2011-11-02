@@ -269,7 +269,7 @@ module SensibleSwing
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    LocalModifiedMplayer = "vendor/cache/mplayer_edl/mplayer.exe"
+    LocalModifiedMplayer = File.expand_path "vendor/cache/mplayer_edl/mplayer.exe"
     
     def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
