@@ -21,7 +21,7 @@
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==  
-  
+  smplayer wurk
 == very next things I was working on ==
   genealogy intro :P
   why is the Sintel's EDL seemingly off?
@@ -42,9 +42,7 @@
   check if smplayer is "off way more" than mplayer with EDL's
 
 == yes do, un-ordered currently, from the various future release options ==
-  mplayer-edl test speed w, w/o debugs on blacky
-  mplayer check if dvdnav cache can/should work [?]
-    compare with VLC does it do any special cacheing? huh? what?
+  warn if using upconverting
   VLC subtitles grey issue
   push a rubyprof v. :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
@@ -165,6 +163,8 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  mplayer check if dvdnav cache can/should work [?]
+    compare with VLC does it do any special cacheing? huh? what?
   maintain smplayer :P
   youtube/hulu timings different?
   can custom pass in an per EDL -osd-add, for the little mermaid, for instance
@@ -185,7 +185,8 @@
   ffmpeg internal compile should be with the memalign hack [?]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
-  see if all those patches have been applied (sherpya's).
+  see if all those patches have been applied to various (sherpya's).
+  start an ffmpeg filter repository
   research VLC softskip at home/slow cpu?
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   netflix upconvert
