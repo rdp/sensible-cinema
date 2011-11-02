@@ -113,7 +113,7 @@ Index: mplayer.c
  
      // A-V sync
      if (mpctx->sh_audio && sh_video)
-@@ -1577,15 +1578,42 @@
+@@ -1577,15 +1578,45 @@
          return;
      }
  
@@ -121,7 +121,6 @@ Index: mplayer.c
 +    
      if (mpctx->sh_video) {
          // fallback on the timer
-+        printf("\nosd_level %d osd_fractions %d \n", osd_level, osd_fractions);
          if (osd_level >= 2) {
 -            int len = demuxer_get_time_length(mpctx->demuxer);
 +            double double_len = demuxer_get_time_length(mpctx->demuxer);
@@ -139,12 +138,16 @@ Index: mplayer.c
 +            printf("final: %f\n", pts);
 +            if((pts - 3) < mpctx->sh_video->pts) {
 +              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 3\n", mpctx->sh_video->pts, pts);
-+              pts = mpctx->sh_video->pts;
 +              if(osd_add_this_much > 0) {
 +                snprintf(osd_accuracy_level, 100, "EDL-high-DVD-accurate");
 +              } else {
-+                snprintf(osd_accuracy_level, 100, "EDL-high-File-accurate");
++                if(mpctx->sh_video->pts == pts) {
++                  snprintf(osd_accuracy_level, 100, "EDL-high-File-accurate");
++                } else {
++                  snprintf(osd_accuracy_level, 100, "EDL-high-DVD-accurate");
++                }
 +              }
++              pts = mpctx->sh_video->pts;
 +            } else {
 +              // typically only DVD gets here...
 +              // hmm...
@@ -159,7 +162,7 @@ Index: mplayer.c
              if (mpctx->osd_show_percentage)
                  percentage = demuxer_get_percent_pos(mpctx->demuxer);
  
-@@ -1597,9 +1625,12 @@
+@@ -1597,9 +1628,12 @@
              if (osd_fractions == 1) {
                  // print fractions as sub-second timestamp
                  snprintf(fractions_text, sizeof(fractions_text), ".%02d",
@@ -173,7 +176,7 @@ Index: mplayer.c
                  // print fractions by estimating the frame count within the
                  // second
  
-@@ -1608,24 +1639,25 @@
+@@ -1608,24 +1642,25 @@
                  // whose first frame is not exactly at timestamp 0. Therefore,
                  // we add 0.2 and cut off at the decimal point, which proved
                  // as good heuristic
@@ -209,7 +212,7 @@ Index: mplayer.c
          } else
              osd_text_timer[0] = 0;
  
-@@ -1643,7 +1675,7 @@
+@@ -1643,7 +1678,7 @@
      // Clear the term osd line
      if (term_osd && osd_text[0]) {
          osd_text[0] = 0;

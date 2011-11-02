@@ -20,15 +20,12 @@
     no auto subtitle downloaders...
     fix VLC dvdnav itself +- mplayer DVD EDL
   
-== high prio like blocking bugs ==  
-  smplayer wurk
+== high prio like blocking bugs ==
 == very next things I was working on ==
-  genealogy intro :P
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
-      fix discrepancy between EDL mplayer and ffmpeg...maybe a new button "accurate EDL playback"?
-      maybe search at end of movies for certain things?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
+  speeds at home better now?
   
 == yes do ordered for this release/other projects ja  ==
   auto-start audio fella
@@ -38,10 +35,12 @@
   ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  ask xbmc how they use nav packets...
   check if smplayer is "off way more" than mplayer with EDL's
 
 == yes do, un-ordered currently, from the various future release options ==
+  it should not ask for an EDL when you play it unedited
+  check xbmc how they use nav packets...
+  genealogy create/publicize
   warn if using upconverting
   VLC subtitles grey issue
   push a rubyprof v. :P
