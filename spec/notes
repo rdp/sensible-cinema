@@ -2,14 +2,14 @@ up next:
 
 == sintel cutting accuracy ==
 
-"dvd_start_offset" => "0.37", # for title 2
-Input #0, mpeg, from 'dvdout.mpg':
-  Duration: 00:00:20.58, start: 0.300300, bitrate: 4305 kb/s
+  "dvd_start_offset" => "0.37", # for title 2
+  Input #0, mpeg, from 'dvdout.mpg':
+    Duration: 00:00:20.58, start: 0.300300, bitrate: 4305 kb/s
   
-  seems that mplayer doesn't quite get the input cut right, I guess...
-    not too far off I guess LOL 0.07 ... yeah we can live with that
+    seems that mplayer doesn't quite get the input cut right, I guess...
+      not too far off I guess LOL 0.07 ... yeah we can live with that
 
-seems that NAV 0.2 thing is *right on* for OSOH
+seems that NAV 0.2 thing is *right on* for OSOH...
   final: 4847.344238
   using mpeg ts appears larger, which if true is definitely better 4847.539551 > 4847.344238 - 3
   last NAV packet was 4842.333496, mpeg at 4847.581055 after -> 29.97 4847.175781
