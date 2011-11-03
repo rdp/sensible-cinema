@@ -164,6 +164,9 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  @wiki: mplayer EDL's look like this...
+  "double check sync" button/option on play [?]
+    note in original where source came
   mplayer check if dvdnav cache can/should work [?]
     compare with VLC does it do any special cacheing? huh? what?
   maintain smplayer :P
@@ -316,8 +319,7 @@
   "save to" -> same dir as "get from" yeah
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
   prompt something if the EDL is actually "empty" :)
-  already donated: sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC
-    todo: audacity, windirstat (done)
+  already donated: sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC, xiph, audacity, windirstat (done)
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title trackfor automatically playing it right.
   fast preview: change it to be aggressive sometimes yes, other times no
