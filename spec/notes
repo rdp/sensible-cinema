@@ -33,13 +33,15 @@ I'm guessing mplayer "relative seeks" are totally bworked
  * discontinuity has occured.
  * NAV packets can also be used for time display, because they are
  * timestamped relatively to the current Cell.
- *
 
 Fascinating. I guess the "PTS values" are the mpeg PTS values themselves...fascinating.
   this seems to imply that XBMC's extra additions aren't necessary though, since they already use the NAV packets...hmm...
   
   XBMC seems to pass past the "discontinuity" all right though, timestamp wise...
   
+  maybe this "isn't" a real discontinuity? whoa! maybe nav packets aren't timestamped relative to the current cell, in reality?
+    Either way, I think you're stuck with the triple. Hmm...
+    
 == sintel cutting accuracy ==
 
   "dvd_start_offset" => "0.37", # for title 2
