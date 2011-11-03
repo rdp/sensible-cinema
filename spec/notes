@@ -41,6 +41,8 @@ Fascinating. I guess the "PTS values" are the mpeg PTS values themselves...fasci
   
   maybe this "isn't" a real discontinuity? whoa! maybe nav packets aren't timestamped relative to the current cell, in reality?
     Either way, I think you're stuck with the triple. Hmm...
+    dvdnav doesn't seem to know about the pts at all, ever...it's gotta be local memory that's the only way DVD players must do it LOL
+    NAV plus offset
     
 == sintel cutting accuracy ==
 
