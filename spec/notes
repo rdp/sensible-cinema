@@ -98,7 +98,16 @@ sherpya athlon:
       and says you need that mingw patch...
 
 
-my "good" one, without audio:                                    V:3499.36 5565/5565 75%  5%  0.0% 0 0                                            V:3499.40 5566/5566 75%  5%  0.0% 0 0                                            V:  0.04   0/  0 ??% ??% ??,?% 0 0                                               V:  0.08   1/  1 ??% ??% ??,?% 0 0                                               V:  0.25   2/  2 ??% ??% ??,?% 0 0                                               V:  0.29   3/  3 ??% ??% ??,?% 0 0           
+my "good" one, but without audio:                                    V:3499.36 5565/5565 75%  5%  0.0% 0 0                                            V:3499.40 5566/5566 75%  5%  0.0% 0 0                                            V:  0.04   0/  0 ??% ??% ??,?% 0 0                                               V:  0.08   1/  1 ??% ??% ??,?% 0 0                                               V:  0.25   2/  2 ??% ??% ??,?% 0 0                                               V:  0.29   3/  3 ??% ??% ??,?% 0 0           
+
+at least it doesn't overrun "too" far LOL
+   V:  1.21  30/ 30 38822% 10677%  0.0% 0 0                                       
+  wonder if dumpstream also overruns...
+  does switch though, so looks like mplayer won't save us there...
+  last timestamp: 
+    V:4364.61 13611/13611 71% 19%  0.0% 0 0                                          "good" one last timestamp is:
+    A:4364.4 V:4364.3 A-V:  0.007 ct:  7.108 13613/13613 76% 38% 291.8% 30 0           A:4364.6 V:   0.0 A-V:4364.649 ct:  7.111   0/  0 ??% ??% ??,?% 30 0               A:   0.4 V:   0.0 A-V:  0.322 ct:  7.114   1/  1 ??% ??% ??,?% 30 0                it does have a 0.28 DVD offset...  could I use benchmark for it somehow, though?  I guess not because it needs audio?
+    nope I understand it not. Ahead by 0.3? huh?  Good thing this only I guess matters with mplayer whoa!
 
 Ok now this is just plain nuts. Seriously what? LODO LOL
 
