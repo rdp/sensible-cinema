@@ -94,12 +94,13 @@ sherpya athlon:
  4% -> 11/13%
     
 ==  mplayers split it differently ==
-
-
-
-
-    http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
+  http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
       and says you need that mingw patch...
+
+
+my "good" one, without audio:                                    V:3499.36 5565/5565 75%  5%  0.0% 0 0                                            V:3499.40 5566/5566 75%  5%  0.0% 0 0                                            V:  0.04   0/  0 ??% ??% ??,?% 0 0                                               V:  0.08   1/  1 ??% ??% ??,?% 0 0                                               V:  0.25   2/  2 ??% ??% ??,?% 0 0                                               V:  0.29   3/  3 ??% ??% ??,?% 0 0           
+
+Ok now this is just plain nuts. Seriously what? LODO LOL
 
 demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
   can mean "we hit the trailer, or the preview section, in that DVD"

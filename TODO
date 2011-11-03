@@ -21,6 +21,7 @@
     fix VLC dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==
+  
 == very next things I was working on ==
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
@@ -37,13 +38,15 @@
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   check if smplayer is "off way more" than mplayer with EDL's
 
-== yes do, un-ordered currently, from the various future release options ==
+== yes do, un-ordered currently, from all the various future release options ==
+  add timestamp_source => "file"
+    if it is, then *DVD* needs to add to it's timestamps :)
   ask them "what does discontinuity mean exactly?"
+  re-ask that one question "to the right forum"
   check jackman/ldsmusicnow.com publishing costs LOL
   it should not ask for an EDL when you play it unedited
-  check xbmc how they use nav packets...
   genealogy create/publicize
-  warn if using upconverting
+  warn when using upconverting
   VLC subtitles grey issue
   push a rubyprof v. :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
@@ -53,8 +56,7 @@
       if not, patch :P
     osd-fractions patch
   @mingw: large file handlez plz?
-  how to automate discovery of splits
-    can I use some speedup thing?
+  optionally automate discovery of splits
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
     C player:
