@@ -380,24 +380,6 @@ module SensibleSwing
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
-    def show_mplayer_instructions_once # used anymore?
-      @_show_mplayer_instructions_once ||= show_mplayer_instructions
-    end
-    
-    def show_mplayer_instructions
-      show_non_blocking_message_dialog <<-EOL
-        About to run mplayer.  To control it, use
-        spacebar : pause,
-        double clicky/right click : toggle full screen,
-        arrow keys (left, right, up down, pg up, pg dn) to seek/scan
-        / and *	: inc/dec volume.
-        'o' key: turn on on-screen-display timestamps (note: the OSD timestamps [upper left] are 30 fps so will need to be converted to use).
-        'v' key: turn off subtitles.
-        '.' key: step one frame.
-         # key: change audio language track
-		 [ and ] make playback faster
-      EOL
-    end
     
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false

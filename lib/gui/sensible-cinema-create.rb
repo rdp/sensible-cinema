@@ -80,25 +80,11 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
       
-      new_jbutton("Display mplayer control instructions/help/howto") do
+      new_jbutton("Display mplayer keyboard commands/howto") do
         show_mplayer_instructions
       end
 
       add_text_line 'Create Edit Options:'
-      
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
-        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
-      @create_new_edl_for_current_dvd.on_clicked do
-        create_brand_new_edl
-        @display_dvd_info.simulate_click # for now...
-      end
-      
-      @open_list = new_jbutton("Open/Edit a previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
-      @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
-        LocalStorage['edit_from_here'] = File.dirname(filename)
-        open_file_to_edit_it filename
-      }
       
       @open_current = new_jbutton("Open EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
@@ -109,6 +95,21 @@ module SensibleSwing
           show_blocking_message_dialog "EDL for this dvd doesn't exist yet, maybe create it first? #{volume_name}"
         end
       end
+      
+      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
+        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
+      @create_new_edl_for_current_dvd.on_clicked do
+        create_brand_new_edl
+        @display_dvd_info.simulate_click # for now...
+      end
+      
+      @open_list = new_jbutton("Open/Edit an arbitrary previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list.on_clicked {
+        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
+        LocalStorage['edit_from_here'] = File.dirname(filename)
+        open_file_to_edit_it filename
+      }
+      
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
       @parse_srt.tool_tip = <<-EOL
@@ -344,6 +345,23 @@ module SensibleSwing
       File.write(filename, input) unless File.exist?(filename)
       open_file_to_edit_it filename
     end     
-    
+
+    def show_mplayer_instructions
+      show_non_blocking_message_dialog <<-EOL
+        About to run mplayer.  To control it or smplayer, you can use these keyboard keys
+        spacebar : pause,
+        double clicky/right click/'f' : toggle full screen,
+        enter : select DVD menu currently highlighted
+        arrow keys (left, right, up down, pg up, pg dn) : seek/scan
+        / and *	: inc/dec volume.
+        'o' key: turn on on-screen-display timestamps see wiki "understanding timestamps"
+        'v' key: toggle display of subtitles.
+        '.' key: step forward one frame.
+        '#' key: change audio language track
+        'j' : change subtitle track/language
+   		  [ and ] make playback faster
+      EOL
+    end
+
   end
 end

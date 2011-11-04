@@ -10,7 +10,7 @@
     upconvert DVD
     upconvert Netflix
     C EDL
-    create a skype recorder
+    create a skype/google+ video recorder
     netflix/skype "disable screen saver while running" program [?]
     linearize [?] hmm...
     re-update todo/all docu/user feedback etc.
@@ -18,7 +18,7 @@
       if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
     no propaganda...
     no auto subtitle downloaders...
-    fix VLC dvdnav itself +- mplayer DVD EDL
+    fix VLC's use of dvdnav itself +- mplayer DVD EDL
   
 == high prio like blocking bugs ==
   
@@ -26,9 +26,9 @@
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  speeds at home better?
   
 == yes do ordered for this release/other projects ja  ==
+  speeds at home better?
   auto-start audio fella
   ffmpeg how to add subs demo
   test distro various buttons on mac
@@ -37,16 +37,16 @@
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   check if smplayer is "off way more" than mplayer with EDL's
+  smplayer dying at home?
 
 == yes do, un-ordered currently, from all the various future release options ==
-  smplayer dying at home?
   show label of currently mounted DVD somewhere, and number of matching EDL's
-  add timestamp_source => "file"
+  add timestamp_offset_from => "0:00"
     if it is, then *DVD* needs to add to it's timestamps :)
   ask them "what does discontinuity mean exactly?"
   re-ask that one question "to the right forum"
   check jackman/ldsmusicnow.com publishing costs LOL
-  it should not ask for an EDL when you play it unedited
+  it should not ask for an EDL when you click "play it unedited"
   genealogy create/publicize
   warn when using upconverting
   VLC subtitles grey issue
@@ -54,8 +54,6 @@
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   blog "dvd nav packets don't start at 0"
   fix mplayer EDL's
-    mplayer: do you seek right at the end of long DVD's?
-      if not, patch :P
     osd-fractions patch
   @mingw: large file handlez plz?
   optionally automate discovery of splits
@@ -74,7 +72,7 @@
     basically the "first round" of patches for it, not for mine :P
     also patch for V:DD
   DIRT short list
-  OSOH DVD timing for forum/Snow White
+  DVD timing for forum/Snow White
   netflix instant descriptor work at all
     OS X check it
       mac'ify OCR/Mouse
@@ -97,14 +95,6 @@
   C player just use 29.97, that's it
     convert to 29.97 [at least this]
   popup_text in EDL's
-  todo.upconvert
-    netflix quality upconverter, have a go at it
-      finalize screen capturer
-    me test it
-      1x, 2x Sintel
-      snapshots of Sintel "normal", then deploy the various comparison pics
-    DVD test it (+- with others testing it for me too)
-
   dvdnav sync with the old stuff (its old mailing lists...I guess...and that one guy...)
     maybe dvdread add some methods? [ask]
   popup text for EDL's
@@ -117,7 +107,7 @@
   test mplayer -vo gl at home
   Ben's other DVD's
   template-ify for netflix too "create for netflix" button
-  EDL gottman
+  EDL gottman -- test
   EDL Greg's DVD's
   minor redcar tweaks
   opening/create buttons [?] -> new separate sub-window, or something like that
@@ -168,6 +158,8 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  mplayer: do you seek right at the end of long DVD's?
+    if not, patch :P
   @wiki: mplayer EDL's look like this...
   "double check sync" button/option on play [?]
     note in original where source came
@@ -190,9 +182,16 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  ffmpeg internal compile should be with the memalign hack [?]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  todo.upconvert
+    netflix quality upconverter, have a go at it
+      finalize screen capturer
+    me test it
+      1x, 2x Sintel
+      snapshots of Sintel "normal", then deploy the various comparison pics
+    DVD test it (+- with others testing it for me too)
+
   see if all those patches have been applied to various (sherpya's).
   start an ffmpeg filter repository
   research VLC softskip at home/slow cpu?

@@ -99,7 +99,8 @@ module SensibleSwing
       out = `ffmpeg -i #{filename} 2>&1`
       print out
       unless out =~ /Duration.*start: 0.00/ || out =~ /Duration.*start: 600/
-        raise 'file must start at zero unexpected?' + out
+        show_blocking_message_dialog 'file\'s typically have the movie start at zero, this one doesn\'t? Please report.' + out
+        raise # give up, as otherwise we're 0.3 off, I think...hmm...
       end
       if filename =~ /\.mkv/i
         show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
@@ -176,8 +177,8 @@ module SensibleSwing
         Saving to #{save_to}.
       EOL
       if !fulli_dot_done_file_exists?(save_to)
-        popup_message += "This will take quite awhile (several hours), since it needs the intermediate file\nit will prompt you with a chime noise when it is done.\n
-        You can close this window and minimize sensible cinema and continue using your computer while it runs in the background.\nYou can track progress via the progress bar."
+        popup_message += "This will take quite awhile (several hours, depending on movie size), \nsince it needs to first create an intermediate file for more accurate splitting.\nit will prompt you with a chime noise when it is done.\n
+        You can close this window and minimize sensible cinema \nto continue using your computer while it runs in the background.\nYou can see progress via the progress bar.\n"
       end
       
       if !start_time
