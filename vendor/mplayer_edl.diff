@@ -136,8 +136,8 @@ Index: mplayer.c
 +            printf("adding %f to %f \n", osd_add_this_much, pts); // cannot figure it out <sniff>
 +            pts += osd_add_this_much;
 +            printf("final: %f\n", pts);
-+            if((pts - 3) < mpctx->sh_video->pts) {
-+              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 3\n", mpctx->sh_video->pts, pts);
++            if((pts - 1.0) < mpctx->sh_video->pts) {
++              printf("using mpeg ts appears larger, which if true is definitely better %f > %f - 1.0\n", mpctx->sh_video->pts, pts);
 +              if(osd_add_this_much > 0) {
 +                snprintf(osd_accuracy_level, 100, "EDL-high-DVD-accurate");
 +              } else {

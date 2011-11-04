@@ -26,7 +26,7 @@
   why is the Sintel's EDL seemingly off?
     ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
     double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
-  speeds at home better now?
+  speeds at home better?
   
 == yes do ordered for this release/other projects ja  ==
   auto-start audio fella
@@ -39,6 +39,8 @@
   check if smplayer is "off way more" than mplayer with EDL's
 
 == yes do, un-ordered currently, from all the various future release options ==
+  smplayer dying at home?
+  show label of currently mounted DVD somewhere, and number of matching EDL's
   add timestamp_source => "file"
     if it is, then *DVD* needs to add to it's timestamps :)
   ask them "what does discontinuity mean exactly?"

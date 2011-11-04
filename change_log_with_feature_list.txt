@@ -1,3 +1,8 @@
+== 0.30.3 ==
+
+fix bug preventing smplayer from working in normal mode (oops).
+tighten up mplayer-edl timings
+
 == 0.30.2 ==
 
 Fix it to use custom mplayer.exe in smplayer better now [whoops], cleanup mplayer-edl
