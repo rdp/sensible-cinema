@@ -86,7 +86,7 @@ module SensibleSwing
       end
       
       if !fulli_dot_done_file_exists? save_to_edited
-        show_blocking_message_dialog "Warning, the first pass through when editing file-wise, Sensible Cinema\nfirst needs to create a large temporary file that it can divide up easily.\nThis takes awhile, so you may need to get comfortable."
+        show_non_blocking_message_dialog "Warning, the first pass through when editing file-wise, Sensible Cinema\nfirst needs to create a large temporary file that it can divide up easily.\nThis takes awhile, so you may need to get comfortable."
       end
 
       require_deletion_entry = true unless watch_unedited
@@ -106,7 +106,7 @@ module SensibleSwing
         show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
       else
         if filename !~ /\.(ts|mpg|mpeg)$/i
-          show_blocking_message_dialog("warning: file #{filename} is not a .mpg or .ts file--it may not work properly all the way, but we'll can try...") 
+          show_blocking_message_dialog("warning: file #{filename} is not a .mpg or .ts file--conversion may not work properly all the way, but we'll try...") 
         end
       end
     end

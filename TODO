@@ -5,27 +5,12 @@
     "just for fun"
     
   netflix instant EDL go live/mac
-
-  === non ordered/maybe eventually (also add line items for these) roadmaps ===
-    upconvert DVD
-    upconvert Netflix
-    C EDL
-    create a skype/google+ video recorder
-    netflix/skype "disable screen saver while running" program [?]
-    linearize [?] hmm...
-    re-update todo/all docu/user feedback etc.
-    LLC
-      if...back off to just the ffmpeg (plus an "[A,B]" viewer) only...but for now stick with just DVD playback [?] until people want more...
-    no propaganda...
-    no auto subtitle downloaders...
-    fix VLC's use of dvdnav itself +- mplayer DVD EDL
+  
+  also see roadmap_possibilities
   
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
-  why is the Sintel's EDL seemingly off?
-    ascertain how accurate mplayer EDL is...I guess compared to...umm...something?
-    double check--are my ffmpeg splits really really really the same as mplayer's EDL DVD splits? really?
   
 == yes do ordered for this release/other projects ja  ==
   speeds at home better?
@@ -41,6 +26,7 @@
   smplayer dying at home?
 
 == yes do, un-ordered currently, from all the various future release options ==
+  "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD somewhere, and number of matching EDL's :)
   add timestamp_offset_from => "0:00"
     if it is, then *DVD* needs to add to it's timestamps :)
