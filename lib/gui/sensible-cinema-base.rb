@@ -284,7 +284,7 @@ module SensibleSwing
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
-      mplayer_to_use = 'vendor/cache/mencoder/mplayer.exe'
+      mplayer_to_use = File.expand_path 'vendor/cache/mencoder/mplayer.exe'
       if show_subs # implies create mode :)
         mplayer_to_use = LocalModifiedMplayer 
         assert File.exist?(mplayer_to_use)
