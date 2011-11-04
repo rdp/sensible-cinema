@@ -36,11 +36,12 @@
   ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  check if smplayer is "off way more" than mplayer with EDL's
+  check if smplayer is "off way more" than mplayer with the same EDL's
+    if so, maybe I do need the "mplayer in mplayer" as a normal option...if it's more stable or the like...
   smplayer dying at home?
 
 == yes do, un-ordered currently, from all the various future release options ==
-  show label of currently mounted DVD somewhere, and number of matching EDL's
+  show label of currently mounted DVD somewhere, and number of matching EDL's :)
   add timestamp_offset_from => "0:00"
     if it is, then *DVD* needs to add to it's timestamps :)
   ask them "what does discontinuity mean exactly?"
@@ -53,7 +54,7 @@
   push a rubyprof v. :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   blog "dvd nav packets don't start at 0"
-  fix mplayer EDL's
+  fix mplayer EDL's pausing
     osd-fractions patch
   @mingw: large file handlez plz?
   optionally automate discovery of splits
@@ -85,7 +86,6 @@
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
     no super scale res necessary?
-  "overwrite?" prompt for files
   screen recording sintel, see below (for upconvert)
   Linux port for SC (call that good enough for usability on TV's...), should be...
   srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
@@ -145,6 +145,7 @@
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
   do we do the right -osd-add for VOB folders?
+  -osd-add kills it in create mode with "normal play" button
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -158,6 +159,8 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  "overwrite?" prompt for file mode
+  tell it to use english sub's if it can
   mplayer: do you seek right at the end of long DVD's?
     if not, patch :P
   @wiki: mplayer EDL's look like this...

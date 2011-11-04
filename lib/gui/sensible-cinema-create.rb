@@ -97,7 +97,7 @@ module SensibleSwing
       end
       
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
-        "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
+          "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
         create_brand_new_edl
         @display_dvd_info.simulate_click # for now...
@@ -105,13 +105,13 @@ module SensibleSwing
       
       @open_list = new_jbutton("Open/Edit an arbitrary previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
+        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", 
+          LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
         LocalStorage['edit_from_here'] = File.dirname(filename)
         open_file_to_edit_it filename
       }
       
-      
-      @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity times automatically" )
+      @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity timestamps automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
         Basically download it from opensubtitles.org (or engsub.net et al),
@@ -332,12 +332,12 @@ module SensibleSwing
 "disk_unique_id" => "#{dvd_id}",
 "dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
 # "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
-# "subtitle_url" => "1234567",
+# "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
-# "closing thoughts" => "only...",
+# "closing thoughts" => "only ...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See https://github.com/rdp/sensible-cinema/wiki/Detecting-mplayer-dvd-reset-times
-# "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just  [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
-# "dvd_start_offset" => "0.28", # use get info button to calculate this number, copy and paste it here.
+# "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
+# "dvd_start_offset" => "0.99", # use get info button to get this number, then copy and paste it here.
         EOL
       # TODO auto-ify above, move docs to a file within documentation folder
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
