@@ -221,11 +221,11 @@ module SensibleSwing
         if run_mplayer_after_done
           run_smplayer_non_blocking saved_to, nil, '', false, false, true
         else
-          size_original = File.size(saved_to).to_f
-          size_edited_version = File.size(file_from).to_f
-          if File.exist?(saved_to) && (size_edited_version/size_original < 0.5)
-            show_blocking_message_dialog("Warning: file size differs by more than 50%--it's possible that transcoding failed somehow #{size_original} #{size_edited_version}")
-          end            
+          size_original = File.size(file_from)
+          size_edited_version = File.size(saved_to)
+          if size_edited_version < (size_original*0.5)
+            show_blocking_message_dialog("Warning: file sizes differs by more than 50%--it's possible that transcoding failed somehow. Orig: #{size_original} edited: #{size_edited_version}")
+          end
           show_in_explorer saved_to
           PlayAudio.new(File.expand_path(File.dirname(__FILE__)) + "/../../vendor/music.wav").start # let it finish on its own :P
           msg =  "Done--you may now watch file\n #{saved_to}\n in VLC player (or possibly smplayer)"
