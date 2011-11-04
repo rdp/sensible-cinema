@@ -126,7 +126,7 @@ module SubtitleProfanityFinder
       99.chr +
       107.chr =>
       'f...',
-      'allah' => 'allah',
+      'allah' => 'all..',
       'bi' +
       'tc' + 104.chr => 'b....',
       'bas' +
