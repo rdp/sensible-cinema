@@ -26,10 +26,12 @@
   smplayer dying at home?
 
 == yes do, un-ordered currently, from all the various future release options ==
+  the php thing :P
   "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD somewhere, and number of matching EDL's :)
   add timestamp_offset_from => "0:00"
     if it is, then *DVD* needs to add to it's timestamps :)
+    add "create for non-DVD" button :) [assume netflix LOL]
   ask them "what does discontinuity mean exactly?"
   re-ask that one question "to the right forum"
   check jackman/ldsmusicnow.com publishing costs LOL
