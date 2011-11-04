@@ -13,7 +13,7 @@
 == very next things I was working on ==
   
 == yes do ordered for this release/other projects ja  ==
-  speeds at home better?
+  speeds at home better? can they be made better?
   auto-start audio fella
   ffmpeg how to add subs demo
   test distro various buttons on mac
@@ -145,6 +145,7 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  fix mplayer EDL to use dvdnav timings :)
   "overwrite?" prompt for file mode
   tell it to use english sub's if it can
   mplayer: do you seek right at the end of long DVD's?
