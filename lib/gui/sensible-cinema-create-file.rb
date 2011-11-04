@@ -106,7 +106,7 @@ module SensibleSwing
         show_blocking_message_dialog "warning .mkv files from makemkv have been known to be off timing wise, please convert to a .ts file using tsmuxer first if it did come from makemkv"
       else
         if filename !~ /\.(ts|mpg|mpeg)$/i
-          show_blocking_message_dialog("warning: file #{filename} is not a .mpg or .ts file--conversion may not work properly all the way, but we'll try...") 
+          show_blocking_message_dialog("warning: file #{filename} is not a .mpg or .ts file--conversion may not work properly all the way [produce a truncated file], but we can try it if you want...") 
         end
       end
     end
