@@ -151,6 +151,7 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+ @mplayer: -dvd-device -dvd-device failz
   fix mplayer EDL to use dvdnav timings :)
   "overwrite?" prompt for file mode
   tell it to use english sub's if it can
