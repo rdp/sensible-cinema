@@ -32,3 +32,5 @@
 # "closing thoughts" => "only ...",
 "mplayer_dvd_splits" => ["339.41","2946.64"], # tough one though...might not be super accurate, but seems on.
 "dvd_start_offset" => "0.29",
+"beginning_subtitle" => ["In Virginia,", "56.97"],
+"ending_subtitle_entry" => ["Ain't no mountain high enough", "01:47:57,96"]
