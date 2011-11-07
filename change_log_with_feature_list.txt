@@ -1,3 +1,6 @@
+NB that we can output XMl or JSON to transmit the EDl timestamp information easily back and forth, and
+cross application, cross platform, client to service and vice versa, etc.
+
 == 0.30.3 ==
 
 fix bug preventing smplayer from working in normal mode (oops).
