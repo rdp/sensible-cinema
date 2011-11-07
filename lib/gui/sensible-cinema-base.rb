@@ -239,9 +239,12 @@ module SensibleSwing
        end
        mplayer_loc = "mplayer"
        if OS.doze? && we_are_in_create_mode
+         p 'using mplayer-edl for smplayer\'s mplayer 1'
          # we want this even if we don't have -osd-add, since it adds confidence :)
          mplayer_loc = LocalModifiedMplayer
          assert File.exist?(mplayer_loc)
+       else
+         p 'using normal mplayer'
        end
        c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -276,9 +279,12 @@ module SensibleSwing
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
       mplayer_to_use = File.expand_path 'vendor/cache/mencoder/mplayer.exe'
-      if show_subs # implies create mode :)
+      if we_are_in_create_mode
+        p 'using mplayer-edl for smplayer\'s mplayer 2'
         mplayer_to_use = LocalModifiedMplayer 
         assert File.exist?(mplayer_to_use)
+      else
+        p 'using normal mplayer'
       end
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
@@ -342,6 +348,7 @@ module SensibleSwing
     
     def get_dvd_playback_options descriptors
       out = "-osdlevel 2 -osd-fractions 1"
+      return out unless we_are_in_create_mode # early out, since they won't be seeing subs anyway :)
       
       if OS.doze? 
         offset_time = "0.20" # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
@@ -433,9 +440,7 @@ module SensibleSwing
         else
           splits.map!{|s| EdlParser.translate_string_to_seconds(s)}
         end
-        if we_are_in_create_mode
-          extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
-        end
+        extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       end
       
       if edl_path

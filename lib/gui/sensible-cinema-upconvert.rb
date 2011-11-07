@@ -40,7 +40,7 @@ module SensibleSwing
     LocalStorage.set_default('screen_multiples', 2.0)
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Change/Test Playback Upconversion Quality Options") do
+      @show_upconvert_options = new_jbutton("Change Playback Upconversion Quality Settings") do
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
@@ -220,7 +220,7 @@ module SensibleSwing
       out = "Upconvert options are now #{  settings ? "set to #{settings} style" : "NOT SET"}"
       if settings
         multiple = LocalStorage[ScreenMultipleFactor]
-        out += " (screen multiplier #{get_current_max_width_resolution}*#{multiple} = #{(multiple * get_current_max_width_resolution).to_i}px)."
+        out += " (screen multiplier #{multiple}*#{get_current_max_width_resolution} = #{(multiple * get_current_max_width_resolution).to_i}px)."
       end
       out
     end
