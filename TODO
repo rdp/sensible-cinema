@@ -26,9 +26,11 @@
   check if smplayer is "off way more" than mplayer with the same EDL's
     if so, maybe I do need the "mplayer in mplayer" as a normal option...if it's more stable or the like...
   smplayer dying at home?
-  
+  bounty fella
 
 == yes do, un-ordered currently, from all the various future release options ==
+  send bom to menumulti guy :P
+  try out VLC bindings to be able to award prize
   rename it "edited movie player"
   the timestamp sync'ing feels broken it's so hard to use
   cap the default remember the titans
@@ -186,6 +188,8 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @mplayer: OSD fails when corrupted DVD's and digit points
+  compare with purevideo
   can I "not" use mencoder for the first pass, to be able to work with handbrake files? [OSOH]
   todo.upconvert
     netflix quality upconverter, have a go at it
