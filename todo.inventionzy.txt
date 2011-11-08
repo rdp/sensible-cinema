@@ -114,3 +114,5 @@
    can auto-compute/compare md5's (using any arbitrary hash function)/truncated md5's/streamline (faster) partial md5's/can md5 specific frames to detect times/to lookup correct EDL's on the fly.
      can use the same or some other mnemonic to download something or to go to some online url for it/related to it.
      can auto-lookup and display things like images/ratings/user reviews, dynamically, about a piece
+  can "auto-sync" "this EDL maps to this movie in this other player (hulu, for instance) which has synchronization points x,y, so it adjust the
+     timestamps in the EDL accordingly, for that one .
