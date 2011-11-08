@@ -38,15 +38,8 @@ module SubtitleProfanityFinder
       for permutation in permutations
         if is_single_word_profanity
           # oh wow this is ughly...
-          sanitized_version = bracketized
-          as_regexp = Regexp.new("\s" + permutation + "\s", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + bracketized + ' ']
-          as_regexp = Regexp.new("^" + permutation + "\s", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, bracketized + ' ']
-          as_regexp = Regexp.new("\s" + permutation + "$", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + bracketized]
-          as_regexp = Regexp.new("^" + permutation + "$", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, bracketized]
+          as_regexp = Regexp.new("(?:\s|^)" + permutation + "(?:\s|$|[^a-zA-Z])", Regexp::IGNORECASE)
+          all_profanity_combinations << [as_regexp, ' ' + bracketized + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already
         else
           all_profanity_combinations << [as_regexp, bracketized]
         end
@@ -169,20 +162,17 @@ module SubtitleProfanityFinder
       output += "\n"
       for glop in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
-          # dunno if we should force words to just start with this or contain it anywhere...
-          # what about 'g..ly' for example?
-          # or 'un...ly' ? I think we're ok there...
   
           if glop =~ profanity
             # create english-ified version
-            # take out timing line, number line
+            # take out timing line, number lines first
             sanitized_glop = glop.lines.to_a[1..-1].join(' ')
             sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
             sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
             sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipses
             sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
             
-            # sanitize the subtitles themselves...
+            # sanitize the subtitles...
             for all_profanity_combinations2 in all_profanity_combinationss
               for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
                 if sanitized_glop =~ prof2

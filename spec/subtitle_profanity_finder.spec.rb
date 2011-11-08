@@ -37,6 +37,7 @@ describe SubtitleProfanityFinder do
     end
     
     describe "deity various" do
+      
       it "should parse output plural deity" do
         output.should include("nordic [deitys] ")
       end
@@ -46,7 +47,7 @@ describe SubtitleProfanityFinder do
         output.should include("fortress is our [goodness]")
       end
       
-      it "should parse out <i> et al " do
+      it "should remove <i> et al " do
         output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
         output.should_not include(" i ")
         output.should_not include("<i")
@@ -81,6 +82,10 @@ describe SubtitleProfanityFinder do
       
       it 'should not disdain impass' do
         output2.should_not include "impa.."
+      end
+      
+      it 'should let them end with a .' do
+        output2.should include "line end full word"
       end
       
     end
@@ -121,8 +126,6 @@ a butt
   S = SubtitleProfanityFinder
 
   describe "it should let you re-factor the timestamps on the fly if desired"  do
-
-#  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given, starting_timestamp_actual, ending_timestamp_given, ending_timestamp_actual^M
 
     it "should subtract from beginning etc. etc." do
        normal = S.edl_output 'dragon.srt'
