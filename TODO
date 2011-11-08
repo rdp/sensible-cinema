@@ -11,20 +11,18 @@
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
-  speeds at home better? can they be made better?
+  speeds at home better? can they be made better at all?
   
 == yes do ordered for this release/other projects ja  ==
   auto-start audio caster ability
   ffmpeg how to add subs demo
-  test distro various buttons on mac
-    advertise urug
   ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  check if smplayer is "off way more" than mplayer with the same EDL's
-    if so, maybe I do need the "mplayer in mplayer" as a normal option...if it's more stable or the like...
 
 == yes do, un-ordered currently, from all the various future release options ==
+  test distro various buttons on mac
+    advertise urug
   those gaps remember titans
   upconvert: compare with "normal", and against itself.  Then release :P
   send bom to menumulti guy :P
@@ -32,9 +30,10 @@
   rename it "edited movie player"
   the timestamp sync'ing feels broken it's so hard to use
   cap the default remember the titans
-  aladdin/other
+  aladdin finalize
   the php thing :P
   subs: grab he... (bad, with ending .)
+    nanny mcphee too 'ell ?
   "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD somewhere, and number of matching EDL's :)
   add timestamp_offset_from => "0:00"
@@ -43,17 +42,17 @@
   ask them "what does discontinuity mean exactly?"
   re-ask that one question "to the right forum"
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  it should not ask for an EDL when you click "play it unedited"
+  it should not have to ask for an EDL when you click "play it unedited"
   genealogy create/publicize
-  warn when using upconverting in SC
+  warn when using upconverting within SC
   VLC subtitles grey issue
   push a rubyprof v. :P
+  push a nextsprocket
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   blog "dvd nav packets don't start at 0"
   fix mplayer EDL's pausing
     osd-fractions patch
   @mingw: large file handlez plz?
-  optionally automate discovery of splits
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
     C player:
@@ -62,9 +61,8 @@
   ffmpeg dshow input can I move audio along anyway, or with different metric?
   automate more creation things...
     prompt if they want to auto-search for splits :P
-  create button "detect mplayer resets :P"
-    dvdnav:// -vo null , +1 frame
   screen saver production-ize :)
+  fix mplayer to actually work with DVDNAV EDL's
   mplayer:
     basically the "first round" of patches for it, not for mine :P
     also patch for V:DD
@@ -186,6 +184,8 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  double check the "sum title times" precisely--do they add up great?
+  research madvr/on board lanczos at all.
   @mplayer: OSD fails when corrupted DVD's and digit points
   compare with purevideo
   can I "not" use mencoder for the first pass, to be able to work with handbrake files? [OSOH]

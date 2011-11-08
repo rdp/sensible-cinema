@@ -11,6 +11,8 @@ worked fine with muting here...with teeny screen video of monster's inc, work de
 
 seemed to work fine with the same edl,  Sherpya-SVN-r33574-4.2.5 (older), on the work desktop, too...hmm...
 
+  actually, smplayer seemed to do (muting) EDL's at 1hr just fine OSOH. and various mplayer's.  All spot on.
+
 == Sintel timing DVD versus file ==
 
   seemed to work, right on.  Could have had that 0.3s offset, hard to tell for sure :P
