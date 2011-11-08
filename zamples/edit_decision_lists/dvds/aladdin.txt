@@ -3,27 +3,28 @@
 
 "mutes" => [
 
-"0:04:15.95" , "0:04:20.44", "profanity", "allah", "By [allah]",
-"0:13:53.54" , "0:13:56.66", "profanity", "allah", "[allah] forbid you should have any daughters",
-"0:51:41.78" , "0:51:45.36", "profanity", "allah", "By [allah] this is quite a remarkable device",
-"1:06:05.46" , "1:06:07.67", "profanity", "allah", "Praise [allah]",
-"1:21:44.66" , "1:21:48.41", "profanity", "moron", "Shut up you [moron] Don't tell me to shut up",
+  "0:04:15.95" , "0:04:20.44", "profanity", "al...", "By [al...]",
+  "0:13:53.54" , "0:13:56.66", "profanity", "al...", "[al...] forbid you should have any daughters",
+  "0:51:41.78" , "0:51:45.36", "profanity", "al...", "By [al...] this is quite a remarkable device",
+  "1:06:05.46" , "1:06:07.67", "profanity", "al...", "Praise [al...]",
+  "1:21:44.66" , "1:21:48.41", "profanity", "moron", "Shut up you [moron] Don't tell me to shut up",
   
 ],
 
 "blank_outs" => [
- # 7:51 7:55 skimpy 8:00 8:07 LOL
+ "7:51", "7:55", "skimpy dancing",
+ "8:00", "8:07", "skimpy dancing",
 ],
 
 "volume_name" => "QL10NNW1",
 "disk_unique_id" => "f0f84375|1dbbed43",
-"dvd_title_track" => "20", 
+"dvd_title_track" => "20",
 # "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
 "subtitle_url" => "http://www.opensubtitles.net/en/opensubtitles-player.sexabe/3289935",
-# "not edited out stuff" => "some...",
+"not edited out stuff" => "there maybe more in there",
 # "closing thoughts" => "only...",
-"mplayer_dvd_splits" => [], # or just  [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
+"mplayer_dvd_splits" => [],
 "dvd_start_offset" => "0.28",
 
-"beginning_subtitle" => ["Oh I Come from a land", "30.5"], # was 29.3
-"ending_subtitle_entry" => ["Made you look. ", "1:25:33.37"], # was .73
+"beginning_subtitle" => ["Oh I Come from a land", "30.5"], 
+"ending_subtitle_entry" => ["Made you look. ", "1:25:33.37"],
