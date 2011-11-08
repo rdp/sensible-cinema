@@ -51,7 +51,7 @@ describe SubtitleProfanityFinder do
         output.should_not include(" i ")
         output.should_not include("<i")
         output.should_not include("huntingand")
-        output.should_not include("  ")
+        output.should_not include("   ")
       end
       
     end
@@ -93,7 +93,7 @@ describe SubtitleProfanityFinder do
   end
   
   it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 1.0
+    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 1.0, 0, 0, 100, 100
 6
 00:00:55,068 --> 00:00:59,164
 a butt

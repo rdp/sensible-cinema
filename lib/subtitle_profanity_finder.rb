@@ -150,16 +150,17 @@ module SubtitleProfanityFinder
 
     semi_bad_profanities = {}
     ['bloody', 'moron', 'breast', 'idiot', 
-      'sex', 'genital', 'boob', 'make love', 
+      'sex', 'genital', 
+      'boob', 
+      'make love', 
       'making love', 'love mak', 
-      'dumb', 'suck', 
-      'piss'
+      'dumb', 'suck', 'piss'
 	  ].each{|name|
-      # butter?
       semi_bad_profanities[name] = name
     }
     semi_bad_profanities['crap'] = ['crap', :full_word]
     semi_bad_profanities['butt'] = ['butt', :full_word]
+    # butter?
 
     all_profanity_combinationss = [convert_to_regexps(bad_profanities), convert_to_regexps(semi_bad_profanities)]
     
@@ -209,7 +210,7 @@ module SubtitleProfanityFinder
             ts_end = multiply_proc.call(ts_end)
             ts_end = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin
-              output += %!"#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
+              output += %!  "#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
             end
           end
         end

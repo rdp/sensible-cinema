@@ -4,12 +4,14 @@
 "mutes" => [
 
 "0:34:38.01" , "0:34:44.01", "profanity", "goodness", "Oh [goodness]",
-#"0:34:40.08" , "0:34:43.61", "profanity", "goodness", "Well that means jellies and ice cream and raspberry cordial and [goodness] only knows what else",
+#overlaps with the above"0:34:40.08" , "0:34:43.61", "profanity", "goodness", "Well that means jellies and ice cream and raspberry cordial and [goodness] only knows what else",
 "1:20:11.62" , "1:20:13.59", "profanity", "goodness", "in the sight of [goodness]",
 "1:20:26.70" , "1:20:31.14", "profanity", "goodness", "instituted of [goodness] in the time of man's innocence",
 "1:21:45.74" , "1:21:48.54", "profanity", "lo..", "Oh [lo..] love a duck",
 "1:21:58.49" , "1:22:01.72", "profanity", "lo..", "Gasps Oh my [lo..] Your Highness",
 "1:23:31.25" , "1:23:32.61", "profanity", "lo..", "Oh [lo..]",
+"01:18:08,831", "01:18:11,391", "PROFANITY", "he..", "blinkin' [he..]"
+
 ],
 
 "blank_outs" => [
@@ -22,11 +24,9 @@
 "dvd_title_track" => "1", 
 # "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
 "subtitle_url" => "http://www.opensubtitles.org/en/subtitles/3081511/nanny-mcphee-en",
-# "not edited out stuff" => "some...",
-# "closing thoughts" => "only...",
-"mplayer_dvd_splits" => [], # or just  [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
-"dvd_start_offset" => "0.28", # use get info button to calculate this number, copy and paste it here.
-
+"not edited out stuff" => "some macabre stuff--please do edit it out for me!",
+"mplayer_dvd_splits" => [],
+"dvd_start_offset" => "0.28",
 
 "beginning_subtitle" => ["We must begin our story", "34.77"],
 "ending_subtitle_entry" => ["Yoo-hoo.", "01:34:03.55"]
