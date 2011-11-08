@@ -116,3 +116,5 @@
      can auto-lookup and display things like images/ratings/user reviews, dynamically, about a piece
   can "auto-sync" "this EDL maps to this movie in this other player (hulu, for instance) which has synchronization points x,y, so it adjust the
      timestamps in the EDL accordingly, for that one .
+  can work with compressed audio/video, or uncompressed
+  can work with encryped data/image/audio data, or unencrypted, with or without 3rd party player/codecs etc.

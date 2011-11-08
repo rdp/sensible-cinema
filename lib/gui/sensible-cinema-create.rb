@@ -18,7 +18,7 @@ module SensibleSwing
       
       add_text_line 'Create: View Options:'
       
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer)")
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (nosubs)")
       @mplayer_edl.on_clicked {
         edl_out_instructions = ""
         answer = show_select_buttons_prompt <<-EOL, {}
