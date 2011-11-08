@@ -1,5 +1,16 @@
 up next:
 
+== mplayer sox at muting DVD's with timestamp resets ==
+  yep, I think it does <sigh>
+  monster's inc. resets PTS with every chapter LOL
+
+== mplayer muting probs ==
+
+worked fine with muting here...with teeny screen video of monster's inc, work desktop, second 1530-1540, with mplayer_edl
+ I think it might be fixed now, in general...maybe...
+
+seemed to work fine with the same edl,  Sherpya-SVN-r33574-4.2.5 (older), on the work desktop, too...hmm...
+
 == Sintel timing DVD versus file ==
 
   seemed to work, right on.  Could have had that 0.3s offset, hard to tell for sure :P
