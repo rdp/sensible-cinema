@@ -93,7 +93,7 @@ describe SubtitleProfanityFinder do
   end
   
   it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 1.0, 0, 0, 100, 100
+    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 0, 0, 100, 100
 6
 00:00:55,068 --> 00:00:59,164
 a butt
