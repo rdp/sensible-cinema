@@ -133,6 +133,7 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  mplayer d3d patch
   "overwrite?" prompt for file mode
   @mplayer: -dvd-device -dvd-device failz
   mplayer: do you seek right at the end of long DVD's?
