@@ -140,7 +140,7 @@ module SensibleSwing
         sleep 0.5 # let it open first
 		    bring_to_front
  
-		    if JOptionPane.show_select_buttons_prompt('Would you like to enter timing adjust information on the .srt file? [final pass should, even if it matches]') == :yes
+		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass should, even if it already matches well, for future coordination of timestamps") == :yes
           if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in mplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
             play_dvd_smplayer_unedited true
           end
