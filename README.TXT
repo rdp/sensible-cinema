@@ -103,7 +103,12 @@ Q. Is it unethical to watch edited movies?
   Well, producers have been making "airplane edited" movies forever, why should this offend them? :)
   http://en.wikipedia.org/wiki/Re-edited_film
   But anyway if you don't find it ethical, then do yourself a favor don't watch them.
-  
+
+Q. Can I know if movies in the theaters have profanity in them?
+A. You can--you can download their subtitle file, then use the "part subtitle" button to tell if even movies
+   *in the theater* have profanity (this won't help you skip that profanity, obviously, if you go to see it, but it's
+   a heads up).
+
 == Caveats ==
 
 NB that "someone" has to first create a edit list, per DVD.

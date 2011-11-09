@@ -6,42 +6,47 @@
     
   netflix instant EDL go live/mac
   
-  also see roadmap_possibilities
+  also roadmap_possibilities
   
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
-  speeds at home better? can they be made better at all?
+  consistency for flight of nav. srt? huh?
+    does my fixer fix it now?
   
 == yes do ordered for this release/other projects ja  ==
+  speeds at home better? can they be made better at all?
   auto-start audio caster ability
   ffmpeg how to add subs demo
   ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
+  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
+    is powerdvd off by exactly 0.5s (rounds up)?
+    C player:
+      double check if it timing shucks, though I think it does...
+        also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
+  -osd-add kills it in create mode with "normal play" button
+  create skype/google+ hangouts recorder windows
 
 == yes do, un-ordered currently, from all the various future release options ==
-    too bad windows doesn't have real dependencies
-  -osd-add kills it in create mode with "normal play" button
-  consistency for flight of nav. srt? huh?
-    does my fixer fix it now?
   test distro various buttons on mac
     advertise urug
   those gaps remember titans, in VLC (report?)
   upconvert: compare with "normal", and against itself.  Then release :P
+  @VLC: you shuck with cars 2 when it skips titles
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   rename it "edited movie player" or whatever google prefers :P
-  the timestamp sync'ing feels broken it's so hard to use LOL
-    tell them "ctrl+v to paste" too
+  the timestamp sync'ing feels broken it's hard to use LOL
+    srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
   the php thing :P
   "call mencoder" call shouldn't be needed anymore...
-  show label of currently mounted DVD somewhere, and number of matching EDL's :)
+  show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
+    maybe reset on button update...
   add timestamp_offset_from => "0:00"
     if it is, then *DVD* needs to add to it's timestamps :)
-    add "create for non-DVD" button :) [assume netflix LOL]
-  ask them "what does discontinuity mean exactly?"
-  re-ask that one question "to the right forum"
+    add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   it should not have to ask for an EDL when you click "play it unedited"
   genealogy create/publicize
@@ -51,18 +56,12 @@
   push a nextsprocket
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   blog "dvd nav packets don't start at 0"
-  fix mplayer EDL's pausing
+  fix mplayer EDL's pausing/freezing on skips. weird.
     osd-fractions patch
   @mingw: large file handlez plz?
-  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
-    is powerdvd off by exactly 0.5s (rounds up)?
-    C player:
-      double check if it timing shucks, though I think it does...
-        also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   ffmpeg dshow input can I move audio along anyway, or with different metric?
   automate more creation things...
-    prompt if they want to auto-search for splits :P
-  screen saver production-ize :)
+    auto-add largest title to the generator EDL
   fix mplayer to actually work with DVDNAV EDL's
   mplayer:
     basically the "first round" of patches for it, not for mine :P
@@ -84,18 +83,12 @@
     no super scale res necessary?
   screen recording sintel, see below (for upconvert)
   Linux port for SC (call that good enough for usability on TV's...), should be...
-  srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
-  note...here's how to screen live movies :)
-  netflix instant CGI how crisp is their HD?
   note "Ooh that is clever.  Slow motion to find it! yes!"
-  C player just use 29.97, that's it
-    convert to 29.97 [at least this]
   popup_text in EDL's
-  dvdnav sync with the old stuff (its old mailing lists...I guess...and that one guy...)
-    maybe dvdread add some methods? [ask]
+  dvdnav that one old patch
   subtitle -> url everywhere
   english name (movie name) mass everywhere
-  ruby_prof stuff (release)
+  ruby_prof stuffs (release)
   warn other wordpresses
   test mplayer -vo gl at home
   template-ify for netflix too "create for netflix" button
@@ -111,16 +104,14 @@
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
   macify work minor things it doesn't currently :)
-  create skype/google+ hangouts recorder windows
-  auto-add largest title to the generator EDL
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
   volume_name => dvd_volume_label
   check with/rent blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
   split LLC's website+consumer
     get LLC before a "real" domain name
-  clear runnings
-    me try [just watch it, maybe rip [?]]
-    have ben and chris test it out [realtime?]
+  cool runnings
+    me try [just watch it, maybe grab [?]]
+    have ben and chris test it out [realtime prolly]
   ask for more beta testers for use, ask for more beta testers for creation, too
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
@@ -163,6 +154,11 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  dvdnav tons of old patches...
+  maybe dvdread add some methods? [ask]
+  netflix instant CGI how crisp is their HD?
+  prompt if they want to auto-search for splits :P
+  on mac needs a different -osd-add number...though if my patches are accepted it may not matter
   do we do the right -osd-add for VOB folders?
   change upconvert options needs its own "close" button
     and status field?

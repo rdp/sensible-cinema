@@ -18,7 +18,7 @@ module SensibleSwing
       
       add_text_line 'Create: View Options:'
       
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (nosubs)")
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
       @mplayer_edl.on_clicked {
         edl_out_instructions = ""
         answer = show_select_buttons_prompt <<-EOL, {}
@@ -128,11 +128,11 @@ module SensibleSwing
       EOL
 
       @parse_srt.on_clicked do
-        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
+        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:")
 		    if(srt_filename =~ /utf16/)
-		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't parse"
+		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
 	      end
-        # TODO nuke
+        # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
         
@@ -141,12 +141,15 @@ module SensibleSwing
 		    bring_to_front
  
 		    if JOptionPane.show_select_buttons_prompt('Would you like to enter timing adjust information on the .srt file? [final pass should, even if it matches]') == :yes
-          start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]", "...")
-          start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"", "00:00:00,000")
+          if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in mplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
+            play_dvd_smplayer_unedited true
+          end
+          start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]\nctrl-v to paste", "...")
+          start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"\nctrl-v to paste", "00:00:00,000")
           start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
         
-          end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie", "...")
-          end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"", "02:30:00,000")
+          end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie\nctrl-v to paste", "...")
+          end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"\nctrl-v to paste", "02:30:00,000")
           end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
         else
 		      start_srt = 0
