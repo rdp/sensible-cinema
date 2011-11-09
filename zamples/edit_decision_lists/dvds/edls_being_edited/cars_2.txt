@@ -21,3 +21,6 @@
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See https://github.com/rdp/sensible-cinema/wiki/Detecting-mplayer-dvd-reset-times
 # "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
 # "dvd_start_offset" => "0.99", # use get info button to get this number, then copy and paste it here.
+
+# dvd begin: "this is agent leland turbo" 47.98
+# dvd end: yippee 1:38:12.85
