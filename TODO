@@ -11,8 +11,6 @@
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
-  consistency for flight of nav. srt? huh?
-    does my fixer fix it now?
   
 == yes do ordered for this release/other projects ja  ==
   speeds at home better? can they be made better at all?
@@ -133,6 +131,8 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  check if mplayer can get out of sync audio and not...appears that it can actually <sigh>
+  "double check your settings, this one should occur at exactly x"
   mplayer d3d patch
   "overwrite?" prompt for file mode
   @mplayer: -dvd-device -dvd-device failz

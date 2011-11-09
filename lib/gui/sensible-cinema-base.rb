@@ -185,21 +185,17 @@ module SensibleSwing
       unless File.exist?(File.expand_path(play_this))
         raise play_this + ' non existing?' # sanity check, I get these in mac :)
       end
-            
 
       extra_options = ""
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
-      # -hardframedrop might help but hurts just too much
-      unless we_are_in_create_mode
-        # avoid in create mode...for accuracy sake, until I hear otherwise
-        extra_options << " -framedrop "
-      end
-      # ?? extra_mplayer_commands << "-mc 0.016" ??
-      extra_options << " -autosync 15 " 
+      # -hardframedrop might help but hurts the eyes just too much
+      extra_options << " -framedrop " # even in create mode, if the audio ever gets off, we're hosed with making accurate timestamps...until I hear otherwise...
+      # ?? extra_mplayer_commands << "-mc 0.016" ?? # doesn't seem to fix anything, unfortunately...this is ridiculous
+      extra_options << " -autosync 30 " 
       
       unless show_subs
-        # disable subtitles
+        # disable all subtitles :P
         extra_options << " -nosub -noautosub -forcedsubsonly -sid 1000 "
       end
       extra_options << " -alang en "
@@ -367,7 +363,7 @@ module SensibleSwing
           end
           out += " -osd-add #{offset_time}"
         else
-          show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your mplayer on screen display timestamp will probably be 0.20s too small, add 0.20 to match DVD time"
+          show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your mplayer on screen display timestamp will probably display low-accuracy and be about 0.20s too small, add 0.20 to match real DVD time, or use the show info button to calculate dvd_start_offset"
         end
       else
         show_blocking_message_dialog "warning, since we're not in windows with a patched mplayer OSD timestamps will probably be 0.19s too small,\n and their fraction past the decimal point will be off.\nPing me for instructions to build a patched mplayer."
@@ -411,7 +407,7 @@ module SensibleSwing
     MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer
+    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, show_subs = false
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly
@@ -453,7 +449,7 @@ module SensibleSwing
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, false, start_full_screen
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, show_subs, start_full_screen
     end
     
     def print *args

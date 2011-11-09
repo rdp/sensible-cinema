@@ -20,29 +20,12 @@ module SensibleSwing
       
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
       @mplayer_edl.on_clicked {
-        edl_out_instructions = ""
-        answer = show_select_buttons_prompt <<-EOL, {}
-          Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
-          EOL
-        if answer == :yes
-          show_non_blocking_message_dialog <<-EOL
-          EDL outfile:
-          As mplayer goes through the video, when you see a scene you want to edit or skip, 
-          hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
-          hit 'i' again to end the edited/skipped scene, within that file.
-          NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
-          78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
-          EOL
-
-          edlout_filename =  new_nonexisting_filechooser_and_go "pick edlout filename"
-          edl_out_instructions = "-edlout #{edlout_filename}"
-        end
-        
-        thred = play_smplayer_edl_non_blocking nil, [edl_out_instructions], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
-        if(edl_out_instructions.present?)
-          open_edl_file_when_done thred, edlout_filename
-        end
+        watch_dvd_edited_realtime_mplayer false
       }
+      
+      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
+        watch_dvd_edited_realtime_mplayer true
+      end
       
       @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
         times = get_start_stop_times_strings
@@ -50,7 +33,7 @@ module SensibleSwing
         start_time = times[0]
         end_time = times[1]
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
-        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # more aggressive :)
       end
       
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
@@ -269,6 +252,30 @@ module SensibleSwing
       
     end # advanced buttons
     
+    def watch_dvd_edited_realtime_mplayer show_subs
+        edl_out_command = ""
+        answer = show_select_buttons_prompt <<-EOL, {}
+          Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
+          EOL
+        if answer == :yes
+          show_non_blocking_message_dialog <<-EOL
+          EDL outfile:
+          As mplayer goes through the video, when you see a scene you want to edit or skip, 
+          hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
+          hit 'i' again to end the edited/skipped scene, within that file.
+          NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
+          78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
+          EOL
+
+          edlout_filename = new_nonexisting_filechooser_and_go "pick edlout filename"
+          edl_out_command = "-edlout #{edlout_filename}"
+          
+        end
+        thred = play_smplayer_edl_non_blocking nil, [edl_out_command], true, false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
+        if(edl_out_command.present?)
+          open_edl_file_when_done thred, edlout_filename
+        end
+    end
     
     def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..."

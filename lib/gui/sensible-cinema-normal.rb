@@ -73,7 +73,7 @@ module SensibleSwing
     
     def add_open_documentation_button
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
-        show_in_explorer __DIR__ + "/../documentation" # TODO mac :)
+        show_in_explorer __DIR__ + "/../../documentation" # TODO mac-compat :)
       end
     end
     
