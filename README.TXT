@@ -71,7 +71,7 @@ See also is_it_legal_to_copy_dvds.txt for some caveats you should understand fir
 I don't actually know how to do this I've never burned a video DVD.
 Windows DVD Maker might help, http://www.dvdflick.net might help.
 iDVD might help on mac.
-DO NOT MAKE ILLEGAL COPIES OF DVD's. See also is_it_legal_to_copy_dvds.txt.
+DO NOT MAKE ILLEGAL COPIES OF DVD's for your country. See also is_it_legal_to_copy_dvds.txt.
 Watching edited movies may be legal in the US under the Family Protection Act.
 
 == FAQ ==
@@ -99,6 +99,11 @@ A. Yes, just use some WMC plugin that allows you to "call out" to a 3rd party so
    mutes are broken currently, so it will set it to just always skip. [note: this may not be implemented all the
    way yet ask on the mailing list if it is or not, for XBMC]
 
+Q. Is it unethical to watch edited movies?
+  Well, producers have been making "airplane edited" movies forever, why should this offend them? :)
+  http://en.wikipedia.org/wiki/Re-edited_film
+  But anyway if you don't find it ethical, then do yourself a favor don't watch them.
+  
 == Caveats ==
 
 NB that "someone" has to first create a edit list, per DVD.
@@ -214,15 +219,16 @@ over time.  Thanks for your contributions.
 
 Feedback, including feature requests, comments, etc. all welcome:
 
-Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to sensible-cinema@googlegroups.com
+Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to 
+sensible-cinema@googlegroups.com or rogerdpack@gmail.com
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
 See development.txt file, and also http://github.com/rdp/sensible-cinema
 
 If you want to donate something, please consider donating to a charity of your choice.  
-No really.
+No really, feel free, go ahead.
 
-== Competition/use of files ==
+== Competition/re-use of files ==
 
 Note that competition/use of files from sensible cinema is welcome!
 
