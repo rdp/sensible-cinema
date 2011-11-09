@@ -313,7 +313,7 @@ module SensibleSwing
     
     def create_brand_new_edl
       drive, volume, dvd_id = choose_dvd_drive_or_file true
-      english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.gsub('_', ' ').downcase)
+      english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.split('_').map{|word| word.downcase.capitalize}.join(' ')) # A Court Jester
       input = <<-EOL
 # comments can go after a # on any line, for example this one.
 "name" => "#{english_name}",
