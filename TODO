@@ -21,18 +21,19 @@
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
 
 == yes do, un-ordered currently, from all the various future release options ==
+    too bad windows doesn't have real dependencies
   -osd-add kills it in create mode with "normal play" button
   consistency for flight of nav. srt? huh?
-    does my fixer fix it?
+    does my fixer fix it now?
   test distro various buttons on mac
     advertise urug
-  those gaps remember titans, in VLC/report
+  those gaps remember titans, in VLC (report?)
   upconvert: compare with "normal", and against itself.  Then release :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   rename it "edited movie player"
   the timestamp sync'ing feels broken it's so hard to use LOL
-    tell them "ctrl+v to paste"
+    tell them "ctrl+v to paste" too
   the php thing :P
   "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD somewhere, and number of matching EDL's :)
@@ -67,6 +68,7 @@
     basically the "first round" of patches for it, not for mine :P
     also patch for V:DD
   DIRT short list
+  just local download smplayer, instead of forcing a dependency :P
   DVD timing for forum/Snow White
   netflix instant descriptor work at all
     OS X check it
