@@ -1,22 +1,21 @@
-# comments can go after a # on any line, for example this one.
 "name" => "remember the titans",
 
 "mutes" => [
-"0:05:47.22" , "0:05:50.93", "profanity", "goodness", "It's the world we live in [goodness] help us all",
-"0:07:04.17" , "0:07:08.14", "profanity", "j....", "I'm not a savior or [j....] [chr...]",
-
-"0:22:48.25" , "0:22:50.97", "profanity", "lo..", "[lo..] we come before you today",
-"0:34:48.02" , "0:34:49.48", "profanity", "goodness", "Is wear to [goodness] I'm gonna hit you so hard",
-"0:47:54.53" , "0:47:57.70", "profanity", "deitys", "the titans were greater even than the [deitys]",
-"0:56:20.16" , "0:56:21.12", "profanity", "da..", "The world don't give a [da..]",
-"1:04:34.70" , "1:04:37.25", "profanity", "da..", "like we ain't a [da..] bit of nothing man",
-"1:09:25.87" , "1:09:27.46", "profanity", "goodness", "Rev I swear to [goodness] I audibled",
-"1:09:29.34" , "1:09:30.59", "profanity", "goodness", "Swear to [goodness]",
-"1:19:13.84" , "1:19:16.47", "profanity", "goodness", "but before [goodness] I swear I'll see",
-"1:39:07.22" , "1:39:09.38", "profanity", "a..", "Ed Henry's kicking my [a..] out there",
-
-"01:02:40,219" , "01:02:41,220", "profanity", "he..", "go to he..",
-"00:20:25,726" , "00:20:30,480", "profanity", "john brown hind parts",
+  "0:05:47.22" , "0:05:50.93", "profanity", "goodness", "It's the world we live in [goodness] help us all",
+  "0:07:04.17" , "0:07:08.14", "profanity", "j....", "I'm not a savior or [j....] [chr...]",
+  
+  "0:22:48.25" , "0:22:50.97", "profanity", "lo..", "[lo..] we come before you today",
+  "0:34:48.02" , "0:34:49.48", "profanity", "goodness", "Is wear to [goodness] I'm gonna hit you so hard",
+  "0:47:54.53" , "0:47:57.70", "profanity", "deitys", "the titans were greater even than the [deitys]",
+  "0:56:20.16" , "0:56:21.12", "profanity", "da..", "The world don't give a [da..]",
+  "1:04:34.70" , "1:04:37.25", "profanity", "da..", "like we ain't a [da..] bit of nothing man",
+  "1:09:25.87" , "1:09:27.46", "profanity", "goodness", "Rev I swear to [goodness] I audibled",
+  "1:09:29.34" , "1:09:30.59", "profanity", "goodness", "Swear to [goodness]",
+  "1:19:13.84" , "1:19:16.47", "profanity", "goodness", "but before [goodness] I swear I'll see",
+  "1:39:07.22" , "1:39:09.38", "profanity", "a..", "Ed Henry's kicking my [a..] out there",
+  
+  "01:02:40,219" , "01:02:41,220", "profanity", "he..", "go to he..",
+  "00:20:25,726" , "00:20:30,480", "profanity", "john brown hind parts",
 
 ],
 
@@ -25,12 +24,12 @@
 ],
 "volume_name" => "REMEMBER_THE_TITANS",
 "disk_unique_id" => "3590c83d|d9073590",
-"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+"dvd_title_track" => "1",
 # "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
 "subtitle_url" => "http://www.opensubtitles.net/en/movie-subtitles-searcher.sekam/3298603",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
-"mplayer_dvd_splits" => ["339.41","2946.64"], # tough one though...might not be super accurate, but seems on.
+"mplayer_dvd_splits" => ["339.41","2946.64"], # tough one though...might not be super accurate, but seemed to work...
 "dvd_start_offset" => "0.29",
 "beginning_subtitle" => ["In Virginia,", "56.97"],
 "ending_subtitle_entry" => ["Ain't no mountain high enough", "01:47:57,96"]
