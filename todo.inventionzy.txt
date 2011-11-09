@@ -120,3 +120,5 @@
   can work with encryped data/image/audio data, or unencrypted, with or without 3rd party player/codecs etc.
   can have its "own" metadata stored off somewhere (like user contributed images/photos/comments/blogs/wikis)
     can link videos to adds/adwords/add providers somehow/voice over/overlay adds, et al. 
+  can have overlay (+- transparent) of adds/off-screen/below the video, always, or every so often, based on timestamp (fixed, or specific to a video)
+    can have overlay text (ex: news ticker, adds, chats, comments from users) on a video.
