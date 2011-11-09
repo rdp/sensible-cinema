@@ -258,7 +258,7 @@ module SensibleSwing
         window.add_options_that_use_local_files
       end
       
-      if ARGV.detect{|a| a == '--developer-mode'}
+      if we_are_in_developer_mode?
        @reload = new_jbutton("reload bin/sensible-cinema code") do
          for file in Dir[__DIR__ + '/*.rb']
            p file

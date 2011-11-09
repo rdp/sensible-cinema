@@ -114,6 +114,10 @@ module SensibleSwing
      ARGV.index("--create-mode")
     end
     
+    def we_are_in_developer_mode?
+      ARGV.detect{|a| a == '--developer-mode'}
+    end
+    
     def new_jbutton title, tooltip = nil
       button = JButton.new title
       button.tool_tip = tooltip
@@ -502,9 +506,13 @@ module SensibleSwing
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
       bring_to_front
-      dir ||= LocalStorage[caller.inspect]
+      unique_trace = caller.inspect
+      if we_are_in_developer_mode?
+        p 'using trace:' + unique_trace + 'which is' + LocalStorage[unique_trace].to_s
+      end
+      dir ||= LocalStorage[unique_trace]
       got = FileDialog.new_previously_existing_file_selector_and_go title, dir
-      LocalStorage[caller.inspect] = File.dirname(got)
+      LocalStorage[unique_trace] = File.dirname(got)
       got
     end
     
