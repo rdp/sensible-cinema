@@ -21,6 +21,7 @@
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
 
 == yes do, un-ordered currently, from all the various future release options ==
+  -osd-add kills it in create mode with "normal play" button
   consistency for flight of nav. srt? huh?
     does my fixer fix it?
   test distro various buttons on mac
@@ -92,19 +93,12 @@
     maybe dvdread add some methods? [ask]
   subtitle -> url everywhere
   english name (movie name) mass everywhere
-  handle gates of he..... (like with line ending I guess?)
   ruby_prof stuff (release)
   warn other wordpresses
   test mplayer -vo gl at home
-  Ben's other DVD's
   template-ify for netflix too "create for netflix" button
-  EDL gottman -- test
-  EDL Greg's DVD's
+  EDL gottman
   minor redcar tweaks
-  opening/create buttons [?] -> new separate sub-window, or something like that
-  change upconvert options needs its own "close" button
-    and status field?
-  lightning strike from various outlets...=c=
   accomodate splits vs. blanks and work everywhere
   short list of todo's for screen capture
   short list of todo's for virtual audio
@@ -132,9 +126,6 @@
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
-  do we do the right -osd-add for VOB folders?
-  -osd-add kills it in create mode with "normal play" button
-  "overwrite?" prompt for file mode
   playing from 55 to 65 with dvdnav:// start too far forward
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
@@ -149,6 +140,7 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  "overwrite?" prompt for file mode
   @mplayer: -dvd-device -dvd-device failz
   mplayer: do you seek right at the end of long DVD's?
     if not, patch :P
@@ -169,6 +161,9 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  do we do the right -osd-add for VOB folders?
+  change upconvert options needs its own "close" button
+    and status field?
   tell it to use english sub's if it can
   mplayer check if dvdnav cache can/should work [?]
     compare with VLC does it do any special cacheing? huh? what?

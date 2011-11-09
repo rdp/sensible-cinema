@@ -131,9 +131,9 @@ task 'zip' do
   raise 'doesnt exist yet to zip?' unless File.directory? name
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
   c = "tar -cvzf #{name}.tgz #{name}"
-  raise c unless system(c)
+  sys c
   delete_now_packaged_dir name
-  p 'created ' + name + '.zip,tgz and deleted its [create from] folder'
+  p 'created ' + name + '.zip,tgz and also deleted its [create from] folder'
 end
 
 
@@ -149,7 +149,7 @@ def sys arg
  raise arg + ' failed 3x!'
 end
 
-desc 'deploy to sourceforge'
+desc 'deploy to sourceforge, after zipping'
 task 'deploy' do
   p 'creating sf shell'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]

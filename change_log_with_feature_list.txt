@@ -1,3 +1,9 @@
+== 0.30.4 == 11-8-11
+
+Fix it to parse profanities better than a postceded by punctuation.
+Add some EDL's
+Minor gui tweakages.
+
 NB that we can output XMl or JSON to transmit the EDl timestamp information easily back and forth, and
 cross application, cross platform, client to service and vice versa, etc.
 
