@@ -86,7 +86,7 @@ module SensibleSwing
 
       add_text_line 'Create Edit Options:'
       
-      @open_current = new_jbutton("Open EDL for currently inserted DVD") do
+      @open_current = new_jbutton("Edit EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if edit_list_path

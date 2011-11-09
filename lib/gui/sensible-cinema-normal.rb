@@ -33,11 +33,15 @@ module SensibleSwing
     def setup_normal_buttons
       add_text_line ""
   
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime)" )
+      @mplayer_edl = new_jbutton( "Watch current DVD edited (realtime)" )
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
       }
+      
+      @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
+        choose_file_and_edl_and_create_sxs_or_play false 
+      end
       
       @create = new_jbutton( "Create edited version of a file on Your Hard Drive" )
       @create.tool_tip = <<-EOL
@@ -48,10 +52,6 @@ module SensibleSwing
       @create.on_clicked {
         do_create_edited_copy_via_file false
       }
-      
-      @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
-        choose_file_and_edl_and_create_sxs_or_play false 
-      end
       
       if LocalStorage[UpConvertEnglish]
         add_text_line ''
