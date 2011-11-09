@@ -507,11 +507,8 @@ module SensibleSwing
     def new_existing_file_selector_and_select_file title, dir = nil
       bring_to_front
       unique_trace = caller.inspect
-      if we_are_in_developer_mode?
-        p 'using trace:' + unique_trace + 'which is' + LocalStorage[unique_trace].to_s
-      end
       dir ||= LocalStorage[unique_trace]
-      p 'using system default dir' unless dir
+      p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
       got = FileDialog.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got
