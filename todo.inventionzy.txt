@@ -118,3 +118,5 @@
      timestamps in the EDL accordingly, for that one .
   can work with compressed audio/video, or uncompressed
   can work with encryped data/image/audio data, or unencrypted, with or without 3rd party player/codecs etc.
+  can have its "own" metadata stored off somewhere (like user contributed images/photos/comments/blogs/wikis)
+    can link videos to adds/adwords/add providers somehow/voice over/overlay adds, et al. 
