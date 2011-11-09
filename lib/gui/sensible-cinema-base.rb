@@ -511,6 +511,7 @@ module SensibleSwing
         p 'using trace:' + unique_trace + 'which is' + LocalStorage[unique_trace].to_s
       end
       dir ||= LocalStorage[unique_trace]
+      p 'using system default dir' unless dir
       got = FileDialog.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got
