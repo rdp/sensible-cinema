@@ -98,6 +98,18 @@ seemed to work fine with the same edl,  Sherpya-SVN-r33574-4.2.5 (older), on the
 
   actually, smplayer seemed to do (muting) EDL's at 1hr just fine OSOH. and various mplayer's.  All spot on.
 
+end of flight:
+
+demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
+A:5159.9 V:5159.90 A-V:  0.025 ct:  2.274 7150/7150 189% 100% 608.6% 9958 0
+Warning! FPS changed 23.976 -> 29.970  (-5.994005) [4]
+A:5163.9 V:5163.89 A-V: -0.003 ct:  2.339 7271/7268 187% 99% 601.0% 9984 0
+
+demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+A:5164.6 V:5164.56 A-V:  0.006 ct:  2.361 7287/7284 186% 99% 599.8% 9989 0
+
+I think end...
+
 == Sintel timing DVD versus file ==
 
   seemed to work, right on.  Could have had that 0.3s offset, hard to tell for sure :P
