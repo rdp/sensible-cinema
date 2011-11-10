@@ -1,5 +1,10 @@
 up next:
 
+
+"we're here, right where you paid me to bring you" is after cut
+  VLC "normal" OS X skipped a tidge
+  mplayer with cache did, and with nocache too, it seems like it has to flit through video to catch up with audio or some odd.
+
                     mpctx->time_frame += frame_time / playback_speed; // for nosound maybe esplain that weirdness. Very weird, as in whoa!
 A:   2.6 V:  2.32 A-V:  0.237 ct:  0.084  64/ 64 19% 81%  4.9% 56 0
 updating edl...
