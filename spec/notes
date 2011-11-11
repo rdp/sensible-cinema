@@ -1,5 +1,29 @@
 up next:
 
+OSOH highlight:
+
+VLC "straight" OSOH
+  hint of yellow there menu
+  yellow subs
+  
+VLC "without dll"
+ yellow menu, same size, hint of white [?] [might be ok]
+ yellow subs, look pretty crisp and type-writer-sy [might be ok]
+
+mplayer "thicker" white menu lines
+  white subs, well positioned
+
+powerdvd:
+ yellow "blurrier" (same size? maybe tidge thicker)
+ yellow, crisp subs
+
+mplayer "patched" [both ways]
+  same "thicker" white menu lines
+  same white subs
+  
+yikes
+
+I guess I'd need to add "accurate where you are" to dvdnav, before being able to add "super accurate seek"...
 
 "we're here, right where you paid me to bring you" is after cut
   VLC "normal" OS X skipped a tidge

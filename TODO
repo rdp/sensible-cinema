@@ -32,7 +32,6 @@
   tighten normal EDL mplayer buffers?
   test distro various buttons on mac
     advertise urug
-  those gaps remember titans, in VLC (report?)
   upconvert: compare with "normal", and against itself.  Then release :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
@@ -57,15 +56,12 @@
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   blog "dvd nav packets don't start at 0"
   fix mplayer EDL's pausing/freezing on skips. weird.
-    osd-fractions patch
   @mingw: large file handlez plz?
   ffmpeg dshow input can I move audio along anyway, or with different metric?
   automate more creation things...
     auto-add largest title to the generator EDL
   fix mplayer to actually work with DVDNAV EDL's
-  mplayer:
-    basically the "first round" of patches for it, not for mine :P
-    also patch for V:DD
+  mplayer patch for V:DD
   DIRT short list
   just local download smplayer, instead of forcing a dependency :P
   DVD timing for forum/Snow White
@@ -85,7 +81,6 @@
   Linux port for SC (call that good enough for usability on TV's...), should be...
   note "Ooh that is clever.  Slow motion to find it! yes!"
   popup_text in EDL's
-  dvdnav that one old patch
   subtitle -> url everywhere
   english name (movie name) mass everywhere
   ruby_prof stuffs (release)
@@ -105,7 +100,7 @@
     and end too why not?
   macify work minor things it doesn't currently :)
   @instructions: full srt how-to document instead of tooltip [?] or combine the two! yes!
-  volume_name => dvd_volume_label
+  volume_name => dvd_volume_label # but what about blu-ray?
   check with/rent blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
   split LLC's website+consumer
     get LLC before a "real" domain name
@@ -120,20 +115,11 @@
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
   playing from 55 to 65 with dvdnav:// start too far forward
+    prolly dvdnav but tho...could try out that new patch I suppose :P
   don't show smplayer buttons in OS X/linux
   
-== other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
-
-  todo.upconvert
-  todo.propaganda
-  todo.inventionzy
-  todo.open_edl_list_org_todo
-  todo.build_library
-  todo.subtitle
-  virtual_audio TODO
-  screen_capture TODO
-
 == decide later to move up or down ==
+  bounty VLC: play DVD's with scratches
   check if mplayer can get out of sync audio and not...appears that it can actually <sigh>
   "double check your settings, this one should occur at exactly x"
   mplayer d3d patch
@@ -157,7 +143,19 @@
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
   
+== other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
+
+  todo.upconvert
+  todo.propaganda
+  todo.inventionzy
+  todo.open_edl_list_org_todo
+  todo.build_library
+  todo.subtitle
+  virtual_audio TODO
+  screen_capture TODO
+
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  compare xine libdvdnav, see if they have any improvements there
   smplayer "might" be able to run on linux, too...
   dvdnav tons of old patches...
   maybe dvdread add some methods? [ask]
