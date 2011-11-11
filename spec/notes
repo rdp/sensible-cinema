@@ -1,5 +1,20 @@
 up next:
 
+
+OSOH:
+  mplayer dvdnav://1 -ss 4500
+  
+  A:4510.0 V:4510.20 A-V: -0.212 ct: -0.050  40/ 40 12% 10% 55.0% 12 0
+  =====  PAUSE  =====
+[mpeg2video @ 012537d0]ignoring SEQ_START_CODE after 100
+[mpeg2video @ 012537d0]ignoring seq ext after 100
+[mpeg2video @ 012537d0]ignoring GOP_START_CODE after 100
+[mpeg2video @ 012537d0]ignoring pic after 100
+[mpeg2video @ 012537d0]Missing picture start code, guessing missing values
+A:4506.3 V:4506.28 A-V: -0.009 ct:  0.092   6/  6 ??% ??% ??,?% 1 0
+
+the other is *right* on with the OSD. like perfeito :P
+
 OSOH highlight:
 
 VLC "straight" OSOH

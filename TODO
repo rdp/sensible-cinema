@@ -11,11 +11,11 @@
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
+  full length DVD
   
 == yes do ordered for this release/other projects ja  ==
+  test for discontinuity across layer (=c=)
   speeds at home better? can they be made better at all?
-  auto-start audio caster ability
-  ffmpeg how to add subs demo
   ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
@@ -24,11 +24,14 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  -osd-add kills it in create mode with "normal play" button
-  create skype/google+ hangouts recorder windows
 
 == yes do, un-ordered currently, from all the various future release options ==
-  test for discontinuity across layer (=c=)
+  create skype/google+ hangouts auto-easy-recorder windows
+    just try it as is for today :P
+  -osd-add kills it in create mode with "normal play" button
+  DIRT new ffmpeg
+  ffmpeg how to add subs demo
+  auto-start audio caster ability, just use jruby LOL
   tighten normal EDL mplayer buffers?
   test distro various buttons on mac
     advertise urug
@@ -51,17 +54,13 @@
   genealogy create/publicize
   warn when using upconverting within SC
   VLC subtitles grey issue
-  push a rubyprof v. :P
-  push a nextsprocket
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
-  blog "dvd nav packets don't start at 0"
   fix mplayer EDL's pausing/freezing on skips. weird.
   @mingw: large file handlez plz?
   ffmpeg dshow input can I move audio along anyway, or with different metric?
   automate more creation things...
     auto-add largest title to the generator EDL
   fix mplayer to actually work with DVDNAV EDL's
-  mplayer patch for V:DD
   DIRT short list
   just local download smplayer, instead of forcing a dependency :P
   DVD timing for forum/Snow White
@@ -73,21 +72,23 @@
     add new batch file for play with netflix OCR
     note on the www stuff once it works
   meta domain
+    note "can't get the ideal domain name?"
   test out DVD style upscale
     real "screen record" of upconverting sintel, see if it shows a difference
       see if I need to fix my capturer...
     no super scale res necessary?
-  screen recording sintel, see below (for upconvert)
+  screen recording sintel
   Linux port for SC (call that good enough for usability on TV's...), should be...
   note "Ooh that is clever.  Slow motion to find it! yes!"
   popup_text in EDL's
   subtitle -> url everywhere
   english name (movie name) mass everywhere
-  ruby_prof stuffs (release)
+  ruby_prof stuffs (release at least)
   warn other wordpresses
   test mplayer -vo gl at home
   template-ify for netflix too "create for netflix" button
   EDL gottman
+  dvdnav [mplayer dvd?] better searching/seeking code from XBMC
   minor redcar tweaks
   accomodate splits vs. blanks and work everywhere
   short list of todo's for screen capture
@@ -114,24 +115,16 @@
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
-  playing from 55 to 65 with dvdnav:// start too far forward
-    prolly dvdnav but tho...could try out that new patch I suppose :P
-  don't show smplayer buttons in OS X/linux
+  don't show smplayer buttons in OS X/linux [?]
   
 == decide later to move up or down ==
   bounty VLC: play DVD's with scratches
-  check if mplayer can get out of sync audio and not...appears that it can actually <sigh>
   "double check your settings, this one should occur at exactly x"
-  mplayer d3d patch
   "overwrite?" prompt for file mode
-  @mplayer: -dvd-device -dvd-device failz
-  mplayer: do you seek right at the end of long DVD's?
-    if not, patch :P
   @wiki: mplayer EDL's look like this...
   "double check sync" button/option on play [?]
     note in original where source came
   youtube/hulu timings different?
-  can custom pass in an per EDL -osd-add, for the little mermaid, for instance
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
@@ -142,6 +135,8 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
+  bounty VLC processor optimized/profile guided :P
+    I could just do my own...
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -155,6 +150,10 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  mplayer patch for V:DD
+  can custom pass in an per EDL -osd-add, for the little mermaid, for instance
+  @mplayer: -dvd-device -dvd-device failz
+  @mplayer: bump your "lib" version ;)
   compare xine libdvdnav, see if they have any improvements there
   smplayer "might" be able to run on linux, too...
   dvdnav tons of old patches...
@@ -248,7 +247,7 @@
   rename as sanitizer, or something else SEO friendlier or something like that
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   add button "re-order srt"
-  @makemkv: 
+  @makemkv:
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
     can I reproduce it this days? double check OSOH, repost to forum
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
