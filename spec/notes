@@ -1,5 +1,14 @@
 up next:
 
+vobu start time resets?
+
+same before, and after reset:
+  updating cell time 17754000
+  vobu start time is 84970868
+  A: 719.9 V:720.03 A-V: -0.105 ct: -0.163  19/ 19  5%  3% 25.3% 0 0
+  only cell time reset, FWIW
+  libdvdnav/dvdnav.c
+    799:    printf("vobu start time is %d\n", &this->pci.pci_gi.vobu_s_ptm);
 
 OSOH:
   mplayer dvdnav://1 -ss 4500
