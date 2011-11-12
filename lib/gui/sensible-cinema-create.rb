@@ -18,31 +18,14 @@ module SensibleSwing
       
       add_text_line 'Create: View Options:'
       
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (nosubs)")
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
       @mplayer_edl.on_clicked {
-        edl_out_instructions = ""
-        answer = show_select_buttons_prompt <<-EOL, {}
-          Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
-          EOL
-        if answer == :yes
-          show_non_blocking_message_dialog <<-EOL
-          EDL outfile:
-          As mplayer goes through the video, when you see a scene you want to edit or skip, 
-          hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
-          hit 'i' again to end the edited/skipped scene, within that file.
-          NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
-          78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
-          EOL
-
-          edlout_filename =  new_nonexisting_filechooser_and_go "pick edlout filename"
-          edl_out_instructions = "-edlout #{edlout_filename}"
-        end
-        
-        thred = play_smplayer_edl_non_blocking nil, [edl_out_instructions], true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
-        if(edl_out_instructions.present?)
-          open_edl_file_when_done thred, edlout_filename
-        end
+        watch_dvd_edited_realtime_mplayer false
       }
+      
+      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
+        watch_dvd_edited_realtime_mplayer true
+      end
       
       @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
         times = get_start_stop_times_strings
@@ -50,7 +33,7 @@ module SensibleSwing
         start_time = times[0]
         end_time = times[1]
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
-        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.25 # more aggressive :)
+        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # more aggressive :)
       end
       
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
@@ -86,7 +69,7 @@ module SensibleSwing
 
       add_text_line 'Create Edit Options:'
       
-      @open_current = new_jbutton("Open EDL for currently inserted DVD") do
+      @open_current = new_jbutton("Edit EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if edit_list_path
@@ -128,11 +111,11 @@ module SensibleSwing
       EOL
 
       @parse_srt.on_clicked do
-        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanity:")
+        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:")
 		    if(srt_filename =~ /utf16/)
-		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't parse"
+		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
 	      end
-        # TODO nuke
+        # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
         
@@ -140,13 +123,16 @@ module SensibleSwing
         sleep 0.5 # let it open first
 		    bring_to_front
  
-		    if JOptionPane.show_select_buttons_prompt('Would you like to enter timing adjust information on the .srt file? [final pass should, even if it matches]') == :yes
-          start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]", "...")
-          start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"", "00:00:00,000")
+		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes
+          if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in mplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
+            play_dvd_smplayer_unedited true
+          end
+          start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]\nctrl-v to paste", "...")
+          start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"\nctrl-v to paste", "00:00:00,000")
           start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
         
-          end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie", "...")
-          end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"", "02:30:00,000")
+          end_text = get_user_input("enter the text from a subtitle entry far within or near the end of the movie\nctrl-v to paste", "...")
+          end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"\nctrl-v to paste", "02:30:00,000")
           end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
         else
 		      start_srt = 0
@@ -255,7 +241,7 @@ module SensibleSwing
         window.add_options_that_use_local_files
       end
       
-      if ARGV.detect{|a| a == '--developer-mode'}
+      if we_are_in_developer_mode?
        @reload = new_jbutton("reload bin/sensible-cinema code") do
          for file in Dir[__DIR__ + '/*.rb']
            p file
@@ -266,6 +252,30 @@ module SensibleSwing
       
     end # advanced buttons
     
+    def watch_dvd_edited_realtime_mplayer show_subs
+        edl_out_command = ""
+        answer = show_select_buttons_prompt <<-EOL, {}
+          Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
+          EOL
+        if answer == :yes
+          show_non_blocking_message_dialog <<-EOL
+          EDL outfile:
+          As mplayer goes through the video, when you see a scene you want to edit or skip, 
+          hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
+          hit 'i' again to end the edited/skipped scene, within that file.
+          NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
+          78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
+          EOL
+
+          edlout_filename = new_nonexisting_filechooser_and_go "pick edlout filename"
+          edl_out_command = "-edlout #{edlout_filename}"
+          
+        end
+        thred = play_smplayer_edl_non_blocking nil, [edl_out_command], true, false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
+        if(edl_out_command.present?)
+          open_edl_file_when_done thred, edlout_filename
+        end
+    end
     
     def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..."

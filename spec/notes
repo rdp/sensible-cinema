@@ -1,5 +1,143 @@
 up next:
 
+vobu start time resets?
+
+same before, and after reset:
+  updating cell time 17754000
+  vobu start time is 84970868
+  A: 719.9 V:720.03 A-V: -0.105 ct: -0.163  19/ 19  5%  3% 25.3% 0 0
+  only cell time reset, FWIW
+  libdvdnav/dvdnav.c
+    799:    printf("vobu start time is %d\n", &this->pci.pci_gi.vobu_s_ptm);
+
+OSOH:
+  mplayer dvdnav://1 -ss 4500
+  
+  A:4510.0 V:4510.20 A-V: -0.212 ct: -0.050  40/ 40 12% 10% 55.0% 12 0
+  =====  PAUSE  =====
+[mpeg2video @ 012537d0]ignoring SEQ_START_CODE after 100
+[mpeg2video @ 012537d0]ignoring seq ext after 100
+[mpeg2video @ 012537d0]ignoring GOP_START_CODE after 100
+[mpeg2video @ 012537d0]ignoring pic after 100
+[mpeg2video @ 012537d0]Missing picture start code, guessing missing values
+A:4506.3 V:4506.28 A-V: -0.009 ct:  0.092   6/  6 ??% ??% ??,?% 1 0
+
+the other is *right* on with the OSD. like perfeito :P
+
+OSOH highlight:
+
+VLC "straight" OSOH
+  hint of yellow there menu
+  yellow subs
+  
+VLC "without dll"
+ yellow menu, same size, hint of white [?] [might be ok]
+ yellow subs, look pretty crisp and type-writer-sy [might be ok]
+
+mplayer "thicker" white menu lines
+  white subs, well positioned
+
+powerdvd:
+ yellow "blurrier" (same size? maybe tidge thicker)
+ yellow, crisp subs
+
+mplayer "patched" [both ways]
+  same "thicker" white menu lines
+  same white subs
+  
+yikes
+
+I guess I'd need to add "accurate where you are" to dvdnav, before being able to add "super accurate seek"...
+
+"we're here, right where you paid me to bring you" is after cut
+  VLC "normal" OS X skipped a tidge
+  mplayer with cache did, and with nocache too, it seems like it has to flit through video to catch up with audio or some odd.
+
+                    mpctx->time_frame += frame_time / playback_speed; // for nosound maybe esplain that weirdness. Very weird, as in whoa!
+A:   2.6 V:  2.32 A-V:  0.237 ct:  0.084  64/ 64 19% 81%  4.9% 56 0
+updating edl...
+A:   2.6 V:  2.35 A-V:  0.225 ct:  0.084  65/ 65 19% 80%  4.8% 56 0
+updating edl...
+A:   2.6 V:  2.38 A-V:  0.213 ct:  0.084  66/ 66 19% 80%  4.7% 57 0
+updating edl...
+
+it seems to update the EDL with each and every frame...possibly just every video frame, but that's prolly ok :P
+
+== subtitles sync'ing ==
+flight:
+ ok now david, if you can:
+   srt:    32:44,943 = 1964.94
+   actual: 34:26.37 = 2066.37
+
+
+don't take any
+ srt: 00:31:52,931 = 1912.93
+
+srt start: 2:25,000 = 145.00
+  actual start:  2:47.98 = 167.98
+  
+srt end: See you later: 01:22:02,271 = 4922.27
+ actual end:                01:25:51.17  = 5151.17
+
+so assuming an algorithm:
+  take srt, add 22.98, then multiply srt value by real_sum/srt_sum = (5151.17-167.98)/(4922.27-145.00)
+
+so (1964.94-145)*(5151.17-167.98)/(4922.27-145.00)+167.98 = 2066.37 = 0:34:26.37
+
+was I accurate?
+
+(1912.93-145)*(5151.17-167.98)/(4922.27-145.00)+167.98 =  2012.115 = 0:33:32.12
+  actual 33:31.997 close enough.
+  srt file sed: 0:33:32.12
+
+my math seems ok...
+
+he starts saying this particular one *before* the subtitles actually display...<sigh>.
+
+seems right borderline...
+once it totally got it...
+
+actually he starts speaking at  V:2012.12
+bad stuff at 2012.6
+
+how can it have missed it sometimes? huh?
+
+ok this one worked great. ok this is nuts LOL
+
+A:2012.0 V:2011.99 A-V:  0.001 ct: -0.148 516/516  6%  7% 25.0% 0 0
+  =====  PAUSE  =====
+ID_PAUSED
+last NAV packet was 2009.800049, mpeg at 2012.032471 after -> 29.97 2011.809814
+adding difference 0.041748 adding 0.000000 to 2011.851563
+final: 2011.851563
+using mpeg ts appears larger, which if true is definitely better 2012.032471 > 2011.851563 - 1.0
+A:2012.0 V:2012.03 A-V:  0.001 ct: -0.148 517/517  6%  7% 24.9% 0 0
+  =====  PAUSE  =====
+ID_PAUSED
+last NAV packet was 2009.800049, mpeg at 2012.074219 after -> 29.97 2011.809814
+adding difference 0.083496 adding 0.000000 to 2011.893311
+final: 2011.893311
+using mpeg ts appears larger, which if true is definitely better 2012.074219 > 2011.893311 - 1.0
+A:2012.0 V:2012.07 A-V: -0.031 ct: -0.151 518/518  6%  7% 24.9% 0 0
+
+the subtitle is actually at about 2012.03
+he starts talking at 2012.07
+
+But also there's .03 of audio out of sync-ness...which shouldn't matter I don't think...
+
+2012.12 2013.47 1
+
+somehow the mute appears to kick in a couple of frames too late...
+  maybe one is right on, the next is *after* that frame is already done? [when else can they do it, though, I guess...]
+   2012.115967
+  
+  
+without frame drop et al, audio gets ahead
+
+  it does *not* seem to be an A-V: getting ahead problem, those only get to like 0.008 [must just be buffers or something internal [?]]
+
+seemed to work fine now that I drop frames...yipes!
+
 == mplayer sox at muting DVD's with timestamp resets ==
   yep, I think it does <sigh>
   monster's inc. resets PTS with every chapter LOL
@@ -12,6 +150,18 @@ worked fine with muting here...with teeny screen video of monster's inc, work de
 seemed to work fine with the same edl,  Sherpya-SVN-r33574-4.2.5 (older), on the work desktop, too...hmm...
 
   actually, smplayer seemed to do (muting) EDL's at 1hr just fine OSOH. and various mplayer's.  All spot on.
+
+end of flight:
+
+demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
+A:5159.9 V:5159.90 A-V:  0.025 ct:  2.274 7150/7150 189% 100% 608.6% 9958 0
+Warning! FPS changed 23.976 -> 29.970  (-5.994005) [4]
+A:5163.9 V:5163.89 A-V: -0.003 ct:  2.339 7271/7268 187% 99% 601.0% 9984 0
+
+demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+A:5164.6 V:5164.56 A-V:  0.006 ct:  2.361 7287/7284 186% 99% 599.8% 9989 0
+
+I think end...
 
 == Sintel timing DVD versus file ==
 
