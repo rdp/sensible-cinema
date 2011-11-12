@@ -122,3 +122,4 @@
     can link videos to adds/adwords/add providers somehow/voice over/overlay adds, et al. 
   can have overlay (+- transparent) of adds/off-screen/below the video, always, or every so often, based on timestamp (fixed, or specific to a video)
     can have overlay text (ex: news ticker, adds, chats, comments from users) on a video.
+ integrate with google plus (+- api) somehow, and/or broadcast [?]/realtime "chat" while watching, voice/text, etc.
