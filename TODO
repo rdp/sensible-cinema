@@ -147,6 +147,10 @@
   screen_capture TODO
 
 == decide later to move up or down ==
+  7z mplayer_edl
+  
+  double check that ffmpeg/mplayer windoze builds are using SSE as they should...
+    also its internal ffmpeg should be using SSE appropo...
   "overwrite?" prompt for file mode
   @mplayer: -dvd-device -dvd-device failz
   mplayer: do you seek right at the end of long DVD's?
