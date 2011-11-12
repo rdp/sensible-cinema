@@ -166,6 +166,20 @@ mplayer_big, yes output
 
 37/71 a-v 0.48, heading to zero. sweet.
 
+mplayer_no_output
+  37/73'ish (at times lower)
+
+console2 maybe is doing something else bad? making output slower perhaps, in general?
+  
+  
+mplayer.bat @20: 0.557
+  quickly collapses to zero--but this is in console2!  
+
+but in the same console2, my mplayer_no_output is losing ground! I haven't explained the discrepancy!
+  
+them: 21/27 to my 31/36 LODO huh?
+  debug enabled builds perhaps?
+  
 ==  mplayers split it differently ==
   http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
       and says you need that mingw patch...
