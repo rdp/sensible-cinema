@@ -123,3 +123,5 @@
   can have overlay (+- transparent) of adds/off-screen/below the video, always, or every so often, based on timestamp (fixed, or specific to a video)
     can have overlay text (ex: news ticker, adds, chats, comments from users) on a video.
  integrate with google plus (+- api) somehow, and/or broadcast [?]/realtime "chat" while watching, voice/text, etc.
+    google TV too, and apple TV, as an app., etc. etc. (auto-download EDL's etc)
+ machine learning for video analysis for synchronization/detection of "questionable scenes/audio" [?]

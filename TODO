@@ -24,6 +24,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
 
 == yes do, un-ordered currently, from all the various future release options ==
+  I "think" I should just use raw...30 fps time...
   investigate "static" mplayer-edl for OS X :P
   bounce the one patch off him
   test with my failing EDL seeks before
@@ -366,11 +367,6 @@
   @xbmc "command line play this dvd with this EDL" :)
   add some way to hide spoilers, like soundtrack adds that ruin the movie for ya...
   @makemkv: show us the title numbers, and number them *by those*
-  @macports: set notestxt \
-  13	    "The MPlayer developers do not believe in making regular releases. \
-  14	    You are likely better off using the mplayer-devel port." *before* and after (?) (double check it--would one way work ok? mplayer)
-  can I use mplayer's "-edlout" to simplify something something, or maybe I should slave mode mplayer for my own means of the same?
-  create real plugins for boxee, XBMC et al
   can "blur out" scenes, or specific pixels on frames, like that guy bleeping out his own profanity just lips plus bleep
   a new button (maybe just in advanced mode?) "play EDL mplayer from file (no transcoding)" [if anybody ever would want/need it--seems related to the new c-based player kind of...?]
   if it doesn't parse a file you choose it annoyingly loops *forever* "error pooping" "error pooping" [?]
@@ -419,7 +415,6 @@
   take out the extra console window box output :) [scary, and closing it closes SC!]
   auto-emailed feedback on crashes [?]
   accomodate failed deletes [files in use] better than dying with a backtrace
-  machine learning for video analysis [?]
   figure out how to auto-crop after grab?
   figure out some way to work with cable providers/iphones/gphones?
   @mplayer: why do you sometimes start with subtitles enabled?

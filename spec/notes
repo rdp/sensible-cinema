@@ -1,5 +1,7 @@
 up next:
 
+== does vobu restart ? ==
+
 A:4104.1 V:4092.9 A-V: 11.242
  when played back at high speed, sans frame drop [does get out of whack]
 
@@ -27,7 +29,27 @@ A:4506.3 V:4506.28 A-V: -0.009 ct:  0.092   6/  6 ??% ??% ??,?% 1 0
 
 the other is *right* on with the OSD. like perfeito :P
 
-OSOH highlight:
+
+I guess I'd need to add "accurate where you are" to dvdnav, before being able to add "super accurate seek"...
+
+"we're here, right where you paid me to bring you" is after cut
+  VLC "normal" OS X skipped a tidge
+  mplayer with cache did, and with nocache too, it seems like it has to flit through video to catch up with audio or some odd.
+
+                    mpctx->time_frame += frame_time / playback_speed; // for nosound maybe esplain that weirdness. Very weird, as in whoa!
+A:   2.6 V:  2.32 A-V:  0.237 ct:  0.084  64/ 64 19% 81%  4.9% 56 0
+updating edl...
+A:   2.6 V:  2.35 A-V:  0.225 ct:  0.084  65/ 65 19% 80%  4.8% 56 0
+updating edl...
+A:   2.6 V:  2.38 A-V:  0.213 ct:  0.084  66/ 66 19% 80%  4.7% 57 0
+updating edl...
+
+it seems to update the EDL with each and every frame...possibly just every video frame, but that's prolly ok :P
+
+conc:     only .0005 off per 0.5seconds, so...straight add could be reasonable...yes!
+    and more upstreamable :P
+
+== OSOH highlight ==
 
 VLC "straight" OSOH
   hint of yellow there menu
@@ -53,23 +75,6 @@ yikes
 linux [my build]:
  white subs
  white "thicker" fellas.  once it worked at all LOL, then the boxes were gone. [possible corrupt/interrupted DVDCSS?]
-
-
-I guess I'd need to add "accurate where you are" to dvdnav, before being able to add "super accurate seek"...
-
-"we're here, right where you paid me to bring you" is after cut
-  VLC "normal" OS X skipped a tidge
-  mplayer with cache did, and with nocache too, it seems like it has to flit through video to catch up with audio or some odd.
-
-                    mpctx->time_frame += frame_time / playback_speed; // for nosound maybe esplain that weirdness. Very weird, as in whoa!
-A:   2.6 V:  2.32 A-V:  0.237 ct:  0.084  64/ 64 19% 81%  4.9% 56 0
-updating edl...
-A:   2.6 V:  2.35 A-V:  0.225 ct:  0.084  65/ 65 19% 80%  4.8% 56 0
-updating edl...
-A:   2.6 V:  2.38 A-V:  0.213 ct:  0.084  66/ 66 19% 80%  4.7% 57 0
-updating edl...
-
-it seems to update the EDL with each and every frame...possibly just every video frame, but that's prolly ok :P
 
 == subtitles sync'ing ==
 flight:
@@ -338,6 +343,8 @@ but in the same console2, my mplayer_no_output is losing ground! I haven't expla
 them: 21/27 to my 31/36 LODO huh?
   debug enabled builds perhaps?
   
+-O2 -g with mingw raw but had march, so cannot test it...
+
 ==  mplayers split it differently ==
   http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
       and says you need that mingw patch...
