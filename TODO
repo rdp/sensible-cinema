@@ -24,6 +24,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
 
 == yes do, un-ordered currently, from all the various future release options ==
+  flds: the tag sync'er :P
   note NAV packets are for searching/time display, then it uses mpeg uh think
   check if it fixes my old broken VOB EDL.
   note my OSD fix on the ML
@@ -157,6 +158,7 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  screen recorder for mac, with audio :P
   mplayer patch for V:DD
   can custom pass in an per EDL -osd-add, for the little mermaid, for instance
   @mplayer: -dvd-device -dvd-device failz
