@@ -96,29 +96,25 @@ Index: libvo/vo_direct3d.c
 ===================================================================
 --- libvo/vo_direct3d.c	(revision 34269)
 +++ libvo/vo_direct3d.c	(working copy)
-@@ -548,7 +548,7 @@
- 
-     /* If the D3D device is uncooperative (not initialized), return success.
-        The device will be probed for reinitialization in the next flip_page() */
--    if (!priv->d3d_device)
-+    if (!priv->d3d_device || !priv->d3d_texture_osd)
-         return VO_TRUE;
- 
-     if (mpi->flags & MP_IMGFLAG_DRAW_CALLBACK)
-@@ -916,7 +916,7 @@
- 
-     /* If the D3D device is uncooperative (not initialized), return success.
-        The device will be probed for reinitialization in the next flip_page() */
--    if (!priv->d3d_device)
-+    if (!priv->d3d_device || !priv->d3d_texture_osd)
+@@ -237,6 +237,12 @@
          return 0;
+     }
  
-     /* Lock the offscreen surface if it's not already locked. */
-@@ -1029,7 +1029,7 @@
++    if (!tex_width || !tex_height) {
++      mp_msg(MSGT_VO, MSGL_V,
++             "<vo_direct3d>Deferring surface creation because width or height is 0.\n");
++      return 0;
++    }
++
+     /* calculate the best size for the OSD depending on the factors from the device */
+     if (priv->device_caps_power2_only) {
+         tex_width  = 1;
+@@ -1029,7 +1035,8 @@
  static void draw_osd(void)
  {
      // we can not render OSD if we lost the device e.g. because it was uncooperative
 -    if (!priv->d3d_device)
++    // or if the OSD textures are not allocated like when minimized
 +    if (!priv->d3d_device || !priv->d3d_texture_osd)
          return;
  

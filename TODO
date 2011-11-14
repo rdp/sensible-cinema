@@ -24,6 +24,9 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
 
 == yes do, un-ordered currently, from all the various future release options ==
+  note NAV packets are for searching/time display, then it uses mpeg uh think
+  check if it fixes my old broken VOB EDL.
+  note my OSD fix on the ML
   I "think" I should just use raw...30 fps time...
   investigate "static" mplayer-edl for OS X :P
   bounce the one patch off him
@@ -34,10 +37,9 @@
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
   -osd-add kills it in create mode with "normal play" button
-  DIRT new ffmpeg
   ffmpeg how to add subs demo
   auto-start audio caster ability, just use jruby LOL
-  tighten normal EDL mplayer buffers?
+  tighten normal EDL mplayer buffers now?
   test distro various buttons on mac
     advertise urug
   upconvert: compare with "normal", and against itself.  Then release :P
