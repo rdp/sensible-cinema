@@ -1,5 +1,8 @@
 up next:
 
+A:4104.1 V:4092.9 A-V: 11.242
+ when played back at high speed, sans frame drop [does get out of whack]
+
 vobu start time resets?
 
 same before, and after reset:
@@ -46,6 +49,11 @@ mplayer "patched" [both ways]
   same white subs
   
 yikes
+
+linux [my build]:
+ white subs
+ white "thicker" fellas.  once it worked at all LOL, then the boxes were gone. [possible corrupt/interrupted DVDCSS?]
+
 
 I guess I'd need to add "accurate where you are" to dvdnav, before being able to add "super accurate seek"...
 

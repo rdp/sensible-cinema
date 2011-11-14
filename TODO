@@ -11,7 +11,6 @@
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
-  full length DVD
   
 == yes do ordered for this release/other projects ja  ==
   speeds at home better? can they be made better at all?
@@ -72,11 +71,6 @@
     note on the www stuff once it works
   meta domain
     note "can't get the ideal domain name?"
-  test out DVD style upscale
-    real "screen record" of upconverting sintel, see if it shows a difference
-      see if I need to fix my capturer...
-    no super scale res necessary?
-  screen recording sintel
   Linux port for SC (call that good enough for usability on TV's...), should be...
   note "Ooh that is clever.  Slow motion to find it! yes!"
   popup_text in EDL's
@@ -136,6 +130,7 @@
       or add button "reveal advanced" with this new button on it...
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
+  @mplayer: if you play just dvdnav://1 from start to finish, it goes until 60 seconds into the menu *after* title 1 finishes
   
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -177,11 +172,6 @@
   todo.upconvert
     netflix quality upconverter, have a go at it
       finalize screen capturer
-    me test it
-      1x, 2x Sintel
-      snapshots of Sintel "normal", then deploy the various comparison pics
-    DVD test it (+- with others testing it for me too)
-
   see if all those patches have been applied to various (sherpya's).
   start an ffmpeg filter repository
   research VLC softskip at home/slow cpu?
