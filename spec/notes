@@ -250,6 +250,8 @@ seems to fix those though, if you unmux them.
 
 == mplayer build speedz ==
 
+office:
+
 with "little/default console output", --enable-debug
   4% total cpu -> 23% cpu, with -march=runtime, work, stripped
 
@@ -268,6 +270,74 @@ sherpya rtm:
 sherpya athlon:
  4% -> 11/13%
     
+	
+home,  -nocache dvdnav://1/f::
+
+"rtm"  Sherpya-SVN-r34118-4.2.5
+   34/74
+
+ "p4"
+    33/76
+   
+mplayer_big, no "scrolling screen"
+  27/81
+  
+ mplayer_big, yes "scrolling screen"
+  27/84
+  
+test/mplayer.exe (assume yasm), no scrolling output
+    31/81
+  yes scrolling
+    25/83
+	
+mplayer_marchnative.exe crash :P
+
+mplayer_no_output
+ 29/83
+
+ 
+same thing, in cmd, with a-v after A:20, -nocache:
+
+mplayer.bat:
+ 39/70 A-V:  -0.028
+ 
+p4:
+  no lag I guess
+    maybe 34/73'ish
+	
+mplayer_big,  no output
+ 35/77, 37/71
+    A: 0
+	
+ gets up to like A-V 1 at second 4, then fighting it down and up till 22, then 0, going full bore
+  
+  in console, starts at like A-V 2 and then loses...without going full bore.
+    5.39,5.5 at 20
+	full bore 7.7 at 20 6.9
+
+	so it does/did make a difference, at least with console2
+	  but not much...
+	  
+in cmd @20 0.2 at full bore, but hovering around 0 really. suh-weet.
+
+mplayer_big, yes output
+
+37/71 a-v 0.48, heading to zero. sweet.
+
+mplayer_no_output
+  37/73'ish (at times lower)
+
+console2 maybe is doing something else bad? making output slower perhaps, in general?
+  
+  
+mplayer.bat @20: 0.557
+  quickly collapses to zero--but this is in console2!  
+
+but in the same console2, my mplayer_no_output is losing ground! I haven't explained the discrepancy!
+  
+them: 21/27 to my 31/36 LODO huh?
+  debug enabled builds perhaps?
+  
 ==  mplayers split it differently ==
   http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
       and says you need that mingw patch...
