@@ -25,6 +25,7 @@
 
 == yes do, un-ordered currently, from all the various future release options ==
  -mc 1 ?
+  directx/post "it was directx" for subs
   flds: the tag sync'er :P
   note NAV packets are for searching/time display, then it uses mpeg uh think
     so basically you have to interpolate...I think...hmm...
