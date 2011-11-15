@@ -119,13 +119,11 @@
   inventionzy: blu-ray stuffs from todo.inventionzy
   sons of provo "music video" EDL
   don't show smplayer buttons in OS X/linux [?]
-  
+  "less intense" 30 fps accurate DVDNAV tracker... 
+
 == decide later to move up or down ==
   7z mplayer_edl
-  
-  double check that ffmpeg/mplayer windoze builds are using SSE as they should...
-    also its internal ffmpeg should be using SSE appropo...
-  bounty VLC: play DVD's with scratches
+  @mplayer: patch so that smplayer gets right time codes afer MPEG PTS split 
   "double check your settings, this one should occur at exactly x"
   "overwrite?" prompt for file mode
   @wiki: mplayer EDL's look like this...
@@ -142,12 +140,12 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  bounty VLC processor optimized/profile guided :P
-    I could just do my own...
   @mplayer: if you play just dvdnav://1 from start to finish, it goes until 60 seconds into the menu *after* title 1 finishes
   @mplayer you *die* with edl's on many DVD's... ex: on bunny one
     vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
-    also check that "old" DVD that always went to the wrong title...
+    also check that "old" DVD that always went to the wrong title...=c= with straight dvdnav://
+      also minc dvdnav:// straight
+  add some VLC forums bugs as real bugs, if they're still around
     
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
@@ -161,6 +159,12 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  bounty VLC processor optimized/profile guided :P
+    I could just do my own...
+  double check that ffmpeg/mplayer windoze builds are using SSE as they should...
+    also its internal ffmpeg should be using SSE appropo...
+  bounty VLC: play DVD's with scratches
+  check if swscale "is efficient" when only doing colorspace conversions
   super-precise "can seek to exactly z"
   fix mplayer dvd:// seeking being slow at times...
     dvdnav [mplayer dvd?] better searching/seeking code from somebody...somewhere, they had some searching code [if only for dvd://]
