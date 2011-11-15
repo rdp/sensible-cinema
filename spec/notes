@@ -1,5 +1,14 @@
 up next:
 
+== vlc slow ==
+27/51 full screen, no interference.  Maybe a dropped frame once a second?
+  *much* fewer "late picture skipped" messages...
+27/100 with ffmpeg going...
+
+with ffmpeg "at real low prio" it...actually seems to work about the same phew
+  once a second'ish late picture skipped
+== libdvdnav research ==
+
 http://lists.mplayerhq.hu/pipermail/mplayer-dev-eng/2006-November/047218.html "dvd nav precise seeking" ?
   this was actually "stable seeking for dvd://" [NAV packets only, I think]
   kind of precursed the stuff I'm doing now...
@@ -358,8 +367,15 @@ them: 21/27 to my 31/36 LODO huh?
 -O4 -march=i486 -mtune=generic
     with --enable-iconv --enable-freetype --enable-static --enable-fontconfig --enable-runtime-cpudetection
     
+34/77 comp.
+30/85 with d3d
     
-    
+	mine 30/84'ish suh-weet
+	
+I do declare--it appears that the highlighting is "right" with  Sherpya-SVN-r34118-4.2.5 directx
+
+and plus 10 with coiso...
+
 ==  mplayers split it differently ==
   http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...
       and says you need that mingw patch...

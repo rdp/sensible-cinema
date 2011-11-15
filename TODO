@@ -63,6 +63,7 @@
   genealogy create/publicize
   warn when using upconverting within SC
   VLC subtitles grey issue
+  @ffmpeg: wiki for filter's?
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   fix mplayer EDL's pausing/freezing on skips. weird.
   @mingw: large file handlez plz?
