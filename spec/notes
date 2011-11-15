@@ -1,5 +1,16 @@
 up next:
 
+http://lists.mplayerhq.hu/pipermail/mplayer-dev-eng/2006-November/047218.html "dvd nav precise seeking" ?
+  this was actually "stable seeking for dvd://" [NAV packets only, I think]
+  kind of precursed the stuff I'm doing now...
+  except it does have a stream_seek in there...
+  
+-mc 10 http://lists.mplayerhq.hu/pipermail/mplayer-users/2010-April/079600.html for A/V offset
+  though mine seems to be fine when seeking...
+  
+maybe the assert '0' thing is fixed already, now [mentioned that an update seemed to have done it...]?
+  http://projects.archlinux.org/svntogit/packages.git/diff/?h=packages/libdvdnav
+
 == does vobu restart ? ==
 
 A:4104.1 V:4092.9 A-V: 11.242

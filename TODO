@@ -24,9 +24,11 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
 
 == yes do, un-ordered currently, from all the various future release options ==
+ -mc 1 ?
   flds: the tag sync'er :P
   note NAV packets are for searching/time display, then it uses mpeg uh think
-  check if it fixes my old broken VOB EDL.
+    so basically you have to interpolate
+  check if it fixes my old broken VOB EDL fella
   note my OSD fix on the ML
   I "think" I should just use raw...30 fps time...
   investigate "static" mplayer-edl for OS X :P
@@ -91,12 +93,11 @@
   test mplayer -vo gl at home
   template-ify for netflix too "create for netflix" button
   EDL gottman
-  dvdnav [mplayer dvd?] better searching/seeking code from XBMC
   minor redcar tweaks
   accomodate splits vs. blanks and work everywhere
   short list of todo's for screen capture
   short list of todo's for virtual audio
-  "fix" mplayer EDL skips pausing (within the mplayer code itself
+  "fix" mplayer EDL skips pausing (within the mplayer code itself]
   add the other type in there, esp. if a man answers
     add to the template, make it so that various can use it
   a real overlapping mute type failure when you hit the "watch edited realtime" should popup.
@@ -145,7 +146,10 @@
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
   @mplayer: if you play just dvdnav://1 from start to finish, it goes until 60 seconds into the menu *after* title 1 finishes
-  
+  @mplayer you *die* with edl's on many DVD's... ex: on bunny one
+    vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
+    also check that "old" DVD that always went to the wrong title...
+    
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
   todo.upconvert
@@ -158,19 +162,22 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  super-precise "can seek to exactly z"
+  fix mplayer dvd:// seeking being slow at times...
+    dvdnav [mplayer dvd?] better searching/seeking code from somebody...somewhere, they had some searching code [if only for dvd://]
+    compare xine libdvdnav, see if they have any improvements there/new methods
   screen recorder for mac, with audio :P
   mplayer patch for V:DD
   can custom pass in an per EDL -osd-add, for the little mermaid, for instance
+    except that I don't really like that...
+    do we do the right -osd-add for VOB folders?
   @mplayer: -dvd-device -dvd-device failz
   @mplayer: bump your "lib" version ;)
-  compare xine libdvdnav, see if they have any improvements there
   smplayer "might" be able to run on linux, too...
-  dvdnav tons of old patches...
-  maybe dvdread add some methods? [ask]
+  maybe lib dvdread add some methods better searching?
   netflix instant CGI how crisp is their HD?
   prompt if they want to auto-search for splits :P
   on mac needs a different -osd-add number...though if my patches are accepted it may not matter
-  do we do the right -osd-add for VOB folders?
   change upconvert options needs its own "close" button
     and status field?
   mplayer check if dvdnav cache can/should work [?]
@@ -221,7 +228,6 @@
   @mplayer the error message for fonts is poor. and misleading?
   support VLC as an EDL for files
   employee instructions: watch @ realtime after profanity filter first pass :P  
-  @mplayer: use libdvdnav cache!
   add custom profanity option
   you can mark where the starts and stop are, then hit a button 'test my latest marks' and then edit them and retest...more easily, that is
   add "play at 1.5x speed" mplayer button, I guess
@@ -304,13 +310,10 @@
     family flix
     http://theeditedmovieencyclopedia.blogspot.com/2008/08/clean-play-dvds-grand-opening-e-mail.html has grande list
     movie mask wayback machine
+    earl?
   test court jester watch it :)
   accomodate ISO's as input as if they were DVD's themselves
   fix ffmpeg's "red hue" within their code
-  be a hero and sync the dvdnav repo's [?] also fix mplayer not being able to startup on some dvd's what the...this is nuts!
-    I'm almost beginning to think VLC for files, DEBUG_C player for DVD's (except on mac, where they just have to live hosed)
-    or maybe...umm...ask the dvdnav people why it might work with one and not the other? ask VLC? huh? what the...
-    call out to VLC on DVDNAV_ERROR occurrence? what the... if can reproduce, submit bug report with trace et al.
   report ffmpeg bugs as real bugs, mplayer various (as bugs):P
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   note better to previewer "you are about to preview these specific edits..." ?
@@ -463,8 +466,6 @@
   an 'always blank not skip the mutes' option for hard core
   video on how to use imdb wiki
   accomodate alternate endings et al
-  @mplayer you *die* with edl's on many DVD's... ex: on bunny one
-    vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
   .exe installer
     just unzips, runs the .bat file for them [?] :)
       full msi
