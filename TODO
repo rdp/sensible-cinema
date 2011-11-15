@@ -27,7 +27,7 @@
  -mc 1 ?
   flds: the tag sync'er :P
   note NAV packets are for searching/time display, then it uses mpeg uh think
-    so basically you have to interpolate
+    so basically you have to interpolate...I think...hmm...
   check if it fixes my old broken VOB EDL fella
   note my OSD fix on the ML
   I "think" I should just use raw...30 fps time...
