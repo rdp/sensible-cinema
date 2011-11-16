@@ -6,6 +6,8 @@ if I ever care...
 ANS_length=6013.200000
 Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
 
+Tamgled is a good test.
+Also gottmann was the other.
 
 == vlc slow ==
 27/51 full screen, no interference.  Maybe a dropped frame once a second?
