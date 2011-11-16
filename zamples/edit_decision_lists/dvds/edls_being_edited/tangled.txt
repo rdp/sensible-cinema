@@ -1,0 +1,21 @@
+# comments can go after a # on any line, for example this one.
+"name" => "Tangled",
+
+"mutes" => [
+  # she's clean AFAICT
+],
+
+"blank_outs" => [
+  "13:58.27", "13:59.84", "lewd", "sudden bust appears",
+],
+
+"volume_name" => "TANGLED",
+"disk_unique_id" => "10b4d52d|23a51e66",
+"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
+# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+# "subtitle_url" => "http://...",
+"not edited out stuff" => "cleavage of the witch, feel free to add it",
+# "closing thoughts" => "only ...",
+# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See https://github.com/rdp/sensible-cinema/wiki/Detecting-mplayer-dvd-reset-times
+# "mplayer_dvd_splits" => ["3600.15", "444.35"], # There are many...
+"dvd_start_offset" => "0.21",
