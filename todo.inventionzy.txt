@@ -125,3 +125,4 @@
  integrate with google plus (+- api) somehow, and/or broadcast [?]/realtime "chat" while watching, voice/text, etc.
     google TV too, and apple TV, as an app., etc. etc. (auto-download EDL's etc)
  machine learning for video analysis for synchronization/detection of "questionable scenes/audio" [?]
+  can "blank out" or "obscure" certain parts of the screen based on skin color, or region, or region with vectors (moving region), based on timestamp, or pixel color, or hue, or YUV, or combination of the two ("this color in this region, within these time beginnings and endingses")
