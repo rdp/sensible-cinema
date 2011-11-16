@@ -148,7 +148,7 @@
     also check that "old" DVD that always went to the wrong title...=c= with straight dvdnav://
       also minc dvdnav:// straight
   add some VLC forums bugs as real bugs, if they're still around
-    
+  
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
   todo.upconvert
@@ -161,6 +161,8 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  display licenses
+  default box "no" for licenses
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
   double check that ffmpeg/mplayer windoze builds are using SSE as they should...
