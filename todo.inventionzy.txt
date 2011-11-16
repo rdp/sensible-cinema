@@ -128,3 +128,5 @@
   can "blank out" or "obscure" certain parts of the screen based on skin color, or region, or region with vectors (moving region), based on timestamp, or pixel color, or hue, or YUV, or combination of the two ("this color in this region, within these time beginnings and endingses")
   can OCR subtitles from DVD's on the fly, to screen them like tvguardian now does.  With or without in an embedded unit.
   Everything else mentioned here, but in an embedded unit/side by side with other things/as an app in a console device.
+  people can send you a file and you send it back edited to them LOL (file meaning a rip of some DVD they own, +- requiring them to send in an original DVD too LOL.
+  see also business ideas.txt file
