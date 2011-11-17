@@ -1,5 +1,5 @@
 "mutes" => [
-  #"0:00:01.0", "0:00:02.0", "profanity", "da..",
+ # TODO 19:51 : 19:52  ,"profanity", "religious exclamation"
 ],
 
 "blank_outs" => [
