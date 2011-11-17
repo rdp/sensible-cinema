@@ -13,8 +13,6 @@
 == very next things I was working on ==
   
 == yes do ordered for this release/other projects ja  ==
-  speeds at home better? can they be made better at all?
-  ffplay diagonal bug
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -22,26 +20,31 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
+  genealogy create/publicize
+  auto-start audio caster ability, just use jruby LOL
+  -mc 1 ?
+  send sintel to him
 
 == yes do, un-ordered currently, from all the various future release options ==
- -mc 1 ?
+  post my "do we need -nocache" to libdvdnav :P
+  VLC dvdnav ifo fella
+  mplayer_me: grab that one recent useful libdvdnav patch :P
+  add timestamp_offset_from => "0:00"
+    if it is, then *DVD* needs to add to it's timestamps :)
+    add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   directx/post "it was directx" for subs
+  ffplay diagonal bug
+  speeds at home better? can they be made better at all?
   flds: the tag sync'er :P
   note NAV packets are for searching/time display, then it uses mpeg uh think
     so basically you have to interpolate...I think...hmm...
-  check if it fixes my old broken VOB EDL fella
-  note my OSD fix on the ML
-  I "think" I should just use raw...30 fps time...
+  dvdcssless NAV examiner
+  I "think" I should just use raw DVD...30 fps time...
   investigate "static" mplayer-edl for OS X :P
-  test with my failing EDL seeks before
-  note my fix for OSD
-  repost my one message to eng-dev
-    too bad windows doesn't have real dependencies
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
   -osd-add kills it in create mode with "normal play" button
   ffmpeg how to add subs demo
-  auto-start audio caster ability, just use jruby LOL
   tighten normal EDL mplayer buffers now?
   test distro various buttons on mac
     advertise urug
@@ -56,12 +59,8 @@
   "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
     maybe reset on button update...
-  add timestamp_offset_from => "0:00"
-    if it is, then *DVD* needs to add to it's timestamps :)
-    add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   it should not have to ask for an EDL when you click "play it unedited"
-  genealogy create/publicize
   warn when using upconverting within SC
   VLC subtitles grey issue
   @ffmpeg: wiki for filter's?
@@ -320,8 +319,7 @@
     earl?
   test court jester watch it :)
   accomodate ISO's as input as if they were DVD's themselves
-  fix ffmpeg's "red hue" within their code
-  report ffmpeg bugs as real bugs, mplayer various (as bugs):P
+  report ffmpeg bugs as real bugs, mplayer various (as bugs) :P
   the final "edited.avi" really "could/should" be playable in WMP...if possible
   note better to previewer "you are about to preview these specific edits..." ?
   "save to" -> same dir as "get from" yeah

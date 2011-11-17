@@ -1,5 +1,38 @@
 up next:
 
+== precise skipping dvdnav patch/broken DVDNAV EDL ==
+
+seems to be "more tight" even with gottmann DVD
+
+my EDL output is still "temporarily messed" though...
+
+just skipping "to 58" skips to 
+A:  54.5 V:  54.6
+which is supposed to skip, at 55, to 58.
+
+So that explains that.
+
+
+54.0 64.5 0 "the freezer/100% pauser"
+skips @ 54 to "an attempted" 64.5
+ at which point, it keeps repeating, trying to skip to 
+
+mplayer -ss 64.5 actually goes to 58.4
+
+wow that is bad LOL (and explains it too)
+
+maybe seek_rel is saving me, and seeking +5 within the DVD's sphere?
+
+accurate "edl seek to" clue:
+libmpdemux\demux_mpg.c static void demux_seek_mpg(demuxer_t *demuxer, float rel_seek_secs,
+                           float audio_delay, int flags)
+
+
+appears that any "seek me forward 10s" that was 
+
+pts = demuxer->stream_pts; // this is DVD accurate! suh-weet... and a double at that...
+
+
 == robust vlc ==
 if I ever care...
 
@@ -81,8 +114,8 @@ conc:     only .0005 off per 0.5seconds, so...straight add could be reasonable..
 == OSOH highlight ==
 
 VLC "straight" OSOH
-  hint of yellow there menu
-  yellow subs
+  hint of yellow in there menu
+  yellow subs [which is right I guess]
   
 VLC "without dll"
  yellow menu, same size, hint of white [?] [might be ok]
@@ -104,6 +137,10 @@ yikes
 linux [my build]:
  white subs
  white "thicker" fellas.  once it worked at all LOL, then the boxes were gone. [possible corrupt/interrupted DVDCSS?]
+
+mplayer @home had yellow subs with some version, some vo
+
+@works: mplayer_me>mplayer dvdnav:// -vo directx -mouse-movements still white on white
 
 == subtitles sync'ing ==
 flight:
@@ -382,8 +419,10 @@ them: 21/27 to my 31/36 LODO huh?
 	mine 30/84'ish suh-weet
 	
 I do declare--it appears that the highlighting is "right" with  Sherpya-SVN-r34118-4.2.5 directx
-
+  
 and plus 10 with coiso...
+
+unfortunately directx is the shtinky one for windows 7 aero...hmm...wonder why it's so much more efficient...oh well.
 
 ==  mplayers split it differently ==
   http://gk.lka.hu/2009/04/mingw-mplayer-guide mentions compiling ffmpeg separately...

@@ -1,75 +1,3 @@
-Index: stream/stream_dvd.c
-===================================================================
---- stream/stream_dvd.c	(revision 34269)
-+++ stream/stream_dvd.c	(working copy)
-@@ -586,12 +586,14 @@
-           continue;
-         tm += d->cell_times_table[i];
-     }
--    tm += mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm);
--
-+    tm += mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm); // probably the VOBU start time...
-+    //if(tm/1000.0 > 3500.0) {
-+//      printf("time %f ", tm/1000.0); // it's just the last NAV time, except we get called here over and over again when searching...hmm...
-+    //}
-     return (double)tm/1000.0;
- }
- 
--static int dvd_seek_to_time(stream_t *stream, ifo_handle_t *vts_file, double sec)
-+static int dvd_seek_to_time(stream_t *stream, ifo_handle_t *vts_file, double sec) // only called once to here...
- {
-     unsigned int i, j, k, timeunit, ac_time, tmap_sector=0, cell_sector=0, vobu_sector=0;
-     int t=0;
-@@ -607,7 +609,8 @@
-     if(sec > duration)
-       return 0;
- 
--    i=d->cur_pgc_idx;
-+
-+    i=d->cur_pgc_idx; // USES CURRENT pgc_idx ?
-     timeunit = vts_tmapt->tmap[i].tmu;
-     for(j = 0; j < vts_tmapt->tmap[i].nr_of_entries; j++) {
-       ac_time = timeunit * (j + 1);
-@@ -622,12 +625,21 @@
-         break;
-       }
-     }
-+    
-+    if( cell_sector == 0 ) {
-+      printf("didnt find this cell...hmm...\n");
-+      //d->cur_pgc_idx = pgc_id-1;
-+      //d->cur_pgc = vts_file->vts_pgcit->pgci_srp[pgc_id-1].pgc;
- 
-+    }
-+    
-+
-+    // seek to beginning of vobu ??
-     pos = ((off_t)cell_sector)<<11;
-     stream_seek(stream, pos);
-     do {
-       stream_skip(stream, 2048);
--      t = mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm);
-+      t = mp_dvdtimetomsec(&d->dsi_pack.dsi_gi.c_eltm); // weak precision...
-     } while(!t);
-     tm = dvd_get_current_time(stream, -1);
- 
-@@ -635,12 +647,12 @@
-     stream_seek(stream, pos);
-     //now get current time in terms of the cell+cell time offset
-     memset(&d->dsi_pack.dsi_gi.c_eltm, 0, sizeof(dvd_time_t));
--    while(tm <= sec) {
--        if(!stream_skip(stream, 2048))
-+    while(tm <= sec) { // TAKES FOREVER?
-+        if(!stream_skip(stream, 2048)) // skip to next NAV packet [?] shouldn't it have already been able to look this up and skip straight there?
-           break;
--        tm = dvd_get_current_time(stream, -1);
-+        tm = dvd_get_current_time(stream, -1); 
-     };
--    tmap_sector = stream->pos >> 11;
-+    tmap_sector = stream->pos >> 11; // what is this magic?
- 
-     //search closest VOBU sector
-     k=(vts_file->vts_vobu_admap->last_byte + 1 - VOBU_ADMAP_SIZE)/4; //entries in the vobu admap
 Index: stream/stream_dvdnav.c
 ===================================================================
 --- stream/stream_dvdnav.c	(revision 34269)
@@ -83,15 +11,31 @@ Index: stream/stream_dvdnav.c
  }
  
  static void stream_dvdnav_close(stream_t *s) {
-@@ -465,7 +465,7 @@
+@@ -465,7 +465,8 @@
      case STREAM_CTRL_SEEK_TO_TIME:
      {
        uint64_t tm = *(double *)arg * 90000;
 -      if(dvdnav_time_search(priv->dvdnav, tm) == DVDNAV_STATUS_OK)
++      printf("jumping to %d", tm);
 +      if(dvdnav_jump_to_sector_by_time(priv->dvdnav, tm) == DVDNAV_STATUS_OK)
          return 1;
        break;
      }
+Index: Makefile
+===================================================================
+--- Makefile	(revision 34269)
++++ Makefile	(working copy)
+@@ -781,8 +781,8 @@
+ %-rc.o: %.rc
+ 	$(WINDRES) -I. $< -o $@
+ 
+-$(FFMPEGLIBS): $(FFMPEGFILES) config.h
+-	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
++#$(FFMPEGLIBS): $(FFMPEGFILES) config.h
++#	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
+ 
+ mencoder$(EXESUF): $(MENCODER_DEPS)
+ mencoder$(EXESUF): EXTRALIBS += $(EXTRALIBS_MENCODER)
 Index: libvo/vo_direct3d.c
 ===================================================================
 --- libvo/vo_direct3d.c	(revision 34269)
@@ -258,7 +202,69 @@ Index: mplayer.c
  static void edl_update(MPContext *mpctx)
  {
      if (!edl_records)
-@@ -3952,7 +3989,7 @@
+@@ -2603,7 +2640,9 @@
+         edl_records     = NULL;
+         return;
+     }
++                double double_len = demuxer_get_time_length(mpctx->demuxer);
+ 
++     double pts = demuxer_get_current_time(mpctx->demuxer);
+     // This indicates that we need to reset next EDL record according
+     // to new PTS due to seek or other condition
+     if (edl_needs_reset) {
+@@ -2614,19 +2653,19 @@
+         // Find next record, also skip immediately if we are already
+         // inside any record
+         while (next_edl_record) {
+-            if (next_edl_record->start_sec > mpctx->sh_video->pts)
++            if (next_edl_record->start_sec > pts)
+                 break;
+-            if (next_edl_record->stop_sec >= mpctx->sh_video->pts) {
++            if (next_edl_record->stop_sec >= pts) {
+                 if (edl_backward) {
+                     mpctx->osd_function = OSD_REW;
+                     edl_decision  = 1;
+                     abs_seek_pos  = 0;
+-                    rel_seek_secs = -(mpctx->sh_video->pts -
++                    rel_seek_secs = -(pts -
+                                       next_edl_record->start_sec +
+                                       edl_backward_delay);
+                     mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], "
+                                                     "offset [%f], start [%f], stop [%f], length [%f]\n",
+-                           mpctx->sh_video->pts, rel_seek_secs,
++                           pts, rel_seek_secs,
+                            next_edl_record->start_sec, next_edl_record->stop_sec,
+                            next_edl_record->length_sec);
+                     return;
+@@ -2644,15 +2683,16 @@
+     }
+ 
+     if (next_edl_record &&
+-        mpctx->sh_video->pts >= next_edl_record->start_sec) {
++        pts >= next_edl_record->start_sec) {
+         if (next_edl_record->action == EDL_SKIP) {
+             mpctx->osd_function = OSD_FFW;
+             edl_decision  = 1;
+             abs_seek_pos  = 0;
+-            rel_seek_secs = next_edl_record->stop_sec - mpctx->sh_video->pts;
++            rel_seek_secs = next_edl_record->stop_sec - pts;
++            printf("EDL rel seek secs %f %f %f \n", rel_seek_secs, pts,  next_edl_record->start_sec);
+             mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], offset [%f], "
+                                             "start [%f], stop [%f], length [%f]\n",
+-                   mpctx->sh_video->pts, rel_seek_secs,
++                   pts, rel_seek_secs,
+                    next_edl_record->start_sec, next_edl_record->stop_sec,
+                    next_edl_record->length_sec);
+         } else if (next_edl_record->action == EDL_MUTE) {
+@@ -3869,6 +3909,7 @@
+ 
+             edl_update(mpctx);
+ 
++
+ //================= Keyboard events, SEEKing ====================
+ 
+             current_module = "key_events";
+@@ -3952,7 +3993,7 @@
                      guiInfo.Chapter = dvd_chapter_from_cell(dvdp, guiInfo.Track - 1, dvdp->cur_cell) + 1;
                  }
  #endif
