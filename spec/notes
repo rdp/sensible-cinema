@@ -1,5 +1,116 @@
 up next:
 
+== sintel dvd menu highlight==
+VLC "straight"
+  red, grey, grey
+MPC
+  red, red, red
+mplayer
+  grey, grey, grey :)
+
+VLC on files:
+  red, grey, grye
+
+VLC sans libyuv:
+  same
+VLC sans libyuvp DVD:
+  good
+VLC sans libyuvp files:
+  good
+VLC linux:
+ red, grey, grye
+
+== seeking forward or back, with new patch ==
+final: 36.870166
+A:  37.1 V: 37.10
+we're about 0.3 off
+
+35.5 36.0
+
+we're seeking to 36...
+
+real difference:
+ 36.000000, mpeg at 36.269568
+
+dvd_start_offset" => "0.37",
+
+mpeg stream seems to...lag behind DVDNAV seeks by a bit...at least one old frame is still there somehow...
+
+stream_pts is "supposed" to be always from dvdnav_get_current_time
+  which can't be anything but a NAV packet can it?  Maybe I was messing the numbers up...
+
+    case STREAM_CTRL_GET_CURRENT_TIME:
+    {
+      double tm;
+      tm = dvdnav_get_current_time(priv->dvdnav)/90000.0f;
+      
+last NAV packet was 35.500000, mpeg at 0.133467 after -> 29.97 35.535500
+adding difference 0.066733 adding 0.000000 to 35.602234
+final: 35.602234
+A:  35.7 V:  0.13 A-V: 35.559 ct:  0.027   3/  3 ??% ??% ??,?% 0 0
+. =====  PAUSE  =====
+"accepting from console"
+
+last NAV packet was 35.500000, mpeg at 35.902534
+
+weird coordination there...
+
+however, that was a "start at 35..."
+
+33 => 33.5
+  might not be the nav's fault though...
+
+
+last NAV packet was 35.000000, mpeg at 35.268574
+last NAV packet was 35.500000, mpeg at 35.769073
+last NAV packet was 36.000000, mpeg at 36.269573
+
+last NAV packet was 35.500000, mpeg at 0.133467 after -> 29.97 35.535500
+adding difference 0.066733 adding 0.000000 to 35.602234
+final: 35.602234
+A:  35.7 V:  0.13 A-V: 35.559 ct:  0.027   3/  3 ??% ??% ??,?% 0 0
+  =====  PAUSE  =====
+last NAV packet was 35.500000, mpeg at 35.902534
+
+weird.
+
+first frame is "right place, wrong V: 0.13"
+then like 5 audio packets...
+
+last NAV packet was 36.000000, mpeg at 36.269573 (which is right...phew)
+
+32.75 [2947500], 32.99 => 33.5
+32.50,32.51,32.55,32.60,32.70,32.74 [2946600] => 33.0
+
+55.75 => 56.5 [same pattern]
+
+seek_to_sec
+
+0 => 0
+there *is* an initial NAV packet for zero...whoa!
+
+
+last NAV packet was 0.000000, mpeg at 0.033367 after -> 29.97 0.000000
+adding difference 0.033367 adding 0.000000 to 0.033367
+final: 0.033367
+last NAV packet was 0.000000, mpeg at 0.367033 (so still ends up being 0.20 almost exact? fascinating, may be more room for coord. in there...)
+  so what I want is dvdcss'less "mpeg to NAV offset" based on first "real" NAV packet.
+    (is it always 0.37-0.1 ?)
+      "dvd_start_offset" => "0.37", # for title 2
+  NAV packet was 0.500000, mpeg at 0.767433 => NAV packet was 0.400000, mpeg at 0.667433 # within 0.05 still...hmm...
+    
+    minc:
+      last NAV packet was 0.000000, mpeg at 0.280633 after -> 29.97 0.000000
+      0.400000, mpeg at 0.614300
+      0.28-0.1 # actually kind'er close...0.21 to 0.18
+    jonah:
+      0.28
+      0.400000, mpeg at 0.614300
+
+seeking in minc
+ 32.74 => 32.533333
+ 33.0,33.1,33.2,33.25 => 33.033333
+ 33.26,33.3 => 33.533333
 == precise skipping dvdnav patch/broken DVDNAV EDL ==
 
 seems to be "more tight" even with gottmann DVD

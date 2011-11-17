@@ -148,6 +148,7 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
   post my fix mplayer to actually work with DVDNAV EDL's
   VLC subtitles grey issue

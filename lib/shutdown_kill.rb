@@ -1,3 +1,4 @@
+# unused anymore...
 
 class ShutdownHook 
   include java.lang.Runnable
