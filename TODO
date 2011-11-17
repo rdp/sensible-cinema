@@ -23,9 +23,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   genealogy create/publicize
   auto-start audio caster ability, just use jruby LOL
-  DVD timing for forum/Snow White
-  @mplayer you *die* with edl's on many DVD's... ex: on bunny one
-    vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
+  DVD timing for forum:Snow White
 
 == yes do, un-ordered currently, from all the various future release options ==
   add timestamp_offset_from => "0:00"
@@ -34,7 +32,7 @@
     timestamps_relative_to => "dvd" ?
     first_nav => "0.20" ?
     remove -osd-add
-    "less intense" 30 fps accurate DVDNAV tracker...no conversion et al :P
+    "less intense" 30 fps accurate DVDNAV tracker...no internal conversion :P
     I "think" I should just use raw DVD...30 fps time...yes!
   ffmpeg how to add subs demo
   directx/post "it was directx" for subs
@@ -114,6 +112,8 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
   sons of provo "music video" EDL
   buy big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
+  blu ray timing
+    my one, others.  Are they the same as DVD's?  They seem really close...
 
 == decide later to move up or down ==
   fix mplayer-devel macport :P
@@ -385,15 +385,9 @@
   also edit the playback of trailers et al [?] hmm...
     allow for mplayer too? hmm...
   @mplayer: double click default to full screen! :) and enter default to dvdnav select!
-  add button "play from exactly here to here" in [mplayer uh guess?] :P
-    what does mplayer do with -ss big_number past the end of an end [monster's inc]?
   fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
     there's a bug report somewhere
-  @makemkv: wrong title no:Title #0 was added (7 cell(s), 0:14:58)
-     Title #1 was added (8 cell(s), 0:14:57), also give us title no's in the dialog :P
   @mencoder you lop off the end somehow (dvd rip)
-  blu ray timing
-    my one, others.  Are they the same as DVD's?  They seem really close...
   pull in information from thetvdb to the GUI app
   create the "ffmpeg frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
@@ -507,8 +501,7 @@ warn when labels both exist and don't match...
 
 == random non-DVD/OCR backlog ... or a few never do DVD. ==
 
-auto-mute during hulu commercials [annoying!]
-fix the audio timestamps for my capturer...
+auto-mute during hulu commercials [annoying!] LOL
 
 @mplayer: you return the wrong return code, sillys! https://gist.github.com/1056292
 @smplayer: bounty or me fix: their for their display [if they use get_time_pos isn't that enough ?]
@@ -520,7 +513,7 @@ main-title themes between them all.)   This type of thing
 some low level frame hijacker for incoming cable movies, too? ... hmm...
   not hijacker, but monitor to detect location/position
 
-can die when doesn't start well:
+can accidentally die when doesn't start well:
 
 Selected player normal_in_youtube.com.chrome.txt
         (full path: C:\dev\ruby\sensible-cinema\zamples\players\youtube\normal_in_youtube.com.chrome.txt)
@@ -542,8 +535,7 @@ advertise my "splitting joining" google doc page. also test the other various op
 use voice recognition for profanity [?]
 take out use_class_name for descriptors
 
-if sued, could use straight mplayer -ss (+- one at a time, or possibly in a playlist [?] like VLC can...)
-  -hr-edl-seek ?
+if s..., could use straight mplayer -ss (+- one at a time, or possibly in a playlist [?] like VLC can...)
 
 fade in/fade out volume, video, instead of just hard muting it as it does currently, or hard overlay blanking it, or skipping.
 make the other stuff work again, since I no longer use YAML...
@@ -584,16 +576,14 @@ advertise on ruby flow
 
 DRY up :levels--it's in the ocr spec as well as the others...
 
-unit tests run with normal ruby
-
 back off on mouse jerking...only every so often?
   maybe increase timings as you get farther along, to accomodate for drift?
 
-preference for beeping at them, et al
+preference for beeping at them if it is failing to track, or when done with a conversion, et al
 
-itunes video on demand player description
+itunes video on demand player descriptor
 
-blockbuster "rent" on demand player description
+blockbuster "rent on demand" player descriptor
 
 no money making for now...all volunteer...more respectful.
   or make it so it can work with an editor of some kind...like a "save here" command line snip this tuck that.
@@ -665,9 +655,6 @@ do the same, but for audio books...also optimize them for reading through full v
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
-@jruby: system("mencoder") from a button doesn't get interrupted by an exception [!]
-@vlc: replay mp4's are too dark.
-
 a DVD burner for ISO, then it can "burn over" some bad sectors? or you can grab an ISO and "null out" just where you wanted to?
 
 maybe require them to rip their stuff "through some means or other" and we'll operate on the product based on an EDL list :) [could be more legal]
@@ -688,3 +675,5 @@ create a "map" of VLC DVD timings to "real" timings via tracking.  Hopefully nev
         
 it fails on "friday" it tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
+
+can mute for "tense" scenes

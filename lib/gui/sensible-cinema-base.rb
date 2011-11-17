@@ -191,7 +191,7 @@ module SensibleSwing
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts the eyes just too much
       extra_options << "-framedrop" # even in create mode, if the audio ever gets off, we're hosed with making accurate timestamps...so drop, until I hear otherwise...
-      extra_mplayer_commands << "-mc 1"
+      extra_options << "-mc 1"
       extra_options << "-autosync 30" 
       
       unless show_subs

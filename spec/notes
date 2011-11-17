@@ -1,5 +1,58 @@
 up next:
 
+== seeking bunny ==
+
+when it goes to a new VOB it must accidentally reset somehow, thus thinking it's at 500'ish
+
+mplayer.exe -framedrop -mc 1 -autosync 30 -nosub -noautosub -forcedsubsonly -sid 1000 -alang en -slang en -msglevel identify=4 -mouse-movements -sws 9 -ssf ls=75.0 -ssf cs=7.0 -lavdopts threads=2 -font c:/dev/ruby/sensible-cinema/vendor/subfont.ttf -volume 100 -vo direct3d  -input conf="/dev/ruby/sensible-cinema/mplayer_input_conf"  -osdlevel 2 -osd-fractions 1  "dvdnav://2/H:" -osd-verbose -ss 298
+
+
+A: 299.7 V:299.72 A-V:  0.017 ct: -0.096  20/ 17 47% 61%  5.7% 0 0
+last NAV packet was 299.000000, mpeg at 299.766144 after -> 29.97 299.299011
+adding difference 0.229462 adding 0.000000 to 299.528473
+final: 299.528473
+libdvdnav: get_PGCN failed. Was trying to find pgcN in domain 20 0
+libdvdnav: chapter NOT FOUND!
+libdvdnav: get_PGCN failed. Was trying to find pgcN in domain 2
+libdvdnav: chapter NOT FOUND!
+
+DVDNAV_TITLE_IS_MOVIE
+[ac3 @ 00c3fbc0]incomplete frame
+weird fella suddenly we're not a DVD? mpeg at 0.000000 adding 0.000000 to 0.000000
+final: 0.000000
+A: 300.5 V:  0.00 A-V:300.470 ct:  0.905   0/  0 ??% ??% ??,?% 0 0
+[ac3 @ 00c3fbc0]frame sync error
+
+last NAV packet was 299.000000, mpeg at 0.041708 after -> 29.97 299.299011
+not adding negative diff -299.494965adding 0.000000 to 299.299011
+final: 299.299011
+A: 299.5 V:  0.04 A-V:299.438 ct:  1.905   1/  1 ??% ??% ??,?% 1 0
+last NAV packet was 299.000000, mpeg at 0.083417 after -> 29.97 299.299011
+not adding negative diff -299.453278adding 0.000000 to 299.299011
+final: 299.299011
+A: 298.6 V:  0.08 A-V:298.470 ct:  2.905   2/  2 ??% ??% ??,?% 2 0
+last NAV packet was 299.000000, mpeg at 0.125125 after -> 29.97 299.299011
+not adding negative diff -299.411560adding 0.000000 to 299.299011
+final: 299.299011
+A: 297.6 V:  0.13 A-V:297.470 ct:  3.905   3/  3 ??% ??% ??,?% 3 0
+last NAV packet was 299.000000, mpeg at 0.166833 after -> 29.97 299.299011
+not adding negative diff -299.369843adding 0.000000 to 299.299011
+final: 299.299011
+A: 296.6 V:  0.17 A-V:296.470 ct:  4.905   4/  4 ??% ??% ??,?% 4 0
+last NAV packet was 299.500000, mpeg at 0.208542 after -> 29.97 299.799500
+new NAV packet! 299.799500 [adjusted] at 0.208542 adding 0.000000 to 299.799500
+final: 299.799500
+A: 295.7 V:  0.21 A-V:295.470 ct:  5.905   5/  5 ??% ??% ??,?% 5 0
+last NAV packet was 299.500000, mpeg at 0.250250 after -> 29.97 299.799500
+adding difference 0.041708 adding 0.000000 to 299.841217
+final: 299.841217
+A: 294.7 V:  0.25 A-V:294.470 ct:  6.905   6/  6 ??% ??% ??,?% 6 0
+last NAV packet was 299.500000, mpeg at 300.099792 after -> 29.97 299.799500
+adding difference 299.891266 adding 0.000000 to 599.690796
+final: 599.690796
+
+Freaky VOB interloper...
+
 == sintel dvd menu highlight==
 VLC "straight"
   red, grey, grey

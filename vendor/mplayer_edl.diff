@@ -16,7 +16,7 @@ Index: stream/stream_dvdnav.c
      {
        uint64_t tm = *(double *)arg * 90000;
 -      if(dvdnav_time_search(priv->dvdnav, tm) == DVDNAV_STATUS_OK)
-+      printf("jumping to %d", tm);
++      printf("\njumping to %d", tm);
 +      if(dvdnav_jump_to_sector_by_time(priv->dvdnav, tm) == DVDNAV_STATUS_OK)
          return 1;
        break;
@@ -202,17 +202,16 @@ Index: mplayer.c
  static void edl_update(MPContext *mpctx)
  {
      if (!edl_records)
-@@ -2603,7 +2640,9 @@
+@@ -2603,7 +2640,7 @@
          edl_records     = NULL;
          return;
      }
-+                double double_len = demuxer_get_time_length(mpctx->demuxer);
- 
+-
 +     double pts = demuxer_get_current_time(mpctx->demuxer);
      // This indicates that we need to reset next EDL record according
      // to new PTS due to seek or other condition
      if (edl_needs_reset) {
-@@ -2614,19 +2653,19 @@
+@@ -2614,22 +2651,22 @@
          // Find next record, also skip immediately if we are already
          // inside any record
          while (next_edl_record) {
@@ -222,6 +221,7 @@ Index: mplayer.c
 -            if (next_edl_record->stop_sec >= mpctx->sh_video->pts) {
 +            if (next_edl_record->stop_sec >= pts) {
                  if (edl_backward) {
++                   // this is just for "after some seek, check if we're in an EDL"
                      mpctx->osd_function = OSD_REW;
                      edl_decision  = 1;
                      abs_seek_pos  = 0;
@@ -229,14 +229,19 @@ Index: mplayer.c
 +                    rel_seek_secs = -(pts -
                                        next_edl_record->start_sec +
                                        edl_backward_delay);
-                     mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], "
-                                                     "offset [%f], start [%f], stop [%f], length [%f]\n",
+-                    mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], "
+-                                                    "offset [%f], start [%f], stop [%f], length [%f]\n",
 -                           mpctx->sh_video->pts, rel_seek_secs,
++                    printf( "\nEDL_SKIP special: pts [%f], offset [%f], start [%f], stop [%f], length [%f]\n",
 +                           pts, rel_seek_secs,
                             next_edl_record->start_sec, next_edl_record->stop_sec,
                             next_edl_record->length_sec);
-                     return;
-@@ -2644,15 +2683,16 @@
+-                    return;
++                    return; // early return
+                 }
+                 break;
+             }
+@@ -2644,15 +2681,16 @@
      }
  
      if (next_edl_record &&
@@ -248,7 +253,7 @@ Index: mplayer.c
              abs_seek_pos  = 0;
 -            rel_seek_secs = next_edl_record->stop_sec - mpctx->sh_video->pts;
 +            rel_seek_secs = next_edl_record->stop_sec - pts;
-+            printf("EDL rel seek secs %f %f %f \n", rel_seek_secs, pts,  next_edl_record->start_sec);
++            printf("\n\nEDL rel seek secs %f %f [%f,%f] \n", rel_seek_secs, pts,  next_edl_record->start_sec, next_edl_record->stop_sec);
              mp_msg(MSGT_CPLAYER, MSGL_DBG4, "EDL_SKIP: pts [%f], offset [%f], "
                                              "start [%f], stop [%f], length [%f]\n",
 -                   mpctx->sh_video->pts, rel_seek_secs,
@@ -256,7 +261,7 @@ Index: mplayer.c
                     next_edl_record->start_sec, next_edl_record->stop_sec,
                     next_edl_record->length_sec);
          } else if (next_edl_record->action == EDL_MUTE) {
-@@ -3869,6 +3909,7 @@
+@@ -3869,6 +3907,7 @@
  
              edl_update(mpctx);
  
@@ -264,7 +269,7 @@ Index: mplayer.c
  //================= Keyboard events, SEEKing ====================
  
              current_module = "key_events";
-@@ -3952,7 +3993,7 @@
+@@ -3952,7 +3991,7 @@
                      guiInfo.Chapter = dvd_chapter_from_cell(dvdp, guiInfo.Track - 1, dvdp->cur_cell) + 1;
                  }
  #endif
@@ -332,7 +337,7 @@ Index: libmpdemux/demuxer.c
  /**
   * \brief demuxer_get_current_time() returns the time of the current play in three possible ways:
   *        either when the stream reader satisfies STREAM_CTRL_GET_CURRENT_TIME (e.g. dvd)
-@@ -1480,15 +1482,48 @@
+@@ -1480,15 +1482,50 @@
   *        0 otherwise
   * \return the current play time
   */
@@ -360,15 +365,17 @@ Index: libmpdemux/demuxer.c
 +        last_dvd_update_pos = get_time_ans;
 +        last_stream_pos_at_that_dvd_time = sh_video->pts;
 +        if (osd_verbose)
-+          printf("new NAV packet! %f at %f ", get_time_ans, sh_video->pts);
++          printf("new NAV packet! %f [adjusted] at %f ", get_time_ans, sh_video->pts);
 +      } else {
 +        double difference = (sh_video->pts - last_stream_pos_at_that_dvd_time);
-+        if(difference > 0) {
++        
++        if(difference > 0 && difference < 1.5) { // should never be very high, typically < 0.6 as it's just "between NAV packets"
 +          if (osd_verbose)
 +            printf("adding difference %f ", difference);
 +          get_time_ans += difference; // add the latest difference, already in 29.97 so not morphing needed. weird-z-o
 +        } else {
-+          printf("not adding negative diff %f", difference);
++          printf("not adding odd diff1? %f", difference);
++          last_stream_pos_at_that_dvd_time = sh_video->pts;
 +        }
 +        if(get_time_ans < 0)
 +          get_time_ans = 0;
@@ -376,8 +383,8 @@ Index: libmpdemux/demuxer.c
 +      
 +    }
 +    else if (sh_video) {
-+        printf("weird fella mpeg at %f ", sh_video->pts);
-+      // we get here at the mpeg "splits" within them...
++        printf("weird fella suddenly we're not a DVD? mpeg at %f ", sh_video->pts);
++        // we get here at the mpeg "splits" cross overs splits...
          get_time_ans = sh_video->pts;
 -    return (int) get_time_ans;
 +        

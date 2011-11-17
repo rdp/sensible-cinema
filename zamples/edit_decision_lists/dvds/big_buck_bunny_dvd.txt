@@ -15,4 +15,6 @@
 # recalculate... "disk_unique_id" => "",
 "url" => "http://www.bigbuckbunny.org/",
 "dvd_title_track" => "2",
+"volume_name" => "BIG_BUCK_BUNNY_NTSC",
+"disk_unique_id" => "94a23146|afc6c923",
 "closing thoughts" => "feels more adult than a kids movie, but probably ok edited"
