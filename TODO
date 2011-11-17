@@ -25,6 +25,7 @@
   DVD timing for forum:Snow White
 
 == yes do, un-ordered currently, from all the various future release options ==
+  update forum.doom9
   experiment with =c='s seek still being on, even without audio LOL
   deprecate mplayer_dvd_splits
   add timestamp_offset_from => "0:00"
