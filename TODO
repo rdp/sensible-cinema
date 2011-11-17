@@ -13,7 +13,6 @@
 == very next things I was working on ==
   
 == yes do ordered for this release/other projects ja  ==
-  watch gottmann
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -100,7 +99,9 @@
     and end too why not?
   macify work minor things it doesn't currently :)
   volume_name => dvd_volume_label # but what about blu-ray?
-  check with blu-rays...do they match timing-wise? sub-title wise? do subs match something else?
+  blu ray timing
+    Are they the same as DVD's?  They seem really close...
+    sub-title wise? do subs match something else? subs DVD vs. blu ray?
   split LLC's website+consumer
     get LLC before a "real" domain name
   cool runnings
@@ -114,8 +115,6 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
   sons of provo "music video" EDL
   buy big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  blu ray timing
-    my one, others.  Are they the same as DVD's?  They seem really close...
 
 == decide later to move up or down ==
   fix mplayer-devel macport :P
