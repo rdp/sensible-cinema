@@ -13,6 +13,7 @@
 == very next things I was working on ==
   
 == yes do ordered for this release/other projects ja  ==
+  watch gottmann
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -23,6 +24,8 @@
   genealogy create/publicize
   auto-start audio caster ability, just use jruby LOL
   DVD timing for forum/Snow White
+  @mplayer you *die* with edl's on many DVD's... ex: on bunny one
+    vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
 
 == yes do, un-ordered currently, from all the various future release options ==
   add timestamp_offset_from => "0:00"
@@ -32,13 +35,13 @@
     first_nav => "0.20" ?
     remove -osd-add
     "less intense" 30 fps accurate DVDNAV tracker...no conversion et al :P
+    I "think" I should just use raw DVD...30 fps time...yes!
   ffmpeg how to add subs demo
   directx/post "it was directx" for subs
   ffplay diagonal bug
   speeds at home better? can they be made better at all?
   flds: the tag sync'er :P
   dvdcssless NAV examiner
-  I "think" I should just use raw DVD...30 fps time...yes!
   investigate "static" mplayer-edl for OS X :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
@@ -130,10 +133,6 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  @mplayer you *die* with edl's on many DVD's... ex: on bunny one
-    vendor\cache\mencoder\mplayer dvdnav://2 -nocache -edl C:\Users\packrd\AppData\Local\Temp\mplayer.temp.edl -dvd-device f:\
-    also check that "old" DVD that always went to the wrong title...=c= with straight dvdnav://
-      also minc dvdnav:// straight
   add some VLC forums bugs as real bugs, if they're still around
   default box "no" for licenses
   
