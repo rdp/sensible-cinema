@@ -186,20 +186,20 @@ module SensibleSwing
         raise play_this + ' non existing?' # sanity check, I get these in mac :)
       end
 
-      extra_options = ""
+      extra_options = []
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
       # -hardframedrop might help but hurts the eyes just too much
-      extra_options << " -framedrop " # even in create mode, if the audio ever gets off, we're hosed with making accurate timestamps...until I hear otherwise...
-      # ?? extra_mplayer_commands << "-mc 0.016" ?? # doesn't seem to fix anything, unfortunately...this is ridiculous
-      extra_options << " -autosync 30 " 
+      extra_options << "-framedrop" # even in create mode, if the audio ever gets off, we're hosed with making accurate timestamps...so drop, until I hear otherwise...
+      extra_mplayer_commands << "-mc 1"
+      extra_options << "-autosync 30" 
       
       unless show_subs
         # disable all subtitles :P
-        extra_options << " -nosub -noautosub -forcedsubsonly -sid 1000 "
+        extra_options << "-nosub -noautosub -forcedsubsonly -sid 1000"
       end
-      extra_options << " -alang en "
-      extra_options += " -slang en "
+      extra_options << "-alang en"
+      extra_options << "-slang en"
 
       parent_parent = File.basename(File.dirname(play_this))
       force_use_mplayer ||= OS.mac?
@@ -215,23 +215,23 @@ module SensibleSwing
         # leave it the same...
       end
       if play_this =~ /dvdnav/ && title_track_maybe_nil
-        extra_options << " -msglevel identify=4 " # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
+        extra_options << "-msglevel identify=4" # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
       end
       
-      extra_options += " -mouse-movements #{get_upconvert_secondary_settings} " # just in case smplayer also needs -mouse-movements... :) LODO
-      extra_options += " -lavdopts threads=#{OS.cpu_count} " # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
+      extra_options << "-mouse-movements #{get_upconvert_secondary_settings}" # just in case smplayer also needs -mouse-movements... :) LODO
+      extra_options << "-lavdopts threads=#{OS.cpu_count}" # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
       if force_use_mplayer
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
-       extra_options += " -font #{File.expand_path('vendor/subfont.ttf')} "
-       extra_options += " -volume 100 " # why start low? mplayer why oh why LODO
+       extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}"
+       extra_options << "-volume 100" # why start low? mplayer why oh why LODO
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
-        extra_options += " -vo direct3d "
+        extra_options << "-vo direct3d"
         conf_file = conf_file[2..-1] # strip off drive letter, which it doesn't seem to like no sir
        end
        if start_full_screen
-         extra_options += " -fs "
+         extra_options << "-fs"
          upconv = get_upconvert_vf_settings
          upconv = "-vf #{upconv}" if upconv.present?
        else
@@ -246,12 +246,12 @@ module SensibleSwing
        else
          p 'using normal mplayer'
        end
-       c = "#{mplayer_loc} #{extra_options} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
+       c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
-          extra_options += " -vo direct3d " # more light nvidia...should be ok...
+          extra_options << "-vo direct3d" # more light nvidia...should be ok...LODO check
         end
-        set_smplayer_opts extra_options + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
+        set_smplayer_opts extra_options.join(' ') + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname SMPlayerIniFile}\" " 
         c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode

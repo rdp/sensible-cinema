@@ -32,6 +32,8 @@ appears that any "seek me forward 10s" that was
 
 pts = demuxer->stream_pts; // this is DVD accurate! suh-weet... and a double at that...
 
+seems to (audio) work great now with both -c- and -minc-
+  I guess video is just broken, but once the seek is in, and to use it, happiness. yipersz-zy-dipers.
 
 == robust vlc ==
 if I ever care...
