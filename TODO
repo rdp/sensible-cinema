@@ -116,6 +116,7 @@
   buy big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
 
 == decide later to move up or down ==
+  fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
   7z mplayer_edl
   "overwrite?" prompt for file mode
@@ -135,7 +136,6 @@
       or add button "reveal advanced" with this new button on it...
   add some VLC forums bugs as real bugs, if they're still around
   default box "no" for licenses
-  
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
   todo.upconvert
