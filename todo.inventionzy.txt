@@ -130,3 +130,4 @@
   Everything else mentioned here, but in an embedded unit/side by side with other things/as an app in a console device.
   people can send you a file and you send it back edited to them LOL (file meaning a rip of some DVD they own, +- requiring them to send in an original DVD too LOL.
   see also business ideas.txt file
+  realtime chat
