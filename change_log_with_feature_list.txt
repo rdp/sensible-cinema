@@ -1,5 +1,6 @@
-== ==
+== 0.31.0 == 11-18-11
 
+fix mplayer-edl to actually *skip* within DVD's now.  And work without any concern for mplayer_splits et al.
 
 == 0.30.5 == 11-9-11
 
