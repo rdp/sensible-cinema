@@ -25,6 +25,7 @@
   DVD timing for forum:Snow White
 
 == yes do, un-ordered currently, from all the various future release options ==
+  an even better dvdnav.h patch :P
   update forum.doom9
   experiment with =c='s seek still being on, even without audio LOL
   deprecate mplayer_dvd_splits
@@ -42,6 +43,7 @@
   speeds at home better? can they be made better at all?
   flds: the tag sync'er :P
   dvdcssless NAV examiner
+    or mplayer-edl itself...
   investigate "static" mplayer-edl for OS X :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
@@ -116,8 +118,12 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
   sons of provo "music video" EDL
   buy big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-
+  in middle of -c- DVDNAV_TITLE_IS_MOVIE weird fella mpeg at 0.000000 adding 0.200000 to 0.000000 final: 0.200000
+  check if there are mplayer sherpya patches that should go upstream
+  interview Ken
+  
 == decide later to move up or down ==
+  distribute with requiring "external" libdvdcss [make them download gstreamer]
   fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
   7z mplayer_edl
@@ -150,6 +156,7 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  investigate more "it seeks past the end of dvdnav:// to the beginning!"
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
   post my fix mplayer to actually work with DVDNAV EDL's
