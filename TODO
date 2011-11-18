@@ -23,11 +23,11 @@
   genealogy create/publicize
   auto-start audio caster ability, just use jruby LOL
   DVD timing for forum:Snow White
+  experiment with more "splittable" DVD's timing is on?
 
 == yes do, un-ordered currently, from all the various future release options ==
   an even better dvdnav.h patch :P
   update forum.doom9
-  experiment with =c='s seek still being on, even without audio LOL
   deprecate mplayer_dvd_splits
   add timestamp_offset_from => "0:00"
     if it is, then *DVD* needs to add to it's timestamps :)
