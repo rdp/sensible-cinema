@@ -23,8 +23,8 @@
   double check NAV packets for full DVD length
   double check his emails for "seeking"/apply
 
-
 == yes do, un-ordered currently, from all the various future release options ==
+  seeking on whitey failz [?]
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -34,7 +34,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   auto-start audio caster ability, just use jruby/mklink LOL
   update forum.doom9's
-
+ it doesn't allow you to switch disk's, hit play.
   document all this junky weird stuff somewhere LOL
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
@@ -125,6 +125,7 @@
   default box "no" for licenses
   @wiki: just a note mplayer EDL's look like this...
   libdvdnav can take libdvdcss-2
+  DIRT short list
   
 == decide later to move up or down ==
   nextsprocket "citrix"
@@ -137,6 +138,7 @@
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
   VLC UI fixes
+  VLC resume
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
   super subtitle parser watcher for netflix instant...like on-demand...
@@ -148,7 +150,10 @@
   user preferences "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
-  DIRT short list
+  dvdread on white one: 
+    *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
+    *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
+
   7z mplayer_edl
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   youtube/hulu timings different?

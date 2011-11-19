@@ -346,20 +346,18 @@ module SensibleSwing
       return out unless we_are_in_create_mode # early out, since they won't be seeing subs anyway :)
       
       if OS.doze? 
-        offset_time = "0.20" # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
-        if offset = descriptors['dvd_start_offset']
-          offset = offset.to_f
-          if offset < 0.10
-            offset_time = offset
-            puts 'using a small osd offset, which almost never happens ' + offset_time
-          end
-          if offset == 0
-            offset = 0.001 # so it knows we really do know what we're doing :)
-          end
-          out += " -osd-add #{offset_time}"
-        else
-          show_blocking_message_dialog "warning--EDL does not contain dvd_start_offset, so your mplayer on screen display timestamp will probably display low-accuracy and be about 0.20s too small, add 0.20 to match real DVD time, or use the show info button to calculate dvd_start_offset"
-        end
+        offset_time = descriptors['dvd_start_offset']
+		p 'warning--using default DVDNAV offset time of 0.20 which is prolly ok for now, plus we don\'t really interpolate well anyway...or do we?'
+		offset_time ||= "0.20" # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
+		  offset = offset.to_f
+		  if offset < 0.10
+			offset_time = offset
+			puts 'using a small osd offset, which almost never happens ' + offset_time
+		  end
+		  if offset == 0
+			offset = 0.001 # so it knows we really do know what we're doing :)
+		  end
+		  out += " -osd-add #{offset_time}"
       else
         show_blocking_message_dialog "warning, since we're not in windows with a patched mplayer OSD timestamps will probably be 0.19s too small,\n and their fraction past the decimal point will be off.\nPing me for instructions to build a patched mplayer."
       end
