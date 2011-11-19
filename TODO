@@ -6,13 +6,25 @@
     
   netflix instant EDL go live/mac'ify
   
-  also roadmap_possibilities
+  then roadmap_possibilities
   
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
+    v 0: ignore mplayer_dvd_splits, just always use mplayer-edl, windows only
   
 == yes do ordered for this release/other projects ja  ==
+  DVD timing for forum:Snow White  genealogy create/publicize
+  SO
+  experiment with more "split" DVD's timing is always on?
+  pay him money
+  take in some home DVD's/tell handbrake
+  working VLC+dvdnav new patches for fun
+  double check NAV packets for full DVD length
+  double check his emails for "seeking"/apply
+
+
+== yes do, un-ordered currently, from all the various future release options ==
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -20,34 +32,25 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  genealogy create/publicize
-  auto-start audio caster ability, just use jruby LOL
-  DVD timing for forum:Snow White
-  experiment with more "splittable" DVD's timing is on?
-
-== yes do, un-ordered currently, from all the various future release options ==
-  an even better dvdnav.h comment patch :P
+  auto-start audio caster ability, just use jruby/mklink LOL
   update forum.doom9's
-  deprecate mplayer_dvd_splits
-  add timestamp_offset_from => "0:00"
-    normal people need to use mplayer-edl too...
-    if it is, then *DVD* needs to add to it's timestamps :)
-    add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-    timestamps_relative_to => "dvd" ?
-    first_nav => "0.20" ?
+
+  document all this junky weird stuff somewhere LOL
+  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
+  an even better dvdnav.h comment patch :P
+  add file_timestamp_offset_from => "0:00"
+    2 options: file +- offset, "dvd"
+    deprecate mplayer_dvd_splits et al/wiki
+    timestamps_derived_from => "dvd"
     remove -osd-add
     add OSD time to the console output
     non 29.97/change OSD
-    "less intense" 30 fps accurate DVDNAV tracker...no internal conversion :P
-    I "think" I should just use raw DVD...30 fps time...yes!
+    "static" mplayer-edl for OS X :P
+  add all my patches
   ffmpeg how to add subs demo
   directx/post "it was directx" for subs
   ffplay diagonal bug
-  speeds at home better? can they be made better at all?
-  flds: the tag sync'er :P
-  dvdcssless NAV examiner
-    or mplayer-edl itself...
-  investigate "static" mplayer-edl for OS X :P
+  flds: the intelligent tag sync'er :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
   test distro various buttons on mac
@@ -66,16 +69,14 @@
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   it should not have to ask for an EDL when you click "play it unedited"
   warn when using upconverting within SC
-  @ffmpeg: wiki for filter's?
-  repost my "do we need -nocache" to libdvdnav :P
+  check highlighting freakiness tomato home/work
+  @ffmpeg: wiki for all filter's?
+  netflix instant descriptor work
+  repost my "do we need -nocache" to libdvdnav-talk :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
-  ffmpeg dshow input can I move audio along anyway, or with different metric?
   automate more creation things...
-    auto-add largest title to the generator EDL
-  DIRT short list
-    add "jpeg output" and "tray icon"
-  just local download vendored smplayer2, instead of forcing a large dependency
+  just local download vendored smplayer every time, they don't mind
   netflix instant descriptor work at all
     OS X check it
       mac'ify OCR/Mouse
@@ -88,17 +89,15 @@
   Linux port for SC (call that good enough for usability on TV's...), should be...
   popup_text in EDL's
   subtitle -> url everywhere
-  english name (movie name) mass everywhere
+  english name (movie name?) mass everywhere
   ruby_prof stuffs (release at least)
   warn other wordpresses
-  test mplayer -vo gl at home
+  test mplayer -vo gl speeds at home
   template-ify for netflix too "create for netflix" button
-  EDL gottman
   @wiki: here is how very messed up DVD's are, what they look like precisely.
   minor redcar tweaks
   accomodate splits vs. blanks and work everywhere
   short list of todo's for screen capture
-  short list of todo's for virtual audio
   add the other type in there, esp. if a man answers
     add to the template, make it so that various can use it
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
@@ -119,23 +118,21 @@
   can edit books, too.
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
+    just OCR powerdvd for now
   sons of provo "music video" EDL
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  check if there are mplayer sherpya patches that should go upstream
-  interview Ken
+  check if libdvdnav saves it to a good dir at all 
   default box "no" for licenses
+  @wiki: just a note mplayer EDL's look like this...
+  libdvdnav can take libdvdcss-2
   
 == decide later to move up or down ==
-  distribute with requiring "external" libdvdcss [make them download gstreamer]
+  nextsprocket "citrix"
   fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
-  7z mplayer_edl
   "overwrite?" prompt for file mode
-  @wiki: mplayer EDL's look like this...
   "double check sync" button/option on play [?]
     note in original where source came
-  youtube/hulu timings different?
-  @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
@@ -146,6 +143,26 @@
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
   add some VLC forums bugs as real bugs, if they're still around
+  default box "no" for licenses
+  @mplayer-devel: 1.2.11
+  user preferences "add this much to mutes" :P
+
+== DVD+-DVD-realtime basically never do backlog (unordered) ==
+  DIRT short list
+  7z mplayer_edl
+  @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
+  youtube/hulu timings different?
+  distribute with requiring "external" libdvdcss [make them download gstreamer]
+    and/or mplayer-edl itself...
+    os x static-ishDYLD_FALLBACK_LIBRARY_PATH oh baby
+    just call out to /Applications/vlc/dvdcss or libdvdcss
+  remembers position from one use to the next, like smplayer
+  ffmpeg dshow input can I move audio along anyway, or with different metric?
+  in middle of -c- DVDNAV_TITLE_IS_MOVIE weird fella mpeg at 0.000000 adding 0.200000 to 0.000000 final: 0.200000
+  investigate more "it seeks past the end of dvdnav:// to the beginning!"
+  is mplayer edl always one frame behind?
+  "double check your settings, this one should occur at exactly x"
+
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
 
   todo.upconvert
@@ -157,15 +174,13 @@
   virtual_audio TODO
   screen_capture TODO
 
-== DVD+-DVD-realtime basically never do backlog (unordered) ==
-  in middle of -c- DVDNAV_TITLE_IS_MOVIE weird fella mpeg at 0.000000 adding 0.200000 to 0.000000 final: 0.200000
-  investigate more "it seeks past the end of dvdnav:// to the beginning!"
-  is mplayer edl always one frame behind?
-  "double check your settings, this one should occur at exactly x"
-  post my fix mplayer to actually work with DVDNAV EDL's
-  VLC subtitles grey issue
+== and more junk ==
+
+  re-post my fix mplayer to actually work with DVDNAV EDL's
+  VLC subtitles have a grey issue, too, not just menu's [?]
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
+    also check/make sure their internal ffmpeg is using SSE et al
   double check that ffmpeg/mplayer windoze builds are using SSE as they should...
     also its internal ffmpeg should be using SSE appropo...
   bounty VLC: play DVD's with scratches

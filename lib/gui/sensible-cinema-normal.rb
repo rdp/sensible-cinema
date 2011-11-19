@@ -33,7 +33,7 @@ module SensibleSwing
     def setup_normal_buttons
       add_text_line ""
   
-      @mplayer_edl = new_jbutton( "Watch current DVD edited (realtime)" )
+      @mplayer_edl = new_jbutton( "Watch currently mounted DVD edited (realtime)" )
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking

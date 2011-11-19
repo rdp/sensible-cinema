@@ -72,7 +72,8 @@ I don't actually know how to do this I've never burned a video DVD.
 Windows DVD Maker might help, http://www.dvdflick.net might help.
 iDVD might help on mac.
 DO NOT MAKE ILLEGAL COPIES OF DVD's for your country. See also is_it_legal_to_copy_dvds.txt.
-Watching edited movies may be legal in the US under the Family Protection Act.
+DO NOT DISTRIBUTE EDITED DVD's.
+Watching movies edited may be legal in the US via the Family Protection Act.
 
 == FAQ ==
 

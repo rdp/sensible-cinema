@@ -5,6 +5,7 @@
 ],
 
 "blank_outs" => [
+ "1:03", "1:16", "kissing :)"
   #"1:01:00.0" , "1:02:00.0", "violent scene of some sort",
 ],
 "audio_codec" => "lavc",
@@ -12,7 +13,7 @@
 #"disk_unique_id" => "",
 "dvd_title_track" => "1", 
 "not edited out stuff" => "some...see comments",
-"name" => "Pack Wedding 2007-03-03"
+"name" => "Pack Wedding 2007-03-03",
 
 #1:03- 1:08 - 1:16
 #12:13 kissing
@@ -20,5 +21,10 @@
 #28:00 presents???
 
 #34:00 "thank ..."
-
+"md5" => "6cb66e056d0f690169d9e16a2326eed5", # possibly wrong
 #got to 38:00
+
+"disk_unique_id" => "816b96f5|2e436fd9",
+"volume_name" => "Roger's Wedding",
+#ID_DVD_TITLE_1_LENGTH=2899.933
+"dvd_start_offset" => "0.22",
