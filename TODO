@@ -20,21 +20,23 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  genealogy create/publicize
   auto-start audio caster ability, just use jruby/mklink LOL
   DVD timing for forum:Snow White
 
 == yes do, un-ordered currently, from all the various future release options ==
+  genealogy create/publicize
+  SO
   experiment with more "split" DVD's timing is always on?
   pay him money
   rip from marriage DVD
   update forum.doom9's
   working VLC+dvdnav new patches for fun
   double check NAV packets for full DVD length
-  double check his emails for "seeking"
+  double check his emails for "seeking"/apply
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
   add file_timestamp_offset_from => "0:00"
+    v 0: ignore mplayer_dvd_splits, just always use mplayer-edl, windows only
     2 options: file +- offset, "dvd"
     deprecate mplayer_dvd_splits et al/wiki
     timestamps_derived_from => "dvd"
@@ -42,7 +44,7 @@
     add OSD time to the console output
     non 29.97/change OSD
     "static" mplayer-edl for OS X :P
-  all my patches
+  add all my patches
   ffmpeg how to add subs demo
   directx/post "it was directx" for subs
   ffplay diagonal bug
@@ -65,14 +67,13 @@
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   it should not have to ask for an EDL when you click "play it unedited"
   warn when using upconverting within SC
+  check highlighting freakiness tomato home/work
   @ffmpeg: wiki for all filter's?
   netflix instant descriptor work
   repost my "do we need -nocache" to libdvdnav-talk :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
   automate more creation things...
-  DIRT short list
-    add "jpeg output" and "tray icon"
   just local download vendored smplayer every time, they don't mind
   netflix instant descriptor work at all
     OS X check it
@@ -142,8 +143,10 @@
   add some VLC forums bugs as real bugs, if they're still around
   default box "no" for licenses
   @mplayer-devel: 1.2.11
+  user preferences "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  DIRT short list
   7z mplayer_edl
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   youtube/hulu timings different?
