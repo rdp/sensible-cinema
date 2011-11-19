@@ -253,10 +253,10 @@ module SensibleSwing
           extra_options << "-vo direct3d" # more light nvidia...should be ok...this wastes cpu...but we have to have it I guess...
         end
         set_smplayer_opts extra_options.join(' ') + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
-        c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname SMPlayerIniFile}\" " 
+        c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname  EightThree.convert_path_to_8_3(SMPlayerIniFile)}\" " 
         c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode
-          c += " -close-at-end "
+          #c += " -close-at-end " # still too unstable...
         end
       end
       puts c
@@ -380,8 +380,9 @@ module SensibleSwing
       unless @_edit_list_path # cache file selection...
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if !edit_list_path && force_choose_edl_file_if_no_easy_match
-          edit_list_path = new_existing_file_selector_and_select_file("Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one for it", EdlParser::EDL_DIR)
-          raise 'cancelled choosing EDL...' unless edit_list_path
+		  message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
+		  show_blocking_message_dialog message
+          edit_list_path = new_existing_file_selector_and_select_file(message, EdlParser::EDL_DIR)
         end
         @_edit_list_path = edit_list_path
       end
