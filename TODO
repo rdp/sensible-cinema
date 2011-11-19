@@ -23,11 +23,14 @@
   genealogy create/publicize
   auto-start audio caster ability, just use jruby LOL
   DVD timing for forum:Snow White
-  experiment with more "splittable" DVD's timing is on?
+  experiment with more "split" DVD's timing is always on?
 
 == yes do, un-ordered currently, from all the various future release options ==
-  update forum.doom9
+  rip from marriage DVD
+  update forum.doom9's
+  working VLC+dvdnav
   double check NAV packets for full DVD length
+  double check his email for "seeking"
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
   add timestamp_offset_from => "0:00"
@@ -43,11 +46,10 @@
   ffmpeg how to add subs demo
   directx/post "it was directx" for subs
   ffplay diagonal bug
-  speeds at home better? can they be made better at all?
   flds: the tag sync'er :P
   dvdcssless NAV examiner
     or mplayer-edl itself...
-  investigate "static" mplayer-edl for OS X :P
+  investigate "static-ish" mplayer-edl for OS X :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
   test distro various buttons on mac
