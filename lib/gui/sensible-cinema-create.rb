@@ -208,7 +208,7 @@ module SensibleSwing
         This is necessary for all hardware DVD player timestamps, PowerDVD player (software), Windows Media Player (playing a DVD), 
         and mplayer's "on screen display" DVD timestamps.
         It is not necessary for smplayer timestamps (or mplayer's "V: 3600" in the command line), which are already 29.97.
-        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from dvd_mplayer_splits) 
+        smplayer's on-screen-display (the 'o' key) is accurate (and doesn't suffer from MPEG timestamps resets midway through) 
         but is 30 fps, so timestamps would need to be converted.
         Dont use VLC for DVD timestamps at all--it can get up to 30s off!  VLC playing back a file is usually pretty accurate to 29.97.
         In general, GUI's like VLC or smplayer are always a tidge off (maybe 0.3s) from the right timestamp, so take that into consideration.
@@ -263,8 +263,6 @@ module SensibleSwing
           As mplayer goes through the video, when you see a scene you want to edit or skip, 
           hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
           hit 'i' again to end the edited/skipped scene, within that file.
-          NB that if the DVD has a timestamp "reset" in it then it will for example write out a timestamps of
-          78.8 when it means 3678.8 or what not, so you'll have to add it to the mplayer_dvd_splits
           EOL
 
           edlout_filename = new_nonexisting_filechooser_and_go "pick edlout filename"
@@ -346,7 +344,6 @@ module SensibleSwing
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
 # In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See https://github.com/rdp/sensible-cinema/wiki/Detecting-mplayer-dvd-reset-times
-# "mplayer_dvd_splits" => ["3600.15", "444.35"], # or just [] if there are none. Not additive, so this would mean "a split at 3600.15 and at second 4044.35" see the link for more info.
 # "dvd_start_offset" => "0.99", # use get info button to get this number, then copy and paste it here.
         EOL
       # TODO auto-ify above, move docs to a file within documentation folder

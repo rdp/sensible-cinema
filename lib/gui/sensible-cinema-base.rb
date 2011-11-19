@@ -237,19 +237,20 @@ module SensibleSwing
        else
         upconv = ""
        end
-       mplayer_loc = "mplayer"
-       if OS.doze? && we_are_in_create_mode
+       if OS.doze?
          p 'using mplayer-edl for smplayer\'s mplayer 1'
          # we want this even if we don't have -osd-add, since it adds confidence :)
          mplayer_loc = LocalModifiedMplayer
          assert File.exist?(mplayer_loc)
        else
+         mplayer_loc = "mplayer"
+	     show_blocking_message_dialog("using non EDl mplayer, which won't work well...please report this...")
          p 'using normal mplayer'
        end
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
-          extra_options << "-vo direct3d" # more light nvidia...should be ok...LODO check
+          extra_options << "-vo direct3d" # more light nvidia...should be ok...this wastes cpu...but we have to have it I guess...
         end
         set_smplayer_opts extra_options.join(' ') + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
         c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname SMPlayerIniFile}\" " 
@@ -278,14 +279,8 @@ module SensibleSwing
       raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
-      mplayer_to_use = File.expand_path 'vendor/cache/mencoder/mplayer.exe'
-      if we_are_in_create_mode
-        p 'using mplayer-edl for smplayer\'s mplayer 2'
-        mplayer_to_use = LocalModifiedMplayer 
-        assert File.exist?(mplayer_to_use)
-      else
-        p 'using normal mplayer'
-      end
+      mplayer_to_use = LocalModifiedMplayer  
+      assert File.exist?(mplayer_to_use)
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
       # now some less important ones...
@@ -418,32 +413,26 @@ module SensibleSwing
       if edl_path # some don't care...
         descriptors = EdlParser.parse_file edl_path
         title_track = get_title_track(descriptors)
-        splits = descriptors['mplayer_dvd_splits']
       end
       
-      if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS') # VOB's...always start at 0
+      if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS')
+	    # it's a file
         # check if it has a start offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
         start = $1.to_f
-        if start > 1 # LODO huh? dvd's themselves start at 0.3 [sintel]?
+        if start > 1 # LODO dvd's themselves start at 0.3 [sintel], but I don't think much higher than that never seen it...
           show_non_blocking_message_dialog "Warning: file seems to start at an extra offset, adding it to the timestamps... #{start}
             maybe not compatible with XBMC, if that's what you use, and you probably don't" # LODO test it XBMC...
           start_add_this_to_all_ts = start
         end
-        splits = []
       else
         # it's a DVD
-        if splits == nil
-          show_blocking_message_dialog("warning: edit list does not contain mplayer replay information [mplayer_dvd_splits] so edits past a certain time period might not won't work ( http://goo.gl/yMfqX ).")
-          splits = []
-        else
-          splits.map!{|s| EdlParser.translate_string_to_seconds(s)}
-        end
         extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       end
       
       if edl_path
+	    splits = [] # TODO
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 

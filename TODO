@@ -11,8 +11,20 @@
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
+    v 0: ignore mplayer_dvd_splits, just always use mplayer-edl, windows only
   
 == yes do ordered for this release/other projects ja  ==
+  DVD timing for forum:Snow White  genealogy create/publicize
+  SO
+  experiment with more "split" DVD's timing is always on?
+  pay him money
+  take in some home DVD's/tell handbrake
+  working VLC+dvdnav new patches for fun
+  double check NAV packets for full DVD length
+  double check his emails for "seeking"/apply
+
+
+== yes do, un-ordered currently, from all the various future release options ==
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -21,22 +33,11 @@
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   auto-start audio caster ability, just use jruby/mklink LOL
-  DVD timing for forum:Snow White
-
-== yes do, un-ordered currently, from all the various future release options ==
-  genealogy create/publicize
-  SO
-  experiment with more "split" DVD's timing is always on?
-  pay him money
-  rip from marriage DVD
   update forum.doom9's
-  working VLC+dvdnav new patches for fun
-  double check NAV packets for full DVD length
-  double check his emails for "seeking"/apply
+  document all this junky weird stuff somewhere LOL
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
   add file_timestamp_offset_from => "0:00"
-    v 0: ignore mplayer_dvd_splits, just always use mplayer-edl, windows only
     2 options: file +- offset, "dvd"
     deprecate mplayer_dvd_splits et al/wiki
     timestamps_derived_from => "dvd"
