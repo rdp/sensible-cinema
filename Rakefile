@@ -17,7 +17,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with next release, though I can't remember why
     s.add_dependency 'rdp-ruby-wmi' # for windows
     s.add_dependency 'plist' # for mac
-	s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics like this.
+  	s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics like this.
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
     s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
     s.add_development_dependency 'hitimes' # now jruby compat!

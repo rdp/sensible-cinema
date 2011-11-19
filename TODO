@@ -30,6 +30,7 @@
   update forum.doom9's
   deprecate mplayer_dvd_splits
   add timestamp_offset_from => "0:00"
+    normal people need to use mplayer-edl too...
     if it is, then *DVD* needs to add to it's timestamps :)
     add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
     timestamps_relative_to => "dvd" ?
