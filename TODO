@@ -28,14 +28,14 @@
 == yes do, un-ordered currently, from all the various future release options ==
   rip from marriage DVD
   update forum.doom9's
-  working VLC+dvdnav
+  working VLC+dvdnav new patches for fun
   double check NAV packets for full DVD length
   double check his email for "seeking"
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
-  add timestamp_offset_from => "0:00"
+  add file_timestamp_offset_from => "0:00"
     2 options: file +- offset, "dvd"
-    deprecate mplayer_dvd_splits et al
+    deprecate mplayer_dvd_splits et al/wiki
     if it is, then *DVD* needs to add to it's timestamps :)
     timestamps_relative_to => "dvd" ?
     remove -osd-add
@@ -46,9 +46,9 @@
   ffmpeg how to add subs demo
   directx/post "it was directx" for subs
   ffplay diagonal bug
-  flds: the tag sync'er :P
+  flds: the intelligent tag sync'er :P
   dvdcssless NAV examiner
-    or mplayer-edl itself...
+    and/or mplayer-edl itself...
   investigate "static-ish" mplayer-edl for OS X :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
@@ -68,15 +68,15 @@
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   it should not have to ask for an EDL when you click "play it unedited"
   warn when using upconverting within SC
-  @ffmpeg: wiki for filter's?
+  @ffmpeg: wiki for all filter's?
+  netflix instant descriptor work
   repost my "do we need -nocache" to libdvdnav-talk :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
   automate more creation things...
   DIRT short list
-  netflix instant descriptor work
     add "jpeg output" and "tray icon"
-  just local download vendored smplayer2, instead of forcing a large dependency
+  just local download vendored smplayer every time, they don't mind
   netflix instant descriptor work at all
     OS X check it
       mac'ify OCR/Mouse
@@ -92,9 +92,8 @@
   english name (movie name?) mass everywhere
   ruby_prof stuffs (release at least)
   warn other wordpresses
-  test mplayer -vo gl at home
+  test mplayer -vo gl speeds at home
   template-ify for netflix too "create for netflix" button
-  EDL gottman
   @wiki: here is how very messed up DVD's are, what they look like precisely.
   minor redcar tweaks
   accomodate splits vs. blanks and work everywhere
@@ -121,11 +120,12 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
   sons of provo "music video" EDL
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  check if there are mplayer sherpya patches that should go upstream
-  interview Ken
+  check if libdvdnav saves it to a good dir at all 
   default box "no" for licenses
   
 == decide later to move up or down ==
+  nextsprocket "citrix"
+  libdvdnav can take libdvdcss-2
   distribute with requiring "external" libdvdcss [make them download gstreamer]
   fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
@@ -160,15 +160,18 @@
   screen_capture TODO
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  various sherpya patches for mplayer itself
+  remembers position from one use to the next, like smplayer
   ffmpeg dshow input can I move audio along anyway, or with different metric?
   in middle of -c- DVDNAV_TITLE_IS_MOVIE weird fella mpeg at 0.000000 adding 0.200000 to 0.000000 final: 0.200000
   investigate more "it seeks past the end of dvdnav:// to the beginning!"
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
   re-post my fix mplayer to actually work with DVDNAV EDL's
-  VLC subtitles grey issue
+  VLC subtitles have a grey issue, too, not just menu's [?]
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
+    also check/make sure their internal ffmpeg is using SSE et al
   double check that ffmpeg/mplayer windoze builds are using SSE as they should...
     also its internal ffmpeg should be using SSE appropo...
   bounty VLC: play DVD's with scratches
