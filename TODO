@@ -11,15 +11,15 @@
 == high prio like blocking bugs ==
   
 == very next things I was working on ==
-    v 0: ignore mplayer_dvd_splits, just always use mplayer-edl, windows only
   
 == yes do ordered for this release/other projects ja  ==
-  DVD timing for forum:Snow White  genealogy create/publicize
+  DVD timing for forum:Snow White  
+  genealogy create/publicize
   SO
   experiment with more "split" DVD's timing is always on?
   pay him money
   take in some home DVD's/tell handbrake
-  working VLC+dvdnav new patches for fun
+  working VLC+dvdnav/new patches for fun
   double check NAV packets for full DVD length
   double check his emails for "seeking"/apply
   republish mplayer-edl
@@ -35,7 +35,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   auto-start audio caster ability, just use jruby/mklink LOL
   update forum.doom9's
- it doesn't allow you to switch disk's, hit play.
+ it doesn't allow you to switch disk's, hit play again.
   document all this junky weird stuff somewhere LOL
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
@@ -47,9 +47,10 @@
     add OSD time to the console output
     non 29.97/change OSD
     "static" mplayer-edl for OS X :P
-  add all my patches
+	assert files "always" start at 0
+	deprecate start offset
+  add all my applied patches
   ffmpeg how to add subs demo
-  directx/post "it was directx" for subs
   ffplay diagonal bug
   flds: the intelligent tag sync'er :P
   create skype/google+ hangouts auto-easy-recorder windows
@@ -72,23 +73,21 @@
   it should not have to ask for an EDL when you click "play it unedited"
   warn when using upconverting within SC
   check highlighting freakiness tomato home/work
-  @ffmpeg: wiki for all filter's?
-  netflix instant descriptor work
+    directx/post "it was directx" for subs highlighting
+  @ffmpeg: wiki list for all filter's?
   repost my "do we need -nocache" to libdvdnav-talk :P
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
   automate more creation things...
-  just local download vendored smplayer every time, they don't mind
   netflix instant descriptor work at all
-    OS X check it
+    OS X too
       mac'ify OCR/Mouse
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
     add new batch file for play with netflix OCR
-    note on the www stuff once it works
+    note on the www once it works
   meta domain
     note "can't get the ideal domain name?"
-  Linux port for SC (call that good enough for usability on TV's...), should be...
   popup_text in EDL's
   subtitle -> url everywhere
   english name (movie name?) mass everywhere
@@ -127,9 +126,10 @@
   default box "no" for licenses
   @wiki: just a note mplayer EDL's look like this...
   libdvdnav can take libdvdcss-2
-  DIRT short list
   
 == decide later to move up or down ==
+  just local download vendored smplayer every time, they don't mind
+  DIRT short list
   nextsprocket "citrix"
   fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
@@ -140,7 +140,7 @@
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
   VLC UI fixes
-  VLC resume
+  VLC resume/window position [?]
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
   super subtitle parser watcher for netflix instant...like on-demand...
@@ -148,14 +148,13 @@
       or add button "reveal advanced" with this new button on it...
   add some VLC forums bugs as real bugs, if they're still around
   default box "no" for licenses
-  @mplayer-devel: 1.2.11
   user preferences "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  Linux port for SC (call that good enough for usability on TV's...), should be...
   dvdread on white one: 
     *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
     *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
-
   7z mplayer_edl
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   youtube/hulu timings different?

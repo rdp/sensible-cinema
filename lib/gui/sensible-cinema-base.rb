@@ -244,8 +244,7 @@ module SensibleSwing
          assert File.exist?(mplayer_loc)
        else
          mplayer_loc = "mplayer"
-	     show_blocking_message_dialog("using non EDl mplayer, which won't work well...please report this...")
-         p 'using normal mplayer'
+	     show_blocking_message_dialog("using non EDl mplayer, which won't work well...please report...")
        end
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
