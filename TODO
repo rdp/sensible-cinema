@@ -22,7 +22,8 @@
   working VLC+dvdnav new patches for fun
   double check NAV packets for full DVD length
   double check his emails for "seeking"/apply
-
+  republish mplayer-edl
+  
 == yes do, un-ordered currently, from all the various future release options ==
   seeking on whitey failz [?]
   gui/edl parser unit tests work
