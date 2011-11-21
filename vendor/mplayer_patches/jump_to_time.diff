@@ -1,0 +1,760 @@
+Index: src/searching.c
+===================================================================
+--- src/searching.c	(revision 1243)
++++ src/searching.c	(working copy)
+@@ -36,6 +36,7 @@
+ #include "vm/decoder.h"
+ #include "vm/vm.h"
+ #include "dvdnav_internal.h"
++#include <dvdread/ifo_read.h>
+ 
+ /*
+ #define LOG_DEBUG
+@@ -654,3 +655,702 @@
+     free(tmp);
+   return retval;
+ }
++
++/* Get an admap and admap_len */
++static vobu_admap_t* dvdnav_admap_get(dvdnav_t *this, dvd_state_t *state
++  , int32_t *admap_len) {
++  vobu_admap_t *admap = NULL;
++  domain_t domain;
++  domain = state->domain;
++  switch(domain) {
++  case FP_DOMAIN:
++  case VMGM_DOMAIN:
++    admap = this->vm->vmgi->menu_vobu_admap;
++    break;
++  case VTSM_DOMAIN:
++    admap = this->vm->vtsi->menu_vobu_admap;
++    break;
++  case VTS_DOMAIN:
++    admap = this->vm->vtsi->vts_vobu_admap;
++    break;
++  default: {
++    fprintf(MSG_OUT, "Unknown domain");
++    return NULL;
++  }
++  }
++  if (admap == NULL) return NULL;
++
++  *admap_len = (admap->last_byte + 1 - VOBU_ADMAP_SIZE) / VOBU_ADMAP_SIZE;
++  if (*admap_len <= 0) {
++    fprintf(MSG_OUT, "admap_len <= 0");
++    return NULL;
++  }
++  return admap;
++}
++
++/* Get a tmap, tmap_len and tmap_interval */
++static vts_tmap_t* dvdnav_tmap_get(dvdnav_t *this, dvd_state_t *state
++  , int32_t *tmap_len, int32_t *tmap_interval) {
++  int32_t vts_idx = 0;
++  domain_t domain;
++  ifo_handle_t *ifo = NULL;
++  vts_tmapt_t *tmapt = NULL;
++  uint16_t tmap_count = 0;
++  int32_t pgcN = 0;
++  vts_tmap_t *tmap = NULL;
++  int32_t result = 0;
++  
++  vts_idx = state->vtsN;
++  domain = state->domain;
++  switch(domain) {
++  case FP_DOMAIN:
++  case VTSM_DOMAIN:
++  case VMGM_DOMAIN: {
++    ifo = this->vm->vmgi;
++    break;
++  }
++  case VTS_DOMAIN: {
++    ifo = this->vm->vtsi;
++    break;
++  }
++  default: {
++    fprintf(MSG_OUT, "unknown domain for tmap");
++    return NULL;
++  }
++  }
++
++  if (ifo == NULL) return NULL;
++  tmapt = ifo->vts_tmapt;
++
++  /* HACK: b/c ifo->vts_tmapt is NULL, reload tmap
++   * should find out why ifo->vts_tmapt is NULL
++   */
++  if (tmapt == NULL) {
++    result = ifoRead_VTS_TMAPT(ifo);
++    if (!result) {
++      return NULL;
++    }
++    tmapt = ifo->vts_tmapt;
++    if (tmapt == NULL) return NULL;
++  }
++
++  tmap_count = tmapt->nr_of_tmaps;
++  pgcN = state->pgcN - 1; /* -1 b/c pgcN is base1 */
++  if (pgcN < 0) {
++    fprintf(MSG_OUT, "pgcN < 0");
++    return NULL;
++  }
++
++  /* get tmap */
++  switch(domain) {
++  case FP_DOMAIN:
++  case VMGM_DOMAIN:
++  case VTSM_DOMAIN: {
++    if (tmap_count == 0) {
++      fprintf(MSG_OUT, "tmap_count == 0");
++      return NULL;
++    }
++    tmap = &tmapt->tmap[0]; /* ASSUME: vmgi only has one time map */
++    break;
++  }
++  case VTS_DOMAIN: {
++    if (pgcN >= tmap_count) {
++      fprintf(MSG_OUT, "pgcN >= tmap_count; pgcN=%i tmap_count=%i"
++        , pgcN, tmap_count);
++      return NULL;
++    }
++    tmap = &tmapt->tmap[pgcN];
++    break;
++  }
++  }
++  if (tmap == NULL) return NULL;
++
++  /* tmap->tmu is in seconds; convert to millisecs */
++  *tmap_interval = tmap->tmu * 1000;
++  if (*tmap_interval == 0) {
++    fprintf(MSG_OUT, "tmap_interval == 0");
++    return NULL;
++  }
++  *tmap_len = tmap->nr_of_entries;
++  if (*tmap_len == 0) {
++    fprintf(MSG_OUT, "tmap_len == 0");
++    return NULL;
++  }
++  return tmap;
++}
++
++/* Get a sector from a tmap */
++static int32_t dvdnav_tmap_get_entry(vts_tmap_t *tmap, uint16_t tmap_len
++  , int32_t idx, uint32_t *sector) {
++  /* tmaps start at idx 0 which represents a sector at time 1 * tmap_interval
++   * this creates a "fake" tmap index at idx -1 for sector 0 */
++  if (idx == TMAP_IDX_EDGE_BGN) {
++    *sector = 0;
++    return 1;
++  }
++  if (idx < TMAP_IDX_EDGE_BGN || idx >= tmap_len) {
++    fprintf(MSG_OUT, "idx out of bounds idx=%i %i", idx, tmap_len);
++    return 0;
++  }
++  /* 0x7fffffff unsets discontinuity bit if present */
++  *sector = tmap->map_ent[idx] & 0x7fffffff;
++  return 1;
++}
++
++/* Do a binary search for earlier admap index near find_sector */
++static int32_t dvdnav_admap_search(vobu_admap_t *admap, uint32_t admap_len
++  , uint32_t find_sector, uint32_t *vobu) {
++  int32_t adj = 1;
++  int32_t prv_pos = 0;
++  int32_t prv_len = admap_len;
++  int32_t cur_len = 0;
++  int32_t cur_idx = 0;
++  uint32_t cur_sector = 0;
++  while (1) {
++    cur_len = prv_len / 2;
++    /* need to add 1 when prv_len == 3 (cur_len shoud go to 2, not 1) */
++    if (prv_len % 2 == 1) ++cur_len;
++    cur_idx = prv_pos + (cur_len * adj);
++    if       (cur_idx < 0)           cur_idx = 0;
++    else if  (cur_idx >= admap_len)  cur_idx = admap_len - 1;
++
++    cur_sector = admap->vobu_start_sectors[cur_idx];
++    if      (find_sector <  cur_sector) adj = -1;
++    else if (find_sector >  cur_sector) adj =  1;
++    else if (find_sector == cur_sector) {
++      *vobu = cur_idx;
++      return 1;
++    }
++    if (cur_len == 1) {/* no smaller intervals left */
++      if (adj == -1) {/* last comparison was greater; take lesser */
++          cur_idx -= 1;
++          cur_sector = admap->vobu_start_sectors[cur_idx];
++      }
++      *vobu = cur_idx;
++      return 1;
++    }
++    prv_len = cur_len;
++    prv_pos = cur_idx;
++  }
++}
++
++/* Do a binary search for the earlier tmap entry near find_sector */
++static int32_t dvdnav_tmap_search(vts_tmap_t *tmap, uint32_t tmap_len
++  , uint32_t find_sector, int32_t *tmap_idx, uint32_t *sector) {
++  int32_t adj = 1;
++  int32_t prv_pos = 0;
++  int32_t prv_len = tmap_len;
++  int32_t result = 0;
++  int32_t cur_len = 0;
++  int32_t cur_idx = 0;
++  uint32_t cur_sector = 0;
++  while (1) {
++    cur_len = prv_len / 2;
++    /* need to add 1 when prv_len == 3 (cur_len shoud go to 2, not 1) */
++    if (prv_len % 2 == 1) ++cur_len;
++    cur_idx = prv_pos + (cur_len * adj);
++    if      (cur_idx < 0)         cur_idx = 0;
++    else if (cur_idx >= tmap_len) cur_idx = tmap_len - 1;
++    cur_sector = 0;
++    result = dvdnav_tmap_get_entry(tmap, tmap_len, cur_idx, &cur_sector);
++    if (!result) return 0;
++    if      (find_sector <  cur_sector) adj = -1;
++    else if (find_sector >  cur_sector) adj =  1;
++    else if (find_sector == cur_sector) {
++      *tmap_idx = cur_idx;
++      *sector = cur_sector;
++      return 1;
++    }
++    if (cur_len == 1) {/* no smaller intervals left */
++      if (adj == -1) {/* last comparison was greater; take lesser */
++        if (cur_idx == 0) { /* fake tmap index for sector 0 */
++          cur_idx = TMAP_IDX_EDGE_BGN;
++          cur_sector = 0;
++        }
++        else {
++          cur_idx -= 1;
++          result = dvdnav_tmap_get_entry(tmap, tmap_len, cur_idx, &cur_sector);
++          if (!result) return 0;
++        }
++      }
++      *tmap_idx = cur_idx;
++      *sector = cur_sector;
++      return 1;
++    }
++    prv_len = cur_len;
++    prv_pos = cur_idx;
++  }
++}
++
++/* Given a sector/time/idx find the cell that encloses it */
++static int32_t dvdnav_cell_find(dvdnav_t *this, dvd_state_t *state
++  , cell_find_mode_t find_mode, uint64_t find_val
++  , int32_t *out_cell_idx
++  , uint64_t *out_bgn_time, uint32_t *out_bgn_sector
++  , uint64_t *out_end_time, uint32_t *out_end_sector) {
++  uint32_t cells_len = 0;
++  uint32_t cells_bgn = 0;
++  uint32_t cells_end = 0;
++  int pgN = 0;
++  int program_count = 0;
++  uint32_t cur_cell_idx = 0;
++  uint32_t cur_sector_bgn = 0;
++  uint32_t cur_sector_end = 0;
++  uint64_t cur_time_bgn = 0;
++  uint64_t cur_time_end = 0;
++  cell_playback_t *cell = NULL;
++  int found = 0;
++  pgc_t *pgc = NULL;
++
++  pgc = state->pgc;
++  if (pgc == NULL) return 0;
++  cells_len = pgc->nr_of_cells;
++  if (cells_len == 0) {
++    fprintf(MSG_OUT, "cells_len == 0");
++    return 0;
++  }
++
++  /* get cells_bgn, cells_end */
++  if (this->pgc_based) {
++    cells_bgn = 1;
++    cells_end = cells_len;
++  }
++  else {
++    pgN = state->pgN;
++    cells_bgn = pgc->program_map[pgN - 1]; /* -1 b/c pgN is 1 based? */
++    program_count = pgc->nr_of_programs;
++    if (pgN < program_count) {
++      cells_end = pgc->program_map[pgN] - 1;
++    }
++    else {
++      cells_end = cells_len;
++    }
++  }
++
++  /* search cells */
++  for (cur_cell_idx = cells_bgn; cur_cell_idx <= cells_end; cur_cell_idx++) {
++    cell = &(pgc->cell_playback[cur_cell_idx - 1]); /* -1 b/c cell is base1 */
++    /* if angle block, only consider first angleBlock
++     * (others are "redundant" for purpose of search) */
++    if ( cell->block_type == BLOCK_TYPE_ANGLE_BLOCK
++      && cell->block_mode != BLOCK_MODE_FIRST_CELL) {
++      continue;
++    }
++    cur_sector_bgn = cell->first_sector;
++    cur_sector_end = cell->last_sector;
++    /* 90 pts to ms */
++    cur_time_end += (dvdnav_convert_time(&cell->playback_time) / 90);
++    if (find_mode == CELL_FIND_SECTOR) {
++      if (find_val >= cur_sector_bgn && find_val <= cur_sector_end) {
++        found = 1;
++        break;
++      }
++    }
++    else if (find_mode == CELL_FIND_TIME) {
++      if (find_val >= cur_time_bgn && find_val <= cur_time_end) {
++        found = 1;
++        break;
++      }
++    }
++    else if (find_mode == CELL_FIND_INDEX) {
++      if (find_val == cur_cell_idx) {
++        found = 1;
++        break;
++      }
++    }
++    cur_time_bgn = cur_time_end;
++  }
++
++  /* found cell: set *out vars */
++  if (found) {
++    *out_cell_idx = cur_cell_idx;
++    *out_bgn_sector = cur_sector_bgn;
++    *out_end_sector = cur_sector_end;
++    *out_bgn_time = cur_time_bgn;
++    *out_end_time = cur_time_end;
++  }
++  else
++    fprintf(MSG_OUT, "cell not found; find=%"PRId64" cells_len=%i"
++    , find_val, cells_len);
++  return found;
++}
++
++/* Given two sectors and a fraction, calc the corresponding vobu */
++static int32_t dvdnav_admap_interpolate_vobu(dvdnav_t *this
++  , vobu_admap_t *admap, int32_t admap_len
++  , uint32_t sector_bgn, uint32_t sector_end, uint32_t fraction
++  , uint32_t *jump_sector) {
++  int32_t result = 0;
++  uint32_t vobu_bgn = 0;
++  uint32_t vobu_end = 0;
++  uint32_t vobu_dif = 0;
++  uint32_t vobu_adj = 0;
++  int32_t vobu_idx = 0;
++
++  /* get vobu_bgn */
++  result = dvdnav_admap_search(admap, admap_len, sector_bgn, &vobu_bgn);
++  if (!result) {
++    fprintf(MSG_OUT, "admap_interpolate: could not find sector_bgn");
++    return 0;
++  }
++
++  /* get vobu_end */
++  result = dvdnav_admap_search(admap, admap_len, sector_end, &vobu_end);
++  if (!result) {
++    fprintf(MSG_OUT, "admap_interpolate: could not find sector_end");
++    return 0;
++  }
++
++  vobu_dif = vobu_end - vobu_bgn;
++  /* +500 to round up else 74% of a 4 sec interval = 2 sec */
++  vobu_adj = ((fraction * vobu_dif) + 500) / 1000;
++  /* HACK: need to add +1, or else will land too soon (not sure why) */
++  vobu_adj++;
++  vobu_idx = vobu_bgn + vobu_adj;
++  if (vobu_idx >= admap_len) {
++    fprintf(MSG_OUT, "admap_interpolate: vobu_idx >= admap_len");
++    return 0;
++  }
++  *jump_sector = admap->vobu_start_sectors[vobu_idx];
++  return 1;
++}
++
++/* Given two tmap entries and a time, calc the time for the lo tmap entry */
++static int32_t dvdnav_tmap_calc_time_for_tmap_entry(vobu_admap_t *admap
++  , uint32_t admap_len, int32_t tmap_interval
++  , uint32_t cell_sector, uint32_t lo_sector, uint32_t hi_sector
++  , uint64_t cell_time, uint64_t *out_lo_time
++  ) {
++  int32_t result = 0;
++  uint32_t lo_vobu = 0;
++  uint32_t hi_vobu = 0;
++  uint32_t cell_vobu = 0;
++  uint32_t vobu_pct = 0;
++  uint64_t time_adj = 0;
++
++  if (lo_sector == hi_sector) {
++    fprintf(MSG_OUT, "lo_sector == hi_sector: %i", lo_sector);
++    return 0;
++  }
++
++  /* get vobus corresponding to lo, hi, cell */
++  result = dvdnav_admap_search(admap, admap_len, lo_sector, &lo_vobu);
++  if (!result) {
++    fprintf(MSG_OUT, "lo_vobu: lo_sector=%i", lo_sector);
++    return 0;
++  }
++  result = dvdnav_admap_search(admap, admap_len, hi_sector, &hi_vobu);
++  if (!result) {
++    fprintf(MSG_OUT, "hi_vobu: hi_sector=%i", hi_sector);
++    return 0;
++  }
++  result = dvdnav_admap_search(admap, admap_len, cell_sector, &cell_vobu);
++  if (!result) {
++    fprintf(MSG_OUT, "cell_vobu: cell_sector=%i", cell_sector);
++    return 0;
++  }
++
++  /* calc position of cell relative to lo */
++  vobu_pct = ((cell_vobu - lo_vobu) * 1000)
++            / (hi_vobu   - lo_vobu);
++  if (vobu_pct < 0 || vobu_pct > 1000) {
++    fprintf(MSG_OUT, "vobu_pct must be between 0 and 1000");
++    return 0;
++  }
++
++  /* calc time of lo */
++  time_adj = (uint64_t)((tmap_interval * vobu_pct) / 1000);
++  *out_lo_time = cell_time - time_adj;
++  return 1;
++}
++
++/* Find the tmap entries on either side of a given sector */
++static int32_t dvdnav_tmap_get_entries_for_sector(dvdnav_t *this
++  , dvd_state_t *state, vobu_admap_t *admap
++  , int32_t admap_len, vts_tmap_t *tmap, uint32_t tmap_len
++  , int32_t cell_idx, uint32_t cell_end_sector, uint32_t find_sector
++  , int32_t *lo_tmap, uint32_t *lo_sector
++  , int32_t *hi_tmap, uint32_t *hi_sector
++  ) {
++  uint32_t out_sector = 0;
++  int32_t result = 0;
++  int32_t discontinuity = 0;
++  int32_t out_cell_idx = 0;
++  uint64_t cell_1_bgn_time = 0;
++  uint64_t cell_1_end_time = 0;
++  uint32_t cell_1_bgn_sector = 0;
++  uint32_t cell_1_end_sector = 0;
++  uint32_t tmap_2_sector = 0;
++  uint32_t tmap_2_vobu = 0;
++  uint32_t tmap_1_vobu = 0;
++  uint32_t vobu_diff = 0;
++  uint32_t lo_vobu = 0;
++
++  result = dvdnav_tmap_search(tmap, tmap_len, find_sector, lo_tmap, lo_sector);
++  if (!result) {
++    fprintf(MSG_OUT, "could not find lo idx: %i", find_sector);
++    return 0;
++  }
++
++  /* lo is last tmap entry; "fake" entry for one beyond
++   * and mark it with cell_end_sector */
++  if (*lo_tmap == tmap_len - 1) {
++    *hi_tmap = TMAP_IDX_EDGE_END;
++    *hi_sector = cell_end_sector;
++  }
++  else {
++    *hi_tmap = *lo_tmap + 1;
++    result = dvdnav_tmap_get_entry(tmap, tmap_len, *hi_tmap, &out_sector);
++    if (!result) {
++      fprintf(MSG_OUT, "could not find hi sector: %i", *hi_tmap);
++      return 0;
++    }
++    *hi_sector = out_sector;
++  }
++  /* HACK: handle cells that start at discontinuity entries
++     first check if discontinuity applies */
++  if (*lo_tmap == TMAP_IDX_EDGE_BGN) {
++    /* get cell 1 */
++    result = dvdnav_cell_find(this, state, CELL_FIND_INDEX
++      , 1, &out_cell_idx, &cell_1_bgn_time, &cell_1_bgn_sector
++      , &cell_1_end_time, &cell_1_end_sector
++      );
++    if (!result) {
++      fprintf(MSG_OUT, "could not retrieve cell 1");
++      return 0;
++    }
++    /* if cell 1 does not start at sector 0 then assume discontinuity
++     * NOTE: most DVDs should start at 0 */
++    if (cell_1_bgn_sector != 0) {
++      discontinuity = 1;
++    }
++  }
++  else {
++    if ((tmap->map_ent[*lo_tmap] & (1 << 31)) != 0) {
++      discontinuity = 1;
++    }
++  }
++  if (discontinuity) {
++    /* HACK: since there is either
++     * (a) a non-zero sector start at cell_1
++     * (b) a discontinuity entry
++     * the vobu at lo_tmap is suspect
++     * In order to find a vobu, assume that lo_tmap to hi_tmap
++     * are separated by the same number of vobus as hi_tmap to hi_tmap + 1
++     * This is a hack. It works in practice but there must be a better way...*/
++
++    /* first get the vobu for tmap_2 */
++    result = dvdnav_tmap_get_entry(tmap, tmap_len
++      , *hi_tmap + 1, &tmap_2_sector);
++    if (!result) {
++      fprintf(MSG_OUT, "no tmap_2_sector: %i"
++        , *hi_tmap + 1);
++      return 0;
++    }
++    result = dvdnav_admap_search(admap, admap_len
++      , tmap_2_sector, &tmap_2_vobu);
++    if (!result) {
++      fprintf(MSG_OUT, "no tmap_2_vobu: %i", tmap_2_vobu);
++      return 0;
++    }
++
++    /* now get the vobu for tmap_1 */
++    result = dvdnav_admap_search(admap, admap_len, *hi_sector, &tmap_1_vobu);
++    if (!result) {
++      fprintf(MSG_OUT, "no find tmap_1_vobu: %i", tmap_1_vobu);
++      return 0;
++    }
++
++    /* now calc the vobu for lo_tmap */
++    vobu_diff = tmap_2_vobu - tmap_1_vobu;
++    lo_vobu = tmap_1_vobu - vobu_diff;
++    if (lo_vobu < 0 || lo_vobu >= admap_len) {
++      fprintf(MSG_OUT, "lo_vobu: %i", lo_vobu);
++      return 0;
++    }
++    *lo_sector = admap->vobu_start_sectors[lo_vobu];
++  }
++  if (!(find_sector >= *lo_sector && find_sector <= *hi_sector)) {
++      fprintf(MSG_OUT, "find_sector not between lo/hi");
++      return 0;
++  }
++  return 1;
++}
++
++/* Find the nearest vobu by using the tmap */
++static int32_t dvdnav_find_vobu_by_tmap(dvdnav_t *this, dvd_state_t *state
++  , vobu_admap_t *admap, int32_t admap_len
++  , int32_t cell_idx
++  , uint64_t cell_bgn_time, uint32_t cell_bgn_sector
++  , uint32_t cell_end_sector
++  , uint64_t time_in_ms, uint32_t *jump_sector) {
++  int32_t tmap_len, tmap_interval = 0;
++  int32_t cell_bgn_lo_tmap = 0;
++  uint32_t cell_bgn_lo_sector = 0;
++  int32_t cell_bgn_hi_tmap = 0;
++  uint32_t cell_bgn_hi_sector = 0;
++  uint64_t cell_bgn_lo_time = 0;
++  uint64_t seek_offset = 0;
++  uint32_t seek_idx = 0;
++  uint32_t jump_lo_sector = 0;
++  uint32_t jump_hi_sector = 0;
++  uint32_t jump_lo_idx = 0;
++  uint32_t jump_hi_idx = 0;
++  int32_t result = 0;
++
++  /* get tmap, tmap_len, tmap_interval */
++  vts_tmap_t *tmap = dvdnav_tmap_get(this, state
++    , &tmap_len, &tmap_interval);
++  if (tmap == NULL) return 0;
++
++  /* get tmap entries on either side of cell_bgn */
++  result = dvdnav_tmap_get_entries_for_sector(this, state, admap, admap_len
++    , tmap, tmap_len, cell_idx, cell_end_sector, cell_bgn_sector
++    , &cell_bgn_lo_tmap, &cell_bgn_lo_sector
++    , &cell_bgn_hi_tmap, &cell_bgn_hi_sector
++    );
++  if (!result) return 0;
++
++  /* calc time of cell_bgn_lo */
++  result = dvdnav_tmap_calc_time_for_tmap_entry(admap, admap_len, tmap_interval
++    , cell_bgn_sector, cell_bgn_lo_sector, cell_bgn_hi_sector
++    , cell_bgn_time, &cell_bgn_lo_time
++    );
++  if (!result) return 0;
++
++  /* calc tmap_time of jump_time relative to cell_bgn_lo */
++  seek_offset = time_in_ms - cell_bgn_lo_time;
++  seek_idx = (uint32_t)(seek_offset / tmap_interval);
++  uint32_t seek_remainder = seek_offset - (seek_idx * tmap_interval);
++  uint32_t seek_pct = (seek_remainder * 1000) / tmap_interval;
++
++  /* get tmap entries on either side of jump_time */
++  jump_lo_idx = (uint32_t)(cell_bgn_lo_tmap + seek_idx);
++  result = dvdnav_tmap_get_entry(tmap, tmap_len, jump_lo_idx, &jump_lo_sector);
++  if (!result) return 0;
++
++  jump_hi_idx = jump_lo_idx + 1; // +1 handled by get_entry
++  result = dvdnav_tmap_get_entry(tmap, tmap_len, jump_hi_idx, &jump_hi_sector);
++  if (!result) return 0;
++
++  /* interpolate sector */
++  result = dvdnav_admap_interpolate_vobu(this, admap, admap_len
++    , jump_lo_sector, jump_hi_sector, seek_pct, jump_sector);
++
++  if (!result) return 0;
++  return 1;
++}
++
++/* Find the nearest vobu by using the cell boundaries */
++static int32_t dvdnav_find_vobu_by_cell_boundaries(dvdnav_t *this
++    , vobu_admap_t *admap, int32_t admap_len
++    , uint64_t cell_bgn_time, uint32_t cell_bgn_sector
++    , uint64_t cell_end_time, uint32_t cell_end_sector
++    , uint64_t time_in_ms
++    , uint32_t *jump_sector
++    ) {
++  /* get jump_offset */
++  uint64_t jump_offset = 0;
++  uint64_t cell_len = 0;
++  uint32_t jump_pct = 0;
++  int32_t result = 0;
++
++  jump_offset = time_in_ms - cell_bgn_time;
++  if (jump_offset < 0) {
++    fprintf(MSG_OUT, "jump_offset < 0");
++    return 0;
++  }
++  cell_len = cell_end_time - cell_bgn_time;
++  if (cell_len < 0) {
++    fprintf(MSG_OUT, "cell_len < 0");
++    return 0;
++  }
++  jump_pct = (jump_offset * 1000) / cell_len;
++
++  /* get sector */
++  /* NOTE: end cell sector in VTS_PGC is last sector of cell
++   * this last sector is not the start of a VOBU
++   * +1 to get sector that is the start of a VOBU */
++  cell_end_sector += 1;
++  result = dvdnav_admap_interpolate_vobu(this, admap, admap_len
++    , cell_bgn_sector, cell_end_sector, jump_pct, jump_sector);
++  if (!result) {
++    fprintf(MSG_OUT, "find_by_admap.interpolate");
++    return 0;
++  }
++  return 1;
++}
++
++dvdnav_status_t dvdnav_jump_to_sector_by_time(dvdnav_t *this
++  , uint64_t time_in_pts_ticks) {
++  int32_t result = 0;
++  uint64_t time_in_ms = 0;
++  dvd_state_t *state = NULL;
++  int32_t cell_idx = 0;
++  uint64_t cell_bgn_time = 0;
++  uint64_t cell_end_time = 0;
++  uint32_t cell_bgn_sector = 0;
++  uint32_t cell_end_sector = 0;
++  int32_t admap_len = 0;
++  vobu_admap_t *admap = NULL;
++  uint32_t jump_sector = 0;
++  uint32_t sector_off = 0;
++
++  /* convert time to milliseconds */
++  time_in_ms = time_in_pts_ticks / 90;
++
++  /* get variables that will be used across both functions */
++  state = &(this->vm->state);
++  if (state == NULL) goto exit;
++
++  /* get cell info */
++  result = dvdnav_cell_find(this, state, CELL_FIND_TIME, time_in_ms
++    , &cell_idx
++    , &cell_bgn_time, &cell_bgn_sector
++    , &cell_end_time, &cell_end_sector);
++  if (!result) goto exit;
++
++  /* get admap */
++  admap = dvdnav_admap_get(this, state, &admap_len);
++  if (admap == NULL) goto exit;
++
++  /* find sector */
++  result = dvdnav_find_vobu_by_tmap(this, state, admap, admap_len
++    , cell_idx, cell_bgn_time, cell_bgn_sector, cell_end_sector
++    , time_in_ms, &jump_sector);
++  if (!result) {// bad tmap; interpolate over cell
++    result = dvdnav_find_vobu_by_cell_boundaries(this, admap, admap_len
++      , cell_bgn_time, cell_bgn_sector
++      , cell_end_time, cell_end_sector
++      , time_in_ms, &jump_sector);
++    if (!result) {
++      goto exit;
++    }
++  }
++
++  /* may need to reget time when jump goes to diff cell (occurs near time 0) */
++  if ( jump_sector < cell_bgn_sector
++    || jump_sector > cell_end_sector) {
++    result = dvdnav_cell_find(this, state, CELL_FIND_SECTOR, jump_sector
++      , &cell_idx
++      , &cell_bgn_time, &cell_bgn_sector
++      , &cell_end_time, &cell_end_sector);
++    if (!result) {
++      fprintf(MSG_OUT, "unable to find cell for %i", jump_sector);
++      goto exit;
++    }
++  }
++
++  /* jump to sector */
++  sector_off = jump_sector - cell_bgn_sector;
++  this->cur_cell_time = 0;
++  if (vm_jump_cell_block(this->vm, cell_idx, sector_off)) {
++    pthread_mutex_lock(&this->vm_lock);
++    this->vm->hop_channel += HOP_SEEK;
++    pthread_mutex_unlock(&this->vm_lock);
++    result = 1;
++  }
++
++exit:
++  return result;
++}
+Index: src/dvdnav_internal.h
+===================================================================
+--- src/dvdnav_internal.h	(revision 1243)
++++ src/dvdnav_internal.h	(working copy)
+@@ -125,6 +125,21 @@
+ } ATTRIBUTE_PACKED spu_status_t;
+ #endif
+ 
++/*
++ * Utility enum for jump_to_time
++ */
++typedef enum {
++  CELL_FIND_SECTOR = 1,
++  CELL_FIND_TIME   = 2,
++  CELL_FIND_INDEX  = 3
++} cell_find_mode_t;
++
++/*
++ * Utility constants for jump_to_time
++ */
++#define TMAP_IDX_EDGE_BGN  -1
++#define TMAP_IDX_EDGE_END  -2
++
+ typedef struct dvdnav_vobu_s {
+   int32_t vobu_start;  /* Logical Absolute. MAX needed is 0x300000 */
+   int32_t vobu_length;
+Index: src/dvdnav/dvdnav.h
+===================================================================
+--- src/dvdnav/dvdnav.h	(revision 1243)
++++ src/dvdnav/dvdnav.h	(working copy)
+@@ -388,6 +388,14 @@
+ 				   uint64_t time);
+ 
+ /*
++ * Find the nearest vobu and jump to it
++ *
++ * Alternative to dvdnav_time_search
++ */
++dvdnav_status_t dvdnav_jump_to_sector_by_time(dvdnav_t *this, 
++				      uint64_t time_in_pts_ticks);
++
++/*
+  * Stop playing current position and play the "GoUp"-program chain.
+  * (which generally leads to the title menu or a higher-level menu).
+  */

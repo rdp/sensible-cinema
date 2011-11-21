@@ -17,14 +17,12 @@
   SO
   experiment with more "split" DVD's timing is always on?
     tangled
-  pay him money
   take in some home DVD's/tell handbrake
-  working VLC+dvdnav/new patches for fun
-  double check NAV packets for full DVD length
-  double check his emails for "seeking"/apply
-  republish mplayer-edl
+  working VLC+dvdnav/new patches for fun [linux?]
   
 == yes do, un-ordered currently, from all the various future release options ==
+  pay him money
+  double check NAV packets verus full DVD length
   genealogy create/publicize
   seeking on whitey failz [?]
   gui/edl parser unit tests work
@@ -35,8 +33,7 @@
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   auto-start audio caster ability, just use jruby/mklink LOL
-  update forum.doom9's
- it doesn't allow you to switch disk's, hit play again.
+  it doesn't allow you to switch disk's, hit play again.
   document all this junky weird stuff somewhere LOL
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
@@ -49,17 +46,17 @@
     non 29.97 with mplayer edl change OSD
     "static" mplayer-edl for OS X :P
     add a migrate button, prompts for "file" versus DVD
+      test with something :P
+    
 	assert files "always" start at 0
-  add all my applied patches
   ffmpeg how to add subs demo
   ffplay diagonal bug
-  flds: the intelligent tag sync'er :P
+  flds: the intelligent tag parent sync'er :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
   test distro various buttons on mac
     advertise urug
   upconvert: compare with "normal", and against itself.  Then release :P
-  google group icon/favicon/the image overlaps?
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   rename it "edited movie player" or whatever google prefers :P
@@ -112,8 +109,6 @@
     sub-title wise? do subs match something else? subs DVD vs. blu ray?
   split LLC's website+consumer
     get LLC before a "real" domain name
-  cool runnings
-    have ben and chris test it out [realtime prolly]
   ask for more beta testers for use, ask for more beta testers for creation, too
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
@@ -127,6 +122,7 @@
   default box "no" for licenses
   @wiki: just a note mplayer EDL's look like this...
   libdvdnav can take libdvdcss-2
+  re-post my fix mplayer to actually work with DVDNAV's past a split
   
 == decide later to move up or down ==
   just local download vendored smplayer every time, they don't mind
@@ -152,6 +148,7 @@
   user preferences "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  cool runnings me/grab
   Linux port for SC (call that good enough for usability on TV's...), should be...
   dvdread on white one: 
     *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
@@ -182,8 +179,7 @@
   screen_capture TODO
 
 == and more junk ==
-
-  re-post my fix mplayer to actually work with DVDNAV EDL's
+  google group icon/favicon/the image overlaps?
   VLC subtitles have a grey issue, too, not just menu's [?]
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
