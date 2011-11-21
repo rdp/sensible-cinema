@@ -21,21 +21,6 @@ Index: stream/stream_dvdnav.c
          return 1;
        break;
      }
-Index: Makefile
-===================================================================
---- Makefile	(revision 34269)
-+++ Makefile	(working copy)
-@@ -781,8 +781,8 @@
- %-rc.o: %.rc
- 	$(WINDRES) -I. $< -o $@
- 
--$(FFMPEGLIBS): $(FFMPEGFILES) config.h
--	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
-+#$(FFMPEGLIBS): $(FFMPEGFILES) config.h
-+#	$(MAKE) -C ffmpeg $(@:ffmpeg/%=%)
- 
- mencoder$(EXESUF): $(MENCODER_DEPS)
- mencoder$(EXESUF): EXTRALIBS += $(EXTRALIBS_MENCODER)
 Index: libvo/vo_direct3d.c
 ===================================================================
 --- libvo/vo_direct3d.c	(revision 34269)

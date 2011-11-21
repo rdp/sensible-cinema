@@ -14,9 +14,9 @@
   
 == yes do ordered for this release/other projects ja  ==
   DVD timing for forum:Snow White  
-  genealogy create/publicize
   SO
   experiment with more "split" DVD's timing is always on?
+    tangled
   pay him money
   take in some home DVD's/tell handbrake
   working VLC+dvdnav/new patches for fun
@@ -25,6 +25,7 @@
   republish mplayer-edl
   
 == yes do, un-ordered currently, from all the various future release options ==
+  genealogy create/publicize
   seeking on whitey failz [?]
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
@@ -39,16 +40,16 @@
   document all this junky weird stuff somewhere LOL
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   an even better dvdnav.h comment patch :P
-  add file_timestamp_offset_from => "0:00"
-    2 options: file +- offset, "dvd"
-    deprecate mplayer_dvd_splits et al/wiki
-    timestamps_derived_from => "dvd"
+  use DVD real time:
+    add 2 options: file, "dvd"
+    update wiki
+    timestamps_relative_to => "dvd"
     remove -osd-add
     add OSD time to the console output
-    non 29.97/change OSD
+    non 29.97 with mplayer edl change OSD
     "static" mplayer-edl for OS X :P
+    add a migrate button, prompts for "file" versus DVD
 	assert files "always" start at 0
-	deprecate start offset
   add all my applied patches
   ffmpeg how to add subs demo
   ffplay diagonal bug
