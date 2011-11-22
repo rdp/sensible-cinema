@@ -26,6 +26,8 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
   .tgz -> .mac.tgz
+  audio DDK
+  inspector general
   backtraces for vlc freezing
   smplayer for sync srt button
   normal smplayer download [download 4 them, reveal]
