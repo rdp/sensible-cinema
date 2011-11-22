@@ -10,11 +10,10 @@
   
 == high prio like blocking bugs ==
   
-== very next things I was working on ==
+== things working on today ==
   
 == yes do ordered for this release/other projects ja  ==
   DVD timing for forum:Snow White  
-  SO
   experiment with more "split" DVD's timing is always on?
     tangled
     carefully compare -c- after split with file.
@@ -23,13 +22,13 @@
   double check NAV packets verus full DVD length
   genealogy create/publicize
   seeking on whitey failz [?]
+  ffmpeg how to add subs demo
   
 == yes do, un-ordered currently, from all the various future release options ==
-  maekmkv
+  .tgz -> .mac.tgz
+  backtraces for vlc freezing
   smplayer for sync srt button
-  email that one guy
-  pay him money
-  normal smplayer download
+  normal smplayer download [download 4 them, reveal]
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -54,7 +53,6 @@
       test with something :P
     
 	assert files "always" start at 0
-  ffmpeg how to add subs demo
   ffplay diagonal bug
   flds: the intelligent tag parent sync'er :P
   create skype/google+ hangouts auto-easy-recorder windows
