@@ -26,10 +26,11 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
   .tgz -> .mac.tgz
+  checkbox for licenses
   what does -ss do in mplayer?
   audio DDK
   inspector general
-  backtraces for vlc freezing
+  backtraces for vlc freezing, w, w/o debug symbols..
   smplayer for sync srt button
   normal smplayer download [download 4 them, reveal]
   gui/edl parser unit tests work
