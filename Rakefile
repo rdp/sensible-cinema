@@ -130,7 +130,7 @@ task 'zip' do
   name = 'sensible-cinema-' + cur_ver
   raise 'doesnt exist yet to zip?' unless File.directory? name
   raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
-  c = "tar -cvzf #{name}.tgz #{name}"
+  c = "tar -cvzf #{name}.mac-os-x.tgz #{name}"
   sys c
   delete_now_packaged_dir name
   p 'created ' + name + '.zip,tgz and also deleted its [create from] folder'
