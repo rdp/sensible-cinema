@@ -137,7 +137,7 @@ task 'zip' do
 end
 
 
-def sys arg
+def sys arg, failing_is_ok = false
  3.times { |n|
   if n > 0
     p 'retrying ' + arg
@@ -146,7 +146,7 @@ def sys arg
     return
   end
  }
- raise arg + ' failed 3x!'
+ raise arg + ' failed 3x!' unless failing_is_ok
 end
 
 desc 'deploy to sourceforge, after zipping'
@@ -154,7 +154,7 @@ task 'deploy' do
   p 'creating sf shell'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
+  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
   for suffix in [ '.zip', '.mac-os-x.tgz']
     name = 'sensible-cinema-' + cur_ver + suffix
     p 'copying to ilab ' + name
