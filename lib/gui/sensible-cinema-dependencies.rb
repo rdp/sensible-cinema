@@ -133,7 +133,7 @@ module SensibleSwing
       # 2 is cancel
       if returned == :no
         if license_url_should_also_be_embedded_by_you_in_message
-          SwingHelpers.show_url_in_browser license_url_should_also_be_embedded_by_you_in_message
+          SwingHelpers.open_url_to_view_it_non_blocking license_url_should_also_be_embedded_by_you_in_message
           puts "Please restart after reading license agreement, to be able to then accept it."
         end
         System.exit 0
