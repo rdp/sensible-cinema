@@ -128,6 +128,9 @@
   check if libdvdnav saves it to a good dir at all 
   default box "no" for licenses
   libdvdnav can take libdvdcss-2
+  dvdread on white one: 
+    *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
+    *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
   
 == decide later to move up or down ==
   @ffmpeg: you can't convert mkv's of this type!
@@ -148,14 +151,11 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  add some VLC forums bugs as real bugs, if they're still around
   default box "no" for licenses
-  user preferences "add this much to mutes" :P
-  dvdread on white one: 
-    *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
-    *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
+  user preference "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  add some VLC forums bugs as real bugs, if they're still around
   force "all" licenses to be accepted one together...
   add the other type in there, esp. if a man answers
       accomodate splits vs. blanks and work everywhere
