@@ -1,6 +1,27 @@
 up next:
 
-looks like tmap "typically" tends to go forward [?]
+241,241 with VLC displaying mostly-white.bmp
+pain.net 255,255,255
+
+= seeking Chris' = "Roger's Wedding" label
+
+WMP fails miserably LOL
+
+(VLC does better with menus than WMP does :P)
+
+VLC seeking is actually right on... [?]
+mplayer_me seems to jump forward by like 1s for 10 LOL
+mplayer seems right on, too...
+  *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1664 ***
+  *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
+     then it plays fine :P
+    
+    same with mplayer_me
+    
+    handbrake refuses it :P
+    
+ == WEDDING == (temple picture)
+  seeking seems great, fast, no weird messages, handbrake ok
 
 == hard crash ==
 
@@ -9,7 +30,8 @@ just mine LOL
 
 == seeking -c-=
 
-
+his seeks about 15s for a 10s seek
+  normal mplayer: like 23s whoa!
 
 last NAV packet was 3583.466553 after -> 29.97 3587.050049
 mpeg at 88.030502 
@@ -446,6 +468,8 @@ then 3.6
 many are 0.40 
 
 last NAV packet was 0.400000, mpeg at 0.614300
+
+conc: looks like tmap "typically" tends to go forward [?] from somewhere
 
 == seeking bunny ==
 

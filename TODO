@@ -11,13 +11,8 @@
 == high prio like blocking bugs ==
   
 == things working on today ==
-  home DVD's seeking/tell handbrake whitey
-    seeking on whitey failz [?]
   working VLC+dvdnav/new patches for fun [linux?]
   answer emails
-  dvdread on white one: 
-    *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
-    *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
   
 == yes do ordered for this release/other projects ja  ==
   DVD timing for forum:Snow White  
@@ -34,6 +29,10 @@
   smplayer for sync srt button
   
 == yes do, un-ordered currently, from all the various future release options ==
+  are there DVD's where NAV's match?
+  grab wedding iso's
+  ring
+  donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   not download mencoder till they click that one button :P
   inspector general
@@ -156,6 +155,7 @@
   user preference "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @ffmpeg/vlc: can you use the nvidia graphics card to *encode* it too, plz?
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
   checkbox for licenses
   add some VLC forums bugs as real bugs, if they're still around
@@ -165,7 +165,6 @@
     add to the template, make it so that various can use it
   nextsprocket "citrix"
   ffmpeg filter to add subs from .srt :P
-  re-post my fix mplayer to actually work with DVDNAV's past a split
   cool runnings me w w/o grab
   Linux port for SC (call that good enough for usability on TV's...), should be...
   7z mplayer_edl
@@ -194,8 +193,7 @@
   screen_capture TODO
 
 == and more junk ==
-  google group icon/favicon/the image overlaps?
-  VLC subtitles have a grey issue, too, not just menu's [?]
+  tell handbrake whitey
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
     also check/make sure their internal ffmpeg is using SSE et al
@@ -230,7 +228,6 @@
   double check the "sum title times" precisely--do they add up great?
   research madvr/on board lanczos at all.
   @mplayer: OSD fails when corrupted DVD's and digit points
-  compare with purevideo
   can I "not" use mencoder for the first pass, to be able to work with handbrake files? [OSOH]
   todo.upconvert
     netflix quality upconverter, have a go at it
