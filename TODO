@@ -20,6 +20,7 @@
   take in some home DVD's/tell handbrake
   working VLC+dvdnav/new patches for fun [linux?]
   double check NAV packets verus full DVD length
+  double check Jonah NAV
   genealogy create/publicize
   seeking on whitey failz [?]
   ffmpeg how to add subs demo
@@ -27,7 +28,7 @@
 == yes do, un-ordered currently, from all the various future release options ==
   mormon demographics :P
   add 0.5 only in "normal" mode to end of splits...I guess...
-    unless authored as DVD
+    unless in create mode :P
   the "lined" "select this one" quality editor...
   .tgz -> .mac.tgz
   -mc 2
@@ -59,7 +60,7 @@
     add a migrate button, prompts for "file" versus DVD
       test with something :P
     
-	assert files "always" start at 0
+    assert files "always" start at 0
   ffplay diagonal bug
   flds: the intelligent tag parent sync'er :P
   create skype/google+ hangouts auto-easy-recorder windows
@@ -105,9 +106,6 @@
   @wiki: here is how very messed up DVD's are, what they look like precisely.
   minor redcar tweaks
   short list of todo's for screen capture
-  add the other type in there, esp. if a man answers
-      accomodate splits vs. blanks and work everywhere
-    add to the template, make it so that various can use it
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
@@ -129,13 +127,12 @@
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
   check if libdvdnav saves it to a good dir at all 
   default box "no" for licenses
-  @wiki: just a note mplayer EDL's look like this...
   libdvdnav can take libdvdcss-2
   
 == decide later to move up or down ==
+  @ffmpeg: you can't convert mkv's of this type!
   just local download vendored smplayer every time, they don't mind
   DIRT short list
-  nextsprocket "citrix"
   fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
   "overwrite?" prompt for file mode
@@ -154,15 +151,19 @@
   add some VLC forums bugs as real bugs, if they're still around
   default box "no" for licenses
   user preferences "add this much to mutes" :P
-
-== DVD+-DVD-realtime basically never do backlog (unordered) ==
-  ffmpeg filter to add from .srt :P
-  re-post my fix mplayer to actually work with DVDNAV's past a split
-  cool runnings me/grab
-  Linux port for SC (call that good enough for usability on TV's...), should be...
   dvdread on white one: 
     *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
     *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
+
+== DVD+-DVD-realtime basically never do backlog (unordered) ==
+  add the other type in there, esp. if a man answers
+      accomodate splits vs. blanks and work everywhere
+    add to the template, make it so that various can use it
+  nextsprocket "citrix"
+  ffmpeg filter to add subs from .srt :P
+  re-post my fix mplayer to actually work with DVDNAV's past a split
+  cool runnings me w w/o grab
+  Linux port for SC (call that good enough for usability on TV's...), should be...
   7z mplayer_edl
   @mplayer: -osdlevel dunno wurk, at least with at the beginning, with dvdnav...
   youtube/hulu timings different?
