@@ -1,5 +1,8 @@
 == dvd upconvert ==
 
+how does powerdvd's upscaling work?
+
+purevideo?
 
 ask mplayer "can you use accurate rounding with lanczos? I don't think you can..."
 
@@ -21,7 +24,7 @@ check out the various posts of people comparing images, try mine out against the
 === netflix/OS screen capture ===
 
   can I make it look awesome?
-  pushdesktop\TODO high prio
+  pushdesktop avoid dupe's?
   
   ==== some day ====
     perfect the looks of absolutely everything upconverted LOL
