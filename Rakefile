@@ -155,7 +155,7 @@ task 'deploy' do
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'"
-  for suffix in [ '.zip', '.tgz']
+  for suffix in [ '.zip', '.mac-os-x.tgz']
     name = 'sensible-cinema-' + cur_ver + suffix
     p 'copying to ilab ' + name
     sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
