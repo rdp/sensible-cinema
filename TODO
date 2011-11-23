@@ -26,6 +26,9 @@
   ffmpeg how to add subs demo
   
 == yes do, un-ordered currently, from all the various future release options ==
+  mac:
+    multiple file open prompts
+    dvdid isn't packaged with executable permissions
   not download mencoder till they click that one button :P
   what does -ss do in mplayer?
   inspector general
