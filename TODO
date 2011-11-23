@@ -156,6 +156,7 @@
     *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  force "all" licenses to be accepted one together...
   add the other type in there, esp. if a man answers
       accomodate splits vs. blanks and work everywhere
     add to the template, make it so that various can use it

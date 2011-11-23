@@ -133,10 +133,8 @@ module SensibleSwing
       # 2 is cancel
       if returned == :no
         if license_url_should_also_be_embedded_by_you_in_message
-          command = OS.doze? ? "start" : "open"
-          system_non_blocking(c = "#{command} #{license_url_should_also_be_embedded_by_you_in_message}") # guess this is url's too, eh?
+          SwingHelpers.show_url_in_browser license_url_should_also_be_embedded_by_you_in_message
           puts "Please restart after reading license agreement, to be able to then accept it."
-          sleep 2 if OS.mac?
         end
         System.exit 0
       elsif returned == :cancel
