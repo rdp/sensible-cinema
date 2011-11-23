@@ -109,7 +109,7 @@
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
-  macify work minor things it doesn't currently :)
+  add show_url to jruby swing helpers
   volume_name => dvd_volume_label # but what about blu-ray?
   blu ray timing
     Are they the same as DVD's?  They seem really close...
