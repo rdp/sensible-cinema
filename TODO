@@ -11,8 +11,6 @@
 == high prio like blocking bugs ==
   
 == things working on today ==
-  working VLC+dvdnav/new patches for fun [linux?]
-  answer emails
   
 == yes do ordered for this release/other projects ja  ==
   DVD timing for forum:Snow White  
@@ -20,13 +18,14 @@
     tangled
     carefully compare -c- after split with file.
   double check NAV packets verus full DVD length
-  double check Jonah NAV
+  double check Jonah starting NAV
   genealogy create/publicize
   mac:
     multiple file open prompts
     dvdid isn't packaged with executable permissions
     can download mplayer-edl
   smplayer for sync srt button
+  virtual audio am I monotonic? reproduce?
   
 == yes do, un-ordered currently, from all the various future release options ==
   can use zoomplayer, prompt them "do you want to..."
