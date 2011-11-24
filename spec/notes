@@ -728,6 +728,7 @@ Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mo
   may also mean that libdvdnav could do more to become more robust...
   same with mplayer.bat
   VLC "loops" backward with this one...hmm weird.
+  actually, this might actually be a bug...
   
 Tangled is a good test.
 Also gottmann was the other.
