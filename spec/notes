@@ -1,5 +1,18 @@
 up next:
 
+= dying/shouting dvdnav =
+tangled loops VLC blackey
+tangled loops VLC work desktop
+
+all disney say "no VTS" only from within virtualbox.
+works fine VLC mac [with nav] doesn't loop
+mplayer blackey:
+Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
+This application has requested the Runtime to terminate it in an unusual way.
+Please contact the application's support team for more information.
+
+Guess is that it's a bad disk.  Possibly patch libdvdnav and see if that "fixes" it...
+
 = VLC patch =
 
 dvdnav:// actually has "times" that match its "seek tos"
