@@ -724,8 +724,10 @@ if I ever care...
 
 ANS_length=6013.200000
 Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
+  may mean a scratched disk [?]
+  may also mean that libdvdnav could do more to become more robust...
 
-Tamgled is a good test.
+Tangled is a good test.
 Also gottmann was the other.
 
 == vlc slow ==
