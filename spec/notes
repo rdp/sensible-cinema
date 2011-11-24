@@ -1,7 +1,56 @@
 up next:
 
+= VLC patch =
+
+dvdnav:// actually has "times" that match its "seek tos"
+  they just don't match reality :P
+  "don't you get it, Ben?"
+  
+dvdread:// has "times" that match its "seek tos"
+  1:00:00 "don't you get it, Ben?"
+
+  should be "I found The Charlotte?...[]The Charlotte?" if it follows sum NAV times...which it doesn't :P
+  so they're both bworked, or what?
+    dvdnav at least is returning some phreaky ratio: (double)pos / (double)len;
+      I guess this lets it...seek ok [but it doesn't always?]
+      sounds bworked to me...
+
+http://git.videolan.org/?p=vlc.git;a=blobdiff;f=modules/access/dvdnav.c;h=99f2e111fb08b9aa00dffcd3feb081d0d2741902;hp=e7f5adf371db87972a5a0530338e898e8f864ae7;hb=99e7dfd49ccdbe8cbb06bd8047b7080e09fc675e;hpb=bc61326a1dc4e58d6de4d7ce0e0d74efd51b37ca
+was dvdnav splitting into percents.
+
+dvd://D:\ *is* dvdnav.
+
+dvdnav_get_duration
+
+dvdread seems to be 'seek this many blocks'
+
+typedef int64_t mtime_t;
+int64_t pgc_length;  /* the length of the current program chain in PTS ticks */
+i_pgc_length =  event->pgc_length * 1000 / 90;
+
+should be 4:02 => 242 seconds 
+
+30 should be:
+  2946600
+  
+  dvdnav_time_search versus dvdnav_sector_search huh?
+     I think sector_search has an "offset" and also a "force me to go forward" aspect, so they don't immediately conflict [?]
+    
+    pass back needed:
+    
+    get time 3894009
+get length 1718232704
+    get time:
+     *va_arg( args, int64_t * ) =(  event->pgc_length * 1000 / 90)*pos/len;
+    get length:
+    *va_arg( args, int64_t * ) = (int64_t)p_sys->i_pgc_length
+    
+    3M for 2seconds, end of sounds
+    
+= ffplay no white's =
+
 241,241 with VLC displaying mostly-white.bmp
-pain.net 255,255,255
+paint.net 255,255,255
 
 = seeking Chris' = "Roger's Wedding" label
 
