@@ -11,39 +11,40 @@
 == high prio like blocking bugs ==
   
 == things working on today ==
-  tangled mplayer mac should die...
   
 == yes do ordered for this release/other projects ja  ==
-  DVD timing for forum:Snow White  
-  experiment with more "split" DVD's timing is always on?
-    tangled
-    carefully compare -c- after split with file.
-  double check NAV packets verus full DVD length
-  double check Jonah starting NAV
-  genealogy create/publicize
+  virtual audio 
+    re-release
   mac:
     multiple file open prompts
     dvdid isn't packaged with executable permissions
     can download mplayer-edl
+  DVD timing for forum:Snow White  
+  genealogy create/publicize
   smplayer for sync srt button
-  virtual audio am I monotonic? reproduce?
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
+  auto-start audio caster ability, just use jruby/mklink LOL
+  upconvert stuff :P
   
 == yes do, un-ordered currently, from all the various future release options ==
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
-  buy zoomplayer
-  are there DVD's where NAV's match?
-  grab wedding iso's
-  ring
+  tangled mplayer mac should die...
+  double check NAV times perfect seeking -c- ?
+  experiment with more "split" DVD's timing is always on after splits?
+    tangled
+    carefully compare -c- after split with file.
+  double check Jonah starting NAV
+  double check NAV packets verus full DVD length
+  are there DVD's where NAV's match? test several
+  grab all wedding iso's
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   not download mencoder till they click that one button :P
   inspector general
-  mormon demographics :P
   add 0.25 only in "normal" mode to end of splits...I guess...
     unless in create mode :P
   allow drag window for upscaling select :P
   the "lined" "select this one" quality editor...
-  normal smplayer download [download 4 them, reveal ?]
+  normal smplayer download [download right one for them, reveal]
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -51,7 +52,6 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  auto-start audio caster ability, just use jruby/mklink LOL
   it doesn't allow you to switch disk's, hit play again.
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   use DVD real time:
@@ -79,6 +79,7 @@
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
+    needs to at *least* parse it for them
   the php thing :P
   "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
@@ -91,7 +92,7 @@
   @ffmpeg: wiki list for all filter's?
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
-  automate creation things...
+  automate various creation things...
   netflix instant descriptor work at all
     OS X too
       mac'ify OCR/Mouse
@@ -157,6 +158,7 @@
   user preference "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  virtual audio figure out weirdness
   @ffmpeg/vlc: can you use the nvidia graphics card to *encode* it too, plz?
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
   checkbox for licenses
