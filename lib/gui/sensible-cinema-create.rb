@@ -322,7 +322,13 @@ module SensibleSwing
     def create_brand_new_edl
       drive, volume, dvd_id = choose_dvd_drive_or_file true
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", volume.split('_').map{|word| word.downcase.capitalize}.join(' ')) # A Court Jester
+
+      # nothing with disk_unique_id: probably dvd_start_offset 29.97
+      # nothing without disk_unque_id: probably start_zero 29.97
+      # 1.1: needs timestamps_relative_to, I guess
+    
       input = <<-EOL
+# edl_version_number 1.1
 # comments can go after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -337,6 +343,7 @@ module SensibleSwing
 ],
 
 "volume_name" => "#{volume}",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
 "disk_unique_id" => "#{dvd_id}",
 "dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
 # "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
