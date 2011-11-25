@@ -60,6 +60,9 @@ get length 1718232704
     
     3M for 2seconds, end of sounds
     
+
+VLC has the right timestamps now, appears.
+
 = ffplay no white's =
 
 241,241 with VLC displaying mostly-white.bmp
@@ -84,11 +87,6 @@ mplayer seems right on, too...
     
  == WEDDING == (temple picture)
   seeking seems great, fast, no weird messages, handbrake ok
-
-== hard crash ==
-
-D:/dev/sensible-cinema-never-commit-from-here/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs -nomouseinput -sub-fuzziness 1 -identify -slave -vo directx -ao dsound -nokeepaspect -priority normal -framedrop -nodr -double -wid 16516234 -colorkey 0x020202 -monitorpixelaspect 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles c:/Documents and Settings/Melissa.BLACKY/.smplayer_sensible_cinema/styles.ass  -dvd-device F: -noass   dvd
-just mine LOL
 
 == seeking -c-=
 

@@ -13,8 +13,9 @@
 == things working on today ==
   
 == yes do ordered for this release/other projects ja  ==
-  virtual audio 
-    re-release
+  Tangled crash
+  upconvert stuff, no non-de-dupe
+  virtual audio re-release
   mac:
     multiple file open prompts
     dvdid isn't packaged with executable permissions
@@ -24,9 +25,12 @@
   smplayer for sync srt button
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
   auto-start audio caster ability, just use jruby/mklink LOL
-  upconvert stuff :P
+  automate various creation things...
   
 == yes do, un-ordered currently, from all the various future release options ==
+  send bom to menumulti guy :P
+  try out VLC bindings to be able to award prize
+  grab all wedding iso's
   tangled mplayer mac should die...
   double check NAV times perfect seeking -c- ?
   experiment with more "split" DVD's timing is always on after splits?
@@ -35,7 +39,6 @@
   double check Jonah starting NAV
   double check NAV packets verus full DVD length
   are there DVD's where NAV's match? test several
-  grab all wedding iso's
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   not download mencoder till they click that one button :P
@@ -54,7 +57,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   it doesn't allow you to switch disk's, hit play again.
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-  use DVD real time:
+  use DVD NAV packet time:
     add 2 options: file, "dvd"
     update wiki
     timestamps_relative_to => "dvd"
@@ -73,8 +76,6 @@
   test distro various buttons on mac
     advertise urug
   upconvert: compare with "normal", and against itself.  Then release :P
-  send bom to menumulti guy :P
-  try out VLC bindings to be able to award prize
   rename it "edited movie player" or whatever google prefers :P
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
@@ -92,7 +93,6 @@
   @ffmpeg: wiki list for all filter's?
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
-  automate various creation things...
   netflix instant descriptor work at all
     OS X too
       mac'ify OCR/Mouse
@@ -196,8 +196,8 @@
   virtual_audio TODO
   screen_capture TODO
 
-== and more junk ==
-  tell handbrake whitey
+== and more to never do ==
+  tell handbrake whitey cannot grab
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
     also check/make sure their internal ffmpeg is using SSE et al
