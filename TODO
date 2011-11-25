@@ -18,29 +18,32 @@
   experiment with more "split" DVD's timing is always on?
     tangled
     carefully compare -c- after split with file.
-  take in some home DVD's/tell handbrake
-  working VLC+dvdnav/new patches for fun [linux?]
   double check NAV packets verus full DVD length
-  double check Jonah NAV
+  double check Jonah starting NAV
   genealogy create/publicize
-  seeking on whitey failz [?]
-  ffmpeg how to add subs demo
-  
-== yes do, un-ordered currently, from all the various future release options ==
   mac:
     multiple file open prompts
     dvdid isn't packaged with executable permissions
+    can download mplayer-edl
+  smplayer for sync srt button
+  virtual audio am I monotonic? reproduce?
+  
+== yes do, un-ordered currently, from all the various future release options ==
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
+  buy zoomplayer
+  are there DVD's where NAV's match?
+  grab wedding iso's
+  ring
+  donate http://alexfeinman.com/W7.htm mkv xiph[?]
+  ffmpeg how to add subs demo
   not download mencoder till they click that one button :P
-  what does -ss do in mplayer?
   inspector general
   mormon demographics :P
   add 0.25 only in "normal" mode to end of splits...I guess...
     unless in create mode :P
   allow drag window for upscaling select :P
   the "lined" "select this one" quality editor...
-  what does -ss simple scaler do in mplayer?
-  smplayer for sync srt button
-  normal smplayer download [download 4 them, reveal]
+  normal smplayer download [download 4 them, reveal ?]
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -50,9 +53,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   auto-start audio caster ability, just use jruby/mklink LOL
   it doesn't allow you to switch disk's, hit play again.
-  document all this junky weird stuff somewhere LOL
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-  an even better dvdnav.h comment patch :P
   use DVD real time:
     add 2 options: file, "dvd"
     update wiki
@@ -83,14 +84,14 @@
   show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
     maybe reset on any button press...
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  it should not have to ask for an EDL when you click "play it unedited"
+  it should not have to ask for an EDL when you click "play it unedited" -- just say why...
   warn when using upconverting within SC
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
   @ffmpeg: wiki list for all filter's?
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   @mingw: large file handlez plz?
-  automate more creation things...
+  automate creation things...
   netflix instant descriptor work at all
     OS X too
       mac'ify OCR/Mouse
@@ -106,14 +107,12 @@
   ruby_prof stuffs (release at least)
   warn other wordpresses
   test mplayer -vo gl speeds at home
-  template-ify for netflix too "create for netflix" button
   @wiki: here is how very messed up DVD's are, what they look like precisely.
   minor redcar tweaks
   short list of todo's for screen capture
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
-  add show_url to jruby swing helpers
   volume_name => dvd_volume_label # but what about blu-ray?
   blu ray timing
     Are they the same as DVD's?  They seem really close...
@@ -132,12 +131,10 @@
   check if libdvdnav saves it to a good dir at all 
   default box "no" for licenses
   libdvdnav can take libdvdcss-2
-  dvdread on white one: 
-    *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1672 ***
-    *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
   don't distribute it with development dependencies...
   
 == decide later to move up or down ==
+  an even better dvdnav.h comment patch :P
   @ffmpeg: you can't convert mkv's of this type!
   just local download vendored smplayer every time, they don't mind
   DIRT short list
@@ -160,6 +157,8 @@
   user preference "add this much to mutes" :P
 
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @ffmpeg/vlc: can you use the nvidia graphics card to *encode* it too, plz?
+  re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
   checkbox for licenses
   add some VLC forums bugs as real bugs, if they're still around
   force "all" licenses to be accepted one together...
@@ -168,7 +167,6 @@
     add to the template, make it so that various can use it
   nextsprocket "citrix"
   ffmpeg filter to add subs from .srt :P
-  re-post my fix mplayer to actually work with DVDNAV's past a split
   cool runnings me w w/o grab
   Linux port for SC (call that good enough for usability on TV's...), should be...
   7z mplayer_edl
@@ -197,8 +195,7 @@
   screen_capture TODO
 
 == and more junk ==
-  google group icon/favicon/the image overlaps?
-  VLC subtitles have a grey issue, too, not just menu's [?]
+  tell handbrake whitey
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
     also check/make sure their internal ffmpeg is using SSE et al
@@ -233,7 +230,6 @@
   double check the "sum title times" precisely--do they add up great?
   research madvr/on board lanczos at all.
   @mplayer: OSD fails when corrupted DVD's and digit points
-  compare with purevideo
   can I "not" use mencoder for the first pass, to be able to work with handbrake files? [OSOH]
   todo.upconvert
     netflix quality upconverter, have a go at it

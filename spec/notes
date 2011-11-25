@@ -1,6 +1,89 @@
 up next:
 
-looks like tmap "typically" tends to go forward [?]
+= dying/shouting dvdnav =
+tangled loops VLC blackey
+tangled loops VLC work desktop
+
+all disney say "no VTS" only from within virtualbox.
+works fine VLC mac [with nav] doesn't loop
+mplayer blackey:
+Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
+This application has requested the Runtime to terminate it in an unusual way.
+Please contact the application's support team for more information.
+
+Guess is that it's a bad disk.  Possibly patch libdvdnav and see if that "fixes" it...
+
+= VLC patch =
+
+dvdnav:// actually has "times" that match its "seek tos"
+  they just don't match reality :P
+  "don't you get it, Ben?"
+  
+dvdread:// has "times" that match its "seek tos"
+  1:00:00 "don't you get it, Ben?"
+
+  should be "I found The Charlotte?...[]The Charlotte?" if it follows sum NAV times...which it doesn't :P
+  so they're both bworked, or what?
+    dvdnav at least is returning some phreaky ratio: (double)pos / (double)len;
+      I guess this lets it...seek ok [but it doesn't always?]
+      sounds bworked to me...
+
+http://git.videolan.org/?p=vlc.git;a=blobdiff;f=modules/access/dvdnav.c;h=99f2e111fb08b9aa00dffcd3feb081d0d2741902;hp=e7f5adf371db87972a5a0530338e898e8f864ae7;hb=99e7dfd49ccdbe8cbb06bd8047b7080e09fc675e;hpb=bc61326a1dc4e58d6de4d7ce0e0d74efd51b37ca
+was dvdnav splitting into percents.
+
+dvd://D:\ *is* dvdnav.
+
+dvdnav_get_duration
+
+dvdread seems to be 'seek this many blocks'
+
+typedef int64_t mtime_t;
+int64_t pgc_length;  /* the length of the current program chain in PTS ticks */
+i_pgc_length =  event->pgc_length * 1000 / 90;
+
+should be 4:02 => 242 seconds 
+
+30 should be:
+  2946600
+  
+  dvdnav_time_search versus dvdnav_sector_search huh?
+     I think sector_search has an "offset" and also a "force me to go forward" aspect, so they don't immediately conflict [?]
+    
+    pass back needed:
+    
+    get time 3894009
+get length 1718232704
+    get time:
+     *va_arg( args, int64_t * ) =(  event->pgc_length * 1000 / 90)*pos/len;
+    get length:
+    *va_arg( args, int64_t * ) = (int64_t)p_sys->i_pgc_length
+    
+    3M for 2seconds, end of sounds
+    
+= ffplay no white's =
+
+241,241 with VLC displaying mostly-white.bmp
+paint.net 255,255,255
+
+= seeking Chris' = "Roger's Wedding" label
+
+WMP fails miserably LOL
+
+(VLC does better with menus than WMP does :P)
+
+VLC seeking is actually right on... [?]
+mplayer_me seems to jump forward by like 1s for 10 LOL
+mplayer seems right on, too...
+  *** libdvdread: CHECK_VALUE failed in libdvdread4/ifo_read.c:1664 ***
+  *** for c_adt->cell_adr_table[i].start_sector < c_adt->cell_adr_table[i].last_sector ***
+     then it plays fine :P
+    
+    same with mplayer_me
+    
+    handbrake refuses it :P
+    
+ == WEDDING == (temple picture)
+  seeking seems great, fast, no weird messages, handbrake ok
 
 == hard crash ==
 
@@ -9,7 +92,8 @@ just mine LOL
 
 == seeking -c-=
 
-
+his seeks about 15s for a 10s seek
+  normal mplayer: like 23s whoa!
 
 last NAV packet was 3583.466553 after -> 29.97 3587.050049
 mpeg at 88.030502 
@@ -447,6 +531,8 @@ many are 0.40
 
 last NAV packet was 0.400000, mpeg at 0.614300
 
+conc: looks like tmap "typically" tends to go forward [?] from somewhere
+
 == seeking bunny ==
 
 when it goes to a new VOB it must accidentally reset somehow, thus thinking it's at 500'ish
@@ -651,8 +737,13 @@ if I ever care...
 
 ANS_length=6013.200000
 Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
-
-Tamgled is a good test.
+  may mean a scratched disk [?]
+  may also mean that libdvdnav could do more to become more robust...
+  same with mplayer.bat
+  VLC "loops" backward with this one...hmm weird.
+  actually, this might actually be a bug...
+  
+Tangled is a good test.
 Also gottmann was the other.
 
 == vlc slow ==
