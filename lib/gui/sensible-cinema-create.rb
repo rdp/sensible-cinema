@@ -33,7 +33,7 @@ module SensibleSwing
         start_time = times[0]
         end_time = times[1]
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
-        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # more aggressive :)
+        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # create mode => aggressive
       end
       
       @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
@@ -325,7 +325,7 @@ module SensibleSwing
 
       # nothing with disk_unique_id: probably dvd_start_offset 29.97
       # nothing without disk_unque_id: probably start_zero 29.97
-      # 1.1: needs timestamps_relative_to, I guess
+      # 1.1: has timestamps_relative_to, I guess
     
       input = <<-EOL
 # edl_version_number 1.1

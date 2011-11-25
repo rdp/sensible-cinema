@@ -14,7 +14,9 @@
   
 == yes do ordered for this release/other projects ja  ==
   Tangled crash
-    uptodate vlc linux, ifoeefit,  upconvert stuff, no non-de-dupe
+    uptodate vlc linux, ifoeefit
+  upconvert stuff
+    no non-de-dupe
   virtual audio re-release
   mac:
     multiple file open prompts
@@ -25,9 +27,11 @@
   smplayer for sync srt button
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
   auto-start audio caster ability, just use jruby/mklink LOL
-  automate various creation things...
+  automate easy creation things...
   
 == yes do, un-ordered currently, from all the various future release options ==
+  timestamps_relative_to "force them" to have, or to hit the upgrade button
+  automate all creation things...add dvd NAV
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
@@ -43,8 +47,8 @@
   ffmpeg how to add subs demo
   not download mencoder till they click that one button :P
   inspector general
+  remove splits' functionality 
   add 0.25 only in "normal" mode to end of splits...I guess...
-    unless in create mode :P
   allow drag window for upscaling select :P
   James' ideas add here
   the "lined" "select this one" quality editor...
