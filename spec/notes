@@ -4,7 +4,7 @@ up next:
 tangled loops VLC blackey
 tangled loops VLC work desktop
 
-all disney say "no VTS" only from within virtualbox.
+all disney say "no VTS" (only from within virtualbox?).
 works fine VLC mac [with nav] doesn't loop
 mplayer blackey:
 Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
