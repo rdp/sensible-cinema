@@ -345,18 +345,20 @@ module SensibleSwing
       return out unless we_are_in_create_mode # early out, since they won't be seeing subs anyway :)
       
       if OS.doze? 
-        offset_time = descriptors['dvd_start_offset']
-		p 'warning--using default DVDNAV offset time of 0.20 which is prolly ok for now, plus we don\'t really interpolate well anyway...or do we?'
-		offset_time ||= "0.20" # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
-		  offset = offset.to_f
-		  if offset < 0.10
-			offset_time = offset
-			puts 'using a small osd offset, which almost never happens ' + offset_time
-		  end
-		  if offset == 0
-			offset = 0.001 # so it knows we really do know what we're doing :)
-		  end
-		  out += " -osd-add #{offset_time}"
+		offset_time = 0.20 # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
+                dvd_start_offset = descriptors['dvd_start_offset']
+		if dvd_start_offset
+                  dvd_start_offset = dvd_start_offset.to_f
+		  if dvd_start_offset < 0.10
+		    offset_time = dvd_start_offset
+		    puts 'using a small osd offset, which almost never happens ' + offset_time
+		  else
+                  end
+                end 
+                if offset_time == 0.20 
+		  p 'warning--using default DVDNAV offset time of 0.20 which is prolly ok for now, plus we don\'t really interpolate well anyway...or do we?'
+                end
+		out += " -osd-add #{offset_time}"
       else
         show_blocking_message_dialog "warning, since we're not in windows with a patched mplayer OSD timestamps will probably be 0.19s too small,\n and their fraction past the decimal point will be off.\nPing me for instructions to build a patched mplayer."
       end
@@ -366,10 +368,9 @@ module SensibleSwing
     if OS.doze? # avoids spaces in filenames :)
       EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '\\mplayer.temp.edl'
     else
-      raise if Dir.tmpdir =~ / / # that would be unexpected, and probably cause problems...
+      raise if Dir.tmpdir =~ / / # that would be unexpected, and possibly cause problems...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
-    
     
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
@@ -383,9 +384,8 @@ module SensibleSwing
         end
         @_edit_list_path = edit_list_path
       end
-      p 're/loading ' + @_edit_list_path
+      p 're/loading ' + @_edit_list_path # in case it has changed on disk
       if @_edit_list_path
-        # reload it every time just in case it has changed on disk
         descriptors = nil
         begin
           descriptors = parse_edl @_edit_list_path

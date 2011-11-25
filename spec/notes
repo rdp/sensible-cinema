@@ -1,5 +1,9 @@
 up next:
 
+NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to 
+ the start of the MPEG, but if they'are always about 0.2 (they're not though... but typically quite close...hmm...)
+  I guess the problem is I don't have the 0.28 time for all EDL's?
+
 = dying/shouting dvdnav =
 tangled loops VLC blackey
 tangled loops VLC work desktop
