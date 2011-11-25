@@ -328,7 +328,7 @@ module SensibleSwing
       # 1.1: has timestamps_relative_to, I guess
     
       input = <<-EOL
-# edl_version_number 1.1
+# edl_version_version 1.1, sensible cinema v#{VERSION}
 # comments can go after a # on any line, for example this one.
 "name" => "#{english_name}",
 
