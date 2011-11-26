@@ -17,7 +17,6 @@
     no non-de-dupe
   virtual audio re-release
   mac:
-    multiple file open prompts
     dvdid isn't packaged with executable permissions
     can download mplayer-edl
   DVD timing for forum:Snow White  
@@ -27,6 +26,9 @@
   automate easy creation things...
   
 == yes do, un-ordered currently, from all the various future release options ==
+  versioning kills prefs
+  if it already exists, create new should "just" open it...probably...
+  "open arbitrary" should default to "being edited" dir
   Tangled crash
     uptodate vlc linux, ifoeefit
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
