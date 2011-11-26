@@ -156,7 +156,7 @@ module SensibleSwing
       end
     end
 
-    LocalStorage = Storage.new("sensible_cinema_storage")
+    LocalStorage = Storage.new("sensible_cinema_storage_#{VERSION}")
     
     def when_thread_done(thread)
       Thread.new {thread.join; yield }
