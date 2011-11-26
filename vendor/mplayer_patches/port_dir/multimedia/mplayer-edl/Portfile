@@ -31,7 +31,8 @@ depends_build       port:pkgconfig port:yasm
 depends_lib \
     port:jpeg port:openjpeg port:lame port:libiconv port:libmad \
     port:libogg port:libpng port:libtheora port:libvorbis \
-    port:lzo2 port:ncurses port:zlib port:bzip2 port:liboil
+    port:lzo2 port:ncurses port:zlib port:bzip2 port:liboil \
+    port:libdca port:faad2
 
 fetch.type          svn
 #svn.revision        ${version}
@@ -40,7 +41,7 @@ depends_fetch-append bin:git:git-core
 worksrcdir          trunk
 
 fetch {
-    system "svn co --force -r${version} --ignore-externals svn://svn.mplayerhq.hu/mplayer/trunk ${worksrcpath}/"
+    system "svn export --force -r${version} --ignore-externals svn://svn.mplayerhq.hu/mplayer/trunk ${worksrcpath}/"
     system "svn export --force -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdnav/src ${worksrcpath}/libdvdnav/"
     system "svn export --force -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdread/src ${worksrcpath}/libdvdread4/"
 
