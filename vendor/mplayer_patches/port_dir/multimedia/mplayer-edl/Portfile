@@ -14,7 +14,7 @@ platforms           darwin
 license             GPL-2
 
 set dvdnav_ver      1228
-set ffmpeg_ver      92afb431621c79155fcb7171d26f137eb1bee028
+set ffmpeg_ver      ce253edf4e5bca101d618d7b
 
 description         The MPlayer movie player built from SVN.
 long_description    ${description} It plays most MPEG/VOB, AVI, Ogg/OGM, \
