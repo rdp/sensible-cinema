@@ -1,18 +1,20 @@
 # $Id: Portfile 86914 2011-11-07 02:04:09Z ecronin@macports.org $
 
+    
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:filetype=tcl:et:sw=4:ts=4:sts=4
 
 PortSystem          1.0
 
 name                mplayer-edl
-version             33766
+version             34269
 revision            1
 categories          multimedia
 maintainers         acho openmaintainer
 platforms           darwin
+license             GPL-2
 
 set dvdnav_ver      1228
-set ffmpeg_ver      9e17d051ac9b113b70980373b8489ca469505f3f
+set ffmpeg_ver      92afb431621c79155fcb7171d26f137eb1bee028
 
 description         The MPlayer movie player built from SVN.
 long_description    ${description} It plays most MPEG/VOB, AVI, Ogg/OGM, \
@@ -38,13 +40,16 @@ depends_fetch-append bin:git:git-core
 worksrcdir          trunk
 
 fetch {
-    system "svn export -r${version} --ignore-externals svn://svn.mplayerhq.hu/mplayer/trunk ${worksrcpath}/"
-    system "svn export -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdnav/src ${worksrcpath}/libdvdnav/"
-    system "svn export -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdread/src ${worksrcpath}/libdvdread4/"
+    system "svn co --force -r${version} --ignore-externals svn://svn.mplayerhq.hu/mplayer/trunk ${worksrcpath}/"
+    system "svn export --force -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdnav/src ${worksrcpath}/libdvdnav/"
+    system "svn export --force -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdread/src ${worksrcpath}/libdvdread4/"
 
+    # TODO novo lib, other patches
     # 1000 should be deep enough to find out checkout
-    system "git clone --depth 1000 git://git.videolan.org/ffmpeg.git ${worksrcpath}/ffmpeg"
+    system "git clone --depth 1000 https://github.com/FFmpeg/FFmpeg.git ${worksrcpath}/ffmpeg"
     system "cd ${worksrcpath}/ffmpeg && git checkout -f ${ffmpeg_ver}"
+    system "cd ${worksrcpath} && patch -p0 < ${portpath}/../../../mplayer_edl.diff" 
+    system "cd ${worksrcpath}/libdvdnav && patch -p1 < ${portpath}/../../../libdvdnav/jump_to_time.diff" 
 }
 
 # Do not use the following environment variables, otherwise the build phase
@@ -72,7 +77,7 @@ configure.args \
 # dependencies, explicitly disable everything optional first.
 # Later, let autodetect do its magic not explicit --enable
 configure.args-append \
-    --disable-smb --disable-live --disable-dvdnav \
+    --disable-smb --disable-live \
     --disable-dvdread --disable-cdparanoia --disable-freetype \
     --disable-fontconfig --disable-fribidi \
     --disable-enca --disable-libcdio --disable-xvid \

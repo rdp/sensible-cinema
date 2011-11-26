@@ -1,1 +1,4 @@
 http://guide.macports.org/#development.local-repositories
+you want osd variant
+this basically collids with mplayer, I guess [without any way around that?] so you cannot install this and any other mplayer port
+sudo port -kd install mplayer-edl +osd
