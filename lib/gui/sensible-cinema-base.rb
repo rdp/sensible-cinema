@@ -457,10 +457,21 @@ module SensibleSwing
     end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
-      bring_to_front # LODO not need...
+      bring_to_front unless OS.mac? # causes triples on mac!
       JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
+    # also caches directory previously selected ...
+    def new_existing_file_selector_and_select_file title, dir = nil
+      bring_to_front unless OS.mac?
+      unique_trace = caller.inspect
+      dir ||= LocalStorage[unique_trace]
+      p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
+      got = FileDialog.new_previously_existing_file_selector_and_go title, dir
+      LocalStorage[unique_trace] = File.dirname(got)
+      got
+    end
+    
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
       bring_to_front
       SwingHelpers.show_blocking_message_dialog message, title, style
@@ -484,17 +495,6 @@ module SensibleSwing
       bring_to_front
       RubyClip.set_clipboard value            
       get_user_input message + " (has been copied to clipboard)", value, true
-    end
-    
-    # also caches directory previously selected ...
-    def new_existing_file_selector_and_select_file title, dir = nil
-      bring_to_front
-      unique_trace = caller.inspect
-      dir ||= LocalStorage[unique_trace]
-      p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
-      got = FileDialog.new_previously_existing_file_selector_and_go title, dir
-      LocalStorage[unique_trace] = File.dirname(got)
-      got
     end
     
     def show_in_explorer filename

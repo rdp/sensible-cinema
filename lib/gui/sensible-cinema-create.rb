@@ -120,7 +120,7 @@ module SensibleSwing
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
         
         open_file_to_edit_it srt_filename
-        sleep 0.5 # let it open first
+        sleep 0.5 # let it open in TextEdit first
 		    bring_to_front
  
 		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes

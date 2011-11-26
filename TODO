@@ -13,8 +13,6 @@
 == things working on today ==
   
 == yes do ordered for this release/other projects ja  ==
-  Tangled crash
-    uptodate vlc linux, ifoeefit
   upconvert stuff
     no non-de-dupe
   virtual audio re-release
@@ -25,11 +23,13 @@
   DVD timing for forum:Snow White  
   genealogy create/publicize
   smplayer for sync srt button
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
   auto-start audio caster ability, just use jruby/mklink LOL
   automate easy creation things...
   
 == yes do, un-ordered currently, from all the various future release options ==
+  Tangled crash
+    uptodate vlc linux, ifoeefit
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
   timestamps_relative_to "force them" to have, or to hit the upgrade button
   automate all creation things...add dvd NAV
   send bom to menumulti guy :P
