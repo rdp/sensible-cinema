@@ -6,6 +6,18 @@ module SensibleSwing
   
   class MainWindow < javax.swing.JFrame
     
+	 
+    def force_accept_license_first
+      if !(LocalStorage['main_license_accepted'] == VERSION)
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
+            "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+        LocalStorage['main_license_accepted'] = VERSION
+      end
+    end
+
+   
     def self.download full_url, to_here
       require 'open-uri'
       require 'openssl'
@@ -77,8 +89,7 @@ module SensibleSwing
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
         puts 'downloading mplayer edl [10 MB]'
         MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
-      end
-        
+      end     
 
       # runtime dependencies, at least as of today...
       ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
@@ -105,7 +116,7 @@ module SensibleSwing
     def assert_ownership_dialog 
       message = "Do you certify you own the DVD this came of and have it in your possession?"
       title = "Verify ownership"
-      returned = JOptionPane.show_select_buttons_prompt(message, {})
+      returned = JOptionPane.show_select_buttons_prompt(message, {:yes => "no", :no => "yes"})
       assert_confirmed_dialog returned, nil
     end
   
@@ -120,18 +131,14 @@ module SensibleSwing
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      answer = JOptionPane.show_select_buttons_prompt message, :yes => 'Accept', :no => "View #{license_name}"
+      answer = JOptionPane.show_select_buttons_prompt message, :no => 'Accept', :yes => "View #{license_name}"
       assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
       p 'confirmation of sensible cinema related license noted of: ' + license_name # LODO require all licenses together :P
-      throw unless answer == :yes
     end
     
     def assert_confirmed_dialog returned, license_url_should_also_be_embedded_by_you_in_message
-      # :yes, :no, :cancel
-      # 1 is view button was clicked
-      # 0 is accept
-      # 2 is cancel
-      if returned == :no
+      # :yes is "view license", :no is "accept", :cancel
+      if returned == :yes
         if license_url_should_also_be_embedded_by_you_in_message
           SwingHelpers.open_url_to_view_it_non_blocking license_url_should_also_be_embedded_by_you_in_message
           puts "Please restart after reading license agreement, to be able to then accept it."
@@ -143,13 +150,11 @@ module SensibleSwing
       elsif returned == :exited
         p 'license exited early...exiting'
         System.exit 1
-      elsif returned == :yes
+      elsif returned == :no
         # ok
       else
         raise 'unknown'
       end
     end
-  
-  
   end
 end

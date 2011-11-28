@@ -85,7 +85,7 @@ module SensibleSwing
     
     def initialize be_visible = true
       super "Sensible-Cinema #{VERSION} (GPL)"
-      force_accept_license_first
+      force_accept_license_first # in other file :P
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
       @buttons = []
@@ -145,17 +145,7 @@ module SensibleSwing
       @starting_button_y += how_much
       setSize @button_width+80, @starting_button_y + 50
     end
-    
-    def force_accept_license_first
-      if !(LocalStorage['main_license_accepted'] == VERSION)
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-            "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
-            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
-        LocalStorage['main_license_accepted'] = VERSION
-      end
-    end
-
+	
     LocalStorage = Storage.new("sensible_cinema_storage_#{VERSION}")
     
     def when_thread_done(thread)
