@@ -4,7 +4,42 @@ NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to
  the start of the MPEG, but if they'are always about 0.2 (they're not though... but typically quite close...hmm...)
   I guess the problem is I don't have the 0.28 time for all EDL's?
 
-= dying/shouting dvdnav =
+  tangled:
+  "dvd_start_offset" => "0.21", # for title 1
+  last NAV packet was 0.400000, mpeg at 0.033367
+  last NAV packet was 0.400000, mpeg at 0.207756
+  ...
+  last NAV packet was 0.900000, mpeg at 1.041922
+    may have had extra resets in there...
+  negative dvdnav offset: -0.07
+  
+  time bandits is streamed
+  
+  finding neverland:
+    "dvd_start_offset" => "0.28", # for title 1
+    last NAV packet was 0.000000, mpeg at 0.033367
+	last NAV packet was 0.000000, mpeg at 0.280633
+	                    0.500000, mpeg at 0.735254
+	negative dvdnav offset: -0.05
+  night at the museum:
+  
+"dvd_start_offset" => "0.20", # for title 1
+    last NAV packet was 0.000000, mpeg at 0.033367 a
+	 0.000000, mpeg at 0.199800 # video packet I believe...
+	 ...
+	 last NAV packet was 0.433333, mpeg at 0.533467 # 0.1 ! but note it st
+	 negative dvdnav offset: -0.09
+	 
+  american mormon:
+  
+"dvd_start_offset" => "0.3", # for title 8
+	last NAV packet was 0.000000, mpeg at 0.033367
+	last NAV packet was 0.000000, mpeg at 0.300300
+	last NAV packet was 0.433333, mpeg at 0.667333 # 0.23, seems to have no correlation?
+	  negative dvd offset: -0.065
+	
+= dying dvdnav =
+
 tangled loops VLC blackey
 tangled loops VLC work desktop
 
@@ -16,6 +51,8 @@ This application has requested the Runtime to terminate it in an unusual way.
 Please contact the application's support team for more information.
 
 Guess is that it's a bad disk.  Possibly patch libdvdnav and see if that "fixes" it...
+
+dies new lappy same spot, same DVD, but clean :P
 
 = VLC patch =
 
