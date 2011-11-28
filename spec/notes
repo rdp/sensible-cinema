@@ -527,11 +527,12 @@ using mpeg ts appears larger, which if true is definitely better 2.983327 > 2.96
 last NAV packet was 2.833333, mpeg at 3.025035 after -> 29.97 2.836167
 NAV packet of 0.43 which is *not* 0.5
 then 3.6
-0.8'ish again. fascinating.
+now 0.8'ish again. fascinating.
 
 many are 0.40 
 
 last NAV packet was 0.400000, mpeg at 0.614300
+  so the NAV packets think it starts at...
 
 conc: looks like tmap "typically" tends to go forward [?] from somewhere
 
