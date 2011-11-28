@@ -23,7 +23,7 @@ def kill_processes
     # this prevents people from having two processes going at once...kind of like queueing them up...
     # system_original("taskkill /f /im mencoder.exe 2>NUL") # todo...is there a better way?
     # system_original("taskkill /f /im ffmpeg.exe 2>NUL")
-    # system_original("taskkill /f /im smplayer_portable.exe 2>NUL")
+    # system_original("taskkill /f /im smplayer.exe 2>NUL")
     # system_original("taskkill /f /im mplayer.exe 2>NUL")
   end
 end

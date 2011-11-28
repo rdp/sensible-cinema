@@ -100,14 +100,16 @@ module SensibleSwing
       if OS.mac?
         check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
       else      
-        path = RubyWhich.new.which('smplayer_portable')
+        path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
           # this one has its own installer...
-          show_blocking_message_dialog("It appears that you need to install a pre-requisite dependency: MPlayer for Windows (MPUI).
-          Click ok to be directed to its download website, where you can download and install it (recommend: MPUI....Full-Package.exe), 
-          then restart sensible cinema.  NB that it takes awhile to install.  Sorry about that.", 
-          "Lacking dependency", JOptionPane::ERROR_MESSAGE)
-          SwingHelpers.open_url_to_view_it_non_blocking "http://code.google.com/p/mulder/downloads/list?can=2&q=MPlayer&sort=-uploaded&colspec=Filename%20Summary%20Type%20Uploaded%20Size%20DownloadCount"
+		  require_blocking_license_accept_dialog 'Smplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
+		  save_to_dir = SwingHelpers.new_existing_dir_chooser_and_go 'pick dir to save smplayer.exe install file to:'
+		  save_to_file =  "#{save_to_dir}/smplayer-0.6.9-win32.exe"
+		  puts 'downloading smplayer.exe [14MB] to #{save_to_file}'
+          MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
+		  show_blocking_message_dialog "Run this file to install it (ok to reveal): smplayer-0.6.9-win32.exe"
+		  show_in_explorer save_to_file
           System.exit 0
         end
       end
@@ -131,7 +133,7 @@ module SensibleSwing
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      answer = JOptionPane.show_select_buttons_prompt message, :no => 'Accept', :yes => "View #{license_name}"
+      answer = JOptionPane.show_select_buttons_prompt message, :no => 'I Accept the Terms of this License Agreement.', :yes => "View #{license_name}"
       assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
       p 'confirmation of sensible cinema related license noted of: ' + license_name # LODO require all licenses together :P
     end

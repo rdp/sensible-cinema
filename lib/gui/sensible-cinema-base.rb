@@ -242,7 +242,7 @@ module SensibleSwing
           extra_options << "-vo direct3d" # more light nvidia...should be ok...this wastes cpu...but we have to have it I guess...
         end
         set_smplayer_opts extra_options.join(' ') + " " + passed_in_extra_options, get_upconvert_vf_settings, show_subs
-        c = "smplayer_portable \"#{play_this}\" -config-path \"#{File.dirname  EightThree.convert_path_to_8_3(SMPlayerIniFile)}\" " 
+        c = "smplayer \"#{play_this}\" -config-path \"#{File.dirname  EightThree.convert_path_to_8_3(SMPlayerIniFile)}\" " 
         c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode
           #c += " -close-at-end " # still too unstable...
