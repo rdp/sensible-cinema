@@ -26,6 +26,7 @@
   automate easy creation things...
   
 == yes do, un-ordered currently, from all the various future release options ==
+  not display "play edited" button if we have no EDL for the current :P
   dive deep dvdnav
   versioning kills prefs
   if it already exists, create new should "just" open it...probably...

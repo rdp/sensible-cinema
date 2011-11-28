@@ -59,7 +59,7 @@ if OS.windows?
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
   
-  installed_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/MPlayer for Windows*'] # sometimes ends with UI? huh?
+  installed_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
 
   for folder in installed_smplayer_folders
     ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
