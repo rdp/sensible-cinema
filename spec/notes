@@ -1,5 +1,9 @@
 up next:
 
+= NAV to MPEG =
+
+negative NAV offset: mpeg - "0.21" - nav_converted
+
 NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to 
  the start of the MPEG, but if they'are always about 0.2 (they're not though... but typically quite close...hmm...)
   I guess the problem is I don't have the 0.28 time for all EDL's?
@@ -11,7 +15,7 @@ NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to
   ...
   last NAV packet was 0.900000, mpeg at 1.041922
     may have had extra resets in there...
-  negative dvdnav offset: -0.07
+  negative dvdnav offset: -0.069  looks good...
   
   time bandits is streamed
   
@@ -20,7 +24,8 @@ NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to
     last NAV packet was 0.000000, mpeg at 0.033367
 	last NAV packet was 0.000000, mpeg at 0.280633
 	                    0.500000, mpeg at 0.735254
-	negative dvdnav offset: -0.05
+	negative dvdnav offset: -0.05 # hmm...
+	
   night at the museum:
   
 "dvd_start_offset" => "0.20", # for title 1
@@ -30,6 +35,10 @@ NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to
 	 last NAV packet was 0.433333, mpeg at 0.533467 # 0.1 ! but note it st
 	 negative dvdnav offset: -0.09
 	 
+	 last NAV packet was 3603.433333, mpeg at 3607.136401
+	 3607.1364 - 0.2-(3603.4333*1.001)
+       => -0.10033329999987473
+	   then has a split
   american mormon:
   
 "dvd_start_offset" => "0.3", # for title 8
@@ -38,6 +47,30 @@ NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to
 	last NAV packet was 0.433333, mpeg at 0.667333 # 0.23, seems to have no correlation?
 	  negative dvd offset: -0.065
 	
+	last NAV packet was 1803.533333, mpeg at 1805.570402
+	   1805.57 - 0.3-(1803.533*1.001)
+       => -0.06653299999970841  might be an expected creep LOL
+	     this explains why my numbers get slightly less accurate near the end...
+	  that's about the end
+	  
+	seeker letters up:
+	
+"dvd_start_offset" => "0.2", # for title 1
+	 0.000000, mpeg at 0.033367
+	  0.000000, mpeg at 0.195633
+	  last NAV packet was 0.433333, mpeg at 0.562667
+	  negative dvdnav offset: -0.069
+	  last NAV packet was 3603.833333, mpeg at 3607.549158
+	     3607.55-0.195-(3603.833*1.001)
+          => -0.08183299999973315
+	  last NAV packet was 5403.600000, mpeg at 5409.099292
+	  5409.099 -0.195-(5403.6*1.001)
+      => -0.09959999999955471
+	      creeping? but that's after like 2 hours...hmm...
+		  
+
+"dvd_start_offset" => "0.2", # for title 1
+
 = dying dvdnav =
 
 tangled loops VLC blackey

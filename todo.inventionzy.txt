@@ -10,6 +10,7 @@
     OCR'ing subtitles on the fly (or, cache'd OCR'ing them on the fly, to give it time to process) to synchronize or check for profanity or other "questionable" content
     
     post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
+	can infer a rating based on (looking it upon imdb, letting people vote, etc.)
     I can forsee some browser window that pulls up some sweet player [mod vlc plugin?] somehow something quality anyway, to play local media, or remote
       or same thing but for upconverting...but how?
    bounty NACL VLC :P
