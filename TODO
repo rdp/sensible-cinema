@@ -24,6 +24,8 @@
   smplayer for sync srt button
   auto-start audio caster ability, just use jruby/mklink LOL
   automate easy creation things...
+  cannot reveal paths with spaces
+  has wrong escape in string
   
 == yes do, un-ordered currently, from all the various future release options ==
   not display "play edited" button if we have no EDL for the current :P
@@ -58,6 +60,7 @@
   James' ideas add here
   the "lined" "select this one" quality editor...
   normal smplayer download [download right one for them, reveal]
+  super precise timing, this 1.001 just doesn't work
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.

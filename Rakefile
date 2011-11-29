@@ -97,8 +97,9 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
-  FileUtils.rm_rf Dir['sensible-cinema-*'] # remove old versions' distro files
-  raise 'unable to delete...' if Dir[spec.name + '-*'].length > 0
+  old_glob = spec.name + '-*'
+  FileUtils.rm_rf Dir[old_glob] # remove any old versions' distro files
+  raise 'unable to delete...' if Dir[old_glob].length > 0
   
   existing = Dir['*']
   FileUtils.mkdir_p dir_out
