@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'jeweler'
 require 'os'
 
@@ -17,7 +18,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with next release, though I can't remember why
     s.add_dependency 'rdp-ruby-wmi' # for windows
     s.add_dependency 'plist' # for mac
-  	s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics like this.
+    s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics...
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
     s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
     s.add_development_dependency 'hitimes' # now jruby compat!
@@ -93,7 +94,7 @@ end
 
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
-  raise 'need rebundle_dependencies first' unless File.directory? 'vendor/cache'
+  raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = eval File.read('sensible-cinema.gemspec')
   dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
@@ -113,10 +114,6 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end
 
-def set_executable_bit filename
-  FileUtils.chmod 0755, filename
-end
-
 def cur_ver
   File.read('VERSION').strip
 end
@@ -129,7 +126,12 @@ desc 'create *.zip,tgz'
 task 'zip' do
   name = 'sensible-cinema-' + cur_ver
   raise 'doesnt exist yet to zip?' unless File.directory? name
-  raise unless system("\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}")
+  if OS.doze?
+    sys "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
+  else
+    sys "zip -r #{name}.zip #{name}"
+  end
+  raise if OS.doze? # dunno work...
   c = "tar -cvzf #{name}.mac-os-x.tgz #{name}"
   sys c
   delete_now_packaged_dir name
