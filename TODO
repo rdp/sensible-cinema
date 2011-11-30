@@ -44,7 +44,7 @@
   ffmpeg how to add subs demo
   inspector general
   remove splits' functionality 
-  add 0.25 only in "normal" mode to end of splits...I guess...if they came from file mode anyway...
+  add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
   super precise timing, this 1.001 just doesn't cut it
@@ -83,7 +83,6 @@
   show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
     maybe reset on any button press...
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  it should ask for an EDL when you click "play it unedited" -- actually just say why...
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
   @ffmpeg: wiki list for all filter's?
@@ -139,6 +138,7 @@
   super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  it should ask for an EDL when you click "play it unedited" -- actually just say why...
   sons of provo "music video" EDL
   volume_name => dvd_volume_name
   english name (movie name?) mass everywhere
@@ -212,7 +212,6 @@
   smplayer "might" be able to run on linux, too...
   maybe lib dvdread add some methods better searching?
   netflix instant CGI how crisp is their HD?
-  prompt if they want to auto-search for splits :P
   on mac needs a different -osd-add number...though if my patches are accepted it may not matter
   change upconvert options needs its own "close" button
     and status field?
@@ -318,14 +317,11 @@
   research XBMC
     break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
-    also are they 30fps or not? and how do they handle timesplits?
     is there another format that will actually mute?
     XBMC mode doesn't mind the 600 starting offset...
       oh wait we weren't even using it right to begin with LOL
       plus it needs to "always just skip instead of mute" for now I guess
       report XBMC bugs, too.
-  research VOB dirs
-    still needs timesplits? what about in XBMC? what about XBMC with DVD's
   @avisynth: 6 fps from 2? huh? also why are some progs [ffmpeg] seemingly resetting the graphedit pins? huh? also tell that one already logged bug how I work around it...
   sout-keep for VLC EDL'ish or playlist?
   local cache volume_name -> dvd id's, in case that can speed things up
