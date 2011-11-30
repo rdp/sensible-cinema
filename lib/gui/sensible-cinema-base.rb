@@ -112,7 +112,6 @@ module SensibleSwing
       Thread.new {
         known_drives = {}
         loop {
-p 'updating'
           present_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
@@ -122,9 +121,9 @@ p 'updating'
             end
           }
           if present_discs.length > 0
-            @current_dvds.text= present_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has' : 'has no'} EDL currently available for it"}.join(' ')
+            @current_dvds.text= '      ' + present_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has' : 'has no'} EDL currently available for it"}.join(' ')
           else
-            @current_dvds.text= 'no discs found'
+            @current_dvds.text= '      No discs currently inserted'
           end
           sleep 5
         }

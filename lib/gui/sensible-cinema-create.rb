@@ -158,7 +158,7 @@ module SensibleSwing
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
         out_hashes, title_lengths = get_disk_info
-	out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect }.join("\n") + "\n" + title_lengths.join("\n")
+	out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
         filename = EdlTempFile + '.disk_info.txt'
         File.write filename, out_string
         open_file_to_edit_it filename

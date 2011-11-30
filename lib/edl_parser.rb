@@ -317,14 +317,13 @@ class EdlParser
     }.compact
     if matching.length == 1
       file = matching[0]
-      p "selecting the one only matching EDL: #{file}"
       file
     elsif matching.length > 1
-      p "found multiple matches for media? #{matching.inspect}"
+          p "found multiple matches for media? #{matching.inspect}"
 	  if return_first_if_there_are_several
 	    matching[0]
 	  else
-        nil
+            nil
 	  end
     else
       nil
