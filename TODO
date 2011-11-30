@@ -13,27 +13,26 @@
 == things working on today ==
   
 == yes do ordered for this release/other projects ja  ==
-  upconvert stuff @home/sintel
-    (no non-de-dupe)
-	prepare for netflix instant
-      allow drag window for upscaling select :P
   virtual audio re-release
-  mac:
-    can download mplayer-edl or build it themselves locally into the same loc.
-    advertise urug
   DVD timing for forum:Snow White  
   auto-start audio caster ability, just use jruby/mklink LOL
   
 == yes do, un-ordered currently, from all the various future release options ==
+  upconvert stuff @home/sintel
+    (no non-de-dupe)
+	prepare for netflix instant
+      allow drag window for upscaling select :P
+  mac:
+    can download mplayer-edl or build it themselves locally into the same loc.
+    advertise urug
   @macports: test VLC "app" without the /opt/local...
   bug on reload EDL apparently
+  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
+  it doesn't allow you to switch disk's, hit play again, currently.
   genealogy create/publicize
-  not display "play current DVD edited" button if we have no EDL for the current :P
-  @dvdnav: tangled
-  Tangled crash
-    uptodate vlc linux
+  @dvdnav: Tangled crash
+    uptodate vlc/mplayer linux
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
-  creation things...add dvd NAV
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
@@ -55,8 +54,6 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  it doesn't allow you to switch disk's, hit play again, currently.
-  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   use DVD NAV packet time:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
     add 2 options: file, "dvd"
@@ -80,8 +77,6 @@
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
   the php thing :P
-  show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
-    maybe reset on any button press...
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
