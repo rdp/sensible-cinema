@@ -25,9 +25,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_
 begin
   require 'sane'
   require 'whichr'
-rescue LoadError
-  p 'please run $ rake rebundle_copy_in_dependencies first, as we dislike needing locally installed rubygems'
-  raise
+rescue LoadError => e
+  raise 'please run $ rake copy dependencies command first, as we dislike needing locally installed rubygems ' + e.to_s
 end
 
 raise 'need jruby' unless OS.java?

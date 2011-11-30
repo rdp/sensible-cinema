@@ -1,6 +1,6 @@
 require 'rubygems'
-require 'jeweler'
-require 'os'
+require 'jeweler' # gem
+require 'os' # gem
 
 ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem hackaround...
 

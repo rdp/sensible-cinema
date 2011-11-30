@@ -18,11 +18,15 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
 or to install them automatically:
-$ jruby -S rake install # create gem
-$ jruby -S gem install pkg\*.gem
-$ jruby -S gem uninstall -x sensible-cinema
+$ jruby -S gem install os sane jeweler # some helper gems
+$ jruby -S rake build
+$ jruby -S gem install pkg\*.gem --development
+# optional:
+$ jruby -S gem uninstall -x sensible-cinema # uninstall the gem so you don't have to worry about it conflicting later, just in case.
  
 You'll have to install some git submodules, too.
+$ git submodule init
+$ git submodule update
 
 The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.
 
@@ -41,7 +45,7 @@ Ex: want JSON'ified output somehow? Just ask.
 == mac os x developers ==
 
 You'll have to install a few dependencies.  It will tell you which at runtime, 
-or see the installation instructions: http://rogerdpack.t28.net/sensible-cinema/
+or see the installation instructions: http://rogerdpack.t28.net/sensible-cinema
 
 == OCR screen tracker ==
 
