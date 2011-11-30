@@ -246,13 +246,13 @@ module SensibleSwing
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if edit_list_path
 	  parsed = parse_edl edit_list_path
-          title_to_get_offset_of = get_title_track(parsed)
+          title_to_get_offset_of = get_title_track_string(parsed)
         else
           title_to_get_offset_of = nil
         end
         title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
         # ID_DVD_TITLE_4_LENGTH=365.000
-        titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+        titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
         largest_title = titles_with_length.max_by{|title, length| length}
 	if !largest_title
 	  show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
@@ -260,6 +260,7 @@ module SensibleSwing
 	largest_title = largest_title[0]
         title_to_get_offset_of ||= largest_title
  	out_hashes['dvd_title_track'] = title_to_get_offset_of
+p titles_with_length
 	out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
         offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
 	start_offset = offsets[:mpeg_start_offset]
@@ -297,19 +298,22 @@ module SensibleSwing
       out = `#{command}`
       #search for V:  0.37
       popup.close
-	  outs = {}
+      outs = {}
       out.each_line{|l|
         if l =~  /V:\s+([\d\.]+)/
           outs[:mpeg_start_offset] ||= $1.to_f
         end
-		float = /\d+\.\d+/
-		if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
-		  outs[:dvd_nav_packet_offset] ||= [$1.to_f,$2.to_f]
-		end
+	float = /\d+\.\d+/
+	if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
+          nav = $1.to_f
+          mpeg = $2.to_f
+          if nav > 0.0
+	    outs[:dvd_nav_packet_offset] ||= [nav, mpeg]
+          end
+	end
       }
-      show_blocking_message_dialog "unable to calculate time?" unless out[:mpeg_start_offset]
-      p 'returning:', outs
-      return outs
+       show_blocking_message_dialog "unable to calculate time?" unless outs.length == 2
+       outs
     end
     
     def get_start_stop_times_strings

@@ -18,7 +18,8 @@ module CheckInstalledMac
   if name == 'mplayer'
     for path in ["/Applications/MPlayerX.app/Contents/Resources/binaries/m32", File.expand_path('~') + "/Downloads/MPlayerX.app/Contents/Resources/binaries/m32/"]
       if File.exist? path + "/mplayer"
-        ENV['PATH'] = path + ':' + ENV['PATH']
+        # TODO remove
+        # ENV['PATH'] = path + ':' + ENV['PATH']
         return true
       end
     end

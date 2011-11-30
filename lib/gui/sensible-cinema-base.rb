@@ -69,7 +69,7 @@ if OS.windows?
   end
 
 else
-  ENV['PATH'] = ENV['PATH'] + ':' + '/opt/local/bin' # add macports' bin in, just in case...
+  ENV['PATH'] = '/opt/local/bin' + ENV['PATH'] # macports' bin in first
 end
 
 import 'javax.swing.ImageIcon'
@@ -107,7 +107,7 @@ module SensibleSwing
       set_visible be_visible
     end
     
-    def get_title_track descriptors, use_default_of_one = true
+    def get_title_track_string descriptors, use_default_of_one = true
       given = descriptors["dvd_title_track"] 
       given ||= "1" if use_default_of_one
       given
@@ -329,7 +329,7 @@ module SensibleSwing
    
     def play_dvd_smplayer_unedited use_mplayer_instead
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
-      title_track_maybe_nil = get_title_track(descriptors, false)
+      title_track_maybe_nil = get_title_track_string(descriptors, false)
       run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false
     end
     
@@ -403,7 +403,7 @@ module SensibleSwing
       start_add_this_to_all_ts = 0
       if edl_path # some don't care...
         descriptors = EdlParser.parse_file edl_path
-        title_track = get_title_track(descriptors)
+        title_track = get_title_track_string(descriptors)
       end
       
       if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS')

@@ -66,7 +66,7 @@ module SensibleSwing
         raise 'no dvd name in EDL?' + edit_list_path + File.read(edit_list_path)
       end
       
-      dvd_title_track = get_title_track(descriptors)
+      dvd_title_track = get_title_track_string(descriptors)
       if dvd_id == NonDvd
         file_from = drive_or_file
       else
