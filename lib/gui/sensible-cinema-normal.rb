@@ -50,6 +50,7 @@ module SensibleSwing
         It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
       EOL
       @create.on_clicked {
+	    check_for_file_manipulation_dependencies
         do_create_edited_copy_via_file false
       }
       
