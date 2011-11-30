@@ -113,7 +113,8 @@ module SensibleSwing
           MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
 		      show_blocking_message_dialog "Run this file to install it (ok to reveal): smplayer-0.6.9-win32.exe"
     		  show_in_explorer save_to_file
-          System.exit 0
+          sleep 2
+		      show_blocking_message_dialog "hit ok after smplayer is installed:"
         end
       end
     end

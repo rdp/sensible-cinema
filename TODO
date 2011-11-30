@@ -18,27 +18,26 @@
   auto-start audio caster ability, just use jruby/mklink LOL
   
 == yes do, un-ordered currently, from all the various future release options ==
-  my mplayer can't seek os x?
-  try his new seeking patch
+  my mplayer can't seek arrow keys os x?
   upconvert stuff @home/sintel
     (no non-de-dupe)
 	prepare for netflix instant
       allow drag window for upscaling select :P
   mac:
-    mplayer-edl download/build instructions on the web page
-    advertise urug
-  @macports: test VLC "app" without the /opt/local..., mpkg bug
+    advertise urug after next release
   bug on reload EDL apparently
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   it doesn't allow you to switch disk's, hit play again, currently.
   genealogy create/publicize
-  @dvdnav: Tangled crash
-    uptodate vlc/mplayer linux
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
-
-
-  mplayer-edl my version :P
+  
+  the timestamp sync'ing feels broken it's hard to use LOL
+    srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
+    needs option "test it out starting near there" or the like
+    needs to at *least* parse it for them
   os x really needs to be some kind of local download or app or something...
+
+  update mplayer-devel macport
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
@@ -48,7 +47,7 @@
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   inspector general
-  remove splits' functionality 
+  remove splits' old functionality 
   add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
@@ -78,15 +77,10 @@
     just try it as is for today :P
   upconvert: compare with "normal", and against itself.  Then release :P
   rename it "edited movie player" or whatever google prefers :P
-  the timestamp sync'ing feels broken it's hard to use LOL
-    srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
-    needs option "test it out starting near there" or the like
-    needs to at *least* parse it for them
   the php thing :P
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
-  @ffmpeg: wiki list for all filter's?
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   netflix instant descriptor work at all
     maybe get it to work with say VLC full screen first?
@@ -101,8 +95,7 @@
   minor redcar tweaks
   short list of todo's for screen capture
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
-  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
-    and end too why not?
+    also if they're "close" but not overlapping [ex: contiguous] they should just combine
   blu ray timing
     Are they the same as DVD's?  They seem really close...
     sub-title wise? do subs match something else? subs DVD vs. blu ray?
@@ -116,7 +109,6 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  check if libdvdnav saves it to a good dir at all 
   libdvdnav can take libdvdcss-2
   it can "overlay display" custom edited .srt files
   OS X netflix instant
@@ -126,7 +118,6 @@
   user preference "always just skip" if that's what he wanted :P
   @ffmpeg: you can't convert mkv's of this type!
   DIRT short list
-  fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
   "overwrite?" prompt for file mode
   VLC UI fixes
@@ -139,6 +130,8 @@
   super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
+    and end too why not?
   it should ask for an EDL when you click "play it unedited" -- actually just say why...
   sons of provo "music video" EDL
   volume_name => dvd_volume_name

@@ -19,15 +19,14 @@ module CheckInstalledMac
   end
 
   if name == 'mplayer'
-    instrs = "please install macports, open a terminal, cd to sensible-cinema/vendor/mplayer_patches/port_dir, run portindex, add that dir to /opt/local/etc/macports/sources.conf, ex: file:///Users/rogerdpack/sensible-cinema/vendor/mplayer_patches/port_dir
- then run $ sudo port install mplayer-edl"
+    instrs = "please install mplayer-edl, see website http://rogerdpack.t28.net/sensible-cinema/content_editor.html"
     unless File.exist?('/opt/local/bin/mplayer')
       puts 'please install mplayer edl, ' + instrs
       return false
     end
     out = `mplayer -osd-verbose`
     if out =~ /unknown option on the command line/i
-     puts 'maybe you have another mplayer uninstalled? please uninstall, install mplayer-edl: ' + instrs
+     puts 'maybe you have another macports mplayer already uninstalled? please $ port uninstall, then ' + instrs
      return false
     else
      return true

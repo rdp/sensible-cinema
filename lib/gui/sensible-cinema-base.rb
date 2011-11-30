@@ -109,7 +109,7 @@ module SensibleSwing
     end
 
     def update_current_dvds_line
-      Thread.new {
+      # ComException LODO Thread.new {
         known_drives = {}
         loop {
           present_discs = []
@@ -127,7 +127,7 @@ module SensibleSwing
           end
           sleep 5
         }
-      }
+      # }
     end
     
     def get_title_track_string descriptors, use_default_of_one = true

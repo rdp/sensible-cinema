@@ -55,7 +55,17 @@ If you plan on watching any movies in "realtime" then you'll need to download <a
 
 If you plan on doing any auto-video editing/saving then you'll need to install <a href="http://www.macports.org/">macports</a> and some libraries.  
 Install macports, then afterward open the "terminal" Application and execute the following command:
-$ sudo port install mencoder ffmpeg gocr
+$ sudo port install ffmpeg gocr
+
+Now comes the hard part.  You're going to want to install mplayer-edl
+
+open a terminal, 
+cd to sensible-cinema/vendor/mplayer_patches/port_dir
+run $ portindex
+add that dir to /opt/local/etc/macports/sources.conf, ex, at the bottom: 
+file:///Users/rogerdpack/sensible-cinema/vendor/mplayer_patches/port_dir
+then run $ sudo port install mplayer-edl
+
 After this finishes (it will take awhile) you should be ready to run Sensible Cinema's advanced mode options.
 Note that by installing these dependencies, you're accepting their respective licenses/distributions.
 
