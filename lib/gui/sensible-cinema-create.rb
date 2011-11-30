@@ -232,7 +232,7 @@ module SensibleSwing
       
     end
 	
-	def get_disk_info
+	def get_disk_info want_titles = true
 	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         # display it, allow them to copy and paste it out
 		out_hashes = {}
@@ -243,6 +243,13 @@ module SensibleSwing
         puts command
         title_lengths_output = `#{command}`
         popup.close
+        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
+        if edit_list_path
+		  parsed = parse_edl edit_list_path
+          title_to_get_offset_of = get_title_track(parsed)
+        else
+          title_to_get_offset_of = largest_title
+        end
         title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
         # ID_DVD_TITLE_4_LENGTH=365.000
         titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
@@ -252,16 +259,10 @@ module SensibleSwing
 		end
 		
 		largest_title = largest_title[0]
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        if edit_list_path
-		  parsed = parse_edl edit_list_path
-          title_to_get_offset_of = get_title_track(parsed)
-        else
-          title_to_get_offset_of = largest_title
-        end
-		out_hashes['dvd_title_track'] = title_to_get_offset_of
+ 		out_hashes['dvd_title_track'] = title_to_get_offset_of
 		out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
-        start_offset = calculate_dvd_start_offset(title_to_get_offset_of, drive)
+        offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
+		start_offset = offsets[:mpeg_start_offset]
 		out_hashes['dvd_start_offset'] = start_offset
 	    [out_hashes, title_lengths]
 	end	
@@ -291,18 +292,24 @@ module SensibleSwing
     
     def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..."
-      command = "mplayer -benchmark -frames 1 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
+      command = "mplayer -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
       out = `#{command}`
       #search for V:  0.37
       popup.close
+	  outs = {}
       out.each_line{|l|
         if l =~  /V:\s+([\d\.]+)/
-          return $1.to_f
+          outs[:mpeg_start_offset] ||= $1.to_f
         end
+		float = /\d+\.\d+/
+		if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
+		  outs[:dvd_nav_packet_offset] ||= [$1.to_f,$2.to_f]
+		end
       }
-      show_blocking_message_dialog "unable to calculate time?"
-      return 0.0
+      show_blocking_message_dialog "unable to calculate time?" unless out[:mpeg_start_offset]
+	  p outs
+      return outs
     end
     
     def get_start_stop_times_strings
