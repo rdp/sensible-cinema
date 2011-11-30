@@ -30,7 +30,7 @@ Jeweler::Tasks.new do |s|
 
     for gem in s.development_dependencies #['hitimes', 'rspec', 'jeweler', 'rake']
       # bundling rake won't be too expensive, right? and this allows for easier dev setup through gem install
-      s.add_dependency gem
+      s.add_dependency gem.name, gem.requirement
     end
   end
 
@@ -83,8 +83,6 @@ desc 'collect binary and gem deps for distribution'
 task 'rebundle_copy_in_dependencies' => 'gemspec' do
    spec = eval File.read('sensible-cinema.gemspec')
    dependencies = spec.runtime_dependencies
-   p spec.runtime_dependencies.length, (spec.runtime_dependencies - spec.development_dependencies).length, spec.development_dependencies.length
-   raise 
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
    FileUtils.mkdir_p 'vendor/cache'
    Dir.chdir 'vendor/cache' do
