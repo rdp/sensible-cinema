@@ -194,14 +194,14 @@ module SensibleSwing
       extra_options << "-alang en"
       extra_options << "-slang en"
 
-      parent_parent = File.basename(File.dirname(play_this))
       force_use_mplayer ||= OS.mac?
+      parent_parent = File.basename(File.dirname(play_this))
       if parent_parent == 'VIDEO_TS'
         # case d:\yo\VIDEO_TS\title0.vob
         dvd_device_dir = normalize_path(File.dirname(play_this))
         play_this = "\"dvdnav://#{title_track_maybe_nil}/#{dvd_device_dir}/..\""
-      elsif File.exist?(play_this + '/VIDEO_TS')
-        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive] or mac's /Volumes/YO
+      elsif File.exist?(play_this + '/VIDEO_TS') || (play_this =~ /\/dev\/disk\d/)
+        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive, or DVD dir] or mac's /dev/disk1
         play_this = "\"dvdnav://#{title_track_maybe_nil}/#{play_this}\""
       else
         # case g:\video\filename.mpg

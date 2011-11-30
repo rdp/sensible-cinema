@@ -206,7 +206,7 @@ module SensibleSwing
 		      ensure
 		      out.dispose
 		      end
-          @_choose_dvd_drive_or_file = [disk.MountPoint, opticals[selected_idx].VolumeName, dvd_id]
+          @_choose_dvd_drive_or_file = [disk.DevicePoint, opticals[selected_idx].VolumeName, dvd_id]
           return @_choose_dvd_drive_or_file
         end
     end
