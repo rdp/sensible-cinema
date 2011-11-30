@@ -157,8 +157,8 @@ module SensibleSwing
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing...)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
-        out_hashes, title_lengths = get_disk_info
-		out_string = out_hashes.map{|name, value| '"' + name + '" => "' + value.to_s + '"'}.join("\n") + "\n" + title_lengths.join("\n")
+        out_hashes, title_lengths = get_disk_info false
+	out_string = out_hashes.map{|name, value| '"' + name + '" => "' + value.to_s + '"'}.join("\n") + "\n" + title_lengths.join("\n")
         filename = EdlTempFile + '.disk_info.txt'
         File.write filename, out_string
         open_file_to_edit_it filename
@@ -232,12 +232,12 @@ module SensibleSwing
       
     end
 	
-	def get_disk_info want_titles = true
-	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
+    def get_disk_info want_titles
+	drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         # display it, allow them to copy and paste it out
-		out_hashes = {}
-		out_hashes['disk_unique_id'] = dvd_id
-		out_hashes['volume_name'] = volume_name
+	out_hashes = {}
+	out_hashes['disk_unique_id'] = dvd_id
+	out_hashes['volume_name'] = volume_name
         popup = show_non_blocking_message_dialog "calculating DVD title sizes..."
         command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
         puts command
@@ -245,26 +245,28 @@ module SensibleSwing
         popup.close
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if edit_list_path
-		  parsed = parse_edl edit_list_path
+	  parsed = parse_edl edit_list_path
           title_to_get_offset_of = get_title_track(parsed)
         else
-          title_to_get_offset_of = largest_title
+          title_to_get_offset_of = nil
         end
-        title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
-        # ID_DVD_TITLE_4_LENGTH=365.000
-        titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
-        largest_title = titles_with_length.max_by{|title, length| length}
-		if !largest_title
-		  show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
-		end
-		
-		largest_title = largest_title[0]
- 		out_hashes['dvd_title_track'] = title_to_get_offset_of
-		out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
+        if want_titles || !title_to_get_offset_of
+          title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+          # ID_DVD_TITLE_4_LENGTH=365.000
+          titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+          largest_title = titles_with_length.max_by{|title, length| length}
+	  if !largest_title
+	    show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
+	  end
+	  largest_title = largest_title[0]
+          title_to_get_offset_of ||= largest_title
+        end
+ 	out_hashes['dvd_title_track'] = title_to_get_offset_of
+	out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
         offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
-		start_offset = offsets[:mpeg_start_offset]
-		out_hashes['dvd_start_offset'] = start_offset
-	    [out_hashes, title_lengths]
+	start_offset = offsets[:mpeg_start_offset]
+	out_hashes['dvd_start_offset'] = start_offset
+	[out_hashes, title_lengths]
 	end	
 	
     def watch_dvd_edited_realtime_mplayer show_subs
@@ -308,7 +310,7 @@ module SensibleSwing
 		end
       }
       show_blocking_message_dialog "unable to calculate time?" unless out[:mpeg_start_offset]
-	  p outs
+      p 'returning:', outs
       return outs
     end
     
@@ -341,7 +343,7 @@ module SensibleSwing
     end
     
     def create_brand_new_edl
-	  hashes, title_lengths = get_disk_info
+	  hashes, title_lengths = get_disk_info true
 	  volume = hashes['volume_name']
 	  default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", default_english_name)
