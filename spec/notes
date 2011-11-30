@@ -1,4 +1,9 @@
 up next:
+= macports mpkg =
+perl seems to be the only extra...
+  #depends_fetch-append bin:git:git-core
+
+gettext might come from subversion, as well fetch.type svn, pkgconfig
 
 = NAV to MPEG =
 
