@@ -260,7 +260,6 @@ module SensibleSwing
          assert File.exist?(mplayer_loc)
        else
          mplayer_loc = "mplayer"
-	     show_blocking_message_dialog("using non EDl mplayer, which won't work well...please report...")
        end
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -360,7 +359,6 @@ module SensibleSwing
       out = "-osdlevel 2 -osd-fractions 1"
       return out unless we_are_in_create_mode # early out, since they won't be seeing subs anyway :)
       
-      if OS.doze? 
 		offset_time = 0.20 # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
                 dvd_start_offset = descriptors['dvd_start_offset']
 		if dvd_start_offset
@@ -375,9 +373,6 @@ module SensibleSwing
 		  p 'warning--using default DVDNAV offset time of 0.20 which is prolly ok for now, plus we don\'t really interpolate well anyway...or do we?'
                 end
 		out += " -osd-add #{offset_time}"
-      else
-        show_blocking_message_dialog "warning, since we're not in windows with a patched mplayer OSD timestamps will probably be 0.19s too small,\n and their fraction past the decimal point will be off.\nPing me for instructions to build a patched mplayer."
-      end
       out
     end
 
