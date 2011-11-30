@@ -14,12 +14,11 @@
   
 == yes do ordered for this release/other projects ja  ==
   upconvert stuff
-    no non-de-dupe
+    (no non-de-dupe)
   virtual audio re-release
   mac:
     can download mplayer-edl
   DVD timing for forum:Snow White  
-  genealogy create/publicize
   smplayer for sync srt button
   auto-start audio caster ability, just use jruby/mklink LOL
   automate easy creation things...
@@ -27,6 +26,7 @@
   has wrong escape in string
   
 == yes do, un-ordered currently, from all the various future release options ==
+  genealogy create/publicize
   /dev/disk1 for mac
   not display "play edited" button if we have no EDL for the current :P
   use direct3d only if nvidia [?]

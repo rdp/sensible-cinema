@@ -112,20 +112,20 @@ module SensibleSwing
 
       @parse_srt.on_clicked do
         srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:")
-		    if(srt_filename =~ /utf16/)
+		if(srt_filename =~ /utf16/)
 		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
-	      end
+	    end
         # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
         
         open_file_to_edit_it srt_filename
-        sleep 0.5 # let it open in TextEdit first
-		    bring_to_front
+        sleep 0.5 # let it open in TextEdit/Notepad first
+		bring_to_front
  
-		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes
-          if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in mplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
-            play_dvd_smplayer_unedited true
+		if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes
+          if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in smplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
+            play_dvd_smplayer_unedited false
           end
           start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]\nctrl-v to paste", "...")
           start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"\nctrl-v to paste", "00:00:00,000")
@@ -135,11 +135,11 @@ module SensibleSwing
           end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"\nctrl-v to paste", "02:30:00,000")
           end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
         else
-		      start_srt = 0
+		  start_srt = 0
           start_movie_ts =0
           end_srt = 1000
-    		  end_movie_ts = 1000
-		    end
+          end_movie_ts = 1000
+		end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
         filename = EdlTempFile + '.parsed.txt'
         File.write filename, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
