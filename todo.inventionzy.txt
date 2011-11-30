@@ -23,6 +23,8 @@
     make it so an EDL can be "split" (or subtitles split, same way) so that it can span across multiple youtube videos that have been divided in some way.
     it can query the currently open browser window, check to see which movie it's playing, and auotmatically spawn off a correct player instance with EDL for that movie
       based on title or url.
+	when playing a movie, it identifies by colors/tones the movie or the scene, to edit accordingly
+	 when there's a profanity mute, to display some extra text on the screen like "and I really want you to be happy!"  I guess it could just be like a transparent overlay on the movie 
     netflix "try this srt, does it match?" no "what about this one, now?"
     it can "infer" where the thumb slider would be, and "drag" it to where it infers the new timestamp location should likely be, for skipping et al.
     people can "vote" on certain sections, if they're profanity or not, should be skipped or not

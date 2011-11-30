@@ -153,36 +153,38 @@ module SensibleSwing
       @display_dvd_info.on_clicked {
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         # display it, allow them to copy and paste it out
-        id_string = %!"disk_unique_id" => "#{dvd_id}",\n"volume_name" => "#{volume_name}","!
-        #show_copy_pastable_string "#{drive} #{volume_name} for your copying+pasting pleasure (highlight, then ctrl+c to copy)\n
-        #This is USED eventually to identify a disk to match it to its EDL, later.", id_string
+		out_hashes = {}
+		out_hashes['disk_unique_id'] = dvd_id
+		out_hashes['volume_name'] = volume_name
         popup = show_non_blocking_message_dialog "calculating DVD title sizes..."
         command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
         puts command
         title_lengths_output = `#{command}`
         popup.close
-        puts 'done'
         title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
         # ID_DVD_TITLE_4_LENGTH=365.000
-        
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        largest_title = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}.max_by{|title, length| length.to_f}
+        titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2]}
+        largest_title = titles_with_length.max_by{|title, length| length.to_f}
 		if !largest_title
-		  show_blocking_message_dialog "unable to parse lengths? maybe need to clean disk? #{title_lengths_output}"
+		  show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
 		end
+		
 		largest_title = largest_title[0]
+        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
 		if edit_list_path
 		  parsed = parse_edl edit_list_path
           title_to_get_offset_of = get_title_track(parsed)
         else
           title_to_get_offset_of = largest_title
         end
+		out_hashes['dvd_title_track'] = title_to_get_offset_of
         start_offset = calculate_dvd_start_offset(title_to_get_offset_of, drive)
-        
+		out_hashes['dvd_start_offset'] = start_offset
+		out_string = out_hashes.map{|name, value| '"' + name + '" => "' + value.to_s + '"'}.join("\n") + "\n" + title_lengths.join("\n")
         filename = EdlTempFile + '.disk_info.txt'
-        File.write filename, id_string + "\n" + title_lengths.join("\n") + "\n" + %!"dvd_start_offset" => "#{start_offset}", # for title #{title_to_get_offset_of}!
+        File.write filename, out_string
         open_file_to_edit_it filename
-        id_string # for unit tests :)
+        id_strings # for unit tests :)
       }
       
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )

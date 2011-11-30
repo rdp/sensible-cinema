@@ -28,6 +28,9 @@ class String
     tr("-", "_").
     downcase
   end
+  def quotify
+    '"' + self + '"'
+  end
 end
 
 # a few I'll always need no matter what...
@@ -54,7 +57,7 @@ end
 
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
-  for name in ['.', 'mencoder', 'ffmpeg']
+  for name in ['.', 'mencoder', 'ffmpeg', 'mplayer_edl']
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end

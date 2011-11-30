@@ -13,53 +13,44 @@
 == things working on today ==
   
 == yes do ordered for this release/other projects ja  ==
-  upconvert stuff
+  upconvert stuff @home/sintel
     (no non-de-dupe)
+	prepare for netflix instant
+      allow drag window for upscaling select :P
   virtual audio re-release
   mac:
-    can download mplayer-edl
+    can download mplayer-edl/@macports pkg
   DVD timing for forum:Snow White  
-  smplayer for sync srt button
   auto-start audio caster ability, just use jruby/mklink LOL
-  automate easy creation things...
-  cannot reveal paths with spaces
-  has wrong escape in string
   
 == yes do, un-ordered currently, from all the various future release options ==
+  automate easy creation things...
+  bug on reload EDL apparently
   genealogy create/publicize
   /dev/disk1 for mac
-  not display "play edited" button if we have no EDL for the current :P
+  not display "play current DVD edited" button if we have no EDL for the current :P
   use direct3d only if nvidia [?]
-  dive deep dvdnav
-  versioning kills prefs
+  @dvdnav: tangled
   if it already exists, create new should "just" open it...probably...
   "open arbitrary" should default to "being edited" dir
   Tangled crash
     uptodate vlc linux, ifoeefit
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
   timestamps_relative_to "force them" to have, or to hit the upgrade button
-  automate all creation things...add dvd NAV
+  creation things...add dvd NAV
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
-  tangled mplayer mac should die...
   double check NAV times perfect seeking -c- ?
-  experiment with more "split" DVD's timing is always on after splits?
-    tangled
-    carefully compare -c- after split with file.
   double check Jonah starting NAV
   double check NAV packets verus full DVD length
-  are there DVD's where NAV's match? test several
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
-  not download mencoder till they click that one button :P
   inspector general
   remove splits' functionality 
-  add 0.25 only in "normal" mode to end of splits...I guess...
-  allow drag window for upscaling select :P
-  James' ideas add here
+  add 0.25 only in "normal" mode to end of splits...I guess...if they came from file mode anyway...
+    theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
-  normal smplayer download [download right one for them, reveal]
   super precise timing, this 1.001 just doesn't work
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
@@ -74,19 +65,18 @@
     add 2 options: file, "dvd"
     update wiki
     timestamps_relative_to => "dvd"
-    remove -osd-add
+    remove -osd-add, or maybe fine tune it?
     add OSD time to the console output
     non 29.97 with mplayer edl change OSD
     "static" mplayer-edl for OS X :P
     add a migrate button, prompts for "file" versus DVD
       test with something :P
-    
     assert files "always" start at 0
   ffplay diagonal bug
-  flds: the intelligent tag parent sync'er :P
+  flds: the intelligent tag parent sync'er, other todo's :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
-  test distro various buttons on mac
+  release workable 4 mac, also have mplayer_edl
     advertise urug
   upconvert: compare with "normal", and against itself.  Then release :P
   rename it "edited movie player" or whatever google prefers :P
@@ -99,19 +89,15 @@
   show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
     maybe reset on any button press...
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  it should not have to ask for an EDL when you click "play it unedited" -- just say why...
+  it should not have to ask for an EDL when you click "play it unedited" -- actually just say why...
   warn when using upconverting within SC
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
   @ffmpeg: wiki list for all filter's?
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
-  @mingw: large file handlez plz?
   netflix instant descriptor work at all
-    OS X too
-      mac'ify OCR/Mouse
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
-    add new batch file for play with netflix OCR
     note on the www once it works
   meta domain
     note "can't get the ideal domain name?"
@@ -127,7 +113,7 @@
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
   subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
     and end too why not?
-  volume_name => dvd_volume_label # but what about blu-ray?
+  volume_name => dvd_volume_name
   blu ray timing
     Are they the same as DVD's?  They seem really close...
     sub-title wise? do subs match something else? subs DVD vs. blu ray?
@@ -143,23 +129,18 @@
   sons of provo "music video" EDL
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
   check if libdvdnav saves it to a good dir at all 
-  default box "no" for licenses
   libdvdnav can take libdvdcss-2
-  don't distribute it with development dependencies...
+  it can "overlay display" custom edited .srt files
   
 == decide later to move up or down ==
-  an even better dvdnav.h comment patch :P
+  user preference "always just skip" if that's what he wanted :P
+  OS X netflix instant
+    mac'ify OCR/Mouse
   @ffmpeg: you can't convert mkv's of this type!
-  just local download vendored smplayer every time, they don't mind
   DIRT short list
   fix mplayer-devel macport :P
   don't show smplayer buttons in OS X/linux [?]
   "overwrite?" prompt for file mode
-  "double check sync" button/option on play [?]
-    note in original where source came
-  investigate WMC "call out to smplayer + EDL" or the like...
-    add to docu
-    maybe add "is this for XBMC"? to the create .edl file button :)
   VLC UI fixes
   VLC resume/window position [?]
   librivox EDL's and/or speedups :P
@@ -167,10 +148,15 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  default box "no" for licenses
-  user preference "add this much to mutes" :P
-
+  super editor: shows the srt near each
+  
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  investigate WMC "call out to smplayer + EDL" or the like...
+    add to docu
+    maybe add "is this for XBMC"? to the create .edl file button :)
+  "double check sync" button/option on play [?]
+  an even better dvdnav.h comment patch :P
+  don't distribute it with development dependencies...
   virtual audio figure out weirdness
   @ffmpeg/vlc: can you use the nvidia graphics card to *encode* it too, plz?
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
