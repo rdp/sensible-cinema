@@ -2,8 +2,11 @@ require 'rubygems'
 require 'os'
 success = true
 
-# MPlayer OSX Extended instead of smplayer... ?
+ENV['PATH'] = '/opt/local/bin' + ENV['PATH'] # macports' bin in first
+
 module CheckInstalledMac
+
+ # should output an error message...
  def self.check_for_installed name
   if name == 'mencoder'
     output = `mencoder --fail 2>&1`
@@ -16,18 +19,22 @@ module CheckInstalledMac
   end
 
   if name == 'mplayer'
-    for path in ["/Applications/MPlayerX.app/Contents/Resources/binaries/m32", File.expand_path('~') + "/Downloads/MPlayerX.app/Contents/Resources/binaries/m32/"]
-      if File.exist? path + "/mplayer"
-        # TODO remove
-        # ENV['PATH'] = path + ':' + ENV['PATH']
-        return true
-      end
+    instrs = "please install macports, open a terminal, cd to sensible-cinema/vendor/mplayer_patches/port_dir, run portindex, add that dir to /opt/local/etc/macports/sources.conf, ex: file:///Users/rogerdpack/sensible-cinema/vendor/mplayer_patches/port_dir
+ then run $ sudo port install mplayer-edl"
+    unless File.exist?('/opt/local/bin/mplayer')
+      puts 'please install mplayer edl, ' + instrs
+      return false
     end
-    puts 'lacking mplayer! please install MPlayerX from the App Store first'
-    return false
+    out = `mplayer -osd-verbose`
+    if out =~ /unknown option on the command line/i
+     puts 'maybe you have another mplayer uninstalled? please uninstall, install mplayer-edl: ' + instrs
+     return false
+    else
+     return true
+    end
   end
 
-  # check for the others as generics
+  # check for the others generically
 
   command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version"}[name]
 

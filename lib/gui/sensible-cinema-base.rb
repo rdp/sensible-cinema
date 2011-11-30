@@ -69,7 +69,7 @@ if OS.windows?
   end
 
 else
-  ENV['PATH'] = '/opt/local/bin' + ENV['PATH'] # macports' bin in first
+  # handled in check_mac_installed
 end
 
 import 'javax.swing.ImageIcon'

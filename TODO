@@ -23,7 +23,7 @@
 	prepare for netflix instant
       allow drag window for upscaling select :P
   mac:
-    can download mplayer-edl or build it themselves locally into the same loc.
+    mplayer-edl download/build instructions on the web page
     advertise urug
   @macports: test VLC "app" without the /opt/local..., mpkg bug
   bug on reload EDL apparently
@@ -33,6 +33,8 @@
   @dvdnav: Tangled crash
     uptodate vlc/mplayer linux
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
+
+
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
