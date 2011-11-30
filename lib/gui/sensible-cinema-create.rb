@@ -157,7 +157,7 @@ module SensibleSwing
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing...)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
-        out_hashes, title_lengths = get_disk_info false
+        out_hashes, title_lengths = get_disk_info
 	out_string = out_hashes.map{|name, value| '"' + name + '" => "' + value.to_s + '"'}.join("\n") + "\n" + title_lengths.join("\n")
         filename = EdlTempFile + '.disk_info.txt'
         File.write filename, out_string
@@ -232,7 +232,7 @@ module SensibleSwing
       
     end
 	
-    def get_disk_info want_titles
+    def get_disk_info
 	drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         # display it, allow them to copy and paste it out
 	out_hashes = {}
@@ -250,17 +250,15 @@ module SensibleSwing
         else
           title_to_get_offset_of = nil
         end
-        if want_titles || !title_to_get_offset_of
-          title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
-          # ID_DVD_TITLE_4_LENGTH=365.000
-          titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
-          largest_title = titles_with_length.max_by{|title, length| length}
-	  if !largest_title
-	    show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
-	  end
-	  largest_title = largest_title[0]
-          title_to_get_offset_of ||= largest_title
-        end
+        title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+        # ID_DVD_TITLE_4_LENGTH=365.000
+        titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+        largest_title = titles_with_length.max_by{|title, length| length}
+	if !largest_title
+	  show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
+	end
+	largest_title = largest_title[0]
+        title_to_get_offset_of ||= largest_title
  	out_hashes['dvd_title_track'] = title_to_get_offset_of
 	out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
         offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
@@ -343,7 +341,7 @@ module SensibleSwing
     end
     
     def create_brand_new_edl
-	  hashes, title_lengths = get_disk_info true
+	  hashes, title_lengths = get_disk_info
 	  volume = hashes['volume_name']
 	  default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", default_english_name)
@@ -371,7 +369,7 @@ module SensibleSwing
 "volume_name" => "#{volume}",
 "timestamps_relative_to" => ["dvd_start_offset","29.97"],
 "disk_unique_id" => "#{hashes['disk_unique_id']}",
-"dvd_title_track" => "#{hashes['dvd_title_track']}", # best guess 
+"dvd_title_track" => "#{hashes['dvd_title_track']}", # the longest title is usually the main
 "dvd_title_track_length" => "#{hashes['dvd_title_track_length']}", 
 # "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
