@@ -146,7 +146,11 @@ get length 1718232704
     
 
 VLC has the right timestamps now, appears.
-
+  guess it's actually consistent (but with wrong times) currently.
+  some of them are way off though, right? But at least it always goes forward...
+    LODO find more that are off in VLC...
+	seems mostly consistent, so hold off I suppose :P
+  
 = ffplay no white's =
 
 241,241 with VLC displaying mostly-white.bmp

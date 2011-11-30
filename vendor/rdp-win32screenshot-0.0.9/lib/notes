@@ -1,5 +1,0 @@
-without aero
-Win32::Screenshot.window( /virtual/i, 0) {|h,w,bits| File.binwrite('1' +name, bits)}
-  was "cropped" and probably had to come to the front, but was full.
-  
-with aero, it didn't show everything [!] so I guess it's really just grabbing that window via hwnd.

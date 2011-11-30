@@ -73,17 +73,20 @@ module SensibleSwing
         end
       end
     end
-    
-    def check_for_various_dependencies
-      
-      if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder') # both use it now, since we have to use our own mplayer.exe for now...
+	
+	def check_for_file_manipulation_dependencies
+	
+	   if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder') # both use it now, since we have to use our own mplayer.exe for now...
         require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
         old = File.binread 'vendor/cache/mencoder/mplayer.exe'
         old.gsub! "V:%6.1f", "V:%6.2f" # better precision! :)
         File.binwrite('vendor/cache/mencoder/mplayer.exe', old)
       end
-      
+    end
+    
+    def check_for_various_dependencies
+            
       if OS.doze? && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil)
         require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
@@ -92,7 +95,7 @@ module SensibleSwing
       end     
 
       # runtime dependencies, at least as of today...
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe')
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
       if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
         require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
         download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
