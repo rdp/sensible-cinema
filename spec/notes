@@ -23,7 +23,8 @@ http://lists.mplayerhq.hu/pipermail/mplayer-users/2010-June/080476.html
 34118 linux works
 SVN-r34269-4.5.2 linux works
 
-= macports mpkg =
+= macports mpkg extraneous =
+
 perl seems to be the only extra...
   #depends_fetch-append bin:git:git-core
 
