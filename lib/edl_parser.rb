@@ -310,8 +310,9 @@ class EdlParser
   end
   
   # returns single matching filename
-  def self.find_single_edit_list_matching use_all = false
-    matching = all_edl_files_parsed(use_all).map{|filename, parsed|
+  # requires a block
+  def self.find_single_edit_list_matching use_all_not_just_dvd_dir = false, return_first_if_there_are_several = false
+    matching = all_edl_files_parsed(use_all_not_just_dvd_dir).map{|filename, parsed|
       yield(parsed) ? filename : nil
     }.compact
     if matching.length == 1
@@ -320,15 +321,19 @@ class EdlParser
       file
     elsif matching.length > 1
       p "found multiple matches for media? #{matching.inspect}"
-      nil
+	  if return_first_if_there_are_several
+	    matching[0]
+	  else
+        nil
+	  end
     else
       nil
     end
   end
   
-  def self.single_edit_list_matches_dvd dvd_id
+  def self.single_edit_list_matches_dvd dvd_id, return_first_if_there_are_several = false
     return nil unless dvd_id
-    find_single_edit_list_matching {|parsed|
+    find_single_edit_list_matching(false, return_first_if_there_are_several)  {|parsed|
       parsed["disk_unique_id"] == dvd_id
     }
   end

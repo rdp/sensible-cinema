@@ -24,7 +24,7 @@
   auto-start audio caster ability, just use jruby/mklink LOL
   
 == yes do, un-ordered currently, from all the various future release options ==
-  automate easy creation things...
+  dvd_title_track_start_offset
   bug on reload EDL apparently
   genealogy create/publicize
   /dev/disk1 for mac
@@ -34,7 +34,7 @@
   if it already exists, create new should "just" open it...probably...
   "open arbitrary" should default to "being edited" dir
   Tangled crash
-    uptodate vlc linux, ifoeefit
+    uptodate vlc linux
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
   timestamps_relative_to "force them" to have, or to hit the upgrade button
   creation things...add dvd NAV

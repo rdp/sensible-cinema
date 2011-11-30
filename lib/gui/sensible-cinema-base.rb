@@ -423,7 +423,7 @@ module SensibleSwing
       end
       
       if edl_path
-	splits = [] # TODO not pass as parameter
+	    splits = [] # TODO not pass as parameter
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
