@@ -17,7 +17,6 @@
     no non-de-dupe
   virtual audio re-release
   mac:
-    dvdid isn't packaged with executable permissions
     can download mplayer-edl
   DVD timing for forum:Snow White  
   genealogy create/publicize
@@ -28,6 +27,7 @@
   has wrong escape in string
   
 == yes do, un-ordered currently, from all the various future release options ==
+  /dev/disk1 for mac
   not display "play edited" button if we have no EDL for the current :P
   use direct3d only if nvidia [?]
   dive deep dvdnav

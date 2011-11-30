@@ -77,7 +77,7 @@ tangled loops VLC blackey
 tangled loops VLC work desktop
 
 all disney say "no VTS" (only from within virtualbox?).
-works fine VLC mac [with nav] doesn't loop
+works fine VLC mac [with nav] doesn't loop at all [?]
 mplayer blackey:
 Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mode != 0, file libdvdnav/vm/vm.c, line 1134
 This application has requested the Runtime to terminate it in an unusual way.
@@ -90,6 +90,10 @@ dies new lappy same spot, same DVD, but clean :P
 
 dies with mplayer  Sherpya-SVN-r30369-4.2.5m libdvdnav: Using dvdnav version MPlayer-custom same way
 
+libdvdnav: Invalid angle block mplayer.here  UNKNOWN-4.2.1 libdvdnav: Using dvdnav version MPlayer-custom
+
+MPlayer SVN-r34269-4.2.1 (C) 2000-2011 MPlayer Team
+  didn't include the latest dvdnav patches though...though mplayer_edl does :P
 
 = VLC patch =
 
