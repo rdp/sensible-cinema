@@ -343,7 +343,7 @@ module SensibleSwing
 ],
 
 "volume_name" => "#{volume}",
-"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"timestamps_relative_to" => ["dvd_start_offset+(NAV+0.2)","29.97"],
 "disk_unique_id" => "#{dvd_id}",
 "dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
 # "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).

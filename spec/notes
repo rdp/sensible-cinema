@@ -83,9 +83,13 @@ Assertion failed: (vm->state).pgc->cell_playback[(vm->state).cellN - 1].block_mo
 This application has requested the Runtime to terminate it in an unusual way.
 Please contact the application's support team for more information.
 
-Guess is that it's a bad disk.  Possibly patch libdvdnav and see if that "fixes" it...
+
+MPlayer interrupted by signal 22 in module: decode_audio
 
 dies new lappy same spot, same DVD, but clean :P
+
+dies with mplayer  Sherpya-SVN-r30369-4.2.5m libdvdnav: Using dvdnav version MPlayer-custom same way
+
 
 = VLC patch =
 
