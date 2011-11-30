@@ -89,8 +89,8 @@ class MencoderWrapper
         p 'warning, overwriting+deleting previous ' + to_here_final_file
         FileUtils.rm to_here_final_file # raises on deletion failure...which is what we want I think...typically...early warning...
       end
-      out += "call mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
-      out += "@rem old DISABLED join way... call mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
+      out += "mencoder #{partials.join(' ')} -o #{to_here_final_file} -ovc copy -oac copy\n"
+      out += "@rem old DISABLED join way... mencoder -oac lavc -ovc lavc -of mpeg -mpegopts format=dvd:tsaf -vf scale=720:480,harddup -srate 48000 -af lavcresample=48000 -lavcopts vcodec=mpeg2video:vrc_buf_size=1835:vrc_maxrate=9800:vbitrate=5000:keyint=18:vstrict=0:acodec=ac3:abitrate=192:aspect=16/9 -ofps 30000/1001  #{partials.join(' ')} -o #{to_here_final_file}\n"
       
       delete_prefix = delete_partials ? "" : "@rem "
       delete_prefix = "@rem" if am_on_developer_machine? # for ease of double checking...

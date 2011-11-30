@@ -89,7 +89,7 @@ class VLCProgrammer
       </track>"
     else
       "vlc --qt-start-minimized #{loc} --start-time=#{start} --stop-time=#{stop} --sout=\"file/ps:#{@filename_or_playlist_if_nil}.ps.#{idx}\" #{"--no-sout-audio" if no_audio} vlc://quit\n" # + 
-      #"call vlc #{@filename_or_playlist_if_nil}.ps.#{idx}.tmp  --sout=file/ps:go.ps
+      #"vlc #{@filename_or_playlist_if_nil}.ps.#{idx}.tmp  --sout=file/ps:go.ps
     end
   end
   

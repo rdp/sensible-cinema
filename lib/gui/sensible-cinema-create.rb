@@ -158,7 +158,7 @@ module SensibleSwing
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
         out_hashes, title_lengths = get_disk_info
-	out_string = out_hashes.map{|name, value| '"' + name + '" => "' + value.to_s + '"'}.join("\n") + "\n" + title_lengths.join("\n")
+	out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect }.join("\n") + "\n" + title_lengths.join("\n")
         filename = EdlTempFile + '.disk_info.txt'
         File.write filename, out_string
         open_file_to_edit_it filename
@@ -265,8 +265,9 @@ p titles_with_length
         offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
 	start_offset = offsets[:mpeg_start_offset]
 	out_hashes['dvd_start_offset'] = start_offset
+        out_hashes['dvd_nav_packet_offset'] = offsets[:dvd_nav_packet_offset]
 	[out_hashes, title_lengths]
-	end	
+    end
 	
     def watch_dvd_edited_realtime_mplayer show_subs
         edl_out_command = ""
@@ -379,6 +380,7 @@ p titles_with_length
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
 "dvd_title_track_start_offset" => "#{hashes['dvd_start_offset']}",
+"dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!

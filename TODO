@@ -19,24 +19,20 @@
       allow drag window for upscaling select :P
   virtual audio re-release
   mac:
-    can download mplayer-edl/@macports pkg
+    can download mplayer-edl or build it themselves locally into the same loc.
+    advertise urug
   DVD timing for forum:Snow White  
   auto-start audio caster ability, just use jruby/mklink LOL
   
 == yes do, un-ordered currently, from all the various future release options ==
-  dvd_title_track_start_offset
+  @macports: test VLC "app" without the /opt/local...
   bug on reload EDL apparently
   genealogy create/publicize
-  /dev/disk1 for mac
   not display "play current DVD edited" button if we have no EDL for the current :P
-  use direct3d only if nvidia [?]
   @dvdnav: tangled
-  if it already exists, create new should "just" open it...probably...
-  "open arbitrary" should default to "being edited" dir
   Tangled crash
     uptodate vlc linux
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
-  timestamps_relative_to "force them" to have, or to hit the upgrade button
   creation things...add dvd NAV
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
@@ -51,7 +47,7 @@
   add 0.25 only in "normal" mode to end of splits...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
-  super precise timing, this 1.001 just doesn't work
+  super precise timing, this 1.001 just doesn't cut it
   gui/edl parser unit tests work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -59,9 +55,10 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  it doesn't allow you to switch disk's, hit play again.
+  it doesn't allow you to switch disk's, hit play again, currently.
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   use DVD NAV packet time:
+    timestamps_relative_to "force them" to have, or to hit the upgrade button
     add 2 options: file, "dvd"
     update wiki
     timestamps_relative_to => "dvd"
@@ -76,8 +73,6 @@
   flds: the intelligent tag parent sync'er, other todo's :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
-  release workable 4 mac, also have mplayer_edl
-    advertise urug
   upconvert: compare with "normal", and against itself.  Then release :P
   rename it "edited movie player" or whatever google prefers :P
   the timestamp sync'ing feels broken it's hard to use LOL
@@ -85,12 +80,10 @@
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
   the php thing :P
-  "call mencoder" call shouldn't be needed anymore...
   show label of currently mounted DVD's somewhere, and number of matching EDL's per each :)
     maybe reset on any button press...
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  it should not have to ask for an EDL when you click "play it unedited" -- actually just say why...
-  warn when using upconverting within SC
+  it should ask for an EDL when you click "play it unedited" -- actually just say why...
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
   @ffmpeg: wiki list for all filter's?
@@ -102,18 +95,14 @@
   meta domain
     note "can't get the ideal domain name?"
   popup_text in EDL's
-  subtitle -> url everywhere
-  english name (movie name?) mass everywhere
   ruby_prof stuffs (release at least)
   warn other wordpresses
   test mplayer -vo gl speeds at home
-  @wiki: here is how very messed up DVD's are, what they look like precisely.
   minor redcar tweaks
   short list of todo's for screen capture
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
-  subtitles: if at beginning of a sub, add extra initial offset...hmm...why not?
+  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
-  volume_name => dvd_volume_name
   blu ray timing
     Are they the same as DVD's?  They seem really close...
     sub-title wise? do subs match something else? subs DVD vs. blu ray?
@@ -126,16 +115,15 @@
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
-  sons of provo "music video" EDL
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
   check if libdvdnav saves it to a good dir at all 
   libdvdnav can take libdvdcss-2
   it can "overlay display" custom edited .srt files
+  OS X netflix instant
+    mac'ify OCR/Mouse
   
 == decide later to move up or down ==
   user preference "always just skip" if that's what he wanted :P
-  OS X netflix instant
-    mac'ify OCR/Mouse
   @ffmpeg: you can't convert mkv's of this type!
   DIRT short list
   fix mplayer-devel macport :P
@@ -148,9 +136,15 @@
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  super editor: shows the srt near each
+  super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  sons of provo "music video" EDL
+  volume_name => dvd_volume_name
+  english name (movie name?) mass everywhere
+  @wiki: here is how very messed up DVD's are, what they look like precisely.
+  subtitle -> url everywhere
+  use direct3d only if nvidia [?]
   investigate WMC "call out to smplayer + EDL" or the like...
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
