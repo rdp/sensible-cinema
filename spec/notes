@@ -5,6 +5,8 @@ perl seems to be the only extra...
 
 gettext might come from subversion, as well fetch.type svn, pkgconfig
 
+cannot have multiple mpkg's easily
+
 = NAV to MPEG =
 
 negative NAV offset: mpeg - "0.21" - nav_converted
