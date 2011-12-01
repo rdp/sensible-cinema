@@ -128,7 +128,7 @@ module SensibleSwing
           else
             @current_dvds.text= '      No DVD discs currently inserted.'
           end
-          sleep 5
+          sleep 1
         }
       }
     end
