@@ -101,6 +101,9 @@ module SensibleSwing
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds = add_text_line ""
+      if OS.doze?
+        DriveInfo.create_looping_drive_cacher
+      end
       update_current_dvds_line
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
@@ -109,7 +112,7 @@ module SensibleSwing
     end
 
     def update_current_dvds_line
-      # ComException LODO Thread.new {
+      Thread.new {
         known_drives = {}
         loop {
           present_discs = []
@@ -121,13 +124,13 @@ module SensibleSwing
             end
           }
           if present_discs.length > 0
-            @current_dvds.text= '      ' + present_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has' : 'has no'} EDL currently available for it"}.join(' ')
+            @current_dvds.text= '      ' + present_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL currently available for it"}.join(' ')
           else
-            @current_dvds.text= '      No discs currently inserted'
+            @current_dvds.text= '      No DVD discs currently inserted.'
           end
           sleep 5
         }
-      # }
+      }
     end
     
     def get_title_track_string descriptors, use_default_of_one = true

@@ -132,9 +132,11 @@ task 'zip' do
   else
     sys "zip -r #{name}.zip #{name}"
   end
-  raise if OS.doze? # dunno work...
-  c = "tar -cvzf #{name}.mac-os-x.tgz #{name}"
-  sys c
+  if OS.doze?
+    puts 'NOT packaging OS X installer'
+  else
+    sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
+  end
   delete_now_packaged_dir name
   p 'created ' + name + '.zip,tgz and also deleted its [create from] folder'
 end
@@ -160,10 +162,14 @@ task 'deploy' do
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
   for suffix in [ '.zip', '.mac-os-x.tgz']
     name = 'sensible-cinema-' + cur_ver + suffix
-    p 'copying to ilab ' + name
-    sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
-    p 'copying into sf from ilab'
-    sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
+    if File.exist? name
+      p 'copying to ilab ' + name
+      sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
+      p 'copying into sf from ilab'
+      sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
+    else
+      p 'not copying:' + name
+    end
   end
   p 'successfully deployed to sf! ' + cur_ver
 end

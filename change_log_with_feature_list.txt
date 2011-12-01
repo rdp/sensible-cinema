@@ -1,3 +1,7 @@
+= 0.31.4 11-30-11 =
+
+Fix some windows usability issues, some bug or other.  Also bump mplayer-edl
+
 = 0.31.3 - 9-30-11
 
 Better (again) for macs, requires mplayer-edl for everything now, better install procedures for windows
