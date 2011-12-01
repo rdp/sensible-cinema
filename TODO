@@ -10,36 +10,35 @@
   
 == high prio like blocking bugs ==
   
-== things working on today ==
+== things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
   virtual audio re-release
   DVD timing for forum:Snow White  
   auto-start audio caster ability, just use jruby/mklink LOL
+  my mplayer can't seek arrow keys os x?
+  bug on reload EDL apparently
+  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
+  it doesn't allow you to switch disk's, hit play again, currently.
   
 == yes do, un-ordered currently, from all the various future release options ==
-  my mplayer can't seek arrow keys os x?
+  
+  genealogy screen saver create/publicize
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
+  mac: distros for ffmpeg, mplayer-edl, to a prefix, advertise urug
   upconvert stuff @home/sintel
     (no non-de-dupe)
 	prepare for netflix instant
       allow drag window for upscaling select :P
-  mac:
-    advertise urug after next release
-  bug on reload EDL apparently
-  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-  it doesn't allow you to switch disk's, hit play again, currently.
-  genealogy create/publicize
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
-  
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
-  os x really needs to be some kind of local download or app or something...
-  status updates when downloading files initially
-  it can "overlay display" custom edited .srt files
+  it can "overlay display" custom edited .srt files  
   update mplayer-devel macport
+  add option "just skip don't mute always instead of muting"
 
+  status updates when downloading files initially
   @mplayer: key patch
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
@@ -291,7 +290,6 @@
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
     can I reproduce it this days? double check OSOH, repost to forum
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
-  add option "just skip don't mute always instead of muting"
   bounty /ask mplayer OS X screen capture input can I use it in ffmpeg?
    ask dll, say, for pausing [?]
      ask if I can make a pausing filter, to start paused...hmm... [?]

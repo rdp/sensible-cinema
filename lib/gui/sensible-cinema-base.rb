@@ -113,18 +113,18 @@ module SensibleSwing
 
     def update_current_dvds_line
       Thread.new {
-        known_drives = {}
+        known_drive_ids = {}
         loop {
-          present_discs = []
+          current_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
-               dvd_id = known_drives[dvd_id] ||= DriveInfo.md5sum_disk(disk.MountPoint)
+               dvd_id = (known_drive_ids[dvd_id] ||= DriveInfo.md5sum_disk(disk.MountPoint))
                edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
                present_discs << [disk.VolumeName, edit_list_path]
             end
           }
-          if present_discs.length > 0
-            @current_dvds.text= '      ' + present_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL currently available for it"}.join(' ')
+          if current_discs.length > 0
+            @current_dvds.text= '      ' + current_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL currently available for it"}.join(' ')
           else
             @current_dvds.text= '      No DVD discs currently inserted.'
           end
