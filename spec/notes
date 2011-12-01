@@ -1,10 +1,24 @@
 up next:
 
+1.0rc4 seeks fine dvd://, fails dvdnav:// apparently
+trunk seeks fine dvdnav://
+MPlayerX 1.0.9's mplayer seeks fine dvdnav://
+mplayer.here seeks fine dvdnav:// (with 1.0rc4 installed)
+
 theirs loops with their vendored libdvdnav
   theirs works with real DVD paths LOL ignore that then
   
 To increase the maximum volume to 400%, use softvol=yes and softvol-max=400
 @smplayer: use the right time sig!
+
+OS X Extended possibly lacks the lib, though it "has" dvdnav apparently, seems too useless
+
+mplayer 1.0rc4 suddenly cannot seek
+  dvd:// does tho
+
+mplayer.here still can tho
+
+mplayer-devel old can seek fine dvd://
 
 = dvdnav arrow keys =
 
