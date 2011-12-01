@@ -100,7 +100,8 @@ module SensibleSwing
       add_text_line "Welcome to Sensible Cinema!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      @current_dvds = add_text_line ""
+      @current_dvds_line1 = add_text_line ""
+      @current_dvds_line2 = add_text_line ""
       if OS.doze?
         DriveInfo.create_looping_drive_cacher
       end
@@ -115,7 +116,7 @@ module SensibleSwing
       Thread.new {
         known_drive_ids = {}
         loop {
-          current_discs = []
+          present_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
                dvd_id = (known_drive_ids[dvd_id] ||= DriveInfo.md5sum_disk(disk.MountPoint))
@@ -123,8 +124,10 @@ module SensibleSwing
                present_discs << [disk.VolumeName, edit_list_path]
             end
           }
-          if current_discs.length > 0
-            @current_dvds.text= '      ' + current_discs.map{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL currently available for it"}.join(' ')
+          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL currently available for it"}
+          if present_discs.length > 0
+            @current_dvds_line1.text= '      ' + present_discs[0].join("\n")
+            @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") # not sure how to get multiple lines
           else
             @current_dvds.text= '      No DVD discs currently inserted.'
           end
