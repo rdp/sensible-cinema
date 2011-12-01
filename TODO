@@ -38,6 +38,7 @@
   update mplayer-devel macport
   add option "just skip don't mute always instead of muting"
 
+  softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
   status updates when downloading files initially
   @mplayer: key patch
   send bom to menumulti guy :P
