@@ -35,7 +35,6 @@
   update mplayer-devel macport
   add option "just skip don't mute always instead of muting"
   DVD timing for forum:Snow White
-  show DVD human title if available
   
   allow drag window for upscaling select :P
   tons of unit tests
