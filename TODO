@@ -36,6 +36,8 @@
   add option "just skip don't mute always instead of muting"
   DVD timing for forum:Snow White
   
+  report xbmc bugz
+  report ffmpeg/mencoder splitting bugz (2)
   try subtitle edit
   allow drag window for upscaling select :P
   tons of unit tests
