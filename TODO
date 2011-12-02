@@ -13,8 +13,6 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  virtual audio re-release
-  auto-start audio caster ability, just use jruby/mklink LOL
   bug on reload EDL apparently
   it doesn't allow you to switch disk's, hit play again, currently.
   it can "overlay display" custom edited .srt files
@@ -36,6 +34,7 @@
   add option "just skip don't mute always instead of muting"
   DVD timing for forum:Snow White
   
+  add "revision" to mplayer edl
   double check arrow keys mac
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
