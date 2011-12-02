@@ -125,12 +125,13 @@ module SensibleSwing
                present_discs << [name||disk.VolumeName, edit_list_path_if_present]
             end
           }
-          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL available for it!"}
+          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} Edit List available!"}
           if present_discs.length > 0
             @current_dvds_line1.text= '      ' + present_discs[0]
             @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 
           else
-            @current_dvds.text= '      No DVD discs currently inserted.'
+            @current_dvds_line1.text= '      No DVD discs currently inserted.'
+            @current_dvds_line2.text = ''
           end
           sleep 1
         }
