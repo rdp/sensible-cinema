@@ -120,11 +120,12 @@ module SensibleSwing
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
                dvd_id = (known_drive_ids[dvd_id] ||= DriveInfo.md5sum_disk(disk.MountPoint))
-               edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
-               present_discs << [disk.VolumeName, edit_list_path]
+               edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
+               name = parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present 
+               present_discs << [name||disk.VolumeName, edit_list_path_if_present]
             end
           }
-          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL already available for it!"}
+          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} EDL available for it!"}
           if present_discs.length > 0
             @current_dvds_line1.text= '      ' + present_discs[0]
             @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 
