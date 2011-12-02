@@ -14,30 +14,31 @@
   
 == yes do ordered for this release/other projects ja  ==
   virtual audio re-release
-  DVD timing for forum:Snow White  
   auto-start audio caster ability, just use jruby/mklink LOL
-  my mplayer can't seek arrow keys os x?
   bug on reload EDL apparently
-  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   it doesn't allow you to switch disk's, hit play again, currently.
+  it can "overlay display" custom edited .srt files
   
 == yes do, un-ordered currently, from all the various future release options ==
   
-  genealogy screen saver create/publicize
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
+  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
+  my mplayer can't seek arrow keys os x?
+  genealogy screen saver create/publicize
   mac: distros that I can just download, unzip for ffmpeg, mplayer-edl, advertise urug
   upconvert stuff @home/sintel
     (no non-de-dupe)
-	prepare for netflix instant
-      allow drag window for upscaling select :P
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
-  it can "overlay display" custom edited .srt files  
   update mplayer-devel macport
   add option "just skip don't mute always instead of muting"
-
+  DVD timing for forum:Snow White
+  show DVD human title if available
+  
+  allow drag window for upscaling select :P
+  tons of unit tests
   softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
   status updates when downloading files initially
   @mplayer: key patch
