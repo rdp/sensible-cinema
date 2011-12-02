@@ -33,9 +33,11 @@
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
   update mplayer-devel macport
+  can write synchronized euphemized srt
   add option "just skip don't mute always instead of muting"
   DVD timing for forum:Snow White
   
+  try subtitle edit
   allow drag window for upscaling select :P
   tons of unit tests
   softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
