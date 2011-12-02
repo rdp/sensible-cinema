@@ -135,3 +135,5 @@
   see also business ideas.txt file
   realtime chat while viewing/editing/use google wave
   being able to coordinate/synchronize playing 2 dvd's when you're away
+  can display "user contributed" subtitles (edited, fan edit style, etc.)
+  can overlay them "transparently" above various players, arbitrarily, by tracking timestamps on screen, etc.
