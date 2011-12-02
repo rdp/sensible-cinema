@@ -35,7 +35,7 @@ end
 
 # a few I'll always need no matter what...
 require_relative '../jruby-swing-helpers/swing_helpers'
-require_relative '../storage'
+require_relative '../jruby-swing-helpers/storage'
 require_relative '../edl_parser'
 require 'tmpdir'
 require 'whichr'
