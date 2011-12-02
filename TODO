@@ -14,12 +14,12 @@
   
 == yes do ordered for this release/other projects ja  ==
   bug on reload EDL apparently
-  it doesn't allow you to switch disk's, hit play again, currently.
+  it doesn't allow you to switch disk's, hit play again, currently
   it can "overlay display" custom edited .srt files
   
 == yes do, un-ordered currently, from all the various future release options ==
   
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   my mplayer can't seek arrow keys os x?
   genealogy screen saver create/publicize
@@ -34,6 +34,7 @@
   add option "just skip don't mute always instead of muting"
   DVD timing for forum:Snow White
   
+  test rvm email
   add "revision" to mplayer edl
   double check arrow keys mac
   report xbmc bugz
