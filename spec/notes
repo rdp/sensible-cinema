@@ -1,5 +1,8 @@
 up next:
 
+xbmc seems to use "straight" dvdnav time.
+
+====
 1.0rc4 seeks fine dvd://, fails dvdnav:// apparently
 trunk seeks fine dvdnav://
 MPlayerX 1.0.9's mplayer seeks fine dvdnav://
