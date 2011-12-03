@@ -119,16 +119,15 @@ module SensibleSwing
           present_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
-               known_drive_ids[disk.MountPoint] ||= DriveInfo.md5sum_disk(disk.MountPoint)
-               dvd_id = known_drive_ids[disk.MountPoint]
-               edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
-               known_drive_ids
+               known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
+               dvd_uid = known_drive_ids[disk.VolumeName]
+               edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_uid, true)
                name = parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
-               if name && name.gsub(/[^a-z]/i, '').downcase == disk.VolumeName.gsub(/[^a-z]/i, '').downcase
+               if name && name.just_letters == disk.VolumeName.just_letters
 			     display_name = name
-			    else
+			   else
 				  display_name = "#{name} (#{disk.VolumeName})"
-				end
+			   end
                present_discs << [display_name, edit_list_path_if_present]
             end
           }
@@ -150,6 +149,15 @@ module SensibleSwing
       given ||= "1" if use_default_of_one
       given
     end
+	
+	def get_srt_filename descriptors, edl_filename
+	  path = descriptors['subtitles_to_display_relative_path'] if descriptors
+	  if path
+	    path = File.expand_path(File.dirname(edl_filename) + '/' + path)
+	    raise 'nonexisting srt file must be relative to the edl file...' + path unless File.exist? path
+	  end
+	  path
+	end
 
     def we_are_in_create_mode
      ARGV.index("--create-mode")
@@ -212,7 +220,7 @@ module SensibleSwing
     end
 
     # basically run mplayer/smplayer on a file or DVD
-    def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen
+    def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen, srt_filename
       unless File.exist?(File.expand_path(play_this))
         raise play_this + ' non existing?' # sanity check, I get these in mac :)
       end
@@ -225,12 +233,16 @@ module SensibleSwing
       extra_options << "-mc 2"
       extra_options << "-autosync 30" 
       
-      unless show_subs
+      if !show_subs && !srt_filename
         # disable all subtitles :P
         extra_options << "-nosub -noautosub -forcedsubsonly -sid 1000"
       end
-      extra_options << "-alang en"
-      extra_options << "-slang en"
+	  if srt_filename
+	    extra_options << "-sub #{srt_filename}"
+	  else
+        extra_options << "-alang en"
+        extra_options << "-slang en"
+	  end
 
       force_use_mplayer ||= OS.mac?
       parent_parent = File.basename(File.dirname(play_this))
@@ -251,10 +263,22 @@ module SensibleSwing
       
       extra_options << "-mouse-movements #{get_upconvert_secondary_settings}" # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options << "-lavdopts threads=#{OS.cpu_count}" # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
+      extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}" # still doesn't work with smplayer which apparently forces you to use fontconfig or the default. boo!
       if force_use_mplayer
+	    key_strokes = <<-EOL
+RIGHT seek +10
+LEFT seek -10
+DOWN seek -60
+UP seek +60
+ENTER {dvdnav} dvdnav select	  
+MOUSE_BTN0 {dvdnav} dvdnav select
+MOUSE_BTN0_DBL vo_fullscreen
+MOUSE_BTN2 vo_fullscreen
+KP_ENTER dvdnav select
+# some for os x, some for doze. huh?
+       EOL
        conf_file = File.expand_path './mplayer_input_conf'
-       File.write conf_file, "ENTER {dvdnav} dvdnav select\nMOUSE_BTN0 {dvdnav} dvdnav select\nMOUSE_BTN0_DBL vo_fullscreen\nMOUSE_BTN2 vo_fullscreen\nKP_ENTER dvdnav select\n" # that KP_ENTER doesn't actually work.  Nor the MOUSE_BTN0 on windows. Weird.
-       extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}"
+       File.write conf_file, key_strokes
        extra_options << "-volume 100" # why start low? mplayer why oh why LODO
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
@@ -269,11 +293,11 @@ module SensibleSwing
         upconv = ""
        end
        if OS.doze?
-         p 'using mplayer-edl for smplayer\'s mplayer 1'
          # we want this even if we don't have -osd-add, since it adds confidence :)
          mplayer_loc = LocalModifiedMplayer
          assert File.exist?(mplayer_loc)
        else
+	     p 'todo check that its mplayer edl first'
          mplayer_loc = "mplayer"
        end
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
@@ -367,7 +391,7 @@ module SensibleSwing
     def play_dvd_smplayer_unedited use_mplayer_instead
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
       title_track_maybe_nil = get_title_track_string(descriptors, false)
-      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false, get_srt_filename(descriptors, edl_path_maybe_nil)
     end
     
     def get_dvd_playback_options descriptors
@@ -398,30 +422,32 @@ module SensibleSwing
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
+	EdlFilesChosen = {}
+	
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
-      
-      unless @_edit_list_path # cache EDL file choice...
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && force_choose_edl_file_if_no_easy_match
-  		    message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
-		      show_blocking_message_dialog message
-          edit_list_path = new_existing_file_selector_and_select_file(message, EdlParser::EDL_DIR)
+      edl_path = EdlFilesChosen[dvd_id]
+      if !edl_path
+        edl_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
+        if !edl_path && force_choose_edl_file_if_no_easy_match
+  		  message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
+		  show_blocking_message_dialog message
+          edl_path = new_existing_file_selector_and_select_file(message, EdlParser::EDL_DIR)
         end
-        @_edit_list_path = edit_list_path
       end
-      p 're/loading ' + @_edit_list_path # in case it has changed on disk
-      if @_edit_list_path
+      p 're/loading ' + edl_path # in case it has changed on disk
+      if edl_path # sometimes they don't have to choose one [?]
         descriptors = nil
         begin
-          descriptors = parse_edl @_edit_list_path
+          descriptors = parse_edl edl_path
         rescue SyntaxError => e
-          show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+          show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + edl_path + "\n " + e)
           raise e
         end
       end
       p descriptors
-      [drive_or_file, dvd_volume_name, dvd_id, @_edit_list_path, descriptors]
+	  EdlFilesChosen[dvd_id] ||= edl_path
+      [drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors]
     end
     
     MplayerBeginingBuffer = 1.0
@@ -463,7 +489,7 @@ module SensibleSwing
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
-      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, show_subs, start_full_screen
+      run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, show_subs, start_full_screen, get_srt_filename(descriptors, edl_path)
     end
     
     def print *args
@@ -554,4 +580,10 @@ class ::File
           this_complete_path
         end
       end
+end
+
+class ::String
+ def just_letters
+     gsub(/[^a-z0-9]/i, '').downcase
+ end
 end
