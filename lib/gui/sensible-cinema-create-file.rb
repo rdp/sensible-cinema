@@ -41,7 +41,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true, false
+        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true, false, nil
       }
     end
     
@@ -220,7 +220,7 @@ module SensibleSwing
       if success
         saved_to = save_to + '.avi'
         if run_mplayer_after_done
-          run_smplayer_non_blocking saved_to, nil, '', false, false, true
+          run_smplayer_non_blocking saved_to, nil, '', false, false, true, nil
         else
           size_original = File.size(file_from)
           size_edited_version = File.size(saved_to)
