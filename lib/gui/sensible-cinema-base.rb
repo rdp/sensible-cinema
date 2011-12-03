@@ -151,7 +151,7 @@ module SensibleSwing
     end
 	
 	def get_srt_filename descriptors, edl_filename
-	  path = descriptors['subtitle_relative_path'] if descriptors
+	  path = descriptors['subtitles_to_display_relative_path'] if descriptors
 	  path = File.expand_path(File.dirname(edl_filename) + '/' + path) if path
 	p 'got here ' + path.to_s
 	  path

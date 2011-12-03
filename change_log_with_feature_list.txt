@@ -1,4 +1,8 @@
-= 0.3.6 12-2-11 =
+= 0.31.7 12-3-11 =
+
+hopefully added subtitles_to_display_relative_path
+
+= 0.31.6 12-2-11 =
 
 Ok this time it's squashed, ok? Please?
 
