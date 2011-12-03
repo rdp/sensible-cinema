@@ -260,7 +260,7 @@ module SensibleSwing
 	largest_title = largest_title[0]
         title_to_get_offset_of ||= largest_title
  	out_hashes['dvd_title_track'] = title_to_get_offset_of
-p titles_with_length
+p titles_with_length # LODO give them access to it, too? own file?
 	out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
         offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
 	start_offset = offsets[:mpeg_start_offset]
@@ -379,6 +379,7 @@ p titles_with_length
 # "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
+# "subtitle_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
 "dvd_title_track_start_offset" => "#{hashes['dvd_start_offset']}",
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
