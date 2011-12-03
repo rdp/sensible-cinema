@@ -34,6 +34,7 @@
   add option "just skip don't mute always instead of muting"
   DVD timing for forum:Snow White
   
+  try anti c_eltm
   add "revision" to mplayer edl
   double check arrow keys mac
   report xbmc bugz
@@ -137,6 +138,7 @@
   mplayer patch for V:DD
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  can enter "arbitrary precision" for upconverter
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
   it should ask for an EDL when you click "play it unedited" -- actually just say why...
