@@ -263,8 +263,8 @@ module SensibleSwing
       
       extra_options << "-mouse-movements #{get_upconvert_secondary_settings}" # just in case smplayer also needs -mouse-movements... :) LODO
       extra_options << "-lavdopts threads=#{OS.cpu_count}" # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
-      extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}" # still doesn't work with smplayer which apparently forces you to use fontconfig or the default. boo!
       if force_use_mplayer
+        extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}"
 	    key_strokes = <<-EOL
 RIGHT seek +10
 LEFT seek -10

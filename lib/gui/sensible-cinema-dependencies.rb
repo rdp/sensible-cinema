@@ -92,7 +92,10 @@ module SensibleSwing
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
         puts 'downloading mplayer edl [10 MB]'
         MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
-      end     
+		config_dir = File.expand_path('~/mplayer')
+		FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
+		FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac
+      end
 
       # runtime dependencies, at least as of today...
       ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
