@@ -124,11 +124,11 @@ module SensibleSwing
                edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
                known_drive_ids
                name = parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
-               if name && name.gsub(/[^a-z]/i, '').downcase == disk.VolumeName.gsub(/[^a-z]/i, '').downcase
+               if name && name.just_letters == disk.VolumeName.just_letters
 			     display_name = name
-			    else
+			   else
 				  display_name = "#{name} (#{disk.VolumeName})"
-				end
+			   end
                present_discs << [display_name, edit_list_path_if_present]
             end
           }
@@ -554,4 +554,10 @@ class ::File
           this_complete_path
         end
       end
+end
+
+class ::String
+ def just_letters
+     gsub(/[^a-z0-9]/i, '').downcase
+ end
 end
