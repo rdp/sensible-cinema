@@ -1,3 +1,7 @@
+= 0.3.6 12-2-11 =
+
+Ok this time it's squashed, ok? Please?
+
 = 0.31.5 12-1-11 =
 
 Cleanup DVD list bug.
