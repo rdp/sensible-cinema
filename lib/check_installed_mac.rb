@@ -2,7 +2,7 @@ require 'rubygems'
 require 'os'
 success = true
 
-ENV['PATH'] = '/opt/local/bin' + ENV['PATH'] # macports' bin in first
+ENV['PATH'] = '/opt/local/rdp_projects/bin/mplayer:' + ENV['PATH'] # macports' bin in first
 
 module CheckInstalledMac
 
@@ -19,18 +19,11 @@ module CheckInstalledMac
   end
 
   if name == 'mplayer'
-    instrs = "please install mplayer-edl, see website http://rogerdpack.t28.net/sensible-cinema/content_editor.html"
-    unless File.exist?('/opt/local/bin/mplayer')
-      puts 'please install mplayer edl, ' + instrs
+    unless File.exist?('/opt/local/rdp_projects/bin/mplayer')
+      puts "please install mplayer edl, please install mplayer-edl, see website http://rogerdpack.t28.net/sensible-cinema/content_editor.html"
       return false
     end
-    out = `mplayer -osd-verbose`
-    if out =~ /unknown option on the command line/i
-     puts 'maybe you have another macports mplayer already uninstalled? please $ port uninstall, then ' + instrs
-     return false
-    else
-     return true
-    end
+    return true
   end
 
   # check for the others generically
