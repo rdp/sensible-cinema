@@ -152,8 +152,10 @@ module SensibleSwing
 	
 	def get_srt_filename descriptors, edl_filename
 	  path = descriptors['subtitles_to_display_relative_path'] if descriptors
-	  path = File.expand_path(File.dirname(edl_filename) + '/' + path) if path
-	p 'got here ' + path.to_s
+	  if path
+	    path = File.expand_path(File.dirname(edl_filename) + '/' + path)
+	    raise 'nonexisting srt file must be relative to the edl file...' + path unless File.exist? path
+	  end
 	  path
 	end
 
