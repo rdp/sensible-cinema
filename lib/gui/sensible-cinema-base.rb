@@ -397,30 +397,32 @@ module SensibleSwing
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
+	EdlFilesChosen = {}
+	
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
-      
-      unless @_edit_list_path # cache EDL file choice...
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        if !edit_list_path && force_choose_edl_file_if_no_easy_match
-  		    message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
-		      show_blocking_message_dialog message
-          edit_list_path = new_existing_file_selector_and_select_file(message, EdlParser::EDL_DIR)
+      edl_path = EdlFilesChosen[dvd_id]
+      if !edl_path
+        edl_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
+        if !edl_path && force_choose_edl_file_if_no_easy_match
+  		  message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
+		  show_blocking_message_dialog message
+          edl_path = new_existing_file_selector_and_select_file(message, EdlParser::EDL_DIR)
         end
-        @_edit_list_path = edit_list_path
       end
-      p 're/loading ' + @_edit_list_path # in case it has changed on disk
-      if @_edit_list_path
+      p 're/loading ' + edl_path # in case it has changed on disk
+      if edl_path # sometimes they don't have to choose one [?]
         descriptors = nil
         begin
-          descriptors = parse_edl @_edit_list_path
+          descriptors = parse_edl edl_path
         rescue SyntaxError => e
-          show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + @_edit_list_path + "\n " + e)
+          show_non_blocking_message_dialog("this file has an error--please fix then hit ok: \n" + edl_path + "\n " + e)
           raise e
         end
       end
       p descriptors
-      [drive_or_file, dvd_volume_name, dvd_id, @_edit_list_path, descriptors]
+	  EdlFilesChosen[dvd_id] ||= edl_path
+      [drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors]
     end
     
     MplayerBeginingBuffer = 1.0
