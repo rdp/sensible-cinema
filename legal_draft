@@ -12,3 +12,6 @@ It can mute by clicking a mute button, by accessing an API.
 It can work by monitoring, using an API, the current playback time.
 
 It can react to "seek" commands to coordinate position within EDL's.
+
+Another invention: it can apply editing "commands" to a player that is playing back blu-ray discs (hardware or software), as originally described in other clearplay
+patents, like US6889383 and those issued to them afterward.
