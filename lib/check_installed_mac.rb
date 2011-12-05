@@ -34,7 +34,7 @@ module CheckInstalledMac
 
   unless system(command + " 1> " + OS.dev_null + " 2>" + OS.dev_null)
      name = 'ImageMagick' if name == 'convert' # special case...
-     puts 'lacking dependency! Please install ' + name + ' by installing macports and running in terminal: $ sudo port install ' + name
+     puts 'lacking dependency! Please install ' + name + ' by installing the contrib pkg from the website'
      false
   else
     true
