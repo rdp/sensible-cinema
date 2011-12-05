@@ -1,5 +1,5 @@
 rem assumes you in mplayer/ dir
-rem known to work with r 34396
+rem known to work with r 34396, ffmpeg  eb4fc6acfede7ced5737c5bf023f
 patch -p0 <  %~dp0/mplayer_edl.diff
 cd libdvdnav
 echo 'just retype last part of name'
