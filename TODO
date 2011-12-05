@@ -37,13 +37,15 @@
   genealogy online fella
   genealogy screen saver create/publicize
   
+  allow drag window for upscaling select :P
+  OS X netflix instant
+    mac'ify OCR/Mouse
   try anti c_eltm
   test rvm email
   add "revision" to mplayer edl
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
-  try subtitle edit
-  allow drag window for upscaling select :P
+  try out subtitle edit
   tons of unit tests
   softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
   status updates when downloading files initially
@@ -107,7 +109,6 @@
   warn other wordpresses
   test mplayer -vo gl speeds at home
   minor redcar tweaks
-  short list of todo's for screen capture
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should just combine
   blu ray timing
@@ -123,11 +124,11 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  OS X netflix instant
-    mac'ify OCR/Mouse
+  test court jester watch it :)
+  @ffmpeg: you can't convert mkv's of this type!
+  mplayer patch for V:DD
   
 == decide later to move up or down ==
-  @ffmpeg: you can't convert mkv's of this type!
   DIRT short list
   don't show smplayer buttons in OS X/linux [?]
   "overwrite?" prompt for file mode
@@ -139,8 +140,7 @@
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
   super editor: shows the srt near each edit...
-  test court jester watch it :)
-  mplayer patch for V:DD
+  short list of todo's for screen capture
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
   @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
