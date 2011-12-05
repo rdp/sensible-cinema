@@ -37,7 +37,6 @@
   try anti c_eltm
   test rvm email
   add "revision" to mplayer edl
-  double check arrow keys mac
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
   try subtitle edit
@@ -139,6 +138,7 @@
   mplayer patch for V:DD
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
@@ -365,8 +365,8 @@ C:/dev/ruby/sensible-cinema/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs 
   @mplayer: highlighting doesn't work (at least with upconvert DVD)
   @ffmpeg: bounty/plz multi-thread the lanczos filter? plz? [if it looks like it would be helpful]
   @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
-  use mplayerx well [?] like wrap it...
-    could for files, not for dvd's yet tho...
+  use mplayerx well [?] like wrap it...with mine inside :P
+    could for files, dvdnav://1 should work too..
   try to team up with fanedit.org ?
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   mplayer EDL button allow this:

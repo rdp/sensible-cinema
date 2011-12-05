@@ -123,15 +123,15 @@ module SensibleSwing
                dvd_uid = known_drive_ids[disk.VolumeName]
                edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_uid, true)
                name = parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
-               if name && name.just_letters == disk.VolumeName.just_letters
-			     display_name = name
-			   else
-				  display_name = "#{name} (#{disk.VolumeName})"
-			   end
+               if !name ||(name.just_letters == disk.VolumeName.just_letters)
+	         display_name = name || disk.VolumeName
+	       else
+	         display_name = "#{name} (#{disk.VolumeName})"
+	       end
                present_discs << [display_name, edit_list_path_if_present]
             end
           }
-          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} Edit List available!"}
+          present_discs.map!{|display_name, has_edl| "DVD: #{display_name} #{ has_edl ? 'has an' : 'has NO'} Edit List available!"}
           if present_discs.length > 0
             @current_dvds_line1.text= '      ' + present_discs[0]
             @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 

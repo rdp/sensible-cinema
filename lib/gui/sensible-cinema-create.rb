@@ -256,6 +256,7 @@ module SensibleSwing
         largest_title = titles_with_length.max_by{|title, length| length}
 	if !largest_title
 	  show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
+          raise
 	end
 	largest_title = largest_title[0]
         title_to_get_offset_of ||= largest_title
