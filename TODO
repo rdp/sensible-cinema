@@ -13,15 +13,15 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  prince of egypt EDL is messed
+  prince of egypt OSD is messed, needs calculation!
   
 == yes do, un-ordered currently, from all the various future release options ==
 
+  mplayer dies tmnt dvdnav://1
   custom VLC build   ffor that fella
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   my mplayer can't seek arrow keys os x?
-  genealogy screen saver create/publicize
   mac: mpkg for ffmpeg et all all together, mplayer-edl, work LOL advertise urug
   upconvert stuff @home/sintel
     (no non-de-dupe)
@@ -34,6 +34,8 @@
   DVD timing for forum:Snow White
   the 50% thing
   srt files work for DVD's LOL/display OSD on command line too :P
+  genealogy online fella
+  genealogy screen saver create/publicize
   
   try anti c_eltm
   test rvm email
@@ -68,6 +70,8 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
+  the awesome ffmpeg file splitter :P
+    also do I really still need to use mencoder?
   use DVD NAV packet time:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
     add 2 options: file, "dvd"
