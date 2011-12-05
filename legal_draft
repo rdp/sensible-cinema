@@ -15,3 +15,5 @@ It can react to "seek" commands to coordinate position within EDL's.
 
 Another invention: it can apply editing "commands" to a player that is playing back blu-ray discs (hardware or software), as originally described in other clearplay
 patents, like US6889383 and those issued to them afterward.
+
+You can get the specific digits by "absolute digit location" or by "OCR on the entire timestamp"
