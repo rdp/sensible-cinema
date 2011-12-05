@@ -20,7 +20,7 @@ homepage            http://rogerdpack.t28.net
 
 livecheck.type      none
 
-depends_lib port:mplayer-edl port:ffmpeg port:gocr port:mplayer-edl
+depends_lib port:ffmpeg port:gocr port:ImageMagick port:mplayer-edl
 
 worksrcdir          trunk
 
