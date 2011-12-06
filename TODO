@@ -202,7 +202,7 @@
 
 == and more to never do ==
   
-  crash upconvert screen smplayer
+  fix crash upconvert screen smplayer
   disable internal "lib"
   report mplayer crash: mplayer crash:
      C:/dev/ruby/sensible-cinema/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs -nomouseinput -sub-fuzziness 1 -identify -vo direct3d -ao dsound -nokeepaspect -priority normal -framedrop -nodr -double -monitorpixelaspect 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles C:/Users/packrd/SMPLAY~1/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 100 -volume 50 -dvd-device D: -dvdangle 1 -nocache -osdlevel 0 -slices -af scaletempo,equalizer=0:0:0:0:0:0:0:0:0:0 -softvol -softvol-max 110 -framedrop -mc 2 -autosync 30 -sub c:/dev/ruby/sensible-cinema/zamples/edit_decision_lists/dvds/edls_being_edited/turtles.srt-msglevel identify=4 -mouse-movements  -lavdopts threads=8 -vo direct3d -osdlevel 2 -osd-fractions 1 -edl C:/Users/packrd/AppData/Local/Temp/mplayer.temp.edl -font c:\windows\fonts\arial.ttf  -subcp cp1250 -noass  dvdnav://1
