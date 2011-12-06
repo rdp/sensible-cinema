@@ -21,6 +21,7 @@ module SensibleSwing
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
       @watch_online = new_jbutton( "Watch upconverted online player, like netflix instant") do
+        show_blocking_message_dialog("sorry not mac compat. yet") and raise unless OS.doze?
         answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture decoder installed, and also configured using its setup utilities.", :yes => 'take me to its website', :no => 'I already and configured it, let me at it!')
         if answer == :yes
            SwingHelpers.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
