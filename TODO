@@ -13,11 +13,11 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  submit a disclosure for OCR, wiki based processing.
   prince of egypt OSD is messed, needs calculation!
   
 == yes do, un-ordered currently, from all the various future release options ==
 
+  submit a disclosure for OCR, wiki based processing.
   custom VLC mac build for that fella
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
@@ -35,11 +35,15 @@
   fix -sub to work with DVDNAV
   the 50% thing
   srt files work for DVD's LOL/display OSD on command line too :P
-  genealogy online fella
+  genealogy living tree fella
   genealogy screen saver create/publicize
   upconvert: compare with "normal", and against itself.  Then release :P
   that one guy's VAC
+  patch v2 for mplayer
+  more mplayer patches
   
+  learn clojure
+  upconvert "checkbox" for normal
   mplayer dies tmnt dvdnav://1
   allow drag window for upscaling select :P
   OS X netflix instant
@@ -142,6 +146,8 @@
   super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  try upconvert VLC, tell them how bwokded it is
+  move all business ideas to patents LOL
   status updates when downloading files initially
   DIRT short list
   short list of todo's for screen capture
