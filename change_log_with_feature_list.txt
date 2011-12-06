@@ -1,8 +1,9 @@
 = 0.32.0 12-6-11 =
 
-New version with an "upconvert from online player" option and instructions.  I haven't actually tried it out yet, but it's cool.
+New version with an "upconvert from online player" button and instructions.  I haven't actually tried it out yet, but it's there.
+Also new DVD defaults
 
-NB that the source code itself and its various commits is a description of the several inventions contained herein, esp.
+Note also that the source code itself and its various commits is a description of the several inventions contained herein, esp.
 when combined with their descriptions in this file and todo.inventionzy file
 
 see also http://www.youtube.com/watch?feature=player_profilepage&v=0AsJtVyVMzk sensible cinema using keystroke combinations which mute the applications volume while tracking. the unmute actually uses volume adjustment, as well, in this example, using keyboard strokes.
