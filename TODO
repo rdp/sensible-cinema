@@ -13,7 +13,7 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  prince of egypt OSD is messed, needs calculation!
+  prince of egypt OSD is messed, needs calculation hopefully!
   
 == yes do, un-ordered currently, from all the various future release options ==
 
@@ -37,7 +37,6 @@
   srt files work for DVD's LOL/display OSD on command line too :P
   genealogy living tree fella
   genealogy screen saver create/publicize
-  upconvert: compare with "normal", and against itself.  Then release :P
   that one guy's VAC
   patch v2 for mplayer
   more mplayer patches
@@ -178,10 +177,9 @@
       accomodate splits vs. blanks and work everywhere
     add to the template, make it so that various can use it
   nextsprocket "citrix"
-  ffmpeg filter to add subs from .srt :P
   cool runnings me w w/o grab
   Linux port for SC (call that good enough for usability on TV's...), should be...
-  7z mplayer_edl
+  7z'up mplayer_edl
   youtube/hulu timings different?
   distribute with requiring "external" libdvdcss [make them download gstreamer]
     and/or mplayer-edl itself...
@@ -192,10 +190,9 @@
   investigate more "it seeks past the end of dvdnav:// to the beginning!"
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
-  auto subtitles for smplayer
+  ffmpeg filter to add subs from .srt :P
 
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
-
   todo.upconvert
   todo.propaganda
   todo.inventionzy
@@ -206,12 +203,11 @@
   screen_capture TODO
 
 == and more to never do ==
+  
+  crash upconvert screen smplayer
   disable internal "lib"
   report mplayer crash: mplayer crash:
-
-C:/dev/ruby/sensible-cinema/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs -nomouseinput -sub-fuzziness 1 -identify -vo direct3d -ao dsound -nokeepaspect -priority normal -framedrop -nodr -double -monitorpixelaspect 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles C:/Users/packrd/SMPLAY~1/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale
-20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 100 -volume 50 -dvd-device D: -dvdangle 1 -nocache -osdlevel 0 -slices -af scaletempo,equalizer=0:0:0:0:0:0:0:0:0:0 -softvol -softvol-max 110 -framedrop -mc 2 -autosync 30 -sub c:/dev/ruby/sensible-cinema/zamples/edit_decision_lists/dvds/edls_being_edited/turtles.srt
--msglevel identify=4 -mouse-movements  -lavdopts threads=8 -vo direct3d -osdlevel 2 -osd-fractions 1 -edl C:/Users/packrd/AppData/Local/Temp/mplayer.temp.edl -font c:\windows\fonts\arial.ttf  -subcp cp1250 -noass  dvdnav://1
+     C:/dev/ruby/sensible-cinema/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs -nomouseinput -sub-fuzziness 1 -identify -vo direct3d -ao dsound -nokeepaspect -priority normal -framedrop -nodr -double -monitorpixelaspect 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles C:/Users/packrd/SMPLAY~1/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 100 -volume 50 -dvd-device D: -dvdangle 1 -nocache -osdlevel 0 -slices -af scaletempo,equalizer=0:0:0:0:0:0:0:0:0:0 -softvol -softvol-max 110 -framedrop -mc 2 -autosync 30 -sub c:/dev/ruby/sensible-cinema/zamples/edit_decision_lists/dvds/edls_being_edited/turtles.srt-msglevel identify=4 -mouse-movements  -lavdopts threads=8 -vo direct3d -osdlevel 2 -osd-fractions 1 -edl C:/Users/packrd/AppData/Local/Temp/mplayer.temp.edl -font c:\windows\fonts\arial.ttf  -subcp cp1250 -noass  dvdnav://1
   tell handbrake whitey cannot grab
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
