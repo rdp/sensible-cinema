@@ -25,6 +25,7 @@
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
   genealogy living tree fella
+  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   adv. DVD upconverter
   
   try to reproduce the ffplay bug with just ffmpeg
@@ -144,6 +145,8 @@
   super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  does -sws 9 make a difference without any "real" upscaling...it might...?
+    maybe a new button "poor man's upscaling" -sws 9 pullup,softskip :P
   update filterguide with link, more examples
   upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
