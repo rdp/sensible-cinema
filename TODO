@@ -53,7 +53,7 @@
   add "revision" to mplayer edl
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
-  try out subtitle edit
+  try out subtitle edit ()can it extract?)
   tons of unit tests
   softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
   @mplayer: ctrl-keys patch
