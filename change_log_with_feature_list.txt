@@ -1,3 +1,6 @@
+= 0.32.0 12-6-11 =
+
+New version with an "upconvert from online player" option and instructions.  I haven't actually tried it out yet, but it's cool.
 
 NB that the source code itself and its various commits is a description of the several inventions contained herein, esp.
 when combined with their descriptions in this file and todo.inventionzy file
