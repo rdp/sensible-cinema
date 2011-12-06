@@ -1,6 +1,6 @@
 # from http://avisynth.org/mediawiki/Enhancing_dvd_videos
 
-Video = DirectShowSource("push2.GRF", fps=35, audio=False, framecount=1000000) # fps appears to be a "max" fps
+Video = DirectShowSource("push3.GRF", fps=35, audio=False, framecount=1000000) # fps appears to be a "max" fps
 Return Video
 
 # 

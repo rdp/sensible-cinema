@@ -20,6 +20,17 @@ module SensibleSwing
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
+      @watch_online = new_jbutton( "Watch upconverted online player, like netflix instant") do
+        answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture decoder installed", :yes => 'take me to its website', :no => 'I do')
+        if answer == :yes
+           SwingHelpers.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
+           raise 'install it'
+        end
+        run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false, get_srt_filename(descriptors, edl_path_maybe_nil)
+
+        
+      end
+      
       add_text_line ''
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
@@ -37,10 +48,10 @@ module SensibleSwing
       LocalStorage[UpConvertEnglish].present?
     end
     
-    LocalStorage.set_default('screen_multiples', 2.0)
+    LocalStorage.set_default('screen_multiples', 1.0)
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Change Playback Upconversion Quality Settings") do
+      @show_upconvert_options = new_jbutton("Tweak Playback Upconversion Quality Settings") do
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
