@@ -13,38 +13,36 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  prince of egypt OSD is messed, needs calculation hopefully!
+  genealogy screen saver create/publicize
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
   
 == yes do, un-ordered currently, from all the various future release options ==
 
-  submit a disclosure for OCR, wiki based processing.
+  prince of egypt OSD is messed, needs calculation hopefully!
   custom VLC mac build for that fella
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
-  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-  my mplayer can't seek arrow keys os x?
-  mac: mpkg for ffmpeg et all all together, mplayer-edl, work LOL advertise urug
-  upconvert stuff @home/sintel
-    (no non-de-dupe)
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
-  can write synchronized euphemized srt
-  add option "just skip don't mute always instead of muting"
-  DVD timing for forum:Snow White
-  fix -sub to work with DVDNAV
-  the 50% thing
-  srt files work for DVD's LOL/display OSD on command line too :P
   genealogy living tree fella
-  genealogy screen saver create/publicize
-  that one guy's VAC
-  patch v2 for mplayer
-  more mplayer patches
   
+  DVD timing for forum:Snow White
+  mac: test for mac, release for mac, advertise urug
+  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
+  submit a disclosure for OCR, wiki based processing.
+  can write synchronized euphemized srt
+  the 50% thing
+  add option "just skip don't mute always instead of muting"
+  more mplayer patches
+    patch v2 for mplayer
+    fix -sub to work with DVDNAV
+    accurate-ify DVDNAV timestamps
+    EDL's work with DVDNAV.
+  that one guy's VAC freakiness
+  upconvert screen try it out, make sure it works, release and with DVD
+  display OSD on command line too, just mine :P
   learn clojure
-  upconvert "checkbox" for normal
   mplayer dies tmnt dvdnav://1
-  allow drag window for upscaling select :P
   OS X netflix instant
     mac'ify OCR/Mouse
   try anti c_eltm
@@ -52,10 +50,10 @@
   add "revision" to mplayer edl
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
-  try out subtitle edit ()can it extract?)
+  try out subtitle edit (can it extract?)
   tons of unit tests
-  softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
-  @mplayer: ctrl-keys patch
+  softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...it probably should...
+  @mplayer: ctrl-keys patch, ask them anyway :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
@@ -98,7 +96,7 @@
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
   rename it "..." or whatever google prefers :P
-  the php thing :P
+  the php uploader thing :P
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
@@ -107,8 +105,7 @@
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
     note on the www once it works
-  meta domain
-    note "can't get the ideal domain name?"
+  meta domain switch to "freedomainnamesforever"
   popup_text in EDL's
   ruby_prof stuffs (merge, release at least)
   warn other wordpresses
@@ -145,6 +142,7 @@
   super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
   move all business ideas to patents LOL
   status updates when downloading files initially

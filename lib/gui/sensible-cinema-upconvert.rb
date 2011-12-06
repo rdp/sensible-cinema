@@ -101,17 +101,17 @@ module SensibleSwing
         display_current_upconvert_setting_and_close_window
         # -Processing method: mplayer with accurate deblocking ???
       }
-      new_jbutton("Set upconvert options to experimental style playback") {
-        LocalStorage[UpConvertKey] = "scale,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
-        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
-        LocalStorage[UpConvertEnglish] = "experimental"
+      new_jbutton("Set upconvert options to experimental screen-upconverting playback") {
+        LocalStorage[UpConvertKey] = "scale=SCREEN_X:-10:0:0:3" # no hqdn3d
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
+        LocalStorage[UpConvertEnglish] = "experimental screenupconversion"
         display_current_upconvert_setting_and_close_window
       }
       
-      new_jbutton("Set upconvert options to whatever you want [like -sws 9 -ssf ls=100.0 -- advanced users only!]") {
+      new_jbutton("Set upconvert options to whatever you want [like -sws 9 -ssf ls=100.0 -- for advanced users]") {
         new_settings = get_user_input("you can set -vf settings, and then other settings. What would you like your -vf settings to be?")
         LocalStorage[UpConvertKey] = new_settings
-        other_settings = get_user_input("other settings you'd like to add:")
+        other_settings = get_user_input("other settings you'd like to also have add:")
         LocalStorage[UpConvertKeyExtra] = other_settings
         LocalStorage[UpConvertEnglish] = "personalized: -vf #{new_settings}, #{other_settings}"      
       }
@@ -119,8 +119,8 @@ module SensibleSwing
       # TODO tooltip from docu here +- this into tooltip
       # TODO "click here" link for more docu [?]
       add_text_line "Multiple factor screen widths"
-      add_text_line "   (higher is better, but uses more cpu, 2x is good for high-end)." 
-      add_text_line "   If mplayer just dies or displays only a black or white screen then lower this setting."
+      add_text_line "   (higher might be better, uses more cpu)." 
+      add_text_line "   If mplayer just dies or displays only a black or white screen then lower this setting, it is too high."
       slider = JSlider.new
       slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
   

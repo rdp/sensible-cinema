@@ -138,3 +138,4 @@
   can display "user contributed" subtitles (edited, fan edit style, etc.)
   can overlay them "transparently" above various players, arbitrarily, by tracking timestamps on screen, etc.
   while synchronized, they can chat, like in a video game LOL
+  can overlay an srt file to an "online" OCR tracked player
