@@ -21,14 +21,12 @@ module SensibleSwing
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
       @watch_online = new_jbutton( "Watch upconverted online player, like netflix instant") do
-        answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture decoder installed", :yes => 'take me to its website', :no => 'I do')
+        answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture decoder installed, and also configured using its setup utilities.", :yes => 'take me to its website', :no => 'I already and configured it, let me at it!')
         if answer == :yes
            SwingHelpers.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
            raise 'install it'
         end
-        run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false, get_srt_filename(descriptors, edl_path_maybe_nil)
-
-        
+        run_smplayer_non_blocking "upconvert_from_screen/upconvert_from_screen_me2.avs", nil, '', force_mplayer = true, true, false, nil
       end
       
       add_text_line ''
@@ -104,10 +102,18 @@ module SensibleSwing
         # -Processing method: mplayer with accurate deblocking ???
       }
       new_jbutton("Set upconvert options to experimental style playback") {
-        LocalStorage[UpConvertKey] = "scale" # hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
+        LocalStorage[UpConvertKey] = "scale,hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
         LocalStorage[UpConvertEnglish] = "experimental"
         display_current_upconvert_setting_and_close_window
+      }
+      
+      new_jbutton("Set upconvert options to whatever you want [like -sws 9 -ssf ls=100.0 -- advanced users only!]") {
+        new_settings = get_user_input("you can set -vf settings, and then other settings. What would you like your -vf settings to be?")
+        LocalStorage[UpConvertKey] = new_settings
+        other_settings = get_user_input("other settings you'd like to add:")
+        LocalStorage[UpConvertKeyExtra] = other_settings
+        LocalStorage[UpConvertEnglish] = "personalized: -vf #{new_settings}, #{other_settings}"      
       }
       
       # TODO tooltip from docu here +- this into tooltip

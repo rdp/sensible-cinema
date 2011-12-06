@@ -221,10 +221,7 @@ module SensibleSwing
 
     # basically run mplayer/smplayer on a file or DVD
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen, srt_filename
-      unless File.exist?(File.expand_path(play_this))
-        raise play_this + ' non existing?' # sanity check, I get these in mac :)
-      end
-
+      raise unless passed_in_extra_options # cannot be nil
       extra_options = []
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
@@ -237,12 +234,12 @@ module SensibleSwing
         # disable all subtitles :P
         extra_options << "-nosub -noautosub -forcedsubsonly -sid 1000"
       end
-	  if srt_filename
-	    extra_options << "-sub #{srt_filename}"
-	  else
+	    if srt_filename
+	      extra_options << "-sub #{srt_filename}"
+  	  else
         extra_options << "-alang en"
         extra_options << "-slang en"
-	  end
+	    end
 
       force_use_mplayer ||= OS.mac?
       parent_parent = File.basename(File.dirname(play_this))
