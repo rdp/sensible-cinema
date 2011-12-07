@@ -295,7 +295,7 @@ p titles_with_length # LODO give them access to it, too? own file?
     
     def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..." # must be non blocking so the command can run :P
-      command = "mplayer -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvd://#{title} -nocache -dvd-device #{drive}  2>&1"
+      command = "mplayer -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
       out = `#{command}`
       #search for V:  0.37
