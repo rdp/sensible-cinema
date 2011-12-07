@@ -16,6 +16,36 @@ the reality is her hair looks "good but out of focus" with 2x as well.
 
 I must conceded LOL
 
+===emperor's new groove: ===
+pauses in mplayer, seems...great in vlc...didn't check vlc logs though.
+when he throws hat, without upconvert too phew
+  8% 9% cpu...2000
+
+ some jerks in mplayer [baby] not in VLC. cache?
+  
+  
+
+Too many video packets in the buffer: (4096 in 8275996 bytes).
+Maybe you are playing a non-interleaved stream/file or the codec failed?
+For AVI files, try to force non-interleaved mode with the -ni option.
+[ac3 @ 00c3fa80]incomplete frame
+
+may have been a reset...
+this has a bajillion resets...
+I think VLC is just skipping it LOL.
+
+Too many video packets in the buffer: (4096 in 8275996 bytes).
+Maybe you are playing a non-interleaved stream/file or the codec failed?
+For AVI files, try to force non-interleaved mode with the -ni option.
+[ac3 @ 00c3fa80]incomplete frame
+
+  
+TODO book 2x
+  
+veggie tales where's g: fails css, fine vlc
+
+vlc paused a tidge at the beginnning
+
 = xbmc timings =
 
 xbmc seems to use "straight" dvdnav time.
