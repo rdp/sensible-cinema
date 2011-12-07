@@ -1,4 +1,13 @@
 http://guide.macports.org/#development.local-repositories
 you want osd variant
 this basically collids with mplayer, I guess [without any way around that?] so you cannot install this and any other mplayer port
+
+
 sudo port -kd install mplayer-edl +osd
+
+home macports: ./configure --prefix=/opt/rdp_project_local --with-applications-dir=/Applications/rdp_projects
+
+add
+/Users/rogerdpack/sensible-cinema/vendor/mplayer_patches/port_dir
+to
+/opt/rdp_project_local/etc/macports/sources.conf
