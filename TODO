@@ -15,12 +15,12 @@
 == yes do ordered for this release/other projects ja  ==
   genealogy screen saver create/publicize
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
+  custom VLC mac build for that fella
   
 == yes do, un-ordered currently, from all the various future release options ==
 
-  veggie tales dies
+  veggie tales dies (1.2.10 v 1.2.11 ?)
   prince of egypt OSD is messed, needs calculation hopefully!
-  custom VLC mac build for that fella
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
@@ -30,6 +30,7 @@
   it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   
   actualize with mplayer svn
+  mac mplayer-edl lacks some diffs
   fix screen capturer negative
   DVD timing for forum:Snow White
   mac: test for mac, release for mac, advertise urug
