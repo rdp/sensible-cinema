@@ -19,10 +19,9 @@
 == yes do, un-ordered currently, from all the various future release options ==
 
   veggie tales dies
-  dvd://
-  4 cores
   prince of egypt OSD is messed, needs calculation hopefully!
   custom VLC mac build for that fella
+  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
@@ -30,13 +29,12 @@
   genealogy living tree fella
   it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   
+  actualize with mplayer svn
   fix screen capturer negative
-  adv. DVD upconverter
-  try to reproduce the ffplay bug with just ffmpeg
   DVD timing for forum:Snow White
   mac: test for mac, release for mac, advertise urug
-  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-  submit a disclosure for OCR, wiki based processing.
+  submit a disclosure for OCR, wiki based processing
+  disclosure lighting, table
   can write synchronized euphemized srt
   the 50% thing
   add option "just skip don't mute always instead of muting"
@@ -45,11 +43,13 @@
     fix -sub to work with DVDNAV
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV.
+  try to reproduce the ffplay bug with just ffmpeg
   that one guy's VAC freakiness
   upconvert screen try it out, make sure it works, release and with DVD
+  mplayer dies tmnt dvdnav://1
+  
   display OSD on command line too, just mine :P
   learn clojure
-  mplayer dies tmnt dvdnav://1
   OS X netflix instant
     mac'ify OCR/Mouse
   test rvm email
@@ -70,6 +70,7 @@
   ffmpeg how to add subs demo
   inspector general
   remove splits' old functionality 
+  adv. DVD upconverter
   add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
