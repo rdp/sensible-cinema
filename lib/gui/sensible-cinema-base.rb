@@ -113,16 +113,21 @@ module SensibleSwing
     end
 
     def update_current_dvds_line
-      Thread.new {
+	  # any second windows call this again...lodo close with each new window [?]
+      @@updater_th ||= Thread.new {
         known_drive_ids = {}
         loop {
           present_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
                known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
-               dvd_uid = known_drive_ids[disk.VolumeName]
-               edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_uid, true)
-               name = parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
+               dvd_id = known_drive_ids[disk.VolumeName]
+			   # lodo this punishes them if they have two disks, one without...
+			   known_drive_ids[dvd_id] ||= begin
+                 edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
+			     parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
+			   end
+			   name = known_drive_ids[dvd_id]
                if name && name.just_letters == disk.VolumeName.just_letters
 			     display_name = name
 			   else
