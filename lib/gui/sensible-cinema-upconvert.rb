@@ -20,6 +20,16 @@ module SensibleSwing
       end
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
+      @watch_online = new_jbutton( "Watch upconverted online player, like netflix instant") do
+        show_blocking_message_dialog("sorry not mac compat. yet") and raise unless OS.doze?
+        answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture decoder installed, and also configured using its setup utilities.", :yes => 'take me to its website', :no => 'I already and configured it, let me at it!')
+        if answer == :yes
+           SwingHelpers.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
+           raise 'install it'
+        end
+        run_smplayer_non_blocking "upconvert_from_screen/upconvert_from_screen_me2.avs", nil, '', force_mplayer = true, true, false, nil
+      end
+      
       add_text_line ''
       @upconv_line = add_text_line ''
       change_upconvert_line_to_current
@@ -37,10 +47,10 @@ module SensibleSwing
       LocalStorage[UpConvertEnglish].present?
     end
     
-    LocalStorage.set_default('screen_multiples', 2.0)
+    LocalStorage.set_default('screen_multiples', 1.0)
 
     def add_change_upconvert_options_button
-      @show_upconvert_options = new_jbutton("Change Playback Upconversion Quality Settings") do
+      @show_upconvert_options = new_jbutton("Tweak Playback Upconversion Quality Settings") do
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
@@ -92,18 +102,26 @@ module SensibleSwing
         display_current_upconvert_setting_and_close_window
         # -Processing method: mplayer with accurate deblocking ???
       }
-      new_jbutton("Set upconvert options to experimental style playback") {
-        LocalStorage[UpConvertKey] = "scale" # hqdn3d=7:7:5,scale=SCREEN_X:-10:0:0:10"
-        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=100.0 -ssf cs=75.0"
-        LocalStorage[UpConvertEnglish] = "experimental"
+      new_jbutton("Set upconvert options to experimental screen-upconverting playback") {
+        LocalStorage[UpConvertKey] = "scale=SCREEN_X:-10:0:0:3" # no hqdn3d
+        LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=25.0"
+        LocalStorage[UpConvertEnglish] = "experimental screenupconversion"
         display_current_upconvert_setting_and_close_window
+      }
+      
+      new_jbutton("Set upconvert options to whatever you want [like -sws 9 -ssf ls=100.0 -- for advanced users]") {
+        new_settings = get_user_input("you can set -vf settings, and then other settings. What would you like your -vf settings to be?")
+        LocalStorage[UpConvertKey] = new_settings
+        other_settings = get_user_input("other settings you'd like to also have add:")
+        LocalStorage[UpConvertKeyExtra] = other_settings
+        LocalStorage[UpConvertEnglish] = "personalized: -vf #{new_settings}, #{other_settings}"      
       }
       
       # TODO tooltip from docu here +- this into tooltip
       # TODO "click here" link for more docu [?]
       add_text_line "Multiple factor screen widths"
-      add_text_line "   (higher is better, but uses more cpu, 2x is good for high-end)." 
-      add_text_line "   If mplayer just dies or displays only a black or white screen then lower this setting."
+      add_text_line "   (higher might be better, uses more cpu)." 
+      add_text_line "   If mplayer just dies or displays only a black or white screen then lower this setting, it is too high."
       slider = JSlider.new
       slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
   

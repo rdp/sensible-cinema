@@ -1,4 +1,19 @@
-=======
+= 0.32.0 12-6-11 =
+
+New version with an "upconvert from online player" button and instructions.  I haven't actually tried it out yet, but it's there.
+Also new DVD defaults
+
+Note also that the source code itself and its various commits is a description of the several inventions contained herein, esp.
+when combined with their descriptions in this file and todo.inventionzy file
+
+see also http://www.youtube.com/watch?feature=player_profilepage&v=0AsJtVyVMzk sensible cinema using keystroke combinations which mute the applications volume while tracking. the unmute actually uses volume adjustment, as well, in this example, using keyboard strokes.
+see http://www.youtube.com/watch?v=8cUV8DKLOK8 sensible cinema using keystroke combinations which mute the system volume while tracking
+see http://www.youtube.com/rogerdpack#p/a/u/2/gJ4jFCFPan0 show off new feature of sensible cinema v0.21.6 See the changelog for sensible cinema for details
+
+= 0.31.8 12-3-11 =
+
+subtitles almost work in smplayer, mac require new packages
+
 = 0.31.7 12-3-11 =
 
 hopefully added subtitles_to_display_relative_path

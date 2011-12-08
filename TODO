@@ -13,38 +13,54 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  prince of egypt EDL is messed
+  genealogy screen saver create/publicize
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
+  custom VLC mac build for that fella
   
 == yes do, un-ordered currently, from all the various future release options ==
-  
-  it can "overlay display" custom edited .srt files smplayer/mplayer-edl
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
+
+  veggie tales dies (1.2.10 v 1.2.11 ?)
+  prince of egypt OSD is messed, needs calculation hopefully!
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
-  my mplayer can't seek arrow keys os x?
-  genealogy screen saver create/publicize
-  mac: distros that I can just download, unzip for ffmpeg, mplayer-edl, advertise urug
-  upconvert stuff @home/sintel
-    (no non-de-dupe)
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
-  can write synchronized euphemized srt
-  add option "just skip don't mute always instead of muting"
-  DVD timing for forum:Snow White
+  genealogy living tree fella
+  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   
-  try anti c_eltm
+  actualize with mplayer svn
+  mac mplayer-edl lacks some diffs
+  fix screen capturer negative
+  DVD timing for forum:Snow White
+  mac: test for mac, release for mac, advertise urug
+  submit a disclosure for OCR, wiki based processing
+  disclosure lighting, table
+  can write synchronized euphemized srt
+  the 50% thing
+  add option "just skip don't mute always instead of muting"
+  more mplayer patches
+    patch v2 for mplayer
+    fix -sub to work with DVDNAV
+    accurate-ify DVDNAV timestamps
+    EDL's work with DVDNAV.
+  try to reproduce the ffplay bug with just ffmpeg
+  that one guy's VAC freakiness
+  upconvert screen try it out, make sure it works, release and with DVD
+  mplayer dies tmnt dvdnav://1
+  
+  display OSD on command line too, just mine :P
+  learn clojure
+  OS X netflix instant
+    mac'ify OCR/Mouse
   test rvm email
   add "revision" to mplayer edl
-  double check arrow keys mac
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
-  try subtitle edit
-  allow drag window for upscaling select :P
+  try out subtitle edit (can it extract?)
   tons of unit tests
-  softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...
-  status updates when downloading files initially
-  @mplayer: key patch
+  softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...it probably should...
+  @mplayer: ctrl-keys patch, ask them anyway :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
@@ -55,6 +71,7 @@
   ffmpeg how to add subs demo
   inspector general
   remove splits' old functionality 
+  adv. DVD upconverter
   add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
@@ -67,6 +84,8 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
+  the awesome ffmpeg file splitter :P
+    also do I really still need to use mencoder?
   use DVD NAV packet time:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
     add 2 options: file, "dvd"
@@ -84,9 +103,8 @@
   flds: the intelligent tag parent sync'er, other todo's :P
   create skype/google+ hangouts auto-easy-recorder windows
     just try it as is for today :P
-  upconvert: compare with "normal", and against itself.  Then release :P
-  rename it "edited movie player" or whatever google prefers :P
-  the php thing :P
+  rename it "..." or whatever google prefers :P
+  the php uploader thing :P
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
@@ -95,14 +113,12 @@
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
     note on the www once it works
-  meta domain
-    note "can't get the ideal domain name?"
+  meta domain switch to "freedomainnamesforever"
   popup_text in EDL's
-  ruby_prof stuffs (release at least)
+  ruby_prof stuffs (merge, release at least)
   warn other wordpresses
   test mplayer -vo gl speeds at home
   minor redcar tweaks
-  short list of todo's for screen capture
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should just combine
   blu ray timing
@@ -118,12 +134,10 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  OS X netflix instant
-    mac'ify OCR/Mouse
+  test court jester watch it :)
+  @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
-  @ffmpeg: you can't convert mkv's of this type!
-  DIRT short list
   don't show smplayer buttons in OS X/linux [?]
   "overwrite?" prompt for file mode
   VLC UI fixes
@@ -134,10 +148,17 @@
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
   super editor: shows the srt near each edit...
-  test court jester watch it :)
-  mplayer patch for V:DD
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  maybe a new button "poor man's upscaling" -sws 9 pullup,softskip :P
+  update filterguide with link, more examples
+  upconvert "checkbox" for normal
+  try upconvert VLC, tell them how bwokded it is
+  move all business ideas to patents LOL
+  status updates when downloading files initially
+  DIRT short list
+  short list of todo's for screen capture
+  @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
@@ -164,10 +185,9 @@
       accomodate splits vs. blanks and work everywhere
     add to the template, make it so that various can use it
   nextsprocket "citrix"
-  ffmpeg filter to add subs from .srt :P
   cool runnings me w w/o grab
   Linux port for SC (call that good enough for usability on TV's...), should be...
-  7z mplayer_edl
+  7z'up mplayer_edl
   youtube/hulu timings different?
   distribute with requiring "external" libdvdcss [make them download gstreamer]
     and/or mplayer-edl itself...
@@ -178,9 +198,9 @@
   investigate more "it seeks past the end of dvdnav:// to the beginning!"
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
+  ffmpeg filter to add subs from .srt :P
 
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
-
   todo.upconvert
   todo.propaganda
   todo.inventionzy
@@ -191,7 +211,11 @@
   screen_capture TODO
 
 == and more to never do ==
+  
+  fix crash upconvert screen smplayer
   disable internal "lib"
+  report mplayer crash: mplayer crash:
+     C:/dev/ruby/sensible-cinema/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs -nomouseinput -sub-fuzziness 1 -identify -vo direct3d -ao dsound -nokeepaspect -priority normal -framedrop -nodr -double -monitorpixelaspect 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles C:/Users/packrd/SMPLAY~1/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 100 -volume 50 -dvd-device D: -dvdangle 1 -nocache -osdlevel 0 -slices -af scaletempo,equalizer=0:0:0:0:0:0:0:0:0:0 -softvol -softvol-max 110 -framedrop -mc 2 -autosync 30 -sub c:/dev/ruby/sensible-cinema/zamples/edit_decision_lists/dvds/edls_being_edited/turtles.srt-msglevel identify=4 -mouse-movements  -lavdopts threads=8 -vo direct3d -osdlevel 2 -osd-fractions 1 -edl C:/Users/packrd/AppData/Local/Temp/mplayer.temp.edl -font c:\windows\fonts\arial.ttf  -subcp cp1250 -noass  dvdnav://1
   tell handbrake whitey cannot grab
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
@@ -358,8 +382,8 @@
   @mplayer: highlighting doesn't work (at least with upconvert DVD)
   @ffmpeg: bounty/plz multi-thread the lanczos filter? plz? [if it looks like it would be helpful]
   @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
-  use mplayerx well [?] like wrap it...
-    could for files, not for dvd's yet tho...
+  use mplayerx well [?] like wrap it...with mine inside :P
+    could for files, dvdnav://1 should work too..
   try to team up with fanedit.org ?
   investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   mplayer EDL button allow this:

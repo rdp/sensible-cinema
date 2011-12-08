@@ -49,24 +49,8 @@ Now insert a DVD you own, and restart sensible cinema to see available options.
 Note that you want to download from sourceforge not from github.com (github is just the raw source).
 There is more documentation <a href="https://github.com/rdp/sensible-cinema/wiki">here</a>.
 
-<h3>Mac user prerequisites</h3>Mac users will need to install some programs first.
+<h3>Mac user prerequisites</h3>Mac users will need to install some <a href="https://sourceforge.net/projects/sensible-cinema/files/mac-dependencies">mac dependencies</a> first.
 
-If you plan on watching any movies in "realtime" then you'll need to download <a href="http://mplayerx.org/#Download">mplayerx</a>.
-
-If you plan on doing any auto-video editing/saving then you'll need to install <a href="http://www.macports.org/">macports</a> and some libraries.  
-Install macports, then afterward open the "terminal" Application and execute the following command:
-$ sudo port install ffmpeg gocr
-
-Now comes the hard part.  You're going to want to install mplayer-edl
-
-open a terminal, 
-cd to sensible-cinema/vendor/mplayer_patches/port_dir
-run $ portindex
-add that dir to /opt/local/etc/macports/sources.conf, ex, at the bottom: 
-file:///Users/rogerdpack/sensible-cinema/vendor/mplayer_patches/port_dir
-then run $ sudo port install mplayer-edl
-
-After this finishes (it will take awhile) you should be ready to run Sensible Cinema's advanced mode options.
 Note that by installing these dependencies, you're accepting their respective licenses/distributions.
 
 <h3>Upconverting/upscaling DVD/video player</h3>Sensible Cinema comes with its own upscaling/upconverting software DVD/movie file player. 

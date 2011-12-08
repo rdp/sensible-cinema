@@ -21,33 +21,6 @@ Index: stream/stream_dvdnav.c
          return 1;
        break;
      }
-Index: libvo/vo_direct3d.c
-===================================================================
---- libvo/vo_direct3d.c	(revision 34269)
-+++ libvo/vo_direct3d.c	(working copy)
-@@ -237,6 +237,12 @@
-         return 0;
-     }
- 
-+    if (!tex_width || !tex_height) {
-+      mp_msg(MSGT_VO, MSGL_V,
-+             "<vo_direct3d>Deferring surface creation because width or height is 0.\n");
-+      return 0;
-+    }
-+
-     /* calculate the best size for the OSD depending on the factors from the device */
-     if (priv->device_caps_power2_only) {
-         tex_width  = 1;
-@@ -1029,7 +1035,8 @@
- static void draw_osd(void)
- {
-     // we can not render OSD if we lost the device e.g. because it was uncooperative
--    if (!priv->d3d_device)
-+    // or if the OSD textures are not allocated like when minimized
-+    if (!priv->d3d_device || !priv->d3d_texture_osd)
-         return;
- 
-     if (vo_osd_changed(0)) {
 Index: mplayer.c
 ===================================================================
 --- mplayer.c	(revision 34269)

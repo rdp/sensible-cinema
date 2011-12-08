@@ -1,5 +1,55 @@
 up next:
 
+= upconv dvd =
+
+2:34:12 seem the same (sky view houses)
+2:35:34 seem same (alleyway)
+2:36:89 crud over right shoulder igual
+42:.40 door same
+2:44.73 one line of difference 2x is taller LOL [really none I guess]
+1x is looking really good...
+2:48.37 igualzinho
+47.27 slightly furry hair:
+47:27 igualzinho
+
+the reality is her hair looks "good but out of focus" with 2x as well.
+
+I must concede LOL
+
+does -sws 9 make a difference without any "real" upscaling...it seems to not do...
+
+===emperor's new groove: ===
+pauses in mplayer, seems...great in vlc...didn't check vlc logs though.
+when he throws hat, without upconvert too phew
+  8% 9% cpu...2000
+
+ some jerks in mplayer [baby] not in VLC. cache?
+  
+  
+
+Too many video packets in the buffer: (4096 in 8275996 bytes).
+Maybe you are playing a non-interleaved stream/file or the codec failed?
+For AVI files, try to force non-interleaved mode with the -ni option.
+[ac3 @ 00c3fa80]incomplete frame
+
+may have been a reset...
+this has a bajillion resets...
+I think VLC is just skipping it LOL.
+
+Too many video packets in the buffer: (4096 in 8275996 bytes).
+Maybe you are playing a non-interleaved stream/file or the codec failed?
+For AVI files, try to force non-interleaved mode with the -ni option.
+[ac3 @ 00c3fa80]incomplete frame
+
+  
+TODO book 2x
+  
+veggie tales where's g: fails css, fine vlc
+
+vlc paused a tidge at the beginnning
+
+= xbmc timings =
+
 xbmc seems to use "straight" dvdnav time.
 
 ====
@@ -120,9 +170,8 @@ NAV packets must be "messed up" for the 0.0s versus 0.4s, relative to
       => -0.09959999999955471
 	      creeping? but that's after like 2 hours...hmm...
 		  
-
-"dvd_start_offset" => "0.2", # for title 1
-
+      prince o' egypt: 0.68-0.35-0.4
+      => -0.07
 = dying/crashing dvdnav =
 
 linux VLC:

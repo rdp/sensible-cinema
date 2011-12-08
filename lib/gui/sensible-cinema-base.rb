@@ -128,15 +128,16 @@ module SensibleSwing
 			     parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
 			   end
 			   name = known_drive_ids[dvd_id]
-               if name && name.just_letters == disk.VolumeName.just_letters
-			     display_name = name
+               if !name ||(name.just_letters == disk.VolumeName.just_letters)
+	             display_name = name || disk.VolumeName
 			   else
 				  display_name = "#{name} (#{disk.VolumeName})"
 			   end
+
                present_discs << [display_name, edit_list_path_if_present]
             end
           }
-          present_discs.map!{|disk, has_edl| "DVD: #{disk} #{ has_edl ? 'has an' : 'has NO'} Edit List available!"}
+          present_discs.map!{|display_name, has_edl| "DVD: #{display_name} #{ has_edl ? 'has an' : 'has NO'} Edit List available!"}
           if present_discs.length > 0
             @current_dvds_line1.text= '      ' + present_discs[0]
             @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 
@@ -226,10 +227,7 @@ module SensibleSwing
 
     # basically run mplayer/smplayer on a file or DVD
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen, srt_filename
-      unless File.exist?(File.expand_path(play_this))
-        raise play_this + ' non existing?' # sanity check, I get these in mac :)
-      end
-
+      raise unless passed_in_extra_options # cannot be nil
       extra_options = []
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
@@ -242,12 +240,12 @@ module SensibleSwing
         # disable all subtitles :P
         extra_options << "-nosub -noautosub -forcedsubsonly -sid 1000"
       end
-	  if srt_filename
-	    extra_options << "-sub #{srt_filename}"
-	  else
+	    if srt_filename
+	      extra_options << "-sub #{srt_filename}"
+  	  else
         extra_options << "-alang en"
         extra_options << "-slang en"
-	  end
+	    end
 
       force_use_mplayer ||= OS.mac?
       parent_parent = File.basename(File.dirname(play_this))
@@ -255,8 +253,8 @@ module SensibleSwing
         # case d:\yo\VIDEO_TS\title0.vob
         dvd_device_dir = normalize_path(File.dirname(play_this))
         play_this = "\"dvdnav://#{title_track_maybe_nil}/#{dvd_device_dir}/..\""
-      elsif File.exist?(play_this + '/VIDEO_TS') || (play_this =~ /\/dev\/disk\d/)
-        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive, or DVD dir] or mac's /dev/disk1
+      elsif File.exist?(play_this + '/VIDEO_TS') || (play_this =~ /\/dev\/rdisk\d/)
+        # case d:\ where d:\VIDEO_TS exists [DVD mounted in drive, or DVD dir] or mac's /dev/rdisk1
         play_this = "\"dvdnav://#{title_track_maybe_nil}/#{play_this}\""
       else
         # case g:\video\filename.mpg
