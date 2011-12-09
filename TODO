@@ -28,7 +28,7 @@
   it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   we're wasting 6% on doze, and run out of steam eventually [!]
   
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for play current DVD with zoom :P [cache preference]
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file" [cache preference]
   add have read to license
   ffmpeg dshow patches
   actualize with mplayer svn
@@ -152,6 +152,7 @@
   super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @mplayer: did you realize you don't go to the start of DVD's right? [tangled]
   maybe a new button "poor man's upscaling" -sws 9 pullup,softskip :P
   update filterguide with link, more examples
   upconvert "checkbox" for normal
