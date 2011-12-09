@@ -125,9 +125,12 @@ module SensibleSwing
 			   # lodo this punishes them if they have two disks, one without...
 			   known_drive_ids[dvd_id] ||= begin
                  edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
-			     parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
+			     if edit_list_path_if_present
+                   name = parse_edl(edit_list_path_if_present)['name']
+				   [name, edit_list_path_if_present]
+                 end				   
 			   end
-			   name = known_drive_ids[dvd_id]
+			   name, edit_list_path_if_present = known_drive_ids[dvd_id]
                if !name ||(name.just_letters == disk.VolumeName.just_letters)
 	             display_name = name || disk.VolumeName
 			   else
