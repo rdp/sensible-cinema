@@ -1,3 +1,15 @@
+= =
+
+NB that for several versions, we have been able to "extrapolate" from the DVD NAV packet time plus elapsed difference in MPEG time,
+more accurate muting/frame skipping within DVD's.
+Another way to do it would be to infer "more precise" actual time by "time elapsed" since the last DVD time.
+
+ZoomPlayer Max has an excellent UI for editing EDL's, with lots of features.
+  can do "inverse edit" (play only lists)
+  can do "cut section", "jump to position", "mute audio", "hude subtitles", "end of playback"
+    also nice would/might be "jump to title with position" or the other mentioned in the other files herein.
+  It can play DVD's back edited splendidly.
+  
 = 0.32.0 12-6-11 =
 
 New version with an "upconvert from online player" button and instructions.  I haven't actually tried it out yet, but it's there.

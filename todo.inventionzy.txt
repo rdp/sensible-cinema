@@ -139,3 +139,5 @@
   can overlay them "transparently" above various players, arbitrarily, by tracking timestamps on screen, etc.
   while synchronized, they can chat, like in a video game LOL
   can overlay an srt file to an "online" OCR tracked player
+  right click on DVD "play edit with ..."
+  bookmarks within edited playback/remember where you last left off
