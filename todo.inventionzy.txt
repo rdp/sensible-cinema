@@ -141,3 +141,4 @@
   can overlay an srt file to an "online" OCR tracked player
   right click on DVD "play edit with ..."
   bookmarks within edited playback/remember where you last left off
+  you can record the screen of an "edited playback" in order to create an edited version. It's like recording off your TV, right?
