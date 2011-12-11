@@ -103,7 +103,7 @@ module SensibleSwing
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
       if OS.doze?
-        DriveInfo.create_looping_drive_cacher
+        #DriveInfo.create_looping_drive_cacher
       end
       update_current_dvds_line
       
@@ -115,15 +115,32 @@ module SensibleSwing
     def update_current_dvds_line
 	  # any second windows call this again...lodo close with each new window [?]
       @@updater_th ||= Thread.new {
-        known_drive_ids = {}
+        @@known_drive_ids ||= {}
+		if OS.doze?
+		  old_drive_glob = '{' + DriveInfo.get_dvd_drive_even_if_empty.map{|dr| dr.MountPoint[0..0]}.join(',') + '}:/*'
+        else
+          old_drive_glob = '/Volumes/*'
+        end
+        previously_known_about_discs = nil		
         loop {
-          present_discs = []
+		  if (cur_disks = Dir[old_drive_glob]) != previously_known_about_discs
+		    p 'updating disks...'
+            update_currently_inserted_dvd_list
+			previously_known_about_discs = cur_disks
+		  end
+          sleep 1
+        }
+      }
+    end
+	
+    def update_currently_inserted_dvd_list
+	      present_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
-               known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
-               dvd_id = known_drive_ids[disk.VolumeName]
+               @@known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
+               dvd_id = @@known_drive_ids[disk.VolumeName]
 			   # lodo this punishes them if they have two disks, one without...
-			   known_drive_ids[dvd_id] ||= begin
+			   @@known_drive_ids[dvd_id] ||= begin
                  edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
 			     if edit_list_path_if_present
                    name = parse_edl(edit_list_path_if_present)['name']
@@ -148,11 +165,8 @@ module SensibleSwing
             @current_dvds_line1.text= '      No DVD discs currently inserted.'
             @current_dvds_line2.text = ''
           end
-          sleep 1
-        }
-      }
     end
-    
+	
     def get_title_track_string descriptors, use_default_of_one = true
       given = descriptors["dvd_title_track"] 
       given ||= "1" if use_default_of_one
