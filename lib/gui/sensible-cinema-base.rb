@@ -100,7 +100,7 @@ module SensibleSwing
       add_text_line "Welcome to Sensible Cinema!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      @current_dvds_line1 = add_text_line ""
+      @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
       if OS.doze?
         DriveInfo.create_looping_drive_cacher
@@ -134,7 +134,7 @@ module SensibleSwing
                if !name ||(name.just_letters == disk.VolumeName.just_letters)
 	             display_name = name || disk.VolumeName
 			   else
-				  display_name = "#{name}.. (#{disk.VolumeName[0..8]}...)"
+				  display_name = "#{name} (#{disk.VolumeName[0..8]}...)"
 			   end
 
                present_discs << [display_name, edit_list_path_if_present]
