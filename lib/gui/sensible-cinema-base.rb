@@ -147,7 +147,7 @@ module SensibleSwing
 				   [name, edit_list_path_if_present]
                  end				   
 			   end
-			   name, edit_list_path_if_present = known_drive_ids[dvd_id]
+			   name, edit_list_path_if_present = @@known_drive_ids[dvd_id]
                if !name ||(name.just_letters == disk.VolumeName.just_letters)
 	             display_name = name || disk.VolumeName
 			   else
@@ -415,9 +415,10 @@ KP_ENTER dvdnav select
     end
     
     def get_dvd_playback_options descriptors
-      out = "-osdlevel 2 -osd-fractions 1"
+      out = ""
       return out unless we_are_in_create_mode # early out, since they won't be seeing subs anyway :)
-      
+      out += "-osdlevel 2 -osd-fractions 1" 
+
 		offset_time = 0.20 # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
                 dvd_start_offset = descriptors['dvd_start_offset']
 		if dvd_start_offset
