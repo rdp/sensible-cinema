@@ -134,7 +134,7 @@ module SensibleSwing
                if !name ||(name.just_letters == disk.VolumeName.just_letters)
 	             display_name = name || disk.VolumeName
 			   else
-				  display_name = "#{name} (#{disk.VolumeName[0..8]...})"
+				  display_name = "#{name}.. (#{disk.VolumeName[0..8]}...)"
 			   end
 
                present_discs << [display_name, edit_list_path_if_present]
