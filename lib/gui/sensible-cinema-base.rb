@@ -451,8 +451,7 @@ KP_ENTER dvdnav select
           raise e
         end
       end
-      p descriptors
-	  EdlFilesChosen[dvd_id] ||= edl_path
+    EdlFilesChosen[dvd_id] ||= edl_path
       [drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors]
     end
     
