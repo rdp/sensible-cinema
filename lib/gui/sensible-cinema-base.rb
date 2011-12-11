@@ -117,7 +117,7 @@ module SensibleSwing
       @@updater_th ||= Thread.new {
         @@known_drive_ids ||= {}
 		if OS.doze?
-		  old_drive_glob = '{' + DriveInfo.get_dvd_drive_even_if_empty.map{|dr| dr.MountPoint[0..0]}.join(',') + '}:/*'
+		  old_drive_glob = '{' + DriveInfo.get_dvd_drive_even_if_empty.map{|dr| dr.MountPoint[0..0]}.join(',') + '}:/.'
         else
           old_drive_glob = '/Volumes/*'
         end
@@ -126,8 +126,9 @@ module SensibleSwing
 		  if (cur_disks = Dir[old_drive_glob]) != previously_known_about_discs
 		    p 'updating disks...'
             update_currently_inserted_dvd_list
-			previously_known_about_discs = cur_disks
-		  end
+			  previously_known_about_discs = cur_disks
+		    end
+        
           sleep 1
         }
       }
