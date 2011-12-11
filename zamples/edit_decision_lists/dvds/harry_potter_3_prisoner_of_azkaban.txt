@@ -12,12 +12,8 @@
 # overlap  "0:21:13.85" , "0:21:16.72", "profanity", "he..", "[bloody] [he..] What's happening",
   "0:27:50.67" , "0:27:52.03", "profanity", "goodness", "Oh [goodness] That's awful",
   "0:32:43.75" , "0:32:46.22", "profanity", "goodness", "Witty [goodness] this place has gone to the dogs",
-  "0:45:43.75" , "0:45:46.58", "profanity", "lo..", "I assumed it would take the shape of [lo..] Voldemort",
   "1:03:14.80" , "1:03:18.86", "profanity", "he..", "[bloody] [he..] Harry That was not funny",
   "1:04:18.79" , "1:04:23.25", "profanity", "da..", "No underage wizards allowed in today Shut the [da..] door",
-  "1:05:44.78" , "1:05:46.40", "profanity", "goodness", "Harry Potter's [goodness]father",
-  "1:36:02.66" , "1:36:05.49", "profanity", "lo..", "The Dark [lo..] You have no idea the weapons he possesses",
-  "1:38:51.49" , "1:38:55.59", "profanity", "goodness", "but when you were born James and Lily made me your [goodness]father",
   "1:47:32.50" , "1:47:34.97", "profanity", "he..", "What the [bloody] [he..] was that all about",
   "0:38:32.09" , "0:38:34.36", "profanity", "bloody", "You and your [bloody] chicken",
 
