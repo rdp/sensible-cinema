@@ -117,9 +117,9 @@ module SensibleSwing
       EOL
 
       @parse_srt.on_clicked do
-        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:")
-		if(srt_filename =~ /utf16/)
-		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
+        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:", File.expand_path('~'))
+		if(srt_filename =~ /utf16/) # from subrip sometimes
+		  show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
         end
         # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")

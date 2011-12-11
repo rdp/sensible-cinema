@@ -100,10 +100,10 @@ module SensibleSwing
       add_text_line "Welcome to Sensible Cinema!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      @current_dvds_line1 = add_text_line ""
+      @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
       if OS.doze?
-        DriveInfo.create_looping_drive_cacher
+        #DriveInfo.create_looping_drive_cacher
       end
       update_current_dvds_line
       
@@ -115,23 +115,43 @@ module SensibleSwing
     def update_current_dvds_line
 	  # any second windows call this again...lodo close with each new window [?]
       @@updater_th ||= Thread.new {
-        known_drive_ids = {}
+        @@known_drive_ids ||= {}
+		if OS.doze?
+		  old_drive_glob = '{' + DriveInfo.get_dvd_drive_even_if_empty.map{|dr| dr.MountPoint[0..0]}.join(',') + '}:/*'
+        else
+          old_drive_glob = '/Volumes/*'
+        end
+        previously_known_about_discs = nil		
         loop {
-          present_discs = []
+		  if (cur_disks = Dir[old_drive_glob]) != previously_known_about_discs
+		    p 'updating disks...'
+            update_currently_inserted_dvd_list
+			previously_known_about_discs = cur_disks
+		  end
+          sleep 1
+        }
+      }
+    end
+	
+    def update_currently_inserted_dvd_list
+	      present_discs = []
           DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
             if disk.VolumeName
-               known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
-               dvd_id = known_drive_ids[disk.VolumeName]
+               @@known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
+               dvd_id = @@known_drive_ids[disk.VolumeName]
 			   # lodo this punishes them if they have two disks, one without...
-			   known_drive_ids[dvd_id] ||= begin
+			   @@known_drive_ids[dvd_id] ||= begin
                  edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
-			     parse_edl(edit_list_path_if_present)['name'] if edit_list_path_if_present
+			     if edit_list_path_if_present
+                   name = parse_edl(edit_list_path_if_present)['name']
+				   [name, edit_list_path_if_present]
+                 end				   
 			   end
-			   name = known_drive_ids[dvd_id]
+			   name, edit_list_path_if_present = known_drive_ids[dvd_id]
                if !name ||(name.just_letters == disk.VolumeName.just_letters)
 	             display_name = name || disk.VolumeName
 			   else
-				  display_name = "#{name} (#{disk.VolumeName})"
+				  display_name = "#{name} (#{disk.VolumeName[0..8]}...)"
 			   end
 
                present_discs << [display_name, edit_list_path_if_present]
@@ -145,11 +165,8 @@ module SensibleSwing
             @current_dvds_line1.text= '      No DVD discs currently inserted.'
             @current_dvds_line2.text = ''
           end
-          sleep 1
-        }
-      }
     end
-    
+	
     def get_title_track_string descriptors, use_default_of_one = true
       given = descriptors["dvd_title_track"] 
       given ||= "1" if use_default_of_one
@@ -448,8 +465,7 @@ KP_ENTER dvdnav select
           raise e
         end
       end
-      p descriptors
-	  EdlFilesChosen[dvd_id] ||= edl_path
+    EdlFilesChosen[dvd_id] ||= edl_path
       [drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors]
     end
     

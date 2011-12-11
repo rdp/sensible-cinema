@@ -22,7 +22,6 @@ module SensibleSwing
   class MainWindow < JFrame
 
     attr_accessor :parent, :upconv_line
-    
    
     # converts to full path, 8.3 if on doze
     def normalize_path path
@@ -37,10 +36,12 @@ module SensibleSwing
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
+		exit 0 
       }
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
-        choose_file_and_edl_and_create_sxs_or_play false 
+        choose_file_and_edl_and_create_sxs_or_play false
+		exit 0
       end
       
       @create = new_jbutton( "Create edited version of a file on Your Hard Drive" )

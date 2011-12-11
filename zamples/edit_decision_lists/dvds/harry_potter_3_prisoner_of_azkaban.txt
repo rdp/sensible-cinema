@@ -1,7 +1,23 @@
 "name" => "Harry Potter Prisoner of Azkaban",
-
+"disk_unique_id" => "c37653e6|83e1decc",
+"volume_name" => "HP_PRISONER_OF_AZKABAN_DISC1",
+"dvd_title_track" => "1",
+"dvd_title_track_length" => 8490.866,
+"dvd_start_offset" => 0.11,
+"dvd_nav_packet_offset" => [0.5, 0.4459],
 "mutes" => [
-  "00:04:05", "00:04:10",  "something wrong w/ the pup",
+  "0:02:10.14" , "0:02:12.10", "profanity", "da..", "[da..] good of my brother to keep you",
+  "0:04:04.98" , "0:04:09.04", "profanity", "b....", "If something's wrong with the [b....] then something's wrong with the pup",
+  "0:05:50.65" , "0:05:52.38", "profanity", "goodness", "Oh [goodness]",
+# overlap  "0:21:13.85" , "0:21:16.72", "profanity", "he..", "[bloody] [he..] What's happening",
+  "0:27:50.67" , "0:27:52.03", "profanity", "goodness", "Oh [goodness] That's awful",
+  "0:32:43.75" , "0:32:46.22", "profanity", "goodness", "Witty [goodness] this place has gone to the dogs",
+  "1:03:14.80" , "1:03:18.86", "profanity", "he..", "[bloody] [he..] Harry That was not funny",
+  "1:04:18.79" , "1:04:23.25", "profanity", "da..", "No underage wizards allowed in today Shut the [da..] door",
+  "1:47:32.50" , "1:47:34.97", "profanity", "he..", "What the [bloody] [he..] was that all about",
+  "0:38:32.09" , "0:38:34.36", "profanity", "bloody", "You and your [bloody] chicken",
+
+
 ],
 
 "blank_outs" => [
@@ -17,4 +33,6 @@
 #   "02:00:33", "02:01:03",  "dementors d", "",
 ],
 
-#"mplayer_dvd_splits" => ["01:15:39"], inaccurate slightly, needs to be checked again
+
+"beginning_subtitle" => ["lumos maxima", "31.64"],
+"ending_subtitle_entry" => ["mischief managed", "2:21:07.66"]

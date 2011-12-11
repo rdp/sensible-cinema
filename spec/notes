@@ -1,5 +1,96 @@
 up next:
 
+= zoomplayer max scene cut editor =
+
+existed since 01 May 2004 http://forum.inmatrix.com/index.php?showtopic=136&hl=%2Bcut+%2Bscene&fromsearch=1
+
+With DVDs, scene-cut files are saved in the Zoom Player 
+  DVD Bookmark directory (usually "C:\Program Files\Zoom Player\DVD-Bookmarks") as a "disc.cut" file. 
+
+== VLC yuvp sox ==
+
+red should always be under each word
+
+Table 2.8. Packed YUV Image Formats
+Identifier	Code	 	                 Byte 0 in memory	 	                 Byte 1	
+ 	 	Bit	7	6	5	4	3	2	1	0	 	7	6	5	4	3	2	1	0	 	7	6	5	4	3	2	1	0	 	7	6	5	4	3	2	1	0
+V4L2_PIX_FMT_YUV444	'Y444'	 	Cb3	Cb2	Cb1	Cb0	Cr3	Cr2	Cr1	Cr0	 	a3	a2	a1	a0	Y'3	Y'2	Y'1	Y'0	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 
+V4L2_PIX_FMT_YUV555	'YUVO'	 	Cb2	Cb1	Cb0	Cr4	Cr3	Cr2	Cr1	Cr0	 	a	Y'4	Y'3	Y'2	Y'1	Y'0	Cb4	Cb3	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 	 
+V4L2_PIX_FMT_YUV565	'YUVP'	 	Cb2	Cb1	Cb0	Cr4	Cr3	Cr2	Cr1	Cr0	 	Y'4	Y'3	Y'2	Y'1	Y'0	Cb5	Cb4	Cb3	 	 	 	 	 	 	 	 	 	 	 # this totally seems unrelated somehow...huh?	 	 	 	 	 	 
+V4L2_PIX_FMT_YUV32	'YUV4'	 	a7	a6	a5	a4	a3	a2	a1	a0	 	Y'7	Y'6	Y'5	Y'4	Y'3	Y'2	Y'1	Y'0	 	Cb7	Cb6	Cb5	Cb4	Cb3	Cb2	Cb1	Cb0	 	Cr7	Cr6	Cr5	Cr4	Cr3	Cr2	Cr1	Cr0
+
+
+
+YUVP 	0x50565559 	24? 	YCbCr 4:2:2 extended precision 10-bits per component in Y0 U0 Y1 V0 order.
+
+maybe the Y is the alpha?
+
+
+AYUV This is a 4:4:4 YUV format with 8 bit samples for each component along with an 8 bit alpha blend value per pixel. Component ordering is A Y U V (as the name suggests).
+
+
+special:
+
+                if( p_trans[i_x+1] > 0xaa )
+
+
+YUVA might be 1,2,2,1
+
+
+
+"YUV" mostly means "Y′CbCr" typically Y is strongest.
+
+
+looks like alpha is 3:
+            i_trans = vlc_alpha( p_pal[p_trans[i_x]][3], i_alpha );
+
+y is 0
+u is 1
+v is 2
+
+
+a comes from A_PLANE
+
+
+    BLEND_CFG( VLC_CODEC_YUVA, BlendYUVAI420, BlendYUVAYUVPacked /* I liked this one */, BlendYUVARV16, BlendYUVARV24 ),
+
+    BLEND_CFG( VLC_CODEC_YUVP, BlendPalI420, BlendPalYUVPacked %* ++ %*, BlendPalRV, BlendPalRV ),
+
+
+interesting, maybe I need to be "writing" to pitches too?
+
+
+                if( p_trans_is_src[i_x+1] > 0xaa )
+                {
+                    i_u = (p_pal[p_src[i_x]][1] + p_pal[p_src[i_x+1]][1]) >> 1;
+                    i_v = (p_pal[p_src[i_x]][2] + p_pal[p_src[i_x+1]][2]) >> 1;
+                }
+
+.so
+
+swapped = 0 always
+
+u,v struggle.
+incoming as VLC_CODEC_YUVP (from that)
+
+http://download.videolan.org/pub/videolan/vlc/0.8.6i/win32/
+2008-Sep-09 19:23:18
+is ok (blend plugin)
+
+0.9.9 not there [no libyuvp either, but yes yuvgrey.dll]
+1.0.0 broken, yes there
+
+1.2.0, 1.3.0 nightlies: right color, wrong place
+
+
+remove libyuvp_plugin.dll
+
+1.1.11 is grey *always*
+
+1.2.0 nightlie it's right color, wrong place
+
+linux?
+
 = upconv dvd =
 
 2:34:12 seem the same (sky view houses)
@@ -801,6 +892,9 @@ VLC sans libyuvp files:
   good
 VLC linux:
  red, grey, grye
+
+
+it "should" be red, with small grey overlay around it, that's it.
 
 == seeking forward or back, with new patch ==
 final: 36.870166
