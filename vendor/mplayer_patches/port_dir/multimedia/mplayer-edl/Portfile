@@ -34,6 +34,10 @@ depends_lib \
     port:lzo2 port:ncurses port:zlib port:bzip2 port:liboil \
     port:libdca port:faad2
 
+if {![variant_isset minimal]} {
+    default_variants +osd
+}
+
 fetch.type          svn
 #svn.revision        ${version}
 #svn.url             svn://svn.mplayerhq.hu/mplayer/trunk

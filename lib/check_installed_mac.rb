@@ -2,7 +2,7 @@ require 'rubygems'
 require 'os'
 success = true
 
-ENV['PATH'] = '/opt/local/rdp_projects/bin/:' + ENV['PATH'] # macports' bin in first
+ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # macports' bin in first
 
 module CheckInstalledMac
 
@@ -19,7 +19,7 @@ module CheckInstalledMac
   end
 
   if name == 'mplayer'
-    unless File.exist?('/opt/local/rdp_projects/bin/mplayer')
+    unless File.exist?('/opt/rdp_project_local/bin/mplayer')
       puts "please install mplayer edl, please install mplayer-edl, see website http://rogerdpack.t28.net/sensible-cinema/content_editor.html"
       return false
     end
