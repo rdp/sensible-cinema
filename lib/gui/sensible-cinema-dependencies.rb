@@ -13,10 +13,12 @@ module SensibleSwing
             "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
         require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
             'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+        if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :yes => "ZoomPlayer MAX", :no => "Just MPlayer") == :yes
+          show_blocking_message_dialog "ZoomPlayer MAX scene cut format isn't supported yet, but ping me and I'll add it."
+        end
         LocalStorage['main_license_accepted'] = VERSION
       end
     end
-
    
     def self.download full_url, to_here
       require 'open-uri'
@@ -140,7 +142,7 @@ module SensibleSwing
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
-      answer = JOptionPane.show_select_buttons_prompt message, :no => "I Have read and Accept the Terms of the #{license_name} License Agreement.", :yes => "View #{license_name}"
+      answer = JOptionPane.show_select_buttons_prompt message, :no => "I have read and Accept the terms of the #{license_name} License Agreement.", :yes => "View #{license_name}"
       assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
       p 'confirmation of sensible cinema related license duly noted of: ' + license_name # LODO require all licenses together :P
     end
