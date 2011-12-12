@@ -1,3 +1,7 @@
+= 0.32.2 12-12-11 =
+
+Add a "zoom player" prompt to the beginning.  Minor license verbiage change.
+
 = 0.32.1 12-10-11=
 
 Fix a bug in updating DVD disk drives too frequently, which was causing WMI to crash [!]
