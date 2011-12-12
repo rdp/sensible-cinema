@@ -13,7 +13,6 @@
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
-  genealogy screen saver create/publicize
   
 == yes do, un-ordered currently, from all the various future release options ==
 
@@ -25,13 +24,12 @@
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
   genealogy living tree fella
-  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
-  we're wasting 6% on doze, and run out of steam eventually [!]
   
+  genealogy screen saver create/publicize
+  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   can use zoomplayer, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file" [cache preference]
-  add have read to license
   ffmpeg dshow patches
-  actualize with mplayer svn
+  actualize with mplayer svn, more mplayer patches upstream
   mac mplayer-edl lacks some diffs
   fix screen capturer negative
   DVD timing for forum:Snow White

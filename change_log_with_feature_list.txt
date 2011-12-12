@@ -1,4 +1,6 @@
-= =
+= 0.32.1 12-10-11=
+
+Fix a bug in updating DVD disk drives too frequently, which was causing WMI to crash [!]
 
 NB that for several versions, we have been able to "extrapolate" from the DVD NAV packet time plus elapsed difference in MPEG time,
 more accurate muting/frame skipping within DVD's.
