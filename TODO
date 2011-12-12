@@ -16,39 +16,38 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
 
-  veggie tales dies (1.2.10 v 1.2.11 ?)
-  prince of egypt OSD is messed, needs calculation hopefully!
+  prince of egypt OSD is off, needs calculation hopefully!
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
-  genealogy living tree fella
-  
-  genealogy screen saver create/publicize
-  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file" [cache preference]
-  ffmpeg dshow patches
+  genealogy living tree
   actualize with mplayer svn, more mplayer patches upstream
-  mac mplayer-edl lacks some diffs
-  fix screen capturer negative
-  DVD timing for forum:Snow White
-  mac: test for mac, release for mac, advertise urug
-  submit a disclosure for OCR, wiki based processing
-  disclosure lighting, table
-  can write synchronized euphemized srt
-  the 50% thing
-  add option "just skip don't mute always instead of muting"
-  more mplayer patches
     patch v2 for mplayer
     fix -sub to work with DVDNAV
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV.
-  try to reproduce the ffplay bug with just ffmpeg
-  that one guy's VAC freakiness
-  upconvert screen try it out, make sure it works, release and with DVD
-  mplayer dies tmnt dvdnav://1
+  the 50% thing
   
+  that one guy's VAC freakiness
+  veggie tales dies (1.2.10 v 1.2.11 ?)
+  mplayer dies tmnt dvdnav://1
+  genealogy screen saver create/publicize
+  can use zoomplayer, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
+  mac mplayer-edl lacks some diffs
+  DVD timing for forum:Snow White
+  disclosure for OCR, wiki based processing
+  disclosure lighting, table
+  
+  can write synchronized euphemized srt [only one guy wanted this tho...]
+  mac: test for mac, release for mac, advertise urug
+  ffmpeg dshow patches
+  add option "just skip don't mute always instead of muting"
+  try to reproduce the ffplay bug with just ffmpeg
+  upconvert screen try it out, make sure it works, release and with DVD
+  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
+  fix screen capturer negative
   display OSD on command line too, just mine :P
   learn clojure
   OS X netflix instant
