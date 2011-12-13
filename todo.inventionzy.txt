@@ -142,3 +142,5 @@
   right click on DVD "play edit with ..."
   bookmarks within edited playback/remember where you last left off
   you can record the screen of an "edited playback" in order to create an edited version. It's like recording off your TV, right?
+  each EDL can have a "type" specified, like "type a starts at time x, ends at time y" "type b starts at time z, ends at time mu" so that you can re-use the same EDL
+    cross several media types.
