@@ -16,23 +16,24 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
 
-  new mac release
-  prince of egypt OSD is off, needs calculation hopefully!
   add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
     needs to at *least* parse it for them
+  the 50% thing
+  genealogy screen saver create/publicize
+  disclosure for OCR, wiki based processing
+  
   genealogy living tree
+  new mac release
+  prince of egypt OSD is off, needs calculation hopefully!
   actualize with mplayer svn, more mplayer patches upstream
     patch V: for mplayer
     fix -sub to work with DVDNAV
     accurate-ify DVDNAV timestamps
-    EDL's work with DVDNAV.
-  the 50% thing
-  genealogy screen saver create/publicize
-  
-  disclosure for OCR, wiki based processing
+    EDL's work with DVDNAV [patch]
+  my treasury (john newspaper thing)
   disclosure lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
   veggie tales dies (1.2.10 v 1.2.11 ?)
