@@ -1,13 +1,13 @@
 
 == Overly Verbose History ==
 
-Sensible Cinema was preceded/inspired by EDL's of editors in the 90's, cleanflicks (both analog and digital incantations, late 90's), 
-then mplayer began to support EDL, zoomplayer added a scene-cut editor, 
+Sensible Cinema was preceded/inspired by EDL's of video editors in the 90's, cleanflicks (both analog and digital incantations, late 90's), 
+then mplayer began to support EDL, zoomplayer added a scene-cut editor years ago, 
 http://code.google.com/p/movie-content-editor came along, and also many
 other editors have historically supported EDL for content creation and/or playback (see wikipedia's "edit decision list"),
 such as mythtv/XBMC's EDL support (as suggested by the phantom edit [1], oreillynet.com), 
 VLC also added playlists with optional start and stop positions per entry.  Ffmpeg, mencoder were high quality video editing open source tools. 
-Once I discovered all of these previously existing programs, I knew the right elements were ready for 
+Once I discovered all of these previously existing programs, I knew the right pieces were ready for 
 something like sensible cinema.
 
 See also the "related" section, and "motivation" section.  See also the change_log_with_feature_list.txt file, and several
@@ -17,8 +17,8 @@ Originally the project started as a prototype to "watch hulu (online) and netfli
 edited" (it uses/used screen snapshots (of specific locations where the digits are expected, based on windows position) 
 and then tracks, using OCR of the on-screen (convert to timestamp), to monitor it for specific times relative 
 to an EDL, and react appropriately.
-However, this functionality, though working and available, is disabled currently for potential patent
-issues.  Some older released versions had it enabled, but not the later releases.
+However, this functionality, though working and available, is disabled currently for potential legal issues.  
+Some older released versions had it enabled, but not recent releases.
 Then I realized I could basically have the same effect by instructing a video player (VLC) to "play from second x to y"
 ok "now play from z to q muted" etc. (so kind of a stop and go video player, kind of like controlling the remote for you).
 It basically was implementing Edit Decision Lists (EDL's) using playlists and
