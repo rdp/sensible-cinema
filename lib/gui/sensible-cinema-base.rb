@@ -102,70 +102,40 @@ module SensibleSwing
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
-      if OS.doze?
-        DriveInfo.create_looping_drive_cacher
-      end
-      update_current_dvds_line
+      DriveInfo.create_looping_drive_cacher
+      DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
       check_for_various_dependencies
       set_visible be_visible
     end
 
-    def update_current_dvds_line
-	  # any second windows call this again...lodo close with each new window [?]
-      @@updater_th ||= Thread.new {
-        @@known_drive_ids ||= {}
-		    if OS.doze?
-		      old_drive_glob = '{' + DriveInfo.get_dvd_drive_even_if_empty.map{|dr| dr.MountPoint[0..0]}.join(',') + '}:/.'
-        else
-          old_drive_glob = '/Volumes/*'
-        end
-        previously_known_about_discs = nil		
-        loop {
-          cur_disks = Dir[old_drive_glob]
-  		    if cur_disks != previously_known_about_discs
-		        p 'updating disks...'
-            update_currently_inserted_dvd_list
-	  		    previously_known_about_discs = cur_disks
-		      end
-          sleep 1
-        }
-      }
-    end
-	
     def update_currently_inserted_dvd_list
-	      present_discs = []
-          DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
-            if disk.VolumeName
-               @@known_drive_ids[disk.VolumeName] ||= DriveInfo.md5sum_disk(disk.MountPoint)
-               dvd_id = @@known_drive_ids[disk.VolumeName]
-			   # lodo this punishes them if they have two disks, one without...
-			   @@known_drive_ids[dvd_id] ||= begin
-                 edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
+	    present_discs = []
+      DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
+        if disk.VolumeName
+           dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)			     
+           edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
 			     if edit_list_path_if_present
-                   name = parse_edl(edit_list_path_if_present)['name']
-				   [name, edit_list_path_if_present]
-                 end				   
-			   end
-			   name, edit_list_path_if_present = @@known_drive_ids[dvd_id]
-               if !name ||(name.just_letters == disk.VolumeName.just_letters)
-	             display_name = name || disk.VolumeName
-			   else
-				  display_name = "#{name} (#{disk.VolumeName[0..8]}...)"
-			   end
-
-               present_discs << [display_name, edit_list_path_if_present]
-            end
-          }
-          present_discs.map!{|display_name, has_edl| "DVD: #{display_name} #{ has_edl ? 'has an' : 'has NO'} Edit List available!"}
-          if present_discs.length > 0
-            @current_dvds_line1.text= '      ' + present_discs[0]
-            @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 
-          else
-            @current_dvds_line1.text= '      No DVD discs currently inserted.'
-            @current_dvds_line2.text = ''
-          end
+              human_name = parse_edl(edit_list_path_if_present)['name']
+           end
+           present_discs << [human_name, disk.VolumeName, edit_list_path_if_present]
+        end
+      }
+      present_discs.map!{|human_name, volume_name, has_edl| 
+        if human_name
+          "DVD: #{human_name} has an Edit List available! (#{volume_name})"
+        else
+          "DVD: #{volume_name} has NO Edit List available!"
+        end
+      }
+      if present_discs.length > 0
+        @current_dvds_line1.text= '      ' + present_discs[0]
+        @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 
+      else
+        @current_dvds_line1.text= '      No DVD discs currently inserted.'
+        @current_dvds_line2.text = ''
+      end
     end
 	
     def get_title_track_string descriptors, use_default_of_one = true
