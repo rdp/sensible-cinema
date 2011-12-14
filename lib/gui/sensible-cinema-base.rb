@@ -103,7 +103,7 @@ module SensibleSwing
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
       if OS.doze?
-        #DriveInfo.create_looping_drive_cacher
+        DriveInfo.create_looping_drive_cacher
       end
       update_current_dvds_line
       
