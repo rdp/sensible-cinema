@@ -31,6 +31,7 @@
   actualize with mplayer svn, more mplayer patches upstream
     patch V: for mplayer
     fix -sub to work with DVDNAV
+      step_sub maybe
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
 	not adding odd diff1? 0.000000
