@@ -40,9 +40,10 @@
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  
+
+  fix mplayer muting sox
   @zoomplayer: more accuracy
-  can use zoomplayer, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
+  can use zoomplayer syntax, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
   can write synchronized euphemized srt [only one guy wanted this tho...]
   mac: test for mac, release for mac, advertise urug
   ffmpeg dshow patches
@@ -488,8 +489,6 @@
   speedify things (the whole process takes approximately...eternity?)
   can overlay with an arbitrary image (I think mencoder can actually do this...)
   ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
-  an 'always blank not skip the mutes' option for hard core
-  video on how to use imdb wiki
   accomodate alternate endings et al
   .exe installer
     just unzips, runs the .bat file for them [?] :)

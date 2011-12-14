@@ -147,3 +147,5 @@
   EDL action "zoom" to a certain part/portion of a movie, for a specified amount of time.
   during a "tense" scene it can "darken" the scene more, or blur it, or shrink it to a fraction of its original size, or make it faster,
     or turn down volume, or mute.  User preferences to "respond to EDl action type x with reaction y" (where y is blur, mute, skip)
+  have jump/jump to file to be able to insert alternate endings.
+    have some menu system for "choose, now, which path you'd like to take" (ex: which alternate ending)
