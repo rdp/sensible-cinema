@@ -145,3 +145,5 @@
   each EDL can have a "type" specified, like "type a starts at time x, ends at time y" "type b starts at time z, ends at time mu" so that you can re-use the same EDL
     cross several media types.
   EDL action "zoom" to a certain part/portion of a movie, for a specified amount of time.
+  during a "tense" scene it can "darken" the scene more, or blur it, or shrink it to a fraction of its original size, or make it faster,
+    or turn down volume, or mute.  User preferences to "respond to EDl action type x with reaction y" (where y is blur, mute, skip)
