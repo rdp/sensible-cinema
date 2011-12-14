@@ -1,3 +1,7 @@
+= 0.32.3 12-14-11 =
+
+Fix some synchronization issues for notifying when a DVD has been inserted.  Hopefully this won't crash anybody's computers :P
+
 = 0.32.2 12-12-11 =
 
 Add a "zoom player" prompt to the beginning.  Minor license verbiage change.
