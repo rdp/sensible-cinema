@@ -1,4 +1,4 @@
-= 0.32.3 12-14-11 =
+= 0.32.3,4 12-14-11 =
 
 Fix some synchronization issues for notifying when a DVD has been inserted.  Hopefully this won't crash anybody's computers :P
 

@@ -9,8 +9,9 @@
   then roadmap_possibilities
   
 == high prio like blocking bugs ==
-  
+  bug  
 == things working on today/requested ==
+  prince of egypt OSD is off, just needs calculation hopefully!
   
 == yes do ordered for this release/other projects ja  ==
   
@@ -23,11 +24,10 @@
     needs to at *least* parse it for them
   the 50% thing
   genealogy screen saver create/publicize
-  disclosure for OCR, wiki based processing
   
   genealogy living tree
-  new mac release
-  prince of egypt OSD is off, needs calculation hopefully!
+  disclosure for OCR, wiki based processing
+  mac release [needs it]
   actualize with mplayer svn, more mplayer patches upstream
     patch V: for mplayer
     fix -sub to work with DVDNAV
