@@ -118,6 +118,7 @@ module SensibleSwing
            edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
 			     if edit_list_path_if_present
               human_name = parse_edl(edit_list_path_if_present)['name']
+			  human_name ||= ''
            end
            present_discs << [human_name, disk.VolumeName, edit_list_path_if_present]
         end
