@@ -1,3 +1,7 @@
+= 0.32.5 12-15-11 =
+
+Fix a bug in showing prompts, try to have better timing calculation for higher accuracy.
+
 = 0.32.3,4 12-14-11 =
 
 Fix some synchronization issues for notifying when a DVD has been inserted.  Hopefully this won't crash anybody's computers :P
