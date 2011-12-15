@@ -401,7 +401,7 @@ KP_ENTER dvdnav select
         show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL."
         offset_time = 0.20
       end
-		  out += "-osd-add #{offset_time}"
+		  out += " -osd-add #{offset_time}"
       out
     end
 

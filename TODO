@@ -11,7 +11,6 @@
 == high prio like blocking bugs ==
 
 == things working on today/requested ==
-  prince of egypt OSD is off, just needs calculation hopefully!
   
 == yes do ordered for this release/other projects ja  ==
   
@@ -42,8 +41,9 @@
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
+  accomodate for telecine [veggie tales]
+  prince of egypt OSD is off, just needs calculation hopefully! [check]
 
-  accomodate for telecine
   fix mplayer muting sox
   @zoomplayer: more accuracy
   can use zoomplayer syntax, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
