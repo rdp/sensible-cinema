@@ -9,6 +9,8 @@
   "90.0", "100.0", "violence", "test cut",
 ],
 
+"dvd_nav_packet_offset" => [0.5, 0.734067],
+
 "name" => "sintel open source blender",
 "volume_name" => "Sintel_NTSC",
 

@@ -36,7 +36,7 @@ module SensibleSwing
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
-		exit 0 
+        # lodo exit [?]
       }
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do

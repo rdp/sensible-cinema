@@ -388,23 +388,20 @@ KP_ENTER dvdnav select
     
     def get_dvd_playback_options descriptors
       out = ""
-      return out unless we_are_in_create_mode # early out, since they won't be seeing subs anyway :)
-      out += "-osdlevel 2 -osd-fractions 1" 
+      
+      if we_are_in_create_mode
+        out += "-osdlevel 2 -osd-fractions 1" 
+      end
 
-		offset_time = 0.20 # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...we can guess this come on everyone's doing it...
-                dvd_start_offset = descriptors['dvd_start_offset']
-		if dvd_start_offset
-                  dvd_start_offset = dvd_start_offset.to_f
-		  if dvd_start_offset < 0.10
-		    offset_time = dvd_start_offset
-		    puts 'using a small osd offset, which almost never happens ' + offset_time
-		  else
-                  end
-                end 
-                if offset_time == 0.20 
-		  p 'warning--using default DVDNAV offset time of 0.20 which is prolly ok for now, plus we don\'t really interpolate well anyway...or do we?'
-                end
-		out += " -osd-add #{offset_time}"
+      nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
+      if nav
+        offset_time = mpeg_time - nav
+      else
+  		  # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
+        show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL."
+        offset_time = 0.20
+      end
+		  out += "-osd-add #{offset_time}"
       out
     end
 
@@ -448,7 +445,7 @@ KP_ENTER dvdnav select
     def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, show_subs = false
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
-        dvd_id = NonDvd # fake it out...LODO a bit smelly
+        dvd_id = NonDvd # fake it out...LODO a bit smelly/ugly
       else
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
@@ -470,12 +467,12 @@ KP_ENTER dvdnav select
           start_add_this_to_all_ts = start
         end
       else
-        # it's a DVD
+        # it's a DVD of some sort
         extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       end
       
       if edl_path
-	    splits = [] # TODO not pass as parameter
+  	    splits = [] # TODO not pass as parameter either
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
         extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 

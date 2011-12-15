@@ -1,5 +1,13 @@
 up next:
 
+= softskip,pullup =
+
+somehow sintel is IIPPPII even though it's 29.97 fps "telecine"
+
+Progressive video requires no special filtering to encode.
+
+=c= 24000/1001fps progressive NTSC content detected
+
 = zoomplayer max scene cut editor =
 
 existed since 01 May 2004 http://forum.inmatrix.com/index.php?showtopic=136&hl=%2Bcut+%2Bscene&fromsearch=1

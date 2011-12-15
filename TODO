@@ -9,7 +9,7 @@
   then roadmap_possibilities
   
 == high prio like blocking bugs ==
-  bug  
+
 == things working on today/requested ==
   prince of egypt OSD is off, just needs calculation hopefully!
   
@@ -43,6 +43,7 @@
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
 
+  accomodate for telecine
   fix mplayer muting sox
   @zoomplayer: more accuracy
   can use zoomplayer syntax, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
