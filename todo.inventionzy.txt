@@ -148,4 +148,7 @@
   during a "tense" scene it can "darken" the scene more, or blur it, or shrink it to a fraction of its original size, or make it faster,
     or turn down volume, or mute.  User preferences to "respond to EDl action type x with reaction y" (where y is blur, mute, skip)
   have jump/jump to file to be able to insert alternate endings.
+  an avisynth script to "cut" the file to be able to cut out/mute out sections
+  an avisynth script to "cut" the file to be able to watch it playback edited without modifying the original.  +- DVD input too.
+  split EDL's based on DVD "title"
     have some menu system for "choose, now, which path you'd like to take" (ex: which alternate ending)
