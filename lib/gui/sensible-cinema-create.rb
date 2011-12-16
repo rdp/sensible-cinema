@@ -92,25 +92,24 @@ module SensibleSwing
         create_brand_new_dvd_edl
       end
       
-      new_jbutton("Create new Edit List (for netflix instant or a file)") do
+      new_jbutton("Create new Edit List (for netflix instant or a movie file)") do # TODO VIDEO_TS here too?
         names = ['movie file', 'netflix instant']
         dialog = DropDownSelector.new(self, names, "Select type")
-        type = dialog.go_selected_value     
+        type = dialog.go_selected_value
         extra_options = {}
         if type == 'movie file'
           path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
           guess_name = File.basename(path).split('.')[0..-2].join('.') # Boss.S01E07.720p.HDTV.X264-DIMENSION.m4v
           extra_options['filename'] = File.basename path
-          require 'movie_hasher'
+          require 'lib/movie_hasher'
           extra_options['movie_hash'] = MovieHasher.compute_hash path
         else
-          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686)"
+          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )"
           if url =~ /netflix/
             guess_name = url.split('/')[-2]
-          elsif url =~ /hulu/ #  or http://www.hulu.com/watch/304824/american-the-bill-hicks-story :|
-            guess_name = url.split('/')[-1]
           else
             show_blocking_message_dialog "non hulu/netflix? please report!"
+            type = 'unknown'
             guess_name = url.split('/')[-1]
           end
           extra_options['url'] = url
@@ -124,7 +123,9 @@ module SensibleSwing
 # edl_version_version 1.1, sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
-#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}"\n!}}
+
+"source" => "#{type}",
+#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}",\n!}}
 "mutes" => [
   # an example line, uncomment the leading "#" to make it active
   # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
@@ -153,8 +154,6 @@ module SensibleSwing
         open_file_to_edit_it filename
       }
       
-      
-      
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity timestamps automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
@@ -173,8 +172,8 @@ module SensibleSwing
 
       @parse_srt.on_clicked do
         srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:", File.expand_path('~'))
-		if(srt_filename =~ /utf16/) # from subrip sometimes
-		  show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
+		    if(srt_filename =~ /utf16/) # from subrip sometimes
+		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
         end
         # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
@@ -182,9 +181,9 @@ module SensibleSwing
         
         open_file_to_edit_it srt_filename
         sleep 0.5 # let it open in TextEdit/Notepad first
-		bring_to_front
+    		bring_to_front
  
-		if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes
+		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes
           if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in smplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
             play_dvd_smplayer_unedited false
           end
@@ -196,11 +195,11 @@ module SensibleSwing
           end_srt = get_user_input("enter the beginning timestamps within the .srt for \"#{end_text}\"\nctrl-v to paste", "02:30:00,000")
           end_movie_ts  = get_user_input("enter beginning timestamps within the movie itself for \"#{end_text}\"", "2:30:00.0 or 9000.0")
         else
-		  start_srt = 0
+		      start_srt = 0
           start_movie_ts =0
           end_srt = 1000
           end_movie_ts = 1000
-		end
+    		end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt, start_movie_ts, end_srt, end_movie_ts
         filename = EdlTempFile + '.parsed.txt'
         File.write filename, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
@@ -370,17 +369,17 @@ module SensibleSwing
         if l =~  /V:\s+([\d\.]+)/
           outs[:mpeg_start_offset] ||= $1.to_f
         end
-	float = /\d+\.\d+/
-	if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
+	      float = /\d+\.\d+/
+	      if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
           nav = $1.to_f
           mpeg = $2.to_f
           if nav > 0.0
-	    outs[:dvd_nav_packet_offset] ||= [nav, mpeg]
+	          outs[:dvd_nav_packet_offset] ||= [nav, mpeg]
           end
-	end
+      	end
       }
-       show_blocking_message_dialog "unable to calculate time?" unless outs.length == 2
-       outs
+      show_blocking_message_dialog "unable to calculate time?" unless outs.length == 2
+      outs
     end
     
     def get_start_stop_times_strings
@@ -437,6 +436,7 @@ module SensibleSwing
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
+"source" => "dvd",
 "volume_name" => "#{volume}",
 "timestamps_relative_to" => ["dvd_start_offset","29.97"],
 "disk_unique_id" => "#{hashes['disk_unique_id']}",
@@ -461,7 +461,7 @@ module SensibleSwing
 
     def show_mplayer_instructions
       show_non_blocking_message_dialog <<-EOL
-        About to run mplayer.  To control it or smplayer, you can use these keyboard keys
+        About to run mplayer.  To control it (or smplayer), you can use these keyboard keys:
         spacebar : pause,
         double clicky/right click/'f' : toggle full screen,
         enter : select DVD menu currently highlighted

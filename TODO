@@ -138,6 +138,7 @@
   @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
+  can "auto find" for files, based on movie hash
   "overwrite?" prompt for file mode
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"

@@ -18,8 +18,7 @@ This file is part of Sensible Cinema.
 =end
 
 
-# load sane
-print 'Starting Sensible Cinema...'
+puts 'Starting Sensible Cinema...'
 
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
@@ -30,11 +29,10 @@ rescue LoadError => e
 end
 
 raise 'need jruby' unless OS.java?
-raise 'need newer jruby!' unless RUBY_DESCRIPTION >= 'jruby 1.6.0' # may not need this since we still have to accomodate for so many...oddities in it :P
 
 require_relative '../lib/gui/sensible-cinema-base'
 require_relative '../lib/gui/sensible-cinema-normal'
-require_relative '../lib/gui/sensible-cinema-create'
+require_relative '../lib/gui/sensible-cinema-create' # maybe don't need to require all these...
 require_relative '../lib/gui/sensible-cinema-create-file'
 require_relative '../lib/gui/sensible-cinema-upconvert'
 
@@ -44,10 +42,9 @@ if $0 == __FILE__
      # jruby bin/sensible-cinema                    # DVD/file EDL player
      $ jruby bin/sensible-cinema --create-mode      # DVD output "parser/cutter" create mode [advanced]
      $ jruby bin/sensible-cinema --upconvert-mode   # DVD/file upconverting player
+                                 --exit-immediately # don't show the GUI, for benchmarking startup times
      $ jruby bin/sensible-cinema-cli                # the experimental OCR tracker for edited arbitrary online/local/internet players.
-         See "Advanced" section in the developer_how_to.txt file, has its own set of options
-        
-         --exit-immediately [don't show the GUI, for benchmarking startup times]
+                                                      run it with --help to see its various options.
     EOL
   else
     a = SensibleSwing::MainWindow.new
