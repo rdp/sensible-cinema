@@ -28,7 +28,7 @@ end
 require_relative '../lib/jruby-swing-helpers/mouse'
 
 def choose_file title, dir
-  SwingHelpers::FileDialog.new_previously_existing_file_selector_and_go title, dir
+  SwingHelpers.new_previously_existing_file_selector_and_go title, dir
 end
 
 def go_sc(args)

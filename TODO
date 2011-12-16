@@ -23,7 +23,7 @@
     needs to at *least* parse it for them
   the 50% thing
   genealogy screen saver create/publicize
-  zoomplayer add single button for "create zoomplayer compatible file" [cache preference]
+  zoomplayer add single button for "create zoomplayer compatible file" [cache preference at install time]
   
   cache "-edlout" choice if ever negative just for session :P
   genealogy living tree

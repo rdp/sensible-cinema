@@ -510,7 +510,7 @@ KP_ENTER dvdnav select
       unique_trace = caller.inspect
       dir ||= LocalStorage[unique_trace]
       p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
-      got = FileDialog.new_previously_existing_file_selector_and_go title, dir
+      got = SwingHelpers.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got
     end

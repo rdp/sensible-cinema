@@ -1,3 +1,7 @@
+= 0.40.0 12-16-11 =
+
+Use "tighter" synchronization with the onscreen display timestamps, for higher accuracy compared to the underlying MPEG stream. 
+
 = 0.32.5 12-15-11 =
 
 Fix a bug in showing prompts, try to have better timing calculation for higher accuracy.

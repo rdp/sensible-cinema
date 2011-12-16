@@ -69,7 +69,7 @@ module SensibleSwing
 
       add_text_line 'Create Edit Options:'
       
-      @open_current = new_jbutton("Edit EDL for currently inserted DVD") do
+      @open_current = new_jbutton("Open/Edit EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if edit_list_path
@@ -85,20 +85,45 @@ module SensibleSwing
 	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
         if edit_list_path
-		   if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
-		     raise 'aborting'
-		   end
-		end	  
+		      if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
+		        raise 'aborting'
+		      end
+		    end	  
         create_brand_new_edl
       end
       
-      @open_list = new_jbutton("Open/Edit an arbitrary previously created Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      new_jbutton("Create new non-DVD Edit List") do
+        names = ['movie file', 'netflix instant']
+        dialog = DropDownSelector.new(self, names, "Select type")
+        type = dialog.go_selected_value     
+        if type == 'movie file'
+          path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
+          guess_name = File.basename(path).split('.')[0..-2].join('.') # Boss.S01E07.720p.HDTV.X264-DIMENSION.m4v
+        else
+          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686)"
+          if url =~ /netflix/
+            guess_name = url.split('/')[-2]
+          elsif url =~ /hulu/ #  or http://www.hulu.com/watch/304824/american-the-bill-hicks-story :|
+            guess_name = url.split('/')[-1]
+          else
+            show_blocking_message_dialog "non hulu/netflix? please report!"
+            guess_name = url.split('/')[-1]
+          end
+        end
+        p 'guessed english name:' + guess_name
+        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', guess_name.gsub(/[-._]/, ' ')
+      end
+
+      
+      @open_list = new_jbutton("Open/Edit an arbitrary Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", 
           LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
         LocalStorage['edit_from_here'] = File.dirname(filename)
         open_file_to_edit_it filename
       }
+      
+      
       
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity timestamps automatically" )
       @parse_srt.tool_tip = <<-EOL
