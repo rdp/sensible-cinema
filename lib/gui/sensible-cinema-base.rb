@@ -413,7 +413,7 @@ KP_ENTER dvdnav select
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
-	EdlFilesChosen = {}
+  	EdlFilesChosen = {} # allow for switchiing tapes :P
 	
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
@@ -421,8 +421,8 @@ KP_ENTER dvdnav select
       if !edl_path
         edl_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if !edl_path && force_choose_edl_file_if_no_easy_match
-  		  message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
-		  show_blocking_message_dialog message
+  		    message = "Please pick a DVD Edit List File (none or more than one were found that seem to match #{dvd_volume_name})--may need to create one, if one doesn't exist yet"
+		      show_blocking_message_dialog message
           edl_path = new_existing_file_selector_and_select_file(message, EdlParser::EDL_DIR)
         end
       end
@@ -436,14 +436,16 @@ KP_ENTER dvdnav select
           raise e
         end
       end
-    EdlFilesChosen[dvd_id] ||= edl_path
+      EdlFilesChosen[dvd_id] ||= edl_path
       [drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors]
     end
     
-    MplayerBeginingBuffer = 1.0
+    LocalStorage.set_default('mplayer_beginning_buffer', 1.0)
+
+#    MplayerBeginingBuffer = 1.0
     MplayerEndBuffer = 0.0
     
-    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = MplayerEndBuffer, add_secs_begin = MplayerBeginingBuffer, show_subs = false
+    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, add_secs_begin = LocalStorage['mplayer_beginning_buffer'], show_subs = false
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly/ugly

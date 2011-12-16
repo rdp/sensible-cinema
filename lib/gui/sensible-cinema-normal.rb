@@ -41,7 +41,6 @@ module SensibleSwing
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
         choose_file_and_edl_and_create_sxs_or_play false
-		exit 0
       end
       
       @create = new_jbutton( "Create edited version of a file on Your Hard Drive" )
@@ -64,7 +63,11 @@ module SensibleSwing
         add_open_documentation_button
       end
       
-      add_change_upconvert_options_button
+      @show_upconvert_options = new_jbutton("Tweak Preferences [timing, upconversion]") do
+        upconvert_window = new_child_window
+        upconvert_window.add_change_upconvert_buttons
+      end
+      @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
       
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
@@ -72,6 +75,7 @@ module SensibleSwing
       @panel.add @progress_bar 
       add_text_line ""# spacing
     end
+    
     
     def add_open_documentation_button
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
@@ -114,7 +118,7 @@ module SensibleSwing
           setup_normal_buttons
         end
       
-        @upload = new_jbutton("Submit Feedback/Upload new EDL's/Request Help") # keeps this one last! :)
+        @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
         @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
         @upload.on_clicked {
           system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
