@@ -1,6 +1,6 @@
 Index: stream/stream_dvdnav.c
 ===================================================================
---- stream/stream_dvdnav.c	(revision 34269)
+--- stream/stream_dvdnav.c	(revision 34396)
 +++ stream/stream_dvdnav.c	(working copy)
 @@ -302,7 +302,7 @@
  fail:
@@ -23,7 +23,7 @@ Index: stream/stream_dvdnav.c
      }
 Index: mplayer.c
 ===================================================================
---- mplayer.c	(revision 34269)
+--- mplayer.c	(revision 34396)
 +++ mplayer.c	(working copy)
 @@ -144,6 +144,7 @@
  int enable_mouse_movements;
@@ -93,21 +93,7 @@ Index: mplayer.c
              if (mpctx->osd_show_percentage)
                  percentage = demuxer_get_percent_pos(mpctx->demuxer);
  
-@@ -1597,9 +1630,12 @@
-             if (osd_fractions == 1) {
-                 // print fractions as sub-second timestamp
-                 snprintf(fractions_text, sizeof(fractions_text), ".%02d",
--                         (int)((mpctx->sh_video->pts - pts) * 100 + 0.5)
-+                         (int)((pts - seconds)*100)
-                          % 100);
-             } else if (osd_fractions == 2) {
-+                printf("unimplemented, and weird osd fractions 2");
-+                // phreaky, infer frame count past the second...
-+                
-                 // print fractions by estimating the frame count within the
-                 // second
- 
-@@ -1608,24 +1644,25 @@
+@@ -1607,24 +1640,25 @@
                  // whose first frame is not exactly at timestamp 0. Therefore,
                  // we add 0.2 and cut off at the decimal point, which proved
                  // as good heuristic
@@ -144,7 +130,7 @@ Index: mplayer.c
          } else
              osd_text_timer[0] = 0;
  
-@@ -1643,7 +1680,6 @@
+@@ -1642,7 +1676,6 @@
      // Clear the term osd line
      if (term_osd && osd_text[0]) {
          osd_text[0] = 0;
@@ -152,7 +138,7 @@ Index: mplayer.c
      }
  }
  
-@@ -2591,6 +2627,7 @@
+@@ -2590,6 +2623,7 @@
  }
  
  // Execute EDL command for the current position if one exists
@@ -160,7 +146,7 @@ Index: mplayer.c
  static void edl_update(MPContext *mpctx)
  {
      if (!edl_records)
-@@ -2603,7 +2640,7 @@
+@@ -2602,7 +2636,7 @@
          edl_records     = NULL;
          return;
      }
@@ -169,7 +155,7 @@ Index: mplayer.c
      // This indicates that we need to reset next EDL record according
      // to new PTS due to seek or other condition
      if (edl_needs_reset) {
-@@ -2614,22 +2651,22 @@
+@@ -2613,22 +2647,22 @@
          // Find next record, also skip immediately if we are already
          // inside any record
          while (next_edl_record) {
@@ -199,7 +185,7 @@ Index: mplayer.c
                  }
                  break;
              }
-@@ -2644,15 +2681,16 @@
+@@ -2643,15 +2677,16 @@
      }
  
      if (next_edl_record &&
@@ -219,7 +205,7 @@ Index: mplayer.c
                     next_edl_record->start_sec, next_edl_record->stop_sec,
                     next_edl_record->length_sec);
          } else if (next_edl_record->action == EDL_MUTE) {
-@@ -3869,6 +3907,7 @@
+@@ -3868,6 +3903,7 @@
  
              edl_update(mpctx);
  
@@ -227,7 +213,7 @@ Index: mplayer.c
  //================= Keyboard events, SEEKing ====================
  
              current_module = "key_events";
-@@ -3952,7 +3991,7 @@
+@@ -3951,7 +3987,7 @@
                      guiInfo.Chapter = dvd_chapter_from_cell(dvdp, guiInfo.Track - 1, dvdp->cur_cell) + 1;
                  }
  #endif
@@ -238,7 +224,7 @@ Index: mplayer.c
  
 Index: cfg-mplayer.h
 ===================================================================
---- cfg-mplayer.h	(revision 34269)
+--- cfg-mplayer.h	(revision 34396)
 +++ cfg-mplayer.h	(working copy)
 @@ -86,6 +86,7 @@
      {"softvol", &soft_vol, CONF_TYPE_FLAG, 0, 0, 1, NULL},
@@ -262,7 +248,7 @@ Index: cfg-mplayer.h
  #ifdef CONFIG_MENU
 Index: mplayer.h
 ===================================================================
---- mplayer.h	(revision 34269)
+--- mplayer.h	(revision 34396)
 +++ mplayer.h	(working copy)
 @@ -27,6 +27,8 @@
  extern char **audio_driver_list;
@@ -275,7 +261,7 @@ Index: mplayer.h
  extern int frame_dropping;
 Index: libmpdemux/demuxer.c
 ===================================================================
---- libmpdemux/demuxer.c	(revision 34269)
+--- libmpdemux/demuxer.c	(revision 34396)
 +++ libmpdemux/demuxer.c	(working copy)
 @@ -493,7 +493,6 @@
          //codec_id = CODEC_ID_DNET;
@@ -353,7 +339,7 @@ Index: libmpdemux/demuxer.c
  int demuxer_get_percent_pos(demuxer_t *demuxer)
 Index: libmpdemux/demuxer.h
 ===================================================================
---- libmpdemux/demuxer.h	(revision 34269)
+--- libmpdemux/demuxer.h	(revision 34396)
 +++ libmpdemux/demuxer.h	(working copy)
 @@ -437,8 +437,8 @@
  int demux_info_print(demuxer_t *demuxer);
