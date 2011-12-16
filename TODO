@@ -16,7 +16,6 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
 
-  add "create for non-DVD" button :) [dropdown netflix/hulu/file LOL]
   the timestamp sync'ing feels broken it's hard to use LOL
     srt add option "pick coordinating one from the middle, or from the end[which might have more spoilers]"
     needs option "test it out starting near there" or the like
@@ -35,6 +34,7 @@
       step_sub maybe
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
+    medium is too long
 	not adding odd diff1? 0.000000
   disclosure lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
@@ -136,6 +136,7 @@
     just OCR powerdvd for now
   test court jester just watch it :)
   @ffmpeg: you can't convert mkv's of this type!
+  ask why mplayer seems to show "overlap" at DVD time splits
   
 == decide later to move up or down ==
   can "auto find" for files, based on movie hash
@@ -147,6 +148,7 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  fix VLC jumping when it hits DVD time splits
   test mplayer -vo gl speeds at home
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting

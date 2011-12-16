@@ -1,6 +1,7 @@
 = 0.40.0 12-16-11 =
 
-Use "tighter" synchronization with the onscreen display timestamps, for higher accuracy compared to the underlying MPEG stream. 
+Allow for "tighter" synchronization with onscreen display timestamps, for higher accuracy compared to the underlying MPEG stream.
+This is useful for DVD's that have timestamp resets in them--they should be quite accurate now.
 
 = 0.32.5 12-15-11 =
 

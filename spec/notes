@@ -73,6 +73,36 @@ final: 5628.228027
 can't complain about this stuff uh guess...umm...uh...hmm...
   integer arithmetic is losing some precision perhaps?  seems all right tho...
   
+  
+  =c=
+  mpeg at 0.681033 after -> 29.97 0.400400
+  adding difference 0.066733 adding 0.214300 to 0.467133
+  final: 0.681433
+  [had some other that didn't seem as close...]
+  
+ mpeg at 47.494480 after -> 29.97 47.280567
+new NAV packet! 47.280567 [adjusted] at 47.494480 adding 0.214300 to 47.280567
+final: 47.494865
+
+0.004
+
+ mpeg at 610.882202 after -> 29.97 610.409790
+ adding difference 0.292053 adding 0.214300 to 610.701843
+ final: 610.916138
+
+ mpeg at 1815.794556 after -> 29.97 1815.280151
+adding difference 0.333618 adding 0.214300 to 1815.613770
+final: 1815.828125
+
+0.033
+
+ mpeg at 3020.873535 after -> 29.97 3020.650879
+adding difference 0.041748 adding 0.214300 to 3020.692627
+final: 3020.906982
+
+0.033
+
+still kinder close...
 = softskip,pullup =
 
 somehow sintel is IIPPPII even though it's 29.97 fps "telecine"

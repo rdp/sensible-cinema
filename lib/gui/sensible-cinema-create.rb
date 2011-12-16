@@ -335,7 +335,8 @@ module SensibleSwing
     end
 	
     def watch_dvd_edited_realtime_mplayer show_subs
-        edl_out_command = ""
+      edl_out_command = ""
+      if !@has_ever_rejected_edl_outfile
         answer = show_select_buttons_prompt <<-EOL, {}
           Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
           EOL
@@ -346,15 +347,18 @@ module SensibleSwing
           hit 'i' and mplayer will write the start time in the file and set it to skip for 2 seconds, 
           hit 'i' again to end the edited/skipped scene, within that file.
           EOL
-
+  
           edlout_filename = new_nonexisting_filechooser_and_go "pick edlout filename"
           edl_out_command = "-edlout #{edlout_filename}"
           
+        else
+          @has_ever_rejected_edl_outfile = true
         end
-        thred = play_smplayer_edl_non_blocking nil, [edl_out_command], true, false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
-        if(edl_out_command.present?)
-          open_edl_file_when_done thred, edlout_filename
-        end
+      end
+      thred = play_smplayer_edl_non_blocking nil, [edl_out_command], true, false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
+      if(edl_out_command.present?)
+        open_edl_file_when_done thred, edlout_filename
+      end
     end
     
     def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...

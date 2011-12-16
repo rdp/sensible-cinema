@@ -11,12 +11,12 @@
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
+"dvd_nav_packet_offset" => [0.4, 0.6143],
 "volume_name" => "NATIONAL_TREASURE",
 "disk_unique_id" => "91a5aeec|5178a204",
-"dvd_title_track" => "1", # the "show DVD info" button will tell you title lengths (typically longest title is the title track)
-# "dvd_title_track_length" => "9999", # length, on the DVD, of dvd_title_track (use the show DVD info button to get this number).
+"dvd_title_track" => "1", 
+"dvd_title_track_length" => 7856.8,
 # "subtitle_url" => "1234567",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only...",
-"mplayer_dvd_splits" => ["3499.07"],  # better than 3499.4 with audio only which is like 0.4 too far?
 "dvd_start_offset" => "0.28",
