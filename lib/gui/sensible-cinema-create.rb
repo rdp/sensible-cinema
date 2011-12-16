@@ -82,23 +82,27 @@ module SensibleSwing
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
           "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
-	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
+  	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
         if edit_list_path
 		      if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
 		        raise 'aborting'
 		      end
 		    end	  
-        create_brand_new_edl
+        create_brand_new_dvd_edl
       end
       
-      new_jbutton("Create new non-DVD Edit List") do
+      new_jbutton("Create new Edit List (for netflix instant or a file)") do
         names = ['movie file', 'netflix instant']
         dialog = DropDownSelector.new(self, names, "Select type")
         type = dialog.go_selected_value     
+        extra_options = {}
         if type == 'movie file'
           path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
           guess_name = File.basename(path).split('.')[0..-2].join('.') # Boss.S01E07.720p.HDTV.X264-DIMENSION.m4v
+          extra_options['filename'] = File.basename path
+          require 'movie_hasher'
+          extra_options['movie_hash'] = MovieHasher.compute_hash path
         else
           url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686)"
           if url =~ /netflix/
@@ -109,11 +113,37 @@ module SensibleSwing
             show_blocking_message_dialog "non hulu/netflix? please report!"
             guess_name = url.split('/')[-1]
           end
+          extra_options['url'] = url
         end
         p 'guessed english name:' + guess_name
-        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', guess_name.gsub(/[-._]/, ' ')
-      end
+        english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
+        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.txt'
+        display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
+        
+        output = <<-EOL
+# edl_version_version 1.1, sensible cinema v#{VERSION}
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "#{english_name}",
+#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}"\n!}}
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
 
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"timestamps_relative_to" => ["#{type}"],
+# "subtitle_url" => "http://...",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
+        EOL
+        File.write filename, output
+        open_file_to_edit_it filename
+      end
       
       @open_list = new_jbutton("Open/Edit an arbitrary Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
@@ -183,7 +213,7 @@ module SensibleSwing
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
         out_hashes, title_lengths = get_disk_info
-	out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
+	      out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
         filename = EdlTempFile + '.disk_info.txt'
         File.write filename, out_string
         open_file_to_edit_it filename
@@ -256,43 +286,53 @@ module SensibleSwing
       end
       
     end
+    
+    def display_and_raise error_message
+      show_blocking_message_dialog error_message
+      raise error_message
+    end
+    
+    def with_autoclose_message(message)
+      a = show_non_blocking_message_dialog message
+      yield
+      a.close
+    end
 	
     def get_disk_info
-	drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
-        # display it, allow them to copy and paste it out
-	out_hashes = {}
-	out_hashes['disk_unique_id'] = dvd_id
-	out_hashes['volume_name'] = volume_name
-        popup = show_non_blocking_message_dialog "calculating DVD title sizes..."
-        command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
-        puts command
-        title_lengths_output = `#{command}`
-        popup.close
-        edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
-        if edit_list_path
-	  parsed = parse_edl edit_list_path
-          title_to_get_offset_of = get_title_track_string(parsed)
-        else
-          title_to_get_offset_of = nil
-        end
-        title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
-        # ID_DVD_TITLE_4_LENGTH=365.000
-        titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
-        largest_title = titles_with_length.max_by{|title, length| length}
-	if !largest_title
-	  show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
-          raise
-	end
-	largest_title = largest_title[0]
-        title_to_get_offset_of ||= largest_title
- 	out_hashes['dvd_title_track'] = title_to_get_offset_of
-p titles_with_length # LODO give them access to it, too? own file?
-	out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
-        offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
-	start_offset = offsets[:mpeg_start_offset]
-	out_hashes['dvd_start_offset'] = start_offset
-        out_hashes['dvd_nav_packet_offset'] = offsets[:dvd_nav_packet_offset]
-	[out_hashes, title_lengths]
+	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
+      # display it, allow them to copy and paste it out
+	    out_hashes = {}
+	    out_hashes['disk_unique_id'] = dvd_id
+	    out_hashes['volume_name'] = volume_name
+      popup = show_non_blocking_message_dialog "calculating DVD title sizes..."
+      command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
+      puts command
+      title_lengths_output = `#{command}`
+      popup.close
+      edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
+      if edit_list_path
+    	  parsed = parse_edl edit_list_path
+        title_to_get_offset_of = get_title_track_string(parsed)
+      else
+        title_to_get_offset_of = nil
+      end
+      title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+      # ID_DVD_TITLE_4_LENGTH=365.000
+      titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+      largest_title = titles_with_length.max_by{|title, length| length}
+  	  if !largest_title
+  	    show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk? #{title_lengths_output}"
+        raise
+	    end
+	    largest_title = largest_title[0]
+      title_to_get_offset_of ||= largest_title
+ 	    out_hashes['dvd_title_track'] = title_to_get_offset_of
+	    out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
+      offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
+    	start_offset = offsets[:mpeg_start_offset]
+	    out_hashes['dvd_start_offset'] = start_offset
+      out_hashes['dvd_nav_packet_offset'] = offsets[:dvd_nav_packet_offset]
+	    [out_hashes, title_lengths]
     end
 	
     def watch_dvd_edited_realtime_mplayer show_subs
@@ -371,20 +411,20 @@ p titles_with_length # LODO give them access to it, too? own file?
         [start_time, end_time]
     end
     
-    def create_brand_new_edl
-	  hashes, title_lengths = get_disk_info
-	  volume = hashes['volume_name']
-	  default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
+    def create_brand_new_dvd_edl
+	    hashes, title_lengths = get_disk_info # has a prompt
+	    volume = hashes['volume_name']
+	    default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
       english_name = get_user_input("Enter a human readable DVD description for #{volume}", default_english_name)
 
       # EDL versions:
-	  # nothing with disk_unique_id: probably dvd_start_offset 29.97
+	    # nothing with disk_unique_id: probably dvd_start_offset 29.97
       # nothing without disk_unque_id: probably start_zero 29.97
       # 1.1: has timestamps_relative_to, I guess
     
       input = <<-EOL
 # edl_version_version 1.1, sensible cinema v#{VERSION}
-# comments can go after a # on any line, for example this one.
+# comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
 "mutes" => [
