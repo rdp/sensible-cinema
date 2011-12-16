@@ -23,6 +23,7 @@
     needs to at *least* parse it for them
   the 50% thing
   genealogy screen saver create/publicize
+  can use zoomplayer syntax, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
   
   genealogy living tree
   disclosure for OCR, wiki based processing
@@ -34,26 +35,27 @@
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
 	not adding odd diff1? 0.000000
-  my treasury (john newspaper thing)
   disclosure lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
-  veggie tales dies (1.2.10 v 1.2.11 ?)
+  veggie tales dies (the lib v's?)
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  accomodate for telecine [veggie tales]
   prince of egypt OSD is off, just needs calculation hopefully! [check]
 
+  my treasury (john newspaper thing)
+  accomodate for telecine [veggie tales]
+  upconv: test snow white book:
+    adv. DVD upconverter [family first?]
+    it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
+  user preference "always just skip" if that's what he wanted :P
   fix mplayer muting sox
-  @zoomplayer: more accuracy
-  can use zoomplayer syntax, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
   can write synchronized euphemized srt [only one guy wanted this tho...]
   mac: test for mac, release for mac, advertise urug
   ffmpeg dshow patches
   add option "just skip don't mute always instead of muting"
   try to reproduce the ffplay bug with just ffmpeg
-  upconvert screen try it out, make sure it works, release and with DVD
-  it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
+  upconvert screen try it out, make sure it works, release
   fix screen capturer negative
   display OSD on command line too, just mine :P
   learn clojure
@@ -63,9 +65,7 @@
   add "revision" to mplayer edl
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
-  try out subtitle edit (can it extract?)
-  tons of unit tests
-  softskip,pullup for all [?] I guess only TV titles need it though...but they do exist...it probably should...
+  try out Subtitle Edit (can it extract?)
   @mplayer: ctrl-keys patch, ask them anyway :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
@@ -76,14 +76,12 @@
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   inspector general
-  remove splits' old functionality 
-  adv. DVD upconverter
+  remove splits' functionality 
   add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
-  user preference "always just skip" if that's what he wanted :P
-  super precise timing, this 1.001 just doesn't cut it
-  gui/edl parser unit tests work
+  super precise timing, this 1.001 apparently is barely off consistently :P
+  gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
@@ -92,10 +90,10 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   the awesome ffmpeg file splitter :P
     also do I really still need to use mencoder?
-  use DVD NAV packet time:
+  use DVD NAV packet time raw:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
-    add 2 options: file, "dvd"
-    update wiki
+      add 2 options: file, "dvd"
+    update wiki/readme
     timestamps_relative_to => "dvd"
     remove -osd-add, or maybe fine tune it?
     add OSD time to the console output
@@ -112,8 +110,6 @@
   rename it "..." or whatever google prefers :P
   the php uploader thing :P
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  check highlighting freakiness tomato home/work
-    directx/post "it was directx" for subs highlighting
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
   netflix instant descriptor work at all
     maybe get it to work with say VLC full screen first?
@@ -123,7 +119,6 @@
   popup_text in EDL's
   ruby_prof stuffs (merge, release at least)
   warn other wordpresses
-  test mplayer -vo gl speeds at home
   minor redcar tweaks
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should just combine
@@ -139,32 +134,30 @@
     +- list/publish mine so far :)
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
-  purchase big buck bunny DVD http://www.blender3d.org/e-shop/product_info.php?products_id=97
-  test court jester watch it :)
+  test court jester just watch it :)
   @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
-  don't show smplayer buttons in OS X/linux [?]
   "overwrite?" prompt for file mode
-  VLC UI fixes
-  VLC resume/window position [?]
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  super editor: shows the srt near each edit...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  test mplayer -vo gl speeds at home
+  check highlighting freakiness tomato home/work
+    directx/post "it was directx" for subs highlighting
+  super editor: shows the srt near each edit...
+  VLC resume/window position [?]
+  don't show smplayer buttons in OS X/linux [?]
   @mplayer: did you realize you don't go to the start of DVD's right? [tangled]
-  maybe a new button "poor man's upscaling" -sws 9 pullup,softskip :P
-  update filterguide with link, more examples
+  update libavfilter filterguide with link, more examples
   upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
-  move all business ideas to patents LOL
   status updates when downloading files initially
   DIRT short list
-  short list of todo's for screen capture
   @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
@@ -176,32 +169,24 @@
   @wiki: here is how very messed up DVD's are, what they look like precisely.
   subtitle -> url everywhere
   use direct3d only if nvidia [?]
-  investigate WMC "call out to smplayer + EDL" or the like...
+  investigate WMC "call out to smplayer + EDL" or the like...with its plugin
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
   "double check sync" button/option on play [?]
   an even better dvdnav.h comment patch :P
-  don't distribute it with development dependencies...
-  virtual audio figure out weirdness
-  @ffmpeg/vlc: can you use the nvidia graphics card to *encode* it too, plz?
+  don't distribute with development dependencies...
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
-  checkbox for licenses
   add some VLC forums bugs as real bugs, if they're still around
   force "all" licenses to be accepted one together...
   add the other type in there, esp. if a man answers
       accomodate splits vs. blanks and work everywhere
     add to the template, make it so that various can use it
   nextsprocket "citrix"
-  cool runnings me w w/o grab
-  Linux port for SC (call that good enough for usability on TV's...), should be...
+  cool runnings me +- grab
+  Linux port SC (call that good enough for usability on TV's...), should be...
   7z'up mplayer_edl
   youtube/hulu timings different?
-  distribute with requiring "external" libdvdcss [make them download gstreamer]
-    and/or mplayer-edl itself...
-    os x static-ishDYLD_FALLBACK_LIBRARY_PATH oh baby
-    just call out to /Applications/vlc/dvdcss or libdvdcss
   ffmpeg dshow input can I move audio along anyway, or with different metric?
-  in middle of -c- DVDNAV_TITLE_IS_MOVIE weird fella mpeg at 0.000000 adding 0.200000 to 0.000000 final: 0.200000
   investigate more "it seeks past the end of dvdnav:// to the beginning!"
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
@@ -219,7 +204,6 @@
 
 == and more to never do ==
   
-  fix crash upconvert screen smplayer
   disable internal "lib"
   report mplayer crash: mplayer crash:
      C:/dev/ruby/sensible-cinema/vendor/cache/mplayer_edl/mplayer.exe -noquiet -nofs -nomouseinput -sub-fuzziness 1 -identify -vo direct3d -ao dsound -nokeepaspect -priority normal -framedrop -nodr -double -monitorpixelaspect 1 -ass -embeddedfonts -ass-line-spacing 0 -ass-font-scale 1 -ass-styles C:/Users/packrd/SMPLAY~1/styles.ass -fontconfig -font Arial -subfont-autoscale 0 -subfont-osd-scale20 -subfont-text-scale 20 -subcp ISO-8859-1 -subpos 100 -volume 50 -dvd-device D: -dvdangle 1 -nocache -osdlevel 0 -slices -af scaletempo,equalizer=0:0:0:0:0:0:0:0:0:0 -softvol -softvol-max 110 -framedrop -mc 2 -autosync 30 -sub c:/dev/ruby/sensible-cinema/zamples/edit_decision_lists/dvds/edls_being_edited/turtles.srt-msglevel identify=4 -mouse-movements  -lavdopts threads=8 -vo direct3d -osdlevel 2 -osd-fractions 1 -edl C:/Users/packrd/AppData/Local/Temp/mplayer.temp.edl -font c:\windows\fonts\arial.ttf  -subcp cp1250 -noass  dvdnav://1
@@ -372,7 +356,7 @@
   "save to" -> same dir as "get from" yeah
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
   prompt something if the EDL is actually "empty" :)
-  already donated: sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC, xiph, audacity, windirstat (done)
+  already donated: big buck, sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC, xiph, audacity, windirstat (done)
   note "you want to optimize your reverse blitting first... :)"
   if 2 EDL's, still can choose a title trackfor automatically playing it right.
   fast preview: change it to be aggressive sometimes yes, other times no
@@ -435,7 +419,7 @@
   pull in information from thetvdb to the GUI app
   create the "ffmpeg frame accurate" splitter
     sounds like I want to move in that direction, esp. if handbrake ends up being sane
-  research the gplv3, add terms. Maybe want real lawyer, even?
+  research the gplv3, add terms.
   it can "slow certain sections down" that might look way cool! LOL
   it can "speed up" certain [scary/frightening] sections, to make them less tense
   script powerdvd via keystrokes
@@ -589,7 +573,6 @@ fix:
   0:01:01.9 next will be at 0:01:02.0s (r [or q to quit]):
   0:01:04.0 next will be at 0:01:06.5s (blanked) (r [or q to quit]): "warning--unable to track screen time for some reason" # *of course you can't track it now!*
 
-byu.tv descriptor
 youtube non full screen: work with all browsers
 amazon player
 "just choose VLCx55" LOL
@@ -691,11 +674,9 @@ do the same, but for audio books...also optimize them for reading through full v
 
 @mencoder: ripping like this results in an (avidemux, VLC) fourcc of 'ugh':  mencoder2 dvdnav://1  -oac copy -ovc copy -o D:\raw_rip_mpeg_example.avi -endpos 20 -dvd-device E:\
 
-a DVD burner for ISO, then it can "burn over" some bad sectors? or you can grab an ISO and "null out" just where you wanted to?
-
 maybe require them to rip their stuff "through some means or other" and we'll operate on the product based on an EDL list :) [could be more legal]
 
-a boxee api? 
+use a boxee api? 
 I *could* record netflix movies, then edit those manually (or mapped-ly)...meh clearplay needs some niche--we don't have each other after all, plus legality
 
 opening youtube, if not already opened, choose chrome in plugin, get this:
@@ -708,7 +689,9 @@ RuntimeError: poor width or wrong window 94 1 71
 
 create a "map" of VLC DVD timings to "real" timings via tracking.  Hopefully never necessary...
   hopefully I can really fix VLC instead
-        
+
+@zoomplayer: more accuracy [?]
+
 it fails on "friday" it tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
 
