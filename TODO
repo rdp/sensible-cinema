@@ -23,8 +23,9 @@
     needs to at *least* parse it for them
   the 50% thing
   genealogy screen saver create/publicize
-  can use zoomplayer syntax, prompt them "do you want to..." and if yes add single button for "create zoomplayer compatible file [unless I get approval end of January]" [cache preference]
+  zoomplayer add single button for "create zoomplayer compatible file" [cache preference]
   
+  cache "-edlout" choice if ever negative just for session :P
   genealogy living tree
   disclosure for OCR, wiki based processing
   mac release [needs it]
@@ -41,7 +42,6 @@
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  prince of egypt OSD is off, just needs calculation hopefully! [check]
 
   my treasury (john newspaper thing)
   accomodate for telecine [veggie tales]
