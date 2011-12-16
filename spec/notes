@@ -1,5 +1,78 @@
 up next:
 
+
+prince of egypt:
+
+mpeg at 0.681033 after -> 29.97 0.400400
+new NAV packet! 0.400400 [adjusted] at 0.681033 adding 0.281033 to 0.400400
+final: 0.681433
+
+ mpeg at 1.081433 after -> 29.97 0.800800
+new NAV packet! 0.800800 [adjusted] at 1.081433 adding 0.281033 to 0.800800
+final: 1.081833
+
+still 0.0004
+
+2.233333, mpeg at 2.516194 after -> 29.97 2.235567
+new NAV packet! 2.235567 [adjusted] at 2.516194 adding 0.281033 to 2.235567
+final: 2.516600
+
+0.0006
+
+all monotonic
+ 3.000000, mpeg at 3.266944 after -> 29.97 3.003000
+new NAV packet! 3.003000 [adjusted] at 3.266944 adding 0.281033 to 3.003000
+final: 3.284033
+
+0.017
+
+
+ was 5.000000, mpeg at 5.268946 after -> 29.97 5.005000
+new NAV packet! 5.005000 [adjusted] at 5.268946 adding 0.281033 to 5.005000
+final: 5.286033
+
+0.017 off [?]
+
+mpeg at 6.937278 after -> 29.97 6.506500
+adding difference 0.166832 adding 0.281033 to 6.673332
+final: 6.954365
+
+ mpeg at 13.777442 after -> 29.97 13.513500
+new NAV packet! 13.513500 [adjusted] at 13.777442 adding 0.281033 to 13.513500
+final: 13.794533
+
+mpeg at 1819.873779 after -> 29.97 1819.484253
+adding difference 0.125244 adding 0.281033 to 1819.609497
+final: 1819.890503
+
+sitll 0.017 off ...
+
+0.0175 off [?]
+
+50:
+ mpeg at 3020.189209 after -> 29.97 3019.616699
+adding difference 0.291504 adding 0.281033 to 3019.908203
+final: 3020.189209
+LOL
+
+near end:
+
+
+mpeg at 4244.576660 after -> 29.97 4244.172852
+adding difference 0.124512 adding 0.281033 to 4244.297363
+final: 4244.578613
+
+0.002 ok now I am weirded out...
+
+ packet was 5622.200195, mpeg at 5628.225586 after -> 29.97 5627.822266
+adding difference 0.124512 adding 0.281033 to 5627.946777
+final: 5628.228027
+
+0.003
+
+can't complain about this stuff uh guess...umm...uh...hmm...
+  integer arithmetic is losing some precision perhaps?  seems all right tho...
+  
 = softskip,pullup =
 
 somehow sintel is IIPPPII even though it's 29.97 fps "telecine"

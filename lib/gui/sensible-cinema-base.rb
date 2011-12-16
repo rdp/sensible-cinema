@@ -387,22 +387,23 @@ KP_ENTER dvdnav select
     end
     
     def get_dvd_playback_options descriptors
-      out = ""
+      out = []
       
       if we_are_in_create_mode
-        out += "-osdlevel 2 -osd-fractions 1" 
+        out << "-osdlevel 2 -osd-fractions 1"
+        out << "-osd-verbose" if we_are_in_developer_mode?		
       end
 
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
       if nav
         offset_time = mpeg_time - nav
       else
-  		  # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
-        show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL."
+  		# readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
+        show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now..."
         offset_time = 0.20
       end
-		  out += " -osd-add #{offset_time}"
-      out
+	  out << "-osd-add #{offset_time}"
+      out.join(' ')
     end
 
     if OS.doze? # avoids spaces in filenames :)
