@@ -64,6 +64,8 @@ module SensibleSwing
       end
       
       @show_upconvert_options = new_jbutton("Tweak Preferences [timing, upconversion]") do
+        get_set_preference 'mplayer_beginning_buffer', "How much time to add to the beginning of cuts/mutes, for safety sake"
+        show_blocking_message_dialog "You will now be able to set some upconversion options, which makes the playback look nicer but uses more cpu [if desired].\nClose the window when finished."
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
       end
@@ -76,6 +78,20 @@ module SensibleSwing
       add_text_line ""# spacing
     end
     
+    def get_set_preference name, english_name
+      old_preference = LocalStorage[name]
+      old_class = old_preference.class
+      new_preference = get_user_input("Enter value for #{english_name}", old_preference)
+      raise if new_preference.empty?
+      if old_class == Float
+        new_preference = new_preference.to_f
+      elsif old_class == String
+        # leave same
+      else
+        raise 'unknown type?' + old_class.to_s
+      end
+      LocalStorage[name] = new_preference
+    end
     
     def add_open_documentation_button
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
