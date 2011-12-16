@@ -69,7 +69,7 @@ module SensibleSwing
 
       add_text_line 'Create Edit Options:'
       
-      @open_current = new_jbutton("Open/Edit EDL for currently inserted DVD") do
+      @open_current = new_jbutton("Edit/Open EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id)
         if edit_list_path
@@ -120,7 +120,7 @@ module SensibleSwing
         display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
         
         output = <<-EOL
-# edl_version_version 1.1, sensible cinema v#{VERSION}
+# edl_version_version 1.1, created by sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -208,7 +208,7 @@ module SensibleSwing
         open_file_to_edit_it filename
       end
 
-      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing...)" )
+      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
         out_hashes, title_lengths = get_disk_info

@@ -396,7 +396,7 @@ KP_ENTER dvdnav select
 
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
       if nav
-        offset_time = mpeg_time - nav
+        offset_time = mpeg_time*1/1.001 - nav # our reading like 0.5 is actually a bit offset, since in reality that "means 4.997" or what not
       else
   		# readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
         show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now..."

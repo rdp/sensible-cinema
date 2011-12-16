@@ -148,6 +148,8 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  doubl check if my variance from reality "goes exactly up to 0.04 then resets to zero" over the course of a movie.
+  autodetect whether is telecine or not
   fix VLC jumping when it hits DVD time splits
   test mplayer -vo gl speeds at home
   check highlighting freakiness tomato home/work

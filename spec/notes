@@ -1,7 +1,45 @@
 up next:
 
+= am I accurate all the way through with dvd_nav_offset =
 
-prince of egypt:
+==osoh==
+
+started quite well
+
+ mpeg at 4.159503 after -> 29.97 3.670333
+adding difference 0.291959 adding 0.213686 to 3.962293
+final: 4.175979
+
+0.016
+
+ 1808.166626, mpeg at 1810.214111 after -> 29.97 1809.974854
+adding difference 0.041748 adding 0.213686 to 1810.016602
+final: 1810.230347
+
+0.016
+
+mpeg at 5418.517090 after -> 29.97 5417.845703
+adding difference 0.458984 adding 0.213686 to 5418.304688
+final: 5418.518555
+
+0.0014
+
+ mpeg at 5532.005859 after -> 29.97 5531.458984
+adding difference 0.334473 adding 0.213686 to 5531.793457
+final: 5532.007324
+
+
+0.002
+
+suh-weet
+
+ mpeg at 6728.743164 after -> 29.97 6728.188477
+adding difference 0.376465 adding 0.213686 to 6728.564941
+final: 6728.778809
+
+0.035645
+
+==prince of egypt==
 
 mpeg at 0.681033 after -> 29.97 0.400400
 new NAV packet! 0.400400 [adjusted] at 0.681033 adding 0.281033 to 0.400400
@@ -45,9 +83,7 @@ mpeg at 1819.873779 after -> 29.97 1819.484253
 adding difference 0.125244 adding 0.281033 to 1819.609497
 final: 1819.890503
 
-sitll 0.017 off ...
-
-0.0175 off [?]
+still  0.017 off ...
 
 50:
  mpeg at 3020.189209 after -> 29.97 3019.616699
@@ -55,8 +91,9 @@ adding difference 0.291504 adding 0.281033 to 3019.908203
 final: 3020.189209
 LOL
 
-near end:
+0.000
 
+near end:
 
 mpeg at 4244.576660 after -> 29.97 4244.172852
 adding difference 0.124512 adding 0.281033 to 4244.297363
@@ -108,6 +145,15 @@ still kinder close...
 somehow sintel is IIPPPII even though it's 29.97 fps "telecine"
 
 Progressive video requires no special filtering to encode.
+
+if I want to autodetect it...
+
+demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+
+last NAV packet was 1.666667, mpeg at 2.094940 after -> 29.97 1.668333
+adding difference 0.212707 adding 0.213686 to 1.881040
+final: 2.094726
+A:   2.1 V:  2.09 A-V: -0.009 ct: -0.172  57/ 54 24% 55% 15.9% 20 0
 
 =c= 24000/1001fps progressive NTSC content detected
 
