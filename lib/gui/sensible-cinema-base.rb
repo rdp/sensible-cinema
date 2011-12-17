@@ -440,12 +440,15 @@ KP_ENTER dvdnav select
       [drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors]
     end
     
-    LocalStorage.set_default('mplayer_beginning_buffer', 1.0)
+    LocalStorage.set_default('mplayer_beginning_buffer', 0.5)
 
 #    MplayerBeginingBuffer = 1.0
-    MplayerEndBuffer = 0.0
+#    MplayerEndBuffer = 0.0
     
     def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, add_secs_begin = LocalStorage['mplayer_beginning_buffer'], show_subs = false
+      if we_are_in_create_mode
+        assert(add_secs_begin == 0 && add_secs_end == 0)
+      end
       if optional_file_with_edl_path
         drive_or_file, edl_path = optional_file_with_edl_path
         dvd_id = NonDvd # fake it out...LODO a bit smelly/ugly

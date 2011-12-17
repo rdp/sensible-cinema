@@ -64,7 +64,7 @@ module SensibleSwing
       end
       
       @show_upconvert_options = new_jbutton("Tweak Preferences [timing, upconversion]") do
-        get_set_preference 'mplayer_beginning_buffer', "How much time to add to the beginning of cuts/mutes, for safety sake"
+        get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
         show_blocking_message_dialog "You will now be able to set some upconversion options, which makes the playback look nicer but uses more cpu [if desired].\nClose the window when finished."
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
