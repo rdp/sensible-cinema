@@ -22,34 +22,34 @@
     needs to at *least* parse it for them
   the 50% thing
   genealogy screen saver create/publicize
-  zoomplayer add single button for "create zoomplayer compatible file" [cache preference at install time]
   
-  cache "-edlout" choice if ever negative just for session :P
+  zoomplayer add single button for "create zoomplayer compatible file" [cache preference at install time]
   genealogy living tree
   disclosure for OCR, wiki based processing
-  mac release [needs it]
-  actualize with mplayer svn, more mplayer patches upstream
+  mac release [needs one]
+  mplayer patches:
+    make sure I can build against latest
     patch V: for mplayer
     fix -sub to work with DVDNAV
       step_sub maybe
+  	not adding odd diff1? 0.000000
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
     medium is too long
-	not adding odd diff1? 0.000000
   disclosure lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
   veggie tales dies (the lib v's?)
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
+  fix mplayer muting sox
 
   my treasury (john newspaper thing)
-  accomodate for telecine [veggie tales]
+  accomodate for telecine option [veggie tales]
   upconv: test snow white book:
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   user preference "always just skip" if that's what he wanted :P
-  fix mplayer muting sox
   can write synchronized euphemized srt [only one guy wanted this tho...]
   mac: test for mac, release for mac, advertise urug
   ffmpeg dshow patches
@@ -62,7 +62,7 @@
   OS X netflix instant
     mac'ify OCR/Mouse
   test rvm email
-  add "revision" to mplayer edl
+  add "revision" to mplayer edl's output
   report xbmc bugz
   report ffmpeg/mencoder splitting bugz (2)
   try out Subtitle Edit (can it extract?)
@@ -139,7 +139,7 @@
   ask why mplayer seems to show "overlap" at DVD time splits
   
 == decide later to move up or down ==
-  can "auto find" for files, based on movie hash
+  can "auto find" for files, based on hash
   "overwrite?" prompt for file mode
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
