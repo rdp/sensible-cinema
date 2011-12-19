@@ -17,6 +17,7 @@ module SubtitleProfanityFinder
      subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
    end
 
+   # convert string to regexp, also accomodating for "full word" type profanities
    def self.convert_to_regexps profanity_hash
     all_profanity_combinations = []
     profanity_hash.to_a.sort.reverse.each{|profanity, sanitized|
@@ -66,7 +67,7 @@ module SubtitleProfanityFinder
      ending_srt = EdlParser.translate_string_to_seconds(ending_srt)
      ending_actual = EdlParser.translate_string_to_seconds ending_actual
 
-     # accomodate for both styles of rewrite, except it messes up the math, so just leave it separate:
+     # accomodate for both styles of rewrite, except it messes up the math...delete this soon...
      # difference = starting_timestamp_given_srt - starting_timestamp_actual
      # subtract_from_each_beginning_ts += difference
      # add_to_end_each_ts -= difference
