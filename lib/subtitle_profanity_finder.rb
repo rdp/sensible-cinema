@@ -186,8 +186,7 @@ module SubtitleProfanityFinder
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
           if text =~ profanity
-            
-            # sanitize the subtitles...
+            # sanitize/euphemize the subtitle text...
             for all_profanity_combinations2 in all_profanity_combinationss
               for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
                 if text =~ prof2
