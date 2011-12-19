@@ -153,3 +153,4 @@
   split EDL's based on DVD "title"
     have some menu system for "choose, now, which path you'd like to take" (ex: which alternate ending)
   when parsing a subtitle file, can specify an "extra buffer" to put around all of the subsequent mutes that it calculates for you, based on timestamp.
+  scan subtitles for text that "accompanies" violent or sex scenes, edit around those automatically.s
