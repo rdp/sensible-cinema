@@ -1,7 +1,7 @@
 #
-# warning: somewhat scary/explicit!
-
+# warning: somewhat scary/explicit down there!
 # see also todo.subtitle file, though what's here is mostly pretty well functional
+#
 begin
   require 'sane'
 rescue LoadError
@@ -21,7 +21,7 @@ module SubtitleProfanityFinder
        # create english-ified version
        text.gsub!(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
        text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> type things
-       text.gsub!(/[^a-zA-Z0-9\-!,.\?']/, ' ') # kill weird stuff like ellipseses
+       text.gsub!(/[^a-zA-Z0-9\-!,.\?']/, ' ') # kill weird stuff like ellipseses, also quotes would hurt
        text.gsub!(/  +/, ' ') # remove duplicate "  " 's now since we may have inserted many
        # extract timing info
        timing_line = glop.split("\n").first.strip
