@@ -152,3 +152,4 @@
   an avisynth script to "cut" the file to be able to watch it playback edited without modifying the original.  +- DVD input too.
   split EDL's based on DVD "title"
     have some menu system for "choose, now, which path you'd like to take" (ex: which alternate ending)
+  when parsing a subtitle file, can specify an "extra buffer" to put around all of the subsequent mutes that it calculates for you, based on timestamp.

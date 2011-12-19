@@ -214,9 +214,12 @@ module SensibleSwing
     		end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         filename = EdlTempFile + '.parsed.txt'
-        File.write filename, "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities +
-          %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
+        out =  "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities
+        if end_srt_time != 1000
+          out += %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
            %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
+        end
+        File.write filename, out
         open_file_to_edit_it filename
       end
 

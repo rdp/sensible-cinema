@@ -1,3 +1,7 @@
+= 0.33.3 12-19-11 =
+
+Make sync'ing the srt files *much* easier, and more automated.
+
 = 0.33.2 12-19-11 =
 
 Make it possible to programmatically spit out an EDL from a subtitle file.
