@@ -218,14 +218,13 @@ end
 
 if $0 == __FILE__
   if ARGV.empty?
-    p 'syntax: [filename.srt | [--create-edl|--create-edl-including-minor-profanities] input_name output_name]'
+    p 'syntax: [filename.srt | [--create-edl|--create-edl-including-minor-profanities] input_name.srt output_name.edl]'
     exit
   elsif ARGV[0].in? ['--create-edl', '--create-edl-including-minor-profanities']
     require_relative 'mplayer_edl'
     incoming_filename = ARGV[1]
     include_minors = true if ARGV[0] == '--create-edl-including-minor-profanities'
     mutes = SubtitleProfanityFinder.edl_output_from_string File.read(incoming_filename), {}, 0, 0, "00:00", "00:00", "10:00:00", "10:00:00", include_minors
-    puts mutes
     specs = EdlParser.parse_string %!"mutes" => [#{mutes}]!
     File.write(ARGV[2], MplayerEdl.convert_to_edl(specs))
     puts "wrote to #{ARGV[2]}"
