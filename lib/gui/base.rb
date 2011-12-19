@@ -40,6 +40,7 @@ require_relative '../edl_parser'
 require 'tmpdir'
 require 'whichr'
 require 'os'
+
 if OS.doze?
   autoload :WMI, 'ruby-wmi'
   autoload :EightThree, './lib/eight_three'
@@ -53,7 +54,6 @@ end
 for kls in [:PlayAudio, :RubyClip, :DriveInfo]
   autoload kls, "./lib/jruby-swing-helpers/#{kls.to_s.snake_case}"
 end
-
 
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
@@ -69,11 +69,11 @@ if OS.windows?
   end
 
 else
-  # handled in check_mac_installed
+  # handled in check_mac_installed.rb file
+
 end
 
 import 'javax.swing.ImageIcon'
-require_relative './sensible-cinema-dependencies'
 
 module SensibleSwing
   include SwingHelpers # various swing classes
@@ -102,6 +102,7 @@ module SensibleSwing
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
+      @callbacks_when_dvd_available_changes = []
       DriveInfo.create_looping_drive_cacher
       DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }
       
@@ -117,8 +118,8 @@ module SensibleSwing
            dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)			     
            edit_list_path_if_present = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
 			     if edit_list_path_if_present
-              human_name = parse_edl(edit_list_path_if_present)['name']
-			  human_name ||= ''
+             human_name = parse_edl(edit_list_path_if_present)['name']
+			       human_name ||= ''
            end
            present_discs << [human_name, disk.VolumeName, edit_list_path_if_present]
         end
@@ -132,10 +133,12 @@ module SensibleSwing
       }
       if present_discs.length > 0
         @current_dvds_line1.text= '      ' + present_discs[0]
-        @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ") 
+        @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ")
+        @callbacks_when_dvd_available_changes.each{|c| c.call(true)}
       else
         @current_dvds_line1.text= '      No DVD discs currently inserted.'
         @current_dvds_line2.text = ''
+        @callbacks_when_dvd_available_changes.each{|c| c.call(false)}
       end
     end
 	

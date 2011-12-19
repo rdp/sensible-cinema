@@ -65,7 +65,7 @@ class EdlParser
       output.merge! new_input
     end
     
-    require_relative 'gui/sensible-cinema-dependencies' # for download methods...
+    require_relative 'gui/dependencies' # for download methods...
     
     if expand
     

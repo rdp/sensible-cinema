@@ -30,11 +30,12 @@ end
 
 raise 'need jruby' unless OS.java?
 
-require_relative '../lib/gui/sensible-cinema-base'
-require_relative '../lib/gui/sensible-cinema-normal'
-require_relative '../lib/gui/sensible-cinema-create' # maybe don't need to require all these...
-require_relative '../lib/gui/sensible-cinema-create-file'
-require_relative '../lib/gui/sensible-cinema-upconvert'
+require_relative '../lib/gui/dependencies'
+require_relative '../lib/gui/base'
+require_relative '../lib/gui/normal'
+require_relative '../lib/gui/create' # LODO maybe don't need to require all these...
+require_relative '../lib/gui/create-file'
+require_relative '../lib/gui/upconvert'
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')

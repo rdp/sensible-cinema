@@ -38,6 +38,14 @@ module SensibleSwing
         play_smplayer_edl_non_blocking
         # lodo exit [?]
       }
+      @callbacks_when_dvd_available_changes << proc { |available_now|
+        if available_now
+          @mplayer_edl.enable
+        else
+          @mplayer_edl.disable
+        end
+      }
+      update_currently_inserted_dvd_list # update it :P
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
         choose_file_and_edl_and_create_sxs_or_play false
@@ -54,7 +62,7 @@ module SensibleSwing
         do_create_edited_copy_via_file false
       }
       
-      if LocalStorage[UpConvertEnglish]
+      if LocalStorage[UpConvertEnglish] # LODO no tight coupling like this
         add_text_line ''
         add_open_documentation_button
         @upconv_line = add_text_line "    #{get_current_upconvert_as_phrase}"
