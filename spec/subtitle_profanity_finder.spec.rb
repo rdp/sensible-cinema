@@ -128,36 +128,36 @@ a butt
   describe "it should let you re-factor the timestamps on the fly if desired"  do
 
     it "should subtract from beginning etc. etc." do
-       normal = S.edl_output 'dragon.srt'
-       normal.should =~ /0:00:50.23/
-       normal.should =~ /0:00:54.93/
-       subtract = S.edl_output 'dragon.srt', {}, 1.0
-       subtract.should =~ /0:00:49.23/
-       normal.should =~ /0:00:54.93/
-       add = S.edl_output 'dragon.srt', {}, 0.0, 1.0
-       add.should =~ /0:00:55.93/
-       add.should =~ /0:00:50.23/
+      normal = S.edl_output 'dragon.srt'
+      normal.should =~ /0:00:50.23/
+      normal.should =~ /0:00:54.93/
+      subtract = S.edl_output 'dragon.srt', {}, 1.0
+      subtract.should =~ /0:00:49.23/
+      normal.should =~ /0:00:54.93/
+      add = S.edl_output 'dragon.srt', {}, 0.0, 1.0
+      add.should =~ /0:00:55.93/
+      add.should =~ /0:00:50.23/
     end
 
     it "should compensate for differing start timestamps" do
-       starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
-       starts_ten_later_than_srt.should =~ /0:01:00.22/
-       starts_ten_later_than_srt.should =~ /0:01:04.92/
+      starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
+      starts_ten_later_than_srt.should =~ /0:01:00.22/
+      starts_ten_later_than_srt.should =~ /0:01:04.92/
     end
 
-   it "should compensate for differing end timestamps with a multiple" do
-     lasts_longer = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:00", "01:00", "01:30" # actual ends 50% later
-     lasts_longer.should =~ /0:01:15.34/
-     lasts_longer.should =~ /0:01:22.39/
-   end
+    it "should compensate for differing end timestamps with a multiple" do
+      lasts_longer = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:00", "01:00", "01:30" # actual ends 50% later
+      lasts_longer.should =~ /0:01:15.34/
+      lasts_longer.should =~ /0:01:22.39/
+    end
 
     describe "combining different initial time offsets with total times" do
 
      it "should combine different initial time offset with different total time" do
-      lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "00:55" 
-      # this one starts off weird, but then ends at almost exactly the same!
-      lasts_longer_with_initial_add.should =~ /0:00:51.10/
-      lasts_longer_with_initial_add.should =~ /0:00:54.94/ # note--almost on
+       lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "00:55" 
+       # this one starts off weird, but then ends at almost exactly the same!
+       lasts_longer_with_initial_add.should =~ /0:00:51.10/
+       lasts_longer_with_initial_add.should =~ /0:00:54.94/ # note--almost on
      end
 
      it "should be ok if they line up perfectly with just an offset" do
@@ -168,6 +168,11 @@ a butt
 
     end
 
+  end
+  
+  it "should split to human friendlier entries" do
+    yo = S.split_to_glops File.read('dragon.srt')
+    p yo
   end
   
 end

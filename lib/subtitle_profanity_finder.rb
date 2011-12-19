@@ -14,7 +14,11 @@ module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_glops subtitles
-     subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
+     all = subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
+     all.map{|glop|
+       sanitized_glop = glop.lines.to_a[1..-1].join(' ')
+       [glop.lines.first, sanitized_glop]
+     }
    end
 
    # convert string to regexp, also accomodating for "full word" type profanities
@@ -166,13 +170,12 @@ module SubtitleProfanityFinder
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      for glop in split_to_glops(subtitles)
+      for glop, sanitized_glop in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
-          if glop =~ profanity
+          if sanitized_glop =~ profanity
             # create english-ified version
             # take out timing line, number lines first
-            sanitized_glop = glop.lines.to_a[1..-1].join(' ')
             sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
             sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
             sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipses
@@ -187,7 +190,7 @@ module SubtitleProfanityFinder
               end
             end
             
-            # because we have duplicate's for the letter l/i, refactor [[[profanity]]]
+            # because we now have duplicate's for the letter l/i, refactor [[[profanity]]]
             sanitized_glop.gsub!(/\[+/, '[')
             sanitized_glop.gsub!(/\]+/, ']')
             
