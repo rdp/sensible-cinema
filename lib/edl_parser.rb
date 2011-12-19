@@ -82,43 +82,43 @@ class EdlParser
   end
   
   def self.parse_imdb output, imdb_id
-        require_relative 'convert_thirty_fps'
-        url = "http://www.imdb.com/title/#{imdb_id}/parentalguide"
-        all = SensibleSwing::MainWindow.download_to_string(url)
-        
-        header, violence_word, violence_section, profanity_word, profanity_section, alcohol_word, alcohol_section, frightening_word, frightening_section = 
-        sections = all.split(/<span>(Violence|Profanity|Alcohol|Frightening)/)
-        header = sections.shift
-        all ={}
-        while(!sections.empty?) # my klugey to_hash method
-          word_type = sections.shift
-          settings = sections.shift
-          assert word_type.in? ['Violence', 'Profanity', 'Alcohol', 'Frightening']
-          all[word_type] = settings
+    require_relative 'convert_thirty_fps'
+    url = "http://www.imdb.com/title/#{imdb_id}/parentalguide"
+    all = SensibleSwing::MainWindow.download_to_string(url)
+    
+    header, violence_word, violence_section, profanity_word, profanity_section, alcohol_word, alcohol_section, frightening_word, frightening_section = 
+    sections = all.split(/<span>(Violence|Profanity|Alcohol|Frightening)/)
+    header = sections.shift
+    all ={}
+    while(!sections.empty?) # my klugey to_hash method
+      word_type = sections.shift
+      settings = sections.shift
+      assert word_type.in? ['Violence', 'Profanity', 'Alcohol', 'Frightening']
+      all[word_type] = settings
+    end
+    # blank_outs or mutes for each...
+    # TODO make the -> optional
+    split_into_timestamps = /([\d:]+(?:\.\d+|))\W*-&gt;\W*([\d:]+(?:\.\d+|))([^\d\n]+)/
+    for type, settings in all
+      settings.scan(split_into_timestamps) do |begin_ts, end_ts, description|
+        puts "parsing from wiki imdb  entry violence: #{begin_ts} #{end_ts} #{description} #{type}"
+        start_seconds = translate_string_to_seconds begin_ts
+        end_seconds = translate_string_to_seconds end_ts
+        # convert from 30 to 29.97 fps ... we presume ...
+        start_seconds = ConvertThirtyFps.from_twenty_nine_nine_seven start_seconds
+        start_seconds = ("%.02f" % start_seconds).to_f # round
+        start_seconds = translate_time_to_human_readable start_seconds, true
+        end_seconds = ConvertThirtyFps.from_twenty_nine_nine_seven end_seconds
+        end_seconds = ("%.02f" % end_seconds).to_f # round
+        end_seconds = translate_time_to_human_readable end_seconds, true
+        p end_seconds
+        if type == 'Profanity'
+          output['mutes'] << [start_seconds, end_seconds]
+        else
+          output['blank_outs'] << [start_seconds, end_seconds]
         end
-        # blank_outs or mutes for each...
-        # TODO make the -> optional
-        split_into_timestamps = /([\d:]+(?:\.\d+|))\W*-&gt;\W*([\d:]+(?:\.\d+|))([^\d\n]+)/
-        for type, settings in all
-          settings.scan(split_into_timestamps) do |begin_ts, end_ts, description|
-            puts "parsing from wiki imdb  entry violence: #{begin_ts} #{end_ts} #{description} #{type}"
-            start_seconds = translate_string_to_seconds begin_ts
-            end_seconds = translate_string_to_seconds end_ts
-            # convert from 30 to 29.97 fps ... we presume ...
-            start_seconds = ConvertThirtyFps.from_twenty_nine_nine_seven start_seconds
-            start_seconds = ("%.02f" % start_seconds).to_f # round
-            start_seconds = translate_time_to_human_readable start_seconds, true
-            end_seconds = ConvertThirtyFps.from_twenty_nine_nine_seven end_seconds
-            end_seconds = ("%.02f" % end_seconds).to_f # round
-            end_seconds = translate_time_to_human_readable end_seconds, true
-            p end_seconds
-            if type == 'Profanity'
-              output['mutes'] << [start_seconds, end_seconds]
-            else
-              output['blank_outs'] << [start_seconds, end_seconds]
-            end
-          end
-        end
+      end
+    end
   end
   
   private
@@ -286,11 +286,11 @@ class EdlParser
     out << ":"
     
     # avoid an ugly .0 at the end
-    if seconds == seconds.to_i
-      out << "%02d" % seconds
-    else
+#    if seconds == seconds.to_i
+#      out << "%02d" % seconds
+#    else
       out << "%05.2f" % seconds # man that printf syntax is tricky...
-    end
+#    end
     
   end
   

@@ -405,7 +405,7 @@ KP_ENTER dvdnav select
         show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now..."
         offset_time = 0.20
       end
-	  out << "-osd-add #{offset_time}"
+	  out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end
 
@@ -516,8 +516,11 @@ KP_ENTER dvdnav select
     def new_existing_file_selector_and_select_file title, dir = nil
       bring_to_front unless OS.mac?
       unique_trace = caller.inspect
-      dir ||= LocalStorage[unique_trace]
+      if LocalStorage[unique_trace]
+        dir = LocalStorage[unique_trace]
+      end
       p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
+      p 'using lookup dir ' + dir, LocalStorage[unique_trace] if $VERBOSE
       got = SwingHelpers.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got

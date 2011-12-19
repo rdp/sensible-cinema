@@ -19,10 +19,10 @@ module SubtitleProfanityFinder
      all.map{|glop|
        text = glop.lines.to_a[1..-1].join(' ')
        # create english-ified version
-       text.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
-       text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
-       text.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipseses
-       text.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's now since we may have inserted many
+       text.gsub!(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
+       text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> type things
+       text.gsub!(/[^a-zA-Z0-9\-!,.\?']/, ' ') # kill weird stuff like ellipseses
+       text.gsub!(/  +/, ' ') # remove duplicate "  " 's now since we may have inserted many
        # extract timing info
        timing_line = glop.split("\n").first.strip
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
@@ -82,11 +82,6 @@ module SubtitleProfanityFinder
      subtitles.gsub!("\r\n", "\n")
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
-
-     starting_timestamp_given_srt = EdlParser.translate_string_to_seconds(starting_timestamp_given_srt)
-     starting_timestamp_actual = EdlParser.translate_string_to_seconds(starting_timestamp_actual)
-     ending_srt = EdlParser.translate_string_to_seconds(ending_srt)
-     ending_actual = EdlParser.translate_string_to_seconds ending_actual
 
      # accomodate for both styles of rewrite, except it messes up the math...delete this soon...
      # difference = starting_timestamp_given_srt - starting_timestamp_actual
