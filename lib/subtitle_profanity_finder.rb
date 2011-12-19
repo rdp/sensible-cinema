@@ -16,12 +16,12 @@ module SubtitleProfanityFinder
    def self.split_to_glops subtitles
      all = subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
      all.map{|glop|
-       sanitized_glop = glop.lines.to_a[1..-1].join(' ')
+       text = glop.lines.to_a[1..-1].join(' ')
        # create english-ified version
-       sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
-       sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
-       sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipseses
-       sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's now since we may have inserted many
+       text.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
+       text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
+       text.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipseses
+       text.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's now since we may have inserted many
        # extract timing info
        timing_line = glop.split("\n").first.strip
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
@@ -29,7 +29,7 @@ module SubtitleProfanityFinder
        raise unless $1 && $2 && $3 && $4
        ts_begin = "#{$2}.#{$3}"
        ts_end =  "#{$4}.#{$5}"
-       [[ts_begin, ts_end], sanitized_glop]
+       [[ts_begin, ts_end], text]
      }
    end
 
@@ -182,23 +182,23 @@ module SubtitleProfanityFinder
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      for (ts_begin, ts_end), sanitized_glop in split_to_glops(subtitles)
+      for (ts_begin, ts_end), text in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
-          if sanitized_glop =~ profanity
+          if text =~ profanity
             
             # sanitize the subtitles...
             for all_profanity_combinations2 in all_profanity_combinationss
               for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
-                if sanitized_glop =~ prof2
-                  sanitized_glop.gsub!(prof2, sanitized2)
+                if text =~ prof2
+                  text.gsub!(prof2, sanitized2)
                 end
               end
             end
             
             # because we now have duplicate's for the letter l/i, refactor [[[profanity]]]
-            sanitized_glop.gsub!(/\[+/, '[')
-            sanitized_glop.gsub!(/\]+/, ']')
+            text.gsub!(/\[+/, '[')
+            text.gsub!(/\]+/, ']')
             
             ts_begin = EdlParser.translate_string_to_seconds ts_begin
             ts_begin  -= subtract_from_each_beginning_ts
@@ -208,8 +208,8 @@ module SubtitleProfanityFinder
             ts_end += add_to_end_each_ts
             ts_end = multiply_proc.call(ts_end)
             ts_end = EdlParser.translate_time_to_human_readable ts_end, true
-            unless output.contain? ts_begin
-              output += %!  "#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{sanitized_glop.strip}",\n!
+            unless output.contain? ts_begin # some previous profanity already found this line :P
+              output += %!  "#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text.strip}",\n!
             end
           end
         end
