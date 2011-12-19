@@ -22,7 +22,14 @@ module SubtitleProfanityFinder
        sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
        sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipseses
        sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's now since we may have inserted many
-       [timing_line = glop.lines.first, sanitized_glop]
+       # extract timing info
+       timing_line = glop.split("\n").first.strip
+       # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+       timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
+       raise unless $1 && $2 && $3 && $4
+       ts_begin = "#{$2}.#{$3}"
+       ts_end =  "#{$4}.#{$5}"
+       [[ts_begin, ts_end], sanitized_glop]
      }
    end
 
@@ -175,7 +182,7 @@ module SubtitleProfanityFinder
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      for glop, sanitized_glop in split_to_glops(subtitles)
+      for (ts_begin, ts_end), sanitized_glop in split_to_glops(subtitles)
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
           if sanitized_glop =~ profanity
@@ -193,16 +200,10 @@ module SubtitleProfanityFinder
             sanitized_glop.gsub!(/\[+/, '[')
             sanitized_glop.gsub!(/\]+/, ']')
             
-            # extract timing info
-            timing_line = glop.split("\n").first.strip
-            timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
-            # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-            ts_begin = "#{$2}.#{$3}"
             ts_begin = EdlParser.translate_string_to_seconds ts_begin
             ts_begin  -= subtract_from_each_beginning_ts
             ts_begin = multiply_proc.call(ts_begin)
             ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
-            ts_end = "#{$4}.#{$5}"
             ts_end = EdlParser.translate_string_to_seconds ts_end
             ts_end += add_to_end_each_ts
             ts_end = multiply_proc.call(ts_end)
