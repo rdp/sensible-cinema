@@ -128,7 +128,7 @@ module SensibleSwing
     end
     
     def assert_ownership_dialog 
-      message = "Do you certify you own the DVD this came of and have it in your possession?"
+      message = "Do you certify you own the DVD this came of and have it in your possession, if it came from a DVD?"
       title = "Verify ownership"
       returned = JOptionPane.show_select_buttons_prompt(message, {:yes => "no", :no => "yes"})
       assert_confirmed_dialog returned, nil
@@ -156,6 +156,8 @@ module SensibleSwing
         if license_url_should_also_be_embedded_by_you_in_message
           SwingHelpers.open_url_to_view_it_non_blocking license_url_should_also_be_embedded_by_you_in_message
           puts "Please restart after reading license agreement, to be able to then accept it."
+        else
+          puts 'dialog assertion failed'
         end
         System.exit 0
       elsif returned == :cancel
@@ -167,7 +169,7 @@ module SensibleSwing
       elsif returned == :no
         # ok
       else
-        raise 'unknown'
+        raise 'unknown?'
       end
     end
   end

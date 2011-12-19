@@ -103,11 +103,11 @@ module SensibleSwing
     
     def add_open_documentation_button
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
-        show_in_explorer __DIR__ + "/../../documentation" # TODO mac-compat :)
+        show_in_explorer __DIR__ + "/../../documentation"
       end
     end
     
-    # side by side stuff we haven't really factored out yet
+    # side by side stuff we haven't really factored out yet, also doubles for both normal/create LODO
     def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
       filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or video_ts/anything.ext)")
       edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EdlParser::EDL_DIR)
@@ -164,82 +164,6 @@ module SensibleSwing
       self
 
     end
-
-    def parse_edl path
-      EdlParser.parse_file path
-    end
-    
-    def get_freespace path
-      JFile.new(File.dirname(path)).get_usable_space
-    end
-    
-
-    def get_drive_with_most_space_with_slash
-      DriveInfo.get_drive_with_most_space_with_slash
-    end
-    
-    attr_accessor :background_thread, :buttons
-    
-    NonDvd = 'non dvd has no dvdid' # we need it for convenience, say you want to go through your indexed vids and convert them all?
-
-    # returns e:\, volume_name, dvd_id
-    # or full_path.mkv, filename, ''
-    def choose_dvd_drive_or_file force_choose_only_dvd_drive
-      opticals = DriveInfo.get_dvd_drives_as_openstruct
-      if @saved_opticals == opticals && @_choose_dvd_drive_or_file
-        # memoize...if disks haven't changed :)
-        return @_choose_dvd_drive_or_file
-      else
-        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
-        # is this ok for os x?
-      end
-
-      has_at_least_one_dvd_inserted = opticals.find{|d| d.VolumeName }
-      if !has_at_least_one_dvd_inserted && force_choose_only_dvd_drive
-        show_blocking_message_dialog 'insert a dvd first' 
-        raise 'no dvd found'
-      end
-      names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
-      if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
-        names += ['No DVD mounted so choose Local File (or insert DVD, re-try)'] # LODO cannot read it...
-        used_local_file_option = true
-      end
-      
-      count = 0
-      opticals.each{|d| count += 1 if d.VolumeName}
-      if count == 1 && !used_local_file_option
-       # just choose it if there's only one disk available..
-       p 'selecting only disk currently present in the various DVD drives [if you have more than one, that is]'
-       selected_idx = opticals.index{|d| d.VolumeName}
-       unless selected_idx
-         show_blocking_message_dialog "Please insert a disk first"
-         raise 'inset disk'
-       end
-      else
-        dialog = get_disk_chooser_window names
-        selected_idx = dialog.go_selected_index
-      end
-        if used_local_file_option
-          raise unless selected_idx == 0 # it was our only option...they must have selected it!
-          filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
-          assert_ownership_dialog
-          return [filename, File.basename(filename), NonDvd]
-        else
-          disk = opticals[selected_idx]
-          out = show_non_blocking_message_dialog "calculating current disk's unique id...if this pauses more than 10s then clean your DVD..."
-          begin
-		        dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
-          rescue Exception => e
-		        show_blocking_message_dialog e.to_s # todo a bit ugly...
-			      raise
-		      ensure
-		      out.dispose
-		      end
-          @_choose_dvd_drive_or_file = [disk.DevicePoint, opticals[selected_idx].VolumeName, dvd_id]
-          return @_choose_dvd_drive_or_file
-        end
-    end
-
     def get_disk_chooser_window names
       DropDownSelector.new(self, names, "Click to select DVD drive")
     end

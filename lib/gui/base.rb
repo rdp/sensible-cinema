@@ -386,7 +386,12 @@ KP_ENTER dvdnav select
     def play_dvd_smplayer_unedited use_mplayer_instead
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
       title_track_maybe_nil = get_title_track_string(descriptors, false)
-      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, get_dvd_playback_options(descriptors), use_mplayer_instead, true, false, get_srt_filename(descriptors, edl_path_maybe_nil)
+      if is_dvd?(drive_or_file)
+        dvd_options = get_dvd_playback_options(descriptors)
+      else
+        dvd_options = ''
+      end
+      run_smplayer_non_blocking drive_or_file, title_track_maybe_nil, dvd_options, use_mplayer_instead, true, false, get_srt_filename(descriptors, edl_path_maybe_nil)
     end
     
     def get_dvd_playback_options descriptors
@@ -404,8 +409,9 @@ KP_ENTER dvdnav select
   		  # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
         show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now..."
         offset_time = 0.20
+        p caller
       end
-	  out << "-osd-add #{ "%0.3f" % offset_time}"
+	    out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end
 
@@ -416,7 +422,7 @@ KP_ENTER dvdnav select
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
     end
     
-  	EdlFilesChosen = {} # allow for switchiing tapes :P
+  	EdlFilesChosen = {} # allow for switching tapes but still cache EDL loc. :P
 	
     def choose_dvd_or_file_and_edl_for_it force_choose_edl_file_if_no_easy_match = true
       drive_or_file, dvd_volume_name, dvd_id = choose_dvd_drive_or_file false
@@ -445,6 +451,11 @@ KP_ENTER dvdnav select
     
     LocalStorage.set_default('mplayer_beginning_buffer', 0.5)
 
+    def is_dvd? drive_or_file
+      # it's like a/b/VIDEO_TS or d:/
+      (File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS') || File.exist?(drive_or_file + '/VIDEO_TS')
+    end
+
 #    MplayerBeginingBuffer = 1.0
 #    MplayerEndBuffer = 0.0
     
@@ -464,8 +475,11 @@ KP_ENTER dvdnav select
         title_track = get_title_track_string(descriptors)
       end
       
-      if dvd_id == NonDvd && !(File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS')
-	    # it's a file
+      if is_dvd?(drive_or_file)
+        # it's a DVD of some sort
+        extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
+      else
+	      # it's a file
         # check if it has a start offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
@@ -475,9 +489,6 @@ KP_ENTER dvdnav select
             maybe not compatible with XBMC, if that's what you use, and you probably don't" # LODO test it XBMC...
           start_add_this_to_all_ts = start
         end
-      else
-        # it's a DVD of some sort
-        extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       end
       
       if edl_path
@@ -558,7 +569,82 @@ KP_ENTER dvdnav select
     def show_select_buttons_prompt message, names
       JOptionPane.show_select_buttons_prompt(message, names)
     end
+
+
+    def parse_edl path
+      EdlParser.parse_file path
+    end
     
+    def get_freespace path
+      JFile.new(File.dirname(path)).get_usable_space
+    end    
+
+    def get_drive_with_most_space_with_slash
+      DriveInfo.get_drive_with_most_space_with_slash
+    end
+    
+    attr_accessor :background_thread, :buttons
+    
+    NonDvd = 'non dvd has no dvdid' # we need it for convenience, say you want to go through your indexed vids and convert them all?
+
+    # returns e:\, volume_name, dvd_id
+    # or full_path.mkv, filename, ''
+    def choose_dvd_drive_or_file force_choose_only_dvd_drive
+      opticals = DriveInfo.get_dvd_drives_as_openstruct
+      if @saved_opticals == opticals && @_choose_dvd_drive_or_file
+        # memoize...if disks haven't changed :)
+        return @_choose_dvd_drive_or_file
+      else
+        @saved_opticals = opticals # save currently mounted disk list, so we know if we should re-select later... 
+        # is this ok for os x?
+      end
+
+      has_at_least_one_dvd_inserted = opticals.find{|d| d.VolumeName }
+      if !has_at_least_one_dvd_inserted && force_choose_only_dvd_drive
+        show_blocking_message_dialog 'insert a dvd first' 
+        raise 'no dvd found'
+      end
+      names = opticals.map{|d| d.Name + "\\" + " (" +  (d.VolumeName || 'Insert DVD to use') + ")"}
+      if !force_choose_only_dvd_drive && !has_at_least_one_dvd_inserted
+        names += ['No DVD mounted so click to choose a Local File (or insert DVD, then re-try)']
+        used_local_file_option = true
+      end
+      
+      count = 0
+      opticals.each{|d| count += 1 if d.VolumeName}
+      if count == 1 && !used_local_file_option
+       # just choose it if there's only one disk available..
+       p 'selecting only disk currently present in the various DVD drives [if you have more than one, that is]'
+       selected_idx = opticals.index{|d| d.VolumeName}
+       unless selected_idx
+         show_blocking_message_dialog "Please insert a disk first"
+         raise 'inset disk'
+       end
+      else
+        dialog = get_disk_chooser_window names
+        selected_idx = dialog.go_selected_index
+      end
+        if used_local_file_option
+          raise unless selected_idx == 0 # it was our only option...they must have selected it!
+          filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
+          assert_ownership_dialog
+          return [filename, File.basename(filename), NonDvd]
+        else
+          disk = opticals[selected_idx]
+          out = show_non_blocking_message_dialog "calculating current disk's unique id...if this pauses more than 10s then clean your DVD..."
+          begin
+		        dvd_id = DriveInfo.md5sum_disk(disk.MountPoint)
+          rescue Exception => e
+		        show_blocking_message_dialog e.to_s # todo a bit ugly...
+			      raise
+		      ensure
+		      out.dispose
+		      end
+          @_choose_dvd_drive_or_file = [disk.DevicePoint, opticals[selected_idx].VolumeName, dvd_id]
+          return @_choose_dvd_drive_or_file
+        end
+    end
+
   end
   
 end
