@@ -9,11 +9,12 @@ rescue LoadError
   require 'sane'
 end
 require_relative 'edl_parser'
+require 'ostruct'
 
 module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
-   def self.split_to_glops subtitles
+   def self.split_to_entries subtitles
      all = subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
      all.map{|glop|
        text = glop.lines.to_a[1..-1].join(' ')
@@ -29,7 +30,11 @@ module SubtitleProfanityFinder
        raise unless $1 && $2 && $3 && $4
        ts_begin = "#{$2}.#{$3}"
        ts_end =  "#{$4}.#{$5}"
-       [[ts_begin, ts_end], text]
+       out = OpenStruct.new
+       out.beginning = ts_begin
+       out.ending = ts_end
+       out.text = text.strip
+       out
      }
    end
 
@@ -182,7 +187,8 @@ module SubtitleProfanityFinder
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      for (ts_begin, ts_end), text in split_to_glops(subtitles)
+      for entry in split_to_entries(subtitles)
+        text = entry.text
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
           if text =~ profanity
@@ -199,23 +205,22 @@ module SubtitleProfanityFinder
             text.gsub!(/\[+/, '[')
             text.gsub!(/\]+/, ']')
             
-            ts_begin = EdlParser.translate_string_to_seconds ts_begin
+            ts_begin = EdlParser.translate_string_to_seconds entry.beginning
             ts_begin  -= subtract_from_each_beginning_ts
             ts_begin = multiply_proc.call(ts_begin)
             ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
-            ts_end = EdlParser.translate_string_to_seconds ts_end
+            ts_end = EdlParser.translate_string_to_seconds entry.ending
             ts_end += add_to_end_each_ts
             ts_end = multiply_proc.call(ts_end)
             ts_end = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin # some previous profanity already found this line :P
-              output += %!  "#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text.strip}",\n!
+              output += %!  "#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
             end
           end
         end
       end
     end
     output
-
   end
 end
 

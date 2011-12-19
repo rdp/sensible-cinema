@@ -183,11 +183,16 @@ module SensibleSwing
         sleep 0.5 # let it open in TextEdit/Notepad first
     		bring_to_front
  
-		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust information on the .srt file?\n  (on the final pass you should, even if it already matches well, for future use/information' sake)") == :yes
+		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should, even if it already matches well, for future information' sake)") == :yes
           if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in smplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On screen display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
             play_dvd_smplayer_unedited false
           end
-          start_text = get_user_input("enter the text from any subtitle entry near beginning [like \"Hello, welcome to our movie.\"]\nctrl-v to paste", "...")
+          
+          all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
+          display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
+          
+          
+          start_text = all_entries[0][1] # [1] is the text
           start_srt = get_user_input("enter beginning timestamp within the .srt file #{File.basename(srt_filename)[0..10]}... for \"#{start_text}\"\nctrl-v to paste", "00:00:00,000")
           start_movie_ts = get_user_input("enter beginning timestamp within the movie itself for said text", "0:00:00")
         

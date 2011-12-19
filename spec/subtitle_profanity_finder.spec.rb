@@ -171,15 +171,17 @@ a butt
   end
   
   it "should split to human friendlier entries" do
-    yo = S.split_to_glops File.read('dragon.srt')
-    for (ts_begin, ts_end), text in yo
+    yo = S.split_to_entries File.read('dragon.srt')
+    for entry in yo
+      ts_begin = entry.beginning
+      ts_end = entry.ending
       for timestamp in [ts_begin, ts_end]
         assert timestamp.present?
         assert timestamp !~ /-->/
         assert timestamp =~ /\d/
       end
       assert ts_end > ts_begin
-      assert text !~ /\n/m
+      assert entry.text !~ /\n/m
     end
   end
   
