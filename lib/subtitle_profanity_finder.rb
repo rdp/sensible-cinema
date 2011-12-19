@@ -1,11 +1,14 @@
 #
 # warning: somewhat scary/explicit!
 
-# see subtitle_todo file
-
-
+# see also todo.subtitle file, though what's here is mostly pretty well functional
+begin
+  require 'sane'
+rescue LoadError
+  require 'rubygems'
+  require 'sane'
+end
 require_relative 'edl_parser'
-
 
 module SubtitleProfanityFinder
 
@@ -46,15 +49,14 @@ module SubtitleProfanityFinder
       end
     }
     all_profanity_combinations
-   end
-
-
+  end
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = "00:00", beginning_actual_movie = "00:00", ending_srt = "10:00:00", ending_actual = "10:00:00"
     edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual
   end
   
-  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given_srt, starting_timestamp_actual, ending_srt, ending_actual
+  private
+  def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_timestamp_given_srt, starting_timestamp_actual, ending_srt, ending_actual, include_minor_profanities=true
      subtitles.gsub!("\r\n", "\n")
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
@@ -155,7 +157,10 @@ module SubtitleProfanityFinder
     semi_bad_profanities['butt'] = ['butt', :full_word]
     # butter?
 
-    all_profanity_combinationss = [convert_to_regexps(bad_profanities), convert_to_regexps(semi_bad_profanities)]
+    all_profanity_combinationss = [convert_to_regexps(bad_profanities)]
+    if include_minor_profanities
+      all_profanity_combinationss += [convert_to_regexps(semi_bad_profanities)]
+    end
     
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
@@ -213,8 +218,17 @@ end
 
 if $0 == __FILE__
   if ARGV.empty?
-    p 'syntax: filename.srt [prof1 sanitized_equivalent1 prof2 sanitized_equivalent2 ...]'
+    p 'syntax: [filename.srt | [--create-edl|--create-edl-including-minor-profanities] input_name output_name]'
     exit
+  elsif ARGV[0].in? ['--create-edl', '--create-edl-including-minor-profanities']
+    require_relative 'mplayer_edl'
+    incoming_filename = ARGV[1]
+    include_minors = true if ARGV[0] == '--create-edl-including-minor-profanities'
+    mutes = SubtitleProfanityFinder.edl_output_from_string File.read(incoming_filename), {}, 0, 0, "00:00", "00:00", "10:00:00", "10:00:00", include_minors
+    puts mutes
+    specs = EdlParser.parse_string %!"mutes" => [#{mutes}]!
+    File.write(ARGV[2], MplayerEdl.convert_to_edl(specs))
+    puts "wrote to #{ARGV[2]}"
   else
     print SubtitleProfanityFinder.edl_output ARGV.first
   end

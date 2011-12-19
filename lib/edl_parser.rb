@@ -129,7 +129,7 @@ class EdlParser
   
   # better eye-ball these before letting people run them, eh? TODO
   # but I couldn't think of any other way to parse the files tho
-  def self.parse_string string, filename, ok_categories_array = []
+  def self.parse_string string, filename = nil, ok_categories_array = []
     string = '{' + string + "\n}"
     if filename
      raw = eval(string, binding, filename)
