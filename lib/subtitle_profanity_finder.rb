@@ -17,7 +17,12 @@ module SubtitleProfanityFinder
      all = subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
      all.map{|glop|
        sanitized_glop = glop.lines.to_a[1..-1].join(' ')
-       [glop.lines.first, sanitized_glop]
+       # create english-ified version
+       sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
+       sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
+       sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipseses
+       sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's now since we may have inserted many
+       [timing_line = glop.lines.first, sanitized_glop]
      }
    end
 
@@ -174,12 +179,6 @@ module SubtitleProfanityFinder
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
           if sanitized_glop =~ profanity
-            # create english-ified version
-            # take out timing line, number lines first
-            sanitized_glop.gsub!(/[\r\n]/, '') # flatten 3 lines to 1
-            sanitized_glop.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> 
-            sanitized_glop.gsub!(/[^a-zA-Z0-9'""]/, ' ') # kill weird stuff like ellipses
-            sanitized_glop.gsub!(/\W\W+/, ' ') # remove duplicate "  " 's
             
             # sanitize the subtitles...
             for all_profanity_combinations2 in all_profanity_combinationss
