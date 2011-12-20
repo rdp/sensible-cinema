@@ -3,7 +3,7 @@
 
 "mutes" => [
   # an example line, uncomment the leading "#" to make it active
-  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+  "01:00:30.0" , "01:00:40.0", "violence", "of some sort",
 ],
 
 "blank_outs" => [

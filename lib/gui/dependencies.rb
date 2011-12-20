@@ -14,7 +14,7 @@ module SensibleSwing
         require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
             'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
         if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :yes => "ZoomPlayer MAX", :no => "Just MPlayer") == :yes
-          show_blocking_message_dialog "ZoomPlayer MAX scene cut format isn't supported yet, but ping me and I'll add it."
+          LocalStorage['have_zoom_button'] = true
         end
         LocalStorage['main_license_accepted'] = VERSION
       end

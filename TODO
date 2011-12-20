@@ -39,6 +39,8 @@
   DVD timing for forum:Snow White
   fix mplayer muting causes jerkiness
 
+  I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
+    prolly keep the "last added offset" so I can still keep adding it in again :P
   dvd_start_offset -> dvd_mpeg_start_offset
   better name for dvd_nav_packet_offset with mpeg in it so you know ordering
   genealogy screen saver create/publicize  

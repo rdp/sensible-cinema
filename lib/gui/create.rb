@@ -284,25 +284,27 @@ module SensibleSwing
         show_blocking_message_dialog "Warning: With XBMC you'll need Eden 11.0 for mutes to work"
         choose_file_and_edl_and_create_sxs_or_play true
       }
-      
-      @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
-        raise unless OS.doze?
-        @prompt ||= show_blocking_message_dialog <<-EOL
-To work with ZoomPlayer MAX's scene cut functionality, first play the DVD you want to watch edited, and create a dummy cut for it in it via the ZoomPlayer MAX cut scene editor.
-Once you create a cut, ZoomPlayer will create a file like this:
-[windows 7]: c:\\Users\\All Users\\Zoom Player\\DVD-Bookmarks\\Sintel_NTSC.3D4D1DFBEB1A53FE\\disc.cut
-
-After it has been created, come back to this.  You will next be prompted to select the generated disc.cut file, and also a sensible cinema EDL file.
-The generated file will then be overwritten with the sensible cinema EDL.
-DVD compatible only currently--ask if you want it for file based selection as well and I can add it.
-        EOL
-        zoom_path  = new_existing_file_selector_and_select_file( "Pick Zoomplayer disc.cut File to override", ENV["ALLUSERSPROFILE"]+ '/Zoom Player/DVD-Bookmarks' )
-        edl_path = new_existing_file_selector_and_select_file( "Pick EDL", EdlParser::EDL_DIR)
-        specs = parse_edl(edl_path)
-        require_relative '../zoom_player_max_edl'
-        out = ZoomPlayerMaxEdl.convert_to_edl_string specs
-        File.write(zoom_path, out)
-        show_blocking_message_dialog "wrote #{zoom_path}"
+      if LocalStorage['have_zoom_button']
+        @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
+          raise unless OS.doze?
+          @prompt ||= show_blocking_message_dialog <<-EOL
+  To work with ZoomPlayer MAX's scene cut functionality, first play the DVD you want to watch edited, and 
+  create a dummy cut for it in it via the ZoomPlayer MAX cut scene editor. (right click -> open interface -> scene cut editor)
+  Once you create a cut, ZoomPlayer will create a file like this:
+  [windows 7]: c:\\Users\\All Users\\Zoom Player\\DVD-Bookmarks\\Sintel_NTSC.3D4D1DFBEB1A53FE\\disc.cut
+  
+  After it has been created, come back to this.  You will next be prompted to select the generated disc.cut file, and also a sensible cinema EDL file.
+  The generated file will then be overwritten with the sensible cinema EDL information.
+  DVD compatible only currently--ask if you want it for file based selection as well and I can add it.
+          EOL
+          zoom_path  = new_existing_file_selector_and_select_file( "Pick Zoomplayer disc.cut File to override", ENV["ALLUSERSPROFILE"]+ '/Zoom Player/DVD-Bookmarks' )
+          edl_path = new_existing_file_selector_and_select_file( "Pick EDL", EdlParser::EDL_DIR)
+          specs = parse_edl(edl_path)
+          require_relative '../zoom_player_max_edl'
+          out = ZoomPlayerMaxEdl.convert_to_edl_string specs
+          File.write(zoom_path, out)
+          show_blocking_message_dialog "wrote #{zoom_path}"
+        end
       end
       
       add_text_line 'Create Options with local intermediary file:'
