@@ -16,9 +16,8 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
 
-  the 50% thing
   
-  zoomplayer add single button for "create zoomplayer compatible file" [cache preference at install time]
+  the 50% thing [youtube]
   genealogy living tree
   disclosure for OCR, wiki based processing
   mac release [needs one]
@@ -31,19 +30,19 @@
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
     medium is too long
-  disclosure lighting, table, maybe they can review it for me?
+  disclosure back-lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
   veggie tales dies (the lib v's?)
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  fix mplayer muting causes jerkiness
+  genealogy screen saver create/publicize  
 
+  mplayer muting causes jerkiness
   I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
     prolly keep the "last added offset" so I can still keep adding it in again :P
   dvd_start_offset -> dvd_mpeg_start_offset
   better name for dvd_nav_packet_offset with mpeg in it so you know ordering
-  genealogy screen saver create/publicize  
   can use smplayer for the .srt fella
   my treasury (john newspaper thing)
   accomodate for telecine option [veggie tales]
@@ -52,7 +51,7 @@
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   user preference "always just skip" if that's what he wanted :P
   can write synchronized euphemized srt [only one guy wanted this tho...]
-  mac: test for mac, release for mac, advertise urug
+  mac: advertise urug
   ffmpeg dshow patches
   add option "just skip don't mute always instead of muting"
   try to reproduce the ffplay bug with just ffmpeg
