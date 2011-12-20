@@ -191,7 +191,7 @@ module SensibleSwing
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
           
           start_text = all_entries[0].text
-          start_srt_time = EdlParser.translate_string_to_seconds all_entries[0].beginning
+          start_srt_time = all_entries[0].beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
           start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle for \"#{start_text}\" first appears, as precise as possible [use '.' key]", human_start)
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
@@ -201,14 +201,14 @@ module SensibleSwing
            end_entry = all_entries[all_entries.length*0.75]  
           end
           end_text = end_entry.text
-          end_srt_time = EdlParser.translate_string_to_seconds end_entry.beginning
+          end_srt_time = end_entry.beginning_time
           end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle for \"#{end_text}\" first appears.", EdlParser.translate_time_to_human_readable(end_srt_time))
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
 		      start_srt_time = 0
           start_movie_time = 0
-          end_srt_time = 1000
-          end_movie_time = 1000
+          end_srt_time = 3000
+          end_movie_time = 3000
     		end
         parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         filename = EdlTempFile + '.parsed.txt'
