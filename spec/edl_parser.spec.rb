@@ -275,10 +275,10 @@ describe EdlParser do
     #"dvd_title_track_start_offset" => "0.06",
     #"dvd_nav_packet_offset" => [0.866667, 0.944217],
     
-    start = [[[1.0, 2.0], :blank], [[3600, 3601], :mute]]
+    start = [[1.0, 2.0, :blank], [3600, 3601, :mute]]
     endy = EdlParser.convert_to_dvd_nav_times start, 'dvd_start_offset', 0.06, [0.866667, 0.944217], 29.97
     # it should be slightly higher than 1, and slightly less than 3600
-    endy.should == [[[1.07655099900099900000, 2.07555199800199830000], :blank], [[3596.48114640359600000000, 3597.48014740259760000000], :mute]]
+    endy.should == [[1.07655099900099900000, 2.07555199800199830000, :blank], [3596.48114640359600000000, 3597.48014740259760000000, :mute]]
   end
   
 end

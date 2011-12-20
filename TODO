@@ -37,8 +37,10 @@
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  fix mplayer muting sox
+  fix mplayer muting causes jerkiness
 
+  dvd_start_offset -> dvd_mpeg_start_offset
+  better name for dvd_nav_packet_offset with mpeg in it so you know ordering
   genealogy screen saver create/publicize  
   can use smplayer for the .srt fella
   my treasury (john newspaper thing)

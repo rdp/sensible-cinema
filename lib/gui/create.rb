@@ -148,9 +148,7 @@ module SensibleSwing
       
       @open_list = new_jbutton("Open/Edit an arbitrary Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
       @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", 
-          LocalStorage['edit_from_here'] || EdlParser::EDL_DIR)
-        LocalStorage['edit_from_here'] = File.dirname(filename)
+        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", EdlParser::EDL_DIR)
         open_file_to_edit_it filename
       }
       
@@ -226,12 +224,15 @@ module SensibleSwing
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
-        out_hashes, title_lengths = get_disk_info
-	      out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
-        filename = EdlTempFile + '.disk_info.txt'
-        File.write filename, out_string
-        open_file_to_edit_it filename
-        out_string # for unit tests :)
+        Thread.new {
+          out_hashes, title_lengths = get_disk_info
+	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
+          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],!
+          filename = EdlTempFile + '.disk_info.txt'
+          File.write filename, out_string 
+          open_file_to_edit_it filename
+          out_string # for unit tests :) TODO
+        }
       }
       
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
@@ -271,7 +272,7 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file")
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC]")
       @create_dot_edl.tool_tip = <<-EOL
         Creates a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
@@ -280,8 +281,29 @@ module SensibleSwing
         version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
+        show_blocking_message_dialog "Warning: With XBMC you'll need Eden 11.0 for mutes to work"
         choose_file_and_edl_and_create_sxs_or_play true
       }
+      
+      @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
+        raise unless OS.doze?
+        @prompt ||= show_blocking_message_dialog <<-EOL
+To work with ZoomPlayer MAX's scene cut functionality, first play the DVD you want to watch edited, and create a dummy cut for it in it via the ZoomPlayer MAX cut scene editor.
+Once you create a cut, ZoomPlayer will create a file like this:
+[windows 7]: c:\\Users\\All Users\\Zoom Player\\DVD-Bookmarks\\Sintel_NTSC.3D4D1DFBEB1A53FE\\disc.cut
+
+After it has been created, come back to this.  You will next be prompted to select the generated disc.cut file, and also a sensible cinema EDL file.
+The generated file will then be overwritten with the sensible cinema EDL.
+DVD compatible only currently--ask if you want it for file based selection as well and I can add it.
+        EOL
+        zoom_path  = new_existing_file_selector_and_select_file( "Pick Zoomplayer disc.cut File to override", ENV["ALLUSERSPROFILE"]+ '/Zoom Player/DVD-Bookmarks' )
+        edl_path = new_existing_file_selector_and_select_file( "Pick EDL", EdlParser::EDL_DIR)
+        specs = parse_edl(edl_path)
+        require_relative '../zoom_player_max_edl'
+        out = ZoomPlayerMaxEdl.convert_to_edl_string specs
+        File.write(zoom_path, out)
+        show_blocking_message_dialog "wrote #{zoom_path}"
+      end
       
       add_text_line 'Create Options with local intermediary file:'
       

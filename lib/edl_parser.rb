@@ -227,7 +227,7 @@ class EdlParser
   # called later, from external files
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like either :blank and :mute
-  # [[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
+  # [ [70.0, 73.0, :blank], [378.0, 379.1, :mute], ... ]
   def self.convert_incoming_to_split_sectors incoming, add_this_to_all_ends = 0, subtract_this_from_beginnings = 0, splits = [], subtract_this_from_ends = 0
     raise if subtract_this_from_beginnings < 0
     raise if add_this_to_all_ends < 0
@@ -340,23 +340,22 @@ class EdlParser
   
   def self.convert_to_dvd_nav_times combined, start_type, start_mpeg_time, dvd_nav_packet_offsets, time_multiplier
     start_dvdnav_time = dvd_nav_packet_offsets[1] - dvd_nav_packet_offsets[0]
-    p 'start time', start_dvdnav_time
     raise unless start_type == 'dvd_start_offset' # for now :P
     out = []
     add_this_to_all_of_them = start_dvdnav_time - start_mpeg_time
     #[[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
-    for (start, endy), type in combined
+    for start, endy, type in combined
      if time_multiplier == 30
        # ok
      elsif time_multiplier == 29.97
        start = ConvertThirtyFps.from_twenty_nine_nine_seven start
        endy  = ConvertThirtyFps.from_twenty_nine_nine_seven endy
     else
-      raise
+      raise time_multiplier
     end
     start += start_dvdnav_time
     endy += start_dvdnav_time
-    out << [[start, endy], type]
+    out << [start, endy, type]
    end
    out
   end

@@ -8,7 +8,7 @@
 
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "01:00:00.0" , "01:00:10.0", "violence", "of some sort",
 ],
 
 "dvd_nav_packet_offset" => [0.4, 0.6143],
@@ -20,3 +20,4 @@
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only...",
 "dvd_start_offset" => "0.28",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],

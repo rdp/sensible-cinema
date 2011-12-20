@@ -20,11 +20,13 @@ require_relative 'edl_parser'
 
 class ZoomPlayerMaxEdl
   
-  def self.convert_to_edl_string specs, is_dvd
-    raise 'needs timestamps_relative_to--or rather, ping me if you want this for file based' unless specs['timestamps_relative_to']
-    combined = EdlParser.convert_incoming_to_split_sectors specs, add_this_many_to_end, add_this_many_to_beginning, splits
-    combined2 = EdlParser.convert_to_dvd_nav_times combined
+  def self.convert_to_edl_string specs
     
+    raise 'needs timestamps_relative_to--or rather, ping me if you want this for file based' unless specs['timestamps_relative_to']
+    combined = EdlParser.convert_incoming_to_split_sectors specs
+    raise unless mpeg_offset = specs['dvd_start_offset'] # TODO make this a class... also rename it mpeg_dvd_start_offset
+    raise unless dvd_nav_packet_offsets = specs['dvd_nav_packet_offset']
+    combined2 = EdlParser.convert_to_dvd_nav_times combined, specs['timestamps_relative_to'][0], mpeg_offset.to_f, dvd_nav_packet_offsets, specs['timestamps_relative_to'][1].to_f
     out = ""
     track = specs['dvd_title_track']
     out += "DVDTitle(#{track})\n"
@@ -34,8 +36,7 @@ class ZoomPlayerMaxEdl
     CutSegment("Start=73.510","End=78.510")
     MuteAudio("From=39.389","Duration=41.389")
 =end
-    for (start, endy), type in combined2
-      
+    for start, endy, type in combined2      
       if type == :mute
         out += %!MuteAudio("From=#{start}","Duration=#{endy-start}")\n!
       elsif type == :blank
@@ -43,5 +44,7 @@ class ZoomPlayerMaxEdl
       else
         raise
       end
+    end
+    out
   end
 end
