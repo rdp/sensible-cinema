@@ -183,8 +183,18 @@ module SubtitleProfanityFinder
     output = ''
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      for entry in split_to_entries(subtitles)
+      entries = split_to_entries(subtitles)
+      for entry in entries
         text = entry.text
+        ts_begin = entry.beginning_time
+        entry.beginning_time = multiply_proc.call(ts_begin)
+        ts_begin -= subtract_from_each_beginning_ts
+        ts_begin = multiply_proc.call(ts_begin)
+        ts_end = entry.ending_time
+        entry.ending_time = multiply_proc.call(ts_end)
+        ts_end += add_to_end_each_ts
+        ts_end = multiply_proc.call(ts_end)
+        entry.beginning_time = ts_begin
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
           if text =~ profanity
@@ -200,22 +210,17 @@ module SubtitleProfanityFinder
             # because we now have duplicate's for the letter l/i, refactor [[[profanity]]]
             text.gsub!(/\[+/, '[')
             text.gsub!(/\]+/, ']')
+            ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
+            ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
             
-            ts_begin = entry.beginning_time
-            ts_begin  -= subtract_from_each_beginning_ts
-            ts_begin = multiply_proc.call(ts_begin)
-            ts_begin = EdlParser.translate_time_to_human_readable ts_begin, true
-            ts_end = entry.ending_time
-            ts_end += add_to_end_each_ts
-            ts_end = multiply_proc.call(ts_end)
-            ts_end = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin # some previous profanity already found this line :P
-              output += %!  "#{ts_begin}" , "#{ts_end}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
+              output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
             end
           end
         end
       end
     end
+    [output, entries]
     output
   end
 end

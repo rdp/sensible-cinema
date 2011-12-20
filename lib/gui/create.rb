@@ -188,7 +188,7 @@ module SensibleSwing
           end
           
           all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
-          display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
+          display_and_raise "unable to parse stuff from subtitle file?" unless all_entries.size > 10
           
           start_text = all_entries[0].text
           start_srt_time = all_entries[0].beginning_time
@@ -210,12 +210,12 @@ module SensibleSwing
           end_srt_time = 3000
           end_movie_time = 3000
     		end
-        parsed_profanities = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities
         if end_srt_time != 1000
           out += %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
-           %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
+                 %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
         end
         File.write filename, out
         open_file_to_edit_it filename
