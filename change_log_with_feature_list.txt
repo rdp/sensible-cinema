@@ -1,6 +1,9 @@
 = 0.33.3 12-19-11 =
 
 Make sync'ing the srt files *much* easier, and more automated.
+Now it parses the .srt files for you, and shows you the text, so that it's human usable.
+If your subtitle files already match then this doesn't matter much, but it seems like 75% of them don't.
+Hooray for synchro!
 
 = 0.33.2 12-19-11 =
 
