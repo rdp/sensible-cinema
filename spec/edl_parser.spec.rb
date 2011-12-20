@@ -267,17 +267,18 @@ describe EdlParser do
 
    it "should download from imdb if specified and merge" do
      File.binwrite('files/edls/a.txt', %!"imdb_id" => "tt1727587"!)
-     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.50"]], "mutes" => [], "imdb_id" => "tt1727587"}
+     EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56.00", "0:00:57.00"], ["0:01:05.00", "0:01:14.50"]], "mutes" => [], "imdb_id" => "tt1727587"}
    end
   
-  it "should be able to convert to DVDNAV time" do
+  it "should be able to convert from 29.97 DVD time to DVDNAV time" do
     
     #"dvd_title_track_start_offset" => "0.06",
     #"dvd_nav_packet_offset" => [0.866667, 0.944217],
     
-    start = [[[1.0, 2.0], :blank], [3.0, 4.0], :mute]
+    start = [[[1.0, 2.0], :blank], [[3600, 3601], :mute]]
     endy = EdlParser.convert_to_dvd_nav_times start, 'dvd_start_offset', 0.06, [0.866667, 0.944217], 29.97
-    p endy
+    # it should be slightly higher than 1, and slightly less than 3600
+    endy.should == [[[1.07655099900099900000, 2.07555199800199830000], :blank], [[3596.48114640359600000000, 3597.48014740259760000000], :mute]]
   end
   
 end

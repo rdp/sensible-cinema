@@ -339,15 +339,13 @@ class EdlParser
   end
   
   def self.convert_to_dvd_nav_times combined, start_type, start_mpeg_time, dvd_nav_packet_offsets, time_multiplier
-    start_dvdnav_time = dvdnav_packet_offset[1] - dvdnav_packet_offset[0]
+    start_dvdnav_time = dvd_nav_packet_offsets[1] - dvd_nav_packet_offsets[0]
     p 'start time', start_dvdnav_time
     raise unless start_type == 'dvd_start_offset' # for now :P
     out = []
     add_this_to_all_of_them = start_dvdnav_time - start_mpeg_time
     #[[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
     for (start, endy), type in combined
-     start -= start_mpeg_time
-     endy -= start_mpeg_time
      if time_multiplier == 30
        # ok
      elsif time_multiplier == 29.97
