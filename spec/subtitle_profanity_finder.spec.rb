@@ -140,13 +140,13 @@ a butt
     end
 
     it "should compensate for differing start timestamps" do
-      starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:10", "00:20"
+      starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, 10.0, 20.0
       starts_ten_later_than_srt.should =~ /0:01:00.22/
       starts_ten_later_than_srt.should =~ /0:01:04.92/
     end
 
     it "should compensate for differing end timestamps with a multiple" do
-      lasts_longer = S.edl_output 'dragon.srt', {}, 0.0, 0.0, "00:00", "00:00", "01:00", "01:30" # actual ends 50% later
+      lasts_longer = S.edl_output 'dragon.srt', {}, 0.0, 0.0, 0.0, 0.0, 60.0, 90.0 # actual ends 50% later
       lasts_longer.should =~ /0:01:15.34/
       lasts_longer.should =~ /0:01:22.39/
     end
@@ -154,14 +154,14 @@ a butt
     describe "combining different initial time offsets with total times" do
 
      it "should combine different initial time offset with different total time" do
-       lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "00:55" 
+       lasts_longer_with_initial_add =  S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = 0.0, begin_actual = 10.0, end_srt = 55.0, end_actual = 55.0
        # this one starts off weird, but then ends at almost exactly the same!
        lasts_longer_with_initial_add.should =~ /0:00:51.10/
        lasts_longer_with_initial_add.should =~ /0:00:54.94/ # note--almost on
      end
 
      it "should be ok if they line up perfectly with just an offset" do
-       plus_ten = S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = "00:00", begin_actual = "00:10", end_srt = "00:55", end_actual = "01:05"
+       plus_ten = S.edl_output 'dragon.srt', {}, 0.0, 0.0, begin_srt = 0.0, begin_actual = 10.0, end_srt = 55.0, end_actual = 65.0
        plus_ten.should =~ /0:01:00.23/
        plus_ten.should =~ /0:01:04.93/
      end
@@ -173,12 +173,11 @@ a butt
   it "should split to human friendlier entries" do
     yo = S.split_to_entries File.read('dragon.srt')
     for entry in yo
-      ts_begin = entry.beginning
-      ts_end = entry.ending
+      ts_begin = entry.beginning_time
+      ts_end = entry.ending_time
       for timestamp in [ts_begin, ts_end]
         assert timestamp.present?
-        assert timestamp !~ /-->/
-        assert timestamp =~ /\d/
+        assert timestamp.is_a? Float
       end
       assert ts_end > ts_begin
       assert entry.text !~ /\n/m
