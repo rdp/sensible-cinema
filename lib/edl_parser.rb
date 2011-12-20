@@ -17,6 +17,7 @@ This file is part of Sensible Cinema.
 =end
 
 require 'sane'
+require_relative 'convert_thirty_fps'
 
 class EdlParser
 
@@ -223,7 +224,7 @@ class EdlParser
   
   public 
   
-  # called later, from external
+  # called later, from external files
   # divides up mutes and blanks so that they don't overlap, preferring blanks over mutes
   # returns it like [[start,end,type], [s,e,t]...] type like either :blank and :mute
   # [[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
@@ -336,7 +337,31 @@ class EdlParser
       parsed["disk_unique_id"] == dvd_id
     }
   end
-
+  
+  def self.convert_to_dvd_nav_times combined, start_type, start_mpeg_time, dvd_nav_packet_offsets, time_multiplier
+    start_dvdnav_time = dvdnav_packet_offset[1] - dvdnav_packet_offset[0]
+    p 'start time', start_dvdnav_time
+    raise unless start_type == 'dvd_start_offset' # for now :P
+    out = []
+    add_this_to_all_of_them = start_dvdnav_time - start_mpeg_time
+    #[[70.0, 73.0, :blank], [378.0, 379.1, :mute]]
+    for (start, endy), type in combined
+     start -= start_mpeg_time
+     endy -= start_mpeg_time
+     if time_multiplier == 30
+       # ok
+     elsif time_multiplier == 29.97
+       start = ConvertThirtyFps.from_twenty_nine_nine_seven start
+       endy  = ConvertThirtyFps.from_twenty_nine_nine_seven endy
+    else
+      raise
+    end
+    start += start_dvdnav_time
+    endy += start_dvdnav_time
+    out << [[start, endy], type]
+   end
+   out
+  end
   
 end
 

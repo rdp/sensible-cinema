@@ -86,7 +86,7 @@ describe EdlParser do
   
   it "should parse a real file" do
    E.parse_file(File.expand_path(__DIR__) + "/../zamples/edit_decision_lists/dvds/bobs_big_plan.txt").should ==
-     {"title"=>"Bob's Big Plan", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["28:13.5", "29:40", "theme song again"], ["48:46", "49:08", "theme song again"]], "blank_outs"=>[]}
+     {"title"=>"Bob's Big Plan", "dvd_title_track"=>1, "other notes"=>"could use more nit-picking of the song, as some parts seem all right in the end", "disk_unique_id"=>"12e77a76|b6e48ce8",  "volume_name"=>"BOBS_BIG_PLAN","mutes"=>[["00:03.8", "01:03", "theme song is a bit raucous at times"], ["28:13.5", "29:40", "theme song again"], ["48:46", "49:08", "theme song again"]], "blank_outs"=>[]}
   end
   
   it "should be able to use personal preferences to decide which edits to make" do
@@ -203,11 +203,11 @@ describe EdlParser do
   end
   
   it "should translate ints to english timestamps well" do
-    english(60).should == "01:00"
+    english(60).should == "01:00.00"
     english(60.1).should == "01:00.10"
-    english(3600).should == "1:00:00"
-    english(3599).should == "59:59"
-    english(3660).should == "1:01:00"
+    english(3600).should == "1:00:00.00"
+    english(3599).should == "59:59.00"
+    english(3660).should == "1:01:00.00"
     english(3660 + 0.1).should == "1:01:00.10"
   end
   
@@ -269,5 +269,15 @@ describe EdlParser do
      File.binwrite('files/edls/a.txt', %!"imdb_id" => "tt1727587"!)
      EdlParser.parse_file('files/edls/a.txt').should == {"blank_outs" => [["0:00:56", "0:00:57"], ["0:01:05", "0:01:14.50"]], "mutes" => [], "imdb_id" => "tt1727587"}
    end
+  
+  it "should be able to convert to DVDNAV time" do
+    
+    #"dvd_title_track_start_offset" => "0.06",
+    #"dvd_nav_packet_offset" => [0.866667, 0.944217],
+    
+    start = [[[1.0, 2.0], :blank], [3.0, 4.0], :mute]
+    endy = EdlParser.convert_to_dvd_nav_times start, 'dvd_start_offset', 0.06, [0.866667, 0.944217], 29.97
+    p endy
+  end
   
 end
