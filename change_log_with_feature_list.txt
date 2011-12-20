@@ -6,7 +6,7 @@ If your subtitle files already match then this doesn't matter much, but it seems
 Hooray for synchro!
 
 Also added a new working ZoomPlayer MAX create EDL button. Ping me if anybody wants this automated like "auto start zoom player" for me
-or the like.  Another player, and it seems reasonably high quality.
+or the like.  Another player, and it seems high quality, though costs.
 
 = 0.33.2 12-19-11 =
 
