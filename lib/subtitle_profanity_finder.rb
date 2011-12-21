@@ -14,14 +14,14 @@ require 'ostruct'
 module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
-   def self.split_to_entries subtitles
-     all = subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
+   def self.split_to_entries subtitles_raw_text
+     all = subtitles_raw_text.scan(/\d\d:\d\d:\d\d.*?^$/m)
      all.map{|glop|
        timing_line = glop.lines.first.strip
-       text = glop.lines.to_a[1..-1].join("\n")
+       text = glop.lines.to_a[1..-1].join("") # they still have separating "\n"'s
        # create english-ified version
        text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> type things
-       text.gsub!(/[^a-zA-Z0-9\-!,.\?'\n]/, ' ') # kill weird stuff like ellipseses, also quotes would hurt
+       text.gsub!(/[^a-zA-Z0-9\-!,.\?'\n\(\)]/, ' ') # kill weird stuff like ellipseses, also quotes would hurt so kill them too
        text.gsub!(/  +/, ' ') # remove duplicate "  " 's now since we may have inserted many
        # extract timing info
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
@@ -76,7 +76,7 @@ module SubtitleProfanityFinder
     edl_output_from_string(File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
   end
   
-  # _time means "a float"
+  # **_time means "a float"
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true
      subtitles.gsub!("\r\n", "\n") # needed?
     
@@ -166,13 +166,13 @@ multiply_proc = proc {|you|
       'sex', 'genital', 
       'boob', 
       'make love', 'pen' +
-	  'is',
+	    'is',
       'making' + 
-	  ' love', 'love mak', 
+	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
 	    'u' + 'nt',
-	   'd' + 'ick', 'vag' +
-	   'i' + 'na'
+	    'd' + 'ick', 'vag' +
+	    'i' + 'na'
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
@@ -187,9 +187,9 @@ multiply_proc = proc {|you|
     end
     
     output = ''
+    entries = split_to_entries(subtitles)
     for all_profanity_combinations in all_profanity_combinationss
       output += "\n"
-      entries = split_to_entries(subtitles)
       for entry in entries
         text = entry.text
         ts_begin = entry.beginning_time
@@ -202,27 +202,32 @@ multiply_proc = proc {|you|
         ts_end += add_to_end_each_ts
         ts_end = multiply_proc.call(ts_end)
         entry.beginning_time = ts_begin
+        found_one = false
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
           if text =~ profanity
-            # sanitize/euphemize the subtitle text...
-            for all_profanity_combinations2 in all_profanity_combinationss
-              for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
-                if text =~ prof2
-                  text.gsub!(prof2, sanitized2)
-                end
-              end
+            found_one = true
+            break
+          end
+        end
+        
+        if found_one
+          # sanitize/euphemize the subtitle text for all profanities...
+          for all_profanity_combinations2 in all_profanity_combinationss
+            for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
+              text.gsub!(prof2, sanitized2)
             end
-            
-            # because we now have duplicate's for the letter l/i, refactor [[[word]]] to just [word]
-            text.gsub!(/\[+/, '[')
-            text.gsub!(/\]+/, ']')
-            text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
-            ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
-            ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
-            unless output.contain? ts_begin_human # some previous profanity already found this line :P
-              output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
-            end
+          end
+          
+          # because we now have duplicate's for the letter l/i, refactor [[[word]]] to just [word]
+          text.gsub!(/\[+/, '[')
+          text.gsub!(/\]+/, ']')
+          entry.text = text # save it away before flattening it
+          text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
+          ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
+          ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
+          unless output.contain? ts_begin_human # some previous profanity already found this line :P
+            output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
           end
         end
       end

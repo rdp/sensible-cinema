@@ -181,28 +181,31 @@ module SensibleSwing
         sleep 0.5 # let it open in TextEdit/Notepad first
     		bring_to_front
  
-		    if show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to, even if it already matches well, for information' sake)") == :yes
+		    if show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to it, even if it already matches well, for future information' sake)") == :yes
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
           end
-          
-          all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
+          all_entries = nil
+          with_autoclose_message("parsing srt file...") do
+            all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
+          end
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
           
-          start_text = all_entries[0].text
+          start_text = all_entries[0].text.gsub("\n", " ")
           start_srt_time = all_entries[0].beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
-          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle for \"#{start_text}\" first appears, as precise as possible", human_start)
+          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\n  first frame it appears on the screen (possibly near #{human_start})", human_start)
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
           else
            end_entry = all_entries[all_entries.length*0.75]  
           end
-          end_text = end_entry.text
+          end_text = end_entry.text.gsub("\n", " ")
           end_srt_time = end_entry.beginning_time
-          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle for \"#{end_text}\" first appears.", EdlParser.translate_time_to_human_readable(end_srt_time))
+          human_end  = EdlParser.translate_time_to_human_readable(end_srt_time)
+          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{end_text}\"\n  first appears (possibly near #{human_end}).", human_end)
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
 		      start_srt_time = 0
@@ -210,7 +213,8 @@ module SensibleSwing
           end_srt_time = 3000
           end_movie_time = 3000
     		end
-        parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        
+        parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities
@@ -222,14 +226,13 @@ module SensibleSwing
         open_file_to_edit_it filename
         
         if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
-          out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename))
+          out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
           File.open(out_file, 'w') do |f|
             euphemized_synchronized_entries.each_with_index{|entry, idx|
               beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
               ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
 =begin
 like:
-
 1
 00:00:34,715 --> 00:00:37,047
 <i>This is Berk.</i>
@@ -238,9 +241,11 @@ like:
 =end
               f.puts idx + 1
               f.puts "#{beginning_time} --> #{ending_time}"
-              f.puts 
+              f.puts entry.text
+              f.puts
             }
           end
+          show_blocking_message_dialog "wrote #{out_file}"
         end
 
         
@@ -350,17 +355,6 @@ like:
       
     end
     
-    def display_and_raise error_message
-      show_blocking_message_dialog error_message
-      raise error_message
-    end
-    
-    def with_autoclose_message(message)
-      a = show_non_blocking_message_dialog message
-      yield
-      a.close
-    end
-	
     def get_disk_info
 	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
       # display it, allow them to copy and paste it out

@@ -106,8 +106,7 @@ I believe in the Lord
 
     EOL
     out[0].should include "55.0"
-    assert out[1] !~ /lord/i
-
+    assert out[1][0].text =~ /l.../i
   end
   
   describe "it should take optional user params" do

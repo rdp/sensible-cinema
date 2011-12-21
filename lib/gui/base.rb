@@ -566,7 +566,7 @@ KP_ENTER dvdnav select
       SwingHelpers.show_in_explorer filename
     end
     
-    def show_select_buttons_prompt message, names
+    def show_select_buttons_prompt message, names ={}
       JOptionPane.show_select_buttons_prompt(message, names)
     end
 
@@ -645,6 +645,18 @@ KP_ENTER dvdnav select
         end
     end
 
+    
+    def display_and_raise error_message
+      show_blocking_message_dialog error_message
+      raise error_message
+    end
+    
+    def with_autoclose_message(message)
+      a = show_non_blocking_message_dialog message
+      yield
+      a.close
+    end
+	
   end
   
 end
