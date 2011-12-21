@@ -17,17 +17,16 @@ module SubtitleProfanityFinder
    def self.split_to_entries subtitles
      all = subtitles.scan(/\d\d:\d\d:\d\d.*?^$/m)
      all.map{|glop|
-       text = glop.lines.to_a[1..-1].join(' ')
+       timing_line = glop.lines.first.strip
+       text = glop.lines.to_a[1..-1].join("\n")
        # create english-ified version
-       text.gsub!(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
        text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> type things
-       text.gsub!(/[^a-zA-Z0-9\-!,.\?']/, ' ') # kill weird stuff like ellipseses, also quotes would hurt
+       text.gsub!(/[^a-zA-Z0-9\-!,.\?'\n]/, ' ') # kill weird stuff like ellipseses, also quotes would hurt
        text.gsub!(/  +/, ' ') # remove duplicate "  " 's now since we may have inserted many
        # extract timing info
-       timing_line = glop.split("\n").first.strip
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
        timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
-       raise unless $1 && $2 && $3 && $4
+       raise unless $1 && $2 && $3 && $4 # :)
        ts_begin = "#{$2}.#{$3}"
        ts_end =  "#{$4}.#{$5}"
        out = OpenStruct.new
@@ -218,12 +217,12 @@ multiply_proc = proc {|you|
             # because we now have duplicate's for the letter l/i, refactor [[[word]]] to just [word]
             text.gsub!(/\[+/, '[')
             text.gsub!(/\]+/, ']')
+            text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
             ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
             ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
             unless output.contain? ts_begin_human # some previous profanity already found this line :P
               output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
             end
-            #entry.text = text
           end
         end
       end

@@ -181,8 +181,8 @@ module SensibleSwing
         sleep 0.5 # let it open in TextEdit/Notepad first
     		bring_to_front
  
-		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to, even if it already matches well, for information' sake)") == :yes
-          if JOptionPane.show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for timestamp times [you probably do...]?\n") == :yes
+		    if show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to, even if it already matches well, for information' sake)") == :yes
+          if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
           end
@@ -211,6 +211,7 @@ module SensibleSwing
           end_movie_time = 3000
     		end
         parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities
         if end_srt_time != 3000
@@ -219,6 +220,30 @@ module SensibleSwing
         end
         File.write filename, out
         open_file_to_edit_it filename
+        
+        if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
+          out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename))
+          File.open(out_file, 'w') do |f|
+            euphemized_synchronized_entries.each_with_index{|entry, idx|
+              beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
+              ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
+=begin
+like:
+
+1
+00:00:34,715 --> 00:00:37,047
+<i>This is Berk.</i>
+
+2
+=end
+              f.puts idx + 1
+              f.puts "#{beginning_time} --> #{ending_time}"
+              f.puts 
+            }
+          end
+        end
+
+        
       end
 
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )

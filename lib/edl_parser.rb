@@ -22,7 +22,7 @@ require_relative 'convert_thirty_fps'
 class EdlParser
 
   # this one is 1:01:02.0 => 36692.0
-  # its reverse is: translate_time_to_human_readable
+  # its reverse is this: translate_time_to_human_readable
   def self.translate_string_to_seconds s
     # might actually already be a float, or int, depending on the yaml
     # int for 8 => 9 and also for 1:09 => 1:10

@@ -181,7 +181,7 @@ I believe in the Lord
         assert timestamp.is_a? Float
       end
       assert ts_end > ts_begin
-      assert entry.text !~ /\n/m
+      assert entry.text =~ /\n/m
     end
   end
   
