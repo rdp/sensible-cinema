@@ -167,7 +167,10 @@ multiply_proc = proc {|you|
       'boob', 
       'make love', 
       'making love', 'love mak', 
-      'dumb', 'suck', 'piss'
+      'dumb', 'suck', 'piss', 'c' +
+	    'u' + 'nt',
+	   'd' + 'ick', 'vag' +
+	   'i' + 'na'
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
