@@ -16,7 +16,7 @@ module SensibleSwing
         window.setup_normal_buttons
       end
       
-      add_text_line 'Create: View Options:'
+      add_text_line 'Create: View Edited Options:'
       
       @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
       @mplayer_edl.on_clicked {
@@ -35,8 +35,14 @@ module SensibleSwing
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
         play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # create mode => aggressive
       end
+            
+      new_jbutton("Display mplayer keyboard commands/howto/instructions") do
+        show_mplayer_instructions
+      end
+
+      add_text_line "View Unedited Options:"
       
-      @play_smplayer = new_jbutton( "Watch full DVD unedited (realtime smplayer)")
+      @play_smplayer = new_jbutton( "Watch DVD/file unedited (realtime smplayer)")
       @play_smplayer.tool_tip = <<-EOL
         This will play the DVD unedited within smplayer.
         NB it will default to title 1, so updated your EDL file that matches this DVD with the proper title if this doesn't work for you 
@@ -51,7 +57,7 @@ module SensibleSwing
         play_dvd_smplayer_unedited false
       }
 
-      @play_mplayer_raw = new_jbutton( "Watch full DVD unedited (realtime mplayer)")
+      @play_mplayer_raw = new_jbutton( "Watch DVD/file unedited (realtime mplayer)")
       @play_mplayer_raw.tool_tip = <<-EOL
         This is also useful for comparing subtitle files to see if they have accurate timings.
         If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
@@ -63,11 +69,7 @@ module SensibleSwing
         play_dvd_smplayer_unedited true
       }
       
-      new_jbutton("Display mplayer keyboard commands/howto") do
-        show_mplayer_instructions
-      end
-
-      add_text_line 'Create: Edit Options:'
+      add_text_line 'Create: Edit File/Text Options:'
       
       @open_current = new_jbutton("Edit/Open EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
@@ -79,7 +81,8 @@ module SensibleSwing
         end
       end
       
-      @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
+      create_new_edl_for_current_dvd_text = "Create new Edit List for currently inserted DVD"
+      @create_new_edl_for_current_dvd = new_jbutton("will be replaced with accurate values", 
           "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
   	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
@@ -95,6 +98,11 @@ module SensibleSwing
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
         @open_current.set_enabled edl_available
         @create_new_edl_for_current_dvd.set_enabled disk_available
+        if edl_available
+          @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [already has one]"
+        else
+          @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [doesn't have one yet]"
+        end
       }
       
       new_jbutton("Create new Edit List (for netflix instant or a movie file)") do # TODO VIDEO_TS here too?
@@ -150,7 +158,7 @@ module SensibleSwing
         open_file_to_edit_it filename
       end
       
-      @open_list = new_jbutton("Open/Edit an arbitrary Edit List file", "If your DVD has a previously existing EDL for it, you can open it to edit it with this button.")
+      @open_list = new_jbutton("Open/Edit an arbitrary file (EDL, whatever)")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", EdlParser::EDL_DIR)
         open_file_to_edit_it filename
@@ -298,7 +306,7 @@ like:
         Mplayers "V: 3600" is usually right on (29.97 fps), however.
       EOL
       @convert_timestamp.on_clicked {
-        thirty_fps = get_user_input("Enter your DVD/hardware/OSD (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
+        thirty_fps = get_user_input("Enter your DVD/hardware (30 fps) timestamp, I'll convert it to 29.97 (usable in EDL's):", "1:00:00.1")
         thirty_fps_in_seconds = EdlParser.translate_string_to_seconds thirty_fps
         twenty_nine_seven_fps = ConvertThirtyFps.from_thirty(thirty_fps_in_seconds)
         human_twenty_nine_seven = EdlParser.translate_time_to_human_readable twenty_nine_seven_fps, true
@@ -340,15 +348,15 @@ like:
         end
       end
       
-      add_text_line 'Create Options for creating an edited file:'
+      add_text_line 'Options for creating an edited movie file:'
       
-      new_jbutton("Show options for creating an edited file") do
+      new_jbutton("Show options for creating an edited movie file") do
         window = new_child_window
         window.add_options_that_use_local_files
       end
       
       if we_are_in_developer_mode?
-       @reload = new_jbutton("reload bin/sensible-cinema code") do
+       @reload = new_jbutton("programmer mode-reload bin/sensible-cinema code") do
          for file in Dir[__DIR__ + '/*.rb']
            p file
            eval(File.read(file), TOPLEVEL_BINDING, file)
