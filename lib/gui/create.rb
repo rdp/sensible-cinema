@@ -82,7 +82,7 @@ module SensibleSwing
       end
       
       create_new_edl_for_current_dvd_text = "Create new Edit List for currently inserted DVD"
-      @create_new_edl_for_current_dvd = new_jbutton("will be replaced with accurate values", 
+      @create_new_edl_for_current_dvd = new_jbutton("will be replaced with accurate text :P", 
           "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
   	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
@@ -99,9 +99,9 @@ module SensibleSwing
         @open_current.set_enabled edl_available
         @create_new_edl_for_current_dvd.set_enabled disk_available
         if edl_available
-          @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [already has one]"
+          @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [already has one!]"
         else
-          @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [doesn't have one yet]"
+          @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [doesn't have one yet!]"
         end
       }
       
@@ -112,12 +112,12 @@ module SensibleSwing
         extra_options = {}
         if type == 'movie file'
           path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
-          guess_name = File.basename(path).split('.')[0..-2].join('.') # Boss.S01E07.720p.HDTV.X264-DIMENSION.m4v
+          guess_name = File.basename(path).split('.')[0..-2].join('.') # like yo.something.720p.HDTV.X264-DIMENSION.m4v maybe?
           extra_options['filename'] = File.basename path
           require 'lib/movie_hasher'
           extra_options['movie_hash'] = MovieHasher.compute_hash path
         else
-          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )"
+          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )" #?
           if url =~ /netflix/
             guess_name = url.split('/')[-2]
           else

@@ -77,8 +77,8 @@ module SubtitleProfanityFinder
   end
   
   # **_time means "a float"
+  
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true # lodo may not need include_minor_profs :P
-      p 'using', subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities
     
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
@@ -92,7 +92,7 @@ module SubtitleProfanityFinder
 #     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
      multiply_by_this_factor = (ending_actual_time - starting_time_actual)/(ending_srt_time - starting_time_given_srt)
 
-multiply_proc = proc {|you|
+     multiply_proc = proc {|you|
       ((you - starting_time_given_srt) * multiply_by_this_factor) + starting_time_actual
     }  
 
@@ -193,15 +193,12 @@ multiply_proc = proc {|you|
       for entry in entries
         text = entry.text
         ts_begin = entry.beginning_time
-        entry.beginning_time = multiply_proc.call(ts_begin)
         ts_begin -= subtract_from_each_beginning_ts
         ts_begin = multiply_proc.call(ts_begin)
         
         ts_end = entry.ending_time
-        entry.ending_time = multiply_proc.call(ts_end)
         ts_end += add_to_end_each_ts
         ts_end = multiply_proc.call(ts_end)
-        entry.beginning_time = ts_begin
         found_one = false
         for profanity, (sanitized, whole_word) in all_profanity_combinations
   
@@ -231,6 +228,11 @@ multiply_proc = proc {|you|
           end
         end
       end
+    end
+    # update timestamps to be synchro'ed
+    for entry in entries
+      entry.beginning_time = multiply_proc.call(entry.beginning_time)
+      entry.ending_time = multiply_proc.call(entry.ending_time)
     end
     [output, entries]
   end
