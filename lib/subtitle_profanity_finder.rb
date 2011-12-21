@@ -128,7 +128,7 @@ multiply_proc = proc {|you|
     bad_profanities = {'hell' => ['he..', :full_word],
       'g' +
       111.chr + 
-      100.chr => 'wow', 'g' +
+      100.chr => '...', 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
