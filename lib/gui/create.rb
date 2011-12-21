@@ -105,7 +105,7 @@ module SensibleSwing
         end
       }
       
-      new_jbutton("Create new Edit List (for netflix instant or a movie file)") do # TODO VIDEO_TS here too?
+      new_jbutton("Create new Edit List (for netflix instant or movie file)") do # LODO VIDEO_TS here too?
         names = ['movie file', 'netflix instant']
         dialog = DropDownSelector.new(self, names, "Select type")
         type = dialog.go_selected_value
@@ -229,32 +229,24 @@ module SensibleSwing
         parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         
         filename = EdlTempFile + '.parsed.txt'
-        out =  "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities
+        out =  "# add these into your \"mute\" section if you deem them mutable\n" + parsed_profanities
         if end_srt_time != 3000
           out += %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                  %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
         end
         File.write filename, out
         open_file_to_edit_it filename
-        
+        sleep 1 # let it open
         if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
           out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
           File.open(out_file, 'w') do |f|
             euphemized_synchronized_entries.each_with_index{|entry, idx|
               beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
               ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
-=begin
-like:
-1
-00:00:34,715 --> 00:00:37,047
-<i>This is Berk.</i>
-
-2
-=end
               f.puts idx + 1
               f.puts "#{beginning_time} --> #{ending_time}"
               f.puts entry.text
-              f.puts
+              f.puts ''
             }
           end
           show_in_explorer out_file
@@ -268,7 +260,7 @@ like:
         Thread.new {
           out_hashes, title_lengths = get_disk_info
 	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
-          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],!
+          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],! # since they're all this way currently
           filename = EdlTempFile + '.disk_info.txt'
           File.write filename, out_string 
           open_file_to_edit_it filename
