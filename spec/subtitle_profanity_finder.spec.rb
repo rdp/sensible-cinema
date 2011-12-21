@@ -44,7 +44,7 @@ describe SubtitleProfanityFinder do
       
       it "should parse out deity singular and at very end" do
         output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
-        output.should include("fortress is our [goodness]")
+        output.should include("fortress is our [...]")
       end
       
       it "should remove <i> et al " do
@@ -99,13 +99,14 @@ describe SubtitleProfanityFinder do
   end
   
   it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)[0]
+    out = SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)
 6
 00:00:55,068 --> 00:00:59,164
-a butt
+I believe in the Lord
 
     EOL
-    out.should include "55.0"
+    out[0].should include "55.0"
+    assert out[1] !~ /lord/i
 
   end
   

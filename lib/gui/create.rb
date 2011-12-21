@@ -184,11 +184,11 @@ module SensibleSwing
 		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to, even if it already matches well, for information' sake)") == :yes
           if JOptionPane.show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
-            show_blocking_message_dialog "ok--use arrow keys and pgdown/pgup to search, and '.' to pinpoint a precise subtitle start time within mplayer"
+            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
           end
           
           all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
-          display_and_raise "unable to parse stuff from subtitle file?" unless all_entries.size > 10
+          display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
           
           start_text = all_entries[0].text
           start_srt_time = all_entries[0].beginning_time

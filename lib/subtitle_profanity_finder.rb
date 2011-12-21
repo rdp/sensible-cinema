@@ -215,7 +215,7 @@ multiply_proc = proc {|you|
               end
             end
             
-            # because we now have duplicate's for the letter l/i, refactor [[[profanity]]]
+            # because we now have duplicate's for the letter l/i, refactor [[[word]]] to just [word]
             text.gsub!(/\[+/, '[')
             text.gsub!(/\]+/, ']')
             ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
@@ -223,6 +223,7 @@ multiply_proc = proc {|you|
             unless output.contain? ts_begin_human # some previous profanity already found this line :P
               output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
             end
+            #entry.text = text
           end
         end
       end
