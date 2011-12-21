@@ -1,3 +1,7 @@
+= 0.33.4 12-21-11 =
+
+Add ability to write out "euphemized" synchronized subtitle files now.  Make subtitle profanity finder slightly better.
+
 = 0.33.3 12-19-11 =
 
 Make sync'ing the srt files *much* easier, and more automated.

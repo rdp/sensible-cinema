@@ -191,7 +191,6 @@ I believe in the Lord
 Grandpa(sris)! your's is here?!.,
 
     EOL
-    p out
     assert out[1][0].beginning_time == 88.16
   end
   
