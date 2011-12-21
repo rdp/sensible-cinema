@@ -182,9 +182,9 @@ module SensibleSwing
     		bring_to_front
  
 		    if JOptionPane.show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to, even if it already matches well, for information' sake)") == :yes
-          if JOptionPane.show_select_buttons_prompt("Would you like to start playing it in mplayer, to be able to search for timestamps?\n [use 'v' to turn on subtitles, 'o' to turn on the On Screen Display timestamps, arrow keys to search, and '.' to pinpoint]?") == :yes
-            play_dvd_smplayer_unedited true
-            sleep 1 # let it start up...
+          if JOptionPane.show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for timestamp times [you probably do...]?\n") == :yes
+            Thread.new { play_dvd_smplayer_unedited true }
+            show_blocking_message_dialog "ok--use arrow keys and pgdown/pgup to search, and '.' to pinpoint a precise subtitle start time within mplayer"
           end
           
           all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
@@ -193,7 +193,7 @@ module SensibleSwing
           start_text = all_entries[0].text
           start_srt_time = all_entries[0].beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
-          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle for \"#{start_text}\" first appears, as precise as possible [use '.' key]", human_start)
+          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle for \"#{start_text}\" first appears, as precise as possible", human_start)
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
@@ -210,10 +210,10 @@ module SensibleSwing
           end_srt_time = 3000
           end_movie_time = 3000
     		end
-        parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output srt_filename, {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your mute section if you deem them mute-worthy\n" + parsed_profanities
-        if end_srt_time != 1000
+        if end_srt_time != 3000
           out += %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                  %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
         end

@@ -127,7 +127,8 @@ multiply_proc = proc {|you|
 
     bad_profanities = {'hell' => ['he..', :full_word],
       'g' +
-      'o' + 100.chr => 'goodness', 'g' +
+      111.chr + 
+      100.chr => 'wow', 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
@@ -162,7 +163,7 @@ multiply_proc = proc {|you|
     bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
 
     semi_bad_profanities = {}
-    ['bloody', 'moron', 'breast', 'idiot', 
+    ['moron', 'breast', 'idiot', 
       'sex', 'genital', 
       'boob', 
       'make love', 'pen' +
@@ -176,6 +177,7 @@ multiply_proc = proc {|you|
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
+    semi_bad_profanities['bloody'] = 'bloomy' # :)
     semi_bad_profanities['crap'] = ['crap', :full_word]
     semi_bad_profanities['butt'] = ['butt', :full_word]
     # butter?
