@@ -30,55 +30,50 @@
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
     medium is too long
+    ask why mplayer seems to show "overlap" at DVD time splits
   disclosure back-lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
   veggie tales dies (the lib v's?)
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  genealogy screen saver create/publicize  
-
-  mplayer muting causes jerkiness
   I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
     prolly keep the "last added offset" so I can still keep adding it in again :P
+  rename it "..." or whatever google prefers :P
+  warn other wordpresses
+
+  genealogy screen saver create/publicize  
+  mplayer muting causes jerkiness
   dvd_start_offset -> dvd_mpeg_start_offset
   better name for dvd_nav_packet_offset with mpeg in it so you know ordering
-  can use smplayer for the .srt fella
   my treasury (john newspaper thing)
-  accomodate for telecine option [veggie tales]
+  accomodate for telecine optionally [veggie tales]
   upconv: test snow white book:
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
   user preference "always just skip" if that's what he wanted :P
-  can write synchronized euphemized srt [only one guy wanted this tho...]
   mac: advertise urug
-  ffmpeg dshow patches
-  add option "just skip don't mute always instead of muting"
+  ffmpeg dshow input ramiro patches
   try to reproduce the ffplay bug with just ffmpeg
   upconvert screen try it out, make sure it works, release
-  fix screen capturer negative
+    fix screen capturer negative
   display OSD on command line too, just mine :P
   learn clojure
   OS X netflix instant
     mac'ify OCR/Mouse
   test rvm email
-  add "revision" to mplayer edl's output
-  report xbmc bugz
+  add "revision" to mplayer edl's initial output
   report ffmpeg/mencoder splitting bugz (2)
   try out Subtitle Edit (can it extract?)
   @mplayer: ctrl-keys patch, ask them anyway :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab all wedding iso's
-  double check NAV times perfect seeking -c- ?
-  double check Jonah starting NAV
   double check NAV packets verus full DVD length
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   inspector general
   remove splits' functionality 
-  add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
-    theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   the "lined" "select this one" quality editor...
   super precise timing, this 1.001 apparently is barely off consistently :P
   gui/edl parser unit tests [just] work
@@ -106,8 +101,6 @@
   ffplay 16,16,16
   flds: the intelligent tag parent sync'er, other todo's :P
   create skype/google+ hangouts auto-easy-recorder windows
-    just try it as is for today :P
-  rename it "..." or whatever google prefers :P
   the php uploader thing :P
   check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
   nextsprocket the "camtwist for windows" avisynth+webcam as one part input
@@ -115,10 +108,9 @@
     maybe get it to work with say VLC full screen first?
     it may need the "50% adjuster" fella...
     note on the www once it works
-  meta domain switch to "freedomainnamesforever"
+  meta domain redirect to "freedomainnamesforever"
   popup_text in EDL's
   ruby_prof stuffs (merge, release at least)
-  warn other wordpresses
   minor redcar tweaks
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should just combine
@@ -130,25 +122,28 @@
   ask for more beta testers for use, ask for more beta testers for creation, too
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
-  can edit books, too.
-    +- list/publish mine so far :)
+  can edit books' text too.
+    +- list/publish potter
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   test court jester just watch it :)
   @ffmpeg: you can't convert mkv's of this type!
-  ask why mplayer seems to show "overlap" at DVD time splits
   
 == decide later to move up or down ==
-  can "auto find" for files, based on hash
-  "overwrite?" prompt for file mode
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  timestamp syncing needs option "test it out starting near there" or the like
+  report xbmc bugz
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
+    theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
+  can "auto find" for files, based on fast hash
+  "overwrite?" prompt for file mode
+  timestamp syncing needs option "test it out starting near there" or the like
+  can use smplayer for the .srt fella [precision]
   choose better folder for saving netflix instant vs. DVD
   double check if my variance from reality "goes exactly up to 0.04 then resets to zero" over the course of a movie.
   autodetect whether is telecine or not
