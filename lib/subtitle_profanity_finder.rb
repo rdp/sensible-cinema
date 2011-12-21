@@ -165,8 +165,10 @@ multiply_proc = proc {|you|
     ['bloody', 'moron', 'breast', 'idiot', 
       'sex', 'genital', 
       'boob', 
-      'make love', 
-      'making love', 'love mak', 
+      'make love', 'pen' +
+	  'is',
+      'making' + 
+	  ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
 	    'u' + 'nt',
 	   'd' + 'ick', 'vag' +
