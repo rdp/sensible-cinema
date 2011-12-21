@@ -74,13 +74,13 @@ module SubtitleProfanityFinder
   end
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0
-    edl_output_from_string File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual
+    edl_output_from_string(File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
   end
   
   # _time means "a float"
-  private
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true
-     subtitles.gsub!("\r\n", "\n")
+     subtitles.gsub!("\r\n", "\n") # needed?
+    
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
 
@@ -93,7 +93,7 @@ module SubtitleProfanityFinder
 #     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
      multiply_by_this_factor = (ending_actual_time - starting_time_actual)/(ending_srt_time - starting_time_given_srt)
 
-     multiply_proc = proc {|you|
+multiply_proc = proc {|you|
       ((you - starting_time_given_srt) * multiply_by_this_factor) + starting_time_actual
     }  
 
@@ -190,6 +190,7 @@ module SubtitleProfanityFinder
         entry.beginning_time = multiply_proc.call(ts_begin)
         ts_begin -= subtract_from_each_beginning_ts
         ts_begin = multiply_proc.call(ts_begin)
+        
         ts_end = entry.ending_time
         entry.ending_time = multiply_proc.call(ts_end)
         ts_end += add_to_end_each_ts
@@ -212,8 +213,7 @@ module SubtitleProfanityFinder
             text.gsub!(/\]+/, ']')
             ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
             ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
-            
-            unless output.contain? ts_begin # some previous profanity already found this line :P
+            unless output.contain? ts_begin_human # some previous profanity already found this line :P
               output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
             end
           end
@@ -221,7 +221,6 @@ module SubtitleProfanityFinder
       end
     end
     [output, entries]
-    output
   end
 end
 

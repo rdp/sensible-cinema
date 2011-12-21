@@ -99,7 +99,7 @@ describe SubtitleProfanityFinder do
   end
   
   it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string <<-EOL, {}, 0, 0, 0, 0, 100, 100
+    out = SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)[0]
 6
 00:00:55,068 --> 00:00:59,164
 a butt
@@ -140,9 +140,9 @@ a butt
     end
 
     it "should compensate for differing start timestamps" do
-      starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, 10.0, 20.0
-      starts_ten_later_than_srt.should =~ /0:01:00.22/
-      starts_ten_later_than_srt.should =~ /0:01:04.92/
+      starts_ten_later_than_srt = S.edl_output 'dragon.srt', {}, 0.0, 0.0, 10.0, 20.0, 110, 120
+      starts_ten_later_than_srt.should =~ /0:01:00.23/ # 50.23 -> this
+      starts_ten_later_than_srt.should =~ /0:01:04.93/
     end
 
     it "should compensate for differing end timestamps with a multiple" do
