@@ -78,7 +78,6 @@ module SensibleSwing
           show_blocking_message_dialog "EDL for this dvd doesn't exist yet, maybe create it first? #{volume_name}"
         end
       end
-      
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
           "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
@@ -91,6 +90,18 @@ module SensibleSwing
 		    end	  
         create_brand_new_dvd_edl
       end
+      
+      @callbacks_when_dvd_available_changes << proc { |available|
+        if !available
+          if DriveInfo.get_dvd_drives_as_openstruct.detect{|disk| disk.VolumeName}
+            @create_new_edl_for_current_dvd.enable
+          else
+            @create_new_edl_for_current_dvd.disable
+          end
+        else
+          @create_new_edl_for_current_dvd.enable
+        end
+      }
       
       new_jbutton("Create new Edit List (for netflix instant or a movie file)") do # TODO VIDEO_TS here too?
         names = ['movie file', 'netflix instant']
@@ -245,9 +256,8 @@ like:
               f.puts
             }
           end
-          show_blocking_message_dialog "wrote #{out_file}"
+          show_in_explorer out_file
         end
-
         
       end
 

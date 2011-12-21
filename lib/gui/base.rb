@@ -203,9 +203,9 @@ module SensibleSwing
     # a window that when closed doesn't bring the whole app down
     def new_child_window
       child = MainWindow.new
-      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE)
+      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE) # don't exit on close
       child.parent=self # this should have failed in the PPL
-      # make both windows visible z-wise
+      # make both windows visible by moving the child down and to the right of its parent
       x, y = self.get_location.x, self.get_location.y
       child.set_location(x + 100, y + 100)
       child

@@ -3,12 +3,10 @@
 
 "mutes" => [
   # an example line, uncomment the leading "#" to make it active
-  "01:00:30.0" , "01:00:40.0", "violence", "of some sort",
 ],
 
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
-  "01:00:00.0" , "01:00:10.0", "violence", "of some sort",
 ],
 
 "dvd_nav_packet_offset" => [0.4, 0.6143],
@@ -21,3 +19,5 @@
 # "closing thoughts" => "only...",
 "dvd_start_offset" => "0.28",
 "timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"beginning_subtitle" => ["Grandpa(sris)! your's is here?!., You're not supposed to be up here, looking at that.", "01:28.16"],
+"ending_subtitle_entry" => ["You'll figure it out.", "2:01:32.40"]
