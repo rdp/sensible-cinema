@@ -67,7 +67,7 @@ module SensibleSwing
         show_mplayer_instructions
       end
 
-      add_text_line 'Create Edit Options:'
+      add_text_line 'Create: Edit Options:'
       
       @open_current = new_jbutton("Edit/Open EDL for currently inserted DVD") do
         drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
@@ -78,6 +78,7 @@ module SensibleSwing
           show_blocking_message_dialog "EDL for this dvd doesn't exist yet, maybe create it first? #{volume_name}"
         end
       end
+      
       @create_new_edl_for_current_dvd = new_jbutton("Create new Edit List for currently inserted DVD", 
           "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
@@ -91,16 +92,9 @@ module SensibleSwing
         create_brand_new_dvd_edl
       end
       
-      @callbacks_when_dvd_available_changes << proc { |available|
-        if !available
-          if DriveInfo.get_dvd_drives_as_openstruct.detect{|disk| disk.VolumeName}
-            @create_new_edl_for_current_dvd.enable
-          else
-            @create_new_edl_for_current_dvd.disable
-          end
-        else
-          @create_new_edl_for_current_dvd.enable
-        end
+      add_callback_for_dvd_edl_present { |disk_available, edl_available|
+        @open_current.set_enabled edl_available
+        @create_new_edl_for_current_dvd.set_enabled disk_available
       }
       
       new_jbutton("Create new Edit List (for netflix instant or a movie file)") do # TODO VIDEO_TS here too?
@@ -125,7 +119,6 @@ module SensibleSwing
           end
           extra_options['url'] = url
         end
-        p 'guessed english name:' + guess_name
         english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
         filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.txt'
         display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
@@ -347,9 +340,9 @@ like:
         end
       end
       
-      add_text_line 'Create Options with local intermediary file:'
+      add_text_line 'Create Options for creating an edited file:'
       
-      new_jbutton("Show options with local intermediary file") do
+      new_jbutton("Show options for creating an edited file") do
         window = new_child_window
         window.add_options_that_use_local_files
       end

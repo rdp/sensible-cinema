@@ -38,14 +38,14 @@ module SensibleSwing
         play_smplayer_edl_non_blocking
         # lodo exit [?]
       }
-      @callbacks_when_dvd_available_changes << proc { |available_now|
-        if available_now
+      
+      add_callback_for_dvd_edl_present { |disk_available, edl_available|
+        if edl_available
           @mplayer_edl.enable
         else
           @mplayer_edl.disable
         end
       }
-      update_currently_inserted_dvd_list # update it :P
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
         choose_file_and_edl_and_create_sxs_or_play false

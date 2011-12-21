@@ -86,7 +86,7 @@ module SensibleSwing
   class MainWindow < JFrame
     include SwingHelpers # work-around?
     
-    def initialize be_visible = true
+    def initialize start_visible = true
       super "Sensible-Cinema #{VERSION} (GPL)"
       force_accept_license_first # in other file :P
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
@@ -102,15 +102,21 @@ module SensibleSwing
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
-      @callbacks_when_dvd_available_changes = []
+      @callbacks_for_dvd_edl_present = []
       DriveInfo.create_looping_drive_cacher
       DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
       check_for_various_dependencies
-      set_visible be_visible
+      set_visible start_visible
     end
-
+    
+    def add_callback_for_dvd_edl_present &block
+      raise unless block
+      @callbacks_for_dvd_edl_present << block
+      update_currently_inserted_dvd_list # updates them :P
+    end
+    
     def update_currently_inserted_dvd_list
 	    present_discs = []
       DriveInfo.get_dvd_drives_as_openstruct.each{|disk|
@@ -124,8 +130,10 @@ module SensibleSwing
            present_discs << [human_name, disk.VolumeName, edit_list_path_if_present]
         end
       }
+      found_one = false
       present_discs.map!{|human_name, volume_name, has_edl| 
         if human_name
+          found_one = true
           "DVD: #{human_name} has an Edit List available! (#{volume_name})"
         else
           "DVD: #{volume_name} has NO Edit List available!"
@@ -134,12 +142,11 @@ module SensibleSwing
       if present_discs.length > 0
         @current_dvds_line1.text= '      ' + present_discs[0]
         @current_dvds_line2.text= '      ' + present_discs[1..2].join(" ")
-        @callbacks_when_dvd_available_changes.each{|c| c.call(true)}
       else
         @current_dvds_line1.text= '      No DVD discs currently inserted.'
         @current_dvds_line2.text = ''
-        @callbacks_when_dvd_available_changes.each{|c| c.call(false)}
       end
+      @callbacks_for_dvd_edl_present.each{|c| c.call(present_discs.length > 0, found_one)}
     end
 	
     def get_title_track_string descriptors, use_default_of_one = true
