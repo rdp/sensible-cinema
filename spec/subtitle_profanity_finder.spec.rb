@@ -184,4 +184,14 @@ I believe in the Lord
     end
   end
   
+  it "should write correct times to output files" do
+    out = S.edl_output_from_string <<-EOL, {}, 0,0,88, 88.16, 7296.5, 7292.4, true
+1
+00:01:28,000 --> 00:01:29,036
+Grandpa(sris)! your's is here?!.,
+
+    EOL
+    p out
+  end
+  
 end
