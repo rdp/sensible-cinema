@@ -1,0 +1,32 @@
+# edl_version_version 1.1, sensible cinema v0.33.4
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Finding Neverland",
+
+"mutes" => [
+  "0:04:33.96" , "0:04:35.63", "profanity", "sh..", "It's [sh..]e, isn't it? Go on. Say it.",
+  
+  "0:04:28.09" , "0:04:31.52", "profanity", "crap", "- I'm not really qualified to... - Do you like it? Is it [crap] ",
+  "0:04:31.66" , "0:04:33.96", "profanity", "crap", "- [crap]  sir? - Go on, say it. Just say it.",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "FINDING_NEVERLAND",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "514e48fe|336ed667",
+"dvd_title_track" => "1", # the longest title is usually the main
+"dvd_title_track_length" => "6058.433", 
+# "subtitle_url" => "http://...",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.28",
+"dvd_nav_packet_offset" => [0.5, 0.735254],
+
+#Also add these two lines for later coordination:
+"beginning_subtitle" => ["- Lights up! - Beginners, please!", " 00:18.12"],
+"ending_subtitle_entry" => ["I can see her.", "1:35:44.01"]
