@@ -1,3 +1,8 @@
+= 0.33.5 12-24-11 =
+
+Allow for mutes to brush up against each other, like muting from [1.0, 2.0] and then [2.0, 3.0] will work now.
+Fix some other minor bugs.
+
 = 0.33.4 12-21-11 =
 
 Add ability to write out "euphemized" synchronized subtitle files now.  Make subtitle profanity finder slightly better.
