@@ -199,29 +199,6 @@ class EdlParser
     out
   end
   
-  def self.get_secs timestamp_string_begin, timestamp_string_end, add_begin, add_end, splits
-    answers = []
-    unless timestamp_string_begin
-      raise 'non begin' 
-    end
-    unless timestamp_string_end
-      raise 'non end' 
-    end
-    for type, offset, multiplier in [[timestamp_string_begin, add_begin, -1], [timestamp_string_end, add_end, 1]]
-      original_secs = translate_string_to_seconds(type) + offset
-      # now if splits is 900 and we'are at 909, then we're just 9
-      closest_split_idx = splits.reverse.index{|t| t < original_secs}
-      if closest_split_idx
-        closest_split = splits.reverse[closest_split_idx]
-        # add some extra seconds onto these if they're "past" a split, too
-        original_secs = original_secs - closest_split + multiplier * (splits.length - closest_split_idx)
-        original_secs = [0, original_secs].max # no negatives allowed :)
-      end
-      answers << original_secs
-    end
-    answers
-  end
-  
   public 
   
   # called later, from external files
@@ -233,41 +210,32 @@ class EdlParser
     raise if add_this_to_all_ends < 0
     raise if subtract_this_from_ends < 0
     add_this_to_all_ends -= subtract_this_from_ends # now we allow negative :)
-    if splits != []
-      # allow it to do all the double checks we later skip, just for sanity :)
-      self.convert_incoming_to_split_sectors incoming, 0, 0, []
-      # make them additive now...
-      previous = 0
-      splits = splits.map{|s| current = s + previous; previous = current; current}
-    end
+	#raise if splits.size > 0 # for now
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
-    mutes = mutes.map{|k, v| get_secs(k, v, -subtract_this_from_beginnings, add_this_to_all_ends, splits) + [:mute]}
-    blanks = blanks.map{|k, v| get_secs(k, v, -subtract_this_from_beginnings, add_this_to_all_ends, splits) + [:blank]}
-    combined = (mutes+blanks).sort
+    mutes = mutes.map{|k, v| [k,v,:mute]}
+    blanks = blanks.map{|k, v| [k,v,:blank]}
+    combined = (mutes+blanks).sort.map{|s,e,type|  [translate_string_to_seconds(s),  translate_string_to_seconds(e), type]}
     
-    # detect and combine overlap...
+    # detect any weirdness...
     previous = nil
-    combined.each_with_index{|current, idx|
-      s,e,t = current
-      if e < s
-       raise SyntaxError.new("detected an end before a start: #{e} < #{s}") if e < s unless splits.length > 0
+    combined.map!{|current|
+      s,e,type = current
+      if e < s || !s || !e || !type
+       raise SyntaxError.new("detected an end before a start or other weirdness: #{e} < #{s}")
       end
       if previous
-        ps, pe, pt = previous
-        if (s < pe)
-          raise SyntaxError.new("detected an overlap #{[s,e,t].join(' ')} #{previous.join(' ')}") unless splits.length > 0
-          # our start might be within the previous' in which case its their start, with (greater of our, their ending)
-          preferred_end = [e,pe].max
-          preferred_type = [t,pt].detect{|t| t == :blank} || :mute # prefer blank to mute
-          combined[idx-1] = [ps, preferred_end, preferred_type]
-          combined[idx] = nil # allow it to be culled later
+        ps, previous_end, pt = previous
+        if (s < previous_end)
+          raise SyntaxError.new("detected an overlap #{current.join(' ')} #{previous.join(' ')}")
         end
         
       end
       previous = current
+	  # do the math later to allow for ones that barely hit into each other 1.0 2.0, 2.0 3.0
+	  [s-subtract_this_from_beginnings, e+add_this_to_all_ends,type]
     }
-    combined.compact
+    combined
   end
   
   

@@ -147,35 +147,17 @@ describe EdlParser do
     proc{ go({"mutes"=>{105=>104.9}})}.should raise_error(SyntaxError)
   end
   
-  it "should allow for splits in its parseage" do
-    go({ "mutes"=>{5=>6,105=>106}, "blank_outs" => {110 => 111} }, 0, 0, [103]).should == 
-      [[1.0, 4.0, :mute], [5.0, 6.0, :mute], [6.0, 9.0, :blank]]
-  end
-  
   it "should raise on poor overlap" do
-    proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [1000])}.should raise_error(/overlap/i)
+    proc{go({ "mutes"=>{5=>10, 6=>7}}, 0, 0, [])}.should raise_error(/overlap/i)
   end
   
-  # I put down it at 10:00 it's at 10:00.5
-  # so...postludingers should be...too early now?
-  # change when complaints come in :P
   it "should take the greater of the end and beginning on combined splits and greater of the blank versus mute" do
     # so if I have a very long mute with a mute in the middle, it should turn into a very long mute
-    go({ "mutes"=>{5=>10, 103=>107}}, 0, 0, [100]).should == [[2.0, 10.0, :mute]]
-    go({ "mutes"=>{5=>10, 103=>110}}, 0, 0, [100]).should == [[2.0, 11.0, :mute]]
-    go({ "mutes"=>{5=>15, 103=>110}}, 0, 0, [100]).should == [[2.0, 15.0, :mute]]
-    go({ "mutes"=>{5=>10, 103=>111}}, 0, 0, [100]).should == [[2.0, 12.0, :mute]]
-    # now throw in blanks to the mix...
-    go({ "mutes"=>{5=>10}, "blank_outs" => {103=>110}}, 0, 0, [100]).should == [[2.0, 11.0, :blank]]
-    go({ "blank_outs"=>{5=>10}, "mutes" => {103=>110}}, 0, 0, [100]).should == [[2.0, 11.0, :blank]]
+    go({ "mutes"=>{5=>10, 103=>107}}, 0, 0, []).should == [[5, 10, :mute], [103, 107, :mute]]
+
+    # and with blanks to the mix...
+    go({ "mutes"=>{5=>10}, "blank_outs" => {103=>110}}, 0, 0, []).should ==  [[5, 10, :mute], [103, 110, :blank]]
   end
-  
-  it "should accomodate well for multiple mplayer_dvd_splits, and one edge case [zero]" do
-    go({ "mutes"=>{5=>10, 75 => 76, 101 => 102}}, 0, 0, [50, 50]).should == 
-      [[0.0, 4.0, :mute], [5.0, 10.0, :mute], [24.0, 27.0, :mute]]
-  end
-  
-  it "should handle edge cases, like where an entry overlaps the divider, or the added stuff causes it to"
   
   def translate x
     EdlParser.translate_string_to_seconds x
