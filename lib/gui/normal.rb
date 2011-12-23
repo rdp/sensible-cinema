@@ -28,7 +28,7 @@ module SensibleSwing
       path = File.expand_path path
       path = EightThree.convert_path_to_8_3 path if OS.doze?
     end
-
+    def hard_exit; java::lang::System.exit 0; end
     def setup_normal_buttons
       add_text_line ""
   
@@ -36,7 +36,9 @@ module SensibleSwing
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
-        # lodo exit [?]
+        sleep 2
+		puts 'enjoy your movie playing in other window'
+		java::lang::System.exit 0
       }
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
