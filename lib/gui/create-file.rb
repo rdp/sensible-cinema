@@ -113,7 +113,7 @@ module SensibleSwing
     end
     
     def repeat_last_copy_dvd_to_hard_drive
-      generate_and_run_bat_file *LocalStorage['last_params']
+      generate_and_run_bat_file(*LocalStorage['last_params'])
     end
 
     def get_ripped_filename_once dvd_title, dvd_title_track

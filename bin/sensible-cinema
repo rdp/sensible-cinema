@@ -48,7 +48,7 @@ if $0 == __FILE__
                                                       run it with --help to see its various options.
     EOL
   else
-    a = SensibleSwing::MainWindow.new
+    a = SensibleSwing::MainWindow.new true, ARGV
     a.setup_default_buttons
     puts 'Please use the Sensible Cinema GUI window popup...'
     if ARGV.index('--exit-immediately')

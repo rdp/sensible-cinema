@@ -11,7 +11,7 @@ module SensibleSwing
 
     def setup_advanced_buttons
     
-      new_jbutton("Display the standard buttons") do
+      new_jbutton("Display the Playback buttons") do
         window = new_child_window
         window.setup_normal_buttons
       end

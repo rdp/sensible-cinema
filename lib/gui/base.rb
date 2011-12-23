@@ -86,8 +86,9 @@ module SensibleSwing
   class MainWindow < JFrame
     include SwingHelpers # work-around?
     
-    def initialize start_visible = true
+    def initialize start_visible = true, args = ARGV # lodo not optionals
       super "Sensible-Cinema #{VERSION} (GPL)"
+	  @args = args
       force_accept_license_first # in other file :P
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
@@ -165,11 +166,11 @@ module SensibleSwing
 	end
 
     def we_are_in_create_mode
-     ARGV.index("--create-mode")
+     @args.index("--create-mode")
     end
     
     def we_are_in_developer_mode?
-      ARGV.detect{|a| a == '--developer-mode'}
+      @args.detect{|a| a == '--developer-mode'}
     end
     
     def new_jbutton title, tooltip = nil
@@ -209,7 +210,7 @@ module SensibleSwing
 
     # a window that when closed doesn't bring the whole app down
     def new_child_window
-      child = MainWindow.new
+      child = MainWindow.new true, []
       child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE) # don't exit on close
       child.parent=self # this should have failed in the PPL
       # make both windows visible by moving the child down and to the right of its parent
