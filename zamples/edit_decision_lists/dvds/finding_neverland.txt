@@ -22,7 +22,7 @@
 "dvd_title_track_length" => "6058.433", 
 # "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
-# "closing thoughts" => "only ...",
+"closing thoughts" => "bit of a theme of...almost infidelity",
 # "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
 "dvd_title_track_start_offset" => "0.28",
 "dvd_nav_packet_offset" => [0.5, 0.735254],

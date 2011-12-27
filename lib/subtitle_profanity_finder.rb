@@ -127,7 +127,7 @@ module SubtitleProfanityFinder
     bad_profanities = {'hell' => ['he..', :full_word],
       'g' +
       111.chr + 
-      100.chr => '...', 'g' +
+      100.chr => 'deity', 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
