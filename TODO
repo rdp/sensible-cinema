@@ -9,15 +9,16 @@
   then roadmap_possibilities
   
 == high prio like blocking bugs ==
+  extract time right for that one DVD
 
 == things working on today/requested ==
   
 == yes do ordered for this release/other projects ja  ==
   
 == yes do, un-ordered currently, from all the various future release options ==
-
+   genealogy screen saver create/publicize  
+   the 50% thing [youtube]
   
-  the 50% thing [youtube]
   genealogy living tree
   disclosure for OCR, wiki based processing
   mac release [needs one]
@@ -42,12 +43,13 @@
   rename it "..." or whatever google prefers :P
   warn other wordpresses
 
-  button have DVD titles
-  readme be helpful for subtitles [?]
-  button back to create mode
-  guide them through process more/subtitles
+  melissa stuff:
+    button and drop down have DVD titles
+    readme be helpful for subtitles [?]
+    button back to create mode
+    guide them through process more/subtitles
   
-  genealogy screen saver create/publicize  
+  make annoying things preferences
   mplayer muting causes jerkiness
   dvd_start_offset -> dvd_mpeg_start_offset
   better name for dvd_nav_packet_offset with mpeg in it so you know ordering
@@ -304,6 +306,7 @@
   can auto-use tsmuxer at all
   port to mac OS X
     PPC dvdid work?
+	  PPC work in general
   .srt input auto-scan from a "full two entries from the .srt file" (easier)
   rename as sanitizer, or something else SEO friendlier or something like that
   from an EDL, it can "just play" for netflix (auto-open browser etc.)

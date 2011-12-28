@@ -1,0 +1,31 @@
+# edl_version_version 1.1, sensible cinema v0.33.5
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Ratatouille",
+
+"mutes" => [  "0:03:11.05" , "0:03:12.75", "profanity", "deity", "Close to [deity]liness.",
+  "0:22:41.65" , "0:22:43.55", "profanity", "deity", "Five minutes, chef. - Oh, [deity].",
+  "0:35:10.24" , "0:35:15.74", "profanity", "he..", "Welcome to [he..]  Now, recreate the soup.",
+  "0:57:35.98" , "0:57:39.87", "profanity", "deity", "Nothing's been poisoned, thank [deity], but it hasn't been easy.",
+  "1:26:15.60" , "1:26:18.90", "profanity", "bloo..", "and no one else seems to have it in this [bloo..] town,",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "RATATOUILLE",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "395cb2b3|2ebd5603",
+"dvd_title_track" => "1", # the longest title is usually the main
+"dvd_title_track_length" => "6662.166", 
+"subtitle_url" => "http://www.opensubtitles.org/en/subtitles/3154838/ratatouille-en",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.28",
+"dvd_nav_packet_offset" => [0.0, 0.280633],
+
+"beginning_subtitle" => ["Although each of the world's countries", "32.46"],
+"ending_subtitle_entry" => ["- Sorry, chef. - The rat! It's stolen my documents!", "1:13:34.32"]
