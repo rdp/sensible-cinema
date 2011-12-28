@@ -36,9 +36,9 @@ module SensibleSwing
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
-        sleep 2
 		puts 'enjoy your movie playing in other window'
-		java::lang::System.exit 0
+        sleep 5
+		java::lang::System.exit 0 # paranoid on usage LOL
       }
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
