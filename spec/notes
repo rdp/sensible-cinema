@@ -1,7 +1,91 @@
 up next:
 
+= ratatouille weird =
+
+last NAV packet was 0.000000, mpeg at 0.000000 after -> 29.97 0.000000
+not adding odd diff1? 0.000000adding 0.000000 to 0.000000
+final: 0.000000
+Audio: no sound
+Starting playback...
+Movie-Aspect is 1.78:1 - prescaling to correct movie aspect.
+VO: [null] 720x480 => 854x480 Planar YV12
+[mpeg2video @ 00c3fa80]ac-tex damaged at 37 7
+[mpeg2video @ 00c3fa80]Warning MVs not available
+[mpeg2video @ 00c3fa80]concealing 1035 DC, 1035 AC, 1035 MV errors
+
+last NAV packet was 0.000000, mpeg at 0.033367 after -> 29.97 0.000000
+adding difference 0.033367 adding 0.000000 to 0.033367
+final: 0.033367
+
+last NAV packet was 0.000000, mpeg at 0.280633 after -> 29.97 0.000000
+adding difference 0.280633 adding 0.000000 to 0.280633
+final: 0.280633
+V:  0.28   2/  2 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.280633 after -> 29.97 0.000000
+adding difference 0.280633 adding 0.000000 to 0.280633
+final: 0.280633
+V:  0.28   3/  3 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.314000 after -> 29.97 0.000000
+adding difference 0.314000 adding 0.000000 to 0.314000
+final: 0.314000
+V:  0.31   4/  4 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.347367 after -> 29.97 0.000000
+adding difference 0.347367 adding 0.000000 to 0.347367
+final: 0.347367
+V:  0.35   5/  5 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.380733 after -> 29.97 0.000000
+adding difference 0.380733 adding 0.000000 to 0.380733
+final: 0.380733
+V:  0.38   6/  6 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.414100 after -> 29.97 0.000000
+adding difference 0.414100 adding 0.000000 to 0.414100
+final: 0.414100
+V:  0.41   7/  7 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.447467 after -> 29.97 0.000000
+adding difference 0.447467 adding 0.000000 to 0.447467
+final: 0.447467
+V:  0.45   8/  8 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.480833 after -> 29.97 0.000000
+adding difference 0.480833 adding 0.000000 to 0.480833
+final: 0.480833
+V:  0.48   9/  9 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.514200 after -> 29.97 0.000000
+adding difference 0.514200 adding 0.000000 to 0.514200
+final: 0.514200
+V:  0.51  10/ 10 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.547567 after -> 29.97 0.000000
+adding difference 0.547567 adding 0.000000 to 0.547567
+final: 0.547567
+V:  0.55  11/ 11 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.580933 after -> 29.97 0.000000
+adding difference 0.580933 adding 0.000000 to 0.580933
+final: 0.580933
+V:  0.58  12/ 12 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.614300 after -> 29.97 0.000000
+adding difference 0.614300 adding 0.000000 to 0.614300
+final: 0.614300
+weird fella suddenly we're not a DVD? mpeg at 0.033367 adding 0.000000 to 0.033367
+final: 0.033367
+V:  0.03   0/  0 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.066733 after -> 29.97 0.400400 # this less a frame I guess...
+new NAV packet! 0.400400 [adjusted] at 0.066733 adding 0.000000 to 0.400400
+final: 0.400400
+V:  0.07   1/  1 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.280633 after -> 29.97 0.400400
+adding difference 0.213900 adding 0.000000 to 0.614300
+final: 0.614300
+V:  0.28   2/  2 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.314000 after -> 29.97 0.400400
+adding difference 0.247267 adding 0.000000 to 0.647667
+final: 0.647667
+V:  0.31   3/  3 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.347367 after -> 29.97 0.400400
+adding difference 0.280633 adding 0.000000 to 0.681033
+final: 0.681033
+
+
 zoomplayer max
-env ALLUSERSPROFILE
+env ALLUSERSPROFILE apparently [?]
 
 = am I accurate all the way through with dvd_nav_offset =
 
