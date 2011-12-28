@@ -25,7 +25,7 @@
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
 "dvd_title_track_start_offset" => "0.28",
-"dvd_nav_packet_offset" => [0.0, 0.280633],
+"dvd_nav_packet_offset" => [0.4, 0.647666], # mutes are 0.04 off...
 
 "beginning_subtitle" => ["Although each of the world's countries", "32.46"],
 "ending_subtitle_entry" => ["- Sorry, chef. - The rat! It's stolen my documents!", "1:13:34.32"]
