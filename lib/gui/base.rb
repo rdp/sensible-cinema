@@ -419,6 +419,7 @@ KP_ENTER dvdnav select
         offset_time = 0.20
         p caller
       end
+	  raise if offset_time <= 0 # unexpected...
 	    out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end

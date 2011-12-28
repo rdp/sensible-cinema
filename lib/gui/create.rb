@@ -212,7 +212,7 @@ module SensibleSwing
           start_text = all_entries[0].text.gsub("\n", " ")
           start_srt_time = all_entries[0].beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
-          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\n  first frame it appears on the screen (possibly near #{human_start})", "00:00.00")
+          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\n  first frame it appears on the screen (possibly near #{human_start})")
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end could be a spoiler]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
@@ -222,7 +222,7 @@ module SensibleSwing
           end_text = end_entry.text.gsub("\n", " ")
           end_srt_time = end_entry.beginning_time
           human_end  = EdlParser.translate_time_to_human_readable(end_srt_time)
-          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{end_text}\"\n  first appears (possibly near #{human_end}).\nYou can find it by searching to near that time, finding any subtitle, then looking for that subtitle in the .srt file to see where it lies\nrelative to the one you are interested in.", "1:00:00.00")
+          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{end_text}\"\n  first appears (possibly near #{human_end}).\nYou can find it by searching to near that time, finding any subtitle, then looking for that subtitle in the .srt file to see where it lies\nrelative to the one you are interested in.")
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
 		      start_srt_time = 0
@@ -427,7 +427,7 @@ module SensibleSwing
       end
     end
     
-    def calculate_dvd_start_offset title, drive # TODO use *their* main title if has one...
+    def calculate_dvd_start_offset title, drive
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..." # must be non blocking so the command can run :P
       command = "mplayer -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
@@ -443,7 +443,7 @@ module SensibleSwing
 	      if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
           nav = $1.to_f
           mpeg = $2.to_f
-          if nav > 0.0
+          if nav > 0.0 || mpeg > 0.1 # ratatouile is like  0.000000, mpeg at 0.280633 weird-o!
 	          outs[:dvd_nav_packet_offset] ||= [nav, mpeg]
           end
       	end
