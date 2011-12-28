@@ -132,12 +132,15 @@ class EdlParser
   # but I couldn't think of any other way to parse the files tho
   def self.parse_string string, filename = nil, ok_categories_array = []
     string = '{' + string + "\n}"
-    if filename
-     raw = eval(string, binding, filename)
-    else
-     raw = eval string
-    end
-    
+	begin
+      if filename
+       raw = eval(string, binding, filename)
+      else
+       raw = eval string
+      end
+    rescue Exception => e
+	  raise SyntaxError.new(e)
+	end
     raise SyntaxError.new("maybe missing quotation marks?" + string) if raw.keys.contain?(nil)
     
     # mutes and blank_outs need to be special parsed into arrays...

@@ -176,7 +176,7 @@ module SubtitleProfanityFinder
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
-    semi_bad_profanities['bloody'] = 'bloomy' # :)
+    semi_bad_profanities['bloody'] = 'bloo..'
     semi_bad_profanities['crap'] = ['crap', :full_word]
     semi_bad_profanities['butt'] = ['butt', :full_word]
     # butter?
