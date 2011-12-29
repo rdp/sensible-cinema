@@ -32,7 +32,7 @@ module SensibleSwing
     def setup_normal_buttons
       add_text_line ""
   
-      @mplayer_edl = new_jbutton( "Watch currently mounted DVD edited (realtime)" )
+      @mplayer_edl = new_jbutton( watch_edited_text="Watch currently mounted DVD edited (realtime)" )
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
@@ -42,11 +42,19 @@ module SensibleSwing
       }
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
-        if edl_available
-          @mplayer_edl.enable
-        else
-          @mplayer_edl.disable
-        end
+        b = @mplayer_edl
+	    if disk_available
+			if edl_available
+			  b.enable
+			  b.text=watch_edited_text
+			else
+			  b.enable # leave it enabled in case it's some nonstandard form of a disk that does have one [?]
+			  b.text= watch_edited_text + "  [disk has no Edit List Available!]" 
+			end
+		else
+		  @mplayer_edl.disable
+		  @mplayer_edl.text=watch_edited_text + " [no disk presently inserted]"
+		end
       }
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
@@ -81,6 +89,11 @@ module SensibleSwing
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
       
+	  new_jbutton("Create new Edit Decision List") do
+	    window = new_child_window
+        window.setup_advanced_buttons
+	  end
+	  
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)
       @progress_bar.visible = false
@@ -147,6 +160,7 @@ module SensibleSwing
         @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
         @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
         @upload.on_clicked {
+		  show_blocking_message_dialog "ok, will open up the groups page now and optionally an email to it"
           system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
           system_non_blocking("start http://groups.google.com/group/sensible-cinema")
         }

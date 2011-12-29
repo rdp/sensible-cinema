@@ -2,11 +2,14 @@
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "Ratatouille",
 
-"mutes" => [  "0:03:11.05" , "0:03:12.75", "profanity", "deity", "Close to [deity]liness.",
-  "0:22:41.65" , "0:22:43.55", "profanity", "deity", "Five minutes, chef. - Oh, [deity].",
-  "0:35:10.24" , "0:35:15.74", "profanity", "he..", "Welcome to [he..]  Now, recreate the soup.",
-  "0:57:35.98" , "0:57:39.87", "profanity", "deity", "Nothing's been poisoned, thank [deity], but it hasn't been easy.",
-  "1:26:15.60" , "1:26:18.90", "profanity", "bloo..", "and no one else seems to have it in this [bloo..] town,",
+"mutes" => [ 
+
+  "1:26:19.09" , "1:26:22.39", "profanity", "bloo..", "and no one else seems to have it in this [bloo..] town,",
+
+  "0:03:11.12" , "0:03:12.82", "profanity", "deity", "Close to [deity]liness.",
+  "0:22:42.52" , "0:22:44.42", "profanity", "deity", "Five minutes, chef. - Oh, [deity].",
+  "0:35:11.63" , "0:35:17.13", "profanity", "he..", "Welcome to [he..]  Now, recreate the soup.",
+  "0:57:38.29" , "0:57:42.19", "profanity", "deity", "Nothing's been poisoned, thank [deity], but it hasn't been easy.",
 ],
 
 "blank_outs" => [
@@ -25,7 +28,8 @@
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
 "dvd_title_track_start_offset" => "0.28",
-"dvd_nav_packet_offset" => [0.4, 0.647666], # mutes are 0.04 off...
+"dvd_nav_packet_offset" => [0.4, 0.647666], 
 
-"beginning_subtitle" => ["Although each of the world's countries", "32.46"],
-"ending_subtitle_entry" => ["- Sorry, chef. - The rat! It's stolen my documents!", "1:13:34.32"]
+
+"beginning_subtitle" => ["Although each of the world's countries", "32.42"],
+"ending_subtitle_entry" => ["- Sorry, chef. - The rat! It's stolen my documents!", " 1:13:37.29"]

@@ -1,3 +1,7 @@
+= 0.33.6 12-28-11 =
+
+Some aesthetic changes to the profanity scanner and create mode.
+
 = 0.33.5 12-24-11 =
 
 Allow for mutes to brush up against each other, like muting from [1.0, 2.0] and then [2.0, 3.0] will work now.
