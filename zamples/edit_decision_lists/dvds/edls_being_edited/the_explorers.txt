@@ -1,0 +1,43 @@
+# edl_version_version 1.1, sensible cinema v0.33.6
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "The Explorers",
+
+"mutes" => [
+  "0:04:23.87" , "0:04:25.99", "profanity", "j....", "[j....] [chr...] ",
+  "0:05:20.89" , "0:05:25.47", "profanity", "a..", "- Kick his [a..]  man. - Go on, kill him.",
+  "0:06:00.05" , "0:06:04.43", "profanity", "a..", "Elephantitis is when something gets bloated and ugly, like your [a..] ",
+  "0:06:13.69" , "0:06:15.10", "profanity", "a..", "Kick his [a..] ",
+  "0:06:16.24" , "0:06:18.78", "profanity", "a..", "Kick his [a..] ",
+  "0:06:48.27" , "0:06:53.06", "profanity", "da..", "This [da..] carburettor. Must've rebuilt this thing 100 times.",
+  "0:12:00.64" , "0:12:02.93", "profanity", "he..", "- Not now, Heinlein. - Go to [he..] ",
+  "0:20:32.63" , "0:20:34.76", "profanity", "deity", "Oh, my [deity]!",
+  "0:20:35.55" , "0:20:39.09", "profanity", "he..", "- What the [he..] s going on in there? - Get in here.",
+  "0:21:38.95" , "0:21:40.53", "profanity", "da..", "[da..].",
+  "0:24:46.61" , "0:24:49.94", "profanity", "deity", "Wolfgang! [deity], man, I'm sorry.",
+  "0:25:57.89" , "0:26:02.60", "profanity", "deity", "Oh, my [deity]. There she is.",
+  "0:45:14.81" , "0:45:16.93", "profanity", "j....", "[j....]! Did you see that?",
+  "1:01:52.06" , "1:01:53.47", "profanity", "deity", "Oh, my [deity].",
+  "1:04:07.83" , "1:04:09.54", "profanity", "he..", "What the [he..] s this?",
+  "1:12:41.28" , "1:12:43.66", "profanity", "deity", "- Oh, my [deity]! - Oh, my [deity]!",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"beginning_subtitle" => ["- Hurry up! Jump in! - There was a girl with them.", "2:57.03"],
+"ending_subtitle_entry" => ["Wak.", "1:17:02.64"]
+
+"source" => "dvd",
+"volume_name" => "THE_EXPLORERS",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "4637e808|c3c50caf",
+"dvd_title_track" => "1", # the longest title is usually the main
+"dvd_title_track_length" => "6385.666", 
+# "subtitle_url" => "http://...",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.28",
+"dvd_nav_packet_offset" => [0.4, 0.6143],

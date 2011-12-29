@@ -76,7 +76,7 @@ module SensibleSwing
 
       @parse_srt.on_clicked do
 
-        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities:", File.expand_path('~'))
+        srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities [may need to download .srt file first]:", File.expand_path('~'))
 		    if(srt_filename =~ /utf16/) # from subrip sometimes
 		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
         end
@@ -129,7 +129,7 @@ module SensibleSwing
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your \"mute\" section if you deem them mutable\n" + parsed_profanities
         if end_srt_time != 3000
-          out += %!\n\n#Also add these two lines for later coordination:\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
+          out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                  %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
         end
         File.write filename, out
