@@ -11,14 +11,12 @@
 == high prio like blocking bugs ==
 
 == things working on today/requested ==
-  
-== yes do ordered for this release/other projects ja  ==
-  
-== yes do, un-ordered currently, from all the various future release options ==
    genealogy screen saver create/publicize  
-   the 50% thing [youtube]
    back light
      poor man
+  
+== yes do, un-ordered currently, from all the various future release options ==
+   the 50% thing [youtube]
   rename it "..." or whatever google prefers :P
   
   "for currently" -> for [name]
@@ -33,7 +31,7 @@
   	not adding odd diff1? 0.000000
     accurate-ify DVDNAV timestamps
     EDL's work with DVDNAV [patch]
-    medium is too long
+    medium is too long for some fonts
     ask why mplayer seems to show "overlap" at DVD time splits
   disclosure back-lighting, table, maybe they can review it for me?
   that one guy's VAC freakiness
@@ -50,7 +48,6 @@
   melissa stuff:
     button and drop down have DVD titles
     readme be helpful for subtitles [?]
-    button back to create mode
     guide them through process more/subtitles
   
   make annoying things preferences

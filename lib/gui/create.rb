@@ -17,59 +17,6 @@ module SensibleSwing
         window.setup_normal_buttons
       end
       
-      add_text_line 'Create: Advanced View Edited Options'
-      
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
-      @mplayer_edl.on_clicked {
-        watch_dvd_edited_realtime_mplayer false
-      }
-      
-      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
-        watch_dvd_edited_realtime_mplayer true
-      end
-      
-      @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
-        times = get_start_stop_times_strings
-        times.map!{|t| EdlParser.translate_string_to_seconds t}
-        start_time = times[0]
-        end_time = times[1]
-        extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
-        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # create mode => aggressive
-      end
-            
-      new_jbutton("Display mplayer keyboard commands/howto/instructions") do
-        show_mplayer_instructions
-      end
-
-      add_text_line "Create: Watch Unedited Options:"
-      
-      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)")
-      @play_smplayer.tool_tip = <<-EOL
-        This will play the DVD unedited within smplayer.
-        NB it will default to title 1, so updated your EDL file that matches this DVD with the proper title if this doesn't work for you 
-        i.e. if it just plays a single preview title or what not, and not the main title, you need to change this value.
-        This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
-        You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
-        (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
-        fps, so you'll need to convert it (the convert timestamp button) to be able to use it in a file.
-        NB That you can get the mplayer keyboard control instructions with the show instructions button.
-      EOL
-      @play_smplayer.on_clicked {
-        play_dvd_smplayer_unedited false
-      }
-
-      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer)")
-      @play_mplayer_raw.tool_tip = <<-EOL
-        This is also useful for comparing subtitle files to see if they have accurate timings.
-        If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
-        with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
-        like "V: 3600.0" should match your subtitle line "01:00:00,000 --> ..."
-        NB That you can get the mplayer keyboard control instructions with the show instructions button.
-      EOL
-      @play_mplayer_raw.on_clicked {
-        play_dvd_smplayer_unedited true
-      }
-      
       add_text_line 'Create: Edit Decision List File Options:'
       
       @open_current = new_jbutton("Edit/Open EDL for currently inserted DVD") do
@@ -83,7 +30,7 @@ module SensibleSwing
       end
       
       create_new_edl_for_current_dvd_text = "Create new Edit List for currently inserted DVD"
-      @create_new_edl_for_current_dvd = new_jbutton("will be replaced with accurate text :P", 
+      @create_new_edl_for_current_dvd = new_jbutton(create_new_edl_for_current_dvd_text, 
           "If your DVD doesn't have an EDL created for it, this will be your first step--create an EDL file for it.")
       @create_new_edl_for_current_dvd.on_clicked do
   	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
@@ -205,6 +152,59 @@ module SensibleSwing
         
       end
 	  
+      add_text_line 'Create: Advanced View Edited Options'
+      
+      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
+      @mplayer_edl.on_clicked {
+        watch_dvd_edited_realtime_mplayer false
+      }
+      
+      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
+        watch_dvd_edited_realtime_mplayer true
+      end
+      
+      @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
+        times = get_start_stop_times_strings
+        times.map!{|t| EdlParser.translate_string_to_seconds t}
+        start_time = times[0]
+        end_time = times[1]
+        extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
+        play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # create mode => aggressive
+      end
+            
+      new_jbutton("Display mplayer keyboard commands/howto/instructions") do
+        show_mplayer_instructions
+      end
+
+      add_text_line "Create: Watch Unedited Options:"
+      
+      @play_smplayer = new_jbutton( "Watch DVD unedited (realtime smplayer)")
+      @play_smplayer.tool_tip = <<-EOL
+        This will play the DVD unedited within smplayer.
+        NB it will default to title 1, so updated your EDL file that matches this DVD with the proper title if this doesn't work for you 
+        i.e. if it just plays a single preview title or what not, and not the main title, you need to change this value.
+        This is useful if you want to just kind of watch the movie to enjoy it, and look for scenes to cut out.
+        You can use the built-in OSD (on-screen-display) to see what time frame the questionable scenes are at
+        (type "o" to toggle it).  However, just realize that the OSD is in 30 fps, and our time stamps are all in 29.97
+        fps, so you'll need to convert it (the convert timestamp button) to be able to use it in a file.
+        NB That you can get the mplayer keyboard control instructions with the show instructions button.
+      EOL
+      @play_smplayer.on_clicked {
+        play_dvd_smplayer_unedited false
+      }
+
+      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer)")
+      @play_mplayer_raw.tool_tip = <<-EOL
+        This is also useful for comparing subtitle files to see if they have accurate timings.
+        If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
+        with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
+        like "V: 3600.0" should match your subtitle line "01:00:00,000 --> ..."
+        NB That you can get the mplayer keyboard control instructions with the show instructions button.
+      EOL
+      @play_mplayer_raw.on_clicked {
+        play_dvd_smplayer_unedited true
+      }
+      
       add_text_line "Less commonly used Edit options:"
 	  
       new_jbutton("Create new Edit List (for netflix instant or movie file)") do # LODO VIDEO_TS here too?
