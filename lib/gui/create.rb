@@ -254,7 +254,7 @@ module SensibleSwing
 # "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
-# "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
         EOL
         File.write filename, output
         open_file_to_edit_it filename
@@ -533,7 +533,7 @@ module SensibleSwing
 # "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
-# "subtitles_to_display_relative_path" => "file.srt" # if you want to display some custom subtitles alongside your movie
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
 "dvd_title_track_start_offset" => "#{hashes['dvd_start_offset']}",
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
