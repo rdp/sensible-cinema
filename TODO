@@ -17,13 +17,14 @@
 == yes do, un-ordered currently, from all the various future release options ==
    genealogy screen saver create/publicize  
    the 50% thing [youtube]
-   blu back light
-   fix screen grabber @ home
+   back light
+     poor man
+  rename it "..." or whatever google prefers :P
   
   "for currently" -> for [name]
   genealogy living tree
+    bookmarks, private notes, links in to the real thing
   disclosure for OCR, wiki based processing
-  mac release [needs one]
   mplayer patches:
     make sure I can build against latest
     patch V: for mplayer
@@ -42,10 +43,10 @@
   DVD timing for forum:Snow White
   I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
     prolly keep the "last added offset" so I can still keep adding it in again :P
-  rename it "..." or whatever google prefers :P
-  warn other wordpresses
-  subs can end with comma or spaces
-
+  warn other wordpresses  rename it "..." or whatever google prefers :P
+  subs can end or begin with comma or spaces or dashes
+  mac: advertise urug
+  
   melissa stuff:
     button and drop down have DVD titles
     readme be helpful for subtitles [?]
@@ -61,18 +62,17 @@
   upconv: test snow white book:
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
+    pay somebody to test it
   user preference "always just skip" if that's what he wanted :P
-  mac: advertise urug
   ffmpeg dshow input ramiro patches
   try to reproduce the ffplay bug with just ffmpeg
-  upconvert screen try it out, make sure it works, release
-    fix screen capturer negative
+  upconvert screen try it out, "release" after testing it with greg for netflix instant
   display OSD on command line too, just mine :P
   learn clojure
   OS X netflix instant
     mac'ify OCR/Mouse
   test rvm email
-  add "revision" to mplayer edl's initial output
+  add "revision" to mplayer edl's initial -v output
   report ffmpeg/mencoder splitting bugz (2)
   try out Subtitle Edit (can it extract?)
   @mplayer: ctrl-keys patch, ask them anyway :P
