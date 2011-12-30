@@ -15,16 +15,25 @@
 == yes do, un-ordered currently, from all the various future release options ==
   genealogy screen saver create/publicize  
   the 50% thing [youtube]
-  rename it "..." or whatever google prefers :P
-  
-  netflix instant work
-  
-  open sanitized for viewing :)
-  64 bit audio single release
-  re-release screen fella
-  "for currently" button -> for [name]
-  genealogy living tree
+  amazing grace, our new DVD's
+  open sanitized EDL for viewing :)
+  melissa stuff
+  genealogy open source tree
     bookmarks, private notes, links in to the real thing
+
+  netflix instant actually work :P
+  
+  ask for next :P
+  
+  back lighting from the side
+  broken scanning hp2
+  rename it "..." or whatever google prefers :P
+    mac: advertise urug
+  upconverting hulu better?
+  submit for copyright all source/note "for not patentable reasons"
+  64 bit audio single release
+  re-release screen capture
+  "for currently" button -> for [name]
   disclosure for OCR, wiki based processing
   mplayer patches:
     make sure I can build against latest
@@ -36,17 +45,14 @@
     EDL's work with DVDNAV [patch]
     medium is too long for some fonts
     ask why mplayer seems to show "overlap" at DVD time splits
+    I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
+      prolly keep the "last added offset" so I can still keep adding it in again :P
   disclosure back-lighting, table, maybe they can review it for me?
-  that one guy's VAC freakiness
   veggie tales dies (the lib v's?)
   mplayer dies tmnt dvdnav://1
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
-  I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
-    prolly keep the "last added offset" so I can still keep adding it in again :P
-  warn other wordpresses  rename it "..." or whatever google prefers :P
-  subs can end or begin with comma or spaces or dashes
-  mac: advertise urug
+  warn other wordpresses  
   
   melissa stuff:
     button and drop down have DVD titles
@@ -54,6 +60,9 @@
     guide them through process more/subtitles
 
   upconverter disable aero automagically	
+  
+  subs can end or begin with comma or spaces or dashes
+  that one guy's VAC freakiness
   make annoying things preferences
   mplayer muting causes jerkiness
   dvd_start_offset -> dvd_mpeg_start_offset
