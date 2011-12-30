@@ -11,11 +11,13 @@
 == high prio like blocking bugs ==
 
 == things working on today/requested ==
-   genealogy screen saver create/publicize  
   
 == yes do, un-ordered currently, from all the various future release options ==
-   the 50% thing [youtube]
+  genealogy screen saver create/publicize  
+  the 50% thing [youtube]
   rename it "..." or whatever google prefers :P
+  
+  netflix instant work
   
   open sanitized for viewing :)
   64 bit audio single release
@@ -50,7 +52,8 @@
     button and drop down have DVD titles
     readme be helpful for subtitles [?]
     guide them through process more/subtitles
-  
+
+  upconverter disable aero automagically	
   make annoying things preferences
   mplayer muting causes jerkiness
   dvd_start_offset -> dvd_mpeg_start_offset
