@@ -2,7 +2,48 @@ up next:
 
 the christmas list: two deity prof's [TODO]
 
-= ratatouille weird =
+= hp 2 weird start =
+
+last NAV packet was 0.000000, mpeg at 0.000000 after -> 29.97 0.000000
+not adding odd diff1? 0.000000adding 0.000000 to 0.000000
+final: 0.000000
+Audio: no sound
+Starting playback...
+Movie-Aspect is 1.33:1 - prescaling to correct movie aspect.
+VO: [null] 720x480 => 720x540 Planar YV12
+[mpeg2video @ 00c3fa80]ac-tex damaged at 0 7
+[mpeg2video @ 00c3fa80]Warning MVs not available
+[mpeg2video @ 00c3fa80]concealing 1035 DC, 1035 AC, 1035 MV errors
+
+last NAV packet was 0.000000, mpeg at 0.050050 after -> 29.97 0.000000
+adding difference 0.050050 adding 0.000000 to 0.050050
+final: 0.050050
+
+last NAV packet was 0.000000, mpeg at 0.128911 after -> 29.97 0.000000
+adding difference 0.128911 adding 0.000000 to 0.128911
+final: 0.128911
+V:  0.13   3/  2 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.178961 after -> 29.97 0.000000
+adding difference 0.178961 adding 0.000000 to 0.178961
+final: 0.178961
+V:  0.18   4/  3 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.212328 after -> 29.97 0.000000
+adding difference 0.212328 adding 0.000000 to 0.212328
+final: 0.212328
+V:  0.21   5/  4 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.128911 after -> 29.97 0.000000 # huh? no what? wha?!
+adding difference 0.128911 adding 0.000000 to 0.128911
+final: 0.128911
+V:  0.13   6/  5 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.162278 after -> 29.97 0.000000
+adding difference 0.162278 adding 0.000000 to 0.162278
+final: 0.162278
+V:  0.16   7/  6 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.212328 after -> 29.97 0.000000
+adding difference 0.212328 adding 0.000000 to 0.212328
+final: 0.212328
+
+= ratatouille weird start, timing=
 
 "1:26:15.57" , "1:26:18.87", "profanity", "bloo..", "and no one else seems to have it in this [bloo..] town,",
 
