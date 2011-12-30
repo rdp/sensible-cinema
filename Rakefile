@@ -130,7 +130,8 @@ task 'zip' do
   if OS.doze?
     sys "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
   else
-    sys "zip -r #{name}.zip #{name}"
+    #sys "zip -r #{name}.zip #{name}"
+    puts "NOT packaging win installer"
   end
   if OS.doze?
     puts 'NOT packaging OS X installer'
