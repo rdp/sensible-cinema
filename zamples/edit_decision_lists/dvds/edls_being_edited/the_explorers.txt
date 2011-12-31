@@ -27,7 +27,7 @@
 ],
 
 "beginning_subtitle" => ["- Hurry up! Jump in! - There was a girl with them.", "2:57.03"],
-"ending_subtitle_entry" => ["Wak.", "1:17:02.64"]
+"ending_subtitle_entry" => ["Wak.", "1:17:02.64"],
 
 "source" => "dvd",
 "volume_name" => "THE_EXPLORERS",

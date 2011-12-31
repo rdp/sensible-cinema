@@ -130,7 +130,7 @@ module SensibleSwing
         out =  "# add these into your \"mute\" section if you deem them mutable\n" + parsed_profanities
         if end_srt_time != 3000
           out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
-                 %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"]!
+                 %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
         end
         File.write filename, out
         open_file_to_edit_it filename
