@@ -15,16 +15,15 @@
 == yes do, un-ordered currently, from all the various future release options ==
   genealogy screen saver create/publicize  
   the 50% thing [youtube]
-  amazing grace, our new DVD's
-  open sanitized EDL for viewing :)
-  melissa stuff
-  genealogy open source tree
-    bookmarks, private notes, links in to the real thing
-
+  open sanitized EDL for viewing :)  
   netflix instant actually work :P
   
-  ask for next :P
-  
+  genealogy open source tree
+    bookmarks, private notes, links in to the real thing
+  LLC
+  melissa stuff
+  amazing grace, our new DVD's
+  the cool uploader website
   back lighting from the side
   broken scanning hp2
   rename it "..." or whatever google prefers :P
@@ -59,8 +58,7 @@
     readme be helpful for subtitles [?]
     guide them through process more/subtitles
 
-  upconverter disable aero automagically	
-  
+  upconverter disable aero automagically
   subs can end or begin with comma or spaces or dashes
   that one guy's VAC freakiness
   make annoying things preferences
@@ -76,7 +74,7 @@
   user preference "always just skip" if that's what he wanted :P
   ffmpeg dshow input ramiro patches
   try to reproduce the ffplay bug with just ffmpeg
-  upconvert screen try it out, "release" after testing it with greg for netflix instant
+  upconvert screen try it out, "release" after testing it for netflix instant
   display OSD on command line too, just mine :P
   learn clojure
   OS X netflix instant
@@ -84,7 +82,6 @@
   test rvm email
   add "revision" to mplayer edl's initial -v output
   report ffmpeg/mencoder splitting bugz (2)
-  try out Subtitle Edit (can it extract?)
   @mplayer: ctrl-keys patch, ask them anyway :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
