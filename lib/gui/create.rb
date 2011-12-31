@@ -141,7 +141,7 @@ module SensibleSwing
             euphemized_synchronized_entries.each_with_index{|entry, idx|
               beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
               ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
-              f.puts idx + 1
+              f.puts entry.index_number
               f.puts "#{beginning_time} --> #{ending_time}"
               f.puts entry.text
               f.puts ''
