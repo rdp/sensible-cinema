@@ -61,8 +61,8 @@ module SubtitleProfanityFinder
       
       for permutation in permutations
         if is_single_word_profanity
-          # oh wow this is ughly...
-          as_regexp = Regexp.new("(?:\s|^)" + permutation + "(?:\s|$|[^a-zA-Z])", Regexp::IGNORECASE)
+		  # \s is whitespace
+          as_regexp = Regexp.new("(?:\s|^|[^a-zA-Z])" + permutation + "(?:\s|$|[^a-zA-Z])", Regexp::IGNORECASE)
           all_profanity_combinations << [as_regexp, ' ' + bracketized + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already
         else
           all_profanity_combinations << [as_regexp, bracketized]
