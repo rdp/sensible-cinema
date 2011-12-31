@@ -31,6 +31,7 @@ module SubtitleProfanityFinder
        ts_begin = "#{$2}.#{$3}"
        ts_end =  "#{$4}.#{$5}"
        out = OpenStruct.new
+	   out.index_number = index_line.strip.to_i
        out.beginning_time = EdlParser.translate_string_to_seconds ts_begin
        out.ending_time = EdlParser.translate_string_to_seconds ts_end
        out.text = text.strip
