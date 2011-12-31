@@ -15,10 +15,12 @@ module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries subtitles_raw_text
-     all = subtitles_raw_text.scan(/\d\d:\d\d:\d\d.*?^$/m)
+     all = subtitles_raw_text.scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m)
      all.map{|glop|
-       timing_line = glop.lines.first.strip
-       text = glop.lines.to_a[1..-1].join("") # they still have separating "\n"'s
+	   lines = glop.lines.to_a
+	   index_line = lines[0]
+       timing_line = lines[1].strip
+       text = lines.to_a[2..-1].join("") # they still have separating "\n"'s
        # create english-ified version
        text.gsub!(/<(.|)(\/|)i>/i, '') # kill <i> type things
        text.gsub!(/[^a-zA-Z0-9\-!,.\?'\n\(\)]/, ' ') # kill weird stuff like ellipseses, also quotes would hurt so kill them too
@@ -26,7 +28,6 @@ module SubtitleProfanityFinder
        # extract timing info
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
        timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
-       raise unless $1 && $2 && $3 && $4 # :)
        ts_begin = "#{$2}.#{$3}"
        ts_end =  "#{$4}.#{$5}"
        out = OpenStruct.new
