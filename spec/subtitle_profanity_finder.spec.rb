@@ -44,7 +44,7 @@ describe SubtitleProfanityFinder do
       
       it "should parse out deity singular and at very end" do
         output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
-        output.should include("fortress is our [...]")
+        output.should include("fortress is our [deity]")
       end
       
       it "should remove <i> et al " do
@@ -107,6 +107,17 @@ I believe in the Lord
     EOL
     out[0].should include "55.0"
     assert out[1][0].text =~ /l.../i
+  end
+  
+  it "should do full word with dashes" do
+    parsed, entries = SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)
+6
+00:00:55,068 --> 00:00:59,164
+I believe in heaven and-hell-
+
+    EOL
+    assert parsed =~ /heaven/
+	assert parsed !~ /hell/
   end
   
   describe "it should take optional user params" do
@@ -184,7 +195,7 @@ I believe in the Lord
     end
   end
   
-  it "should write correct times to output files" do
+  it "should capture times and tweak them" do
     out = S.edl_output_from_string <<-EOL, {}, 0,0,88, 88.16, 7296.5, 7292.4, true
 1
 00:01:28,000 --> 00:01:29,036

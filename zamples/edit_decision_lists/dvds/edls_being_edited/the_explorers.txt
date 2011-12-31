@@ -1,7 +1,7 @@
 # edl_version_version 1.1, sensible cinema v0.33.6
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "The Explorers",
-
+# touch 35 beer, 3 past clothes off , 11:40 heck and nudity...
 "mutes" => [
   "0:04:23.87" , "0:04:25.99", "profanity", "j....", "[j....] [chr...] ",
   "0:05:20.89" , "0:05:25.47", "profanity", "a..", "- Kick his [a..]  man. - Go on, kill him.",
