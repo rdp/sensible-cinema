@@ -394,8 +394,7 @@ module SensibleSwing
       titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
       largest_title = titles_with_length.max_by{|title, length| length}
   	  if !largest_title
-  	    show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
-        raise
+  	    display_and_raise "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
 	    end
 	    largest_title = largest_title[0]
       title_to_get_offset_of ||= largest_title
