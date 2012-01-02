@@ -13,10 +13,17 @@
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==
-  genealogy screen saver create/publicize  
+  test explorers
+  version => element
+  note assume DVD origin
+  freelds: comments, secular link, quote, lucas,
   open sanitized original EDL for viewing :)
+  new button
   netflix instant actually work :P
-  
+    screencast, prompt to see it
+ 
+  genealogy screen saver authorize
+  screen saver gedcom 
   genealogy open source tree v0
   LLC
   blu-ray: try VLC with unencrypted mounted, try zoomplayer with encrypted
@@ -76,6 +83,7 @@
   user preference "always just skip" if that's what he wanted :P
   ffmpeg dshow input ramiro patches
   try to reproduce the ffplay bug with just ffmpeg
+  submit abandonment for libdvdnav
   upconvert screen try it out, "release" after testing it for netflix instant
   display OSD on command line too, just mine :P
   learn clojure
