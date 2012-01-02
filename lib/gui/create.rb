@@ -154,11 +154,6 @@ module SensibleSwing
 	  
       add_text_line 'Create: Advanced View Edited Options'
       
-      @mplayer_edl = new_jbutton( "Watch DVD edited (realtime) (mplayer) (no subtitles)")
-      @mplayer_edl.on_clicked {
-        watch_dvd_edited_realtime_mplayer false
-      }
-      
       @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
         watch_dvd_edited_realtime_mplayer true
       end
@@ -193,20 +188,8 @@ module SensibleSwing
         play_dvd_smplayer_unedited false
       }
 
-      @play_mplayer_raw = new_jbutton( "Watch DVD unedited (realtime mplayer)")
-      @play_mplayer_raw.tool_tip = <<-EOL
-        This is also useful for comparing subtitle files to see if they have accurate timings.
-        If you turn on subtitles (use the v button), then compare your srt file at say, the 1 hour mark, or 2 hour mark,
-        with the subtitles that mplayer displays, it *should* match exactly with the output in the command line,
-        like "V: 3600.0" should match your subtitle line "01:00:00,000 --> ..."
-        NB That you can get the mplayer keyboard control instructions with the show instructions button.
-      EOL
-      @play_mplayer_raw.on_clicked {
-        play_dvd_smplayer_unedited true
-      }
-      
       add_text_line "Less commonly used Edit options:"
-	  
+
       new_jbutton("Create new Edit List (for netflix instant or movie file)") do # LODO VIDEO_TS here too?
         names = ['movie file', 'netflix instant']
         dialog = DropDownSelector.new(self, names, "Select type")
@@ -259,6 +242,8 @@ module SensibleSwing
         open_file_to_edit_it filename
       end
       
+      new_jbutton("Show even more rarely used buttons") do
+
       @open_list = new_jbutton("Open/Edit an arbitrary file (EDL, .srt file, whatever)")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", EdlParser::EDL_DIR)
@@ -351,7 +336,7 @@ module SensibleSwing
           show_blocking_message_dialog "wrote #{zoom_path}"
         end
       end
-      
+      end 
       add_text_line 'Options for creating an edited movie file from a local file:'
       
       new_jbutton("Show options to help with creating a fully edited movie file") do
