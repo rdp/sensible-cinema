@@ -20,6 +20,8 @@
     screencast, prompt to see screencast
  
   note assume DVD origin
+  add some "never again" options for things :P
+  display zoom always
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
