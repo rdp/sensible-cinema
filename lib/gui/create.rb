@@ -251,7 +251,6 @@ module SensibleSwing
 ],
 
 "timestamps_relative_to" => ["#{type}"],
-# "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
@@ -527,9 +526,8 @@ module SensibleSwing
 "volume_name" => "#{volume}",
 "timestamps_relative_to" => ["dvd_start_offset","29.97"],
 "disk_unique_id" => "#{hashes['disk_unique_id']}",
-"dvd_title_track" => "#{hashes['dvd_title_track']}", # the longest title is usually the main
+"dvd_title_track" => "#{hashes['dvd_title_track']}", # our guess for it
 "dvd_title_track_length" => "#{hashes['dvd_title_track_length']}", 
-# "subtitle_url" => "http://...",
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie

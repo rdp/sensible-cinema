@@ -14,15 +14,18 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
   test explorers
-  version => element
-  note assume DVD origin
   freelds: comments, secular link, quote, lucas,
   open sanitized original EDL for viewing :)
-  new button
   netflix instant actually work :P
     screencast, prompt to see it
  
+  new button
+  note assume DVD origin
+  version => element
+    prompt "insert it directly?"
+     tell them to close it if open in other windows
   genealogy screen saver authorize
+  only prompt for is it legal twice
   screen saver gedcom 
   genealogy open source tree v0
   LLC
