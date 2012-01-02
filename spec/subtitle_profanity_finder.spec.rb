@@ -98,15 +98,24 @@ describe SubtitleProfanityFinder do
     out.should include "51.59"
   end
 
-  def test_this_added_text text
-    SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)
+  def test_this_added_text text, extra = {}
+    SubtitleProfanityFinder.edl_output_from_string(<<-EOL, extra, 0, 0, 0, 0, 100, 100)
 6
 00:00:55,068 --> 00:00:59,164
 #{text}
 
     EOL
   end
-  
+
+  it "should let you set replacement text" do
+    out = test_this_added_text "a good day", {'good' => ['replace with', :partial_word, 'category']}
+    p out
+    good = "\n  \"0:00:55.07\" , \"0:00:59.16\", \"profanity\", \"category\", \"a [replace with] day\",\n\n"
+    out[0].should == good
+    out = test_this_added_text "a good day", {'good' => ['replace with', :full_word, 'category']}
+    out[0].should == good
+  end
+ 
   it "should accomodate lesser profanities" do
     out = test_this_added_text "I believe in the Lord"
     out[0].should include "55.0"

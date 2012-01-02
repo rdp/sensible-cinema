@@ -45,10 +45,13 @@ module SubtitleProfanityFinder
     profanity_hash.to_a.sort.reverse.each{|profanity, sanitized|
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
       if sanitized.is_a? Array
-        # like ['bad word', :partial_word, 'deity', 'vain use']
-        is_single_word_profanity = true
+        # like 'bad word' => ['vain use', :partial_word, 'deity']
+        raise unless sanitized.length.in? [2, 3]
         raise unless sanitized[1].in? [:full_word, :partial_word]
-        raise unless sanitized.length.in? [2, 4]
+        is_single_word_profanity = true if sanitized[1] == :full_word
+        if sanitized.length == 3
+          category = sanitized[2]
+        end
         sanitized = sanitized[0]
       end
       
@@ -60,14 +63,14 @@ module SubtitleProfanityFinder
         permutations << profanity.gsub(/i/i, 'l')
       end
       
-      replace_with ||= '[' + sanitized + ']'
-      category = sanitized
+      replace_with = '[' + sanitized + ']'
+      category ||= sanitized
       
       for permutation in permutations
         if is_single_word_profanity
 		  # \s is whitespace
           as_regexp = Regexp.new("(?:\s|^|[^a-zA-Z])" + permutation + "(?:\s|$|[^a-zA-Z])", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, sanitized, ' ' + replace_with + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already, and we collapse them
+          all_profanity_combinations << [as_regexp, category, ' ' + replace_with + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already, and we collapse them
         else
           all_profanity_combinations << [as_regexp, category, replace_with]
         end
