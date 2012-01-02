@@ -87,9 +87,12 @@ module SensibleSwing
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
-	if show_select_buttons_prompt("Sometimes subtitle files time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
-          open_file_to_edit_it srt_filename
-          sleep 0.5 # let it open in TextEdit/Notepad first
+	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
+          with_autoclose_message("parsing srt file...") do
+            parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
+          end
+		  open_file_to_edit_it srt_filename
+          sleep 0.5 # let it open in TextEdit/Notepad first...
     	  bring_to_front
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
@@ -115,7 +118,7 @@ module SensibleSwing
           end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle #{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.")
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
-	  start_srt_time = 0
+	      start_srt_time = 0
           start_movie_time = 0
           end_srt_time = 3000
           end_movie_time = 3000
@@ -137,16 +140,7 @@ module SensibleSwing
         sleep 1 # let it open
         if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
           out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
-          File.open(out_file, 'w') do |f|
-            euphemized_synchronized_entries.each_with_index{|entry, idx|
-              beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
-              ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
-              f.puts entry.index_number
-              f.puts "#{beginning_time} --> #{ending_time}"
-              f.puts entry.text
-              f.puts ''
-            }
-          end
+		  write_subs_to_file out_file, euphemized_synchronized_entries
           show_in_explorer out_file
         end
         
@@ -256,6 +250,19 @@ module SensibleSwing
       
     end
 
+		def write_subs_to_file out_file, euphemized_synchronized_entries
+          File.open(out_file, 'w') do |f|
+            euphemized_synchronized_entries.each_with_index{|entry, idx|
+              beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
+              ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
+              f.puts entry.index_number
+              f.puts "#{beginning_time} --> #{ending_time}"
+              f.puts entry.text
+              f.puts ''
+            }
+		  end
+	    end
+	
     def show_rarely_used_buttons
       if we_are_in_developer_mode?
        @reload = new_jbutton("[programmer mode] reload bin/sensible-cinema code") do
