@@ -1,3 +1,7 @@
+= 0.33.8 1-2-12 =
+
+When you scan for profanities, it shows you a euphemized version for you to look through.  Minor UI and mac fixes.
+
 = 0.33.7 12-31-11 =
 
 Add entry number for when it asks you for subtitles, so you won't get confused as to which one it is if there are multiple.
