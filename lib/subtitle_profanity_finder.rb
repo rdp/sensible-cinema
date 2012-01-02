@@ -15,7 +15,7 @@ module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries subtitles_raw_text
-     all = subtitles_raw_text.scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m)
+     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # line endings so that it parses right when linux reads a windows file <huh?>
      all.map{|glop|
 	   lines = glop.lines.to_a
 	   index_line = lines[0]
@@ -81,7 +81,6 @@ module SubtitleProfanityFinder
   # **_time means "a float"
   
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true # lodo may not need include_minor_profs :P
-    
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
 
@@ -221,7 +220,7 @@ module SubtitleProfanityFinder
           # because we now have duplicate's for the letter l/i, refactor [[[word]]] to just [word]
           text.gsub!(/\[+/, '[')
           text.gsub!(/\]+/, ']')
-          entry.text = text # save it away before flattening it
+          entry.euphemized_text = text
           text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
@@ -235,6 +234,7 @@ module SubtitleProfanityFinder
     for entry in entries
       entry.beginning_time = multiply_proc.call(entry.beginning_time)
       entry.ending_time = multiply_proc.call(entry.ending_time)
+      entry.text = entry.euphemized_text
     end
     [output, entries]
   end
