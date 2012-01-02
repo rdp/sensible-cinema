@@ -36,12 +36,12 @@ module SensibleSwing
   	    drive, volume_name, dvd_id = choose_dvd_drive_or_file true # require a real DVD disk :)
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
         if edit_list_path
-		      if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
+		    if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
 		        raise 'aborting'
-		      end
-		    end	  
+		    end
+        end	  
         create_brand_new_dvd_edl
-		update_currently_inserted_dvd_list # notify them that files have changed...lodo is there a better way?
+  	update_currently_inserted_dvd_list # notify them that files have changed...lodo is there a better way?
       end
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
@@ -79,7 +79,7 @@ module SensibleSwing
         srt_filename = new_existing_file_selector_and_select_file("Pick srt file to scan for profanities [may need to download .srt file first]:", File.expand_path('~'))
 		    if(srt_filename =~ /utf16/) # from subrip sometimes
 		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
-        end
+                    end
 		if srt_filename =~ /\.sub$/i
 		  show_blocking_message_dialog "warning--file has to be in Subrip [.srt] format, and yours might be in .sub format, which is incompatible"
 		end
@@ -89,9 +89,9 @@ module SensibleSwing
         
         open_file_to_edit_it srt_filename
         sleep 0.5 # let it open in TextEdit/Notepad first
-    		bring_to_front
+    	bring_to_front
  
-		    if show_select_buttons_prompt("Sometimes subtitle files time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
+	if show_select_buttons_prompt("Sometimes subtitle files time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
@@ -118,11 +118,11 @@ module SensibleSwing
           end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle #{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.")
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
-		      start_srt_time = 0
+	  start_srt_time = 0
           start_movie_time = 0
           end_srt_time = 3000
           end_movie_time = 3000
-    		end
+    	end
         
         parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         
@@ -243,13 +243,34 @@ module SensibleSwing
       end
       
       new_jbutton("Show even more rarely used buttons") do
+        child = new_child_window
+        child.show_rarely_used_buttons
+      end
+
+      add_text_line 'Options for creating an edited movie file from a local file:'
+      
+      new_jbutton("Show options to help with creating a fully edited movie file") do
+        window = new_child_window
+        window.add_options_that_use_local_files
+      end
+      
+    end
+
+    def show_rarely_used_buttons
+      if we_are_in_developer_mode?
+       @reload = new_jbutton("[programmer mode] reload bin/sensible-cinema code") do
+         for file in Dir[__DIR__ + '/*.rb']
+           p file
+           eval(File.read(file), TOPLEVEL_BINDING, file)
+         end
+       end
+      end
 
       @open_list = new_jbutton("Open/Edit an arbitrary file (EDL, .srt file, whatever)")
       @open_list.on_clicked {
         filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", EdlParser::EDL_DIR)
         open_file_to_edit_it filename
       }
-      
 
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
@@ -336,23 +357,6 @@ module SensibleSwing
           show_blocking_message_dialog "wrote #{zoom_path}"
         end
       end
-      end 
-      add_text_line 'Options for creating an edited movie file from a local file:'
-      
-      new_jbutton("Show options to help with creating a fully edited movie file") do
-        window = new_child_window
-        window.add_options_that_use_local_files
-      end
-      
-      if we_are_in_developer_mode?
-       @reload = new_jbutton("[programmer mode] reload bin/sensible-cinema code") do
-         for file in Dir[__DIR__ + '/*.rb']
-           p file
-           eval(File.read(file), TOPLEVEL_BINDING, file)
-         end
-       end
-      end
-      
     end
     
     def get_disk_info
@@ -379,7 +383,7 @@ module SensibleSwing
       largest_title = titles_with_length.max_by{|title, length| length}
   	  if !largest_title
   	    display_and_raise "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
-	    end
+	  end
 	    largest_title = largest_title[0]
       title_to_get_offset_of ||= largest_title
  	    out_hashes['dvd_title_track'] = title_to_get_offset_of
@@ -432,10 +436,10 @@ module SensibleSwing
           outs[:mpeg_start_offset] ||= $1.to_f
         end
 	      float = /\d+\.\d+/
-	      if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
-            nav = $1.to_f
-            mpeg = $2.to_f
-            if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
+	     if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
+          nav = $1.to_f
+          mpeg = $2.to_f
+          if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
 			  if mpeg < nav
 			    # case there is an MPEG split before the second NAV packet [ratatouille]
 			    p mpeg, nav, old_mpeg
@@ -446,7 +450,7 @@ module SensibleSwing
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
             else
 			  old_mpeg = mpeg # ratatouile weirdness...
-			end
+	    end
       	  end
       }
       show_blocking_message_dialog "unable to calculate time?" unless outs.length == 2
