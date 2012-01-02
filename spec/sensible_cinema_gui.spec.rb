@@ -28,6 +28,8 @@ module SensibleSwing
       MainWindow.new.dispose# doesn't crash :)
     end
 
+   it "should have working is_dvd method for mac"
+
     Test_DVD_ID = 'deadbeef|8b27d001'
     
     it "should die if you file select a poorly formed edl" do

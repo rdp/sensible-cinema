@@ -300,7 +300,6 @@ KP_ENTER dvdnav select
          mplayer_loc = LocalModifiedMplayer
          assert File.exist?(mplayer_loc)
        else
-	     p 'todo check that its mplayer edl first'
          mplayer_loc = "mplayer"
        end
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
@@ -462,7 +461,17 @@ KP_ENTER dvdnav select
 
     def is_dvd? drive_or_file
       # it's like a/b/VIDEO_TS or d:/
-      (File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS') || File.exist?(drive_or_file + '/VIDEO_TS')
+      if File.basename(File.dirname(drive_or_file)) == 'VIDEO_TS' 
+        # /a/b/c/VIDEO_TS/yo.vob
+        true
+      elsif File.exist?(drive_or_file + '/VIDEO_TS')
+        # d:\
+        true
+      elsif OS.mac? && (drive_or_file =~ /\/dev\/rdisk\d+/)
+        true
+      else
+       false
+      end
     end
 
 #    MplayerBeginingBuffer = 1.0
