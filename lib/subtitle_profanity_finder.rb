@@ -130,7 +130,7 @@ module SubtitleProfanityFinder
 
 
 
-    bad_profanities = {'hell' => ['he..', :full_word],
+    bad_profanities = {'hell' => ['h...', :full_word],
       'g' +
       111.chr + 
       100.chr => ['vain use', :partial_word, 'deity'], 'g' +
@@ -162,8 +162,7 @@ module SubtitleProfanityFinder
       'chri' +
       'st'=> ['vain use', :full_word, 'deity'], # allow for christian[ity] 
       'sh' +
-       'i' + 
-       't' => 'sh..',
+       'i' + 't' => 'sh..',
     }
     
     bad_profanities.merge! extra_profanity_hash # LODO make easier to use...

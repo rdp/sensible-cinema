@@ -86,12 +86,12 @@ module SensibleSwing
         # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
-        
-        open_file_to_edit_it srt_filename
-        sleep 0.5 # let it open in TextEdit/Notepad first
-    	bring_to_front
  
 	if show_select_buttons_prompt("Sometimes subtitle files time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
+          open_file_to_edit_it srt_filename
+          sleep 0.5 # let it open in TextEdit/Notepad first
+    	  bring_to_front
+
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
