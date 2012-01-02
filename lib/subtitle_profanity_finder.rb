@@ -154,15 +154,16 @@ module SubtitleProfanityFinder
       's'*2)) => ['a..', :full_word],
       arse + 'h' +
       'ole' => 'a..h...',
-      'dieu' => ['deity', :full_word], # TODO fails...
-      arse + 'wipe' => 'a..w....',
+      'dieu' => ['deity', :full_word],
+      arse + 'w' +
+      'ipe' => 'a..w...',
       'jes' +
-      'u' + 's' => 'j....',
+      'u' + 's' => ['vain use', :partial_word, 'deity'],
       'chri' +
-      'st'=> ['chr...', :full_word], # allow for christian[ity] 
+      'st'=> ['vain use', :full_word, 'deity'], # allow for christian[ity] 
       'sh' +
-       'i' + 't' => 'sh..',
-      'a realllly bad word' => ['test edited bad word', :full_word]
+       'i' + 
+       't' => 'sh..',
     }
     
     bad_profanities.merge! extra_profanity_hash # LODO make easier to use...

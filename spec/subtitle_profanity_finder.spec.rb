@@ -44,7 +44,7 @@ describe SubtitleProfanityFinder do
       
       it "should parse out deity singular and at very end" do
         output = SubtitleProfanityFinder.edl_output 'deity_end.srt'
-        output.should include("fortress is our [deity]")
+        output.should include("fortress is our [vain use]")
       end
       
       it "should remove <i> et al " do
@@ -109,7 +109,6 @@ describe SubtitleProfanityFinder do
 
   it "should let you set replacement text" do
     out = test_this_added_text "a good day", {'good' => ['replace with', :partial_word, 'category']}
-    p out
     good = "\n  \"0:00:55.07\" , \"0:00:59.16\", \"profanity\", \"category\", \"a [replace with] day\",\n\n"
     out[0].should == good
     out = test_this_added_text "a good day", {'good' => ['replace with', :full_word, 'category']}
