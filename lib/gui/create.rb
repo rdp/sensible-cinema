@@ -90,10 +90,11 @@ module SensibleSwing
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
           with_autoclose_message("parsing srt file...") do
             parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
+			write_subs_to_file euphemized_filename = EdlTempFile + '.euphemized.srt.txt', euphemized_synchronized_entries
+  		    open_file_to_edit_it euphemized_filename
+            sleep 0.5 # let it open in TextEdit/Notepad first...
+      	    bring_to_front
           end
-		  open_file_to_edit_it srt_filename
-          sleep 0.5 # let it open in TextEdit/Notepad first...
-    	  bring_to_front
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
