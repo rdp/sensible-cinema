@@ -19,7 +19,7 @@
   netflix instant actually work :P
     screencast, prompt to see it
  
-  new button
+  new button for rarely used
   note assume DVD origin
   version => element
     prompt "insert it directly?"
@@ -68,7 +68,13 @@
   melissa stuff:
     button and drop down have DVD titles
     readme be helpful for subtitles [?]
+      better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
     guide them through process more/subtitles
+    split pc/mac for understandability :P
+    instructions on how to continue after creation
+    instructions on how to actually use opensubtitles LOL
+      avoid .sub
+    overlapping mutes don't prompt
 
   upconverter disable aero automagically
   subs can end or begin with comma or spaces or dashes
@@ -169,7 +175,8 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
-  report xbmc bugz
+  remove subtitle_url's everywhere 
+  report/check xbmc bugz
   add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   can "auto find" for files, based on fast hash

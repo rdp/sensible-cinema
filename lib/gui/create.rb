@@ -91,8 +91,8 @@ module SensibleSwing
         sleep 0.5 # let it open in TextEdit/Notepad first
     		bring_to_front
  
-		    if show_select_buttons_prompt("Would you like to enter timing adjust synchronization information for this .srt file?\n  (on the final pass you should want to it, even if it already matches well, for future information' sake)") == :yes
-          if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for timestamp times [you probably do...]?\n") == :yes
+		    if show_select_buttons_prompt("Sometimes subtitle files time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
+          if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
           end
@@ -107,7 +107,7 @@ module SensibleSwing
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
           start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})")
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
-          if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end could be a spoiler]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
+          if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end can be a spoiler at times]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
           else
            end_entry = all_entries[all_entries.length*0.75]  
@@ -115,7 +115,7 @@ module SensibleSwing
           end_text = end_entry.text.gsub("\n", " ")
           end_srt_time = end_entry.beginning_time
           human_end  = EdlParser.translate_time_to_human_readable(end_srt_time)
-          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle #{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time, finding any subtitle, then looking for that subtitle in the .srt file to see where it lies\nrelative to the one you are interested in.")
+          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle #{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.")
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
 		      start_srt_time = 0
