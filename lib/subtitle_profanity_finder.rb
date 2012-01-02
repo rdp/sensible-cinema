@@ -34,7 +34,8 @@ module SubtitleProfanityFinder
 	   out.index_number = index_line.strip.to_i
        out.beginning_time = EdlParser.translate_string_to_seconds ts_begin
        out.ending_time = EdlParser.translate_string_to_seconds ts_end
-       out.text = text.strip
+       out.text = text.strip # harmless right?
+	   out.single_line_text = text.strip.gsub(/^[- ,_\.]+/, '').gsub(/[- ,_]+$/, '').gsub(/[\r\n]/, ' ')
        out
      }
    end

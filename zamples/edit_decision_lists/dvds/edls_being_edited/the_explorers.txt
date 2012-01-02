@@ -1,27 +1,28 @@
 # edl_version_version 1.1, sensible cinema v0.33.6
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "The Explorers",
-# touch 35 beer, 3 past clothes off , 11:40 heck and nudity...
+# touch 35 beer, 3 past clothes off , 11:40 heck, nudity...
 "mutes" => [
- "0:04:23.67" , "0:04:25.99", "profanity", "deity", "[vain use] [vain use] ",
-  "0:05:20.69" , "0:05:25.47", "profanity", "a..", "- Kick his [a..]  man. - Go on, kill him.",
-  "0:06:00.05" , "0:06:04.43", "profanity", "a..", "Elephantitis is when something gets bloated and ugly, like your [a..] ",
-  "0:06:13.69" , "0:06:15.10", "profanity", "a..", "Kick his [a..] ",
-  "0:06:16.24" , "0:06:18.78", "profanity", "a..", "Kick his [a..] ",
-  "0:06:48.07" , "0:06:53.06", "profanity", "da..", "This [da..] carburettor. Must've rebuilt this thing 100 times.",
-  "0:12:00.64" , "0:12:02.93", "profanity", "h...", "- Not now, Heinlein. - Go to [h...] ",
-  "0:20:32.63" , "0:20:34.76", "profanity", "deity", "Oh, my [vain use]!",
-  "0:20:35.55" , "0:20:39.09", "profanity", "h...", "- What the [h...] s going on in there? - Get in here.",
-  "0:21:38.75" , "0:21:40.53", "profanity", "da..", "[da..].",
-  "0:24:46.41" , "0:24:49.94", "profanity", "deity", "Wolfgang! [vain use], man, I'm sorry.",
-  "0:25:57.69" , "0:26:02.60", "profanity", "deity", "Oh, my [vain use]. There she is.",
-  "0:45:14.61" , "0:45:16.93", "profanity", "deity", "[vain use]! Did you see that?",
-  "1:01:51.86" , "1:01:53.47", "profanity", "deity", "Oh, my [vain use].",
-  "1:04:07.63" , "1:04:09.54", "profanity", "h...", "What the [h...] s this?",
-  "1:12:40.80" , "1:12:43.66", "profanity", "deity", "- Oh, my [vain use]! - Oh, my [vain use]!",
-# "0:06:57.57" , "0:07:03.11", "profanity", "butt", "Steve Jackson's a jerk. If he tries it again, I'll kick his [butt] ",
-#   "0:48:30.60" , "0:48:32.67", "profanity", "idiot", "You [idiot].", # actually before lke 0.2
-#  57.48 30.42
+
+  "0:04:23.95" , "0:04:25.87", "profanity", "deity", "[vain use] [vain use] ",
+  "0:05:21.01" , "0:05:22.18", "profanity", "a..", "Kick his [a..]  man!",
+  "0:06:00.09" , "0:06:04.05", "profanity", "a..", "Elephantitis is when something gets bloated and ugly, like your [a..] ",
+  "0:06:13.73" , "0:06:15.19", "profanity", "a..", "Kick his [a..] ",
+  "0:06:16.23" , "0:06:18.19", "profanity", "a..", "Kick his [a..] ",
+  "0:06:48.39" , "0:06:50.22", "profanity", "da..", "This [da..] carburetor.",
+  "0:12:00.50" , "0:12:02.71", "profanity", "h...", "- Not right now, Heinlein. - Go to [h...] ",
+  "0:15:41.26" , "0:15:43.22", "profanity", "h...", "- Hello, Heinlein. - Go to [h...] ",
+  "0:20:33.01" , "0:20:35.14", "profanity", "deity", "Oh, my [vain use]!",
+  "0:20:35.31" , "0:20:36.77", "profanity", "h...", "Hey, what the [h...] s going on in there?",
+  "0:21:39.08" , "0:21:40.37", "profanity", "da..", "[da..].",
+  "0:24:46.60" , "0:24:49.82", "profanity", "deity", "Wolfgang! Oh, [vain use], man, I'm sorry!",
+  "0:25:57.84" , "0:25:59.72", "profanity", "deity", "Oh, my [vain use].",
+  "0:43:50.80" , "0:43:52.64", "profanity", "h...", "Burn in [h...]  alien maggots!",
+  "0:45:14.72" , "0:45:16.89", "profanity", "deity", "[vain use]! Did you see that?",
+  "0:52:24.57" , "0:52:27.08", "profanity", "h...", "I wanna find out what the [h...] it was we saw up there.",
+  "1:01:50.77" , "1:01:53.40", "profanity", "deity", "- Where are we? - Oh, my [vain use].",
+  "1:04:08.12" , "1:04:09.49", "profanity", "h...", "What? What the [h...] s this?",
+  "1:12:41.39" , "1:12:43.56", "profanity", "deity", "- Oh, my [vain use]! - Oh, my [vain use]!",
 ],
 
 "blank_outs" => [
@@ -29,8 +30,10 @@
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
 ],
 
-"beginning_subtitle" => ["- Hurry up! Jump in! - There was a girl with them.", "2:57.03"],
-"ending_subtitle_entry" => ["Wak.", "1:17:02.64"],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Hey, you! You better get out of here!", "1:15.26"],
+"ending_subtitle_entry" => ["- You get it, don't you? - No, I...", "01:17:35.31"],
 
 "source" => "dvd",
 "volume_name" => "THE_EXPLORERS",

@@ -143,7 +143,7 @@ module SensibleSwing
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
 		
 
-	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
+	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]?") == :yes
           out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
 		  write_subs_to_file out_file, euphemized_synchronized_entries
           show_in_explorer out_file

@@ -154,3 +154,6 @@
     have some menu system for "choose, now, which path you'd like to take" (ex: which alternate ending)
   when parsing a subtitle file, can specify an "extra buffer" to put around all of the subsequent mutes that it calculates for you, based on timestamp.
   scan subtitles for text that "accompanies" violent or sex scenes, edit around those automatically.s
+  when playing they are presented with a list of "groups" of items that can be added to their EDL.
+    One for profanity, one for boredome, etc.  and can pick and choose, mix and match the ones that they will apply for that viewing.
+	  It then adds them together and uses them.

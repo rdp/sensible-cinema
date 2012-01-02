@@ -26,13 +26,13 @@ describe SubtitleProfanityFinder do
     
     output = SubtitleProfanityFinder.edl_output 'dragon.srt'
 
-    describe "he.." do
+    describe "h..." do
       it "should include the bad line with timestamp" do
-        output.should match(/0:00:54.93.*"he\.\."/)
+        output.should match(/0:00:54.93.*"h\.\.\."/)
       end
     
       it "should include the description in its output" do
-        output.should include("e [he..] b")
+        output.should include("e [h...] b")
       end
     end
     
@@ -63,7 +63,8 @@ describe SubtitleProfanityFinder do
       
       it 'should not parse it if it\'s in other words' do
         output2.should_not include "a..ume"
-        output2.should_not include "he..o" # todo: positive ex: ... :P
+        output2.should_not include "h...o"
+        output2.should_not include "he..o"
       end
       
       it 'should parse them at EOL' do
@@ -105,6 +106,13 @@ describe SubtitleProfanityFinder do
 #{text}
 
     EOL
+  end
+  
+  it "should remove some punctuation" do
+    out = test_this_added_text " .- (ab\nc)."
+    out[1][0].single_line_text.should == "(ab c)."	
+    out = test_this_added_text "(abc)., "
+    out[1][0].single_line_text.should == "(abc)."	
   end
 
   it "should let you set replacement text" do
