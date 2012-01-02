@@ -65,9 +65,9 @@ module SubtitleProfanityFinder
         if is_single_word_profanity
 		  # \s is whitespace
           as_regexp = Regexp.new("(?:\s|^|[^a-zA-Z])" + permutation + "(?:\s|$|[^a-zA-Z])", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, ' ' + bracketized + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already
+          all_profanity_combinations << [as_regexp, sanitized, ' ' + bracketized + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already, and we collapse them
         else
-          all_profanity_combinations << [as_regexp, bracketized]
+          all_profanity_combinations << [as_regexp, sanitized, bracketized]
         end
       end
     }
@@ -200,20 +200,19 @@ module SubtitleProfanityFinder
         ts_end = entry.ending_time
         ts_end += add_to_end_each_ts
         ts_end = multiply_proc.call(ts_end)
-        found_one = false
-        for profanity, (sanitized, whole_word) in all_profanity_combinations
-  
+        found_category = nil
+        for (profanity, category, sanitized) in all_profanity_combinations
           if text =~ profanity
-            found_one = true
+            found_category = category
             break
           end
         end
         
-        if found_one
+        if found_category
           # sanitize/euphemize the subtitle text for all profanities...
           for all_profanity_combinations2 in all_profanity_combinationss
-            for (prof2, (sanitized2, whole_word2)) in all_profanity_combinations2
-              text.gsub!(prof2, sanitized2)
+            for (profanity, category, sanitized) in all_profanity_combinations2
+              text.gsub!(profanity, sanitized)
             end
           end
           
@@ -225,7 +224,7 @@ module SubtitleProfanityFinder
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
           unless output.contain? ts_begin_human # some previous profanity already found this line :P
-            output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{sanitized.gsub(/[\[\]]/, '').strip}", "#{text}",\n!
+            output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{found_category}", "#{text}",\n!
           end
         end
       end
