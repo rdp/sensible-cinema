@@ -133,7 +133,7 @@ module SubtitleProfanityFinder
     bad_profanities = {'hell' => ['he..', :full_word],
       'g' +
       111.chr + 
-      100.chr => 'deity', 'g' +
+      100.chr => ['vain use', :partial_word, 'deity'], 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
@@ -159,7 +159,7 @@ module SubtitleProfanityFinder
       'jes' +
       'u' + 's' => 'j....',
       'chri' +
-      'st'=> ['chr...', :full_word], # allow for christian[ity] [good idea or not?]
+      'st'=> ['chr...', :full_word], # allow for christian[ity] 
       'sh' +
        'i' + 't' => 'sh..',
       'a realllly bad word' => ['test edited bad word', :full_word]
