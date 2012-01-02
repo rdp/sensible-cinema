@@ -25,6 +25,7 @@ module SensibleSwing
       require 'openssl'
       eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE") if full_url =~ /https/
       keep_going_bg_thread = true
+	  print 'working'
       Thread.new { while keep_going_bg_thread; print '.'; sleep 1; end}
       writeOut = open(to_here, "wb")
       writeOut.write(open(full_url).read)

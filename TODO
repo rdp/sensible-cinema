@@ -23,6 +23,7 @@
   note assume DVD origin
   add some "never again" options for things :P
   display zoom always
+  failed downloads can corrupt...
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
@@ -74,10 +75,13 @@
     split pc/mac for understandability :P
     instructions on how to continue after creation
     instructions on how to actually use opensubtitles LOL
-      avoid .sub
+      avoid .sub!
     overlapping mutes don't prompt
 
   upconverter disable aero automagically
+  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
+    and end too why not?
+    ideally only if it varies much more than a sec.
   subs can end or begin with comma or spaces or dashes
   that one guy's VAC freakiness
   make annoying things preferences
@@ -203,8 +207,7 @@
   DIRT short list
   @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
-  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
-    and end too why not?
+
   it should ask for an EDL when you click "play it unedited" -- actually just say why...
   sons of provo "music video" EDL
   volume_name => dvd_volume_name

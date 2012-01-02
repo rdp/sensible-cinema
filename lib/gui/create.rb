@@ -94,7 +94,7 @@ module SensibleSwing
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
-            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
+            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time."
           end
           all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
