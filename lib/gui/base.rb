@@ -235,6 +235,12 @@ module SensibleSwing
       extra_options << "-framedrop" # even in create mode, if the audio ever gets off, we're hosed with making accurate timestamps...so drop, until I hear otherwise...
       extra_options << "-mc 2"
       extra_options << "-autosync 30" 
+
+      if we_are_in_create_mode
+        extra_options << "-osdlevel 2"
+        extra_options << "-osd-verbose" if we_are_in_developer_mode?		
+      end
+      extra_options << "-osd-fractions 1"
       
       if !show_subs && !srt_filename
         # disable all subtitles :P
@@ -404,11 +410,6 @@ KP_ENTER dvdnav select
     def get_dvd_playback_options descriptors
       out = []
       
-      if we_are_in_create_mode
-        out << "-osdlevel 2 -osd-fractions 1"
-        out << "-osd-verbose" if we_are_in_developer_mode?		
-      end
-
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
       if nav
         offset_time = mpeg_time*1/1.001 - nav # our reading like 0.5 is actually a bit offset, since in reality that "means 4.997" or what not

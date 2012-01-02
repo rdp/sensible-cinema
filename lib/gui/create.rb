@@ -96,10 +96,7 @@ module SensibleSwing
             Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer."
           end
-          all_entries = nil
-          with_autoclose_message("parsing srt file...") do
-            all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
-          end
+          all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
           
           start_text = all_entries[0].text.gsub("\n", " ")
@@ -123,8 +120,11 @@ module SensibleSwing
           end_srt_time = 3000
           end_movie_time = 3000
     	end
-        
-        parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+
+        parsed_profanities, euphemized_synchronized_entries = nil
+        with_autoclose_message("parsing srt file...") do
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        end
         
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your \"mute\" section if you deem them mutable\n" + parsed_profanities
