@@ -135,11 +135,15 @@ module SensibleSwing
         if end_srt_time != 3000
           out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                  %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
+		  show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.text.gsub("\n", " ")}\" (##{middle_entry.index_number})\nshould first appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nIf it's off much you may want to try a different .srt file"
         end
         File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open
-        if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
+        middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
+		
+
+	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file?") == :yes
           out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
 		  write_subs_to_file out_file, euphemized_synchronized_entries
           show_in_explorer out_file
