@@ -1,3 +1,7 @@
+= 0.33.7 12-31-11 =
+
+Add entry number for when it asks you for subtitles, so you won't get confused as to which one it is if there are multiple.
+
 = 0.33.6 12-28-11 =
 
 Some aesthetic changes to the profanity scanner and create mode.

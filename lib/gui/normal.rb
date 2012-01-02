@@ -106,7 +106,7 @@ module SensibleSwing
       old_preference = LocalStorage[name]
       old_class = old_preference.class
       new_preference = get_user_input("Enter value for #{english_name}", old_preference)
-      raise if new_preference.empty?
+      display_and_raise 'enter something like 0.0' if new_preference.empty?
       if old_class == Float
         new_preference = new_preference.to_f
       elsif old_class == String
@@ -136,7 +136,7 @@ module SensibleSwing
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
-        raise unless File.exist?(output_file)
+        raise unless File.exist?(output_file) # sanity
         show_blocking_message_dialog("created #{output_file}")
       else
         play_smplayer_edl_non_blocking [filename_mpg, edl_filename]

@@ -105,7 +105,7 @@ module SensibleSwing
           start_text = all_entries[0].text.gsub("\n", " ")
           start_srt_time = all_entries[0].beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
-          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\n  first frame it appears on the screen (possibly near #{human_start})")
+          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})")
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end could be a spoiler]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
@@ -115,7 +115,7 @@ module SensibleSwing
           end_text = end_entry.text.gsub("\n", " ")
           end_srt_time = end_entry.beginning_time
           human_end  = EdlParser.translate_time_to_human_readable(end_srt_time)
-          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{end_text}\"\n  first appears (possibly near #{human_end}).\nYou can find it by searching to near that time, finding any subtitle, then looking for that subtitle in the .srt file to see where it lies\nrelative to the one you are interested in.")
+          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle #{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time, finding any subtitle, then looking for that subtitle in the .srt file to see where it lies\nrelative to the one you are interested in.")
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
 		      start_srt_time = 0
@@ -141,7 +141,7 @@ module SensibleSwing
             euphemized_synchronized_entries.each_with_index{|entry, idx|
               beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
               ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
-              f.puts idx + 1
+              f.puts entry.index_number
               f.puts "#{beginning_time} --> #{ending_time}"
               f.puts entry.text
               f.puts ''
@@ -394,8 +394,7 @@ module SensibleSwing
       titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
       largest_title = titles_with_length.max_by{|title, length| length}
   	  if !largest_title
-  	    show_blocking_message_dialog "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
-        raise
+  	    display_and_raise "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
 	    end
 	    largest_title = largest_title[0]
       title_to_get_offset_of ||= largest_title
