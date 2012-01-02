@@ -150,14 +150,15 @@
   @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
+  super automatic-o "your DVD has no EDL? let me do all of that for you..."
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  report xbmc bugz
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  report xbmc bugz
   add 0.25 only in "normal" mode to end of skips...I guess...if they came from file mode anyway...
     theoretically add 0 in normal mode, for the pedantic...make it a preference I guess :P
   can "auto find" for files, based on fast hash
