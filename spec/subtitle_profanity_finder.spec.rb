@@ -97,27 +97,26 @@ describe SubtitleProfanityFinder do
     out.should include "45.46"
     out.should include "51.59"
   end
-  
-  it "should accomodate lesser profanities" do
-    out = SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)
+
+  def test_this_added_text text
+    SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)
 6
 00:00:55,068 --> 00:00:59,164
-I believe in the Lord
+#{text}
 
     EOL
+  end
+  
+  it "should accomodate lesser profanities" do
+    out = test_this_added_text "I believe in the Lord"
     out[0].should include "55.0"
     assert out[1][0].text =~ /l.../i
   end
   
   it "should do full word with dashes" do
-    parsed, entries = SubtitleProfanityFinder.edl_output_from_string(<<-EOL, {}, 0, 0, 0, 0, 100, 100)
-6
-00:00:55,068 --> 00:00:59,164
-I believe in heaven and-hell-
-
-    EOL
+    parsed, entries = test_this_added_text("I believe in heaven and-hell-")
     assert parsed =~ /heaven/
-	assert parsed !~ /hell/
+    assert parsed !~ /hel/
   end
   
   describe "it should take optional user params" do
@@ -195,7 +194,7 @@ I believe in heaven and-hell-
     end
   end
   
-  it "should capture times and tweak them" do
+  it "should capture times and tweak them, and keep punctuation" do
     out = S.edl_output_from_string <<-EOL, {}, 0,0,88, 88.16, 7296.5, 7292.4, true
 1
 00:01:28,000 --> 00:01:29,036
@@ -203,6 +202,7 @@ Grandpa(sris)! your's is here?!.,
 
     EOL
     assert out[1][0].beginning_time == 88.16
+    out[1][0].text.should match /\(sris\)!/
   end
   
 end

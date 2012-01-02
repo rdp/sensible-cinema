@@ -45,9 +45,10 @@ module SubtitleProfanityFinder
     profanity_hash.to_a.sort.reverse.each{|profanity, sanitized|
       as_regexp = Regexp.new(profanity, Regexp::IGNORECASE)
       if sanitized.is_a? Array
+        # like ['bad word', :partial_word, 'deity', 'vain use']
         is_single_word_profanity = true
-        raise unless sanitized[1] == :full_word
-        raise unless sanitized.length == 2
+        raise unless sanitized[1].in? [:full_word, :partial_word]
+        raise unless sanitized.length.in? [2, 4]
         sanitized = sanitized[0]
       end
       
@@ -59,15 +60,16 @@ module SubtitleProfanityFinder
         permutations << profanity.gsub(/i/i, 'l')
       end
       
-      bracketized = '[' + sanitized + ']'
+      replace_with ||= '[' + sanitized + ']'
+      category = sanitized
       
       for permutation in permutations
         if is_single_word_profanity
 		  # \s is whitespace
           as_regexp = Regexp.new("(?:\s|^|[^a-zA-Z])" + permutation + "(?:\s|$|[^a-zA-Z])", Regexp::IGNORECASE)
-          all_profanity_combinations << [as_regexp, sanitized, ' ' + bracketized + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already, and we collapse them
+          all_profanity_combinations << [as_regexp, sanitized, ' ' + replace_with + ' '] # might introduce an extra space in there, but that's prolly ok since they're full-word already, and we collapse them
         else
-          all_profanity_combinations << [as_regexp, sanitized, bracketized]
+          all_profanity_combinations << [as_regexp, category, replace_with]
         end
       end
     }
@@ -219,7 +221,7 @@ module SubtitleProfanityFinder
           # because we now have duplicate's for the letter l/i, refactor [[[word]]] to just [word]
           text.gsub!(/\[+/, '[')
           text.gsub!(/\]+/, ']')
-          entry.euphemized_text = text
+          entry.text = text
           text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
@@ -233,7 +235,6 @@ module SubtitleProfanityFinder
     for entry in entries
       entry.beginning_time = multiply_proc.call(entry.beginning_time)
       entry.ending_time = multiply_proc.call(entry.ending_time)
-      entry.text = entry.euphemized_text
     end
     [output, entries]
   end
