@@ -14,13 +14,15 @@
   
 == yes do, un-ordered currently, from all the various future release options ==
   netflix instant actually work :P
- 
+    determine its timing...
+  email genealogy
+	
   netflix screencast, prompt to see screencast
-  smplayer has no -osd-fractions set uh don't think...or at least file mode doesn't...
   note assume DVD origin
   add some "never again" options for things :P
-  display zoom always
-  failed downloads can corrupt...
+  display zoom button always
+  combine all "folders" of movie EDL's into one folder
+  failed downloads can be corrupt...
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
@@ -81,10 +83,8 @@
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
     ideally only if it varies much more than a sec.
-  subs can end or begin with comma or spaces or dashes
-  that one guy's VAC freakiness
-  make annoying things preferences
-  mplayer muting causes jerkiness
+  that one guy's VAC freakiness...
+  mplayer muting causes jerkiness doze
   dvd_start_offset -> dvd_mpeg_start_offset
   better name for dvd_nav_packet_offset with mpeg in it so you know ordering
   my treasury (john newspaper thing)
@@ -108,15 +108,13 @@
   @mplayer: ctrl-keys patch, ask them anyway :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
-  grab all wedding iso's
-  double check NAV packets verus full DVD length
+  grab wedding iso's
   donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   inspector general
   check if mplayer handles "a mute that leads into a second mute or skip" well or not
   remove splits' functionality 
   the "lined" "select this one" quality editor...
-  super precise timing, this 1.001 apparently is barely off consistently :P
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
@@ -155,9 +153,6 @@
   minor redcar tweaks
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should just combine
-  blu ray timing
-    Are they the same as DVD's?  They seem really close...
-    sub-title wise? do subs match something else? subs DVD vs. blu ray?
   split LLC's website+consumer
     get LLC before a "real" domain name
   ask for more beta testers for use, ask for more beta testers for creation, too
@@ -180,6 +175,10 @@
       or add button "reveal advanced" with this new button on it...
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  blu ray timing
+    Are they the same as DVD's?  They seem really close...
+    sub-title wise? do subs match something else? subs DVD vs. blu ray?
+  super precise timing, this 1.001 apparently is barely off consistently :P
   submit for copyright all source/note "for not patentable reasons"
   remove subtitle_url's everywhere 
   report/check xbmc bugz
