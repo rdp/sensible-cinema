@@ -17,7 +17,8 @@ end
 
 
 def render_edited out, incoming_params
-    mutes = combine_arrays incoming_params['mute_starts'], incoming_params['mute_ends']
+    mutes = combine_arrays incoming_params['mute_start'], incoming_params['mute_end']
+    splits = combine_arrays incoming_params['skip_start'], incoming_params['skip_end']
     out.puts 'mutes:' + mutes.join(',')
     out.puts $template.result(binding)
 end

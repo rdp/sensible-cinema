@@ -1,5 +1,5 @@
 #!/home/wilkboar/local_installs/bin/ruby
-# http://rogerdpack.t28.net/sensible-cinema/youtube_edl/yo?mute_starts=10&mute_starts=30&mute_ends=20&mute_ends=35
+# http://rogerdpack.t28.net/sensible-cinema/youtube_edl/yo?mute_start=2&mute_end=7&mute_start=10&mute_end=20
 require 'socket'
 if Socket.gethostname =~ /bluehost.com/
   ENV['GEM_PATH'] = '/home/wilkboar/.gems:/usr/lib/ruby/gems/1.8'
