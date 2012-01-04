@@ -157,3 +157,4 @@
   when playing they are presented with a list of "groups" of items that can be added to their EDL.
     One for profanity, one for boredome, etc.  and can pick and choose, mix and match the ones that they will apply for that viewing.
 	  It then adds them together and uses them.
+  http://openplayback.blogspot.com/ lists some useful ideas
