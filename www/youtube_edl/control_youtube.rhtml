@@ -86,7 +86,7 @@ Run this from a web server to actually work...
           else
             ytplayer.unMute();
           if(last_end = areWeWithin(splits)) {
-              alert("should skip to " + last_end);
+            ytplayer.seekTo(last_end, true);
           }
           
         }
