@@ -170,6 +170,10 @@ Also clearplay doesn't seem to users for example leave comments on their filters
 Also you can't tell from clearplay's list whether a DVD is absent because it's clean, or because they
 haven't done a filter for it.
 Also sometimes certain DVD's "don't work" with clearplay for some reason (rental versions?) [3]
+As a friend once said "Clearplay is a bit of a hassle to use in today's day and age.
+It should either have wireless or an ethernet port on it. I should
+enter my login credentials to the box. When I stick a move in, it
+should go to the website and download the filter."
 
 So overall I wanted to build my own that overcame some of these hurdles.
 
