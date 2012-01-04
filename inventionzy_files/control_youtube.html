@@ -1,14 +1,15 @@
 
 <!--
-You are free to copy and use this sample in accordance with the terms of the
-Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+
+Run this from a web server to actually work...
+
 --> 
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
   <head> 
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/> 
-    <title>YouTube Player API Sample</title> 
+    <title>YouTube Edit Decision Listed</title> 
     <style type="text/css"> 
       #videoDiv { 
         margin-right: 3px;
@@ -39,24 +40,16 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
       // This function is called when the player changes state
       function onPlayerStateChange(newState) {
         updateHTML("playerState", newState);
-      }
+      }      
       
-      
-      function pausecomp(millis)
-       {
-        var date = new Date();
-        var curDate = null;
-        do { curDate = new Date(); }
-        while(curDate-date < millis);
-      }
 
-// we will mute from 2->10 seconds, and skip from second 13 to 18, wash and repeat
+// we will mute from 2->10 seconds, and then skip from second 13 to 18...
 // have to run this from a web server for it to work
 
-    function muteFromSecondTwoToTen() {
+    function muteFromSecondTwoToTen() { // also contains a skip from 13 to 18...
       ytplayer.mute();
             setTimeout(
-              function() { 
+              function() {
                 ytplayer.unMute();
                 setTimeout(
                  function() { 
@@ -70,12 +63,8 @@ Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
       var madeFirstTrans = false;
 
       // Display information about the current state of the player
+      // I think this gets called...somewhat frequently, by the youtube player
       function updatePlayerInfo() {
-        // Also check that at least one function exists since when IE unloads the
-        // page, it will destroy the SWF before clearing the interval.
-        
-        // mute from 5 to 10
-        // then skip from 15 to 20
         if(ytplayer && ytplayer.getDuration) {
           updateHTML("videoDuration", ytplayer.getDuration());
           updateHTML("videoCurrentTime", ytplayer.getCurrentTime()); // this is it...
