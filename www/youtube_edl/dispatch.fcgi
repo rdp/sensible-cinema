@@ -10,10 +10,16 @@ end
 require "fcgi"
 require 'cgi'
 require 'render_edited.rb'
+
 FCGI.each { |request|
-    request.out.print "Content-Type: text/html\n\n"
+    out = request.out
+    out.print "Content-Type: text/html\n\n"
     incoming_params = CGI.parse(request.env["REQUEST_URI"].split('?')[1]) # assume they're like mute_starts=["33.0", "35.0"], mute_ends=["34.0", "36.0"]
-    #render_edited request.out, incoming_params
-    request.out.puts incoming_params.inspect
+    begin
+      render_edited out, incoming_params
+    rescue Exception => e
+      out.puts "failure #{e}"
+      out.puts incoming_params.inspect
+    end
     request.finish
 }

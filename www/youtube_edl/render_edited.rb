@@ -1,5 +1,5 @@
 require 'erb'
-template = ERB.new File.read("control_youtube.rhtml")
+$template = ERB.new File.read("control_youtube.rhtml")
 
 def render_edited out, incoming_params
     mutes = []
@@ -7,8 +7,8 @@ def render_edited out, incoming_params
       start = start.to_f
       endy = incoming_params['mute_ends'][idx].to_f
       mutes << "[#{start},#{endy}]"
-      raise unless endy > start
+      out.puts "bad #{endy} < #{start}"  unless endy > start
     }
-    out.puts mutes.join(',')
-    out.puts template.result(binding)
+    out.puts 'mutes:' + mutes.join(',')
+    out.puts $template.result(binding)
 end
