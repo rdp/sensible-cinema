@@ -47,7 +47,7 @@ Run this from a web server to actually work...
 // have to run this from a web server for it to work
 
     function muteFromSecondTwoToTen() { // also contains a skip from 13 to 18...
-      ytplayer.mute();
+            ytplayer.mute();
             setTimeout(
               function() {
                 ytplayer.unMute();
@@ -60,7 +60,7 @@ Run this from a web server to actually work...
               },  8000);
     }
       
-      var madeFirstTrans = false;
+      var mutes2=[10,20];
 
       // Display information about the current state of the player
       // I think this gets called...somewhat frequently, by the youtube player
@@ -68,9 +68,10 @@ Run this from a web server to actually work...
         if(ytplayer && ytplayer.getDuration) {
           updateHTML("videoDuration", ytplayer.getDuration());
           updateHTML("videoCurrentTime", ytplayer.getCurrentTime()); // this is it...
-          if(ytplayer.getCurrentTime() > 2 && !madeFirstTrans) {
+          if(ytplayer.getCurrentTime() > 2) {
+            var shouldMute = false;
+            for each (var item in mutes2) alert(item);
             muteFromSecondTwoToTen();
-            madeFirstTrans = true;
           }
           updateHTML("bytesTotal", ytplayer.getVideoBytesTotal());
           updateHTML("startBytes", ytplayer.getVideoStartBytes());
