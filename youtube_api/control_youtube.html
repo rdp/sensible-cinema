@@ -60,7 +60,7 @@ Run this from a web server to actually work...
               },  8000);
     }
       
-      var mutes2=[10,20];
+      var mutes2=[[10,20]];
 
       // Display information about the current state of the player
       // I think this gets called...somewhat frequently, by the youtube player
@@ -68,9 +68,13 @@ Run this from a web server to actually work...
         if(ytplayer && ytplayer.getDuration) {
           updateHTML("videoDuration", ytplayer.getDuration());
           updateHTML("videoCurrentTime", ytplayer.getCurrentTime()); // this is it...
-          if(ytplayer.getCurrentTime() > 2) {
+          if(ytplayer.getCurrentTime() > 1) {
             var shouldMute = false;
-            for each (var item in mutes2) alert(item);
+            for each (var item in mutes2) {
+              var start_time = item[0];
+              var end_time = item[1];
+              alert(end_time);
+            }
             muteFromSecondTwoToTen();
           }
           updateHTML("bytesTotal", ytplayer.getVideoBytesTotal());
