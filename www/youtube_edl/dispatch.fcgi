@@ -9,20 +9,11 @@ end
 
 require "fcgi"
 require 'cgi'
-require 'erb'
-template = ERB.new File.read("control_youtube.rhtml")
+require 'render_edited.rb'
 FCGI.each { |request|
-    out = request.out
-    out.print "Content-Type: text/html\n\n"
+    request.out.print "Content-Type: text/html\n\n"
     incoming_params = CGI.parse(request.env["REQUEST_URI"].split('?')[1]) # assume they're like mute_starts=["33.0", "35.0"], mute_ends=["34.0", "36.0"]
-    mutes = []
-    incoming_params['mute_starts'].each_with_index{|start, idx|
-      start = start.to_f
-      endy = incoming_params['mute_ends'][idx].to_f
-      mutes << "[#{start},#{endy}]"
-      raise unless endy > start
-    }
-    out.puts mutes.join(',')
-    out.puts template.result(binding)
+    #render_edited request.out, incoming_params
+    request.out.puts incoming_params.inspect
     request.finish
 }
