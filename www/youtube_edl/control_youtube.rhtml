@@ -65,12 +65,12 @@ Run this from a web server to actually work...
       
       function areWeWithin(thisArray) {
           var cur_time = ytplayer.getCurrentTime();
-          for (key in mutes2) {
-            var item = mutes2[key];
+          for (key in thisArray) {
+            var item = thisArray[key];
             var start_time = item[0];
             var end_time = item[1];
             if(cur_time > start_time && cur_time < end_time) {
-              return true;
+              return end_time;
             }
           }
           return false;
@@ -81,11 +81,14 @@ Run this from a web server to actually work...
         if(ytplayer && ytplayer.getDuration) {
           updateHTML("videoDuration", ytplayer.getDuration());
           updateHTML("videoCurrentTime", ytplayer.getCurrentTime()); // this is it...
-          var shouldMute = areWeWithin(mutes2);
-          if(shouldMute)
+          if(areWeWithin(mutes2))
             ytplayer.mute();
           else
             ytplayer.unMute();
+          if(last_end = areWeWithin(splits)) {
+              alert("should skip to " + last_end);
+          }
+          
         }
         updateHTML("bytesTotal", ytplayer.getVideoBytesTotal());
         updateHTML("startBytes", ytplayer.getVideoStartBytes());
