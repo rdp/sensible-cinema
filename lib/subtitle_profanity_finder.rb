@@ -164,6 +164,9 @@ module SubtitleProfanityFinder
       'st'=> ['vain use', :full_word, 'deity'], # allow for christian[ity] 
       'sh' +
        'i' + 't' => 'sh..',
+      'cu' +
+      'nt' => 'c...',
+      'cocksucker' => 'cock......',
     }
     
     bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
@@ -172,6 +175,7 @@ module SubtitleProfanityFinder
     ['moron', 'breast', 'idiot', 
       'sex', 'genital', 
       'boob', 
+      'tits',
       'make love', 'pen' +
 	    'is',
       'making' + 
