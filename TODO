@@ -13,9 +13,10 @@
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==
+  that one guy's VAC freakiness...
   netflix instant actually work :P
     determine its timing...
-  email genealogy questions
+  email genealogy questionaire
 	
   netflix screencast, prompt to see screencast
   note assume DVD origin
@@ -29,7 +30,8 @@
   genealogy screen saver authorize
   only prompt for is it legal twice
   princess bride EDL  
-  screen saver gedcom 
+  screen saver gedcom
+  "finalize" hulu upconvert, advertise
   genealogy open source tree v0
   
   LLC
@@ -82,7 +84,6 @@
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
     ideally only if it varies much more than a sec.
-  that one guy's VAC freakiness...
   mplayer muting causes jerkiness doze
   dvd_start_offset -> dvd_mpeg_start_offset
   better name for dvd_nav_packet_offset with mpeg in it so you know ordering
