@@ -1,8 +1,7 @@
-= 0.40.0 1-4-12 =
+= 0.34.0 1-6-12 =
 
 Add a youtube "user controlled playback" device yes!
-Parse things barely slightly better
-
+Parse EDL's barely slightly more friendlier.
 
 = 0.33.8 1-2-12 =
 

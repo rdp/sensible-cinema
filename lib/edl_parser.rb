@@ -277,7 +277,7 @@ class EdlParser
           [filename, parsed]
         rescue SyntaxError => e
           # ignore poorly formed edit lists for the auto choose phase...
-          p 'warning, unable to parse a file:' + filename + " " + e.to_s
+          puts 'warning, unable to parse a file:' + filename + " " + e.to_s
           nil
         end
      }.compact
