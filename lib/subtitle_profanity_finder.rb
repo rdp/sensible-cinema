@@ -178,12 +178,13 @@ module SubtitleProfanityFinder
       'tits',
       'make love', 'pen' +
 	    'is',
+      'pussy',
       'making' + 
 	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
 	    'u' + 'nt',
 	    'd' + 'ick', 'vag' +
-	    'i' + 'na'
+	    'i' + 'na',
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
