@@ -46,6 +46,8 @@ if $0 == __FILE__
                                  --exit-immediately # don't show the GUI, for benchmarking startup times
      $ jruby bin/sensible-cinema-cli                # the experimental OCR tracker for edited arbitrary online/local/internet players.
                                                       run it with --help to see its various options.
+
+     $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for more details.
     EOL
   else
     a = SensibleSwing::MainWindow.new true, ARGV
