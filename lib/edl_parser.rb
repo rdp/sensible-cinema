@@ -34,13 +34,8 @@ class EdlParser
     # s is like 1:01:02.0
     total = 0.0
     seconds = nil
-    begin
-      seconds = s.split(":")[-1]
-    rescue Exception => e
-     p 'failed!', s
-     raise e
-    end
-    raise 'failed to parse?' + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
+    seconds = s.split(":")[-1]
+    raise 'does not look like a timestamp? ' + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
     seconds.gsub!(',', '.')
     total += seconds.to_f
     minutes = s.split(":")[-2] || "0"
@@ -132,16 +127,23 @@ class EdlParser
   # but I couldn't think of any other way to parse the files tho
   def self.parse_string string, filename = nil, ok_categories_array = []
     string = '{' + string + "\n}"
-	begin
+	  begin
       if filename
        raw = eval(string, binding, filename)
       else
        raw = eval string
       end
     rescue Exception => e
-	  raise SyntaxError.new(e)
-	end
-    raise SyntaxError.new("maybe missing quotation marks?" + string) if raw.keys.contain?(nil)
+      string.strip.lines.to_a[0..-3].each_with_index{|l, idx| # last line doesn't need a comma check
+        unless l =~ /^#/ || l.strip.empty?
+          if l.strip[-1..-1] =~ /[\]""]/ # don't care about {} since we inserted those probably ourselves
+            puts "warning: line #{idx} maybe missing ending comma!" + l.strip
+          end
+        end
+      }
+	    raise SyntaxError.new(e)
+	  end
+    raise SyntaxError.new("maybe missing quotation marks somewhere?" + string) if raw.keys.contain?(nil)
     
     # mutes and blank_outs need to be special parsed into arrays...
     mutes = raw["mutes"] || []
@@ -275,7 +277,7 @@ class EdlParser
           [filename, parsed]
         rescue SyntaxError => e
           # ignore poorly formed edit lists for the auto choose phase...
-          p 'warning, unable to parse a file:' + filename + " " + e.to_s
+          puts 'warning, unable to parse a file:' + filename + " " + e.to_s
           nil
         end
      }.compact
