@@ -1,3 +1,6 @@
+
+minor subtitle scanning improvements.
+
 = 0.34.0 1-6-12 =
 
 Add a youtube "user controlled playback" device yes!
