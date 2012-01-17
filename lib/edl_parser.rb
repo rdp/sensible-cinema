@@ -135,13 +135,20 @@ class EdlParser
       end
     rescue Exception => e
       string.strip.lines.to_a[0..-3].each_with_index{|l, idx| # last line doesn't need a comma check
-        unless l.strip =~ /^#/ || l.strip.empty?
-          if l.strip[-1..-1] =~ /[\]""]/ # don't care about {} since we inserted those probably ourselves
-            puts "warning: line #{idx} maybe missing ending comma!" + l.strip
+	    orig_line = l
+        if l.contain? '#'
+		  l = l.split('#')[0]
+		end
+		l = l.strip
+		unless l.empty?
+		  # todo strip off # comments at the end of lines too...
+		  end_char = l[-1..-1]
+          if !end_char.in? [']', '['] # those are probably ok
+            puts "warning: line #{idx} maybe missing ending comma!" + orig_line unless end_char == ',' 
           end
         end
       }
-	    raise SyntaxError.new(e)
+	    raise SyntaxError.new(e.to_s) # to_s as a workaround for jruby #6353
 	  end
     raise SyntaxError.new("maybe missing quotation marks somewhere?" + string) if raw.keys.contain?(nil)
     

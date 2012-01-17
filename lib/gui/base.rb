@@ -137,7 +137,7 @@ module SensibleSwing
           found_one = true
           "DVD: #{human_name} has an Edit List available! (#{volume_name})"
         else
-          "DVD: #{volume_name} has NO Edit List available!"
+          "DVD: (#{volume_name}) has NO Edit List available!"
         end
       }
       if present_discs.length > 0
