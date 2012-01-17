@@ -59,6 +59,7 @@ module SensibleSwing
       }
       
       @watch_file_edl = new_jbutton( "Watch movie file edited (realtime)" ) do
+        force_accept_file_style_license
         choose_file_and_edl_and_create_sxs_or_play false
       end
       
@@ -69,7 +70,8 @@ module SensibleSwing
         It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
       EOL
       @create.on_clicked {
-	    check_for_file_manipulation_dependencies
+        force_accept_file_style_license
+  	    check_for_file_manipulation_dependencies
         do_create_edited_copy_via_file false
       }
       

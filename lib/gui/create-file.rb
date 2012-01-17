@@ -3,7 +3,8 @@ module SensibleSwing
   class MainWindow
     
     def add_options_that_use_local_files
-	  check_for_file_manipulation_dependencies
+      force_accept_file_style_license
+	    check_for_file_manipulation_dependencies
       add_text_line 'These are Create Options that operate on a file:'
 
       @preview_section = new_jbutton( "Preview a certain time frame (edited)" )
