@@ -34,11 +34,11 @@ class EdlParser
       loop {
         current_value = get_files_hash.call
         if current_value != old_value
-          p 'detected some file has changed!'
+          p 'detected some file changed! Updating...'
           old_value = current_value
           this_block.call
         end
-        sleep 5
+        sleep 2 # 0.02 for size 70, so...hopefully this is ok...
       }
     }
   end
@@ -164,7 +164,7 @@ class EdlParser
 		    unless l.empty?
 		      # todo strip off # comments at the end of lines too...
 		      end_char = l[-1..-1]
-          if !end_char.in? [']', '[', '{'] # these are probably all ok...
+          if !end_char.in? ['[', '{'] # these are probably ok...
             puts "warning: #{File.basename filename} line #{idx} might be bad: (maybe needs comma after?) " + l unless end_char == ',' 
           end
         end
