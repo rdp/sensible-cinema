@@ -226,7 +226,7 @@ the authors and maintainers of said libraries, and anybody else I forgot to ment
 Sensible Cinema is a conglomeration of the good ideas from several people who contacted me
 over time.  Thanks for your contributions.
 
-== Feedback/Development ==
+== Feedback/Contributing to Development ==
 
 Feedback, including feature requests, comments, etc. all welcome:
 
@@ -234,7 +234,8 @@ Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to
 sensible-cinema@googlegroups.com or rogerdpack@gmail.com
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
-See development.txt file, and also http://github.com/rdp/sensible-cinema
+See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or
+the wiki there.
 
 If you want to donate something, please consider donating to a charity of your choice.  
 No really, feel free, go ahead.

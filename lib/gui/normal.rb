@@ -143,47 +143,6 @@ module SensibleSwing
       end
     end
     
-    def we_are_in_upconvert_mode
-       ARGV.index("--upconvert-mode")
-    end
-    
-    def setup_default_buttons
-      if we_are_in_upconvert_mode
-        add_play_upconvert_buttons
-      else
-        if we_are_in_create_mode
-          setup_advanced_buttons
-          add_text_line 'Contact:'
-        else
-          setup_normal_buttons
-        end
-      
-        @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
-        @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
-        @upload.on_clicked {
-		  show_blocking_message_dialog "ok, will open up the groups page now and optionally an email to it"
-          system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
-          system_non_blocking("start http://groups.google.com/group/sensible-cinema")
-        }
-        increment_button_location
-
-      end # big else
-      
-      @exit = new_jbutton("Exit", "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
-      @exit.on_clicked {
-        Thread.new { self.close } # don't waste the time to close it :P
-        puts 'Thank you for using Sensible Cinema. Come again!'
-        System.exit 0
-      }
-
-      increment_button_location
-      increment_button_location
-      self
-
-    end
-    def get_disk_chooser_window names
-      DropDownSelector.new(self, names, "Click to select DVD drive")
-    end
     
   end
 end

@@ -18,7 +18,7 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
 or to install them automatically:
-$ jruby -S gem install os sane jeweler # some helper gems
+$ jruby -S gem install rake os sane jeweler # some helper gems
 $ jruby -S rake build
 $ jruby -S gem install pkg\*.gem --development
 # optional:
