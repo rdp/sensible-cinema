@@ -179,6 +179,7 @@ module SubtitleProfanityFinder
       'make love', 'pen' +
 	    'is',
       'pussy',
+      'fart',
       'making' + 
 	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +

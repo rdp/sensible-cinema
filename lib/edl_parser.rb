@@ -135,7 +135,7 @@ class EdlParser
       end
     rescue Exception => e
       string.strip.lines.to_a[0..-3].each_with_index{|l, idx| # last line doesn't need a comma check
-        unless l =~ /^#/ || l.strip.empty?
+        unless l.strip =~ /^#/ || l.strip.empty?
           if l.strip[-1..-1] =~ /[\]""]/ # don't care about {} since we inserted those probably ourselves
             puts "warning: line #{idx} maybe missing ending comma!" + l.strip
           end
