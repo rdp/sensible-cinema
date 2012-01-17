@@ -6,7 +6,7 @@ ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's
 
 Jeweler::Tasks.new do |s|
     s.name = "sensible-cinema"
-    s.summary = "an EDL scene-skipper/bleeper that works with DVD's and online players like hulu"
+    s.summary = "an EDL scene-skipper/bleeper that works with DVD's and files and online players like netflix instant"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
@@ -188,7 +188,7 @@ def on_wbo command
 end
 
 desc 'sync wbo website'
-task :sync_wbo_website do
+task 'sync_wbo_website' do
   on_wbo 'cd ~/sensible-cinema/source && git pull'
 end
 
