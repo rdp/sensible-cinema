@@ -686,7 +686,7 @@ KP_ENTER dvdnav select
         add_play_upconvert_buttons
       else
         if we_are_in_create_mode
-          setup_advanced_buttons
+          setup_create_buttons
           add_text_line 'Contact:'
         else
           setup_normal_buttons

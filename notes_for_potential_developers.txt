@@ -17,11 +17,10 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
-or to install them automatically:
-$ jruby -S gem install rake os sane jeweler # some helper gems
-$ jruby -S rake build
-$ jruby -S gem install pkg\*.gem --development
-# optional:
+or to install them automatically [has to be remote until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
+$ jruby -S gem install sensible-cinema
+# ... it installs it and tons of dependencies
+# next optional:
 $ jruby -S gem uninstall -x sensible-cinema # uninstall the gem so you don't have to worry about it conflicting later, just in case.
  
 You'll have to install some git submodules, too.

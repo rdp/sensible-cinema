@@ -90,10 +90,10 @@ module SensibleSwing
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
       
-	  new_jbutton("Create new Edit Decision List") do
-	    window = new_child_window
-        window.setup_advanced_buttons
-	  end
+ 	    new_jbutton("Create new Edit Decision List") do
+	      window = new_child_window
+        window.setup_create_buttons
+	    end
 	  
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)

@@ -9,7 +9,7 @@ module SensibleSwing
       }
     end
 
-    def setup_advanced_buttons
+    def setup_create_buttons
     
 	  add_text_line 'Normal playback Options:'
       new_jbutton("Display Standard Playback Options") do
