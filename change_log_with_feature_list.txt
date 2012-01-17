@@ -2,6 +2,10 @@
 
 minor subtitle scanning improvements, EDL scanning improvements.
 
+Note also that the subtitle profanity parser has been augmented to include "phrases that may accompany questionable scenes" 
+to give you hints as to where they may be, so you can search and discover them more easily/know approximately the time
+when they occur/automatically find them even though not profanity per se.
+
 = 0.34.0 1-6-12 =
 
 Add a youtube "user controlled playback" device yes!
