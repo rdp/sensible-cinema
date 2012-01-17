@@ -129,22 +129,20 @@ class EdlParser
     string = '{' + string + "\n}"
 	  begin
       if filename
-       raw = eval(string, binding, filename)
+       raw = eval(string, binding, filename, 0)
       else
        raw = eval string
       end
     rescue Exception => e
       string.strip.lines.to_a[0..-3].each_with_index{|l, idx| # last line doesn't need a comma check
 	    orig_line = l
-        if l.contain? '#'
-		  l = l.split('#')[0]
-		end
-		l = l.strip
-		unless l.empty?
-		  # todo strip off # comments at the end of lines too...
-		  end_char = l[-1..-1]
-          if !end_char.in? [']', '['] # those are probably ok
-            puts "warning: line #{idx} maybe missing ending comma!" + orig_line unless end_char == ',' 
+	    l = l.split('#')[0]
+		  l = l.strip
+		  unless l.empty?
+		    # todo strip off # comments at the end of lines too...
+		    end_char = l[-1..-1]
+          if !end_char.in? [']', '[', '{'] # these are probably all ok...
+            puts "warning: line #{idx} might be bad: (maybe needs comma after?) " + l unless end_char == ',' 
           end
         end
       }
