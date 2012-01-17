@@ -10,8 +10,8 @@ module SensibleSwing
     end
 
     def setup_create_buttons
-    
-	  add_text_line 'Normal playback Options:'
+      EdlParser.on_any_file_changed_single_cached_thread { DriveInfo.notify_all_drive_blocks_that_change_has_occured }
+	    add_text_line 'Normal playback Options:'
       new_jbutton("Display Standard Playback Options") do
         window = new_child_window
         window.setup_normal_buttons
@@ -240,7 +240,7 @@ module SensibleSwing
         open_file_to_edit_it filename
       end
       
-      new_jbutton("Show even more rarely used buttons") do
+      new_jbutton("Show more (rarely used) buttons/options") do
         child = new_child_window
         child.show_rarely_used_buttons
       end

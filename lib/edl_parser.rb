@@ -20,6 +20,28 @@ require 'sane'
 require_relative 'convert_thirty_fps'
 
 class EdlParser
+  
+  def self.on_any_file_changed_single_cached_thread &this_block
+    raise unless this_block
+    get_files_hash = proc {
+      glob = EDL_DIR + '/../**/*'
+      Dir[glob].map{|f|
+        [f, File.mtime(f)]
+      }.sort
+    }
+    old_value = get_files_hash.call
+    @@checking_thread ||= Thread.new {
+      loop {
+        current_value = get_files_hash.call
+        if current_value != old_value
+          p 'detected some file has changed!'
+          old_value = current_value
+          this_block.call
+        end
+        sleep 5
+      }
+    }
+  end
 
   # this one is 1:01:02.0 => 36692.0
   # its reverse is this: translate_time_to_human_readable
