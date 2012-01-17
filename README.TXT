@@ -108,7 +108,8 @@ Q. Is it unethical to watch edited movies?
 Q. Can I know if movies in the theaters have profanity in them?
 A. You can--you can download their subtitle file, then use the "part subtitle" button to tell if even movies
    *in the theater* have profanity (this won't help you skip that profanity, obviously, if you go to see it, but it's
-   a heads up).
+   a heads up).  Kids-in-mind.com and common sense media reviews are helpful, as well, though sometimes they miss
+   profanity words, one or two.
 
 == Caveats ==
 
