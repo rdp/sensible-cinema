@@ -157,14 +157,15 @@ class EdlParser
       end
     rescue Exception => e
       string.strip.lines.to_a[0..-3].each_with_index{|l, idx| # last line doesn't need a comma check
-	    orig_line = l
-	    l = l.split('#')[0]
-		  l = l.strip
-		  unless l.empty?
-		    # todo strip off # comments at the end of lines too...
-		    end_char = l[-1..-1]
+	      orig_line = l
+	      l = l.split('#')[0]
+		    l = l.strip
+      
+		    unless l.empty?
+		      # todo strip off # comments at the end of lines too...
+		      end_char = l[-1..-1]
           if !end_char.in? [']', '[', '{'] # these are probably all ok...
-            puts "warning: line #{idx} might be bad: (maybe needs comma after?) " + l unless end_char == ',' 
+            puts "warning: #{File.basename filename} line #{idx} might be bad: (maybe needs comma after?) " + l unless end_char == ',' 
           end
         end
       }
