@@ -143,6 +143,7 @@ class EdlParser
       }
 	    raise SyntaxError.new(e)
 	  end
+    
     raise SyntaxError.new("maybe missing quotation marks somewhere?" + string) if raw.keys.contain?(nil)
     
     # mutes and blank_outs need to be special parsed into arrays...
