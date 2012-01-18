@@ -8,48 +8,45 @@
   
   then roadmap_possibilities
   
-== high prio like blocking bugs ==
+== blocked high ==
+  genealogy screen saver authorize
 
 == things working on today/requested ==
-  genealogy collab wiki
   screen saver gedcom
-  genealogy screen saver authorize
   
 == yes do, un-ordered currently, from all the various future release options ==
+  genealogy collab wiki/forum [facebook page?]
+  LLC
   netflix instant actually work :P
     determine its timing relative to DVD...
-    netflix screencast, prompt to see screencast
-  email genealogy questionaire
-	
+    netflix screencast, prompt to see screencast	
   that one guy's VAC freakiness...
-  note assume DVD origin
-  combine all "folders" of movie EDL's into one folder
+  "finalize" hulu upconvert, advertise
+  
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
-  "finalize" hulu upconvert, advertise
-  genealogy open source tree v0
-  
-  LLC
+  combine all "folders" of movie EDL's into one folder
+  note assume DVD origin
+  email genealogy tree questionaire
+  genealogy open source tree v0  
+  64 bit screen capture
   double check gnosugnu's patch submission again
   princess bride EDL
-  if any file ever fails, prompt...
-  display zoom button always
+  if any file ever fails, GUI prompt...
   failed downloads can corrupt...
-  add some "never again" options for things :P
-  check this .srt entry it should be right on appropo [50 %]
+  add some "never again" options for things :P [or default off with preferences]
   melissa UI stuff/notes
   cleanup youtube fella
   amazing grace et al DVD's
-  our new DVD's
+  our new DVD's that we own
   os gem MIT license
   the cool uploader website
     split EDL's to "mine" versus community
-  back lighting from the side
   broken scanning hp2 init's
   rename it "..." or whatever google prefers :P after LLC
     mac: advertise urug
-  upconvert hulu better?
+  upconvert hulu better/really work?
   VAC short list
   64 bit audio single release
   "for currently" button -> for [name]
@@ -66,27 +63,26 @@
     ask why mplayer seems to show "overlap" at DVD time splits
     I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
       prolly keep the "last added offset" so I can still keep adding it in again :P
-  disclosure back-lighting, table, maybe they can review it for me?
   veggie tales dies (the lib v's?)
   mplayer dies tmnt dvdnav://1
+  
+  display zoom button always
+  back lighting
+  disclosure back-lighting, table
   mac mplayer-edl lacks some diffs
   DVD timing for forum:Snow White
   warn other wordpresses  
-  source_location for ri_for
-  
+  source_location for ri_for  
+  drop down have DVD titles :P
   melissa stuff:
-    button and drop down have DVD titles
     readme be helpful for subtitles [?]
       better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
     guide them through process more/subtitles
     split pc/mac for understandability :P
     instructions on how to continue after creation
     instructions on how to actually use opensubtitles LOL
-      avoid .sub!
     overlapping mutes don't prompt
-
-  XBMC for DVD's?
-  upconverter disable aero automagically
+  upconverter disable aero automagically [or does it already?]
   subtitles: if at beginning of a sub, add extra offset...hmm...why not?
     and end too why not?
     ideally only if it varies much more than a sec.
@@ -100,7 +96,7 @@
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
     pay somebody to test it
   user preference "always just skip" if that's what he wanted :P
-  ffmpeg dshow input ramiro patches
+  ffmpeg dshow input ramiro more patches
   try to reproduce the ffplay bug with just ffmpeg
   submit abandonment for libdvdnav
   upconvert screen try it out, "release" after testing it for netflix instant
@@ -111,11 +107,10 @@
   test rvm email
   add "revision" to mplayer edl's initial -v output
   report ffmpeg/mencoder splitting bugz (2)
-  @mplayer: ctrl-keys patch, ask them anyway :P
+  @mplayer: ctrl-keys patch, ask them at least :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab wedding iso's
-  donate http://alexfeinman.com/W7.htm mkv xiph[?]
   ffmpeg how to add subs demo
   inspector general
   check if mplayer handles "a mute that leads into a second mute or skip" well or not
@@ -142,6 +137,7 @@
     add a migrate button, prompts for "file" versus DVD
       test with something :P
     assert files "always" start at 0
+    fix it skipping too far forward
   ffplay diagonal bug
   ffplay 16,16,16
   flds: the intelligent tag parent sync'er, other todo's :P
@@ -154,7 +150,6 @@
     it may need the "50% adjuster" fella...
     note on the www once it works
   meta domain redirect to "freedomainnamesforever"
-  popup_text in EDL's
   ruby_prof stuffs (merge, release at least)
   minor redcar tweaks
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
@@ -172,15 +167,19 @@
   @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
-  scanning profanity can pick one with or near profanity...
   super automatic-o "your DVD has no EDL? let me do all of that for you..."
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
+    also HP's
+  
+== DVD+-DVD-realtime basically never do backlog (unordered) ==
+  XBMC for DVD's?
+
   super subtitle parser watcher for netflix instant...like on-demand...
     without download, though...they download it, I let them use it, like a medium button?
       or add button "reveal advanced" with this new button on it...
-  
-== DVD+-DVD-realtime basically never do backlog (unordered) ==
+  scanning profanity can pick one with or near profanity...
+  popup_text in EDL's
   "if you're in edit mode, then scan for file changes, update too"
   I don't "recognize" blu-ray disks...
   blu ray timing
@@ -410,9 +409,8 @@
   "save to" -> same dir as "get from" yeah
   figure out a way to get to the roku [ps3ms?], +- netflix edited to roku LOL
   prompt something if the EDL is actually "empty" :)
-  already donated: big buck, sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC, xiph, audacity, windirstat (done)
-  note "you want to optimize your reverse blitting first... :)"
-  if 2 EDL's, still can choose a title trackfor automatically playing it right.
+  already donated: big buck, sox, rubular, mplayer, vlc, menumeter, http://instantitunes.wordpress.com/2010/02/26/use-tsmuxer-on-snow-leopard, unlocker, mac fan thing, open office, many sourceforge tops, 7zip, VLC, mplayer, cannot donate: ffmpeg, http://ffmpeg.zeranoe.com/builds, tsmuxer (sent email), asked mulder, smplayer ($5), http://lame.buanzo.com.ar, sox, smcFanControl (eidac), free flash webcam tester guy, argentine audacity liblame, VLC, xiph, audacity, windirstat (done), wot,http://alexfeinman.com/W7.htm matroska xiph
+  if 2 EDL's, still can choose a title track for automatically playing it right.
   fast preview: change it to be aggressive sometimes yes, other times no
   fast preview mode: watch for modifications to file, kill mplayer instances for them on change :)
   fast preview tends to "go too far" [like the end of profanity is still there when played via the "real way"]
