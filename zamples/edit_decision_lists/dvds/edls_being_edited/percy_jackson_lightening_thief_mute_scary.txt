@@ -1,0 +1,23 @@
+"name" => "Percy Jackson Lightening Thief",
+
+"mutes" => [
+  "0:25:28.82" , "0:25:31.28", "profanity", "a..", "A real horse's [a..] ",
+  "12:54.0", "13:36.8", "scary", "fury",
+  "19:09.0", "20:22.79", "scary", "minotaur",
+  "38:51.73", "39:28.2", "scary", "hades",  
+  "51:12.75", "51:15.0", "scary", "medusa",
+  "51:51.0", "51:54.9", "scary", "medusa",
+  "1:06:35.5", "1:09.55", "scary", "hydra",
+  "1:25:29.5", "01:25:40.93", "scary", "dogs",
+  "01:27:22.59", "01:27:31.49", "scary", "hades",
+  "01:30:20.0", "01:31:26.8", "scary", "dogs",
+],
+
+"blank_outs" => [
+],
+
+"not edited out" => "medusa's snakes",
+"source" => "dvd",
+"volume_name" => "PERCY_JACKSON_LIGHTENING_THIEF",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"add_on_disk_unique_id" => "0668b3c4|eaff4b07",
