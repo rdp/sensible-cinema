@@ -168,6 +168,7 @@
   @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
+  can optionally select "supplemental" EDL's per DVD.
   super automatic-o "your DVD has no EDL? let me do all of that for you..."
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
