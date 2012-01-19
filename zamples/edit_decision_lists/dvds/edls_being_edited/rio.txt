@@ -1,0 +1,24 @@
+# edl_version_version 1.1, sensible cinema v0.34.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Rio",
+
+"mutes" => [
+   "1:16:51.18", "1:16:51.90",  # in portuges  
+ 
+],
+
+"blank_outs" => [
+    "1:13:12.90", "1:13:21.89", #riske  
+],
+
+"source" => "dvd",
+"volume_name" => "RIO",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "3b70cf79|a9b792f7",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "5751.333", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.2",
+"dvd_nav_packet_offset" => [0.766667, 0.862967],

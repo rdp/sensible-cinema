@@ -1,0 +1,39 @@
+# edl_version_version 1.1, sensible cinema v0.34.1
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Percy Jackson Lightening Thief",
+
+"mutes" => [
+  "0:13:43.33" , "0:13:48.38", "profanity", "deity", "Oh, [vain use], wait! Did that really just happen?",
+  "0:25:28.82" , "0:25:31.28", "profanity", "a..", "A real horse's [a..] ",
+  "0:29:33.80" , "0:29:37.10", "profanity", "deity", "Ow! [vain use], how do you guys wear this stuff? It weighs more than me.",
+  "0:46:42.23" , "0:46:45.28", "profanity", "h...", "If you see my dad on the highway to [h...] ..",
+  "0:46:46.58" , "0:46:47.95", "profanity", "a..", "Kick his [a..] for me.",
+  "0:46:51.29" , "0:46:54.29", "profanity", "h...", "I'm on the highway to [h...] ",
+  "0:46:54.79" , "0:46:57.76", "profanity", "h...", "Highway to [h...] ",
+  "0:46:57.79" , "0:47:01.29", "profanity", "h...", "I'm on the highway to [h...] ",
+  "0:47:02.80" , "0:47:05.80", "profanity", "h...", "Highway to [h...] ",
+  "0:57:39.76" , "0:57:40.60", "profanity", "deity", "Oh, my [vain use].",
+  "1:26:14.90" , "1:26:17.04", "profanity", "h...", "I'm already in [h...] ",
+  "1:27:52.11" , "1:27:57.40", "profanity", "da..", "I was banished here by Zeus and your father. I am [da..]ed.",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "PERCY_JACKSON_LIGHTENING_THIEF",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "0668b3c4|eaff4b07",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "7110.366", 
+"not edited out stuff" => "some heck near the end, plenty of scary violence",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.2",
+"dvd_nav_packet_offset" => [0.733333, 0.8699],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Zeus.", "00:02:47.32"],
+"ending_subtitle_entry" => ["Come on! Go!", "01:19:06.18"],
