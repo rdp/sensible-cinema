@@ -138,8 +138,8 @@ module SubtitleProfanityFinder
       111.chr + 
       100.chr +
       's' => 'deitys',
-      'meu deus' => 'lo..',
-      'lord' => 'lo..', 'da' +
+      'meu deus' => 'l...',
+      'lord' => 'l...', 'da' +
       'mn' => 'da..', 
       'f' +
       117.chr +
