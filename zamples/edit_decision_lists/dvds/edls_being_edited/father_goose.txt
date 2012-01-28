@@ -30,7 +30,7 @@
 "disk_unique_id" => "21b940b2|40bb33b1",
 "dvd_title_track" => "2", # our guess for it
 "dvd_title_track_length" => "6977.766", 
-# "not edited out stuff" => "some...",
+"not edited out stuff" => "kissing girl, one profanity near end, honeymoon talk",
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
 "dvd_title_track_start_offset" => "0.3",
