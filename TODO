@@ -8,12 +8,13 @@
   
   then roadmap_possibilities
   
+== things working on today/requested ==
+  screen saver gedcom
+  end of percy olympians jumps "poorly"/wrong ?
+  
 == blocked high ==
   genealogy screen saver authorize
 
-== things working on today/requested ==
-  screen saver gedcom
-  
 == yes do, un-ordered currently, from all the various future release options ==
   genealogy collab wiki/forum [facebook page?]
   LLC
@@ -24,20 +25,17 @@
   "finalize" hulu upconvert, advertise
 
   accomodate srt trailer/headers
-  end of percy jumps "poorly"/wrong
+  log the indice numbers
   filenames start with what they are, not mplayer.templ.edl  
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
   combine all "folders" of movie EDL's into one folder
-  note assume DVD origin
-  email genealogy tree questionaire
-  genealogy open source tree v0  
-  64 bit screen capture
+  64 bit screen capture et al
   allow for a mute to "encompass" a skip by splitting it, uh guess
   double check gnosugnu's patch submission again
   princess bride EDL
-  if any file ever fails, GUI prompt...
+  if any file ever fails, GUI prompt immediately...
   failed downloads can corrupt...
   add some "never again" options for things :P [or default off with preferences]
   melissa UI stuff/notes
@@ -122,11 +120,6 @@
   the "lined" "select this one" quality editor...
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
-    is powerdvd off by exactly 0.5s (rounds up)?
-    C player:
-      double check if it timing shucks, though I think it does...
-        also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   the awesome ffmpeg file splitter :P
     also do I really still need to use mencoder?
   use DVD NAV packet time raw:
@@ -172,12 +165,19 @@
   
 == decide later to move up or down ==
   can optionally select "supplemental" EDL's per DVD.
-  super automatic-o "your DVD has no EDL? let me do all of that for you..."
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
     also HP's
+  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
+    is powerdvd off by exactly 0.5s (rounds up)?
+    C player:
+      double check if it timing shucks, though I think it does...
+        also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  super automatic-o "your DVD has no EDL? let me do all of that for you..."
+  email genealogy tree questionaire
+  genealogy open source tree v0  
   XBMC for real DVD's some how? Does it work now at all anyway?
   ability to "yes show [+- edited] subtitles during this section"
   super subtitle parser watcher for netflix instant...like on-demand...
