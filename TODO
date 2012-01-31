@@ -25,6 +25,7 @@
   "finalize" hulu upconvert, advertise
 
   accomodate srt trailer/headers
+  hp 4 finalize
   log the indice numbers
   filenames start with what they are, not mplayer.templ.edl  
   version => element
