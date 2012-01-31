@@ -35,9 +35,13 @@ module SubtitleProfanityFinder
        out.beginning_time = EdlParser.translate_string_to_seconds ts_begin
        out.ending_time = EdlParser.translate_string_to_seconds ts_end
        out.text = text.strip # harmless right?
-	   out.single_line_text = text.strip.gsub(/^[- ,_\.]+/, '').gsub(/[- ,_]+$/, '').gsub(/[\r\n]/, ' ')
+       add_single_line_minimized_text_from_multiline out
        out
      }
+   end
+
+   def self.add_single_line_minimized_text_from_multiline entry
+     entry.single_line_text = entry.text.strip.gsub(/^[- ,_\.]+/, '').gsub(/[- ,_]+$/, '').gsub(/[\r\n]/, ' ')
    end
 
    # convert string to regexp, also accomodating for "full word" type profanities
@@ -232,6 +236,7 @@ module SubtitleProfanityFinder
           text.gsub!(/\[+/, '[')
           text.gsub!(/\]+/, ']')
           entry.text = text
+          add_single_line_minimized_text_from_multiline entry
           text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
