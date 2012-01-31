@@ -88,7 +88,8 @@ module SensibleSwing
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
-          with_autoclose_message("parsing srt file...") do
+          euphemized_synchronized_entries = nil
+          with_autoclose_message("parsing srt file... #{srt_filename}") do
             parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
 			write_subs_to_file euphemized_filename = EdlTempFile + '.euphemized.srt.txt', euphemized_synchronized_entries
   		    open_file_to_edit_it euphemized_filename
@@ -98,9 +99,13 @@ module SensibleSwing
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             Thread.new { play_dvd_smplayer_unedited true }
-            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time."
+            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for."
           end
-          all_entries = SubtitleProfanityFinder.split_to_entries File.read(srt_filename)
+          all_entries = euphemized_synchronized_entries
+
+          all_entries.shift if all_entries[0].text =~ / by /i
+          all_entries.pop if all_entries[-1].text =~ / by /i
+
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
           
           start_text = all_entries[0].single_line_text
@@ -111,7 +116,7 @@ module SensibleSwing
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end can be a spoiler at times]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
           else
-           end_entry = all_entries[all_entries.length*0.75]  
+           end_entry = all_entries[all_entries.length*0.75] 
           end
           end_text = end_entry.single_line_text
           end_srt_time = end_entry.beginning_time
@@ -126,23 +131,21 @@ module SensibleSwing
     	end
 
         parsed_profanities, euphemized_synchronized_entries = nil
-        with_autoclose_message("parsing srt file...") do
+        with_autoclose_message("parsing srt file... #{srt_filename}") do
           parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
         filename = EdlTempFile + '.parsed.txt'
         out =  "# add these into your \"mute\" section if you deem them mutable\n" + parsed_profanities
-        if end_srt_time != 3000
-          out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
-                 %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
-          middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-		  show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould first appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nIf it's off much you may want to try a different .srt file"
-        end
+        out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
+               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
+        middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
+        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould first appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nIf it's off much you may want to try a different .srt file"
         File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open
 		
-	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]?") == :yes
+	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]\nyou probably don't?") == :yes
           out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
 		  write_subs_to_file out_file, euphemized_synchronized_entries
           show_in_explorer out_file
@@ -452,7 +455,7 @@ module SensibleSwing
           mpeg = $2.to_f
           if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
 			  if mpeg < nav
-			    # case there is an MPEG split before the second NAV packet [ratatouille]
+			    # case there is an MPEG split before the second NAV packet [ratatouille, hp]
 			    p mpeg, nav, old_mpeg
 			    assert old_mpeg > 0.3
 				mpeg = old_mpeg + mpeg - 0.033367 # assume 30 fps, and that this is the second frame since it occurred, since the first one we apparently display "weird suddenly we're not a dvd?"
