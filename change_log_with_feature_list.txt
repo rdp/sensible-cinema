@@ -1,3 +1,7 @@
+= 0.34.2 2-6-12 =
+
+minor subtitle friendli-ezations.
+
 = 0.34.1 1-17-12 =
 
 minor subtitle scanning improvements, EDL scanning improvements.
