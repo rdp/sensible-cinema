@@ -1,0 +1,41 @@
+# edl_version_version 1.1, sensible cinema v0.34.1
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Father Goose",
+
+"mutes" => [
+
+  "0:01:19.26" , "0:01:23.55", "profanity", "da..", "? To tell the whole [da..] world if you don't happen to like it",
+  "0:06:46.98" , "0:06:51.18", "profanity", "da..", "It's important work, Walter, [da..]ed important, but I'd like you to volunteer.",
+  "0:35:52.28" , "0:35:55.56", "profanity", "da..", "- We're sinking! - Don't just sit there, [da..] it! Bail!",
+  "1:31:38.84" , "1:31:41.80", "profanity", "lo..", "- Dear [l...]. - It's Dominique's turn to say grace.",
+  "1:31:41.89" , "1:31:46.72", "profanity", "deity", "Mon [deity]  b?nissez nous ainsi que la nourriture que nous allons prendre.",
+  "1:42:20.58" , "1:42:23.49", "profanity", "deity", "which is an honourable estate, instituted of [vain use].",
+  "1:45:34.57" , "1:45:39.70", "profanity", "h...", "Mr and Mrs Eckland, if you're finished now, I suggest you get the [h...] out of there.",
+  "1:47:37.25" , "1:47:39.64", "profanity", "l...", "[l...], you're stubborn.",
+  "1:48:15.59" , "1:48:18.26", "profanity", "deity", "- That's a Japanese patrol boat. - Oh, my [vain use]...",
+
+  "0:10:16.78" , "0:10:19.93", "profanity", "bloo..", "Now try to remember all that, Walter. It's [bloo..] important.",
+  "0:10:20.02" , "0:10:21.54", "profanity", "bloo..", "Yeah, [bloo..].",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "FATHER_GOOSE",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "21b940b2|40bb33b1",
+"dvd_title_track" => "2", # our guess for it
+"dvd_title_track_length" => "6977.766", 
+"not edited out stuff" => "kissing girl, one profanity near end, honeymoon talk",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.3",
+"dvd_nav_packet_offset" => [0.5, 0.667333],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["This is the Australian Broadcasting Commission. And now the news.", "19.95"],
+"ending_subtitle_entry" => ["Ah... I wonder if they serve coconut milk on submarines.", "1:55:56.9"],
