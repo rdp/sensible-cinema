@@ -25,9 +25,10 @@
   "finalize" hulu upconvert, advertise
 
   mfp cookies
-  accomodate srt trailer/headers
+  ruby_gnuplot bugz
+  accomodate srt trailer/headers more
   hp 4 finalize
-  log the indice numbers
+  log the indice numbers [why not?]
   filenames start with what they are, not mplayer.templ.edl  
   version => element
     prompt "insert it directly?"
