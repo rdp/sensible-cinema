@@ -9,40 +9,39 @@
   then roadmap_possibilities
   
 == things working on today/requested ==
-  screen saver gedcom
   end of percy olympians jumps "poorly"/wrong ?
+  64 bit VAC
+  tweak screen capture
+  better releases VAC et al
+  ruby_gnuplot bugz et al
   
-== blocked high ==
+== blocked working on ==
   genealogy screen saver authorize
 
 == yes do, un-ordered currently, from all the various future release options ==
-  genealogy collab wiki/forum [facebook page?]
+  JPFA genealogy collab wiki/forum [facebook page?]
   LLC
   netflix instant actually work :P
     determine its timing relative to DVD...
-    netflix screencast, prompt to see screencast	
   that one guy's VAC freakiness...
-  "finalize" hulu upconvert, advertise
 
+  "finalize" hulu upconvert, advertise
+  netflix "how to" screencast, with prompt to see screencast	
   mfp cookies
-  ruby_gnuplot bugz
-  accomodate srt trailer/headers more
-  hp 4 finalize
+  accomodate srt trailer/headers more (one on melissa's)
+  hp 4 finalize intro waz off
   log the indice numbers [why not?]
   filenames start with what they are, not mplayer.templ.edl  
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
   combine all "folders" of movie EDL's into one folder
-  64 bit screen capture et al
-  finalize HP 4
-  move documentation online [all]
+  move documentation to online [all]
   feedback button fails os x
-  allow for a mute to "encompass" a skip by splitting it, uh guess
-  double check gnosugnu's patch submission again
+  allow for a mute to "encompass" a skip by splitting it, uh guess, "except in a single file" (?)
+  double check gnosugnu's patch submission again (the C code)
   princess bride EDL
   if any file ever fails, GUI prompt immediately...
-  failed downloads can corrupt...
   add some "never again" options for things :P [or default off with preferences]
   melissa UI stuff/notes
   cleanup youtube fella
@@ -171,6 +170,7 @@
   @ffmpeg: you can't convert mkv's of this type!
   
 == decide later to move up or down ==
+  failed downloads can corrupt...
   can optionally select "supplemental" EDL's per DVD.
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
