@@ -31,7 +31,7 @@ class MainWindow < JFrame
       @start_time = Time.now
       @jlabel.set_text 'welcome...'
       
-      starting_seconds_requested = (ARGV[0] || '25').to_f*60
+      starting_seconds_requested = ARGV[0].to_f*60
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
         seconds_left = starting_seconds_requested - (Time.now - @start_time)
@@ -59,5 +59,11 @@ class MainWindow < JFrame
   
   end
 
-  MainWindow.new.show
+if $0 == __FILE__
+  if ARGV.length == 0
+    p 'syntax: minutes1 minutes2 [it will loop, for pomodoro]'
+  else
+    MainWindow.new.show
+  end
+end
 
