@@ -32,7 +32,7 @@ class MainWindow < JFrame
       @jlabel.set_text 'welcome...'
       
       cur_index = 0
-      starting_seconds_requested = [ARGV.map[0].to_f*60]
+      starting_seconds_requested = ARGV.map{|a| a.to_f*60}
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
         seconds_requested = starting_seconds_requested[cur_index % starting_seconds_requested.length]
@@ -41,7 +41,7 @@ class MainWindow < JFrame
           setState ( java.awt.Frame::NORMAL )
           setVisible(true)
           toFront()
-          show_blocking_message_dialog "timer done!"
+          show_blocking_message_dialog "timer done! #{seconds_requested/60}m"
           @start_time = Time.now
           cur_index += 1
         else
