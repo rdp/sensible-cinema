@@ -16,7 +16,7 @@ class MainWindow < JFrame
 
   def initialize
       super "countdown"
-      set_size 150,100
+      set_size 165,100
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @jlabel = JLabel.new 'Welcome to Sensible Cinema!'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
@@ -32,16 +32,18 @@ class MainWindow < JFrame
       @jlabel.set_text 'welcome...'
       
       cur_index = 0
-      starting_seconds_requested = [ARGV[0].to_f*60]
+      starting_seconds_requested = [ARGV.map[0].to_f*60]
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
-        seconds_left = starting_seconds_requested[cur_index] - (Time.now - @start_time)
+        seconds_requested = starting_seconds_requested[cur_index % starting_seconds_requested.length]
+        seconds_left = seconds_requested  - (Time.now - @start_time)
         if seconds_left < 0
           setState ( java.awt.Frame::NORMAL )
           setVisible(true)
           toFront()
           show_blocking_message_dialog "timer done!"
           @start_time = Time.now
+          cur_index += 1
         else
           # avoid weird re-draw issues
           minutes = (seconds_left/60).to_i          
