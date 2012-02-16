@@ -36,13 +36,21 @@ class MainWindow < JFrame
       @switch_image_timer.add_action_listener do |e|
         seconds_left = starting_seconds_requested - (Time.now - @start_time)
         if seconds_left < 0
+          setState ( java.awt.Frame::NORMAL )
           setVisible(true)
           toFront()
           show_blocking_message_dialog "timer done!"
           @start_time = Time.now
         else
           # avoid weird re-draw issues
-          @jlabel.set_text "%02d:%02d" % [seconds_left/60, seconds_left % 60]
+          minutes = (seconds_left/60).to_i          
+          if minutes > 0
+            current_time = "%02d:%02d" % [minutes, seconds_left % 60]
+          else
+            current_time = "%02ds" % [seconds_left % 60]
+          end
+          @jlabel.set_text current_time
+          set_title current_time
         end
       end
       @switch_image_timer.start

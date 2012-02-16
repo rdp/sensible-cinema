@@ -28,6 +28,8 @@ describe EdlParser do
     E.parse_string('"a" => "3"', nil).should ==  {"a"=>"3", "mutes"=>[], "blank_outs"=>[]}
   end
   
+  it "should sort 1:00:00 then 30:00 setting to the right order, though they defy ascii sorting"
+  
   it "should get mutes and blank_outs" do
     string = <<-EOL
       "mutes" => [

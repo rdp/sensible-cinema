@@ -23,13 +23,14 @@
   LLC
   netflix instant actually work :P
     determine its timing relative to DVD...
-  that one guy's VAC freakiness...
 
+  that one guy's VAC freakiness...
   "finalize" hulu upconvert, advertise
-  netflix "how to" screencast, with prompt to see screencast	
+  netflix instant "how to" screencast, with prompt to see screencast	
   mfp cookies
   accomodate srt trailer/headers more (one on melissa's)
   hp 4 finalize intro waz off
+    broken scanning hp2 init's
   log the indice numbers [why not?]
   filenames start with what they are, not mplayer.templ.edl  
   version => element
@@ -41,16 +42,16 @@
   allow for a mute to "encompass" a skip by splitting it, uh guess, "except in a single file" (?)
   double check gnosugnu's patch submission again (the C code)
   princess bride EDL
+  monty python EDL LOL
+  fix court jester EDL last skip off, also the first one's skip failed looping [?]
   if any file ever fails, GUI prompt immediately...
   add some "never again" options for things :P [or default off with preferences]
   melissa UI stuff/notes
-  cleanup youtube fella
   amazing grace et al DVD's
   our new DVD's that we own
   os gem MIT license
   the cool uploader website
     split EDL's to "mine" versus community
-  broken scanning hp2 init's
   rename it "..." or whatever google prefers :P after LLC
     mac: advertise urug
   upconvert hulu better/really work?
@@ -166,15 +167,16 @@
     +- list/publish potter
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
-  test court jester just watch it :)
   @ffmpeg: you can't convert mkv's of this type!
   no edl-out prompt by default ( -> pref)
   "ideal is if already matches..." (+ button "already known to match perfectly/well")
-  crash on cancel edl-out
+  crash on cancel edl-out  
   
 == decide later to move up or down ==
-  failed downloads can corrupt...
+  cleanup youtube fella
+  failed downloads can corrupt/interrupted...
   fix smplayer OSD, make it default for editing/getting timestamps
+    at least fix my mplayer to display the "right" output time...
   can optionally select "supplemental" EDL's per DVD.
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
@@ -186,6 +188,7 @@
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  Do the C based "use the real thing" MSDN skipper it might actually be accurate after all...just not precise for doing edits.
   super automatic-o "your DVD has no EDL? let me do all of that for you..."
   email genealogy tree questionaire
   genealogy open source tree v0  
