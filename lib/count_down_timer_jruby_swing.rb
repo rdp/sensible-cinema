@@ -31,10 +31,11 @@ class MainWindow < JFrame
       @start_time = Time.now
       @jlabel.set_text 'welcome...'
       
-      starting_seconds_requested = ARGV[0].to_f*60
+      cur_index = 0
+      starting_seconds_requested = [ARGV[0].to_f*60]
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
-        seconds_left = starting_seconds_requested - (Time.now - @start_time)
+        seconds_left = starting_seconds_requested[cur_index] - (Time.now - @start_time)
         if seconds_left < 0
           setState ( java.awt.Frame::NORMAL )
           setVisible(true)
@@ -47,7 +48,7 @@ class MainWindow < JFrame
           if minutes > 0
             current_time = "%02d:%02d" % [minutes, seconds_left % 60]
           else
-            current_time = "%02ds" % [seconds_left % 60]
+            current_time = "%2ds" % [seconds_left % 60]
           end
           @jlabel.set_text current_time
           set_title current_time
