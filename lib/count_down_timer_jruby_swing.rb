@@ -13,10 +13,18 @@ class MainWindow < JFrame
     JOptionPane.showMessageDialog(nil, message, title, style)
     true
   end
+  
+  def set_normal_size
+      set_size 165,100
+  end
+  
+  def super_size
+    set_size 1650,1000
+  end
 
   def initialize
-      super "countdown"
-      set_size 165,100
+      super "welcome..."
+      set_normal_size
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @jlabel = JLabel.new 'Welcome to Sensible Cinema!'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
@@ -41,7 +49,9 @@ class MainWindow < JFrame
           setState ( java.awt.Frame::NORMAL )
           setVisible(true)
           toFront()
+          super_size
           show_blocking_message_dialog "timer done! #{seconds_requested/60}m"
+          set_normal_size
           @start_time = Time.now
           cur_index += 1
         else
