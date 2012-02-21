@@ -44,13 +44,15 @@ class MainWindow < JFrame
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
         seconds_requested = starting_seconds_requested[cur_index % starting_seconds_requested.length]
-        seconds_left = seconds_requested  - (Time.now - @start_time)
+        next_up = starting_seconds_requested[(cur_index+1) % starting_seconds_requested.length]
+        seconds_left = (seconds_requested - (Time.now - @start_time)).to_i
         if seconds_left < 0
           setState ( java.awt.Frame::NORMAL )
           setVisible(true)
           toFront()
           super_size
-          show_blocking_message_dialog "timer done! #{seconds_requested/60}m"
+          set_title 'done!'
+          show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
           set_normal_size
           @start_time = Time.now
           cur_index += 1
@@ -59,11 +61,12 @@ class MainWindow < JFrame
           minutes = (seconds_left/60).to_i          
           if minutes > 0
             current_time = "%02d:%02d" % [minutes, seconds_left % 60]
+            set_title "#{minutes}m"
           else
-            current_time = "%2ds" % [seconds_left % 60]
+            current_time = "%2ds" % seconds_left
+            set_title "#{seconds_left}s" % seconds_left
           end
           @jlabel.set_text current_time
-          set_title current_time
         end
       end
       @switch_image_timer.start

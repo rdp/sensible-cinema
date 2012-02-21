@@ -9,7 +9,6 @@
   then roadmap_possibilities
   
 == things working on today/requested ==
-  end of percy olympians jumps "poorly"/wrong ?
   64 bit VAC
   tweak screen capture
   better releases VAC et al
@@ -23,6 +22,7 @@
   LLC
   netflix instant actually work :P
     determine its timing relative to DVD...
+  check why it "resets" to the front, investigate why it was *dying* with court jester when jumping...is CJ really that messed?
 
   that one guy's VAC freakiness...
   "finalize" hulu upconvert, advertise
