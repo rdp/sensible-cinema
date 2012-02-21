@@ -25,6 +25,7 @@ class MainWindow < JFrame
   def initialize
       super "welcome..."
       set_normal_size
+      setAlwaysOnTop true
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @jlabel = JLabel.new 'Welcome to Sensible Cinema!'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
