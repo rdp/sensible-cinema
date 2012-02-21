@@ -55,7 +55,7 @@ class MainWindow < JFrame
           super_size
           set_title 'done!'
           show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
-          @name = SwingHelpers.get_user_input('name for next pomodoro?', @name) if next_up > 5
+          @name = SwingHelpers.get_user_input('name for next pomodoro?', @name) if (next_up/60) > 5
           set_normal_size
           @start_time = Time.now
           cur_index += 1
