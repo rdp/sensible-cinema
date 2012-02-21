@@ -26,7 +26,7 @@ class MainWindow < JFrame
       super "welcome..."
       set_normal_size
       setAlwaysOnTop true
-      com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.7) 
+      com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.8) 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @jlabel = JLabel.new 'Welcome to Sensible Cinema!'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
@@ -40,7 +40,7 @@ class MainWindow < JFrame
       panel.add @jlabel
       @start_time = Time.now
       @jlabel.set_text 'welcome...'
-      
+      @name = SwingHelpers.get_user_input 'name for first pomodoro?'
       cur_index = 0
       starting_seconds_requested = ARGV.map{|a| a.to_f*60}
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
@@ -55,6 +55,7 @@ class MainWindow < JFrame
           super_size
           set_title 'done!'
           show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
+          @name = SwingHelpers.get_user_input('name for next pomodoro?', @name) if next_up > 5
           set_normal_size
           @start_time = Time.now
           cur_index += 1
