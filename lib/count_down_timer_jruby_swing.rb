@@ -26,6 +26,7 @@ class MainWindow < JFrame
       super "welcome..."
       set_normal_size
       setAlwaysOnTop true
+      com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.7) 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @jlabel = JLabel.new 'Welcome to Sensible Cinema!'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
