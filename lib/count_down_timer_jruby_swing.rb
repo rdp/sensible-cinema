@@ -10,7 +10,7 @@ class MainWindow < JFrame
     # I think I'm already on top...
     setVisible(true);
     toFront()
-    JOptionPane.showMessageDialog(nil, message, title, style)
+    JOptionPane.showMessageDialog(self, message, title, style)
     true
   end
   
