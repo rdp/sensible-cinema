@@ -25,10 +25,9 @@ class MainWindow < JFrame
   def initialize
       super "welcome..."
       set_normal_size
-      setAlwaysOnTop true
       com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.8) 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
-      @jlabel = JLabel.new 'Welcome to Sensible Cinema!'
+      @jlabel = JLabel.new 'Welcome...'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       @jlabel.setFont(happy)
       @jlabel.set_bounds(44,44,160,14)
@@ -39,10 +38,9 @@ class MainWindow < JFrame
       add panel # why can't I just slap these down?
       panel.add @jlabel
       @start_time = Time.now
-      @jlabel.set_text 'welcome...'
-      @name = SwingHelpers.get_user_input 'name for first pomodoro?'
       cur_index = 0
       starting_seconds_requested = ARGV.map{|a| a.to_f*60}
+      setup_pomo_name starting_seconds_requested[0]
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
         seconds_requested = starting_seconds_requested[cur_index % starting_seconds_requested.length]
@@ -55,7 +53,7 @@ class MainWindow < JFrame
           super_size
           set_title 'done!'
           show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
-          @name = SwingHelpers.get_user_input('name for next pomodoro?', @name) if (next_up/60) > 5
+          setup_pomo_name next_up
           set_normal_size
           @start_time = Time.now
           cur_index += 1
@@ -63,8 +61,8 @@ class MainWindow < JFrame
           # avoid weird re-draw issues
           minutes = (seconds_left/60).to_i          
           if minutes > 0
-            current_time = "%02d:%02d" % [minutes, seconds_left % 60]
-            set_title "#{minutes}m"
+            current_time = "#{minutes}m"
+            set_title current_time
           else
             current_time = "%2ds" % seconds_left
             set_title "#{seconds_left}s" % seconds_left
@@ -73,10 +71,19 @@ class MainWindow < JFrame
         end
       end
       @switch_image_timer.start
-      self.always_on_top=true
+      self.always_on_top=true # setAlwaysOnTop what?
   end
   
+  def setup_pomo_name next_up
+     if (next_up/60) > 6 # preferenc-ize
+       @real_name = SwingHelpers.get_user_input('name for next pomodoro?', @real_name) 
+       @name = @real_name
+     else
+       @name = 'break!'
+     end
   end
+       
+end
 
 if $0 == __FILE__
   if ARGV.length == 0
