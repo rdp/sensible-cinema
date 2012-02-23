@@ -29,14 +29,18 @@ class MainWindow < JFrame
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @jlabel = JLabel.new 'Welcome...'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
-      @jlabel.setFont(happy)
       @jlabel.set_bounds(44,44,160,14)
+      @jlabel.font = happy
+      @name_label = JLabel.new
+      @name_label.font = happy
+      @name_label.set_bounds(44,4,160,14)
+      
       panel = JPanel.new
       @panel = panel
-      @buttons = []
       panel.set_layout nil
       add panel # why can't I just slap these down?
       panel.add @jlabel
+      panel.add @name_label
       @start_time = Time.now
       cur_index = 0
       starting_seconds_requested = ARGV.map{|a| a.to_f*60}
@@ -79,8 +83,9 @@ class MainWindow < JFrame
        @real_name = SwingHelpers.get_user_input('name for next pomodoro?', @real_name) 
        @name = @real_name
      else
-       @name = 'break!'
+       @name = "break!"
      end
+    @name_label.text=@name
   end
        
 end
