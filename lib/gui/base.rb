@@ -568,7 +568,7 @@ KP_ENTER dvdnav select
       SwingHelpers.show_non_blocking_message_dialog message, close_button_text
     end
     
-    include_class javax.swing.UIManager
+    java_import javax.swing.UIManager
     
     def get_user_input(message, default = '', cancel_ok = false)
       bring_to_front
