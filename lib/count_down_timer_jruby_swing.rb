@@ -27,19 +27,19 @@ class MainWindow < JFrame
       set_normal_size
       com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.8) 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
-      @jlabel = JLabel.new 'Welcome...'
+      @time_remaining_label = JLabel.new 'Welcome...'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
-      @jlabel.set_bounds(44,44,160,14)
-      @jlabel.font = happy
+      @time_remaining_label.set_bounds(44,44,160,14)
+      @time_remaining_label.font = happy
       @name_label = JLabel.new
       @name_label.font = happy
-      @name_label.set_bounds(44,4,160,14)
+      @name_label.set_bounds(44,4,1600,14)
       
       panel = JPanel.new
       @panel = panel
       panel.set_layout nil
       add panel # why can't I just slap these down?
-      panel.add @jlabel
+      panel.add @time_remaining_label
       panel.add @name_label
       @start_time = Time.now
       cur_index = 0
@@ -71,7 +71,7 @@ class MainWindow < JFrame
             current_time = "%2ds" % seconds_left
             set_title "#{seconds_left}s" % seconds_left
           end
-          @jlabel.set_text current_time
+          @time_remaining_label.set_text current_time
         end
       end
       @switch_image_timer.start
