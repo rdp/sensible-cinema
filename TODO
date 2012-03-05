@@ -39,6 +39,7 @@
   combine all "folders" of movie EDL's into one folder
   move documentation to online [all]
   feedback button fails os x
+  "real" exe runner so that it can find java from just JAVA_HOME et al
   allow for a mute to "encompass" a skip by splitting it, uh guess, "except in a single file" (?)
   double check gnosugnu's patch submission again (the C code)
   princess bride EDL
