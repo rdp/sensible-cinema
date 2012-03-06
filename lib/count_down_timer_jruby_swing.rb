@@ -15,7 +15,7 @@ class MainWindow < JFrame
   end
   
   def set_normal_size
-      set_size 165,100
+      set_size 200,30
   end
   
   def super_size
@@ -61,6 +61,7 @@ class MainWindow < JFrame
           set_normal_size
           @start_time = Time.now
           cur_index += 1
+          self.always_on_top=true
         else
           # avoid weird re-draw issues
           minutes = (seconds_left/60).to_i          
@@ -75,12 +76,12 @@ class MainWindow < JFrame
         end
       end
       @switch_image_timer.start
-      self.always_on_top=true # setAlwaysOnTop what?
+      self.always_on_top=true
   end
   
   def setup_pomo_name next_up
-     if (next_up/60) > 6 # preferenc-ize
-       @real_name = SwingHelpers.get_user_input('name for next pomodoro?', @real_name) 
+     if (next_up/60) > 6 # preferenc-ize it :P
+       @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{next_up/60}m", @real_name) 
        @name = @real_name
      else
        @name = "break!"
