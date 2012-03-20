@@ -1,0 +1,45 @@
+# edl_version_version 1.1, sensible cinema v0.34.1
+
+"name" => "Harry Potter and the Goblet Of Fire (4)",
+
+"mutes" => [
+   "0:04:04.69" , "0:04:05.89", "profanity", "h...", "[bloo..] [h...] ",
+  "0:17:51.50" , "0:17:53.10", "profanity", "h...", "[bloo..] [h...] ",
+  "0:20:47.01" , "0:20:49.81", "profanity", "h...", "[bloo..] [h...]  It's Mad-Eye Moody.",
+  "0:35:30.12" , "0:35:32.32", "profanity", "h...", "- But of course he is lying. - The [h...] he is!",
+  "0:50:41.63" , "0:50:44.83", "profanity", "da..", "I don't give a [da..] what your father thinks, Malfoy.",
+  "0:59:46.34" , "0:59:47.74", "profanity", "deity", "Oh, my [vain use].",
+  "1:03:29.74" , "1:03:32.14", "profanity", "h...", "What the [bloo..] [h...] was that?",
+  "1:11:55.75" , "1:11:57.35", "profanity", "h...", "[bloo..] [h...] ",
+  "1:14:59.85" , "1:15:01.55", "profanity", "h...", "[bloo..] [h...] ",
+  "1:15:03.85" , "1:15:05.55", "profanity", "h...", "[bloo..] [h...] ",
+  "2:10:26.90" , "2:10:28.80", "profanity", "deity", "For [vain use]'s sake, [dumb]ledore, what's happened?",
+ #1:32:35 killed harry
+# 2:01 hand 2:01:36 blood
+# transform back to kid.
+
+  "0:01:47.19" , "0:01:49.59", "profanity", "bloo..", "[bloo..] kids.",
+  "0:38:08.22" , "0:38:11.52", "profanity", "bloo..", "- Let you know what? - You know [bloo..] well what.",
+  "0:38:51.42" , "0:38:53.12", "profanity", "piss", "[piss] off.",
+  "1:15:09.05" , "1:15:10.35", "profanity", "bloo..", "[bloo..]...",
+  "1:15:10.55" , "1:15:11.75", "profanity", "bloo..", "Oh, [bloo..]...",
+  "1:16:00.16" , "1:16:05.26", "profanity", "bloo..", "Nobody asked her. Would've taken her myself if she wasn't so [bloo..] proud.",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "HARRY_POTTER_GOBLET_OF_FIRE",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "a174e1f1|8a74ac65",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "9414.166", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.13",
+"dvd_nav_packet_offset" => [0.5, 0.59], # ??

@@ -103,8 +103,8 @@ module SensibleSwing
           end
           all_entries = euphemized_synchronized_entries
 
-          all_entries.shift if all_entries[0].text =~ / by /i
-          all_entries.pop if all_entries[-1].text =~ / by /i
+          all_entries.shift if all_entries[0].text =~ / by |downloaded|/i
+          all_entries.pop if all_entries[-1].text =~ / by |downloaded/i
 
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
           
