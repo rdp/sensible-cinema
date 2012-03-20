@@ -1,0 +1,33 @@
+# edl_version_version 1.1, sensible cinema v0.34.2
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Puss In Boots",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+
+  "0:37:16.37" , "0:37:17.68", "profanity", "deity", "Oh, my [vain use]!",
+  "0:55:55.79" , "0:55:56.82", "profanity", "deity", "Oh, my [vain use]!",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+
+"beginning_subtitle" => ["Through the years I have been known by many names.", "34.98"],
+"ending_subtitle_entry" => ["I spent a lot of time in prison preparing for this.", "1:00:07.67"],
+
+
+"source" => "dvd",
+"volume_name" => "PUSS_IN_BOOTS",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "660a7687|a5356994",
+"dvd_title_track" => "17", # our guess for it
+"dvd_title_track_length" => "5407.633", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.28",
+"dvd_nav_packet_offset" => [0.5, 0.735254],
