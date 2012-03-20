@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sane' # require_relative
 require_relative 'jruby-swing-helpers/swing_helpers'
+require_relative 'jruby-swing-helpers/play_mp3_audio'
 
 include SwingHelpers
   
@@ -57,7 +58,10 @@ class MainWindow < JFrame
           toFront()
           super_size
           set_title 'done!'
+		  a = PlayMp3Audio.new('diesel.mp3')
+		  a.start
           show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
+		  a.stop
           setup_pomo_name next_up
           set_normal_size
           @start_time = Time.now
