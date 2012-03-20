@@ -15,7 +15,7 @@ class MainWindow < JFrame
   end
   
   def set_normal_size
-      set_size 200,30
+      set_size 200,80
   end
   
   def super_size
@@ -25,6 +25,7 @@ class MainWindow < JFrame
   def initialize
       super "welcome..."
       set_normal_size
+	  set_location 100,100
       com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.8) 
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @time_remaining_label = JLabel.new 'Welcome...'
@@ -80,9 +81,15 @@ class MainWindow < JFrame
   end
   
   def setup_pomo_name next_up
-     if (next_up/60) > 6 # preferenc-ize it :P
-       @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{next_up/60}m", @real_name) 
-       @name = @real_name
+     minutes = next_up/60
+     if minutes > 6 # preferenc-ize it :P
+	   if minutes > 15
+         @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", @real_name) 
+         @name = @real_name
+		 minimize
+	   else
+	     @name = "big break!"
+		end
      else
        @name = "break!"
      end
