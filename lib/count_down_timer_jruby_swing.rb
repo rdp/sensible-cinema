@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sane' # require_relative
 require_relative 'jruby-swing-helpers/swing_helpers'
 require_relative 'jruby-swing-helpers/play_mp3_audio'
+require_relative 'jruby-swing-helpers/storage'
 
 include SwingHelpers
   
@@ -83,12 +84,13 @@ class MainWindow < JFrame
       @switch_image_timer.start
       self.always_on_top=true
   end
-  
+  Storage = ::Storage.new("pomo_timer")
   def setup_pomo_name next_up
      minutes = next_up/60
      if minutes > 6 # preferenc-ize it :P
 	   if minutes > 15
-         @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", @real_name) 
+         @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", Storage['real_name']) 
+		 Storage['real_name'] = @real_name
          @name = @real_name
 		 minimize
 	   else
