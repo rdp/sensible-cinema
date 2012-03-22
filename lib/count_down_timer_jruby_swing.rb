@@ -21,7 +21,6 @@ class MainWindow < JFrame
       set_normal_size
 	  set_location 100,100
       com.sun.awt.AWTUtilities.setWindowOpacity(self, 0.8) 
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # happiness
       @time_remaining_label = JLabel.new 'Welcome...'
       happy = Font.new("Tahoma", Font::PLAIN, 11)
       @time_remaining_label.set_bounds(44,44,160,14)
@@ -83,7 +82,11 @@ class MainWindow < JFrame
      minutes = next_up/60
      if minutes > 6 # preferenc-ize it :P
 	   if minutes > 15
-         @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", Storage['real_name']) 
+	     begin
+           @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", Storage['real_name']) 
+		 rescue Exception => canceled
+		   SwingHelpers.hard_exit # so we don't have to shutdown timers, blah blah
+		 end
 		 Storage['real_name'] = @real_name
          @name = @real_name
 		 Thread.new { sleep 0.5; minimize }
