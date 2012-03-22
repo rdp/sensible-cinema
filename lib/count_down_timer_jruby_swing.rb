@@ -8,14 +8,6 @@ include SwingHelpers
   
 class MainWindow < JFrame
 
-  def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
-    # I think I'm already on top...
-    setVisible(true);
-    toFront()
-    JOptionPane.showMessageDialog(self, message, title, style)
-    true
-  end
-  
   def set_normal_size
       set_size 200,80
   end
@@ -61,7 +53,7 @@ class MainWindow < JFrame
           set_title 'done!'
 		  a = PlayMp3Audio.new('diesel.mp3')
 		  a.start
-          show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
+          SwingHelpers.show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
 		  a.stop
           setup_pomo_name next_up
           set_normal_size
@@ -84,7 +76,9 @@ class MainWindow < JFrame
       @switch_image_timer.start
       self.always_on_top=true
   end
+  
   Storage = ::Storage.new("pomo_timer")
+  
   def setup_pomo_name next_up
      minutes = next_up/60
      if minutes > 6 # preferenc-ize it :P
@@ -92,7 +86,7 @@ class MainWindow < JFrame
          @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", Storage['real_name']) 
 		 Storage['real_name'] = @real_name
          @name = @real_name
-		 minimize
+		 Thread.new { sleep 0.5; minimize }
 	   else
 	     @name = "big break!"
 		end
