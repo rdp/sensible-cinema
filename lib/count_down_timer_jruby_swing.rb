@@ -38,7 +38,7 @@ class MainWindow < JFrame
       @start_time = Time.now
       cur_index = 0
       starting_seconds_requested = ARGV.map{|a| a.to_f*60}
-      setup_pomo_name starting_seconds_requested[0]
+      setup_pomo_name starting_seconds_requested[0]/60
       @switch_image_timer = javax.swing.Timer.new(1000, nil) # nil means it has no default person to call when the action has occurred...
       @switch_image_timer.add_action_listener do |e|
         seconds_requested = starting_seconds_requested[cur_index % starting_seconds_requested.length]
@@ -54,13 +54,18 @@ class MainWindow < JFrame
 		  a.start
           SwingHelpers.show_blocking_message_dialog "Timer done! #{seconds_requested/60}m at #{Time.now}. Next up #{next_up/60}m." 
 		  a.stop
-          setup_pomo_name next_up
-          set_normal_size
+		  minutes = next_up/60
+          setup_pomo_name minutes
+		  if(minutes > 6)
+            set_normal_size
+		  else
+		    super_size # for breaks to force them...
+		  end
           @start_time = Time.now
           cur_index += 1
           self.always_on_top=true
         else
-          # avoid weird re-draw issues
+          # avoid weird re-draw text issues
           minutes = (seconds_left/60).to_i          
           if minutes > 0
             current_time = "#{minutes}m"
@@ -78,8 +83,7 @@ class MainWindow < JFrame
   
   Storage = ::Storage.new("pomo_timer")
   
-  def setup_pomo_name next_up
-     minutes = next_up/60
+  def setup_pomo_name minutes
      if minutes > 6 # preferenc-ize it :P
 	   if minutes > 15
 	     begin
