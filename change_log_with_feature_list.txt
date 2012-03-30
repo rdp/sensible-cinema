@@ -1,3 +1,6 @@
+
+NB that with ZoomPlayer Max's Blu-Ray support, you can watch blu-ray's edited too.
+
 = 0.34.2 2-6-12 =
 
 minor subtitle friendli-ezations.
