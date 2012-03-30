@@ -58,9 +58,9 @@ def get_transitive_dependencies dependencies
   dependencies.each{|d|
    gem d.name # make sure it's loaded so that it'll be in Gem.loaded_specs
    begin
-     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[0][1]
+     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[d.name]
    rescue
-     raise 'possibly dont have that gem are you running jruby for sure?' + d.name
+     raise 'possibly dont have that gem are you running jruby for sure?' + d.name +  Gem.loaded_specs.select{|name, spec| name}.inspect
    end
    transitive_deps = dependency_spec.runtime_dependencies
    new_dependencies << transitive_deps

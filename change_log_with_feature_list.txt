@@ -1,6 +1,14 @@
 
 NB that with ZoomPlayer Max's Blu-Ray support, you can watch blu-ray's edited too.
 
+Split pomodoro timer out to its own repo.
+
+= 0.34.3 3-17-12 =
+
+Fix sorting bug. Add a few titles.
+
+Add pomodoro timer!
+
 = 0.34.2 2-6-12 =
 
 minor subtitle friendli-ezations.

@@ -24,7 +24,9 @@
     determine its timing relative to DVD...
   check why it "resets" to the front, investigate why it was *dying* with court jester when jumping the old way...is CJ DVD really that messed? is it a dvdnav patch difficulty? smells like the old one...
 
+  screen capture better java-zer [?]
   that one guy's VAC freakiness...
+  the "add on" type EDL
   "finalize" hulu upconvert, advertise
   netflix instant "how to" screencast, with prompt to see screencast	
   mfp cookies
@@ -39,6 +41,7 @@
   combine all "folders" of movie EDL's into one folder
   move documentation to online [all]
   feedback button fails os x
+  "real" exe runner so that it can find java from just JAVA_HOME et al
   allow for a mute to "encompass" a skip by splitting it, uh guess, "except in a single file" (?)
   double check gnosugnu's patch submission again (the C code)
   princess bride EDL
