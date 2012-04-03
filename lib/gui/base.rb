@@ -538,13 +538,13 @@ KP_ENTER dvdnav select
     end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
-      bring_to_front unless OS.mac? # causes triples on mac!
+      bring_to_front unless OS.mac? # causes triples on mac! TODO rdp
       JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
-      bring_to_front unless OS.mac?
+      bring_to_front unless OS.mac? # causes duplicate prompts or something?
       unique_trace = caller.inspect
       if LocalStorage[unique_trace]
         dir = LocalStorage[unique_trace]
@@ -557,7 +557,6 @@ KP_ENTER dvdnav select
     end
     
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
-      bring_to_front
       SwingHelpers.show_blocking_message_dialog message, title, style
     end
     
@@ -571,7 +570,6 @@ KP_ENTER dvdnav select
     java_import javax.swing.UIManager
     
     def get_user_input(message, default = '', cancel_ok = false)
-      bring_to_front
       SwingHelpers.get_user_input message, default, cancel_ok
     end
     
@@ -586,9 +584,8 @@ KP_ENTER dvdnav select
     end
     
     def show_select_buttons_prompt message, names ={}
-      JOptionPane.show_select_buttons_prompt(message, names)
+      SwingHelpers.show_select_buttons_prompt(message, names)
     end
-
 
     def parse_edl path
       EdlParser.parse_file path
