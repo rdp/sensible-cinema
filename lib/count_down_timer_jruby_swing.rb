@@ -14,6 +14,7 @@ class MainWindow < JFrame
   
   def super_size
     set_size 1650,1000
+    self.always_on_top=true
   end
 
   def initialize
@@ -56,7 +57,7 @@ class MainWindow < JFrame
 		  a.stop
 		  minutes = next_up/60
           setup_pomo_name minutes
-		  if(minutes > 6)
+		  if(minutes > Storage['break_time'])
             set_normal_size
 		  else
 		    super_size # for breaks to force them...
@@ -82,18 +83,25 @@ class MainWindow < JFrame
   end
   
   Storage = ::Storage.new("pomo_timer")
+  Storage.set_default('break_time', 7)
+  Storage.set_default('big_break_time', 15)
+  Storage.set_default('all_done', [])
   
   def setup_pomo_name minutes
-     if minutes > 6 # preferenc-ize it :P
-	   if minutes > 15
+     if minutes > Storage['break_time']
+	   if minutes > Storage['big_break_time']
 	     begin
            @real_name = SwingHelpers.get_user_input("name for next pomodoro? #{minutes}m", Storage['real_name']) 
+		   Storage['all_done'] = Storage['all_done'] + [@real_name] # save history away for now... 
 		 rescue Exception => canceled
 		   SwingHelpers.hard_exit # so we don't have to shutdown timers, blah blah
 		 end
 		 Storage['real_name'] = @real_name
          @name = @real_name
-		 Thread.new { sleep 0.5; minimize }
+		 Thread.new { 
+		   sleep 0.5; 
+		   SwingHelpers.invoke_in_gui_thread {minimize}
+		 }
 	   else
 	     @name = "big break!"
 		end
@@ -109,7 +117,6 @@ if $0 == __FILE__
   if ARGV.length == 0
     p 'syntax: minutes1 minutes2 [it will loop, for pomodoro]'
   else
-    MainWindow.new.show
+    SwingHelpers.invoke_in_gui_thread { MainWindow.new.show }
   end
 end
-
