@@ -96,9 +96,7 @@ A. Yes, just use some WMC plugin that allows you to "call out" to a 3rd party so
    Then use the "advanced" mode "create side-by-side EDL file" to create an EDL for your previously existing file.
    Then make your WMC plugin "call out" to smplayer to play those files (through whatever means it necessary), and
    it will automatically pick up and use the EDL file.
-   You could also use the same side-by-side EDL file with XBMC, which also honors them, though
-   mutes are broken currently, so it will set it to just always skip. [note: this may not be implemented all the
-   way yet ask on the mailing list if it is or not, for XBMC]
+   You could also use the same side-by-side EDL file with XBMC, which also honors them (need at least an Eden release version).
 
 Q. Is it unethical to watch edited movies?
   Well, producers have been making "airplane edited" movies forever, why should this offend them? :)
