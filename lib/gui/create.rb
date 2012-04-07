@@ -137,7 +137,7 @@ module SensibleSwing
         end
         
         filename = EdlTempFile + '.parsed.txt'
-        out =  "# copy and paste these into your \"mute\" section of your EDL if you deem them mutable\n" + parsed_profanities
+        out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
         out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
