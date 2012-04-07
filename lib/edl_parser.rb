@@ -245,12 +245,12 @@ class EdlParser
     raise if add_this_to_all_ends < 0
     raise if subtract_this_from_ends < 0
     add_this_to_all_ends -= subtract_this_from_ends # now we allow negative :)
-	#raise if splits.size > 0 # for now
+   # raise if splits.size > 0 # just ignore them for now
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [k,v,:mute]}
     blanks = blanks.map{|k, v| [k,v,:blank]}
-    combined = (mutes+blanks).sort.map{|s,e,type|  [translate_string_to_seconds(s),  translate_string_to_seconds(e), type]}
+    combined = (mutes+blanks).map{|s,e,type|  [translate_string_to_seconds(s),  translate_string_to_seconds(e), type]}.sort
     
     # detect any weirdness...
     previous = nil
@@ -262,13 +262,12 @@ class EdlParser
       if previous
         ps, previous_end, pt = previous
         if (s < previous_end)
-          raise SyntaxError.new("detected an overlap #{current.join(' ')} #{previous.join(' ')}")
+          raise SyntaxError.new("detected an overlap current #{s} < #{previous_end} of current: #{current.join(' ')} previous: #{previous.join(' ')}")
         end
-        
       end
       previous = current
-	  # do the math later to allow for ones that barely hit into each other 1.0 2.0, 2.0 3.0
-	  [s-subtract_this_from_beginnings, e+add_this_to_all_ends,type]
+      # do the math later to allow for ones that barely hit into each other 1.0 2.0, 2.0 3.0
+      [s-subtract_this_from_beginnings, e+add_this_to_all_ends,type]
     }
     combined
   end

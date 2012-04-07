@@ -477,8 +477,11 @@ KP_ENTER dvdnav select
 
 #    MplayerBeginingBuffer = 1.0
 #    MplayerEndBuffer = 0.0
+   def begin_buffer_preference
+    LocalStorage['mplayer_beginning_buffer']
+   end
     
-    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, add_secs_begin = LocalStorage['mplayer_beginning_buffer'], show_subs = false
+    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, add_secs_begin = begin_buffer_preference, show_subs = false
       if we_are_in_create_mode
         assert(add_secs_begin == 0 && add_secs_end == 0)
       end

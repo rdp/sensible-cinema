@@ -135,9 +135,8 @@ module SensibleSwing
       if just_create_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
         # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        # NB these are just for the Side by side EDL's!
         
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = MplayerEndBuffer, MplayerBeginingBuffer, splits = []
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, begin_buffer_preference, splits = []
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
         raise unless File.exist?(output_file) # sanity
