@@ -1,7 +1,10 @@
+= 0.34.4 4-6-12 =
+
+Fix XBMC EDL style creation.  Hopefully fix sorting bug for real this time.
 
 NB that with ZoomPlayer Max's Blu-Ray support, you can watch blu-ray's edited too.
 
-Split pomodoro timer out to its own repo.
+Split pomodoro timer out to its own repo. :)
 
 = 0.34.3 3-17-12 =
 
