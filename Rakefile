@@ -10,6 +10,8 @@ Jeweler::Tasks.new do |s|
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
+    
+    # IF CHANGED PUBLISH NEW GEM :)
     s.add_dependency 'os', '>= 0.9.4'
     s.add_dependency 'sane', '>= 0.25.2'
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
