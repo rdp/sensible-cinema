@@ -45,8 +45,9 @@ module SensibleSwing
       end
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
+        #TODO rdp file buttons
         @open_current.set_enabled edl_available
-        @create_new_edl_for_current_dvd.set_enabled disk_available
+        #@create_new_edl_for_current_dvd.set_enabled disk_available
         if edl_available
           @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [yours already has one!]"
         else
