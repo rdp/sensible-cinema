@@ -1,3 +1,10 @@
+= =
+
+Note that one can already "beam" edited video content from one computer to the next,
+using my on-screen-video capture utility.  Even captures audio "for free" 
+for windows vista+.
+You can also beam it to a console device (tranasmit) the (now edited) video.
+
 = 0.34.4 4-6-12 =
 
 Fix XBMC EDL style creation.  Hopefully fix sorting bug for real this time.

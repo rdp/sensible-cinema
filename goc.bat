@@ -1,1 +1,1 @@
-call j %* bin\sensible-cinema --create-mode --developer-mode
+call j --1.8 %* bin\sensible-cinema --create-mode --developer-mode

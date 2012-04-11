@@ -158,3 +158,5 @@
     One for profanity, one for boredome, etc.  and can pick and choose, mix and match the ones that they will apply for that viewing.
 	  It then adds them together and uses them.
   http://openplayback.blogspot.com/ lists some useful ideas
+  Create a system that "receives" for instance netflix instant streams, or DVD streams, or screen casts
+    1) edits them, "sends" them back to a client receiver. with or without OCR'ing elements of the screen.

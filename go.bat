@@ -1,2 +1,2 @@
 @rem NB that you can call it like go --debug
-call j %* bin\sensible-cinema
+call j --1.8 %* bin\sensible-cinema
