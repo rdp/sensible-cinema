@@ -1,6 +1,6 @@
 #
 # warning: somewhat scary/explicit down there!
-# see also todo.subtitle file, though what's here is mostly pretty well functional
+# see also todo.subtitle file, though what's here is mostly pretty well functional/complete
 #
 begin
   require 'sane'
