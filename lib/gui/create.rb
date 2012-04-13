@@ -99,12 +99,12 @@ module SensibleSwing
           end
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
-            Thread.new { play_dvd_smplayer_unedited true }
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for."
+            play_dvd_smplayer_unedited true
           end
           all_entries = euphemized_synchronized_entries
 
-          all_entries.shift if all_entries[0].text =~ / by |downloaded|/i
+          all_entries.shift if all_entries[0].text =~ / by |downloaded/i # only place I think
           all_entries.pop if all_entries[-1].text =~ / by |downloaded/i
 
           display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
