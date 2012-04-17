@@ -34,7 +34,7 @@ class EdlParser
       loop {
         current_value = get_files_hash.call
         if current_value != old_value
-          print 'detected some file changed! Re-parsing to update...'
+          print 'detected some file was changed! Re-parsing to update...'
           old_value = current_value
           this_block.call
           puts 'done.'
