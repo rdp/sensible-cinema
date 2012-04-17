@@ -542,12 +542,12 @@ module SensibleSwing
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
       filename.downcase!
       if File.exist?(filename)
-	    show_blocking_message_dialog 'cannot overwrite file in the edit dir that already has same name, opening it instead...'
-	  else
-	    File.write(filename, input)
+	      show_blocking_message_dialog 'don\'t want to overwrite a file in the edit dir that already has same name, opening it instead...'
+	    else
+	      File.write(filename, input)
       end
       open_file_to_edit_it filename
-    end     
+    end    
 
     def show_mplayer_instructions
       show_non_blocking_message_dialog <<-EOL

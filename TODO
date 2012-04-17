@@ -9,20 +9,22 @@
   then roadmap_possibilities
   
 == things working on today/requested ==
-  XBMC big time stamps
-  JPFA genealogy collab wiki/forum [facebook page?]
+  JPFA genealogy collab wiki--maybe just a page on weRelate? [+facebook genealogy page]
+  check why it "resets" to the front, investigate why it was *dying* with court jester when jumping the old way...is CJ
+    DVD really that messed? is it a dvdnav patch difficulty? smells like the old one...
   
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
-  genealogy screen saver authorize
   LLC
   netflix instant actually work :P
     determine its timing relative to DVD...
-  check why it "resets" to the front, investigate why it was *dying* with court jester when jumping the old way...is CJ DVD really that messed? is it a dvdnav patch difficulty? smells like the old one...
 
+  make it easier to use for "just files"
+  genealogy screen saver authorize
   better releases VAC et al
   ruby_gnuplot bugz et al
+  prompt/warn if > 50 titles :)
   parser missed first subtitle entry
   screen capture better java-zer [?]
   that one guy's VAC freakiness...
