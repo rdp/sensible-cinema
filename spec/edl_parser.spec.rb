@@ -264,5 +264,7 @@ describe EdlParser do
     # it should be slightly higher than 1, and slightly less than 3600
     endy.should == [[1.07655099900099900000, 2.07555199800199830000, :blank], [3596.48114640359600000000, 3597.48014740259760000000, :mute]]
   end
+
+  it "should parse out bad beginning/ending subtitle entries"
   
 end

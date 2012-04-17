@@ -23,6 +23,7 @@
 
   better releases VAC et al
   ruby_gnuplot bugz et al
+  parser missed first subtitle entry
   screen capture better java-zer [?]
   that one guy's VAC freakiness...
   the "add on" type EDL
@@ -34,6 +35,7 @@
     broken scanning hp2 init's
   log the indice numbers [why not?]
   filenames start with what they are, not mplayer.templ.edl  
+  after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows

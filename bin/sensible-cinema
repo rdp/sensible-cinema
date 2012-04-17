@@ -50,7 +50,6 @@ if $0 == __FILE__
      $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for more details.
     EOL
   else
-    p $LOADED_FEATURES
     a = SensibleSwing::MainWindow.new true, ARGV
     a.setup_default_buttons
     puts 'Please use the Sensible Cinema GUI window popup...'
