@@ -6,7 +6,9 @@
 ],
 
 "blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
+  "0:10", "0:15",
+  "1:00:10", "1:00:15"
+
 ],
 
 "dvd_nav_packet_offset" => [0.4, 0.6143],

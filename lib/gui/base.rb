@@ -109,6 +109,10 @@ module SensibleSwing
       
       setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
       check_for_various_dependencies
+	  LocalStorage.set_once('init_preferences_once') {
+	    show_blocking_message_dialog "lets setup some preferences once..."
+	    set_individual_preferences
+	  }
       set_visible start_visible
     end
     

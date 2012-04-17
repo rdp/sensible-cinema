@@ -87,7 +87,7 @@ module SensibleSwing
       end
       
       @show_upconvert_options = new_jbutton("Tweak Preferences [timing, upconversion]") do
-        get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
+	    set_individual_preferences
         show_blocking_message_dialog "You will now be able to set some upconversion options, which makes the playback look nicer but uses more cpu [if desired].\nClose the window when finished."
         upconvert_window = new_child_window
         upconvert_window.add_change_upconvert_buttons
@@ -105,6 +105,16 @@ module SensibleSwing
       @panel.add @progress_bar 
       add_text_line ""# spacing
     end
+	
+	def set_individual_preferences
+      get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
+      if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :no => "ZoomPlayer MAX", :yes => "Just MPlayer [free]") == :no
+        LocalStorage['have_zoom_button'] = true
+      else
+	    LocalStorage['have_zoom_button'] = false
+	  end
+	  true
+	end
     
     def get_set_preference name, english_name
       old_preference = LocalStorage[name]
