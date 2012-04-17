@@ -1,29 +1,28 @@
-== roadmap [for just tasks, see below though] == 
-
   remember this stuff is all "oh gosh I have to do that too?" crud time, don't even want it.
     and "won't even be useful to people in the end so why bother?"
     "just for fun"
-    
+
+== roadmap [for just tasks, see below though] == 
+
   netflix instant EDL go live/mac'ify
   
   then roadmap_possibilities
   
 == things working on today/requested ==
-  64 bit VAC
-  tweak screen capture
-  better releases VAC et al
-  ruby_gnuplot bugz et al
+  XBMC big time stamps
+  JPFA genealogy collab wiki/forum [facebook page?]
   
 == blocked working on ==
-  genealogy screen saver authorize
 
 == yes do, un-ordered currently, from all the various future release options ==
-  JPFA genealogy collab wiki/forum [facebook page?]
+  genealogy screen saver authorize
   LLC
   netflix instant actually work :P
     determine its timing relative to DVD...
   check why it "resets" to the front, investigate why it was *dying* with court jester when jumping the old way...is CJ DVD really that messed? is it a dvdnav patch difficulty? smells like the old one...
 
+  better releases VAC et al
+  ruby_gnuplot bugz et al
   screen capture better java-zer [?]
   that one guy's VAC freakiness...
   the "add on" type EDL
