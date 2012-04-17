@@ -250,13 +250,6 @@ module SensibleSwing
         child.show_rarely_used_buttons
       end
 
-      add_text_line 'Options for creating an edited movie file from a local file:'
-      
-      new_jbutton("Show options to help with creating a fully edited movie file") do
-        window = new_child_window
-        window.add_options_that_use_local_files
-      end
-      
     end
 
 		def write_subs_to_file out_file, euphemized_synchronized_entries
@@ -351,6 +344,15 @@ module SensibleSwing
         show_blocking_message_dialog "Warning: With XBMC you'll need at least Eden v11.0 for mutes to work at all"
         choose_file_and_edl_and_create_sxs_or_play true
       }
+	  
+      add_text_line 'Options for creating an edited movie file from a local file:'
+      
+      new_jbutton("Show options to help with creating a fully edited movie file") do
+        window = new_child_window
+        window.add_options_that_use_local_files
+      end
+      
+	  
       if LocalStorage['have_zoom_button']
         @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
           raise unless OS.doze?
