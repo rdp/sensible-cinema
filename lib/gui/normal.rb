@@ -128,15 +128,14 @@ module SensibleSwing
     end
     
     # side by side stuff we haven't really factored out yet, also doubles for both normal/create LODO
-    def choose_file_and_edl_and_create_sxs_or_play just_create_dot_edl_file_instead_of_play
+    def choose_file_and_edl_and_create_sxs_or_play just_create_xbmc_dot_edl_file_instead_of_play
       filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or video_ts/anything.ext)")
       edl_filename = new_existing_file_selector_and_select_file( "Pick an EDL file to use with it", EdlParser::EDL_DIR)
       assert_ownership_dialog
-      if just_create_dot_edl_file_instead_of_play
+      if just_create_xbmc_dot_edl_file_instead_of_play
         descriptors = EdlParser.parse_file edl_filename
-        # LODO these timings...DRY up...plus is XBMC the same? what about on a slower computer?
-        
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, begin_buffer_preference, splits = []
+        # XBMC can use english timestamps
+        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end = 0.0, begin_buffer_preference, splits = [], extra_time_to_all = 0.0, use_english_timestamps=true
         output_file = filename_mpg.gsub(/\.[^\.]+$/, '') + '.edl' # sanitize...
         File.write(output_file, edl_contents)
         raise unless File.exist?(output_file) # sanity

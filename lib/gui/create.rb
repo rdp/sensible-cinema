@@ -52,7 +52,7 @@ module SensibleSwing
           @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [yours already has one!]"
         else
 		  if disk_available
-            @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [doesn't have one yet!]"
+            @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [it doesn't have one yet!]"
 		  else
 		    @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [no disk inserted!]"
 		  end
@@ -348,7 +348,7 @@ module SensibleSwing
         version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
-        show_blocking_message_dialog "Warning: With XBMC you'll need Eden 11.0 for mutes to work"
+        show_blocking_message_dialog "Warning: With XBMC you'll need at least Eden v11.0 for mutes to work at all"
         choose_file_and_edl_and_create_sxs_or_play true
       }
       if LocalStorage['have_zoom_button']

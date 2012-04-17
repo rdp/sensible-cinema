@@ -4,8 +4,7 @@ require 'sane'
 
 module SensibleSwing
   
-  class MainWindow < javax.swing.JFrame
-    
+  class MainWindow < javax.swing.JFrame    
 	 
     def force_accept_license_first
       if !(LocalStorage['main_license_accepted'] == VERSION)
@@ -19,8 +18,11 @@ module SensibleSwing
     end
     
     def force_accept_file_style_license
-      require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
-            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file'
+       if !(LocalStorage['accepted_legal_copys'] == VERSION)
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file.'
+        LocalStorage['accepted_legal_copys'] = VERSION
+      end
     end
    
     def self.download full_url, to_here
@@ -28,12 +30,13 @@ module SensibleSwing
       require 'openssl'
       eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE") if full_url =~ /https/
       keep_going_bg_thread = true
-	  print 'working'
+      print 'downloading'
       Thread.new { while keep_going_bg_thread; print '.'; sleep 1; end}
       writeOut = open(to_here, "wb")
       writeOut.write(open(full_url).read)
       writeOut.close
       keep_going_bg_thread = false
+      puts 'done!'
     end
     
     def self.download_to_string full_url
@@ -83,8 +86,7 @@ module SensibleSwing
       end
     end
 	
-	def check_for_file_manipulation_dependencies
-	
+	def check_for_file_manipulation_dependencies	
 	   if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder') # both use it now, since we have to use our own mplayer.exe for now...
         require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
@@ -94,8 +96,7 @@ module SensibleSwing
       end
     end
     
-    def check_for_various_dependencies
-            
+    def check_for_various_dependencies            
       if OS.doze? && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil)
         require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
@@ -132,7 +133,8 @@ module SensibleSwing
     end
     
     def assert_ownership_dialog 
-      message = "Do you certify you own the DVD this came of and have it in your possession, if it came from a DVD?"
+      force_accept_file_style_license
+      message = "Do you certify you own the DVD this came of and have it in your possession, if necessary in your legal jurisdiction?"
       title = "Verify ownership"
       returned = JOptionPane.show_select_buttons_prompt(message, {:yes => "no", :no => "yes"})
       assert_confirmed_dialog returned, nil
