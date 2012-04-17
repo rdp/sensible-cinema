@@ -5,6 +5,11 @@ works fine jonah [forward too far?]
 
 sintel works ok
   
+ big buck:
+  jump 9.5 to 15 goes to 15.68 or so...
+  about a second "ahead" at 9 minutes, as well.
+  so works ok
+  
  =c= eureka! fails at second 10
 
 = =

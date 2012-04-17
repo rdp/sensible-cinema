@@ -23,6 +23,7 @@
   make it easier to use for "just files"
   genealogy screen saver authorize
   better releases VAC et al
+  detect an overlap 'at parse time'
   ruby_gnuplot bugz et al
   prompt/warn if > 50 titles :)
   parser missed first subtitle entry

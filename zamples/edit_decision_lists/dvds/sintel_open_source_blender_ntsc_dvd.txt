@@ -6,7 +6,6 @@
 "blank_outs" => [
   "00:00:56.0" , "00:00:57.0", "violence", "knife stabbing",
   "00:01:05.0" , "00:01:14.5", "violence", "stab through",
-  "90.0", "100.0", "violence", "test cut",
 ],
 
 "dvd_nav_packet_offset" => [0.5, 0.734067],
