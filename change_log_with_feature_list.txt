@@ -1,9 +1,11 @@
-= =
+= 0.34.5 4-17-12 =
+
+Made side by Side EDL format to default to "XBMC" human readable. Ask and ye shall receive...
 
 Note that one can already "beam" edited video content from one computer to the next,
-using my on-screen-video capture utility.  Even captures audio "for free" 
-for windows vista+.
-You can also beam it to a console device (tranasmit) the (now edited) video.
+using my on-screen-video capture utility.  Even can capture audio from the computer "natively" 
+for vista+.
+You can also beam it to a console device (transmit) the (now being transmitted as edited) video.
 
 = 0.34.4 4-6-12 =
 

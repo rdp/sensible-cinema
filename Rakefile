@@ -11,7 +11,7 @@ Jeweler::Tasks.new do |s|
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
     
-    # IF CHANGED PUBLISH NEW GEM :)
+    # IF CHANGED PUBLISH NEW GEM [and delete pkg] :)
     s.add_dependency 'os', '>= 0.9.4'
     s.add_dependency 'sane', '>= 0.25.2'
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
@@ -72,13 +72,12 @@ end
 
 desc 'clear_and_copy_vendor_cache'
 task 'clear_and_copy_vendor_cache' do
-   system("rm -rf ../cache.bak")
-   system("cp -r vendor/cache ../cache.bak") # for retrieval later
+   FileUtils.rm_rf "../cache.bak"
+   system("cp -r vendor/cache ../cache.bak") # so we can retrieve it back later
    Dir['vendor/cache/*'].each{|f|
     FileUtils.rm_rf f
     raise 'unable to delete: ' + f if File.exist?(f)
    }
-   FileUtils.mkdir_p 'vendor/cache'
 end
 
 desc 'collect binary and gem deps for distribution'
@@ -196,7 +195,9 @@ end
 
 desc ' (releases with clean cache dir, which we need now)'
 task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
-  p 'remember to run all the specs first!'
+  p 'remember to run all the specs!! Have any!'
+  require 'os'
+  raise 'need jruby' unless OS.jruby?
   raise unless system("git pull")
   raise unless system("git push origin master")
   #Rake::Task["gem_release"].execute
