@@ -4,40 +4,37 @@
 
 == roadmap [for just tasks, see below though] == 
 
-  netflix instant EDL go live/mac'ify
-  
-  then roadmap_possibilities
+  netflix instant EDL work at all
+    relative to DVD's
   
 == things working on today/requested ==
   JPFA genealogy collab wiki--maybe just a page on weRelate? [+facebook genealogy page]
-  check why it "resets" to the front, investigate why it was *dying* with court jester when jumping the old way...is CJ
-    DVD really that messed? is it a dvdnav patch difficulty? smells like the old one...
   
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
   LLC
-  netflix instant actually work :P
+  netflix instant descriptor work at all
+    maybe get it to work with say VLC full screen first?
+    it may need the "50% adjuster" fella...
+    note on the www once it works
     determine its timing relative to DVD...
+  amazing grace et al DVD's
+  our new DVD's that we own
+  mplayer dies tmnt dvdnav://1  
 
-  make it easier to use for "just files"
-  genealogy screen saver authorize
-  better releases VAC et al
-  detect an overlap 'at parse time'
-  ruby_gnuplot bugz et al
-  prompt/warn if > 50 titles :)
+  netflix instant mac'ify
+  veggie tales dies (the lib v's?)
+  prompt/warn if > 50 DVD titles :)
   parser missed first subtitle entry
-  screen capture better java-zer [?]
-  that one guy's VAC freakiness...
   the "add on" type EDL
   "finalize" hulu upconvert, advertise
   netflix instant "how to" screencast, with prompt to see screencast	
-  mfp cookies
   accomodate srt trailer/headers more (one on melissa's)
   hp 4 finalize intro waz off
+  make it easier to use for "just files"
     broken scanning hp2 init's
-  log the indice numbers [why not?]
-  filenames start with what they are, not mplayer.templ.edl  
+  have filenames start with what they are, not mplayer.templ.edl  
   after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   version => element
     prompt "insert it directly?"
@@ -45,51 +42,24 @@
   combine all "folders" of movie EDL's into one folder
   move documentation to online [all]
   feedback button fails os x
-  "real" exe runner so that it can find java from just JAVA_HOME et al
+  the awesome new editor GUI
+  "real" exe runner so that it can find java from just JAVA_HOME et al in case they don't have it setup in their path right :)
+    real installer, too, why not?
   allow for a mute to "encompass" a skip by splitting it, uh guess, "except in a single file" (?)
-  double check gnosugnu's patch submission again (the C code)
-  princess bride EDL
-  monty python EDL LOL
-  fix court jester EDL last skip off, also the first one's skip failed looping [?]
-  if any file ever fails, GUI prompt immediately...
-  add some "never again" options for things :P [or default off with preferences]
-  melissa UI stuff/notes
-  amazing grace et al DVD's
-  our new DVD's that we own
-  os gem MIT license
   the cool uploader website
     split EDL's to "mine" versus community
   rename it "..." or whatever google prefers :P after LLC
-    mac: advertise urug
+  mac: advertise urug
+    after new mplayer build
   upconvert hulu better/really work?
-  VAC short list
-  64 bit audio single release
-  "for currently" button -> for [name]
   disclosure for OCR, wiki based processing
-  mplayer patches:
-    make sure I can build against latest
-    patch V: for mplayer
-    fix -sub to work with DVDNAV
-      step_sub maybe
-  	not adding odd diff1? 0.000000
-    accurate-ify DVDNAV timestamps
-    EDL's work with DVDNAV [patch]
-    medium is too long for some fonts
-    ask why mplayer seems to show "overlap" at DVD time splits
-    I think I have imprecise forward skips in mplayer still [goes too far when it gets too confused...]
-      prolly keep the "last added offset" so I can still keep adding it in again :P
-  veggie tales dies (the lib v's?)
-  mplayer dies tmnt dvdnav://1
-  
   display zoom button always
-  back lighting
-  disclosure back-lighting, table
   mac mplayer-edl lacks some diffs
-  DVD timing for forum:Snow White
-  warn other wordpresses  
+    rebuild/publish
+  DVD timing for makemkv forum:Snow White
   search for goblet of fire en 1cd subtitles "srt file" 
-  source_location for ri_for  
-  drop down have DVD titles :P
+  source_location hackz for ri_for  
+  authorize.net SIM :)
   melissa stuff:
     readme be helpful for subtitles [?]
       better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
@@ -97,76 +67,33 @@
     split pc/mac for understandability :P
     instructions on how to continue after creation
     instructions on how to actually use opensubtitles LOL
-    overlapping mutes don't prompt
-  upconverter disable aero automagically [or does it already?]
-  subtitles: if at beginning of a sub, add extra offset...hmm...why not?
-    and end too why not?
-    ideally only if it varies much more than a sec.
+    overlapping mutes' failures don't prompt
   mplayer muting causes jerkiness doze
   dvd_start_offset -> dvd_mpeg_start_offset
-  better name for dvd_nav_packet_offset with mpeg in it so you know ordering
   my treasury (john newspaper thing)
-  accomodate for telecine optionally [veggie tales]
+  accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
   upconv: test snow white book:
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
     pay somebody to test it
-  user preference "always just skip" if that's what he wanted :P
-  ffmpeg dshow input ramiro more patches
-  try to reproduce the ffplay bug with just ffmpeg
-  submit abandonment for libdvdnav
-  upconvert screen try it out, "release" after testing it for netflix instant
-  display OSD on command line too, just mine :P
+  user preference "always just skip" that's what he wanted I guess :) [or have I already done it?]
+  ffmpeg dshow input ramiro fixup patches
   learn clojure
   OS X netflix instant
     mac'ify OCR/Mouse
-  test rvm email
-  add "revision" to mplayer edl's initial -v output
-  report ffmpeg/mencoder splitting bugz (2)
-  @mplayer: ctrl-keys patch, ask them at least :P
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
-  grab wedding iso's
+  grab wedding iso's for backup purposes
   ffmpeg how to add subs demo
-  inspector general
   check if mplayer handles "a mute that leads into a second mute or skip" well or not
   remove splits' functionality 
-  the "lined" "select this one" quality editor...
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  the awesome ffmpeg file splitter :P
-    also do I really still need to use mencoder?
-  use DVD NAV packet time raw:
-    timestamps_relative_to "force them" to have, or to hit the upgrade button
-      add 2 options: file, "dvd"
-    update wiki/readme
-    timestamps_relative_to => "dvd"
-    remove -osd-add, or maybe fine tune it?
-    add OSD time to the console output
-    non 29.97 with mplayer edl change OSD
-    "static" mplayer-edl for OS X :P
-    add a migrate button, prompts for "file" versus DVD
-      test with something :P
-    assert files "always" start at 0
-    fix it skipping too far forward
-  ffplay diagonal bug
-  ffplay 16,16,16
-  flds: the intelligent tag parent sync'er, other todo's :P
+  ffplay diagonal bug reproduce
   create skype/google+ hangouts auto-easy-recorder windows
   the php uploader thing :P
-  check jackman/ldsmusicnow.com/ldsmusicsource [green label] publishing costs LOL
-  nextsprocket the "camtwist for windows" avisynth+webcam as one part input
-  netflix instant descriptor work at all
-    maybe get it to work with say VLC full screen first?
-    it may need the "50% adjuster" fella...
-    note on the www once it works
-  meta domain redirect to "freedomainnamesforever"
-  ruby_prof stuffs (merge, release at least)
-  minor redcar tweaks
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should just combine
-  split LLC's website+consumer
-    get LLC before a "real" domain name
   ask for more beta testers for use, ask for more beta testers for creation, too
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
@@ -174,13 +101,18 @@
     +- list/publish potter
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
-  @ffmpeg: you can't convert mkv's of this type!
-  no edl-out prompt by default ( -> pref)
-  "ideal is if already matches..." (+ button "already known to match perfectly/well")
-  crash on cancel edl-out  
+  @ffmpeg: you can't convert mkv's of this creation type!
   
 == decide later to move up or down ==
-  cleanup youtube fella
+  use DVD NAV packet time raw:
+    timestamps_relative_to "force them" to have, or to hit the upgrade button
+      add 2 options: file, "dvd"
+    non 29.97 with mplayer edl change OSD
+      remove -osd-add, or maybe fine tune it?
+	    after mplayer accepts my patches LOL
+    assert file played back "always" start at 0 [?]
+  back lighting
+  upconvert screen try it out, "release" after testing it for netflix instant
   failed downloads can corrupt/interrupted...
   fix smplayer OSD, make it default for editing/getting timestamps
     at least fix my mplayer to display the "right" output time...
@@ -193,8 +125,21 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
+  crash on cancel edl-out  
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  genealogy screen saver authorize
+  detect an overlap 'at parse time'
+  meta domain redirect to "freedomainnamesforever"
+  "ideal is if already matches..." (+ button "already known to match perfectly/well")
+  mplayer:
+     fix -sub to work with DVDNAV
+      step_sub maybe
+   ask why mplayer seems to show "overlap" at DVD time splits [and become non DVD]
+  @mplayer: ctrl-keys patch, ask them at least :P
+  report ffmpeg/mencoder splitting bugz (2)
+  the awesome ffmpeg file splitter :P
+    also do I really still need to use mencoder?
   Do the C based "use the real thing" MSDN skipper it might actually be accurate after all...just not precise for doing edits.
   super automatic-o "your DVD has no EDL? let me do all of that for you..."
   email genealogy tree questionaire
