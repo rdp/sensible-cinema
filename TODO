@@ -68,7 +68,7 @@
     instructions on how to continue after creation
     instructions on how to actually use opensubtitles LOL
     overlapping mutes' failures don't prompt
-  mplayer muting causes jerkiness doze
+  mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   dvd_start_offset -> dvd_mpeg_start_offset
   my treasury (john newspaper thing)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
@@ -85,15 +85,15 @@
   try out VLC bindings to be able to award prize
   grab wedding iso's for backup purposes
   ffmpeg how to add subs demo
-  check if mplayer handles "a mute that leads into a second mute or skip" well or not
-  remove splits' functionality 
+  check if mplayer handles "a mute that bumps into a second mute or skip" well or not
+  remove splits' functionality [ruby]
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   ffplay diagonal bug reproduce
   create skype/google+ hangouts auto-easy-recorder windows
   the php uploader thing :P
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
-    also if they're "close" but not overlapping [ex: contiguous] they should just combine
+    also if they're "close" but not overlapping [ex: contiguous] they should not fail.
   ask for more beta testers for use, ask for more beta testers for creation, too
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
