@@ -1,3 +1,8 @@
+= 0.35.0 4/18/12 =
+
+Preferences setup has changed, uses a new version of mplayer which "heck, might!" be more stable,
+but I *think* it should be more accurate by 0.2s.
+
 = 0.34.5 4-17-12 =
 
 Made side by Side EDL format to default to "XBMC" human readable. Ask and ye shall receive...
