@@ -1,3 +1,16 @@
+= not jumping from right time DVD =
+
+=c= to 15.1, from second 13:
+
+  last NAV packet was 12.833333, mpeg at 13.201875 after -> 29.97 12.846167
+  adding difference 0.166841
+
+  EDL rel seek secs 2.086993 13.013007 [13.000000,15.100000]
+
+  11.5 15.2 0 still fails, new mplayer
+
+  the "old old way" did jump ok, but to second 30 (and they probably had other probs :P)
+  
 = seeking with new dvdnav =
 
 works fine jonah [forward too far?]
@@ -10,8 +23,72 @@ sintel works ok
   about a second "ahead" at 9 minutes, as well.
   so works ok
   
+  everything from 15.{0-9} all went forward just right.
+  
  =c= eureka! fails at second 10
+   at 1:10, seeking to 3615
+     new NAV packet! 3615.345215
+   at 30:00
+     new NAV packet! 1805.270142 so within 0.4 ...
+    to 15:
+       14.833333
+	to 14.5:
+	   14.833333
+	to 14.3:
+	   14.400000
+	to 15.6:
+	   15.600000
+	   
+	15.0: 14.83
+	15.1: 14.833333
+	15.2: 15.6
+	15.3: 15.6
+	15.4: 15.6
+	15.5: 15.6
+	15.6: 15.6
+	15.7: 15.6
+	15.8: 15.6 but worked
+	16.3: 16.4
+	
+	  it has 13.6,14.4,14.83,15.6,16.4,16.83
+	 
+	 
+	 to 15.7 has to jump twice:
+	 
+A:  13.2 V: 13.20 A-V: -0.002 ct: -0.212  33/ 33  2% 24% 18.7% 0 0
+last NAV packet was 12.833333, mpeg at 13.201875 after -> 29.97 12.846167
+adding difference 0.166841
 
+EDL rel seek secs 2.686993 13.013007 [13.000000,15.700000]
+
+jumping to 1396829
+DVDNAV_TITLE_IS_MOVIE
+[mpeg2video @ 00c3fa80]ignoring SEQ_START_CODE after 100
+[mpeg2video @ 00c3fa80]ignoring seq ext after 100
+[mpeg2video @ 00c3fa80]ignoring GOP_START_CODE after 100
+[mpeg2video @ 00c3fa80]ignoring pic after 100
+[mpeg2video @ 00c3fa80]Missing picture start code, guessing missing values
+weird fella suddenly we're not a DVD? mpeg at 0.041708 adding 0.214000 to 0.041708
+final: 0.255708
+
+last NAV packet was 15.600000, mpeg at 0.083417 after -> 29.97 15.615601
+new NAV packet! 15.615601 [adjusted] at 0.083417 adding 0.214000 to 15.615601
+final: 15.829600
+
+last NAV packet was 15.600000, mpeg at 0.125125 after -> 29.97 15.615601
+adding difference 0.041708 adding 0.214000 to 15.657309
+final: 15.871308
+
+last NAV packet was 15.600000, mpeg at 15.962967 after -> 29.97 15.615601
+not adding odd diff1? 15.879550adding 0.214000 to 15.615601
+final: 15.829600
+A:  14.0 V: 15.96 A-V: -1.986 ct: -0.100   3/  3 ??% ??% ??,?% 0 0
+last NAV packet was 15.600000, mpeg at 15.962967 after -> 29.97 15.615601
+not adding odd diff1? 0.000000
+
+EDL rel seek secs 0.084399 15.615601 [13.000000,15.700000]
+	 
+	 
 = =
 
 = explorers subs =
@@ -19,6 +96,9 @@ sintel works ok
   I think I got some closure on this though...
   
 the christmas list: two deity prof's [TODO EDL]
+
+= court jester =
+#-> 1:41:11.465, ts 01:41:10.94, mkv 01:41:13.01
 
 = hp 2 weird start =
 
@@ -4229,7 +4309,7 @@ handbrake -> ffmpeg I think sameq -> mencoder split
 
 == blu subtitles versus dvd ==
 
-National Treasure [2004] {English} [XviD].srt doesn't seem to match up with mplayer OSD, like 6 seconds off per hour?
+=c= [2004] {English} [XviD].srt doesn't seem to match up with mplayer OSD, like 6 seconds off per hour?
   mplayer OSD seems way off...or actually match normal players whoa!?
 865
 01:28:47,322 --> 01:28:48,864

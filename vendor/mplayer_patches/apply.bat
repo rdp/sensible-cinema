@@ -1,5 +1,9 @@
 rem assumes you in mplayer/ dir
-rem known to work with r 34396, ffmpeg  eb4fc6acfede7ced5737c5bf023f
+rem known to work with r 34396, ffmpeg eb4fc6acfede7ced5737c5bf023f
+rem for github checkout, you'll need to do the subversion external thing manually
+@rem like mplayer-svn-git $ cp -r ../old/microe-libdvdnav/src libdvdnav
+@rem also need $ git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
+@rem  --enable-iconv --enable-freetype --enable-static --enable-fontconfig --enable-runtime-cpudetection --enable-debug
 patch -p0 <  %~dp0/mplayer_edl.diff
 cd libdvdnav
 echo 'just retype last part of name'

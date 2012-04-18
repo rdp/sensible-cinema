@@ -19,7 +19,6 @@
 
 "volume_name" => "JESTER",
 "disk_unique_id" => "a0eadedd|449cd867",
-#-> 1:41:11.465, ts 01:41:10.94, mkv 01:41:13.01
 "dvd_title_track" => "1",# "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
 # "mplayer_dvd_splits" => [lots...],

@@ -147,17 +147,19 @@ module SensibleSwing
         open_file_to_edit_it filename
         sleep 1 # let it open
 		
-	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]\nyou probably don't?") == :yes
-          out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
-		  write_subs_to_file out_file, euphemized_synchronized_entries
-          show_in_explorer out_file
-        end
+		if LocalStorage['prompt_obscure_options']
+	      if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]\nyou probably don't?") == :yes
+            out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
+		    write_subs_to_file out_file, euphemized_synchronized_entries
+            show_in_explorer out_file
+          end
+		end
         
       end
 	  
       add_text_line 'Create: Advanced View Edited Options'
       
-      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (with subtitles)") do
+      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (with mplayer, subtitles)") do
         watch_dvd_edited_realtime_mplayer true
       end
       
@@ -419,7 +421,7 @@ module SensibleSwing
 	
     def watch_dvd_edited_realtime_mplayer show_subs
       edl_out_command = ""
-      if !@has_ever_rejected_edl_outfile
+      if LocalStorage['prompt_obscure_options']
         answer = show_select_buttons_prompt <<-EOL, {}
           Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
           EOL

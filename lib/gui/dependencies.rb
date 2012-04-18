@@ -88,7 +88,7 @@ module SensibleSwing
         require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
         download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
         old = File.binread 'vendor/cache/mencoder/mplayer.exe'
-        old.gsub! "V:%6.1f", "V:%6.2f" # better precision! :)
+        old.gsub! "V:%6.1f", "V:%6.2f" # better precision! though I don't use that for playing anymore :)
         File.binwrite('vendor/cache/mencoder/mplayer.exe', old)
       end
     end
@@ -98,7 +98,7 @@ module SensibleSwing
         require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
         puts 'downloading mplayer edl [10 MB]'
-        MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
+        MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/0.2/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
 		config_dir = File.expand_path('~/mplayer')
 		FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
 		FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac
@@ -175,5 +175,37 @@ module SensibleSwing
         raise 'unknown?'
       end
     end
-  end
+	
+	def set_individual_preferences
+      get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
+      if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :no => "ZoomPlayer MAX", :yes => "Just MPlayer [free]") == :no
+        LocalStorage['have_zoom_button'] = true
+      else
+	    LocalStorage['have_zoom_button'] = false
+	  end
+	  # TODO break these out into create mode prefs versus human [?]
+      if JOptionPane.show_select_buttons_prompt("Would you like to enable obscure options, like using keyboard shortcuts to create EDL files on the fly, or creating euphemized .srt files (you probably don't)?") == :yes
+        LocalStorage['prompt_obscure_options'] = true
+      else
+	    LocalStorage['prompt_obscure_options'] = false
+	  end
+	  true
+	end
+    
+    def get_set_preference name, english_name
+      old_preference = LocalStorage[name]
+      old_class = old_preference.class
+	  
+	  new_preference = get_user_input("Enter value for #{english_name}", old_preference)
+      display_and_raise 'enter something like 0.0' if new_preference.empty?
+      if old_class == Float
+        new_preference = new_preference.to_f
+      elsif old_class == String
+        # leave same
+      else
+        raise 'unknown type?' + old_class.to_s
+      end
+      LocalStorage[name] = new_preference
+    end
+  end # MainWindow
 end

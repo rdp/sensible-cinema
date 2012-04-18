@@ -116,30 +116,6 @@ module SensibleSwing
       add_text_line ""# spacing
     end
 	
-	def set_individual_preferences
-      get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
-      if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :no => "ZoomPlayer MAX", :yes => "Just MPlayer [free]") == :no
-        LocalStorage['have_zoom_button'] = true
-      else
-	    LocalStorage['have_zoom_button'] = false
-	  end
-	  true
-	end
-    
-    def get_set_preference name, english_name
-      old_preference = LocalStorage[name]
-      old_class = old_preference.class
-      new_preference = get_user_input("Enter value for #{english_name}", old_preference)
-      display_and_raise 'enter something like 0.0' if new_preference.empty?
-      if old_class == Float
-        new_preference = new_preference.to_f
-      elsif old_class == String
-        # leave same
-      else
-        raise 'unknown type?' + old_class.to_s
-      end
-      LocalStorage[name] = new_preference
-    end
     
     def add_open_documentation_button
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do

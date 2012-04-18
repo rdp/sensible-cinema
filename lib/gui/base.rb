@@ -105,9 +105,10 @@ module SensibleSwing
       @current_dvds_line2 = add_text_line ""
       @callbacks_for_dvd_edl_present = []
       DriveInfo.create_looping_drive_cacher
-      DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }
-      
-      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
+      DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }      
+	  icon_filename = __DIR__ + "/../../vendor/profs.png"
+	  raise unless File.exist? icon_filename # it doesn't check this for us?
+      setIconImage(ImageIcon.new(icon_filename).getImage())
       check_for_various_dependencies
 	  LocalStorage.set_once('init_preferences_once') {
 	    show_blocking_message_dialog "lets setup some preferences once..."
@@ -416,15 +417,18 @@ KP_ENTER dvdnav select
       
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
       if nav
-        offset_time = mpeg_time*1/1.001 - nav # our reading like 0.5 is actually a bit offset, since in reality that "means 4.997" or what not
+	    mpeg_time *= 1/1.001 # -> 29.97 fps
+        offset_time = mpeg_time - nav
       else
   		  # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
         show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now...if you tweak any timing info you may want to set this more accurately first!"
         offset_time = 0.20
-        p caller
       end
 	  raise if offset_time <= 0 # unexpected...
-	    out << "-osd-add #{ "%0.3f" % offset_time}"
+	  # -osd-add is because the initial NAV packet is "x" seconds off from the mpeg, and since 
+	  # we have it set within mplayer to "prefer to just give you the MPEG time when you haven't passed a DVD block"
+	  # we wanted to match that more precisely once we did get past it.
+	  out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end
 
