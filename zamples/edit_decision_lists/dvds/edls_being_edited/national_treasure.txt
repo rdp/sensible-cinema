@@ -1,5 +1,5 @@
 # comments can go after a # on any line, for example this one.
-"name" => "national treasure",
+"name" => "National Treasure",
 
 "mutes" => [
   # an example line, uncomment the leading "#" to make it active

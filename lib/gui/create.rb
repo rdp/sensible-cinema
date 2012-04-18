@@ -157,10 +157,12 @@ module SensibleSwing
 	  
       add_text_line 'Create: Advanced View Edited Options'
       
-      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
+      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (with subtitles)") do
         watch_dvd_edited_realtime_mplayer true
       end
       
+	  @mplayer_edl_with_subs.tool_tip="This watches it in mplayer, which has access to its console output, and also includes subtitles."
+	  
       @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
         times = get_start_stop_times_strings
         times.map!{|t| EdlParser.translate_string_to_seconds t}
@@ -169,6 +171,8 @@ module SensibleSwing
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
         play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # create mode => aggressive
       end
+	  
+	  @mplayer_partial.tool_tip="this can play just a specific portion of your film, like from second 30 to 35, for testing."
             
       new_jbutton("Display mplayer keyboard commands/howto/instructions") do
         show_mplayer_instructions
