@@ -1,3 +1,7 @@
+= 0.35.1 4/18/12 =
+
+Attempt to not infinite loop on edge case DVD timings.
+
 = 0.35.0 4/18/12 =
 
 Preferences setup has changed, uses a new version of mplayer which "heck, might!" be more stable,
