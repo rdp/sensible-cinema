@@ -433,7 +433,7 @@ KP_ENTER dvdnav select
     end
 
     if OS.doze? # avoids spaces in filenames :)
-      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '\\mplayer.temp.edl'
+      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '\\mplayer.edl' # stay 8.3 friendly :)
     else
       raise if Dir.tmpdir =~ / / # that would be unexpected, and possibly cause problems...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
@@ -525,7 +525,7 @@ KP_ENTER dvdnav select
   	    splits = [] # TODO not pass as parameter either
         edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
         File.write(EdlTempFile, edl_contents)
-        extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
+        extra_mplayer_commands_array << "-edl #{EdlTempFile}" 
       end
       
       run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, show_subs, start_full_screen, get_srt_filename(descriptors, edl_path)
@@ -716,6 +716,17 @@ KP_ENTER dvdnav select
     def get_disk_chooser_window names
       DropDownSelector.new(self, names, "Click to select DVD drive")
     end
+	
+	def get_temp_file_name name_with_ext
+	  File.dirname(EdlTempFile) + '/' + name_with_ext
+	end
+	
+    # converts to full path, 8.3 if on doze
+    def normalize_path path
+      path = File.expand_path path
+      path = EightThree.convert_path_to_8_3 path if OS.doze?
+    end
+
 
   end
   

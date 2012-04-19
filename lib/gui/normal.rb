@@ -23,12 +23,6 @@ module SensibleSwing
 
     attr_accessor :parent, :upconv_line
    
-    # converts to full path, 8.3 if on doze
-    def normalize_path path
-      path = File.expand_path path
-      path = EightThree.convert_path_to_8_3 path if OS.doze?
-    end
-
     def hard_exit; java::lang::System.exit 0; end
 
     def setup_normal_buttons

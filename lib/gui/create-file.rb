@@ -42,7 +42,7 @@ module SensibleSwing
         sleep 0.5 # lodo take out ???
         background_thread.join if background_thread # let it write out the original fulli, if necessary [?]
         nice_file = wrote_to_here_fulli
-        run_smplayer_blocking nice_file, nil, "-edl #{normalize_path EdlTempFile}", false, true, false, nil
+        run_smplayer_blocking nice_file, nil, "-edl #{EdlTempFile}", false, true, false, nil
       }
     end
     

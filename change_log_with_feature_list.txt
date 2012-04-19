@@ -2,6 +2,9 @@
 
 Attempt to not infinite loop on edge case DVD timings.
 
+Also note the existence of several videos showing how to do "certain things"
+here: https://sourceforge.net/projects/sensible-cinema/files/videos/
+
 = 0.35.0 4/18/12 =
 
 Preferences setup has changed, uses a new version of mplayer which "heck, might!" be more stable,

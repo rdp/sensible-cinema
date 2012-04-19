@@ -10,7 +10,9 @@ module SensibleSwing
     end
 
     def setup_create_buttons
+	  # only create mode needs this uh guess
       EdlParser.on_any_file_changed_single_cached_thread { DriveInfo.notify_all_drive_blocks_that_change_has_occured }
+	  
 	    add_text_line 'Normal playback Options:'
       new_jbutton("Display Standard Playback Options") do
         window = new_child_window
@@ -92,7 +94,7 @@ module SensibleSwing
           euphemized_synchronized_entries = nil
           with_autoclose_message("parsing srt file... #{srt_filename}") do
             parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
-			write_subs_to_file euphemized_filename = EdlTempFile + '.euphemized.srt.txt', euphemized_synchronized_entries
+			write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.subtitles.txt'), euphemized_synchronized_entries
   		    open_file_to_edit_it euphemized_filename
             sleep 0.5 # let it open in TextEdit/Notepad first...
       	    bring_to_front
@@ -137,7 +139,7 @@ module SensibleSwing
           parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
-        filename = EdlTempFile + '.parsed.txt'
+        filename = get_temp_file_name('partial.edl.txt')
         out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
         out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
@@ -294,7 +296,7 @@ module SensibleSwing
           out_hashes, title_lengths = get_disk_info
 	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
           out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],! # since they're all this way currently
-          filename = EdlTempFile + '.disk_info.txt'
+          filename = get_temp_file_name('disk_info.txt')
           File.write filename, out_string 
           open_file_to_edit_it filename
           out_string # for unit tests :) TODO
