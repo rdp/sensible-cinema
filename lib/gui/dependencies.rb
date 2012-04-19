@@ -178,7 +178,7 @@ module SensibleSwing
 	
 	def set_individual_preferences
       get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
-      if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :no => "ZoomPlayer MAX", :yes => "Just MPlayer [free]") == :no
+      if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $], or just MPlayer [free]", :no => "ZoomPlayer MAX", :yes => "Just MPlayer/VLC/MS DVD Navigator [free]") == :no
         LocalStorage['have_zoom_button'] = true
       else
 	    LocalStorage['have_zoom_button'] = false
