@@ -404,6 +404,9 @@ module SensibleSwing
       title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
       # ID_DVD_TITLE_4_LENGTH=365.000
       titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+	  if titles_with_length.length > 50
+	    show_blocking_message_dialog "this DVD has > 50 titles, this may mean that our 'guess' for the main title will be off, please double check it see "
+	  end
       largest_title = titles_with_length.max_by{|title, length| length}
   	  if !largest_title
   	    display_and_raise "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
@@ -469,7 +472,7 @@ module SensibleSwing
 			    p mpeg, nav, old_mpeg
 			    assert old_mpeg > 0.3
 				mpeg = old_mpeg + mpeg - 0.033367 # assume 30 fps, and that this is the second frame since it occurred, since the first one we apparently display "weird suddenly we're not a dvd?"
-				show_blocking_message_dialog "this dvd has some weird stuff at the start, attempting to accomodate..."
+				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report..."
 			  end
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
             else
@@ -477,7 +480,7 @@ module SensibleSwing
 	    end
       	  end
       }
-      show_blocking_message_dialog "unable to calculate time?" unless outs.length == 2
+      show_blocking_message_dialog "unable to calculate DVD start time from #{command}?" unless outs.length == 2
       outs
     end
     

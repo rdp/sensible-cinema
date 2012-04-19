@@ -21,46 +21,35 @@
     determine its timing relative to DVD...
   amazing grace et al DVD's
   our new DVD's that we own
-  mplayer dies tmnt dvdnav://1  
 
-  netflix instant mac'ify
-  icon is not clear :P
-  veggie tales dies (the lib v's?)
   only track files if in create mode 
-  can work with audio CD's multi-track. Huh?
-  prompt/warn if > 50 DVD titles :)
+  can work with audio CD's multi-track. Or maybe one at a time for now :)
   parser missed first subtitle entry
   the "add on" type EDL
-  "finalize" hulu upconvert, advertise
-  netflix instant "how to" screencast, with prompt to see screencast	
-  accomodate srt trailer/headers more (one on melissa's)
+  accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
-  make it easier to use for "just files"
     broken scanning hp2 init's
-  have filenames start with what they are, not mplayer.templ.edl  
+  make it easier to use for "just files"
+    "pick your source, pick your EDL, ready, ok?"
+  have filenames start with what they are, not the name mplayer.templ.edl  
   after have "awesome editor" when you change main title, it needs to change/update tons of junk...
+  disclosure for OCR, wiki based processing
   version => element
     prompt "insert it directly?"
      tell them to close it if open in other windows
-  combine all "folders" of movie EDL's into one folder
+  combine all "folders" of movie EDL's into one uni-folder [?]
   move documentation to online [all]
-  feedback button fails os x
   the awesome new editor GUI
-  "real" exe runner so that it can find java from just JAVA_HOME et al in case they don't have it setup in their path right :)
-    real installer, too, why not?
-  allow for a mute to "encompass" a skip by splitting it, uh guess, "except in a single file" (?)
-  the cool uploader website
+  allow for a mute to "encompass" a skip by splitting it, uh guess, otherwise hard to card 'bad' part in middle of a mute.
+    Or programmatically
+  use the cool uploader website
     split EDL's to "mine" versus community
   rename it "..." or whatever google prefers :P after LLC
   mac: advertise urug
-    after new mplayer build
+    once things settle DVD-wise
   upconvert hulu better/really work?
-  disclosure for OCR, wiki based processing
-  display zoom button always
-  mac mplayer-edl lacks some diffs
-    rebuild/publish
   DVD timing for makemkv forum:Snow White
-  search for goblet of fire en 1cd subtitles "srt file" 
+  google search for goblet of fire en 1cd subtitles "srt file" 
   source_location hackz for ri_for  
   authorize.net SIM :)
   melissa stuff:
@@ -70,36 +59,26 @@
     split pc/mac for understandability :P
     instructions on how to continue after creation
     instructions on how to actually use opensubtitles LOL
-    overlapping mutes' failures don't prompt
-  mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   dvd_start_offset -> dvd_mpeg_start_offset
   my treasury (john newspaper thing)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
-  upconv: test snow white book:
-    adv. DVD upconverter [family first?]
-    it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
-    pay somebody to test it
-  user preference "always just skip" that's what he wanted I guess :) [or have I already done it?]
-  ffmpeg dshow input ramiro fixup patches
+  user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?]
+  ffmpeg dshow input ramiro finalize patches
   learn clojure
   OS X netflix instant
-    mac'ify OCR/Mouse
+    mac'ify Mouse first
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   grab wedding iso's for backup purposes
-  ffmpeg how to add subs demo
   check if mplayer handles "a mute that bumps into a second mute or skip" well or not
-  remove splits' functionality [ruby]
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  ffplay diagonal bug reproduce
+  ffplay diagonal bug reproduce/file
   create skype/google+ hangouts auto-easy-recorder windows
   the php uploader thing :P
   a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
     also if they're "close" but not overlapping [ex: contiguous] they should not fail.
   ask for more beta testers for use, ask for more beta testers for creation, too
-  create a semi-accurate phantom edit EDL [?] with just splits
-    http://www.chefelf.com/forums/index.php?showtopic=6176
   can edit books' text too.
     +- list/publish potter
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
@@ -107,6 +86,17 @@
   @ffmpeg: you can't convert mkv's of this creation type!
   
 == decide later to move up or down ==
+  icon is not clear :P
+  "real" exe runner so that it can find java from just JAVA_HOME et al in case they don't have it setup in their path right :)
+    real installer, too, why not?
+  feedback button fails os x
+  remove splits' functionality [ruby code]
+  ffmpeg how to add subs demo
+  upconv: test snow white book:
+    adv. DVD upconverter [family first?]
+    it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
+    pay somebody to test it
+  "finalize" hulu upconvert, advertise
   use DVD NAV packet time raw:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
       add 2 options: file, "dvd"
@@ -128,9 +118,13 @@
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  crash on cancel edl-out  
+  fix crash on cancel edl-out  
+  mplayer dies tmnt dvdnav://1  
+  mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  create a semi-accurate phantom edit EDL [?] with just splits
+    http://www.chefelf.com/forums/index.php?showtopic=6176
   genealogy screen saver authorize
   detect an overlap 'at parse time'
   meta domain redirect to "freedomainnamesforever"
