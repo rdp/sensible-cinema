@@ -1,5 +1,9 @@
 = not jumping from right time DVD =
 
+ = turtles =
+
+VLC seems to fail seeking on it, too. Hmm...
+
 =c= to 15.1, from second 13:
 
   last NAV packet was 12.833333, mpeg at 13.201875 after -> 29.97 12.846167

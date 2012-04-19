@@ -19,19 +19,19 @@
     it may need the "50% adjuster" fella...
     note on the www once it works
     determine its timing relative to DVD...
-  amazing grace et al DVD's
+  amazing grace et al borrowed DVD's
   our new DVD's that we own
-  mplayer dies tmnt dvdnav://1  
+  @gnu: this other one jumps forward a bit [check NAV packet times too...)
 
-  veggie tales dies (the lib v's?)
   movie of "controlling utube, and also for full length film"
   umplayer for mac/use
   netflix instant mac'ify
   icon is not clear on doze :P
-  only track files if in create mode 
+  only track file changes if in create mode 
   can work with audio CD's multi-track. Huh?
   prompt/warn if > 50 DVD titles :)
   parser missed first subtitle entry
+  mplayer dies tmnt dvdnav://1  but is ok with dvd://1 or after a title? vlc seeking fails?
   the "add on" type EDL
   "finalize" hulu upconvert, advertise
   netflix instant "how to" screencast, with prompt to see screencast	
@@ -132,6 +132,9 @@
   crash on cancel edl-out  
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @mplayer: fix it playing the wrong audio track by default (ex: It's a Meaningful Life)
+  veggie tales dies (the lib v's?) (dunno which one...couldn't find it)
+  libdvdreaad fails for kites...or maybe does...
   genealogy screen saver authorize
   detect an overlap 'at parse time'
   meta domain redirect to "freedomainnamesforever"
