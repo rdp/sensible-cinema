@@ -307,7 +307,6 @@ KP_ENTER dvdnav select
         upconv = ""
        end
        if OS.doze?
-         # we want this even if we don't have -osd-add, since it adds confidence :)
          mplayer_loc = LocalModifiedMplayer
          assert File.exist?(mplayer_loc)
        else
@@ -428,6 +427,8 @@ KP_ENTER dvdnav select
 	  # -osd-add is because the initial NAV packet is "x" seconds off from the mpeg, and since 
 	  # we have it set within mplayer to "prefer to just give you the MPEG time when you haven't passed a DVD block"
 	  # we wanted to match that more precisely once we did get past it.
+	  # so basically today we are trying to "match" the underlying MPEG time well. Which is wrong, of course.
+	  # either match the file or match the DVD, punk!
 	  out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end

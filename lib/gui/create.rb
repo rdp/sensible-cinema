@@ -202,55 +202,7 @@ module SensibleSwing
       add_text_line "Less commonly used Edit options:"
 
       new_jbutton("Create new Edit List (for netflix instant or movie file)") do # LODO VIDEO_TS here too?
-        names = ['movie file', 'netflix instant']
-        dialog = DropDownSelector.new(self, names, "Select type")
-        type = dialog.go_selected_value
-        extra_options = {}
-        if type == 'movie file'
-          path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
-          guess_name = File.basename(path).split('.')[0..-2].join('.') # like yo.something.720p.HDTV.X264-DIMENSION.m4v maybe?
-          extra_options['filename'] = File.basename path
-          require 'lib/movie_hasher'
-          extra_options['movie_hash'] = MovieHasher.compute_hash path
-        else
-          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )" #?
-          if url =~ /netflix/
-            guess_name = url.split('/')[-2]
-          else
-            show_blocking_message_dialog "non hulu/netflix? please report!"
-            type = 'unknown'
-            guess_name = url.split('/')[-1]
-          end
-          extra_options['url'] = url
-        end
-        english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
-        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.txt'
-        display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
-        
-        output = <<-EOL
-# edl_version_version 1.1, created by sensible cinema v#{VERSION}
-# comments can go be created by placing text after a # on any line, for example this one.
-"name" => "#{english_name}",
-
-"source" => "#{type}",
-#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}",\n!}}
-"mutes" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
-],
-
-"blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-],
-
-"timestamps_relative_to" => ["#{type}"],
-# "not edited out stuff" => "some...",
-# "closing thoughts" => "only ...",
-# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
-        EOL
-        File.write filename, output
-        open_file_to_edit_it filename
+	    create_new_for_file_or_netflix
       end
       
       new_jbutton("Show more (rarely used) buttons/options") do
@@ -282,12 +234,6 @@ module SensibleSwing
          end
        end
       end
-
-      @open_list = new_jbutton("Open/Edit an arbitrary file (EDL, .srt file, whatever)")
-      @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", EdlParser::EDL_DIR)
-        open_file_to_edit_it filename
-      }
 
       @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
@@ -578,6 +524,59 @@ module SensibleSwing
    		  [ and ] make playback faster or slower [like 2x]
       EOL
     end
+	
+    def create_new_for_file_or_netflix
+	    names = ['movie file', 'netflix instant']
+        dialog = DropDownSelector.new(self, names, "Select type")
+        type = dialog.go_selected_value
+        extra_options = {}
+        if type == 'movie file'
+          path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
+          guess_name = File.basename(path).split('.')[0..-2].join('.') # like yo.something.720p.HDTV.X264-DIMENSION.m4v maybe?
+          extra_options['filename'] = File.basename path
+          require 'lib/movie_hasher'
+          extra_options['movie_hash'] = MovieHasher.compute_hash path
+        else
+          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )" #?
+          if url =~ /netflix/
+            guess_name = url.split('/')[-2]
+          else
+            show_blocking_message_dialog "non hulu/netflix? please report!"
+            type = 'unknown'
+            guess_name = url.split('/')[-1]
+          end
+          extra_options['url'] = url
+        end
+        english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
+        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.txt'
+        display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
+        
+        output = <<-EOL
+# edl_version_version 1.1, created by sensible cinema v#{VERSION}
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "#{english_name}",
+
+"source" => "#{type}",
+#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}",\n!}}
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"timestamps_relative_to" => ["#{type}"],
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+        EOL
+        File.write filename, output
+        open_file_to_edit_it filename
+
+	  end
 
   end
 end

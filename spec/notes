@@ -1,9 +1,25 @@
+=c=
+
+last NAV packet was 3008.133301, mpeg at 3011.530518 adding difference 0.208008 adding 0.214000 to 3011.349365 with pts 3011.349365
+final: 3011.349365
+
+last NAV packet was 4.400000, mpeg at 4.860203 adding difference 0.241908 adding 0.214000 to 4.646308 with pts 4.646308
+final: 4.646308
+
+
+= Sintel should match up =
+
+"dvd_nav_packet_offset" => [0.5, 0.734067],
+"dvd_start_offset" => 0.37,
+
+
+= for ref =
 
 big DVD list: http://www.hometheaterinfo.com/dvdlist.htm
 
 = not jumping from right time DVD =
 
- = turtles =
+ == turtles ==
 
 VLC seems to fail seeking on it, too. Hmm...
 
