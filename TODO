@@ -23,9 +23,11 @@
   our new DVD's that we own
   mplayer dies tmnt dvdnav://1  
 
-  netflix instant mac'ify
-  icon is not clear :P
   veggie tales dies (the lib v's?)
+  movie of "controlling utube, and also for full length film"
+  umplayer for mac/use
+  netflix instant mac'ify
+  icon is not clear on doze :P
   only track files if in create mode 
   can work with audio CD's multi-track. Huh?
   prompt/warn if > 50 DVD titles :)
@@ -105,6 +107,7 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   @ffmpeg: you can't convert mkv's of this creation type!
+  fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard]
   
 == decide later to move up or down ==
   use DVD NAV packet time raw:
@@ -117,8 +120,6 @@
   back lighting
   upconvert screen try it out, "release" after testing it for netflix instant
   failed downloads can corrupt/interrupted...
-  fix smplayer OSD, make it default for editing/getting timestamps
-    at least fix my mplayer to display the "right" output time...
   can optionally select "supplemental" EDL's per DVD.
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
