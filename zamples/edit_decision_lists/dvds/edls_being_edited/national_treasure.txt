@@ -2,7 +2,7 @@
 "name" => "National Treasure",
 
 "mutes" => [
-  # an example line, uncomment the leading "#" to make it active
+
 ],
 
 "blank_outs" => [

@@ -1,11 +1,9 @@
 =c=
 
-last NAV packet was 3008.133301, mpeg at 3011.530518 adding difference 0.208008 adding 0.214000 to 3011.349365 with pts 3011.349365
-final: 3011.349365
+last NAV packet was 3006.633301, mpeg at 3010.112549 adding difference 0.291748 adding 0.214000 to pts 3009.931641
+final: 3010.145752
 
-last NAV packet was 4.400000, mpeg at 4.860203 adding difference 0.241908 adding 0.214000 to 4.646308 with pts 4.646308
-final: 4.646308
-
+"within one frame worth" or whatever woot
 
 = Sintel should match up =
 
