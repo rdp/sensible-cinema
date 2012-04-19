@@ -1,3 +1,5 @@
+howto:
+
 add
 file:///Users/rogerdpack/sensible-cinema/vendor/mplayer_patches/port_dir
 to
@@ -11,7 +13,9 @@ this basically collides with mplayer, I guess [without any way around that?] so 
 
 $ export PATH=/opt/rdp_project_local/bin:$PATH
 $ sudo port -kd install mplayer-edl +osd
-$ port mdmg rdp-projects # and distribute
+$ port mdmg rdp-projects 
+
+# and distribute to https://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/
 
 # to build home macports: ./configure --prefix=/opt/rdp_project_local --with-applications-dir=/Applications/rdp_projects
 
