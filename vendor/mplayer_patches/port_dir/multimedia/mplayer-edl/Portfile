@@ -36,10 +36,10 @@ if {![variant_isset minimal]} {
 }
 
 fetch.type        git
-git.url           https://rdp@github.com/rdp/mplayer-svn.git
+git.url           https://github.com/rdp/mplayer-svn.git
 
-fetch {
-    system "cd ${worksrcpath}/ && git submodule init && git submodule update"
+post-fetch {
+    system "cd ${worksrcpath} && git submodule init && git submodule update"
 }
 
 # Do not use the following environment variables, otherwise the build phase
