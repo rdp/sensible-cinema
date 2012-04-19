@@ -6,17 +6,14 @@
 PortSystem          1.0
 
 name                mplayer-edl
-version             34269
-revision            1
+version             0 
+revision            3
 categories          multimedia
-maintainers         acho openmaintainer
+maintainers         rdp
 platforms           darwin
 license             GPL-2
 
-set dvdnav_ver      1228
-set ffmpeg_ver      ce253edf4e5bca101d618d7b
-
-description         The MPlayer movie player built from SVN.
+description         The MPlayer movie player built from SVN, with EDL luv.
 long_description    ${description} It plays most MPEG/VOB, AVI, Ogg/OGM, \
                     VIVO, ASF/WMA/WMV, QT/MOV/MP4, RealMedia, Matroska, \
                     NUT, NuppelVideo, FLI, YUV4MPEG, FILM, RoQ, PVA files, \
@@ -38,23 +35,11 @@ if {![variant_isset minimal]} {
     default_variants +osd
 }
 
-fetch.type          svn
-#svn.revision        ${version}
-#svn.url             svn://svn.mplayerhq.hu/mplayer/trunk
-depends_fetch-append bin:git:git-core
-worksrcdir          trunk
+fetch.type        git
+git.url           https://rdp@github.com/rdp/mplayer-svn.git
 
 fetch {
-    system "svn export --force -r${version} --ignore-externals svn://svn.mplayerhq.hu/mplayer/trunk ${worksrcpath}/"
-    system "svn export --force -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdnav/src ${worksrcpath}/libdvdnav/"
-    system "svn export --force -r${dvdnav_ver} svn://svn.mplayerhq.hu/dvdnav/trunk/libdvdread/src ${worksrcpath}/libdvdread4/"
-
-    # TODO novo lib, other patches
-    # 1000 should be deep enough to find out checkout
-    system "git clone --depth 1000 https://github.com/FFmpeg/FFmpeg.git ${worksrcpath}/ffmpeg"
-    system "cd ${worksrcpath}/ffmpeg && git checkout -f ${ffmpeg_ver}"
-    system "cd ${worksrcpath} && patch -p0 < ${portpath}/../../../mplayer_edl.diff" 
-    system "cd ${worksrcpath}/libdvdnav && patch -p1 < ${portpath}/../../../libdvdnav/jump_to_time.diff" 
+    system "cd ${worksrcpath}/ && git submodule init && git submodule update"
 }
 
 # Do not use the following environment variables, otherwise the build phase
@@ -113,7 +98,7 @@ post-destroot {
     xinstall -m 0755 ${worksrcpath}/TOOLS/midentify.sh ${destroot}${prefix}/bin/midentify
 }
 
-universal_variant no
+universal_variant yes
 
 variant man_all_lang \
     description {Install all possible languages for man pages} {
