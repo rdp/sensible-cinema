@@ -7,7 +7,7 @@ PortSystem          1.0
 
 name                mplayer-edl
 version             0 
-revision            4
+revision            2
 categories          multimedia
 maintainers         rdp
 platforms           darwin
