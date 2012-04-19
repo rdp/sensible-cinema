@@ -407,7 +407,7 @@ module SensibleSwing
       # ID_DVD_TITLE_4_LENGTH=365.000
       titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
 	  if titles_with_length.length > 50
-	    show_blocking_message_dialog "this DVD has > 50 titles, this may mean that our 'guess' for the main title will be off, please double check it see "
+	    show_blocking_message_dialog "this DVD has > 50 titles, this may mean that our 'guess' for the main title will be off, please double check the right number\nby starting the main movie in VLC then Playback menu -> title to see which number it is on."
 	  end
       largest_title = titles_with_length.max_by{|title, length| length}
   	  if !largest_title
