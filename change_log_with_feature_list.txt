@@ -1,3 +1,7 @@
+= 0.35.2 4/20/12 =
+
+Fix bug in DVD player, new mac release.
+
 = 0.35.1 4/18/12 =
 
 Attempt to not infinite loop on edge case DVD timings.
