@@ -5,11 +5,55 @@ final: 3010.145752
 
 "within one frame worth" or whatever woot
 
+
+Seeking 10-15
+
+last NAV packet was 9.600000, mpeg at 10.082091 adding difference 0.258597 adding 0.000000 to pts 9.868456
+final: 9.868456
+using mpeg ts appears larger, which if true is definitely better 10.082091 > 9.868456 - 1.0
+
+
+EDL rel seek secs +4.917909 from pts:10.082091 [10.000000,15.000000]
+
+last NAV packet was 9.600000, mpeg at 10.082091 adding difference 0.258597
+jumping to 1329885
+[mpeg2video @ 00d2c8e0]ignoring SEQ_START_CODE after 100
+[mpeg2video @ 00d2c8e0]ignoring seq ext after 100
+[mpeg2video @ 00d2c8e0]ignoring GOP_START_CODE after 100
+[mpeg2video @ 00d2c8e0]ignoring pic after 100
+[mpeg2video @ 00d2c8e0]Missing picture start code, guessing missing values
+A:  11.1 V: 15.16 A-V: -4.098 ct: -0.100   3/  3 ??% ??% ??,?% 0 0
+last NAV packet was 14.833333, mpeg at 15.162167 new NAV packet! 14.833333 at mpeg 15.162167 adding 0.000000 to pts 14.848167
+final: 14.848167
+
+
+so basically MPEG went from 10.082091 -> 15.162167 which is really close.
+
+Also NB it appears to handle skips one frame too late [?]
+
+using mpeg ts appears larger, which if true is definitely better 9.956966 > 9.743206 - 1.0
+A:  10.0 V: 10.00 A-V: -0.007 ct: -0.204 104/100  4%  0% 11.6% 0 0
+last NAV packet was 9.600000, mpeg at 9.998675 adding difference 0.175181 adding 0.000000 to pts 9.784956
+final: 9.784956
+using mpeg ts appears larger, which if true is definitely better 9.998675 > 9.784956 - 1.0
+A:  10.0 V: 10.04 A-V: -0.009 ct: -0.205 105/101  4%  0% 11.8% 0 0
+last NAV packet was 9.600000, mpeg at 10.040383 adding difference 0.216889 adding 0.000000 to pts 9.826706
+final: 9.826706
+using mpeg ts appears larger, which if true is definitely better 10.040383 > 9.826706 - 1.0
+A:  10.1 V: 10.08 A-V: -0.011 ct: -0.206 106/102  3%  0% 12.3% 0 0
+last NAV packet was 9.600000, mpeg at 10.082091 adding difference 0.258597 adding 0.000000 to pts 9.868456
+final: 9.868456
+using mpeg ts appears larger, which if true is definitely better 10.082091 > 9.868456 - 1.0
+
+
+
 = Sintel should match up =
 
 "dvd_nav_packet_offset" => [0.5, 0.734067],
 "dvd_start_offset" => 0.37,
 
+I don't actually match up, 3.5 to 3.8, *because* my current goal is apparently to psycho-match the
+internal MPEG timestamp. Yikes. And it does. Dang :P
 
 = for ref =
 
@@ -56,7 +100,7 @@ sintel works ok
 	to 14.5:
 	   14.833333
 	to 14.3:
-	   14.400000
+	   14.400000 (there is 14.83)
 	to 15.6:
 	   15.600000
 	   

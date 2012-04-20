@@ -490,7 +490,8 @@ KP_ENTER dvdnav select
     LocalStorage['mplayer_beginning_buffer']
    end
     
-    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, add_secs_begin = begin_buffer_preference, show_subs = false
+    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, 
+	    add_secs_begin = begin_buffer_preference, show_subs = false
       if we_are_in_create_mode
         assert(add_secs_begin == 0 && add_secs_end == 0)
       end
@@ -501,8 +502,19 @@ KP_ENTER dvdnav select
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
       start_add_this_to_all_ts = 0
-      if edl_path # some don't care...
-        descriptors = EdlParser.parse_file edl_path
+	  
+      if edl_path # some don't have one [?]
+	    begin
+		  # TODO combine these 2 methods yipzers
+          descriptors = EdlParser.parse_file edl_path
+  	      splits = [] # TODO not pass as parameter either
+          edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
+          File.write(EdlTempFile, edl_contents)
+          extra_mplayer_commands_array << "-edl #{EdlTempFile}" 
+		rescue SyntaxError => e
+		  show_blocking_message_dialog "unable to parse file! #{edl_path} #{e}"
+		  raise
+		end
         title_track = get_title_track_string(descriptors)
       end
       
@@ -520,13 +532,6 @@ KP_ENTER dvdnav select
             maybe not compatible with XBMC, if that's what you use, and you probably don't" # LODO test it XBMC...
           start_add_this_to_all_ts = start
         end
-      end
-      
-      if edl_path
-  	    splits = [] # TODO not pass as parameter either
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
-        File.write(EdlTempFile, edl_contents)
-        extra_mplayer_commands_array << "-edl #{EdlTempFile}" 
       end
       
       run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, show_subs, start_full_screen, get_srt_filename(descriptors, edl_path)

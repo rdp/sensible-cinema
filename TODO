@@ -12,21 +12,20 @@
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
-  republish 0.4 doze, publish mac
+  publish 0.4 mac to "right place"
   LLC
   amazing grace et al borrowed DVD's
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...
     determine its timing relative to DVD...
   can work with audio CD's multi-track. Or maybe one at a time for now :)
-  @gnu: this other one jumps forward a bit [check NAV packet times too...)
 
   either match the file or match the DVD times, punk!  No more half and half weird-o stuff.
   upload movie of "controlling utube, and also for full length film"
   umplayer for mac/use it
   our new DVD's that we own
   princess bride EDL
-  watch Gottman
+  watch Gottman/audio fella
   parser misses first subtitle entry?
   mplayer dies tmnt dvdnav://1  but is ok with dvd://1 or after a title? vlc seeking fails?
   the "add on" type EDL
@@ -35,7 +34,6 @@
     broken scanning hp2 init's
   make it easier to use for "just files"
     "pick your source, pick your EDL, ready, ok?"
-  have filenames start with what they are, not the name mplayer.templ.edl  
   after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   disclosure for OCR, including wiki based processing
   combine all "folders" of movie EDL's into one uni-folder (non youtube)
@@ -49,7 +47,7 @@
   mac: advertise urug
     once things settle DVD-wise
   DVD timing for makemkv forum:Snow White
-  google search for goblet of fire en 1cd subtitles "srt file" 
+  google search for them goblet of fire en 1cd subtitles "srt file" 
   source_location hackz for ri_for  
   authorize.net SIM :)
   melissa stuff:
@@ -75,17 +73,16 @@
   ffplay diagonal bug reproduce/file
   create skype/google+ hangouts auto-easy-recorder windows
   the php uploader thing :P
-  a true overlapping mute type failure when you hit the "watch edited realtime" should popup.
-    also if they're "close" but not overlapping [ex: contiguous] they should not fail.
   ask for more beta testers for use, ask for more beta testers for creation, too
   can edit books' text too.
     +- list/publish potter
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   @ffmpeg: you can't convert mkv's of this creation type!
-  fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard]
+  fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard to do...]
   
 == decide later to move up or down ==
+  If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
   upconvert hulu better/really work?
   icon is not clear :P
   "real" exe runner so that it can find java from just JAVA_HOME et al in case they don't have it setup in their path right :)
@@ -122,6 +119,7 @@
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  @mplayer: you handle EDL skips one frame too late! [at least]
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
   @mplayer: fix it playing the wrong audio track by default (ex: It's a Meaningful Life)

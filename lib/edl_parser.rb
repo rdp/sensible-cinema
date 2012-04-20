@@ -254,10 +254,11 @@ class EdlParser
     
     # detect any weirdness...
     previous = nil
-    combined.map!{|current|
+    combined.map!{ |current|
       s,e,type = current
       if e < s || !s || !e || !type
-       raise SyntaxError.new("detected an end before a start or other weirdness: #{e} < #{s}")
+	   p caller
+       raise SyntaxError.new("detected an end before a start or other weirdness: #{s} > #{e}")
       end
       if previous
         ps, previous_end, pt = previous
