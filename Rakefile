@@ -129,9 +129,9 @@ task 'zip' do
   name = 'sensible-cinema-' + cur_ver
   raise 'doesnt exist yet to zip?' unless File.directory? name
   if OS.doze?
-    sys "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
+    raise 'please distro from linux only so we can get mac distros too'
   else
-    #sys "zip -r #{name}.zip #{name}"
+    sys "zip -r #{name}.zip #{name}"
     puts "NOT packaging win installer"
   end
   if OS.doze?

@@ -18,21 +18,13 @@ module CheckInstalledMac
     end
   end
 
-  if name == 'mplayer'
-    unless File.exist?('/opt/rdp_project_local/bin/mplayer')
-      puts "please install mplayer edl, please install mplayer-edl, see website http://rogerdpack.t28.net/sensible-cinema/content_editor.html"
-      return false
-    end
-    return true
-  end
-
   # check for the others generically
 
   command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version"}[name]
 
   raise 'unknown ' + name unless command # sanity check
 
-  unless system(command + " 1> " + OS.dev_null + " 2>" + OS.dev_null)
+  unless File.executable? "/opt/rdp_project_local/bin/#{name}"
      name = 'ImageMagick' if name == 'convert' # special case...
      puts 'lacking dependency! Please install ' + name + ' by installing the contrib pkg from the website'
      false
