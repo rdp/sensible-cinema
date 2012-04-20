@@ -8,11 +8,10 @@ to
 
 $ portindex # within there somewhere
 
-you now want osd variant
 this basically collides with mplayer, I guess [without any way around that?] so you cannot install this and any other mplayer port
 
 $ export PATH=/opt/rdp_project_local/bin:$PATH
-$ sudo port -kd install mplayer-edl +osd
+$ sudo port -kd install mplayer-edl
 $ port mdmg rdp-projects 
 
 # and distribute to https://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/
