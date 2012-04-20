@@ -132,17 +132,11 @@ task 'zip' do
     raise 'please distro from linux only so we can get mac distros too'
   else
     sys "zip -r #{name}.zip #{name}"
-    puts "NOT packaging win installer"
   end
-  if OS.doze?
-    puts 'NOT packaging OS X installer'
-  else
-    sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
-  end
+  sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
   delete_now_packaged_dir name
   p 'created ' + name + '.zip,tgz and also deleted its [create from] folder'
 end
-
 
 def sys arg, failing_is_ok = false
  3.times { |n|
@@ -167,7 +161,7 @@ task 'deploy' do
     if File.exist? name
       p 'copying to ilab ' + name
       sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
-      p 'copying into sf from ilab'
+      p 'copying into sf from ilab ' + name
       sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
     else
       p 'not copying:' + name
