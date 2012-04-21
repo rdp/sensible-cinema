@@ -21,6 +21,7 @@
     determine its timing relative to DVD...
   can work with audio CD's multi-track. Or maybe one at a time for now :)
 
+  rename it "..." or whatever google prefers :P after LLC
   either match the file or match the DVD times, punk!  No more half and half weird-o stuff.
   upload movie of "controlling utube, and also for full length film"
   umplayer for mac/use it
@@ -44,7 +45,6 @@
     Or programmatically
   use the cool uploader website
     split EDL's to "mine" versus community?
-  rename it "..." or whatever google prefers :P after LLC
   mac: advertise urug
     once things settle DVD-wise
   DVD timing for makemkv forum:Snow White
@@ -81,6 +81,7 @@
     just OCR powerdvd for now
   @ffmpeg: you can't convert mkv's of this creation type!
   fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard to do...]
+  @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
@@ -120,6 +121,10 @@
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  fix mplayer "skipping" at chapter breaks
+  fix vlc "skipping" at chapter breaks
+  @VLC: TMNT broken seeks
+  
   super more precise DVD seeks "to this time"
   @mplayer: you handle EDL skips one frame too late! [at least]
   create a semi-accurate phantom edit EDL [?] with just splits
