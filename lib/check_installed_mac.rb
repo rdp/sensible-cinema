@@ -20,11 +20,11 @@ module CheckInstalledMac
 
   # check for the others generically
 
-  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version"}[name]
+  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version", "mplayer" => "mplayer"}[name]
 
   raise 'unknown ' + name unless command # sanity check
 
-  unless File.executable? "/opt/rdp_project_local/bin/#{name}"
+  unless system("/opt/rdp_project_local/bin/#{command} 1>/dev/null 2>&1")
      name = 'ImageMagick' if name == 'convert' # special case...
      puts 'lacking dependency! Please install ' + name + ' by installing the contrib pkg from the website'
      false
