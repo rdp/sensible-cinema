@@ -1,3 +1,7 @@
+= 0.35.3 4/21/12 =
+
+Test distro for mac.
+
 = 0.35.2 4/20/12 =
 
 Fix bug in DVD player, new mac release.
