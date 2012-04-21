@@ -6,9 +6,9 @@ issue or post to the Mailing List: http://groups.google.com/group/sensible-cinem
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
 to install them automatically [has to be remote like this until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
-$ jruby -S gem install --development sensible-cinema
+$ jruby -S gem install sensible-cinema
 # ... it installs it and tons of dependencies
-# next optional:
+# next optionalyl:
 $ jruby -S gem uninstall -x sensible-cinema # uninstall the [old] gem so you don't have to worry about it conflicting later, just in case.
  
 You'll have to install some git submodules, too.
@@ -19,7 +19,8 @@ The tests are in the spec directory, though some of them are out of date as deve
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
 
-To run it via command line (see go*.sh files):
+To run it via command line (see go*.sh files): j bin/sensible-cinema
+A few lib/* files have their own "main" as well.
 
 Want JSON'ified output somehow? Just ask.
 
