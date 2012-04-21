@@ -85,32 +85,33 @@ module SensibleSwing
 		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
                     end
 		if srt_filename =~ /\.sub$/i
-		  show_blocking_message_dialog "warning--file has to be in Subrip [.srt] format, and yours might be in .sub format, which is incompatible"
+		  show_blocking_message_dialog "warning--input file has to be in SubRip [.srt] format, and yours might be in .sub format, which is incompatible"
 		end
         # TODO nuke, or do I use them for the 600.0 stuff?
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
+        euphemized_entries = nil
+        with_autoclose_message("parsing srt file... #{srt_filename}") do
+          parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
+          write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.subtitles.srt.txt'), euphemized_entries
+        end
+        display_and_raise "unable to parse subtitle file?" unless euphemized_entries.size > 10
+        euphemized_entries.shift if euphemized_entries[0].text =~ / by |downloaded/i # only place I think
+        euphemized_entires.pop if euphemized_entries[-1].text =~ / by |downloaded/i
+
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
-          euphemized_synchronized_entries = nil
-          with_autoclose_message("parsing srt file... #{srt_filename}") do
-            parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
-			write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.subtitles.txt'), euphemized_synchronized_entries
-  		    open_file_to_edit_it euphemized_filename
-            sleep 0.5 # let it open in TextEdit/Notepad first...
-      	    bring_to_front
-          end
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for."
             play_dvd_smplayer_unedited true
           end
-          all_entries = euphemized_synchronized_entries
 
-          all_entries.shift if all_entries[0].text =~ / by |downloaded/i # only place I think
-          all_entries.pop if all_entries[-1].text =~ / by |downloaded/i
+  	  open_file_to_edit_it euphemized_filename
+          sleep 0.5 # let it open in TextEdit/Notepad first...
+      	  bring_to_front
 
-          display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
+          all_entries = euphemized_entries # rename :)
           
           start_text = all_entries[0].single_line_text
           start_srt_time = all_entries[0].beginning_time
@@ -129,7 +130,8 @@ module SensibleSwing
           end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.")
           end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
-	      start_srt_time = 0
+          # the case they know it matches
+	  start_srt_time = 0
           start_movie_time = 0
           end_srt_time = 3000
           end_movie_time = 3000
