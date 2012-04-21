@@ -64,7 +64,8 @@ module SensibleSwing
       @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity timestamps automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
-        Basically download it from opensubtitles.org (or engsub.net et al),
+        Basically download it from opensubtitles.org 
+        (or google search for something like your equivalent for "prince of egypt subtitles 1cd en",
         (for opensubtitles.org enter dvd title in the search box, click on a result, click one from the list with an English flag, 
         then choose 'Download(zip)', then unzip the file)
         NB that you'll want/need to *carefully* double check your subtitle file for accuracy. Here's how:
