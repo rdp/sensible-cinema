@@ -27,13 +27,6 @@ Jeweler::Tasks.new do |s|
     s.add_development_dependency 'rspec', '> 2'
     s.add_development_dependency 'jeweler'
     s.add_development_dependency 'rake'
-    
-    # add as real dependencies for now, as gem install --development is still broken for jruby, basically installing transitive dependencies in error <sigh> (actually might be fixed now though...so we may not need this)
-
-    for gem in s.development_dependencies #['hitimes', 'rspec', 'jeweler', 'rake']
-      # bundling rake won't be too expensive, right? and this allows for easier dev setup through gem install
-      s.add_dependency gem.name, gem.requirement
-    end
   end
 
 desc 'run all specs'
