@@ -26,7 +26,7 @@ module CheckInstalledMac
 
   unless system("/opt/rdp_project_local/bin/#{command} 1>/dev/null 2>&1")
      name = 'ImageMagick' if name == 'convert' # special case...
-     puts 'lacking dependency! Please install ' + name + ' by installing the contrib pkg from the website'
+     puts 'lacking dependency! Please install ' + name + ' by installing from the mac dependencies link from the website first'
      false
   else
     true
