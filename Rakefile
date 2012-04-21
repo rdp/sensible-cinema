@@ -13,7 +13,7 @@ Jeweler::Tasks.new do |s|
     
     # IF CHANGED PUBLISH NEW GEM [and delete pkg] :)
     s.add_dependency 'os', '>= 0.9.4'
-    s.add_dependency 'sane', '>= 0.25.2'
+    s.add_dependency 'sane', '>= 0.25.4'
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
