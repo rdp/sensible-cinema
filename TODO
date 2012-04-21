@@ -13,6 +13,7 @@
 
 == yes do, un-ordered currently, from all the various future release options ==
   publish 0.4 mac to "right place"
+    test it, test pc receiving from mac, test mac without deps, mac with deps downloaded, transfer mac deps
   LLC
   amazing grace et al borrowed DVD's
   netflix instant descriptor work at all
@@ -119,6 +120,7 @@
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD+-DVD-realtime basically never do backlog (unordered) ==
+  super more precise DVD seeks "to this time"
   @mplayer: you handle EDL skips one frame too late! [at least]
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
