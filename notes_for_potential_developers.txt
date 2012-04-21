@@ -1,23 +1,11 @@
 A few notes for developers:
 
-You can test the DVD portion of the program out by mounting the DVD of "big buck bunny" 
-http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
-On windows daemon tools helps there, or "magic ISO" or the like, may be helpful to avoid having to burn disks.
-
-Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against 
-(a slightly more cross platform approach I guess).
-
-Then rip it and use the output, or use it as your DVD.
-
-Or if you have a DVD that already has a edit list available for it, you could use that, or create
-a new edit list for a DVD you own, etc.
-
-If you have any feedback/feature requests, et al, post an
+If you have any feedback/feature requests, et al, post a github
 issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
 
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
-or to install them automatically [has to be remote until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
+to install them automatically [has to be remote like this until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
 $ jruby -S gem install --development sensible-cinema
 # ... it installs it and tons of dependencies
 # next optional:
@@ -31,15 +19,21 @@ The tests are in the spec directory, though some of them are out of date as deve
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
 
-Also you'll need to run git submodule init && git submodule update (possibly modify .gitsubmodules to be the open one, or ask me to)
+To run it via command line (see go*.sh files):
 
-To run it via command line:
+Want JSON'ified output somehow? Just ask.
 
-$ jruby bin/sensible-cinema --help # tells you all available options
-$ jruby lib/edl_parser edl_filename.txt # outputs the file, but parsed, and in YAML, useful for porting to other programming languages.
-Feedback/contribution welcome :)
+You can test the DVD portions of the program out by mounting the DVD of "big buck bunny" 
+http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
+On windows daemon tools helps there, or "magic ISO" or the like, may be helpful to avoid having to burn disks.
 
-Ex: want JSON'ified output somehow? Just ask.
+Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against 
+(a slightly more cross platform approach I guess).
+
+Then rip it and use the output, or use it as your DVD.
+
+Or if you have a DVD that already has a edit list available for it, you could use that, or create
+a new edit list for a DVD you own, etc.
 
 == mac os x developers ==
 

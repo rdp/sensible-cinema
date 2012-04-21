@@ -27,9 +27,8 @@
   umplayer for mac/use it
   our new DVD's that we own
   princess bride EDL
-  watch Gottman/audio fella
+  watch Gottman
   parser misses first subtitle entry?
-  mplayer dies tmnt dvdnav://1  but is ok with dvd://1 or after a title? vlc seeking fails?
   the "add on" type EDL
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
@@ -84,6 +83,7 @@
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
+  mplayer dies tmnt dvdnav://1  but is ok with dvd://1 or after a title? vlc seeking fails?
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
   upconvert hulu better/really work?
   icon is not clear :P

@@ -75,6 +75,21 @@ DO NOT MAKE ILLEGAL COPIES OF DVD's for your country. See also is_it_legal_to_co
 DO NOT DISTRIBUTE EDITED DVD's.
 Watching movies edited may be legal in the US via the Family Protection Act.
 
+
+== Feedback/Contributing to Development ==
+
+Feedback, including feature requests, comments, etc. all welcome:
+
+Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to 
+sensible-cinema@googlegroups.com or rogerdpack@gmail.com
+
+If you're a developer and want to help out with programmming or look and feel, etc., please do!
+See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or
+the wiki there.
+
+If you want to donate something, please consider donating to a charity of your choice.  
+No really, feel free, go ahead.
+
 == FAQ ==
 
 Q. How do I watch these on my TV, not just on my computer?
@@ -223,20 +238,6 @@ Sensible Cinema leverages code from lots of other projects (see LICENSE.TXT)--ma
 the authors and maintainers of said libraries, and anybody else I forgot to mention.
 Sensible Cinema is a conglomeration of the good ideas from several people who contacted me
 over time.  Thanks for your contributions.
-
-== Feedback/Contributing to Development ==
-
-Feedback, including feature requests, comments, etc. all welcome:
-
-Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to 
-sensible-cinema@googlegroups.com or rogerdpack@gmail.com
-
-If you're a developer and want to help out with programmming or look and feel, etc., please do!
-See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or
-the wiki there.
-
-If you want to donate something, please consider donating to a charity of your choice.  
-No really, feel free, go ahead.
 
 == Competition/re-use of files ==
 
