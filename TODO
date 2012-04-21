@@ -12,8 +12,6 @@
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
-  publish 0.4 mac to "right place"
-    test it, test pc receiving from mac, test mac without deps, mac with deps downloaded, transfer mac deps
   LLC
   amazing grace et al borrowed DVD's
   netflix instant descriptor work at all
@@ -22,6 +20,8 @@
   can work with audio CD's multi-track. Or maybe one at a time for now :)
 
   rename it "..." or whatever google prefers :P after LLC
+  "downloading" needs to go to GUI, have a "human name" per file
+  mac: double check mplayer-edl version
   either match the file or match the DVD times, punk!  No more half and half weird-o stuff.
   upload movie of "controlling utube, and also for full length film"
   umplayer for mac/use it
