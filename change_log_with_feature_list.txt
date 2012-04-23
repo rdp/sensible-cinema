@@ -1,6 +1,13 @@
+= 0.35.4 4/23/12 =
+
+Fixes for mac, some UI improvements phew!
+Also fixed it for subtitle synchro without entering sync points [oops]
+Added a couple DVD's in there.
+
 = 0.35.3 4/21/12 =
 
-Test distro for mac.
+Test distro for mac.  Also include dvdsample.exe the MS DVD Navigator "demo" jumper.  See the source code.
+This release if you want it.
 
 = 0.35.2 4/20/12 =
 
