@@ -46,7 +46,6 @@
   use the cool uploader website
     split EDL's to "mine" versus community?
   mac: advertise urug
-    once things settle DVD-wise
   DVD timing for makemkv forum:Snow White
   google search for them goblet of fire en 1cd subtitles "srt file" 
   source_location hackz for ri_for  
@@ -83,6 +82,8 @@
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
+  the "super duper awesome editor" like you can hold down the "a" key during the time you want to mute,
+    you can say "ok start here!" and the like, instead of writing it in by hand.
   mplayer dies tmnt dvdnav://1  but is ok with dvd://1 or after a title? vlc seeking fails?
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
   upconvert hulu better/really work?
