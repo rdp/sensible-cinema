@@ -7,6 +7,10 @@ There is also more "advanced" documentation in the root of the project.
 It contains the LICENSE file, gplv3.txt, change_log_with_feature_list.txt, developer_how_to_contribute_to_the_project.txt file,
 experimental_online_player_ocr_readme.txt file, history_and_related_works_list.txt file.
 
+== Creating your own EDL's ==
+
+To see instructions to create new edit lists, go to https://github.com/rdp/sensible-cinema/wiki/How-to-create-your-own-EDL%27s
+
 == Contact ==
 
 contact: http://groups.google.com/group/sensible-cinema

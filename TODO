@@ -19,12 +19,13 @@
     determine its timing relative to DVD...
   can work with audio CD's multi-track. Or maybe one at a time for now :)
 
+  mplayer patches:
   rename it "..." or whatever google prefers :P after LLC
   "downloading" needs to go to GUI, have a "human name" per file
-  mac: double check mplayer-edl version
+  mac: double check mplayer-edl version (when I need to)
   either match the file or match the DVD times, punk!  No more half and half weird-o stuff.
   upload movie of "controlling utube, and also for full length film"
-  umplayer for mac/use it
+  umplayer for mac/use it, mplayer shucks!
   our new DVD's that we own
   princess bride EDL
   watch Gottman
@@ -64,10 +65,9 @@
   ffmpeg dshow input ramiro finalize patches
   learn clojure
   OS X netflix instant
-    mac'ify Mouse first
+    mac'ify Mouse
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
-  grab wedding iso's for backup purposes
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   ffplay diagonal bug reproduce/file
