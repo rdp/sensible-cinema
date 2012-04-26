@@ -1,6 +1,4 @@
-  remember this stuff is all "oh gosh I have to do that too?" crud time, don't even want it.
-    and "won't even be useful to people in the end so why bother?"
-    "just for fun"
+Remember this stuff is all "oh gosh can I avoid doing that at all?
 
 == roadmap [for just tasks, see below though] == 
 
@@ -16,20 +14,19 @@
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...
     determine its timing relative to DVD...
-  can work with audio CD's single-track. Or maybe one at a time for now :)
-
+  can work with one big mp3
+  rename it "..." or whatever google prefers :P after LLC
+  
   JPFA genealogy collab wiki--maybe just a page on weRelate? [+facebook genealogy page]
+  mplayer patches  
   OS X netflix instant
     mac'ify Mouse
-  mplayer patches
-  rename it "..." or whatever google prefers :P after LLC
   add default preference "turn on upconversion?" :)
-  mac: double check mplayer-edl version
   move documentation to online [all]
-
   "downloading" needs to go to GUI, have a "human name" per file
   mac: double check mplayer-edl version (when I need to)
-  either match the file or match the DVD times, punk!  No more half and half weird-o stuff.
+  either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
+    Maybe after mplayer accepts my patches?
   upload movie of "controlling utube, and also for full length film"
   umplayer for mac/use it, mplayer shucks!
   our new DVD's that we own
@@ -83,6 +80,7 @@
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
+  mac: double check mplayer-edl version at startup
   fork smplayer so it can work with mine [?]
     submit patches upstream?
   "downloading" needs to go to GUI, have a "human name" per file
