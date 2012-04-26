@@ -7,7 +7,6 @@
   netflix instant EDL
   
 == things working on today/requested ==
-  JPFA genealogy collab wiki--maybe just a page on weRelate? [+facebook genealogy page]
   
 == blocked working on ==
 
@@ -17,14 +16,22 @@
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...
     determine its timing relative to DVD...
-  can work with audio CD's multi-track. Or maybe one at a time for now :)
+  can work with audio CD's single-track. Or maybe one at a time for now :)
 
+  JPFA genealogy collab wiki--maybe just a page on weRelate? [+facebook genealogy page]
+  OS X netflix instant
+    mac'ify Mouse
+  mplayer patches
   rename it "..." or whatever google prefers :P after LLC
   add default preference "turn on upconversion?" :)
   mac: double check mplayer-edl version
+  move documentation to online [all]
+
+  "downloading" needs to go to GUI, have a "human name" per file
+  mac: double check mplayer-edl version (when I need to)
   either match the file or match the DVD times, punk!  No more half and half weird-o stuff.
   upload movie of "controlling utube, and also for full length film"
-  umplayer for mac/use it
+  umplayer for mac/use it, mplayer shucks!
   our new DVD's that we own
   princess bride EDL
   watch Gottman
@@ -38,14 +45,9 @@
   after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   disclosure for OCR, including wiki based processing
   combine all "folders" of movie EDL's into one uni-folder (non youtube)
-  move documentation to online [all]
   the awesome new editor GUI
-  allow for a mute to "encompass" a skip by splitting it, uh guess, otherwise hard to card 'bad' part in middle of a mute.
-    Or programmatically
   use the cool uploader website
     split EDL's to "mine" versus community?
-  mac: advertise urug
-    once things settle DVD-wise
   DVD timing for makemkv forum:Snow White
   google search for them goblet of fire en 1cd subtitles "srt file" 
   source_location hackz for ri_for  
@@ -63,11 +65,8 @@
   user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?]
   ffmpeg dshow input ramiro finalize patches
   learn clojure
-  OS X netflix instant
-    mac'ify Mouse first
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
-  grab wedding iso's for backup purposes
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   ffplay diagonal bug reproduce/file
@@ -79,13 +78,18 @@
   inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
     just OCR powerdvd for now
   @ffmpeg: you can't convert mkv's of this creation type!
-  fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard to do...]
+  fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
+    also fix it to "just output the right time" for mplayer sake?
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
   fork smplayer so it can work with mine [?]
     submit patches upstream?
   "downloading" needs to go to GUI, have a "human name" per file
+  allow for a mute to "encompass" a skip by splitting it, uh guess, otherwise hard to card 'bad' part in middle of a mute.
+    Or programmatically
+  the "super duper awesome editor" like you can hold down the "a" key during the time you want to mute,
+    you can say "ok start here!" and the like, instead of writing it in by hand.
   mplayer dies tmnt dvdnav://1  but is ok with dvd://1 or after a title? vlc seeking fails?
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
   upconvert hulu better/really work?

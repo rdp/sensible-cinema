@@ -63,6 +63,8 @@ NB that you want to download it sourceforge, not from github downloads.
 
 == Creating Your Own Edit Lists, or modifying previously existing ones ==
 
+Sometimes the movie you want doesn't have an EDL (edit list) available for it yet.
+Not to worry, you can create your own!
 See https://github.com/rdp/sensible-cinema/wiki/How-to-create-your-own-EDL's
 
 == Creating an edited DVD ==
