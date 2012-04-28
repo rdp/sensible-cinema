@@ -91,14 +91,11 @@ module SensibleSwing
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
-        euphemized_entries = nil
+        euphemized_entries = euphemized_filename = nil
         with_autoclose_message("parsing srt file... #{srt_filename}") do
           parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
           write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.subtitles.srt.txt'), euphemized_entries
         end
-        display_and_raise "unable to parse subtitle file?" unless euphemized_entries.size > 10
-        euphemized_entries.shift if euphemized_entries[0].text =~ / by |downloaded/i # only place I think
-        euphemized_entires.pop if euphemized_entries[-1].text =~ / by |downloaded/i
 
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
 
