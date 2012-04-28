@@ -39,11 +39,11 @@ module SensibleSwing
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
         if edit_list_path
 		    if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
-		        raise 'aborting'
+		        raise 'aborted'
 		    end
         end	  
         create_brand_new_dvd_edl
-  	update_currently_inserted_dvd_list # notify them that files have changed...lodo is there a better way?
+        show_blocking_message_dialog "Now that it's created, you can add some entries by hand, or try downloading a subtitle\nfile and parsing it to look for profanities\nif it finds any, then copy and paste them into the file you just created"
       end
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
@@ -144,7 +144,7 @@ module SensibleSwing
         out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nIf it's off much you may want to try a different .srt file"
+        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try a different other .srt file"
         File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open
