@@ -41,11 +41,13 @@ module SubtitleProfanityFinder
      if all.size < 10
        raise "unable to parse subtitle file?"
      end
+
      # strip out auto inserted trailers/headers
-     while all[0].text =~ / by |downloaded| english|www|http/i
+     reg =  / by|download| eng|www|http|sub/i
+     while all[0].text =~ reg
       all.shift
      end
-     while all[-1] =~ / by |downloaded| english|www|http/i
+     while all[-1] =~ reg
       all.pop
      end
      all
