@@ -16,7 +16,7 @@ module SubtitleProfanityFinder
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries subtitles_raw_text
      all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # line endings so that it parses right when linux reads a windows file <huh?>
-     all.map{|glop|
+     all.map!{|glop|
 	   lines = glop.lines.to_a
 	   index_line = lines[0]
        timing_line = lines[1].strip
@@ -38,6 +38,19 @@ module SubtitleProfanityFinder
        add_single_line_minimized_text_from_multiline out
        out
      }
+     if all.size < 10
+       raise "unable to parse subtitle file?"
+     end
+
+     # strip out auto inserted trailers/headers
+     reg =  / by|download| eng|www|http|sub/i
+     while all[0].text =~ reg
+      all.shift
+     end
+     while all[-1] =~ reg
+      all.pop
+     end
+     all
    end
 
    def self.add_single_line_minimized_text_from_multiline entry

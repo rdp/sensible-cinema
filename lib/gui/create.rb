@@ -39,11 +39,11 @@ module SensibleSwing
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
         if edit_list_path
 		    if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
-		        raise 'aborting'
+		        raise 'aborted'
 		    end
         end	  
         create_brand_new_dvd_edl
-  	update_currently_inserted_dvd_list # notify them that files have changed...lodo is there a better way?
+        show_blocking_message_dialog "Now that it's created, you can add some entries by hand, or try downloading a subtitle\nfile and parsing it to look for profanities\nif it finds any, then copy and paste them into the file you just created"
       end
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
@@ -91,14 +91,11 @@ module SensibleSwing
         add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
-        euphemized_entries = nil
+        euphemized_entries = euphemized_filename = nil
         with_autoclose_message("parsing srt file... #{srt_filename}") do
           parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
           write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.subtitles.srt.txt'), euphemized_entries
         end
-        display_and_raise "unable to parse subtitle file?" unless euphemized_entries.size > 10
-        euphemized_entries.shift if euphemized_entries[0].text =~ / by |downloaded/i # only place I think
-        euphemized_entires.pop if euphemized_entries[-1].text =~ / by |downloaded/i
 
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
 
@@ -147,7 +144,7 @@ module SensibleSwing
         out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nIf it's off much you may want to try a different .srt file"
+        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try a different other .srt file"
         File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open
