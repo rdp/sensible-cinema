@@ -4,7 +4,7 @@ how does powerdvd's upscaling work?
 
 purevideo?/zoomplayer
 
-what does -ss do in mplayer?
+what does -ss actually do in mplayer? is a parameter to SWCALE or not? hmm...
 
 ask mplayer "can you use accurate rounding with lanczos? I don't think you can..."
 
