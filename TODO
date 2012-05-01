@@ -1,10 +1,12 @@
 Remember this stuff is all "oh gosh can I avoid doing that at all?
 
-== roadmap [for just tasks, see below though] == 
+== rough milestone current roadmap == 
 
   netflix instant EDL
   
 == things working on today/requested ==
+
+  can work with one big mp3
   
 == blocked working on ==
 
@@ -14,14 +16,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...
     determine its timing relative to DVD...
-  can work with one big mp3
   
-  JPFA genealogy collab wiki--maybe church's site?
-  a dialog for accepting "more profanities" when parsing
-  mplayer patches  
+  JPFA genealogy collab wiki--maybe on church's wiki site?
+  a dialog for accepting "more profanities" when parsing subtitles
+  my mplayer patches re-do
   OS X netflix instant
     mac'ify Mouse
   add default preference "turn on upconversion?" :)
+  mplayer re-read config file each frame
   move documentation to online [all]
   "downloading" needs to go to GUI, have a "human name" per file
   mac: double check mplayer-edl version (when I need to)
@@ -127,13 +129,15 @@ several times over, really)
   mplayer dies tmnt dvdnav://1  
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
-== DVD+-DVD-realtime basically never do backlog (unordered) ==
+== DVD +- DVD-realtime/other basically never do backlog (unordered) ==
+
   fix mplayer "skipping" at chapter breaks
   fix vlc "skipping" at chapter breaks
   @VLC: TMNT broken seeks
   
+  the online "like stack overflow" way to contribute -- "I found a profanity at time x" "I found one at time y" [they add on] for online streams  
   super more precise DVD seeks "to this time"
-  @mplayer: you handle EDL skips one frame too late! [at least]
+  @mplayer: you handle EDL skips one frame too late! [at least, seemingly]
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
   @mplayer: fix it playing the wrong audio track by default (ex: It's a Meaningful Life)
