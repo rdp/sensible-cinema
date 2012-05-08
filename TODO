@@ -82,6 +82,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
+  VLC can skip over poor parts
   It can say "go and look for this at this place, which has a profanity in it" (
 several times over, really)
   mac: double check mplayer-edl version at startup
