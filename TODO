@@ -25,8 +25,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   add default preference "turn on upconversion?" :)
   mplayer re-read config file each frame
   move documentation to online [all]
-  "downloading" needs to go to GUI, have a "human name" per file
-  mac: double check mplayer-edl version (when I need to)
+  one 7zip feature
+  "downloading" message needs to go to GUI, have a "human name" per file
+  mac: double check mplayer-edl version (when I need to, if ever)
   either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
     Maybe after mplayer accepts my patches?
   upload movie of "controlling utube, and also for full length film"
@@ -82,6 +83,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
+  VLC resume/window position et al
   It can say "go and look for this at this place, which has a profanity in it" (
 several times over, really)
   mac: double check mplayer-edl version at startup
@@ -189,7 +191,6 @@ several times over, really)
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
   super editor: shows the srt near each edit...
-  VLC resume/window position [?]
   don't show smplayer buttons in OS X/linux [?]
   @mplayer: did you realize you don't go to the start of DVD's right? [tangled]
   update libavfilter filterguide with link, more examples

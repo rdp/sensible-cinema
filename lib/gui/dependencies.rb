@@ -25,13 +25,17 @@ module SensibleSwing
     def self.download full_url, to_here
       require 'open-uri'
       require 'openssl'
+	  require 'fileutils'
       eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE") if full_url =~ /https/
       keep_going_bg_thread = true
-      print 'downloading'
+      print 'downloading ' + File.basename(to_here)
       Thread.new { while keep_going_bg_thread; print '.'; sleep 1; end}
-      writeOut = open(to_here, "wb")
-      writeOut.write(open(full_url).read)
+      writeOut = open(to_here + '.temp', "wb")
+	  url = open(full_url, 'rb')
+      writeOut.write(url.read)
+	  url.close
       writeOut.close
+	  FileUtils.mv to_here + '.temp', to_here # avoid partial downloads corrupting uss
       keep_going_bg_thread = false
       puts 'done!'
     end
