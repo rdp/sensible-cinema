@@ -24,6 +24,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
     mac'ify Mouse
   add default preference "turn on upconversion?" :)
   mplayer re-read config file each frame
+  don't download ffmpeg till needed
   move documentation to online [all]
   one 7zip feature
   "downloading" message needs to go to GUI, have a "human name" per file
@@ -84,6 +85,7 @@ use opensub hash
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
+  ffmpeg: joining split files failed [go back in time...] also keyint failed?
   VLC resume/window position et al
   VLC can skip over poor parts
   fix all ffmpeg bugs LOL

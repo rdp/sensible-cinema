@@ -299,14 +299,6 @@ module SensibleSwing
         choose_file_and_edl_and_create_sxs_or_play true
       }
 	  
-      add_text_line 'Options for creating an edited movie file from a local file:'
-      
-      new_jbutton("Show options to help with creating a fully edited movie file") do
-        window = new_child_window
-        window.add_options_that_use_local_files
-      end
-      
-	  
       if LocalStorage['have_zoom_button']
         @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
           raise unless OS.doze?

@@ -59,18 +59,6 @@ module SensibleSwing
         choose_file_and_edl_and_create_sxs_or_play false
       end
       
-      @create = new_jbutton( "Create edited version of a file on Your Hard Drive" )
-      @create.tool_tip = <<-EOL
-        This takes a file and creates a new file on your hard disk like dvd_name_edited.mpg that you can watch when it's done.
-        The file you create will contain the whole movie edited.
-        It takes quite awhile maybe 2 hours.  Sometimes the progress bar will look paused--it typically continues eventually.
-      EOL
-      @create.on_clicked {
-        force_accept_file_style_license
-  	    check_for_file_manipulation_dependencies
-        do_create_edited_copy_via_file false
-      }
-      
       if LocalStorage[UpConvertEnglish] # LODO no tight coupling like this
         add_text_line ''
         add_open_documentation_button
@@ -101,7 +89,6 @@ module SensibleSwing
           system_non_blocking("start http://groups.google.com/group/sensible-cinema")
         }
         increment_button_location
-
 	  
       @progress_bar = JProgressBar.new(0, 100)
       @progress_bar.set_bounds(44,@starting_button_y,@button_width,23)

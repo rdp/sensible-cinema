@@ -47,24 +47,6 @@ module SensibleSwing
       time_through.should == 1
     end
     
-    it "should warn if you don't have enough disk space" do
-      @subject.get_freespace('.').should be > 0
-      @subject.get_freespace("c:\\nonexistent").should be > 0
-      @subject.stub!(:get_freespace) {
-        0
-      }
-      @subject.get_save_to_filename 'dvd_title'
-      @show_blocking_message_dialog_last_arg.should =~ /may not be enough/
-    end
-    
-    it "should not warn if you have enough free disk space" do
-      @subject.stub!(:get_freespace) {
-        16_000_000_000
-      }
-      @subject.get_save_to_filename 'dvd_title'
-      @show_blocking_message_dialog_last_arg.should be nil
-    end
-    
     def with_clean_edl_dir_as this
       FileUtils.rm_rf 'temp'
       Dir.mkdir 'temp'
@@ -75,10 +57,6 @@ module SensibleSwing
       ensure
         EdlParser::EDL_DIR.sub!(/.*/, old_edl)
       end
-    end
-    
-    it "should modify path to have mencoder available" do
-      RubyWhich.new.which('mencoder').length.should be > 0
     end
     
     it "should not modify path to have mplayer available" do
@@ -133,10 +111,6 @@ module SensibleSwing
         # don't play anything, by default :)
       }
       
-      @subject.stub!(:get_freespace) {
-        # during testing, we *always* have enough free space :)
-        16_000_000_000
-      }
       @subject.stub!(:show_in_explorer) {|filename|}
       unless $VERBOSE
         # less chatty...
@@ -186,65 +160,13 @@ module SensibleSwing
       @subject.system_non_blocking "ls"
     end
 
-    it "should be able to do a normal copy to hard drive, edited" do
-      @subject.do_create_edited_copy_via_file(false).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
-      File.exist?('test_file_to_see_if_we_have_permission_to_write_to_this_folder').should be false
-    end
-    
-    it "should only prompt twice for filenames--once for the 'save to' filename, once for the 'from' filename" do
-      count1=count2=0
-      @subject.stub!(:new_existing_file_selector_and_select_file) { # get from filename
-        count2 += 1
-        'selected_file'
-      }
-      
-      @subject.stub!(:new_nonexisting_filechooser_and_go) { # save to filename
-        count1 += 1
-        'selected_file'
-      }
-      
-      @subject.do_create_edited_copy_via_file(false).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
-      5.times { 
-        @subject.do_create_edited_copy_via_file(false)
-      }
-      count1.should == 1
-      count2.should == 2 # once for from filename, once for [tell us where you grabbed it to] filename
-    end
-    
     it "should have a good default title of 1" do
      @subject.get_title_track({}).should == "1"
      descriptors = {"dvd_title_track" => "3"}
      @subject.get_title_track(descriptors).should == "3"
     end
     
-    it "should call through to explorer to display the final output file" do
-      PlayAudio.stub!(:play) {
-        @played = true
-      }
-      @subject.do_create_edited_copy_via_file(false)
-      @subject.background_thread.join
-      @get_mencoder_commands_args[-4].should == nil
-      @system_blocking_command.should match /explorer/
-      @system_blocking_command.should_not match /fulli/
-      @played.should == true
-    end
-    
-    it "should be able to return the fulli name if it already exists" do
-      @subject.do_create_edited_copy_via_file(false,true).should == [true, "selected_file.fulli_unedited.tmp.mpg"]
-      FileUtils.rm "selected_file.fulli_unedited.tmp.mpg.done"
-    end
-    
-    it "should call explorer eventually, even if it has to create the fulli file"
-    
-    it "should play the edited file" do
-     @subject.do_create_edited_copy_via_file(true).should == [false, "selected_file.fulli_unedited.tmp.mpg"]
-     join_background_thread
-     @get_mencoder_commands_args[-2].should == "2" # title track
-     @get_mencoder_commands_args[-3].should == "01:00"
-     @system_blocking_command.should_not match /fulli/
-    end
-    
-    def assert_played_mplayer
+    def assert_played_mplayer # used?
       Thread.join_all_others
       if OS.doze?
         @system_blocking_command.should =~ /smplayer/
@@ -272,55 +194,6 @@ module SensibleSwing
       Thread.join_all_others # just in case...
     end
     
-    it "should be able to preview unedited" do
-      @subject.stub!(:get_user_input).and_return('06:00', '07:00')
-      @subject.stub!(:run_smplayer_blocking) {} # stub this out
-      @subject.unstub!(:get_mencoder_commands)
-      click_button(:@preview_section_unedited)
-      join_background_thread # scary timing spec
-      temp_file = temp_dir + '/vlc.temp.bat'
-      File.read(temp_file).should include("59.99")
-    end
-    
-    it "should do something for fast preview" do
-      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg"
-      click_button(:@fast_preview)
-      assert_played_mplayer
-    end
-    
-    it "should be able to rerun the latest start and end times with the rerun button" do
-      run_preview_section_button_successfully
-      old_args = @get_mencoder_commands_args
-      old_args.should_not == nil
-      @get_mencoder_commands_args = nil
-      click_button(:@rerun_preview).join
-      @get_mencoder_commands_args.should == old_args
-      join_background_thread
-      assert_played_mplayer      
-    end
-    
-    it "should not die if you pass it the same start and end time frames--graceful acceptance" do
-      @subject.stub!(:get_mencoder_commands) {
-        raise MencoderWrapper::TimingError
-      }
-      click_button(:@rerun_preview)
-      @show_blocking_message_dialog_last_arg.should =~ /you chose a time frame/
-    end
-    
-    it "should not die if you pass it the same start and end time frames--graceful acceptance" do
-      @subject.stub!(:get_mencoder_commands) {
-        raise Errno::EACCES
-      }
-      click_button(:@rerun_preview) # lodo rspec error: wrong backtrace if no => e!
-      @show_blocking_message_dialog_last_arg.should =~ /a file/
-    end
-
-    it "should warn if you watch an edited time frame with no edits within thatin it" do
-      @subject.unstub!(:get_mencoder_commands) # this time through, let it check for existence of edits...
-      click_button(:@preview_section)
-      @show_blocking_message_dialog_last_arg.should =~ /unable to find/
-    end
-    
     it "should warn if you give it an mkv file, just in case" do
       @subject.stub!(:run_smplayer_blocking) {} # avoid check for file existence
       @subject.unstub!(:get_mencoder_commands) # this time through, let it really check for existence of edits...
@@ -337,13 +210,6 @@ module SensibleSwing
       
       @show_blocking_message_dialog_last_arg.should =~ /preview just a portion/
       join_background_thread # weird...rspec you should do my after blocks before you'n... LODO
-    end
-    
-    it "if the .done files exists, do_copy... should just call smplayer ja" do
-      require 'tracer'
-#      Tracer.on
-      FileUtils.touch "selected_file.fulli_unedited.tmp.mpg.done"
-      @subject.do_create_edited_copy_via_file(false, true, true).should == [true, "selected_file.fulli_unedited.tmp.mpg"]
     end
     
     it "should create a new file based on stats of current disc" do
@@ -518,26 +384,6 @@ module SensibleSwing
       ARGV.pop 
     end 
     
-    it "should read splits from the file" do
-      splits1 = nil
-      MplayerEdl.stub(:convert_to_edl) do |d,s,s2,splits|
-        splits1 = splits
-      end
-      @subject.play_smplayer_edl_non_blocking
-      splits1.should == []
-    end
-    
-    it "should warn if there are no DVD splits and you try to use EDL" do
-      with_clean_edl_dir_as 'temp' do
-        File.binwrite('temp/a.txt', "\"disk_unique_id\" => \"abcdef1234\"")
-        @subject.stub!(:choose_dvd_drive_or_file) {
-           ["mock_dvd_drive", "mockVolume", "abcdef1234"]
-        }
-        @subject.play_smplayer_edl_non_blocking
-        @show_blocking_message_dialog_last_arg.should =~ /does not contain mplayer replay information \[mplayer_dvd_splits\]/
-      end
-   end
-  
   it "should be able to parse an srt for ya" do
      @subject.stub!(:new_existing_file_selector_and_select_file) {
        'spec/dragon.srt'

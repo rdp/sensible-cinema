@@ -8,17 +8,7 @@ module CheckInstalledMac
 
  # should output an error message...
  def self.check_for_installed name
-  if name == 'mencoder'
-    output = `mencoder --fail 2>&1`
-    if output =~ /mencoder/i
-      # success, it is installed
-      return true
-    else
-      # fall through
-    end
-  end
-
-  # check for the others generically
+  # check for these with generic "does it run"
 
   command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version", "mplayer" => "mplayer"}[name]
 

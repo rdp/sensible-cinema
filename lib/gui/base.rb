@@ -46,8 +46,8 @@ if OS.doze?
   autoload :EightThree, './lib/eight_three'
 end
 
-# attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
+# attempt to load on demand...i.e. faster...gah
+for kls in [:MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
@@ -57,7 +57,7 @@ end
 
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
-  for name in ['.', 'mencoder', 'ffmpeg', 'mplayer_edl']
+  for name in ['.', 'ffmpeg', 'mplayer_edl']
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
@@ -364,7 +364,7 @@ KP_ENTER dvdnav select
         out = IO.popen(command) # + " 2>&1"
         low_prio = 64 # from msdn
         
-        if command =~ /(ffmpeg|mencoder)/
+        if command =~ /(ffmpeg)/
           # XXXX not sure if there's a better way...because some *are* complex and have ampersands...
           # unfortunately have to check for nil because it could exit too early [?]
           exe_name = $1 + '.exe'
