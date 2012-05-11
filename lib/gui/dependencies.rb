@@ -86,6 +86,15 @@ module SensibleSwing
         end
       end
     end
+	
+	def check_for_ffmpeg_installed
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
+      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
+        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
+      end
+	
+	end
     
     def check_for_various_dependencies            
       if OS.doze? && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil)
@@ -99,11 +108,6 @@ module SensibleSwing
       end
 
       # runtime dependencies, at least as of today...
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
-      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
-      end
       if OS.mac?
         check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
       else      

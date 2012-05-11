@@ -3,6 +3,7 @@ module SensibleSwing
   class MainWindow
     
     def sanity_check_file filename
+	  check_for_ffmpeg_installed
       out = `ffmpeg -i #{filename} 2>&1`
       print out
       unless out =~ /Duration.*start: 0.00/ || out =~ /Duration.*start: 600/

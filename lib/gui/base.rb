@@ -362,36 +362,9 @@ KP_ENTER dvdnav select
       new_prefs.each_line{|l| print l if l =~ /additional_video/} # debug
     end
     
-    def system_blocking command, low_prio = false
+    def system_blocking command
       return true if command =~ /^@rem/ # JRUBY-5890 bug
-      if low_prio
-        out = IO.popen(command) # + " 2>&1"
-        low_prio = 64 # from msdn
-        
-        if command =~ /(ffmpeg)/
-          # XXXX not sure if there's a better way...because some *are* complex and have ampersands...
-          # unfortunately have to check for nil because it could exit too early [?]
-          exe_name = $1 + '.exe'
-          begin
-            p = proc{ ole = ::WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
-            piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-            # but the first time through this still inexplicably fails all 3...odd
-            piddys = ::WMI::Win32_Process.find(:all,  :conditions => {'Name' => exe_name})
-            for piddy in piddys
-              # piddy.SetPriority low_prio # this call can seg fault at times...JRUBY-5422
-              pid = piddy.ProcessId # this doesn't seg fault, tho
-              system_original("vendor\\setpriority -lowest #{pid}") # uses PID for the command line
-            end
-          rescue Exception => e
-            p 'warning, got exception trying to set priority [jruby prob? ...]', e
-          end
-        end
-        print out.read # let it finish
-        out.close
-        $?.exitstatus == 0 # 0 means success
-      else
-        raise command + " failed env #{ENV['PATH']}" unless system_original command
-      end
+      raise command + " failed env #{ENV['PATH']}" unless system_original command
     end
     
     def system_non_blocking command
@@ -526,7 +499,8 @@ KP_ENTER dvdnav select
         # it's a DVD of some sort
         extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       else
-	      # it's a file
+	    check_for_ffmpeg_installed
+	    # it's a file
         # check if it has a start offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/

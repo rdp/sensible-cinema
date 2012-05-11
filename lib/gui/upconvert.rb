@@ -199,12 +199,14 @@ module SensibleSwing
       @generate_images.tool_tip = "This creates a folder with images upconverted from some DVD or file, so you can tweak settings and compare." # TODO more tooltips
 
       @generate_screen_cast = new_jbutton("Test current configuration by watching video file and recording screen") do
-        popup = warn_if_no_upconvert_options_currently_selected
+        check_for_ffmpeg_installed
+		popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         output_dir = get_same_drive_friendly_clean_temp_dir 'temp_screencast_dir'
         thread1 = play_smplayer_edl_non_blocking [filename_mpg, nil], [" -ss 2:44 -endpos 11"]
         # screen capture for 10s
         fps_to_grab = 5
+		
         thread2 = Thread.new {  c = %!ffmpeg -f dshow -i video="screen-capture-recorder" -r #{fps_to_grab} -vframes #{fps_to_grab*10} -y #{File.strip_drive_windows(output_dir)}/%d.png!; system_blocking c }
         thread2.join
         show_blocking_message_dialog "ffmpeg done, close mplayer now!"
