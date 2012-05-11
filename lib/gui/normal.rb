@@ -76,12 +76,12 @@ module SensibleSwing
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
       
- 	    new_jbutton("Create new Edit Decision List for a DVD or File that doesn't have one") do
+ 	    new_jbutton("Create new Edit Decision List for a DVD or File that doesn't have one yet") do
 	      window = new_child_window
           window.setup_create_buttons
 	    end
 		
-        @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
+        @upload = new_jbutton("Feedback/questions welcome!") # keeps this one last! :)
         @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
         @upload.on_clicked {
 		      show_blocking_message_dialog "ok, next it will open up the groups page now or optionally an email you could send"
