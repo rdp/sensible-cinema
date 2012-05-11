@@ -62,11 +62,15 @@ if OS.windows?
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
   
-  installed_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
+  def add_smplayer_paths
+    discovered_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
 
-  for folder in installed_smplayer_folders
-    ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+    for folder in discovered_smplayer_folders
+      ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+    end
   end
+  
+  add_smplayer_paths
 
 else
   # handled in check_mac_installed.rb file

@@ -17,7 +17,7 @@ module SensibleSwing
     def force_accept_file_style_license
        if !(LocalStorage['accepted_legal_copys'] == VERSION)
         require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
-            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file.'
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept the documentation/is_it_legal_to_copy_dvds.txt file.'
         LocalStorage['accepted_legal_copys'] = VERSION
       end
     end
@@ -115,10 +115,11 @@ module SensibleSwing
 		      save_to_file =  "#{save_to_dir}/smplayer-0.6.9-win32.exe"
     		  puts "downloading smplayer.exe [14MB] to #{save_to_file}"
           MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
-		      show_blocking_message_dialog "Run this file to install it (ok to reveal): smplayer-0.6.9-win32.exe"
+		      show_blocking_message_dialog "Run this file to install it now (click ok to reveal): smplayer-0.6.9-win32.exe"
     		  show_in_explorer save_to_file
           sleep 2
 		      show_blocking_message_dialog "hit ok after smplayer is installed:"
+			  add_smplayer_paths # load it onto the PATH now
         end
       end
     end
