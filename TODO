@@ -138,7 +138,9 @@ several times over, really)
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
-
+  allow for "special filters" (brightening,etc.) per film
+    and per time, to be applied to the movie between a certain time frame, then reverted back to original.
+	add this to the "overlay" thing...and you have instant star wars despecialized options!
   fix mplayer "skipping" at chapter breaks
   fix vlc "skipping" at chapter breaks
   @VLC: TMNT broken seeks
