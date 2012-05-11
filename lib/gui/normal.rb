@@ -76,9 +76,9 @@ module SensibleSwing
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
       
- 	    new_jbutton("Create new Edit Decision List") do
+ 	    new_jbutton("Create new Edit Decision List for a DVD or File that doesn't have one") do
 	      window = new_child_window
-        window.setup_create_buttons
+          window.setup_create_buttons
 	    end
 		
         @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
