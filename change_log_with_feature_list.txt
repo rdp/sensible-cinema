@@ -1,3 +1,6 @@
+
+Youtube EDL new URL: http://cleaneditingmovieplayer.inet2.org/youtube_edl/yo?mute_start=2&mute_end=7&skip_start=10&skip_end=20&youtube_video_id=ylLzyHk54Z0
+
 0.37.0 5/1/12
 
 fix some verbiage, attempt to remove file modification code to come more in line with the CopyRight act.
