@@ -183,12 +183,16 @@ module SensibleSwing
 	    LocalStorage['have_zoom_button'] = false
 	  end
 	  # TODO break these out into create mode prefs versus human [?]
-      if JOptionPane.show_select_buttons_prompt("Would you like to enable obscure options, like using keyboard shortcuts to create EDL files on the fly, or creating euphemized .srt files (you probably don't)?") == :yes
+      if JOptionPane.show_select_buttons_prompt("Would you like to enable some obscure options, like
+ Using keyboard shortcuts to create EDL files on the fly, or 
+ Prompting to create euphemized .srt files, or
+ Being able to add your own 'profanity words' specific to different videos?
+ (Most users answer no to this).", :yes => 'No', :no => 'Yes') == :no
         LocalStorage['prompt_obscure_options'] = true
       else
 	    LocalStorage['prompt_obscure_options'] = false
 	  end
-	  if JOptionPane.show_select_buttons_prompt("Would you like to enable upconversion [i.e. make playback prettier, but takes more cpu?]") == :yes
+	  if JOptionPane.show_select_buttons_prompt("Would you like to enable upconversion [i.e. make playback prettier, requires more cpu?]") == :yes
 	    setup_dvd_upconvert_options
 	  else
 	    reset_upconversion_options
