@@ -190,8 +190,7 @@ module SubtitleProfanityFinder
 	  'cker' => 'cock......',
     }
     
-    bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
-
+	
     semi_bad_profanities = {}
     ['moron', 'breast', 'idiot', 
       'sex', 'genital', 
@@ -217,6 +216,8 @@ module SubtitleProfanityFinder
     semi_bad_profanities['crap'] = ['crap', :full_word]
     semi_bad_profanities['butt'] = ['butt', :full_word]
     # butter?
+	
+    semi_bad_profanities.merge! extra_profanity_hash
 
     all_profanity_combinationss = [convert_to_regexps(bad_profanities)]
     if include_minor_profanities
