@@ -19,6 +19,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
     determine its timing relative to DVD...
   
   JPFA genealogy collab wiki--maybe on church's wiki site?
+  'finish' rename: sourceforge, github, all docu, links
   a dialog for accepting "more profanities" when parsing subtitles
   my mplayer patches re-do
   OS X netflix instant
@@ -27,6 +28,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   mplayer re-read config file each frame
   don't download ffmpeg till needed
   move documentation to online [all]
+   combine README with the online docu...DRY that up...
   one 7zip feature
   "downloading" message needs to go to GUI, have a "human name" per file
   mac: double check mplayer-edl version (when I need to, if ever)

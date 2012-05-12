@@ -1,17 +1,15 @@
-This is a README description for the Sensible Cinema edited movie playback portion of the player
-for its other aspects like upconverting DVD/Netflix Instant please see 
-http://rogerdpack.t28.net/sensible-cinema for descriptions.
+This is a README description for the Clean Editing Movie Player
 
 For installation/download instructions, see http://rogerdpack.t28.net/sensible-cinema
 
 ===
 
-Sensible-cinema allows you to apply pre-programmed edit lists
-(e.g. Edit Decision Lists [2]) to the DVD's you own.  
+CEM Player allows you to use pre-programmed edit lists
+(e.g. Edit Decision Lists [2]) to DVD's that you own.  
 I.e. you can edit a DVD to "mute out" or skip certain scenes, deemed objectionable.
-This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
+This allows you to sit back and relax as you watch a more "sanitized" showing of your DVD.
 
-It is currently in alpha/beta, and is free (probably forever, as it is gplv3 currently).
+It is currently in alpha/beta, and is free (probably both forever, as it is gplv3 currently).
 It also includes a library of EDL's that go along with various DVD's.  We need volunteers/contributors
 to help it grow!
 
@@ -21,22 +19,12 @@ It will pop up some windows where you choose what to do.
 Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
 and not from github's "download" button.  See the "install" section, below, for fine-grained install details.
 
-Sensible cinema basically allows you to either create an edited video version of the DVD, onto your hard drive, 
-and watch it there, or to playback a DVD or file (edited) via the use of EDL playback in some
-pre-existing popular video players.
-
-How? Sensible cinema basically takes the original DVD, slices out the bad parts, then combines it back
-into a new file and gives you the result.
-It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
-a few freely available open source programs [3] to accomplish the editing for you.
-Note that the process can take several hours, so budget some time for it.
-
-It also has a few "realtime viewing" options available, based on some freely available
-open source popular video players [3].  These don't have any startup time to wait at all.
+CEM Player has a few "realtime viewing" options available, based on some freely available
+open source popular video players [3].
 
 On a more moral note, just because an edited video lacks profanity/sex scenes...does not 
 automatically make it a wholesome experience.
-Sensible cinema does not a clean movie make of a dirty one, even without profanity.  
+CEM Player does not necessarily "a clean movie make of a dirty one" even if it can cut profanity.  
 Don't watch it if it's not uplifting! Be nice to yourself!
 
 dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].
@@ -236,9 +224,9 @@ See the file documentation/troubleshooting.txt, or contact (see the feedback/dev
 Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
 The combination of these tools made programming this actually something of a pleasure, 
 and a breeze cross platform.
-Sensible Cinema leverages code from lots of other projects (see LICENSE.TXT)--many thanks to 
+CEM Player leverages code from lots of other projects (see LICENSE.TXT)--many thanks to 
 the authors and maintainers of said libraries, and anybody else I forgot to mention.
-Sensible Cinema is a conglomeration of the good ideas from several people who contacted me
+CEM Player also includes a conglomeration of the good ideas from several people who contacted me
 over time.  Thanks for your contributions.
 
 == Competition/re-use of files ==
