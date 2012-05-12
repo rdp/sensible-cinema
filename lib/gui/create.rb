@@ -497,8 +497,8 @@ module SensibleSwing
 "dvd_title_track_start_offset" => "#{hashes['dvd_start_offset']}",
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
+		
       filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
-      filename.downcase!
       if File.exist?(filename)
 	      show_blocking_message_dialog 'don\'t want to overwrite a file in the edit dir that already has same name, opening it instead...'
 	    else

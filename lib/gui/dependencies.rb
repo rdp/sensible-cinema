@@ -188,7 +188,7 @@ module SensibleSwing
       else
 	    LocalStorage['prompt_obscure_options'] = false
 	  end
-	  if JOptionPane.show_select_buttons_promt "Would you like to enable upconversion [i.e. make playback prettier, but takes more cpu?]" == :yes
+	  if JOptionPane.show_select_buttons_prompt("Would you like to enable upconversion [i.e. make playback prettier, but takes more cpu?]") == :yes
 	    setup_dvd_upconvert_options
 	  else
 	    reset_upconversion_options
