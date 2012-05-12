@@ -61,7 +61,7 @@ module SensibleSwing
         end
       }
       
-      @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity timestamps automatically" )
+      @parse_srt = new_jbutton("Scan a subtitle file to detect profanity timestamps automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
         Basically download it from opensubtitles.org 
@@ -92,7 +92,7 @@ module SensibleSwing
         add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
         euphemized_entries = euphemized_filename = nil
-        with_autoclose_message("parsing srt file... #{srt_filename}") do
+        with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
           parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
           write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.subtitles.srt.txt'), euphemized_entries
         end
@@ -109,9 +109,9 @@ module SensibleSwing
       	  bring_to_front
 
           all_entries = euphemized_entries # rename :)
-          
-          start_text = all_entries[0].single_line_text
-          start_srt_time = all_entries[0].beginning_time
+          start_entry = all_entries[0]
+          start_text = start_entry.single_line_text
+          start_srt_time = start_entry.beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
           start_movie_sig = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})", start_text)
           start_movie_time = EdlParser.translate_string_to_seconds start_movie_sig
@@ -123,8 +123,8 @@ module SensibleSwing
           end_text = end_entry.single_line_text
           end_srt_time = end_entry.beginning_time
           human_end = EdlParser.translate_time_to_human_readable(end_srt_time)
-          end_movie_ts = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.", end_text) 
-		  end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
+          end_movie_sig = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.", end_text) 
+		  end_movie_time = EdlParser.translate_string_to_seconds end_movie_sig
         else
           # the case they know it already matches
 	  start_srt_time = 0
@@ -134,16 +134,24 @@ module SensibleSwing
     	end
 
         parsed_profanities, euphemized_synchronized_entries = nil
-        with_autoclose_message("parsing srt file... #{srt_filename}") do
-          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+		extra_profanity_hash = {}
+		if LocalStorage['prompt_obscure_options']
+		  for entry in get_user_input_with_persistence("enter any 'extra' words to search for, like badword1,badword2 if any", srt_filename).split(',')
+		    extra_profanity_hash[entry] = entry
+		  end
+		end
+        with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
         filename = get_temp_file_name('partial.edl.txt')
         out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
-        out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
-               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
+        if end_srt_time != 3000
+		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
+               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],!
+	    end
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try a different other .srt file"
+        show_non_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
         File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open
