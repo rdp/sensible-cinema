@@ -1,6 +1,8 @@
+0.38.0
 
-Clarify some verbiage/cache more for subtitles.
 New project name "Clean Editing Movie Player" woot.
+
+Clarify some verbiage/cache better/more sanely for subtitles.  Update documentation to match new style more.
 
 Youtube EDL new URL: http://cleaneditingmovieplayer.inet2.org/youtube_edl/yo?mute_start=2&mute_end=7&skip_start=10&skip_end=20&youtube_video_id=ylLzyHk54Z0
 

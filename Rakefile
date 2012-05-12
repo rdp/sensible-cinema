@@ -5,7 +5,7 @@ require 'os' # gem
 ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem hackaround...
 
 Jeweler::Tasks.new do |s|
-    s.name = "sensible-cinema"
+    s.name = "content-editing-movie-player"
     s.summary = "an EDL scene-skipper/bleeper that works with DVD's and files and online players like netflix instant"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
@@ -22,7 +22,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'plist' # for mac
     s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics...
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
-    s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
+    s.files.exclude '**/*.exe', '**/*.wav', '**/images/*', 'vendor/*'
     s.add_development_dependency 'hitimes' # now jruby compat!
     s.add_development_dependency 'rspec', '> 2'
     s.add_development_dependency 'jeweler'
@@ -79,9 +79,13 @@ task 'clear_and_copy_vendor_cache' do
    }
 end
 
+def read_spec
+ eval File.read('content-editing-movie-player.gemspec')
+end
+
 desc 'collect binary and gem deps for distribution'
 task 'rebundle_copy_in_dependencies' => 'gemspec' do
-   spec = eval File.read('sensible-cinema.gemspec')
+   spec = read_spec
    dependencies = spec.runtime_dependencies
    dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
    FileUtils.mkdir_p 'vendor/cache'
@@ -96,8 +100,8 @@ desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
   raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
   require 'fileutils'
-  spec = eval File.read('sensible-cinema.gemspec')
-  dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
+  spec = read_spec
+  dir_out = spec.name + "-" + spec.version.version + '/cem-player'
   old_glob = spec.name + '-*'
   FileUtils.rm_rf Dir[old_glob] # remove any old versions' distro files
   raise 'unable to delete...' if Dir[old_glob].length > 0
@@ -125,7 +129,7 @@ end
 
 desc 'create *.zip,tgz'
 task 'zip' do
-  name = 'sensible-cinema-' + cur_ver
+  name = 'cem-player-' + cur_ver
   raise 'doesnt exist yet to zip?' unless File.directory? name
   if OS.doze?
     raise 'please distro from linux only so we can get mac distros too'
@@ -156,7 +160,7 @@ task 'deploy' do
   p 'creating sf dir'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
   for suffix in [ '.zip', '.mac-os-x.tgz']
-    name = 'sensible-cinema-' + cur_ver + suffix
+    name = 'cem-player-' + cur_ver + suffix
     if File.exist? name
       p 'copying to ilab ' + name
       sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
@@ -172,7 +176,7 @@ end
 # task 'gem_release' do
 #   FileUtils.rm_rf 'pkg'
 #   Rake::Task["build"].execute
-#   sys("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
+#   sys("#{Gem.ruby} -S gem push pkg/content-editing-movie-player-#{cur_ver}.gem")
 #   FileUtils.rm_rf 'pkg'
 # end
 
