@@ -1,3 +1,8 @@
+0.37.0 5/1/12
+
+fix some verbiage, attempt to remove file modification code to come more in line with the CopyRight act.
+Fix some install quirks.  Faster now, hopefully :P
+
 0.36.1
 
 fix downloads to be more robust.
