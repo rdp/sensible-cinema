@@ -11,35 +11,25 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
-  'finish' mplayer previous patches
+  'finish' mplayer previous patches re-do
+  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing
   LLC
   netflix instant descriptor work at all
-    it may need the "50% adjuster" fella...
-    determine its timing relative to DVD...
+    it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
   
   JPFA genealogy collab wiki--maybe on church's wiki site?
-  'finish' rename: sourceforge, github, all docu, some links
-  a dialog for accepting "more profanities" when parsing subtitles
-  my mplayer patches re-do
-  OS X netflix instant
-    mac'ify Mouse
-  add default preference "turn on upconversion?" :)
-  mplayer re-read config file each frame
-  don't download ffmpeg till needed
+  'finish' rename: sourceforge, github, all docu, some links, package filenames
+  mplayer re-read config file each frame, maybe track mtime? hmm...
   move documentation to online [all]
-   combine README with the online docu...DRY that up...
-  one 7zip feature
-  "downloading" message needs to go to GUI, have a "human name" per file
-  mac: double check mplayer-edl version (when I need to, if ever)
+   combine README with the online docu...DRY that stuff up...
+  add one 7zip feature
   either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
     Maybe after mplayer accepts my patches?
   upload movie of "controlling utube, and also for full length film"
-  umplayer for mac/use it, mplayer shucks!
   our new DVD's that we own
   princess bride EDL
   watch Gottman
   parser misses first subtitle entry?
-  the "add on" type EDL
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
     broken scanning hp2 init's
@@ -60,14 +50,11 @@ use opensub hash
     readme be helpful for subtitles [?]
       better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
     guide them through process more/subtitles
-    split pc/mac for understandability :P
-    instructions on how to continue after creation
+    split pc/mac distros for understandability :P
     instructions on how to actually use opensubtitles LOL
-  dvd_start_offset -> dvd_mpeg_start_offset
   my treasury (john newspaper thing)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
   user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?]
-  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing
   learn clojure
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
@@ -75,7 +62,6 @@ use opensub hash
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   ffplay diagonal bug reproduce/file
   create skype/google+ hangouts auto-easy-recorder windows
-  the php uploader thing :P
   ask for more beta testers for use, ask for more beta testers for creation, too
   can edit books' text too.
     +- list/publish potter
@@ -84,10 +70,17 @@ use opensub hash
   @ffmpeg: you can't convert mkv's of this creation type!
   fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
     also fix it to "just output the right time" for mplayer sake?
-  @docu: imprecise dvd "end points"
+  @docu: imprecise dvd "end seek points"
   
 == decide later to move up or down ==
-  @VLc: toying with the truth fails
+  OS X netflix instant
+    mac'ify Mouse
+  the "add on" type EDL
+  dvd_start_offset -> dvd_mpeg_start_offset
+  mac: double check mplayer-edl version (when I need to, if ever)
+  umplayer for mac/use it, mplayer shucks!
+  "downloading" message needs to go to GUI, have a "human name" per file
+  @VLC: toying with the truth fails
   ffmpeg: joining split files failed [go back in time...] also keyint failed?
   VLC resume/window position et al
   VLC can skip over poor parts
