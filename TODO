@@ -12,7 +12,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
 
 == yes do, un-ordered currently, from all the various future release options ==
   'finish' mplayer previous patches re-do
-  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing
+  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
   LLC
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
@@ -20,6 +20,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   JPFA genealogy collab wiki--maybe on church's wiki site?
   'finish' rename: sourceforge, github, all docu, some links, package filenames
   mplayer re-read config file each frame, maybe track mtime? hmm...
+  ffmpeg dshow crossbar, @todo: test if it should use a "drop all" option
   move documentation to online [all]
    combine README with the online docu...DRY that stuff up...
   add one 7zip feature
