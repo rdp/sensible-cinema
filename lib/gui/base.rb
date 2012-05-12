@@ -563,7 +563,12 @@ KP_ENTER dvdnav select
     end
     
     java_import javax.swing.UIManager
-    
+
+	def get_user_input_with_persistence(message, storage_key)
+	  got = get_user_input(message, LocalStorage[storage_key])
+      LocalStorage[storage_key] = got
+	  got
+	end
     def get_user_input(message, default = '', cancel_ok = false)
       SwingHelpers.get_user_input message, default, cancel_ok
     end

@@ -185,8 +185,8 @@ module SubtitleProfanityFinder
        'i' + 't' => 'sh..',
       'cu' +
       'nt' => 'c...',
-      'cock'
-	  + 'su' + 
+      'cock' +
+	  'su' + 
 	  'cker' => 'cock......',
     }
     

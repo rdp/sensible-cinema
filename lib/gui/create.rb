@@ -113,9 +113,8 @@ module SensibleSwing
           start_text = all_entries[0].single_line_text
           start_srt_time = all_entries[0].beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
-          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})", @start_movie_remember)
-          @start_movie_remember = start_movie_ts
-          start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
+          start_movie_sig = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})", start_text)
+          start_movie_time = EdlParser.translate_string_to_seconds start_movie_sig
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end can be a spoiler at times]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
           else
@@ -123,11 +122,11 @@ module SensibleSwing
           end
           end_text = end_entry.single_line_text
           end_srt_time = end_entry.beginning_time
-          human_end  = EdlParser.translate_time_to_human_readable(end_srt_time)
-          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.")
-          end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
+          human_end = EdlParser.translate_time_to_human_readable(end_srt_time)
+          end_movie_ts = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.", end_text) 
+		  end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
         else
-          # the case they know it matches
+          # the case they know it already matches
 	  start_srt_time = 0
           start_movie_time = 0
           end_srt_time = 3000
