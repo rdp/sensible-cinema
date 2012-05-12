@@ -5,19 +5,19 @@ For installation/download instructions, see http://rogerdpack.t28.net/sensible-c
 ===
 
 CEM Player allows you to use pre-programmed edit lists
-(e.g. Edit Decision Lists [2]) to DVD's that you own.  
-I.e. you can edit a DVD to "mute out" or skip certain scenes, deemed objectionable.
+(e.g. Edit Decision Lists [2]) to watch movies that you own.  
+I.e. you can watch a DVD while "muting out" or skip certain scenes, deemed objectionable.
 This allows you to sit back and relax as you watch a more "sanitized" showing of your DVD.
 
-It is currently in alpha/beta, and is free (probably both forever, as it is gplv3 currently).
+It is currently in alpha/beta, and is free (probably both forever, gplv3 license currently).
 It also includes a library of EDL's that go along with various DVD's.  We need volunteers/contributors
 to help it grow!
 
 To use, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
-It will pop up some windows where you choose what to do.
+It will pop up some windows where you choose what to do (watch edited, create a new EDL file, etc.).
 
 Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
-and not from github's "download" button.  See the "install" section, below, for fine-grained install details.
+and not from github's "download" button.
 
 CEM Player has a few "realtime viewing" options available, based on some freely available
 open source popular video players [3].
@@ -31,8 +31,6 @@ dove.org and common sense media are good references for discovering the "uplifti
 kids-in-mind.com is also a good reference for profanity levels, though sometimes it misses profanities,
 and it also lacks timestamps to know when the profanities occur, and doesn't allow for community
 contribution.  Hence this project existing.
-Also note that even if you happen to have an edited copy of a DVD floating around, if you have kids, chances are they
-will eventually find (and watch) the unedited originals, so be careful there.
 
 That being said, some videos are quite enjoyable once you strip out profanity/questionable content.
 It's your call.
@@ -55,23 +53,11 @@ Sometimes the movie you want doesn't have an EDL (edit list) available for it ye
 Not to worry, you can create your own!
 See https://github.com/rdp/sensible-cinema/wiki/How-to-create-your-own-EDL's
 
-== Creating an edited DVD ==
-
-See also is_it_legal_to_copy_dvds.txt for some caveats you should understand first.
-I don't actually know how to do this I've never burned a video DVD.
-Windows DVD Maker might help, http://www.dvdflick.net might help.
-iDVD might help on mac.
-DO NOT MAKE ILLEGAL COPIES OF DVD's for your country. See also is_it_legal_to_copy_dvds.txt.
-DO NOT DISTRIBUTE EDITED DVD's.
-Watching movies edited may be legal in the US via the Family Protection Act.
-
-
 == Feedback/Contributing to Development ==
 
 Feedback, including feature requests, comments, etc. all welcome:
 
-Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to 
-sensible-cinema@googlegroups.com or rogerdpack@gmail.com
+See website: http://cleaneditingmovieplayet.inet2.org contact section
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
 See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or
@@ -94,7 +80,7 @@ A. One way is to plug your computer into your TV.
   Another good option is to purchase and use a clearplay player, with accompanying subscription.
   
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original, non-edited DVD and then email them a link to sensible-cinema's website :)
+A. Give them the original, non-edited DVD and then give them a link to sensible-cinema's website :)
 
 Q. Can I use this with Windows Media Center?
 A. Yes, just use some WMC plugin that allows you to "call out" to a 3rd party software to play your files.
