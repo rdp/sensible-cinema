@@ -5,13 +5,13 @@ require 'os' # gem
 ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem hackaround...
 
 Jeweler::Tasks.new do |s|
-    s.name = "content-editing-movie-player"
+    s.name = "clean-editing-movie-player"
     s.summary = "an EDL scene-skipper/bleeper that works with DVD's and files and online players like netflix instant"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
     
-    # IF CHANGED PUBLISH NEW GEM [and delete pkg] :)
+    # IF CHANGED PUBLISH NEW GEM [and delete pkg dir] :)
     s.add_dependency 'os', '>= 0.9.4'
     s.add_dependency 'sane', '>= 0.25.4'
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
@@ -80,7 +80,7 @@ task 'clear_and_copy_vendor_cache' do
 end
 
 def read_spec
- eval File.read('content-editing-movie-player.gemspec')
+ eval File.read('clean-editing-movie-player.gemspec')
 end
 
 desc 'collect binary and gem deps for distribution'
@@ -101,7 +101,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = read_spec
-  dir_out = spec.name + "-" + spec.version.version + '/cem-player'
+  dir_out = spec.name + "-" + spec.version.version + '/clean-editing-movie-player'
   old_glob = spec.name + '-*'
   FileUtils.rm_rf Dir[old_glob] # remove any old versions' distro files
   raise 'unable to delete...' if Dir[old_glob].length > 0
@@ -129,7 +129,7 @@ end
 
 desc 'create *.zip,tgz'
 task 'zip' do
-  name = 'cem-player-' + cur_ver
+  name = 'clean-edtiting-movie-player-' + cur_ver
   raise 'doesnt exist yet to zip?' unless File.directory? name
   if OS.doze?
     raise 'please distro from linux only so we can get mac distros too'
@@ -160,7 +160,7 @@ task 'deploy' do
   p 'creating sf dir'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
   for suffix in [ '.zip', '.mac-os-x.tgz']
-    name = 'cem-player-' + cur_ver + suffix
+    name = 'clean-editing-movie-player-' + cur_ver + suffix
     if File.exist? name
       p 'copying to ilab ' + name
       sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
@@ -176,7 +176,7 @@ end
 # task 'gem_release' do
 #   FileUtils.rm_rf 'pkg'
 #   Rake::Task["build"].execute
-#   sys("#{Gem.ruby} -S gem push pkg/content-editing-movie-player-#{cur_ver}.gem")
+#   sys("#{Gem.ruby} -S gem push pkg/sensible-cinema-#{cur_ver}.gem")
 #   FileUtils.rm_rf 'pkg'
 # end
 
