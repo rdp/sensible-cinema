@@ -2,7 +2,7 @@ require 'rubygems'
 require 'os'
 success = true
 
-ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # macports' bin in first
+ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # put macports' bin in first
 
 module CheckInstalledMac
 
