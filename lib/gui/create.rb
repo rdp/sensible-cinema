@@ -144,7 +144,7 @@ module SensibleSwing
           parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
-        filename = get_temp_file_name('partial.edl.txt')
+        filename = get_temp_file_name('mutex.edl.txt')
         out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
         if end_srt_time != 3000
 		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
@@ -498,7 +498,7 @@ module SensibleSwing
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
 		
-      filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
+      filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.edl.txt'
       if File.exist?(filename)
 	      show_blocking_message_dialog 'don\'t want to overwrite a file in the edit dir that already has same name, opening it instead...'
 	    else
@@ -547,8 +547,8 @@ module SensibleSwing
           extra_options['url'] = url
         end
         english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
-        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.txt'
-        display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
+        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.edl.txt'
+        display_and_raise "probably needs .txt extension?" unless filename =~ /\.txt$/i
         
         output = <<-EOL
 # edl_version_version 1.1, created by sensible cinema v#{VERSION}
