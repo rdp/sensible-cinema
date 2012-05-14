@@ -1,3 +1,6 @@
+
+# open subtitles' hasher/MPC-HC
+
 module MovieHasher
 
   CHUNK_SIZE = 64 * 1024 # in bytes
