@@ -345,7 +345,6 @@ KP_ENTER dvdnav select
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
       mplayer_to_use = LocalModifiedMplayer  
@@ -411,7 +410,8 @@ KP_ENTER dvdnav select
     end
 
     if OS.doze? # avoids spaces in filenames :)
-      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '\\mplayer.edl' # stay 8.3 friendly :)
+      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '/mplayer.edl' # stay 8.3 friendly :)
+	  p 'got' + EdlTempFile
     else
       raise if Dir.tmpdir =~ / / # that would be unexpected, and possibly cause problems...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'

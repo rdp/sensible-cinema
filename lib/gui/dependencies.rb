@@ -130,7 +130,7 @@ module SensibleSwing
     
     def assert_ownership_dialog 
       force_accept_file_style_license
-      message = "Do you certify you own the DVD this came of and have it in your possession, if necessary in your legal jurisdiction?"
+      message = "Do you certify you own the DVD this came of and have it in your possession, if necessary?"
       title = "Verify ownership"
       returned = JOptionPane.show_select_buttons_prompt(message, {:yes => "no", :no => "yes"})
       assert_confirmed_dialog returned, nil
