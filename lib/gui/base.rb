@@ -91,8 +91,8 @@ module SensibleSwing
     include SwingHelpers # work-around?
     
     def initialize start_visible = true, args = ARGV # lodo not optionals
-      super "Sensible-Cinema #{VERSION} (GPL)"
-	    @args = args # save them away so this works with sub-child-windows
+      super "Clean Editing Movie Player #{VERSION} (GPL)"
+	  @args = args # save them away so sub windows can "not have to use" ARGV
       force_accept_license_first # in other file :P
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
@@ -102,7 +102,7 @@ module SensibleSwing
       @starting_button_y = 40
       @button_width = 400      
       
-      add_text_line "Welcome to Sensible Cinema!"
+      add_text_line "Welcome to the Clean Editing Movie Player!"
       @starting_button_y += 10 # kinder ugly...
       add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
@@ -236,7 +236,8 @@ module SensibleSwing
 
     # basically run mplayer/smplayer on a file or DVD
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen, srt_filename
-      raise unless passed_in_extra_options # cannot be nil
+      puts "starting mplayer..."
+	  raise unless passed_in_extra_options # cannot be nil
       extra_options = []
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
@@ -410,8 +411,7 @@ KP_ENTER dvdnav select
     end
 
     if OS.doze? # avoids spaces in filenames :)
-      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '/mplayer.edl' # stay 8.3 friendly :)
-	  p 'got' + EdlTempFile
+      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '/mplayer.edl' # stay 8.3 friendly, guess we want forward slashes
     else
       raise if Dir.tmpdir =~ / / # that would be unexpected, and possibly cause problems...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
