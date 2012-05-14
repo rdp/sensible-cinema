@@ -463,7 +463,7 @@ module SensibleSwing
 	    hashes, title_lengths = get_disk_info # has a prompt
 	    volume = hashes['volume_name']
 	    default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
-      english_name = get_user_input("Enter a human readable DVD description for #{volume}", default_english_name)
+      english_name = get_user_input("Enter a human readable DVD descriptive name for #{volume}", default_english_name)
 
       # EDL versions:
 	    # nothing with disk_unique_id: probably dvd_start_offset 29.97
