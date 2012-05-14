@@ -1,14 +1,14 @@
 @echo Welcome to the Clean Editing Movie Player...
 @IF NOT EXIST clean-editing-movie-player\VENDOR\CACHE GOTO NOVENDORDIR
 @echo This window will display lots of debug output 
-@echo   (you can just ignore this window or minimize it, but have to leave it open)
+@echo   (you can just ignore this window or minimize it, but do have to leave it open)
 @setlocal
 @rem disable any local rubyopt settings, just in case...
 @set RUBYOPT=
 @rem check for java installed...we will be needing that :)
 @call java -version > NUL 2>&1 || echo need to install java JRE first please install it from java.com && pause && GOTO DONE
 
-@cd sensible-cinema
+@cd clean-editing-movie-player
 @call java -cp "./vendor/jruby-complete-1.6.2.jar" org.jruby.Main bin\sensible-cinema %* || echo ERROR. Please look for error message, above, and report back the error you see, or fix it && pause
 
 @rem taskkill /f /im mencoder.exe ???

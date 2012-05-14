@@ -103,8 +103,8 @@ module SensibleSwing
       @button_width = 400      
       
       add_text_line "Welcome to the Clean Editing Movie Player!"
-      @starting_button_y += 10 # kinder ugly...
-      add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
+      #@starting_button_y += 10 # kinder ugly...
+      #add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
       @callbacks_for_dvd_edl_present = []
