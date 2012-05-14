@@ -246,6 +246,9 @@ module SensibleSwing
       extra_options << "-mc 2"
       extra_options << "-autosync 30" 
 
+	  # larger max volume, like VLC :)
+	  extra_options << "-softvol -softvol-max 250"
+	  
       if we_are_in_create_mode
         extra_options << "-osdlevel 2"
         extra_options << "-osd-verbose" if we_are_in_developer_mode?		
