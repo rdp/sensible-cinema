@@ -206,12 +206,12 @@ module SensibleSwing
         play_dvd_smplayer_unedited false
       }
 
-      add_text_line "Less commonly used Edit options:"
-
-      new_jbutton("Create new Edit List (for netflix instant or local file)") do # LODO VIDEO_TS here too?
-	    create_new_for_file_or_netflix
+      new_jbutton("Create new Edit List (for netflix instant or for a local file)") do # LODO VIDEO_TS here too?
+	create_new_for_file_or_netflix
       end
       
+      add_text_line "Less commonly used Edit options:"
+
       new_jbutton("Show more (rarely used) buttons/options") do
         child = new_child_window
         child.show_rarely_used_buttons
@@ -525,7 +525,7 @@ module SensibleSwing
     end
 	
     def create_new_for_file_or_netflix
-	    names = ['movie file', 'netflix instant']
+	names = ['movie file', 'netflix instant']
         dialog = DropDownSelector.new(self, names, "Select type")
         type = dialog.go_selected_value
         extra_options = {}
@@ -546,7 +546,7 @@ module SensibleSwing
           end
           extra_options['url'] = url
         end
-        english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
+        english_name = get_user_input "Enter descriptive name for movie", guess_name.gsub(/[-._]/, ' ')
         filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.edl.txt'
         display_and_raise "probably needs .txt extension?" unless filename =~ /\.txt$/i
         
