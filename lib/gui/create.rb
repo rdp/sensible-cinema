@@ -208,7 +208,7 @@ module SensibleSwing
 
       add_text_line "Less commonly used Edit options:"
 
-      new_jbutton("Create new Edit List (for netflix instant or movie file)") do # LODO VIDEO_TS here too?
+      new_jbutton("Create new Edit List (for netflix instant or local file)") do # LODO VIDEO_TS here too?
 	    create_new_for_file_or_netflix
       end
       
