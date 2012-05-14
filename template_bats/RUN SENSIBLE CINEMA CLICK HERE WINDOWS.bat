@@ -1,5 +1,5 @@
-@echo Welcome to Sensible Cinema...
-@IF NOT EXIST sensible-cinema\VENDOR\CACHE GOTO NOVENDORDIR
+@echo Welcome to the Clean Editing Movie Player...
+@IF NOT EXIST clean-editing-movie-player\VENDOR\CACHE GOTO NOVENDORDIR
 @echo This window will display lots of debug output 
 @echo   (you can just ignore this window or minimize it, but have to leave it open)
 @setlocal
@@ -16,7 +16,7 @@
 GOTO DONE
 
 :NOVENDORDIR
-@echo "it appears you downloaded sensible cinema straight from github--please download it instead fromhttps://sourceforge.net/projects/sensible-cinema/files/ for it to work properly"
+@echo "it appears you downloaded sensible cinema straight from github--please download it instead from https://sourceforge.net/projects/sensible-cinema/files/ for it to work properly"
 @pause
 @start https://sourceforge.net/projects/sensible-cinema/files
 

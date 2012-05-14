@@ -14,7 +14,7 @@ module SensibleSwing
       EdlParser.on_any_file_changed_single_cached_thread { DriveInfo.notify_all_drive_blocks_that_change_has_occured }
 	  
 	    add_text_line 'Normal playback Options:'
-      new_jbutton("Display Standard Playback Options") do
+      new_jbutton("Display Normal Playback Options") do
         window = new_child_window
         window.setup_normal_buttons
       end
