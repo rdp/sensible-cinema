@@ -11,7 +11,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
-  CAPTUREBLT speedz
   'finish' mplayer previous patches re-do
   ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
   LLC
@@ -21,10 +20,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   JPFA genealogy collab wiki--maybe on church's wiki site?
   'finish' rename: sourceforge, github, all docu, some links, package filenames work
   mplayer re-read config file each frame, maybe track mtime? hmm...
-  ffmpeg dshow crossbar, @todo: test if it should use a "drop all" option
+  ffmpeg dshow crossbar
   move documentation to online [all]
    combine README with the online docu...DRY that stuff up...
-  add one 7zip feature
+  add the one 7zip feature
   either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
     Maybe after mplayer accepts my patches?
   upload movie of "controlling utube, and also for full length film"
@@ -46,8 +45,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   DVD timing for makemkv forum:Snow White
   google search for them goblet of fire en 1cd subtitles "srt file" 
   source_location hackz for ri_for
-use opensub hash  
-  authorize.net SIM :)
+  authorize.net SIM patch :)
   melissa stuff:
     readme be helpful for subtitles [?]
       better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
@@ -56,7 +54,8 @@ use opensub hash
     instructions on how to actually use opensubtitles LOL
   my treasury (john newspaper thing)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
-  user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?]
+  user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?] might be nice for slow computers
+  debug slow mplayer mute on old comps
   learn clojure
   send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
