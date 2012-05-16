@@ -13,8 +13,7 @@ To see instructions to create new edit lists, go to https://github.com/rdp/sensi
 
 == Contact ==
 
-contact: http://groups.google.com/group/sensible-cinema
-or email to sensible-cinema@googlegroups.com
+See links bottom of http://cleaneditingmovieplayer.inet2.org
 
 == Troubleshooting ==
 

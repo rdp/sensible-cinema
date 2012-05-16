@@ -80,10 +80,8 @@ Watching movies edited may be legal in the US via the Family Protection Act.
 
 == Feedback/Contributing to Development ==
 
-Feedback, including feature requests, comments, etc. all welcome:
+Feedback, including feature requests, comments, etc. all welcome, see contact links here: http://cleaneditingmovieplayer.inet2.org
 
-Mailing List: http://groups.google.com/group/sensible-cinema, or just mail to 
-sensible-cinema@googlegroups.com or rogerdpack@gmail.com
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
 See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or

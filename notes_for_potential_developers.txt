@@ -1,7 +1,7 @@
 A few notes for developers:
 
 If you have any feedback/feature requests, et al, post a github
-issue or post to the Mailing List: http://groups.google.com/group/sensible-cinema
+issue or post to the Mailing List: (see links bottom of http://cleaneditingmovieplayer.inet2.org/)
 
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 

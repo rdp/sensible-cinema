@@ -96,9 +96,8 @@ module SensibleSwing
         @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
         @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
         @upload.on_clicked {
-		      show_blocking_message_dialog "ok, next it will open up the groups page now or optionally an email you could send"
-          system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
-          system_non_blocking("start http://groups.google.com/group/sensible-cinema")
+		      show_blocking_message_dialog "ok, next it will open up the web page which has some contact links at the bottom"
+          system_non_blocking("start http://cleaneditingmovieplayer.inet2.org/")
         }
         increment_button_location
 
