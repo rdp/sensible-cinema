@@ -1,6 +1,12 @@
 So...is this legal?
 
-Unclear.  In general ripping home DVD's is legal.
+Sensible cinema no longer allows for "creating edited copies of movies"
+in an attempt to obey the Family Entertainment and Copyright Act (US).
+In other jurisdictions, consult a lawyer.
+
+Now for some thoughts on ripping DVD's in general:
+
+In general ripping home DVD's is legal.
 Note: do not redistribute or re-sell edited DVD's, that has been deemed illegal in the US.
 
 Note also that if you don't feel it is legal in your country, you can still use the timing info given 
@@ -15,18 +21,16 @@ fair use [3].  http://fanedit.org/49/ also lists some interesting copyright impl
 
 Sensible cinema doesn't include any ability to actually rip DVD's,
 and relies on you to use something else for that, to avoid liability.
-We choose a 
-"you have to do the ripping through some other means" philosophy, to avoid legal issues.
-You can ask the authors of the ripping programs you use if their software is legal.  Apparently
-libdvdcss (which some programs use) has never been legally challenged in court (or so the authors say), 
+Apparently libdvdcss (which some programs use to play DVD's) has never been legally challenged in court (or so the authors say), 
 and uses a slightly different algorithm than those that have, so the jury's still out there.
-It has apparently been challenged in French courts and apparently found legal so this may vary 
+It has apparently been challenged in French courts and apparently found legal rhis may vary 
 from country to country, as well [4].
 
-Using sensible-cinema "file mode" also might not be more unethical than ripping your DVD collection to your hard
-drive so you can "keep your DVD's all in one place" or what not (which might perhaps be deemed fair use), since it
-basically only saves parts from the original, concatenated.  Only original content is saved.  It just happens to be bits and
-pieces that don't have the profanity.
+Some releases include a prototype "MS DVD Navigator" type playback, which uses the legal
+installed DVD decoder filters on your Microsoft system (ex: 
+most version of windows 7 comes with a DVD decoder built-in), so ping me if you're interested in that option
+being used again.
+
 Note also that fair use at times does allow one to "record" things for personal use/backup (for example off the TV).
 Note also that sensible cinema does require the original DVD to be present when using it, to help enforce ownership,
 at least for watching it/using from within sensible cinema.  Certainly, do not rip DVD's if it's illegal to you.

@@ -1,50 +1,36 @@
-This is a README description for the Sensible Cinema edited movie playback portion of the player
-for its other aspects like upconverting DVD/Netflix Instant please see 
-http://rogerdpack.t28.net/sensible-cinema for descriptions.
+This is a README description for the Clean Editing Movie Player
 
 For installation/download instructions, see http://rogerdpack.t28.net/sensible-cinema
 
 ===
 
-Sensible-cinema allows you to apply pre-programmed edit lists
-(e.g. Edit Decision Lists [2]) to the DVD's you own.  
-I.e. you can edit a DVD to "mute out" or skip certain scenes, deemed objectionable.
-This allows you to sit back and relax as you watch a more "sensiblized" showing of your DVD.
+CEM Player allows you to use pre-programmed edit lists
+(e.g. Edit Decision Lists [2]) to watch movies that you own.  
+I.e. you can watch a DVD while "muting out" or skip certain scenes, deemed objectionable.
+This allows you to sit back and relax as you watch a more "sanitized" showing of your DVD.
 
-It is currently in alpha/beta, and is free (probably forever, as it is gplv3 currently).
+It is currently in alpha/beta, and is free (probably both forever, gplv3 license currently).
 It also includes a library of EDL's that go along with various DVD's.  We need volunteers/contributors
 to help it grow!
 
 To use, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
-It will pop up some windows where you choose what to do.
+It will pop up some windows where you choose what to do (watch edited, create a new EDL file, etc.).
 
 Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
-and not from github's "download" button.  See the "install" section, below, for fine-grained install details.
+and not from github's "download" button.
 
-Sensible cinema basically allows you to either create an edited video version of the DVD, onto your hard drive, 
-and watch it there, or to playback a DVD or file (edited) via the use of EDL playback in some
-pre-existing popular video players.
-
-How? Sensible cinema basically takes the original DVD, slices out the bad parts, then combines it back
-into a new file and gives you the result.
-It is essentially a linear editor [1] that applies Edit Decision Lists [2] to videos.  It wraps
-a few freely available open source programs [3] to accomplish the editing for you.
-Note that the process can take several hours, so budget some time for it.
-
-It also has a few "realtime viewing" options available, based on some freely available
-open source popular video players [3].  These don't have any startup time to wait at all.
+CEM Player has a few "realtime viewing" options available, based on some freely available
+open source popular video players [3].
 
 On a more moral note, just because an edited video lacks profanity/sex scenes...does not 
 automatically make it a wholesome experience.
-Sensible cinema does not a clean movie make of a dirty one, even without profanity.  
+CEM Player does not necessarily "a clean movie make of a dirty one" even if it can cut profanity.  
 Don't watch it if it's not uplifting! Be nice to yourself!
 
 dove.org and common sense media are good references for discovering the "uplifting" level of movies [4].
 kids-in-mind.com is also a good reference for profanity levels, though sometimes it misses profanities,
 and it also lacks timestamps to know when the profanities occur, and doesn't allow for community
 contribution.  Hence this project existing.
-Also note that even if you happen to have an edited copy of a DVD floating around, if you have kids, chances are they
-will eventually find (and watch) the unedited originals, so be careful there.
 
 That being said, some videos are quite enjoyable once you strip out profanity/questionable content.
 It's your call.
@@ -67,21 +53,9 @@ Sometimes the movie you want doesn't have an EDL (edit list) available for it ye
 Not to worry, you can create your own!
 See https://github.com/rdp/sensible-cinema/wiki/How-to-create-your-own-EDL's
 
-== Creating an edited DVD ==
-
-See also is_it_legal_to_copy_dvds.txt for some caveats you should understand first.
-I don't actually know how to do this I've never burned a video DVD.
-Windows DVD Maker might help, http://www.dvdflick.net might help.
-iDVD might help on mac.
-DO NOT MAKE ILLEGAL COPIES OF DVD's for your country. See also is_it_legal_to_copy_dvds.txt.
-DO NOT DISTRIBUTE EDITED DVD's.
-Watching movies edited may be legal in the US via the Family Protection Act.
-
-
 == Feedback/Contributing to Development ==
 
 Feedback, including feature requests, comments, etc. all welcome, see contact links here: http://cleaneditingmovieplayer.inet2.org
-
 
 If you're a developer and want to help out with programmming or look and feel, etc., please do!
 See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or
@@ -104,7 +78,7 @@ A. One way is to plug your computer into your TV.
   Another good option is to purchase and use a clearplay player, with accompanying subscription.
   
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original, non-edited DVD and then email them a link to sensible-cinema's website :)
+A. Give them the original, non-edited DVD and then give them a link to sensible-cinema's website :)
 
 Q. Can I use this with Windows Media Center?
 A. Yes, just use some WMC plugin that allows you to "call out" to a 3rd party software to play your files.
@@ -234,9 +208,9 @@ See the file documentation/troubleshooting.txt, or contact (see the feedback/dev
 Thanks to Jarmo for the win32-screenshot gem, the mini_magick gem authors, jruby guys, etc.  
 The combination of these tools made programming this actually something of a pleasure, 
 and a breeze cross platform.
-Sensible Cinema leverages code from lots of other projects (see LICENSE.TXT)--many thanks to 
+CEM Player leverages code from lots of other projects (see LICENSE.TXT)--many thanks to 
 the authors and maintainers of said libraries, and anybody else I forgot to mention.
-Sensible Cinema is a conglomeration of the good ideas from several people who contacted me
+CEM Player also includes a conglomeration of the good ideas from several people who contacted me
 over time.  Thanks for your contributions.
 
 == Competition/re-use of files ==

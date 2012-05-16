@@ -17,7 +17,7 @@ module SensibleSwing
     def force_accept_file_style_license
        if !(LocalStorage['accepted_legal_copys'] == VERSION)
         require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
-            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept and agree to abide by the implications noted in the documentation/is_it_legal_to_copy_dvds.txt file.'
+            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept the documentation/is_it_legal_to_copy_dvds.txt file.'
         LocalStorage['accepted_legal_copys'] = VERSION
       end
     end
@@ -87,15 +87,14 @@ module SensibleSwing
       end
     end
 	
-	def check_for_file_manipulation_dependencies	
-	   if !check_for_exe('vendor/cache/mencoder/mencoder.exe', 'mencoder') # both use it now, since we have to use our own mplayer.exe for now...
-        require_blocking_license_accept_dialog 'mplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer with mencoder."
-        download_zip_file_and_extract "Mplayer/mencoder (6MB)", "http://sourceforge.net/projects/mplayer-win32/files/MPlayer%20and%20MEncoder/revision%2034118/MPlayer-rtm-svn-34118.7z", "mencoder"
-        old = File.binread 'vendor/cache/mencoder/mplayer.exe'
-        old.gsub! "V:%6.1f", "V:%6.2f" # better precision! though I don't use that for playing anymore :)
-        File.binwrite('vendor/cache/mencoder/mplayer.exe', old)
+	def check_for_ffmpeg_installed
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
+      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
+        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
+        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
       end
-    end
+	
+	end
     
     def check_for_various_dependencies            
       if OS.doze? && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil)
@@ -109,11 +108,6 @@ module SensibleSwing
       end
 
       # runtime dependencies, at least as of today...
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
-      if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
-        require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
-      end
       if OS.mac?
         check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
       else      
@@ -125,17 +119,18 @@ module SensibleSwing
 		      save_to_file =  "#{save_to_dir}/smplayer-0.6.9-win32.exe"
     		  puts "downloading smplayer.exe [14MB] to #{save_to_file}"
           MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
-		      show_blocking_message_dialog "Run this file to install it (ok to reveal): smplayer-0.6.9-win32.exe"
+		      show_blocking_message_dialog "Run this file to install it now (click ok to reveal): smplayer-0.6.9-win32.exe"
     		  show_in_explorer save_to_file
           sleep 2
 		      show_blocking_message_dialog "hit ok after smplayer is installed:"
+			  add_smplayer_paths # load it onto the PATH now
         end
       end
     end
     
     def assert_ownership_dialog 
       force_accept_file_style_license
-      message = "Do you certify you own the DVD this came of and have it in your possession, if necessary in your legal jurisdiction?"
+      message = "Do you certify you own the DVD this came of and have it in your possession, if necessary?"
       title = "Verify ownership"
       returned = JOptionPane.show_select_buttons_prompt(message, {:yes => "no", :no => "yes"})
       assert_confirmed_dialog returned, nil
@@ -188,10 +183,19 @@ module SensibleSwing
 	    LocalStorage['have_zoom_button'] = false
 	  end
 	  # TODO break these out into create mode prefs versus human [?]
-      if JOptionPane.show_select_buttons_prompt("Would you like to enable obscure options, like using keyboard shortcuts to create EDL files on the fly, or creating euphemized .srt files (you probably don't)?") == :yes
+      if JOptionPane.show_select_buttons_prompt("Would you like to enable some obscure options, like
+ Using keyboard shortcuts to create EDL files on the fly, or 
+ Prompting to create euphemized .srt files, or
+ Being able to add your own 'profanity words' specific to different videos?
+ (Most users answer no to this).", :yes => 'No', :no => 'Yes') == :no
         LocalStorage['prompt_obscure_options'] = true
       else
 	    LocalStorage['prompt_obscure_options'] = false
+	  end
+	  if JOptionPane.show_select_buttons_prompt("Would you like to enable upconversion [i.e. make playback prettier, requires more cpu?]") == :yes
+	    setup_dvd_upconvert_options
+	  else
+	    reset_upconversion_options
 	  end
 	  true
 	end

@@ -1,3 +1,16 @@
+0.38.0
+
+New project name "Clean Editing Movie Player" woot.
+
+Clarify some verbiage/cache better/more sanely for subtitles.  Update documentation to match new style more.
+
+Youtube EDL new URL: http://cleaneditingmovieplayer.inet2.org/youtube_edl/yo?mute_start=2&mute_end=7&skip_start=10&skip_end=20&youtube_video_id=ylLzyHk54Z0
+
+0.37.0 5/1/12
+
+fix some verbiage, attempt to remove file modification code to come more in line with the CopyRight act.
+Fix some install quirks.  Faster now, hopefully :P
+
 0.36.1
 
 fix downloads to be more robust.

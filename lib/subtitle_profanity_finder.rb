@@ -156,8 +156,9 @@ module SubtitleProfanityFinder
       100.chr +
       's' => 'deitys',
       'meu deus' => 'l...',
-      'lord' => 'l...', 'da' +
-      'mn' => 'da..', 
+      'lo' + 
+	  'rd' => 'l...', 'da' +
+      'mn' => 'd...', 
       'f' +
       117.chr +
       99.chr +
@@ -167,7 +168,8 @@ module SubtitleProfanityFinder
       'bi' +
       'tc' + 104.chr => 'b....',
       'bas' +
-      'ta' + 'r' + 100.chr => 'ba.....',
+      'ta' + 
+	  'r' + 100.chr => 'ba.....',
       ((arse = 'a' +
       's'*2)) => ['a..', :full_word],
       arse + 'h' +
@@ -183,11 +185,12 @@ module SubtitleProfanityFinder
        'i' + 't' => 'sh..',
       'cu' +
       'nt' => 'c...',
-      'cocksucker' => 'cock......',
+      'cock' +
+	  'su' + 
+	  'cker' => 'cock......',
     }
     
-    bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
-
+	
     semi_bad_profanities = {}
     ['moron', 'breast', 'idiot', 
       'sex', 'genital', 
@@ -195,8 +198,11 @@ module SubtitleProfanityFinder
       'tits',
       'make love', 'pen' +
 	    'is',
-      'pussy',
+      'pu' +
+	  'ssy',
       'fart',
+	  'whore',
+	  'debauch',
       'making' + 
 	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
@@ -210,6 +216,8 @@ module SubtitleProfanityFinder
     semi_bad_profanities['crap'] = ['crap', :full_word]
     semi_bad_profanities['butt'] = ['butt', :full_word]
     # butter?
+	
+    semi_bad_profanities.merge! extra_profanity_hash
 
     all_profanity_combinationss = [convert_to_regexps(bad_profanities)]
     if include_minor_profanities

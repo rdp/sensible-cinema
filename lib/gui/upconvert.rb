@@ -81,17 +81,28 @@ module SensibleSwing
     UpConvertEnglish = 'upconvert_english_name'
     ScreenMultipleFactor = 'screen_multiples'
 
-    def add_change_upconvert_buttons
-      raise 'should have already been set for us' unless LocalStorage[ScreenMultipleFactor]
-      @medium_dvd = new_jbutton("Set upconvert options to DVD-style video") {
-        luma_spatial = 0
+	def setup_dvd_upconvert_options
+	    luma_spatial = 0
         chroma_spatial = 1
         luma_tmp = 4
         chroma_tmp = 4
+		# SCREEN_X is replaced later.
         LocalStorage[UpConvertKey] = "hqdn3d=%s:%s:%s:%s,scale=SCREEN_X:-10:0:0:2" % [luma_spatial, chroma_spatial, luma_tmp, chroma_tmp]
         # hqdn3d[=luma_spatial:chroma_spatial:luma_tmp:chroma_tmp]
         LocalStorage[UpConvertKeyExtra] = "-sws 9 -ssf ls=75.0 -ssf cs=7.0"
         LocalStorage[UpConvertEnglish] = "DVD"
+    end
+	
+	def reset_upconversion_options
+	LocalStorage[UpConvertKey] = nil
+        LocalStorage[UpConvertKeyExtra] = nil
+        LocalStorage[UpConvertEnglish] = nil
+    end
+	
+    def add_change_upconvert_buttons
+      raise 'should have already been set for us' unless LocalStorage[ScreenMultipleFactor]
+      @medium_dvd = new_jbutton("Set upconvert options to DVD-style video") {
+	    setup_dvd_upconvert_options
         display_current_upconvert_setting_and_close_window
       }
       high_compression = new_jbutton("Set upconvert options to high compressed video file playback") {
@@ -180,9 +191,7 @@ module SensibleSwing
       @none = new_jbutton("Reset upconvert options to none (no upconversion)")
       @none.tool_tip = "Having no upconvert options is reasonably good, might use directx for scaling, nice for slow cpu's"
       @none.on_clicked {
-        LocalStorage[UpConvertKey] = nil
-        LocalStorage[UpConvertKeyExtra] = nil
-        LocalStorage[UpConvertEnglish] = nil
+        reset_upconversion_options
         display_current_upconvert_setting_and_close_window
       }
       
@@ -199,12 +208,14 @@ module SensibleSwing
       @generate_images.tool_tip = "This creates a folder with images upconverted from some DVD or file, so you can tweak settings and compare." # TODO more tooltips
 
       @generate_screen_cast = new_jbutton("Test current configuration by watching video file and recording screen") do
-        popup = warn_if_no_upconvert_options_currently_selected
+        check_for_ffmpeg_installed
+		popup = warn_if_no_upconvert_options_currently_selected
         filename_mpg = new_existing_file_selector_and_select_file( "pick movie file (like moviename.mpg)")
         output_dir = get_same_drive_friendly_clean_temp_dir 'temp_screencast_dir'
         thread1 = play_smplayer_edl_non_blocking [filename_mpg, nil], [" -ss 2:44 -endpos 11"]
         # screen capture for 10s
         fps_to_grab = 5
+		
         thread2 = Thread.new {  c = %!ffmpeg -f dshow -i video="screen-capture-recorder" -r #{fps_to_grab} -vframes #{fps_to_grab*10} -y #{File.strip_drive_windows(output_dir)}/%d.png!; system_blocking c }
         thread2.join
         show_blocking_message_dialog "ffmpeg done, close mplayer now!"
@@ -254,9 +265,10 @@ module SensibleSwing
         screen_multiple = LocalStorage[ScreenMultipleFactor]
         upc = template.gsub('SCREEN_X', (get_current_max_width_resolution*screen_multiple).to_i.to_s) # has to be an integer...
         upc = 'pullup,softskip,' + upc
-        show_non_blocking_message_dialog 'using upconvert settings ' + upc
+		show_non_blocking_message_dialog 'using upconversion settings ' + upc
         p 'using upconvert settings: ' + upc
-        upc
+        raise 'unexpected' if upc =~ /"/ # keep things smplayer sane
+		upc
       else
         p 'not using any specific upconversion-ing'
         # pullup, softskip -- might slow things down too much for slow cpus

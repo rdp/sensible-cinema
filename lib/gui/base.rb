@@ -46,8 +46,8 @@ if OS.doze?
   autoload :EightThree, './lib/eight_three'
 end
 
-# attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
+# attempt to load on demand...i.e. faster...gah
+for kls in [:MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
@@ -57,16 +57,20 @@ end
 
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
-  for name in ['.', 'mencoder', 'ffmpeg', 'mplayer_edl']
+  for name in ['.', 'ffmpeg', 'mplayer_edl']
     # put them all before the old path
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
   
-  installed_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
+  def add_smplayer_paths
+    discovered_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
 
-  for folder in installed_smplayer_folders
-    ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+    for folder in discovered_smplayer_folders
+      ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+    end
   end
+  
+  add_smplayer_paths
 
 else
   # handled in check_mac_installed.rb file
@@ -87,8 +91,8 @@ module SensibleSwing
     include SwingHelpers # work-around?
     
     def initialize start_visible = true, args = ARGV # lodo not optionals
-      super "Sensible-Cinema #{VERSION} (GPL)"
-	    @args = args # save them away so this works with sub-child-windows
+      super "Clean Editing Movie Player #{VERSION} (GPL)"
+	  @args = args # save them away so sub windows can "not have to use" ARGV
       force_accept_license_first # in other file :P
       setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
@@ -98,9 +102,9 @@ module SensibleSwing
       @starting_button_y = 40
       @button_width = 400      
       
-      add_text_line "Welcome to Sensible Cinema!"
-      @starting_button_y += 10 # kinder ugly...
-      add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
+      add_text_line "Welcome to the Clean Editing Movie Player!"
+      #@starting_button_y += 10 # kinder ugly...
+      #add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
       @current_dvds_line1 = add_text_line "Checking present DVD's..."
       @current_dvds_line2 = add_text_line ""
       @callbacks_for_dvd_edl_present = []
@@ -111,7 +115,7 @@ module SensibleSwing
       setIconImage(ImageIcon.new(icon_filename).getImage())
       check_for_various_dependencies
 	  LocalStorage.set_once('init_preferences_once') {
-	    show_blocking_message_dialog "lets setup some preferences once..."
+	    show_blocking_message_dialog "let's setup user preferences once..."
 	    set_individual_preferences
 	  }
       set_visible start_visible
@@ -232,7 +236,8 @@ module SensibleSwing
 
     # basically run mplayer/smplayer on a file or DVD
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen, srt_filename
-      raise unless passed_in_extra_options # cannot be nil
+      puts "starting mplayer..."
+	  raise unless passed_in_extra_options # cannot be nil
       extra_options = []
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
@@ -241,6 +246,9 @@ module SensibleSwing
       extra_options << "-mc 2"
       extra_options << "-autosync 30" 
 
+	  # larger max volume, like VLC :)
+	  extra_options << "-softvol -softvol-max 250"
+	  
       if we_are_in_create_mode
         extra_options << "-osdlevel 2"
         extra_options << "-osd-verbose" if we_are_in_developer_mode?		
@@ -341,7 +349,6 @@ KP_ENTER dvdnav select
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
       mplayer_to_use = LocalModifiedMplayer  
@@ -358,36 +365,9 @@ KP_ENTER dvdnav select
       new_prefs.each_line{|l| print l if l =~ /additional_video/} # debug
     end
     
-    def system_blocking command, low_prio = false
+    def system_blocking command
       return true if command =~ /^@rem/ # JRUBY-5890 bug
-      if low_prio
-        out = IO.popen(command) # + " 2>&1"
-        low_prio = 64 # from msdn
-        
-        if command =~ /(ffmpeg|mencoder)/
-          # XXXX not sure if there's a better way...because some *are* complex and have ampersands...
-          # unfortunately have to check for nil because it could exit too early [?]
-          exe_name = $1 + '.exe'
-          begin
-            p = proc{ ole = ::WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
-            piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-            # but the first time through this still inexplicably fails all 3...odd
-            piddys = ::WMI::Win32_Process.find(:all,  :conditions => {'Name' => exe_name})
-            for piddy in piddys
-              # piddy.SetPriority low_prio # this call can seg fault at times...JRUBY-5422
-              pid = piddy.ProcessId # this doesn't seg fault, tho
-              system_original("vendor\\setpriority -lowest #{pid}") # uses PID for the command line
-            end
-          rescue Exception => e
-            p 'warning, got exception trying to set priority [jruby prob? ...]', e
-          end
-        end
-        print out.read # let it finish
-        out.close
-        $?.exitstatus == 0 # 0 means success
-      else
-        raise command + " failed env #{ENV['PATH']}" unless system_original command
-      end
+      raise command + " failed env #{ENV['PATH']}" unless system_original command
     end
     
     def system_non_blocking command
@@ -434,7 +414,7 @@ KP_ENTER dvdnav select
     end
 
     if OS.doze? # avoids spaces in filenames :)
-      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '\\mplayer.edl' # stay 8.3 friendly :)
+      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '/mplayer.edl' # stay 8.3 friendly, guess we want forward slashes
     else
       raise if Dir.tmpdir =~ / / # that would be unexpected, and possibly cause problems...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
@@ -522,7 +502,8 @@ KP_ENTER dvdnav select
         # it's a DVD of some sort
         extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       else
-	      # it's a file
+	    check_for_ffmpeg_installed
+	    # it's a file
         # check if it has a start offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
@@ -585,7 +566,12 @@ KP_ENTER dvdnav select
     end
     
     java_import javax.swing.UIManager
-    
+
+	def get_user_input_with_persistence(message, storage_key)
+	  got = get_user_input(message, LocalStorage[storage_key])
+      LocalStorage[storage_key] = got
+	  got
+	end
     def get_user_input(message, default = '', cancel_ok = false)
       SwingHelpers.get_user_input message, default, cancel_ok
     end

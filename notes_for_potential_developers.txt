@@ -1,15 +1,19 @@
 A few notes for developers:
 
 If you have any feedback/feature requests, et al, post a github
+<<<<<<< HEAD
 issue or post to the Mailing List: (see links bottom of http://cleaneditingmovieplayer.inet2.org/)
+=======
+issue or post to the Mailing List: http://cleaneditingmovieplayer.inet2.org
+>>>>>>> 34a5567e600d7b524a05a3a311d9c75caebcaca6
 
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
 to install them automatically [has to be remote like this until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
-$ jruby -S gem install sensible-cinema
+$ jruby -S gem install content-editing-movie-player
 # ... it installs it and tons of dependencies
 # next optionalyl:
-$ jruby -S gem uninstall -x sensible-cinema # uninstall the [old] gem so you don't have to worry about it conflicting later, just in case.
+$ jruby -S gem uninstall -x content-editing-movie-player # uninstall the [old] gem so you don't have to worry about it conflicting later, just in case.
  
 You'll have to install some git submodules, too.
 $ git submodule init
