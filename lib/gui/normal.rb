@@ -23,8 +23,6 @@ module SensibleSwing
 
     attr_accessor :parent, :upconv_line
    
-    def hard_exit; java::lang::System.exit 0; end
-
     def setup_normal_buttons
       add_text_line ""
   
@@ -32,10 +30,11 @@ module SensibleSwing
       @mplayer_edl.tool_tip = "This will watch your DVD in realtime from your computer while skipping/muting questionable scenes."
       @mplayer_edl.on_clicked {
         play_smplayer_edl_non_blocking
-	sleep 5
-	puts 'enjoy your movie playing in other window'
+	    sleep 5
+	    puts 'enjoy your movie playing in other window'
         sleep 1
-	hard_exit if OS.doze? # paranoid on cpu usage LOL LODO mac too? it kills mplayer child processes currently...hmm...
+	    SwingHelpers.hard_exit! if OS.doze? # paranoid on cpu usage LOL LODO mac too? it kills mplayer child processes currently...hmm...
+		# might only need a #dispose call here
       }
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|

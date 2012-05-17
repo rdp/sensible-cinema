@@ -28,7 +28,7 @@ else
 
     def self.startup
       @fr = JFrame.new("Sensible Cinema blanker-outer overlay window")
-      @fr.default_close_operation = JFrame::EXIT_ON_CLOSE
+	  # lodo: they can't close it?
       @fr.set_size(2000, 2000) # ltodo better size ?
       cp = @fr.getContentPane
       cp.setBackground(java.awt.Color.black);      

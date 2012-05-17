@@ -94,7 +94,6 @@ module SensibleSwing
       super "Clean Editing Movie Player #{VERSION} (GPL)"
 	  @args = args # save them away so sub windows can "not have to use" ARGV
       force_accept_license_first # in other file :P
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
       @buttons = []
       @panel.set_layout nil
@@ -220,7 +219,6 @@ module SensibleSwing
     # a window that when closed doesn't bring the whole app down
     def new_child_window
       child = MainWindow.new true, []
-      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE) # don't exit on close
       child.parent=self # this should have failed in the PPL
       # make both windows visible by moving the child down and to the right of its parent
       x, y = self.get_location.x, self.get_location.y

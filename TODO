@@ -6,8 +6,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   
 == things working on today/requested ==
 
-  can work with one big mp3
-  
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
@@ -19,9 +17,12 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
 	also do "upconverter" as "netflix quality enhancer" separate project LOL
   
   JPFA genealogy collab wiki--maybe on church's wiki site?
-  'finish' rename: sourceforge, github, all docu, some links, package filenames work
+  tell that guy where to upload, once it's possible LOL. Hmm...
+  'finish' rename: sourceforge, github, all docu, some links
+  location chooser broken on mac
   mplayer re-read config file each frame, maybe track mtime? hmm...
   ffmpeg dshow crossbar
+  "add 2 seconds to all entries"
   move documentation to online [all]
    combine README with the online docu...DRY that stuff up...
   add the one 7zip feature
@@ -77,6 +78,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   @docu: imprecise dvd "end seek points"
   
 == decide later to move up or down ==
+  pure java ocr
   OS X netflix instant
     mac'ify Mouse
   the "add on" type EDL
