@@ -6,6 +6,16 @@ Clarify some verbiage/cache better/more sanely for subtitles.  Update documentat
 
 Youtube EDL new URL: http://cleaneditingmovieplayer.inet2.org/youtube_edl/yo?mute_start=2&mute_end=7&skip_start=10&skip_end=20&youtube_video_id=ylLzyHk54Z0
 
+See also http://betterlogic.com/roger/2009/02/user-contributed-movie-scene-selection-or-past-clearplay/ for a list of ideas/thoughts/inventions related.
+
+Another idea I might get around to:
+being able to "switch input" on the fly.  for instance with this device: https://github.com/rdp-org/avisynth-as-directshow-capture theoretically it could be
+configured to allow "changeable inputs" like switching from one webcam to another one.
+Mine would be the same, but would track mplayer, and, according to an EDL, for instance at "minute 6" it would skip to a different file.  Or start playing an extra
+audio file.  Or "skip forward" or "mute" or "turn down the volume" or "accelerate the video" while playing it, to cut through scary scenes more quickly.
+Or fade in or fade out, etc.
+All of this could be combined in the user interface to look like "one long video" too.
+
 0.37.0 5/1/12
 
 fix some verbiage, attempt to remove file modification code to come more in line with the CopyRight act.
