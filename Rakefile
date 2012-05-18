@@ -115,12 +115,20 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.cp_r(dir_out + '/template_bats/pc', root_distro) # the executable bit carries through somehow..
   FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
   FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
-  p 'created (still need to zips it) ' + dir_out
+  p 'created (still need to zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end
 
 def cur_ver
-  File.read('VERSION').strip
+  got = File.read('VERSION').strip
+  spec = read_spec
+  raise unless got == spec.version.version
+  got
+end
+
+def cur_folder_with_ver
+  spec = read_spec
+  spec.name + '-' + cur_ver
 end
 
 def delete_now_packaged_dir name
@@ -129,8 +137,8 @@ end
 
 desc 'create *.zip,tgz'
 task 'zip' do
-  name = 'clean-edtiting-movie-player-' + cur_ver
-  raise 'doesnt exist yet to zip?' unless File.directory? name
+  name = cur_folder_with_ver
+  raise 'doesnt exist yet to zip?' + name unless File.directory? name
   if OS.doze?
     raise 'please distro from linux only so we can get mac distros too'
   else
@@ -160,7 +168,7 @@ task 'deploy' do
   p 'creating sf dir'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
   for suffix in [ '.zip', '.mac-os-x.tgz']
-    name = 'clean-editing-movie-player-' + cur_ver + suffix
+    name = cur_folder_with_ver + suffix
     if File.exist? name
       p 'copying to ilab ' + name
       sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
