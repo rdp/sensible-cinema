@@ -16,6 +16,8 @@ audio file.  Or "skip forward" or "mute" or "turn down the volume" or "accelerat
 Or fade in or fade out, etc.
 All of this could be combined in the user interface to look like "one long video" too.
 
+Maybe even take a snapshot picture of the face of the user and insert it into movies in certain scenes/spots with trajectories, etc.
+
 0.37.0 5/1/12
 
 fix some verbiage, attempt to remove file modification code to come more in line with the CopyRight act.
