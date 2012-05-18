@@ -101,7 +101,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = read_spec
-  dir_out = spec.name + "-" + spec.version.version + '/clean-editing-movie-player'
+  dir_out = cur_folder_with_ver + '/clean-editing-movie-player'
   old_glob = spec.name + '-*'
   FileUtils.rm_rf Dir[old_glob] # remove any old versions' distro files
   raise 'unable to delete...' if Dir[old_glob].length > 0
@@ -122,7 +122,7 @@ end
 def cur_ver
   got = File.read('VERSION').strip
   spec = read_spec
-  raise unless got == spec.version.version
+  raise unless got == spec.version.version # better match
   got
 end
 
