@@ -136,7 +136,7 @@ module SensibleSwing
         parsed_profanities, euphemized_synchronized_entries = nil
 		extra_profanity_hash = {}
 		if LocalStorage['prompt_obscure_options']
-		  for entry in get_user_input_with_persistence("enter any 'extra' words to search for, like badword1,badword2 if any", srt_filename).split(',')
+		  for entry in get_user_input_with_persistence("enter any 'extra' words to search for, like badword1,badword2 if any", srt_filename + 'words', true).split(',')
 		    extra_profanity_hash[entry] = entry
 		  end
 		end

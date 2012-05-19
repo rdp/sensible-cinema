@@ -193,16 +193,18 @@ module SubtitleProfanityFinder
 	
     semi_bad_profanities = {}
     ['moron', 'breast', 'idiot', 
-      'sex', 'genital', 
+      'sex', 'genital', 'naked', 
       'boob', 
-      'tits',
+      'tits','penis',
       'make love', 'pen' +
 	    'is',
       'pu' +
 	  'ssy',
       'fart',
 	  'whore',
-	  'debauch',
+	  'debauch', 
+      'come to bed',
+      'lie with',
       'making' + 
 	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
