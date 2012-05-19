@@ -202,7 +202,8 @@ module SubtitleProfanityFinder
 	  'ssy',
       'fart',
 	  'whore',
-	  'debauch', 
+	  'debauch', 'cu'+
+       'nt', 
       'come to bed',
       'lie with',
       'making' + 
