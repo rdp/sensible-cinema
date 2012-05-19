@@ -1,3 +1,7 @@
+0.38.1
+
+Fix file opening for mac.
+
 0.38.0
 
 New project name "Clean Editing Movie Player" woot.
