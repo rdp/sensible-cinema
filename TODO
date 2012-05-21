@@ -5,24 +5,28 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   netflix instant EDL
   
 == things working on today/requested ==
+  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
 
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
   'finish' mplayer previous patches re-do
-  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
   LLC
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
 	also do "upconverter" as "netflix quality enhancer" separate project LOL
   
+  does it need to install ffmpeg to "just play" a file?
+  smplayer doesn't recognize mplayer v?
+  sintel file upconvert is *messed* [maybe just with mkv?]
   JPFA genealogy collab wiki--maybe on church's wiki site?
   tell that guy where to upload, once it's possible LOL. Hmm...
   'finish' rename: sourceforge, github, all docu, some links
   location chooser broken on mac
+  does my 'select directory' require it to exist?
   mplayer re-read config file each frame, maybe track mtime? hmm...
   ffmpeg dshow crossbar
-  "add 2 seconds to all entries"
+  make possible "add 2 seconds to all entries in this EDL"
   move documentation to online [all]
    combine README with the online docu...DRY that stuff up...
   add the one 7zip feature
@@ -78,6 +82,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   @docu: imprecise dvd "end seek points"
   
 == decide later to move up or down ==
+  the zip file has an extra subdir.  Except I probably want to spend time on a real innosetup, not fixing that :P
   pure java ocr
   OS X netflix instant
     mac'ify Mouse

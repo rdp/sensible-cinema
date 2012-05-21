@@ -19,6 +19,7 @@ Mine would be the same, but would track mplayer, and, according to an EDL, for i
 audio file.  Or "skip forward" or "mute" or "turn down the volume" or "accelerate the video" while playing it, to cut through scary scenes more quickly.
 Or fade in or fade out, etc.
 All of this could be combined in the user interface to look like "one long video" too.
+Also being able to skip "from second 10 back to second 5" and "loop 3 times doing this" or the like.  It can track in memory how many times it's done the loop, etc.
 
 Maybe even take a snapshot picture of the face of the user and insert it into movies in certain scenes/spots with trajectories, etc.
 
