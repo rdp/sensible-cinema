@@ -160,3 +160,9 @@
   http://openplayback.blogspot.com/ lists some useful ideas
   Create a system that "receives" for instance netflix instant streams, or DVD streams, or screen casts
     1) edits them, "sends" them back to a client receiver. with or without OCR'ing elements of the screen.
+  it can "automatically synchronize" with a list of EDL files contained on some "other server somewhere"
+    basically, when it starts, it runs a git update, which brings its local list of EDL's up to date, so it can see any changes.
+	This also allows for p2p EDL sharing, since you can have git repositories anywhere, and pull a list of them.
+	Another option would be to "always" pull from a/the server when you lookup EDL's for a certain media object (DVD, file, online, etc.)
+	then you're always getting the latest/greatest.
+	Note that pulling from a wiki at runtime was already demonstrated in a past release.

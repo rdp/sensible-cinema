@@ -5,11 +5,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
   netflix instant EDL
   
 == things working on today/requested ==
-  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
 
 == blocked working on ==
 
 == yes do, un-ordered currently, from all the various future release options ==
+  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
   'finish' mplayer previous patches re-do
   LLC
   netflix instant descriptor work at all
