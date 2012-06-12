@@ -81,6 +81,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
     also fix it to "just output the right time" for mplayer sake?
   @docu: imprecise dvd "end seek points"
+  VLC bounty resume/window position et al
+    did Melissa have more feedback for VLC?
+  VLC bounty can skip over poor parts of a DVD
   
 == decide later to move up or down ==
   fix mplayer mute
@@ -96,8 +99,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   "downloading" message needs to go to GUI, have a "human name" per file
   @VLC: toying with the truth fails
   ffmpeg: joining split files failed [go back in time...] also keyint failed?
-  VLC resume/window position et al
-  VLC can skip over poor parts
   fix all ffmpeg bugs LOL
   It can say "go and look for this at this place, which has a profanity in it" (
 several times over, really)
@@ -117,7 +118,6 @@ several times over, really)
     real installer, too, why not?
   feedback button fails os x
   remove splits' functionality [ruby code]
-  ffmpeg how to add subs demo
   upconv: test snow white book:
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
@@ -130,9 +130,7 @@ several times over, really)
       remove -osd-add, or maybe fine tune it?
 	    after mplayer accepts my patches LOL
     assert file played back "always" start at 0 [?]
-  back lighting
-  upconvert screen try it out, "release" after testing it for netflix instant
-  failed downloads can corrupt/interrupted...
+  back lighting cleanup
   can optionally select "supplemental" EDL's per DVD.
   librivox EDL's and/or speedups :P
     "process them at home, or download them here"
@@ -142,8 +140,8 @@ several times over, really)
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  fix crash on cancel edl-out  
-  mplayer dies tmnt dvdnav://1  
+  fix crash on cancel edl-out dialog
+  mplayer dies tmnt dvdnav://1
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
