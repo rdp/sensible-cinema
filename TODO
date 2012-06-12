@@ -83,6 +83,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   @docu: imprecise dvd "end seek points"
   
 == decide later to move up or down ==
+  fix mplayer mute
+  fix mplayer chapter breaks shuck! whoa!
   the zip file has an extra subdir.  Except I probably want to spend time on a real innosetup, not fixing that :P
   pure java ocr
   OS X netflix instant
