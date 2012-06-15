@@ -23,8 +23,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   JPFA genealogy collab wiki--maybe on church's wiki site?
   tell that guy where to upload, once it's possible LOL. Hmm...
   'finish' rename: sourceforge, github, all docu, some links
-  location chooser broken on mac
-  does my 'select directory' require it to exist?
   mplayer re-read config file each frame, maybe track mtime? hmm...
   ffmpeg dshow crossbar
   make possible "add 2 seconds to all entries in this EDL"
@@ -63,7 +61,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     instructions on how to actually use opensubtitles LOL
   my treasury (john newspaper thing)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
-  user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?] might be nice for slow computers
   debug slow mplayer mute on old comps
   learn clojure
   send bom to menumulti guy :P
@@ -71,7 +68,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   gui/edl parser unit tests [just] work
     added an extra "show" perhaps? EXIT_ON_CLOSE [?]
   ffplay diagonal bug reproduce/file
-  create skype/google+ hangouts auto-easy-recorder windows
+  create auto-easy-recorder windows, with multiple audio if possible
   ask for more beta testers for use, ask for more beta testers for creation, too
   can edit books' text too.
     +- list/publish potter
@@ -80,15 +77,17 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   @ffmpeg: you can't convert mkv's of this creation type!
   fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
     also fix it to "just output the right time" for mplayer sake?
-  @docu: imprecise dvd "end seek points"
-  VLC bounty resume/window position et al
+  @docu: imprecise dvd "end seek points" at the least
+  VLC bounty 
+    resume/window position et al
     did Melissa have more feedback for VLC?
-  VLC bounty can skip over poor parts of a DVD
-  
+    can skip over poor parts of a DVD
+    vlc += mplayer chapter breaks not skip LOL
+
 == decide later to move up or down ==
+  user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?] might be nice for slow computers
   fix mplayer mute
   fix mplayer chapter breaks shuck! whoa!
-  the zip file has an extra subdir.  Except I probably want to spend time on a real innosetup, not fixing that :P
   pure java ocr
   OS X netflix instant
     mac'ify Mouse
@@ -96,12 +95,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   dvd_start_offset -> dvd_mpeg_start_offset
   mac: double check mplayer-edl version (when I need to, if ever)
   umplayer for mac/use it, mplayer shucks!
-  "downloading" message needs to go to GUI, have a "human name" per file
+  "downloading" message needs to go to GUI
   @VLC: toying with the truth fails
-  ffmpeg: joining split files failed [go back in time...] also keyint failed?
-  fix all ffmpeg bugs LOL
-  It can say "go and look for this at this place, which has a profanity in it" (
-several times over, really)
+  ffmpeg: keyint failed?
+  It can say "go and look for this at this place, which has a profanity in it" (several times over, really)
   mac: double check mplayer-edl version at startup
   fork smplayer so it can work with mine [?]
     submit patches upstream?
@@ -145,6 +142,7 @@ several times over, really)
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
+  the zip file has an extra subdir.  Except I probably want to spend time on a real innosetup, not fixing that :P
   allow for "special filters" (brightening,etc.) per film
     and per time, to be applied to the movie between a certain time frame, then reverted back to original.
 	add this to the "overlay" thing...and you have instant star wars despecialized options!
