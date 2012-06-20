@@ -87,8 +87,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     vlc += mplayer chapter breaks not skip LOL
 
 == decide later to move up or down ==
+  process shared map/queues, working uh guess
   user preference to "always just skip" that's what he wanted I guess :) [or have I already done it?] might be nice for slow computers
-  fix mplayer mute
+  fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   fix mplayer chapter breaks shuck! whoa!
   pure java ocr
   OS X netflix instant
@@ -141,7 +142,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   fix crash on cancel edl-out dialog
   mplayer dies tmnt dvdnav://1
-  mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
   the zip file has an extra subdir.  Except I probably want to spend time on a real innosetup, not fixing that :P
