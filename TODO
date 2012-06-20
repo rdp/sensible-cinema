@@ -10,12 +10,13 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
 == yes do, un-ordered currently, from all the various future release options ==
   ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing, no realtime stuff at all
-  'finish' mplayer previous patches re-do
-  LLC
+  'finish' mplayer/ffmpeg previous patches re-do
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
 	also do "upconverter" as "netflix quality enhancer" separate project LOL
   
+  LLC
+  netflix upconvert that rox LOL
   try latest zoomplayer with blu-ray
   bounty vlc cross bar problem
   bounty ffmpeg libavfilter dynamic variables
