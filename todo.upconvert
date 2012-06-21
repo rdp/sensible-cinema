@@ -1,5 +1,7 @@
 == dvd upconvert ==
 
+@ whomever: could you port your frame doubling filter from AviSynth to ffmpeg, plz?
+
 how does powerdvd's upscaling work?
 
 purevideo?/zoomplayer
