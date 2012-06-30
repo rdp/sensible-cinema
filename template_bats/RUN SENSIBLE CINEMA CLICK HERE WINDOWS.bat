@@ -3,6 +3,11 @@
 @echo This window will display lots of debug output 
 @echo   (you can just ignore this window or minimize it, but do have to leave it open)
 @setlocal
+
+@set PATH=%WINDIR%\syswow64;%PATH%
+@rem add in JAVA_HOME just for fun/in case
+@set PATH=%PATH%;%JAVA_HOME%\bin
+
 @rem disable any local rubyopt settings, just in case...
 @set RUBYOPT=
 @rem check for java installed...we will be needing that :)
