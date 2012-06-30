@@ -43,7 +43,7 @@ module SensibleSwing
 		    end
         end	  
         create_brand_new_dvd_edl
-        show_blocking_message_dialog "Now that it's created, you can add some entries by hand, or try downloading a subtitle\nfile and parsing it to look for profanities\nif it finds any, then copy and paste them into the file you just created"
+        show_blocking_message_dialog "Now that it's created, you can add some entries by hand, or try parsing subtitles to detect profanities (\"scan a subtitle\" button)"
       end
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
@@ -151,7 +151,7 @@ module SensibleSwing
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],!
 	    end
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_non_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
+        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
         File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open
