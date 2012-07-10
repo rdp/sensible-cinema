@@ -18,16 +18,15 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
     determine its timing relative to DVD...
   
   JPFA genealogy collab wiki--maybe on church's wiki site?
-  a dialog for accepting "more profanities" when parsing subtitles
   my mplayer patches re-do
   OS X netflix instant
     mac'ify Mouse
+  auto-run the smplayer install
+  do "lots" of DVD's I might want
   add default preference "turn on upconversion?" :)
-  mplayer re-read config file each frame
+  mplayer re-read config file each frame [?]
   move documentation to online [all]
   one 7zip feature
-  "downloading" message needs to go to GUI, have a "human name" per file
-  mac: double check mplayer-edl version (when I need to, if ever)
   either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
     Maybe after mplayer accepts my patches?
   upload movie of "controlling utube, and also for full length film"
@@ -50,8 +49,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
     split EDL's to "mine" versus community?
   DVD timing for makemkv forum:Snow White
   google search for them goblet of fire en 1cd subtitles "srt file" 
-  source_location hackz for ri_for
-use opensub hash  
   authorize.net SIM :)
   melissa stuff:
     readme be helpful for subtitles [?]
@@ -84,7 +81,9 @@ use opensub hash
   @docu: imprecise dvd "end points"
   
 == decide later to move up or down ==
-  VLC resume/window position et al
+  "downloading" message needs to go to GUI, have a "human name" per file
+  mac: double check mplayer-edl version (when I need to, if ever)
+VLC resume/window position et al
   VLC can skip over poor parts
   fix all ffmpeg bugs LOL
   It can say "go and look for this at this place, which has a profanity in it" (
@@ -133,12 +132,12 @@ several times over, really)
   fix crash on cancel edl-out  
   mplayer dies tmnt dvdnav://1  
   mplayer muting causes jerkiness doze [not work desktop though, works fine there]
+  @VLC: bounty: TMNT broken seeks
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
-
+  source_location hackz for ri_for
   fix mplayer "skipping" at chapter breaks
   fix vlc "skipping" at chapter breaks
-  @VLC: TMNT broken seeks
   
   the online "like stack overflow" way to contribute -- "I found a profanity at time x" "I found one at time y" [they add on] for online streams  
   super more precise DVD seeks "to this time"

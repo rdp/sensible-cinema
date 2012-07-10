@@ -2,6 +2,8 @@
 
 fix downloads to be more robust.
 
+Also NB that since VLC supports blu-ray, and we support VLC, we have instant blu-ray support. Sweetness!
+
 = 0.36.0 4/28/12 =
 
 Some UI improvements, fix subtitles parsing again.
