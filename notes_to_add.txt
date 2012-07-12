@@ -1,0 +1,6 @@
+it can extract "known profanities and euphemisms" from subtitle files
+it can be made into a browser plugin so as to auto-load when the movie is selected.
+It lets them choose from several available options, including add-on EDL's.
+It could have a "friendly editor" that allows them to seek to a time and create
+edit items, like ZoomPlayer's max cut scene editor.
+the EDL's themselves can be euphemized.
