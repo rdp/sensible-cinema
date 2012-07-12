@@ -134,7 +134,7 @@ module SensibleSwing
       add_text_line "   (higher might be better, uses more cpu)." 
       add_text_line "   If mplayer just dies or displays only a black or white screen then lower this setting, it is too high."
       slider = JSlider.new
-      slider.setBorder(BorderFactory.createTitledBorder("Screen resolution multiple"));
+      slider.setBorder(javax.swing.BorderFactory.createTitledBorder("Screen resolution multiple"));
   
       # I want tick for 1x, 1.5x, 2x, 2.5x, 3x
       # so let's do marker values of 10 -> 30, since it requires integers...

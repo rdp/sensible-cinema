@@ -142,10 +142,6 @@ class EdlParser
   
   private
 
-  def self.download full_url, to_here
-    ::SwingHelpers::MainWindow.download full_url, to_here
-  end
-  
   # better eye-ball these before letting people run them, eh? TODO
   # but I couldn't think of any other way to parse the files tho
   def self.parse_string string, filename = nil, ok_categories_array = []

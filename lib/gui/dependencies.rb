@@ -50,7 +50,7 @@ module SensibleSwing
           done = 0
           response.read_body do |fragment|
             raise 'do something with this string'
-            done = += fragment.length
+            done += fragment.length
             yield done/length * 100
           end
         end
@@ -219,7 +219,6 @@ module SensibleSwing
     def get_set_preference name, english_name
       old_preference = LocalStorage[name]
       old_class = old_preference.class
-	  
 	  new_preference = get_user_input("Enter value for #{english_name}", old_preference)
       display_and_raise 'enter something like 0.0' if new_preference.empty?
       if old_class == Float

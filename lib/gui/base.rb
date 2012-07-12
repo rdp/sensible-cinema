@@ -34,8 +34,7 @@ class String
 end
 
 # a few I'll always need no matter what...
-require_relative '../jruby-swing-helpers/swing_helpers'
-require_relative '../jruby-swing-helpers/storage'
+require_relative '../jruby-swing-helpers/lib/simple_gui_creator'
 require_relative '../edl_parser'
 require 'tmpdir'
 require 'whichr'
@@ -50,8 +49,10 @@ for kls in [:MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
-for kls in [:PlayAudio, :RubyClip, :DriveInfo]
-  autoload kls, "./lib/jruby-swing-helpers/#{kls.to_s.snake_case}"
+class String
+  def to_filename
+    SimpleGuiCreator.to_filename(self)
+  end
 end
 
 if OS.windows?
@@ -78,16 +79,15 @@ end
 
 import 'javax.swing.ImageIcon'
 
-module SensibleSwing
-  include SwingHelpers # various swing classes
-  JFrame
+module SensibleSwing # LODO rename
+  include SimpleGuiCreator # various swing classes
   VERSION = File.read(File.dirname(__FILE__) + "/../../VERSION").strip
-  puts "v. " + VERSION
+  puts "v. " + VERSION # for the console output
   
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # <sigh>
   
   class MainWindow < JFrame
-    include SwingHelpers # work-around?
+    include SimpleGuiCreator # various swing classes
     
     def initialize start_visible = true, args = ARGV # lodo not optionals
       super "Clean Editing Movie Player #{VERSION} (GPL)"
@@ -546,20 +546,20 @@ KP_ENTER dvdnav select
       end
       p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
       p 'using lookup dir ' + dir, LocalStorage[unique_trace] if $VERBOSE
-      got = SwingHelpers.new_previously_existing_file_selector_and_go title, dir
+      got = SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got
     end
     
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
-      SwingHelpers.show_blocking_message_dialog message, title, style
+      SimpleGuiCreator.show_blocking_message_dialog message, title, style
     end
     
     # call dispose on this to close it if it hasn't been canceled yet...
     def show_non_blocking_message_dialog message, close_button_text = 'Close'
       bring_to_front
       # lodo NonBlockingDialog it can get to the top instead of being so buried...
-      SwingHelpers.show_non_blocking_message_dialog message, close_button_text
+      SimpleGuiCreator.show_non_blocking_message_dialog message, close_button_text
     end
     
     java_import javax.swing.UIManager
@@ -570,7 +570,7 @@ KP_ENTER dvdnav select
 	  got
 	end
     def get_user_input(message, default = '', cancel_ok = false)
-      SwingHelpers.get_user_input message, default, cancel_ok
+      SimpleGuiCreator.get_user_input message, default, cancel_ok
     end
     
     def show_copy_pastable_string(message, value)
@@ -580,11 +580,11 @@ KP_ENTER dvdnav select
     end
     
     def show_in_explorer filename
-      SwingHelpers.show_in_explorer filename
+      SimpleGuiCreator.show_in_explorer filename
     end
     
     def show_select_buttons_prompt message, names ={}
-      SwingHelpers.show_select_buttons_prompt(message, names)
+      SimpleGuiCreator.show_select_buttons_prompt(message, names)
     end
 
     def parse_edl path
@@ -693,7 +693,7 @@ KP_ENTER dvdnav select
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Come again!'
-        System.exit 0
+        java.lang.System.exit 0
       }
 
       increment_button_location
