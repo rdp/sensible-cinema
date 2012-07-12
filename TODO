@@ -17,6 +17,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?
     it may need the "50% adjuster" fella...
     determine its timing relative to DVD...
   
+  @ffmpeg: -ss 90 creates one that goes from second 1 to 11? and not quite all the way there even? (missing a few video packets at the end, if audio comes too early)
   JPFA genealogy collab wiki--maybe on church's wiki site?
   my mplayer patches re-do
   OS X netflix instant

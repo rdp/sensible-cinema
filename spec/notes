@@ -1,3 +1,67 @@
+= ffmpeg seeking =
+
+
+The "end" frame can be a non-iframe, so we can assume it seeks "10 seconds to the end" rather well.
+
+start
+[PACKET]
+codec_type=video
+stream_index=0
+pts=114621
+pts_time=1.273567
+dts=105612
+dts_time=1.173467
+duration=3003
+duration_time=0.033367
+convergence_duration=N/A
+convergence_duration_time=N/A
+size=66353
+pos=30
+flags=K
+[/PACKET]
+
+
+ends:
+[PACKET]
+codec_type=audio
+stream_index=1
+pts=988380
+pts_time=10.982000
+dts=988380
+dts_time=10.982000
+duration=2880
+duration_time=0.032000
+convergence_duration=N/A
+convergence_duration_time=N/A
+size=1792
+pos=3940364
+flags=K
+[/PACKET]
+[PACKET]
+codec_type=video
+stream_index=0
+pts=997503
+pts_time=11.083367
+dts=988494
+dts_time=10.983267
+duration=3003
+duration_time=0.033367
+convergence_duration=N/A
+convergence_duration_time=N/A
+size=8021
+pos=3895296
+flags=_
+[/PACKET]
+
+for a non iframe. huh?
+
+possibly it's doing audio "from 1 to 11" then when it hits audio, its skipping some (valid) later video frames, for 1, and for 2
+  shouldn't it synchronize on having both audio and video available? It doesn't get enough video? and why the warning message "no an i-frame"?
+
+oops looks like it took audio "up to" 11 and video "past" 11?
+  
+possibly the only question is "are you comfortable having less video?" (if so, why does it have an 11.08 pts time frame?) and "why does it have that warning" at all?
+
 =c=
 
 last NAV packet was 3006.633301, mpeg at 3010.112549 adding difference 0.291748 adding 0.214000 to pts 3009.931641
