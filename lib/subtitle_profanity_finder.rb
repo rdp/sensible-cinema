@@ -151,7 +151,7 @@ module SubtitleProfanityFinder
     bad_profanities = {'hell' => ['h...', :full_word],
       'g' +
       111.chr + 
-      100.chr => ['vain use', :partial_word, 'deity'], 'g' +
+      100.chr => ['___', :partial_word, 'deity'], 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
@@ -178,9 +178,9 @@ module SubtitleProfanityFinder
       arse + 'w' +
       'ipe' => 'a..w...',
       'jes' +
-      'u' + 's' => ['vain use', :partial_word, 'deity'],
+      'u' + 's' => ['___', :partial_word, 'deity'],
       'chri' +
-      'st'=> ['vain use', :full_word, 'deity'], # allow for christian[ity] 
+      'st'=> ['___', :full_word, 'deity'], # allow for christian[ity] 
       'sh' +
        'i' + 't' => 'sh..',
       'cu' +

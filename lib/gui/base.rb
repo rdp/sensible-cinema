@@ -401,7 +401,7 @@ KP_ENTER dvdnav select
         show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now...if you tweak any timing info you may want to set this more accurately first!"
         offset_time = 0.20
       end
-	  raise if offset_time <= 0 # unexpected...
+	  raise if offset_time < -0.5 # unexpected...except karate kid which actually has a negative...
 	  # -osd-add is because the initial NAV packet is "x" seconds off from the mpeg, and since 
 	  # we have it set within mplayer to "prefer to just give you the MPEG time when you haven't passed a DVD block"
 	  # we wanted to match that more precisely once we did get past it.

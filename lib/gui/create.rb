@@ -100,7 +100,7 @@ module SensibleSwing
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
 
           if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
-            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for."
+            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for.\nIt may take a few seconds to come up..."
             play_dvd_smplayer_unedited true
           end
 
@@ -144,7 +144,7 @@ module SensibleSwing
           parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
-        filename = get_temp_file_name('mutex.edl.txt')
+        filename = get_temp_file_name('mutes.edl.txt')
         out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
         if end_srt_time != 3000
 		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
@@ -154,8 +154,9 @@ module SensibleSwing
         show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
         File.write filename, out
         open_file_to_edit_it filename
-        sleep 1 # let it open
-		 write_subs_to_file out_file, euphemized_synchronized_entries
+        sleep 1 # let it open in notepad
+		
+		write_subs_to_file get_temp_file_name('euphemized.synchronized.edl.txt'), euphemized_synchronized_entries
 		
 		if LocalStorage['prompt_obscure_options']
 	      if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]\nyou probably don't?") == :yes
@@ -420,7 +421,8 @@ module SensibleSwing
 			    p mpeg, nav, old_mpeg
 			    assert old_mpeg > 0.3
 				mpeg = old_mpeg + mpeg - 0.033367 # assume 30 fps, and that this is the second frame since it occurred, since the first one we apparently display "weird suddenly we're not a dvd?"
-				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report..."
+				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report to the mailing list..."
+				puts out
 			  end
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
             else
