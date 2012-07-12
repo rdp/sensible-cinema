@@ -61,12 +61,9 @@
       it can examine "output volume level" to auto-detect violence scenes.
       similarly for "questionable" content
       it can detect from subtitles (and/or OCR, same thing), questionable content, or violence, based on words used
-    use multiple filters/complex mapping graphs to overlay just the exactly correct overlay: http://ffmpeg.org/libavfilter.html
+    use multiple filters/complex mapping graphs to overlay just the exactly correct overlay: http://ffmpeg.org/libavfilter.html or AviSynth scripts
     user preference "how many down clicks on volume for profanity" (already possible)
-    make it so it can suck in from "another wiki" the DL's, at package time, somehow (just one)
-      or even just suck in any web file, for starters
     space -> advance from pause until next edit item?
-    amazon player descriptor, just in case ;P
     can jerk mouse only every so often (cheap would be to just arbitrarily have it from x to y, demo that)
     can scan several player descriptors to "pick the right one" (kind of already showed/did this one)
     post some playon.tv demo screencast...this should prove all shouldn't it [?]
@@ -82,7 +79,7 @@
     can suck it in "in realtime" from online, and parse it +- from a user editable wiki
     a UI to select categories, save as preference, apply it each time at DVD selection time
     don't use timecodes, use "% of the movie" and "total length" perhaps?
-    look at patents for other ideas? [+- nissim patents?]
+    look at patents for other ideas? [+- nissim p's?]
     just pause it, tell them how far to fast forward at that point :P [somewhat already done/showed actually, thanks to mplayer]
     
     have the user forced to tell me what each digit is, themselves, at runtime, for OCR :P
@@ -141,7 +138,7 @@
   can overlay an srt file to an "online" OCR tracked player
   right click on DVD "play edit with ..."
   bookmarks within edited playback/remember where you last left off
-  you can record the screen of an "edited playback" in order to create an edited version. It's like recording off your TV, right?
+  you can record the screen of an "edited playback" in order to create an edited version. If legal.
   each EDL can have a "type" specified, like "type a starts at time x, ends at time y" "type b starts at time z, ends at time mu" so that you can re-use the same EDL
     cross several media types.
   EDL action "zoom" to a certain part/portion of a movie, for a specified amount of time.
@@ -165,4 +162,3 @@
 	This also allows for p2p EDL sharing, since you can have git repositories anywhere, and pull a list of them.
 	Another option would be to "always" pull from a/the server when you lookup EDL's for a certain media object (DVD, file, online, etc.)
 	then you're always getting the latest/greatest.
-	Note that pulling from a wiki at runtime was already demonstrated in a past release.
