@@ -42,7 +42,6 @@ require 'whichr'
 require 'os'
 
 if OS.doze?
-  autoload :WMI, 'ruby-wmi'
   autoload :EightThree, './lib/eight_three'
 end
 

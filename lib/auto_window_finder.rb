@@ -1,4 +1,4 @@
-require 'rautomation'
+require 'rautomation' # might be able to get rid of this...
 require_relative 'edl_parser'
 
 class AutoWindowFinder

@@ -1,6 +1,9 @@
 0.38.1
 
 Fix file opening for mac.
+Some GUI fixes/tweaks.
+
+Also NB that since we support youtube's API, we can control full feature length movies in that regard, as well as normal youtube-length clips.
 
 0.38.0
 
@@ -31,6 +34,8 @@ Fix some install quirks.  Faster now, hopefully :P
 0.36.1
 
 fix downloads to be more robust.
+
+Also NB that since VLC supports blu-ray, and we support VLC, we have instant blu-ray support. Sweetness!
 
 = 0.36.0 4/28/12 =
 

@@ -2,11 +2,11 @@ require 'rubygems'
 require 'jeweler' # gem
 require 'os' # gem
 
-ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem hackaround...
+ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # jeweler's git gem hack-work-around...
 
 Jeweler::Tasks.new do |s|
     s.name = "clean-editing-movie-player"
-    s.summary = "an EDL scene-skipper/bleeper that works with DVD's and files and online players like netflix instant"
+    s.summary = "an movie scene-skipper/bleeper that works by using EDL's on DVD's or files or online players like netflix instant/hulu"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
@@ -17,8 +17,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
-    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with next release, though I can't remember why
-    s.add_dependency 'rdp-ruby-wmi' # for windows
+    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with its next release, though I can't remember why
     s.add_dependency 'plist' # for mac
     s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics...
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
@@ -83,14 +82,29 @@ def read_spec
  eval File.read('clean-editing-movie-player.gemspec')
 end
 
-desc 'collect binary and gem deps for distribution'
-task 'rebundle_copy_in_dependencies' => 'gemspec' do
+desc 'install dependency gems'
+task 'install_dependency_gems' do
+  get_all_dependency_gems.each{|d|
+    system("#{OS.ruby_bin} -S gem install #{d.name}")
+  }
+end
+
+def get_all_dependency_gems
    spec = read_spec
    dependencies = spec.runtime_dependencies
-   dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
+   dependencies = (dependencies + get_transitive_dependencies(dependencies))
+   # out own uniq method...gems...sigh...
+   out = {}
+   dependencies.each{|d| out[d.name] ||= d}
+   out.values
+end
+
+desc 'collect binary and gem deps for distribution'
+task 'rebundle_copy_in_dependencies' do # => 'gemspec' do
    FileUtils.mkdir_p 'vendor/cache'
+   gems = get_all_dependency_gems
    Dir.chdir 'vendor/cache' do
-     dependencies.each{|d|
+     gems.each{|d|
        system("#{OS.ruby_bin} -S gem unpack #{d.name}")
      }
    end

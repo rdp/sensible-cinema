@@ -38,6 +38,23 @@ module SensibleSwing
 	  FileUtils.mv to_here + '.temp', to_here # avoid partial downloads corrupting uss
       keep_going_bg_thread = false
       puts 'done!'
+    end        
+    
+    def self.download_with_progress_bar_to_100_in_other_thread(url, to_here)
+      require 'net/http'
+      require 'uri'
+      Thread.new do
+        url = URI.parse url
+        Net::HTTP.new(url.host, url.port).request_get(url.path) do |response|
+          length = response.content_length
+          done = 0
+          response.read_body do |fragment|
+            raise 'do something with this string'
+            done = += fragment.length
+            yield done/length * 100
+          end
+        end
+      end
     end
     
     def self.download_to_string full_url
@@ -120,10 +137,9 @@ module SensibleSwing
     		  puts "downloading smplayer.exe [14MB] to #{save_to_file}"
               MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
 		      show_blocking_message_dialog "Run this file to install it now (click ok to reveal): smplayer-0.6.9-win32.exe"
-    		  show_in_explorer save_to_file
-              sleep 5
+    		  system(save_to_file)
 		      show_blocking_message_dialog "hit ok after smplayer is installed..."
-			  add_smplayer_paths # load it onto the PATH now
+			  add_smplayer_paths # load it back onto the PATH now that it's installed so its path exists...
         end
       end
     end
