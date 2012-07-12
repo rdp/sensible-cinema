@@ -411,12 +411,12 @@ module SensibleSwing
         if l =~  /V:\s+([\d\.]+)/
           outs[:mpeg_start_offset] ||= $1.to_f
         end
-	      float = /\d+\.\d+/
-	     if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
+	    float = /\d+\.\d+/
+	    if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
           nav = $1.to_f
           mpeg = $2.to_f
           if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
-			  if mpeg < nav
+			  if mpeg < (nav - 0.05) # 0.05 for karate kid. weird.
 			    # case there is an MPEG split before the second NAV packet [ratatouille, hp]
 			    p mpeg, nav, old_mpeg
 			    assert old_mpeg > 0.3
@@ -425,10 +425,10 @@ module SensibleSwing
 				puts out
 			  end
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
-            else
-			  old_mpeg = mpeg # ratatouile weirdness...
-	    end
-      	  end
+          else
+			  old_mpeg = mpeg # ratatouile weirdness...TODO FIX ME
+	      end
+      	end
       }
       show_blocking_message_dialog "unable to calculate DVD start time from #{command}?" unless outs.length == 2
       outs
