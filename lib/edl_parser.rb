@@ -256,14 +256,16 @@ class EdlParser
     previous = nil
     combined.map!{ |current|
       s,e,type = current
+	  human_s = translate_time_to_human_readable s
+	  human_e = translate_time_to_human_readable e
       if e < s || !s || !e || !type
 	   p caller
-       raise SyntaxError.new("detected an end before a start or other weirdness: #{s} > #{e}")
+       raise SyntaxError.new("detected an end before a start or other weirdness: #{human_s} > #{human_e}")
       end
       if previous
         ps, previous_end, pt = previous
         if (s < previous_end)
-          raise SyntaxError.new("detected an overlap current #{s} < #{previous_end} of current: #{current.join(' ')} previous: #{previous.join(' ')}")
+          raise SyntaxError.new("detected an overlap current #{human_s} < #{translate_time_to_human_readable previous_end} of current: #{current.join(' ')} previous: #{previous.join(' ')}")
         end
       end
       previous = current

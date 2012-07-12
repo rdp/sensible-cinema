@@ -33,7 +33,7 @@ module SensibleSwing
 	    sleep 5
 	    puts 'enjoy your movie playing in other window'
         sleep 1
-	    SwingHelpers.hard_exit! if OS.doze? # paranoid on cpu usage LOL LODO mac too? it kills mplayer child processes currently...hmm...
+	    SwingHelpers.hard_exit if OS.doze? # paranoid on cpu usage LOL LODO mac too? it kills mplayer child processes currently...hmm...
 		# might only need a #dispose call here
       }
       
