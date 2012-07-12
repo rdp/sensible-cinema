@@ -1,0 +1,92 @@
+# edl_version_version 1.1, sensible cinema v0.37.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "WarGames",
+# xxx want some answers
+# xxx bombers on the g
+# they're wondering what the ...
+# pig eyed xxx
+# xxx firewall
+"mutes" => [
+  # copy and paste these into your "mute" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable
+
+  "0:02:26.97" , "0:02:31.68", "profanity", "sh..", "Visibility? Bull[sh..]. You guys haven't been on time for the last six months.",
+  "0:04:25.67" , "0:04:29.34", "profanity", "sh..", "- Launch order confirmed. - Holy [sh..]!",
+  "0:05:23.06" , "0:05:26.35", "profanity", "deity", "- Three enabled. - Get somebody on the [vain use][d...] phone.",
+  "0:05:47.08" , "0:05:51.37", "profanity", "deity", "I want somebody on the [vain use][d...] phone before I kill 20 million people.",
+  "0:10:11.58" , "0:10:16.25", "profanity", "deity", "Lyle, for [vain use]'s sakes! How many times are we gonna go through this?",
+  "0:10:49.03" , "0:10:53.33", "profanity", "sh..", "with a lot of headshrinker horse[sh..]! You can't screen out human response!",
+  "0:11:52.55" , "0:11:55.18", "profanity", "h...", "- You're [d...] tootin'. - Well, [h...] ..",
+  "0:13:57.63" , "0:13:59.68", "profanity", "deity", "to a machine, for [vain use]'s sake!",
+  "0:14:58.11" , "0:15:00.15", "profanity", "d...", "[d...]!",
+  "0:26:48.20" , "0:26:50.25", "profanity", "d...", "- [d...]! - Please.",
+  "0:31:01.11" , "0:31:03.15", "profanity", "deity", "Oh, my [vain use]!",
+  "0:37:50.29" , "0:37:54.13", "profanity", "d...", "If I could just get that [d...] password, I could play the computer.",
+  "0:44:13.74" , "0:44:18.12", "profanity", "deity", "[vain use][d...] it! We didn't get a launch detection from our satellite.",
+  "0:45:18.56" , "0:45:20.60", "profanity", "sh..", "[sh..]!",
+  "0:45:59.26" , "0:46:01.72", "profanity", "h...", "What the [h...] s he yelling about? I didn't order that.",
+  "0:46:18.86" , "0:46:23.66", "profanity", "h...", "Hold at DEFCON 4 till we find out exactly what in the [h...] s happening here!",
+  "0:47:58.63" , "0:48:01.09", "profanity", "deity", "It could be. Oh, [vain use], Jennifer!",
+  "0:48:38.41" , "0:48:42.08", "profanity", "deity", "[vain use]! This is so unbelievable! Can I call Michelle and tell her?",
+  "0:49:25.50" , "0:49:27.00", "profanity", "deity", "Oh, my [vain use].",
+  "0:53:11.84" , "0:53:14.30", "profanity", "deity", "Oh, my [vain use]! It's the wrong one!",
+  "0:54:09.94" , "0:54:12.44", "profanity", "deity", "- Give me that. - Oh, [vain use]  Another tour group.",
+  "0:55:12.54" , "0:55:15.17", "profanity", "h...", "What the [h...] is going on, John?",
+  "1:00:21.80" , "1:00:24.21", "profanity", "h...", "- What the [h...] s he sayin'? - In English.",
+  "1:00:53.87" , "1:00:58.21", "profanity", "ba.....", "Get me an update on those subs. I wanna know what those [ba.....]s are up to.",
+  "1:03:05.83" , "1:03:09.37", "profanity", "ba.....", "- Get that [ba.....] out of the war room! - No! It's Joshua!",
+  "1:03:20.30" , "1:03:22.80", "profanity", "h...", "What the [h...] s he doing in here anyway?",
+  "1:15:04.39" , "1:15:08.94", "profanity", "d...", "Yes, sir. I just hope they don't make me eat none of them [d...] fish eggs.",
+  "1:15:22.37" , "1:15:25.33", "profanity", "sh..", "They're full of [sh..]. We know they're down there.",
+  "1:15:25.45" , "1:15:28.08", "profanity", "a..", "I'm gonna blow their [a..] out of the water.",
+  "1:21:15.33" , "1:21:17.37", "profanity", "h...", "What the [h...] !",
+  "1:22:24.77" , "1:22:26.81", "profanity", "bees", "With the [bees] probably.",
+  "1:23:46.31" , "1:23:47.72", "profanity", "sh..", "Bull[sh..]!",
+  "1:26:06.31" , "1:26:08.36", "profanity", "sh..", "Well, that's a load of [sh..]!",
+  "1:26:22.66" , "1:26:25.12", "profanity", "deity", " [vain use]  Now they got us chasing shadows.",
+  "1:26:44.10" , "1:26:48.73", "profanity", "a..h...", "What kind of an [a..h...] lives on an island and he doesn't even have a boat?",
+  "1:27:07.62" , "1:27:11.67", "profanity", "a..h...", "What kind of an [a..h...] grows up in Seattle and doesn't know how to swim?",
+  "1:27:49.16" , "1:27:51.21", "profanity", "deity", "Oh, [vain use]!",
+  "1:27:55.88" , "1:27:57.92", "profanity", "deity", "I swear to [vain use] I did.",
+  "1:28:47.97" , "1:28:49.47", "profanity", "deity", "Oh, [vain use]!",
+  "1:28:49.60" , "1:28:51.64", "profanity", "ba.....", "The [ba.....] turned us in!",
+  "1:33:06.80" , "1:33:09.14", "profanity", "deity", "Hold the [vain use][d...] door!",
+  "1:34:36.68" , "1:34:39.68", "profanity", "h...", "Mr Falken, you picked a [h...] of a day for a visit.",
+  "1:38:32.90" , "1:38:36.53", "profanity", "deity", "- [vain use] H [vain use]  We're still here! - Our boards are showing impact.",
+  "1:41:07.34" , "1:41:09.39", "profanity", "deity", "Just unplug the [vain use][d...] thing!",
+  "1:41:09.51" , "1:41:12.77", "profanity", "deity", "- [vain use] [vain use]  - That won't work, General.",
+  "1:41:40.25" , "1:41:43.17", "profanity", "sh..", "I don't have to take that, you pig-eyed sack of [sh..].",
+  "1:42:57.62" , "1:43:00.54", "profanity", "deity", "- For [vain use] s sake! - He's played before.",
+  "1:43:50.17" , "1:43:52.54", "profanity", "deity", "Stephen, for [vain use] s sake. Do something.",
+  "1:45:34.47" , "1:45:37.06", "profanity", "deity", "Come on. Learn, [vain use][d...] it.",
+
+  "0:16:54.22" , "0:16:59.47", "profanity", "sex", "There seems to be a lot of confusion on this next question - a[sex]ual reproduction.",
+  "0:17:02.93" , "0:17:08.31", "profanity", "sex", "who first suggested the idea of reproduction without [sex]?",
+  "0:17:28.33" , "0:17:33.55", "profanity", "sex", "Maybe you can tell us who first suggested the idea of reproduction without [sex].",
+  "0:33:56.86" , "0:34:01.95", "profanity", "dumb", "Boy, are you guys [dumb]! You guys are so [dumb]. I got this thing all figured out.",
+  "0:55:19.51" , "0:55:23.68", "profanity", "idiot", "You know what an [idiot] that makes me look? Not to mention the general.",
+  "0:59:24.45" , "0:59:27.66", "profanity", "crap", "I think we'd better forget about the lawyer [crap] ",
+  "1:41:34.95" , "1:41:39.29", "profanity", "suck", "I have come to the conclusion that your new defence system [suck]s.",
+  "1:43:03.16" , "1:43:06.04", "profanity", "piss", "I'd [piss] on a spark plug if I thought it'd do any good.",
+
+],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Replacement team's here, sir.", "1:16.32", 2],
+"ending_subtitle_entry" => ["I'm not giving up.", "1:22:30.40", 901],
+
+
+"blank_outs" => [
+ "1:17:45.14", "1:17:48.8", "kissing", "on the cheek",
+],
+
+"source" => "dvd",
+"volume_name" => "WARGAMES",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "e7a10abb|de972586",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "6759.166", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.35",
+"dvd_nav_packet_offset" => [0.466667, 0.66435],

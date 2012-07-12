@@ -1,0 +1,34 @@
+# edl_version_version 1.1, sensible cinema v0.38.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Star Trek Nemesis",
+
+"mutes" => [
+ 
+  "0:05:00.18" , "0:05:07.01", "profanity", "d...", "You're happy, but what about my needs? This is All a [d...]ed inconvenience.",
+  "0:07:17.63" , "0:07:22.58", "profanity", "h...", "Like [h...] you are! You already know too much about me.",
+  "0:34:17.82" , "0:34:24.40", "profanity", "h...", "Inform Starfleet of the situation. I need to know where the [h...] he came from.",
+  "0:40:27.02" , "0:40:32.44", "profanity", "d...", "In those terrible depths Lived only the [d...]ed. Along with the Reman slaves,",
+  "0:46:55.24" , "0:46:59.37", "profanity", "d...", "- He was a bit cocky as I recall. - He was a [d...]ed fool.",
+
+
+],
+
+"blank_outs" => [
+"3:20.0", "4:00.0", "dying people",
+   "0:48:00.81" , "49:24.05", "sex", "come to bed", "[come to bed].",
+  "1:31:24.0", "1:31:26.73", "violence", "head kick",
+  "1:39:23.0", "1:40:30.0", "violence", "stabbing",
+  "1:40:43.0", "1:40:48", "violence", "stabbing aftermath",
+],
+
+"source" => "dvd",
+"volume_name" => "STNEMESIS",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "bba937af|13f24164",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "6681.766", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.2",
+"dvd_nav_packet_offset" => [0.433333, 0.531344],

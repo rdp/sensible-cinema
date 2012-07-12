@@ -1,0 +1,37 @@
+# edl_version_version 1.1, sensible cinema v0.38.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Passage To Zarahemla Less Intense",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+  
+  "00:03:44.0" , "00:03:46.5", "gore", "water to blood",
+  "3:58.97", "4:04.27", "scary indian", 
+  "4:05.5", "4:10.0", "scary indian",
+  "1:24:31.8", "1:24:33.83", "arrow shot",
+  "1:26:38.05", "1:26:41.46", "kill other",
+  "1:26:48", "1:26:51.10", "killa nother",
+  "1:27:27.5", "1:27:31.0", "killa nother",
+  "1:28:19.0", "1:28:28.0", "killa nother",
+],
+
+"source" => "dvd",
+"volume_name" => "PASSAGE_TO_ZARAHEMLA",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "5a36273a|fd1cb0ba",
+"dvd_title_track" => "23", # less intense main title
+
+# "not edited out stuff" => "some...",
+"closing thoughts" => "bad acting left",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+
+
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"dvd_title_track" => "23",
+"dvd_title_track_length" => 6365.266,
+"dvd_start_offset" => 0.37,
+"dvd_nav_packet_offset" => [0.5, 0.734067],
