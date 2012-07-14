@@ -1,0 +1,30 @@
+# edl_version_version 1.1, sensible cinema v0.38.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Karate Kid II",
+
+"mutes" => [
+  # none aparently
+ "1:14:03.18", "01:14:04.94", "profanity", "possible deity"
+],
+
+"blank_outs" => [
+  "05:36.5", "05:46.2", "nudity", "obscured shower scene", # could us refinement 
+],
+
+"source" => "dvd",
+"volume_name" => "DVD_VIDEO",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "e6cf30b6|51be1044",
+"dvd_title_track" => "1",
+"dvd_title_track_length" => "6788.0", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.04",
+"dvd_nav_packet_offset" => [0.4, 0.375167],
+
+
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Wouldn't a flyswatter be easier?", "1:19.32", 2],
+"ending_subtitle_entry" => ["Fear is why you leave.", "1:11:33.03", 727],
