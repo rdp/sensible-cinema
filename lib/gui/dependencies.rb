@@ -22,40 +22,40 @@ module SensibleSwing
       end
     end
    
-    def self.download full_url, to_here
+    def self.download full_url, to_here, english_name = File.basename(to_here)
       require 'open-uri'
-      require 'openssl'
-	  require 'fileutils'
-      eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE") if full_url =~ /https/
-      keep_going_bg_thread = true
-      print 'downloading ' + File.basename(to_here)
-      Thread.new { while keep_going_bg_thread; print '.'; sleep 1; end}
-      writeOut = open(to_here + '.temp', "wb")
-	  url = open(full_url, 'rb')
-      writeOut.write(url.read)
-	  url.close
-      writeOut.close
-	  FileUtils.mv to_here + '.temp', to_here # avoid partial downloads corrupting uss
-      keep_going_bg_thread = false
-      puts 'done!'
-    end        
-    
-    def self.download_with_progress_bar_to_100_in_other_thread(url, to_here)
-      require 'net/http'
-      require 'uri'
-      Thread.new do
-        url = URI.parse url
-        Net::HTTP.new(url.host, url.port).request_get(url.path) do |response|
-          length = response.content_length
-          done = 0
-          response.read_body do |fragment|
-            raise 'do something with this string'
-            done += fragment.length
-            yield done/length * 100
-          end
-        end
+      require 'fileutils'
+      if full_url =~ /https/
+        require 'openssl'
+        eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE")
       end
-    end
+      out_frame = JFrame.new("downloading #{english_name}...")
+      out_frame.show
+      out_frame.setSize(500,15)
+      print 'downloading ' + english_name
+      temp_filename = to_here + '.temp'
+      writeOut = open(temp_filename, "wb")
+      content_length = nil
+      last_percent = 0
+      progress_proc = proc {|p|
+        if content_length
+          percent = (p.to_f/content_length*100).to_i
+          title = "Downloading: At #{percent}% of #{english_name} (#{content_length/1000000}M)"
+        else
+          title="Downloading: got #{p} bytes of #{english_name}"
+        end
+        out_frame.title=title
+        print '.' if last_percent != percent
+        last_percent = percent
+      }      
+      url = open(full_url, 'rb', :content_length_proc => proc {|cl| content_length = cl}, :progress_proc => progress_proc)
+      writeOut.write(url.read)
+      url.close
+      writeOut.close
+      out_frame.close
+      FileUtils.mv temp_filename, to_here # avoid partial downloads corrupting uss
+      puts 'done downloading ' + english_name
+    end    
     
     def self.download_to_string full_url
        require 'tempfile'
@@ -131,15 +131,19 @@ module SensibleSwing
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
           # this one has its own installer...
-		      require_blocking_license_accept_dialog 'Smplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
-     		  save_to_dir = SimpleGuiCreator.new_existing_dir_chooser_and_go 'pick dir to save smplayer exe installer to:'
-		      save_to_file =  "#{save_to_dir}/smplayer-0.6.9-win32.exe"
-    		  puts "downloading smplayer.exe [14MB] to #{save_to_file}"
-              MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
-		      show_blocking_message_dialog "Run this file to install it now (click ok to reveal): smplayer-0.6.9-win32.exe"
-    		  system(save_to_file)
-		      show_blocking_message_dialog "hit ok after smplayer is installed..."
-			  add_smplayer_paths # load it back onto the PATH now that it's installed so its path exists...
+          require_blocking_license_accept_dialog 'Smplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
+          save_to_dir = SimpleGuiCreator.new_existing_dir_chooser_and_go 'pick dir to save smplayer exe installer to:'
+          filename = "smplayer-0.6.9-win32.exe"
+          save_to_file =  "#{save_to_dir}/#{filename}"
+          puts "downloading smplayer.exe [14MB] to #{save_to_file}"
+          MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/#{filename}", save_to_file
+          #system(save_to_file) # unfortunately fails...
+          show_blocking_message_dialog "Run this file to install it now (click ok to reveal): #{filename}"
+          SimpleGuiCreator.show_in_explorer save_to_file
+          sleep 3
+          show_blocking_message_dialog "please run the file #{filename} in the other window, and then hit ok after smplayer is fully installed..."          
+          add_smplayer_paths # load it back onto the PATH now that it's installed so its path exists...
+          raise 'smplayer not installed' unless RubyWhich.new.which('smplayer')
         end
       end
     end
