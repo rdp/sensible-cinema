@@ -5,6 +5,8 @@ Some GUI fixes/tweaks.
 
 Also NB that since we support youtube's API, we can control full feature length movies in that regard, as well as normal youtube-length clips.
 
+NB that this could also work with google play, apple itunes (using java's mac API's), powerDVD, etc.
+
 0.38.0
 
 New project name "Clean Editing Movie Player" woot.
