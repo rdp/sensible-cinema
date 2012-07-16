@@ -24,7 +24,7 @@ module SensibleSwing
         show_blocking_message_dialog("sorry not mac compat. yet") and raise unless OS.doze?
         answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture device installed (install MSVC 2010 runtime x86 first), and also configured using its setup utility, and avisynth installed.", :yes => 'take me to its website', :no => 'I already and configured it, let me at it!')
         if answer == :yes
-           SwingHelpers.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
+           SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
            raise 'install it'
         end
         run_smplayer_non_blocking "upconvert_from_screen/upconvert_from_screen_me2.avs", nil, '', force_mplayer = true, true, false, nil

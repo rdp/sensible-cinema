@@ -132,7 +132,7 @@ module SensibleSwing
         if(path.length == 0)
           # this one has its own installer...
 		      require_blocking_license_accept_dialog 'Smplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
-     		  save_to_dir = SwingHelpers.new_existing_dir_chooser_and_go 'pick dir to save smplayer exe installer to:'
+     		  save_to_dir = SimpleGuiCreator.new_existing_dir_chooser_and_go 'pick dir to save smplayer exe installer to:'
 		      save_to_file =  "#{save_to_dir}/smplayer-0.6.9-win32.exe"
     		  puts "downloading smplayer.exe [14MB] to #{save_to_file}"
               MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/smplayer-0.6.9-win32.exe", save_to_file
@@ -172,7 +172,7 @@ module SensibleSwing
       # :yes is "view license", :no is "accept", :cancel
       if returned == :yes
         if license_url_should_also_be_embedded_by_you_in_message
-          SwingHelpers.open_url_to_view_it_non_blocking license_url_should_also_be_embedded_by_you_in_message
+          SimpleGuiCreator.open_url_to_view_it_non_blocking license_url_should_also_be_embedded_by_you_in_message
           puts "Please restart after reading license agreement, to be able to then accept it."
         else
           puts 'dialog assertion failed'

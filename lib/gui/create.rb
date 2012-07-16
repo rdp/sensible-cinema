@@ -533,7 +533,7 @@ module SensibleSwing
         type = dialog.go_selected_value
         extra_options = {}
         if type == 'movie file'
-          path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
+          path = SimpleGuiCreator.new_previously_existing_file_selector_and_go "Select file to create EDL for"
           guess_name = File.basename(path).split('.')[0..-2].join('.') # like yo.something.720p.HDTV.X264-DIMENSION.m4v maybe?
           extra_options['filename'] = File.basename path
           require 'lib/movie_hasher'
