@@ -1,11 +1,10 @@
 0.39.0
 
 Fix file opening for mac.
-Some GUI fixes/tweaks.
+Some GUI fixes/tweaks (and also use updated sub lib).
 
 Also NB that since we support youtube's API, we can control full feature length movies in that regard, as well as normal youtube-length clips.
-
-NB that this could also work with google play, apple itunes (using java's mac API's), powerDVD, etc.
+Also NB that this could also work with google play, apple itunes (using java's mac API's), powerDVD, etc.
 
 0.38.0
 
