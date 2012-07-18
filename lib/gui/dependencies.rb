@@ -23,6 +23,7 @@ module SensibleSwing
     end
    
     def self.download full_url, to_here, english_name = File.basename(to_here)
+	  return if File.exist? to_here # already downloaded it...
       require 'open-uri'
       require 'fileutils'
       if full_url =~ /https/
