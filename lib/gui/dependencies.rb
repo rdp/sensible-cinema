@@ -142,9 +142,9 @@ module SensibleSwing
           show_blocking_message_dialog "Run this file to install it now (click ok to reveal): #{filename}"
           SimpleGuiCreator.show_in_explorer save_to_file
           sleep 3
-          show_blocking_message_dialog "please run the file #{filename} in the other window, and then hit ok after smplayer is fully installed..."          
+          show_blocking_message_dialog "please run the file #{filename} in the other window, and then hit ok AFTER you have installed smplayer fully..."          
           add_smplayer_paths # load it back onto the PATH now that it's installed so its path exists...
-          raise 'smplayer not installed' unless RubyWhich.new.which('smplayer')
+          raise 'smplayer not installed' unless RubyWhich.new.which('smplayer').length > 0
         end
       end
     end
