@@ -1,5 +1,6 @@
 0.39.0
 
+Some github tweakage/renaming/use new stuff.
 Fix file opening for mac.
 Some GUI fixes/tweaks (and also use updated sub lib).
 

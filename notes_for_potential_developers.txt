@@ -1,32 +1,24 @@
 A few notes for developers:
 
 If you have any feedback/feature requests, et al, post a github
-<<<<<<< HEAD
 issue or post to the Mailing List: (see links bottom of http://cleaneditingmovieplayer.inet2.org/)
-=======
-issue or post to the Mailing List: http://cleaneditingmovieplayer.inet2.org
->>>>>>> 34a5567e600d7b524a05a3a311d9c75caebcaca6
 
 To run it from source, download from github, you may need to install a few gem dependencies (listed in the Rakefile)
 
-to install them automatically [has to be remote like this until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
-$ jruby -S gem install content-editing-movie-player
-# ... it installs it and tons of dependencies
-# next optionalyl:
-$ jruby -S gem uninstall -x content-editing-movie-player # uninstall the [old] gem so you don't have to worry about it conflicting later, just in case.
- 
 You'll have to install some git submodules, too.
 $ git submodule init
 $ git submodule update
 
-The tests are in the spec directory, though some of them are out of date as development has shifted focus to other areas.
+To install them automatically [has to be remote like this until https://github.com/rubygems/rubygems/issues/96 is fixed I think]:
+$ jruby bin/sensible-cinema (it will tell you the rake commands to use to bundle the gems locally)
+ 
+The tests are in the spec directory, though some of them are out of date as development has shifted.
 
 Note: you transfer (c) of materials to sensible cinema when you submit patches/contributions, of course, so don't submit something you don't want published :)
 
-To run it via command line (see go*.sh files): j bin/sensible-cinema
 A few lib/* files have their own "main" as well.
 
-Want JSON'ified output somehow? Just ask.
+Want JSON'ified output somehow? Just ask.  Want anything else? Just ask.
 
 You can test the DVD portions of the program out by mounting the DVD of "big buck bunny" 
 http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
@@ -47,4 +39,4 @@ or see the installation instructions: http://rogerdpack.t28.net/sensible-cinema
 
 == OCR screen tracker ==
 
-For the screen tracker (the experimental version, see file experimental_online_player_ocr_readme.txt).
+For the screen tracker (the experimental version), see file experimental_online_player_ocr_readme.txt.
