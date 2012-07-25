@@ -1,7 +1,7 @@
 Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to protect it for in 20 years"
 
 == rough milestone current roadmap == 
-  DVD's "done" but not user friendly
+  DVD's "works" but not user friendly
   netflix instant EDL
   
 == things working on today/requested ==
@@ -17,17 +17,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   LLC
   do we still leak win32ole handles?
   netflix upconvert that rox LOL
-  bounty ffmpeg libavfilter dynamic variables
-  does it need to install ffmpeg to "just play" a file?
+  assert mplayer versions =~ /EDL/
   tell that guy where to upload, once it's possible LOL. Hmm...
   'finish' rename: sourceforge, github, all docu, some links
   mplayer re-read config file each frame, maybe track mtime? hmm...
-  ffmpeg dshow crossbar (buy exemplar? send? use local?)
   make possible "add 2 seconds to all entries in this EDL" (maybe after an online system)
   move documentation to online [all]
    combine README with the online docu...DRY that stuff up...
   add the one 7zip feature
-  @ffmpeg: -ss 90 creates one that goes from second 1 to 11? and not quite all the way there even? (missing a few video packets at the end, if audio comes too early)
   either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
     Maybe after mplayer accepts my patches?
   our new DVD's that we own
@@ -39,37 +36,23 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     broken scanning hp2 init's
   make it easier to use for "just files"
     "pick your source, pick your EDL, ready, ok?"
-  disclosure for backlighting, upconverting arbitrary
   combine all "folders" of movie EDL's into one uni-folder (non youtube)
   the awesome new editor GUI [or do I just want online? probably...]
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   use the cool uploader website
   DVD timing for makemkv forum:Snow White
   google search for them goblet of fire en 1cd subtitles "srt file" (google search is ok)
-  authorize.net SIM patch :)
   melissa stuff:
     readme be helpful for subtitles [?]
       better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
-    guide them through process more/subtitles
     split pc/mac distros for easier understandability :P
       actually a real installer for each might help...let's do that instead...
-    instructions on how to actually use opensubtitles LOL
-  my treasury (john newspaper thing)
+    better instructions on how to actually use opensubtitles LOL (youtube?)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
-  learn clojure
-  send bom to menumulti guy :P
   try out VLC bindings to be able to award prize
   gui/edl parser unit tests [just] work
-    added an extra "show" perhaps? EXIT_ON_CLOSE [?]
-  ffplay diagonal bug reproduce/trac
-  create auto-easy-recorder windows, with multiple audio if possible
   ask for more beta testers for use, ask for more beta testers for creation, too
-  can edit books' text too.
-    +- list/publish potter
-  inventionzy: blu-ray stuffs from todo.inventionzy [and add a blog for it LOL]
-    just OCR powerdvd for now
-  @ffmpeg: you can't convert mkv's of this creation type!
-  fix smplayer OSD, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
+  fix smplayer button time slider, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
     also fix it to "just output the right time" for mplayer sake?
   @docu: imprecise dvd "end seek points" at the least
   VLC bounty 
@@ -80,15 +63,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     bounty: TMNT broken seeks
     toying with the truth fails
     crossbar fails
-  process shared map/queues
-  librivox EDL's and/or speedups and/or remove headers :P
-    "process them at home, or download them here" [prefer download here]
   bounty: fix mplayer chapter breaks shuck! whoa!
   fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
-  feedback button fails os x
- 
+  feedback button fails os x (double check)
+  mplayer dies tmnt dvdnav://1 (bounty anyway?)
 
 == decide later to move up or down ==
+  inventionzy: blu-ray stuffs from todo.inventionzy
+    just OCR powerdvd for now
   parser misses first subtitle entry even when it's legit?
   @VLC fantasia 2000 dvd fails
   sintel file upconvert is *messed* [maybe just with mkv?]
@@ -119,13 +101,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
       after mplayer accepts my patches LOL
     assert file played back "always" start at 0 [?]
   back lighting code cleanup
-  also HP profanity lists...
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
     C player:
       double check if it timing shucks, though I think it does...
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  mplayer dies tmnt dvdnav://1
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
   pure java ocr [?]
