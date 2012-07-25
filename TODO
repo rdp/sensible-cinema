@@ -1,35 +1,29 @@
 Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to protect it for in 20 years"
 
 == rough milestone current roadmap == 
-
+  DVD's "done" but not user friendly
   netflix instant EDL
   
 == things working on today/requested ==
   smplayer doesn't recognize my mplayer v?
-    better seek while I'm at it ?:P
   
-== blocked working on ==
-
-== yes do, un-ordered currently, from all the various future release options ==
-  ffmpeg dshow input ramiro finalize patches, also fix the 333333/10000 thing
-  do "lots" of DVD's I might want [orem pub?]
-  'finish' mplayer/patches
+== yes do, un-ordered currently, from all the various future release options ==  
+  do "lots" of DVD's I might want [orem pub?]  
   
-  JPFA genealogy collab wiki--maybe on church's wiki site?
+  smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
   also do "upconverter" as "netflix quality enhancer" separate project LOL  
   LLC
   do we still leak win32ole handles?
   netflix upconvert that rox LOL
-  bounty vlc cross bar problem
   bounty ffmpeg libavfilter dynamic variables
   does it need to install ffmpeg to "just play" a file?
   tell that guy where to upload, once it's possible LOL. Hmm...
   'finish' rename: sourceforge, github, all docu, some links
   mplayer re-read config file each frame, maybe track mtime? hmm...
-  ffmpeg dshow crossbar
-  make possible "add 2 seconds to all entries in this EDL"
+  ffmpeg dshow crossbar (buy exemplar? send? use local?)
+  make possible "add 2 seconds to all entries in this EDL" (maybe after an online system)
   move documentation to online [all]
    combine README with the online docu...DRY that stuff up...
   add the one 7zip feature
@@ -51,7 +45,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   use the cool uploader website
   DVD timing for makemkv forum:Snow White
-  google search for them goblet of fire en 1cd subtitles "srt file" 
+  google search for them goblet of fire en 1cd subtitles "srt file" (google search is ok)
   authorize.net SIM patch :)
   melissa stuff:
     readme be helpful for subtitles [?]
@@ -84,7 +78,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     can skip over poor parts of a DVD
     vlc += mplayer chapter breaks not skip LOL    
     bounty: TMNT broken seeks
-    toying with the truth fails  
+    toying with the truth fails
+    crossbar fails
   process shared map/queues
   librivox EDL's and/or speedups and/or remove headers :P
     "process them at home, or download them here" [prefer download here]
