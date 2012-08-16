@@ -139,8 +139,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
       step_sub maybe
    ask why mplayer seems to show "overlap" at DVD time splits [and become non DVD]
   @mplayer: ctrl-keys patch, ask them at least :P
-  report ffmpeg/mencoder splitting bugz (2)
-  the awesome ffmpeg file splitter :P
+  the awesome ffmpeg file splitter (re-encodes only the part that needs to):P
     also do I really still need to use mencoder?
   Do the C based "use the real thing" MSDN skipper it might actually be accurate after all...just not precise for doing edits.
   super automatic-o "your DVD has no EDL? let me do all of that for you..."
@@ -210,11 +209,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   Linux port SC (call that good enough for usability on TV's...), should be...
   7z'up mplayer_edl
   youtube/hulu timings different?
-  ffmpeg dshow input can I move audio along anyway, or with different metric?
   investigate more "it seeks past the end of dvdnav:// to the beginning!"
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
-  ffmpeg filter to add subs from .srt :P
 
 == other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
   todo.upconvert
@@ -235,8 +232,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   bounty VLC processor optimized/profile guided :P
     I could just do my own...
     also check/make sure their internal ffmpeg is using SSE et al
-  double check that ffmpeg/mplayer windoze builds are using SSE as they should...
-    also its internal ffmpeg should be using SSE appropo...
   bounty VLC: play DVD's with scratches
   check if swscale "is efficient" when only doing colorspace conversions
   super-precise "can seek to exactly z"
@@ -266,7 +261,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     netflix quality upconverter, have a go at it
       finalize screen capturer
   see if all those patches have been applied to various (sherpya's).
-  start an ffmpeg filter repository
   research VLC softskip at home/slow cpu?
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   netflix upconvert
@@ -308,7 +302,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     or some online gui thing, that would work too...prefer the latter
   real mac app
   A netflix instant "coordinator" so you can watch a movie while on the phone et al :P (/hulu etc.)
-  bounty qtcapture for ffmpeg LOL/fix VLC
   compare netflix instant HD to a blu-ray...same?
   split out the "dependency" codes
   more netflix instant timing
@@ -329,11 +322,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     try out libdvdcss + handbrake on the one that was totally broken...is it better?
     can I reproduce it this days? double check OSOH, repost to forum
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
-  bounty /ask mplayer OS X screen capture input can I use it in ffmpeg?
-   ask dll, say, for pausing [?]
+  ask dll, say, for pausing [?]
      ask if I can make a pausing filter, to start paused...hmm... [?]
-   bounty ffmpeg server for doze
-   bounty motion-detect, audio
+  
   try out disney digital copy
   EDL's (if not lewd) (only after can do propaganda, really)
     monty python
@@ -346,7 +337,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   propaganda DVD upconverter
   propaganda virtual audio
   propaganda screen capture
-  report ffplay -t 6 doesn't stop bug
   research XBMC
     break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
@@ -395,8 +385,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   fan editor (after C player ?? though I suppose we could bring back batch mplayer to also do this...)
     "fan editor" .bat file LOL
   @mplayer: highlighting doesn't work (at least with upconvert DVD)
-  @ffmpeg: bounty/plz multi-thread the lanczos filter? plz? [if it looks like it would be helpful]
-  @ffmpeg: super video enhancer filter. plz? LOL [bounty?]
   use mplayerx well [?] like wrap it...with mine inside :P
     could for files, dvdnav://1 should work too..
   try to team up with fanedit.org ?
@@ -437,12 +425,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   also edit the playback of trailers on DVD's et al [?] hmm...
    maybe an internal mplayer thing based on title [?]
   @mplayer: double click default to full screen! :) and enter default to dvdnav select!
-  fix ffmpeg's  Application provided invalid, non monotonically increasing dts to muxer in stream 0: 5940 >= 5940
-    there's a bug report somewhere
   @mencoder you lop off the end somehow (dvd rip)
   pull in information from thetvdb to the GUI app
-  create the "ffmpeg frame accurate" splitter
-    sounds like I want to move in that direction, esp. if handbrake ends up being sane
   research the gplv3, add terms.
   it can "slow certain sections down" that might look way cool! LOL
   it can "speed up" certain [scary/frightening] sections, to make them less tense
@@ -494,12 +478,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     http://themoviedb.lighthouseapp.com/projects/17044-themoviedborg/tickets/142
     their mkv player probably does some lookup 'er other...maybe...for dvd's
     I really need to tell tvdb to allow for discid, and/or themoviedb to allow for series'
-  @ffmpeg: gop 12 for ntsc-dvd?
   can watch conference like a music video :)
   can play "this section then that, with this one's audio [wow that is fringey]
   speedify things (the whole process takes approximately...eternity?)
   can overlay with an arbitrary image (I think mencoder can actually do this...)
-  ffmpeg handle 3F2R audio [sigh] [cars, should work with temple at lavc, too, bob dvd's are dual, I think...hmm...]
   accomodate alternate endings et al
   .exe installer
     just unzips, runs the .bat file for them [?] :)
@@ -531,11 +513,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     might not work for all modes tho...
   make the progress bar map "better" to the actual time that each section should take...
 
-  @ffmpeg: rip to fulli mpeg -> ffmpeg -ovc copy -oac copy out.mpg -> no audio!
-     and to .avi sometimes works, sometimes it results in static!
-
-  can lop off sections/screen coords to save disk space (?)
-
+  
 @smplayer: right click on DVD...
 the ac3 thing (I have to specify it...is this necessary? is it always ac3?) [basically, can I copy audio again?]
 make it so it can have different volume settings, like low volume instead of just always 0
@@ -543,7 +521,7 @@ an auto-check for "newer version available" automagically not...
 warn when labels both exist and don't match...
 
 @mplayer warn before overwrite
-@mplayer you cannot convert mkv files correctly you silly! (ffmpeg too?)
+@mplayer you cannot convert mkv files correctly you silly!
 
 == random non-DVD/OCR backlog ... or a few never do DVD. ==
 
