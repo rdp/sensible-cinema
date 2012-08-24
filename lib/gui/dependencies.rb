@@ -119,10 +119,10 @@ module SensibleSwing
         require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
         FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
         puts 'downloading mplayer edl [12 MB]'
-        MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/0.4/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
-		config_dir = File.expand_path('~/mplayer')
-		FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
-		FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac
+        MainWindow.download('http://sourceforge.net/projects/mplayer-edl/files/0.5/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
+        config_dir = File.expand_path('~/mplayer')
+        FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
+        FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac
       end
 
       # runtime dependencies, at least as of today...

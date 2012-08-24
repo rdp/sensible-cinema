@@ -1,3 +1,7 @@
+0.39.1
+
+use an mplayer EDL that is friendlier for smplayer, also some change/inventionzy related notes added.
+
 0.39.0
 
 Some github tweakage/renaming/use new stuff.
