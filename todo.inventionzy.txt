@@ -165,3 +165,5 @@
   it can have multiple "synchronization points" for various different medias, for example specifying that "in netflix instant, this particular subtitle starts here, where as with dvd's, it starts here, and this ending subtitle is here with netflix instant, here with other media"
   it can have multiple "synchronization points" for coordinating subtitles with the movie, like a beginning, middle, ending point, for better incoordination.
   it can "save" a movie using upscaling/upconversion techniques, so that when it is played back later it can be played back looking good, without requiring more cpu to upscale it "on the fly" at that time.
+  "user prompt each time" for sections, like "would you like to skip this section this time around?" per EDL
+  upconvert the audio somehow, like adding bass on its way out :)
