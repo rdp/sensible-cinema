@@ -84,7 +84,7 @@ def read_spec
 end
 
 desc 'install dependency gems'
-task 'install_dependency_gems' do
+task 'install_dependency_gems' => :gemspec do
   get_all_dependency_gems.each{|d|
     system("#{OS.ruby_bin} -S gem install #{d.name}")
   }
