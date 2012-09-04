@@ -1,4 +1,4 @@
-      : add docu on how it works.
+0.39.3: add docu on how it works.
 
 0.39.2: fix missing dependency with work around for now
 
