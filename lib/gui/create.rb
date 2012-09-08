@@ -415,14 +415,15 @@ module SensibleSwing
 	    if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
           nav = $1.to_f
           mpeg = $2.to_f
-          if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
+          if !outs[:dvd_nav_packet_offset] && nav > 0.0 # we hit our first real "NAV" packet, like 0.4
 			  if mpeg < (nav - 0.05) # 0.05 for karate kid. weird.
-			    # case there is an MPEG split before the second NAV packet [ratatouille, hp]
+			    # case there is an MPEG split before the second NAV packet [ratatouille, hp] or does it only occur right *at* the first nav?
 			    p mpeg, nav, old_mpeg
 			    assert old_mpeg > 0.3
+				# works with ...=c=
 				mpeg = old_mpeg + mpeg - 0.033367 # assume 30 fps, and that this is the second frame since it occurred, since the first one we apparently display "weird suddenly we're not a dvd?"
-				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report to the mailing list..."
-				puts out
+				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report to the mailing list...\nyou may want to double check the math..."
+				puts out # so they can manually debug it if they so desire LOL.
 			  end
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
           else

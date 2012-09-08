@@ -85,16 +85,18 @@ end
 
 desc 'install dependency gems'
 task 'install_dependency_gems' => :gemspec do
-  get_all_dependency_gems.each{|d|
+  get_all_dependency_gems(false).each{|d|
     system("#{OS.ruby_bin} -S gem install #{d.name}")
   }
 end
 
-def get_all_dependency_gems
+def get_all_dependency_gems include_transitive_children=true
    spec = read_spec
    dependencies = spec.runtime_dependencies
-   dependencies = (dependencies + get_transitive_dependencies(dependencies))
-   # out own uniq method...gems...sigh...
+   if include_transitive_children
+     dependencies = (dependencies + get_transitive_dependencies(dependencies))
+   end
+   # our own uniq method...gems...sigh...
    out = {}
    dependencies.each{|d| out[d.name] ||= d}
    out.values
