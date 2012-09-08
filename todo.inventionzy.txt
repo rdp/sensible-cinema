@@ -167,3 +167,5 @@
   it can "save" a movie using upscaling/upconversion techniques, so that when it is played back later it can be played back looking good, without requiring more cpu to upscale it "on the fly" at that time.
   "user prompt each time" for sections, like "would you like to skip this section this time around?" per EDL
   upconvert the audio somehow, like adding bass on its way out :)
+  it can "insert" video/videos
+  it can "loop" just once or always, when it hits a certain timestamp (ex: just loop once to insert a video)
