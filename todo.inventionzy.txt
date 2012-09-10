@@ -170,3 +170,8 @@
   it can "insert" video/videos
   it can "loop" just once or always, when it hits a certain timestamp (ex: just loop once to insert a video)
   you can specify an image to "overlay" at "exactly this frame" then a different one for "exactly this one..."
+  allow for interaction among users watching a video together (but on separate devices), for instance chat, synchronization,
+    they can "circle" things in the playback/insert their own overlays/their own dynamic overlays/their own programmable
+    filters that do something to the video before displaying it/interact with ads presented during video playback or
+    "while" video is playing back.  Playing games together while the movie is playing. Being able to pause and then "color over"
+    parts of the frame, etc.
