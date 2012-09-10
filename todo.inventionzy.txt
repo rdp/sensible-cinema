@@ -169,3 +169,4 @@
   upconvert the audio somehow, like adding bass on its way out :)
   it can "insert" video/videos
   it can "loop" just once or always, when it hits a certain timestamp (ex: just loop once to insert a video)
+  you can specify an image to "overlay" at "exactly this frame" then a different one for "exactly this one..."
