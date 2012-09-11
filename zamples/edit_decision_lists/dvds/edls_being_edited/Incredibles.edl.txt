@@ -3,11 +3,11 @@
 "name" => "Incredibles",
 
 "mutes" => [
-  "0:43:21.07" , "0:43:24.98", "profanity", "deity", "My , you've gotten fat. Come in. Come, come.",
+  "0:43:20.07" , "0:43:24.98", "profanity", "deity", "My , you've gotten fat. Come in. Come, come.",
   "0:43:32.24" , "0:43:36.91", "profanity", "deity", "Yes, things are going quite well. Quite well. My [ ], no complaints.",
   "0:43:55.68" , "0:43:59.55", "profanity", "deitys", "Feh! I used to design for [deitys].",
   "1:03:12.51" , "1:03:16.81", "profanity", "deity", "You are Elastigirl! My ! Pull yourself together.",
-  "1:10:54.54" , "1:10:57.33", "profanity", "deity", "- Oh, my ! Who's idea was this? - What are we gonna do?",
+  "1:10:54.0" , "1:10:57.33", "profanity", "deity", "- Oh, my ! Who's idea was this? - What are we gonna do?",
   "1:27:12.53" , "1:27:15.37", "profanity", "deity", "We're running for our lives through some [_]forsaken jungle.",
 ],
 
