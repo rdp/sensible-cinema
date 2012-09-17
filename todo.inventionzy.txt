@@ -175,3 +175,5 @@
     filters that do something to the video before displaying it/interact with ads presented during video playback or
     "while" video is playing back.  Playing games together while the movie is playing. Being able to pause and then "color over"
     parts of the frame, etc.
+  it can display a screen/wiki editable something that accompanies a film while it is being viewed, a la: http://www.cnn.com/2012/09/15/showbiz/tv/second-screen-tv-our-mobile-society/index.html
+    including online chats with others, etc.
