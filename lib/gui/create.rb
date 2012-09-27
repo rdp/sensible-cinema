@@ -295,7 +295,7 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC etc.]")
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC use, etc.]")
       @create_dot_edl.tool_tip = <<-EOL
         Creates a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
@@ -307,6 +307,11 @@ module SensibleSwing
         show_blocking_message_dialog "Warning: With XBMC you'll need at least Eden v11.0 for mutes to work at all"
         choose_file_and_edl_and_create_sxs_or_play true
       }
+	  
+	  new_jbutton("open arbitrary file to edit it") do
+	    path = SimpleGuiCreator.new_previously_existing_file_selector_and_go "Select file to open/edit"
+		open_file_to_edit_it path
+	  end
 	  
       if LocalStorage['have_zoom_button']
         @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do

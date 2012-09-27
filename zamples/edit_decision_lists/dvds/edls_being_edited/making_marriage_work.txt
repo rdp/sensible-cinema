@@ -1,5 +1,6 @@
 "mutes" => [
-  "19:52" ,  "19:53"  ,"profanity", "religious exclamation"
+  "11:39" ,  "11:45"  ,"profanity", "religious exclamation", #untested
+  "19:49" ,  "19:53"  ,"profanity", "religious exclamation"
 ],
 
 "blank_outs" => [
