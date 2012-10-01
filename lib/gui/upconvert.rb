@@ -22,11 +22,17 @@ module SensibleSwing
       
       @watch_online = new_jbutton( "Watch upconverted online player, like netflix instant") do
         show_blocking_message_dialog("sorry not mac compat. yet") and raise unless OS.doze?
-        answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the screen capture device installed (install MSVC 2010 runtime x86 first), and also configured using its setup utility, and avisynth installed.", :yes => 'take me to its website', :no => 'I already and configured it, let me at it!')
-        if answer == :yes
-           SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/screen-capture-recorder-to-video-windows-free"
-           raise 'install it'
-        end
+		for type, url in {'screen capture grabber device' => "https://github.com/rdp/screen-capture-recorder-to-video-windows-free", 'avisynth 32-bit' => "http://avisynth.org/mediawiki/Main_Page"}
+          answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the #{type} previously installed.", :yes => 'take me to its website', :no => 'I already and installed it!') # guess we could auto-detect...
+          if answer == :yes
+             SimpleGuiCreator.open_url_to_view_it_non_blocking url
+             raise 'install them then click this button again'
+          end
+		end
+		SimpleGuiCreator.show_text "you will want to first configure the capture device by 
+		starting the video playing, 
+		then run programs -> screen capture recorder -> configure -> by resizing a transparent window
+		position it exactly over the video, then click ok.  Click ok here when that has been done."
         run_smplayer_non_blocking "upconvert_from_screen/upconvert_from_screen_me2.avs", nil, '', force_mplayer = true, true, false, nil
       end
       
