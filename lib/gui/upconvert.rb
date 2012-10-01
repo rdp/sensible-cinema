@@ -21,8 +21,9 @@ module SensibleSwing
       @watch_dvd_upconvert.tool_tip = "Plays back the currently inserted DVD, using your current upconverter settings.\nIf it fails (dies immediately, blank screen, etc.), try setting upconvert options to a smaller screen resolution multiple.\nOr try playing the DVD with VLC first, then it might work.\nTo playback a DVD edited upconverted, set upconvert options here first, then run them using sensible cinema main--it will automatically use your new upconverting options."
       
       @watch_online = new_jbutton( "Watch upconverted online player, like netflix instant") do
-        show_blocking_message_dialog("sorry not mac compat. yet") and raise unless OS.doze?
-		for type, url in {'screen capture grabber device' => "https://github.com/rdp/screen-capture-recorder-to-video-windows-free", 'avisynth 32-bit' => "http://avisynth.org/mediawiki/Main_Page"}
+	    show_blocking_message_dialog("sorry not mac compat. yet") and raise unless OS.doze?
+		warn_if_no_upconvert_options_currently_selected
+        for type, url in {'screen capture grabber device' => "https://github.com/rdp/screen-capture-recorder-to-video-windows-free", 'avisynth 32-bit' => "http://avisynth.org/mediawiki/Main_Page"}
           answer = JOptionPane.show_select_buttons_prompt("Warning: you must have the #{type} previously installed.", :yes => 'take me to its website', :no => 'I already and installed it!') # guess we could auto-detect...
           if answer == :yes
              SimpleGuiCreator.open_url_to_view_it_non_blocking url
@@ -100,7 +101,7 @@ module SensibleSwing
     end
 	
 	def reset_upconversion_options
-	LocalStorage[UpConvertKey] = nil
+	    LocalStorage[UpConvertKey] = nil
         LocalStorage[UpConvertKeyExtra] = nil
         LocalStorage[UpConvertEnglish] = nil
     end
