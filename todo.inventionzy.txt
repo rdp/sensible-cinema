@@ -178,3 +178,5 @@
   it can display a screen/wiki editable something that accompanies a film while it is being viewed, a la: http://www.cnn.com/2012/09/15/showbiz/tv/second-screen-tv-our-mobile-society/index.html
     including online chats with others, etc.
   it can record an online playing movie/video/stream, then replay it back to you "at 1.5 speed" or "beautified/optimized" (or edited), or any combination of the same.
+  
+  you can adjust as a subtitle file "gets off" with time, you factor in some timing to accomodate for its qwirks, ex: by different phases that re-sync/
