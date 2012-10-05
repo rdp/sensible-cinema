@@ -4,6 +4,7 @@
 
 "mutes" => [
    "0:50:31.91" , "0:50:34.45", "profanity", "deity", "What in [___]'s name?",
+  "1:15:29.0", "1:15:35.0", "profanity", "deity", "l...",
 ],
 
 "blank_outs" => [
