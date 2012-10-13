@@ -107,12 +107,7 @@ module SubtitleProfanityFinder
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
 
-     # accomodate for both styles of rewrite, except it messes up the math...delete this soon...
-     # difference = starting_timestamp_given_srt - starting_timestamp_actual
-     # subtract_from_each_beginning_ts += difference
-     # add_to_end_each_ts -= difference
-
-#     you minus the initial srt time... (given)
+#     you minus the initial srt time... (given) then
 #     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
      multiply_by_this_factor = (ending_actual_time - starting_time_actual)/(ending_srt_time - starting_time_given_srt)
 
@@ -188,16 +183,16 @@ module SubtitleProfanityFinder
       'cock' +
 	  'su' + 
 	  'cker' => 'cock......',
+	  'bloody' => 'bloo..'
     }
-    
 	
     semi_bad_profanities = {}
     ['moron', 'breast', 'idiot', 
       'sex', 'genital', 'naked', 
       'boob', 
-      'tits','penis',
+      'tits',
       'make love', 'pen' +
-	    'is',
+	  'is',
       'pu' +
 	  'ssy',
       'fart',
@@ -210,15 +205,17 @@ module SubtitleProfanityFinder
 	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
 	    'u' + 'nt',
-	    'd' + 'ick', 'vag' +
-	    'i' + 'na',
+	    'd' + 'ick', 'v' +
+		'ag' +
+	    'i' + 
+		'na',
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
-    semi_bad_profanities['bloody'] = 'bloo..'
-    semi_bad_profanities['crap'] = ['crap', :full_word]
-    semi_bad_profanities['butt'] = ['butt', :full_word]
-    # butter?
+	
+	for word in ['crap', 'butt', 'dumb']
+	  semi_bad_profanities[word] = [word, :full_word]
+	end
 	
     semi_bad_profanities.merge! extra_profanity_hash
 
@@ -234,12 +231,13 @@ module SubtitleProfanityFinder
       for entry in entries
         text = entry.text
         ts_begin = entry.beginning_time
-        ts_begin -= subtract_from_each_beginning_ts
+
         ts_begin = multiply_proc.call(ts_begin)
+        ts_begin -= subtract_from_each_beginning_ts
         
         ts_end = entry.ending_time
-        ts_end += add_to_end_each_ts
         ts_end = multiply_proc.call(ts_end)
+        ts_end += add_to_end_each_ts
         found_category = nil
         for (profanity, category, sanitized) in all_profanity_combinations
           if text =~ profanity

@@ -87,9 +87,6 @@ module SensibleSwing
 		if srt_filename =~ /\.sub$/i
 		  show_blocking_message_dialog "warning--input file has to be in SubRip [.srt] format, and yours might be in .sub format, which is incompatible"
 		end
-        # TODO nuke, or do I use them for the 600.0 stuff?
-        add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
-        add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
         euphemized_entries = euphemized_filename = nil
         with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
@@ -140,8 +137,17 @@ module SensibleSwing
 		    extra_profanity_hash[entry] = entry
 		  end
 		end
+		
+		if end_srt_time != 3000
+		  add_to_beginning_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
+		  add_to_end_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
+		else
+		  add_to_beginning_all=0.0
+		  add_to_end_all=0.0
+		end
+		
         with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
-          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_end_all, add_to_beginning_all, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
         filename = get_temp_file_name('mutes.edl.txt')
@@ -151,8 +157,11 @@ module SensibleSwing
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],!
 	    end
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
-        File.write filename, out
+        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time} (not accomodating for added start times)\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
+		
+        # LODO ask them if it worked...
+		
+		File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open in notepad
 		
@@ -163,7 +172,7 @@ module SensibleSwing
             out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
 		    write_subs_to_file out_file, euphemized_synchronized_entries
             show_in_explorer out_file
-          end
+          end		  
 		end
         
       end
