@@ -3,16 +3,15 @@
 "name" => "Harry Potter 5 Order Phoenix",
 
 "mutes" => [
-  
-  "0:05:10.54" , "0:05:14.21", "profanity", "l...", "Good [l...], boy. They told me you were intelligent.",
+  "0:05:09.54" , "0:05:14.21", "profanity", "l...", "Good [l...], boy. They told me you were intelligent.",
   "0:08:44.50" , "0:08:48.36", "profanity", "deity", "- Tonks, for [___]'s sake. - Unnatural.",
-  "0:41:13.81" , "0:41:17.25", "profanity", "h...", "[bloo..] [h...]  Harry. The woman's torturing you.",
-
+  "0:41:11.81" , "0:41:17.25", "profanity", "h...", "[bloo..] [h...]  Harry. The woman's torturing you.",
+  "00:56:42", "00:56:45", "profanity", "[bloo..]",
+# beginning till 4:30 dementors
 ],
 
 "blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "01:08:16", "01:08:21.04", "blood",
 ],
 
 "source" => "dvd",
