@@ -180,3 +180,5 @@
   it can record an online playing movie/video/stream, then replay it back to you "at 1.5 speed" or "beautified/optimized" (or edited), or any combination of the same.
   
   you can adjust as a subtitle file "gets off" with time, you factor in some timing to accomodate for its qwirks, ex: by different phases that re-sync/
+  you can "pause and insert audio" at some point (or a separate video, or jump within the same one), then it returns/resumes playing where it left off.
+
