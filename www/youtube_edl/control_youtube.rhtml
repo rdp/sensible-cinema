@@ -40,6 +40,11 @@ Run this from a web server to actually work...
       // This function is called when the player changes state
       function onPlayerStateChange(newState) {
         updateHTML("playerState", newState);
+        <% if should_loop == '1' %>
+        if(newState == 0) {
+          document.location.reload(true);
+        } 
+        <% end %>
       }      
       
 

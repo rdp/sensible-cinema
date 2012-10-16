@@ -18,8 +18,9 @@ end
 def render_edited out, incoming_params
     mutes = combine_arrays incoming_params['mute_start'], incoming_params['mute_end']
     splits = combine_arrays incoming_params['skip_start'], incoming_params['skip_end']
-    video_id =  incoming_params['youtube_video_id'][0]
+    video_id = incoming_params['youtube_video_id'][0]
+    should_loop = incoming_params['loop'][0] || '0' # everything's an array, even if not there? weird
     out.puts $template.result(binding)
-   # html tag has already been closed...
+    # html tag has already been closed...hmm
     out.puts 'mutes: ' + mutes.join(', ') + ' skips: ' + splits.join(', ') + "\n"
 end
