@@ -59,7 +59,14 @@ def get_transitive_dependencies dependencies
   dependencies.each{|d|
    gem d.name # make sure it's loaded so that it'll be in Gem.loaded_specs
    begin 
-     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[0][1]
+     matching = Gem.loaded_specs.select{|name, spec| name == d.name}
+	 if matching.is_a? Array
+	   dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[0][1]
+	 elsif matching.is_a? Hash
+	   dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[d.name] # huh?
+	 else
+	   raise 'not found'
+	 end
    rescue
      raise 'possibly dont have that gem are you running jruby for sure?' + d.name +  Gem.loaded_specs.select{|name, spec| name}.inspect
    end
@@ -84,17 +91,19 @@ def read_spec
 end
 
 desc 'install dependency gems'
-task 'install_dependency_gems' do
-  get_all_dependency_gems.each{|d|
+task 'install_dependency_gems' => :gemspec do
+  get_all_dependency_gems(false).each{|d|
     system("#{OS.ruby_bin} -S gem install #{d.name}")
   }
 end
 
-def get_all_dependency_gems
+def get_all_dependency_gems with_transitive = true
    spec = read_spec
    dependencies = spec.runtime_dependencies
-   dependencies = (dependencies + get_transitive_dependencies(dependencies))
-   # out own uniq method...gems...sigh...
+   if with_transitive
+     dependencies = (dependencies + get_transitive_dependencies(dependencies))
+   end
+   # out own uniq method...sigh...
    out = {}
    dependencies.each{|d| out[d.name] ||= d}
    out.values
