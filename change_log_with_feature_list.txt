@@ -1,3 +1,9 @@
+0.39.4: add upconv. ease of use features
+
+0.39.3: add docu on how it works.
+
+0.39.2: fix missing dependency with work around for now
+
 0.39.1
 
 use an mplayer EDL that is friendlier for smplayer, also some change/inventionzy related notes added.

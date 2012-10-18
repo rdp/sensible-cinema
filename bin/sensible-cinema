@@ -25,7 +25,7 @@ begin
   require 'sane'
   require 'whichr'
 rescue LoadError => e
-  raise 'please run the rake command to copy dependencies (like rake install_dependency_gems and/or rake rebundle_copy_in_dependencies) first, as we prefer using cached gems ' + e.to_s
+  raise 'please run the rake command to copy dependencies (like gem install jeweler os sane rake && rake install_dependency_gems && rake rebundle_copy_in_dependencies) first, as we prefer using cached gems ' + e.to_s
 end
 
 raise $:.inspect + " has bad gems in it, run rake rebundle_copy_in_dependencies" if $:.detect{|path| path =~ /gems/}

@@ -1,46 +1,53 @@
 Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to protect it for in 20 years"
 
-== rough milestone current roadmap == 
-  DVD's "works" but not user friendly
+== rough milestone current roadmap, in order, just here == 
+  minor cleanings for DVD
+    'finish' rename: new name? sourceforge, github, all docu, some links
+    use a dropdown for 'tell me which one it is'
+    smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
+    mplayer bounty: 
+      fix mplayer chapter breaks shuck! whoa!
+      mplayer dies tmnt dvdnav://1 (bounty anyway?) once I have confirmed it...
+      fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
+        I can research this one, too...
+    mplayer re-read config file each frame, maybe track mtime? hmm...
+    mplayer patches
+    VLC bounties
   netflix instant EDL
   
 == things working on today/requested ==
-  smplayer doesn't recognize my mplayer v?
+  mutes "00:56:42", "00:56:45", "profanity", "[bloo..]", doesn't work right [HP 5]?
   
 == yes do, un-ordered currently, from all the various future release options ==  
-  do "lots" of DVD's I might want [orem pub?]  
   
-  smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
+  new DVD's that we own
+  after disclsoure accepted, "tell clearplay" :)
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
-  also do "upconverter" as "netflix quality enhancer" separate project LOL  
   LLC
+  
   netflix upconvert that rox LOL
   assert mplayer versions =~ /EDL/
   tell that guy where to upload, once it's possible LOL. Hmm...
-  'finish' rename: sourceforge, github, all docu, some links
-  mplayer re-read config file each frame, maybe track mtime? hmm...
-  make possible "add 2 seconds to all entries in this EDL" (maybe after an online system)
-  move documentation to online [all]
+  make possible "add 2 seconds to all entries in this EDL" (maybe after editor system)
+  move documentation to online wiki [all]
    combine README with the online docu...DRY that stuff up...
-  add the one 7zip feature
-  either match the file or match the DVD times, punk!  No more half and half weird-o DVD timing stuff.
-    Maybe after mplayer accepts my patches?
-  our new DVD's that we own
+  match the file time, punk!  No more half and half weird-o DVD timing stuff.
   respond to that guy "better upload place"
   princess bride EDL
-  watch Gottman
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
     broken scanning hp2 init's
   make it easier to use for "just files"
     "pick your source, pick your EDL, ready, ok?"
-  combine all "folders" of movie EDL's into one uni-folder (non youtube)
+  combine all "folders" of movie EDL's into one uni-folder 
+    non youtube, 
+    also non...in process folder
   the awesome new editor GUI [or do I just want online? probably...]
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   use the cool uploader website
   DVD timing for makemkv forum:Snow White
-  google search for them goblet of fire en 1cd subtitles "srt file" (google search is ok)
+  do a google search for them goblet of fire en 1cd subtitles "srt file" (google search is ok...but not really...)
   melissa stuff:
     readme be helpful for subtitles [?]
       better readme documentation system overall.  move all docs together, and/or move them all the wiki maybe.
@@ -48,38 +55,41 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
       actually a real installer for each might help...let's do that instead...
     better instructions on how to actually use opensubtitles LOL (youtube?)
   accomodate for telecine optionally [veggie tales, sintel need it <sigh>]
-  try out VLC bindings to be able to award prize
   gui/edl parser unit tests [just] work
   ask for more beta testers for use, ask for more beta testers for creation, too
-  fix smplayer button time slider, to make it default for editing/getting timestamps [that stuff is hard with mplayer...]
-    also fix it to "just output the right time" for mplayer sake?
   @docu: imprecise dvd "end seek points" at the least
   VLC bounty 
     resume/window position et al
-    did Melissa have more feedback for VLC?
+    did Melissa have more feedback for VLC itself?
     can skip over poor parts of a DVD
     vlc += mplayer chapter breaks not skip LOL    
     bounty: TMNT broken seeks
     toying with the truth fails
     crossbar fails
-  bounty: fix mplayer chapter breaks shuck! whoa!
-  fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
   feedback button fails os x (double check)
-  mplayer dies tmnt dvdnav://1 (bounty anyway?)
+  use real JSON or the like...
+  use DVD NAV packet time raw:
+    timestamps_relative_to "force them" to have, or to hit the upgrade button
+      add 2 options: file, "dvd"
+    non 29.97 with mplayer edl change OSD
+      remove -osd-add, or maybe fine tune it?
+      after mplayer accepts my patches LOL
+    assert file played back "always" start at 0 [?]
 
 == decide later to move up or down ==
+  assert mplayer versions =~ /EDL/
   inventionzy: blu-ray stuffs from todo.inventionzy
     just OCR powerdvd for now
+    make blog post "clearplay for blu ray" :)
   parser misses first subtitle entry even when it's legit?
   @VLC fantasia 2000 dvd fails
   sintel file upconvert is *messed* [maybe just with mkv?]
   OS X netflix instant
     mac'ify Mouse
   the "add on" type EDL
-  dvd_start_offset -> dvd_mpeg_start_offset
-  mac: double check mplayer-edl version is installed (when I need to, if ever) [or both...]
+  gottman had serious de-interlacing problems, even with softskip/pullup
+  dvd_start_offset -> dvd_mpeg_start_offset or something better...
   umplayer for mac/use it, mplayer shucks!
-  mac: double check mplayer-edl version (when I need to, if ever)
   allow for a mute to "encompass" a skip by splitting it, uh guess, otherwise hard to card 'bad' part in middle of a mute.
     Or programmatically
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
@@ -92,13 +102,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
     pay somebody to test it
-  use DVD NAV packet time raw:
-    timestamps_relative_to "force them" to have, or to hit the upgrade button
-      add 2 options: file, "dvd"
-    non 29.97 with mplayer edl change OSD
-      remove -osd-add, or maybe fine tune it?
-      after mplayer accepts my patches LOL
-    assert file played back "always" start at 0 [?]
   back lighting code cleanup
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?

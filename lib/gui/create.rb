@@ -87,9 +87,6 @@ module SensibleSwing
 		if srt_filename =~ /\.sub$/i
 		  show_blocking_message_dialog "warning--input file has to be in SubRip [.srt] format, and yours might be in .sub format, which is incompatible"
 		end
-        # TODO nuke, or do I use them for the 600.0 stuff?
-        add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
-        add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
         euphemized_entries = euphemized_filename = nil
         with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
@@ -140,8 +137,17 @@ module SensibleSwing
 		    extra_profanity_hash[entry] = entry
 		  end
 		end
+		
+		if end_srt_time != 3000
+		  add_to_beginning_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
+		  add_to_end_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
+		else
+		  add_to_beginning_all=0.0
+		  add_to_end_all=0.0
+		end
+		
         with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
-          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_end_all, add_to_beginning_all, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
         
         filename = get_temp_file_name('mutes.edl.txt')
@@ -151,8 +157,11 @@ module SensibleSwing
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],!
 	    end
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
-        File.write filename, out
+        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time} (not accomodating for added start times)\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
+		
+        # LODO ask them if it worked...
+		
+		File.write filename, out
         open_file_to_edit_it filename
         sleep 1 # let it open in notepad
 		
@@ -163,7 +172,7 @@ module SensibleSwing
             out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
 		    write_subs_to_file out_file, euphemized_synchronized_entries
             show_in_explorer out_file
-          end
+          end		  
 		end
         
       end
@@ -295,7 +304,7 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC etc.]")
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC use, etc.]")
       @create_dot_edl.tool_tip = <<-EOL
         Creates a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
@@ -307,6 +316,11 @@ module SensibleSwing
         show_blocking_message_dialog "Warning: With XBMC you'll need at least Eden v11.0 for mutes to work at all"
         choose_file_and_edl_and_create_sxs_or_play true
       }
+	  
+	  new_jbutton("open arbitrary file to edit it") do
+	    path = SimpleGuiCreator.new_previously_existing_file_selector_and_go "Select file to open/edit"
+		open_file_to_edit_it path
+	  end
 	  
       if LocalStorage['have_zoom_button']
         @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
@@ -415,14 +429,16 @@ module SensibleSwing
 	    if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
           nav = $1.to_f
           mpeg = $2.to_f
-          if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
+          if !outs[:dvd_nav_packet_offset] && nav > 0.0 && mpeg > 0.04 # we hit our first real "NAV" packet, like 0.4
 			  if mpeg < (nav - 0.05) # 0.05 for karate kid. weird.
-			    # case there is an MPEG split before the second NAV packet [ratatouille, hp]
+			    # case there is an MPEG split before the second NAV packet [ratatouille, hp] or does it only occur right *at* the first nav?
 			    p mpeg, nav, old_mpeg
-			    assert old_mpeg > 0.3
+				# works with ...=c=
+				# TODO incredibles...
 				mpeg = old_mpeg + mpeg - 0.033367 # assume 30 fps, and that this is the second frame since it occurred, since the first one we apparently display "weird suddenly we're not a dvd?"
-				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report to the mailing list..."
-				puts out
+				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report to the mailing list...\nyou may want to double check the math..."
+				puts out # so they can manually debug it if they so desire LOL.
+			    # assert old_mpeg > 0.3
 			  end
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
           else

@@ -167,3 +167,20 @@
   it can "save" a movie using upscaling/upconversion techniques, so that when it is played back later it can be played back looking good, without requiring more cpu to upscale it "on the fly" at that time.
   "user prompt each time" for sections, like "would you like to skip this section this time around?" per EDL
   upconvert the audio somehow, like adding bass on its way out :)
+  it can "insert" video/videos
+  it can "loop" just once or always, when it hits a certain timestamp (ex: just loop once to insert a video)
+  you can specify an image to "overlay" at "exactly this frame" then a different one for "exactly this one..."
+  allow for interaction among users watching a video together (but on separate devices), for instance chat, synchronization,
+    they can "circle" things in the playback/insert their own overlays/their own dynamic overlays/their own programmable
+    filters that do something to the video before displaying it/interact with ads presented during video playback or
+    "while" video is playing back.  Playing games together while the movie is playing. Being able to pause and then "color over"
+    parts of the frame, etc.
+  it can display a screen/wiki editable something that accompanies a film while it is being viewed, a la: http://www.cnn.com/2012/09/15/showbiz/tv/second-screen-tv-our-mobile-society/index.html
+    including online chats with others, etc.
+  it can record an online playing movie/video/stream, then replay it back to you "at 1.5 speed" or "beautified/optimized" (or edited), or any combination of the same.
+  
+  you can adjust as a subtitle file "gets off" with time, you factor in some timing to accomodate for its qwirks, ex: by different phases that re-sync/
+  you can "pause and insert audio" at some point (or a separate video, or jump within the same one), then it returns/resumes playing where it left off.
+
+  choose your own adventure type movies :)
+  "random play each movie" / "different movie each time through random jumping in a controlled, prescribed manner

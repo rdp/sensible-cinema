@@ -132,19 +132,19 @@ module SensibleSwing
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
           # this one has its own installer...
-          require_blocking_license_accept_dialog 'Smplayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
+          require_blocking_license_accept_dialog 'SMPlayer', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: smplayer."
           save_to_dir = SimpleGuiCreator.new_existing_dir_chooser_and_go 'pick dir to save smplayer exe installer to:'
           filename = "smplayer-0.6.9-win32.exe"
           save_to_file =  "#{save_to_dir}/#{filename}"
           puts "downloading smplayer.exe [14MB] to #{save_to_file}"
-          MainWindow.download "http://sourceforge.net/projects/smplayer/files/SMPlayer/0.6.9/#{filename}", save_to_file
-          #system(save_to_file) # unfortunately fails...
+          MainWindow.download "http://smplayer-clean.googlecode.com/files/#{filename}", save_to_file
           show_blocking_message_dialog "Run this file to install it now (click ok to reveal): #{filename}"
           SimpleGuiCreator.show_in_explorer save_to_file
+          # system("save_to_file") # unfortunately fails for some reason[?]
           sleep 3
-          show_blocking_message_dialog "please run the file #{filename} in the other window, and then hit ok AFTER you have installed smplayer fully..."          
+          show_blocking_message_dialog "please hit ok AFTER you have installed SMPlayer has been installed fully..."          
           add_smplayer_paths # load it back onto the PATH now that it's installed so its path exists...
-          raise 'smplayer not installed' unless RubyWhich.new.which('smplayer').length > 0
+          raise 'smplayer not installed, try restarting!' unless RubyWhich.new.which('smplayer').length > 0
         end
       end
     end
