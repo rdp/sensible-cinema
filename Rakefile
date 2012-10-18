@@ -59,7 +59,7 @@ def get_transitive_dependencies dependencies
   dependencies.each{|d|
    gem d.name # make sure it's loaded so that it'll be in Gem.loaded_specs
    begin 
-     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}.to_a[0][1]
+     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}.to_a[0][1] # sometimes a Hash, sometimes an Array? huh?
    rescue
      raise 'possibly dont have that gem are you running jruby for sure?' + d.name +  Gem.loaded_specs.select{|name, spec| name}.inspect
    end
@@ -90,6 +90,15 @@ task 'install_dependency_gems' => :gemspec do
   }
 end
 
+<<<<<<< HEAD
+def get_all_dependency_gems with_transitive = true
+   spec = read_spec
+   dependencies = spec.runtime_dependencies
+   if with_transitive
+     dependencies = (dependencies + get_transitive_dependencies(dependencies))
+   end
+   # out own uniq method...sigh...
+=======
 def get_all_dependency_gems include_transitive_children=true
    spec = read_spec
    dependencies = spec.runtime_dependencies
@@ -97,6 +106,7 @@ def get_all_dependency_gems include_transitive_children=true
      dependencies = (dependencies + get_transitive_dependencies(dependencies))
    end
    # our own uniq method...gems...sigh...
+>>>>>>> e9ec6e03bb2418bc5204ed993acf3280a5724f33
    out = {}
    dependencies.each{|d| out[d.name] ||= d}
    out.values
