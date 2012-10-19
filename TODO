@@ -34,7 +34,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
    combine README with the online docu...DRY that stuff up...
   match the file time, punk!  No more half and half weird-o DVD timing stuff.
   respond to that guy "better upload place"
-  princess bride EDL
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
     broken scanning hp2 init's
@@ -77,6 +76,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     assert file played back "always" start at 0 [?]
 
 == decide later to move up or down ==
+  princess bride EDL
   assert mplayer versions =~ /EDL/
   inventionzy: blu-ray stuffs from todo.inventionzy
     just OCR powerdvd for now
