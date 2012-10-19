@@ -76,7 +76,12 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     assert file played back "always" start at 0 [?]
 
 == decide later to move up or down ==
-  princess bride EDL
+  EDL's (if not lewd) (only after can do propaganda, really)
+    monty python
+    LOTR
+    forever strong
+    MOTAB music videos :P
+    princess bride EDL
   assert mplayer versions =~ /EDL/
   inventionzy: blu-ray stuffs from todo.inventionzy
     just OCR powerdvd for now
@@ -185,8 +190,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   update libavfilter filterguide with link, more examples
   upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
-  status updates when downloading files initially
-  DIRT short list
   @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
 
@@ -201,7 +204,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
   "double check sync" button/option on play [?]
-  an even better dvdnav.h comment patch :P
+  an even better dvdnav.h comment patch :P (at least bump it)
   don't distribute with development dependencies...
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
   add some VLC forums bugs as real bugs, if they're still around
@@ -331,11 +334,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
      ask if I can make a pausing filter, to start paused...hmm... [?]
   
   try out disney digital copy
-  EDL's (if not lewd) (only after can do propaganda, really)
-    monty python
-    LOTR
-    forever strong
-    MOTAB music videos :P
   refresh bug try to reproduce
   if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
