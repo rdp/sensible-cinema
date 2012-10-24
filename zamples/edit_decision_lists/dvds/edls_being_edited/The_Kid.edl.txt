@@ -3,15 +3,15 @@
 "name" => "The Kid",
 
 "mutes" => [
-  "0:51:46.17" , "0:51:48.43", "profanity", "deity", "- Hey! - Oh, [___].",
-  "0:52:12.09" , "0:52:15.82", "profanity", "d...", "- Hey! Put-- - [d...], he won't even let you eat, huh?",
-  "0:55:57.17" , "0:55:59.39", "profanity", "deity", "Oh, my [___].",
-  "0:56:47.05" , "0:56:52.62", "profanity", "deity", "Because I've been watching the two of you together, and I swear to [___]...",
-  "0:59:46.65" , "0:59:48.97", "profanity", "deity", "My [___], the wedding tomorrow. Hang on a minute.",
-  "1:13:44.45" , "1:13:46.88", "profanity", "deity", "Oh, my [___].",
-  "1:27:49.13" , "1:27:54.46", "profanity", "deity", "[___], and you pull some stunt like you did today. You're killing her!",
-  "0:24:49.95" , "0:24:52.05", "profanity", "naked", "the time you saw your mother [naked] in the shower.",
-  "0:24:51.95" , "0:24:54.21", "profanity", "naked", "You saw your mother [naked] in the shower?",
+  "0:51:45.17" , "0:51:48.43", "profanity", "deity", "- Hey! - Oh, [___].",
+  "0:52:11.09" , "0:52:15.82", "profanity", "d...", "- Hey! Put-- - [d...], he won't even let you eat, huh?",
+  "0:55:56.17" , "0:55:59.39", "profanity", "deity", "Oh, my [___].",
+  "0:56:46.05" , "0:56:52.62", "profanity", "deity", "Because I've been watching the two of you together, and I swear to [___]...",
+  "0:59:45.65" , "0:59:48.97", "profanity", "deity", "My [___], the wedding tomorrow. Hang on a minute.",
+  "1:13:43.45" , "1:13:46.88", "profanity", "deity", "Oh, my [___].",
+  "1:27:48.13" , "1:27:54.46", "profanity", "deity", "[___], and you pull some stunt like you did today. You're killing her!",
+  "0:24:48.95" , "0:24:52.05", "profanity", "naked", "the time you saw your mother [naked] in the shower.",
+  "0:24:50.95" , "0:24:54.21", "profanity", "naked", "You saw your mother [naked] in the shower?",
 
 ],
 
