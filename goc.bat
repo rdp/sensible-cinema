@@ -1,1 +1,1 @@
-call j -rubygems --1.8 %* bin\sensible-cinema --create-mode --developer-mode
+call j -rubygems %* bin\sensible-cinema --create-mode --developer-mode
