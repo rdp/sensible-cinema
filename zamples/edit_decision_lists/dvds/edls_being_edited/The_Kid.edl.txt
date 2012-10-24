@@ -9,7 +9,7 @@
   "0:56:47.05" , "0:56:52.62", "profanity", "deity", "Because I've been watching the two of you together, and I swear to [___]...",
   "0:59:46.65" , "0:59:48.97", "profanity", "deity", "My [___], the wedding tomorrow. Hang on a minute.",
   "1:13:44.45" , "1:13:46.88", "profanity", "deity", "Oh, my [___].",
-  "1:27:50.13" , "1:27:54.46", "profanity", "deity", "[___], and you pull some stunt like you did today. You're killing her!",
+  "1:27:49.13" , "1:27:54.46", "profanity", "deity", "[___], and you pull some stunt like you did today. You're killing her!",
   "0:24:49.95" , "0:24:52.05", "profanity", "naked", "the time you saw your mother [naked] in the shower.",
   "0:24:51.95" , "0:24:54.21", "profanity", "naked", "You saw your mother [naked] in the shower?",
 
