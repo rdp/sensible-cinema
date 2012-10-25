@@ -2,6 +2,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
 == rough milestone current roadmap, in order, just here == 
   minor cleanings for DVD
+    don't exit normal play
     ending_subtitle needs a LF :)
     palavroes -> real euphemism, like 'wow!'
 	  make sure it accomodate for ',' and ignores them...and line breaks...

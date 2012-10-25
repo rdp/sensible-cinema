@@ -10,9 +10,8 @@
   "0:59:45.65" , "0:59:48.97", "profanity", "deity", "My [___], the wedding tomorrow. Hang on a minute.",
   "1:13:43.45" , "1:13:46.88", "profanity", "deity", "Oh, my [___].",
   "1:27:48.13" , "1:27:54.46", "profanity", "deity", "[___], and you pull some stunt like you did today. You're killing her!",
-  "0:24:48.95" , "0:24:52.05", "profanity", "naked", "the time you saw your mother [naked] in the shower.",
-  "0:24:50.95" , "0:24:54.21", "profanity", "naked", "You saw your mother [naked] in the shower?",
-
+  "0:24:48.95" , "0:24:54.25", "profanity", "naked", "the time you saw your mother [naked] in the shower.",
+ 
 ],
 
 "blank_outs" => [
