@@ -213,7 +213,7 @@ module SubtitleProfanityFinder
       semi_bad_profanities[name] = name
     }
 	
-	for word in ['crap', 'butt', 'dumb']
+	for word in ['panties', 'crap', 'butt', 'dumb']
 	  semi_bad_profanities[word] = [word, :full_word]
 	end
 	

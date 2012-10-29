@@ -1,0 +1,37 @@
+# edl_version_version 1.1, sensible cinema v0.39.4
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "The Kid",
+
+"mutes" => [
+  "0:51:45.17" , "0:51:48.43", "profanity", "deity", "- Hey! - Oh, [___].",
+  "0:52:11.09" , "0:52:15.82", "profanity", "d...", "- Hey! Put-- - [d...], he won't even let you eat, huh?",
+  "0:55:56.17" , "0:55:59.39", "profanity", "deity", "Oh, my [___].",
+  "0:56:46.05" , "0:56:52.62", "profanity", "deity", "Because I've been watching the two of you together, and I swear to [___]...",
+  "0:59:45.65" , "0:59:48.97", "profanity", "deity", "My [___], the wedding tomorrow. Hang on a minute.",
+  "1:13:43.45" , "1:13:46.88", "profanity", "deity", "Oh, my [___].",
+  "1:27:48.13" , "1:27:54.46", "profanity", "deity", "[___], and you pull some stunt like you did today. You're killing her!",
+  "0:24:48.95" , "0:24:54.25", "profanity", "naked", "the time you saw your mother [naked] in the shower.",
+  "0:37:41.02" , "0:37:44.32", "profanity", "panties", "I should've worn my magic bra and [panties] ", 
+],
+
+"blank_outs" => [
+ "51:15.37", "51:32.61", "bathroom scene",
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "THE_KID",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "2e382f25|c19fc0c5",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "6234.966", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.3",
+"dvd_nav_packet_offset" => [0.5, 0.3003],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["I'm sorry. I can't seem to find my purse.", "53.62", 2],
+"ending_subtitle_entry" => ["Why? What would you do?", "1:14:13.68", 1137],

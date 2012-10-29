@@ -2,6 +2,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
 == rough milestone current roadmap, in order, just here == 
   minor cleanings for DVD
+    prompt for "add 0.0 to all" after displaying synchro time
+    don't exit normal play
+    ending_subtitle needs a LF :)
+    palavroes -> real euphemism, like 'wow!'
+	  make sure it accomodate for ',' and ignores them...and line breaks...
     'finish' rename: new name? sourceforge, github, all docu, some links
     use a dropdown for 'tell me which one it is'
     smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
@@ -27,6 +32,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   LLC
   
   netflix upconvert that rox LOL
+  download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
+  @clearplay: zoomplayer/mplayer have this... ?
   assert mplayer versions =~ /EDL/
   tell that guy where to upload, once it's possible LOL. Hmm...
   make possible "add 2 seconds to all entries in this EDL" (maybe after editor system)
@@ -34,7 +41,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
    combine README with the online docu...DRY that stuff up...
   match the file time, punk!  No more half and half weird-o DVD timing stuff.
   respond to that guy "better upload place"
-  princess bride EDL
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
     broken scanning hp2 init's
@@ -77,6 +83,12 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     assert file played back "always" start at 0 [?]
 
 == decide later to move up or down ==
+  EDL's (if not lewd) (only after can do propaganda, really)
+    monty python
+    LOTR
+    forever strong
+    MOTAB music videos :P
+    princess bride EDL
   assert mplayer versions =~ /EDL/
   inventionzy: blu-ray stuffs from todo.inventionzy
     just OCR powerdvd for now
@@ -185,8 +197,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   update libavfilter filterguide with link, more examples
   upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
-  status updates when downloading files initially
-  DIRT short list
   @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
 
@@ -201,7 +211,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
   "double check sync" button/option on play [?]
-  an even better dvdnav.h comment patch :P
+  an even better dvdnav.h comment patch :P (at least bump it)
   don't distribute with development dependencies...
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
   add some VLC forums bugs as real bugs, if they're still around
@@ -331,11 +341,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
      ask if I can make a pausing filter, to start paused...hmm... [?]
   
   try out disney digital copy
-  EDL's (if not lewd) (only after can do propaganda, really)
-    monty python
-    LOTR
-    forever strong
-    MOTAB music videos :P
   refresh bug try to reproduce
   if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
