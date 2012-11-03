@@ -3,6 +3,8 @@
 Sensible Cinema was preceded by EDL's [2] of video editors in the 90's, 
 cleanflicks (both analog and digital/DVD incantations, late 90's), 
 then more recently mplayer began to support EDL, zoomplayer added a scene-cut editor some years ago, 
+PowerDVD added a "movie remix" feature (for DVD's, blu-ray) with its version 8 (including
+the ability to share remixes with other on the MoovieLive web site [3]),
 http://code.google.com/p/movie-content-editor came along, and also many
 other editors have supported EDL for content creation and/or playback,
 such as mythtv/XBMC's EDL support (as suggested by the phantom edit [1], from oreillynet.com), 
@@ -45,6 +47,7 @@ Who knows what the future will hold...
 
 [1] http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
+[3] http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp
 
 == Related ==
 
@@ -104,5 +107,7 @@ http://www.youtube.com/watch?v=0vumR5Hcz7s is an Emacs "EDL editor" which uses m
 "fan subs" are edited subtitles, displayed overlaid on the original track/video, or so I'm told.
 Avatar DVD was released with an audio track that was "euphemized" of the profanity.
 kids-in-mind.com lists basically all the bad things that happen in movies (very detailedly) as also does common sense media, though without any timestamps unfortunately.
-
-BYU's Varsity theater used to edit movies, and show them on the big screen.
+PowerDVD from version 8 on has a "remix" functionality http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp including some innovative features, such 
+  as being able to continue playing with a "blank screen" and adding effects, adding audio (ex: voice overs), "blurring" scenes and sections of movies, 
+  and uploading and downloading (sharing) remixes with others through a central point of distribution. 
+  some people have made downloadable collections for it, as well: https://www.facebook.com/ClearplayFilterForum

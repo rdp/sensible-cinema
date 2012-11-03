@@ -1,0 +1,41 @@
+# edl_version_version 1.1, sensible cinema v0.39.4
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "ET The Extra Terrestrial",
+
+"mutes" => [
+  "0:18:36.48" , "0:18:40.90", "profanity", "d...", "[d...] it! Why don't you grow up?",
+  "0:34:09.99" , "0:34:15.41", "profanity", "sh..", "Nothing but health [sh..]",
+  "0:34:43.65" , "0:34:47.32", "profanity", "deity", "My [___]!",
+  "0:56:14.84" , "0:56:17.89", "profanity", "deity", "[___]!",
+  "0:57:45.83" , "0:57:55.31", "profanity", "sh..", "What's all this [sh..]? E.T. phone home.",
+  #"0:57:50.42" , "0:57:55.38", "profanity", "deity", "Oh, my [___], he's talking now.",
+  "0:58:41.61" , "0:58:46.48", "profanity", "h...", "How the [h...] do I know? You're the genius here.",
+  "1:37:15.74" , "1:37:22.23", "profanity", "deity", "Oh, my [___].",
+  "1:39:17.97" , "1:39:24.46", "profanity", "deity", "Oh, my [___].",
+  "1:40:55.80" , "1:41:02.29", "profanity", "b....", "Son of a [b....].",
+  "1:41:33.56" , "1:41:38.10", "profanity", "deity", "Oh, my [___].",
+  "1:45:19.16" , "1:45:25.65", "profanity", "sh..", "We made it! Oh, [sh..]!",
+
+  "0:17:13.72" , "0:17:17.80", "profanity", "penis", "It was nothing like that, [penis] breath!",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "ET_THE_EXTRA_TERRESTRIAL",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "b5947257|43dd9dd3",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "7170.966", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.36",
+"dvd_nav_packet_offset" => [0.5, 0.718565],
+
+"beginning_subtitle" => ["Five. Great.", "7:51.45", 4],
+"ending_subtitle_entry" => ["There's no response at 20 per kilo. Let's move to hypertonic saline.", "1:24:04.45", 726],
