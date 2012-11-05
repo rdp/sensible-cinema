@@ -52,7 +52,22 @@ Who knows what the future will hold...
 
 == Related ==
 
-The concepts I use aren't novel.  Some other previously existing related type examples:
+The concepts aren't terribly novel.  Some other previously existing examples:
+
+== Closely related ==
+
+http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut supporter--also contains links to some other editors' support for EDL's)
+http://www.mplayerhq.hu/DOCS/HTML/en/edl.html (smplayer, for instance, can pick up a file's EDL files auomatically)
+PowerDVD from version 8 on has a "remix" functionality http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp including some innovative features, such 
+  as being able to continue playing with a "blank screen" and adding effects, adding audio (ex: voice overs), "blurring" scenes and sections of movies, 
+  and uploading and downloading (sharing) remixes with others through a central point of distribution. 
+  some people have made downloadable collections for it, as well: https://www.facebook.com/ClearplayFilterForum
+http://clearplay.com a commercial "filtering" DVD player See the "motivation" section of the README for a description.
+  It does offer a few features that sensible cinema supports but does not, like (user flexible) content decisions.
+http://www.inmatrix.com zoom player's "scene cut editor"
+http://code.google.com/p/movie-content-editor (player written in Python, controls VLC using libvlc, to mute out parts based on subtitles (it parses them for profanity) and user-input/edit'ed EDL's, using edit decision lists in realtime)
+  
+== Also Related ==
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited for TV) movies, for instance Schindler's List was slightly edited when shown on television.
@@ -66,27 +81,18 @@ http://college.swankmp.com/insti/edited.asp prisoners apparently have access to 
 http://www.videoredo.com/en/index.htm lets you "cut out" offensive content (commercials et al) and burn DVD's from mpeg's/h264 streams, and has its own EDL syntax http://wiki.xbmc.org/?title=EDL_%28commercial_skipping%29_and_SceneMarker_support
 http://www.microsoft.com/windows/windowsmedia/howto/articles/device_control.aspx Windows Media Encoder supports EDL's by timestamp
 http://cutlist.at has community shared cutlists (in this instance, for commercials)
-http://www.mplayerhq.hu/DOCS/HTML/en/edl.html
 Time programmable VCR's (at the least, it can 'skip the first few minutes' of a movie or what not, and, if you're handy with the pause and rewind buttons on you remote, edit offensive content)
 http://www.amazon.com/Make-Edited-Movies-ebook/dp/B004EYT3BU
 http://www.sharewareconnection.com/fast-compress-content-and-anti-profanity.htm replaces profanity in web pages with euphemized content.
-MovieMask apparently had capability of "overlaying" DVD playback, like adding new clothing to people, and other features.
 http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html (mplayer has had this ability for awhile, with no complaints).
 http://fanedit.org/49 fanedits take the original and remix it through some means for more enjoyable playbacks.
-http://clearplay.com a commercial "filtering" DVD player See the "motivation" section for a description.
-  It does offer a few features that sensible cinema supports but does not provide access to, 
-  like (user flexible) content decisions.
 http://en.wikipedia.org/wiki/RiffTrax has an interesting idea of "overlaying" audio over the original video, and synchronizing between the two (their re-player does, anyway).
 http://forum.bsplayer.com/feature-requests-feedback-suggestions/7157-chapter-playlist-scene-cut-3.html
-http://www.inmatrix.com zoom player's "scene cut editor"
 edited released movies by the producer, like http://en.wikipedia.org/wiki/Seven_Samurai and http://www.swank.com/insti/studios.html and http://betterlogic.com/roger/2011/06/dove-edited-films
-http://wiki.xbmc.org/?title=EDL_(commercial_skipping)_and_SceneMarker_support (XBMC's scene cut supporter--also contains links to some other editors' support for EDL's)
 http://dvdshrink.info "Re-author" mode: to make "movie-only" backups, compilations, combine "flippers",.... DvdShrink has the ability to "crop or cut parts of a title" etc.
 The VCR with its record button, coupled with the stop+rewind button and a list of edits (if even in your head).
 http://kb2.adobe.com/cps/191/tn_19151.html Adobe Director MX 2004 can "script" DVD playback apparently.
 DVD's themselves allow for "scripted" playback of certain content, allowing controls for jumping from location to location, switching audio/video tracks, etc.
-DVD's with different titles based on content.
-http://code.google.com/p/movie-content-editor (player written in Python, controls VLC based on subtitles and user-input'ed EDL's, using edit decision lists in realtime)
 http://forums.gbpvr.com/showthread.php?10606-Automated-Cutting-and-Transcoding-Guide-Using-Mencoder/page45
 http://www.imdb.com/swiki/special?ParentalGuideHelp (search for "scene description")
 http://www.mythtv.org/wiki/Removing_Commercials
@@ -94,21 +100,15 @@ showanalyzer http://www.dragonglobal.biz/showanalyzer.html and comskip analyze v
 Old-school: using the remote control with the pause, mute, stop, fast forward, and play buttons, along with previous knowledge of "questionable" scene locations
 The scissors and old VHS tapes (Clean Flicks' original method, if I remember correctly).  http://www.familysafemedia.com/home_movie_editor.html (was a helper kit for cutting VHS tape)
 Windows Movie Maker.  Allows for users to cut and copy scenes of movies.  Really any editor can do this.
-http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using EDL's via playlists
-Corel WinDVD has "Quick Clip" settings for capturing movie from DVD's.
-Microsoft's built-in magnifier basically copies DVD's screen output if mouse is placed over playing DVD.
+http://forum.videolan.org/viewtopic.php?f=7&t=56998 VLC Media Player using playlists to accomplish EDL like features.
+Corel WinDVD has "Quick Clip" settings for capturing movie from DVD's while playing.
 http://superuser.com/questions/85278/how-can-i-cut-scenes-out-of-a-dvd
-moviemask once had several advanced features: http://theeditedmovieencyclopedia.blogspot.com/2008/06/cleaning-up-movies-part-2.html
+moviemask once had several advanced features: http://theeditedmovieencyclopedia.blogspot.com/2008/06/cleaning-up-movies-part-2.html capability of "overlaying" DVD playback, like adding new clothing to people, and other features.
 http://blog.josephhall.com/2008/09/command-line-dvd-authoring-part-1.html
-AviSynth can script dvd playback http://forum.doom9.org/archive/index.php/t-109558.html
-ps3 media server has edl support: https://github.com/chocolateboy/PMS-EDL
-Anydvd HD's "magic file replacement" for DVD's/blu-ray's.  Google for it.
-RiffTrax allows for an audio "overlay" to a DVD playback, have their own player to coordinate the extra audio track with the playing video.
-http://www.youtube.com/watch?v=0vumR5Hcz7s is an Emacs "EDL editor" which uses mplayer and Media Lovin' Toolkit framework.
-"fan subs" are edited subtitles, displayed overlaid on the original track/video, or so I'm told.
-Avatar DVD was released with an audio track that was "euphemized" of the profanity.
-kids-in-mind.com lists basically all the bad things that happen in movies (very detailedly) as also does common sense media, though without any timestamps unfortunately.
-PowerDVD from version 8 on has a "remix" functionality http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp including some innovative features, such 
-  as being able to continue playing with a "blank screen" and adding effects, adding audio (ex: voice overs), "blurring" scenes and sections of movies, 
-  and uploading and downloading (sharing) remixes with others through a central point of distribution. 
-  some people have made downloadable collections for it, as well: https://www.facebook.com/ClearplayFilterForum
+AviSynth can script dvd playback to skip scenes http://forum.doom9.org/archive/index.php/t-109558.html
+ps3 media server has edl support through a plugin: https://github.com/chocolateboy/PMS-EDL via mencoder
+Anydvd HD's "magic file replacement" for DVD's/blu-ray's.  Google for information on this feature.
+RiffTrax allows for an audio "overlay" to arbitrary DVD playback, have their own player to coordinate the extra audio track with the playing video.
+"fan subs" are edited subtitles, displayed overlaid on the original track/video, or so I'm told.  See also "fan edits"
+The movie Avatar's DVD was released with an audio track that was "euphemized" of the profanity.
+Apple's DVD player appears to be "scriptable" in a way that would work for EDL's, as well: http://web.archive.org/web/20070407125849/http://digitallyobsessed.com/showarticle.php3?ID=49
