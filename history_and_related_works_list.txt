@@ -5,7 +5,7 @@ cleanflicks (both analog and digital/DVD incantations, late 90's),
 then more recently mplayer began to support EDL, zoomplayer added a scene-cut editor some years ago
 (and a place to share them http://forum.inmatrix.com/index.php?showtopic=129 since 2004), 
 PowerDVD added a "movie remix" feature (for DVD's, blu-ray) with its version 8 (including
-the ability to share remixes with other on the MoovieLive web site since 2008 [3]),
+the ability to share remixes with others on the MoovieLive web site since 2008 [3]),
 http://code.google.com/p/movie-content-editor came along, and also many
 other editors have supported EDL for content creation and/or playback,
 such as mythtv/XBMC's EDL support (as suggested by the phantom edit [1], from oreillynet.com), 
@@ -61,13 +61,17 @@ http://www.mplayerhq.hu/DOCS/HTML/en/edl.html (smplayer, for instance, can pick 
 PowerDVD from version 8 on has a "remix" functionality http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp including some innovative features, such 
   as being able to continue playing with a "blank screen" and adding effects, adding audio (ex: voice overs), "blurring" scenes and sections of movies, 
   and uploading and downloading (sharing) remixes with others through a central point of distribution. 
-  some people have made downloadable collections for it, as well: https://www.facebook.com/ClearplayFilterForum
+  some people have made downloadable collections for it, as well, see: http://pcnoevil.org/ and https://www.facebook.com/ClearplayFilterForum
+  (there is also a canonical ability to share remixes with others on the MoovieLive web site since 2008 [3])
+  works with blu-ray, as well, with later versions of PowerDVD
 http://clearplay.com a commercial "filtering" DVD player See the "motivation" section of the README for a description.
   It does offer a few features that sensible cinema supports but does not, like (user flexible) content decisions.
-http://www.inmatrix.com zoom player's "scene cut editor"
+http://www.inmatrix.com zoom player's "scene cut editor" (and a place to share scene cuts with other at http://forum.inmatrix.com/index.php?showtopic=129 since 2004). Also works with blu-ray's
 http://code.google.com/p/movie-content-editor (player written in Python, controls VLC using libvlc, to mute out parts based on subtitles (it parses them for profanity) and user-input/edit'ed EDL's, using edit decision lists in realtime)
   
 == Also Related ==
+
+see also the change_log_with_feature_list.txt.
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited for TV) movies, for instance Schindler's List was slightly edited when shown on television.
