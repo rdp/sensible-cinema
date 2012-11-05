@@ -47,7 +47,7 @@ Who knows what the future will hold...
 
 [1] http://www.oreillynet.com/sysadmin/blog/2005/06/make_your_own_phantom_edit_wit.html
 [2] http://en.wikipedia.org/wiki/Edit_decision_list
-[3] http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp
+[3] http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp and http://www.pcpro.co.uk/news/176412/first-look-remix-hollywood-with-powerdvd-8
 
 == Related ==
 
