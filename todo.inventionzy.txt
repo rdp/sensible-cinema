@@ -184,3 +184,4 @@
 
   choose your own adventure type movies :)
   "random play each movie" / "different movie each time through random jumping in a controlled, prescribed manner
+  can specify to 'add text/graphics {pictures, circles, etc.}' at such and such a time, at such and such a location
