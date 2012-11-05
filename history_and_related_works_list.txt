@@ -2,9 +2,10 @@
 
 Sensible Cinema was preceded by EDL's [2] of video editors in the 90's, 
 cleanflicks (both analog and digital/DVD incantations, late 90's), 
-then more recently mplayer began to support EDL, zoomplayer added a scene-cut editor some years ago, 
+then more recently mplayer began to support EDL, zoomplayer added a scene-cut editor some years ago
+(and a place to share them http://forum.inmatrix.com/index.php?showtopic=129 since 2004), 
 PowerDVD added a "movie remix" feature (for DVD's, blu-ray) with its version 8 (including
-the ability to share remixes with other on the MoovieLive web site [3]),
+the ability to share remixes with other on the MoovieLive web site since 2008 [3]),
 http://code.google.com/p/movie-content-editor came along, and also many
 other editors have supported EDL for content creation and/or playback,
 such as mythtv/XBMC's EDL support (as suggested by the phantom edit [1], from oreillynet.com), 
