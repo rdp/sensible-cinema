@@ -13,7 +13,6 @@
 	can infer a rating based on (looking it upon imdb, letting people vote, etc.)
     I can forsee some browser window that pulls up some sweet player [mod vlc plugin?] somehow something quality anyway, to play local media, or remote
       or same thing but for upconverting...but how?
-   bounty NACL VLC :P
     could add dragging since we already control the mouse up and down, and movements etc., for example to skip forward etc.
     a little robot demo thingy that can "click" your remote (or hardware) to fast forward through certain scenes, et al
 	  EDL can say "this exact text was at this exact time" to allow for matching with other videos of same content that may have slightly different timestamps/speeds/start time etc.
@@ -185,3 +184,5 @@
   choose your own adventure type movies :)
   "random play each movie" / "different movie each time through random jumping in a controlled, prescribed manner
   can specify to 'add text/graphics {pictures, circles, etc.}' at such and such a time, at such and such a location
+  from http://www.pcnoevil.info/?p=27: an ability to zoom and crop the moving image, so that scenes which may contain objectionable visual content but may be otherwise tolerable can be framed differently. Another feature that I think would be a real plus is the ability to store portions of the audio track of the presentation in memory when the disc loads, in order to later interject them during playback to replace objectionable terms in the dialogue. For instance if a character in a movie says, “great…” at some point, that word could be stored in memory when the disc loads, and when the playback reaches a certain point, the word could be substituted for a curse word.
+  

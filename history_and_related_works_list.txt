@@ -61,7 +61,7 @@ http://www.mplayerhq.hu/DOCS/HTML/en/edl.html (smplayer, for instance, can pick 
 PowerDVD from version 8 on has a "remix" functionality http://www.cyberlink.com/stat/product-tutorial/enu/powerdvd/8/movieremixes.jsp including some innovative features, such 
   as being able to continue playing with a "blank screen" and adding effects, adding audio (ex: voice overs), "blurring" scenes and sections of movies, 
   and uploading and downloading (sharing) remixes with others through a central point of distribution. 
-  some people have made downloadable collections for it, as well, see: http://pcnoevil.org/ and https://www.facebook.com/ClearplayFilterForum
+  some people have made downloadable collections for it, as well, see: http://pcnoevil.org/ and https://www.facebook.com/ClearplayFilterForum (there was in 2009 PCNoEvil.com which shared remixes too)
   (there is also a canonical ability to share remixes with others on the MoovieLive web site since 2008 [3])
   works with blu-ray, as well, with later versions of PowerDVD
 http://clearplay.com a commercial "filtering" DVD player See the "motivation" section of the README for a description.
@@ -75,9 +75,9 @@ see also the change_log_with_feature_list.txt.
 
 Edited "airplane edit" style movies.
 Commercial TV (ABC, NBC) show their own (edited for TV) movies, for instance Schindler's List was slightly edited when shown on television.
-http://en.wikipedia.org/wiki/Linear_video_editing
+PS3MS has "edl's at encode time": https://github.com/chocolateboy/PMS-EDLhttp://en.wikipedia.org/wiki/Linear_video_editing
 http://en.wikipedia.org/wiki/Edit_decision_list#Systems_supporting_EDL_playback.2C_not_just_EDL_cutting lists a lot of players that support EDL DVD playback in some form or another.
-http://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.  I've even released a version of SC that has working time edits pulled from a wiki like that.
+GBPVR can use comskip style EDL's: http://forums.gbpvr.com/showthread.php?51246-Comskiphttp://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.  I've even released a version of SC that has working time edits pulled from a wiki like that.
 Normal DVD's versus "directors cut" versions of movies (one is at times preferable, content wise)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
 Clean Flicks (used to) sell edited movies
