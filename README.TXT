@@ -162,6 +162,8 @@ As a friend once said "Clearplay is a bit of a hassle to use in today's day and 
 It should either have wireless or an ethernet port on it. I should
 enter my login credentials to the box. When I stick a move in, it
 should go to the website and download the filter."
+Clearplay's player apparently only works for region 1 DVD's.
+Clearplay doesn't work for straight "movie files", for instance a download of the free movie "sintel" etc.
 
 So overall I wanted to build my own that overcame some of these hurdles.
 
