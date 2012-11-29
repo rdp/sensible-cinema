@@ -278,7 +278,8 @@ module SensibleSwing
 		upc
       else
         p 'not using any specific upconversion-ing'
-        # pullup, softskip -- might slow things down too much for slow cpus
+        # pullup, softskip -- might slow things down too much for slow cpus [?]
+		''
       end
     end
 

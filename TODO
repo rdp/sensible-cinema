@@ -2,31 +2,40 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
 == rough milestone current roadmap, in order, just here == 
   minor cleanings for DVD
+    prompt for "add 0.0 to all" after displaying synchro time
+    don't exit normal play
+    ending_subtitle needs a LF :)
+    palavroes -> real euphemism, like 'wow!'
+	  make sure it accomodate for ',' and ignores them...and line breaks...
     'finish' rename: new name? sourceforge, github, all docu, some links
     use a dropdown for 'tell me which one it is'
     smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
     mplayer bounty: 
       fix mplayer chapter breaks shuck! whoa!
-      mplayer dies tmnt dvdnav://1 (bounty anyway?) once I have confirmed it...
+      mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
       fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
         I can research this one, too...
     mplayer re-read config file each frame, maybe track mtime? hmm...
     mplayer patches
     VLC bounties
-  netflix instant EDL
-  
+	
 == things working on today/requested ==
   mutes "00:56:42", "00:56:45", "profanity", "[bloo..]", doesn't work right [HP 5]?
   
 == yes do, un-ordered currently, from all the various future release options ==  
   
-  new DVD's that we own
-  after disclsoure accepted, "tell clearplay" :)
   netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
   LLC
+  buy powerdvd cheap-o
   
-  netflix upconvert that rox LOL
+  offer blu-ray player...
+  bring blu-ray drive home
+  update alternativeto.net, wikipedia
+  powerdvd compat/cleanup entry screne anyway...buy powerdvd 12?
+  tell clearplay "I'll license it to you" LOL
+  seeking in ET went back to the beginning sometimes? huh?
+  download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
   assert mplayer versions =~ /EDL/
   tell that guy where to upload, once it's possible LOL. Hmm...
   make possible "add 2 seconds to all entries in this EDL" (maybe after editor system)
@@ -34,7 +43,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
    combine README with the online docu...DRY that stuff up...
   match the file time, punk!  No more half and half weird-o DVD timing stuff.
   respond to that guy "better upload place"
-  princess bride EDL
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   hp 4 finalize intro waz off
     broken scanning hp2 init's
@@ -79,6 +87,15 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     assert file played back "always" start at 0 [?]
 
 == decide later to move up or down ==
+  make it "cool" for XBMC, like those guys...
+  ask VLC bid j-b
+  netflix upconvert that rox LOL
+  EDL's (if not lewd) (only after can do propaganda, really)
+    monty python
+    LOTR
+    forever strong
+    MOTAB music videos :P
+    princess bride EDL
   assert mplayer versions =~ /EDL/
   inventionzy: blu-ray stuffs from todo.inventionzy
     just OCR powerdvd for now
@@ -104,7 +121,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
     pay somebody to test it
-  back lighting code cleanup
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
     C player:
@@ -112,6 +128,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
         also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
+
+  advertise self as "youtube your way" or "youtube with stop time" or the like...
+  back lighting code cleanup  
   pure java ocr [?]
   the "super duper awesome editor" like you can hold down the "a" key during the time you want to mute,
     you can say "ok start here!" and the like, instead of writing it in by hand.
@@ -125,7 +144,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   source_location hackz for ri_for
   fix mplayer "skipping" at chapter breaks
   fix vlc "skipping" at chapter breaks
-  
   the online "like stack overflow" way to contribute -- "I found a profanity at time x" "I found one at time y" [they add on] for online streams  
   super more precise DVD seeks "to this time"
   @mplayer: you handle EDL skips one frame too late! [at least, seemingly]
@@ -184,8 +202,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   update libavfilter filterguide with link, more examples
   upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
-  status updates when downloading files initially
-  DIRT short list
   @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
   can enter "arbitrary precision" for upconverter
 
@@ -200,7 +216,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
   "double check sync" button/option on play [?]
-  an even better dvdnav.h comment patch :P
+  an even better dvdnav.h comment patch :P (at least bump it)
   don't distribute with development dependencies...
   re-publish this bounty to ml: http://nextsprocket.com/tasks/mencoder-fix-broken-acs-audio-for-mkv
   add some VLC forums bugs as real bugs, if they're still around
@@ -217,7 +233,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
 
-== other lists to not do (duplicate the todo here if want to actually do it though, basically no do) ==
+== other files lists to (do or not do) (duplicate the todo here if want to actually do it though) ==
   todo.upconvert
   todo.propaganda
   todo.inventionzy
@@ -241,11 +257,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   super-precise "can seek to exactly z"
   fix mplayer dvd:// seeking being slow at times...
     compare xine libdvdnav, see if they have any improvements there/new methods
-  screen recorder for mac, with audio :P
   can custom pass in an per EDL -osd-add, for the little mermaid, for instance
     except that I don't really like that...
     do we do the right -osd-add for VOB folders?
-  @mplayer: -dvd-device -dvd-device failz
   smplayer "might" be able to run on linux, too...
   maybe lib dvdread add some methods better searching?
   netflix instant CGI how crisp is their HD?
@@ -255,16 +269,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   mplayer check if dvdnav cache can work [?]
     compare with VLC does it do any special cacheing? 
   spork stuffs
-  ruby-debug sample profiler
-  maintain smplayer :P
   ri_for updatez
   double check the "sum title times" precisely--do they add up great?
   research madvr/on board lanczos at all.
   can I "not" use mencoder for the first pass, to be able to work with handbrake files? [OSOH]
-  todo.upconvert
-    netflix quality upconverter, have a go at it
-      finalize screen capturer
-  see if all those patches have been applied to various (sherpya's).
   research VLC softskip at home/slow cpu?
   create the following EDL: 10 commandments (or other Christian DVD I have) EDL to skip the intro music LOL
   netflix upconvert
@@ -293,9 +301,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     once I can jump around, advertise as a phantom editor :)
       maybe even before?
     can hit 'i' to save current timestamp :)
-  support VLC as an EDL for files
   employee instructions: watch @ realtime after profanity filter first pass :P  
-  add custom profanity option
   you can mark where the starts and stop are, then hit a button 'test my latest marks' and then edit them and retest...more easily, that is
   screencast for creating using srt [after it's user friendly?]
   linearize: full EDL with JSON on top, full timestamps. or something I like...
@@ -319,7 +325,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     PPC dvdid work?
 	  PPC work in general
   .srt input auto-scan from a "full two entries from the .srt file" (easier)
-  rename as sanitizer, or something else SEO friendlier or something like that
+  rename as sanitizer, or something else friendlier or something like that
   from an EDL, it can "just play" for netflix (auto-open browser etc.)
   add button "re-order srt"
   @makemkv:
@@ -327,20 +333,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     can I reproduce it this days? double check OSOH, repost to forum
   advertise http://betterlogic.com/roger/2011/06/mkv-mencoder-too-many-audio-packets-in-the-buffer/
   ask dll, say, for pausing [?]
-     ask if I can make a pausing filter, to start paused...hmm... [?]
-  
+     ask if I can make a pausing filter, to start paused...hmm... [?]  
   try out disney digital copy
-  EDL's (if not lewd) (only after can do propaganda, really)
-    monty python
-    LOTR
-    forever strong
-    MOTAB music videos :P
-  refresh bug try to reproduce
-  if I don't use jruby complete is it faster?
   tweak web stuff/propaganda for upconverter filenames et al
-  propaganda DVD upconverter
-  propaganda virtual audio
-  propaganda screen capture
   research XBMC
     break out into its own separate window?
     @XBMC: your stuff is broken in at least these two ways (bug reports)
@@ -392,7 +387,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   use mplayerx well [?] like wrap it...with mine inside :P
     could for files, dvdnav://1 should work too..
   try to team up with fanedit.org ?
-  investigate boxee edl (just fer fun...maybe possible?) http://getsatisfaction.com/boxee/topics/commercial_skipping_edl_support
   mplayer EDL button allow this:
     got fatal exception in button
     detected an overlap 1397.51 1401.275 mute 1395.474 1397.874 mute
