@@ -187,3 +187,12 @@
   from http://www.pcnoevil.info/?p=27: an ability to zoom and crop the moving image, so that scenes which may contain objectionable visual content but may be otherwise tolerable can be framed differently. Another feature that I think would be a real plus is the ability to store portions of the audio track of the presentation in memory when the disc loads, in order to later interject them during playback to replace objectionable terms in the dialogue. For instance if a character in a movie says, “great…” at some point, that word could be stored in memory when the disc loads, and when the playback reaches a certain point, the word could be substituted for a curse word.
   can "just play the music" from a movie--put in the DVD, play back its tunes, baby :)
   add an air of randomization, for instance, as to which ending it will be... 
+  online player:
+    overlay "obscuring/blurring window" by reading the screen underneath, then contorting it somehow.
+	or overlay specific image
+	  with or without alpha blending techniques in the iamge
+	md5 each frame as it comes in (or checksum it) to "know" exactly/precisely what timestamp you're at.  this would work if the resolutions matched...or possibly blur it first/resize it, or just md5 "parts" of it (a diagonal down it).  Then you can know with higher precision which frame you're on.
+	  or compare it with several different md5's, taken from different original playbacks, etc.
+	  
+	
+	
