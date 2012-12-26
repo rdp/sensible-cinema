@@ -4,24 +4,29 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 	
 == things working on today/requested ==
   mutes "00:56:42", "00:56:45", "profanity", "[bloo..]", doesn't work right [HP 5]?
-  seeking in ET went back to the beginning sometimes? huh?
-  try out gnu
   
 == yes do, un-ordered currently, from all the various future release options ==  
+
+  smplayer can be used for EDL's
+    or can I already?
+  gnosygnu seeking in ET went back to the beginning sometimes? huh?
+  try out gnosygnu
+  smplayer can seek right
+  mplayer patches
   
   netflix instant descriptor work at all after 18 months
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
 	add new button
-  LLC
+  LLC  
   'finish' rename: new name? sourceforge, github, all docu, some links  
   minor cleanings for DVD
     prompt for "add 0.0 to all" after displaying synchro time
     ending_subtitle needs a LF :)
     palavroes -> real euphemism, like 'wow!'
-    smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
     mplayer re-read config file each frame, maybe track mtime? hmm...
-    mplayer patches  buy powerdvd el cheap-o
-    test at home
+    mplayer patches 
+	buy powerdvd el cheap-o
+      test blu-ray at home
   mplayer bounties: 
     fix mplayer chapter breaks shuck! whoa!
     mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
@@ -39,10 +44,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   match the file time, punk!  No more half and half weird-o DVD timing stuff.
   respond to that guy "better upload place"
   accomodate srt trailer/headers more (one on melissa's) -- has spec
-  hp 4 finalize intro waz off
+  hp 4 scanning intro waz off
     broken scanning hp2 init's
-  make it easier to use for "just files"
-    "pick your source, pick your EDL, ready, ok?"
   combine all "folders" of movie EDL's into one uni-folder 
     non youtube, 
     also non...in process folder
@@ -66,11 +69,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     can skip over poor parts of a DVD
     vlc += mplayer chapter breaks not skip LOL    
     bounty: TMNT broken seeks
-    toying with the truth fails
-    crossbar fails
-	more below!
+    toying with the truth DVD fails
+    crossbar
+	more below! ?
 	avisynth plugin...
-  feedback button fails os x (double check)
+  feedback button fails os x (double check--does it still?)
   use real JSON or the like...
   use DVD NAV packet time raw:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
@@ -79,51 +82,54 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
       remove -osd-add, or maybe fine tune it?
       after mplayer accepts my patches LOL
     assert file played back "always" start at 0 [?]
+	get tons of EDL's somehow, somewhere...
+  awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)
 
 == decide later to move up or down ==
+  make it easier to use for "just files"
+    "pick your source, pick your EDL, ready, ok?"
+  a coolio player that can do the "half mutes" and "fast forward through these scenes"
   DVD timing for makemkv forum:Snow White
   make it "cool" for XBMC, like those guys...
   ask VLC bid j-b EDL
   netflix upconvert that rox LOL
   EDL's (if not lewd) (only after can do propaganda, really)
+    Star Trek movies
     monty python
     LOTR
     forever strong
-    MOTAB music videos :P
+    MOTAB music video :P
     princess bride EDL
-  assert mplayer versions =~ /EDL/
   inventionzy: blu-ray stuffs from todo.inventionzy
-    just OCR powerdvd for now
-    make blog post "clearplay for blu ray" :)
   parser misses first subtitle entry even when it's legit?
   @VLC fantasia 2000 dvd fails
   sintel file upconvert is *messed* [maybe just with mkv?]
   OS X netflix instant
     mac'ify Mouse
-  the "add on" type EDL
+  allow for the "add on" type EDL
   gottman had serious de-interlacing problems, even with softskip/pullup
   dvd_start_offset -> dvd_mpeg_start_offset or something better...
   umplayer for mac/use it, mplayer shucks!
   allow for a mute to "encompass" a skip by splitting it, uh guess, otherwise hard to card 'bad' part in middle of a mute.
     Or programmatically
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
-  upconvert hulu better/really work?
   icon is not always very clear :P
   "real" exe runner so that it can find java from just JAVA_HOME et al in case they don't have it setup in their path right :)
     real installer, too, why not?
   remove splits' functionality [ruby code]
+  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
+    is powerdvd off by exactly 0.5s (rounds up)?
+  
+== DVD +- DVD-realtime/other basically never do backlog (unordered) ==
+
+  upconvert hulu better/really work?
+  C player:
+    double check if it timing shucks, though I think it does...
+      also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
   upconv: test snow white book:
     adv. DVD upconverter [family first?]
     it should not prompt if you don't have an EDL, upconverting [maybe tell them, in that case "use mouse to select DVD menu item, and enter to select it" if there's none]
     pay somebody to test it
-  double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
-    is powerdvd off by exactly 0.5s (rounds up)?
-    C player:
-      double check if it timing shucks, though I think it does...
-        also what happens if I hit "next frame" over and over and over? does it get behind then? huh?
-  
-== DVD +- DVD-realtime/other basically never do backlog (unordered) ==
-
   advertise self as "youtube your way" or "youtube with stop time" or the like...
   back lighting code cleanup  
   pure java ocr [?]
