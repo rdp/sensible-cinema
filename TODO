@@ -1,41 +1,35 @@
 Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to protect it for in 20 years"
 
 == rough milestone current roadmap, in order, just here == 
-  minor cleanings for DVD
-    prompt for "add 0.0 to all" after displaying synchro time
-    don't exit normal play
-    ending_subtitle needs a LF :)
-    palavroes -> real euphemism, like 'wow!'
-	  make sure it accomodate for ',' and ignores them...and line breaks...
-    'finish' rename: new name? sourceforge, github, all docu, some links
-    use a dropdown for 'tell me which one it is'
-    smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
-    mplayer bounty: 
-      fix mplayer chapter breaks shuck! whoa!
-      mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
-      fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
-        I can research this one, too...
-    mplayer re-read config file each frame, maybe track mtime? hmm...
-    mplayer patches
-    VLC bounties
 	
 == things working on today/requested ==
   mutes "00:56:42", "00:56:45", "profanity", "[bloo..]", doesn't work right [HP 5]?
+  seeking in ET went back to the beginning sometimes? huh?
+  try out gnu
   
 == yes do, un-ordered currently, from all the various future release options ==  
   
-  netflix instant descriptor work at all
+  netflix instant descriptor work at all after 18 months
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
-	add new button for it
+	add new button
   LLC
-  buy powerdvd el cheap-o
-  
-  offer blu-ray player...
-  bring blu-ray drive home
-  update alternativeto.net, wikipedia
-  powerdvd compat/cleanup entry screne anyway...buy powerdvd 12?
-  tell clearplay "I'll license it to you" LOL after 18 (but keep it free)
-  seeking in ET went back to the beginning sometimes? huh?
+  'finish' rename: new name? sourceforge, github, all docu, some links  
+  minor cleanings for DVD
+    prompt for "add 0.0 to all" after displaying synchro time
+    ending_subtitle needs a LF :)
+    palavroes -> real euphemism, like 'wow!'
+    smplayer better seek while I'm at it ?:P (the sourceforge bug report...)
+    mplayer re-read config file each frame, maybe track mtime? hmm...
+    mplayer patches  buy powerdvd el cheap-o
+    test at home
+  mplayer bounties: 
+    fix mplayer chapter breaks shuck! whoa!
+    mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
+    fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
+      I can research this one, too...
+  update alternativeto.net with "the known competitors"
+  powerdvd compat/cleanup entry screne anyway...buy powerdvd 12
+  tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
   assert mplayer versions =~ /EDL/
   tell that guy where to upload, once it's possible LOL. Hmm...
@@ -55,7 +49,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   the awesome new editor GUI [or do I just want online? probably...]
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
   use the cool uploader website
-  DVD timing for makemkv forum:Snow White
   do a google search for them goblet of fire en 1cd subtitles "srt file" (google search is ok...but not really...)
   melissa stuff:
     readme be helpful for subtitles [?]
@@ -88,8 +81,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     assert file played back "always" start at 0 [?]
 
 == decide later to move up or down ==
+  DVD timing for makemkv forum:Snow White
   make it "cool" for XBMC, like those guys...
-  ask VLC bid j-b
+  ask VLC bid j-b EDL
   netflix upconvert that rox LOL
   EDL's (if not lewd) (only after can do propaganda, really)
     monty python
