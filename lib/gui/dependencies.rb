@@ -113,22 +113,33 @@ module SensibleSwing
       end
 	
 	end
+	
+	def mplayer_up_to_date?
+	  out = `mplayer -fake 2>&1`
+	  out =~ /EDL-0.5/
+	end
     
     def check_for_various_dependencies            
-      if OS.doze? && !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil)
-        require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
-        FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
-        puts 'downloading mplayer edl [12 MB]'
-        MainWindow.download('http://mplayer-edl.googlecode.com/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
-        config_dir = File.expand_path('~/mplayer')
-        FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
-        FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac
-      end
-
-      # runtime dependencies, at least as of today...
-      if OS.mac?
-        check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
-      else      
+      if OS.doze? 
+	    if !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil) || !mplayer_up_to_date?
+          require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
+          FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
+          puts 'downloading mplayer edl [12 MB]'
+		  FileUtils.rm_rf 'vendor/cache/mplayer_edl/mplayer.exe' # old version
+          MainWindow.download('http://mplayer-edl.googlecode.com/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
+          config_dir = File.expand_path('~/mplayer')
+          FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
+          FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac ttf?
+		end
+      else
+        if check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
+		  if !mplayer_up_to_date?
+		    SimpleGuiCreator.show_message "your mplayer may be out of date, download a new one, or request it!"   
+		  end
+		end
+	  end
+	  
+	  if OS.doze?
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
           # this one has its own installer...
