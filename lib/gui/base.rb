@@ -246,7 +246,7 @@ module SensibleSwing # LODO rename
 	  # larger max volume, like VLC :)
 	  # extra_options << "-softvol -softvol-max 250" # turns out this messes with mute timing...
 	  # http://lists.mplayerhq.hu/pipermail/mplayer-users/2012-December/085802.html
-	  extra_options << "-nosoftvol -af volume=10.1:0" # amplify without using software mixer
+	  extra_options << "-nosoftvol -af volume=10.1:0" # amplify without using buggy software mixer
 	  
       extra_options << "-osdlevel 2" # who doesn't want to see those fraction decimal points :)
       if we_are_in_create_mode
