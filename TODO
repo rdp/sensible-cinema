@@ -80,6 +80,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)
 
 == decide later to move up or down ==
+  I guess mplayer has libbluray support, too, but I haven't tested it.
   accomodate srt trailer/headers more (one on melissa's) -- has spec
   right and left arrows only seek 5 seconds [?]
   ratatouile has [18:19:11:264] MplayerProcess::parseLine: 'Please send bug report - no VTS_TMAPT ?? '

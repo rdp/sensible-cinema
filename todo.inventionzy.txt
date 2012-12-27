@@ -1,5 +1,8 @@
- === patentzy yes actually do vaguely ordered ===
+ === patentzy yes actually do vaguely ordered ===    
     see also http://ip.com/IPCOM/000223192
+	a "stand alone box" for people to insert their DVD's into (or maybe that just plays netflix instant "edited" for them? magically)
+	some software for a PS3, that allows people to "watch the next DVD/blu-ray edited" or to watch something edited natively (from online)
+	
     blu-ray OCR
       more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
       some blu-ray player descriptor somehow

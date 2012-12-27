@@ -1,4 +1,4 @@
-This is a README description for the Clean Editing Movie Player
+This is a README description for Sensible Cinema, the Clean Editing Movie Player (CEM Player)
 
 For installation/download instructions, see http://rogerdpack.t28.net/sensible-cinema
 
@@ -67,30 +67,30 @@ No really, feel free, go ahead.
 == FAQ ==
 
 Q. How do I watch these on my TV, not just on my computer?
-A. One way is to plug your computer into your TV.
-  For instance, position a laptop near your TV and hook it in.  Newer TV's support this.
-  Or buy a very long monitor cord and plug it in from your desktop/laptop.
-  You could also buy a projector, attach it to your computer/laptop, and then use that to watch it.
+A. One way is to plug your computer (laptop) into your TV.
+  For instance, position a laptop near your TV and hook it in.  Newer TV's and laptops are typically compatible.
+  Or buy a very long monitor and audio cord and plug it in from your desktop/laptop :)
+  You could also buy a projector, attach your computer/laptop to it, and then use that to watch.
   If you're interested in also being able to "beam" it from your computer to your game console (ex: PS3) ping me--I might have 
   something in mind that could help, though hasn't been created yet.  (Playon.tv does something like this, too, but
   I might come up with a competitor to it if desired, as the existing one costs money).
-  You may be able to create your own edited version of a DVD, see section "Creating an edited DVD"
-  Another good option is to purchase and use a clearplay player, with accompanying subscription.
+  Another option is to purchase a clearplay DVD player.
   
 Q. I want to give an edited DVD to a friend, how do I do that well?
-A. Give them the original, non-edited DVD and then give them a link to sensible-cinema's website :)
+A. Give them the original, non-edited DVD and a link to sensible-cinema's website :)
 
 Q. Can I use this with Windows Media Center?
-A. Yes, just use some WMC plugin that allows you to "call out" to a 3rd party software to play your files.
-   Then use the "advanced" mode "create side-by-side EDL file" to create an EDL for your previously existing file.
+A. Yes, in theor you could use one of the existing WMC plugins that allows you to "call out" to a 3rd party software to play your files.
+   Then use the "advanced" mode in sensible cinema "create side-by-side EDL file" button to create an EDL for your previously existing file.
    Then make your WMC plugin "call out" to smplayer to play those files (through whatever means it necessary), and
    it will automatically pick up and use the EDL file.
    You could also use the same side-by-side EDL file with XBMC, which also honors them (need at least an Eden release version).
 
-Q. Is it unethical to watch edited movies?
-  Well, producers have been making "airplane edited" movies forever, why should this offend them? :)
+Q. Is it ethical to watch edited movies?
+  Well, producers have been making "airplane edited" movies forever... :)
+  But anyway if you don't find it ethical, then do yourself a favor don't watch them.  I personally like cutting out gratitous profanity from
+  my viewing experience.
   http://en.wikipedia.org/wiki/Re-edited_film
-  But anyway if you don't find it ethical, then do yourself a favor don't watch them.
 
 Q. Can I know if movies in the theaters have profanity in them?
 A. You can--you can download their subtitle file, then use the "part subtitle" button to tell if even movies
@@ -118,9 +118,8 @@ so we recommend to always clean your discs first!
 The initial motivation for the project was that I dislike deity profanity in movies.
 And really any profanity is jarring, if you're not used to it in real life, and can
 put me a bit on edge when I watch an otherwise enjoyable movie.
-Also sometimes producers put in certain scenes (read: sex scenes) 
-just to get a desired rating.
-I don't want those scenes, but still want to be able to enjoy more movies :)
+Also sometimes producers put in certain bad scenes (ex: scenes involving nudity) 
+just to get a desired end rating, even if the rest of the movie is not as offensive.
 
 I once tried Clearplay (a "filter"ed DVD player)
 but (for me) it didn't cut it.  It costs money monthly (I'm too cheap to pay--and many
@@ -164,6 +163,9 @@ enter my login credentials to the box. When I stick a move in, it
 should go to the website and download the filter."
 Clearplay's player apparently only works for region 1 DVD's.
 Clearplay doesn't work for straight "movie files", for instance a download of the free movie "sintel" etc.
+Also owning a Clearplay player takes at least a marginal amount of technical expertise (fails the "grandma"
+test) https://plus.google.com/u/0/112065817515875981770/posts/UeSPiYYTDfV .
+
 
 So overall I wanted to build my own that overcame some of these hurdles.
 
