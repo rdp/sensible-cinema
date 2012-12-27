@@ -28,7 +28,7 @@ rescue LoadError => e
   raise 'please run the rake command to copy dependencies (like gem install jeweler os sane rake && rake install_dependency_gems && rake rebundle_copy_in_dependencies) first, as we prefer using cached gems ' + e.to_s
 end
 
-raise $:.inspect + " has bad gems in it, run rake rebundle_copy_in_dependencies" if $:.detect{|path| path =~ /gems/}
+raise $:.inspect + " has system installed gems in it, run rake rebundle_copy_in_dependencies first" if $:.detect{|path| path =~ /gems/}
 raise 'probably need jruby' unless OS.java? # put after loading sane gem so we have the OS gem available :)
 
 require_relative '../lib/gui/dependencies'
