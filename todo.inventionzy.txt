@@ -1,8 +1,9 @@
-  === patentzy yes actually do vaguely ordered ===
-      blu-ray OCR
-        more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
-        some blu-ray player descriptor somehow
-      accomodate splits vs. blanks and work
+ === patentzy yes actually do vaguely ordered ===
+    see also http://ip.com/IPCOM/000223192
+    blu-ray OCR
+      more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
+      some blu-ray player descriptor somehow
+    accomodate splits vs. blanks and work
 
     it can "resync" based on lipsync'ing or some user input (back, forward buttons to subtly resync edits with a currently playing back video) or
       with user input "tell me where this subtitle is, for you, and also this one" to synchronize it (+- auto-playing to "around" that level so they can check more easily), 
