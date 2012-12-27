@@ -166,13 +166,14 @@ Clearplay doesn't work for straight "movie files", for instance a download of th
 Also owning a Clearplay player takes at least a marginal amount of technical expertise (fails the "grandma"
 test) https://plus.google.com/u/0/112065817515875981770/posts/UeSPiYYTDfV .
 
-
 So overall I wanted to build my own that overcame some of these hurdles.
+Because at least for some people if there is any cost associated, they will not consider it, so freer might be
+better.
 
 I also wanted to get a prototype out there of some ideas so that
 others can't later patent them and pretend that they were first inventors later :)
 
-See also the "Overly Verbose History" section.
+See also the "Overly Verbose History" section in the history_and_related_works_list.txt file.
 
 [1] http://www.amazon.com/gp/product/B002YPRW7S/ref=cm_rdp_product
  "...I agree that it is not made clear on their website that if you don't continue your membership, you can't continue 

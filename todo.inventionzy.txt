@@ -2,6 +2,8 @@
     see also http://ip.com/IPCOM/000223192
 	a "stand alone box" for people to insert their DVD's into (or maybe that just plays netflix instant "edited" for them? magically)
 	some software for a PS3, that allows people to "watch the next DVD/blu-ray edited" or to watch something edited natively (from online)
+	I wonder if you could "screen capture" the playing movie "sans timestamp" (that is displaying in a background window, or in a different monitor attached)
+	  and then display the captured movie onto "the displaying viewport" (projector, fore ground window)
 	
     blu-ray OCR
       more blu-ray stuff: can ID them, can playback (through...mkv? VLC? powerdvd OCr/scripted?)
@@ -13,7 +15,9 @@
        or you can ask them manually for time entry for the same.
     OCR'ing subtitles on the fly (or, cache'd OCR'ing them on the fly, to give it time to process) to synchronize or check for profanity or other "questionable" content
     
-    post a demo of it playing back blu-ray edited local computer, +- projector, +- playon (?)
+    post a demo of it playing back blu-ray edited local computer, +- projector
+	post a demo of it being streamed to (a server/somebody else's computer) using ffmpeg or playon.tv
+	some "free edited player" thing, but that also shows ads somehow (pause every so often?)
 	can infer a rating based on (looking it upon imdb, letting people vote, etc.)
     I can forsee some browser window that pulls up some sweet player [mod vlc plugin?] somehow something quality anyway, to play local media, or remote
       or same thing but for upconverting...but how?
