@@ -27,12 +27,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     fix mplayer chapter breaks shuck! whoa!
     mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
     fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
-      I can research this one, too...
+      I can research this, too...
   update alternativeto.net with "the known competitors"
   powerdvd compat/cleanup entry screne anyway...buy powerdvd 12
   tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
-  assert mplayer versions =~ /EDL/
   tell that guy where to upload, once it's possible LOL. Hmm...
   make possible "add 2 seconds to all entries in this EDL" (maybe after editor system)
   move documentation to online wiki [all]
@@ -148,18 +147,13 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   @mplayer: you handle EDL skips one frame too late! [at least, seemingly]
   create a semi-accurate phantom edit EDL [?] with just splits
     http://www.chefelf.com/forums/index.php?showtopic=6176
-  @mplayer: fix it playing the wrong audio track by default (ex: It's a Meaningful Life)
+  @mplayer: please fix it playing the wrong audio track by default (ex: It's a Meaningful Life)
   veggie tales dies (the lib v's?) (dunno which one...couldn't find it)
   libdvdreaad fails for kites...or maybe does...
   genealogy screen saver authorize
   detect an overlap 'at parse time'
   meta domain redirect to "freedomainnamesforever"
   "ideal is if already matches..." (+ button "already known to match perfectly/well")
-  mplayer:
-     fix -sub to work with DVDNAV
-      step_sub maybe
-   ask why mplayer seems to show "overlap" at DVD time splits [and become non DVD]
-  @mplayer: ctrl-keys patch, ask them at least :P
   the awesome ffmpeg file splitter (re-encodes only the part that needs to):P
     also do I really still need to use mencoder?
   Do the C based "use the real thing" MSDN skipper it might actually be accurate after all...just not precise for doing edits.
@@ -187,30 +181,22 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   can "auto find" for files, based on fast hash
   "overwrite?" prompt for file mode
   timestamp syncing needs option "test it out starting near there" or the like
-  can use smplayer for the .srt fella [precision]
   choose better folder for saving netflix instant vs. DVD
   double check if my variance from reality "goes exactly up to 0.04 then resets to zero" over the course of a movie.
   autodetect whether is telecine or not
   fix VLC jumping when it hits DVD time splits
-  test mplayer -vo gl speeds at home
   check highlighting freakiness tomato home/work
     directx/post "it was directx" for subs highlighting
   super editor: shows the srt near each edit...
-  don't show smplayer buttons in OS X/linux [?]
-  @mplayer: did you realize you don't go to the start of DVD's right? [tangled]
+  @mplayer: did you realize you don't go to the start of DVD's right? [tangled, ratatouille] or was this smmplayer :)
   update libavfilter filterguide with link, more examples
   upconvert "checkbox" for normal
   try upconvert VLC, tell them how bwokded it is
-  @mplayer: if you use arrow keys to select a button, it leaves a ghost, at least os x
-  can enter "arbitrary precision" for upconverter
-
+ 
   it should ask for an EDL when you click "play it unedited" -- actually just say why...
-  sons of provo "music video" EDL
   volume_name => dvd_volume_name
   english name (movie name?) mass everywhere
-  @wiki: here is how very messed up DVD's are, what they look like precisely.
   subtitle -> url everywhere
-  use direct3d only if nvidia [?]
   investigate WMC "call out to smplayer + EDL" or the like...with its plugin
     add to docu
     maybe add "is this for XBMC"? to the create .edl file button :)
@@ -226,10 +212,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   nextsprocket "citrix"
   cool runnings me +- grab
   Linux port SC (call that good enough for usability on TV's...), should be...
-  7z'up mplayer_edl
+  7z'up the mplayer_edl exe
   youtube/hulu timings different?
   investigate more "it seeks past the end of dvdnav:// to the beginning!"
-  is mplayer edl always one frame behind?
   "double check your settings, this one should occur at exactly x"
 
 == other files lists to (do or not do) (duplicate the todo here if want to actually do it though) ==
@@ -265,8 +250,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   on mac needs a different -osd-add number...though if my patches are accepted it may not matter
   change upconvert options needs its own "close" button
     and status field?
-  mplayer check if dvdnav cache can work [?]
-    compare with VLC does it do any special cacheing? 
   spork stuffs
   ri_for updatez
   double check the "sum title times" precisely--do they add up great?
