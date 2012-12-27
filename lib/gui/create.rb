@@ -96,12 +96,12 @@ module SensibleSwing
 
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
 
-          if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
+          if show_select_buttons_prompt("Would you like to start playing the movie in smplayer, to be able to search for subtitle timestamp timings [you probably do...]?\n") == :yes
             show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for.\nIt may take a few seconds to come up..."
-            play_dvd_smplayer_unedited true
+            play_dvd_smplayer_unedited false
           end
 
-  	  open_file_to_edit_it euphemized_filename
+  	      open_file_to_edit_it euphemized_filename
           sleep 0.5 # let it open in TextEdit/Notepad first...
       	  bring_to_front
 

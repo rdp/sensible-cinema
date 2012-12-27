@@ -244,11 +244,13 @@ module SensibleSwing # LODO rename
       extra_options << "-autosync 30" 
 
 	  # larger max volume, like VLC :)
-	  extra_options << "-softvol -softvol-max 250"
+	  # extra_options << "-softvol -softvol-max 250" # turns out this messes with mute timing...
+	  # http://lists.mplayerhq.hu/pipermail/mplayer-users/2012-December/085802.html
+	  extra_options << "-nosoftvol -af volume=10.1:0" # amplify without using software mixer
 	  
+      extra_options << "-osdlevel 2" # who doesn't want to see those fraction decimal points :)
       if we_are_in_create_mode
-        extra_options << "-osdlevel 2"
-        extra_options << "-osd-verbose" if we_are_in_developer_mode?		
+        extra_options << "-osd-verbose" if we_are_in_developer_mode?		 # console output
       end
       extra_options << "-osd-fractions 1"
       
@@ -298,7 +300,7 @@ KP_ENTER dvdnav select
        EOL
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, key_strokes
-       extra_options << "-volume 100" # why start low? mplayer why oh why LODO
+       extra_options << "-volume 100" # why start low? mplayer why oh why LODO tell them not to, also tell them the default should be dvdnavigable, really...yes?
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
         extra_options << "-vo direct3d"
@@ -326,7 +328,7 @@ KP_ENTER dvdnav select
         c = "smplayer \"#{play_this}\" -config-path \"#{File.dirname  EightThree.convert_path_to_8_3(SMPlayerIniFile)}\" " 
         c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode
-          #c += " -close-at-end " # still too unstable...
+          #c += " -close-at-end " # smplayer close after...still a bit too unstable though...
         end
       end
       puts c
@@ -377,6 +379,7 @@ KP_ENTER dvdnav select
     else # it's a reload
     end
    
+    # LODO remove now unused parameter...
     def play_dvd_smplayer_unedited use_mplayer_instead
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
       title_track_maybe_nil = get_title_track_string(descriptors, false)
