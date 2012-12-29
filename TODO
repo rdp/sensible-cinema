@@ -78,10 +78,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     assert file played back "always" start at 0 [?]
   get tons of EDL's somehow, somewhere...
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)
-
+  
 == decide later to move up or down ==
-  I guess mplayer has libbluray support, too, but I haven't tested it.
-  accomodate srt trailer/headers more (one on melissa's) -- has spec
+  backwards EDL demo (sons of provo? motab video?)
+  I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
   right and left arrows only seek 5 seconds [?]
   ratatouile has [18:19:11:264] MplayerProcess::parseLine: 'Please send bug report - no VTS_TMAPT ?? '
   make it easier to use for "just play a file"
@@ -90,13 +90,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   make it "cool" for XBMC, like those guys...
   ask VLC bid j-b EDL
   netflix upconvert that rox LOL
-  EDL's (if not lewd) (only after can do propaganda, really)
-    Star Trek movies
-    monty python
-    LOTR
-    forever strong
-    MOTAB music video :P
-    princess bride EDL
   inventionzy: blu-ray stuffs from todo.inventionzy
   parser misses first subtitle entry even when it's legit?
   @VLC fantasia 2000 dvd fails
@@ -116,8 +109,17 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   remove splits' functionality [ruby code]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?
+  EDL's our movies
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
+  EDL's (if not lewd) (only after can do propaganda, really)
+    Star Trek movies
+    monty python
+    LOTR
+    forever strong
+    MOTAB music video :P
+    princess bride EDL
+  accomodate srt trailer/headers more (one on melissa's) -- has spec
 
   a coolio awesome EDL player that can do the "half mutes" and "fast forward through these scenes"
   upconvert hulu better/really work?
