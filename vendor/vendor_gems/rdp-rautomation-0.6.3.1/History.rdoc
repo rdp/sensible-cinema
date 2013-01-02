@@ -1,0 +1,103 @@
+== Version 0.6.3 / 2011-07-16
+
+  * use current window's handle (hwnd) in WinFfi::Window#child method
+
+
+== Version 0.6.2 / 2011-07-07
+
+=== WinFFI adapter
+
+  * loading lazily oleacc.dll
+  * loading lazily uia_dll.rb due to problems on certain Windows XP machines
+
+
+== Version 0.6.1 / 2011-07-05
+
+=== WinFFI adapter
+
+  * Fixed it for Ruby 1.9.2.
+
+
+== Version 0.6.0 / 2011-07-03
+
+=== WinFFI adapter
+
+  * Window#send_keys now accepts only String argument similar to AutoIt's Send function.
+  * added Table#strings, #select, #selected? methods.
+  * added Label element support with #value method.
+  * added #has_focus? and #set_focus methods to controls.
+  * added possibility to search controls by automation id as :id.
+  * added #enabled? and #disabled? methods for controls.
+  * added Window#control and #controls methods for accessing controls generally.
+  * added SelectList#option method.
+  * added ListBox element support with #count, #items, #exist?, #selected? and #select methods.
+
+
+== Version 0.5.1 / 2011-01-30
+
+=== All adapters
+
+  * added Window.windows, #windows, #buttons and #text_fields methods to retrieve collection of elements and use them with Enumerable/Array methods.
+
+=== WinFFI adapter
+
+  * added Window#child method for searching child windows and popups
+  * added initial support for Radio, Checkbox, SelectList and Table
+
+=== AutoIt adapter
+
+  * allow to search windows by PID
+
+
+== Version 0.4.0 / 2010-12-23
+
+  * allow to search windows without text (like empty Notepad window for example).
+  * added possibility to use block for #click to specify successful clicking condition.
+  * renamed :ffi adapter to :win_ffi because FFI may be used on other platforms too.
+
+
+== Version 0.3.0 / 2010-12-18
+
+  * added Ffi adapter specific method Window#child which searches for child windows and popups
+
+
+== Version 0.2.1 / 2010-12-17
+
+  * added yard options for documentation
+
+
+== Version 0.2.0 / 2010-12-17
+
+  * added Window#pid method
+
+
+== Version 0.1.0 / 2010-12-14
+
+  * added new default adapter for Windows: FFI
+  * changes for AutoIt adapter:
+    - added 0-based :index locator for window locators to search for windows with the same criteria.
+    - renamed text_field and button locator :instance to :index instead.
+    - :class_name locator is not allowed anymore. Use :class and :index together instead.
+    - use :value for button locator instead of :text
+
+
+== Version 0.0.4 / 2010-10-27
+
+ * most Window, Button and TextField methods wait until the object exists.
+     Use RAutomation::Window.wait_timeout= to set timeout before failing. Default is 60 seconds.
+
+
+== Version 0.0.3 / 2010-10-15
+
+ * RAutomation didn't load AutoIt correctly if it wasn't installed before
+
+
+== Version 0.0.2 / 2010-10-14
+
+ * using :value locator for buttons instead of :text
+ * searching only visible windows with some text on them
+
+
+== Version 0.0.1 / 2010-10-13
+
+ * Initial release

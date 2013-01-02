@@ -1,0 +1,41 @@
+ruby which: the linux "which" command re-written in ruby [and windows-friendly].
+
+An executable locator (i.e. which or locate command) for windows that works!
+
+Itch it scratches: there seems to be a lack of a "which" command for windows that actually work--they sometimes skip batch files entirely [batch file? what's that?] or don't list extensions, leaving you in doubt.  Despite running "which yyy" you never know what you're really running when you next run yyy in the command line--is it yyy.exe or some other yyy.bat that wasn't reported by "which"?  
+
+Try it--you might really like it.
+
+Usage:
+
+   C:\>whichr ruby
+   higher in the list will be executed first
+   ./ruby.bat
+   C:/Ruby/bin/ruby.exe
+   c:/cygwin/bin/ruby.exe
+
+   C:>whichr rub*
+   higher in the list will be executed first
+   c:/ruby/bin/rubigen
+   c:/ruby/bin/rubigen.bat
+   c:/ruby/bin/ruby.exe
+   ...
+
+Installation:
+
+   C:\>gem install rogerdpack-whichr --source http://gems.github.com 
+  
+Enjoy.
+
+Feedback welcome rogerdpack on github/gmail
+
+Also Related:
+http://github.com/Pistos/ruby-which discovers the location of installed ruby libraries, i.e. which gem folder they're in
+C:\>rwhich ruby-which
+c:/ruby/lib/ruby/gems/1.9.1/gems/Pistos-ruby-which-0.5.3/lib/ruby-which.rb
+
+Except you don't actually need it since you have
+$ gem which fileutils
+/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/fileutils.rb
+
+Thanks Eric!
