@@ -209,13 +209,14 @@ module SensibleSwing
 	
 	def set_individual_preferences
       get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
-      if JOptionPane.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $]\n(ping me if you want PowerDVD remix support added\n, or MPlayer et al [free]", :no => "ZoomPlayer MAX", :yes => "MPlayer [free]") == :no
+      if SimpleGuiCreator.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $],\n or MPlayer et al [free]", :no => "ZoomPlayer MAX/PowerDVD", :yes => "MPlayer [free]") == :no	  
+	    SimpleGuiCreator.show_message "ZoomPlayer support has been added to your release, with the 'create zoomplayer max' button. Ping me and I will add PowerDVD remix support button as well."
         LocalStorage['have_zoom_button'] = true
       else
 	    LocalStorage['have_zoom_button'] = false
 	  end
-	  # TODO break these out into create mode prefs versus human [?]
-      if JOptionPane.show_select_buttons_prompt("Would you like to enable some obscure options, like
+	  
+      if SimpleGuiCreator.show_select_buttons_prompt("Would you like to enable some obscure options, like
  Using keyboard shortcuts to create EDL files on the fly, or 
  Prompting to create euphemized .srt files, or
  Being able to add your own 'profanity words' specific to different videos?
@@ -224,7 +225,7 @@ module SensibleSwing
       else
 	    LocalStorage['prompt_obscure_options'] = false
 	  end
-	  if JOptionPane.show_select_buttons_prompt("Would you like to enable upconversion [i.e. make playback prettier, requires more cpu?]") == :yes
+	  if SimpleGuiCreator.show_select_buttons_prompt("Would you like to enable upconversion [i.e. make playback prettier, requires more cpu?]") == :yes
 	    setup_dvd_upconvert_options
 	  else
 	    reset_upconversion_options
