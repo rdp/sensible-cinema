@@ -196,10 +196,12 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       end
 	  
 	  @mplayer_partial.tool_tip="this can play just a specific portion of your film, like from second 30 to 35, for testing."
-            
-      new_jbutton("Display mplayer keyboard commands/howto/instructions") do
-        show_mplayer_instructions
-      end
+
+      if OS.x?	  
+        new_jbutton("Display mplayer keyboard commands/howto/instructions") do
+          show_mplayer_instructions
+        end
+	  end
 
       add_text_line "Create: Watch Unedited Options:"
       
@@ -221,6 +223,22 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       new_jbutton("Create new Edit List (for netflix instant or for a local file)") do # LODO VIDEO_TS here too?
 	create_new_for_file_or_netflix
       end
+
+	  
+      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
+      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
+      @display_dvd_info.on_clicked {
+        Thread.new {
+          out_hashes, title_lengths = get_disk_info
+	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
+          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],! # since they're all this way currently
+          filename = get_temp_file_name('disk_info.txt')
+          File.write filename, out_string 
+          open_file_to_edit_it filename
+          out_string # for unit tests :) TODO
+        }
+      }
+      
       
       add_text_line "Less commonly used Edit options:"
 
@@ -254,20 +272,6 @@ You will be prompted for a beginning and starting timestamp time to search for.\
        end
       end
 
-      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
-      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
-      @display_dvd_info.on_clicked {
-        Thread.new {
-          out_hashes, title_lengths = get_disk_info
-	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
-          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],! # since they're all this way currently
-          filename = get_temp_file_name('disk_info.txt')
-          File.write filename, out_string 
-          open_file_to_edit_it filename
-          out_string # for unit tests :) TODO
-        }
-      }
-      
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
       @convert_seconds_to_ts.on_clicked {
         input = get_user_input("Enter \"from\" timestamp, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
