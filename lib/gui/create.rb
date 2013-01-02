@@ -155,7 +155,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
         out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
         if end_srt_time != 3000
 		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
-               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],!
+               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],\n!
 	    end
         middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
         show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time} (not accomodating for added start times)\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
