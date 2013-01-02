@@ -11,7 +11,6 @@ Jeweler::Tasks.new do |s|
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
     
-    # IF CHANGED PUBLISH NEW GEM [and delete pkg dir] :)
     s.add_dependency 'os', '>= 0.9.4'
     s.add_dependency 'sane', '>= 0.25.4'
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
@@ -29,7 +28,7 @@ Jeweler::Tasks.new do |s|
     s.add_development_dependency 'rake'
     if ENV['for_gem_release']
       # add as real dependencies for now, as gem install --development is still broken https://github.com/rubygems/rubygems/issues/309
-      for gem in s.development_dependencies #['hitimes', 'rspec', 'jeweler', 'rake']
+      for gem in s.development_dependencies
         s.add_dependency gem.name, gem.requirement
      end  
    end
