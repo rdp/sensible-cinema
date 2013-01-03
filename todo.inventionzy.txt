@@ -1,6 +1,7 @@
  === patentzy yes actually do vaguely ordered ===    
     see also http://ip.com/IPCOM/000223192
 	a "stand alone box" for people to insert their DVD's into (or maybe that just plays netflix instant "edited" for them? magically)
+	  linux box with a DVD player in it? :)
 	some software for a PS3, that allows people to "watch the next DVD/blu-ray edited" or to watch something edited natively (from online)
 	I wonder if you could "screen capture" the playing movie "sans timestamp" (that is displaying in a background window, or in a different monitor attached)
 	  and then display the captured movie onto "the displaying viewport" (projector, fore ground window)
