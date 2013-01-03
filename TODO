@@ -6,15 +6,13 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == yes do, un-ordered currently, from all the various future release options ==  
 
-  use "file" timings now
-
-  innosetup *at least* yikes!
-  it should just say "do you want to download and install smplayer?" and show its license again, and get a local copy
+  check if file timings style...
+  it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
   gnosygnu seeking in ET went back to the beginning sometimes? huh?
     try out gnosygnu updated, make sure it works, then try and break it
   netflix instant descriptor work at all after 18 months
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
-	add new button
+	add new button?
   LLC, 'finish' rename: new name? sourceforge, github, all docu, some links  
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
@@ -28,6 +26,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
       I can research this, too...	
   update alternativeto.net with "the known competitors"
+  an innosetup *at least* yikes!
   powerdvd compat/cleanup entry screne anyway...buy powerdvd 12
   tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
