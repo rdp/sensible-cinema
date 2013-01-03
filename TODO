@@ -110,6 +110,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?  
   mplayer re-read config file each frame, maybe track mtime? hmm...
+  backport *all* my fixes to mplayer
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
