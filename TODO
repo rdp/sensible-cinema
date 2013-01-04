@@ -20,6 +20,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     mplayer patches to them, if I have any...
 	buy powerdvd el cheap-o
       test blu-ray at home
+  it doesn't set osd-verbose when playing in smplayer
   mplayer bounties:
     fix mplayer chapter breaks shuck! whoa!
     mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
@@ -73,13 +74,12 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   use DVD NAV packet time to infer raw:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
     non 29.97 with mplayer edl change OSD
-      remove -osd-add, or maybe fine tune it?
       after mplayer accepts my patches LOL
     assert file played back "always" start at 0 [?]
-  get tons of EDL's somehow, somewhere...
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
   
 == decide later to move up or down ==
+  get tons of EDL's somehow, somewhere...
   EDL's our movies
   backwards EDL demo (sons of provo? motab video?)
   I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
