@@ -243,10 +243,8 @@ module SensibleSwing # LODO rename
       extra_options << "-mc 2"
       extra_options << "-autosync 30" 
 
-	  # larger max volume, like VLC :)
-	  # extra_options << "-softvol -softvol-max 250" # turns out this messes with mute timing...
-	  # http://lists.mplayerhq.hu/pipermail/mplayer-users/2012-December/085802.html
-	  extra_options << "-nosoftvol -af volume=10.1:0" # amplify without using buggy software mixer
+	  # allow a larger max volume
+	  extra_options << "-nosoftvol -af volume=10.1:0" # amplify without using buggy software mixer softvol
 	  
       extra_options << "-osdlevel 2" # who doesn't want to see those fraction decimal points :)
       if we_are_in_create_mode
@@ -282,7 +280,10 @@ module SensibleSwing # LODO rename
         extra_options << "-msglevel identify=4" # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
       end
       
-      extra_options << "-mouse-movements #{get_upconvert_secondary_settings}" # just in case smplayer also needs -mouse-movements... :) LODO
+      extra_options << "-mouse-movements" # just in case smplayer also needs -mouse-movements... :) LODO it prolly doesn't
+	  if get_upconvert_secondary_settings.present?
+	    extra_options << get_upconvert_secondary_settings
+      end
       extra_options << "-lavdopts threads=#{OS.cpu_count}" # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
       if force_use_mplayer
         extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}"
@@ -395,6 +396,7 @@ KP_ENTER dvdnav select
       out = []
       
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
+	  
       if nav
 	    mpeg_time *= 1/1.001 # -> 29.97 fps
         offset_time = mpeg_time - nav
@@ -409,6 +411,18 @@ KP_ENTER dvdnav select
 	  # we wanted to match that more precisely once we did get past it.
 	  # so basically today we are trying to "match" the underlying MPEG time well. Which is wrong, of course.
 	  # either match the file or match the DVD, punk!
+	  
+	  mpeg_start = descriptors['dvd_title_track_start_offset']
+	  if mpeg_start
+	    unless descriptors["timestamps_relative_to"][0] == ["dvd_start_offset"] # like  ["dvd_start_offset", "29.97"]
+          out << "-osd-subtract #{ "%0.3f" % mpeg_start}" # bring it into line with what the "file time" would be, since it skips the initial 0.28s ...
+		else
+		  puts "update me!"
+		end
+	  else
+	    show_blocking_message_dialog "DVD lacks dvd_title_track_start_offset -- please add it"
+	  end
+	  
 	  out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end

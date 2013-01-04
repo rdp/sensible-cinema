@@ -1,3 +1,153 @@
+
+
+= mplayer current OSD timing =
+
+== osoh start white==
+
+osd-fractions 2 is bad
+
+1.10/1.13 mplayer.exe out.mkv (which equals a NAV time equivalent for start? huh?)
+
+1.1 handbrake whoa!
+1.38 mplayer.exe dvdnav://1/d:   (same with mainline mplayer)
+1.38 with smplayer OSD -osd-add 0.214 (its just using mpeg + 0.214 to try and equal the 1.38, anyway)
+1.38 with playing the output from mplayer -dumpstream dvdout.mpg
+
+VO: [directx] 720x480 => 854x480 Planar YV12 
+A:   0.3 a:   0.5 V:  0.28 A-V:  0.212 ct:  0.000   2/  2 ??% ??% ??,?% 1 0    
+
+it's because the video first frame was at 0.28 ... oh wow the plot thickens...
+
+so to convert from DVD to normal time:
+  current_dvd_timestamp+offset_mpeg_to_dvd-dvd_start_stamp
+  or
+  current_dvd_timestamp+(offset_mpeg_to_dvd-dvd_start_stamp)
+
+NB that our current "match that original MPEG timestamp number!" is pretty close to spot on...
+  [["0.000000", 0.0],
+ ["0.033367", -3.299999999999831e-05],
+ ["0.280633", -0.0002809999999999757],
+ ["0.280633", -0.0002809999999999757],
+ ["0.314000", -0.00031399999999998096],
+ ["0.347367", -0.0003470000000000417],
+ ["0.380733", -0.0003810000000000202],
+ ["0.414100", -0.00041399999999996995],
+ ["0.447467", -0.0004469999999999752],
+ ["0.480833", -0.0004810000000000092],
+ ["0.514200", -0.0005140000000000144],
+ ["0.547567", -0.0005469999999999642],
+ ["0.580933", -0.0005809999999999427],
+ ["0.614300", 0.21389999999999998],
+ ["0.647667", 0.21386699999999997],
+ ["0.681033", 0.213833],
+ ["0.714400", 0.2138],
+ ["0.747767", 0.21376699999999993],
+ ["10.082091", 0.21363500000000002],
+ ["9.956966", 0.21375999999999884],
+ ["9.998675", 0.2137190000000011],
+ ["10.040383", 0.21367700000000056],
+ ["10.082091", 0.21363500000000002],
+ ["3.567245", -0.01113099999999978],
+ ["2401.796387", -0.0024410000000898435],
+ ["3496.649170", -0.0021969999997963896],
+ ["2.574586", 0.013895000000000213], # -c- ? hmm... maybe it's impossible to get more than a frame worth of accurate
+ ["2.983327", 0.013894000000000073],
+ ["2012.032471", 0.18090800000004492],
+ ["2012.074219", 0.18090800000004492]]
+  
+== osoh ==
+last NAV packet was 0.000000, mpeg at 0.000000 not adding odd diff1? (probable skip) 0.000000adding 0.000000 to pts 0.000000
+final: 0.000000
+using mpeg ts appears larger, which if true is definitely better 0.000000 > 0.000000 - 1.0
+Audio: no sound
+Starting playback...
+Movie-Aspect is 1.78:1 - prescaling to correct movie aspect.
+VO: [null] 720x480 => 854x480 Planar YV12
+[mpeg2video @ 00d13780]ac-tex damaged at 0 7
+[mpeg2video @ 00d13780]Warning MVs not available
+[mpeg2video @ 00d13780]concealing 1035 DC, 1035 AC, 1035 MV errors in I frame
+
+last NAV packet was 0.000000, mpeg at 0.033367 adding MPEG difference since last NAV of 0.033367 adding 0.000000 to pts 0.033400
+final: 0.033400
+using mpeg ts appears larger, which if true is definitely better 0.033367 > 0.033400 - 1.0
+
+last NAV packet was 0.000000, mpeg at 0.280633 adding MPEG difference since last NAV of 0.280633 adding 0.000000 to pts 0.280914
+final: 0.280914
+using mpeg ts appears larger, which if true is definitely better 0.280633 > 0.280914 - 1.0
+V:  0.28   2/  2 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.280633 adding MPEG difference since last NAV of 0.280633 adding 0.000000 to pts 0.280914
+final: 0.280914
+using mpeg ts appears larger, which if true is definitely better 0.280633 > 0.280914 - 1.0
+V:  0.28   3/  3 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.314000 adding MPEG difference since last NAV of 0.314000 adding 0.000000 to pts 0.314314
+final: 0.314314
+using mpeg ts appears larger, which if true is definitely better 0.314000 > 0.314314 - 1.0
+V:  0.31   4/  4 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.347367 adding MPEG difference since last NAV of 0.347367 adding 0.000000 to pts 0.347714
+final: 0.347714
+using mpeg ts appears larger, which if true is definitely better 0.347367 > 0.347714 - 1.0
+V:  0.35   5/  5 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.380733 adding MPEG difference since last NAV of 0.380733 adding 0.000000 to pts 0.381114
+final: 0.381114
+using mpeg ts appears larger, which if true is definitely better 0.380733 > 0.381114 - 1.0
+V:  0.38   6/  6 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.414100 adding MPEG difference since last NAV of 0.414100 adding 0.000000 to pts 0.414514
+final: 0.414514
+
+using mpeg ts appears larger, which if true is definitely better 0.414100 > 0.414514 - 1.0
+V:  0.41   7/  7 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.447467 adding MPEG difference since last NAV of 0.447467 adding 0.000000 to pts 0.447914
+final: 0.447914
+using mpeg ts appears larger, which if true is definitely better 0.447467 > 0.447914 - 1.0
+V:  0.45   8/  8 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.480833 adding MPEG difference since last NAV of 0.480833 adding 0.000000 to pts 0.481314
+final: 0.481314
+using mpeg ts appears larger, which if true is definitely better 0.480833 > 0.481314 - 1.0
+V:  0.48   9/  9 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.514200 adding MPEG difference since last NAV of 0.514200 adding 0.000000 to pts 0.514714
+final: 0.514714
+using mpeg ts appears larger, which if true is definitely better 0.514200 > 0.514714 - 1.0
+V:  0.51  10/ 10 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.547567 adding MPEG difference since last NAV of 0.547567 adding 0.000000 to pts 0.548114
+final: 0.548114
+using mpeg ts appears larger, which if true is definitely better 0.547567 > 0.548114 - 1.0
+V:  0.55  11/ 11 ??% ??% ??,?% 0 0
+last NAV packet was 0.000000, mpeg at 0.580933 adding MPEG difference since last NAV of 0.580933 adding 0.000000 to pts 0.581514
+final: 0.581514
+using mpeg ts appears larger, which if true is definitely better 0.580933 > 0.581514 - 1.0
+V:  0.58  12/ 12 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.614300 new NAV packet! 0.400000 at mpeg 0.614300 adding 0.000000 to pts 0.400400              => first NAV packet is *too low* to start (I guess a few are "too high") and over time it gets lower and lower?
+     "dvd_nav_packet_offset" => [0.4, 0.6143]
+	 
+final: 0.400400
+using mpeg ts appears larger, which if true is definitely better 0.614300 > 0.400400 - 1.0
+V:  0.61  13/ 13 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.647667 adding MPEG difference since last NAV of 0.033367 adding 0.000000 to pts 0.433800
+final: 0.433800
+using mpeg ts appears larger, which if true is definitely better 0.647667 > 0.433800 - 1.0
+V:  0.65  14/ 14 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.681033 adding MPEG difference since last NAV of 0.066733 adding 0.000000 to pts 0.467200
+final: 0.467200
+using mpeg ts appears larger, which if true is definitely better 0.681033 > 0.467200 - 1.0
+V:  0.68  15/ 15 ??% ??% ??,?% 0 0
+last NAV packet was 0.400000, mpeg at 0.714400 adding MPEG difference since last NAV of 0.100100 adding 0.000000 to pts 0.500600
+final: 0.500600
+using mpeg ts appears larger, which if true is definitely better 0.714400 > 0.500600 - 1.0
+V:  0.71  16/ 16  4%  0%  0.0% 0 0
+last NAV packet was 0.400000, mpeg at 0.747767 adding MPEG difference since last NAV of 0.133467 adding 0.000000 to pts 0.534000
+final: 0.534000
+using mpeg ts appears larger, which if true is definitely better 0.747767 > 0.534000 - 1.0
+V:  0.75  17/ 17  4%  0%  0.0% 0 0
+
+...
+
+last NAV packet was 3606.666667, mpeg at 3610.595755 adding MPEG difference since last NAV of 0.125125 adding 0.000000 to pts 3610.398583
+final: 3610.398583
+
+so typically NAV packets start less, then get less and less and less, relative to the MPEG timestamp.
+
+so I can "hope" that I'm matching file times with this, can't I?
+
 = ffmpeg seeking =
 
 
@@ -1360,7 +1510,7 @@ final: 2.560691
 using mpeg ts appears larger, which if true is definitely better 2.574586 > 2.560691 - 1.0
 last NAV packet was 2.400000, mpeg at 2.616294 after -> 29.97 2.402400
 
-NAV packet of 0.8! whoa!
+NAV packet after 0.8! whoa!
 then
 last NAV packet was 2.400000, mpeg at 2.983327 after -> 29.97 2.402400
 adding difference 0.367033 adding 0.200000 to 2.769433

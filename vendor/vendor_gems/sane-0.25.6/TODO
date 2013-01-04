@@ -1,0 +1,5 @@
+take out some junk here, that I rarely use!
+
+what I do use: require_relative, array#select!, try2 (?), OS, present?, blank?, include?, *sometimes* the socket stuff.  in? Maybe make it its own require :P
+
+submittable: try, present?, move ruby-debug to core.
