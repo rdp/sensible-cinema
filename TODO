@@ -531,8 +531,8 @@ C:/dev/ruby/sensible-cinema/lib/screen_tracker.rb:37:in `initialize': poor width
         from bin\sensible-cinema-cli:73:in `go_sc'
         from bin\sensible-cinema-cli:107
 
-can synchronize hulu/netflix instant play, for girlfriends
-create avisynth realtime EDL'er
+can synchronize hulu/netflix instant play, for playing with girlfriends :)
+  beam your comp. there? that might be a bit more resource intensive...
 
 when mouse jerks the "first" time--don't count the next reading!  It's the next transition that matters..I think so...
   or count it as "worst possible"?
