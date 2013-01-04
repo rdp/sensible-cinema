@@ -2,11 +2,36 @@
 
 = mplayer current OSD timing =
 
-== osoh start white==
+== osoh end stuff
+
+mplayer m4v 6532.09 (1:48:52.09)
+
+dvdoutfull.mpeg ends at V:6773.92 what?
+
+mplayer dvdnav://1  V:6532.26 ish
+
+mplayer mkv  V:6532.03
+
+smplayer 1:48:52.05
+
+== osoh first frame walking down
+
+mplayer m4v V:3607.74 'ish transition
+
+mplayer dvdoutfull.mpg V:3968.38 huh?
+
+mplayer dvdnav://1  V:3607.72
+
+1:00:07.43 smplayer spot on suh-weet
+
+mplayer mkv  V:3607.44
+
+== osoh first white frame ==
 
 osd-fractions 2 is bad
 
-1.10/1.13 mplayer.exe out.mkv (which equals a NAV time equivalent for start? huh?)
+1.10 mplayer.exe out.mkv (which equals a NAV time equivalent for start? huh?)
+1.10 mplayer.exe .m4v
 
 1.1 handbrake whoa!
 1.38 mplayer.exe dvdnav://1/d:   (same with mainline mplayer)
