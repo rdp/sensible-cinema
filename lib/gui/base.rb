@@ -414,11 +414,12 @@ KP_ENTER dvdnav select
 	  
 	  mpeg_start = descriptors['dvd_title_track_start_offset']
 	  if mpeg_start
-	    unless descriptors["timestamps_relative_to"][0] == ["dvd_start_offset"] # like  ["dvd_start_offset", "29.97"]
+	    # TODO rdp mark all current ones [most of them anyway] as file, then this will be appropriate...
+	    #unless descriptors["timestamps_relative_to"][0] == ["dvd_start_offset"] # like  ["dvd_start_offset", "29.97"]
           out << "-osd-subtract #{ "%0.3f" % mpeg_start}" # bring it into line with what the "file time" would be, since it skips the initial 0.28s ...
-		else
-		  puts "update me!"
-		end
+		#else
+		#  puts "update me!"
+		#end
 	  else
 	    show_blocking_message_dialog "DVD lacks dvd_title_track_start_offset -- please add it"
 	  end
