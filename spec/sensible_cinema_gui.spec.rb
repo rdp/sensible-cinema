@@ -213,7 +213,7 @@ module SensibleSwing
     end
     
     it "should create a new file based on stats of current disc" do
-      out = EdlParser::EDL_DIR + "/edls_being_edited/sweetest_disc_ever.txt"
+      out = EdlParser::EDL_DIR + "/sweetest_disc_ever.txt"
       FileUtils.mkdir_p File.dirname(out)
       File.exist?( out ).should be_false
       @subject.stub!(:get_user_input) {'sweetest disc ever'}

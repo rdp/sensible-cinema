@@ -221,7 +221,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       }
 
       new_jbutton("Create new Edit List (for netflix instant or for a local file)") do # LODO VIDEO_TS here too?
-	create_new_for_file_or_netflix
+	    create_new_for_file_or_netflix
       end
 
 	  
@@ -230,12 +230,12 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       @display_dvd_info.on_clicked {
         Thread.new {
           out_hashes, title_lengths = get_disk_info
-	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
-          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],! # since they're all this way currently
+	      out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
+          out_string += %!\n"timestamps_relative_to" => ["file", "29.97"],! # we do our best to emulate it these days :)
           filename = get_temp_file_name('disk_info.txt')
           File.write filename, out_string 
           open_file_to_edit_it filename
-          out_string # for unit tests :) TODO
+          out_string # for unit tests--do I still need this?
         }
       }
       
@@ -522,7 +522,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
 		
-      filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.edl.txt'
+      filename = EdlParser::EDL_DIR + "/" + english_name.gsub(' ', '_') + '.edl.txt'
       if File.exist?(filename)
 	      show_blocking_message_dialog 'don\'t want to overwrite a file in the edit dir that already has same name, opening it instead...'
 	    else

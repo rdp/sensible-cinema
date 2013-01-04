@@ -395,6 +395,7 @@ KP_ENTER dvdnav select
       out = []
       
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
+	  
       if nav
 	    mpeg_time *= 1/1.001 # -> 29.97 fps
         offset_time = mpeg_time - nav
@@ -409,6 +410,18 @@ KP_ENTER dvdnav select
 	  # we wanted to match that more precisely once we did get past it.
 	  # so basically today we are trying to "match" the underlying MPEG time well. Which is wrong, of course.
 	  # either match the file or match the DVD, punk!
+	  
+	  mpeg_start = descriptors['dvd_title_track_start_offset']
+	  if mpeg_start
+	    unless descriptors["timestamps_relative_to"][0] == ["dvd_start_offset"] # like  ["dvd_start_offset", "29.97"]
+          out << "-osd-subtract #{ "%0.3f" % mpeg_start}" # bring it into line with what the "file time" would be, since it skips the initial 0.28s ...
+		else
+		  puts "update me!"
+		end
+	  else
+	    show_blocking_message_dialog "DVD lacks dvd_title_track_start_offset -- please add it"
+	  end
+	  
 	  out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end
