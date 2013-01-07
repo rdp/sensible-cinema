@@ -11,7 +11,8 @@
       some blu-ray player descriptor somehow
     accomodate splits vs. blanks and work
 
-    it can "resync" based on lipsync'ing or some user input (back, forward buttons to subtly resync edits with a currently playing back video) or
+    it can use windows messaging API's to "control" a remote player, viz: http://www.chipmunkav.com/help/appcontroller.htm
+    it can "resync" based on audio transcription (or noticing lips move) or on some user input (back, forward buttons to subtly resync edits with a currently playing back video) or
       with user input "tell me where this subtitle is, for you, and also this one" to synchronize it (+- auto-playing to "around" that level so they can check more easily), 
        or you can ask them manually for time entry for the same.
     OCR'ing subtitles on the fly (or, cache'd OCR'ing them on the fly, to give it time to process) to synchronize or check for profanity or other "questionable" content
@@ -193,7 +194,7 @@
   choose your own adventure type movies :)
   "random play each movie" / "different movie each time through random jumping in a controlled, prescribed manner
   can specify to 'add text/graphics {pictures, circles, etc.}' at such and such a time, at such and such a location
-  from http://www.pcnoevil.info/?p=27: an ability to zoom and crop the moving image, so that scenes which may contain objectionable visual content but may be otherwise tolerable can be framed differently. Another feature that I think would be a real plus is the ability to store portions of the audio track of the presentation in memory when the disc loads, in order to later interject them during playback to replace objectionable terms in the dialogue. For instance if a character in a movie says, “great…” at some point, that word could be stored in memory when the disc loads, and when the playback reaches a certain point, the word could be substituted for a curse word.
+  from http://www.pcnoevil.info/?p=27: an ability to zoom and crop the moving image, so that scenes which may contain objectionable visual content but may be otherwise tolerable can be framed differently. Another feature that I think would be a real plus is the ability to store portions of the audio track of the presentation in memory when the disc loads, in order to later interject them during playback to replace objectionable terms in the dialogue. For instance if a character in a movie says, ï¿½greatï¿½ï¿½ at some point, that word could be stored in memory when the disc loads, and when the playback reaches a certain point, the word could be substituted for a curse word.
   can "just play the music" from a movie--put in the DVD, play back its tunes, baby :)
   add an air of randomization, for instance, as to which ending it will be... 
   online player:
