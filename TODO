@@ -83,10 +83,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
   
 == decide later to move up or down ==
-  get lots of DVD's and see if 30.03 is at all common because...I guess then I would want to multiply by something else than 29.97 internally...make it a command line option...but it still might be impossible to easily tell for a user? <sigh>
-  get tons of EDL's somehow, somewhere...
+  get lots of DVD's and see if 30.03 is at all common because...
+    I guess then I would want to multiply by something else than 29.97 internally...make it a command line option...
+    but it still might be impossible to easily tell for a user? They'd have to use a watch to time it...or compare mplayer's V: time with the OSD 'at an hour' which might not be an option yikes
+      could programmatically check for the "V:" at 3600?
+        if I run into this more/again...
+        else...could rip some, use mencoder on it, ask them to look how the "-ss 3600" of it compares to the "-ss 3600" of the DVD, is it before, or behind?
+          it's either that, or use a stop watch for it, compare it to the OSD. same effect.
   EDL's our movies
-  backwards EDL demo (sons of provo? motab video?)
   I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
   right and left arrows only seek 5 seconds [?]
   ratatouile has [18:19:11:264] MplayerProcess::parseLine: 'Please send bug report - no VTS_TMAPT ?? '
@@ -118,6 +122,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
+  backwards EDL demo (sons of provo? motab video?)
   did Melissa have any feedback for VLC itself? bounty it :)
   Linux port SC (call that good enough for usability on TV's...), should be...
     fix the icons for :yes prompts
