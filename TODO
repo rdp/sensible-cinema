@@ -12,11 +12,12 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   innosetup *at least* yikes!
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
   gnosygnu seeking in XX went back to the beginning sometimes?
-    try out gnosygnu updated, make sure it works, then try and break it
+    try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
   netflix instant descriptor work at all after 18 months
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
     add new button?
   LLC, 'finish' rename: new name? sourceforge, github, all docu, some links  
+  we should "bundle" with an .srt file, really...
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
   minor cleanings for DVD    
@@ -120,7 +121,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
-    get lots of DVD's and see if 30.03 is at all common...
+  an editing player that respects the "you can do this or not" UOP's and/or uses DVD Navigator or just respects them :)
+  get lots of DVD's and see if 30.03 is at all common...
     I guess then I would want to multiply by something else than 29.97 internally...make it a command line option...
     but it still might be impossible to easily tell for a user? They'd have to use a watch to time it...or compare mplayer's V: time with the OSD 'at an hour' which might not be an option yikes
       could programmatically check via the "V:" at 3600, with my osd-verbose output

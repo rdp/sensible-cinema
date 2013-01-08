@@ -243,8 +243,13 @@ pdvd wall time: 5008.669215 == 1:23:28.7 + 1.5 ==  1:23:30'ish
 SW dvd advertises as 1:23:28.166 5013.18 so could go up to 1:23:32.16 I believe, if we went that routehandbrake yields a file with length  01:23:34.03makemkv: 01:23:32.52dvd advertises as 1:23:28.166 5013.18 so up to 32actual wall time appeared to be around 1:23:31'ish [?] so makemkv may actually be closestraw mpeg might be around 01:23:33.44so my guess is that PowerDVD seeking to 1h would be off in the direction I anticipateand my conclusion is that rippers all have their own opinion of timings, makemkv might be "most accurate"
 PowerDVD 12 seemed to show the same as well clock working "right" for the prince
   and then ended 2 seconds too early? that might be expected...
-
-I hope this just means PowerDVD is fixed LOL
+  I hope this just means PowerDVD is fixed LOL
+  
+check with rip cushion 1:00:28 start
+  check with...unmodified mplayer :)
+  oh wait maybe it was just apple's DVD player that suffered from this?
+  
+  rip 
 
 = mplayer current OSD timing =
 
@@ -3982,12 +3987,13 @@ Snow White apparently failed quite well at work, however.  Man this is really re
   has a plus 5 freako
   the TS *might* be right on, which would imply ts == 29.97, makemkv = ts*30.03, which somehow feels wrong...
 
- wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd)
-  1:23:32 sum powerDVD
-  *except* when you scan to the end, then it's 1:23:28 again
-  my guess is powerDVD isn't keeping track except internally...
-  seeking 1HR "good night" [good] night (her last one)
-  yep it's totally internally inconsistent. Fascinating.
+  wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd [5??])
+    1:23:32 sum powerDVD
+    *except* when you scan to the end, then it's 1:23:28 again
+    my guess is powerDVD isn't keeping track except internally...
+    seeking 1HR "good night" [good] night (her last one)
+    yep it's totally internally inconsistent. Fascinating.
+    apple dvd player too, IIRC
   
   120180 frames in the ts
     -> 29.97 1:46:50 <sigh> (totally off)
