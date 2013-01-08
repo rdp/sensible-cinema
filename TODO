@@ -81,15 +81,13 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
       after mplayer accepts my patches LOL
     assert file played back "always" start at 0 [?]
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
+  add a dropdown for it "when the OSD says 1:00, does your wrist watch say... (typically X)".
+    test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
+    maybe just add it for now, then I can examine several with time, just myself/connected with me
+    if I ever see a 30.03 again then I guess make it an option in mplayer [?] or rather just note it in the EDL, add asserts [?]
   
 == decide later to move up or down ==
-  get lots of DVD's and see if 30.03 is at all common because...
-    I guess then I would want to multiply by something else than 29.97 internally...make it a command line option...
-    but it still might be impossible to easily tell for a user? They'd have to use a watch to time it...or compare mplayer's V: time with the OSD 'at an hour' which might not be an option yikes
-      could programmatically check for the "V:" at 3600?
-        if I run into this more/again...
-        else...could rip some, use mencoder on it, ask them to look how the "-ss 3600" of it compares to the "-ss 3600" of the DVD, is it before, or behind?
-          it's either that, or use a stop watch for it, compare it to the OSD. same effect.
+
   EDL's our movies
   I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
   right and left arrows only seek 5 seconds [?]
@@ -121,6 +119,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   backport *all* my fixes to mplayer
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
+
+    get lots of DVD's and see if 30.03 is at all common...
+    I guess then I would want to multiply by something else than 29.97 internally...make it a command line option...
+    but it still might be impossible to easily tell for a user? They'd have to use a watch to time it...or compare mplayer's V: time with the OSD 'at an hour' which might not be an option yikes
+      could programmatically check via the "V:" at 3600, with my osd-verbose output
+        else...could grab some, use mencoder on it, ask them to look and examine how the "-ss 3600" of it compares to the "-ss" of the DVD, is it before, or behind?
+          it's either that, or use a stop watch for it, compare it to the OSD. same effect.
+            prefer stopwatch...
 
   backwards EDL demo (sons of provo? motab video?)
   did Melissa have any feedback for VLC itself? bounty it :)
