@@ -63,7 +63,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   @docu: imprecise dvd "end seek to points" currently
   VLC bounty
     fix VLC jumping when it hits DVD time splits [?]
-	accurate DVD times :) [patch preferably...]
+    accurate DVD times :) [or submit my patch preferably...]
     fantasia 2000 dvd fails
     EDL support
     resume/window position et al
@@ -71,8 +71,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     vlc chapter breaks not skip LOL    
     TMNT broken seeks
     toying with the truth DVD fails
-    crossbar	
-	avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
+    crossbar
+    avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
   feedback button fails os x (double check--does it still?)
   use real JSON or the like...
   use DVD NAV packet time to infer raw:
@@ -81,13 +81,16 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
       after mplayer accepts my patches LOL
     assert file played back "always" start at 0 [?]
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
-  add a dropdown for it "when the OSD says 1:00, does your wrist watch say... (typically X)".
-    test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
-    maybe just add it for now, then I can examine several with time, just myself/connected with me
-    if I ever see a 30.03 again then I guess make it an option in mplayer [?] or rather just note it in the EDL, add asserts [?]
-  
+    or an online equiv?
+  add a prompt "when the OSD says 1:00, does your wrist watch say... (typically X)"
+  add a "middle" thing "you should see this at time x, you can/should double check this..."
+    at that point, allow recalibrate
+    
 == decide later to move up or down ==
 
+  test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
+    maybe just add it for now, then I can examine several with time, just myself/connected with me
+    if I ever see a 30.03 again then I guess make it an option in mplayer [?] or rather just note it in the EDL, add asserts [?]
   EDL's our movies
   I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
   right and left arrows only seek 5 seconds [?]

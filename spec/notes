@@ -1,4 +1,248 @@
+== gnosygnu patch ==
 
+snow white, jumping 10M past the end puts you at 7M in?
+
+== length of DVD compared ==
+basically, 2 different rips get 1s off.  Legitimately. Each different type is going to want/need different double start metricsHopefully resynchronizing helps :)Currently DVDNAV conversion...works ok for some DVD's, not ok for others, but might match some file times precisely.  just not snow white LOL
+  OSOH ok (had no breaks tho...)  = snow white =
+
+compare times dvdnav:// rip1, rip2
+== mplayer dvdout.mencoder.mpg
+
+
+A:5312.3 V:5312.3 A-V: -0.012 ct:  0.048 371/371  6%  0%  1.0% 0 0
+[ac3 @ 01395220]incomplete frame
+A:5312.7 V:5313.2 A-V: -0.458 ct: -0.042 397/397  6%  3%  0.9% 0 0
+
+mplayer real end (before guy):
+A:5166.3 V:5166.2 == 1:26:6.2
+
+== title0.mkv
+V:5012.5 == 1:23:32.5, OSD 1:23:32,
+== hbrk:
+mplayer:
+ V:5013.4 1:23:33
+
+ffmpeg hbrk:  Duration: 01:23:34.03,
+
+mplayer dvdout.mencoder.ffmpeg.copyies.mpg
+V:5167.0 == 1:26:07 which matches dvdnav....
+
+
+this is a huge discrepancy.. 150s?  we have 5s leeway...
+  this feels broken...
+
+time how long mplayer takes to play each...
+
+also including the dvdnav itself...that's the real litmus test :P
+
+
+took 5017.688s (ran \downloads\MPlayer-rtm-svn-34401\MPlayer-rtm-svn-34401\mplayer 
+
+dvdout.mencoder.ffmpeg.copyies.t5167.mpg -vo direct3d)
+from V:5167.0
+
+took 5014.936s (ran \downloads\MPlayer-rtm-svn-34401\MPlayer-rtm-svn-34401\mplayer 
+
+snow_white.hbrk.m4v -vo direct3d)
+from A:5013.4
+
+
+mplayer dvdnav://1 (with cache, without framedrop oops): wall time 5069.266876 ~= 
+
+1:24:29.27
+
+
+TODO time with vlc, mplayer dvdnav, powerdvd ...
+
+
+TODO check when it seems to start gaining...is it just at breaks? what are the mpeg 
+
+frames like at breaks? like it's using them for black sections...?
+
+
+wedding bells will...
+
+A: 131.4 V: 131.4 A-V: -0.006 ct: -0.273 194/194  5%  2% 37.5% 0 0
+A: 132.4 V:   0.0 A-V:132.414 ct: -0.269   0/  0 ??% ??% ??,?% 0 0
+A:  -0.6 V:   0.0 A-V: -0.678 ct: -0.269   1/  1 ??% ??% ??,?% 0 0
+A:  -0.5 V:   0.0 A-V: -0.558 ct: -0.269   1/  1 ??% ??% ??,?% 0 0
+A:  -0.4 V:   0.0 A-V: -0.438 ct: -0.269   1/  1 ??% ??% ??,?% 0 0
+A:  -0.3 V:   0.0 A-V: -0.298 ct: -0.269   1/  1 ??% ??% ??,?% 0 0
+A:  -0.1 V:   0.0 A-V: -0.168 ct: -0.269   1/  1 ??% ??% ??,?% 0 0
+A:   0.1 V:   0.0 A-V:  0.012 ct: -0.269   1/  1 ??% ??% ??,?% 0 0
+A:   0.2 V:   0.0 A-V:  0.132 ct: -0.265   1/  1 ??% ??% ??,?% 0 0
+A:   0.2 V:   0.1 A-V:  0.160 ct: -0.260   2/  2 ??% ??% ??,?% 0 0
+A:   0.3 V:   0.1 A-V:  0.159 ct: -0.256   3/  3 ??% ??% ??,?% 0 0
+A:   0.3 V:   0.2 A-V:  0.147 ct: -0.252   4/  4 ??% ??% ??,?% 0 0
+A:   0.3 V:   0.2 A-V:  0.125 ct: -0.248   5/  5 ??% ??% ??,?% 0 0
+A:   0.4 V:   0.3 A-V:  0.103 ct: -0.244   6/  6 ??% ??% ??,?% 0 0
+A:   0.4 V:   0.3 A-V:  0.082 ct: -0.240   7/  7 ??% ??% ??,?% 0 0
+A:   0.4 V:   0.3 A-V:  0.068 ct: -0.235   8/  8 ??% ??% ??,?% 0 0
+A:   0.5 V:   0.4 A-V:  0.108 ct: -0.231   9/  9 ??% ??% ??,?% 0 0
+A:   0.5 V:   0.4 A-V:  0.097 ct: -0.227  10/ 10 ??% ??% ??,?% 0 0
+A:   0.5 V:   0.5 A-V:  0.075 ct: -0.223  11/ 11 94% 44% 704.3% 0 0
+A:   0.6 V:   0.5 A-V:  0.063 ct: -0.219  12/ 12 87% 41% 651.0% 0 0
+A:   0.6 V: 132.0 A-V:-131.376 ct: -0.223  13/ 13 82% 38% 606.3% 0 0
+A:   0.7 V: 132.0 A-V:-131.378 ct: -0.227  14/ 14 77% 36% 568.1% 0 0
+A:   0.7 V: 132.1 A-V:-131.402 ct: -0.231  15/ 15 72% 34% 534.7% 0 0
+A:   0.8 V: 132.1 A-V:-131.362 ct: -0.235  16/ 16 69% 32% 505.3% 0 0
+A:   0.8 V: 132.2 A-V:-131.343 ct: -0.240  17/ 17 65% 31% 482.7% 0 0
+
+My guess is it's preloading some audio "negative 0.6?" or maybe it's negative...umm...
+and then...umm....
+obviously mplayer doesn't handle this well...
+
+
+vlc handles the breaks better, lists 1:23:28 as the sum?
+  seems about accurate...
+
+
+
+with VLC  dvd:///D:/#1 vlc://quit 8 seconds of bootstrap'ish?
+
+ffmpeg -i mkv
+  Chapter #0.26: start 4844.072567, end 5012.524000
+
+1:23:28 "vlc dvd sum time" compared to "01:23:34.03" hbrk time, 5012.524000==1:23:32.4 
+
+mkv
+
+ffmpeg -i  dvdout.mencoder.ffmpeg.copyies.t5167.mpg
+    Duration: 01:26:07.06, start: 1.000000, bitrate: 5692 kb/s
+
+ffmpeg -i  dvdout.mencoder.ffmpeg.copyies.t5167.mencoder.forceidx.mpg
+    Duration: 01:23:33.44, start: 0.000000, bitrate: 5385 kb/s
+
+ffprobe on the baddy? :)
+
+
+*30/29.97 is actually about equal...so...but...does it go in the "wrong" direction?
+
+typically, it thinks it is 30 fps, but it is actually 29.97...
+
+so typically dvd is ahead...but they are behind in this particular case?
+
+I guess that is ok...so maybe "in this case, they just underestimated"
+
+but if that's the case, then wall time should match mkv time...
+
+  was 1:24:29.27
+
+like a minute extra too long, but consistently?
+
+possibly another fluke?
+  possibly mplayer sucks at handling overlaps right, too...
+  could tell by rerunning it, was already seeing it at OSD 52:35 ...
+  so if it's not there by that point...
+
+noooooooo
+the output end time should be some fraction of 29.97/30 ...
+
+assuming makemkv is actually on which...they...might probably be...
+
+
+demux_mpg: 24000/1001fps progressive NTSC content detected, switching framerate.
+
+with no other changes for quite awhile, assume progressive 24000/1001 fps...
+
+
+so what I *want* is for wall time in (VLC, mplayer fixed, or powerdvd) to match something 
+
+*sane* like the mkv time :)
+
+coudl try out =c=, ratatouille
+
+
+
+ID_DVD_VOLUME_ID=
+ID_DVD_CURRENT_TITLE=1
+ID_DVD_TITLE_1_LENGTH=5008.166 == 1:23:28.166 (same as other number at least...)
+   scaled to 29.97 == 1:23:23.158 "which is the wrong way" apparently
+   scaled to 30.03 == 1:23:33.179
+                      01:23:32.52 mkv
+
+ID_DVD_TITLE_1_CHAPTERS=28
+
+VIDEO:  MPEG2  720x480  (aspect 2)  29.970 fps  5162.0 kbps (645.2 kbyte/s)
+ID_FILENAME=dvdnav://1
+ID_DEMUXER=mpegps
+ID_VIDEO_FORMAT=0x10000002
+ID_VIDEO_BITRATE=5162000
+ID_VIDEO_WIDTH=720
+ID_VIDEO_HEIGHT=480
+ID_VIDEO_FPS=29.970
+ID_VIDEO_ASPECT=0.0000
+ID_AUDIO_FORMAT=8192
+ID_AUDIO_BITRATE=0
+ID_AUDIO_RATE=0
+ID_AUDIO_NCH=0
+ID_START_TIME=0.57         ??? NAV start? huh?
+ID_LENGTH=5008.17
+ID_SEEKABLE=1
+ID_CHAPTERS=28
+
+
+last NAV packet was 0.500000, mpeg at 0.364044 new NAV packet! 0.500000 at mpeg 0.364044 
+
+adding 0.000000 to pts 0.500500
+final: 0.500500
+using mpeg ts appears larger, which if true is definitely better 0.364044 > 0.500500 - 
+
+1.0
+A:   0.4 a:   0.8 V:  0.36 A-V:  0.447 ct:  0.000   2/  2 ??% ??% ??,?% 1 0
+last NAV packet was 0.500000, mpeg at 0.397411 adding MPEG difference since last NAV of 
+
+0.033367 adding 0.000000 to pts 0.533900
+final: 0.533900
+
+
+does mplayer show "skips" when playing a raw mpeg rip?
+  mplayer  dvdout.mencoder.mpg
+    A:4245.2 V:4245.1
+  so my guess is not...though...umm...uh...
+@end:
+A:5166.3 V:5166.2 A-V:  0.074 ct:  0.283 789/786  3%  0%  0.8% 0 0
+
+demux_mpg: 30000/1001fps NTSC content detected, switching framerate.
+A:5166.3 V:5166.2 A-V:  0.072 ct:  0.287 790/787  3%  0%  0.8% 0 0
+Warning! FPS changed 23.976 -> 29.970  (-5.994005) [4]
+
+though the V: keeps going...hmm...
+
+A:5313.2 V:5313.2
+
+end ffprobe on dvdout.mencoder.mpg:
+pts_time=5313.207700
+pts_time=5313.341167
+pts_time=5313.289367
+
+no idea what ffmpeg is doing here/what is going on here...
+
+
+end ov dvdnav://1
+
+final: 5011.506348
+A:5011.5 a:  13.2 V: 13.19 A-V:  0.013 ct: -0.264 180/180  4%  0% 31.7% 1 0
+last NAV packet was 5006.500000, mpeg at 13.234327 adding MPEG difference since last NAV 
+
+of 0.041708 adding 0.000000 to pts 5011.547852
+final: 5011.547852
+A:5011.5 a:  13.2 V: 13.23 A-V:  0.001 ct: -0.264 181/181  4%  0% 31.6% 1 0
+last NAV packet was 5006.500000, mpeg at 13.276035 adding MPEG difference since last NAV 
+
+of 0.083416 adding 0.000000 to pts 5011.589844
+final: 5011.589844
+A:5011.6 a:  13.3 V: 13.28 A-V:  0.010 ct: -0.263 182/182  4%  0% 31.5% 1 0
+last NAV packet was 5006.500000, mpeg at 13.317743 adding MPEG difference since last NAV 
+
+of 0.125124 adding 0.000000 to pts 5011.631836
+final: 5011.631836
+A:5011.6 a:  13.3 V: 13.32 A-V:  0.008 ct: -0.263 183/183  4%  0% 31.3% 1 0
+last NAV packet was 5006.500000, mpeg at 13.359455 adding MPEG difference since last NAV 
+
+of 0.166836 adding 0.000000 to pts 5011.673828
+final: 5011.673828
 
 = mplayer current OSD timing =
 
@@ -5231,5 +5475,5 @@ resulted in a sound with no audio
 
 I got bigg trying to combine (mencoder ?) two large files.
 
-I think bigg has honestly messed up audio, no reindexing seems to help it, at all.
+I think .big has honestly messed up audio, no reindexing seems to help it, at all.
 
