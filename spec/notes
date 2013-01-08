@@ -4,7 +4,8 @@ snow white, jumping 10M past the end puts you at 7M in?
 
 == length of DVD compared ==
 basically, 2 different rips get 1s off.  Legitimately. Each different type is going to want/need different double start metricsHopefully resynchronizing helps :)Currently DVDNAV conversion...works ok for some DVD's, not ok for others, but might match some file times precisely.  just not snow white LOL
-  OSOH ok (had no breaks tho...)  = snow white =
+  OSOH ok (had no breaks tho...)
+    that's important, though...yeah.  = snow white =
 
 compare times dvdnav:// rip1, rip2
 == mplayer dvdout.mencoder.mpg
@@ -28,7 +29,6 @@ ffmpeg hbrk:  Duration: 01:23:34.03,
 mplayer dvdout.mencoder.ffmpeg.copyies.mpg
 V:5167.0 == 1:26:07 which matches dvdnav....
 
-
 this is a huge discrepancy.. 150s?  we have 5s leeway...
   this feels broken...
 
@@ -37,16 +37,11 @@ time how long mplayer takes to play each...
 also including the dvdnav itself...that's the real litmus test :P
 
 
-took 5017.688s (ran \downloads\MPlayer-rtm-svn-34401\MPlayer-rtm-svn-34401\mplayer 
-
-dvdout.mencoder.ffmpeg.copyies.t5167.mpg -vo direct3d)
+took 5017.688s (ran \downloads\MPlayer-rtm-svn-34401\MPlayer-rtm-svn-34401\mplayer dvdout.mencoder.ffmpeg.copyies.t5167.mpg -vo direct3d)
 from V:5167.0
 
-took 5014.936s (ran \downloads\MPlayer-rtm-svn-34401\MPlayer-rtm-svn-34401\mplayer 
-
-snow_white.hbrk.m4v -vo direct3d)
+took 5014.936s (ran \downloads\MPlayer-rtm-svn-34401\MPlayer-rtm-svn-34401\mplayer snow_white.hbrk.m4v -vo direct3d)
 from A:5013.4
-
 
 mplayer dvdnav://1 (with cache, without framedrop oops): wall time 5069.266876 ~= 
 
@@ -243,6 +238,13 @@ last NAV packet was 5006.500000, mpeg at 13.359455 adding MPEG difference since 
 
 of 0.166836 adding 0.000000 to pts 5011.673828
 final: 5011.673828
+
+pdvd wall time: 5008.669215 == 1:23:28.7 + 1.5 ==  1:23:30'ish
+SW dvd advertises as 1:23:28.166 5013.18 so could go up to 1:23:32.16 I believe, if we went that routehandbrake yields a file with length  01:23:34.03makemkv: 01:23:32.52dvd advertises as 1:23:28.166 5013.18 so up to 32actual wall time appeared to be around 1:23:31'ish [?] so makemkv may actually be closestraw mpeg might be around 01:23:33.44so my guess is that PowerDVD seeking to 1h would be off in the direction I anticipateand my conclusion is that rippers all have their own opinion of timings, makemkv might be "most accurate"
+PowerDVD 12 seemed to show the same as well clock working "right" for the prince
+  and then ended 2 seconds too early? that might be expected...
+
+I hope this just means PowerDVD is fixed LOL
 
 = mplayer current OSD timing =
 

@@ -1,28 +1,27 @@
 Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to protect it for in 20 years"
 
 == rough milestone current roadmap, in order, just here == 
-	
+
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==  
 
-  update all edl's as "need verification" and "based on file time"
   publish new release
-  check if file timings style lines up
 
+  update all edl's as "need verification" and "based on file time"
   innosetup *at least* yikes!
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
-  gnosygnu seeking in ET went back to the beginning sometimes? huh?
+  gnosygnu seeking in XX went back to the beginning sometimes?
     try out gnosygnu updated, make sure it works, then try and break it
   netflix instant descriptor work at all after 18 months
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
-	add new button?
+    add new button?
   LLC, 'finish' rename: new name? sourceforge, github, all docu, some links  
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
   minor cleanings for DVD    
     mplayer patches to them, if I have any...
-	buy powerdvd el cheap-o
+    buy powerdvd el cheap-o
       test blu-ray at home
   it doesn't set osd-verbose when playing in smplayer
   mplayer bounties:
@@ -31,7 +30,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
       I can research this, too...	
   update alternativeto.net with "the known competitors"
-  an innosetup *at least* yikes!
   powerdvd compat/cleanup entry screne anyway...buy powerdvd 12
   tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
@@ -40,10 +38,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   move documentation to online wiki [all]
    combine README with the online docu...DRY that stuff up...
   match the file time, punk!  No more half and half weird-o DVD timing stuff.
-  respond to that guy "better upload place"
   hp 4 scanning intro waz off
     broken scanning hp2 init's
-	or not complain, these days...even snow white had a complaint [?]
+    or not complain, these days...even snow white had a complaint [?]
   combine all "folders" of movie EDL's into one uni-folder 
     non youtube, 
     also non...in process folder
@@ -60,21 +57,20 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   accomodate for telecine optionally [veggie tales, sintel seem to need it <sigh>]
   gui/edl parser unit tests [just] work
   ask for more beta testers for use, ask for more beta testers for creation, too
-  @docu: imprecise dvd "end seek to points" currently
+  @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
   VLC bounty
     fix VLC jumping when it hits DVD time splits [?]
+      check if it does still...anything disney should be enough? cars 2 would be great...cars with an older version?
     accurate DVD times :) [or submit my patch preferably...]
     fantasia 2000 dvd fails
     EDL support
     resume/window position et al
     can skip over scratched parts of a DVD
-    vlc chapter breaks not skip LOL    
-    TMNT broken seeks
     toying with the truth DVD fails
-    crossbar
+    crossbar heck why not?
     avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
-  feedback button fails os x (double check--does it still?)
   use real JSON or the like...
+    online editor :)
   use DVD NAV packet time to infer raw:
     timestamps_relative_to "force them" to have, or to hit the upgrade button
     non 29.97 with mplayer edl change OSD
@@ -88,6 +84,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     
 == decide later to move up or down ==
 
+  feedback button fails os x (double check--does it still?)
   test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
     maybe just add it for now, then I can examine several with time, just myself/connected with me
     if I ever see a 30.03 again then I guess make it an option in mplayer [?] or rather just note it in the EDL, add asserts [?]
