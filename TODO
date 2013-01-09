@@ -6,8 +6,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == yes do, un-ordered currently, from all the various future release options ==  
 
-  publish new release
-
+  publish new release, once I have even more feedback...
+    use new smplayer.ini 
+    1. Extra words - if you leave extra words blank, the process does not work
+    2. Writing euphemized srt files does not work
+    
   update all edl's as "need verification" and "based on file time"
   innosetup *at least* yikes!
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
@@ -20,34 +23,29 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   we should "bundle" with an .srt file, really...
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
-  minor cleanings for DVD    
-    mplayer patches to them, if I have any...
-    buy powerdvd el cheap-o
-      test blu-ray at home
-  it doesn't set osd-verbose when playing in smplayer
+  test blu-ray remixes at home with PDVD ultra 10 [depending on their email response...]
+  it doesn't set osd-verbose when playing in smplayer in dev mode?
+  add the "straight play" button to create mode
   mplayer bounties:
     fix mplayer chapter breaks shuck! whoa!
-    mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it...
+    mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it [Alison's?]
     fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
-      I can research this, too...	
+      I could research this, too...unable to repro snow white work lappy
   update alternativeto.net with "the known competitors"
-  powerdvd compat/cleanup entry screne anyway...buy powerdvd 12
+  powerdvd compat/cleanup entry init prompt more?
   tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   download my own smplayer distro (exe prolly) so that I can just use it locally, and it doesn't pollute...
-  tell that guy where to upload, once it's possible LOL. Hmm...
-  make possible "add 2 seconds to all entries in this EDL" (maybe after editor system)
-  move documentation to online wiki [all]
-   combine README with the online docu...DRY that stuff up...
-  match the file time, punk!  No more half and half weird-o DVD timing stuff.
+  use the cool uploader website
+    tell that guy where to upload, once it's possible LOL. Hmm...
+  make possible "add 2 seconds to all entries in this EDL" (maybe after editor system?)
+    don't I want to move it all online tho? this way might be easy tho...
+  move documentation folder to online wiki [all]
+   combine README with the online docu...DRY that stuff up ?
   hp 4 scanning intro waz off
     broken scanning hp2 init's
     or not complain, these days...even snow white had a complaint [?]
-  combine all "folders" of movie EDL's into one uni-folder 
-    non youtube, 
-    also non...in process folder
   the awesome new editor GUI [or do I just want online? probably...]
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
-  use the cool uploader website
   do a google search for them goblet of fire en 1cd subtitles "srt file" (google search is ok...but not really...)
   melissa stuff:
     readme be helpful for subtitles [?]
@@ -55,12 +53,12 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     split pc/mac distros for easier understandability :P
       actually a real installer for each might help...let's do that instead...
     better instructions on how to actually use opensubtitles LOL (youtube?)
-  accomodate for telecine optionally [veggie tales, sintel seem to need it <sigh>]
+  accomodate for telecine optionally [veggie tales, sintel seem to need it <sigh>, jonah? huh? even vlc turfs it?]
   gui/edl parser unit tests [just] work
   ask for more beta testers for use, ask for more beta testers for creation, too
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
   VLC bounty
-    fix VLC jumping when it hits DVD time splits [?]
+    fix VLC jumping when it hits DVD time splits [?] chapters ?
       check if it does still...anything disney should be enough? cars 2 would be great...cars with an older version?
     accurate DVD times :) [or submit my patch preferably...]
     fantasia 2000 dvd fails
@@ -68,30 +66,25 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     resume/window position et al
     can skip over scratched parts of a DVD
     toying with the truth DVD fails
-    crossbar heck why not?
+    crossbar heck why not, even though it's unrelated, it's moving it forward :)
     avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
   use real JSON or the like...
-    online editor :)
-  use DVD NAV packet time to infer raw:
-    timestamps_relative_to "force them" to have, or to hit the upgrade button
-    non 29.97 with mplayer edl change OSD
-      after mplayer accepts my patches LOL
-    assert file played back "always" start at 0 [?]
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
     or an online equiv?
   add a prompt "when the OSD says 1:00, does your wrist watch say... (typically X)"
   add a "middle" thing "you should see this at time x, you can/should double check this..."
     at that point, allow recalibrate
+  tell them exactly *what* advanced does
     
 == decide later to move up or down ==
 
+  assert file played back "always" start at 0 first frame [?]
   feedback button fails os x (double check--does it still?)
   test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
     maybe just add it for now, then I can examine several with time, just myself/connected with me
     if I ever see a 30.03 again then I guess make it an option in mplayer [?] or rather just note it in the EDL, add asserts [?]
   EDL's our movies
   I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
-  right and left arrows only seek 5 seconds [?]
   ratatouile has [18:19:11:264] MplayerProcess::parseLine: 'Please send bug report - no VTS_TMAPT ?? '
   make it easier to use for "just play a file"
     "pick your source, pick your EDL, ready, ok?"
@@ -121,6 +114,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
+  right and left arrows only seek 5 seconds [?]
   an editing player that respects the "you can do this or not" UOP's and/or uses DVD Navigator or just respects them :)
   get lots of DVD's and see if 30.03 is at all common...
     I guess then I would want to multiply by something else than 29.97 internally...make it a command line option...
