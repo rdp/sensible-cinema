@@ -1,11 +1,17 @@
+== comparing times again ==
+
+S&SAC youtube rentable, no netflix instant
+S&S amazon prime viewable, no netflix instant, hulu free
+forever s.: netflix instant, amazon prime, plus I have the DVD TODO check DVD timings here...has blu-ray though gah! but I accept!
+
 == gnosygnu patch ==
 
 snow white, jumping 10M past the end puts you at 7M in?
 
 == length of DVD compared ==
-basically, 2 different rips get 1s off.  Legitimately. Each different type is going to want/need different double start metricsHopefully resynchronizing helps :)Currently DVDNAV conversion...works ok for some DVD's, not ok for others, but might match some file times precisely.  just not snow white LOL
+basically, 2 different rips get 1s off.  Possibly legitimately. Each different type is going to want/need different double start metricsHopefully resynchronizing helps :)Currently DVDNAV conversion...works ok for some DVD's, not ok for others, but might match some file times precisely.  just not snow white LOL
   OSOH ok (had no breaks tho...)
-    that's important, though...yeah.  = snow white =
+    that's important, though...yeah.  = snow white =
 
 compare times dvdnav:// rip1, rip2
 == mplayer dvdout.mencoder.mpg
@@ -249,28 +255,38 @@ PowerDVD 12 seemed to show the same as well clock working "right" for the prince
     V: 6.4 at the end I believe, so no longer MPEG at the end...oh man this is sooo weird.
 
   wall time latest: wrist watch started a tidge behind, ended up even further behind (powerdvd [5??])
-    1:23:32 sum powerDVD
+    1:23:32 sum powerDVD (last OSD I guess?)
     *except* when you scan to the end, then it's 1:23:28 again
     my guess is powerDVD isn't keeping track except internally...
     seeking 1HR "good night" [good] night (her last one)
-    yep it's totally internally inconsistent. Fascinating.
+    yep it's totally internally inconsistent (I assume I'm referring to the OSD matching wall time oddly). Fascinating.
     apple dvd player too, IIRC
     
     with powerdvd 12:
       PDVD's last OSD 1:23:30 "reasonably strong" at least 0.5s showing 30, with an end of 1:23:28 advertised
+        got this again with a full run through, exact same, wall time was 
       and if you seek to it, it gets to the "end second shown" 1:23:26 or 1:23:27 then "bumps" to 1:23:28
       yep, this may be still messed up!
         sniff...maybe...EDL's might still work, though...somehow...sniff...
- 
-TODO my recordings again, but with PDVD again, VLC, mplayer, etc. 
-  TODO modify files manually, new release
- 
-check with rip cushion 1:00:28 start
-  check with...unmodified mplayer :)
-  oh wait maybe it was just apple's DVD player that suffered from this?
-  
-  rip...
+      remember: pdvd wall time: 5008.669215 == 1:23:28.7 + 1.5 ==  1:23:30'ish (or + 2).  It seems like PDVD 12 is tracking wall time still...but...but...played it more quickly than an older version?
+      with 60 second build up, last second shown was a reasonably strong 1:23:27
 
+      wall time right on at second 4
+        first black after blue == 5010.79
+        prolly 5011.69 or (5012.0'ish == 1:23:32)
+        powerdvd is reporting a half and half MPEG to wall time with this new version? huh?
+         or maybe it just loses a second at the beginning or something...I'm thinking that the wall time is actually 1:23:32, at least that would simplify things on my brain a bit :)
+           though possibly I didn't quite start the timings on?
+        it "becomes" 1s behind wall time, and is 1:23:31? that's still like 1s off makemkv grumble grumble.
+           the take home is "everybody has their own timings" I suppose...
+     LODO try it with the old PDVD again? or it may have been a fluke with a few extra seconds thrown in there :P
+       we'll assume we understand what was happening and leave this awful DVD behind LOL
+  VLC walltime:
+    around 5005.62 [?] which...might seemingly be timing-wise off for whatever reason though (VLC bug? timing issue?)
+  mplayer wall time: 5005.5+..."a few seconds" (should be 5010?) ok this is hurting my brain, there might be some legitimate discrepancy between DVD and rips now LOL
+    same lesson--don't trust one source to match another...though it might be interesting to see about netflix instant...
+  mplayer the console time was started a few seconds late
+       
 = mplayer current OSD timing =
 
 == osoh end stuff
@@ -5286,17 +5302,15 @@ hulu
  45: just before the big grin from duck
  sum: 1:22:51 1:22:52 in thing, seems to get that far... hmm...
 
-
 youtube jonah: appears lower quality?
  15: wash your hands before you [eat]
  30: yes well [you] and ...
  45: big smile, turns [to his right]
- sum: (says 1:22:59 for pay version [?]) says 1:22:54  in index, and on vid, felt really like 1:22:52 or so
-
+ sum: (says 1:22:59 for pay version [?]) says 1:22:54 in index, and on vid, felt really like 1:22:52 or so
 
 powerdvd 8 (DVD):
-  15: 
-    wash your hands before you [eat] 
+  15:
+    wash your hands before you [eat]
     wash your hands [before] you eat
     wash your [hands] before you eat LOL
   30: 

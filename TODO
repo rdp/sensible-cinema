@@ -7,11 +7,15 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == yes do, un-ordered currently, from all the various future release options ==  
 
   publish new release, once I have even more feedback...
-    use new smplayer.ini 
+    use new smplayer.ini's [?]
     1. Extra words - if you leave extra words blank, the process does not work
     2. Writing euphemized srt files does not work
     
-  update all edl's as "need verification" and "based on file time"
+  test forever strong timing amazon prime anyway :)
+    watch that other prime film?
+  try commercial bluray with anyDVD and zoomplayer :)
+  update manually all edl's as "need verification" and "based on file time"
+  advanced mode, say all it's good for
   innosetup *at least* yikes!
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
   gnosygnu seeking in XX went back to the beginning sometimes?
@@ -41,6 +45,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     don't I want to move it all online tho? this way might be easy tho...
   move documentation folder to online wiki [all]
    combine README with the online docu...DRY that stuff up ?
+   or maybe just cleanup the README, make it presentable for InnoSetup, and make it user intuitive so they don't *need* instructions
   hp 4 scanning intro waz off
     broken scanning hp2 init's
     or not complain, these days...even snow white had a complaint [?]
