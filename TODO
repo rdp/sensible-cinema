@@ -7,13 +7,13 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == yes do, un-ordered currently, from all the various future release options ==  
 
   publish new release, once I have even more feedback...
-    use new smplayer.ini's [?]
     1. Extra words - if you leave extra words blank, the process does not work
     2. Writing euphemized srt files does not work
     
+  bundle smplayer, plz?
   test forever strong timing amazon prime anyway :)
     watch that other prime film?
-  try commercial bluray with anyDVD and zoomplayer :)
+  try bluray with anyDVD and zoomplayer :)
   update manually all edl's as "need verification" and "based on file time"
   advanced mode, say all it's good for
   innosetup *at least* yikes!
@@ -80,11 +80,13 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   add a prompt "when the OSD says 1:00, does your wrist watch say... (typically X)"
   add a "middle" thing "you should see this at time x, you can/should double check this..."
     at that point, allow recalibrate
-  tell them exactly *what* advanced does
+  tell them exactly *what* advanced all does
     
 == decide later to move up or down ==
 
-  assert file played back "always" start at 0 first frame [?]
+  warn if file played back not start at 0 first frame [?]
+  right click on a file "=> play edited"
+    and DVD drive?
   feedback button fails os x (double check--does it still?)
   test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
     maybe just add it for now, then I can examine several with time, just myself/connected with me

@@ -337,7 +337,7 @@ KP_ENTER dvdnav select
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    LocalModifiedMplayer = File.expand_path "vendor/cache/mplayer_edl/mplayer.exe"
+    LocalModifiedMplayer = File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" # also edit mplayer_up_to_date method ...
     
     def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this

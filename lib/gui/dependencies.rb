@@ -114,19 +114,18 @@ module SensibleSwing
 	
 	end
 	
-	def mplayer_up_to_date?
+	def mplayer_up_to_date? # for mac users...I guess? yeah warn them that I don't really support them LOL
 	  out = `mplayer -fake 2>&1`
-	  out =~ /EDL-0.5/
+	  out =~ /EDL-0.6/
 	end
     
     def check_for_various_dependencies            
       if OS.doze? 
-	    if !check_for_exe('vendor/cache/mplayer_edl/mplayer.exe', nil) || !mplayer_up_to_date?
+	    if !check_for_exe(LocalModifiedMplayer, nil)
           require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
           FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
           puts 'downloading mplayer edl [12 MB]'
-		  FileUtils.rm_rf 'vendor/cache/mplayer_edl/mplayer.exe' # old version
-          MainWindow.download('http://mplayer-edl.googlecode.com/files/mplayer.exe', 'vendor/cache/mplayer_edl/mplayer.exe')
+          MainWindow.download('http://mplayer-edl.googlecode.com/files/' + File.basename(LocalModifiedMplayer), LocalModifiedMplayer)
           config_dir = File.expand_path('~/mplayer')
           FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
           FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac ttf?
@@ -134,7 +133,7 @@ module SensibleSwing
       else
         if check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
 		  if !mplayer_up_to_date?
-		    SimpleGuiCreator.show_message "your mplayer may be out of date, download a new one, or request it!"   
+		    SimpleGuiCreator.show_message "your mplayer may be out of date, download a new one, or request it if not yet available!"   
 		  end
 		end
 	  end
