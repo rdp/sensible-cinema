@@ -215,10 +215,10 @@ module SensibleSwing
 	    LocalStorage['have_zoom_button'] = false
 	  end
 	  
-      if SimpleGuiCreator.show_select_buttons_prompt("Would you like to enable some obscure options, like
- Using keyboard shortcuts to create EDL files on the fly, or 
- Prompting to create euphemized .srt files, or
- Being able to add your own 'profanity words' specific to different videos?
+      if SimpleGuiCreator.show_select_buttons_prompt("Would you like to enable some obscure options? They are:
+ Using keyboard shortcuts to create EDL files on the fly, while watching, with keystrokes,
+ Prompting to create euphemized .srt files, for later playback as subtitles, and
+ Being able to add your own 'profanity words' to search for, in the subtitles, specific to unique videos?
  (Most users answer no to this).", :yes => 'No', :no => 'Yes') == :no
         LocalStorage['prompt_obscure_options'] = true
       else

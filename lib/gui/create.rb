@@ -90,8 +90,13 @@ module SensibleSwing
  
         euphemized_entries = euphemized_filename = nil
         with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
-          parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
-          write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.nonsynchronized.subtitles.srt.txt'), euphemized_entries
+          begin
+		    parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
+            write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.nonsynchronized.subtitles.srt.txt'), euphemized_entries
+		  rescue => e
+		    show_blocking_message_dialog "unable to parse #{srt_filename}\n#{e}?"
+			raise
+		  end
         end
 
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
@@ -134,8 +139,11 @@ You will be prompted for a beginning and starting timestamp time to search for.\
         parsed_profanities, euphemized_synchronized_entries = nil
 		extra_profanity_hash = {}
 		if LocalStorage['prompt_obscure_options']
-		  for entry in get_user_input_with_persistence("enter any 'extra' words to search for, like badword1,badword2 if any", srt_filename + 'words', true).split(',')
-		    extra_profanity_hash[entry] = entry
+		  got = get_user_input_with_persistence("enter any 'extra' words to search for, like badword1,badword2 if any", srt_filename + 'words', true)
+		  if got
+		    for entry in got.split(',')
+		      extra_profanity_hash[entry] = entry
+		    end
 		  end
 		end
 		

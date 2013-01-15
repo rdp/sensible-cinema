@@ -551,8 +551,8 @@ KP_ENTER dvdnav select
     end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
-      bring_to_front unless OS.mac? # causes triples on mac! TODO rdp
-      JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
+      bring_to_front unless OS.mac? # causes triples on mac! TODO rdp why?
+      SimpleGuiCreator.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
     # also caches directory previously selected ...
@@ -687,8 +687,11 @@ KP_ENTER dvdnav select
     
     def with_autoclose_message(message)
       a = show_non_blocking_message_dialog message
-      yield
-      a.close
+	  begin
+        yield
+	  ensure
+        a.close
+	  end
     end
 	
     def we_are_in_upconvert_mode
