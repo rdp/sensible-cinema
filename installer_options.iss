@@ -4,13 +4,13 @@
 ; AppId === AppName by default BTW
 
 [Run]
-; a checkbox run optional after install, disabled since it has a console...
-; Filename: vendor/jruby-complete-1.7.0.jar; Description: Launch {#AppName} after finishing installation; WorkingDir: {app}; Parameters: -Ilib bin\startup.rb --background-start; Flags: nowait postinstall
+; a checkbox run optional after install, NB, has a console...
+Description: Run Sensible Cinema; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema; Flags: nowait postinstall runminimized
 
 [UninstallRun]
 
 [Files]
-Source: *; DestDir: {app}; Excludes: releases; Flags: recursesubdirs
+Source: *; DestDir: {app}; Excludes: releases, vendor\cache, spec, lib\jruby-swing-helpers\spec; Flags: recursesubdirs
 Source: README.TXT; DestDir: {app}; Flags: isreadme
 
 [Setup]
@@ -25,10 +25,10 @@ OutputDir=releases
 
 [Icons]
 ; extra space hopes to make it appear at the top...
-Name: "{group}\Run Sensible Cinema"; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema
-Name: "{group}\Run Sensible Cinema in advanced or create mode"; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema  --create-mode
-; IconFilename: {app}/vendor/webcam-clipart.ico
-Name: {group}\Uninstall {#AppName}; Filename: {uninstallexe}
+Name: {group}\Run Sensible Cinema; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema; Flags: runminimized
+Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema  --create-mode; Flags: runminimized
+Name: {group}\advanced\Uninstall {#AppName}; Filename: {uninstallexe}
+Name: {group}\advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 
 [Messages]
 ;ConfirmUninstall=Are you sure you want to remove %1 (any saved videos will still be left on the disk)?
