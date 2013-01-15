@@ -1,7 +1,7 @@
-0.40.1:
+0.41.0:
   update mplayer and DVD playback so that it's [hopefully] super file accurate.  In certain cases LOL.
   hopefully fix mplayer to play audio again
-  
+  fix euphemized subtitles gen, fix additional swear word scanning to work if empty, thanks Michael!  
 
 0.40.0: fix mutes so they're accurate again [yikes]
 update mplayer so it can seek with smplayer woot!
