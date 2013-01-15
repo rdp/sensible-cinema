@@ -227,7 +227,7 @@ module SubtitleProfanityFinder
     output = ''
     entries = split_to_entries(subtitles)
     for all_profanity_combinations in all_profanity_combinationss
-      output += "\n"
+      output += "\n" # some space between greater and lesser prof's
       for entry in entries
         text = entry.text
         ts_begin = entry.beginning_time
@@ -273,7 +273,7 @@ module SubtitleProfanityFinder
       entry.beginning_time = multiply_proc.call(entry.beginning_time)
       entry.ending_time = multiply_proc.call(entry.ending_time)
     end
-    [output, entries]
+    [output.strip, entries]
   end
 end
 

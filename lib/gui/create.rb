@@ -160,7 +160,11 @@ You will be prompted for a beginning and starting timestamp time to search for.\
         end
         
         filename = get_temp_file_name('mutes.edl.txt')
-        out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem them mutable\n" + parsed_profanities
+		if parsed_profanities.present?
+          out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem mute-worthy\n" + parsed_profanities
+		else
+		  out = "# no mute-worthy profanities found..."
+		end
         if end_srt_time != 3000
 		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],\n!

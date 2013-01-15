@@ -551,14 +551,14 @@ KP_ENTER dvdnav select
     end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
-      bring_to_front unless OS.mac? # causes triples on mac! TODO rdp why?
+      bring_to_front unless OS.mac? # causes triplicate windows on mac! LODO rdp investigate
       SimpleGuiCreator.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
-      bring_to_front unless OS.mac? # causes duplicate prompts or something?
-      unique_trace = caller.inspect
+      bring_to_front unless OS.mac? # causes same duplicate prompts?
+      unique_trace = caller.map{|string| string.gsub(/\d+/, '_') }.inspect # or #hash I guess, but maybe easier for debugging purposes to save the whole trace
       if LocalStorage[unique_trace]
         dir = LocalStorage[unique_trace]
       end
