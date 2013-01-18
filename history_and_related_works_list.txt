@@ -116,3 +116,4 @@ RiffTrax allows for an audio "overlay" to arbitrary DVD playback, have their own
 "fan subs" are edited subtitles, displayed overlaid on the original track/video, or so I'm told.  See also "fan edits"
 The movie Avatar's DVD was released with an audio track that was "euphemized" of the profanity.
 Apple's DVD player appears to be "scriptable" in a way that would work for EDL's, as well: http://web.archive.org/web/20070407125849/http://digitallyobsessed.com/showarticle.php3?ID=49
+PowerDVD 9 may be able to remix blu-rays.  Note also that it can do things like "adding movie modification effects/text etc." as you watch, see http://www.youtube.com/watch?v=zPGkN9WVzeU
