@@ -11,6 +11,7 @@
       some blu-ray player descriptor somehow
     accomodate splits vs. blanks and work
 
+    it can add an overlay "gradient" (alpha transparent gradient optionally), and/or text, and/or "pause at this scene for 5 seconds" and/or "at this scene, pause, then insert this other scene from the same movie, or other movies, over it while paused" (or while it continues to play...)
     it can use windows messaging API's to "control" a remote player, viz: http://www.chipmunkav.com/help/appcontroller.htm
     it can "resync" based on audio transcription (or noticing lips move) or on some user input (back, forward buttons to subtly resync edits with a currently playing back video) or
       with user input "tell me where this subtitle is, for you, and also this one" to synchronize it (+- auto-playing to "around" that level so they can check more easily), 
