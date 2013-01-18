@@ -505,9 +505,10 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 	    # nothing with disk_unique_id: probably dvd_start_offset 29.97
       # nothing without disk_unque_id: probably start_zero 29.97
       # 1.1: has timestamps_relative_to, I guess
+	  # 1.2: default to file offsets now...or try to, I guess?
     
       input = <<-EOL
-# edl_version_version 1.1, sensible cinema v#{VERSION}
+# edl_version_version 1.2, sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -523,7 +524,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 
 "source" => "dvd",
 "volume_name" => "#{volume}",
-"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"timestamps_relative_to" => ["file", "29.97"],
 "disk_unique_id" => "#{hashes['disk_unique_id']}",
 "dvd_title_track" => "#{hashes['dvd_title_track']}", # our guess for it
 "dvd_title_track_length" => "#{hashes['dvd_title_track_length']}", 
