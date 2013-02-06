@@ -63,16 +63,18 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   ask for more beta testers for use, ask for more beta testers for creation, too
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
   VLC bounty
-    Nacl player :)
-    doesn't like widths not divisible...
+    Nacl http player :)
+    doesn't like widths not divisible... [me though...]
     fix VLC jumping when it hits DVD time splits [?] chapters ?
       check if it does still...anything disney should be enough? cars 2 would be great...cars with an older version?
     accurate DVD times :) [or submit my patch preferably...]
     fantasia 2000 dvd fails
+    toying with the truth DVD fails
     EDL support
     resume/window position et al
     can skip over scratched parts of a DVD
-    toying with the truth DVD fails
+      cars full screen might be a good example, test it [?]
+        also does it startup too slowly somehow?
     crossbar heck why not, even though it's unrelated, it's moving it forward :)
     avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
   use real JSON or the like...
