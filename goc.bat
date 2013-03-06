@@ -1,1 +1,1 @@
-call j -rubygems %* bin\sensible-cinema --create-mode --developer-mode
+call java -jar vendor\jruby-complete-1.6.2.jar %* bin\sensible-cinema --create-mode --developer-mode

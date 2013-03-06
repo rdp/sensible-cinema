@@ -508,7 +508,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 	  # 1.2: default to file offsets now...or try to, I guess?
     
       input = <<-EOL
-# edl_version_version 1.2, sensible cinema v#{VERSION}
+# edl_version 1.2.1, sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -588,7 +588,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
         display_and_raise "probably needs .txt extension?" unless filename =~ /\.txt$/i
         
         output = <<-EOL
-# edl_version_version 1.1, created by sensible cinema v#{VERSION}
+# edl_version 1.2.1, created by sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
