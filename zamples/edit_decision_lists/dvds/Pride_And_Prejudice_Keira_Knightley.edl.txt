@@ -11,11 +11,13 @@
   "1:44:41.09" , "1:44:46.13", "profanity", "a..", "First, I must tell you I've been the most unmitigated and comprehensive [a..] ",
   "1:45:28.51" , "1:45:32.26", "profanity", "l...", "Thank the [l...] for that. I thought it would never happen.",
   "1:57:58.56" , "1:58:00.60", "profanity", "l...", "Good [l...].",
+  "1:06:48.91" , "1:06:52.14", "profanity", "intercourse", "which are only to be obtained through [intercourse]...",
 ],
 
 "blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "01:22:39.9", "01:23:34.84", "sculptures some rear/frontal nudity",
+  "01:24:06.15", "01:24:21.47", "sculptures read nudity", 
+  "01:22:03.00", "01:22:14.88", "pictures nudity frontal",
 ],
 
 "source" => "dvd",

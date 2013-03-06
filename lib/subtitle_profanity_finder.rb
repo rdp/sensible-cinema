@@ -209,6 +209,9 @@ module SubtitleProfanityFinder
 		'ag' +
 	    'i' + 
 		'na',
+		'int' +
+		'er' +
+		'course'
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
