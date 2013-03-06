@@ -7,15 +7,15 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == yes do, un-ordered currently, from all the various future release options ==  
 
   test forever strong timing blu-ray @ home
-  watch that other prime film?
-  cars jerks with vlc?
   morph to new download location...add a note "for os x, ping me" LOL
+  new icon option for upconverter :)
 
   add the "needs review" to everything again LOL
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 	
   just throw up an upload website :)
   it says "no EDL available!" for a new DVD, even after you just created one...
+  just throw up the upload website :)
   splash screen on startup :)
     keep the console for now :)
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
@@ -64,15 +64,20 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   ask for more beta testers for use, ask for more beta testers for creation, too
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
   VLC bounty
-    doesn't like widths not divisible...
+    cars 2 jerks with vlc [need to test it at work?]
+	  I know at least cars 2 did...could test it first...my other DVD's seem all scratched that have massive breaks LOL
+    Nacl http player :)
+    doesn't like widths not divisible... [me though...]
     fix VLC jumping when it hits DVD time splits [?] chapters ?
       check if it does still...anything disney should be enough? cars 2 would be great...cars with an older version?
     accurate DVD times :) [or submit my patch preferably...]
     fantasia 2000 dvd fails
+    toying with the truth DVD fails
     EDL support
     resume/window position et al
     can skip over scratched parts of a DVD
-    toying with the truth DVD fails
+      cars full screen might be a good example, test it [?]
+        also does it startup too slowly somehow?
     crossbar heck why not, even though it's unrelated, it's moving it forward :)
     avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
   use real JSON or the like...
