@@ -120,7 +120,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.cp_r(dir_out + '/template_bats/pc', root_distro) # the executable bit carries through somehow..
   FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
   FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
-  p 'created (still need to zip it) ' + dir_out
+  p 'created (still need to mac_zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end
 
@@ -140,14 +140,12 @@ def delete_now_packaged_dir name
   FileUtils.rm_rf name
 end
 
-desc 'create *.zip,tgz'
-task 'zip' do
+desc 'create mac tgz'
+task 'mac_zip' do
   name = cur_folder_with_ver
   raise 'doesnt exist yet to zip?' + name unless File.directory? name
   if OS.doze?
-    raise 'please distro from linux only so we can get mac distros too'
-  else
-    sys "zip -r #{name}.zip #{name}"
+    raise 'please distro from linux-y only so mac distros work...'
   end
   sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
   delete_now_packaged_dir name
@@ -168,11 +166,12 @@ end
 
 desc 'deploy to sourceforge, after zipping'
 task 'deploy' do
+  raise "please deploy manually to google code!"
   p 'creating sf shell'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
-  for suffix in [ '.zip', '.mac-os-x.tgz']
+  for suffix in ['.mac-os-x.tgz']
     name = cur_folder_with_ver + suffix
     if File.exist? name
       p 'copying to ilab ' + name
@@ -211,7 +210,7 @@ task 'full_release' => [:clear_and_copy_vendor_cache,  :create_distro_dir] do # 
   raise unless system("git pull")
   raise unless system("git push origin master")
   #Rake::Task["gem_release"].execute
-  Rake::Task["zip"].execute
+  Rake::Task["mac_zip"].execute
   Rake::Task["deploy"].execute
   Rake::Task["sync_wbo_website"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
