@@ -134,6 +134,7 @@ module SensibleSwing
         if check_for_exe("mplayer", "mplayer") # mencoder and mplayer are separate for mac... [this checks for mac's mplayerx, too]
 		  if !mplayer_up_to_date?
 		    SimpleGuiCreator.show_message "your mplayer may be out of date, download a new one, or request it if not yet available!"   
+                    raise
 		  end
 		end
 	  end
