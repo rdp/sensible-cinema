@@ -168,16 +168,16 @@ desc 'deploy to sourceforge, after zipping'
 task 'deploy' do
   raise "please deploy manually to google code (from current dir...)!"
   p 'creating sf shell'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
+  sys "ssh rdp@ilab.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
+  sys "ssh rdp@ilab.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
   for suffix in ['.mac-os-x.tgz']
     name = cur_folder_with_ver + suffix
     if File.exist? name
       p 'copying to ilab ' + name
-      sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
+      sys "scp #{name} rdp@ilab.cs.byu.edu:~/incoming"
       p 'copying into sf from ilab ' + name
-      sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
+      sys "ssh rdp@ilab.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
     else
       p 'not copying:' + name
     end
@@ -193,7 +193,7 @@ end
 # end
 
 def on_wbo command
-  sys "ssh rdp@ilab1.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
+  sys "ssh rdp@ilab.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
   
 end
 
