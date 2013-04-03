@@ -12,6 +12,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
   add the "needs review" to everything again LOL
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
+  add a breadcrumb "this is no longer the right place for you!" to sourceforge
 	
   everything should be "bundled" with an srt file...
   just throw up an upload website :)
