@@ -101,17 +101,6 @@ def get_all_dependency_gems include_transitive_children=true
    out.values
 end
 
-desc 'collect binary and gem deps for distribution'
-task 'rebundle_copy_in_dependencies' do # => 'gemspec' do
-   FileUtils.mkdir_p 'vendor/cache'
-   gems = get_all_dependency_gems
-   Dir.chdir 'vendor/cache' do
-     gems.each{|d|
-       system("#{OS.ruby_bin} -S gem unpack #{d.name}")
-     }
-   end
-end
-
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
   raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
@@ -215,7 +204,7 @@ task 'sync_wbo_website' do
 end
 
 desc ' (releases with clean cache dir, which we need now)'
-task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
+task 'full_release' => [:clear_and_copy_vendor_cache,  :create_distro_dir] do # this is :release
   p 'remember to run all the specs!! Have any!'
   require 'os'
   raise 'need jruby' unless OS.jruby?
