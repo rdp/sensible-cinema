@@ -166,7 +166,7 @@ end
 
 desc 'deploy to sourceforge, after zipping'
 task 'deploy' do
-  raise "please deploy manually to google code!"
+  raise "please deploy manually to google code (from current dir...)!"
   p 'creating sf shell'
   sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
   p 'creating sf dir'
