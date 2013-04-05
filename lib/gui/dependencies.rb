@@ -117,7 +117,7 @@ module SensibleSwing
 	def assert_mplayer_up_to_date # for mac users...I guess? yeah warn them that I don't really support them LOL
 	  out = `mplayer -fake 2>&1`
 	  if out !~ /EDL-0.6/
-	    SimpleGuiCreator.show_message "your mplayer may be out of date, need version EDL-0.6, download new mac dependencies package possibly, or ask on mailing list\n. Your version: #{out =~ /(.*MPlayer.*)/; $1}"   
+	    SimpleGuiCreator.show_message "your mplayer may be out of date, need version EDL-0.6, download new mac-dependencies package possibly, or ask on mailing list\n. Your version: #{out =~ /(.*MPlayer.*)/; $1}"   
             raise "please update mplayer #{out}"
           end
 	end
