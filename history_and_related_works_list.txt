@@ -80,7 +80,7 @@ http://en.wikipedia.org/wiki/Edit_decision_list#Systems_supporting_EDL_playback.
 GBPVR can use comskip style EDL's: http://forums.gbpvr.com/showthread.php?51246-Comskiphttp://imdb.com tends to have reasonably good lists of what occurs in movies (find a movie, click on "parent's guide" on the left).  Sometimes it even lists the time signatures for events (ex: "Labyrinth" http://www.imdb.com/title/tt0091369/parentalguide) which you could use to translate into a sensible-cinema compatible list.  I've even released a version of SC that has working time edits pulled from a wiki like that.
 Normal DVD's versus "directors cut" versions of movies (one is at times preferable, content wise)
 http://en.wikipedia.org/wiki/Edit_decision_list (it's a linear editing tool, after all--so see the vast list of those)
-Clean Flicks (used to) sell edited movies
+Clean Flicks (used to) sell edited movies.  See also purifiedpictures.com these days.
 http://college.swankmp.com/insti/edited.asp prisoners apparently have access to a few "edited" versions of movies (not many though, but there are some listed there)
 http://www.videoredo.com/en/index.htm lets you "cut out" offensive content (commercials et al) and burn DVD's from mpeg's/h264 streams, and has its own EDL syntax http://wiki.xbmc.org/?title=EDL_%28commercial_skipping%29_and_SceneMarker_support
 http://www.microsoft.com/windows/windowsmedia/howto/articles/device_control.aspx Windows Media Encoder supports EDL's by timestamp
