@@ -7,38 +7,34 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == yes do, un-ordered currently, from all the various future release options ==  
 
   test forever strong timing blu-ray @ home
-  morph to new download location...add a note "for os x, ping me" LOL
-  new icon option for upconverter :)
+  add new icon option for upconverter, windows :)
 
-  add the "needs review" to everything again LOL
+  add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
-  add a breadcrumb "this is no longer the right place for you!" to sourceforge
-	
-  everything should be "bundled" with an srt file...
+
+  @VLC: does that DVD have poor chapter breaks?	slow startup?
+  everything should be "bundled-able" with an srt file...
   mac cleanup .tgz it...only needs mac'y stuff now :)
   just throw up an upload website :)
   automate deploys again...somehow...cygwin?
   it says "no EDL available!" for a new DVD, even after you just created one...
-  just throw up the upload website :)
   splash screen on startup :)
     keep the console for now :)
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
   try and figure out powerdvd remixes at all?
-    test blu-ray remixes at home with PDVD ultra 10?... [depending on their email response...]
-  try bluray with anyDVD and zoomplayer MAX :)
-  update manually all edl's as "need verification" and "based on file time"
-  innosetup *at least* yikes!
+    test blu-ray remixes at home with PDVD ultra 10, etc?...
+  try bluray again with anyDVD and zoomplayer MAX :)
   gnosygnu seeking in XX went back to the beginning sometimes?
     try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
   netflix instant descriptor work at all after 18 months
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
     add new button?
-  2014 LLC, 'finish' rename: new name? sourceforge, github, all docu, some links  
+  2014 LLC, 'finish' rename: new name?  github, all docu, some links  
   we should "bundle" with an .srt file, really...we should...
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
   it doesn't set osd-verbose when playing in smplayer in dev mode?
-  add the "straight play" button to create mode window...
+  add a "straight play" button to create mode window...
   mplayer bounties:
     fix mplayer chapter breaks shuck! whoa!
     mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it [Alison's?]
@@ -90,11 +86,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     or an online equiv?
   add a "middle" thing "you should see this at time x, you can/should double check this..."
     at that point, allow recalibrate, add to same EDL :)
+  rename button to "play X edited" :)
     
 == decide later to move up or down ==
 
-  add a prompt "when the OSD says 1:00, does your wrist watch say... (typically X)" (except...umm...uh...we are changing that number for them so...they can't see it anymore...)
-  tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   warn if file played back not start at 0 first frame [?]
   right click on a file "=> play edited"
     and DVD drive?
@@ -107,7 +102,6 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   ratatouile has [18:19:11:264] MplayerProcess::parseLine: 'Please send bug report - no VTS_TMAPT ?? '
   make it easier to use for "just play a file"
     "pick your source, pick your EDL, ready, ok?"
-  DVD timing for makemkv forum:Snow White
   make it "cool" for XBMC, like those guys...
   netflix upconvert that rox LOL
   inventionzy: blu-ray stuffs from todo.inventionzy
@@ -121,18 +115,20 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   umplayer for mac/use it, mplayer shucks!
   allow for a mute to "encompass" a skip by splitting it, uh guess, otherwise hard to card 'bad' part in middle of a mute.
     Or programmatically
+    or it has a UI that can autosplit stuff for you...
   If mutes are "close" but not overlapping [ex: contiguous] they should not fail, even with "added time"
-  icon is not always very clear/easy to see... :P
-  "real" exe runner so that it can find java from just JAVA_HOME et al in case they don't have it setup in their path right :)
-    real installer, too, why not?
+  current icon is not always very clear/easy to see... :P
   remove splits' functionality [ruby code]
   double check if sampleDvd and HPC/PowerDvd are really inconsistent like I believe they are.
     is powerdvd off by exactly 0.5s (rounds up)?  
   mplayer re-read config file each frame, maybe track mtime? hmm...
-  backport *all* my fixes to mplayer
+  backport my fixes to mplayer. maybe even ask if they want all of them?
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
+  tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
+  track their "local library" so they can play previous played files, edited...
+  add a prompt "when the OSD says 1:00, does your wrist watch say... (typically X)" (except...umm...uh...we are changing that number for them so...they can't see it anymore...)
   right and left arrows only seek 5 seconds [?]
   an editing player that respects the "you can do this or not" UOP's and/or uses DVD Navigator or just respects them :)
   get lots of DVD's and see if 30.03 is at all common...
