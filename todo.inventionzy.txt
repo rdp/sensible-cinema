@@ -11,6 +11,7 @@
       some blu-ray player descriptor somehow
     accomodate splits vs. blanks and work
 
+    a roku app that can somehow receive it edited, like...streaming from your computer.  Actually, I'm in a reasonable position to accomplish this LOL.  Though plugging in a computer's HDMI out cable might be nuff for now...I'd have to meter this once I "go serious" with it.
     it can project "around" a movie as it's playing, so producer's control the atmosphere around it (viz: MS game atmosphere thing)
     it can add an overlay "gradient" (alpha transparent gradient optionally), and/or text, and/or "pause at this scene for 5 seconds" and/or "at this scene, pause, then insert this other scene from the same movie, or other movies, over it while paused" (or while it continues to play...)
     it can use windows messaging API's to "control" a remote player, viz: http://www.chipmunkav.com/help/appcontroller.htm
@@ -192,6 +193,7 @@
   
   you can adjust as a subtitle file "gets off" with time, you factor in some timing to accomodate for its qwirks, ex: by different phases that re-sync/
   you can "pause and insert audio" at some point (or a separate video, or jump within the same one), then it returns/resumes playing where it left off.
+  after I can do netflix instant, also hook it up so that it can mute "pandora songs" too [?] or figure out some way to edit streaming sound like that.
 
   choose your own adventure type movies :)
   "random play each movie" / "different movie each time through random jumping in a controlled, prescribed manner

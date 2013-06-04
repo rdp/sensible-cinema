@@ -16,7 +16,7 @@ to help it grow!
 To use, basically install, then insert an original DVD that you want to edited, then run sensible cinema.
 It will pop up some windows where you choose what to do (watch edited, create a new EDL file, etc.).
 
-Note: please install from the zip files at https://sourceforge.net/projects/sensible-cinema/files/ 
+Note: please install from the zip files at http://code.google.com/p/sensible-cinema/downloads/list
 and not from github's "download" button.
 
 CEM Player has a few "realtime viewing" options available, based on some freely available
@@ -45,7 +45,6 @@ Enjoy your movies!
 == Installation ==
 
 Installation and usage instructions available here: http://rogerdpack.t28.net/sensible-cinema
-NB that you want to download it sourceforge, not from github downloads.
 
 == Creating Your Own Edit Lists, or modifying previously existing ones ==
 

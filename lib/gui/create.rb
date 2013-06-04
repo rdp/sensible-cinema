@@ -146,18 +146,26 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 		    end
 		  end
 		end
+
+        with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, 0.0, 0.0, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        end
+		
+        middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
+        show_blocking_message_dialog "You may want to double check if the math worked out and if the adjusted subtitles now match the movie.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time} (not accomodating for added start times)\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"		
+        # LODO ask them if it worked... [?]
 		
 		if end_srt_time != 3000
 		  add_to_beginning_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
-		  add_to_end_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
+		  add_to_end_all = get_user_input("Would you like to adjust all subtitles and make them all end any seconds later (like 1.0)?", "0.0").to_f
 		else
 		  add_to_beginning_all=0.0
 		  add_to_end_all=0.0
 		end
-		
+
         with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
-          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_end_all, add_to_beginning_all, start_srt_time, start_movie_time, end_srt_time, end_movie_time
-        end
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning_all, add_to_end_all, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        end		
         
         filename = get_temp_file_name('mutes.edl.txt')
 		if parsed_profanities.present?
@@ -169,10 +177,6 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],\n!
 	    end
-        middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time} (not accomodating for added start times)\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"
-		
-        # LODO ask them if it worked...
 		
 		File.write filename, out
         open_file_to_edit_it filename
@@ -508,7 +512,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 	  # 1.2: default to file offsets now...or try to, I guess?
     
       input = <<-EOL
-# edl_version_version 1.2, sensible cinema v#{VERSION}
+# edl_version 1.2.1, sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -588,7 +592,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
         display_and_raise "probably needs .txt extension?" unless filename =~ /\.txt$/i
         
         output = <<-EOL
-# edl_version_version 1.1, created by sensible cinema v#{VERSION}
+# edl_version 1.2.1, created by sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 

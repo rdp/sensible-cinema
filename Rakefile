@@ -2,6 +2,9 @@ require 'rubygems'
 require 'jeweler' # gem
 require 'os' # gem
 
+# basically, to deploy, for windows run innosetup, manual upload
+# for mac, run rake full_release, manual upload
+
 ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # jeweler's git gem hack-work-around...
 
 Jeweler::Tasks.new do |s|
@@ -101,17 +104,6 @@ def get_all_dependency_gems include_transitive_children=true
    out.values
 end
 
-desc 'collect binary and gem deps for distribution'
-task 'rebundle_copy_in_dependencies' do # => 'gemspec' do
-   FileUtils.mkdir_p 'vendor/cache'
-   gems = get_all_dependency_gems
-   Dir.chdir 'vendor/cache' do
-     gems.each{|d|
-       system("#{OS.ruby_bin} -S gem unpack #{d.name}")
-     }
-   end
-end
-
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
   raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
@@ -131,7 +123,7 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.cp_r(dir_out + '/template_bats/pc', root_distro) # the executable bit carries through somehow..
   FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
   FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
-  p 'created (still need to zip it) ' + dir_out
+  p 'created (still need to mac_zip it) ' + dir_out
   FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
 end
 
@@ -151,14 +143,12 @@ def delete_now_packaged_dir name
   FileUtils.rm_rf name
 end
 
-desc 'create *.zip,tgz'
-task 'zip' do
+desc 'create mac tgz'
+task 'mac_zip' do
   name = cur_folder_with_ver
   raise 'doesnt exist yet to zip?' + name unless File.directory? name
   if OS.doze?
-    raise 'please distro from linux only so we can get mac distros too'
-  else
-    sys "zip -r #{name}.zip #{name}"
+    raise 'please distro from linux-y only so mac distros work...'
   end
   sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
   delete_now_packaged_dir name
@@ -179,22 +169,7 @@ end
 
 desc 'deploy to sourceforge, after zipping'
 task 'deploy' do
-  p 'creating sf shell'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
-  p 'creating sf dir'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
-  for suffix in [ '.zip', '.mac-os-x.tgz']
-    name = cur_folder_with_ver + suffix
-    if File.exist? name
-      p 'copying to ilab ' + name
-      sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
-      p 'copying into sf from ilab ' + name
-      sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
-    else
-      p 'not copying:' + name
-    end
-  end
-  p 'successfully deployed to sf! ' + cur_ver
+  raise "please deploy manually to google code (from current dir...)!"
 end
 
 # task 'gem_release' do
@@ -205,7 +180,7 @@ end
 # end
 
 def on_wbo command
-  sys "ssh rdp@ilab1.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
+  sys "ssh rdp@ilab.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
   
 end
 
@@ -215,14 +190,14 @@ task 'sync_wbo_website' do
 end
 
 desc ' (releases with clean cache dir, which we need now)'
-task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
+task 'full_release' => [:clear_and_copy_vendor_cache,  :create_distro_dir] do # this is :release
   p 'remember to run all the specs!! Have any!'
   require 'os'
   raise 'need jruby' unless OS.jruby?
   raise unless system("git pull")
   raise unless system("git push origin master")
   #Rake::Task["gem_release"].execute
-  Rake::Task["zip"].execute
+  Rake::Task["mac_zip"].execute
   Rake::Task["deploy"].execute
   Rake::Task["sync_wbo_website"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
