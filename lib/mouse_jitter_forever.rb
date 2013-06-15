@@ -15,5 +15,5 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-require './../lib/mouse.rb'
-Mouse::jitter_forever_in_own_thread.join
+require './jruby-swing-helpers/lib/simple_gui_creator/mouse_control'
+MouseControl::jitter_forever_in_own_thread.join

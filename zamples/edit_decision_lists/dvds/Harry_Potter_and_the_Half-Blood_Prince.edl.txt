@@ -17,6 +17,11 @@
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "2:06:46.51", "2:06:48.1", "scary hand grab",
+  "2:07:06.37","2:08:53.00", "scary undead fight",
+  "1:39:21.0", "1:39:25.5", "bloody body",  
+"1:39:44", "1:39:52", "blood being healed",
+
 ],
 
 "source" => "dvd",
