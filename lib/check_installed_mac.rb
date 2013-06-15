@@ -2,7 +2,7 @@ require 'rubygems'
 require 'os'
 success = true
 
-ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # put macports' bin in first
+ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # put local bin in first, has ffmpeg etc.
 
 module CheckInstalledMac
 
@@ -10,7 +10,7 @@ module CheckInstalledMac
  def self.check_for_installed name
   # check for these with generic "does it run"
 
-  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version", "mplayer" => "mplayer"}[name]
+  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version", mplayer_local => mplayer_local}[name]
 
   raise 'unknown ' + name unless command # sanity check
 
@@ -23,12 +23,4 @@ module CheckInstalledMac
   end
 
  end
-end
-
-if $0 == __FILE__
-  for name in ['gocr', 'convert', 'mplayer', 'ffmpeg'] do
-    if CheckInstalledMac.check_for_installed name
-      puts 'has dep:' + name
-    end
-  end
 end

@@ -314,12 +314,8 @@ KP_ENTER dvdnav select
        else
         upconv = ""
        end
-       if OS.doze?
-         mplayer_loc = LocalModifiedMplayer
-         assert File.exist?(mplayer_loc)
-       else
-         mplayer_loc = "mplayer"
-       end
+       mplayer_loc = mplayer_local
+       assert File.exist?(mplayer_loc)
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
@@ -337,7 +333,14 @@ KP_ENTER dvdnav select
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    LocalModifiedMplayer = File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" # also edit mplayer_up_to_date method ...
+    
+    def mplayer_local
+      if OS.doze?
+        File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" # also edit mplayer_up_to_date method if you change this...
+      else
+        '/opt/rdp_project_local/bin/mplayer'
+      end
+    end
     
     def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
@@ -351,7 +354,7 @@ KP_ENTER dvdnav select
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
-      mplayer_to_use = LocalModifiedMplayer  
+      mplayer_to_use = mplayer_local  
       assert File.exist?(mplayer_to_use)
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)

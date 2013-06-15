@@ -374,7 +374,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 	    out_hashes['disk_unique_id'] = dvd_id
 	    out_hashes['volume_name'] = volume_name
       popup = show_non_blocking_message_dialog "calculating DVD title sizes..."
-      command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
+      command = "#{mplayer_local} -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
       puts command
       title_lengths_output = `#{command}`
       popup.close
@@ -435,7 +435,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
     
     def calculate_dvd_start_offset title, drive
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..." # must be non blocking so the command can run :P
-      command = "mplayer -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
+      command = "#{mplayer_local} -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
       out = `#{command}`
       #search for V:  0.37
