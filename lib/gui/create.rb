@@ -502,7 +502,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
     def create_brand_new_dvd_edl
 	    hashes, title_lengths = get_disk_info # has a prompt
 	    volume = hashes['volume_name']
-	    default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
+	    default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # turn it into A Court A Jester
       english_name = get_user_input("Enter a human readable DVD descriptive name for #{volume}", default_english_name)
 
       # EDL versions:

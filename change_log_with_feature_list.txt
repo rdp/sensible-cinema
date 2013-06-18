@@ -1,5 +1,12 @@
+0.41.5
+  attempt to use a real launcher now...
+  
+0.41.4
+  add some quotes in a blind attempt to get it to install right on machines whose java.exe paths contain spaces in them.
+  fix (hopefully) some pathing issues in windows
+
 0.41.{1,2,3}:
-  add mac debug/attempt get dvd id/mplayer working, esp. i386 
+  add mac debug/attempt get dvd-id/mplayer working, esp. on i386 (and it finally does LOL).
 
 0.41.0:
   update mplayer and DVD playback so that it's [hopefully] super file accurate.  In certain cases LOL.

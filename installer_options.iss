@@ -1,11 +1,11 @@
-#define AppVer "0.41.0"
+#define AppVer "0.41.5"
 
 #define AppName "Sensible Cinema"
 ; AppId === AppName by default BTW
 
 [Run]
 ; a checkbox run optional after install, NB, has a console...
-Description: Run Sensible Cinema; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema; Flags: nowait postinstall runminimized
+Description: Run Sensible Cinema; Filename: sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall runminimized
 
 [UninstallRun]
 
@@ -25,9 +25,9 @@ OutputDir=releases
 
 [Icons]
 ; extra space hopes to make it appear at the top...
-Name: {group}\Run Sensible Cinema; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema; Flags: runminimized
-Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: java.exe; WorkingDir: {app}; Parameters: -jar vendor/jruby-complete-1.6.2.jar -Ilib bin\sensible-cinema  --create-mode; Flags: runminimized
-Name: {group}\advanced\Uninstall {#AppName}; Filename: {uninstallexe}
+Name: {group}\Run Sensible Cinema; Filename: sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: runminimized
+Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: runminimized
+Name: {group}\advanced\Uninstall; Filename: {uninstallexe}
 Name: {group}\advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 
 [Messages]
