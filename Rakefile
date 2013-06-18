@@ -106,7 +106,6 @@ end
 
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
-  raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
   require 'fileutils'
   spec = read_spec
   dir_out = cur_folder_with_ver + '/clean-editing-movie-player'
