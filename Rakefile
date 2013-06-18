@@ -118,12 +118,11 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
   root_distro =  "#{dir_out}/.."
-  FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through somehow..
-  FileUtils.cp_r(dir_out + '/template_bats/pc', root_distro) # the executable bit carries through somehow..
-  FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
+  FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through...
+  #FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
   FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
   p 'created (still need to mac_zip it) ' + dir_out
-  FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
+  FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M, baby!
 end
 
 def cur_ver
