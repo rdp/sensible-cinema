@@ -5,7 +5,7 @@
 
 [Run]
 ; a checkbox run optional after install, NB, has a console...
-Description: Run Sensible Cinema; Filename: sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall runminimized
+Description: Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: nowait postinstall runminimized
 
 [UninstallRun]
 
@@ -17,7 +17,7 @@ Source: README.TXT; DestDir: {app}; Flags: isreadme
 AppName={#AppName}
 AppVerName={#AppVer}
 ; someplace editable...
-DefaultDirName={%HOMEPATH|c:\}\{#AppName} v{#AppVer}
+DefaultDirName={%HOMEPATH|c:\}\{#AppName}
 DefaultGroupName={#AppName}
 UninstallDisplayName={#AppName} uninstall
 OutputBaseFilename=Setup {#AppName} v{#AppVer}
@@ -25,8 +25,8 @@ OutputDir=releases
 
 [Icons]
 ; extra space hopes to make it appear at the top...
-Name: {group}\Run Sensible Cinema; Filename: sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: runminimized
-Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: runminimized
+Name: {group}\Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: runminimized
+Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: runminimized
 Name: {group}\advanced\Uninstall; Filename: {uninstallexe}
 Name: {group}\advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 
