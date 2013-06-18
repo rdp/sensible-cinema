@@ -16,7 +16,7 @@ Source: README.TXT; DestDir: {app}; Flags: isreadme
 [Setup]
 AppName={#AppName}
 AppVerName={#AppVer}
-; someplace editable...
+; default to someplace editable/installable for now...
 DefaultDirName={%HOMEPATH|c:\}\{#AppName}
 DefaultGroupName={#AppName}
 UninstallDisplayName={#AppName} uninstall
@@ -27,7 +27,7 @@ OutputDir=releases
 ; extra space hopes to make it appear at the top...
 Name: {group}\Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: runminimized
 Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: runminimized
-Name: {group}\advanced\Uninstall; Filename: {uninstallexe}
+Name: {group}\advanced\Uninstall {#AppName}; Filename: {uninstallexe}
 Name: {group}\advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 
 [Messages]
