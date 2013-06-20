@@ -350,11 +350,7 @@ module SensibleSwing
 
       it "should only prompt for file selection once" do
         prompted = false
-        @subject.stub(:assert_ownership_dialog) {
-          prompted = true
-        }
         yo( false ).should == 0 # choose a file, so never dvdid any dvd...
-        assert prompted
       end
   
       it "should prompt you if you need to insert a dvd" do
@@ -400,14 +396,9 @@ module SensibleSwing
   
   it "should create an sxs file" do
     FileUtils.rm_rf 'yo.edl' # nothing up my sleeve.
-    prompted = false
-    @subject.stub(:assert_ownership_dialog) {
-      prompted = true
-    }
     @subject.stub(:new_existing_file_selector_and_select_file).and_return("yo.mpg", "selected_file")
     click_button(:@create_dot_edl)
     assert File.exist? 'yo.edl'
-    assert prompted
   end
   
   it "should be able to upconvert at all" do

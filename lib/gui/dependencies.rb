@@ -91,13 +91,13 @@ module SensibleSwing
       end
     end
     
-    def check_for_exe windows_full_loc, unix_name
+    def check_for_exe windows_full_loc, unix_name_in_opt_rdp
       # in windows, that exe *at that location* must exist...
       if OS.windows?
         File.exist?(windows_full_loc)
       else
         require 'lib/check_installed_mac.rb'
-        if !CheckInstalledMac.check_for_installed(unix_name)
+        if !CheckInstalledMac.check_for_installed(unix_name_in_opt_rdp)
           exit 1 # it'll have already displayed a message...
         else
           true
@@ -114,16 +114,16 @@ module SensibleSwing
 	
 	end
 	
-	def assert_mplayer_up_to_date # for mac users...I guess? yeah warn them that I don't really support them LOL
-	  out = `mplayer -fake 2>&1`
+	def assert_mplayer_up_to_date
+	  out = `#{mplayer_local} -fake 2>&1`
 	  if out !~ /EDL-0.6/
 	    SimpleGuiCreator.show_message "your mplayer may be out of date, need version EDL-0.6, download new mac-dependencies package possibly https://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/ , or ask on mailing list\n. Your version: #{out =~ /(.*MPlayer.*)/; $1}"   
             raise "please update mplayer #{out}"
-          end
+      end
 	end
     
-    def check_for_various_dependencies            
-      if OS.doze? 
+    def check_for_various_dependencies
+      if OS.doze?	
 	    if !check_for_exe(mplayer_local(false), nil)
           require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
           FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
@@ -133,12 +133,11 @@ module SensibleSwing
           FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
           FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac ttf?
 		end
-      else
-        if check_for_exe(mplayer_local(false), "mplayer") # does this assert?
-          assert_mplayer_up_to_date
-		end
+	  else
+	    check_for_exe(nil, 'mplayer') # os x, raises on failure
 	  end
-	  
+	  assert_mplayer_up_to_date
+		
 	  if OS.doze?
         path = RubyWhich.new.which('smplayer')
         if(path.length == 0)
@@ -160,14 +159,6 @@ module SensibleSwing
       end
     end
     
-    def assert_ownership_dialog 
-      force_accept_file_style_license
-      message = "Do you certify you own the DVD this came of and have it in your possession, if necessary?"
-      title = "Verify ownership"
-      returned = JOptionPane.show_select_buttons_prompt(message, {:yes => "no", :no => "yes"})
-      assert_confirmed_dialog returned, nil
-    end
-  
     def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
       title = 'Confirm Acceptance of License Agreement', message = nil
       puts 'Please confirm license agreement in open window before proceeding.'

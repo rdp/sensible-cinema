@@ -1,4 +1,4 @@
-#define AppVer "0.41.6"
+#define AppVer "0.41.7"
 
 #define AppName "Sensible Cinema"
 ; AppId === AppName by default BTW

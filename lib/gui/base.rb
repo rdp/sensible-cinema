@@ -667,7 +667,6 @@ KP_ENTER dvdnav select
         if used_local_file_option
           raise unless selected_idx == 0 # it was our only option...they must have selected it!
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
-          assert_ownership_dialog
           return [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]

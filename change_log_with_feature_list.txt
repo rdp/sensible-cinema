@@ -1,5 +1,7 @@
-0.41.6
+0.41.6,7
   use better icons, hopefully work for paths with spaces now
+  gui cleanup
+  hopefully mac fixes
 
 0.41.5
   attempt to use a real launcher now...
