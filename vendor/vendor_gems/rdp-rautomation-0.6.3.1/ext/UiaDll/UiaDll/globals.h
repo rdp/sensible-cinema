@@ -1,3 +1,0 @@
-
-IUIAutomation* getGlobalIUIAutomation() ;
-
