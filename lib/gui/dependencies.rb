@@ -124,17 +124,17 @@ module SensibleSwing
     
     def check_for_various_dependencies            
       if OS.doze? 
-	    if !check_for_exe(mplayer_local, nil)
+	    if !check_for_exe(mplayer_local(false), nil)
           require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
           FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
           puts 'downloading mplayer edl [12 MB]'
-          MainWindow.download('http://mplayer-edl.googlecode.com/files/' + File.basename(mplayer_local), mplayer_local)
+          MainWindow.download('http://mplayer-edl.googlecode.com/files/' + File.basename(mplayer_local false), mplayer_local(false))
           config_dir = File.expand_path('~/mplayer')
           FileUtils.mkdir(config_dir) unless File.directory?(config_dir)
           FileUtils.cp('vendor/subfont.ttf', config_dir) # TODO mac ttf?
 		end
       else
-        if check_for_exe(mplayer_local, "mplayer") # does this assert?
+        if check_for_exe(mplayer_local(false), "mplayer") # does this assert?
           assert_mplayer_up_to_date
 		end
 	  end

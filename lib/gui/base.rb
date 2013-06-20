@@ -77,9 +77,13 @@ else
 end
 
 # not sure where to put this method...
-    def mplayer_local
+    def mplayer_local add_quotes = true
       if OS.doze?
-        '"' + File.expand_path("vendor/cache/mplayer_edl/mplayer.060.exe") + '"' # also edit mplayer_up_to_date method if you change this...maybe?
+        loc = File.expand_path("vendor/cache/mplayer_edl/mplayer.060.exe") # also edit mplayer_up_to_date method if you change this...maybe?
+		if add_quotes
+		  loc = '"' + loc + '"'
+		end
+		loc
       else
         '/opt/rdp_project_local/bin/mplayer'
       end
