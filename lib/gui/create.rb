@@ -245,8 +245,8 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
       @display_dvd_info.on_clicked {
         Thread.new {
-          out_hashes, title_lengths = get_disk_info
-	      out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
+          out_hashes, raw_title_lengths = get_disk_info
+	      out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + raw_title_lengths.map{|raw| "#" + raw}.join("\n")
           out_string += %!\n"timestamps_relative_to" => ["file", "29.97"],! # we do our best to emulate it these days :)
           filename = get_temp_file_name('disk_info.txt')
           File.write filename, out_string 
@@ -385,9 +385,9 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       else
         title_to_get_offset_of = nil
       end
-      title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+      raw_title_lengths = title_lengths_output.split("\n").select{|line| line =~ /ID_DVD_TITLE_.*LENGTH/}
       # ID_DVD_TITLE_4_LENGTH=365.000
-      titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+      titles_with_length = raw_title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
 	  if titles_with_length.length > 50
 	    show_blocking_message_dialog "this DVD has > 50 titles, this may mean that our 'guess' for the main title will be off, please double check the right number\nby starting the main movie in VLC then Playback menu -> title to see which number it is on."
 	  end
@@ -403,7 +403,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
     	start_offset = offsets[:mpeg_start_offset]
 	    out_hashes['dvd_start_offset'] = start_offset
       out_hashes['dvd_nav_packet_offset'] = offsets[:dvd_nav_packet_offset]
-	    [out_hashes, title_lengths]
+	    [out_hashes, raw_title_lengths]
     end
 	
     def watch_dvd_edited_realtime_mplayer show_subs

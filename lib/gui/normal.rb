@@ -70,7 +70,7 @@ module SensibleSwing
       end
       @show_upconvert_options.tool_tip= "Allows you to set your upconvert options.\nUpconverting attempts to playback your movie with higher quality on high resolution monitors."
       
- 	    new_jbutton("Create new Edit Decision List for a DVD or File that doesn't have one yet") do
+ 	    new_jbutton("Create new/edit Edit Decision List for a DVD or File") do
 	      window = new_child_window
           window.setup_create_buttons
 	    end
