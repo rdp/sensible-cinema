@@ -2,7 +2,7 @@
   <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
   <jar>vendor\jruby-complete-1.6.2.jar</jar>
-  <outfile>C:\dev\ruby\sensible-cinema\sensible_cinema_wrapper.exe</outfile>
+  <outfile>sensible_cinema_wrapper.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -19,4 +19,10 @@
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
   </jre>
+  <splash>
+    <file>C:\dev\ruby\sensible-cinema\profs3.bmp</file>
+    <waitForWindow>true</waitForWindow>
+    <timeout>60</timeout>
+    <timeoutErr>true</timeoutErr>
+  </splash>
 </launch4jConfig>
