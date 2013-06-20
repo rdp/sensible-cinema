@@ -189,7 +189,7 @@ task 'sync_wbo_website' do
 end
 
 desc ' (releases with clean cache dir, which we need now)'
-task 'full_release' => [:clear_and_copy_vendor_cache,  :create_distro_dir] do # this is :release
+task 'full_release' => [:clear_and_copy_vendor_cache, :create_distro_dir] do # this is :release
   p 'remember to run all the specs!! Have any!'
   require 'os'
   raise 'need jruby' unless OS.jruby?
@@ -197,8 +197,8 @@ task 'full_release' => [:clear_and_copy_vendor_cache,  :create_distro_dir] do # 
   raise unless system("git push origin master")
   #Rake::Task["gem_release"].execute
   Rake::Task["mac_zip"].execute
-  Rake::Task["deploy"].execute
   Rake::Task["sync_wbo_website"].execute
+  Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
   system("rm -rf ../cache.bak")
 end

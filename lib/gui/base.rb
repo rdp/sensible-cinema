@@ -58,7 +58,7 @@ end
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
   for name in ['.', 'ffmpeg', 'mplayer_edl']
-    # put them all before the old path
+    # put them all at the beginning of the PATH
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
   
@@ -74,9 +74,16 @@ if OS.windows?
 
 else
   # handled in check_mac_installed.rb file
-
 end
 
+# not sure where to put this method...
+    def mplayer_local
+      if OS.doze?
+        '"' + File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" + '"' # also edit mplayer_up_to_date method if you change this...maybe?
+      else
+        '/opt/rdp_project_local/bin/mplayer'
+      end
+    end
 import 'javax.swing.ImageIcon'
 
 module SensibleSwing # LODO rename
@@ -333,14 +340,6 @@ KP_ENTER dvdnav select
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    
-    def mplayer_local
-      if OS.doze?
-        '"' + File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" + '"' # also edit mplayer_up_to_date method if you change this...maybe?
-      else
-        '/opt/rdp_project_local/bin/mplayer'
-      end
-    end
     
     def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
