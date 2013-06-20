@@ -336,7 +336,7 @@ KP_ENTER dvdnav select
     
     def mplayer_local
       if OS.doze?
-        File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" # also edit mplayer_up_to_date method if you change this...
+        '"' + File.expand_path "vendor/cache/mplayer_edl/mplayer.060.exe" + '"' # also edit mplayer_up_to_date method if you change this...maybe?
       else
         '/opt/rdp_project_local/bin/mplayer'
       end
