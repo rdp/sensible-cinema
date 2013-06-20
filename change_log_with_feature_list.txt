@@ -1,3 +1,6 @@
+0.41.6
+  use better icons, hopefully work for paths with spaces now
+
 0.41.5
   attempt to use a real launcher now...
   actually release the 0.41.4 pathing issue stuff LOL
