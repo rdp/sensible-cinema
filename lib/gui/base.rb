@@ -325,7 +325,7 @@ KP_ENTER dvdnav select
        else
         upconv = ""
        end
-       mplayer_loc = mplayer_local
+       mplayer_loc = mplayer_local false
        assert File.exist?(mplayer_loc)
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
@@ -357,7 +357,7 @@ KP_ENTER dvdnav select
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
-      mplayer_to_use = mplayer_local  
+      mplayer_to_use = mplayer_local false 
       assert File.exist?(mplayer_to_use)
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
