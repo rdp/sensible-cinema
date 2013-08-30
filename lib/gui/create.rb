@@ -401,7 +401,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 	    out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
       offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
     	start_offset = offsets[:mpeg_start_offset]
-	    out_hashes['dvd_start_offset'] = start_offset
+	    out_hashes['dvd_title_track_start_offset'] = start_offset
       out_hashes['dvd_nav_packet_offset'] = offsets[:dvd_nav_packet_offset]
 	    [out_hashes, raw_title_lengths]
     end
@@ -510,9 +510,9 @@ You will be prompted for a beginning and starting timestamp time to search for.\
       # nothing without disk_unque_id: probably start_zero 29.97
       # 1.1: has timestamps_relative_to, I guess
 	  # 1.2: default to file offsets now...or try to, I guess?
-    
+      # 1.3: now has plus and minus? dvd_title_track_start_offset
       input = <<-EOL
-# edl_version 1.2.1, sensible cinema v#{VERSION}
+# edl_version 1.3, sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -535,7 +535,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
-"dvd_title_track_start_offset" => "#{hashes['dvd_start_offset']}",
+"dvd_title_track_start_offset" => "#{hashes['dvd_title_track_start_offset']}",
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
 		

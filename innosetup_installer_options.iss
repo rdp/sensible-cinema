@@ -1,4 +1,7 @@
-#define AppVer "0.41.7"
+#define VerFile FileOpen("VERSION")
+#define AppVer FileRead(VerFile)
+#expr FileClose(VerFile)
+#undef VerFile
 
 #define AppName "Sensible Cinema"
 ; AppId === AppName by default BTW
@@ -24,11 +27,11 @@ OutputBaseFilename=Setup {#AppName} v{#AppVer}
 OutputDir=releases
 
 [Icons]
-; extra space hopes to make it appear at the top...
 Name: {group}\Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
-Name: {group}\advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: 
-Name: {group}\advanced\Uninstall {#AppName}; Filename: {uninstallexe}
-Name: {group}\advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
+Name: {group}\Advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: 
+Name: {group}\Advanced\Run Sensible Cinema with debug console; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
+Name: {group}\Advanced\Uninstall {#AppName}; Filename: {uninstallexe}
+Name: {group}\Advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 
 [Messages]
 ;ConfirmUninstall=Are you sure you want to remove %1 (any local EDL files you created will be left on disk, so please upload them first!)?

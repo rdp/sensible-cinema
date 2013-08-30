@@ -12,7 +12,11 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 
+  netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
+
   @VLC: does that DVD have poor chapter breaks?	slow startup?
+  check condor man poor timings vs. "other" dvd, plus...can I bind it to the old EDL file?
+    plus it had poor start times?
   the dialogs when there are 2 EDL's for a DVD aren't very friendly...pretty...
   just do the GUI editor...
   everything should be "bundled-able" with an srt file...
