@@ -255,7 +255,7 @@ module SensibleSwing # LODO rename
       extra_options << "-autosync 30" 
 
 	  # allow a larger max volume
-	  extra_options << "-nosoftvol -af volume=10.1:0" # amplify without using buggy software mixer softvol
+	  extra_options << "-nosoftvol -af volume=20.0:0" # amplify without using buggy software mixer softvol--0 is soft clipping off, whatever that means
 	  
       extra_options << "-osdlevel 2" # who doesn't want to see those fraction decimal points :)
       if we_are_in_create_mode
