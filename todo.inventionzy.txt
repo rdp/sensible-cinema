@@ -20,7 +20,7 @@
        or you can ask them manually for time entry for the same.
     OCR'ing subtitles on the fly (or, cache'd OCR'ing them on the fly, to give it time to process) to synchronize or check for profanity or other "questionable" content
     
-    
+    chromecast has an api, use that
     provide a system where (netflix instant or not) you can choose "what to do" in scenes of violence, etc.  mute? skip? overlay? decrease volume? fast forward? several?  depending on intensity, too, etc.
     post a demo of it playing back blu-ray edited local computer, +- projector
 	post a demo of it being streamed to (a server/somebody else's computer) using ffmpeg or playon.tv
