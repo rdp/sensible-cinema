@@ -86,7 +86,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
         also does it startup too slowly somehow?
     ratatouille: hitting the "menu" button takes you to 6 minutes into the title track?
     crossbar heck why not, even though it's unrelated, it's moving it forward :)
-    avisynth plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
+    avisynth passthrough plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
   use real JSON or the like...
     with a real editor tho...hand in hand...
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
@@ -97,8 +97,8 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     
 == decide later to move up or down ==
 
-  add "gosh" to the list...so easy why not?
-  pure java volume adjust
+  pure java volume adjuster :)
+  experiment with using some dictionary profanity list...
   netflix instant: "can obscure certain percentage portions of the screen"
   netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
   can let them choose what to do in certain parts...

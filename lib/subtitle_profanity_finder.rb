@@ -188,17 +188,17 @@ module SubtitleProfanityFinder
 	
     semi_bad_profanities = {}
     ['moron', 'breast', 'idiot', 
-      'sex', 'genital', 'naked', 
+      'sex', 'genital', 
+	  'naked', 
       'boob', 
       'tits',
       'make love', 'pen' +
 	  'is',
       'pu' +
 	  'ssy',
-      'fart',
+	  'gosh',
 	  'whore',
-	  'debauch', 'cu'+
-       'nt', 
+	  'debauch',
       'come to bed',
       'lie with',
       'making' + 
@@ -216,7 +216,7 @@ module SubtitleProfanityFinder
       semi_bad_profanities[name] = name
     }
 	
-	for word in ['panties', 'crap', 'butt', 'dumb']
+	for word in ['panties', 'crap', 'butt', 'dumb', 'fart']
 	  semi_bad_profanities[word] = [word, :full_word]
 	end
 	
