@@ -119,4 +119,5 @@ Apple's DVD player appears to be "scriptable" in a way that would work for EDL's
 PowerDVD 9 (possibly other versions too) may be able to "remix" (EDL style) blu-rays.  Note also that it can do things like "adding movie modification effects/text etc." as you watch, see http://www.youtube.com/watch?v=zPGkN9WVzeU
 http://enjoymoviesyourway.com seems to offer a windows based player that can do some similar things
 https://github.com/Vaselinessa/moviesoap allows control of VLC to "black out" offensive sections, identify them with keystrokes while it's playing, etc.
-
+http://www.enjoymoviesyourway.com provides a player for edited DVD playback using predefined filters.
+http://www.vidangel.com provides for editing using the API of online players, can even beam it to your device (edited) or what not in realtime, via chromecast.  Also has some community collaborative options/playback.
