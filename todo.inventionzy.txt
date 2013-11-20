@@ -209,6 +209,5 @@
 	  with or without alpha blending techniques in the iamge
 	md5 each frame as it comes in (or checksum it) to "know" exactly/precisely what timestamp you're at.  this would work if the resolutions matched...or possibly blur it first/resize it, or just md5 "parts" of it (a diagonal down it).  Then you can know with higher precision which frame you're on.
 	  or compare it with several different md5's, taken from different original playbacks, etc.
-	  
-	
-	
+
+  chromecast can be controlled via api possible, with an edited film/movie playback? http://semanticmedia.byu.edu/2013/08/youtube-apis-and-googles-new-chromecast.html	  
