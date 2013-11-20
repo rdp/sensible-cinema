@@ -211,3 +211,5 @@
 	  or compare it with several different md5's, taken from different original playbacks, etc.
 
   chromecast can be controlled via api possible, with an edited film/movie playback? http://semanticmedia.byu.edu/2013/08/youtube-apis-and-googles-new-chromecast.html	  
+  xbmc can be controlled via it's EDL's
+  smplayer can be controlled via it's (pre-packaged file name based EDL files).
