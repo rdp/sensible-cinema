@@ -12,6 +12,7 @@
     accomodate splits vs. blanks and work
 
     a roku app that can somehow receive it edited, like...streaming from your computer.  Actually, I'm in a reasonable position to accomplish this LOL.  Though plugging in a computer's HDMI out cable might be nuff for now...I'd have to meter this once I "go serious" with it.
+      intel's broadcast thing (mentioned http://forums.roku.com/viewtopic.php?p=392123&sid=ff1df19a71129a37979934ed540a5349)? desktop to chromecast? chrome to chromecast (youtube API) via chromecast to TV?
     it can project "around" a movie as it's playing, so producer's control the atmosphere around it (viz: MS game atmosphere thing)
     it can add an overlay "gradient" (alpha transparent gradient optionally), and/or text, and/or "pause at this scene for 5 seconds" and/or "at this scene, pause, then insert this other scene from the same movie, or other movies, over it while paused" (or while it continues to play...)
     it can use windows messaging API's to "control" a remote player, viz: http://www.chipmunkav.com/help/appcontroller.htm
