@@ -5,50 +5,36 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==  
+
   email their support "I've listed your competitors here, I suppose their continued existence is taciet consent" :) (ask lawyers first) maybe before releasing?
   test forever strong timing blu-ray @ home
-  add new icon option for upconverter, windows :)
 
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 
   netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
-  @VLC: does that DVD have poor chapter breaks?	slow startup?
   check condor man poor timings vs. "other" dvd, plus...can I bind it to the old EDL file?
     plus it had poor start times?
   the dialogs when there are 2 EDL's for a DVD aren't very friendly...pretty...
-  just do the GUI editor...
   everything should be "bundled-able" with an srt file...
-  mac cleanup .tgz it...only needs mac'y stuff now :)
-  just throw up an upload website :)
+  mac cleanup .tgz it...it only needs mac'y stuff now :)
   real icon for the .exe
-  automate deploys again...somehow...cygwin?
   it says "no EDL available!" for a new DVD, even after you just created one...
   add splash screen on startup :)
-    leave the console for now :)
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
-  try and figure out powerdvd remixes at all?
-    test blu-ray remixes at home with PDVD ultra various versions?
-  try bluray again with anyDVD and zoomplayer MAX :)
-  gnosygnu seeking in XX went back to the beginning sometimes?
-    try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
-  netflix instant descriptor work at all after 18 months
+  try bluray edited again with anyDVD and zoomplayer MAX :)
+  netflix instant descriptor work at all
     it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
-    add new button?
-  2014 LLC, 'finish' rename: new name?  github, all docu, some links  
-  we should "bundle" with an .srt file, really...we should...
+  2014 LLC, 'finish' rename of sensible cinema (barely too confusing): new name?  github, all docu, some links  
+  we should "bundle" each with an .srt file, really...we should...for comparison/re-tuning purposes...
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
   it doesn't set osd-verbose when playing in smplayer in dev mode?
   add a "straight play" button to create mode window...
   mplayer bounties:
     fix mplayer chapter breaks shuck! whoa!
-    mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it [Alison's?]
     fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
       I could research this, too...unable to repro snow white work lappy...research at home does it still occur?
-  update alternativeto.net with "the known competitors"
-  use the cool uploader website
-    tell that guy where to upload, once it's possible LOL. Hmm...
   make possible "add 2 seconds to all entries in this EDL" (maybe after editor system?)
     don't I want to move it all online tho? this way might be easy tho...
   move documentation folder to online wiki [all]
@@ -59,65 +45,52 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     or not complain, these days...even snow white had a complaint [?]
   the awesome new editor GUI [or do I just want online? probably...]
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
-  do a google search for them: goblet of fire en 1cd subtitles "srt file" (google search is ok...but not really...)
   melissa stuff:
     readme be helpful for subtitles [?]
     split pc/mac distros for easier understandability :P
       actually a real installer for each might help...let's do that instead...
-    better instructions on how to actually use opensubtitles LOL (youtube?)
   accomodate for telecine optionally [veggie tales, sintel seem to need it <sigh>, jonah? huh? even vlc turfs it?]
   gui/edl parser unit tests [just] work
   ask for more beta testers for use, ask for more beta testers for creation, too
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
-  VLC bounty
-    cars 2 jerks with vlc [need to test it at work?]
-	  I know at least cars 2 did...could test it first...my other DVD's seem all scratched that have massive breaks LOL
-    Nacl http player :)
-    doesn't like widths not divisible... [me though...]
-    fix VLC jumping when it hits DVD time splits [?] chapters ?
-      check if it does still...anything disney should be enough? cars 2 would be great...cars with an older version?
-    accurate DVD times :) [or submit my patch preferably...]
-    fantasia 2000 dvd fails
-    toying with the truth DVD fails
-    EDL support
-    resume/window position et al
-    can skip over scratched parts of a DVD
-      cars full screen might be a good example, test it [?]
-        also does it startup too slowly somehow?
-    ratatouille: hitting the "menu" button takes you to 6 minutes into the title track?
-    crossbar heck why not, even though it's unrelated, it's moving it forward :)
-    avisynth passthrough plugin...to be able to then do this: http://forum.videolan.org/viewtopic.php?f=7&t=42137&sid=1335fdb7e30ff6154bef7141e8fc1432&p=363264#p363264
   use real JSON or the like...
     with a real editor tho...hand in hand...
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
     or an online equiv?
-  add a "middle" thing "you should see this at time x, you can/should double check this..."
-    at that point, allow recalibrate, add to same EDL :)
-  rename button to "play X edited" :)
-    
+  @VLC: does that DVD have poor chapter breaks?	(me check, then flame them, cars 2[?])
+
 == decide later to move up or down ==
 
+  add new icon to innosetup for upconverter, windows :)
+    does this even work though?
+      ask mplayer "how do I pass parameters to ffmpeg" lavcopts?
+  @mplayer: you sometimes play the wrong DVD audio track
+  gnosygnu seeking in XX went back to the beginning sometimes?
+    try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
+  just do the GUI editor...(or maybe never)
+  update alternativeto.net with "the known competitors"
   linux can work for dvd's (bundle dvdid basically, right? right? :)
   pure java (totally java) windows 7 volume adjuster :)
-  experiment with using some dictionary profanity list...
+  experiment with using some 3rd party dictionary profanity list...maybe to supplement?
   netflix instant: "can obscure certain percentage portions of the screen"
   netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
   can let them choose what to do in certain parts...
   warn if file played back not start at 0 first frame [?]
   right click on a file "=> play edited"
     and DVD drive?
+  @VLC what's with the slow startup?
   feedback button fails os x (double check--does it still?)
   test a few other DVD's (disney?) for 29.97 vs. 30.03 fps (once I figure out a stable way, or is mplayer actually stable enough here, at 60:00?)
     maybe just add it for now, then I can examine several with time, just myself/connected with me
     if I ever see a 30.03 again then I guess make it an option in mplayer [?] or rather just note it in the EDL, add asserts [?]
-  EDL's our movies
-  I guess mplayer/vls has libbluray support, too, but I haven't tested it yet.
+  EDL's our DVD's all :)
+  I guess mplayer/vlc has libbluray support, too, but I haven't tested it yet.
   ratatouile has [18:19:11:264] MplayerProcess::parseLine: 'Please send bug report - no VTS_TMAPT ?? '
   make it easier to use for "just play a file"
     "pick your source, pick your EDL, ready, ok?"
   make it "cool" for XBMC, like those guys...
   netflix upconvert that rox LOL
-  inventionzy: blu-ray stuffs from todo.inventionzy
+  inventionzy: blu-ray stuffs from (already published in) todo.inventionzy
   parser misses first subtitle entry even when it's legit?
   sintel file upconvert is *messed* [maybe just with mkv?]
   OS X netflix instant
@@ -139,6 +112,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
+  automate deploys again...somehow...cygwin?
+  try and figure out powerdvd remixes at all?
+    test blu-ray remixes at home with PDVD ultra various versions?
+  use the cool uploader website someone emailed me once...
+    tell that guy where to upload, once it's possible LOL. Hmm...
+  do a google search for them: goblet of fire en 1cd subtitles "srt file" (google search is ok...but not really...)
+  mplayer dies tmnt dvdnav://1 (bounty?) once I have confirmed it [Alison's?]
+  gnosygnu patch that forces seek forward so I don't have to do phreaky stuff for mplayer :)
   tell clearplay (my original message plus) "I'll license it to you" LOL after 18 (but keep it free)
   track their "local library" so they can play previous played files, edited...
   add a prompt "when the OSD says 1:00, does your wrist watch say... (typically X)" (except...umm...uh...we are changing that number for them so...they can't see it anymore...)
