@@ -344,6 +344,19 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 		open_file_to_edit_it path
 	  end
 	  
+	  
+      @upconvert_screen = new_jbutton( "play screen upconverted" )
+      @upconvert_screen.on_clicked {
+        if Dir[ENV['ProgramFiles']  +"/AviSynth*"].empty? # allow different versions of it...
+		  show_blocking_message_dialog "warning, you may need/want to install avisynth first!"
+		end
+        if !File.directory?(ENV['ProgramFiles']  + "/Screen Capturer Recorder")
+		  show_blocking_message_dialog "warning, you may need/want to install the screen capture recorder package first!"
+		end
+		show_blocking_message_dialog "To get this to work, first start your video playing [windows--not full screen].\n  Then run the screen capture recorder's \"configure by resizing a transparent window\" utility, cover the movie part of the player wiht it, and hit ok.  Then click ok here..."
+		system("#{mplayer_local} -geometry 10:10 upconvert_from_screen\\upconvert_from_screen_me2.avs") # I am not in the "bin" directory...
+      }
+	  
       if LocalStorage['have_zoom_button']
         @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
           raise unless OS.doze?
