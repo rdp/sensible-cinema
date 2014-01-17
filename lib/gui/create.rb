@@ -354,7 +354,9 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 		  show_blocking_message_dialog "warning, you may need/want to install the screen capture recorder package first!"
 		end
 		show_blocking_message_dialog "To get this to work, first start your video playing [windows--not full screen].\n  Then run the screen capture recorder's \"configure by resizing a transparent window\" utility, cover the movie part of the player wiht it, and hit ok.  Then click ok here..."
-		system("#{mplayer_local} -geometry 10:10 upconvert_from_screen\\upconvert_from_screen_me2.avs") # I am not in the "bin" directory...
+        # what fps is this?
+        # maybe should enable...dedupe?
+		system("#{mplayer_local} -benchmark -geometry 10:10 upconvert_from_screen\\upconvert_from_screen_me2.avs") # I am not in the "bin" directory...
       }
 	  
       if LocalStorage['have_zoom_button']
