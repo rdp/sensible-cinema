@@ -94,6 +94,7 @@ module SensibleSwing # LODO rename
   include SimpleGuiCreator # various swing classes
   VERSION = File.read(File.dirname(__FILE__) + "/../../VERSION").strip
   puts "v. " + VERSION # for the console output
+  puts RUBY_DESCRIPTION # for debug purposes...
   
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # <sigh>
   
