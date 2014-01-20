@@ -19,6 +19,7 @@ This file is part of Sensible Cinema.
 
 
 puts 'Starting Clean Editing Movie Player (Sensible Cinema)...'
+# version output is in lib/gui/base.rb
 
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
