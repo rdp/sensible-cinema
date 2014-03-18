@@ -486,8 +486,6 @@ KP_ENTER dvdnav select
       end
     end
 
-#    MplayerBeginingBuffer = 1.0
-#    MplayerEndBuffer = 0.0
    def begin_buffer_preference
     LocalStorage['mplayer_beginning_buffer']
    end

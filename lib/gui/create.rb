@@ -214,11 +214,10 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 	  
 	  @mplayer_partial.tool_tip="this can play just a specific portion of your film, like from second 30 to 35, for testing."
 
-      if OS.x?	  
-        new_jbutton("Display mplayer keyboard commands/howto/instructions") do
-          show_mplayer_instructions
-        end
-	  end
+      # all OS's apparently still use mplayer raw in an advanced edit mode or other? huh wuh?
+      new_jbutton("Display mplayer keyboard commands/howto/instructions") do
+        show_mplayer_instructions
+      end
 
       add_text_line "Create: Watch Unedited Options:"
       
@@ -444,7 +443,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
           @has_ever_rejected_edl_outfile = true
         end
       end
-      thred = play_smplayer_edl_non_blocking nil, [edl_out_command], true, false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
+      thred = play_smplayer_edl_non_blocking nil, [edl_out_command], (force_mplayer = true), false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
       if(edl_out_command.present?)
         open_edl_file_when_done thred, edlout_filename
       end
