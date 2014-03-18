@@ -2,6 +2,8 @@
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "Honor Flight",
 
+# really only till 1:19
+
 "mutes" => [
   # an example line, uncomment the leading "#" to make it active
   # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
@@ -10,8 +12,6 @@
 "30:36.5", "30:37.5", 
 "31:58.5", "31:59.5",
 "55:14.5", "55:16.5", # could use some precision...
-
-
 
 ],
 
