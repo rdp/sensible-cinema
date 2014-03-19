@@ -18,6 +18,9 @@
 "blank_outs" => [
   # an example line, uncomment the leading "#" to make it active
   # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "00:00.0", "00:25.0", "boring",
+  "07:15", "8:40", "fund raising",
+
 ],
 
 "source" => "dvd",
