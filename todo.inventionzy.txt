@@ -11,6 +11,7 @@
       some blu-ray player descriptor somehow
     accomodate splits vs. blanks and work
 
+   roku has an api to control playback (like a remote)...use it to control/mute/monitor playback
     a roku app (private channel?) that can somehow receive it edited, like...streaming from your computer.  Actually, I'm in a reasonable position to accomplish this LOL.  Though plugging in a computer's HDMI out cable might be nuff for now...I'd have to meter this once I "go serious" with it.
       intel's broadcast thing (mentioned http://forums.roku.com/viewtopic.php?p=392123&sid=ff1df19a71129a37979934ed540a5349)? desktop to chromecast? chrome to chromecast (youtube API) via chromecast to TV?
       ffmpeg to transcode it (on the fly? HLS?)
