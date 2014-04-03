@@ -11,6 +11,18 @@
       some blu-ray player descriptor somehow
     accomodate splits vs. blanks and work
 
+   netflix instant:
+    overlays that are "partial window" overlays, to block pieces of the movie
+      or an overlay that is obscuring [pixelating for instance] of pieces of the movie
+        same overlay partial windows could be made to "move" over time, or change location, position, size, color, obscuring percentage, etc.
+      or so that it can add text over the top of a playing movie [with or without dropshadow]
+        the text could be community text
+          it could also allow for community comments over a video [for instance text from different previous viewers, or simultaneous viewers]
+       it could overlay with "boxes" or other shapes to point out things in the film, for instance "red boxes" to highlight idiosyncracies, with or without accompanying text.
+      overlays could be accomplished using native windows, or using a web browser type "insert this over" like  [related: youtube text and bubble overlays] [related: mozilla's popcorn.js over html5 videos]
+    also related: http://www.amara.org/en/ [universal subtitles] has a way to super impose text over videos, probably could be used by us for [text] or obscuring the playback screen, as well. https://github.com/pculture/unisubs [could be nice, popcorn.js possibly better maintained]
+      
+
    roku has an api to control playback (like a remote)...use it to control/mute/monitor playback
     a roku app (private channel?) that can somehow receive it edited, like...streaming from your computer.  Actually, I'm in a reasonable position to accomplish this LOL.  Though plugging in a computer's HDMI out cable might be nuff for now...I'd have to meter this once I "go serious" with it.
       intel's broadcast thing (mentioned http://forums.roku.com/viewtopic.php?p=392123&sid=ff1df19a71129a37979934ed540a5349)? desktop to chromecast? chrome to chromecast (youtube API) via chromecast to TV?
