@@ -5,19 +5,22 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==  
-  email their support "I've listed your competitors here, I suppose their continued existence is taciet consent" :) (ask lawyers first) maybe before releasing?
   test forever strong timing blu-ray @ home
 
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 
   create a forum and somethign else...uservoice for all my stuff LOL
-  is there a flash netflix I can control [linux]?
-  petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
+  is there a flash netflix/amazon I can control [linux]?
+  petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
+  netflix instant descriptor work at all
+    it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
+
+= medium DVD stuff =
   check condor man poor timings vs. "other" dvd, plus...can I bind it to the old EDL file?
     plus it had poor start times?
-  the dialogs when there are 2 EDL's for a DVD aren't very friendly...pretty...
+  the dialogs when there are 2 EDL's for a DVD aren't very friendly...
   everything should be "bundled-able" with an srt file...
   mac cleanup .tgz it...it only needs mac'y stuff now :)
   real icon for the .exe
@@ -25,16 +28,14 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   add splash screen on startup :)
   it should just say "do you want to download and install smplayer?" and show its license again, and just use a local copy
   try bluray edited again with anyDVD and zoomplayer MAX :)
-  netflix instant descriptor work at all
-    it may need the "50% adjuster" fella...  determine its timing relative to DVD's/ripped...
   2014 LLC, 'finish' rename of sensible cinema (barely too confusing): new name?  github, all docu, some links  
   we should "bundle" each with an .srt file, really...we should...for comparison/re-tuning purposes...
   why do I seemingly parse srt's twice in a row?
   palavroes -> real euphemism, like 'wow!' [?]
-  it doesn't set osd-verbose when playing in smplayer in dev mode?
-  add a "straight play" button to create mode window...
+  add a "straight edited play" button to create mode window...or a comment as to where to find it...
   mplayer bounties:
     fix mplayer chapter breaks shuck! whoa!
+      need reproducible though...
     fix mplayer muting causes jerkiness doze [not work desktop though, works fine there]
       I could research this, too...unable to repro snow white work lappy...research at home does it still occur?
   make possible "add 2 seconds to all entries in this EDL" (maybe after editor system?)
@@ -47,14 +48,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
     or not complain, these days...even snow white had a complaint [?]
   the awesome new editor GUI [or do I just want online? probably...]
     after have "awesome editor" when you change main title, it needs to change/update tons of junk...
-  melissa stuff:
-    readme be helpful for subtitles [?]
-    split pc/mac distros for easier understandability :P
-      actually a real installer for each might help...let's do that instead...
   accomodate for telecine optionally [veggie tales, sintel seem to need it <sigh>, jonah? huh? even vlc turfs it?]
   gui/edl parser unit tests [just] work
   ask for more beta testers for use, ask for more beta testers for creation, too
-  @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
   use real JSON or the like...
     with a real editor tho...hand in hand...
   awesome subtitle list displayer/adjuster, so you can just tell *it* which one you want to sync :)  
@@ -63,12 +59,10 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
 == decide later to move up or down ==
 
-  add new icon to innosetup for upconverter, windows :)
-    does this even work though?
-      ask mplayer "how do I pass parameters to ffmpeg" lavcopts?
+  @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
+  screen extender?
   @mplayer: you sometimes play the wrong DVD audio track
-  gnosygnu seeking in XX went back to the beginning sometimes?
-    try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
+  try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
   just do the GUI editor...(or maybe never)
   update alternativeto.net with "the known competitors"
   linux can work for dvd's (bundle dvdid basically, right? right? :)
@@ -114,6 +108,9 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
   
 == DVD +- DVD-realtime/other basically never do backlog (unordered) ==
 
+  add new icon to innosetup for upconverter, windows :)
+    does this even work though?
+      ask mplayer "how do I pass parameters to ffmpeg" lavcopts?
   automate deploys again...somehow...cygwin?
   try and figure out powerdvd remixes at all?
     test blu-ray remixes at home with PDVD ultra various versions?
