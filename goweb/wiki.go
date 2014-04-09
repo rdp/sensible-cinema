@@ -37,12 +37,6 @@ func handler(w http.ResponseWriter, r *http.Request) { // unused
     fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
-func viewHandler(w http.ResponseWriter, r *http.Request) {
-    title := r.URL.Path[len("/view/"):]
-    p, _ := loadPage(title)
-    fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
-}
-
 func editHandler(w http.ResponseWriter, r *http.Request) {
     title := r.URL.Path[len("/edit/"):]
     p, err := loadPage(title)
@@ -59,6 +53,12 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
     p := &Page{Title: title, Body: []byte(body)}
     p.save()
     http.Redirect(w, r, "/view/"+title, http.StatusFound)
+}
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+    title := r.URL.Path[len("/view/"):]
+    p, _ := loadPage(title)
+    t, _ := template.ParseFiles("view.html")
+    t.Execute(w, p)
 }
 
 func main() {
