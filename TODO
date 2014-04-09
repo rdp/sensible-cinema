@@ -5,26 +5,27 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==  
-  netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
   is there a flash netflix/amazon I can control [linux]?
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   netflix instant descriptor work at all
-    it may need the "50% adjuster" fella...  
   whole new website for downloading/editing...
-    the awesome new editor GUI [or do I just want online? probably...]
+    the awesome new online editor
+      very first pass: it can feed you json that you can use [or yaml]
+        from file for a single fella...
+  create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
+  netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
+  netflix instant: mac compat?
 
 = medium DVD stuff =
   test forever strong timing blu-ray @ home
-  create a forum and somethign else...uservoice for all my stuff LOL
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 
-  determine netflix instant timign relative to DVD's
+  determine netflix instant timing relative to DVD's
   check condor man poor timings vs. "other" dvd, plus...can I bind it to the old EDL file?
     plus it had poor start times?
   the dialogs when there are 2 EDL's for a DVD aren't very friendly...
   everything should be "bundled-able" with an srt file...
-  mac cleanup .tgz it...it only needs mac'y stuff now :)
   real icon for the .exe
   it says "no EDL available!" for a new DVD, even after you just created one...
   add splash screen on startup :)
@@ -58,6 +59,7 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 
 == decide later to move up or down ==
 
+  mac cleanup .tgz it...it only needs mac'y stuff now :)
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
   screen extender?
   @mplayer: you sometimes play the wrong DVD audio track
