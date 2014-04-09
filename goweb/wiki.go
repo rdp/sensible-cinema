@@ -32,11 +32,18 @@ func main_old() { // just writes a file, loads it, outputs it...
     fmt.Println(string(p2.Body))
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func handler(w http.ResponseWriter, r *http.Request) { // unused
     fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
+func viewHandler(w http.ResponseWriter, r *http.Request) {
+    title := r.URL.Path[len("/view/"):]
+    p, _ := loadPage(title)
+    fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+}
+
 func main() {
-    http.HandleFunc("/", handler)
+    http.HandleFunc("/view/", viewHandler)
+    fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
 }
