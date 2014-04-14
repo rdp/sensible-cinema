@@ -26,7 +26,7 @@ type EditListEntry struct {
 }
 
 type EDL struct {
-  URL string
+  NetflixURL string
   Title string
   Notes string
   Mutes []EditListEntry
@@ -77,7 +77,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     if err != nil {
         // then there was an error
-        empty := &EDL{ URL: "http://...", Title: "title" }
+        empty := &EDL{ NetflixURL: "http://...", Title: "title" }
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
         b, _ := empty.marshal()
@@ -87,13 +87,13 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 // render some template file for this action :)
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
+func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
     t, err := template.ParseFiles(tmpl + ".html")
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
-    err = t.Execute(w, p)
+    err = t.Execute(w, data)
     if err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
     }
@@ -106,6 +106,16 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
         return
     }
     renderTemplate(w, "view", p)
+}
+
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+    files, _ := ioutil.ReadDir(DirName)
+    for _, file := range files {
+     fmt.Println("got file ", file) // has a Name method
+    }
+    fmt.Println("done enumerate" + DirName)
+    renderTemplate(w, "index", files[0])
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -154,6 +164,7 @@ func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
+    http.HandleFunc("/index", indexHandler)
     fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
     fmt.Println("exiting")
