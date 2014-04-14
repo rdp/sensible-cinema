@@ -25,6 +25,7 @@ type EditListEntry struct {
 type EDL struct {
   URL string
   Title string
+  Notes string
   Mutes []EditListEntry
   Skips []EditListEntry
 }
@@ -52,7 +53,8 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     if err != nil {
         // then there was an error
         empty := &EDL{ URL: "http://...", Title: "title" }
-        //empty.Mutes := [&EditListEntry{}]
+        empty.Mutes = []EditListEntry{EditListEntry{}}
+        empty.Skips = []EditListEntry{EditListEntry{}}
         b, _ := json.MarshalIndent(empty, "", " ") // attempt to give a good pattern for them to edit with...
         p = &Page{Title: title, Body: b}
     }
