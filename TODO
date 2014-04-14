@@ -5,19 +5,22 @@ Remember this stuff is all "oh gosh can I avoid doing that at all?" or "to prote
 == things working on today/requested ==
   
 == yes do, un-ordered currently, from all the various future release options ==  
-  is there a flash netflix/amazon I can control [linux]?
-  petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   netflix instant descriptor work at all
   whole new website for downloading/editing...
     the awesome new online editor
-      very first pass: it can feed you json that you can use [or yaml]
-        from file for a single fella...
+      very first pass: it can feed you json that you can use
+
   create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
   netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
   netflix instant: mac compat?
-  frozen digital
+  frozen digital just get it
+  website:
+    can bind it to imdb, image?
+  is there a flash netflix/amazon I can control [linux]?
+  petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
+  
 
-= medium DVD stuff =
+= medium DVD stuff [?] =
   test forever strong timing blu-ray @ home
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
