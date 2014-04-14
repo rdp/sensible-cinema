@@ -157,7 +157,7 @@ func readConfig() Configuration {
   }
   fmt.Println("will be saving to" + conf.DirName)
   DirName = conf.DirName
-  os.MkdirAll(DirName, 0600)
+  os.MkdirAll(DirName, 0700)
   return conf
 }
 
