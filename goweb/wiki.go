@@ -123,6 +123,7 @@ func main() {
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     readConfig()
-    fmt.Println("serving on 8080") 
-    http.ListenAndServe(":8080", nil)
+    //fmt.Println("serving on 8080") 
+    //http.ListenAndServe(":8080", nil)
+    fmt.Println("exiting")
 }
