@@ -135,7 +135,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
         if m == nil {
-            fmt.Println("bad path you hacker")
+            fmt.Println("bad path you hacker " + r.URL.Path)
             http.NotFound(w, r)
             return 
         }
