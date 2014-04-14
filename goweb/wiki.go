@@ -93,7 +93,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 type Configuration struct {
-    Users    string
+    DirName    string
 }
 
 func readConfig() Configuration {
@@ -114,5 +114,5 @@ func main() {
     //fmt.Println("serving on 8080") 
     //http.ListenAndServe(":8080", nil)
     a := readConfig()
-    fmt.Println(a.Users)
+    fmt.Println(a.DirName)
 }
