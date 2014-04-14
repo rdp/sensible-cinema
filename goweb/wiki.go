@@ -115,7 +115,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
      fmt.Println("got file ", file) // has a Name method
     }
     fmt.Println("done enumerate" + DirName)
-    renderTemplate(w, "index", files[0])
+    renderTemplate(w, "index", files)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
