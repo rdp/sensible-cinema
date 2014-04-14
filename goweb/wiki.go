@@ -9,6 +9,7 @@ import ( "fmt"
         "os"
         "bytes"
         "errors"
+        "strings"
 )
 
 type Page struct {
@@ -33,7 +34,7 @@ type EDL struct {
   Skips []EditListEntry
 }
 
-var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$") // security check
+var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
 
 var DirName string = "/tmp"; // will be overwritten, can't assign nil?
 
@@ -110,6 +111,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func newHandler(w http.ResponseWriter, r *http.Request) {
     moviename := r.URL.Query()["moviename"][0];
+    moviename = strings.Replace(moviename, " ", "-", -1)
     http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
@@ -133,6 +135,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
     return func(w http.ResponseWriter, r *http.Request) {
         m := validPath.FindStringSubmatch(r.URL.Path)
         if m == nil {
+            fmt.Println("bad path you hacker")
             http.NotFound(w, r)
             return 
         }
