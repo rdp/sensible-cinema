@@ -50,7 +50,10 @@ func loadPage(title string) (*Page, error) {
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     if err != nil {
-        p = &Page{Title: title}
+        // then there was an error
+        var emptyEDL EDL
+        b, _ := json.Marshal(emptyEDL) // attempt to give a good pattern for them to edit with...
+        p = &Page{Title: title, Body: b}
     }
     renderTemplate(w, "edit", p)
 }
@@ -111,7 +114,7 @@ func readConfig() Configuration {
   if err != nil {
     fmt.Println("error:", err)
   }
-  fmt.Println(conf.DirName)
+  fmt.Println("will save to" + conf.DirName)
   DirName = conf.DirName
   os.MkdirAll(DirName, 0700)
   return conf
@@ -123,7 +126,7 @@ func main() {
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     readConfig()
-    //fmt.Println("serving on 8080") 
-    //http.ListenAndServe(":8080", nil)
+    fmt.Println("serving on 8080") 
+    http.ListenAndServe(":8080", nil)
     fmt.Println("exiting")
 }
