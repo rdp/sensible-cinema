@@ -1,11 +1,12 @@
 package main
 
-import (
-	"fmt"
-	"io/ioutil"
+import ( "fmt"
+        "io/ioutil"
         "net/http" // std lib
 	"html/template"
         "regexp"
+        "encoding/json"
+        "os"
 )
 
 type Page struct {
@@ -91,10 +92,25 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
     }
 }
 
+type Configuration struct {
+    Users    []string
+    Groups   []string
+}
+
+func readConfig() Configuration {
+  conf := Configuration{}
+  file, _ := os.Open("conf.json")
+  decoder := json.NewDecoder(file)
+  decoder.Decode(&conf)
+  return conf
+}
+
 func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
-    fmt.Println("serving on 8080") 
-    http.ListenAndServe(":8080", nil)
+    //fmt.Println("serving on 8080") 
+    //http.ListenAndServe(":8080", nil)
+    a := readConfig()
+    fmt.Println(a.Users)
 }
