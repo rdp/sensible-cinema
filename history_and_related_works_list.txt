@@ -123,3 +123,4 @@ http://www.enjoymoviesyourway.com provides a player for edited DVD playback usin
 http://www.vidangel.com provides for editing using the API of online players, can even beam it to your device (edited) or what not in realtime, via chromecast.  Also has some community collaborative options/playback for youtube.
   vidangel also has a concept of "on off checkboxes" for choosing exactly which profanities you want to hear, violence to skip, etc. and uses those when playing back the video, with some euphemisms.  Categories/finer grained control wouldn't be too hard/far off using their system.
   vidangel also has an online list of "editable movies" so you can choose from it, it directs you to it.
+libdvdnav had a "remap" feature for several years that allowed you to "skip" from sector to sector in a DVD, to avoid objectionable content.

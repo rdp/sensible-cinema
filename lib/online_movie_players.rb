@@ -17,49 +17,18 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
-require 'sane'
-
-for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'jruby-swing-helpers/swing_helpers']
-  require_relative '../lib/' + file
+for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'jruby-swing-helpers/lib/simple_gui_creator/swing_helpers', 'jruby-swing-helpers/lib/simple_gui_creator/mouse_control']
+  require_relative file
 end
-
-# shared
-require_relative '../lib/jruby-swing-helpers/mouse'
 
 def choose_file title, dir
-  SwingHelpers.new_previously_existing_file_selector_and_go title, dir
+  SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
 end
 
-def go_sc(args)
+def go_sc()
   
-  $VERBOSE = 1 if args.delete('-v')
-  $DEBUG = 1 if args.delete('-d')
-  if args.delete('--clear-cache')
-    OCR.clear_cache!
-    puts 'cleared cache'
-  end
-  
-  $stderr.puts 'warning: currently windows only for certain parts currently' unless ENV['OS'] == 'Windows_NT'
-  
-  if args.detect{|arg| arg == '-h' || arg == '--help'}
-  
-    puts <<-END
-  
-    syntax: [player_description.yml] [delete_list.txt|test] [-t, -v, --clear-cache] (or just nothing at all--it will prompt for all things it needs)
-    
-    If you specify "test" for the edit list, it will pause 2s, take a single snapshot of the selected player, then exit.
-    Useful for debugging your screen capture of the current player.
-    You can also specify -v or -t if you want to enable more verbose (chatty) output.
-    
-    END
-      
-    for file in Dir[__DIR__ + '../zamples/mute*/*']
-       puts "\n", "Example file:", file + "\n\n", File.read(file)
-    end
-    
-    exit 1
-  end
+  OCR.clear_cache!
+  puts 'cleared cache'
   
   players_root_dir = __DIR__ + "/../zamples/players"
   # allow for command line filenames
@@ -78,17 +47,16 @@ def go_sc(args)
     player_description = choose_file("     SELECT COMPUTER PLAYER", players_root_dir)
     raise unless player_description
   end
-
+   
   edit_decision_list = args.shift.to_s
 
-  if edit_decision_list == 'test'
+  if edit_decision_list == 'test' # TODO test option!
     overlay = nil
     p 'got test...just doing screen dump'
     $VERBOSE=true # adds some extra output
   elsif File.exist? edit_decision_list
     # accept it from the command line
   else
-    # assume they want an online player, right? LODO player can tell us...
     auto_found = AutoWindowFinder.search_for_single_url_match
     if auto_found
       p 'auto-discovered open window for player x EDL, using it ' + auto_found
@@ -97,14 +65,10 @@ def go_sc(args)
       puts 'Select Edit Decision List to use'
       edit_decision_list = choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
     end
-    settings = EdlParser.parse_file edit_decision_list
+    url = SimpleGuiCreator.get_user_input "please enter url with edits, like http://.../view/name"
+    edl = SensibleSwing::MainWindow.download_to_string url
+    settings = EdlParser.parse_string edl
     
-    if !edit_decision_list	
-      puts "error: have to specify a scene descriptions file\n    or specify \"test\" on the command line if you just want to snapshot your player"
-      exit 1
-    end
-    
-    puts 'Selected scene descriptions file ' + File.basename(edit_decision_list) + "\n\t(full path: #{edit_decision_list})"
     Blanker.startup
     # todo start it late as it has an annoying startup blip
   end
@@ -135,7 +99,7 @@ def go_sc(args)
     puts 'warning--not using any screen tracking...'
   end
   
-  OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...
+  OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...???
 
   p 'moving mouse to align it for muting down 10'
   Mouse.move_mouse_relative 0, 10 # LODO 
@@ -147,15 +111,5 @@ def go_sc(args)
     Blanker.shutdown # lodo move this and the 'q' key to within overlayer
     OCR.serialize_cache_to_disk
   }
-  begin
-    key_input.handle_keystrokes_forever # blocking...
-  ensure
-    puts "syntax from command line: \"#{player_description}\" \"#{edit_decision_list}\""
-  end
-    
-end
-
-if __FILE__ == $0
- puts 'Welcome to Sensible Cinema...'
- go_sc ARGV
+  key_input.handle_keystrokes_forever # blocking...
 end
