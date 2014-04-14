@@ -101,7 +101,10 @@ func readConfig() Configuration {
   conf := Configuration{}
   file, _ := os.Open("conf.json")
   decoder := json.NewDecoder(file)
-  decoder.Decode(&conf)
+  err := decoder.Decode(&conf)
+  if err != nil {
+    fmt.Println("error:", err)
+  }
   return conf
 }
 
