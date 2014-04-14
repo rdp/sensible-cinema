@@ -93,7 +93,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 type Configuration struct {
-    Users    []string
+    Users    string
     Groups   []string
 }
 

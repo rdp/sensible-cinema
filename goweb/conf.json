@@ -1,4 +1,4 @@
 {
-    "Users": ["UserA","UserB"],
+    "Users": "UserA",
     "Groups": ["GroupA"]
 }
