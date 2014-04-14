@@ -19,9 +19,10 @@ type Page struct {
 type EditListEntry struct {
   Start string
   End string
-  Type string
-  ExactType string
-  Info string
+  Category string
+  ExactTypeInCategory string
+  AdditionalInfo string
+  AdditionalInfo1 string
 }
 
 type EDL struct {
