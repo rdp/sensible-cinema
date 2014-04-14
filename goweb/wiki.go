@@ -14,6 +14,21 @@ type Page struct {
     Body  []byte
 }
 
+type EditListEntry struct {
+  Start string
+  End string
+  Type string
+  ExactType string
+  Info string
+}
+
+type EDL struct {
+  URL string
+  Title string
+  Mutes []EditListEntry
+  Skips []EditListEntry
+}
+
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$") // security check
 
 var DirName string = "/tmp"; // will be overwritten, can't assign nil?
@@ -30,10 +45,6 @@ func loadPage(title string) (*Page, error) {
         return nil, err
     }
     return &Page{Title: title, Body: body}, nil
-}
-
-func handler(w http.ResponseWriter, r *http.Request) { // unused
-    fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -105,6 +116,7 @@ func readConfig() Configuration {
   os.MkdirAll(DirName, 0700)
   return conf
 }
+
 
 func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
