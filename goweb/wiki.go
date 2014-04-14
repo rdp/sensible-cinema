@@ -45,13 +45,14 @@ func (p *Page) save() error {
     if err != nil {
       return err // never get here, basiaclly
     }
-    b, _ := json.Marshal(asObject)  
+    b, _ := json.MarshalIndent(asObject, "", " ")  
     countMarshalled := bytes.Count(b, []byte(`"`))
     countIncoming := bytes.Count(p.Body, []byte(`"`))
     if countIncoming != countMarshalled {
-      return errors.New("miscount, possibly misspelling?")
-    } 
-    return ioutil.WriteFile(filename, p.Body, 0600)
+      return errors.New("miscount, possibly misspelling/malformatted?")
+    } else { 
+      return ioutil.WriteFile(filename, b, 0600) // write re-prettified...
+    }
 }
 
 func loadPage(title string) (*Page, error) {
