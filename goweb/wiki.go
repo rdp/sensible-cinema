@@ -108,7 +108,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
     renderTemplate(w, "view", p)
 }
 
-
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     files, _ := ioutil.ReadDir(DirName)
     for _, file := range files {
