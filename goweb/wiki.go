@@ -41,14 +41,18 @@ func (edl *EDL) marshal() ([]byte, error) {
     return json.MarshalIndent(edl, "", " ")  
 }
 
+func (edl *EDL) unmarshal(b []byte) error {
+    return json.Unmarshal(b, edl)
+}
+
 func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
     // make sure if we encode it and decode it, it has the same number of quotes
     // which would imply that it parses right to our object, at least :P
     var asObject EDL
-    err := json.Unmarshal(p.Body, &asObject) // not enough :(
+    err := asObject.unmarshal(p.Body)
     if err != nil {
-      return err // never get here, basiaclly
+      return err // never get here, basically it's too "loose"
     }
     b, _ := asObject.marshal()
     countMarshalled := bytes.Count(b, []byte(`"`))
