@@ -2,7 +2,7 @@ package main
 
 import ( "fmt"
         "io/ioutil"
-        "net/http" // std lib
+        "net/http"
 	"html/template"
         "regexp"
         "encoding/json"
@@ -115,10 +115,6 @@ func newHandler(w http.ResponseWriter, r *http.Request) {
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     files, _ := ioutil.ReadDir(DirName)
-    for _, file := range files {
-     fmt.Println("got file ", file) // has a Name method
-    }
-    fmt.Println("done enumerate" + DirName)
     renderTemplate(w, "index", files)
 }
 
@@ -168,7 +164,7 @@ func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
-    http.HandleFunc("/index", indexHandler)
+    http.HandleFunc("/", indexHandler)
     http.HandleFunc("/new", newHandler)
     fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
