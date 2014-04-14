@@ -36,6 +36,12 @@ var DirName string = "/tmp"; // will be overwritten, can't assign nil?
 
 func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
+    // make sure it can encode:
+    var asObject EDL
+    err := json.Unmarshal(p.Body, &asObject) // not enough :(
+    if err != nil {
+      return err
+    }
     return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
@@ -46,7 +52,7 @@ func loadPage(title string) (*Page, error) {
         return nil, err
     }
     return &Page{Title: title, Body: body}, nil
-}
+} 
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
@@ -119,7 +125,7 @@ func readConfig() Configuration {
   }
   fmt.Println("will save to" + conf.DirName)
   DirName = conf.DirName
-  os.MkdirAll(DirName, 0700)
+  os.MkdirAll(DirName, 0600)
   return conf
 }
 
