@@ -51,8 +51,9 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     if err != nil {
         // then there was an error
-        emptyEDL := &EDL{URL: "http://...", Title: "title"}
-        b, _ := json.MarshalIndent(emptyEDL, "", " ") // attempt to give a good pattern for them to edit with...
+        empty := &EDL{ URL: "http://...", Title: "title" }
+        //empty.Mutes := [&EditListEntry{}]
+        b, _ := json.MarshalIndent(empty, "", " ") // attempt to give a good pattern for them to edit with...
         p = &Page{Title: title, Body: b}
     }
     renderTemplate(w, "edit", p)
