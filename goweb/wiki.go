@@ -8,6 +8,7 @@ import ( "fmt"
         "encoding/json"
         "os"
         "bytes"
+        "errors"
 )
 
 type Page struct {
@@ -37,7 +38,8 @@ var DirName string = "/tmp"; // will be overwritten, can't assign nil?
 
 func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
-    // make sure it can encode:
+    // make sure if we encode it and decode it, it has the same number of quotes
+    // which would imply that it parses right to our object, at least :P
     var asObject EDL
     err := json.Unmarshal(p.Body, &asObject) // not enough :(
     if err != nil {
@@ -45,9 +47,10 @@ func (p *Page) save() error {
     }
     b, _ := json.Marshal(asObject)  
     countMarshalled := bytes.Count(b, []byte(`"`))
-    //countIncoming := b.count([]byte(`"`)
-    fmt.Println("count marshaled", countMarshalled)
-
+    countIncoming := bytes.Count(p.Body, []byte(`"`))
+    if countIncoming != countMarshalled {
+      return errors.New("miscount, possibly misspelling?")
+    } 
     return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
