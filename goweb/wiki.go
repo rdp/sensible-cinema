@@ -7,6 +7,7 @@ import ( "fmt"
         "regexp"
         "encoding/json"
         "os"
+        "bytes"
 )
 
 type Page struct {
@@ -40,8 +41,13 @@ func (p *Page) save() error {
     var asObject EDL
     err := json.Unmarshal(p.Body, &asObject) // not enough :(
     if err != nil {
-      return err
+      return err // never get here, basiaclly
     }
+    b, _ := json.Marshal(asObject)  
+    countMarshalled := bytes.Count(b, []byte(`"`))
+    //countIncoming := b.count([]byte(`"`)
+    fmt.Println("count marshaled", countMarshalled)
+
     return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
