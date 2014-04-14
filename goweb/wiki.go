@@ -108,6 +108,11 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
     renderTemplate(w, "view", p)
 }
 
+func newHandler(w http.ResponseWriter, r *http.Request) {
+    moviename := r.URL.Query()["moviename"][0];
+    http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
+}
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     files, _ := ioutil.ReadDir(DirName)
     for _, file := range files {
@@ -164,6 +169,7 @@ func main() {
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     http.HandleFunc("/index", indexHandler)
+    http.HandleFunc("/new", newHandler)
     fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
     fmt.Println("exiting")
