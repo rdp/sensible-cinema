@@ -1,0 +1,13 @@
+<h1>Index</h1>
+
+{{range .}}
+    <p>[<a href="/view/{{.Name}}">{{.Name}}</a>]</p>
+{{end}}
+
+<pre>
+Or create a new page:
+<form action="/new" method="GET">
+Movie name: <input type="text" name="moviename"/>
+<input type="submit">
+</form>
+
