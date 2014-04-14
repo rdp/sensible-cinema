@@ -37,6 +37,10 @@ var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$") // secu
 
 var DirName string = "/tmp"; // will be overwritten, can't assign nil?
 
+func (edl *EDL) marshal() ([]byte, error) {
+    return json.MarshalIndent(edl, "", " ")  
+}
+
 func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
     // make sure if we encode it and decode it, it has the same number of quotes
@@ -46,7 +50,7 @@ func (p *Page) save() error {
     if err != nil {
       return err // never get here, basiaclly
     }
-    b, _ := json.MarshalIndent(asObject, "", " ")  
+    b, _ := asObject.marshal()
     countMarshalled := bytes.Count(b, []byte(`"`))
     countIncoming := bytes.Count(p.Body, []byte(`"`))
     if countIncoming != countMarshalled {
@@ -72,7 +76,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
         empty := &EDL{ URL: "http://...", Title: "title" }
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
-        b, _ := json.MarshalIndent(empty, "", " ") // attempt to give a good pattern for them to edit with...
+        b, _ := empty.marshal()
         p = &Page{Title: title, Body: b}
     }
     renderTemplate(w, "edit", p)
@@ -108,7 +112,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
         http.Error(w, err.Error(), http.StatusInternalServerError)
         return
     }
-    http.Redirect(w, r, "/view/"+title, http.StatusFound)
+    http.Redirect(w, r, "/view/" + title, http.StatusFound)
 }
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
@@ -134,7 +138,7 @@ func readConfig() Configuration {
   if err != nil {
     fmt.Println("error:", err)
   }
-  fmt.Println("will save to" + conf.DirName)
+  fmt.Println("will be saving to" + conf.DirName)
   DirName = conf.DirName
   os.MkdirAll(DirName, 0600)
   return conf
@@ -142,11 +146,13 @@ func readConfig() Configuration {
 
 
 func main() {
+    readConfig()
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
-    readConfig()
     fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
     fmt.Println("exiting")
 }
+
+// TODO migrateMain with duplicate structs...
