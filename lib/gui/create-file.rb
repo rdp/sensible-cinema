@@ -19,6 +19,5 @@ module SensibleSwing
       end
     end
     
-    
   end
 end

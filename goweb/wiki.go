@@ -2,13 +2,15 @@ package main
 
 import ( "fmt"
         "io/ioutil"
-        "net/http" // std lib
+        "net/http"
 	"html/template"
         "regexp"
         "encoding/json"
         "os"
         "bytes"
         "errors"
+        "strings"
+        "path/filepath"
 )
 
 type Page struct {
@@ -33,7 +35,7 @@ type EDL struct {
   Skips []EditListEntry
 }
 
-var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$") // security check
+var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
 
 var DirName string = "/tmp"; // will be overwritten, can't assign nil?
 
@@ -110,15 +112,12 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func newHandler(w http.ResponseWriter, r *http.Request) {
     moviename := r.URL.Query()["moviename"][0];
+    moviename = strings.Replace(moviename, " ", "-", -1)
     http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     files, _ := ioutil.ReadDir(DirName)
-    for _, file := range files {
-     fmt.Println("got file ", file) // has a Name method
-    }
-    fmt.Println("done enumerate" + DirName)
     renderTemplate(w, "index", files)
 }
 
@@ -135,8 +134,11 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        m := validPath.FindStringSubmatch(r.URL.Path)
+        path := r.URL.Path
+        path = strings.TrimSuffix(path, filepath.Ext(path)) // TODO
+        m := validPath.FindStringSubmatch(path)
         if m == nil {
+            fmt.Println("bad path you hacker " + r.URL.Path)
             http.NotFound(w, r)
             return 
         }
@@ -158,7 +160,7 @@ func readConfig() Configuration {
   }
   fmt.Println("will be saving to" + conf.DirName)
   DirName = conf.DirName
-  os.MkdirAll(DirName, 0600)
+  os.MkdirAll(DirName, 0700)
   return conf
 }
 
@@ -168,7 +170,7 @@ func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
-    http.HandleFunc("/index", indexHandler)
+    http.HandleFunc("/", indexHandler)
     http.HandleFunc("/new", newHandler)
     fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
