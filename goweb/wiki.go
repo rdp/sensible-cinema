@@ -10,6 +10,7 @@ import ( "fmt"
         "bytes"
         "errors"
         "strings"
+        "path/filepath"
 )
 
 type Page struct {
@@ -133,7 +134,9 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
-        m := validPath.FindStringSubmatch(r.URL.Path)
+        path := r.URL.Path
+        path = strings.TrimSuffix(path, filepath.Ext(path)) // TODO
+        m := validPath.FindStringSubmatch(path)
         if m == nil {
             fmt.Println("bad path you hacker " + r.URL.Path)
             http.NotFound(w, r)
