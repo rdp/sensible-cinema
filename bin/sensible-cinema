@@ -38,6 +38,7 @@ require_relative '../lib/gui/normal'
 require_relative '../lib/gui/create' # LODO maybe don't need to require all these every time...
 require_relative '../lib/gui/create-file'
 require_relative '../lib/gui/upconvert'
+require_relative '../lib/gui/online-player'
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')
@@ -46,17 +47,18 @@ if $0 == __FILE__
      $ jruby bin/sensible-cinema --create-mode      # DVD output "parser/cutter" create mode [advanced]
      $ jruby bin/sensible-cinema --upconvert-mode   # DVD/file upconverting player
                                  --exit-immediately # don't show the GUI, for benchmarking startup times
-     $ jruby bin/sensible-cinema-cli                # the experimental OCR tracker for edited arbitrary online/local/internet players.
-                                                      run it with --help to see its various options.
+     $                          --online-player-mode# just run the online player mode, skip all that pesky other stuff :)                           
+                           the experimental OCR tracker for edited arbitrary online/local/internet players.                                                     
 
-     $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for more details.
+     $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for details.
     EOL
   else
     a = SensibleSwing::MainWindow.new true, ARGV
     a.setup_default_buttons
-    puts 'Please use the Sensible Cinema GUI window popup...'
     if ARGV.index('--exit-immediately')
       a.dispose
+    else
+        puts 'Please use the Sensible Cinema GUI window popup...'
     end
   end
 end

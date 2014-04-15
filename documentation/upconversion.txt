@@ -1,4 +1,0 @@
-          With upconversion, if your monitor is 1024 pixels wide and you upconvert to 2048 pixels then display it on 1024, it looks better.
-          Sensible Cinema sets the default default resolution to be 2x your screen resolution, which is better for high end cpu's.
-          If you have a low powered system or laptop you may need to change it (drag the slider) lower to avoid it displaying only a black or white screen, as your system can't handle it,
-          so adjust accordingly if you have a lesser system.  Also changing this setting can make it use more or less CPU overall.

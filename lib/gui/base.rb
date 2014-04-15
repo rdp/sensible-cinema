@@ -35,6 +35,8 @@ end
 
 # a few I'll always need no matter what...
 require_relative '../jruby-swing-helpers/lib/simple_gui_creator'
+require_relative '../jruby-swing-helpers/lib/simple_gui_creator/storage'
+require_relative '../jruby-swing-helpers/lib/simple_gui_creator/drive_info'
 require_relative '../edl_parser'
 require 'tmpdir'
 require 'whichr'
@@ -45,7 +47,7 @@ if OS.doze?
 end
 
 # attempt to load on demand...i.e. faster...gah
-for kls in [:MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
+for kls in [:MplayerEdl, :SubtitleProfanityFinder, :ConvertThirtyFps]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
@@ -187,6 +189,10 @@ module SensibleSwing # LODO rename
     def we_are_in_create_mode
      @args.index("--create-mode")
     end
+
+    def in_online_player_startup_mode
+     @args.index("--online-player-mode")
+    end
     
     def we_are_in_developer_mode?
       @args.detect{|a| a == '--developer-mode'}
@@ -224,8 +230,7 @@ module SensibleSwing # LODO rename
     
     def when_thread_done(thread)
       Thread.new {thread.join; yield }
-    end
-    
+    end    
 
     # a window that when closed doesn't bring the whole app down
     def new_child_window
@@ -708,6 +713,8 @@ KP_ENTER dvdnav select
       else
         if we_are_in_create_mode
           setup_create_buttons
+        elsif in_online_player_startup_mode
+          setup_online_player_buttons
         else
           setup_normal_buttons
         end

@@ -84,11 +84,11 @@ module SensibleSwing
         increment_button_location
 	  
     end
-	
     
     def add_open_documentation_button
       @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
-        show_in_explorer __DIR__ + "/../../documentation"
+        show_blocking_message_dialog "Documentation has moved to online, ask on the mailing list if there are questions"
+        SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/sensible-cinema/wiki/_pages"
       end
     end
     
