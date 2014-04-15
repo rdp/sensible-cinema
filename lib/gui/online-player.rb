@@ -15,6 +15,7 @@ module SensibleSwing
       new_jbutton("Open Website for editing/creating EDL's") do
          SimpleGuiCreator.open_url_to_view_it_non_blocking "http://inet2.org:8080/"
       end
+	  add_open_documentation_button
     end
   end
 end

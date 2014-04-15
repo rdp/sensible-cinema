@@ -15,9 +15,11 @@ module SensibleSwing
     end
     
     def force_accept_file_style_license
+	program, license_name, license_url_or_full_path_should_also_be_embedded_by_you_in_message, 
+      title = 'Confirm Acceptance of License Agreement', message = nil
        if !(LocalStorage['accepted_legal_copys'] == VERSION)
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'is_it_legal_to_copy_dvds.txt file', File.expand_path(File.dirname(__FILE__) + "/../../documentation/is_it_legal_to_copy_dvds.txt"), 
-            'is_it_legal_to_copy_dvds.txt file', 'I acknowledge that I have read, understand, accept the documentation/is_it_legal_to_copy_dvds.txt file.'
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'Legal Page', "https://github.com/rdp/sensible-cinema/wiki/Legality", 
+            'Legal Page', 'I acknowledge that I have read, understand, accept the documentation Legal Pages file.'
         LocalStorage['accepted_legal_copys'] = VERSION
       end
     end
@@ -159,19 +161,20 @@ module SensibleSwing
       end
     end
     
-    def require_blocking_license_accept_dialog program, license_name, license_url_should_also_be_embedded_by_you_in_message, 
+    def require_blocking_license_accept_dialog program, license_name, license_url_or_full_path_should_also_be_embedded_by_you_in_message, 
       title = 'Confirm Acceptance of License Agreement', message = nil
+	  
       puts 'Please confirm license agreement in open window before proceeding.'
       
       message ||= "Sensible Cinema requires a separately installed program (#{program}), not yet installed.
         You can install this program manually to the vendor/cache subdirectory, or Sensible Cinema can download it for you.
         By clicking accept, below, you are confirming that you have read and agree to be bound by the
-        terms of its license (the #{license_name}), located at #{license_url_should_also_be_embedded_by_you_in_message}.  
+        terms of its license (the #{license_name}), located at #{license_url_or_full_path_should_also_be_embedded_by_you_in_message}.  
         Click 'View License' to view it.  If you do not agree to these terms, click 'Cancel'.  You also agree that this is a 
         separate program, with its own distribution, license, ownership and copyright.  
         You agree that you are responsible for the download and use of this program, within sensible cinema or otherwise."
       answer = JOptionPane.show_select_buttons_prompt message, :no => "I have read and Accept the terms of the #{license_name} License Agreement.", :yes => "View #{license_name}"
-      assert_confirmed_dialog answer, license_url_should_also_be_embedded_by_you_in_message
+      assert_confirmed_dialog answer, license_url_or_full_path_should_also_be_embedded_by_you_in_message
       p 'confirmation of sensible cinema related license duly noted of: ' + license_name # LODO require all licenses together :P
     end
     
