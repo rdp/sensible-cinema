@@ -85,13 +85,6 @@ module SensibleSwing
 	  
     end
     
-    def add_open_documentation_button
-      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
-        show_blocking_message_dialog "Documentation has moved to online, ask on the mailing list if there are questions"
-        SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/sensible-cinema/wiki/_pages"
-      end
-    end
-    
     # side by side stuff we haven't really factored out yet, also doubles for both normal/create LODO
     def choose_file_and_edl_and_create_sxs_or_play just_create_xbmc_dot_edl_file_instead_of_play
       filename_mpg = new_existing_file_selector_and_select_file( "Pick moviefile (like moviename.mpg or video_ts/anything.ext)")

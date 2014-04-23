@@ -1,7 +1,8 @@
 #define VerFile FileOpen("VERSION")
-#define AppVer FileRead(VerFile)
+#define AppVerFile FileRead(VerFile)
 #expr FileClose(VerFile)
 #undef VerFile
+#define AppVer {#AppVerFile}beta
 
 #define AppName "Sensible Cinema"
 ; AppId === AppName by default BTW

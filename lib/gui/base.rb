@@ -225,6 +225,13 @@ module SensibleSwing # LODO rename
       @starting_button_y += how_much
       setSize @button_width+80, @starting_button_y + 50
     end
+    
+    def add_open_documentation_button
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
+        show_blocking_message_dialog "Documentation has moved to online, ask on the mailing list if there are questions"
+        SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/sensible-cinema/wiki/_pages"
+      end
+    end
 	
     LocalStorage = Storage.new("sensible_cinema_storage_#{VERSION}")
     

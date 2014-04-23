@@ -36,8 +36,11 @@
 = medium DVD stuff/low prio netflix instant =
   can specify screen coords for boxes to overlay?
   is there a flash netflix/amazon I can control [linux]?
+  prettify website
 
   @VLC fix trac 4
+	
+  convert DVD to use the new website/morph old ones there?
   test forever strong timing blu-ray @ home
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
