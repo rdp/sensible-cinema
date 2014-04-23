@@ -5,11 +5,12 @@
 == yes do, un-ordered currently, from all the various future release options ==  
   netflix instant descriptor work at all doze
   the awesome new online editor
-    very first pass: it can feed you json that you can actually use
-    it has links so you can go from my website to netflix
-    use "location mapping" for internal JSON
+    very first pass: it can feed you json that you can actually use, and just one LOL [you specify a url somehow...]
+    it has links so you can go from this website to netflix
+    use "location mapping" for internal JSON, not just url
+      possibly multiple hard coded types...for now...sigh...yeah just call it netflix source [?] or type "netflix" url -> ???
   installer new icon to use instant stuff...
-  tell that guy
+  tell that guy...
 
 = low prio netflix instant stuff, but possibly still do'ish =
   adv. more beta testers...
@@ -21,22 +22,29 @@
     subtitle file?
     scan for profs?
     integrate with DVD's?
-  pay peeps to do this...
-  working google play consumer
+      multiple DVD's...or maybe just call it dvd1, dvd2 LOL
+  pay peeps to do EDL's...
+  prettify website...
+  actually make editing intuitive
+  working google play consumer...
   working amazon prime player descriptor
-  definte severity levels
+  define severity levels
   can search from website
-  mac compat?
+    client can auto-use the search...
+  mac compat 4 scanning, mousing, etc.
   'finish' rename of sensible cinema (barely too confusing): github, all docu, some links  
   create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
-   possibly just a ML and uservoice yeah
+    possibly just a ML and uservoice yeah
   netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
-  can bind it to imdb, image url only for now :p
+  add image url per film
+  pay option somehow to create EDL's?
 
-= medium DVD stuff/low prio netflix instant =
+= medium DVD stuff/super-low prio netflix instant =
+  can bind it to imdb url
   can specify screen coords for boxes to overlay?
+  become index of all that's on netflix instant etc...
+  add user ratings to my website...
   is there a flash netflix/amazon I can control [linux]?
-  prettify website
 
   @VLC fix trac 4
 	
