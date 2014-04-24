@@ -11,13 +11,16 @@
       possibly multiple hard coded types...for now...sigh...yeah just call it netflix source [?] or type "netflix" url -> ???
   installer new icon to use instant stuff...
   tell that guy...
+  email golang to make it into a wiki :)
 
 = low prio netflix instant stuff, but possibly still do'ish =
-  adv. more beta testers...
+  update golang wiki source LOL [TO
+  adv. more beta testers...to those that left comments [?]
   better index [no .txt]
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   use the better muter?
   easier JSON section editing somehow [?]
+    probably not a generic anything really...
   cross-timings between google play/x/y
     subtitle file?
     scan for profs?
@@ -54,6 +57,7 @@
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 
   determine netflix instant timing relative to DVD's
+  tell mplayer "you pause at these chapter breaks!" if I ever can find an instance tho...cars 2 none...
   check condor man poor timings vs. "other" dvd, plus...can I bind it to the old EDL file?
     plus it had poor start times?
   the dialogs when there are 2 EDL's for a DVD aren't very friendly...
