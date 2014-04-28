@@ -146,6 +146,10 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
     }
 }
 
+func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Hi there")
+}
+
 type Configuration struct {
     DirName    string
 }
@@ -172,6 +176,7 @@ func main() {
     http.HandleFunc("/save/", makeHandler(saveHandler))
     http.HandleFunc("/", indexHandler)
     http.HandleFunc("/new", newHandler)
+    http.HandleFunc("/hello_world", helloWorldHandler)
     fmt.Println("serving on 8080") 
     http.ListenAndServe(":8080", nil)
     fmt.Println("exiting")
