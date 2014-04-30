@@ -107,7 +107,12 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
         http.Redirect(w, r, "/edit/" + title, http.StatusFound)
         return
     }
-    renderTemplate(w, "view", p)
+    if len(r.URL.Query()["raw"]) > 0 {
+      renderTemplate(w, "raw", p)
+    } else {
+      renderTemplate(w, "view", p)
+    }
+    
 }
 
 func newHandler(w http.ResponseWriter, r *http.Request) {
