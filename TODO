@@ -6,25 +6,22 @@
   netflix instant descriptor work at all doze
   the awesome new online editor
     very first pass: it can feed you json that you can actually use, and just one LOL [you specify a url somehow...]
-    it has links so you can go from our website to netflix instant...
-    use "location mapping" for internal JSON, not just url
-      possibly multiple "mappings" to the video...though just one to start, no timings needed nor subs yet :)
+    proxy port
+    probably just netflix_url for now...or possibly 3 different ones, you can pick only one?
   installer new icon to use instant stuff...
   tell that guy...the volunteer
-  'finish' rename of sensible cinema (barely too confusing): github, all docu, some links  
 
 = low prio netflix instant stuff, but possibly still do'ish =
+  'finish' rename of sensible cinema (barely too confusing): github, all docu, some links  
   update golang wiki source LOL [patches..., README patch]
   adv. more beta testers...to those that left comments [?]
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   use the better muter exe?
-  easier JSON section editing somehow [?]
-    probably not a generic anything really...
-  cross-timings between google play/x/y
-    subtitle file?
-    scan for profs?
-    integrate with DVD's?
-      multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
+  it has links so you can go from our website to netflix instant...
+  use "location mapping" for internal JSON, not just url
+    possibly multiple "mappings" to the video...though just one to start, no timings needed nor subs yet :)
+  easier than JSON editing somehow
+    probably not a generic JSON anything really...
   pay peeps to do EDL's...
   prettify website...
   actually make editing intuitive
@@ -39,6 +36,11 @@
   netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
   add image url per film
   pay option somehow to create EDL's?
+  cross-timings between google play/x/y
+    subtitle file?
+    scan for profs?
+    integrate with DVD's?
+      multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
 
 = medium DVD stuff/super-low prio netflix instant =
   better index [no .txt] meh
