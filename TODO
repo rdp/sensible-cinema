@@ -6,26 +6,25 @@
   netflix instant descriptor work at all doze
   the awesome new online editor
     very first pass: it can feed you json that you can actually use, and just one LOL [you specify a url somehow...]
-    it has links so you can go from this website to netflix
+    it has links so you can go from our website to netflix instant...
     use "location mapping" for internal JSON, not just url
-      possibly multiple hard coded types...for now...sigh...yeah just call it netflix source [?] or type "netflix" url -> ???
+      possibly multiple "mappings" to the video...though just one to start, no timings needed nor subs yet :)
   installer new icon to use instant stuff...
-  tell that guy...
+  tell that guy...the volunteer
   'finish' rename of sensible cinema (barely too confusing): github, all docu, some links  
 
 = low prio netflix instant stuff, but possibly still do'ish =
   update golang wiki source LOL [patches..., README patch]
   adv. more beta testers...to those that left comments [?]
-  better index [no .txt]
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
-  use the better muter?
+  use the better muter exe?
   easier JSON section editing somehow [?]
     probably not a generic anything really...
   cross-timings between google play/x/y
     subtitle file?
     scan for profs?
     integrate with DVD's?
-      multiple DVD's...or maybe just call it dvd1, dvd2 LOL
+      multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
   pay peeps to do EDL's...
   prettify website...
   actually make editing intuitive
@@ -42,6 +41,7 @@
   pay option somehow to create EDL's?
 
 = medium DVD stuff/super-low prio netflix instant =
+  better index [no .txt] meh
   can bind it to imdb url
   can specify screen coords for boxes to overlay?
   become index of all that's on netflix instant etc...
