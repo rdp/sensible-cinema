@@ -108,7 +108,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
         return
     }
     if len(r.URL.Query()["raw"]) > 0 {
-      renderTemplate(w, "raw", p)
+      fmt.Fprintf(w, "%s", p.Body)
     } else {
       renderTemplate(w, "view", p)
     }
