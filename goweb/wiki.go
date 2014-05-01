@@ -29,6 +29,7 @@ type EditListEntry struct {
 
 type EDL struct {
   NetflixURL string
+  AmazonURL string
   Title string
   Notes string
   Mutes []EditListEntry

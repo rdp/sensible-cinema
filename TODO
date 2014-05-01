@@ -4,12 +4,13 @@
   
 == yes do, un-ordered currently, from all the various future release options ==  
   netflix instant descriptor work at all doze
-  the awesome new online editor
-    very first pass: it can feed you json that you can actually use, and just one LOL [you specify a url somehow...]
-    proxy port
-    probably just netflix_url for now...or possibly 3 different ones, you can pick only one?
+    netflix instant?
+    amazon instant to start :)
+    can suck in JSON
   installer new icon to use instant stuff...
   tell that guy...the volunteer
+  the awesome new online editor
+    second pass somehow...?
 
 = low prio netflix instant stuff, but possibly still do'ish =
   'finish' rename of sensible cinema (barely too confusing): github, all docu, some links  
