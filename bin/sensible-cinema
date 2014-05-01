@@ -47,7 +47,7 @@ if $0 == __FILE__
      $ jruby bin/sensible-cinema --create-mode      # DVD output "parser/cutter" create mode [advanced]
      $ jruby bin/sensible-cinema --upconvert-mode   # DVD/file upconverting player
                                  --exit-immediately # don't show the GUI, for benchmarking startup times
-     $                          --online-player-mode# just run the online player mode, skip all that pesky other stuff :)                           
+     $                          --online-player-mode [--go] # just run the online player mode, skip all that pesky other stuff :)                           
                            the experimental OCR tracker for edited arbitrary online/local/internet players.                                                     
 
      $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for details.
