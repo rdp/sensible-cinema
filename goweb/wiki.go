@@ -182,8 +182,8 @@ func main() {
     http.HandleFunc("/", indexHandler)
     http.HandleFunc("/new", newHandler)
     http.HandleFunc("/hello_world", helloWorldHandler)
-    fmt.Println("serving on 8080") 
-    http.ListenAndServe(":8080", nil)
+    fmt.Println("serving on 8888") 
+    http.ListenAndServe(":8888", nil)
     fmt.Println("exiting")
 }
 
