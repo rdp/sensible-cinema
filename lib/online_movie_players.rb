@@ -25,54 +25,42 @@ def choose_file title, dir
   SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
 end
 
-def go_sc()
+def go_online screen_snapshot = false, url = "http://198.199.93.93/view/abc?raw=1"
   
   OCR.clear_cache!
-  puts 'cleared cache'
+  puts 'cleared OCR cache'
   
   players_root_dir = __DIR__ + "/../zamples/players"
   # allow for command line filenames
-  player_description = args.shift
-  unless player_description
-    player_description = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
-    if player_description
-      p 'auto selected player ' + player_description 
-    else
-      player_description = ''
-    end
+  # TODO
+  # player_description = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
+  player_description = nil
+  if player_description
+    p 'auto selected player ' + player_description 
+  else
+    player_description = ''
   end
   
   if !File.exist?(player_description)    
-    puts 'Please Select Computer Player'
-    player_description = choose_file("     SELECT COMPUTER PLAYER", players_root_dir)
+    puts 'Please Select Your Movie Player'
+    player_description = choose_file("     SELECT MOVIE PLAYER", players_root_dir)
     raise unless player_description
   end
    
-  edit_decision_list = args.shift.to_s
-
-  if edit_decision_list == 'test' # TODO test option!
-    overlay = nil
+  if screen_snapshot
     p 'got test...just doing screen dump'
-    $VERBOSE=true # adds some extra output
-  elsif File.exist? edit_decision_list
-    # accept it from the command line
+    $VERBOSE=true # add some extra output
+  elsif url
+    # accept it
   else
-    auto_found = AutoWindowFinder.search_for_single_url_match
-    if auto_found
-      p 'auto-discovered open window for player x EDL, using it ' + auto_found
-      edit_decision_list = auto_found
-    else
-      puts 'Select Edit Decision List to use'
-      edit_decision_list = choose_file("     SELECT EDIT DECISION LIST", __DIR__  + "/../zamples/edit_decision_lists")
-    end
-    url = SimpleGuiCreator.get_user_input "please enter url with edits, like http://.../view/name"
-    edl = SensibleSwing::MainWindow.download_to_string url
-    settings = EdlParser.parse_string edl
-    
+    # TODO auto_found_url = AutoWindowFinder.search_for_single_url_match
+    # TODO migrate these to onliners [the online playback ones]: "/../zamples/edit_decision_lists"
+	# TODO migrate DVDzers too :)
+	url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"
     Blanker.startup
-    # todo start it late as it has an annoying startup blip
+    # todo start it later as it has an annoying startup blip, or something
   end
-  overlay = OverLayer.new(edit_decision_list) if edit_decision_list
+  overlay = OverLayer.new(url) if url
   
   if File.exist? player_description.to_s
     puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
@@ -81,7 +69,7 @@ def go_sc()
     does_not_need_mouse_jerk = YAML.load_file(player_description)["does_not_need_mouse_movement"]
     unless does_not_need_mouse_jerk
       p 'yes using mouse jitter' if $VERBOSE or $DEBUG
-      Mouse.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
+      MouseControl.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
     else
       p 'not using mouse jitter' if $VERBOSE or $DEBUG
     end
@@ -102,7 +90,7 @@ def go_sc()
   OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...???
 
   p 'moving mouse to align it for muting down 10'
-  Mouse.move_mouse_relative 0, 10 # LODO 
+  MouseControl.move_mouse_relative 0, 10 # LODO 
   puts "Opening the curtains... (please play in your other video player now)"
   overlay.start_thread true
   key_input = KeyboardInput.new overlay

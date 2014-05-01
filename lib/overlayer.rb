@@ -27,7 +27,19 @@ require_relative 'edl_parser'
 require 'pp' # for pretty_inspect
 
 class OverLayer
-  
+
+  def initialize url
+    @url = url
+    @am_muted = false
+    @am_blanked = false
+    @mutex = Mutex.new
+    @cv = ConditionVariable.new
+    @file_mtime = nil
+    reload_yaml!
+    @just_unblanked = false
+    @start_time = Time.now_f # assume they want to start immediately...
+  end
+    
   def muted?
     @am_muted
   end
@@ -59,21 +71,11 @@ class OverLayer
     Blanker.unblank_full_screen!
   end
   
-  def check_reload_yaml
-    current_mtime = File.stat(@filename).mtime
-    if @file_mtime != current_mtime
-      reload_yaml!
-      @file_mtime = current_mtime 
-    else
-      #p 'same mtime:', @file_mtime if $DEBUG && $VERBOSE
-    end
-  end
-  
   attr_accessor :all_sequences
   
   def reload_yaml!
-    @all_sequences = OverLayer.translate_file(@filename)
-    puts '(re) loaded mute sequences from ' + File.basename(@filename) + ' as', pretty_sequences.pretty_inspect, "" unless defined?($AM_IN_UNIT_TEST)
+    @all_sequences = OverLayer.translate_url @url
+    puts '(re) loaded mute sequences from ' + @url + ' as', pretty_sequences.pretty_inspect, "" unless defined?($AM_IN_UNIT_TEST)
     signal_change
   end  
   
@@ -96,22 +98,11 @@ class OverLayer
     OverLayer.new('temp.yml')
   end
   
-  def initialize filename
-    @filename = filename
-    @am_muted = false
-    @am_blanked = false
-    @mutex = Mutex.new
-    @cv = ConditionVariable.new
-    @file_mtime = nil
-    check_reload_yaml
-    @just_unblanked = false
-    @start_time = Time.now_f # assume they want to start immediately...
-  end
-  
   # note this is actually deprecated and won't work anymore <sigh> and needs to be updated.
-  def self.translate_file filename
+  def self.translate_url url
     begin
-      all = EdlParser.parse_file(filename)
+      string = SensibleSwing::MainWindow.download_to_string url
+      all = EdlParser.parse_string(string)
     rescue NoMethodError, ArgumentError => e
       p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
       raise e # hope this is ok...
@@ -148,18 +139,6 @@ class OverLayer
     all
   end  
   
-  def timestamp_changed to_this_exact_string_might_be_nil, delta
-    if @just_unblanked
-      # ignore it, since it was probably just caused by the screen blipping
-      # at worse this will put us 1s behind...hmm.
-      @just_unblanked = false
-      p 'ignoring timestamp update ' + to_this_exact_string_might_be_nil.to_s if $VERBOSE
-    else
-      set_seconds EdlParser.translate_string_to_seconds(to_this_exact_string_might_be_nil) + delta if to_this_exact_string_might_be_nil
-    end
-  end
-  
-  
   # returns seconds it's at currently...
   def cur_time
     Time.now_f - @start_time
@@ -182,7 +161,7 @@ class OverLayer
         state += "(" + [muted? ? "muted" : nil, blank? ? "blanked" : nil ].compact.join(' ') + ") "
       end
     end
-    check_reload_yaml
+    reload_yaml!
     time + state + "(r [ctrl+c or q to quit]): "
   end
 
