@@ -160,23 +160,26 @@ type Configuration struct {
     DirName    string
 }
 
-func readConfig() Configuration {
+func readConfig() error {
   conf := Configuration{}
   file, _ := os.Open("conf.json")
   decoder := json.NewDecoder(file)
   err := decoder.Decode(&conf)
   if err != nil {
-    fmt.Println("error:", err)
+    fmt.Println("error reading config:", err)
+    return err
   }
-  fmt.Println("will be saving to" + conf.DirName)
+  fmt.Println("will be saving to:" + conf.DirName)
   DirName = conf.DirName
   os.MkdirAll(DirName, 0700)
-  return conf
+  return nil
 }
 
 
 func main() {
-    readConfig()
+    if readConfig() != nil {
+      os.Exit(1)
+    }
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
