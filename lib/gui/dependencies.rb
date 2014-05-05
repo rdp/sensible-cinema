@@ -56,17 +56,16 @@ module SensibleSwing
       url.close
       writeOut.close
       out_frame.close
-      FileUtils.mv temp_filename, to_here # avoid partial downloads corrupting uss
+      FileUtils.mv temp_filename, to_here # avoid partial downloads corrupting us
       puts 'done downloading ' + english_name
     end    
     
     def self.download_to_string full_url
        require 'tempfile'
-       to = Tempfile.new 'abc'
-       download(full_url, to.path)
-       out = File.binread(to.path)
-       to.delete
-       out
+       Tempfile.open('abc') do |to|
+         download(full_url, to.path)
+         return File.binread to.path
+       end
     end
 
 
