@@ -14,8 +14,12 @@ module SensibleSwing
       end
 	  # not pertinent enough...
 	  # add_open_documentation_button
+	  
 	  if ARGV.contain?('--go')
-	    go_online
+        button = new_jbutton("Auto go online") do
+          go_online false, "http://198.199.93.93/view/abc?raw=1", "C:/dev/ruby/sensible-cinema/zamples/players/amazon/total_length_over_an_hour.txt"		
+        end
+		button.click!
 	  end
     end
   end

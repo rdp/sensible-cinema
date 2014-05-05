@@ -96,7 +96,7 @@ else
     end
     
     def self.shutdown
-      @fr.dispose
+      @fr.dispose if @fr
     end
     
   end

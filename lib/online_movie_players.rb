@@ -25,48 +25,48 @@ def choose_file title, dir
   SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
 end
 
-def go_online screen_snapshot = false, url = "http://198.199.93.93/view/abc?raw=1"
+def go_online just_screen_snapshot = false, url = nil, player_description_path = nil
   
   OCR.clear_cache!
   puts 'cleared OCR cache'
   
   players_root_dir = __DIR__ + "/../zamples/players"
-  # allow for command line filenames
   # TODO
-  # player_description = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
-  player_description = nil
-  if player_description
-    p 'auto selected player ' + player_description 
+  # player_description_path = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
+  if player_description_path
+    p 'using auto selected player ' + player_description_path 
   else
-    player_description = ''
+    player_description_path = ''
   end
   
-  if !File.exist?(player_description)    
+  if !File.exist?(player_description_path)    
     puts 'Please Select Your Movie Player'
-    player_description = choose_file("     SELECT MOVIE PLAYER", players_root_dir)
-    raise unless player_description
+    player_description_path = choose_file("     SELECT MOVIE PLAYER", players_root_dir)
+    raise unless player_description_path
   end
    
-  if screen_snapshot
-    p 'got test...just doing screen dump'
-    $VERBOSE=true # add some extra output
+  if just_screen_snapshot
+    p 'just doing screen dump...'
+    $VERBOSE=true # also add some extra output
   elsif url
-    # accept it
+    # accept url...
   else
     # TODO auto_found_url = AutoWindowFinder.search_for_single_url_match
     # TODO migrate these to onliners [the online playback ones]: "/../zamples/edit_decision_lists"
-	# TODO migrate DVDzers too :)
-	url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"
-    Blanker.startup
-    # todo start it later as it has an annoying startup blip, or something
+	# TODO migrate DVD;ers too :)
+	url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"    
+    # todo start it later as it has an annoying startup blip, or something [?]
   end
-  overlay = OverLayer.new(url) if url
+  if url
+    overlay = OverLayer.new(url) if url
+	Blanker.startup
+  end
   
-  if File.exist? player_description.to_s
-    puts 'Selected player ' + File.basename(player_description) + "\n\t(full path: #{player_description})"
+  if File.exist? player_description_path.to_s
+    puts 'Selected player ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
     # this one doesn't use any updates, so just pass in file contents, not filename
-    screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description), overlay
-    does_not_need_mouse_jerk = YAML.load_file(player_description)["does_not_need_mouse_movement"]
+    screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay
+    does_not_need_mouse_jerk = YAML.load_file(player_description_path)["does_not_need_mouse_movement"]
     unless does_not_need_mouse_jerk
       p 'yes using mouse jitter' if $VERBOSE or $DEBUG
       MouseControl.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
