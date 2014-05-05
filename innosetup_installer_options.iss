@@ -29,7 +29,7 @@ OutputBaseFilename=Setup {#AppName} v{#AppVer}
 OutputDir=releases
 
 [Icons]
-Name: {group}\Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
+Name: {group}\Run Sensible Cinema for DVDs or Files; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema with debug console; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema Online Player mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --online-player-mode; Flags: 
