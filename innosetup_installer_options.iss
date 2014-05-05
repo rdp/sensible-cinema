@@ -16,6 +16,10 @@
 Source: *; DestDir: {app}; Excludes: releases, vendor\cache, spec, lib\jruby-swing-helpers\spec; Flags: recursesubdirs
 Source: README.TXT; DestDir: {app}; Flags: isreadme
 
+; attempt to remove previous versions' icons
+[InstallDelete]
+Type: filesandordirs; Name: {group}\*;
+
 [Setup]
 AppName={#AppName}
 AppVerName={#AppVer}beta
