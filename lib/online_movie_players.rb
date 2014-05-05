@@ -95,9 +95,9 @@ def go_online screen_snapshot = false, url = "http://198.199.93.93/view/abc?raw=
   overlay.start_thread true
   key_input = KeyboardInput.new overlay
   key_input.start_thread # status thread
-  at_exit {
-    Blanker.shutdown # lodo move this and the 'q' key to within overlayer
+  
+  at_exit { # lodo at end of window close [?]
+    Blanker.shutdown 
     OCR.serialize_cache_to_disk
   }
-  key_input.handle_keystrokes_forever # blocking...
 end
