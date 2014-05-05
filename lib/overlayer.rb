@@ -162,7 +162,7 @@ class OverLayer
       end
     end
     reload_yaml!
-    time + state + "(r [ctrl+c or q to quit]): "
+    time + state
   end
 
   def keyboard_input char
