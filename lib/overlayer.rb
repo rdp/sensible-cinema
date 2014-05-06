@@ -102,12 +102,15 @@ class OverLayer
   
   EditTypes = ['Mutes', 'Skips'] 
   
+  @parse_cache = {}
+  
   def self.translate_url url
     string = SensibleSwing::MainWindow.download_to_string url    
 	  if string.empty?
      raise "bad url? #{url}"
-    end	   
-    return parse_from_json_string string
+    end
+    @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid some extra error logging :)
+    @parse_cache[string]
   end  
   
   def self.parse_from_json_string string
@@ -143,6 +146,7 @@ class OverLayer
       all.delete(type.to_s) # cleanup
       all[type] = new.sort
     end
+    p "read in from json as ", all
     all
   end
   
@@ -270,8 +274,7 @@ class OverLayer
           time_till_next_mute_starts = next_point - cur_time
         end
         
-       # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
-        
+        # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         set_states!
       }

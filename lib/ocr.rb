@@ -50,16 +50,16 @@ module OCR
     end
     
     if options[:might_be_colon]
-      # do special processing <sigh>
+      # do special processing and basically assert it has some darkness in there <sigh>
       total = (memory_bitmap.scan(/\x00{5}+/)).length
       if total >= 3 # really should be 4 for VLC
-        # it had some darkness...therefore have been a colon!
+        # it had some darkness...therefore must be a colon!
         CACHE[memory_bitmap] = ":"
         return ":"
       end
     end
     image = MiniMagick::Image.read(memory_bitmap)
-	p 'SUCCESS ***'
+	  p 'SUCCESS imagemagick read from mem\n*'*100
     # any operation on image is expensive, requires convert.exe in path...
     if options[:should_invert] 
       # hulu wants negate
