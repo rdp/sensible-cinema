@@ -414,7 +414,7 @@ module MiniMagick
         else
           # TODO: should we do something different if the command times out ...?
           # its definitely better for logging.. otherwise we dont really know
-          puts "fail identify\n"*10
+          puts "fail mini_magick identify!\n"
 		      raise Error, "Command (#{command.inspect.gsub("\\", "")}) failed: #{{:status_code => sub.exitstatus, :output => sub.output}.inspect}"
         end
       else
