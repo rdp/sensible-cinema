@@ -24,8 +24,10 @@ module SensibleSwing
       end
     end
    
-    def self.download full_url, to_here, english_name = File.basename(to_here)
-	  return if File.exist? to_here # already downloaded it...
+    def self.download full_url, to_here, english_name = File.basename(to_here), force_download = false
+	  if !force_download && File.exist?(to_here)
+	    return # early, it was already successfully downloaded
+	  end
       require 'open-uri'
       require 'fileutils'
       if full_url =~ /https/
@@ -63,7 +65,7 @@ module SensibleSwing
     def self.download_to_string full_url
        require 'tempfile'
        Tempfile.open('abc') do |to|
-         download(full_url, to.path)
+         download(full_url, to.path, 'edit list', true)
          return File.binread to.path
        end
     end

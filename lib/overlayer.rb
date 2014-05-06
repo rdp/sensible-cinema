@@ -100,9 +100,13 @@ class OverLayer
   
   # note this is actually deprecated and won't work anymore <sigh> and needs to be updated.
   def self.translate_url url
+    string = SensibleSwing::MainWindow.download_to_string url
+	if string.empty?
+     raise "bad url? #{url}" # TODO recover better here?
+    end	   
+	
     begin
-      string = SensibleSwing::MainWindow.download_to_string url
-      all = EdlParser.parse_string(string)
+      all = JSON.parse(string)
     rescue NoMethodError, ArgumentError => e
       p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
       raise e # hope this is ok...
@@ -111,8 +115,8 @@ class OverLayer
     # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
     # translate to floats like 62.0 => 63.0
 
-    for type in [:mutes, :blank_outs] # LODO standardize these :mutes and :blank_outs somewhere...scary to have them repeated *everywhere*
-      maps = all[type] || all[type.to_s] || {}
+    for type in ['mutes', 'blank_outs'] 
+      maps = all[type] || {}
       new = {}
       maps.each{|start,endy|
         # both are like 1:02.0

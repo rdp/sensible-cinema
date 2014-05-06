@@ -59,6 +59,7 @@ module OCR
       end
     end
     image = MiniMagick::Image.read(memory_bitmap)
+	p 'SUCCESS ***'
     # any operation on image is expensive, requires convert.exe in path...
     if options[:should_invert] 
       # hulu wants negate
