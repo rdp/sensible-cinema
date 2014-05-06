@@ -23,6 +23,7 @@ require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
 require_relative 'edl_parser'
+require 'json'
 
 require 'pp' # for pretty_inspect
 
@@ -81,6 +82,8 @@ class OverLayer
   
   def pretty_sequences
     new_sequences = {}
+	require 'ruby-debug'
+	debugger
     @all_sequences.each{|type, values|
       if values.is_a? Array
         new_sequences[type] = values.map{|s, f|
@@ -105,25 +108,20 @@ class OverLayer
      raise "bad url? #{url}" # TODO recover better here?
     end	   
 	
-    begin
-	  require' json'
-      all = JSON.parse(string)
-    rescue NoMethodError, ArgumentError => e
-      p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
-      raise e # hope this is ok...
-    end
-    
-    # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
-    # translate to floats like 62.0 => 63.0
+    all = JSON.parse(string)    
+    # now it's like {Mutes => {"1:02.0" => "1:3.0"}}
+    # translate to all floats like {62.0 => 63.0}
 
-    for type in ['mutes', 'blank_outs'] 
+    for type in ['Mutes', 'Skips'] 
       maps = all[type] || {}
       new = {}
-      maps.each{|start,endy|
+      maps.each{ |full_edit|
         # both are like 1:02.0
-        start2 = EdlParser.translate_string_to_seconds(start) if start
-        endy2 = EdlParser.translate_string_to_seconds(endy) if endy
-        if start2 == 0 || endy2 == 0 || start == nil || endy == nil
+		start = full_edit['Start']
+		endy = full_edit['End']
+        start2 = EdlParser.translate_string_to_seconds(start) if start.present?
+        endy2 = EdlParser.translate_string_to_seconds(endy) if endy.present?
+        if !start2 || !endy2
           p 'warning--possible error in the Edit Decision List file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
           # drop this line into the bitbucket...
           next
@@ -170,43 +168,6 @@ class OverLayer
     time + state
   end
 
-  def keyboard_input char
-    delta = case char
-      when 'h' then 60*60
-      when 'H' then -60*60
-      when 'm' then 60
-      when 'M' then -60
-      when 's' then 1
-      when 'S' then -1
-      when 't' then 0.1
-      when 'q' then
-        puts '','quitting'
-        exit(1)        
-      when 'T' then -0.1
-      when 'v' then
-        $VERBOSE = !$VERBOSE
-        p 'set verbose to ', $VERBOSE
-        return
-      when 'd'
-        $DEBUG = !$DEBUG
-        p 'set debug to', $DEBUG
-        return
-      when ' ' then
-        puts 'timestamp:' + cur_english_time
-        return
-      when 'r' then
-        reload_yaml!
-        puts
-        return
-      else nil
-    end
-    if delta
-      set_seconds(cur_time + delta)
-    else
-      puts 'invalid char: [' + char + ']'
-    end
-  end
-  
   # sets it to a new set of seconds...
   def set_seconds seconds
     seconds = [seconds, 0].max

@@ -17,7 +17,7 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-for file in ['overlayer', 'keyboard_input', 'screen_tracker', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'jruby-swing-helpers/lib/simple_gui_creator/swing_helpers', 'jruby-swing-helpers/lib/simple_gui_creator/mouse_control']
+for file in ['overlayer', 'status_line', 'screen_tracker', 'ocr', 'vlc_programmer', 'edl_parser', 'auto_window_finder', 'jruby-swing-helpers/lib/simple_gui_creator/swing_helpers', 'jruby-swing-helpers/lib/simple_gui_creator/mouse_control']
   require_relative file
 end
 
@@ -93,8 +93,8 @@ def go_online just_screen_snapshot = false, url = nil, player_description_path =
   MouseControl.move_mouse_relative 0, 10 # LODO 
   puts "Opening the curtains... (please play in your other video player now)"
   overlay.start_thread true
-  key_input = KeyboardInput.new overlay
-  key_input.start_thread # status thread
+  status_line = StatusLine.new overlay
+  status_line.start_thread
   
   at_exit { # lodo at end of window close [?]
     Blanker.shutdown 
