@@ -30,7 +30,7 @@ rescue LoadError => e
 end
 
 raise $:.inspect + " has system installed gems in it, run rake rebundle_copy_in_dependencies first" if $:.detect{|path| path =~ /gems/ && path !~ /vendor_gems/}
-raise 'probably need jruby' unless OS.java? # put after loading sane gem so we have the OS gem available :)
+raise 'probably need jruby' unless OS.java? # put after loading sane gem so we have the OS class available :)
 
 require_relative '../lib/gui/dependencies'
 require_relative '../lib/gui/base'

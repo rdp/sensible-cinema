@@ -28,7 +28,7 @@ require_relative 'blanker'
 require_relative 'edl_parser'
 require 'json'
 require 'pp' # for pretty_inspect
-require 'gui/dependencies.rb'
+require_relative 'gui/dependencies'
 
 class OverLayer
 
@@ -103,11 +103,15 @@ class OverLayer
   EditTypes = ['Mutes', 'Skips'] 
   
   def self.translate_url url
-    string = SensibleSwing::MainWindow.download_to_string url
+    string = SensibleSwing::MainWindow.download_to_string url    
 	  if string.empty?
      raise "bad url? #{url}"
     end	   
-	
+    return parse_from_json_string string
+  end  
+  
+  def self.parse_from_json_string string
+  	
     all = JSON.parse(string)    
     # now it's like {Mutes => {"1:02.0" => "1:3.0"}}
     # translate to all floats like {62.0 => 63.0}
@@ -140,7 +144,7 @@ class OverLayer
       all[type] = new.sort
     end
     all
-  end  
+  end
   
   # returns seconds it's at currently...
   def cur_time

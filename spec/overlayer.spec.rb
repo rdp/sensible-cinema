@@ -17,7 +17,6 @@ This file is part of Sensible Cinema.
 =end
 
 require File.expand_path(File.dirname(__FILE__) + '/common')
-$: << '../lib'
 require_relative '../lib/overlayer'
 
 $AM_IN_UNIT_TEST = true
