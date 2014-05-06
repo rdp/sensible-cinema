@@ -106,6 +106,7 @@ class OverLayer
     end	   
 	
     begin
+	  require' json'
       all = JSON.parse(string)
     rescue NoMethodError, ArgumentError => e
       p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
