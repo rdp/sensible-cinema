@@ -59,7 +59,7 @@ def go_online just_screen_snapshot = false, url = nil, player_description_path =
   end
   if url
     overlay = OverLayer.new(url)
-	Blanker.warmup
+	  Blanker.warmup
   end
   
   puts 'Selected player ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
@@ -94,8 +94,11 @@ def go_online just_screen_snapshot = false, url = nil, player_description_path =
   
   puts "Opening the curtains, all systems started... (please play in your other video player now)"
   
-  at_exit { # lodo at end of window close [?]
+  at_exit { # lodo at end of a window close [?]
     Blanker.shutdown 
+    screen_tracker.shutdown
     OCR.serialize_cache_to_disk
+    MouseControl.shutdown
+    overlay.shutdown
   }
 end

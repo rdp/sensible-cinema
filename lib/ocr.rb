@@ -17,10 +17,10 @@ This file is part of Sensible Cinema.
 =end
 require 'sane' # gem
 require 'whichr' # gem
+require 'mini_magick'
 
-# not a dependency anymore, so I don't have to bundle it...
-# im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/cache/imagemagick") # convert.exe wants to only be chosen from here...
-# ENV['PATH'] = im_path.gsub('/', "\\") + ';' + ENV['PATH']
+im_path = File.expand_path(File.dirname(__FILE__) + "/../vendor/") # convert.exe/identify.exe want to only be chosen first from here...
+ENV['PATH'] = im_path.gsub('/', "\\") + ';' + ENV['PATH']
 
 if RubyWhich.new.which('identify').length == 0 || RubyWhich.new.which('convert').length == 0
  puts 'appears you do not have imagemagick installed (or not in your path) -- please download and install it first! http://www.imagemagick.org/script/binary-releases.php for windows, for instance'
@@ -41,8 +41,7 @@ module OCR
   
   # options are :might_be_colon, :should_invert
   def identify_digit memory_bitmap, options = {}
-    require 'mini_magick' # here because of installation woe, but actually not a big slowdown
-
+    # spawning a process is [on windows at least] actually pretty expensive--last time I looked at least
     if CACHE.has_key?(memory_bitmap)
       return CACHE[memory_bitmap] unless (defined?($OCR_NO_CACHE) && $OCR_NO_CACHE)
     else
@@ -59,7 +58,6 @@ module OCR
       end
     end
     image = MiniMagick::Image.read(memory_bitmap)
-	  p 'SUCCESS imagemagick read from mem\n*'*100
     # any operation on image is expensive, requires convert.exe in path...
     if options[:should_invert] 
       # hulu wants negate
