@@ -731,7 +731,6 @@ KP_ENTER dvdnav select
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Come again!'
-        java.lang.System.exit 0
       }
 
       increment_button_location

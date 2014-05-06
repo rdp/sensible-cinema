@@ -98,7 +98,6 @@ class OverLayer
     new_sequences
   end
   
-
   
   EditTypes = ['Mutes', 'Skips'] 
   
@@ -259,9 +258,14 @@ class OverLayer
     output
   end
   
+  def shutdown
+    @keep_going = false
+  end
+  
   def continue_until_past_all continue_forever
+    @keep_going = true
     @mutex.synchronize {
-      loop {
+      while(@keep_going)
         muted, blanked, next_point = get_current_state
         if next_point == :done
           if continue_forever
@@ -277,7 +281,7 @@ class OverLayer
         # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         set_states!
-      }
+      end
     }
   end  
   

@@ -25,7 +25,7 @@ def choose_file title, dir
   SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
 end
 
-def go_online just_screen_snapshot = false, url = nil, player_description_path = nil
+def go_online parent_window, just_screen_snapshot = false, url = nil, player_description_path = nil
   
   OCR.clear_cache!
   puts 'cleared OCR cache'
@@ -94,11 +94,13 @@ def go_online just_screen_snapshot = false, url = nil, player_description_path =
   
   puts "Opening the curtains, all systems started... (please play in your other video player now)"
   
-  at_exit { # lodo at end of a window close [?]
+  parent_window.after_closed {
+    puts 'shuttting down'
     Blanker.shutdown 
     screen_tracker.shutdown
     OCR.serialize_cache_to_disk
     MouseControl.shutdown
     overlay.shutdown
   }
+  p 'done go_online'
 end
