@@ -58,43 +58,41 @@ def go_online just_screen_snapshot = false, url = nil, player_description_path =
     # todo start it later as it has an annoying startup blip, or something [?]
   end
   if url
-    overlay = OverLayer.new(url) if url
-	Blanker.startup
+    overlay = OverLayer.new(url)
+	Blanker.warmup
   end
   
-  if File.exist? player_description_path.to_s
-    puts 'Selected player ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
-    # this one doesn't use any updates, so just pass in file contents, not filename
-    screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay
-    does_not_need_mouse_jerk = YAML.load_file(player_description_path)["does_not_need_mouse_movement"]
-    unless does_not_need_mouse_jerk
-      p 'yes using mouse jitter' if $VERBOSE or $DEBUG
-      MouseControl.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
-    else
-      p 'not using mouse jitter' if $VERBOSE or $DEBUG
-    end
-    
-    # exit early if we just wanted a screen dump...a little kludgey...
-    unless overlay
-      puts 'warning--only doing screen dump in t-minus 2s...'      
-      sleep 2
-      puts 'snap!'
-      screen_tracker.dump_bmps
-      exit 1
-    end
+  puts 'Selected player ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
+  # this one doesn't use any updates, so just pass in file contents, not filename
+  screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay
+  does_not_need_mouse_jerk = YAML.load_file(player_description_path)["does_not_need_mouse_movement"]
+  unless does_not_need_mouse_jerk
+    p 'yes using mouse jitter' if $VERBOSE or $DEBUG
+    MouseControl.jitter_forever_in_own_thread # when this ends you know a snapshot was taken...
+  else
+    p 'not using mouse jitter' if $VERBOSE or $DEBUG
+  end
+
+  # exit early if we just wanted a screen dump...a little kludgey...
+  if overlay
     screen_tracker.process_forever_in_thread
   else
-    puts 'warning--not using any screen tracking...'
+    puts 'warning--only doing screen dump in t-minus 2s...'      
+    sleep 2
+    puts 'snap!'
+    screen_tracker.dump_bmps
+    exit 1
   end
   
   OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...???
 
   p 'moving mouse to align it for muting down 10'
   MouseControl.move_mouse_relative 0, 10 # LODO 
-  puts "Opening the curtains... (please play in your other video player now)"
   overlay.start_thread true
   status_line = StatusLine.new overlay
   status_line.start_thread
+  
+  puts "Opening the curtains, all systems started... (please play in your other video player now)"
   
   at_exit { # lodo at end of window close [?]
     Blanker.shutdown 

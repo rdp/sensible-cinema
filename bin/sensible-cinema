@@ -40,6 +40,8 @@ require_relative '../lib/gui/create-file'
 require_relative '../lib/gui/upconvert'
 require_relative '../lib/gui/online-player'
 
+$AM_IN_UNIT_TEST = false # avoid some ruby "undefined" warnings in $VERBOSE mode
+
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')
     puts <<-EOL
@@ -47,7 +49,7 @@ if $0 == __FILE__
      $ jruby bin/sensible-cinema --create-mode      # DVD output "parser/cutter" create mode [advanced]
      $ jruby bin/sensible-cinema --upconvert-mode   # DVD/file upconverting player
                                  --exit-immediately # don't show the GUI, for benchmarking startup times
-     $                          --online-player-mode [--go] # just run the online player mode, skip all that pesky other stuff :)                           
+     $                           --online-player-mode [--go] # just run the online player mode,
                            the experimental OCR tracker for edited arbitrary online/local/internet players.                                                     
 
      $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for details.
@@ -58,7 +60,8 @@ if $0 == __FILE__
     if ARGV.index('--exit-immediately')
       a.dispose
     else
-        puts 'Please use the Sensible Cinema GUI window popup...'
+      puts 'Please use the Sensible Cinema GUI window popup...'
+	  a.sleep_until_closed # avoid some EBADF for jruby autoclose method yikes!	  
     end
   end
 end

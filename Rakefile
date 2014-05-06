@@ -22,6 +22,7 @@ Jeweler::Tasks.new do |s|
     s.add_dependency 'rdp-ruby-wmi', '> 0.3.1' # windows requirement gem for the simple_gui_creator gem, remove when we "gem depend" on them...
     s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with its next release, though I can't remember why
     s.add_dependency 'plist' # for mac
+	s.add_dependency 'json' # online player
     s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics...
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
     s.files.exclude '**/*.exe', '**/*.wav', '**/images/*', 'vendor/*'

@@ -262,6 +262,7 @@ class ScreenTracker
   def process_forever_in_thread
     Thread.new {
       loop {
+	    p 'screen tracker thread'
         out_time, delta = wait_till_next_change
         @callback.timestamp_changed out_time, delta
       }

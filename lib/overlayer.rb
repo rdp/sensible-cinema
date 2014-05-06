@@ -18,14 +18,17 @@ This file is part of Sensible Cinema.
 
 require 'sane'
 require 'thread'
+if RUBY_VERSION < '1.9.2' && !OS.jruby?
+  raise 'need 1.9.2+ for MRI for the mutex #wait method'
+end
 require 'timeout'
 require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
 require_relative 'edl_parser'
 require 'json'
-
 require 'pp' # for pretty_inspect
+require 'gui/dependencies.rb'
 
 class OverLayer
 
@@ -82,10 +85,9 @@ class OverLayer
   
   def pretty_sequences
     new_sequences = {}
-	require 'ruby-debug'
-	debugger
     @all_sequences.each{|type, values|
       if values.is_a? Array
+	    # assume it's some tiemstamps :)
         new_sequences[type] = values.map{|s, f|
           [EdlParser.translate_time_to_human_readable(s), EdlParser.translate_time_to_human_readable(f)]
         }
@@ -96,34 +98,32 @@ class OverLayer
     new_sequences
   end
   
-  def self.new_raw ruby_hash
-    File.write 'temp.yml', YAML.dump(ruby_hash)
-    OverLayer.new('temp.yml')
-  end
+
   
-  # note this is actually deprecated and won't work anymore <sigh> and needs to be updated.
+  EditTypes = ['Mutes', 'Skips'] 
+  
   def self.translate_url url
     string = SensibleSwing::MainWindow.download_to_string url
-	if string.empty?
-     raise "bad url? #{url}" # TODO recover better here?
+	  if string.empty?
+     raise "bad url? #{url}"
     end	   
 	
     all = JSON.parse(string)    
     # now it's like {Mutes => {"1:02.0" => "1:3.0"}}
     # translate to all floats like {62.0 => 63.0}
 
-    for type in ['Mutes', 'Skips'] 
+    for type in EditTypes
       maps = all[type] || {}
       new = {}
       maps.each{ |full_edit|
-        # both are like 1:02.0
-		start = full_edit['Start']
-		endy = full_edit['End']
+        # both are like "1:02.0"
+        start = full_edit['Start']
+        endy = full_edit['End']
         start2 = EdlParser.translate_string_to_seconds(start) if start.present?
         endy2 = EdlParser.translate_string_to_seconds(endy) if endy.present?
         if !start2 || !endy2
-          p 'warning--possible error in the Edit Decision List file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
-          # drop this line into the bitbucket...
+          p "warning--possible error in the Edit Decision List file some line has start #{start2} or not end #{endy2}!" unless $AM_IN_UNIT_TEST
+          # and drop it into the bitbucket...
           next
         end
         
@@ -193,7 +193,9 @@ class OverLayer
   # end
 
   def start_thread continue_forever = false
-    @thread = Thread.new { continue_until_past_all continue_forever }
+    @thread = Thread.new { 
+	  continue_until_past_all continue_forever 
+	}
   end
   
   def kill_thread!
@@ -222,7 +224,7 @@ class OverLayer
   def get_current_state
     all = []
     time = cur_time
-    for type in [:mutes, :blank_outs] do
+    for type in EditTypes do
       all << discover_state(type, time)
     end
     output = []
@@ -250,10 +252,6 @@ class OverLayer
   end
   
   def continue_until_past_all continue_forever
-    if RUBY_VERSION < '1.9.2'
-      raise 'need 1.9.2+ for MRI for the mutex stuff' unless RUBY_PLATFORM =~ /java/
-    end
-
     @mutex.synchronize {
       loop {
         muted, blanked, next_point = get_current_state

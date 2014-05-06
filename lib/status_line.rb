@@ -26,15 +26,18 @@ class StatusLine
  end
 
  def start_thread
-  Thread.new { loop { 
-    print get_line_printout
-    sleep 0.1
-   } }
+  Thread.new { 
+    loop {
+      p 'status line thread'
+      print get_line_printout
+      sleep 0.1
+    } 
+   }
  end
 
  def get_line_printout
     status = @fella.status
-    # some scary hard coded values here...LODO curses?
+    # some scary hard coded values here...XXXX
     " " * 20 + "\b"*150 + status
  end
 
