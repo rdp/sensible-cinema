@@ -47,8 +47,9 @@ else
       @fr.set_visible(false) # hide it to start
     end
     
-    @@use_mouse = false
+    @@use_mouse = false # hard coded for now, if used
     @@use_foreground_window_minimize = false
+    
     if @@use_foreground_window_minimize
       require 'win32/screenshot'
       SW_MINIMIZE = 6
@@ -63,11 +64,12 @@ else
     end
 
     def self.blank_full_screen! seconds
-      
+      p 'blanking'      
       if @@use_mouse
         p "using mouse click to blank"
         Mouse.single_click_left_mouse_button
       elsif @@use_foreground_window_minimize
+        p 'using foreground window minimize to blank'
         @foreground_hwnd ||= Win32::Screenshot::BitmapMaker.foreground_window
         minimize_hwnd @foreground_hwnd
       else
@@ -85,6 +87,7 @@ else
     end
     
     def self.unblank_full_screen!
+      p 'unblanking'
       if @@use_mouse
         Mouse.single_click_left_mouse_button
       elsif @@use_foreground_window_minimize
