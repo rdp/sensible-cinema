@@ -272,6 +272,7 @@ class ScreenTracker
         out_time, delta = wait_till_next_change
         @callback.timestamp_changed out_time, delta
       end
+      p 'screen tracker exiting'
     }
   end
   
