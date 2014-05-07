@@ -10,12 +10,12 @@ module SensibleSwing
         go_online self
       end            
       new_jbutton("Open Website for viewing/editing movie edits") do
-         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://198.199.93.93/"
+         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org"
       end	    
 	    # add_open_documentation_button # not pertinent enough yet...	  
 	    if ARGV.contain?('--go')
         button = new_jbutton("Auto go online") do
-          go_online self, false, "http://198.199.93.93/view/abc?raw=1", "C:/dev/ruby/sensible-cinema/zamples/players/amazon/total_length_over_an_hour.txt"		
+          go_online self, false, "http://cinemasoap.inet2.org/view/abc?raw=1", "C:/dev/ruby/sensible-cinema/zamples/players/amazon/total_length_over_an_hour.txt"
         end
 		    button.click!
 	    end
