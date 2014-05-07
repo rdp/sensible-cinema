@@ -37,7 +37,7 @@ class StatusLine
  def get_line_printout
     status = "status line:" + @fella.status
     # some scary hard coded values here...XXXX
-    " " * 20 + "\b"*150 + status
+    " " * 20 + "\b"*150 + status + "\n"
  end
 
 end

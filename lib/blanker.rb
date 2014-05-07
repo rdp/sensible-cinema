@@ -65,6 +65,7 @@ else
     def self.blank_full_screen! seconds
       
       if @@use_mouse
+        p "using mouse click to blank"
         Mouse.single_click_left_mouse_button
       elsif @@use_foreground_window_minimize
         @foreground_hwnd ||= Win32::Screenshot::BitmapMaker.foreground_window
