@@ -1,8 +1,7 @@
 #define VerFile FileOpen("VERSION")
-#define AppVerFile FileRead(VerFile)
+#define AppVer FileRead(VerFile)
 #expr FileClose(VerFile)
 #undef VerFile
-#define AppVer {#AppVerFile}beta
 
 #define AppName "Sensible Cinema"
 ; AppId === AppName by default BTW
@@ -17,20 +16,27 @@
 Source: *; DestDir: {app}; Excludes: releases, vendor\cache, spec, lib\jruby-swing-helpers\spec; Flags: recursesubdirs
 Source: README.TXT; DestDir: {app}; Flags: isreadme
 
+; attempt to remove previous versions' icons
+[InstallDelete]
+Type: filesandordirs; Name: {group}\*;
+
 [Setup]
 AppName={#AppName}
-AppVerName={#AppVer}
-; default to someplace editable/installable for now...
+AppVerName={#AppVer}beta
+; default to someplace editable/installable for now until DVD's don't need it for creation...
 DefaultDirName={%HOMEPATH|c:\}\{#AppName}
+; typical: 
+; DefaultDirName={pf}\{#AppName} 
 DefaultGroupName={#AppName}
 UninstallDisplayName={#AppName} uninstall
 OutputBaseFilename=Setup {#AppName} v{#AppVer}
 OutputDir=releases
 
 [Icons]
-Name: {group}\Run Sensible Cinema; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
+Name: {group}\Run Sensible Cinema for DVDs or Files; Filename: {app}\sensible_cinema_wrapper.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema in advanced or create mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --create-mode; Flags: 
 Name: {group}\Advanced\Run Sensible Cinema with debug console; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema; Flags: 
+Name: {group}\Advanced\Run Sensible Cinema Online Player mode; Filename: {app}\sensible_cinema_debug.exe; WorkingDir: {app}; Parameters: -Ilib bin\sensible-cinema --online-player-mode; Flags: 
 Name: {group}\Advanced\Uninstall {#AppName}; Filename: {uninstallexe}
 Name: {group}\Advanced\ChangeLog ; Filename: {app}\change_log_with_feature_list.txt
 

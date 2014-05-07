@@ -15,11 +15,6 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-# avoid full loading if testing impossible
-if RUBY_VERSION < '1.9.2' && RUBY_PLATFORM !~ /java/
-  puts 'not compatible to MRI < 1.9.2'
-  exit 0 # this isn't a really real failure...
-end
 
 require File.expand_path(File.dirname(__FILE__) + '/common')
 require_relative '../lib/overlayer'
@@ -32,6 +27,11 @@ end
 
 def start_bad_blank
   assert @o.blank?
+end
+
+def new_raw ruby_hash
+  File.write 'temp.yml', YAML.dump(ruby_hash)
+  OverLayer.new('temp.yml')
 end
 
 describe OverLayer do
@@ -354,7 +354,7 @@ describe OverLayer do
 
     it "should be able to discover next states well" do
       for type in [:blank_outs, :mutes] do
-        @o = OverLayer.new_raw({type => {2.0 => 4.0}})
+        @o = new_raw({type => {2.0 => 4.0}})
         @o.discover_state(type, 3).should == [2.0, 4.0, true]
         @o.discover_state(type, 0.5).should == [2.0, 4.0, false]
         @o.discover_state(type, 5).should == [nil, nil, :done]
@@ -366,7 +366,7 @@ describe OverLayer do
     context "with a list of blanks" do
 
       it "should allow for blanks" do
-        @o = OverLayer.new_raw({:blank_outs => {2.0 => 4.0}})
+        @o = new_raw({:blank_outs => {2.0 => 4.0}})
         @o.start_thread
         start_good_blank
         sleep 1
@@ -387,7 +387,7 @@ describe OverLayer do
 
     context "mixed blanks and others" do
       it "should allow for mixed" do
-        @o = OverLayer.new_raw({:mutes => {2.0 => 3.5}, :blank_outs => {3.0 => 4.0}})
+        @o = new_raw({:mutes => {2.0 => 3.5}, :blank_outs => {3.0 => 4.0}})
         at(1.5) do
           @o.cur_time.should == 1.5
           @o.get_current_state.should == [false, false, 2.0]
@@ -407,7 +407,7 @@ describe OverLayer do
         
         # now a bit more complex...
         
-        @o = OverLayer.new_raw({:mutes => {2.0 => 3.5, 5 => 6}, :blank_outs => {3.0 => 4.0}})
+        @o = new_raw({:mutes => {2.0 => 3.5, 5 => 6}, :blank_outs => {3.0 => 4.0}})
         
         at(3.75) do
           @o.get_current_state.should == [false, true, 4.0]

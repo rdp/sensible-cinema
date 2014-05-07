@@ -92,11 +92,10 @@ end
     end
 import 'javax.swing.ImageIcon'
 
-module SensibleSwing # LODO rename
-  include SimpleGuiCreator # various swing classes
+module SensibleSwing # LODO rename :)
+  include SimpleGuiCreator # have access to various swing classes
   VERSION = File.read(File.dirname(__FILE__) + "/../../VERSION").strip
-  puts "v. " + VERSION # for the console output
-  puts RUBY_DESCRIPTION # for debug purposes...
+  puts "v. " + VERSION + " " + RUBY_DESCRIPTION # for the console output
   
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # <sigh>
   
@@ -249,9 +248,9 @@ module SensibleSwing # LODO rename
       child
     end
     
-    def run_smplayer_non_blocking *args
+    def run_smplayer_non_blocking(*args)
       @background_thread = Thread.new {
-        run_smplayer_blocking *args
+        run_smplayer_blocking(*args)
       }
     end
 
@@ -732,7 +731,6 @@ KP_ENTER dvdnav select
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Come again!'
-        java.lang.System.exit 0
       }
 
       increment_button_location

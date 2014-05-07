@@ -1,6 +1,7 @@
 require 'java'
-
 require 'sane'
+require 'open-uri'
+require 'fileutils'
 
 module SensibleSwing
   
@@ -25,9 +26,6 @@ module SensibleSwing
     end
    
     def self.download full_url, to_here, english_name = File.basename(to_here)
-	  return if File.exist? to_here # already downloaded it...
-      require 'open-uri'
-      require 'fileutils'
       if full_url =~ /https/
         require 'openssl'
         eval("OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE")
@@ -35,9 +33,8 @@ module SensibleSwing
       out_frame = JFrame.new("downloading #{english_name}...")
       out_frame.show
       out_frame.setSize(500,15)
-      print 'downloading ' + english_name
       temp_filename = to_here + '.temp'
-      writeOut = open(temp_filename, "wb")
+      writeOut = File.open(temp_filename, "wb")
       content_length = nil
       last_percent = 0
       progress_proc = proc {|p|
@@ -50,25 +47,25 @@ module SensibleSwing
         out_frame.title=title
         print '.' if last_percent != percent
         last_percent = percent
-      }      
-      url = open(full_url, 'rb', :content_length_proc => proc {|cl| content_length = cl}, :progress_proc => progress_proc)
-      writeOut.write(url.read)
-      url.close
+      }     
+      connection = open(full_url, 'rb', :content_length_proc => proc {|cl| content_length = cl}, :progress_proc => progress_proc)
+      contents = connection.read
+      connection.close
+	    writeOut.write contents
       writeOut.close
       out_frame.close
-      FileUtils.mv temp_filename, to_here # avoid partial downloads corrupting uss
-      puts 'done downloading ' + english_name
+      FileUtils.mv temp_filename, to_here # avoid partial downloads corrupting us
+      puts 'success downloading ' + english_name
     end    
     
     def self.download_to_string full_url
-       require 'tempfile'
-       to = Tempfile.new 'abc'
-       download(full_url, to.path)
-       out = File.binread(to.path)
-       to.delete
-       out
+     # skip the GUI stuff :)
+     # assume don't want cacheing either...
+     connection = open(full_url)
+     out = connection.read
+     connection.close
+	   return out
     end
-
 
     def download_7zip
       Dir.mkdir('./vendor/cache') unless File.directory? 'vendor/cache' # development may not have it created yet... [?]

@@ -18,13 +18,17 @@ This file is part of Sensible Cinema.
 
 require 'sane'
 require 'thread'
+if RUBY_VERSION < '1.9.2' && !OS.jruby?
+  raise 'need 1.9.2+ for MRI for the mutex #wait method'
+end
 require 'timeout'
 require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
 require_relative 'edl_parser'
-
+require 'json'
 require 'pp' # for pretty_inspect
+require_relative 'gui/dependencies'
 
 class OverLayer
 
@@ -83,6 +87,7 @@ class OverLayer
     new_sequences = {}
     @all_sequences.each{|type, values|
       if values.is_a? Array
+	    # assume it's some tiemstamps :)
         new_sequences[type] = values.map{|s, f|
           [EdlParser.translate_time_to_human_readable(s), EdlParser.translate_time_to_human_readable(f)]
         }
@@ -93,34 +98,38 @@ class OverLayer
     new_sequences
   end
   
-  def self.new_raw ruby_hash
-    File.write 'temp.yml', YAML.dump(ruby_hash)
-    OverLayer.new('temp.yml')
-  end
   
-  # note this is actually deprecated and won't work anymore <sigh> and needs to be updated.
+  EditTypes = ['Mutes', 'Skips'] 
+  
+  @parse_cache = {}
+  
   def self.translate_url url
-    begin
-      string = SensibleSwing::MainWindow.download_to_string url
-      all = EdlParser.parse_string(string)
-    rescue NoMethodError, ArgumentError => e
-      p 'appears your file has a syntax error in it--perhaps missing quotation marks?', e.to_s
-      raise e # hope this is ok...
+    string = SensibleSwing::MainWindow.download_to_string url    
+	  if string.empty?
+     raise "bad url? #{url}"
     end
-    
-    # now it's like {:mutes => {"1:02.0" => "1:3.0"}}
-    # translate to floats like 62.0 => 63.0
+    @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid some extra error logging :)
+    @parse_cache[string]
+  end  
+  
+  def self.parse_from_json_string string
+  	
+    all = JSON.parse(string)    
+    # now it's like {Mutes => {"1:02.0" => "1:3.0"}}
+    # translate to all floats like {62.0 => 63.0}
 
-    for type in [:mutes, :blank_outs] # LODO standardize these :mutes and :blank_outs somewhere...scary to have them repeated *everywhere*
-      maps = all[type] || all[type.to_s] || {}
+    for type in EditTypes
+      maps = all[type] || {}
       new = {}
-      maps.each{|start,endy|
-        # both are like 1:02.0
-        start2 = EdlParser.translate_string_to_seconds(start) if start
-        endy2 = EdlParser.translate_string_to_seconds(endy) if endy
-        if start2 == 0 || endy2 == 0 || start == nil || endy == nil
-          p 'warning--possible error in the Edit Decision List file some line not parsed! (NB if you want one to start at time 0 please use 0.0001)', start, endy unless $AM_IN_UNIT_TEST
-          # drop this line into the bitbucket...
+      maps.each{ |full_edit|
+        # both are like "1:02.0"
+        start = full_edit['Start']
+        endy = full_edit['End']
+        start2 = EdlParser.translate_string_to_seconds(start) if start.present?
+        endy2 = EdlParser.translate_string_to_seconds(endy) if endy.present?
+        if !start2 || !endy2
+          p "warning--possible error in the Edit Decision List file some line has start #{start2} or not end #{endy2}!" unless $AM_IN_UNIT_TEST
+          # and drop it into the bitbucket...
           next
         end
         
@@ -136,8 +145,9 @@ class OverLayer
       all.delete(type.to_s) # cleanup
       all[type] = new.sort
     end
+    p "read in from json as ", all
     all
-  end  
+  end
   
   # returns seconds it's at currently...
   def cur_time
@@ -162,46 +172,9 @@ class OverLayer
       end
     end
     reload_yaml!
-    time + state + "(r [ctrl+c or q to quit]): "
+    time + state
   end
 
-  def keyboard_input char
-    delta = case char
-      when 'h' then 60*60
-      when 'H' then -60*60
-      when 'm' then 60
-      when 'M' then -60
-      when 's' then 1
-      when 'S' then -1
-      when 't' then 0.1
-      when 'q' then
-        puts '','quitting'
-        exit(1)        
-      when 'T' then -0.1
-      when 'v' then
-        $VERBOSE = !$VERBOSE
-        p 'set verbose to ', $VERBOSE
-        return
-      when 'd'
-        $DEBUG = !$DEBUG
-        p 'set debug to', $DEBUG
-        return
-      when ' ' then
-        puts 'timestamp:' + cur_english_time
-        return
-      when 'r' then
-        reload_yaml!
-        puts
-        return
-      else nil
-    end
-    if delta
-      set_seconds(cur_time + delta)
-    else
-      puts 'invalid char: [' + char + ']'
-    end
-  end
-  
   # sets it to a new set of seconds...
   def set_seconds seconds
     seconds = [seconds, 0].max
@@ -227,7 +200,9 @@ class OverLayer
   # end
 
   def start_thread continue_forever = false
-    @thread = Thread.new { continue_until_past_all continue_forever }
+    @thread = Thread.new { 
+	  continue_until_past_all continue_forever 
+	}
   end
   
   def kill_thread!
@@ -256,7 +231,7 @@ class OverLayer
   def get_current_state
     all = []
     time = cur_time
-    for type in [:mutes, :blank_outs] do
+    for type in EditTypes do
       all << discover_state(type, time)
     end
     output = []
@@ -283,13 +258,14 @@ class OverLayer
     output
   end
   
+  def shutdown
+    @keep_going = false
+  end
+  
   def continue_until_past_all continue_forever
-    if RUBY_VERSION < '1.9.2'
-      raise 'need 1.9.2+ for MRI for the mutex stuff' unless RUBY_PLATFORM =~ /java/
-    end
-
+    @keep_going = true
     @mutex.synchronize {
-      loop {
+      while(@keep_going)
         muted, blanked, next_point = get_current_state
         if next_point == :done
           if continue_forever
@@ -302,11 +278,10 @@ class OverLayer
           time_till_next_mute_starts = next_point - cur_time
         end
         
-       # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
-        
+        # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         set_states!
-      }
+      end
     }
   end  
   

@@ -1,18 +1,20 @@
 == rough milestone current roadmap, in order, just here == 
 
-== things working on today/requested ==
+== things working on today/requested  [try to do what people actually want] ==
   
-== yes do, un-ordered currently, from all the various future release options ==  
+== yes do ==  
   netflix instant descriptor work at all doze
     netflix instant?
-    amazon instant to start :) [hulu?]
-    can suck in JSON
-  installer new icon to use instant stuff...
+      amazon instant to start :) [hulu? ]
+    can suck in JSON, do a single mute/skip 
   tell that guy...the volunteer
-  the awesome new online editor
-    second pass...
 
 = low prio netflix instant stuff, but possibly still do'ish =
+  the awesome new online editor
+    second pass...
+    links *out*
+  rename from "EDL" 
+  google plus +url, work [use my stuff, suck in json in javascript, re-suck it in with each frame :) ]
   'finish' rename of sensible cinema (barely too confusing): github, all docu, some links  
   update golang wiki source LOL [patches..., README patch]
   adv. more beta testers...to those that left comments [?]
@@ -26,7 +28,6 @@
   pay peeps to do EDL's...
   prettify website...
   actually make editing intuitive
-  working google play consumer...
   working amazon prime player descriptor
   define severity levels
   can search from website
@@ -37,28 +38,30 @@
   netflix instant: you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume?
   add image url per film
   pay option somehow to create EDL's?
-  cross-timings between google play/x/y
+  cross-timings between x/y/z
     subtitle file?
     scan for profs?
     integrate with DVD's?
       multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
 
-= medium DVD stuff/super-low prio netflix instant =
+= super-low prio netflix instant =
   better index [no .txt] meh
   can bind it to imdb url
   can specify screen coords for boxes to overlay?
   become index of all that's on netflix instant etc...
   add user ratings to my website...
   is there a flash netflix/amazon I can control [linux]?
+  convert DVD to use the new website/morph old ones there?
+  determine netflix instant timing relative to DVD's
+  offline mode?
+
+= medium DVD-only stuff =
 
   @VLC fix trac 4
-	
-  convert DVD to use the new website/morph old ones there?
   test forever strong timing blu-ray @ home
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
 
-  determine netflix instant timing relative to DVD's
   tell mplayer "you pause at these chapter breaks!" if I ever can find an instance tho...cars 2 none...
   check condor man poor timings vs. "other" dvd, plus...can I bind it to the old EDL file?
     plus it had poor start times?
