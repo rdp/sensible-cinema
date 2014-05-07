@@ -65,7 +65,7 @@ class ScreenTracker
     end
     if max_x == 0 || max_y == 0
       # I don't think we can ever get here, because of the checks above
-      raise 'window invisible?'
+      raise 'window invisible???'
     end
     @digits = digits
     @previously_displayed_warning = false
@@ -80,7 +80,6 @@ class ScreenTracker
       @hwnd = Win32::Screenshot::BitmapMaker.desktop_window
       return
     else
-      raise if OS.mac?
       @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
     end
 
@@ -195,7 +194,7 @@ class ScreenTracker
           if got_implies_able_to_still_ocr
             return got_implies_able_to_still_ocr
           else
-            p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
+            p 'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
             @previously_displayed_warning = true
             # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
             get_hwnd_loop_forever
@@ -266,6 +265,7 @@ class ScreenTracker
   end
   
   def process_forever_in_thread
+    @keep_going = true
     Thread.new {
       while(@keep_going)
 	      p 'screen tracker thread'

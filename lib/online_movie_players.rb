@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 =begin
-Copyright 2010, Roger Pack 
+Copyright 2014, Roger Pack 
 This file is part of Sensible Cinema.
 
     Sensible Cinema is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ end
 
 def go_online parent_window, just_screen_snapshot = false, url = nil, player_description_path = nil
   
-  OCR.clear_cache!
+  OCR.clear_cache! # ??
   puts 'cleared OCR cache'
   
   players_root_dir = __DIR__ + "/../zamples/players"
@@ -46,23 +46,23 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   end
    
   if just_screen_snapshot
-    p 'just doing screen dump...'
+    p 'just doing [only] screen dump...'
     $VERBOSE=true # also add some extra output
   elsif url
     # accept url...
   else
     # TODO auto_found_url = AutoWindowFinder.search_for_single_url_match
     # TODO migrate these to onliners [the online playback ones]: "/../zamples/edit_decision_lists"
-	# TODO migrate DVD;ers too :)
-	url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"    
-    # todo start it later as it has an annoying startup blip, or something [?]
+	  # TODO migrate DVD;ers too :)
+	  url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"    
   end
+  
   if url
     overlay = OverLayer.new(url)
 	  Blanker.warmup
   end
   
-  puts 'Selected player ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
+  puts 'Selected player: ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
   # this one doesn't use any updates, so just pass in file contents, not filename
   screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay
   does_not_need_mouse_jerk = YAML.load_file(player_description_path)["does_not_need_mouse_movement"]
@@ -79,14 +79,14 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   else
     puts 'warning--only doing screen dump in t-minus 2s...'      
     sleep 2
-    puts 'snap!'
     screen_tracker.dump_bmps
+    puts 'done snap!'
     exit 1
   end
   
-  OCR.unserialize_cache_from_disk # do this every time so we don't delete it if they don't have one...???
+  OCR.unserialize_cache_from_disk # do this every time so we don't overwrite it ever on accident
 
-  p 'moving mouse to align it for muting down 10'
+  p 'moving mouse to align it for muting down 10' # ??
   MouseControl.move_mouse_relative 0, 10 # LODO 
   overlay.start_thread true
   status_line = StatusLine.new overlay
@@ -95,12 +95,11 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   puts "Opening the curtains, all systems started... (please play in your other video player now)"
   
   parent_window.after_closed {
-    puts 'shuttting down'
     Blanker.shutdown 
     screen_tracker.shutdown
     OCR.serialize_cache_to_disk
     MouseControl.shutdown
     overlay.shutdown
+    puts 'done shuttting down'
   }
-  p 'done go_online'
 end
