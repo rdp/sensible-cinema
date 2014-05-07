@@ -24,14 +24,22 @@ class StatusLine
  def initialize fella
   @fella = fella
  end
+ 
+ @keep_going = true
 
  def start_thread
+  @keep_going = true
   Thread.new { 
-    loop {
+    while(@keep_going)
       print get_line_printout
       sleep 0.1
-    } 
+    end
+    puts 'exiting status line'
    }
+ end
+ 
+ def shutdown
+   @keep_going = false
  end
 
  def get_line_printout
