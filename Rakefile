@@ -3,6 +3,7 @@ begin
   require 'jeweler' # gem
 rescue LoadError
   puts 'unfortunately, to bootstrap the rakefile we need the jeweler and os gems, please install them manually first'
+  puts '$ gem install jeweler os'
   exit 1
 end
 require 'os' # gem
