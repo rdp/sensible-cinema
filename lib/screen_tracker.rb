@@ -263,10 +263,11 @@ class ScreenTracker
   def shutdown
     @keep_going = false
   end
+  attr_accessor :thread
   
   def process_forever_in_thread
     @keep_going = true
-    Thread.new {
+    @thread = Thread.new {
       while(@keep_going)
 	      p 'screen tracker thread'
         out_time, delta = wait_till_next_change

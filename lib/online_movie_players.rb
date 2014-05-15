@@ -100,6 +100,7 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
     OCR.serialize_cache_to_disk
     MouseControl.shutdown
     overlay.shutdown
+    #screen_tracker.thread.join # XXX
     status_line.shutdown
     puts 'done shuttting down'
   }

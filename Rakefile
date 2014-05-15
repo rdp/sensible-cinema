@@ -1,5 +1,10 @@
 require 'rubygems'
-require 'jeweler' # gem
+begin
+  require 'jeweler' # gem
+rescue LoadError
+  puts 'unfortunately, to bootstrap the rakefile we need the jeweler and os gems, please install them manually first'
+  exit 1
+end
 require 'os' # gem
 
 # basically, to deploy, for windows run innosetup, manual upload
