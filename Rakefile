@@ -102,6 +102,7 @@ end
 def get_all_dependency_gems include_transitive_children=true
    spec = read_spec
    dependencies = spec.runtime_dependencies
+   dependencies += spec.development_dependencies
    if include_transitive_children
      dependencies = (dependencies + get_transitive_dependencies(dependencies))
    end
