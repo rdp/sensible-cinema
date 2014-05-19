@@ -14,6 +14,7 @@
   'finish' rename of sensible cinema (current is barely too confusing): github, all docu, some links, README
     rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list"
   adv. more beta testers...to those that left comments [?]
+  them enter *url*
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   it has links so you can go from our website to netflix instant...
   use "location mapping" for internal JSON, not just url
@@ -42,6 +43,12 @@
       multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
 
 = super-low prio netflix instant =
+  dumb client
+    smart web server:
+       peronalized parts/choices per movie
+         shareable?
+       skip "non sunday appropriate" parts?
+       
   update golang wiki source LOL [patches..., README patch]
   better index [no .txt] meh
   can bind it to imdb url
