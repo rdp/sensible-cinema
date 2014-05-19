@@ -104,7 +104,7 @@ module SensibleSwing # LODO rename :)
     
     def initialize start_visible = true, args = ARGV # lodo not optionals
       super "Clean Editing Movie Player #{VERSION} (GPL)"
-	  @args = args # save them away so sub windows can "not have to use" ARGV
+      @args = args # save them away so sub windows can "not have to use" ARGV
       force_accept_license_first # in other file :P
       @panel = JPanel.new
       @buttons = []
@@ -124,11 +124,13 @@ module SensibleSwing # LODO rename :)
 	  icon_filename = __DIR__ + "/../../vendor/profs.png"
 	  raise unless File.exist? icon_filename # it doesn't check this for us?
       setIconImage(ImageIcon.new(icon_filename).getImage())
-      check_for_various_dependencies
-	  LocalStorage.set_once('init_preferences_once') {
+      if !in_online_player_startup_mode # the other guys need tons of local help...this one is all web
+        check_for_various_dependencies
+      end
+      LocalStorage.set_once('init_preferences_once') {
 	    show_blocking_message_dialog "let's setup user preferences once..."
 	    set_individual_preferences
-	  }
+      }
       set_visible start_visible
     end
     

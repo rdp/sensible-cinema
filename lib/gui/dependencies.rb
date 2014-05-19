@@ -199,7 +199,9 @@ module SensibleSwing
     end
 	
 	def set_individual_preferences
-      get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
+          get_set_preference 'mplayer_beginning_buffer', "How much extra \"buffer\" time to add at the beginning of all cuts/mutes in normal mode [for added safety sake]."
+          return if in_online_player_startup_mode # don't need the rest...
+
       if SimpleGuiCreator.show_select_buttons_prompt("Would you like to use this with Zoom Player MAX's scene cuts [3rd party player program, costs $],\n or MPlayer et al [free]", :no => "ZoomPlayer MAX/PowerDVD", :yes => "MPlayer [free]") == :no	  
 	    SimpleGuiCreator.show_message "ZoomPlayer support has been added to your release, with the 'create zoomplayer max' button. Ping me and I will add PowerDVD remix support button as well."
         LocalStorage['have_zoom_button'] = true
