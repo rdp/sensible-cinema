@@ -1,0 +1,193 @@
+=begin
+Copyright 2010, Roger Pack 
+This file is part of Sensible Cinema.
+
+    Sensible Cinema is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Sensible Cinema is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
+=end
+
+require 'sane'
+require 'yaml'
+require File.dirname(__FILE__)+ '/ocr'
+if OS.doze?
+  require 'screen_tracker_windows'
+elsif OS.mac?
+  require 'screen_tracker_mac'
+else
+ raise 'unsupported os as of yet'
+end
+
+class ScreenTracker
+  
+  def self.new_from_yaml yaml, callback # callback can be nil, is used for timestamp changed stuff
+    settings = YAML.load yaml
+    return new(settings["name"], settings["x"], settings["y"], settings["width"], 
+        settings["height"], settings["use_class_name"], settings["digits"], callback)
+  end
+  # writes out all screen tracking info to various files in the current pwd
+  def dump_bmps filename = 'dump.bmp'
+    File.binwrite filename, get_bmp
+    File.binwrite 'all.' + filename, get_full_bmp
+    dump_digits(get_digits_as_bitmaps, 'dump_bmp') if @digits
+  end
+  
+  def dump_digits digits, message
+    p "#{message} dumping digits to dump no: #{@dump_digit_count} #{Time.now.to_f}"
+    for type, bitmap in digits
+      File.binwrite type.to_s + '.' + @dump_digit_count.to_s + '.bmp', bitmap    
+    end
+    File.binwrite @dump_digit_count.to_s + '.mrsh', Marshal.dump(digits)
+    @dump_digit_count += 1
+  end
+  
+  DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
+  
+  def identify_digit bitmap
+    OCR.identify_digit(bitmap, @digits)
+  end
+  
+  # we have to wait until the next change, because when we start, it might be half-way through
+  # the current second...
+  def wait_till_next_change
+    original = get_bmp
+    time_since_last_screen_change = Time.now
+    loop {
+      # save away the current time to try and be most accurate...
+      time_before_current_scan = Time.now
+      current = get_bmp
+      if current != original
+        if @digits
+          got = attempt_to_get_time_from_screen time_before_current_scan
+          if @previously_displayed_warning && got
+            # reassure user :)
+            p 'tracking it successfully again' 
+            @previously_displayed_warning = false
+          end
+          return got
+        else
+          puts 'screen time change only detected... [unexpected]' # unit tests do this still <sigh>
+          return
+        end
+      else
+        if(Time.now - time_since_last_screen_change > 2.0)
+          got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
+          if got_implies_able_to_still_ocr
+            return got_implies_able_to_still_ocr
+          else
+            p 'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
+            @previously_displayed_warning = true
+            # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
+            get_hwnd_loop_forever
+            # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al
+          end
+          time_since_last_screen_change = Time.now
+        end
+      end
+      sleep 0.02
+    }
+  end
+  
+  # returns like {:hours => nil, :minutes_tens => raw_bmp, ...^M
+  def get_digits_as_bitmaps^M
+    # @digits are like {:hours => [100,5], :minute_tens => [x, width], :minute_ones, :second_tens, :second_ones}^M
+    out = {}^M
+    for type in DIGIT_TYPES^M
+      assert @digits.key?(type)^M
+      if @digits[type]^M
+        x,w = @digits[type]^M
+        if(x < 0)^M
+          x = @max_x + x^M
+        end^M
+        x2 = x + w^M
+        raise 'a digit width can never be negative #{w}' if w <= 0^M
+        y2 = @y2^M
+        width = x2 - x^M
+        height = y2 - @y^M
+        # lodo calculate these only once...^M
+        out[type] = capture_area(@hwnd, x, @y, x2, y2)
+      end^M
+    end^M
+    out^M
+  end^M
+
+  def attempt_to_get_time_from_screen start_time
+    out = {}
+    # force it to have two matching snapshots in a row, to avoid race conditions grabbing the digits...
+    # allow youtube to update (sigh) lodo just for utube
+    previous = nil 
+    sleep 0.05
+    current = get_digits_as_bitmaps
+    while previous != current
+      previous = current
+      sleep 0.05
+      current = get_digits_as_bitmaps
+      # lodo it should probably poll *before* calling this, not here...maybe?
+    end
+    assert previous == current
+    digits = current = previous    
+    DIGIT_TYPES.each{|type|
+      if digits[type]
+        digit = identify_digit(digits[type])
+        unless digit
+          bitmap = digits[type]
+          # unable to identify a digit?
+          if $DEBUG || $VERBOSE && (type != :hours)
+            @a ||= 1
+            @a += 1
+            @already_wrote ||= {}
+            unless @already_wrote[bitmap]
+              p 'unable to identify capture!' + type.to_s + @a.to_s + ' dump:' + @dump_digit_count.to_s
+              File.binwrite("bad_digit#{@a}#{type}.bmp", bitmap)
+              @already_wrote[bitmap] = true
+            end
+          end
+          if type == :hours
+            digit = 0 # this one can fail and that's ok in VLC bottom right
+          else
+            # early (failure) return
+            return nil
+          end
+        else
+          p " got digit #{type} OCR as #{digit} which was captured to dump #{@dump_digit_count - 1} #{Time.now_f}" if $DEBUG
+        end
+        out[type] = digit
+      else
+        # there isn't one specified as being on screen, so assume it is always zero (like youtube hour)...
+        out[type] = 0
+      end
+    }
+    out = "%d:%d%d:%d%d" % DIGIT_TYPES.map{ |type| out[type] }
+    puts '', 'got new screen time ' + out + " (+ tracking delta:" + (Time.now - start_time).to_s  + ")" if $VERBOSE
+    return out, Time.now-start_time
+  end
+  
+  @keep_going = true
+  
+  def shutdown
+    @keep_going = false
+  end
+  attr_accessor :thread
+  
+  def process_forever_in_thread
+    @keep_going = true
+    @thread = Thread.new {
+      while(@keep_going)
+	      p 'screen tracker thread'
+        out_time, delta = wait_till_next_change
+        @callback.timestamp_changed out_time, delta
+      end
+      p 'screen tracker exiting'
+    }
+  end
+  
+end
