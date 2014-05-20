@@ -29,8 +29,6 @@ else
     def self.warmup
       # lodo does this really speed things up to pre-create it? that icon is a bit ugly in the taskbar...
       @fr = JFrame.new("Sensible Cinema blanker-outer overlay window")
-      @fr.set_visible true
-      @fr.set_location(-2100, -2100) # off screen to start
       @fr.set_size(2000, 2000) # lodo better size ?
       cp = @fr.getContentPane
       cp.setBackground(java.awt.Color.black);      
@@ -43,6 +41,7 @@ else
       @label.revalidate
       
       @fr.set_resizable(false)
+      unblank_full_screen! 
     end
     
     @@use_mouse = false # hard coded for now, to use change this value
@@ -51,15 +50,14 @@ else
     if @@use_foreground_window_minimize
       require 'win32/screenshot'
       SW_MINIMIZE = 6
+      def self.minimize_hwnd hwnd
+        Win32::Screenshot::BitmapMaker.show_window(hwnd, SW_MINIMIZE)
+      end
+      def self.restore_hwnd hwnd
+        Win32::Screenshot::BitmapMaker.restore(hwnd)
+      end
     end
     
-    def self.minimize_hwnd hwnd
-      Win32::Screenshot::BitmapMaker.show_window(hwnd, SW_MINIMIZE)
-    end
-    
-    def self.restore_hwnd hwnd
-      Win32::Screenshot::BitmapMaker.restore(hwnd)
-    end
 
     def self.blank_full_screen! seconds
       p 'blanking'      

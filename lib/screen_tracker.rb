@@ -84,6 +84,8 @@ class ScreenTracker
       else
         if(Time.now - time_since_last_screen_change > 2.0)
           got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
+require 'ruby-debug'
+debugger
           if got_implies_able_to_still_ocr
             return got_implies_able_to_still_ocr
           else
@@ -130,7 +132,12 @@ class ScreenTracker
     previous = nil 
     sleep 0.05
     current = get_digits_as_bitmaps
+    start = Time.now
     while previous != current
+      # don't allow it to loop forever or it will never complain of not finding digits if the screen is not actually showing a movie, for instance
+      if (Time.now - start > 2)
+        return nil # early failure 
+      end
       previous = current
       sleep 0.05
       current = get_digits_as_bitmaps

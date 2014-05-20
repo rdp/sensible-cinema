@@ -111,7 +111,19 @@ class OverLayer
     @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid some extra error logging :)
     @parse_cache[string]
   end  
-  
+ 
+  def timestamp_changed to_this_exact_string_might_be_nil, delta
+    if @just_unblanked
+      # ignore it, since it was probably just caused by the screen blipping
+      # at worse this will put us 1s behind...hmm.
+      @just_unblanked = false
+      p 'ignoring timestamp update ' + to_this_exact_string_might_be_nil.to_s if $VERBOSE
+    else
+      set_seconds EdlParser.translate_string_to_seconds(to_this_exact_string_might_be_nil) + delta if to_this_exact_string_might_be_nil
+    end
+  end
+
+ 
   def self.parse_from_json_string string
   	
     all = JSON.parse(string)    
