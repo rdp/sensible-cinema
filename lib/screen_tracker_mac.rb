@@ -41,7 +41,7 @@ class ScreenTracker
     baos = java.io.ByteArrayOutputStream.new
     #javax.imageio.ImageIO.write(img, "BMP", java.io.File.new("filename.bmp"))
     javax.imageio.ImageIO.write(img, "BMP", baos)
-    as_string = String.from_java_bytes(baos.get_bytes)
+    as_string = String.from_java_bytes(baos.to_byte_array)
   end
   
   # gets snapshot of the full window
