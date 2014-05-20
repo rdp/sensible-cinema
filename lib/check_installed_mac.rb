@@ -14,8 +14,8 @@ module CheckInstalledMac
 
   unless system("/opt/rdp_project_local/bin/#{command} 1>/dev/null 2>&1")
      name = 'ImageMagick' if name == 'convert' # special case this one...
-     puts 'lacking dependency! Please install ' + name + ' by installing from the mac dependencies link from the website first'
-     puts caller
+     SimpleGuiCreator.show_message 'lacking dependency! Please install ' + name + ' by installing from the mac dependencies package from the website first'
+     SimpleGuiCreator.open_url_to_view_it_non_blocking "http://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/" # TODO test this out does it work?
      false
   else
     true
