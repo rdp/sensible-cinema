@@ -23,7 +23,7 @@ class ScreenTracker
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
   def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, callback=nil
-    raise "must be desktop full screen in os x" unless name == 'desktop'
+    raise "must be desktop full screen in os x" unless name_or_regex == 'desktop'
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback
     @digits = digits
     @dump_digit_count = 1
@@ -37,7 +37,7 @@ class ScreenTracker
   end
   
   def get_bmp_by_coords x,y,x2,y2
-    img = robot.createScreenCapture(java.awt.Rectangle.new(java.awt.Toolkit.getDefaultToolkit().getScreenSize()))
+    img = @robot.createScreenCapture(java.awt.Rectangle.new(java.awt.Toolkit.getDefaultToolkit().getScreenSize()))
     baos = java.io.ByteArrayOutputStream.new
     #javax.imageio.ImageIO.write(img, "BMP", java.io.File.new("filename.bmp"))
     javax.imageio.ImageIO.write(img, "BMP", baos)
