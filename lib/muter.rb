@@ -18,8 +18,29 @@ This file is part of Sensible Cinema.
 require 'rubygems' # ugh
 require 'ffi'
 require 'sane'
+require 'os'
 require_relative 'jruby-swing-helpers/lib/simple_gui_creator/mouse_control'
-require_relative 'jruby-swing-helpers/lib/simple_gui_creator/play_audio'
+
+if OS.x?
+
+module Muter
+  def mute!
+    system(%!osascript -e "set volume with output muted"!)
+  end
+  def unmute!
+    system(%!osascript -e "set volume without output muted"!)
+  end
+  def hit_volume_up_key
+    system(%!osascript -e "set volume output volume (output volume of (get volume settings) + 5) --100%"!)
+  end
+  def hit_volume_down_key
+    system(%!osascript -e "set volume output volume (output volume of (get volume settings) - 5) --100%"!)
+  end
+  # allow for Muter.xxx
+  extend self
+end
+
+else
 
 module Muter
   # from msdn on keybd_event ...
@@ -63,7 +84,7 @@ module Muter
     end
   end
   
-  @@use_mouse_click = true
+  @@use_mouse_click = false # TODO if ever use this then...umm...fix it for mac too?
 
   # LODO better for doze 7/xp
   def unmute!
@@ -84,4 +105,6 @@ module Muter
   # allow for Muter.xxx
   extend self
   
+end
+
 end
