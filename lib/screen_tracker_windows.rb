@@ -17,7 +17,6 @@ This file is part of Sensible Cinema.
 =end
 require 'sane'
 require 'yaml'
-require File.dirname(__FILE__)+ '/ocr'
 require 'ffi'
 require 'win32/screenshot'
 
@@ -29,14 +28,6 @@ class ScreenTracker
   # read it like rect.read_array_of_long(4)
   attach_function :GetWindowRect, [:long, :pointer], :int # returns a BOOL
   
-  def self.new_from_yaml yaml, callback # callback can be nil, is used for timestamp changed stuff
-    settings = YAML.load yaml
-    return new(settings["name"], settings["x"], settings["y"], settings["width"], 
-        settings["height"], settings["use_class_name"], settings["digits"], callback)
-  end
-  
-  attr_accessor :hwnd
-  
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
   def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, callback=nil
@@ -45,7 +36,7 @@ class ScreenTracker
     @use_class_name = use_class_name
     pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
-    get_hwnd_loop_forever
+    get_hwnd_loop_forever # setup @hwnd
     max_x, max_y = Win32::Screenshot::Util.dimensions_for(@hwnd)
     if(x < 0 || y < 0)
       if x < 0

@@ -18,11 +18,11 @@ This file is part of Sensible Cinema.
 
 require 'sane'
 require 'yaml'
-require File.dirname(__FILE__)+ '/ocr'
+require_relative 'ocr'
 if OS.doze?
-  require 'screen_tracker_windows'
+  require_relative 'screen_tracker_windows'
 elsif OS.mac?
-  require 'screen_tracker_mac'
+  require_relative 'screen_tracker_mac'
 else
  raise 'unsupported os as of yet'
 end
@@ -34,6 +34,9 @@ class ScreenTracker
     return new(settings["name"], settings["x"], settings["y"], settings["width"], 
         settings["height"], settings["use_class_name"], settings["digits"], callback)
   end
+
+  attr_accessor :hwnd # TODO move to windows only
+
   # writes out all screen tracking info to various files in the current pwd
   def dump_bmps filename = 'dump.bmp'
     File.binwrite filename, get_bmp
@@ -98,27 +101,27 @@ class ScreenTracker
   end
   
   # returns like {:hours => nil, :minutes_tens => raw_bmp, ...^M
-  def get_digits_as_bitmaps^M
-    # @digits are like {:hours => [100,5], :minute_tens => [x, width], :minute_ones, :second_tens, :second_ones}^M
-    out = {}^M
-    for type in DIGIT_TYPES^M
-      assert @digits.key?(type)^M
-      if @digits[type]^M
-        x,w = @digits[type]^M
-        if(x < 0)^M
-          x = @max_x + x^M
-        end^M
-        x2 = x + w^M
-        raise 'a digit width can never be negative #{w}' if w <= 0^M
-        y2 = @y2^M
-        width = x2 - x^M
-        height = y2 - @y^M
-        # lodo calculate these only once...^M
+  def get_digits_as_bitmaps
+    # @digits are like {:hours => [100,5], :minute_tens => [x, width], :minute_ones, :second_tens, :second_ones}
+    out = {}
+    for type in DIGIT_TYPES
+      assert @digits.key?(type)
+      if @digits[type]
+        x,w = @digits[type]
+        if(x < 0)
+          x = @max_x + x
+        end
+        x2 = x + w
+        raise 'a digit width can never be negative #{w}' if w <= 0
+        y2 = @y2
+        width = x2 - x
+        height = y2 - @y
+        # lodo calculate these only once...
         out[type] = capture_area(@hwnd, x, @y, x2, y2)
-      end^M
-    end^M
-    out^M
-  end^M
+      end
+    end
+    out
+  end
 
   def attempt_to_get_time_from_screen start_time
     out = {}
