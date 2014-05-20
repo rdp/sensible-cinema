@@ -27,9 +27,11 @@ else
     JLabel = javax.swing.JLabel
 
     def self.warmup
+      # lodo does this really speed things up to pre-create it? that icon is a bit ugly in the taskbar...
       @fr = JFrame.new("Sensible Cinema blanker-outer overlay window")
-	  # lodo: they can't close it?
-      @fr.set_size(2000, 2000) # ltodo better size ?
+      @fr.set_visible true
+      @fr.set_location(-2100, -2100) # off screen to start
+      @fr.set_size(2000, 2000) # lodo better size ?
       cp = @fr.getContentPane
       cp.setBackground(java.awt.Color.black);      
       
@@ -41,13 +43,9 @@ else
       @label.revalidate
       
       @fr.set_resizable(false)
-      @fr.set_visible(true) # have to do this once, to ever see the thing
-      # lodo does this really speed things up to pre-create it? that icon is a bit ugly in the taskbar...
-      @fr.repaint
-      @fr.set_visible(false) # hide it to start
     end
     
-    @@use_mouse = false # hard coded for now, if used
+    @@use_mouse = false # hard coded for now, to use change this value
     @@use_foreground_window_minimize = false
     
     if @@use_foreground_window_minimize
