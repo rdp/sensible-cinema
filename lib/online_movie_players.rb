@@ -94,7 +94,7 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   
   puts "Opening the curtains, all systems started... (please play in your other video player now)"
   
-  parent_window.after_closed {
+  close_proc = proc {
     Blanker.shutdown 
     screen_tracker.shutdown
     OCR.serialize_cache_to_disk
@@ -104,4 +104,7 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
     status_line.shutdown
     puts 'done shuttting down'
   }
+  parent_window.after_closed { close_proc.call } # just in case
+  close_proc
+
 end

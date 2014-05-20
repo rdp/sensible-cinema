@@ -5,9 +5,14 @@ module SensibleSwing
   
     def setup_online_player_buttons
       require_relative '../online_movie_players.rb'	 
-	    add_text_line 'Online Player playback Options:'
-      new_jbutton("Attempt to start") do
-        go_online self
+      add_text_line 'Online Player playback Options:'
+
+      new_jbutton("Attempt to start editing [manual input]") do
+        @close_proc = go_online self
+      end            
+
+      new_jbutton("Attempt to stop editing") do
+        @close_proc.call if @close_proc
       end            
 
       new_jbutton("Open Website for viewing/editing movie edits") do
@@ -15,9 +20,9 @@ module SensibleSwing
       end	    
       # add_open_documentation_button # not pertinent enough yet...	  
       if ARGV.contain?('--go')
-        button = new_jbutton("Auto go online") do
+        button = new_jbutton("Auto go for testing") do
           path = File.dirname(__FILE__) + "/../../zamples/players/amazon/total_length_over_an_hour.txt"
-          go_online self, false, "http://cinemasoap.inet2.org/view/abc?raw=1", path
+          @close_proc = go_online self, false, "http://cinemasoap.inet2.org/view/abc?raw=1", path
         end
         button.click!
       end
