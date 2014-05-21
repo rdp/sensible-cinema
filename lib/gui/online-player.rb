@@ -3,12 +3,17 @@ module SensibleSwing
   
   class MainWindow
   
+    def start_new_run *args
+      @close_proc.call if @close_proc
+      @close_proc = go_online *args
+    end
+    
     def setup_online_player_buttons
       require_relative '../online_movie_players.rb'	 
       add_text_line 'Online Player playback Options:'
 
       new_jbutton("Start edited playback") do
-        @close_proc = go_online self
+        start_new_run self
       end            
 
       new_jbutton("Stop edited playback") do
@@ -21,12 +26,17 @@ module SensibleSwing
       @online_status_label = add_text_line "Player status:"
       @playing_well_label = add_text_line "Status: editor initializing..."
       # add_open_documentation_button # not pertinent enough yet...	  
-      if ARGV.contain?('--go')
-        button = new_jbutton("Auto start edited playback for testing") do
-          path = File.dirname(__FILE__) + "/../../zamples/players/amazon/total_length_over_an_hour.txt"
-          @close_proc = go_online self, false, "http://cinemasoap.inet2.org/view/abc?raw=1", path
+      if ARGV.contain?('--advanced')
+      
+        path = File.dirname(__FILE__) + "/../../zamples/players/amazon/total_length_over_an_hour.txt"
+        url = "http://cinemasoap.inet2.org/view/abc?raw=1"
+        autostart = new_jbutton("Auto start edited playback for testing") do
+          start_new_run self, false, url, path          
         end
-        button.click!
+        new_jbutton("Take snapshot of player descriptor") do
+          start_new_run self, true, url, path
+        end
+        autostart.click!
       end
     end
 
