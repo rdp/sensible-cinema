@@ -62,7 +62,7 @@ class ScreenTracker
     pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits.inspect if $VERBOSE
   end
   
-  def get_hwnd_loop_forever
+  def retrain_on_window_loop_forever
     if @name_or_regex.to_s.downcase == 'desktop'
       # full screen 'use the desktop' option
       assert !@use_class_name # window "class name" and desktop is not an option
@@ -103,7 +103,7 @@ class ScreenTracker
   DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
   
   def capture_area hwnd, x, y, x2, y2
-    out[type] = Win32::Screenshot::BitmapMaker.capture_area(hwnd, x, y, x2, y2) {|h,w,bmp| bmp}
+    Win32::Screenshot::BitmapMaker.capture_area(hwnd, x, y, x2, y2) {|h,w,bmp| bmp}
   end
   
   def get_relative_coords_of_timestamp_window
