@@ -36,7 +36,7 @@ class ScreenTracker
     @use_class_name = use_class_name
     pps 'height', height, 'width', width if $VERBOSE
     raise 'poor dimentia' if width <= 0 || height <= 0
-    get_hwnd_loop_forever # setup @hwnd
+    retrain_on_window_loop_forever # setup @hwnd
     max_x, max_y = Win32::Screenshot::Util.dimensions_for(@hwnd)
     if(x < 0 || y < 0)
       if x < 0

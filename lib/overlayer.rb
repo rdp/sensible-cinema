@@ -104,9 +104,13 @@ class OverLayer
   @parse_cache = {}
   
   def self.translate_url url
-    string = SensibleSwing::MainWindow.download_to_string url    
-	  if string.empty?
-     raise "bad url? #{url}"
+    begin
+      string = SensibleSwing::MainWindow.download_to_string url    
+      if string.empty?
+       raise "bad url? #{url}"
+      end
+    rescue => e
+      puts 'bad url? ' + e.to_s # this happens when debugging EOFError or what not
     end
     @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid some extra error logging :)
     @parse_cache[string]

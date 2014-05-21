@@ -64,7 +64,7 @@ class ScreenTracker
   def wait_till_next_change
     original = get_bmp
     time_since_last_screen_change = Time.now
-    loop {
+    while(@keep_going) 
       # save away the current time to try and be most accurate...
       time_before_current_scan = Time.now
       current = get_bmp
@@ -76,6 +76,10 @@ class ScreenTracker
             p 'tracking it successfully again' 
             @previously_displayed_warning = false
           end
+          if !got
+            puts 'screen location where we anticipate digits is changing, but unable to track digits from it!'
+            @previously_displayed_warning = true
+          end
           return got
         else
           puts 'screen time change only detected... [unexpected]' # unit tests do this still <sigh>
@@ -83,23 +87,22 @@ class ScreenTracker
         end
       else
         if(Time.now - time_since_last_screen_change > 2.0)
+          # screen hasn't changed/updated at all in a long time
           got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
-require 'ruby-debug'
-debugger
           if got_implies_able_to_still_ocr
             return got_implies_able_to_still_ocr
           else
             p 'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
             @previously_displayed_warning = true
             # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
-            get_hwnd_loop_forever
-            # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al
+            retrain_on_window_loop_forever
+            # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al [?]
           end
           time_since_last_screen_change = Time.now
         end
       end
       sleep 0.02
-    }
+    end
   end
   
   # returns like {:hours => nil, :minutes_tens => raw_bmp, ...^M

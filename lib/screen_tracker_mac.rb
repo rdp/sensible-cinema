@@ -37,7 +37,7 @@ class ScreenTracker
   end
   
   def get_bmp_by_coords x,y,x2,y2
-    img = @robot.createScreenCapture(java.awt.Rectangle.new(java.awt.Toolkit.getDefaultToolkit().getScreenSize()))
+    img = @robot.createScreenCapture(java.awt.Rectangle.new(x, y, x2-x, y2-y))
     baos = java.io.ByteArrayOutputStream.new
     #javax.imageio.ImageIO.write(img, "BMP", java.io.File.new("filename.bmp"))
     javax.imageio.ImageIO.write(img, "BMP", baos)
@@ -52,6 +52,10 @@ class ScreenTracker
 
   def capture_area hwnd, x, y, x2, y2
     get_bmp_by_coords x, y, x2, y2 # ignore hwnd
+  end
+
+  def retrain_on_window_loop_forever
+    # do nothing
   end
   
 end
