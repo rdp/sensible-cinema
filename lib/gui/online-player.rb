@@ -33,8 +33,8 @@ module SensibleSwing
         autostart = new_jbutton("Auto start edited playback for testing") do
           start_new_run self, false, url, path          
         end
-        new_jbutton("Take snapshot of player descriptor") do
-          start_new_run self, true, url, path
+        new_jbutton("Take screen snapshot of player descriptor") do
+          start_new_run self, true, nil, path
         end
         autostart.click!
       end
@@ -43,6 +43,7 @@ module SensibleSwing
     def update_playing_well_status status
       @playing_well_label.set_text "Status:" + status
     end
+    
     def update_online_player_status status
       @online_status_label.set_text "Player status:" + status
     end

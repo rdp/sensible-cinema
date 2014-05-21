@@ -77,11 +77,14 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   if overlay
     screen_tracker.process_forever_in_thread
   else
-    puts 'warning--only doing screen dump in t-minus 2s...'      
-    sleep 2
-    screen_tracker.dump_bmps
-    puts 'done snap!'
-    exit 1
+    parent_window.update_playing_well_status 'warning--only doing screen dump in t-minus 2s...'      
+    Thread.new {
+      # new thread so the UI can get the above message :)
+      sleep 2
+      screen_tracker.dump_bmps
+      parent_window.update_playing_well_status 'done snap!'
+    }
+    return nil
   end
   
   OCR.unserialize_cache_from_disk # do this every time so we don't overwrite it ever on accident
