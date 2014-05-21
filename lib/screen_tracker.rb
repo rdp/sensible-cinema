@@ -29,10 +29,10 @@ end
 
 class ScreenTracker
   
-  def self.new_from_yaml yaml, callback # callback can be nil, is used for timestamp changed stuff
+  def self.new_from_yaml yaml, timestamp_callback, status_callback # callback can be nil, is used for timestamp changed stuff
     settings = YAML.load yaml
     return new(settings["name"], settings["x"], settings["y"], settings["width"], 
-        settings["height"], settings["use_class_name"], settings["digits"], callback)
+        settings["height"], settings["use_class_name"], settings["digits"], timestamp_callback, status_callback)
   end
 
   attr_accessor :hwnd # TODO move to windows only
@@ -71,14 +71,9 @@ class ScreenTracker
       if current != original
         if @digits
           got = attempt_to_get_time_from_screen time_before_current_scan
-          if @previously_displayed_warning && got
-            # reassure user :)
-            p 'tracking it successfully again' 
-            @previously_displayed_warning = false
-          end
+          @status_callback.update_playing_well_status 'tracking it successfully' 
           if !got
-            puts 'screen location where we anticipate digits is changing, but unable to track digits from it!'
-            @previously_displayed_warning = true
+            @status_callback.update_playing_well_status 'screen location where we anticipate digits is changing, but unable to track digits from it!'
           end
           return got
         else
@@ -92,8 +87,7 @@ class ScreenTracker
           if got_implies_able_to_still_ocr
             return got_implies_able_to_still_ocr
           else
-            p 'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
-            @previously_displayed_warning = true
+            @status_callback.update_playing_well_status  'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
             # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
             retrain_on_window_loop_forever
             # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al [?]
@@ -197,9 +191,10 @@ class ScreenTracker
       while(@keep_going)
 	      p 'screen tracker thread'
         out_time, delta = wait_till_next_change
-        @callback.timestamp_changed out_time, delta
+        @timestamp_callback.timestamp_changed out_time, delta
       end
-      p 'screen tracker exiting'
+      p 'screen tracker exiting tracking thread'
+      @status_callback.update_playing_well_status 'stopped'
     }
   end
   

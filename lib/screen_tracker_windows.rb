@@ -30,7 +30,7 @@ class ScreenTracker
   
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
-  def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, callback=nil
+  def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, timestamp_callback=nil, status_callback=nil
     # cache to save us 0.00445136 per time LOL
     @name_or_regex = name_or_regex
     @use_class_name = use_class_name
@@ -46,7 +46,8 @@ class ScreenTracker
         y = max_y + y
       end
     end
-    @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
+    @x = x; @y = y; @x2 = x+width; @y2 = y+height; @timestamp_callback = timestamp_callback    
+    @status_callback = status_callback
     @max_x = max_x
     raise "poor width or wrong window #{@x2} #{max_x} #{x}" if @x2 > max_x  || @x2 == x
     if @y2 > max_y || @y2 == y || @y2 <= 0

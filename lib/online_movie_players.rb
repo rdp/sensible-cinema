@@ -64,7 +64,7 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   
   puts 'Selected player: ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
   # this one doesn't use any updates, so just pass in file contents, not filename
-  screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay
+  screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay, parent_window
   does_not_need_mouse_jerk = YAML.load_file(player_description_path)["does_not_need_mouse_movement"]
   unless does_not_need_mouse_jerk
     p 'yes using mouse jitter' if $VERBOSE or $DEBUG
@@ -86,8 +86,6 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   
   OCR.unserialize_cache_from_disk # do this every time so we don't overwrite it ever on accident
 
-  p 'moving mouse to align it for muting down 10' # ??
-  MouseControl.move_mouse_relative 0, 10 # LODO 
   overlay.start_thread true
   callback = proc { |status|
     parent_window.update_online_player_status status

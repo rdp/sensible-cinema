@@ -22,9 +22,10 @@ class ScreenTracker
   
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
-  def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, callback=nil
+  def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, timestamp_callback=nil, status_callback=nil
     raise "must be desktop full screen in os x" unless name_or_regex == 'desktop'
-    @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback
+    @x = x; @y = y; @x2 = x+width; @y2 = y+height; @timestamp_callback = timestamp_callback
+    @status_callback = status_callback
     @digits = digits
     @dump_digit_count = 1
     pps 'using desktop in mac', @digits
