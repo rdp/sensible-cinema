@@ -20,8 +20,9 @@ This file is part of Sensible Cinema.
 
 class StatusLine
 
- def initialize fella
+ def initialize fella, callback
   @fella = fella
+  @callback = callback
  end
  
  @keep_going = true
@@ -30,7 +31,7 @@ class StatusLine
   @keep_going = true
   Thread.new { 
     while(@keep_going)
-      print get_line_printout
+      @callback.call @fella.status
       sleep 0.1
     end
     puts 'exiting status line'

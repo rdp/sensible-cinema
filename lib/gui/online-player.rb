@@ -18,6 +18,7 @@ module SensibleSwing
       new_jbutton("Open Website for viewing/editing movie edits") do
          SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org"
       end	    
+      @online_status_label = add_text_line "Current status:"
       # add_open_documentation_button # not pertinent enough yet...	  
       if ARGV.contain?('--go')
         button = new_jbutton("Auto go for testing") do
@@ -26,6 +27,10 @@ module SensibleSwing
         end
         button.click!
       end
+    end
+
+    def update_online_player_status status
+      @online_status_label.set_text "Player status:" + status
     end
   end
 end

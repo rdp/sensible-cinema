@@ -89,7 +89,10 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   p 'moving mouse to align it for muting down 10' # ??
   MouseControl.move_mouse_relative 0, 10 # LODO 
   overlay.start_thread true
-  status_line = StatusLine.new overlay
+  callback = proc { |status|
+    parent_window.update_online_player_status status
+  }
+  status_line = StatusLine.new overlay, callback
   status_line.start_thread
   
   puts "Opening the curtains, all systems started... (please play in your other video player now)"
