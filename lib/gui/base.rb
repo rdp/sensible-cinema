@@ -116,15 +116,15 @@ module SensibleSwing # LODO rename :)
       add_text_line "Welcome to the Clean Editing Movie Player!"
       #@starting_button_y += 10 # kinder ugly...
       #add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      @current_dvds_line1 = add_text_line "Checking present DVD's..."
-      @current_dvds_line2 = add_text_line ""
-      @callbacks_for_dvd_edl_present = []
-      DriveInfo.create_looping_drive_cacher
-      DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }      
-	  icon_filename = __DIR__ + "/../../vendor/profs.png"
-	  raise unless File.exist? icon_filename # it doesn't check this for us?
+      icon_filename = __DIR__ + "/../../vendor/profs.png"
+      raise unless File.exist? icon_filename # it doesn't check this for us?
       setIconImage(ImageIcon.new(icon_filename).getImage())
       if !in_online_player_startup_mode # the other guys need tons of local help...this one is all web
+        @current_dvds_line1 = add_text_line "Checking present DVD's..."
+        @current_dvds_line2 = add_text_line ""
+        @callbacks_for_dvd_edl_present = []
+        DriveInfo.create_looping_drive_cacher
+        DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }      
         check_for_various_dependencies
       end
       LocalStorage.set_once('init_preferences_once') {
