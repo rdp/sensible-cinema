@@ -4,6 +4,7 @@ module SensibleSwing
   class MainWindow
   
     def start_new_run *args
+      update_playing_well_status 'initializing...'
       @close_proc.call if @close_proc
       @close_proc = go_online *args
     end
@@ -24,7 +25,7 @@ module SensibleSwing
          SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org"
       end	    
       @online_status_label = add_text_line "Player status:"
-      @playing_well_label = add_text_line "Status: editor initializing..."
+      @playing_well_label = add_text_line "Status: hit start to being..."
       # add_open_documentation_button # not pertinent enough yet...	  
       if ARGV.contain?('--advanced')
       
