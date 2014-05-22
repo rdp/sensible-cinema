@@ -3,7 +3,7 @@ package main
 import ("fmt"
     "os")
 
-func main() {
+func main2() {
     if ReadConfig() != nil {
       os.Exit(1)
     }

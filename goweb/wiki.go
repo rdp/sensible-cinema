@@ -22,24 +22,16 @@ var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // se
 
 var DirName string = "/tmp"; // will be overwritten, can't assign nil?
 
-func (edl *EDL) marshal() ([]byte, error) {
-    return json.MarshalIndent(edl, "", " ")  
-}
-
-func (edl *EDL) unmarshal(b []byte) error {
-    return json.Unmarshal(b, edl)
-}
-
 func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
     // make sure if we encode it and decode it, it has the same number of quotes
     // which would imply that it parses right to our object, at least :P
     var asObject EDL
-    err := asObject.unmarshal(p.Body)
+    err := asObject.StringToEdl(p.Body)
     if err != nil {
       return err // never get here, basically it's too "loose"
     }
-    b, _ := asObject.marshal()
+    b, _ := asObject.EdlToString()
     countMarshalled := bytes.Count(b, []byte(`"`))
     countIncoming := bytes.Count(p.Body, []byte(`"`))
     if countIncoming != countMarshalled {
@@ -65,7 +57,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
         empty := &EDL{ NetflixURL: "http://...", Title: "title" }
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
-        b, _ := empty.marshal()
+        b, _ := empty.EdlToString()
         p = &Page{Title: title, Body: b}
     }
     renderTemplate(w, "edit", p)
@@ -162,8 +154,7 @@ func ReadConfig() error {
   return nil
 }
 
-
-func main2() {
+func main() {
     if ReadConfig() != nil {
       os.Exit(1)
     }
