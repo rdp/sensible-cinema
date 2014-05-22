@@ -18,24 +18,6 @@ type Page struct {
     Body  []byte
 }
 
-type EditListEntry struct {
-  Start string
-  End string
-  Category string
-  ExactTypeInCategory string
-  AdditionalInfo string
-  AdditionalInfo1 string
-}
-
-type EDL struct {
-  NetflixURL string
-  AmazonURL string
-  Title string
-  Notes string
-  Mutes []EditListEntry
-  Skips []EditListEntry
-}
-
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
 
 var DirName string = "/tmp"; // will be overwritten, can't assign nil?
@@ -61,7 +43,7 @@ func (p *Page) save() error {
     countMarshalled := bytes.Count(b, []byte(`"`))
     countIncoming := bytes.Count(p.Body, []byte(`"`))
     if countIncoming != countMarshalled {
-      return errors.New("miscount, possibly misspelling/malformatted?")
+      return errors.New("miscount, possibly misspelling/malformatted or out of date?")
     } else { 
       return ioutil.WriteFile(filename, b, 0600) // write re-prettified...
     }
