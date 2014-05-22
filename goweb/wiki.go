@@ -104,8 +104,13 @@ func newHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func AllFiles() []os.FileInfo {
     files, _ := ioutil.ReadDir(DirName)
+    return files
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+    files := AllFiles()
     renderTemplate(w, "index", files)
 }
 
@@ -142,7 +147,7 @@ type Configuration struct {
     DirName    string
 }
 
-func readConfig() error {
+func ReadConfig() error {
   conf := Configuration{}
   file, _ := os.Open("conf.json")
   decoder := json.NewDecoder(file)
@@ -159,7 +164,7 @@ func readConfig() error {
 
 
 func main2() {
-    if readConfig() != nil {
+    if ReadConfig() != nil {
       os.Exit(1)
     }
     http.HandleFunc("/view/", makeHandler(viewHandler))

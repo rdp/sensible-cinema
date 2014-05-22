@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import ("fmt"
+    "os")
 
 func main() {
+    if ReadConfig() != nil {
+      os.Exit(1)
+    }
+
+  files := AllFiles()
+  for _, file := range files {
+    fmt.Println("hello",file)
+  }
   fmt.Println("hello")
 }
