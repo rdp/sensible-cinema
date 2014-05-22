@@ -158,7 +158,7 @@ func readConfig() error {
 }
 
 
-func main() {
+func main2() {
     if readConfig() != nil {
       os.Exit(1)
     }
