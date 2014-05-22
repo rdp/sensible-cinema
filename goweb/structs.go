@@ -21,7 +21,7 @@ type EDL struct {
   Skips []EditListEntry
 }
 
-type EDL_Old struct {
+type EDLOld struct {
   NetflixURL string
   AmazonURL string
   Title string
@@ -31,10 +31,18 @@ type EDL_Old struct {
 }
 
 func (edl *EDL) EdlToString() ([]byte, error) {
-    return json.MarshalIndent(edl, "", " ")
+    return json.MarshalIndent(edl, "", " ") // pretty print
 }
 
-func (edl *EDL) StringToEdl(b []byte) error { // unmarshal
+func (edl *EDL) EdlOldToString() ([]byte, error) {
+    return json.MarshalIndent(edl, "", " ") // pretty print
+}
+
+func (edl *EDL) StringToEdl(b []byte) error {
+    return json.Unmarshal(b, edl)
+}
+
+func (edl *EDLOld) StringToEdlOld(b []byte) error {
     return json.Unmarshal(b, edl)
 }
 
