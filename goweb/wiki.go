@@ -36,7 +36,7 @@ func (p *Page) save() error {
 }
 
 func CheckEdlString(toBytes []byte) ([]byte, error) {
-    var asObject EDL
+    var asObject Edl
     err := asObject.StringToEdl(toBytes)
     if err != nil {
       return nil, err // never get here, basically it's too "loose"
@@ -64,7 +64,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     if err != nil {
         // then there was an error
-        empty := &EDL{ NetflixURL: "http://...", Title: "title" }
+        empty := &Edl{ NetflixURL: "http://...", Title: "title" }
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
         b, _ := empty.EdlToString()

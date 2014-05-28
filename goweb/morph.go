@@ -4,10 +4,20 @@ import ("fmt"
    "io/ioutil"
 )
 
+
 func Morph() {
   files := AllPaths()
   for _, filename := range files {
-    fmt.Println("hello", filename)
+    body, _ := ioutil.ReadFile(filename)
+    old := EdlOld{}
+    old.StringToEdlOld(body)
+  }
+  CheckAll()
+}
+
+func CheckAll() {
+  files := AllPaths()
+  for _, filename := range files {
     body, _ := ioutil.ReadFile(filename)
     _, err := CheckEdlString(body);
     if err != nil {
