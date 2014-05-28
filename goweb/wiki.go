@@ -26,18 +26,27 @@ func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
     // make sure if we encode it and decode it, it has the same number of quotes
     // which would imply that it parses right to our object, at least :P
-    var asObject EDL
-    err := asObject.StringToEdl(p.Body)
+    prettyBytes, err := CheckEdlString(p.Body)
     if err != nil {
-      return err // never get here, basically it's too "loose"
+      return err
+    } else { 
+      return ioutil.WriteFile(filename, prettyBytes, 0600)
+    }
+}
+
+func CheckEdlString(toBytes []byte) ([]byte, error) {
+    var asObject EDL
+    err := asObject.StringToEdl(toBytes)
+    if err != nil {
+      return nil, err // never get here, basically it's too "loose"
     }
     b, _ := asObject.EdlToString()
     countMarshalled := bytes.Count(b, []byte(`"`))
-    countIncoming := bytes.Count(p.Body, []byte(`"`))
+    countIncoming := bytes.Count(toBytes, []byte(`"`))
     if countIncoming != countMarshalled {
-      return errors.New("miscount, possibly misspelling/malformatted or out of date?")
-    } else { 
-      return ioutil.WriteFile(filename, b, 0600) // write re-prettified...
+      return nil, errors.New("miscount, possibly misspelling/malformatted or out of date?")
+    } else {
+      return b, nil
     }
 }
 
@@ -154,7 +163,7 @@ func ReadConfig() error {
   return nil
 }
 
-func main() {
+func main2() {
     if ReadConfig() != nil {
       os.Exit(1)
     }
