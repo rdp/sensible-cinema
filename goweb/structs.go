@@ -30,19 +30,19 @@ type EdlOld struct {
   Skips []EditListEntry
 }
 
-func (edl *Edl) EdlToString() ([]byte, error) {
+func (edl *Edl) EdlToBytes() ([]byte, error) {
     return json.MarshalIndent(edl, "", " ") // pretty print
 }
 
-func (edl *Edl) EdlOldToString() ([]byte, error) {
+func (edl *Edl) EdlOldToBytes() ([]byte, error) {
     return json.MarshalIndent(edl, "", " ") // pretty print
 }
 
-func (edl *Edl) StringToEdl(b []byte) error {
+func (edl *Edl) BytesToEdl(b []byte) error {
     return json.Unmarshal(b, edl)
 }
 
-func (edl *EdlOld) StringToEdlOld(b []byte) error {
+func (edl *EdlOld) BytesToEdlOld(b []byte) error {
     return json.Unmarshal(b, edl)
 }
 

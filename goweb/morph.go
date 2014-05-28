@@ -9,9 +9,14 @@ func Morph() {
   files := AllPaths()
   for _, filename := range files {
     body, _ := ioutil.ReadFile(filename)
-    old := EdlOld{}
-    old.StringToEdlOld(body)
+    // old := EdlOld{} // don't need anything this complex for a simple add :)
+    // old.StringToEdlOld(body)
+    new := Edl{}
+    new.BytesToEdl(body)
+    newBody, _ := new.EdlToBytes()
+    _ = ioutil.WriteFile(filename, newBody, 0600)
   }
+  fmt.Println("done morph")
   CheckAll()
 }
 
@@ -27,5 +32,5 @@ func CheckAll() {
     }
     // EdlOldToString ...
   }
-  fmt.Println("donemorph")
+  fmt.Println("done CheckAll")
 }

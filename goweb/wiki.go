@@ -37,11 +37,11 @@ func (p *Page) save() error {
 
 func CheckEdlString(toBytes []byte) ([]byte, error) {
     var asObject Edl
-    err := asObject.StringToEdl(toBytes)
+    err := asObject.BytesToEdl(toBytes)
     if err != nil {
       return nil, err // never get here, basically it's too "loose"
     }
-    b, _ := asObject.EdlToString()
+    b, _ := asObject.EdlToBytes()
     countMarshalled := bytes.Count(b, []byte(`"`))
     countIncoming := bytes.Count(toBytes, []byte(`"`))
     if countIncoming != countMarshalled {
@@ -67,7 +67,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
         empty := &Edl{ NetflixURL: "http://...", Title: "title" }
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
-        b, _ := empty.EdlToString()
+        b, _ := empty.EdlToBytes()
         p = &Page{Title: title, Body: b}
     }
     renderTemplate(w, "edit", p)
