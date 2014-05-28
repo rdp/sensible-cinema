@@ -11,7 +11,7 @@ type EditListEntry struct {
   AdditionalInfo1 string
 }
 
-type EDL struct {
+type Edl struct {
   NetflixURL string
   AmazonURL string
   GooglePlayURL string
@@ -21,7 +21,7 @@ type EDL struct {
   Skips []EditListEntry
 }
 
-type EDLOld struct {
+type EdlOld struct {
   NetflixURL string
   AmazonURL string
   Title string
@@ -30,19 +30,19 @@ type EDLOld struct {
   Skips []EditListEntry
 }
 
-func (edl *EDL) EdlToString() ([]byte, error) {
+func (edl *Edl) EdlToBytes() ([]byte, error) {
     return json.MarshalIndent(edl, "", " ") // pretty print
 }
 
-func (edl *EDL) EdlOldToString() ([]byte, error) {
+func (edl *Edl) EdlOldToBytes() ([]byte, error) {
     return json.MarshalIndent(edl, "", " ") // pretty print
 }
 
-func (edl *EDL) StringToEdl(b []byte) error {
+func (edl *Edl) BytesToEdl(b []byte) error {
     return json.Unmarshal(b, edl)
 }
 
-func (edl *EDLOld) StringToEdlOld(b []byte) error {
+func (edl *EdlOld) BytesToEdlOld(b []byte) error {
     return json.Unmarshal(b, edl)
 }
 

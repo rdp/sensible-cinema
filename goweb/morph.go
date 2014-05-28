@@ -1,17 +1,36 @@
 package main
 
 import ("fmt"
-    "os")
+   "io/ioutil"
+)
 
-func main2() {
-  if ReadConfig() != nil {
-    os.Exit(1)
+
+func Morph() {
+  files := AllPaths()
+  for _, filename := range files {
+    body, _ := ioutil.ReadFile(filename)
+    // old := EdlOld{} // don't need anything this complex for a simple add :)
+    // old.StringToEdlOld(body)
+    new := Edl{}
+    new.BytesToEdl(body)
+    newBody, _ := new.EdlToBytes()
+    _ = ioutil.WriteFile(filename, newBody, 0600)
   }
+  fmt.Println("done morph")
+  CheckAll()
+}
 
-  files := AllFiles()
-  for _, file := range files {
-    fmt.Println("hello",file)
+func CheckAll() {
+  files := AllPaths()
+  for _, filename := range files {
+    body, _ := ioutil.ReadFile(filename)
+    _, err := CheckEdlString(body);
+    if err != nil {
+      fmt.Println("probably got a bad/old one:" + filename) 
+    } else {
+      fmt.Println("got a good one" + filename)
+    }
     // EdlOldToString ...
   }
-  fmt.Println("hello")
+  fmt.Println("done CheckAll")
 }

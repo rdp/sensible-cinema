@@ -11,6 +11,7 @@ import ( "fmt"
         "errors"
         "strings"
         "path/filepath"
+        "path"
 )
 
 type Page struct {
@@ -26,18 +27,27 @@ func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
     // make sure if we encode it and decode it, it has the same number of quotes
     // which would imply that it parses right to our object, at least :P
-    var asObject EDL
-    err := asObject.StringToEdl(p.Body)
+    prettyBytes, err := CheckEdlString(p.Body)
     if err != nil {
-      return err // never get here, basically it's too "loose"
-    }
-    b, _ := asObject.EdlToString()
-    countMarshalled := bytes.Count(b, []byte(`"`))
-    countIncoming := bytes.Count(p.Body, []byte(`"`))
-    if countIncoming != countMarshalled {
-      return errors.New("miscount, possibly misspelling/malformatted or out of date?")
+      return err
     } else { 
-      return ioutil.WriteFile(filename, b, 0600) // write re-prettified...
+      return ioutil.WriteFile(filename, prettyBytes, 0600)
+    }
+}
+
+func CheckEdlString(toBytes []byte) ([]byte, error) {
+    var asObject Edl
+    err := asObject.BytesToEdl(toBytes)
+    if err != nil {
+      return nil, err // never get here, basically it's too "loose"
+    }
+    b, _ := asObject.EdlToBytes()
+    countMarshalled := bytes.Count(b, []byte(`"`))
+    countIncoming := bytes.Count(toBytes, []byte(`"`))
+    if countIncoming != countMarshalled {
+      return nil, errors.New("miscount, possibly misspelling/malformatted or out of date?")
+    } else {
+      return b, nil
     }
 }
 
@@ -54,10 +64,10 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     if err != nil {
         // then there was an error
-        empty := &EDL{ NetflixURL: "http://...", Title: "title" }
+        empty := &Edl{ NetflixURL: "http://...", Title: "title" }
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
-        b, _ := empty.EdlToString()
+        b, _ := empty.EdlToBytes()
         p = &Page{Title: title, Body: b}
     }
     renderTemplate(w, "edit", p)
@@ -96,13 +106,15 @@ func newHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
-func AllFiles() []os.FileInfo {
+func AllPaths() []string {
     files, _ := ioutil.ReadDir(DirName)
-    return files
+    array2 := make([]string, len(files))
+    for i, f := range files { array2[i] = path.Join(DirName, f.Name()) }
+    return array2
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-    files := AllFiles()
+    files := AllPaths()
     renderTemplate(w, "index", files)
 }
 
@@ -157,6 +169,10 @@ func ReadConfig() error {
 func main() {
     if ReadConfig() != nil {
       os.Exit(1)
+    }
+    if len(os.Args) > 1 {
+      Morph()
+      os.Exit(0)
     }
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
