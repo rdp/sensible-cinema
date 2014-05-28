@@ -42,6 +42,7 @@ else
       
       @fr.set_resizable(false)
       unblank_full_screen! 
+      @fr.set_visible true
     end
     
     @@use_mouse = false # hard coded for now, to use change this value
@@ -90,7 +91,7 @@ else
         restore_hwnd @foreground_hwnd
       else
         # just move it off screen...lodo
-        @fr.set_location(-2100, -2100)
+        @fr.set_location(-2300, -2300)
         @fr.repaint 0
       end
     end
