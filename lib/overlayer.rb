@@ -34,6 +34,7 @@ class OverLayer
 
   def initialize url
     @url = url
+    puts 'using url ' + url
     @am_muted = false
     @am_blanked = false
     @mutex = Mutex.new
