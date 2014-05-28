@@ -107,10 +107,11 @@ class OverLayer
     begin
       string = SensibleSwing::MainWindow.download_to_string url    
       if string.empty?
-       raise "bad url? #{url}"
+       raise "bad url1? url=#{url}"
       end
     rescue => e
-      puts 'bad url? ' + e.to_s # this happens when debugging EOFError or what not
+      puts "bad url2? url=#{url} " + e.to_s # this happens when debugging EOFError or what not
+      throw e
     end
     @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid some extra error logging :)
     @parse_cache[string]
