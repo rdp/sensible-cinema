@@ -21,7 +21,7 @@ require 'yaml'
 require_relative 'ocr'
 if OS.doze?
   require_relative 'screen_tracker_windows'
-elsif OS.mac?
+elsif OS.mac? || OS.linux?
   require_relative 'screen_tracker_mac'
 else
  raise 'unsupported os as of yet'

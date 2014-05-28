@@ -1,2 +1,2 @@
 #see comments in other file
-jruby --debug  $@ bin/sensible-cinema  --online-player-mode --go
+jruby --debug  $@ bin/sensible-cinema  --online-player-mode --advanced

@@ -24,6 +24,7 @@ class ScreenTracker
   # digits share the height start point, have their own x and width...
   def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, timestamp_callback=nil, status_callback=nil
     raise "must be desktop full screen in os x" unless name_or_regex == 'desktop'
+    @hwnd = nil # avoid some warnings XXXX get rid of code that is shared and uses hwnd
     @x = x; @y = y; @x2 = x+width; @y2 = y+height; @timestamp_callback = timestamp_callback
     @status_callback = status_callback
     @digits = digits
