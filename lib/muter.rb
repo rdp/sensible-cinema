@@ -40,7 +40,22 @@ module Muter
   extend self
 end
 
+elsif OS.linux?
+
+module Muter
+  def mute!
+    system("amixer sset 'Master' 50%")
+  end
+  def unmute!
+   system("amixer -D pulse set Master 1+ toggle") # http://askubuntu.com/questions/65764/how-do-i-toggle-sound-with-amixer/286437#286437 yikes
+  end
+  extend self
+end
+
 else
+ 
+# assume windows
+
 
 module Muter
   # from msdn on keybd_event ...

@@ -12,10 +12,21 @@ module CheckInstalledMac
   command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version", 'mplayer' => 'mplayer'}[name]
   raise 'unknown ' + name unless command # sanity check
 
-  unless system("/opt/rdp_project_local/bin/#{command} 1>/dev/null 2>&1")
+  prefix = "/opt/rdp_project_local/bin/"
+  if !OS.x? && OS.linux?
+    prefix = "" # just use system
+  end
+  unless system("#{prefix}#{command} 1>/dev/null 2>&1")
      name = 'ImageMagick' if name == 'convert' # special case this one...
-     SimpleGuiCreator.show_message 'lacking dependency! Please install ' + name + ' by installing from the mac dependencies package from the website first'
-     SimpleGuiCreator.open_url_to_view_it_non_blocking "http://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/" # TODO test this out does it work?
+     if OS.x?
+       SimpleGuiCreator.show_message 'lacking dependency! Please install ' + name + ' by installing from the mac dependencies package from the website first'
+       SimpleGuiCreator.open_url_to_view_it_non_blocking "http://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/" # TODO test this out does it work?
+     elsif OS.linux?
+       SimpleGuiCreator.show_message 'lacking dependency! Please install ' + name + ' by installing using linux instructions'
+       SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/sensible-cinema/wiki/Linux-Dependencies"
+     else
+       throw 'huh os'
+     end
      false
   else
     true
