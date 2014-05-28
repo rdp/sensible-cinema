@@ -11,6 +11,7 @@ import ( "fmt"
         "errors"
         "strings"
         "path/filepath"
+        "path"
 )
 
 type Page struct {
@@ -105,13 +106,15 @@ func newHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
-func AllFiles() []os.FileInfo {
+func AllPaths() []string {
     files, _ := ioutil.ReadDir(DirName)
-    return files
+    array2 := make([]string, len(files))
+    for i, f := range files { array2[i] = path.Join(DirName, f.Name()) }
+    return array2
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-    files := AllFiles()
+    files := AllPaths()
     renderTemplate(w, "index", files)
 }
 
@@ -163,9 +166,13 @@ func ReadConfig() error {
   return nil
 }
 
-func main2() {
+func main() {
     if ReadConfig() != nil {
       os.Exit(1)
+    }
+    if len(os.Args) > 1 {
+      Morph()
+      os.Exit(0)
     }
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))

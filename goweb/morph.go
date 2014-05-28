@@ -1,17 +1,21 @@
 package main
 
 import ("fmt"
-    "os")
+   "io/ioutil"
+)
 
-func main() {
-  if ReadConfig() != nil {
-    os.Exit(1)
-  }
-
-  files := AllFiles()
-  for _, file := range files {
-    fmt.Println("hello",file)
+func Morph() {
+  files := AllPaths()
+  for _, filename := range files {
+    fmt.Println("hello", filename)
+    body, _ := ioutil.ReadFile(filename)
+    _, err := CheckEdlString(body);
+    if err != nil {
+      fmt.Println("probably got a bad/old one:" + filename) 
+    } else {
+      fmt.Println("got a good one" + filename)
+    }
     // EdlOldToString ...
   }
-  fmt.Println("hello")
+  fmt.Println("donemorph")
 }
