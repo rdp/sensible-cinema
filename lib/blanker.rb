@@ -42,6 +42,7 @@ else
       
       @fr.set_resizable(false)
       unblank_full_screen! 
+      @fr.set_visible true
     end
     
     @@use_mouse = false # hard coded for now, to use change this value
@@ -70,6 +71,7 @@ else
         minimize_hwnd @foreground_hwnd
       else
         # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
+        @fr.set_visible true
         @fr.setAlwaysOnTop(false) 
         @fr.setAlwaysOnTop(true)
         @fr.set_location(0,0)
@@ -90,7 +92,8 @@ else
         restore_hwnd @foreground_hwnd
       else
         # just move it off screen...lodo
-        @fr.set_location(-2100, -2100)
+        @fr.set_location(-2300, -2300)
+        @fr.set_visible false
         @fr.repaint 0
       end
     end
