@@ -5,7 +5,7 @@ module SensibleSwing
   
     def start_new_run *args
       update_playing_well_status 'initializing...'
-      @close_proc.call if @close_proc
+      @close_proc.call if @close_proc # reset in case they call start twice
       @close_proc = go_online *args
     end
     
@@ -38,14 +38,17 @@ module SensibleSwing
         new_jbutton("Take screen snapshot of player descriptor") do
           start_new_run self, true, nil, path
         end
+        new_jbutton("Reset current timestamp to 0:0s") do
+
+        end
         autostart.click!
       end
     end
 
     def update_playing_well_status status
-      @playing_well_label.set_text "Status:" + status[0..100]
-      if status.length > 100
-        @playing_well_label2.set_text status[100..-1]
+      @playing_well_label.set_text "Status:" + status[0..50]
+      if status.length > 50
+        @playing_well_label2.set_text status[50..-1]
       else
         @playing_well_label2.set_text "" # reset it
       end

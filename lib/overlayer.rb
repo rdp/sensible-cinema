@@ -55,14 +55,14 @@ class OverLayer
   
   def mute!
     @am_muted = true
-    puts 'muting!' if $VERBOSE
-    Muter.mute! unless defined?($AM_IN_UNIT_TEST)
+    puts 'muting!'
+    Muter.mute! unless $AM_IN_UNIT_TEST
   end
   
   def unmute!
     @am_muted = false
-    puts 'unmuting!' if $VERBOSE
-    Muter.unmute! unless defined?($AM_IN_UNIT_TEST)
+    puts 'unmuting!'
+    Muter.unmute! unless $AM_IN_UNIT_TEST
   end
   
   def blank! seconds
@@ -80,7 +80,7 @@ class OverLayer
   
   def reload_yaml!
     @all_sequences = OverLayer.translate_url @url
-    puts '(re) loaded mute sequences from ' + @url + ' as', pretty_sequences.pretty_inspect, "" unless defined?($AM_IN_UNIT_TEST)
+    puts '(re) loaded mute sequences from ' + @url + ' as', pretty_sequences.pretty_inspect, "" if $VERBOSE
     signal_change
   end  
   
@@ -114,7 +114,7 @@ class OverLayer
       puts "bad url2? url=#{url} " + e.to_s # this happens when debugging EOFError or what not
       throw e
     end
-    @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid some extra error logging :)
+    @parse_cache[string] ||= parse_from_json_string(string) # just parse once to avoid extra error logging :)
     @parse_cache[string]
   end  
  
@@ -152,11 +152,11 @@ class OverLayer
         end
         
         if start2 == endy2 || endy2 < start2
-          p 'warning--found a line that had poor interval', start, endy, type unless defined?($AM_IN_UNIT_TEST)
+          p 'warning--found a line that had poor interval', start, endy, type unless $AM_IN_UNIT_TEST
           next
         end
         if(endy2 > 60*60*3)
-          p 'warning--found setting past 3 hours [?]', start, endy, type unless defined?($AM_IN_UNIT_TEST)
+          p 'warning--found setting past 3 hours [?]', start, endy, type unless $AM_IN_UNIT_TEST
         end
         new[start2] = endy2
       }
@@ -304,7 +304,7 @@ class OverLayer
   end  
   
   def display_change change
-    puts '' unless defined?($AM_IN_UNIT_TEST)
+    puts '' unless $AM_IN_UNIT_TEST
     if $VERBOSE
       puts change + ' at ' + cur_english_time
     end    

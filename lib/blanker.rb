@@ -93,8 +93,8 @@ else
       else
         # just move it off screen...lodo
         @fr.set_location(-2300, -2300)
-        @fr.set_visible false
         @fr.repaint 0
+        @fr.set_visible false
       end
     end
     
