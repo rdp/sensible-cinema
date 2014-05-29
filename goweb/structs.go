@@ -24,6 +24,7 @@ type Edl struct {
 type EdlOld struct {
   NetflixURL string
   AmazonURL string
+  GooglePlayURL string
   Title string
   Notes string
   Mutes []EditListEntry

@@ -16,7 +16,7 @@ func Morph() {
     newBody, _ := new.EdlToBytes()
     _ = ioutil.WriteFile(filename, newBody, 0600)
   }
-  fmt.Println("done morph")
+  fmt.Println("done morph -- update structs file now if they all pass")
   CheckAll()
 }
 
