@@ -26,6 +26,7 @@ module SensibleSwing
       end	    
       @online_status_label = add_text_line "Player status:"
       @playing_well_label = add_text_line "Status: hit start to being..."
+      @playing_well_label2 = add_text_line ""
       # add_open_documentation_button # not pertinent enough yet...	  
       if ARGV.contain?('--advanced')
       
@@ -42,8 +43,12 @@ module SensibleSwing
     end
 
     def update_playing_well_status status
-      p 'new playing well status:' + status # for long lines, for now
-      @playing_well_label.set_text "Status:" + status
+      @playing_well_label.set_text "Status:" + status[0..100]
+      if status.length > 100
+        @playing_well_label2.set_text status[100..-1]
+      else
+        @playing_well_label2.set_text "" # reset it
+      end
     end
     
     def update_online_player_status status
