@@ -71,9 +71,12 @@ class ScreenTracker
       if current != original
         if @digits
           got = attempt_to_get_time_from_screen time_before_current_scan
-          @status_callback.update_playing_well_status 'tracking it successfully' 
-          if !got
+          if got
+            @status_callback.update_playing_well_status 'tracking it successfully' 
+          else
             @status_callback.update_playing_well_status 'screen location where we anticipate digits is changing, but unable to track digits from it!'
+            File.binwrite('original.debug.bmp', original)
+            File.binwrite('current.debug.bmp', current)
           end
           return got
         else
@@ -85,9 +88,10 @@ class ScreenTracker
           # screen hasn't changed/updated at all in a long time
           got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
           if got_implies_able_to_still_ocr
+            @status_callback.update_playing_well_status 'appears screen is paused but still tracking?'
             return got_implies_able_to_still_ocr
           else
-            @status_callback.update_playing_well_status  'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] @hwnd:' + @hwnd.to_s
+            @status_callback.update_playing_well_status  'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] and screen is not changing at all, either'
             # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
             retrain_on_window_loop_forever
             # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al [?]

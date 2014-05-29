@@ -42,6 +42,7 @@ module SensibleSwing
     end
 
     def update_playing_well_status status
+      p 'new playing well status:' + status # for long lines, for now
       @playing_well_label.set_text "Status:" + status
     end
     
