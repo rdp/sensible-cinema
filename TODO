@@ -3,15 +3,11 @@
 == things working on today/requested  [try to do what people actually want] ==
   
 == yes do ==  
-  working amazon prime player descriptor
-  go wiki page add :)
+  working amazon prime instant video player descriptor
 
 = low prio netflix instant stuff, but possibly still do'ish =
-  tell that guy...the volunteer
+  tell that guy...the volunteer...once it can work at all with something [hulu?]
   netflix instant descriptor work at all doze
-    netflix instant?
-      amazon instant to start :) [hulu? ]
-  fix index page
 
   mutes don't work OS X
   it stayed blank in OS X for 5s?
@@ -37,24 +33,30 @@
   create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
     possibly just a ML and uservoice yeah
   google plus +url personalized [facebook?] for the project :)
-  use the better muter exe?
   you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume? [all server side]
   add image url [and use it on the website] per cut list
   pay option somehow to create EDL's?
   cross-timings between x/y/z
     subtitle file?
-    scan for profs?
+    scan for profs online/synchronize?
     integrate with DVD's?
       multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
 
 = to-decide netflix instant =
+  automagically grab current playback url from open browser windows [windows]?
   links *out* from online
   split feedback/callback to two lines
   add some type of popup [balloon?] if/when not tracking
   fix auto scan for window in windows?
   move the online edited youtube stuff "to the go side"
+  hulu descriptor
+  ability to just decrease volume, not mute it [cross platform :) ]
+    use the better muter exe
 
 = super-low prio netflix instant =
+  tons more descriptors [itunes, vudu, etc.]
+  "fade in" for blanks, then fade out [?]
+  sheer awesome ness for not having to show the end user the timestamp while they watch the movie...somehow err other...
   dumb client
     smart web server:
        peronalized parts/choices per movie
