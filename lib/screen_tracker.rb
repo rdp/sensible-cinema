@@ -193,7 +193,7 @@ class ScreenTracker
     @keep_going = true
     @thread = Thread.new {
       while(@keep_going)
-	      p 'screen tracker thread'
+        p 'screen tracker thread'
         out_time, delta = wait_till_next_change
         @timestamp_callback.timestamp_changed out_time, delta
       end

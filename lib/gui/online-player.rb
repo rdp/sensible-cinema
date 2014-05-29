@@ -6,7 +6,7 @@ module SensibleSwing
     def start_new_run *args
       update_playing_well_status 'initializing...'
       @close_proc.call if @close_proc # reset in case they call start twice
-      @close_proc = go_online *args
+      @close_proc, @overlay = go_online *args
     end
     
     def setup_online_player_buttons
@@ -39,7 +39,7 @@ module SensibleSwing
           start_new_run self, true, nil, path
         end
         new_jbutton("Reset current timestamp to 0:0s") do
-
+          @overlay.timestamp_changed "0:0", 0
         end
         autostart.click!
       end

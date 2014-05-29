@@ -109,6 +109,5 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
     puts 'done shuttting down'
   }
   parent_window.after_closed { close_proc.call } # just in case
-  close_proc
-
+  [close_proc, overlay]
 end
