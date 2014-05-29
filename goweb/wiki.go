@@ -106,16 +106,23 @@ func newHandler(w http.ResponseWriter, r *http.Request) {
     http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
-func AllPaths() []string {
+func allFileInfos() []os.FileInfo {
     files, _ := ioutil.ReadDir(DirName)
+    return files
+}
+
+func AllPaths() []string {
+    files := allFileInfos()
     array2 := make([]string, len(files))
     for i, f := range files { array2[i] = path.Join(DirName, f.Name()) }
     return array2
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-    files := AllPaths()
-    renderTemplate(w, "index", files)
+    files := allFileInfos()
+    array2 := make([]string, len(files))
+    for i, file := range files { array2[i] = strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())) } // strip off .ext's
+    renderTemplate(w, "index", array2)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
