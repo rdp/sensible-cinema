@@ -41,8 +41,8 @@ else
       @label.revalidate
       
       @fr.set_resizable(false)
-      unblank_full_screen! 
       @fr.set_visible true
+      unblank_full_screen! 
     end
     
     @@use_mouse = false # hard coded for now, to use change this value
