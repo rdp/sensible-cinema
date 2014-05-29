@@ -71,6 +71,7 @@ else
         minimize_hwnd @foreground_hwnd
       else
         # somewhat hacky work around for doze: http://www.experts-exchange.com/Programming/Languages/Java/Q_22977145.html
+        @fr.set_visible true
         @fr.setAlwaysOnTop(false) 
         @fr.setAlwaysOnTop(true)
         @fr.set_location(0,0)
@@ -92,6 +93,7 @@ else
       else
         # just move it off screen...lodo
         @fr.set_location(-2300, -2300)
+        @fr.set_visible false
         @fr.repaint 0
       end
     end
