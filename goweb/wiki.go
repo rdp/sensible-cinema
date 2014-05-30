@@ -60,14 +60,19 @@ func loadPage(title string) (*Page, error) {
 } 
 
 func searchHandler(w http.ResponseWriter, r *http.Request) {
-    // moviename := r.URL.Query()["movieurl"][0];
+    moviename := r.URL.Query()["movieurl"][0];
     for _, filename := range AllPaths() {
       body, _:= ioutil.ReadFile(filename)
       var edl Edl
       edl.BytesToEdl(body) // XXX panic errors here
       fmt.Println("comparing with:" + edl.AmazonURL)
+      if moviename == edl.AmazonURL || moviename == edl.GooglePlayURL || moviename == edl.NetflixURL {
+        title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
+        http.Redirect(w, r, "/view/" + title + "?raw=1", http.StatusFound)
+        return
+      }
     }
-    http.Redirect(w, r, "/view/abc?raw=1", http.StatusFound)
+    fmt.Fprintf(w, "Hi there, not found %s!", moviename)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
