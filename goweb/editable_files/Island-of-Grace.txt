@@ -1,0 +1,27 @@
+{
+ "NetflixURL": "http://...",
+ "AmazonURL": "http://www.amazon.com/gp/product/B004RFZODC",
+ "GooglePlayURL": "none",
+ "Title": "title",
+ "Notes": "",
+ "Mutes": [
+  {
+   "Start": "",
+   "End": "",
+   "Category": "",
+   "ExactTypeInCategory": "",
+   "AdditionalInfo": "",
+   "AdditionalInfo1": ""
+  }
+ ],
+ "Skips": [
+  {
+   "Start": "",
+   "End": "",
+   "Category": "",
+   "ExactTypeInCategory": "",
+   "AdditionalInfo": "",
+   "AdditionalInfo1": ""
+  }
+ ]
+}
