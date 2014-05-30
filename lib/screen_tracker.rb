@@ -45,11 +45,11 @@ class ScreenTracker
   end
   
   def dump_digits digits, message
-    p "#{message} dumping digits to dump no: .#{@dump_digit_count}. (current time: #{Time.now.to_f}) in #{Dir.pwd}"
+    p "#{message} dumping digits all together to dump no: .#{@dump_digit_count}. (current time: #{Time.now.to_f}) in #{Dir.pwd}"
     for type, bitmap in digits
       File.binwrite type.to_s + '.' + @dump_digit_count.to_s + '.bmp', bitmap    
     end
-    File.binwrite @dump_digit_count.to_s + '.mrsh', Marshal.dump(digits)
+    File.binwrite @dump_digit_count.to_s + '.all_digits.mrsh', Marshal.dump(digits)
     @dump_digit_count += 1
   end
   

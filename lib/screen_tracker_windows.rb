@@ -101,8 +101,6 @@ class ScreenTracker
      Win32::Screenshot::BitmapMaker.capture_all(@hwnd) {|h,w,bmp| return bmp}
   end
 
-  DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
-  
   def capture_area hwnd, x, y, x2, y2
     Win32::Screenshot::BitmapMaker.capture_area(hwnd, x, y, x2, y2) {|h,w,bmp| bmp}
   end
