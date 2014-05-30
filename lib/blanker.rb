@@ -29,7 +29,8 @@ else
     def self.warmup
       # lodo does this really speed things up to pre-create it? that icon is a bit ugly in the taskbar...
       @fr = JFrame.new("Sensible Cinema blanker-outer overlay window")
-      @fr.set_size(2000, 2000) # lodo better size ?
+      cover_entire_screen = java.awt.Toolkit.getDefaultToolkit().getScreenSize()
+      @fr.set_size(cover_entire_screen)
       cp = @fr.getContentPane
       cp.setBackground(java.awt.Color.black);      
       
