@@ -5,7 +5,6 @@ import ( "fmt"
         "net/http"
 	"html/template"
         "regexp"
-        "encoding/json"
         "os"
         "bytes"
         "errors"
@@ -21,7 +20,7 @@ type Page struct {
 
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
 
-var DirName string = "/tmp"; // will be overwritten, can't assign nil?
+var DirName string = "editable_files"; // will be overwritten, can't assign nil?
 
 func (p *Page) save() error {
     filename := DirName + "/" + p.Title + ".txt"
@@ -154,29 +153,7 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hi there")
 }
 
-type Configuration struct {
-    DirName    string
-}
-
-func ReadConfig() error {
-  conf := Configuration{}
-  file, _ := os.Open("conf.json")
-  decoder := json.NewDecoder(file)
-  err := decoder.Decode(&conf)
-  if err != nil {
-    fmt.Println("error reading config:", err)
-    return err
-  }
-  fmt.Println("will be saving to:" + conf.DirName)
-  DirName = conf.DirName
-  os.MkdirAll(DirName, 0700)
-  return nil
-}
-
 func main() {
-    if ReadConfig() != nil {
-      os.Exit(1)
-    }
     if len(os.Args) > 1 {
       Morph()
       os.Exit(0)
@@ -191,5 +168,3 @@ func main() {
     http.ListenAndServe(":8888", nil)
     fmt.Println("exiting")
 }
-
-// TODO migrateMain with duplicate structs...
