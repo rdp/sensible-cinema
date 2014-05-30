@@ -34,15 +34,15 @@ func (p *Page) save() error {
     }
 }
 
-func CheckEdlString(toBytes []byte) ([]byte, error) {
+func CheckEdlString(incomingBytes []byte) ([]byte, error) {
     var asObject Edl
-    err := asObject.BytesToEdl(toBytes)
+    err := asObject.BytesToEdl(incomingBytes)
     if err != nil {
-      return nil, err // never get here, basically it's too "loose"
+      return nil, err // never get here, basically it's too "loose" XXX panic it out?
     }
     b, _ := asObject.EdlToBytes()
     countMarshalled := bytes.Count(b, []byte(`"`))
-    countIncoming := bytes.Count(toBytes, []byte(`"`))
+    countIncoming := bytes.Count(incomingBytes, []byte(`"`))
     if countIncoming != countMarshalled {
       return nil, errors.New("miscount, possibly misspelling/malformatted or out of date?")
     } else {
@@ -58,6 +58,17 @@ func loadPage(title string) (*Page, error) {
     }
     return &Page{Title: title, Body: body}, nil
 } 
+
+func searchHandler(w http.ResponseWriter, r *http.Request) {
+    // moviename := r.URL.Query()["movieurl"][0];
+    for _, filename := range AllPaths() {
+      body, _:= ioutil.ReadFile(filename)
+      var edl Edl
+      edl.BytesToEdl(body) // XXX panic errors here
+      fmt.Println("comparing with:" + edl.AmazonURL)
+    }
+    http.Redirect(w, r, "/view/abc?raw=1", http.StatusFound)
+}
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
@@ -98,6 +109,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
     }
     
 }
+
 
 func newHandler(w http.ResponseWriter, r *http.Request) {
     moviename := r.URL.Query()["moviename"][0];
@@ -162,6 +174,7 @@ func main() {
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     http.HandleFunc("/", indexHandler)
+    http.HandleFunc("/search", searchHandler)
     http.HandleFunc("/new", newHandler)
     http.HandleFunc("/hello_world", helloWorldHandler)
     fmt.Println("serving on 8888") 
