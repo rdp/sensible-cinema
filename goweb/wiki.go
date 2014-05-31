@@ -65,10 +65,10 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
       body, _:= ioutil.ReadFile(filename)
       var edl Edl
       edl.BytesToEdl(body) // XXX panic errors here
-      fmt.Println("comparing with:" + edl.AmazonURL)
       if moviename == edl.AmazonURL || moviename == edl.GooglePlayURL || moviename == edl.NetflixURL {
         title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
         url := "/view/" + title + "?raw=1"
+        fmt.Println("found match:" + title)
         fmt.Fprintf(w, "http://%s%s", r.Host, url)
         return
       }

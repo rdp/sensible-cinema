@@ -13,8 +13,8 @@
   'finish' rename of sensible cinema (current is barely too confusing): github, all docu, some links, README
     rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list"
   adv. more beta testers...to those that left comments [?]
-  them enter playing *url* [nothing auto, for now]
-    can search
+  auto find url [windows]
+  auto get appropriate descriptor [windows]
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   it has links so you can go from our website to netflix instant...
   easier than JSON editing somehow
@@ -22,7 +22,8 @@
   pay peeps to do EDL's...
   prettify website...
   actually make editing intuitive/easy to use editing...
-  define severity levelss
+  disallow saving one that competes with another...
+  define severity levelss, allow for their entry
   create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
     possibly just a ML and uservoice yeah
   google plus +url personalized [facebook?] for the project :)
@@ -30,6 +31,7 @@
   test blanker multi monitor all OS's LOL
 
 = to-decide netflix instant =
+  XSD with severity levels in it?
   is there a chance that it could "freeze" in the middle of some bad scene, then  unblank, but it's still there...? hmm
   you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume? [all server side]
   pay option somehow to bounty EDL's?
