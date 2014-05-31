@@ -31,6 +31,8 @@
   pay peeps to do EDL's...
 
 = to-decide netflix instant =
+  client side splash screen, this thing is slooow to load...
+  whoa make sure we don't use too much cpu--if we don't, get rid of status line -> constant update?
   add image url [and use it on the website] per cut list
   is there a chance that it could "freeze" in the middle of some bad scene, then  unblank, but it's still there...? hmm
   you can choose "what to do" in scenes of violence, etc.  mute? skip? decrease volume? [all server side]
