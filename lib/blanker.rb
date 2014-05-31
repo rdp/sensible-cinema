@@ -96,6 +96,7 @@ else
         @fr.set_location(-2300, -2300)
         @fr.repaint 0
         @fr.set_visible false
+        @label.set_text 'non-blanked--you should never see this'
       end
     end
     

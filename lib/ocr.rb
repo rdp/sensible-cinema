@@ -74,7 +74,7 @@ module OCR
     p options if $DEBUG
     raise 'you must pass in OCR levels in the player description' unless options[:levels]
     for level in options[:levels]
-      command = "#{GOCR} -l #{level} #{image.path} 2>NUL"
+      command = "#{GOCR} -l #{level} #{image.path} 2>#{OS.dev_null}"
       a = `#{command}`
       if a =~ /[0-9]/
         # it might be funky like "_1_\n"

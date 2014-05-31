@@ -25,44 +25,21 @@ def choose_file title, dir
   SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
 end
 
-def go_online parent_window, just_screen_snapshot = false, url = nil, player_description_path = nil
+def go_online parent_window, just_screen_snapshot, movie_url, player_description_path
   
   OCR.clear_cache! # ??
   puts 'cleared OCR cache'
   
-  players_root_dir = __DIR__ + "/../zamples/players"
-  # TODO
-  # player_description_path = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
-  if player_description_path
-    p 'using auto selected player ' + player_description_path 
-  else
-    player_description_path = ''
-  end
-  
-  if !File.exist?(player_description_path)    
-    puts 'Please Select Your Movie Player'
-    player_description_path = choose_file("     SELECT MOVIE PLAYER", players_root_dir)
-    raise unless player_description_path
-  end
-   
   if just_screen_snapshot
-    p 'just doing [only] screen dump...'
     $VERBOSE=true # also add some extra output
-  elsif url
-    # accept url...
+    raise if movie_url
   else
-    # TODO auto_found_url = AutoWindowFinder.search_for_single_url_match
-    # TODO migrate these to onliners [the online playback ones]: "/../zamples/edit_decision_lists"
-	  # TODO migrate DVD;ers too :)
-	  url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"    
+    query_url = "http://cinemasoap.inet2.org/search?movieurl=" + movie_url
+    # TODO warn on web server down :)
+    edl_url = SensibleSwing::MainWindow.download_to_string query_url
+    overlay = OverLayer.new(edl_url)
   end
   
-  if url
-    overlay = OverLayer.new(url)
-	  Blanker.warmup
-  end
-  
-  puts 'Selected player: ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"
   # this one doesn't use any updates, so just pass in file contents, not filename
   screen_tracker = ScreenTracker.new_from_yaml File.binread(player_description_path), overlay, parent_window
   does_not_need_mouse_jerk = YAML.load_file(player_description_path)["does_not_need_mouse_movement"]
@@ -74,7 +51,8 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   end
 
   # exit early if we just wanted a screen dump...a little kludgey...
-  if overlay
+  if !just_screen_snapshot
+    Blanker.warmup
     screen_tracker.process_forever_in_thread
   else
     parent_window.update_playing_well_status 'warning--only doing screen dump in t-minus 2s...'      
@@ -87,7 +65,7 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
     return nil
   end
   
-  OCR.unserialize_cache_from_disk # do this every time so we don't overwrite it ever on accident
+  OCR.unserialize_cache_from_disk # do this every time so we don't overwrite it ever on accident with a fresh blank slate and lose everything
 
   overlay.start_thread true
   callback = proc { |status|
