@@ -25,7 +25,7 @@ def choose_file title, dir
   SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
 end
 
-def go_online parent_window, just_screen_snapshot = false, url = nil, player_description_path = nil
+def go_online parent_window, just_screen_snapshot = false, movie_url = nil, player_description_path = nil
   
   OCR.clear_cache! # ??
   puts 'cleared OCR cache'
@@ -48,18 +48,19 @@ def go_online parent_window, just_screen_snapshot = false, url = nil, player_des
   if just_screen_snapshot
     p 'just doing [only] screen dump...'
     $VERBOSE=true # also add some extra output
-  elsif url
-    # accept url...
+  elsif movie_url
+    # accept url from param...
   else
     # TODO auto_found_url = AutoWindowFinder.search_for_single_url_match
-    # TODO migrate these to onliners [the online playback ones]: "/../zamples/edit_decision_lists"
-	  # TODO migrate DVD;ers too :)
-	  url = SimpleGuiCreator.get_user_input "please enter url to use, like http://198.199.93.93/view/abc?raw=1"    
+    movie_url = SimpleGuiCreator.get_user_input "please enter movie url, like http://www.amazon.com/gp/product/B004RFZODC", "http://www.amazon.com/gp/product/B004RFZODC"
   end
   
-  if url
-    overlay = OverLayer.new(url)
-	  Blanker.warmup
+  if movie_url
+    query_url = "http://cinemasoap.inet2.org/search?movieurl=" + movie_url
+    # TODO warn on web server down :)
+    edl_url = SensibleSwing::MainWindow.download_to_string query_url
+    overlay = OverLayer.new(edl_url)
+    Blanker.warmup
   end
   
   puts 'Selected player: ' + File.basename(player_description_path) + "\n\t(full path: #{player_description_path})"

@@ -31,8 +31,8 @@ module SensibleSwing
       if ARGV.contain?('--advanced')
       
         path = File.dirname(__FILE__) + "/../../zamples/players/amazon/total_length_over_an_hour.txt"
-        url = "http://cinemasoap.inet2.org/view/abc?raw=1"
         autostart = new_jbutton("Auto start edited playback for testing") do
+          url = "http://www.amazon.com/gp/product/B004RFZODC" # Island of grace amazon for now
           start_new_run self, false, url, path          
         end
         new_jbutton("Take screen snapshot of player descriptor") do
