@@ -87,5 +87,5 @@ def go_online parent_window, just_screen_snapshot, movie_url, player_description
     puts 'done shuttting down'
   }
   parent_window.after_closed { close_proc.call } # just in case
-  [close_proc, overlay]
+  [close_proc, overlay, edl_url]
 end

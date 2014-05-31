@@ -1,12 +1,19 @@
+require 'pathname'
 
 module SensibleSwing
   
   class MainWindow
   
-    def start_new_run *args
+    def start_new_run parent_window, just_screen_snapshot, movie_url, player_description_path
       update_playing_well_status 'initializing...'
       @close_proc.call if @close_proc # reset in case they call start twice
-      @close_proc, @overlay = go_online *args
+      begin
+        @close_proc, @overlay, edl_url = go_online parent_window, just_screen_snapshot, movie_url, player_description_path
+        path = Pathname.new player_description_path
+        @now_playing_label.set_text "player: #{path.parent.basename}/#{path.basename} #{edl_url.split('/')[-1]} #{movie_url}" # movie name somehow? extract from movie_url? get from edl?
+      rescue OpenURI::HTTPError => e
+        show_blocking_message_dialog "uh oh, cinemasoap website possibly down [please report it]? #{e}"
+      end
     end
     
     def setup_online_player_buttons
@@ -18,8 +25,8 @@ module SensibleSwing
       new_jbutton("Start edited playback") do
         # TODO movie_url = AutoWindowFinder.search_for_single_url_match
         movie_url = SimpleGuiCreator.get_user_input "please enter movie url, like http://www.amazon.com/gp/product/B004RFZODC", test_video_url
-        # TODO players_root_dir = __DIR__ + "/../zamples/players"
-        # player_description_path = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
+        players_root_dir = __DIR__ + "/../zamples/players"
+        # TODO player_description_path = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
         player_description_path = choose_file("     SELECT MOVIE PLAYER YOU INTEND ON USING", players_root_dir)
         raise unless player_description_path
         start_new_run self, false, movie_url, player_description_path
@@ -32,9 +39,12 @@ module SensibleSwing
       new_jbutton("Open Website for viewing/editing all movie edit choice lists") do
          SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org/"
       end	    
+
       @online_status_label = add_text_line "Player status:"
       @playing_well_label = add_text_line "Status: hit start to being..."
       @playing_well_label2 = add_text_line ""
+      @now_playing_label = add_text_line ""
+
       # add_open_documentation_button # not pertinent enough yet...	  
       if ARGV.contain?('--advanced')
       

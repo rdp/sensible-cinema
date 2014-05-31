@@ -567,6 +567,10 @@ KP_ENTER dvdnav select
         system_non_blocking "open -a TextEdit \"#{filename}\""
       end
     end
+
+    def show_message message
+      SimpleGuiCreator.show_message message
+    end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
       bring_to_front unless OS.mac? # causes triplicate windows on mac! LODO rdp investigate
