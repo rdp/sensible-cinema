@@ -68,11 +68,13 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
       fmt.Println("comparing with:" + edl.AmazonURL)
       if moviename == edl.AmazonURL || moviename == edl.GooglePlayURL || moviename == edl.NetflixURL {
         title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
-        http.Redirect(w, r, "/view/" + title + "?raw=1", http.StatusFound)
+        url := "/view/" + title + "?raw=1"
+        fmt.Fprintf(w, "http://%s%s", r.Host, url)
         return
       }
     }
     fmt.Fprintf(w, "Hi there, not found %s!", moviename)
+    http.NotFound(w, r)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -158,7 +160,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
         path = strings.TrimSuffix(path, filepath.Ext(path)) // TODO
         m := validPath.FindStringSubmatch(path)
         if m == nil {
-            fmt.Println("bad path you hacker " + r.URL.Path)
+            fmt.Println("bad path hacker found" + r.URL.Path)
             http.NotFound(w, r)
             return 
         }
