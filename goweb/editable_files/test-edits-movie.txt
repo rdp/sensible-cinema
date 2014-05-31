@@ -1,0 +1,27 @@
+{
+ "NetflixURL": "http://test.com/test",
+ "AmazonURL": "",
+ "GooglePlayURL": "",
+ "Title": "title",
+ "Notes": "",
+ "Mutes": [
+  {
+   "Start": "00:04",
+   "End": "00:04.5",
+   "Category": "",
+   "ExactTypeInCategory": "",
+   "AdditionalInfo": "",
+   "AdditionalInfo1": ""
+  }
+ ],
+ "Skips": [
+  {
+   "Start": "00:05",
+   "End": "00:06",
+   "Category": "",
+   "ExactTypeInCategory": "",
+   "AdditionalInfo": "",
+   "AdditionalInfo1": ""
+  }
+ ]
+}
