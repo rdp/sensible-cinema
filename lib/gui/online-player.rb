@@ -10,7 +10,8 @@ module SensibleSwing
       begin
         @close_proc, @overlay, edl_url = go_online parent_window, just_screen_snapshot, movie_url, player_description_path
         path = Pathname.new player_description_path
-        @now_playing_label.set_text "player: #{path.parent.basename}/#{path.basename} #{edl_url.split('/')[-1]} #{movie_url}" # movie name somehow? extract from movie_url? get from edl?
+        @now_playing_label.set_text "player: #{path.parent.basename}/#{path.basename} #{edl_url.split('/')[-1]}" 
+        @now_playing_label2.set_text "currently editing for this movie: #{movie_url}" # movie name somehow? extract from movie_url? get from edl?
       rescue OpenURI::HTTPError => e
         show_blocking_message_dialog "uh oh, cinemasoap website possibly down [please report it]? #{e}"
       end
@@ -44,6 +45,7 @@ module SensibleSwing
       @playing_well_label = add_text_line "Status: hit start to being..."
       @playing_well_label2 = add_text_line ""
       @now_playing_label = add_text_line ""
+      @now_playing_label2 = add_text_line ""
 
       # add_open_documentation_button # not pertinent enough yet...	  
       if ARGV.contain?('--advanced')
