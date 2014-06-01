@@ -1,20 +1,23 @@
-== rough milestone current roadmap, in order, just here == 
-
 == things working on today/requested  [try to do what people actually want] ==
   
 == yes do ==  
 
 = low prio netflix instant stuff, but possibly still do'ish =
-  working amazon prime instant video player descriptor
+  working hulu video player descriptor
+    maybe a test edl for something there...
   tell that guy...the volunteer...once it can work at all with something [hulu?]
   netflix instant descriptor work at all doze
 
-  if non exist url, ping for name, take them to an edit page automagically with prompt :)
+  if non exist edit choice list url, ping for name, take them to an edit page automagically with prompt :)
+  there should not be any full screen 152x768 descriptors...I should be able to infer the math for 'full screen' for it...
+  blanker sometimes doesn't start right? at least linux...
   'finish' rename of sensible cinema (current is barely too confusing): github, all docu, some links, README
     rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list"
   adv. more beta testers...to those that left comments [?]
   auto find url [windows]
-  auto get appropriate descriptor [windows]
+  sanitize too long of amazon url's [?]
+  auto scan get appropriate descriptor [windows]
+    based on url?
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   it has links so you can go from our website to netflix instant...
   easier than JSON editing somehow
@@ -30,7 +33,6 @@
   add some type of popup [balloon?] if/when not tracking
 
 = to-decide netflix instant =
-  blanker sometimes doesn't start right? at least linux...
   disallow saving one that competes with another...
   XSD with severity levels in it?
   client side splash screen, this thing is slooow to load...
@@ -48,13 +50,14 @@
       multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
   automagically grab current playback url from open browser windows [windows]?
   links *out* from online index
-  fix auto scan for window in windows?
   move the online edited youtube stuff "to the go side"
   hulu descriptor
   ability to just decrease volume, not mute it [cross platform :) ]
     use the better muter exe
 
 = super-low prio netflix instant =
+  do screen capture on iOS/Android to do the same thing :)
+    any api's we could use here?
   tons more descriptors [itunes, vudu, etc.]
   "fade in" for blanks, then fade out [?]
   sheer awesome ness for not having to show the end user the timestamp while they watch the movie...somehow err other...
