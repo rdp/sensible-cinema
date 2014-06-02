@@ -118,7 +118,7 @@ The movie Avatar's DVD was released with an audio track that was "euphemized" of
 Apple's DVD player appears to be "scriptable" in a way that would work for EDL's, as well: http://web.archive.org/web/20070407125849/http://digitallyobsessed.com/showarticle.php3?ID=49
 PowerDVD 9 (possibly other versions too) may be able to "remix" (EDL style) blu-rays.  Note also that it can do things like "adding movie modification effects/text etc." as you watch, see http://www.youtube.com/watch?v=zPGkN9WVzeU
 http://enjoymoviesyourway.com seems to offer a windows based player that can do some similar things
-https://github.com/Vaselinessa/moviesoap allows control of VLC to "black out" offensive sections, identify them with keystrokes while it's playing, etc.
+https://github.com/Vaselinessa/moviesoap allows control of VLC to "black out" offensive sections, identify them with keystrokes while it's playing, etc.  moviesoap also allows sharing of filter files/automatic upload of them, and inline/ingrained control of VLC movie player for EDL style playback.
 http://www.enjoymoviesyourway.com provides a player for edited DVD playback using predefined filters.
 http://www.vidangel.com provides for editing using the API of online players, can even beam it to your device (edited) or what not in realtime, via chromecast.  Also has some community collaborative options/playback for youtube.
   vidangel also has a concept of "on off checkboxes" for choosing exactly which profanities you want to hear, violence to skip, etc. and uses those when playing back the video, with some euphemisms.  Categories/finer grained control wouldn't be too hard/far off using their system.

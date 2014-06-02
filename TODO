@@ -2,7 +2,7 @@
   
 == yes do ==  
 
-= low prio netflix instant stuff, but possibly still do'ish =
+= low prio netflix instant stuff, but still do'ish =
   working hulu video player descriptor
     maybe a test edl for something there...
   tell that guy...the volunteer...once it can work at all with something [hulu?]
@@ -11,7 +11,7 @@
   if non exist edit choice list url, ping for name, take them to an edit page automagically [i know the url too, so auto fill it for them] :)
   blanker sometimes doesn't start right? at least linux...
   'finish' rename of sensible cinema (current is barely too confusing): github, all docu, some links, README
-    rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list"
+    rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list" "cut list"?
   adv. more beta testers...to those that left comments [?]
   there should not be any full screen 152x768 descriptors...I should be able to infer the math for 'full screen' for it...
   auto find url from open browser windows [windows]
@@ -32,8 +32,12 @@
   pay peeps to do EDL's...
   add some type of popup [balloon?] if/when not tracking
   javascript google play edited option
+  hulu descriptor work
 
 = to-decide netflix instant =
+  netflix instant: "can obscure certain percentage portions of the screen"
+  screen extender?
+  netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
   disallow saving one that competes with another...
   XSD with severity levels in it?
   client side splash screen, this thing is slooow to load...
@@ -49,13 +53,15 @@
     scan for profs online/synchronize?
     integrate with DVD's?
       multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
-  links *out* from online index
   move the online edited youtube stuff "to the go side"
-  hulu descriptor
   ability to just decrease volume, not mute it [cross platform :) ]
     use the better muter exe
+  super subtitle parser watcher for netflix instant...like on-demand...
+    without download, though...they download it, I let them use it, like a medium button?
+  chrome plugin? ff? etc?
 
 = super-low prio netflix instant =
+  super automatic "new film? let me download its subs for you too, and parse them"
   do screen capture on iOS/Android to do the same thing :)
     any api's we could use here?
   tons more descriptors [itunes, vudu, etc.]
@@ -120,20 +126,18 @@
     or an online equiv?
   @VLC: does that DVD have poor chapter breaks?	(me check, then flame them, cars 2[?])
 
-== decide later to move up or down ==
+== DVD decide later to move up or down ==
 
   LLC
+  make a plugin so that stock [non moviesoap] VLC can have EDL like playback support
   mac cleanup .tgz it...it only needs mac'y stuff now :)
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
-  screen extender?
   @mplayer: you sometimes play the wrong DVD audio track
   try out gnosygnu updated, make sure it works at all, then try and break it with internal seeks, too
   update alternativeto.net with "the known competitors"
   linux can work for dvd's (bundle dvdid basically, right? right? :)
   pure java (totally java) windows 7 volume adjuster :)
   experiment with using some 3rd party dictionary profanity list...maybe to supplement?
-  netflix instant: "can obscure certain percentage portions of the screen"
-  netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
   can let them choose what to do in certain parts...
   warn if file played back not start at 0 first frame [?]
   right click on a file "=> play edited"
@@ -153,8 +157,6 @@
   inventionzy: blu-ray stuffs from (already published in) todo.inventionzy
   parser misses first subtitle entry even when it's legit?
   sintel file upconvert is *messed* [maybe just with mkv?]
-  OS X netflix instant
-    mac'ify everything including mouse LOL
   allow for the "add on" supplemental type EDL
   gottman had serious de-interlacing problems, even with softskip/pullup
   dvd_start_offset -> dvd_mpeg_start_offset or something better...
@@ -252,9 +254,6 @@
   genealogy open source tree v0  
   XBMC for real DVD's some how? Does it work now at all anyway?
   ability to "yes show [+- edited] subtitles during this section"
-  super subtitle parser watcher for netflix instant...like on-demand...
-    without download, though...they download it, I let them use it, like a medium button?
-      or add button "reveal advanced" with this new button on it...
   scanning profanity can pick one with or near profanity...
   popup_text in EDL's
   "if you're in edit mode, then scan for file changes, update too"
@@ -271,7 +270,6 @@
   can "auto find" for files, based on fast hash
   "overwrite?" prompt for file mode
   timestamp syncing needs option "test it out starting near there" or the like
-  choose better folder for saving netflix instant vs. DVD
   double check if my variance from reality "goes exactly up to 0.04 then resets to zero" over the course of a movie.
   autodetect whether is telecine or not
   check highlighting freakiness tomato home/work
@@ -331,7 +329,6 @@
     do we do the right -osd-add for VOB folders?
   smplayer "might" be able to run on linux, too...
   maybe lib dvdread add some methods better searching?
-  netflix instant CGI how crisp is their HD?
   on mac needs a different -osd-add number...though if my patches are accepted it may not matter
   change upconvert options needs its own "close" button
     and status field?

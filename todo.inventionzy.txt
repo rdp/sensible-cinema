@@ -230,3 +230,5 @@
   xbmc can be controlled via it's EDL's
   smplayer can be controlled via it's (pre-packaged file name based EDL files).
   control the roku so that you can control what it plays back (external control? http://sdkdocs.roku.com/display/sdkdoc/External+Control+Guide and GetInfo perhaps, then simulate button presses, or if possible control it directly? https://github.com/plexinc/roku-client-public/issues/52)
+
+  netflix instant: somehow download sub automatically, then play the movie, then OCR the screen playback to determine exact instant of playback [or OCR the whole thing, to determine where profanities].  Or have a "delayed playback" system that OCR's as you go along, tries to predict profanity/nudity/etc. based on subtitles [or sounds of what's going on?].
