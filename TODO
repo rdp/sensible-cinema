@@ -35,6 +35,7 @@
   hulu descriptor work
 
 = to-decide netflix instant =
+  accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen"
   screen extender?
   netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
