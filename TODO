@@ -35,6 +35,7 @@
   hulu descriptor work
 
 = to-decide netflix instant =
+  move descriptors to "online" (possibly after combining all into one?)
   accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen"
   screen extender?

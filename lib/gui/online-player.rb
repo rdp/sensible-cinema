@@ -9,9 +9,11 @@ module SensibleSwing
       @close_proc.call if @close_proc # reset in case they call start twice
       begin
         @close_proc, @overlay, edl_url = go_online parent_window, just_screen_snapshot, movie_url, player_description_path
-        path = Pathname.new player_description_path
-        @now_playing_label.set_text "player: #{path.parent.basename}/#{path.basename} #{edl_url.split('/')[-1]}" 
-        @now_playing_label2.set_text "currently editing for this movie: #{movie_url}" # movie name somehow? extract from movie_url? get from edl?
+        if @close_proc
+          path = Pathname.new player_description_path
+          @now_playing_label.set_text "player: #{path.parent.basename}/#{path.basename} #{edl_url.split('/')[-1]}" 
+          @now_playing_label2.set_text "currently editing for this movie: #{movie_url}" # movie name somehow? extract from movie_url? get from edl?
+        end
       rescue OpenURI::HTTPError => e
         show_blocking_message_dialog "uh oh, cinemasoap website possibly down [please report it]? #{e}"
       end
@@ -21,13 +23,14 @@ module SensibleSwing
       require_relative '../online_movie_players.rb'	 
       add_text_line 'Online Player playback Options:'
 
-      test_video_url = "http://test.com/test"
+      test_video_url = "http://www.hulu.com/watch/12893est"
 
       new_jbutton("Start edited playback") do
         # TODO movie_url = AutoWindowFinder.search_for_single_url_match
         movie_url = SimpleGuiCreator.get_user_input "please enter movie url, like http://www.amazon.com/gp/product/B004RFZODC", test_video_url
-        players_root_dir = __DIR__ + "/../zamples/players"
+        players_root_dir = __DIR__ + "/../../zamples/players"
         # TODO player_description_path = AutoWindowFinder.search_for_player_and_url_match(players_root_dir)
+        # or maybe player_description = get from web :)
         player_description_path = choose_file("     SELECT MOVIE PLAYER YOU INTEND ON USING", players_root_dir)
         raise unless player_description_path
         start_new_run self, false, movie_url, player_description_path
