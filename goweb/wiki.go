@@ -14,6 +14,7 @@ import ( "fmt"
 type Page struct {
     Title string
     Body  []byte
+    Edl*   Edl
 }
 
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
@@ -34,6 +35,11 @@ func (p *Page) save() error {
 
 func loadPage(title string) (*Page, error) {
     filename := DirName + "/" + title + ".txt"
+    return loadPageFilename(filename)
+}
+
+func loadPageFilename(filename string) (*Page, error) {
+    title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
     body, err := ioutil.ReadFile(filename)
     if err != nil {
         return nil, err
@@ -47,14 +53,15 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
       body, _:= ioutil.ReadFile(filename)
       var edl Edl
       edl.BytesToEdl(body) // XXX panic errors here
-      if movieurl == edl.AmazonURL || movieurl == edl.GooglePlayURL || movieurl == edl.NetflixURL {
+      if movieurl == edl.AmazonURL || movieurl == edl.GooglePlayURL || movieurl == edl.NetflixURL || movieurl == edl.HuluUrl {
         title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
         url := "/view/" + title + "?raw=1"
-        fmt.Println("found match:" + title)
+        fmt.Println("found match:" + title + "for " + movieurl)
         fmt.Fprintf(w, "http://%s%s", r.Host, url)
         return
       }
     }
+    fmt.Println("not found match for " + movieurl)
     fmt.Fprintf(w, "not found not yet in database %s!", movieurl)
     http.NotFound(w, r)
 }
@@ -75,6 +82,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
          
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
+
         b, _ := empty.EdlToBytes()
         p = &Page{Title: title, Body: b}
     }
@@ -121,6 +129,20 @@ func allFileInfos() []os.FileInfo {
     return files
 }
 
+func allPages() []*Page {
+    paths := AllPaths()
+    array2 := make([]*Page, len(paths))
+    for i, filename := range paths { 
+      body, _:= ioutil.ReadFile(filename)
+      var edl Edl
+      edl.BytesToEdl(body)
+      page, _ := loadPageFilename(filename)
+      page.Edl = &edl
+      array2[i] = page
+    }
+    return array2
+}
+
 func AllPaths() []string {
     files := allFileInfos()
     array2 := make([]string, len(files))
@@ -129,10 +151,7 @@ func AllPaths() []string {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-    files := allFileInfos()
-    array2 := make([]string, len(files))
-    for i, file := range files { array2[i] = strings.TrimSuffix(file.Name(), filepath.Ext(file.Name())) } // strip off .ext's
-    renderTemplate(w, "index", array2)
+    renderTemplate(w, "index", allPages())
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -149,7 +168,6 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         path := r.URL.Path
-        path = strings.TrimSuffix(path, filepath.Ext(path)) // TODO
         m := validPath.FindStringSubmatch(path)
         if m == nil {
             fmt.Println("bad path hacker found" + r.URL.Path)

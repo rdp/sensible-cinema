@@ -26,10 +26,23 @@ type EdlOld struct {
   NetflixURL string
   AmazonURL string
   GooglePlayURL string
+  HuluUrl string
   Title string
   Notes string
   Mutes []EditListEntry
   Skips []EditListEntry
+}
+
+func (edl *Edl) UrlString() string {
+    if edl.NetflixURL != "" {
+      return edl.NetflixURL
+    } else if edl.AmazonURL != "" {
+      return edl.AmazonURL
+    } else if edl.GooglePlayURL != "" {
+      return edl.GooglePlayURL
+    } else {
+      return edl.HuluUrl // nil ok :)
+    }
 }
 
 func (edl *Edl) EdlToBytes() ([]byte, error) {
