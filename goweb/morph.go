@@ -2,8 +2,9 @@ package main
 
 import ("fmt"
    "io/ioutil"
+   "bytes"
+   "errors"
 )
-
 
 func Morph() {
   files := AllPaths()
@@ -28,9 +29,26 @@ func CheckAll() {
     if err != nil {
       fmt.Println("probably got a bad/old one:" + filename) 
     } else {
-      fmt.Println("got a good one" + filename)
+      fmt.Println("got a good one " + filename)
     }
     // EdlOldToString ...
   }
   fmt.Println("done CheckAll")
 }
+
+func CheckEdlString(incomingBytes []byte) ([]byte, error) {
+    var asObject Edl
+    err := asObject.BytesToEdl(incomingBytes)
+    if err != nil {
+      return nil, err // never get here, basically it's too "loose" XXX panic it out?
+    }
+    b, _ := asObject.EdlToBytes()
+    countMarshalled := bytes.Count(b, []byte(`"`))
+    countIncoming := bytes.Count(incomingBytes, []byte(`"`))
+    if countIncoming != countMarshalled {
+      return nil, errors.New("miscount, possibly misspelling/malformatted or out of date?")
+    } else {
+      return b, nil
+    }
+}
+

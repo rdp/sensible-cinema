@@ -2,6 +2,7 @@
  "NetflixURL": "http://test.com/test",
  "AmazonURL": "",
  "GooglePlayURL": "",
+ "HuluUrl": "",
  "Title": "title",
  "Notes": "",
  "Mutes": [
