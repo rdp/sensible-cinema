@@ -14,6 +14,7 @@ import ( "fmt"
 type Page struct {
     Title string
     Body  []byte
+    Edl*   Edl
 }
 
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
@@ -81,6 +82,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
          
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
+
         b, _ := empty.EdlToBytes()
         p = &Page{Title: title, Body: b}
     }
@@ -127,12 +129,16 @@ func allFileInfos() []os.FileInfo {
     return files
 }
 
-func allPages() []Page {
+func allPages() []*Page {
     paths := AllPaths()
-    array2 := make([]Page, len(paths))
+    array2 := make([]*Page, len(paths))
     for i, filename := range paths { 
-      p, _ := loadPageFilename(filename)
-      array2[i] = *p 
+      body, _:= ioutil.ReadFile(filename)
+      var edl Edl
+      edl.BytesToEdl(body)
+      page, _ := loadPageFilename(filename)
+      page.Edl = &edl
+      array2[i] = page
     }
     return array2
 }
@@ -143,7 +149,6 @@ func AllPaths() []string {
     for i, f := range files { array2[i] = path.Join(DirName, f.Name()) }
     return array2
 }
-
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "index", allPages())
