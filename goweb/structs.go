@@ -34,14 +34,26 @@ type EdlOld struct {
 }
 
 func (edl *Edl) UrlString() string {
+  urlString, _ := edl.UrlAndType()
+  return urlString
+}
+
+func (edl *Edl) UrlType() string {
+  _, urlType := edl.UrlAndType()
+  return urlType
+}
+
+func (edl *Edl) UrlAndType() (string, string) {
     if edl.NetflixURL != "" {
-      return edl.NetflixURL
+      return edl.NetflixURL, "Netflix"
     } else if edl.AmazonURL != "" {
-      return edl.AmazonURL
+      return edl.AmazonURL, "Amazon"
     } else if edl.GooglePlayURL != "" {
-      return edl.GooglePlayURL
+      return edl.GooglePlayURL, "Google Play"
+    } else if edl.HuluUrl != "" {
+      return edl.HuluUrl, "Hulu" 
     } else {
-      return edl.HuluUrl // nil ok :)
+      return "not set url", "unknown"
     }
 }
 
