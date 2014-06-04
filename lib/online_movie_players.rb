@@ -35,8 +35,19 @@ def go_online parent_window, just_screen_snapshot, movie_url, player_description
     raise if movie_url
   else
     query_url = "http://cinemasoap.inet2.org/search?movieurl=" + movie_url
-    # TODO warn on web server down :)
     edl_url = SensibleSwing::MainWindow.download_to_string query_url
+    if edl_url =~ /not found/
+      webpage_itself = SensibleSwing::MainWindow.download_to_string movie_url
+      webpage_itself =~ /<title>(.*)<\/title>/i
+      SimpleGuiCreator.show_message "movie not yet in our database, please edit/add it now"   # TODO pass in url, it assigns it smartly?
+      if $1
+         movie_name = $1.split(' | ')[0] # moviename | hulu => moviename
+         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org/new?moviename=#{movie_name}&movieurl=#{movie_url}" # TODO  use movieurl
+      else
+         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org/" # index page  has add at the bottom :)
+      end
+      return nil
+    end
     overlay = OverLayer.new(edl_url)
   end
   
