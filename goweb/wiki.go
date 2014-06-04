@@ -42,12 +42,12 @@ func loadPage(title string) (*Page, error) {
 } 
 
 func searchHandler(w http.ResponseWriter, r *http.Request) {
-    moviename := r.URL.Query()["movieurl"][0];
+    movieurl := r.URL.Query()["movieurl"][0];
     for _, filename := range AllPaths() {
       body, _:= ioutil.ReadFile(filename)
       var edl Edl
       edl.BytesToEdl(body) // XXX panic errors here
-      if moviename == edl.AmazonURL || moviename == edl.GooglePlayURL || moviename == edl.NetflixURL {
+      if movieurl == edl.AmazonURL || movieurl == edl.GooglePlayURL || movieurl == edl.NetflixURL {
         title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
         url := "/view/" + title + "?raw=1"
         fmt.Println("found match:" + title)
@@ -55,15 +55,24 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
         return
       }
     }
-    fmt.Fprintf(w, "Hi there, not found %s!", moviename)
+    fmt.Fprintf(w, "not found not yet in database %s!", movieurl)
     http.NotFound(w, r)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     if err != nil {
-        // then there was an error
-        empty := &Edl{ NetflixURL: "http://...", Title: "title" }
+        // then there was an error -- it doesn't exist yet!
+        empty := &Edl{ Title: title }
+        movieurl := r.URL.Query()["movieurl"][0];
+        if strings.Contains(movieurl, "hulu") {
+          empty.HuluUrl = movieurl
+        } else if strings.Contains(movieurl, "netflix") {
+          empty.NetflixURL = movieurl
+        } else if strings.Contains(movieurl, "amazon.com") {
+          empty.AmazonURL = movieurl
+        } // else if strings.Contains(movieurl, 'play.google.com') { // youtube here too?
+         
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
         b, _ := empty.EdlToBytes()
@@ -72,7 +81,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     renderTemplate(w, "edit", p)
 }
 
-// render some template file for this action :)
+// render template file for this action :)
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
     t, err := template.ParseFiles(tmpl + ".html")
     if err != nil {
@@ -102,8 +111,9 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func newHandler(w http.ResponseWriter, r *http.Request) {
     moviename := r.URL.Query()["moviename"][0];
+    movieurl := r.URL.Query()["movieurl"][0];
     moviename = strings.Replace(moviename, " ", "-", -1)
-    http.Redirect(w, r, "/edit/" + moviename, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
+    http.Redirect(w, r, "/edit/" + moviename + "?movieurl=" + movieurl, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
 
 func allFileInfos() []os.FileInfo {
