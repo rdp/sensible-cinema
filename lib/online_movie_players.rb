@@ -22,7 +22,11 @@ for file in ['overlayer', 'status_line', 'screen_tracker', 'ocr', 'vlc_programme
 end
 
 def choose_file title, dir
-  SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
+  filename = SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
+  if !filename
+    raise "did not choose one #{title}"
+  end
+  filename
 end
 
 def go_online parent_window, just_screen_snapshot, movie_url, player_description_path
@@ -39,7 +43,7 @@ def go_online parent_window, just_screen_snapshot, movie_url, player_description
     if edl_url =~ /not found/
       webpage_itself = SensibleSwing::MainWindow.download_to_string movie_url
       webpage_itself =~ /<title>(.*)<\/title>/i
-      SimpleGuiCreator.show_message "movie not yet in our database, please edit/add it now" 
+      SimpleGuiCreator.show_message "movie not yet in our database, please edit it now #{movie_url} in browser window" 
       if $1
          movie_name = $1
          if movie_url =~ /hulu.com/
