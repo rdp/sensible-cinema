@@ -2,13 +2,18 @@
 <h1>Index</h1>
 
 {{range .}}
-    <p>[<a href="/view/{{.}}">{{.}}</a>]</p>
+    <p>[<a href="/view/{{.Title}}">{{.Title}}</a>]</p>
 {{end}}
 
 <pre>
-Or create a new page:
+Or create a new one:
 <form action="/new" method="GET">
 Movie name: <input type="text" name="moviename"/>
 <input type="submit">
 </form>
+Or search by url
+<form action="/search" method="GET">
+Movie url: <input type="text" name="movieurl"/>
+<input type="submit">
+</pre>
 
