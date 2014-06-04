@@ -156,8 +156,8 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     if len(os.Args) > 1 {
-      //Morph()
-      CheckAll()
+      Morph()
+      //CheckAll()
       os.Exit(0)
     }
     http.HandleFunc("/view/", makeHandler(viewHandler))
