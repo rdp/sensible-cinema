@@ -6,8 +6,6 @@ import ( "fmt"
 	"html/template"
         "regexp"
         "os"
-        "bytes"
-        "errors"
         "strings"
         "path/filepath"
         "path"
@@ -31,22 +29,6 @@ func (p *Page) save() error {
       return err
     } else { 
       return ioutil.WriteFile(filename, prettyBytes, 0600)
-    }
-}
-
-func CheckEdlString(incomingBytes []byte) ([]byte, error) {
-    var asObject Edl
-    err := asObject.BytesToEdl(incomingBytes)
-    if err != nil {
-      return nil, err // never get here, basically it's too "loose" XXX panic it out?
-    }
-    b, _ := asObject.EdlToBytes()
-    countMarshalled := bytes.Count(b, []byte(`"`))
-    countIncoming := bytes.Count(incomingBytes, []byte(`"`))
-    if countIncoming != countMarshalled {
-      return nil, errors.New("miscount, possibly misspelling/malformatted or out of date?")
-    } else {
-      return b, nil
     }
 }
 
@@ -174,7 +156,8 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
     if len(os.Args) > 1 {
-      Morph()
+      //Morph()
+      CheckAll()
       os.Exit(0)
     }
     http.HandleFunc("/view/", makeHandler(viewHandler))
