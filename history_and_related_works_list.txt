@@ -124,3 +124,4 @@ http://www.vidangel.com provides for editing using the API of online players, ca
   vidangel also has a concept of "on off checkboxes" for choosing exactly which profanities you want to hear, violence to skip, etc. and uses those when playing back the video, with some euphemisms.  Categories/finer grained control wouldn't be too hard/far off using their system.
   vidangel also has an online list of "editable movies" so you can choose from it, it directs you to it.
 libdvdnav had a "remap" feature for several years that allowed you to "skip" from sector to sector in a DVD, to avoid objectionable content.
+https://forum.videolan.org/viewtopic.php?f=29&t=119310 VLC has a lua cutlist extension that can accomplish edited movie playback.
