@@ -16,9 +16,9 @@
   auto find url from open browser windows [windows]
   sanitize too long of amazon url's [?]
   auto scan get appropriate descriptor [windows]
-    based on url? or maybe "given amazon, assume full screen"
+    based on url? or maybe "given amazon CL, assume full screen"
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
-  it has links so you can go from our website to netflix instant...
+  it has links so you can go from our website to netflix, etc...
   easier than JSON editing somehow
     probably not a generic JSON anything really...
   prettify website...
@@ -29,12 +29,13 @@
   google plus +url personalized [facebook?] for the project :)
   test blanker multi monitor all OS's LOL hmm...how though...
   pay peeps to do EDL's...
-  add some type of popup [balloon?] if/when not tracking
+  add some type of popup [balloon? systray?] if/when not tracking [or tracking]
   javascript google play edited option
   hulu descriptor work
   add cut list version/warning on outdated...or possibly force them to always just go and get the latest version?
 
 = to-decide netflix instant =
+  
   move descriptors to "online" (possibly after combining all into one?)
   accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen"
@@ -132,6 +133,7 @@
 == DVD decide later to move up or down ==
 
   LLC
+  VLC integrate with the "clipper" extension [and fixed DVD timestamps] to "just work" :)
   make a plugin so that stock [non moviesoap] VLC can have EDL like playback support
   mac cleanup .tgz it...it only needs mac'y stuff now :)
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
