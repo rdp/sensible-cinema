@@ -32,6 +32,7 @@
   add some type of popup [balloon?] if/when not tracking
   javascript google play edited option
   hulu descriptor work
+  add cut list version/warning on outdated...or possibly force them to always just go and get the latest version?
 
 = to-decide netflix instant =
   move descriptors to "online" (possibly after combining all into one?)
@@ -62,6 +63,7 @@
   chrome plugin? ff? etc?
 
 = super-low prio netflix instant =
+  the magic "insta upgrade" system LOL.  Maybe all from bin/sensible-cinema so it can overwrite everything else?
   super automatic "new film? let me download its subs for you too, and parse them"
   do screen capture on iOS/Android to do the same thing :)
     any api's we could use here?
