@@ -39,7 +39,8 @@
   move descriptors to "online" (possibly after combining all into one?)
   accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen"
-  screen extender?
+  screen extender [faux maximize]
+    overlay with black-er?
   netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
   disallow saving one that competes with another...
   XSD with severity levels in it?
