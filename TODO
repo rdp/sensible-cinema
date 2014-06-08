@@ -30,12 +30,12 @@
   test blanker multi monitor all OS's LOL hmm...how though...
   pay peeps to do EDL's...
   add some type of popup [balloon? systray?] if/when not tracking [or tracking]
-  javascript google play edited option
+  javascript google play edited option, also convert old stuff over to go
   hulu descriptor work
   add cut list version/warning on outdated...or possibly force them to always just go and get the latest version?
 
 = to-decide netflix instant =
-  
+  auto-prompt on new client version downlodable "go download it!"
   move descriptors to "online" (possibly after combining all into one?)
   accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen"
@@ -65,7 +65,9 @@
   chrome plugin? ff? etc?
 
 = super-low prio netflix instant =
-  the magic "insta upgrade" system LOL.  Maybe all from bin/sensible-cinema so it can overwrite everything else?
+  @CS "all online option": just do gocr remote always [!] or maybe inline java...
+     10 char md5 hash lookup should rock memory size wise though, right? low prio they can just do that locally for now...I don't see a problem with local currently...
+  the magic "insta upgrade" to new client version LOL.  Maybe all from bin/sensible-cinema so it can overwrite everything else?
   super automatic "new film? let me download its subs for you too, and parse them"
   do screen capture on iOS/Android to do the same thing :)
     any api's we could use here?
