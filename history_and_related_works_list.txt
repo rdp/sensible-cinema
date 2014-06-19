@@ -125,3 +125,4 @@ http://www.vidangel.com provides for editing using the API of online players, ca
   vidangel also has an online list of "editable movies" so you can choose from it, it directs you to it.
 libdvdnav had a "remap" feature for several years that allowed you to "skip" from sector to sector in a DVD, to avoid objectionable content.
 https://forum.videolan.org/viewtopic.php?f=29&t=119310 VLC has a lua cutlist extension that can accomplish edited movie playback.
+http://www.amara.org/en/ [universal subtitles] has a way to super impose text over online videos, probably could be used by us for [text] or obscuring the playback screen, as well. https://github.com/pculture/unisubs [could be nice, popcorn.js possibly better maintained than popcorn is]
