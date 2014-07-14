@@ -2,7 +2,7 @@
 <h1>Index</h1>
 
 {{range .}}
-    <p>[<a href="/view/{{.Title}}">{{.Title}}</a>] {{.Edl.UrlString}}</p>
+    <p>[<a href="/view/{{.Title}}">{{.Title}}</a>] {{.Edl.UrlType}}</p>
 {{end}}
 
 <pre>
@@ -11,7 +11,7 @@ Or create a new one:
 Movie name: <input type="text" name="moviename"/>
 <input type="submit">
 </form>
-Or search by url
+Or search by movie url
 <form action="/search" method="GET">
 Movie url: <input type="text" name="movieurl"/>
 <input type="submit">

@@ -10,6 +10,8 @@
   look for forever strong everywhere
 
   blanker sometimes doesn't start right? at least linux...
+  use my coupon for free movie
+  amazon descriptor
   'finish' rename of sensible cinema (current is barely too confusing): github, all docu, some links, README
     rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list" "cut list"?
   adv. more beta testers...to those that left comments [?]
@@ -17,9 +19,9 @@
   auto find url from open browser windows [windows]
   sanitize too long of amazon url's [?]
   auto scan get appropriate descriptor [windows]
-    based on url? or maybe "given amazon, assume full screen"
+    based on url? or maybe "given amazon CL, assume full screen"
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
-  it has links so you can go from our website to netflix instant...
+  it has links so you can go from our website to netflix, etc...
   easier than JSON editing somehow
     probably not a generic JSON anything really...
   prettify website...
@@ -30,15 +32,18 @@
   google plus +url personalized [facebook?] for the project :)
   test blanker multi monitor all OS's LOL hmm...how though...
   pay peeps to do EDL's...
-  add some type of popup [balloon?] if/when not tracking
-  javascript google play edited option
-  hulu descriptor work
+    shared amazon corporate?
+  add some type of popup [balloon? systray?] if/when not tracking [or tracking]
+  javascript google play edited option, also convert old stuff over to go
+  add cut list version/warning on outdated...or possibly force them to always just go and get the latest version?
 
 = to-decide netflix instant =
+  auto-prompt on new client version downlodable "go download it!"
   move descriptors to "online" (possibly after combining all into one?)
   accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen"
-  screen extender?
+  screen extender [faux maximize]
+    overlay with black-er?
   netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
   disallow saving one that competes with another...
   XSD with severity levels in it?
@@ -64,6 +69,9 @@
 
 = super-low prio netflix instant =
   community annotations [sound/images? LOL]
+  "all online option": just do gocr remote always [!] or maybe inline java...
+     10 char md5 hash lookup should rock memory size wise though, right? low prio they can just do that locally for now...I don't see a problem with local currently...
+  the magic "insta upgrade" to new client version LOL.  Maybe all from bin/sensible-cinema so it can overwrite everything else?
   super automatic "new film? let me download its subs for you too, and parse them"
   do screen capture on iOS/Android to do the same thing :)
     any api's we could use here?
@@ -132,6 +140,7 @@
 == DVD decide later to move up or down ==
 
   LLC
+  VLC integrate with the "clipper" extension [and fixed DVD timestamps] to "just work" :)
   make a plugin so that stock [non moviesoap] VLC can have EDL like playback support
   mac cleanup .tgz it...it only needs mac'y stuff now :)
   @docu: imprecise dvd "end seek to points" currently, and the most they'll ever possibly improve in my lifetime is to ensure it's "after" them instead of 'around' them
