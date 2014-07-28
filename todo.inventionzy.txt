@@ -23,6 +23,7 @@
     also related: http://www.amara.org/en/ [universal subtitles] has a way to super impose text over online videos, probably could be used by us for [text] or obscuring the playback screen, as well. https://github.com/pculture/unisubs [could be nice, popcorn.js possibly better maintained than popcorn is]
     overlay with an alpha transparent image (like circles, etc.) that may or not move over time.  The image knows which pixels should be let through.
     make this into a "pick your own aspect ratio for playing back netflix, etc." program [controls the windows, resizing them appropriately, or screen captures and re-displays that with adjusted scaling for a new aspect ratio/modified playback.]
+    some way to "interject" new audio and/or video playback [a la "fan edit"] into a playback, possibly pausing the controller, or diminishing its playback, or volume control, as well, etc.
       
    roku has an api to control playback (like a remote)...use it to control/mute/monitor playback
     a roku app (private channel?) that can somehow receive it edited, like...streaming from your computer.  Actually, I'm in a reasonable position to accomplish this LOL.  Though plugging in a computer's HDMI out cable might be nuff for now...I'd have to meter this once I "go serious" with it.
