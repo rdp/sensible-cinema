@@ -21,7 +21,7 @@ A few lib/* files have their own "main" as well.
 Want JSON'ified output somehow? Just ask.  Want anything else? Just ask.
 
 You can test the DVD portions of the program out by mounting the DVD of "big buck bunny" 
-http://rogerdpack.t28.net/sensible-cinema/releases/dvd_isos has it and a few other creative commons ISO's for use.
+https://sourceforge.net/projects/sensible-cinema/files/open_source_dvd_isos/ has it and a few other creative commons ISO's for use.
 On windows daemon tools helps there, or "magic ISO" or the like, may be helpful to avoid having to burn disks.
 
 Or you could alternatively burn a copy of big buck bunny to DVD, then use that to test it against 
