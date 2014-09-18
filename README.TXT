@@ -44,7 +44,7 @@ Enjoy your movies!
 
 == Installation ==
 
-Installation and usage instructions available here: http://rogerdpack.t28.net/sensible-cinema
+Installation and usage instructions available here: http://cleaneditingmovieplayer.inet2.org/
 
 == Creating Your Own Edit Lists, or modifying previously existing ones ==
 
