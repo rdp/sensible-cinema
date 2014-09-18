@@ -1,6 +1,6 @@
 This is a README description for Sensible Cinema, the Clean Editing Movie Player (CEM Player)
 
-For installation/download instructions, see http://rogerdpack.t28.net/sensible-cinema
+For installation/download instructions, see http://cleaneditingmovieplayer.inet2.org/
 
 ===
 
