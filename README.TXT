@@ -6,7 +6,7 @@ For installation/download instructions, see http://cleaneditingmovieplayer.inet2
 
 CEM Player allows you to use pre-programmed edit lists
 (e.g. Edit Decision Lists [2]) to watch movies that you own.  
-I.e. you can watch a DVD while "muting out" or skip certain scenes, deemed objectionable.
+I.e. you can watch a DVD while "muting out" or skipping certain scenes, deemed objectionable.
 This allows you to sit back and relax as you watch a more "sanitized" showing of your DVD.
 
 It is currently in alpha/beta, and is free (probably both forever, gplv3 license currently).
@@ -56,7 +56,7 @@ See https://github.com/rdp/sensible-cinema/wiki/How-to-create-your-own-EDL's
 
 Feedback, including feature requests, comments, etc. all welcome, see contact links here: http://cleaneditingmovieplayer.inet2.org
 
-If you're a developer and want to help out with programmming or look and feel, etc., please do!
+If you're a developer and want to help out with programming or look and feel, etc., please do!
 See notes_for_potential_developers.txt file, and also http://github.com/rdp/sensible-cinema for source, and/or
 the wiki there.
 
@@ -79,7 +79,7 @@ Q. I want to give an edited DVD to a friend, how do I do that well?
 A. Give them the original, non-edited DVD and a link to sensible-cinema's website :)
 
 Q. Can I use this with Windows Media Center?
-A. Yes, in theor you could use one of the existing WMC plugins that allows you to "call out" to a 3rd party software to play your files.
+A. Yes, in theory you could use one of the existing WMC plugins that allows you to "call out" to a 3rd party software to play your files.
    Then use the "advanced" mode in sensible cinema "create side-by-side EDL file" button to create an EDL for your previously existing file.
    Then make your WMC plugin "call out" to smplayer to play those files (through whatever means it necessary), and
    it will automatically pick up and use the EDL file.
@@ -87,7 +87,7 @@ A. Yes, in theor you could use one of the existing WMC plugins that allows you t
 
 Q. Is it ethical to watch edited movies?
   Well, producers have been making "airplane edited" movies forever... :)
-  But anyway if you don't find it ethical, then do yourself a favor don't watch them.  I personally like cutting out gratitous profanity from
+  But anyway if you don't find it ethical, then do yourself a favor don't watch them.  I personally like cutting out gratuitous profanity from
   my viewing experience.
   http://en.wikipedia.org/wiki/Re-edited_film
 
@@ -125,7 +125,7 @@ but (for me) it didn't cut it.  It costs money monthly (I'm too cheap to pay--an
 many other people don't use it because of this...).  Casual users no longer have the
 option to buy specific "filters" but are obliged to purchase a monthly subscription,
 so it doesn't make sense financially for many casual movie viewers.
-For instance, if you use redbox every week, and then have to subscribe to clearplay,
+For instance, if you use Redbox every week, and then have to subscribe to Clearplay,
 it could triple your total cost.
 Their filters sometimes don't cut out all undesired content (ex: Saints and
 Soldiers left several profanities in...which was unexpected).
@@ -133,9 +133,9 @@ If your standards differ from theirs, I guess you're out of luck.
 Clearplay apparently also runs a rather 
 confusing subscription policy, or so I'm told [1], and their DVD players that 
 are a bit shaky at times [2], so I'm told.  Their DVD players aren't quite as readily accessible (read: 
-can't buy them at walmart), nor as cheap to buy as some others.
+can't buy them at Walmart), nor as cheap to buy as some others.
 Clearplay also doesn't seem to have much community collaboration/review (though you can email them feedback).
-They also did't have filters for all movies that I, at times, wanted to watch edited (Condorman and Tron
+They also didn't have filters for all the movies that I, at times, wanted to watch edited (Condorman and Tron)
 lacking last time I checked...probably because they were too
 obscure.  Also it doesn't have filters for educational videos, etc.) 
 If there isn't a filter, you basically have to request one and then *hope* they get around to it.
@@ -145,17 +145,17 @@ no longer seem to offer a computer player, just hardware players.  They also don
 online movies either (last time I checked, anyway), nor offer an edited blu-ray player.
 I also emailed them once (2003?) to inform them I'd be making an open source
 equivalent, and haven't heard back, which I assume to mean implicitly
-they're all for it (in reality this project is more like in-home cleanflicks than clearplay, anyway) 
-Also clearplay isn't quite flexible enough, editing out only profanity/sex/violence et al (and based
+they're all for it (in reality this project is more like in-home Cleanflicks than Clearplay, anyway) 
+Also Clearplay isn't quite flexible enough, editing out only profanity/sex/violence et al (and based
 only on their own criteria).  Some users may want to,
 for example, skip the intro's to specific movies (like older movies with long songs and no 
 content during the intro) because...they want to get to the movie faster.  
 Or skip commercials in some personal DVD recording.
-Or use it on their home dvd's.  Clearplay does not allow for any of these.  
-Also clearplay doesn't seem to users for example leave comments on their filters, to improve them, etc.
-Also you can't tell from clearplay's list whether a DVD is absent because it's clean, or because they
+Or use it on their home DVD's.  Clearplay does not allow for any of these.  
+Also Clearplay doesn't seem to users for example leave comments on their filters, to improve them, etc.
+Also you can't tell from Clearplay's list whether a DVD is absent because it's clean, or because they
 haven't done a filter for it.
-Also sometimes certain DVD's "don't work" with clearplay for some reason (rental versions?) [3]
+Also sometimes certain DVD's "don't work" with Clearplay for some reason (rental versions?) [3]
 As a friend once said "Clearplay is a bit of a hassle to use in today's day and age.
 It should either have wireless or an ethernet port on it. I should
 enter my login credentials to the box. When I stick a move in, it
@@ -179,7 +179,7 @@ See also the "Overly Verbose History" section in the history_and_related_works_l
   to use the [previously downloaded] filters"
 
 [2] http://deseretbook.com/ClearPlay-HDMI-DVD-Player-30-Day-Trial-Membership/i/5038491
- "We bought a clearplay player about 2 years ago. It worked great, until it just stopped working. I called their support line, 
+ "We bought a Clearplay player about 2 years ago. It worked great, until it just stopped working. I called their support line, 
   and they told us the model we got was defective, and that the new one was much better and we could get it at a discount, but 
   the next one just died also."
 
