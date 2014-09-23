@@ -100,6 +100,7 @@
 = medium DVD-only stuff =
 
   @VLC fix trac 4
+  they wanted a way to stream it...possibly by creating an edited version that their remote fella could pick up...plus more flexible...hrm...
   test forever strong timing blu-ray @ home
   add the "needs verification" to everything again LOL "based on file time"
     basically everything that says ["dvd_start_offset actually today means... ["file" and also there's a code TODO rdp that I need to modify that's letting me cheat without needing this yet  
