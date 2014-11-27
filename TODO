@@ -9,7 +9,7 @@
   convert old edited youtube to go
 
   netflix instant descriptor work at all doze
-  javascript google play edited option, 
+  javascript google play edited option
   autostart goweb :)
   blanker sometimes doesn't start right? at least linux...
   amazon descriptor
@@ -21,13 +21,16 @@
   it has links so you can go from our website to netflix, etc...
   easier than JSON editing somehow
     probably not a generic JSON anything really...
+    with angular...do I need to just provide a UI wrapper that is intensely "json format" aware, for displaying it, etc.?
+      upload the entire thing? "save" button?
   actually make editing intuitive/easy to use editing...
   pay peeps to do EDL's...
-    shared amazon corporate?
+    shared amazon corporate account?
   add some type of popup [balloon? systray? alert?] if/when stop tracking [or tracking]
   test OS X, Windows, Linux
 
 = to-decide netflix instant =
+  deployable to varioius...
   adv. more beta testers...to those that left comments [?]
   prettify website...
   rename from using "EDL"  to "edit choice" "edit decision" "cut list" "cut list"?
@@ -47,11 +50,9 @@
   move player descriptors to "online" (possibly after combining all into one?)
   accomodate for "buffering during a bad scene" by checkign for current timestamp "under" the blanker overlay window
   netflix instant: "can obscure certain percentage portions of the screen as specified"
-  screen extender [faux maximize]
-    overlay with black-er?
+  faux maximize -- move the timestamps off screen?
   netflix instant: can "pixellate" or obscure parts instead of...just garbling them, et al.
-  disallow saving one that competes with another...
-  XSD with severity levels in it?
+  XSD with severity levels defined in it?
   client side splash screen, this thing is slooow to load...
   whoa make sure we don't use too much cpu--if we don't, get rid of status line -> constant update?
   add image url [and use it on the website] per cut list
@@ -65,14 +66,14 @@
     scan for profs online/synchronize?
     integrate with DVD's?
       multiple DVD's...or maybe just call it dvd1, dvd2 LOL seems like we need X...
-  move the online edited youtube stuff "to the go side"
   ability to just decrease volume, not mute it [cross platform :) ]
-    use the better muter exe
-  super subtitle parser watcher for netflix instant...like on-demand...
-    without download, though...they download it, I let them use it, like a medium button?
+    use the better muter exe :)
   chrome plugin? ff? etc?
+    I wonder if "all javascript" solutions can/may exist...
 
 = super-low prio netflix instant =
+  super subtitle parser watcher for netflix instant...like on-demand...
+    without download, though...they download it, I let them use it, like a medium button?
   community annotations [sound/images? LOL]
   "all online option": just do gocr remote always [!] or maybe inline java...
      10 char md5 hash lookup should rock memory size wise though, right? low prio they can just do that locally for now...I don't see a problem with local currently...
