@@ -9,8 +9,8 @@ module SensibleSwing
 	 
     def force_accept_license_first
       if !(LocalStorage['main_license_accepted'] == VERSION)
-        require_blocking_license_accept_dialog 'Sensible Cinema', 'gplv3', 'http://www.gnu.org/licenses/gpl.html', 'Sensible Cinema license agreement', 
-            "Sensible Cinema is distributed under the gplv3 (http://www.gnu.org/licenses/gpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS AGREEMENT"
+        require_blocking_license_accept_dialog 'Sensible Cinema', 'LGPL', 'https://www.gnu.org/licenses/lgpl.html', 'Sensible Cinema license agreement', 
+            "Sensible Cinema is distributed under the LGPL (https://www.gnu.org/licenses/lgpl.html).\nBY CLICKING \"accept\" YOU SIGNIFY THAT YOU HAVE READ, UNDERSTOOD AND AGREED TO ABIDE BY THE TERMS OF THIS LICENSE"
         LocalStorage['main_license_accepted'] = VERSION
       end
     end

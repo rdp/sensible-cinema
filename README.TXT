@@ -7,7 +7,7 @@ For installation/download instructions, see http://cleaneditingmovieplayer.inet2
 	CEM Player allows you to use pre-programmed edit lists (e.g. Edit Decision Lists [2]) to watch movies that you own. I.e. you can watch a DVD while "muting out" or skipping certain
 scenes, deemed objectionable. This allows you to sit back and relax as you watch a more "sanitized" showing of your DVD.
 
-	It is currently in alpha/beta, and is free (probably forever, under GPLv3 license currently). It also includes a library of EDL's that go along with various DVD's.  We need
+	It is currently in alpha/beta, and is free (probably forever, under LGPL license currently). It also includes a library of EDL's that go along with various DVD's.  We need
 volunteers/contributors to help it grow!
 
 	To use:
@@ -160,7 +160,7 @@ better.
 
 == License ==
 
-	See the included LICENSE.TXT file for licensing and usage terms (basically it's released under gplv3). Some other programs are (distributed separately and) used, if present. These are
+	See the included LICENSE.TXT file for licensing and usage terms (basically it's released under LGPL). Some other programs are (distributed separately and) used, if present. These are
 typically released under their own copy of the gplv2 license, though some have differing licenses.
 
 	EDL files themselves are released under the Creative Commons License, however. See first also the file "is_it_legal_to_copy_dvds.txt" for more information on legal use in your country.
