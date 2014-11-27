@@ -2,43 +2,45 @@
   
 == yes do ==  
 
-= low prio netflix instant stuff, but still do'ish =
+= netflix instant stuff, but still do'ish =
   working hulu video player descriptor
     maybe a test edl for something there...
-  tell that guy...the volunteer...once it can work at all with something [hulu?]
-  netflix instant descriptor work at all doze
-  look for forever strong everywhere
+  tell that guy...the volunteer...once it can work at all with something [hulu for beta?]
+  convert old edited youtube to go
 
+  netflix instant descriptor work at all doze
+  javascript google play edited option, 
+  autostart goweb :)
   blanker sometimes doesn't start right? at least linux...
-  use my coupon for free movie
   amazon descriptor
-  move downloads somewhere else except for big things...
   'finish' rename of sensible cinema (current is barely too confusing): github, all docu, some links, README
-    rename from using "EDL"  to "edit choice" "edit decision" "content point" "cut list" "cut list"?
-  adv. more beta testers...to those that left comments [?]
-  there should not be any full screen 152x768 descriptors...I should be able to infer the math for 'full screen' for it...
   auto find url from open browser windows [windows]
-  sanitize too long of amazon url's [?]
   auto scan get appropriate descriptor [windows]
     based on url? or maybe "given amazon CL, assume full screen"
   petition for more "get current time" api's to all the things [roku, etc.] [google chromecast, etc.]
   it has links so you can go from our website to netflix, etc...
   easier than JSON editing somehow
     probably not a generic JSON anything really...
-  prettify website...
   actually make editing intuitive/easy to use editing...
-  define severity levelss, use them [?]
-  create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
-    possibly just a ML and uservoice yeah
-  google plus +url personalized [facebook?] for the project :)
-  test blanker multi monitor all OS's LOL hmm...how though...
   pay peeps to do EDL's...
     shared amazon corporate?
-  add some type of popup [balloon? systray?] if/when not tracking [or tracking]
-  javascript google play edited option, also convert old stuff over to go
-  add cut list version/warning on outdated...or possibly force them to always just go and get the latest version?
+  add some type of popup [balloon? systray? alert?] if/when stop tracking [or tracking]
+  test OS X, Windows, Linux
 
 = to-decide netflix instant =
+  adv. more beta testers...to those that left comments [?]
+  prettify website...
+  rename from using "EDL"  to "edit choice" "edit decision" "cut list" "cut list"?
+  there should not be any full screen 152x768 descriptors...I should be able to infer the math for 'full screen' for it...
+  add cut list version/warning on outdated...or possibly force them to always just go and get the latest version?
+  test blanker multi monitor all OS's LOL hmm...how though...
+  google plus +url personalized [facebook?] for the project :)
+  create a forum [or facebook page] and...uservoice for all my stuff LOL [or just edl's]
+    possibly just a ML and uservoice yeah
+  define severity levelss, use them [?]
+  auto-sanitize too long of amazon url's [?]
+  move downloads somewhere else except for big things...
+  look for forever strong everywhere
   is there...a way to resize a window for people so that it moves the current playback time to off screen'ish [?]
   pay for people to do redbox for normal dvd's [add back in subtitle number for now...]
   auto-prompt on new client version downlodable "go download it!"
