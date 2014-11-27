@@ -15,7 +15,7 @@ module SensibleSwing
           @now_playing_label2.set_text "currently editing for this movie: #{movie_url}" # movie name somehow? extract from movie_url? get from edl?
         end
       rescue OpenURI::HTTPError => e
-        show_blocking_message_dialog "uh oh, cinemasoap website possibly down [please report it]? #{e}"
+        show_blocking_message_dialog "uh oh, cinemasoap website possibly down [please report it]? #{e}\n #{movie_url}"
       end
     end
     
