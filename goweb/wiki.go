@@ -117,6 +117,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 
+
 func newHandler(w http.ResponseWriter, r *http.Request) {
     moviename := r.URL.Query()["moviename"][0];
     movieurl := r.URL.Query()["movieurl"][0];
@@ -182,6 +183,10 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hi there")
 }
 
+func randomHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "random", allPages())
+}
+
 func main() {
     if len(os.Args) > 1 {
       Morph()
@@ -195,6 +200,7 @@ func main() {
     http.HandleFunc("/search", searchHandler)
     http.HandleFunc("/new", newHandler)
     http.HandleFunc("/hello_world", helloWorldHandler)
+    http.HandleFunc("/random", randomHandler)
     fmt.Println("serving on 8888") 
     http.ListenAndServe(":8888", nil)
     fmt.Println("exiting")
