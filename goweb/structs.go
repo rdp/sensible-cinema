@@ -33,6 +33,13 @@ type EdlOld struct {
   Skips []EditListEntry
 }
 
+type Page struct {
+    Title string
+    Body  []byte
+    Edl*   Edl
+}
+
+
 func (edl *Edl) UrlString() string {
   urlString, _ := edl.UrlAndType()
   return urlString
