@@ -81,7 +81,3 @@
 #ID_DVD_TITLE_6_LENGTH=114.600
 "timestamps_relative_to" => ["file", "29.97"],
 
--- 
-You received this message because you are subscribed to the Google Groups "clean-editing-movie-player" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to clean-editing-movie-player+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.

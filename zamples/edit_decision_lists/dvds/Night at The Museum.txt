@@ -52,7 +52,3 @@
 "beginning_subtitle" => ["Hey, watch it.", "03:15.85", 1],
 "ending_subtitle_entry" => ["Ripped By Geniuses Group ir guitar yahoo.com", "1:44:50.42", 1216],
 
--- 
-You received this message because you are subscribed to the Google Groups "clean-editing-movie-player" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to clean-editing-movie-player+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.

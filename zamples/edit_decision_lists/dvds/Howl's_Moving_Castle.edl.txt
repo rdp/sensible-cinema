@@ -25,7 +25,3 @@
 "dvd_title_track_start_offset" => "0.28",
 "dvd_nav_packet_offset" => [1.066667, 0.814499],
 
--- 
-You received this message because you are subscribed to the Google Groups "clean-editing-movie-player" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to clean-editing-movie-player+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
