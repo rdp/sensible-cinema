@@ -11,12 +11,6 @@ import ( "fmt"
         "path"
 )
 
-type Page struct {
-    Title string
-    Body  []byte
-    Edl*   Edl
-}
-
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9- ]+)$") // security check
 
 var DirName string = "editable_files"; // will be overwritten, can't assign nil?
@@ -35,10 +29,10 @@ func (p *Page) save() error {
 
 func loadPage(title string) (*Page, error) {
     filename := DirName + "/" + title + ".txt"
-    return loadPageFilename(filename)
+    return loadPageFromFilename(filename)
 }
 
-func loadPageFilename(filename string) (*Page, error) {
+func loadPageFromFilename(filename string) (*Page, error) {
     title := strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
     body, err := ioutil.ReadFile(filename)
     if err != nil {
@@ -78,7 +72,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
           empty.NetflixURL = movieurl
         } else if strings.Contains(movieurl, "amazon.com") {
           empty.AmazonURL = movieurl
-        } // else if strings.Contains(movieurl, 'play.google.com') { // youtube here too?
+        } // TODO else if strings.Contains(movieurl, 'play.google.com') { // youtube here too?
          
         empty.Mutes = []EditListEntry{EditListEntry{}}
         empty.Skips = []EditListEntry{EditListEntry{}}
@@ -116,7 +110,6 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
     
 }
 
-
 func newHandler(w http.ResponseWriter, r *http.Request) {
     moviename := r.URL.Query()["moviename"][0];
     movieurl := r.URL.Query()["movieurl"][0];
@@ -136,8 +129,8 @@ func allPages() []*Page {
       body, _:= ioutil.ReadFile(filename)
       var edl Edl
       edl.BytesToEdl(body)
-      page, _ := loadPageFilename(filename)
-      page.Edl = &edl
+      page, _ := loadPageFromFilename(filename)
+      page.Edl = &edl // only place we do this, for easy assocition purposes...
       array2[i] = page
     }
     return array2
@@ -152,6 +145,17 @@ func AllPaths() []string {
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
     renderTemplate(w, "index", allPages())
+}
+
+func redirectToMovieHandler(w http.ResponseWriter, r *http.Request, title string) {
+    p, err := loadPage(title)
+    if err != nil {
+        http.NotFound(w, r) // not much here...
+        return
+    }
+    var edl Edl
+    edl.BytesToEdl(p.Body)
+    http.Redirect(w, r, edl.UrlString(), http.StatusFound)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -182,6 +186,10 @@ func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hi there")
 }
 
+func randomHandler(w http.ResponseWriter, r *http.Request) {
+    renderTemplate(w, "random", allPages())
+}
+
 func main() {
     if len(os.Args) > 1 {
       Morph()
@@ -191,10 +199,12 @@ func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
+    http.HandleFunc("/redirect_to_movie/", makeHandler(redirectToMovieHandler))
     http.HandleFunc("/", indexHandler)
     http.HandleFunc("/search", searchHandler)
     http.HandleFunc("/new", newHandler)
     http.HandleFunc("/hello_world", helloWorldHandler)
+    http.HandleFunc("/random", randomHandler)
     fmt.Println("serving on 8888") 
     http.ListenAndServe(":8888", nil)
     fmt.Println("exiting")
