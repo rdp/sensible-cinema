@@ -42,7 +42,7 @@ func loadPageFromFilename(filename string) (*Page, error) {
 } 
 
 func searchHandler(w http.ResponseWriter, r *http.Request) {
-    movieurl := r.URL.Query()["movieurl"][0];
+    movieurl := r.URL.Query().Get("movieurl");
     for _, filename := range AllPaths() {
       body, _:= ioutil.ReadFile(filename)
       var edl Edl
@@ -65,7 +65,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     if err != nil {
         // then there was an error -- it doesn't exist yet!
         empty := &Edl{ Title: title }
-        movieurl := r.URL.Query()["movieurl"][0];
+        movieurl := r.URL.Query().Get("movieurl");
         if strings.Contains(movieurl, "hulu") {
           empty.HuluUrl = movieurl
         } else if strings.Contains(movieurl, "netflix") {
@@ -102,7 +102,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
         http.Redirect(w, r, "/edit/" + title, http.StatusFound)
         return
     }
-    if len(r.URL.Query()["raw"]) > 0 {
+    if len(r.URL.Query().Get("raw")) > 0 {
       fmt.Fprintf(w, "%s", p.Body)
     } else {
       renderTemplate(w, "view", p)
@@ -111,8 +111,8 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func newHandler(w http.ResponseWriter, r *http.Request) {
-    moviename := r.URL.Query()["moviename"][0];
-    movieurl := r.URL.Query()["movieurl"][0];
+    moviename := r.URL.Query().Get("moviename");
+    movieurl := r.URL.Query().Get("movieurl");
     moviename = strings.Replace(moviename, " ", "-", -1)
     http.Redirect(w, r, "/edit/" + moviename + "?movieurl=" + movieurl, http.StatusFound) // edit pre-initializes it for us...plus what if it already exists somehow? hmm....
 }
