@@ -776,3 +776,9 @@ it fails on "friday" it tracks 0:48 as 1:48
 probably at startup should not start at 0, either, wait for first screen trackage
 
 can mute for "tense" scenes
+
+vlc: donate to them a failing DVD for the "skips"
+@mplayer, dvdnav://1 can choose the "non default" audio track
+@mplayer: this freezes, which I..doubt...it should... mplayer -vo direct3d -slave -quiet \vids\sintel.mpg (or does it work?)
+dvdnav: seeking past end of dvd in mplayer? huh wuh? (for gnosygnu) also check like...everywhere with it...somewhere seemed to seek wrong...
+vlc fix their "trac #4" :)
