@@ -102,7 +102,9 @@ module SubtitleProfanityFinder
   end
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0
-    edl_output_from_string(File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
+    # jruby is unkind to invalid encoding input, and these can come from "all over" unfortunately, and it doesn't guess it right [?] ai ai so scrub
+    contents = File.read(incoming_filename).scrub
+    edl_output_from_string(contents, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
   end
   
   # **_time means "a float"

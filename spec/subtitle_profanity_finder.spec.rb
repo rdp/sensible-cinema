@@ -150,10 +150,13 @@ describe SubtitleProfanityFinder do
     
   end
 
-  S = SubtitleProfanityFinder
+  it "should parse invalid utf-8 input" do
+    assert SubtitleProfanityFinder.edl_output('invalid_utf8.srt').length > 100
+  end
 
   describe "it should let you re-factor the timestamps on the fly if desired"  do
 
+    S = SubtitleProfanityFinder
     it "should subtract from beginning etc. etc." do
       normal = S.edl_output 'dragon.srt'
       normal.should =~ /0:00:50.23/
