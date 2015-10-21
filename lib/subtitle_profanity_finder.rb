@@ -12,6 +12,10 @@ require_relative 'edl_parser'
 require 'ostruct'
 
 module SubtitleProfanityFinder
+   @@expected_min_size = 10 # so unit tests can change it
+   def self.expected_min_size= new_min
+     @@expected_min_size = new_min
+   end
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries subtitles_raw_text
@@ -38,8 +42,8 @@ module SubtitleProfanityFinder
        add_single_line_minimized_text_from_multiline out
        out
      }
-     if all.size < 10
-       raise "unable to parse subtitle file?"
+     if all.size < @@expected_min_size
+       raise "unable to parse subtitle file? size=#{all.size}"
      end
 
      # strip out auto inserted trailers/headers

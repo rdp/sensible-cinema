@@ -21,6 +21,7 @@ require_relative '../lib/subtitle_profanity_finder'
 require 'sane'
 
 describe SubtitleProfanityFinder do
+  SubtitleProfanityFinder.expected_min_size = 1
 
   describe "should parse out various profanities" do
     
