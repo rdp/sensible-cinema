@@ -19,10 +19,11 @@ module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries subtitles_raw_text
-     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # line endings so that it parses right when linux reads a windows file <huh?>
+      p subtitles_raw_text.valid_encoding?
+     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings so that it parses right when linux reads a windows file <huh?>
      all.map!{|glop|
-	   lines = glop.lines.to_a
-	   index_line = lines[0]
+       lines = glop.lines.to_a
+       index_line = lines[0]
        timing_line = lines[1].strip
        text = lines.to_a[2..-1].join("") # they still have separating "\n"'s
        # create english-ified version
@@ -103,7 +104,7 @@ module SubtitleProfanityFinder
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0
     # jruby is unkind to invalid encoding input, and these can come from "all over" unfortunately, and it doesn't guess it right [?] ai ai so scrub
-    contents = File.read(incoming_filename).scrub
+    contents = File.read(incoming_filename)
     edl_output_from_string(contents, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
   end
   
@@ -112,6 +113,7 @@ module SubtitleProfanityFinder
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true # lodo may not need include_minor_profs :P
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
+     subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
 
 #     you minus the initial srt time... (given) then
 #     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
