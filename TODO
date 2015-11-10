@@ -35,6 +35,9 @@ clean editing needs new download location...also fix "source" link...wait how do
   test OS X, Windows, Linux
 
 = to-decide netflix instant/online =
+  do a prototype HTML 5 controlling a playback device so that it skips/mutes objectionable scenes/content
+    you can get the currentTime http://www.w3schools.com/tags/av_prop_currenttime.asp and also change it/mute/control...
+    possibly inject it into other websites playback apparati, like onto netflix.com (ex: with a browser plugin)
   research integrate with "kodi"/XBMC [netflix?]
   chromecast api just look into it [?]
   deployable to varioius...
