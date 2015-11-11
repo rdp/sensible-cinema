@@ -11,6 +11,7 @@
       some blu-ray player descriptor somehow
     accomodate splits vs. blanks and work
 
+   apple TV "mirror" edited content (via overlays or not) to your TV
    netflix instant:
     overlays that are "partial window" overlays, to block pieces of the movie
       or an overlay that is obscuring [pixelating for instance] of pieces of the movie
