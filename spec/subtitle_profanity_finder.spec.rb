@@ -21,6 +21,7 @@ require_relative '../lib/subtitle_profanity_finder'
 require 'sane'
 
 describe SubtitleProfanityFinder do
+  SubtitleProfanityFinder.expected_min_size = 1
 
   describe "should parse out various profanities" do
     
@@ -149,10 +150,13 @@ describe SubtitleProfanityFinder do
     
   end
 
-  S = SubtitleProfanityFinder
+  it "should parse invalid utf-8 input" do
+    assert SubtitleProfanityFinder.edl_output('invalid_utf8.srt').length > 100
+  end
 
   describe "it should let you re-factor the timestamps on the fly if desired"  do
 
+    S = SubtitleProfanityFinder
     it "should subtract from beginning etc. etc." do
       normal = S.edl_output 'dragon.srt'
       normal.should =~ /0:00:50.23/

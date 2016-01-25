@@ -1,1 +1,0 @@
-call j bin\sensible-cinema-cli %*

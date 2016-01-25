@@ -1,0 +1,36 @@
+# edl_version 1.3, sensible cinema v0.41.9
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Honor Flight",
+
+# really only till 1:19
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+  "15:32.75", "15:35.15", "profanity", "he..",
+  "19:17.5", "19:19", "profanity", "he..", 
+"30:36.5", "30:37.5", 
+"31:58.5", "31:59.5",
+"55:14.5", "55:16.5", # could use some precision...
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "00:00.0", "00:25.0", "boring",
+  "07:15", "8:40", "fund raising",
+
+],
+
+"source" => "dvd",
+"volume_name" => "HONOR_FLIGHT",
+"timestamps_relative_to" => ["file", "29.97"],
+"disk_unique_id" => "ea0208b5|ffb743fc",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "4935.6", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.3",
+"dvd_nav_packet_offset" => [0.5, 0.738237],

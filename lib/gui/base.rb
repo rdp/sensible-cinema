@@ -34,63 +34,78 @@ class String
 end
 
 # a few I'll always need no matter what...
-require_relative '../jruby-swing-helpers/swing_helpers'
-require_relative '../jruby-swing-helpers/storage'
+require_relative '../jruby-swing-helpers/lib/simple_gui_creator'
+require_relative '../jruby-swing-helpers/lib/simple_gui_creator/storage'
+require_relative '../jruby-swing-helpers/lib/simple_gui_creator/drive_info'
 require_relative '../edl_parser'
 require 'tmpdir'
 require 'whichr'
 require 'os'
 
 if OS.doze?
-  autoload :WMI, 'ruby-wmi'
   autoload :EightThree, './lib/eight_three'
 end
 
-# attempt to load on demand...i.e. faster...
-for kls in [:MencoderWrapper, :MplayerEdl, :PlayAudio, :SubtitleProfanityFinder, :ConvertThirtyFps]
+# attempt to load on demand...i.e. faster...gah
+for kls in [:MplayerEdl, :SubtitleProfanityFinder, :ConvertThirtyFps]
   autoload kls, "./lib/#{kls.to_s.snake_case}"
 end
 
-for kls in [:PlayAudio, :RubyClip, :DriveInfo]
-  autoload kls, "./lib/jruby-swing-helpers/#{kls.to_s.snake_case}"
+class String
+  def to_filename
+    SimpleGuiCreator.to_filename(self)
+  end
 end
 
 if OS.windows?
   vendor_cache = File.expand_path(File.dirname(__FILE__)) + '/../../vendor/cache'
-  for name in ['.', 'mencoder', 'ffmpeg', 'mplayer_edl']
-    # put them all before the old path
+  for name in ['.', 'ffmpeg', 'mplayer_edl']
+    # put them all at the beginning of the PATH
     ENV['PATH'] = (vendor_cache + '/' + name).to_filename + ';' + ENV['PATH']
   end
   
-  installed_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
+  def add_smplayer_paths
+    discovered_smplayer_folders = Dir['{c,d,e,f,g}:/program files*/smplayer']
 
-  for folder in installed_smplayer_folders
-    ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+    for folder in discovered_smplayer_folders
+      ENV['PATH'] = ENV['PATH'] + ";#{folder.gsub('/', "\\")}"
+    end
   end
+  
+  add_smplayer_paths
 
 else
   # handled in check_mac_installed.rb file
-
 end
 
+# not sure where to put this method...
+    def mplayer_local add_quotes = true
+      if OS.doze?
+        loc = File.expand_path("vendor/cache/mplayer_edl/mplayer.060.exe") # also edit mplayer_up_to_date method if you change this...maybe?
+		if add_quotes
+		  loc = '"' + loc + '"'
+		end
+		loc
+      else
+        '/opt/rdp_project_local/bin/mplayer'
+      end
+    end
 import 'javax.swing.ImageIcon'
 
-module SensibleSwing
-  include SwingHelpers # various swing classes
-  JFrame
+module SensibleSwing # LODO rename :)
+  include SimpleGuiCreator # have access to various swing classes
   VERSION = File.read(File.dirname(__FILE__) + "/../../VERSION").strip
-  puts "v. " + VERSION
+  puts "v. " + VERSION + " " + RUBY_DESCRIPTION # for the console output
   
   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()) # <sigh>
   
   class MainWindow < JFrame
-    include SwingHelpers # work-around?
+    include SimpleGuiCreator # various swing classes
     
     def initialize start_visible = true, args = ARGV # lodo not optionals
-      super "Sensible-Cinema #{VERSION} (GPL)"
-	    @args = args # save them away so this works with sub-child-windows
+      super "Clean Editing Movie Player #{VERSION} (GPL)"
+      @args = args # save them away so sub windows can "not have to use" ARGV
       force_accept_license_first # in other file :P
-      setDefaultCloseOperation JFrame::EXIT_ON_CLOSE # closes the whole app when they hit X ...
       @panel = JPanel.new
       @buttons = []
       @panel.set_layout nil
@@ -98,17 +113,24 @@ module SensibleSwing
       @starting_button_y = 40
       @button_width = 400      
       
-      add_text_line "Welcome to Sensible Cinema!"
-      @starting_button_y += 10 # kinder ugly...
-      add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
-      @current_dvds_line1 = add_text_line "Checking present DVD's..."
-      @current_dvds_line2 = add_text_line ""
-      @callbacks_for_dvd_edl_present = []
-      DriveInfo.create_looping_drive_cacher
-      DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }
-      
-      setIconImage(ImageIcon.new(__DIR__ + "/../vendor/profs.png").getImage())
-      check_for_various_dependencies
+      add_text_line "Welcome to the Clean Editing Movie Player!"
+      #@starting_button_y += 10 # kinder ugly...
+      #add_text_line "      Rest mouse over buttons for \"help\" type descriptions (tooltips)."
+      icon_filename = __DIR__ + "/../../vendor/profs.png"
+      raise unless File.exist? icon_filename # it doesn't check this for us?
+      setIconImage(ImageIcon.new(icon_filename).getImage())
+      if !in_online_player_startup_mode # the other guys need tons of local help...this one is all web
+        @current_dvds_line1 = add_text_line "Checking present DVD's..."
+        @current_dvds_line2 = add_text_line ""
+        @callbacks_for_dvd_edl_present = []
+        DriveInfo.create_looping_drive_cacher
+        DriveInfo.add_notify_on_changed_disks { update_currently_inserted_dvd_list }      
+        check_for_various_dependencies
+      end
+      LocalStorage.set_once('init_preferences_once') {
+	    show_blocking_message_dialog "let's setup user preferences once..."
+	    set_individual_preferences
+      }
       set_visible start_visible
     end
     
@@ -168,6 +190,10 @@ module SensibleSwing
     def we_are_in_create_mode
      @args.index("--create-mode")
     end
+
+    def in_online_player_startup_mode
+     @args.index("--online-player-mode")
+    end
     
     def we_are_in_developer_mode?
       @args.detect{|a| a == '--developer-mode'}
@@ -200,18 +226,23 @@ module SensibleSwing
       @starting_button_y += how_much
       setSize @button_width+80, @starting_button_y + 50
     end
+    
+    def add_open_documentation_button
+      @open_help_file = new_jbutton("View Sensible Cinema Documentation") do
+        show_blocking_message_dialog "Documentation has moved to online, ask on the mailing list if there are questions"
+        SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/sensible-cinema/wiki/_pages"
+      end
+    end
 	
     LocalStorage = Storage.new("sensible_cinema_storage_#{VERSION}")
     
     def when_thread_done(thread)
       Thread.new {thread.join; yield }
-    end
-    
+    end    
 
     # a window that when closed doesn't bring the whole app down
     def new_child_window
       child = MainWindow.new true, []
-      child.setDefaultCloseOperation(JFrame::DISPOSE_ON_CLOSE) # don't exit on close
       child.parent=self # this should have failed in the PPL
       # make both windows visible by moving the child down and to the right of its parent
       x, y = self.get_location.x, self.get_location.y
@@ -219,15 +250,16 @@ module SensibleSwing
       child
     end
     
-    def run_smplayer_non_blocking *args
+    def run_smplayer_non_blocking(*args)
       @background_thread = Thread.new {
-        run_smplayer_blocking *args
+        run_smplayer_blocking(*args)
       }
     end
 
     # basically run mplayer/smplayer on a file or DVD
     def run_smplayer_blocking play_this, title_track_maybe_nil, passed_in_extra_options, force_use_mplayer, show_subs, start_full_screen, srt_filename
-      raise unless passed_in_extra_options # cannot be nil
+      puts "starting mplayer..."
+	  raise unless passed_in_extra_options # cannot be nil
       extra_options = []
       # -framedrop is for slow CPU's
       # same with -autosync to try and help it stay in sync... -mc 0.03 is to A/V correct 1s audio per 2s video
@@ -236,9 +268,12 @@ module SensibleSwing
       extra_options << "-mc 2"
       extra_options << "-autosync 30" 
 
+	  # allow a larger max volume
+	  extra_options << "-nosoftvol -af volume=20.0:0" # amplify without using buggy software mixer softvol--0 is soft clipping off, whatever that means
+	  
+      extra_options << "-osdlevel 2" # who doesn't want to see those fraction decimal points :)
       if we_are_in_create_mode
-        extra_options << "-osdlevel 2"
-        extra_options << "-osd-verbose" if we_are_in_developer_mode?		
+        extra_options << "-osd-verbose" if we_are_in_developer_mode?		 # console output
       end
       extra_options << "-osd-fractions 1"
       
@@ -270,7 +305,10 @@ module SensibleSwing
         extra_options << "-msglevel identify=4" # prevent smplayer from using *forever* to look up info on DVD's with -identify ...
       end
       
-      extra_options << "-mouse-movements #{get_upconvert_secondary_settings}" # just in case smplayer also needs -mouse-movements... :) LODO
+      extra_options << "-mouse-movements" # just in case smplayer also needs -mouse-movements... :) LODO it prolly doesn't
+	  if get_upconvert_secondary_settings.present?
+	    extra_options << get_upconvert_secondary_settings
+      end
       extra_options << "-lavdopts threads=#{OS.cpu_count}" # just in case this helps [supposed to with h.264] # NB fast *crashes* doze...
       if force_use_mplayer
         extra_options << "-font #{File.expand_path('vendor/subfont.ttf')}"
@@ -288,7 +326,7 @@ KP_ENTER dvdnav select
        EOL
        conf_file = File.expand_path './mplayer_input_conf'
        File.write conf_file, key_strokes
-       extra_options << "-volume 100" # why start low? mplayer why oh why LODO
+       extra_options << "-volume 100" # why start low? mplayer why oh why LODO tell them not to, also tell them the default should be dvdnavigable, really...yes?
        if OS.windows?
         # direct3d for windows 7 old nvidia cards' sake [yipes] and also dvdnav sake
         extra_options << "-vo direct3d"
@@ -301,13 +339,8 @@ KP_ENTER dvdnav select
        else
         upconv = ""
        end
-       if OS.doze?
-         # we want this even if we don't have -osd-add, since it adds confidence :)
-         mplayer_loc = LocalModifiedMplayer
-         assert File.exist?(mplayer_loc)
-       else
-         mplayer_loc = "mplayer"
-       end
+       mplayer_loc = mplayer_local false
+       assert File.exist?(mplayer_loc)
        c = "#{mplayer_loc} #{extra_options.join(' ')} #{upconv} -input conf=\"#{conf_file}\" #{passed_in_extra_options} \"#{play_this}\" "
       else
         if OS.windows?
@@ -317,7 +350,7 @@ KP_ENTER dvdnav select
         c = "smplayer \"#{play_this}\" -config-path \"#{File.dirname  EightThree.convert_path_to_8_3(SMPlayerIniFile)}\" " 
         c += " -fullscreen " if start_full_screen
         if !we_are_in_create_mode
-          #c += " -close-at-end " # still too unstable...
+          #c += " -close-at-end " # smplayer close after...still a bit too unstable though...
         end
       end
       puts c
@@ -325,7 +358,6 @@ KP_ENTER dvdnav select
     end
     
     SMPlayerIniFile = File.expand_path("~/.smplayer_sensible_cinema/smplayer.ini")
-    LocalModifiedMplayer = File.expand_path "vendor/cache/mplayer_edl/mplayer.exe"
     
     def set_smplayer_opts to_this, video_settings, show_subs = false
       p 'setting smplayer extra opts to this:' + to_this
@@ -337,10 +369,9 @@ KP_ENTER dvdnav select
       raise to_this if to_this =~ /"/ # unexpected, unfortunately... <smplayer bug>
       assert new_prefs = old_prefs.gsub(/mplayer_additional_options=.*/, "mplayer_additional_options=#{to_this}")
       assert new_prefs.gsub!(/autoload_sub=.*$/, "autoload_sub=#{show_subs.to_s}")
-      raise 'unexpected' if get_upconvert_vf_settings =~ /"/
       assert new_prefs.gsub!(/mplayer_additional_video_filters=.*$/, "mplayer_additional_video_filters=\"#{video_settings}\"")
       raise 'smplayer on non doze not expected...' unless OS.doze?
-      mplayer_to_use = LocalModifiedMplayer  
+      mplayer_to_use = mplayer_local false 
       assert File.exist?(mplayer_to_use)
       new_value = "\"" + mplayer_to_use.to_filename.gsub("\\", '/') + '"' # forward slashes. Weird.
       assert new_prefs.gsub!(/mplayer_bin=.*$/, "mplayer_bin=" + new_value)
@@ -354,36 +385,9 @@ KP_ENTER dvdnav select
       new_prefs.each_line{|l| print l if l =~ /additional_video/} # debug
     end
     
-    def system_blocking command, low_prio = false
+    def system_blocking command
       return true if command =~ /^@rem/ # JRUBY-5890 bug
-      if low_prio
-        out = IO.popen(command) # + " 2>&1"
-        low_prio = 64 # from msdn
-        
-        if command =~ /(ffmpeg|mencoder)/
-          # XXXX not sure if there's a better way...because some *are* complex and have ampersands...
-          # unfortunately have to check for nil because it could exit too early [?]
-          exe_name = $1 + '.exe'
-          begin
-            p = proc{ ole = ::WMI::Win32_Process.find(:first,  :conditions => {'Name' => exe_name}); sleep 1 unless ole; ole }
-            piddy = p.call || p.call || p.call # we actually do need this to loop...guess we're too quick
-            # but the first time through this still inexplicably fails all 3...odd
-            piddys = ::WMI::Win32_Process.find(:all,  :conditions => {'Name' => exe_name})
-            for piddy in piddys
-              # piddy.SetPriority low_prio # this call can seg fault at times...JRUBY-5422
-              pid = piddy.ProcessId # this doesn't seg fault, tho
-              system_original("vendor\\setpriority -lowest #{pid}") # uses PID for the command line
-            end
-          rescue Exception => e
-            p 'warning, got exception trying to set priority [jruby prob? ...]', e
-          end
-        end
-        print out.read # let it finish
-        out.close
-        $?.exitstatus == 0 # 0 means success
-      else
-        raise command + " failed env #{ENV['PATH']}" unless system_original command
-      end
+      raise command + " failed env #{ENV['PATH']}" unless system_original command
     end
     
     def system_non_blocking command
@@ -396,6 +400,7 @@ KP_ENTER dvdnav select
     else # it's a reload
     end
    
+    # LODO remove now unused parameter...
     def play_dvd_smplayer_unedited use_mplayer_instead
       drive_or_file, dvd_volume_name, dvd_id, edl_path_maybe_nil, descriptors = choose_dvd_or_file_and_edl_for_it(force_choose_edl_file_if_no_easy_match = true)
       title_track_maybe_nil = get_title_track_string(descriptors, false)
@@ -411,21 +416,40 @@ KP_ENTER dvdnav select
       out = []
       
       nav, mpeg_time = descriptors['dvd_nav_packet_offset'] # like [0.5, 0.734067]
+	  
       if nav
-        offset_time = mpeg_time*1/1.001 - nav # our reading like 0.5 is actually a bit offset, since in reality that "means 4.997" or what not
+	    mpeg_time *= 1/1.001 # -> 29.97 fps
+        offset_time = mpeg_time - nav
       else
   		  # readings: 0.213  0.173 0.233 0.21 0.18 0.197 they're almost all right around 0.20...
-        show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now..."
+        show_blocking_message_dialog "error--your DVD EDL doesn\'t list a start offset time [dvd_nav_packet_offset] which is needed for precise accurate timing. Please run\nadvanced mode -> Display information about current DVD\nand add it to the EDL. Using a default for now...if you tweak any timing info you may want to set this more accurately first!"
         offset_time = 0.20
-        p caller
       end
-	  raise if offset_time <= 0 # unexpected...
-	    out << "-osd-add #{ "%0.3f" % offset_time}"
+	  raise if offset_time < -0.5 # unexpected...except karate kid which actually has a negative...
+	  # -osd-add is because the initial NAV packet is "x" seconds off from the mpeg, and since 
+	  # we have it set within mplayer to "prefer to just give you the MPEG time when you haven't passed a DVD block"
+	  # we wanted to match that more precisely once we did get past it.
+	  # so basically today we are trying to "match" the underlying MPEG time well. Which is wrong, of course.
+	  # either match the file or match the DVD, punk!
+	  
+	  mpeg_start = descriptors['dvd_title_track_start_offset']
+	  if mpeg_start
+	    # TODO rdp mark all current ones [most of them anyway] as file, then this will be appropriate...
+	    #unless descriptors["timestamps_relative_to"][0] == ["dvd_start_offset"] # like  ["dvd_start_offset", "29.97"]
+          out << "-osd-subtract #{ "%0.3f" % mpeg_start}" # bring it into line with what the "file time" would be, since it skips the initial 0.28s ...
+		#else
+		#  puts "update me!"
+		#end
+	  else
+	    show_blocking_message_dialog "DVD lacks dvd_title_track_start_offset -- please add it"
+	  end
+	  
+	  out << "-osd-add #{ "%0.3f" % offset_time}"
       out.join(' ')
     end
 
     if OS.doze? # avoids spaces in filenames :)
-      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '\\mplayer.temp.edl'
+      EdlTempFile = EightThree.convert_path_to_8_3(Dir.tmpdir) + '/mplayer.edl' # stay 8.3 friendly, guess we want forward slashes
     else
       raise if Dir.tmpdir =~ / / # that would be unexpected, and possibly cause problems...
       EdlTempFile = Dir.tmpdir + '/mplayer.temp.edl'
@@ -475,10 +499,12 @@ KP_ENTER dvdnav select
       end
     end
 
-#    MplayerBeginingBuffer = 1.0
-#    MplayerEndBuffer = 0.0
+   def begin_buffer_preference
+    LocalStorage['mplayer_beginning_buffer']
+   end
     
-    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, add_secs_begin = LocalStorage['mplayer_beginning_buffer'], show_subs = false
+    def play_smplayer_edl_non_blocking optional_file_with_edl_path = nil, extra_mplayer_commands_array = [], force_mplayer = false, start_full_screen = true, add_secs_end = 0, 
+	    add_secs_begin = begin_buffer_preference, show_subs = false
       if we_are_in_create_mode
         assert(add_secs_begin == 0 && add_secs_end == 0)
       end
@@ -489,8 +515,19 @@ KP_ENTER dvdnav select
         drive_or_file, dvd_volume_name, dvd_id, edl_path, descriptors = choose_dvd_or_file_and_edl_for_it
       end
       start_add_this_to_all_ts = 0
-      if edl_path # some don't care...
-        descriptors = EdlParser.parse_file edl_path
+	  
+      if edl_path # some don't have one [?]
+	    begin
+		  # TODO combine these 2 methods yipzers
+          descriptors = EdlParser.parse_file edl_path
+  	      splits = [] # TODO not pass as parameter either
+          edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
+          File.write(EdlTempFile, edl_contents)
+          extra_mplayer_commands_array << "-edl #{EdlTempFile}" 
+		rescue SyntaxError => e
+		  show_blocking_message_dialog "unable to parse file! #{edl_path} #{e}"
+		  raise
+		end
         title_track = get_title_track_string(descriptors)
       end
       
@@ -498,7 +535,8 @@ KP_ENTER dvdnav select
         # it's a DVD of some sort
         extra_mplayer_commands_array << get_dvd_playback_options(descriptors)
       else
-	      # it's a file
+	    check_for_ffmpeg_installed
+	    # it's a file
         # check if it has a start offset...
         all =  `ffmpeg -i "#{drive_or_file}" 2>&1` # => Duration: 01:35:49.59, start: 600.000000
         all =~ /Duration.*start: ([\d\.]+)/
@@ -508,13 +546,6 @@ KP_ENTER dvdnav select
             maybe not compatible with XBMC, if that's what you use, and you probably don't" # LODO test it XBMC...
           start_add_this_to_all_ts = start
         end
-      end
-      
-      if edl_path
-  	    splits = [] # TODO not pass as parameter either
-        edl_contents = MplayerEdl.convert_to_edl descriptors, add_secs_end, add_secs_begin, splits, start_add_this_to_all_ts # add a sec to mutes to accomodate for mplayer's oddness..
-        File.write(EdlTempFile, edl_contents)
-        extra_mplayer_commands_array << "-edl #{File.expand_path EdlTempFile}" 
       end
       
       run_smplayer_non_blocking drive_or_file, title_track, extra_mplayer_commands_array.join(' '), force_mplayer, show_subs, start_full_screen, get_srt_filename(descriptors, edl_path)
@@ -536,43 +567,50 @@ KP_ENTER dvdnav select
         system_non_blocking "open -a TextEdit \"#{filename}\""
       end
     end
+
+    def show_message message
+      SimpleGuiCreator.show_message message
+    end
     
     def new_nonexisting_filechooser_and_go title = nil, default_dir = nil, default_file = nil
-      bring_to_front unless OS.mac? # causes triples on mac!
-      JFileChooser.new_nonexisting_filechooser_and_go title, default_dir, default_file
+      bring_to_front unless OS.mac? # causes triplicate windows on mac! LODO rdp investigate
+      SimpleGuiCreator.new_nonexisting_filechooser_and_go title, default_dir, default_file
     end
 
     # also caches directory previously selected ...
     def new_existing_file_selector_and_select_file title, dir = nil
-      bring_to_front unless OS.mac?
-      unique_trace = caller.inspect
+      bring_to_front unless OS.mac? # causes same duplicate prompts?
+      unique_trace = caller.map{|string| string.gsub(/\d+/, '_') }.inspect # or #hash I guess, but maybe easier for debugging purposes to save the whole trace
       if LocalStorage[unique_trace]
         dir = LocalStorage[unique_trace]
       end
       p 'using system default dir' unless dir # happens more frequently after code changes alter the path :P
       p 'using lookup dir ' + dir, LocalStorage[unique_trace] if $VERBOSE
-      got = SwingHelpers.new_previously_existing_file_selector_and_go title, dir
+      got = SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
       LocalStorage[unique_trace] = File.dirname(got)
       got
     end
     
     def show_blocking_message_dialog(message, title = message.split("\n")[0], style= JOptionPane::INFORMATION_MESSAGE)
-      bring_to_front
-      SwingHelpers.show_blocking_message_dialog message, title, style
+      SimpleGuiCreator.show_blocking_message_dialog message, title, style
     end
     
     # call dispose on this to close it if it hasn't been canceled yet...
     def show_non_blocking_message_dialog message, close_button_text = 'Close'
       bring_to_front
       # lodo NonBlockingDialog it can get to the top instead of being so buried...
-      SwingHelpers.show_non_blocking_message_dialog message, close_button_text
+      SimpleGuiCreator.show_non_blocking_message_dialog message, close_button_text
     end
     
-    include_class javax.swing.UIManager
-    
+    java_import javax.swing.UIManager
+
+	def get_user_input_with_persistence(message, storage_key, cancel_ok=false)
+	  got = get_user_input(message, LocalStorage[storage_key], cancel_ok)
+      LocalStorage[storage_key] = got
+	  got
+	end
     def get_user_input(message, default = '', cancel_ok = false)
-      bring_to_front
-      SwingHelpers.get_user_input message, default, cancel_ok
+      SimpleGuiCreator.get_user_input message, default, cancel_ok
     end
     
     def show_copy_pastable_string(message, value)
@@ -582,13 +620,12 @@ KP_ENTER dvdnav select
     end
     
     def show_in_explorer filename
-      SwingHelpers.show_in_explorer filename
+      SimpleGuiCreator.show_in_explorer filename
     end
     
     def show_select_buttons_prompt message, names ={}
-      JOptionPane.show_select_buttons_prompt(message, names)
+      SimpleGuiCreator.show_select_buttons_prompt(message, names)
     end
-
 
     def parse_edl path
       EdlParser.parse_file path
@@ -646,7 +683,6 @@ KP_ENTER dvdnav select
         if used_local_file_option
           raise unless selected_idx == 0 # it was our only option...they must have selected it!
           filename = new_existing_file_selector_and_select_file("Select yer previously grabbed from DVD file")
-          assert_ownership_dialog
           return [filename, File.basename(filename), NonDvd]
         else
           disk = opticals[selected_idx]
@@ -672,8 +708,11 @@ KP_ENTER dvdnav select
     
     def with_autoclose_message(message)
       a = show_non_blocking_message_dialog message
-      yield
-      a.close
+	  begin
+        yield
+	  ensure
+        a.close
+	  end
     end
 	
     def we_are_in_upconvert_mode
@@ -681,33 +720,23 @@ KP_ENTER dvdnav select
     end
 
     def setup_default_buttons
-      # relies on some dependency .rb files...
       if we_are_in_upconvert_mode
         add_play_upconvert_buttons
       else
         if we_are_in_create_mode
           setup_create_buttons
-          add_text_line 'Contact:'
+        elsif in_online_player_startup_mode
+          setup_online_player_buttons
         else
           setup_normal_buttons
         end
       
-        @upload = new_jbutton("Feedback/submissions welcome!") # keeps this one last! :)
-        @upload.tool_tip = "We welcome all feedback!\nQuestion, comments, request help.\nAlso if you create a new EDL, please submit it back to us so that others can benefit from it later!"
-        @upload.on_clicked {
-		      show_blocking_message_dialog "ok, will open up the groups page now and optionally an email to it"
-          system_non_blocking("start mailto:sensible-cinema@googlegroups.com")
-          system_non_blocking("start http://groups.google.com/group/sensible-cinema")
-        }
-        increment_button_location
-
       end # big else
       
       @exit = new_jbutton("Exit", "Exits the application and kills any background processes that are running at all--don't exit unless you are done processing all the way!")
       @exit.on_clicked {
         Thread.new { self.close } # don't waste the time to close it :P
         puts 'Thank you for using Sensible Cinema. Come again!'
-        System.exit 0
       }
 
       increment_button_location
@@ -719,6 +748,17 @@ KP_ENTER dvdnav select
     def get_disk_chooser_window names
       DropDownSelector.new(self, names, "Click to select DVD drive")
     end
+	
+	def get_temp_file_name name_with_ext
+	  File.dirname(EdlTempFile) + '/' + name_with_ext
+	end
+	
+    # converts to full path, 8.3 if on doze
+    def normalize_path path
+      path = File.expand_path path
+      path = EightThree.convert_path_to_8_3 path if OS.doze?
+    end
+
 
   end
   

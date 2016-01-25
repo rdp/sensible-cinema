@@ -1,0 +1,37 @@
+# edl_version_version 1.2, sensible cinema v0.41.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Pride And Prejudice Keira Knightley",
+
+"mutes" => [
+ "0:15:19.48" , "0:15:23.40", "profanity", "l...", "Praise the [l...]. We are saved!",
+  "0:17:36.99" , "0:17:39.45", "profanity", "l...", "Good [l...], did you walk here?",
+  "1:31:13.36" , "1:31:15.48", "profanity", "l...", "They are gone to [l...] knows where.",
+  "1:34:07.23" , "1:34:11.86", "profanity", "deity", "[___] knows how much your uncle must've laid on that wretched man.",
+  "1:39:59.40" , "1:40:03.32", "profanity", "l...", "Oh, my [l...], I shall have a seizure, I'm sure I shall.",
+  "1:44:41.09" , "1:44:46.13", "profanity", "a..", "First, I must tell you I've been the most unmitigated and comprehensive [a..] ",
+  "1:45:28.51" , "1:45:32.26", "profanity", "l...", "Thank the [l...] for that. I thought it would never happen.",
+  "1:57:58.56" , "1:58:00.60", "profanity", "l...", "Good [l...].",
+  "1:06:48.91" , "1:06:52.14", "profanity", "intercourse", "which are only to be obtained through [intercourse]...",
+],
+
+"blank_outs" => [
+  "01:22:39.9", "01:23:34.84", "sculptures some rear/frontal nudity",
+  "01:24:06.15", "01:24:21.47", "sculptures read nudity", 
+  "01:22:03.00", "01:22:14.88", "pictures nudity frontal",
+],
+
+"source" => "dvd",
+"volume_name" => "PRIDE_AND_PREJUDICE",
+"timestamps_relative_to" => ["file", "29.97"],
+"disk_unique_id" => "52319a42|ed9e965a",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "7689.266", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.28",
+"dvd_nav_packet_offset" => [0.4, 0.6143],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Lydia! Kitty!", "2:10.21", 2],
+"ending_subtitle_entry" => ["Splendid fishing, good company. What a capital fellow.", "1:30:24.25", 932],

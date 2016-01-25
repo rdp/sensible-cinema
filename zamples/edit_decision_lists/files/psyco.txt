@@ -1,0 +1,26 @@
+# edl_version_version 1.1, created by sensible cinema v0.38.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "01 Audio CD",
+#Allan Burger Relationship Matters,  therapy CD
+
+"source" => "movie file",
+
+"filename" => "01 Audio CD.m4a",
+
+"movie_hash" => "0c8d9ea36e948751",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  "0:05:13.0", "0:05:19.0", "profanity", "G..", 
+  "0:38:30.0", "0:38:36.0", "profanity", "G..", 
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"timestamps_relative_to" => ["movie file"],
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie

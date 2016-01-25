@@ -19,7 +19,8 @@ This file is part of Sensible Cinema.
 require_relative 'edl_parser'
 
 class MplayerEdl
-  def self.convert_to_edl specs, add_this_many_to_end = 0, add_this_many_to_beginning = 0, splits = [], extra_time_to_all = 0.0
+  
+  def self.convert_to_edl specs, add_this_many_to_end = 0, add_this_many_to_beginning = 0, splits = [], extra_time_to_all = 0.0, use_english_timestamps = false
     
     # simple re-map to EDL style output
     combined = EdlParser.convert_incoming_to_split_sectors specs, add_this_many_to_end, add_this_many_to_beginning, splits
@@ -29,8 +30,13 @@ class MplayerEdl
     for start, endy, type in combined
       start += extra_time_to_all
       endy += extra_time_to_all
+      if use_english_timestamps
+        start = EdlParser.translate_time_to_human_readable start
+        endy  = EdlParser.translate_time_to_human_readable endy
+      end
       out += "#{start} #{endy} #{map[type]}\n"
     end
     out
   end
+  
 end

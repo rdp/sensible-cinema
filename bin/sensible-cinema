@@ -17,18 +17,19 @@ This file is part of Sensible Cinema.
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-
-puts 'Starting Sensible Cinema...'
+puts 'Starting Clean Editing Movie Player (Sensible Cinema)...'
+# version output to stdout is in lib/gui/base.rb ...
 
 require File.expand_path(File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb")
 begin
   require 'sane'
   require 'whichr'
 rescue LoadError => e
-  raise 'please run the rake command to copy dependencies (like rebundle_copy_in_dependencies) first, as we prefer using cached rubygems ' + e.to_s
+  raise 'please run the rake command to copy dependencies (like gem install jeweler sane [maybe rake]) first, as we prefer using cached gems ' + e.to_s
 end
 
-raise 'probably need jruby' unless OS.java? # put after loading sane gem so we have the OS gem available :)
+raise $:.inspect + " has system installed gems in it, run rake rebundle_copy_in_dependencies first" if $:.detect{|path| path =~ /gems/ && path !~ /vendor_gems/}
+raise 'probably need jruby' unless OS.java? # put after loading sane gem so we have the OS class available :)
 
 require_relative '../lib/gui/dependencies'
 require_relative '../lib/gui/base'
@@ -36,6 +37,9 @@ require_relative '../lib/gui/normal'
 require_relative '../lib/gui/create' # LODO maybe don't need to require all these every time...
 require_relative '../lib/gui/create-file'
 require_relative '../lib/gui/upconvert'
+require_relative '../lib/gui/online-player'
+
+$AM_IN_UNIT_TEST = false # avoid some ruby "undefined" warnings in $VERBOSE mode
 
 if $0 == __FILE__
   if ARGV.index('-h') || ARGV.index('--help')
@@ -44,17 +48,20 @@ if $0 == __FILE__
      $ jruby bin/sensible-cinema --create-mode      # DVD output "parser/cutter" create mode [advanced]
      $ jruby bin/sensible-cinema --upconvert-mode   # DVD/file upconverting player
                                  --exit-immediately # don't show the GUI, for benchmarking startup times
-     $ jruby bin/sensible-cinema-cli                # the experimental OCR tracker for edited arbitrary online/local/internet players.
-                                                      run it with --help to see its various options.
+     $                           --online-player-mode [--go] # just run the online player mode,
+                           the experimental OCR tracker for edited arbitrary online/local/internet players.                                                     
 
-     $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for more details.
+     $ jruby lib/**.rb Many library files have their own "main" method for example to 'just' parse an EDL file, etc.  Ask for details.
     EOL
   else
     a = SensibleSwing::MainWindow.new true, ARGV
     a.setup_default_buttons
-    puts 'Please use the Sensible Cinema GUI window popup...'
     if ARGV.index('--exit-immediately')
       a.dispose
+    else
+      puts 'Please use the Sensible Cinema GUI window popup...'
+	    a.sleep_until_closed # avoid some EBADF for jruby autoclose method yikes!	  
+      puts 'Window closed, exiting...'
     end
   end
 end

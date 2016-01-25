@@ -1,0 +1,35 @@
+# edl_version_version 1.1, sensible cinema v0.39.3
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Incredibles",
+
+"mutes" => [
+  "0:43:20.07" , "0:43:24.98", "profanity", "deity", "My , you've gotten fat. Come in. Come, come.",
+  "0:43:32.24" , "0:43:36.91", "profanity", "deity", "Yes, things are going quite well. Quite well. My [ ], no complaints.",
+  "0:43:55.68" , "0:43:59.55", "profanity", "deitys", "Feh! I used to design for [deitys].",
+  "1:03:12.51" , "1:03:16.81", "profanity", "deity", "You are Elastigirl! My ! Pull yourself together.",
+  "1:10:54.0" , "1:10:57.33", "profanity", "deity", "- Oh, my ! Who's idea was this? - What are we gonna do?",
+  "1:27:12.53" , "1:27:15.37", "profanity", "deity", "We're running for our lives through some [_]forsaken jungle.",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "INC0NNF1",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "28399f01|7e920a7a",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "6917.433", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.28",
+"dvd_nav_packet_offset" => [0.5, 0.280633],
+
+
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Is this on? That's fine.", "34.0", 2],
+"ending_subtitle_entry" => ["Next time you gamble bet your own life!", "1:16:22.11", 897],

@@ -1,0 +1,26 @@
+# comments can go after a # on any line, for example this one.
+"name" => "National Treasure",
+
+"mutes" => [
+
+],
+
+"blank_outs" => [
+  "0:12", "0:15.7",
+  "30:00", "30:05",
+  "1:00:10", "1:00:15"
+
+],
+
+"dvd_nav_packet_offset" => [0.4, 0.6143],
+"volume_name" => "NATIONAL_TREASURE",
+"disk_unique_id" => "91a5aeec|5178a204",
+"dvd_title_track" => "1", 
+"dvd_title_track_length" => 7856.8,
+# "subtitle_url" => "1234567",
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only...",
+"dvd_start_offset" => "0.28",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"beginning_subtitle" => ["Grandpa(sris)! your's is here?!., You're not supposed to be up here, looking at that.", "01:28.16"],
+"ending_subtitle_entry" => ["You'll figure it out.", "2:01:32.40"]

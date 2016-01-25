@@ -1,0 +1,31 @@
+# edl_version_version 1.1, sensible cinema v0.39.4
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Harry Potter 5 Order Phoenix",
+
+"mutes" => [
+  "0:05:09.54" , "0:05:14.21", "profanity", "l...", "Good [l...], boy. They told me you were intelligent.",
+  "0:08:44.50" , "0:08:48.36", "profanity", "deity", "- Tonks, for [___]'s sake. - Unnatural.",
+  "0:41:11.81" , "0:41:17.25", "profanity", "h...", "[bloo..] [h...]  Harry. The woman's torturing you.",
+  "00:56:42", "00:56:45", "profanity", "[bloo..]",
+# beginning till 4:30 dementors
+],
+
+"blank_outs" => [
+  "01:08:16", "01:08:21.04", "blood",
+],
+
+"source" => "dvd",
+"volume_name" => "HARRY_POTTER_5_ORDER_PHOENIX",
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"disk_unique_id" => "d4d0eeb7|9ffeb73f",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "8284.533", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.13",
+"dvd_nav_packet_offset" => [0.5, 0.491774],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["I don't know about you it's just too hot today, isn't it?", "53.11", 2],
+"ending_subtitle_entry" => ["The Ministry restricts their territory much more...", "1:28:41.1", 976],

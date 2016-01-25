@@ -1,0 +1,83 @@
+# copy and paste these into your "mute" section of A SEPARATE EDL already created with the other buttons, for lines you deem mute-worthy
+"mutes" => [
+
+  "0:04:09.39" , "0:04:11.36", "profanity", "h...", "That's a [h...] of a field. Challenging.",
+  "0:06:35.60" , "0:06:36.50", "profanity", "s...", "[s...].",
+  "0:06:39.31" , "0:06:41.48", "profanity", "d...", "[d...].",
+  "0:08:05.29" , "0:08:07.35", "profanity", "a..h...", "I'll kill you, [a..h...].",
+  "0:10:56.73" , "0:11:01.34", "profanity", "h...", "annoys the [h...] out of the Tourist Commission.",
+  "0:13:34.76" , "0:13:38.49", "profanity", "f...", "I'm going to [f...] him up. Watch this. Hold my stick.",
+  "0:14:44.09" , "0:14:45.99", "profanity", "sh..", "He's a vindictive little [sh..], Captain.",
+  "0:17:54.01" , "0:17:56.01", "profanity", "deity", "[___].",
+  "0:20:24.00" , "0:20:28.14", "profanity", "deity", "just to--Oh, [___]-- to blast yourself out?",
+  "0:21:43.51" , "0:21:46.84", "profanity", "deity", "Oh, [___]! When?",
+  "0:24:47.33" , "0:24:50.02", "profanity", "deity", "Go, [___] [d...] it! Go!",
+  "0:25:30.47" , "0:25:32.47", "profanity", "deity", "You got a lot of [___][d...] gall.",
+  "0:28:54.17" , "0:28:55.38", "profanity", "deity", "Oh, [___]!",
+  "0:29:41.46" , "0:29:42.82", "profanity", "deity", "Oh, [___].",
+  "0:32:08.70" , "0:32:10.03", "profanity", "deity", "Oh, for [___]'s sakes.",
+  "0:37:07.93" , "0:37:12.43", "profanity", "deity", "[___] knows what would happen to you if I wasn't around.",
+  "0:40:14.02" , "0:40:15.65", "profanity", "l...", "[l...] have mercy.",
+  "0:40:17.26" , "0:40:18.99", "profanity", "deity", "[___] [___] ",
+  "0:43:00.49" , "0:43:03.22", "profanity", "a..", "How about we bust your [a..]  for B-and-E?",
+   "0:44:33.40" , "0:44:34.00", "profanity", "l...", "[D...] D... NOTHING BUT MONEY.",
+  "0:47:41.50" , "0:47:43.44", "profanity", "sh..", "If you're broke and can't afford an attorney, tough [sh..]!",
+  "0:48:53.17" , "0:48:55.98", "profanity", "deity", "Oh, [___]. I can't tell you anything.",
+  "0:49:40.45" , "0:49:42.45", "profanity", "deity", "[___], what is that? Don't!",
+  "0:50:38.71" , "0:50:40.51", "profanity", "deity", "Honest to [___], I don't know.",
+  "0:51:25.26" , "0:51:28.56", "profanity", "deity", "Where is my [___][d...] car?",
+  "0:52:43.87" , "0:52:45.00", "profanity", "deity", "Oh, [___]! Don't let her swallow her tongue!",
+  "0:54:43.46" , "0:54:46.29", "profanity", "f...", "OK! Just get me the [f...] out of here!",
+  "0:55:03.91" , "0:55:06.45", "profanity", "deity", "Please, Morty. [___].",
+  "0:55:54.72" , "0:55:55.99", "profanity", "deity", "OH, MY [___]. IT'S EATING MY SHOE.",
+  "0:57:07.27" , "0:57:09.77", "profanity", "deity", "Thank [___].",
+  "0:59:43.79" , "0:59:46.28", "profanity", "deity", "[___], I am so tired.",
+  "1:00:52.86" , "1:00:55.29", "profanity", "deity", "Oh, my [___]. It was horrible.",
+  "1:02:38.63" , "1:02:40.77", "profanity", "b....", "I no working with him, you [b....]!",
+  "1:04:55.93" , "1:04:58.93", "profanity", "sh..", "[sh..]! [d...]!",
+  "1:05:08.31" , "1:05:09.78", "profanity", "d...", "[d...]!",
+  "1:05:48.75" , "1:05:51.66", "profanity", "deity", "Oh, my [___]. She walked!",
+  "1:06:51.75" , "1:06:55.62", "profanity", "deity", "[___][d...] it! Stop here! Not going to entrap you.",
+  "1:07:11.74" , "1:07:13.17", "profanity", "d...", "[d...] it!",
+  "1:09:47.33" , "1:09:49.16", "profanity", "d...", "[d...]!",
+  "1:10:44.78" , "1:10:47.79", "profanity", "h...", "What in the [h...]  are you doing here?",
+  "1:16:48.35" , "1:16:51.62", "profanity", "d...", "Son of a [b....]! [d...] it!",
+  "1:17:10.23" , "1:17:11.74", "profanity", "h...", "Where the [h...] are you from?",
+  "1:17:19.64" , "1:17:20.87", "profanity", "d...", "[d...]!",
+  "1:24:39.88" , "1:24:42.95", "profanity", "deity", "My [___]! Oh, [___]! The ocean is so deep!",
+  "1:24:47.59" , "1:24:50.60", "profanity", "deity", "Oh, my [___]!",
+  "1:25:09.68" , "1:25:11.65", "profanity", "h...", "Just get me the [h...]  out of here, please!",
+
+  "0:08:13.87" , "0:08:16.14", "profanity", "suck", "You [suck]er.",
+  "0:12:04.80" , "0:12:07.97", "profanity", "suck", "but the Electrolux is the biggest [suck]er of all.",
+  "0:23:05.66" , "0:23:07.63", "profanity", "sex", "Nothing about our [sex] life, I hope.",
+  "0:27:04.70" , "0:27:06.93", "profanity", "sex", "You have a really [sex]y voice...",
+  "0:39:17.96" , "0:39:19.80", "profanity", "piss", "[piss]ing away the taxpayers' money.",
+  #"1:19:01.41" , "1:19:03.41", "profanity", "idiot", "Bring it over, you [idiot].",
+  "1:20:56.46" , "1:20:59.46", "profanity", "piss", "I'm getting seriously [piss]ed.",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "0:57:38.70" , "0:57:50.35", "innuendo ", "",
+  "01:00:13.60" , "01:00:29.50", "innuendo ", "",
+  "00:38:13.20" , "00:38:56.00", "mushiness about to go somewhere", "",
+],
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["BABY GIGGLING", "00:22.47", 2],
+"ending_subtitle_entry" => ["YOU'RE NOT GOING TO GIVE ME ANY MORE TROUBLE, ARE YOU?", "1:10:12.88", 195],
+"disk_unique_id" => "28a1db5d|30cfc159",
+"volume_name" => "UNDERCOVER_BLUES_WS",
+"dvd_title_track" => "1",
+"dvd_title_track_length" => 5384.966,
+"dvd_title_track_start_offset" => 0.07,
+"dvd_nav_packet_offset" => [0.4, 0.6143],
+#ID_DVD_TITLE_1_LENGTH=5384.966
+#ID_DVD_TITLE_2_LENGTH=34.600
+#ID_DVD_TITLE_3_LENGTH=99.833
+#ID_DVD_TITLE_4_LENGTH=84.433
+#ID_DVD_TITLE_5_LENGTH=146.866
+#ID_DVD_TITLE_6_LENGTH=114.600
+"timestamps_relative_to" => ["file", "29.97"],
+

@@ -1,0 +1,6 @@
+--readme README.rdoc
+--no-private
+--hide-void-return
+--title "RAutomation"
+--files History.rdoc,LICENSE
+--default-return ""

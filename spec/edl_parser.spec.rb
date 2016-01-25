@@ -28,6 +28,8 @@ describe EdlParser do
     E.parse_string('"a" => "3"', nil).should ==  {"a"=>"3", "mutes"=>[], "blank_outs"=>[]}
   end
   
+  it "should sort 1:00:00 then 30:00 setting to the right order, though they defy ascii sorting"
+  
   it "should get mutes and blank_outs" do
     string = <<-EOL
       "mutes" => [
@@ -262,5 +264,7 @@ describe EdlParser do
     # it should be slightly higher than 1, and slightly less than 3600
     endy.should == [[1.07655099900099900000, 2.07555199800199830000, :blank], [3596.48114640359600000000, 3597.48014740259760000000, :mute]]
   end
+
+  it "should parse out bad beginning/ending subtitle entries"
   
 end

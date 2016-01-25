@@ -34,7 +34,7 @@ class EdlParser
       loop {
         current_value = get_files_hash.call
         if current_value != old_value
-          print 'detected some file changed! Updating...'
+          print 'detected some file was changed! Re-parsing to update...'
           old_value = current_value
           this_block.call
           puts 'done.'
@@ -142,10 +142,6 @@ class EdlParser
   
   private
 
-  def self.download full_url, to_here
-    ::SwingHelpers::MainWindow.download full_url, to_here
-  end
-  
   # better eye-ball these before letting people run them, eh? TODO
   # but I couldn't think of any other way to parse the files tho
   def self.parse_string string, filename = nil, ok_categories_array = []
@@ -245,7 +241,7 @@ class EdlParser
     raise if add_this_to_all_ends < 0
     raise if subtract_this_from_ends < 0
     add_this_to_all_ends -= subtract_this_from_ends # now we allow negative :)
-	#raise if splits.size > 0 # for now
+   # raise if splits.size > 0 # just ignore them for now
     mutes = incoming["mutes"] || {}
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [k,v,:mute]}
@@ -254,21 +250,23 @@ class EdlParser
     
     # detect any weirdness...
     previous = nil
-    combined.map!{|current|
+    combined.map!{ |current|
       s,e,type = current
+	  human_s = translate_time_to_human_readable s
+	  human_e = translate_time_to_human_readable e
       if e < s || !s || !e || !type
-       raise SyntaxError.new("detected an end before a start or other weirdness: #{e} < #{s}")
+	   p caller
+       raise SyntaxError.new("detected an end before a start or other weirdness: #{human_s} > #{human_e}")
       end
       if previous
         ps, previous_end, pt = previous
         if (s < previous_end)
-          raise SyntaxError.new("detected an overlap #{current.join(' ')} #{previous.join(' ')}")
+          raise SyntaxError.new("detected an overlap current #{human_s} < #{translate_time_to_human_readable previous_end} of current: #{current.join(' ')} previous: #{previous.join(' ')}")
         end
-        
       end
       previous = current
-	  # do the math later to allow for ones that barely hit into each other 1.0 2.0, 2.0 3.0
-	  [s-subtract_this_from_beginnings, e+add_this_to_all_ends,type]
+      # do the math later to allow for ones that barely hit into each other 1.0 2.0, 2.0 3.0
+      [s-subtract_this_from_beginnings, e+add_this_to_all_ends,type]
     }
     combined
   end

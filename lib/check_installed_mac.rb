@@ -2,51 +2,35 @@ require 'rubygems'
 require 'os'
 success = true
 
-ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # macports' bin in first
+ENV['PATH'] = '/opt/rdp_project_local/bin/:' + ENV['PATH'] # put local bin in first, has ffmpeg etc.
 
 module CheckInstalledMac
 
  # should output an error message...
  def self.check_for_installed name
-  if name == 'mencoder'
-    output = `mencoder --fail 2>&1`
-    if output =~ /mencoder/i
-      # success, it is installed
-      return true
-    else
-      # fall through
-    end
-  end
-
-  if name == 'mplayer'
-    unless File.exist?('/opt/rdp_project_local/bin/mplayer')
-      puts "please install mplayer edl, please install mplayer-edl, see website http://rogerdpack.t28.net/sensible-cinema/content_editor.html"
-      return false
-    end
-    return true
-  end
-
-  # check for the others generically
-
-  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version"}[name]
-
+  # check for these with generic "does it run" command
+  command = {"gocr" => "gocr --help", "convert" => "convert --help", "ffmpeg" => "ffmpeg -version", 'mplayer' => 'mplayer'}[name]
   raise 'unknown ' + name unless command # sanity check
 
-  unless system(command + " 1> " + OS.dev_null + " 2>" + OS.dev_null)
-     name = 'ImageMagick' if name == 'convert' # special case...
-     puts 'lacking dependency! Please install ' + name + ' by installing the contrib pkg from the website'
+  prefix = "/opt/rdp_project_local/bin/"
+  if !OS.x? && OS.linux?
+    prefix = "" # just use system
+  end
+  unless system("#{prefix}#{command} 1>/dev/null 2>&1")
+     name = 'ImageMagick' if name == 'convert' # special case this one...
+     if OS.x?
+       SimpleGuiCreator.show_message 'lacking dependency! Please install ' + name + ' by installing from the mac dependencies package from the website first'
+       SimpleGuiCreator.open_url_to_view_it_non_blocking "http://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/" # TODO test this out does it work?
+     elsif OS.linux?
+       SimpleGuiCreator.show_message 'lacking dependency! Please install ' + name + ' by installing using linux instructions'
+       SimpleGuiCreator.open_url_to_view_it_non_blocking "https://github.com/rdp/sensible-cinema/wiki/Linux-Dependencies"
+     else
+       throw 'huh os'
+     end
      false
   else
     true
   end
 
  end
-end
-
-if $0 == __FILE__
-  for name in ['gocr', 'convert', 'mplayer', 'ffmpeg'] do
-    if CheckInstalledMac.check_for_installed name
-      puts 'has dep:' + name
-    end
-  end
 end

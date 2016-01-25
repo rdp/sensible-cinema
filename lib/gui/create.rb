@@ -10,9 +10,11 @@ module SensibleSwing
     end
 
     def setup_create_buttons
+	  # only create mode needs this uh guess
       EdlParser.on_any_file_changed_single_cached_thread { DriveInfo.notify_all_drive_blocks_that_change_has_occured }
+	  
 	    add_text_line 'Normal playback Options:'
-      new_jbutton("Display Standard Playback Options") do
+      new_jbutton("Display Normal Playback Options") do
         window = new_child_window
         window.setup_normal_buttons
       end
@@ -37,31 +39,33 @@ module SensibleSwing
         edit_list_path = EdlParser.single_edit_list_matches_dvd(dvd_id, true)
         if edit_list_path
 		    if show_select_buttons_prompt('It appears that one or more EDL\'s exist for this DVD already--create another?', {}) == :no
-		        raise 'aborting'
+		        raise 'aborted'
 		    end
         end	  
         create_brand_new_dvd_edl
-  	update_currently_inserted_dvd_list # notify them that files have changed...lodo is there a better way?
+        show_blocking_message_dialog "Now that it's created, you can add some entries by hand, or try parsing subtitles to detect profanities (\"scan a subtitle\" button)"
       end
       
       add_callback_for_dvd_edl_present { |disk_available, edl_available|
+        #TODO rdp file buttons
         @open_current.set_enabled edl_available
-        @create_new_edl_for_current_dvd.set_enabled disk_available
+        #@create_new_edl_for_current_dvd.set_enabled disk_available
         if edl_available
           @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [yours already has one!]"
         else
 		  if disk_available
-            @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [doesn't have one yet!]"
+            @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [it doesn't have one yet!]"
 		  else
 		    @create_new_edl_for_current_dvd.text= create_new_edl_for_current_dvd_text + " [no disk inserted!]"
 		  end
         end
       }
       
-      @parse_srt = new_jbutton("Scan a subtitle file (.srt) to detect profanity timestamps automatically" )
+      @parse_srt = new_jbutton("Scan a subtitle file to detect profanity timestamps automatically" )
       @parse_srt.tool_tip = <<-EOL
         You can download a .srt file and use it to programmatically search for the location of various profanities.
-        Basically download it from opensubtitles.org (or engsub.net et al),
+        Basically download it from opensubtitles.org 
+        (or google search for something like your equivalent for "prince of egypt subtitles 1cd en",
         (for opensubtitles.org enter dvd title in the search box, click on a result, click one from the list with an English flag, 
         then choose 'Download(zip)', then unzip the file)
         NB that you'll want/need to *carefully* double check your subtitle file for accuracy. Here's how:
@@ -81,39 +85,40 @@ module SensibleSwing
 		      show_blocking_message_dialog "warning--filename #{srt_filename} may be in utf16, which we don't yet parse"
                     end
 		if srt_filename =~ /\.sub$/i
-		  show_blocking_message_dialog "warning--file has to be in Subrip [.srt] format, and yours might be in .sub format, which is incompatible"
+		  show_blocking_message_dialog "warning--input file has to be in SubRip [.srt] format, and yours might be in .sub format, which is incompatible"
 		end
-        # TODO nuke, or do I use them for the 600.0 stuff?
-        add_to_beginning = "0.0"#get_user_input("How much time to subtract from the beginning of every subtitle entry (ex: (1:00,1:01) becomes (0:59,1:01))", "0.0")
-        add_to_end = "0.0"#get_user_input("How much time to add to the end of every subtitle entry (ex: (1:00,1:04) becomes (1:00,1:05))", "0.0")
  
+        euphemized_entries = euphemized_filename = nil
+        with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
+          begin
+		    parsed_profanities, euphemized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
+            write_subs_to_file euphemized_filename = get_temp_file_name('euphemized.nonsynchronized.subtitles.srt.txt'), euphemized_entries
+		  rescue => e
+		    show_blocking_message_dialog "unable to parse #{srt_filename}\n#{e}?"
+			raise
+		  end
+        end
+
 	if show_select_buttons_prompt("Sometimes subtitle files' time signatures don't match precisely with the video.\nWould you like to enter some information to allow it to synchronize the timestamps?\n  (on the final pass you should do this, even if it already matches well, for future information' sake)") == :yes
-          euphemized_synchronized_entries = nil
-          with_autoclose_message("parsing srt file... #{srt_filename}") do
-            parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {},  0, 0, 0, 0, 3000, 3000
-			write_subs_to_file euphemized_filename = EdlTempFile + '.euphemized.srt.txt', euphemized_synchronized_entries
-  		    open_file_to_edit_it euphemized_filename
-            sleep 0.5 # let it open in TextEdit/Notepad first...
-      	    bring_to_front
+
+          if show_select_buttons_prompt("Would you like to start playing the movie in smplayer, to be able to search for subtitle timestamp timings?") == :yes
+            show_blocking_message_dialog "ok--use the '.' key and on your keyboard to pinpoint a precise subtitle start time within mplayer.
+Use arrow keys to seek.
+You will be prompted for a beginning and starting timestamp time to search for.\nIt may take a few seconds for the player to appear..."
+            play_dvd_smplayer_unedited false
           end
 
-          if show_select_buttons_prompt("Would you like to start playing the movie in mplayer, to be able to search for subtitle timestamp times [you probably do...]?\n") == :yes
-            Thread.new { play_dvd_smplayer_unedited true }
-            show_blocking_message_dialog "ok--use the arrow keys and pgdown/pgup to search/scan, and then '.' to pinpoint a precise subtitle start time within mplayer.\nYou will be prompted for a beginning and starting timestamp time to search for."
-          end
-          all_entries = euphemized_synchronized_entries
+  	      open_file_to_edit_it euphemized_filename
+          sleep 0.5 # let it open in TextEdit/Notepad first...
+      	  bring_to_front
 
-          all_entries.shift if all_entries[0].text =~ / by /i
-          all_entries.pop if all_entries[-1].text =~ / by /i
-
-          display_and_raise "unable to parse subtitle file?" unless all_entries.size > 10
-          
-          start_text = all_entries[0].single_line_text
-          start_srt_time = all_entries[0].beginning_time
+          all_entries = euphemized_entries # rename :)
+          start_entry = all_entries[0]
+          start_text = start_entry.single_line_text
+          start_srt_time = start_entry.beginning_time
           human_start = EdlParser.translate_time_to_human_readable(start_srt_time)
-          start_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})", @start_movie_remember)
-          @start_movie_remember = start_movie_ts
-          start_movie_time = EdlParser.translate_string_to_seconds start_movie_ts
+          start_movie_sig = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle \"#{start_text}\"\nfirst frame the subtitle appears on the on screen display (possibly near #{human_start})", start_text)
+          start_movie_time = EdlParser.translate_string_to_seconds start_movie_sig
           if(show_select_buttons_prompt 'Would you like to select an ending timestamp at the end or 3/4 mark of the movie [end can be a spoiler at times]?', :yes => 'very end of movie', :no => '3/4 of the way into movie') == :yes
            end_entry = all_entries[-1]
           else
@@ -121,45 +126,83 @@ module SensibleSwing
           end
           end_text = end_entry.single_line_text
           end_srt_time = end_entry.beginning_time
-          human_end  = EdlParser.translate_time_to_human_readable(end_srt_time)
-          end_movie_ts = get_user_input("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.")
-          end_movie_time = EdlParser.translate_string_to_seconds end_movie_ts
+          human_end = EdlParser.translate_time_to_human_readable(end_srt_time)
+          end_movie_sig = get_user_input_with_persistence("Enter beginning timestamp within the movie itself for when the subtitle ##{end_entry.index_number}\n\"#{end_text}\"\nfirst appears (possibly near #{human_end}).\nYou can find it by searching to near that time in the movie [pgup+pgdown, then arrow keys], find some subtitle, then find where that subtitle is within the .srt file to see where it lies\nrelative to the one you are interested in\nthen seek relative to that to find the one you want.", end_text) 
+		  end_movie_time = EdlParser.translate_string_to_seconds end_movie_sig
         else
-	      start_srt_time = 0
+          # the case they know it already matches
+	  start_srt_time = 0
           start_movie_time = 0
           end_srt_time = 3000
           end_movie_time = 3000
     	end
 
         parsed_profanities, euphemized_synchronized_entries = nil
-        with_autoclose_message("parsing srt file... #{srt_filename}") do
-          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), {}, add_to_beginning.to_f, add_to_end.to_f, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+		extra_profanity_hash = {}
+		if LocalStorage['prompt_obscure_options']
+		  got = get_user_input_with_persistence("enter any 'extra' words to search for, like badword1,badword2 if any", srt_filename + 'words', true)
+		  if got
+		    for entry in got.split(',')
+		      extra_profanity_hash[entry] = entry
+		    end
+		  end
+		end
+
+        with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, 0.0, 0.0, start_srt_time, start_movie_time, end_srt_time, end_movie_time
         end
-        
-        filename = EdlTempFile + '.parsed.txt'
-        out =  "# copy and paste these into your \"mute\" section of your EDL if you deem them mutable\n" + parsed_profanities
-        out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_ts}"],! +
-               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_ts}"],!
-        middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
-        show_blocking_message_dialog "You may want to double check if the math worked out.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould first appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time}\nIf it's off much you may want to try a different .srt file"
-        File.write filename, out
-        open_file_to_edit_it filename
-        sleep 1 # let it open
 		
-	    if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]\nyou probably don't?") == :yes
-          out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
-		  write_subs_to_file out_file, euphemized_synchronized_entries
-          show_in_explorer out_file
-        end
+        middle_entry = euphemized_synchronized_entries[euphemized_synchronized_entries.length*0.5]
+        show_blocking_message_dialog "You may want to double check if the math worked out and if the adjusted subtitles now match the movie.\n\"#{middle_entry.single_line_text}\" (##{middle_entry.index_number})\nshould appear at #{EdlParser.translate_time_to_human_readable middle_entry.beginning_time} (not accomodating for added start times)\nYou can go and check it!\nIf it's off much you may want to try this whole process again\n with a different other .srt file"		
+        # LODO ask them if it worked... [?]
+		
+		if end_srt_time != 3000
+		  add_to_beginning_all = get_user_input("Would you like to adjust all subtitles and make them start any seconds earlier (like 1.0)?", "0.0").to_f
+		  add_to_end_all = get_user_input("Would you like to adjust all subtitles and make them all end any seconds later (like 1.0)?", "0.0").to_f
+		else
+		  add_to_beginning_all=0.0
+		  add_to_end_all=0.0
+		end
+
+        with_autoclose_message("parsing srt file... #{File.basename srt_filename}") do
+          parsed_profanities, euphemized_synchronized_entries = SubtitleProfanityFinder.edl_output_from_string File.read(srt_filename), extra_profanity_hash, add_to_beginning_all, add_to_end_all, start_srt_time, start_movie_time, end_srt_time, end_movie_time
+        end		
+        
+        filename = get_temp_file_name('mutes.edl.txt')
+		if parsed_profanities.present?
+          out =  "# copy and paste these into your \"mute\" section of A SEPARATE EDL already created with the other buttons, for lines you deem mute-worthy\n" + parsed_profanities
+		else
+		  out = "# no mute-worthy profanities found..."
+		end
+        if end_srt_time != 3000
+		  out += %!\n\n#Also add these lines at the bottom of the EDL (for later coordination):\n"beginning_subtitle" => ["#{start_text}", "#{start_movie_sig}", #{start_entry.index_number}],! +
+               %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],\n!
+	    end
+		
+		File.write filename, out
+        open_file_to_edit_it filename
+        sleep 1 # let it open in notepad
+		
+		write_subs_to_file get_temp_file_name('euphemized.synchronized.edl.txt'), euphemized_synchronized_entries
+		
+		if LocalStorage['prompt_obscure_options']
+	      if show_select_buttons_prompt("Would you like to write out a synchronized, euphemized .srt file [useful if you want to watch the movie with sanitized subtitles later]\nyou probably don't?") == :yes
+            out_file = new_nonexisting_filechooser_and_go("Select filename to write to", File.dirname(srt_filename), File.basename(srt_filename)[0..-5] + ".euphemized.srt")
+		    write_subs_to_file out_file, euphemized_synchronized_entries
+            show_in_explorer out_file
+          end		  
+		end
         
       end
 	  
       add_text_line 'Create: Advanced View Edited Options'
       
-      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (mplayer) (yes subtitles)") do
+      @mplayer_edl_with_subs = new_jbutton( "Watch DVD edited (realtime) (with mplayer, subtitles)") do
         watch_dvd_edited_realtime_mplayer true
       end
       
+	  @mplayer_edl_with_subs.tool_tip="This watches it in mplayer, which has access to its console output, and also includes subtitles."
+	  
       @mplayer_partial = new_jbutton( "Watch DVD edited (realtime) (mplayer) based on timestamp") do
         times = get_start_stop_times_strings
         times.map!{|t| EdlParser.translate_string_to_seconds t}
@@ -168,7 +211,10 @@ module SensibleSwing
         extra_mplayer_commands = ["-ss #{start_time}", "-endpos #{end_time - start_time}"]
         play_smplayer_edl_non_blocking nil, extra_mplayer_commands, true, false, add_end = 0.0, add_begin = 0.0 # create mode => aggressive
       end
-            
+	  
+	  @mplayer_partial.tool_tip="this can play just a specific portion of your film, like from second 30 to 35, for testing."
+
+      # all OS's apparently still use mplayer raw in an advanced edit mode or other? huh wuh?
       new_jbutton("Display mplayer keyboard commands/howto/instructions") do
         show_mplayer_instructions
       end
@@ -190,72 +236,33 @@ module SensibleSwing
         play_dvd_smplayer_unedited false
       }
 
+      new_jbutton("Create new Edit List (for netflix instant or for a local file)") do # LODO VIDEO_TS here too?
+	    create_new_for_file_or_netflix
+      end
+
+	  
+      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
+      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
+      @display_dvd_info.on_clicked {
+        Thread.new {
+          out_hashes, raw_title_lengths = get_disk_info
+	      out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + raw_title_lengths.map{|raw| "#" + raw}.join("\n")
+          out_string += %!\n"timestamps_relative_to" => ["file", "29.97"],! # we do our best to emulate it these days :)
+          filename = get_temp_file_name('disk_info.txt')
+          File.write filename, out_string 
+          open_file_to_edit_it filename
+          out_string # for unit tests--do I still need this?
+        }
+      }
+      
+      
       add_text_line "Less commonly used Edit options:"
 
-      new_jbutton("Create new Edit List (for netflix instant or movie file)") do # LODO VIDEO_TS here too?
-        names = ['movie file', 'netflix instant']
-        dialog = DropDownSelector.new(self, names, "Select type")
-        type = dialog.go_selected_value
-        extra_options = {}
-        if type == 'movie file'
-          path = SwingHelpers.new_previously_existing_file_selector_and_go "Select file to create EDL for"
-          guess_name = File.basename(path).split('.')[0..-2].join('.') # like yo.something.720p.HDTV.X264-DIMENSION.m4v maybe?
-          extra_options['filename'] = File.basename path
-          require 'lib/movie_hasher'
-          extra_options['movie_hash'] = MovieHasher.compute_hash path
-        else
-          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )" #?
-          if url =~ /netflix/
-            guess_name = url.split('/')[-2]
-          else
-            show_blocking_message_dialog "non hulu/netflix? please report!"
-            type = 'unknown'
-            guess_name = url.split('/')[-1]
-          end
-          extra_options['url'] = url
-        end
-        english_name = get_user_input "Enter name of movie", guess_name.gsub(/[-._]/, ' ')
-        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.txt'
-        display_and_raise "needs .txt extension" unless filename =~ /\.txt$/i
-        
-        output = <<-EOL
-# edl_version_version 1.1, created by sensible cinema v#{VERSION}
-# comments can go be created by placing text after a # on any line, for example this one.
-"name" => "#{english_name}",
-
-"source" => "#{type}",
-#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}",\n!}}
-"mutes" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
-],
-
-"blank_outs" => [
-  # an example line, uncomment the leading "#" to make it active
-  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
-],
-
-"timestamps_relative_to" => ["#{type}"],
-# "not edited out stuff" => "some...",
-# "closing thoughts" => "only ...",
-# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
-        EOL
-        File.write filename, output
-        open_file_to_edit_it filename
-      end
-      
       new_jbutton("Show more (rarely used) buttons/options") do
         child = new_child_window
         child.show_rarely_used_buttons
       end
 
-      add_text_line 'Options for creating an edited movie file from a local file:'
-      
-      new_jbutton("Show options to help with creating a fully edited movie file") do
-        window = new_child_window
-        window.add_options_that_use_local_files
-      end
-      
     end
 
 		def write_subs_to_file out_file, euphemized_synchronized_entries
@@ -281,26 +288,6 @@ module SensibleSwing
        end
       end
 
-      @open_list = new_jbutton("Open/Edit an arbitrary file (EDL, .srt file, whatever)")
-      @open_list.on_clicked {
-        filename = new_existing_file_selector_and_select_file("Pick any file to open in editor", EdlParser::EDL_DIR)
-        open_file_to_edit_it filename
-      }
-
-      @display_dvd_info = new_jbutton( "Display information about current DVD (ID, timing, etc.)" )
-      @display_dvd_info.tool_tip = "This is useful to setup a DVD's 'unique ID' within an EDL for it. \nIf your EDL doesn't have a line like disk_unique_id => \"...\" then you will want to run this to be able to add that line in."
-      @display_dvd_info.on_clicked {
-        Thread.new {
-          out_hashes, title_lengths = get_disk_info
-	        out_string = out_hashes.map{|name, value| name.inspect + ' => ' + value.inspect  + ','}.join("\n") + "\n" + title_lengths.join("\n")
-          out_string += %!\n"timestamps_relative_to" => ["dvd_start_offset","29.97"],! # since they're all this way currently
-          filename = EdlTempFile + '.disk_info.txt'
-          File.write filename, out_string 
-          open_file_to_edit_it filename
-          out_string # for unit tests :) TODO
-        }
-      }
-      
       @convert_seconds_to_ts = new_jbutton( "Convert 3600.0 <-> 1:00:00 style timestamps" )
       @convert_seconds_to_ts.on_clicked {
         input = get_user_input("Enter \"from\" timestamp, like 3600 or 1:40:00:", "1:00:00.1 or 3600.1")
@@ -338,7 +325,7 @@ module SensibleSwing
         show_copy_pastable_string("Sensible cinema usable value (29.97 fps) for #{thirty_fps} would be:                ", human_twenty_nine_seven)
       }
       
-      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC etc.]")
+      @create_dot_edl = new_jbutton( "Create a side-by-side moviefilename.edl file [XBMC use, etc.]")
       @create_dot_edl.tool_tip = <<-EOL
         Creates a moviefilename.edl file (corresponding to some moviefilename.some_ext file already existing)
         XBMC/smplayer (smplayer can be used by WMC plugins, etc.) "automagically detect", 
@@ -347,9 +334,31 @@ module SensibleSwing
         version (which includes an updated version of mplayer that fixes some bugs in EDL playback)
       EOL
       @create_dot_edl.on_clicked {
-        show_blocking_message_dialog "Warning: With XBMC you'll need Eden 11.0 for mutes to work"
+        show_blocking_message_dialog "Warning: With XBMC you'll need at least Eden v11.0 for mutes to work at all"
         choose_file_and_edl_and_create_sxs_or_play true
       }
+	  
+	  new_jbutton("open arbitrary file to edit it") do
+	    path = SimpleGuiCreator.new_previously_existing_file_selector_and_go "Select file to open/edit"
+		open_file_to_edit_it path
+	  end
+	  
+	  
+      @upconvert_screen = new_jbutton( "play screen upconverted" )
+      @upconvert_screen.on_clicked {
+        program_files_dir = ENV['ProgramFiles'].gsub("\\", '/')
+        if Dir[program_files_dir  +"/AviSynth*"].empty? # allow different versions of it...
+		  show_blocking_message_dialog "warning, you may need/want to install avisynth first!"
+		end
+        if !File.directory?(program_files_dir  + "/Screen Capturer Recorder")
+		  show_blocking_message_dialog "warning, you may need/want to install the screen capture recorder package first!"
+		end
+		show_blocking_message_dialog "To get this to work, first start your video playing [windows--not full screen].\n  Then run the screen capture recorder's \"configure by resizing a transparent window\" utility, cover the movie part of the player wiht it, and hit ok.  Then click ok here..."
+        # what fps is this?
+        # maybe should enable...dedupe?
+		system("#{mplayer_local} -benchmark -geometry 10:10 upconvert_from_screen\\upconvert_from_screen_me2.avs") # I am not in the "bin" directory...
+      }
+	  
       if LocalStorage['have_zoom_button']
         @create_zoomplayer = new_jbutton( "Create a ZoomPlayer MAX compatible EDL file") do
           raise unless OS.doze?
@@ -381,7 +390,7 @@ module SensibleSwing
 	    out_hashes['disk_unique_id'] = dvd_id
 	    out_hashes['volume_name'] = volume_name
       popup = show_non_blocking_message_dialog "calculating DVD title sizes..."
-      command = "mplayer -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
+      command = "#{mplayer_local} -vo direct3d dvdnav:// -nocache -dvd-device #{drive} -identify -frames 0 2>&1"
       puts command
       title_lengths_output = `#{command}`
       popup.close
@@ -392,9 +401,12 @@ module SensibleSwing
       else
         title_to_get_offset_of = nil
       end
-      title_lengths = title_lengths_output.split("\n").select{|line| line =~ /TITLE.*LENGTH/}
+      raw_title_lengths = title_lengths_output.split("\n").select{|line| line =~ /ID_DVD_TITLE_.*LENGTH/}
       # ID_DVD_TITLE_4_LENGTH=365.000
-      titles_with_length = title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+      titles_with_length = raw_title_lengths.map{|name| name =~ /ID_DVD_TITLE_(\d+)_LENGTH=([\d\.]+)/; [$1, $2.to_f]}
+	  if titles_with_length.length > 50
+	    show_blocking_message_dialog "this DVD has > 50 titles, this may mean that our 'guess' for the main title will be off, please double check the right number\nby starting the main movie in VLC then Playback menu -> title to see which number it is on."
+	  end
       largest_title = titles_with_length.max_by{|title, length| length}
   	  if !largest_title
   	    display_and_raise "unable to parse title lengths? maybe need to clean disk first? #{title_lengths_output}"
@@ -405,14 +417,14 @@ module SensibleSwing
 	    out_hashes['dvd_title_track_length'] = titles_with_length.detect{|title, length| title == title_to_get_offset_of}[1]
       offsets = calculate_dvd_start_offset(title_to_get_offset_of, drive)
     	start_offset = offsets[:mpeg_start_offset]
-	    out_hashes['dvd_start_offset'] = start_offset
+	    out_hashes['dvd_title_track_start_offset'] = start_offset
       out_hashes['dvd_nav_packet_offset'] = offsets[:dvd_nav_packet_offset]
-	    [out_hashes, title_lengths]
+	    [out_hashes, raw_title_lengths]
     end
 	
     def watch_dvd_edited_realtime_mplayer show_subs
       edl_out_command = ""
-      if !@has_ever_rejected_edl_outfile
+      if LocalStorage['prompt_obscure_options']
         answer = show_select_buttons_prompt <<-EOL, {}
           Would you like to create an .edl outfile as it plays (hit button to capture timestamps)?
           EOL
@@ -431,7 +443,7 @@ module SensibleSwing
           @has_ever_rejected_edl_outfile = true
         end
       end
-      thred = play_smplayer_edl_non_blocking nil, [edl_out_command], true, false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
+      thred = play_smplayer_edl_non_blocking nil, [edl_out_command], (force_mplayer = true), false, add_end = 0.0, add_begin = 0.0, show_subs # more aggressive :)
       if(edl_out_command.present?)
         open_edl_file_when_done thred, edlout_filename
       end
@@ -439,7 +451,7 @@ module SensibleSwing
     
     def calculate_dvd_start_offset title, drive
       popup = show_non_blocking_message_dialog "calculating start info for title #{title}..." # must be non blocking so the command can run :P
-      command = "mplayer -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
+      command = "#{mplayer_local} -benchmark -frames 35  -osd-verbose -osdlevel 2 -vo null -nosound dvdnav://#{title} -nocache -dvd-device #{drive}  2>&1"
       puts command
       out = `#{command}`
       #search for V:  0.37
@@ -450,25 +462,28 @@ module SensibleSwing
         if l =~  /V:\s+([\d\.]+)/
           outs[:mpeg_start_offset] ||= $1.to_f
         end
-	      float = /\d+\.\d+/
-	     if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
+	    float = /\d+\.\d+/
+	    if l =~ /last NAV packet was (#{float}), mpeg at (#{float})/
           nav = $1.to_f
           mpeg = $2.to_f
-          if !outs[:dvd_nav_packet_offset] && nav > 0.0 # like 0.4
-			  if mpeg < nav
-			    # case there is an MPEG split before the second NAV packet [ratatouille, hp]
+          if !outs[:dvd_nav_packet_offset] && nav > 0.0 && mpeg > 0.04 # we hit our first real "NAV" packet, like 0.4
+			  if mpeg < (nav - 0.05) # 0.05 for karate kid. weird.
+			    # case there is an MPEG split before the second NAV packet [ratatouille, hp] or does it only occur right *at* the first nav?
 			    p mpeg, nav, old_mpeg
-			    assert old_mpeg > 0.3
+				# works with ...=c=
+				# TODO incredibles...
 				mpeg = old_mpeg + mpeg - 0.033367 # assume 30 fps, and that this is the second frame since it occurred, since the first one we apparently display "weird suddenly we're not a dvd?"
-				show_blocking_message_dialog "this dvd has some weird stuff at the start, attempting to accomodate..."
+				show_blocking_message_dialog "this dvd has some weird timing stuff at the start, attempting to accomodate...please report to the mailing list...\nyou may want to double check the math..."
+				puts out # so they can manually debug it if they so desire LOL.
+			    # assert old_mpeg > 0.3
 			  end
 	          outs[:dvd_nav_packet_offset] = [nav, mpeg] # like [0.4, 0.6] or the like
-            else
-			  old_mpeg = mpeg # ratatouile weirdness...
-	    end
-      	  end
+          else
+			  old_mpeg = mpeg # ratatouile weirdness...TODO FIX ME
+	      end
+      	end
       }
-      show_blocking_message_dialog "unable to calculate time?" unless outs.length == 2
+      show_blocking_message_dialog "unable to calculate DVD start time from #{command}?" unless outs.length == 2
       outs
     end
     
@@ -503,16 +518,17 @@ module SensibleSwing
     def create_brand_new_dvd_edl
 	    hashes, title_lengths = get_disk_info # has a prompt
 	    volume = hashes['volume_name']
-	    default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # A Court A Jester
-      english_name = get_user_input("Enter a human readable DVD description for #{volume}", default_english_name)
+	    default_english_name = volume.split('_').map{|word| word.downcase.capitalize}.join(' ') # turn it into A Court A Jester
+      english_name = get_user_input("Enter a human readable DVD descriptive name for #{volume}", default_english_name)
 
       # EDL versions:
 	    # nothing with disk_unique_id: probably dvd_start_offset 29.97
       # nothing without disk_unque_id: probably start_zero 29.97
       # 1.1: has timestamps_relative_to, I guess
-    
+	  # 1.2: default to file offsets now...or try to, I guess?
+      # 1.3: now has plus and minus? dvd_title_track_start_offset
       input = <<-EOL
-# edl_version_version 1.1, sensible cinema v#{VERSION}
+# edl_version 1.3, sensible cinema v#{VERSION}
 # comments can go be created by placing text after a # on any line, for example this one.
 "name" => "#{english_name}",
 
@@ -528,25 +544,25 @@ module SensibleSwing
 
 "source" => "dvd",
 "volume_name" => "#{volume}",
-"timestamps_relative_to" => ["dvd_start_offset","29.97"],
+"timestamps_relative_to" => ["file", "29.97"],
 "disk_unique_id" => "#{hashes['disk_unique_id']}",
 "dvd_title_track" => "#{hashes['dvd_title_track']}", # our guess for it
 "dvd_title_track_length" => "#{hashes['dvd_title_track_length']}", 
 # "not edited out stuff" => "some...",
 # "closing thoughts" => "only ...",
 # "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
-"dvd_title_track_start_offset" => "#{hashes['dvd_start_offset']}",
+"dvd_title_track_start_offset" => "#{hashes['dvd_title_track_start_offset']}",
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
-      filename = EdlParser::EDL_DIR + "/edls_being_edited/" + english_name.gsub(' ', '_') + '.txt'
-      filename.downcase!
+		
+      filename = EdlParser::EDL_DIR + "/" + english_name.gsub(' ', '_') + '.edl.txt'
       if File.exist?(filename)
-	    show_blocking_message_dialog 'cannot overwrite file in the edit dir that already has same name, opening it instead...'
-	  else
-	    File.write(filename, input)
+	      show_blocking_message_dialog 'don\'t want to overwrite a file in the edit dir that already has same name, opening it instead...'
+	    else
+	      File.write(filename, input)
       end
       open_file_to_edit_it filename
-    end     
+    end    
 
     def show_mplayer_instructions
       show_non_blocking_message_dialog <<-EOL
@@ -564,6 +580,59 @@ module SensibleSwing
    		  [ and ] make playback faster or slower [like 2x]
       EOL
     end
+	
+    def create_new_for_file_or_netflix
+	names = ['movie file', 'netflix instant']
+        dialog = DropDownSelector.new(self, names, "Select type")
+        type = dialog.go_selected_value
+        extra_options = {}
+        if type == 'movie file'
+          path = SimpleGuiCreator.new_previously_existing_file_selector_and_go "Select file to create EDL for"
+          guess_name = File.basename(path).split('.')[0..-2].join('.') # like yo.something.720p.HDTV.X264-DIMENSION.m4v maybe?
+          extra_options['filename'] = File.basename path
+          require 'lib/movie_hasher'
+          extra_options['movie_hash'] = MovieHasher.compute_hash path
+        else
+          url = get_user_input "Please input the movies url (like http://www.netflix.com/Movie/Curious-George/70042686 )" #?
+          if url =~ /netflix/
+            guess_name = url.split('/')[-2]
+          else
+            show_blocking_message_dialog "non hulu/netflix? please report!"
+            type = 'unknown'
+            guess_name = url.split('/')[-1]
+          end
+          extra_options['url'] = url
+        end
+        english_name = get_user_input "Enter descriptive name for movie", guess_name.gsub(/[-._]/, ' ')
+        filename = new_nonexisting_filechooser_and_go 'Pick new EDL filename', EdlParser::EDL_DIR + '/..', english_name.gsub(' ', '_') + '.edl.txt'
+        display_and_raise "probably needs .txt extension?" unless filename =~ /\.txt$/i
+        
+        output = <<-EOL
+# edl_version 1.2.1, created by sensible cinema v#{VERSION}
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "#{english_name}",
+
+"source" => "#{type}",
+#{extra_options.map{|k, v| %!\n"#{k}" => "#{v}",\n!}}
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"timestamps_relative_to" => ["#{type}"],
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+        EOL
+        File.write filename, output
+        open_file_to_edit_it filename
+
+	  end
 
   end
 end

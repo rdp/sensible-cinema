@@ -18,8 +18,44 @@ This file is part of Sensible Cinema.
 require 'rubygems' # ugh
 require 'ffi'
 require 'sane'
-require_relative 'jruby-swing-helpers/mouse'
-require_relative 'jruby-swing-helpers/play_audio'
+require 'os'
+require_relative 'jruby-swing-helpers/lib/simple_gui_creator/mouse_control'
+
+if OS.x?
+
+module Muter
+  def mute!
+    system(%!osascript -e "set volume with output muted"!)
+  end
+  def unmute!
+    system(%!osascript -e "set volume without output muted"!)
+  end
+  def hit_volume_up_key
+    system(%!osascript -e "set volume output volume (output volume of (get volume settings) + 5) --100%"!)
+  end
+  def hit_volume_down_key
+    system(%!osascript -e "set volume output volume (output volume of (get volume settings) - 5) --100%"!)
+  end
+  # allow for Muter.xxx
+  extend self
+end
+
+elsif OS.linux?
+
+module Muter
+  def mute!
+    system("amixer sset 'Master' 50%")
+  end
+  def unmute!
+   system("amixer -D pulse set Master 1+ toggle") # http://askubuntu.com/questions/65764/how-do-i-toggle-sound-with-amixer/286437#286437 yikes
+  end
+  extend self
+end
+
+else
+ 
+# assume windows
+
 
 module Muter
   # from msdn on keybd_event ...
@@ -63,7 +99,7 @@ module Muter
     end
   end
   
-  @@use_mouse_click = true
+  @@use_mouse_click = false # TODO if ever use this then...umm...fix it for mac too?
 
   # LODO better for doze 7/xp
   def unmute!
@@ -84,4 +120,6 @@ module Muter
   # allow for Muter.xxx
   extend self
   
+end
+
 end

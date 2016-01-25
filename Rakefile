@@ -1,38 +1,48 @@
 require 'rubygems'
-require 'jeweler' # gem
+begin
+  require 'jeweler' # gem
+rescue LoadError
+  puts 'unfortunately, to bootstrap the rakefile we need the jeweler and os gems, please install them manually first'
+  puts '$ gem install jeweler os'
+  exit 1
+end
 require 'os' # gem
 
-ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # for jeweler's git gem hackaround...
+# basically, to deploy, for windows run innosetup, manual upload
+# for mac, run rake full_release, manual upload
+
+ENV['PATH'] = "C:\\Program Files (x86)\\Git\\cmd;" + ENV['PATH'] # jeweler's git gem hack-work-around...
 
 Jeweler::Tasks.new do |s|
-    s.name = "sensible-cinema"
-    s.summary = "an EDL scene-skipper/bleeper that works with DVD's and files and online players like netflix instant"
+    s.name = "clean-editing-movie-player"
+    s.summary = "an movie scene-skipper/bleeper that works by using EDL's on DVD's or files or online players like netflix instant/hulu"
     s.email = "rogerdpack@gmail.com"
     s.homepage = "http://github.com/rdp"
     s.authors = ["Roger Pack"]
+    
     s.add_dependency 'os', '>= 0.9.4'
-    s.add_dependency 'sane', '>= 0.25.2'
+    s.add_dependency 'sane', '>= 0.25.4'
     s.add_dependency 'rdp-win32screenshot', '= 0.0.9'
     s.add_dependency 'mini_magick', '>= 3.1' # for ocr...
     s.add_dependency 'whichr', '>= 0.3.6'
-    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with next release, though I can't remember why
-    s.add_dependency 'rdp-ruby-wmi' # for windows
+    s.add_dependency 'rdp-ruby-wmi', '> 0.3.1' # windows requirement gem for the simple_gui_creator gem, remove when we "gem depend" on them...
+    s.add_dependency 'rdp-rautomation', '> 0.6.3' # LODO use mainline with its next release, though I can't remember why
     s.add_dependency 'plist' # for mac
+	s.add_dependency 'json' # online player
     s.add_dependency 'jruby-win32ole' # jruby-complete.jar doesn't include windows specifics...
     s.add_dependency 'ffi' # mouse, etc. needed for windows MRI, probably jruby too [windows]
-    s.files.exclude '**/*.exe', '**/*.wav', '**/images/*'
+    s.files.exclude '**/*.exe', '**/*.wav', '**/images/*', 'vendor/*'
     s.add_development_dependency 'hitimes' # now jruby compat!
     s.add_development_dependency 'rspec', '> 2'
     s.add_development_dependency 'jeweler'
     s.add_development_dependency 'rake'
-    
-    # add as real dependencies for now, as gem install --development is still broken for jruby, basically installing transitive dependencies in error <sigh> (actually might be fixed now though...so we may not need this)
-
-    for gem in s.development_dependencies #['hitimes', 'rspec', 'jeweler', 'rake']
-      # bundling rake won't be too expensive, right? and this allows for easier dev setup through gem install
-      s.add_dependency gem.name, gem.requirement
-    end
-  end
+    if ENV['for_gem_release']
+      # add as real dependencies for now, as gem install --development is still broken https://github.com/rubygems/rubygems/issues/309
+      for gem in s.development_dependencies
+        s.add_dependency gem.name, gem.requirement
+     end  
+   end
+end
 
 desc 'run all specs'
 task 'spec' do
@@ -57,10 +67,10 @@ def get_transitive_dependencies dependencies
   new_dependencies = []
   dependencies.each{|d|
    gem d.name # make sure it's loaded so that it'll be in Gem.loaded_specs
-   begin
-     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}[0][1]
+   begin 
+     dependency_spec = Gem.loaded_specs.select{|name, spec| name == d.name}.to_a[0][1] # sometimes a Hash, sometimes an Array? huh?
    rescue
-     raise 'possibly dont have that gem are you running jruby for sure?' + d.name
+     raise 'possibly dont have that gem are you running jruby for sure?' + d.name +  Gem.loaded_specs.select{|name, spec| name}.inspect
    end
    transitive_deps = dependency_spec.runtime_dependencies
    new_dependencies << transitive_deps
@@ -70,34 +80,43 @@ end
 
 desc 'clear_and_copy_vendor_cache'
 task 'clear_and_copy_vendor_cache' do
-   system("rm -rf ../cache.bak")
-   system("cp -r vendor/cache ../cache.bak") # for retrieval later
+   FileUtils.rm_rf "../cache.bak"
+   system("cp -r vendor/cache ../cache.bak") # so we can retrieve it back later
    Dir['vendor/cache/*'].each{|f|
     FileUtils.rm_rf f
     raise 'unable to delete: ' + f if File.exist?(f)
    }
-   FileUtils.mkdir_p 'vendor/cache'
 end
 
-desc 'collect binary and gem deps for distribution'
-task 'rebundle_copy_in_dependencies' => 'gemspec' do
-   spec = eval File.read('sensible-cinema.gemspec')
+def read_spec
+ eval File.read('clean-editing-movie-player.gemspec')
+end
+
+desc 'install dependency gems'
+task 'install_dependency_gems' => :gemspec do
+  get_all_dependency_gems(false).each{|d|
+    system("#{OS.ruby_bin} -S gem install #{d.name}")
+  }
+end
+
+def get_all_dependency_gems include_transitive_children=true
+   spec = read_spec
    dependencies = spec.runtime_dependencies
-   dependencies = (dependencies + get_transitive_dependencies(dependencies)).uniq
-   FileUtils.mkdir_p 'vendor/cache'
-   Dir.chdir 'vendor/cache' do
-     dependencies.each{|d|
-       system("#{OS.ruby_bin} -S gem unpack #{d.name}")
-     }
+   dependencies += spec.development_dependencies
+   if include_transitive_children
+     dependencies = (dependencies + get_transitive_dependencies(dependencies))
    end
+   # our own uniq method...gems...sigh...
+   out = {}
+   dependencies.each{|d| out[d.name] ||= d}
+   out.values
 end
 
 desc 'create distro zippable dir'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
-  raise 'need rebundle deps first' unless File.directory? 'vendor/cache'
   require 'fileutils'
-  spec = eval File.read('sensible-cinema.gemspec')
-  dir_out = spec.name + "-" + spec.version.version + '/sensible-cinema'
+  spec = read_spec
+  dir_out = cur_folder_with_ver + '/clean-editing-movie-player'
   old_glob = spec.name + '-*'
   FileUtils.rm_rf Dir[old_glob] # remove any old versions' distro files
   raise 'unable to delete...' if Dir[old_glob].length > 0
@@ -107,41 +126,40 @@ task 'create_distro_dir' => :gemspec do # depends on gemspec...
   FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
   root_distro =  "#{dir_out}/.."
-  FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through somehow..
-  FileUtils.cp_r(dir_out + '/template_bats/pc', root_distro) # the executable bit carries through somehow..
-  FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
+  FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through...
+  #FileUtils.cp(dir_out + '/template_bats/RUN SENSIBLE CINEMA CLICK HERE WINDOWS.bat', root_distro)
   FileUtils.cp('template_bats/README_DISTRO.TXT', root_distro)
-  p 'created (still need to zips it) ' + dir_out
-  FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M!
+  p 'created (still need to mac_zip it) ' + dir_out
+  FileUtils.rm_rf Dir[dir_out + '/**/{spec}'] # don't need to distribute those..save 3M, baby!
 end
 
 def cur_ver
-  File.read('VERSION').strip
+  got = File.read('VERSION').strip
+  spec = read_spec
+  raise unless got == spec.version.version # better match
+  got
+end
+
+def cur_folder_with_ver
+  spec = read_spec
+  spec.name + '-' + cur_ver
 end
 
 def delete_now_packaged_dir name
   FileUtils.rm_rf name
 end
 
-desc 'create *.zip,tgz'
-task 'zip' do
-  name = 'sensible-cinema-' + cur_ver
-  raise 'doesnt exist yet to zip?' unless File.directory? name
+desc 'create mac tgz'
+task 'mac_zip' do
+  name = cur_folder_with_ver
+  raise 'doesnt exist yet to zip?' + name unless File.directory? name
   if OS.doze?
-    sys "\"c:\\Program Files\\7-Zip\\7z.exe\" a -tzip -r  #{name}.zip #{name}"
-  else
-    #sys "zip -r #{name}.zip #{name}"
-    puts "NOT packaging win installer"
+    raise 'please distro from linux-y only so mac distros work...'
   end
-  if OS.doze?
-    puts 'NOT packaging OS X installer'
-  else
-    sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
-  end
+  sys "tar -cvzf #{name}.mac-os-x.tgz #{name}"
   delete_now_packaged_dir name
   p 'created ' + name + '.zip,tgz and also deleted its [create from] folder'
 end
-
 
 def sys arg, failing_is_ok = false
  3.times { |n|
@@ -157,22 +175,7 @@ end
 
 desc 'deploy to sourceforge, after zipping'
 task 'deploy' do
-  p 'creating sf shell'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net create'" # needed for the next command to be able to work [weird]
-  p 'creating sf dir'
-  sys "ssh rdp@ilab1.cs.byu.edu 'ssh rogerdpack,sensible-cinema@shell.sourceforge.net \"mkdir /home/frs/project/s/se/sensible-cinema/#{cur_ver}\"'", true
-  for suffix in [ '.zip', '.mac-os-x.tgz']
-    name = 'sensible-cinema-' + cur_ver + suffix
-    if File.exist? name
-      p 'copying to ilab ' + name
-      sys "scp #{name} rdp@ilab1.cs.byu.edu:~/incoming"
-      p 'copying into sf from ilab'
-      sys "ssh rdp@ilab1.cs.byu.edu 'scp ~/incoming/#{name} rogerdpack,sensible-cinema@frs.sourceforge.net:/home/frs/project/s/se/sensible-cinema/#{cur_ver}/#{name}'"
-    else
-      p 'not copying:' + name
-    end
-  end
-  p 'successfully deployed to sf! ' + cur_ver
+  raise "please deploy manually to google code (from current dir...)!"
 end
 
 # task 'gem_release' do
@@ -183,7 +186,7 @@ end
 # end
 
 def on_wbo command
-  sys "ssh rdp@ilab1.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
+  sys "ssh rdp@ilab.cs.byu.edu \"ssh wilkboar@rogerdpack.t28.net '#{command}' \""
   
 end
 
@@ -193,14 +196,16 @@ task 'sync_wbo_website' do
 end
 
 desc ' (releases with clean cache dir, which we need now)'
-task 'full_release' => [:clear_and_copy_vendor_cache, :rebundle_copy_in_dependencies, :create_distro_dir] do # this is :release
-  p 'remember to run all the specs first!'
+task 'full_release' => [:clear_and_copy_vendor_cache, :create_distro_dir] do # this is :release
+  p 'remember to run all the specs!! Have any!'
+  require 'os'
+  raise 'need jruby' unless OS.jruby?
   raise unless system("git pull")
   raise unless system("git push origin master")
   #Rake::Task["gem_release"].execute
-  Rake::Task["zip"].execute
-  Rake::Task["deploy"].execute
+  Rake::Task["mac_zip"].execute
   Rake::Task["sync_wbo_website"].execute
+  Rake::Task["deploy"].execute
   system(c = "cp -r ../cache.bak/* vendor/cache")
   system("rm -rf ../cache.bak")
 end

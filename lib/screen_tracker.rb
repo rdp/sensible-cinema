@@ -15,100 +15,27 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-require 'win32/screenshot'
+
 require 'sane'
 require 'yaml'
-require File.dirname(__FILE__)+ '/ocr'
-require 'ffi'
+require_relative 'ocr'
+if OS.doze?
+  require_relative 'screen_tracker_windows'
+elsif OS.mac? || OS.linux?
+  require_relative 'screen_tracker_mac'
+else
+ raise 'unsupported os as of yet'
+end
 
 class ScreenTracker
   
-  extend FFI::Library
-  ffi_lib 'user32'
-  # second parameter, pointer, LPRECT is FFI::MemoryPointer.new(:long, 4)
-  # read it like rect.read_array_of_long(4)
-  attach_function :GetWindowRect, [:long, :pointer], :int # returns a BOOL
-  
-  def self.new_from_yaml yaml, callback # callback can be nil, is used for timestamp changed stuff
+  def self.new_from_yaml yaml, timestamp_callback, status_callback # callback can be nil, is used for timestamp changed stuff
     settings = YAML.load yaml
     return new(settings["name"], settings["x"], settings["y"], settings["width"], 
-        settings["height"], settings["use_class_name"], settings["digits"], callback)
+        settings["height"], settings["use_class_name"], settings["digits"], timestamp_callback, status_callback)
   end
-  
-  attr_accessor :hwnd
-  
-  # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
-  # digits share the height start point, have their own x and width...
-  def initialize name_or_regex, x, y, width, height, use_class_name=nil, digits=nil, callback=nil
-    # cache to save us 0.00445136 per time LOL
-    @name_or_regex = name_or_regex
-    @use_class_name = use_class_name
-    pps 'height', height, 'width', width if $VERBOSE
-    raise 'poor dimentia' if width <= 0 || height <= 0
-    get_hwnd_loop_forever
-    max_x, max_y = Win32::Screenshot::Util.dimensions_for(@hwnd)
-    if(x < 0 || y < 0)
-      if x < 0
-        x = max_x + x
-      end
-      if y < 0
-        y = max_y + y
-      end
-    end
-    @x = x; @y = y; @x2 = x+width; @y2 = y+height; @callback = callback    
-    @max_x = max_x
-    raise "poor width or wrong window #{@x2} #{max_x} #{x}" if @x2 > max_x  || @x2 == x
-    if @y2 > max_y || @y2 == y || @y2 <= 0
-      raise "poor height or wrong window selected #{@y2} > #{max_y} || #{@y2} == #{y} || #{@y2} <= 0" 
-    end
-    if max_x == 0 || max_y == 0
-      # I don't think we can ever get here, because of the checks above
-      raise 'window invisible?'
-    end
-    @digits = digits
-    @previously_displayed_warning = false
-    @dump_digit_count = 1
-    pps 'using x',@x, 'from x', x, 'y', @y, 'from y', y,'x2',@x2,'y2',@y2,'digits', @digits.inspect if $VERBOSE
-  end
-  
-  def get_hwnd_loop_forever
-    if @name_or_regex.to_s.downcase == 'desktop'
-      # full screen option
-      assert !@use_class_name # not an option
-      @hwnd = hwnd = Win32::Screenshot::BitmapMaker.desktop_window
-      return
-    else
-      raise if OS.mac?
-      @hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
-    end
 
-    # display the 'found it message' only if it was previously lost...
-    unless @hwnd
-      until @hwnd
-        print 'unable to find the player window currently [%s] (maybe need to start program or move mouse over it)' % @name_or_regex.inspect
-        sleep 1
-        STDOUT.flush
-
-        hwnd = Win32::Screenshot::BitmapMaker.hwnd(@name_or_regex, @use_class_name)
-        width, height = Win32::Screenshot::Util.dimensions_for(hwnd)
-        p width, height
-        @hwnd = hwnd
-      end
-      puts 're-established contact with window'
-    end
-    true
-  end
-  
-  # gets the snapshot of "all the digits together"
-  def get_bmp
-    # Note: we no longer bring the window to the front tho...which it needs to be in both XP and Vista to work...sigh.
-    Win32::Screenshot::BitmapMaker.capture_area(@hwnd,@x,@y,@x2,@y2) {|h,w,bmp| return bmp}
-  end
-  
-  # gets snapshot of the full window
-  def get_full_bmp
-     Win32::Screenshot::BitmapMaker.capture_all(@hwnd) {|h,w,bmp| return bmp}
-  end
+  attr_accessor :hwnd # TODO move to windows only
 
   # writes out all screen tracking info to various files in the current pwd
   def dump_bmps filename = 'dump.bmp'
@@ -118,17 +45,65 @@ class ScreenTracker
   end
   
   def dump_digits digits, message
-    p "#{message} dumping digits to dump no: #{@dump_digit_count} #{Time.now.to_f}"
+    p "#{message} dumping digits all together to dump no: .#{@dump_digit_count}. (current time: #{Time.now.to_f}) in #{Dir.pwd}"
     for type, bitmap in digits
       File.binwrite type.to_s + '.' + @dump_digit_count.to_s + '.bmp', bitmap    
     end
-    File.binwrite @dump_digit_count.to_s + '.mrsh', Marshal.dump(digits)
+    File.binwrite @dump_digit_count.to_s + '.all_digits.mrsh', Marshal.dump(digits)
     @dump_digit_count += 1
   end
   
   DIGIT_TYPES = [:hours, :minute_tens, :minute_ones, :second_tens, :second_ones]
   
-  # returns like {:hours => nil, :minutes_tens => raw_bmp, ...
+  def identify_digit bitmap
+    OCR.identify_digit(bitmap, @digits)
+  end
+  
+  # we have to wait until the next change, because when we start, it might be half-way through
+  # the current second...
+  def wait_till_next_change
+    original = get_bmp
+    time_since_last_screen_change = Time.now
+    while(@keep_going) 
+      # save away the current time to try and be most accurate...
+      time_before_current_scan = Time.now
+      current = get_bmp
+      if current != original
+        if @digits
+          got = attempt_to_get_time_from_screen time_before_current_scan
+          if got
+            @status_callback.update_playing_well_status 'tracking it successfully' 
+          else
+            @status_callback.update_playing_well_status 'screen location where we anticipate digits is changing, but unable to track digits from it!'
+            File.binwrite('original.debug.bmp', original)
+            File.binwrite('current.debug.bmp', current)
+          end
+          return got
+        else
+          puts 'screen time change only detected... [unexpected]' # unit tests do this still <sigh>
+          return
+        end
+      else
+        if(Time.now - time_since_last_screen_change > 2.0)
+          # screen hasn't changed/updated at all in a long time
+          got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
+          if got_implies_able_to_still_ocr
+            @status_callback.update_playing_well_status 'appears screen is paused but still tracking?'
+            return got_implies_able_to_still_ocr
+          else
+            @status_callback.update_playing_well_status  'screen tracker: warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] and screen is not changing at all, either'
+            # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
+            retrain_on_window_loop_forever
+            # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al [?]
+          end
+          time_since_last_screen_change = Time.now
+        end
+      end
+      sleep 0.02
+    end
+  end
+  
+  # returns like {:hours => nil, :minutes_tens => raw_bmp, ...^M
   def get_digits_as_bitmaps
     # @digits are like {:hours => [100,5], :minute_tens => [x, width], :minute_ones, :second_tens, :second_ones}
     out = {}
@@ -145,67 +120,12 @@ class ScreenTracker
         width = x2 - x
         height = y2 - @y
         # lodo calculate these only once...
-        out[type] = Win32::Screenshot::BitmapMaker.capture_area(@hwnd, x, @y, x2, y2) {|h,w,bmp| bmp}
+        out[type] = capture_area(@hwnd, x, @y, x2, y2)
       end
     end
     out
   end
-  
-  def get_relative_coords_of_timestamp_window
-    [@x,@y,@x2,@y2]
-  end
-  
-  def get_coords_of_window_on_display # yea
-    out = FFI::MemoryPointer.new(:long, 4)
-    ScreenTracker.GetWindowRect @hwnd, out
-    out.read_array_of_long(4)
-  end
 
-  def identify_digit bitmap
-    OCR.identify_digit(bitmap, @digits)
-  end
-  
-  # we have to wait until the next change, because when we start, it might be half-way through
-  # the current second...
-  def wait_till_next_change
-    original = get_bmp
-    time_since_last_screen_change = Time.now
-    loop {
-      # save away the current time to try and be most accurate...
-      time_before_current_scan = Time.now
-      current = get_bmp
-      if current != original
-        if @digits
-          got = attempt_to_get_time_from_screen time_before_current_scan
-          if @previously_displayed_warning && got
-            # reassure user :)
-            p 'tracking it successfully again' 
-            @previously_displayed_warning = false
-          end
-          return got
-        else
-          puts 'screen time change only detected... [unexpected]' # unit tests do this still <sigh>
-          return
-        end
-      else
-        if(Time.now - time_since_last_screen_change > 2.0)
-          got_implies_able_to_still_ocr = attempt_to_get_time_from_screen time_before_current_scan
-          if got_implies_able_to_still_ocr
-            return got_implies_able_to_still_ocr
-          else
-            p 'warning--unable to track screen time for some reason [perhaps screen obscured or it\'s not playing yet?] ' + @hwnd.to_s
-            @previously_displayed_warning = true
-            # also reget window hwnd, just in case that's the problem...(can be with VLC moving from title to title)
-            get_hwnd_loop_forever
-            # LODO loop through all available player descriptions to find the right one, or a changed different new one, et al
-          end
-          time_since_last_screen_change = Time.now
-        end
-      end
-      sleep 0.02
-    }
-  end
-  
   def attempt_to_get_time_from_screen start_time
     out = {}
     # force it to have two matching snapshots in a row, to avoid race conditions grabbing the digits...
@@ -213,7 +133,12 @@ class ScreenTracker
     previous = nil 
     sleep 0.05
     current = get_digits_as_bitmaps
+    start = Time.now
     while previous != current
+      # don't allow it to loop forever or it will never complain of not finding digits if the screen is not actually showing a movie, for instance
+      if (Time.now - start > 2)
+        return nil # early failure 
+      end
       previous = current
       sleep 0.05
       current = get_digits_as_bitmaps
@@ -257,12 +182,23 @@ class ScreenTracker
     return out, Time.now-start_time
   end
   
+  @keep_going = true
+  
+  def shutdown
+    @keep_going = false
+  end
+  attr_accessor :thread
+  
   def process_forever_in_thread
-    Thread.new {
-      loop {
+    @keep_going = true
+    @thread = Thread.new {
+      while(@keep_going)
+        p 'screen tracker thread'
         out_time, delta = wait_till_next_change
-        @callback.timestamp_changed out_time, delta
-      }
+        @timestamp_callback.timestamp_changed out_time, delta
+      end
+      p 'screen tracker exiting tracking thread'
+      @status_callback.update_playing_well_status 'stopped'
     }
   end
   

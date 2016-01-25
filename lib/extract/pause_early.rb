@@ -1,3 +1,4 @@
+# stand alone file
 start = 33.26
 #play_this = "g:\\Video\\Sintel_NTSC\\Sintel_NTSC-2.m4v"
 play_this = "dvdnav://1/d:"

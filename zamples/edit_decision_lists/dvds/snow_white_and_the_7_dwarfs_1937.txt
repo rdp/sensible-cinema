@@ -3,7 +3,8 @@
 
 "mutes" => [
   # an example line, uncomment the leading "#" to make it active
-  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+  "0:00:10.0", "0:00:15.0", "profanity", "da..", 
+  "1:00:10.0", "1:00:15.0", "profanity", "da..", 
 ],
 
 "blank_outs" => [
@@ -12,8 +13,10 @@
 ],
 
 "volume_name" => "Snow_White",
-"disk_unique_id" => "4a3cd891|ab315d08",
-"dvd_title_track" => "1", # most DVD's use title 1. Not all do, though.  If sensible-cinema plays anything except the main title (for example, it plays a trailer), when you use it, see http://goo.gl/QHLIF to set this right.
+"dvd_title_track" => "1", 
 # "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => [a lot!], # or [] if there are none.  In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
+"disk_unique_id" => "4a3cd891|ab315d08",
+"dvd_title_track_length" => 5008.166,
+"dvd_start_offset" => 0.36,
+"dvd_nav_packet_offset" => [0.5, 0.364044],

@@ -17,15 +17,14 @@ This file is part of Sensible Cinema.
 =end
 
 def add_any_bundled_gems_to_load_path
-  vendor_dir = File.dirname(__FILE__) +  '/../vendor'
+  vendor_dir = File.dirname(__FILE__) +  '/../vendor/vendor_gems'
   raise 'no vendor dir?' unless File.directory?(vendor_dir)
-  if File.directory? vendor_dir + '/cache'
-    Dir[vendor_dir + '/**/lib'].sort.reverse.each{|lib_dir| # prefers newer versioned copies of gems in case I have duplicates
+  if File.directory? vendor_dir
+    Dir[vendor_dir + '/**/lib'].sort.reverse.each{|lib_dir| # prefers newer versioned copies of gems in case I have duplicates locally
       $: << lib_dir
     }
   else
-    require 'rubygems'
-    # they'll need imagemagick installed, as well, currently
+    raise 'should never get here now'
   end
 end
 

@@ -8,7 +8,7 @@
  "10:26", "10:36", "some lewd'ish dancing",
 ],
 
-# TODO add other side:
+# TODO add this other side of DVD
 # "disk_unique_id" => "e75236da|39c26c9b", # CONDOR_MAN_FF_PROJECT
 "volume_name" => "CONDOR_MAN_LB_PROJECT",
 "disk_unique_id" => "7cde4a1b|6c57c31e",
@@ -18,5 +18,10 @@
 "not edited out stuff" => "let's be democratic together [if you find it, take it out, tell me where it is]",
 "rating"=> "7 stars out of 10",
 # "closing thoughts" => "only...",
-# In mplayer, the DVD timestamp "resets" to zero for some reason, so you need to specify when if you want to use mplayer DVD realtime playback, or use mencoder -edl to split your file.  See http://goo.gl/yMfqX
-"mplayer_dvd_splits" => [], 
+
+
+"dvd_title_track_length" => 5407.4,
+"dvd_start_offset" => 0.23,
+"dvd_nav_packet_offset" => [0.733333, 0.9009],
+
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],

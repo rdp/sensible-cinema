@@ -1,0 +1,25 @@
+name: desktop
+x: 8
+y: -17
+width: 45
+height: 13
+digits:
+      :hours:
+      - 15
+      - 7
+      :minute_tens:
+      - 24
+      - 7
+      :minute_ones:
+      - 31
+      - 6
+      :second_tens:
+      - 40
+      - 6
+      :second_ones:
+      - 46
+      - 7
+      :should_invert: true
+      :levels:
+      - 100
+    

@@ -1,3 +1,140 @@
+0.42.0
+  bring back the "online player" editor!
+  features:
+    has a web user editable interface now [woot]
+    can minimize a window to "blank" it instead of showing one over the top (overlay window)
+    can click a mouse click to "mute" or "blank" instead of showing an overlay window
+    
+
+0.41.6,7,8
+  use better icons, hopefully work for paths with spaces now
+  gui cleanup
+  hopefully mac fixes
+
+0.41.5
+  attempt to use a real launcher now...
+  actually release the 0.41.4 pathing issue stuff LOL
+  
+0.41.4
+  add some quotes in a blind attempt to get it to install right on machines whose java.exe paths contain spaces in them.
+  fix (hopefully) some pathing issues in windows
+
+0.41.{1,2,3}:
+  add mac debug/attempt get dvd-id/mplayer working, esp. on i386 (and it finally does LOL).
+
+0.41.0:
+  update mplayer and DVD playback so that it's [hopefully] super file accurate.  In certain cases LOL.
+  hopefully fix mplayer to play audio again
+  fix euphemized subtitles gen, fix additional swear word scanning to work if empty, thanks Michael!  
+
+0.40.0: fix mutes so they're accurate again [yikes]
+update mplayer so it can seek with smplayer woot!
+
+0.39.4: add upconv. ease of use features
+
+0.39.3: add docu on how it works.
+
+0.39.2: fix missing dependency with work around for now
+
+0.39.1
+
+use an mplayer EDL that is friendlier for smplayer, also some change/inventionzy related notes added.
+
+0.39.0
+
+Some github tweakage/renaming/use new stuff.
+Fix file opening for mac.
+Some GUI fixes/tweaks (and also use updated sub lib).
+
+Also NB that since we support youtube's API, we can control full feature length movies in that regard, as well as normal youtube-length clips.
+Also NB that this could also work with google play, apple itunes (using java's mac API's), powerDVD, etc.
+
+0.38.0
+
+New project name "Clean Editing Movie Player" woot.
+
+Clarify some verbiage/cache better/more sanely for subtitles.  Update documentation to match new style more.
+
+Youtube EDL new URL: http://cleaneditingmovieplayer.inet2.org/youtube_edl/yo?mute_start=2&mute_end=7&skip_start=10&skip_end=20&youtube_video_id=ylLzyHk54Z0
+
+See also http://betterlogic.com/roger/2009/02/user-contributed-movie-scene-selection-or-past-clearplay/ for a list of ideas/thoughts/inventions related.
+
+Another idea I might get around to:
+being able to "switch input" on the fly.  for instance with this device: https://github.com/rdp-org/avisynth-as-directshow-capture theoretically it could be
+configured to allow "changeable inputs" like switching from one webcam to another one.
+Mine would be the same, but would track mplayer, and, according to an EDL, for instance at "minute 6" it would skip to a different file.  Or start playing an extra
+audio file.  Or "skip forward" or "mute" or "turn down the volume" or "accelerate the video" while playing it, to cut through scary scenes more quickly.
+Or fade in or fade out, etc.
+All of this could be combined in the user interface to look like "one long video" too.
+Also being able to skip "from second 10 back to second 5" and "loop 3 times doing this" or the like.  It can track in memory how many times it's done the loop, etc.
+
+Maybe even take a snapshot picture of the face of the user and insert it into movies in certain scenes/spots with trajectories, etc.
+
+0.37.0 5/1/12
+
+fix some verbiage, attempt to remove file modification code to come more in line with the CopyRight act.
+Fix some install quirks.  Faster now, hopefully :P
+
+0.36.1
+
+fix downloads to be more robust.
+
+Also NB that since VLC supports blu-ray, and we support VLC, we have instant blu-ray support. Sweetness!
+
+= 0.36.0 4/28/12 =
+
+Some UI improvements, fix subtitles parsing again.
+
+= 0.35.4 4/23/12 =
+
+Fixes for mac, some UI improvements phew!
+Also fixed it for subtitle synchro without entering sync points [oops]
+Added a couple DVD's in there.
+
+= 0.35.3 4/21/12 =
+
+Test distro for mac.  Also include dvdsample.exe the MS DVD Navigator "demo" jumper.  See the source code.
+This release if you want it.
+
+= 0.35.2 4/20/12 =
+
+Fix bug in DVD player, new mac release.
+
+= 0.35.1 4/18/12 =
+
+Attempt to not infinite loop on edge case DVD timings.
+
+Also note the existence of several videos showing how to do "certain things"
+here: https://sourceforge.net/projects/sensible-cinema/files/videos/
+
+= 0.35.0 4/18/12 =
+
+Preferences setup has changed, uses a new version of mplayer which "heck, might!" be more stable,
+but I *think* it should be more accurate by 0.2s.
+
+= 0.34.5 4-17-12 =
+
+Made side by Side EDL format to default to "XBMC" human readable. Ask and ye shall receive...
+
+Note that one can already "beam" edited video content from one computer to the next,
+using my on-screen-video capture utility.  Even can capture audio from the computer "natively" 
+for vista+.
+You can also beam it to a console device (transmit) the (now being transmitted as edited) video.
+
+= 0.34.4 4-6-12 =
+
+Fix XBMC EDL style creation.  Hopefully fix sorting bug for real this time.
+
+NB that with ZoomPlayer Max's Blu-Ray support, you can watch blu-ray's edited too.
+
+Split pomodoro timer out to its own repo. :)
+
+= 0.34.3 3-17-12 =
+
+Fix sorting bug. Add a few titles.
+
+Add pomodoro timer!
+
 = 0.34.2 2-6-12 =
 
 minor subtitle friendli-ezations.

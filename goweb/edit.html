@@ -1,0 +1,14 @@
+<h1>Editing {{.Title}}</h1>
+
+<form action="/save/{{.Title}}" method="POST">
+<div>
+<textarea name="body" rows="40" cols="120" style="font-size: 12pt; font-family: Arial;">
+{{printf "%s" .Body}}
+</textarea>
+</div>
+
+<div><input type="submit" value="Save"></div>
+</form>
+<p>[<a href="/view/{{.Title}}">cancel</a>]</p>
+<p>[<a href="/">index</a>]</p>
+

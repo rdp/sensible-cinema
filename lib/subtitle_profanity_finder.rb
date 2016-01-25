@@ -1,6 +1,6 @@
 #
 # warning: somewhat scary/explicit down there!
-# see also todo.subtitle file, though what's here is mostly pretty well functional
+# see also todo.subtitle file, though what's here is mostly pretty well functional/complete
 #
 begin
   require 'sane'
@@ -12,13 +12,18 @@ require_relative 'edl_parser'
 require 'ostruct'
 
 module SubtitleProfanityFinder
+   @@expected_min_size = 10 # so unit tests can change it
+   def self.expected_min_size= new_min
+     @@expected_min_size = new_min
+   end
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries subtitles_raw_text
-     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # line endings so that it parses right when linux reads a windows file <huh?>
-     all.map{|glop|
-	   lines = glop.lines.to_a
-	   index_line = lines[0]
+      p subtitles_raw_text.valid_encoding?
+     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings so that it parses right when linux reads a windows file <huh?>
+     all.map!{|glop|
+       lines = glop.lines.to_a
+       index_line = lines[0]
        timing_line = lines[1].strip
        text = lines.to_a[2..-1].join("") # they still have separating "\n"'s
        # create english-ified version
@@ -38,6 +43,19 @@ module SubtitleProfanityFinder
        add_single_line_minimized_text_from_multiline out
        out
      }
+     if all.size < @@expected_min_size
+       raise "unable to parse subtitle file? size=#{all.size}"
+     end
+
+     # strip out auto inserted trailers/headers
+     reg =  / by|download| eng|www|http|sub/i
+     while all[0].text =~ reg
+      all.shift
+     end
+     while all[-1] =~ reg
+      all.pop
+     end
+     all
    end
 
    def self.add_single_line_minimized_text_from_multiline entry
@@ -85,7 +103,9 @@ module SubtitleProfanityFinder
   end
 
   def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0
-    edl_output_from_string(File.read(incoming_filename), extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
+    # jruby is unkind to invalid encoding input, and these can come from "all over" unfortunately, and it doesn't guess it right [?] ai ai so scrub
+    contents = File.read(incoming_filename)
+    edl_output_from_string(contents, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
   end
   
   # **_time means "a float"
@@ -93,13 +113,9 @@ module SubtitleProfanityFinder
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true # lodo may not need include_minor_profs :P
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
+     subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
 
-     # accomodate for both styles of rewrite, except it messes up the math...delete this soon...
-     # difference = starting_timestamp_given_srt - starting_timestamp_actual
-     # subtract_from_each_beginning_ts += difference
-     # add_to_end_each_ts -= difference
-
-#     you minus the initial srt time... (given)
+#     you minus the initial srt time... (given) then
 #     ratio = (end actual - init actual/ end given - init given)*(how far you are past the initial srt) plus initial actual
      multiply_by_this_factor = (ending_actual_time - starting_time_actual)/(ending_srt_time - starting_time_given_srt)
 
@@ -138,13 +154,14 @@ module SubtitleProfanityFinder
     bad_profanities = {'hell' => ['h...', :full_word],
       'g' +
       111.chr + 
-      100.chr => ['vain use', :partial_word, 'deity'], 'g' +
+      100.chr => ['___', :partial_word, 'deity'], 'g' +
       111.chr + 
       100.chr +
       's' => 'deitys',
       'meu deus' => 'l...',
-      'lord' => 'l...', 'da' +
-      'mn' => 'da..', 
+      'lo' + 
+	  'rd' => 'l...', 'da' +
+      'mn' => 'd...', 
       'f' +
       117.chr +
       99.chr +
@@ -154,7 +171,8 @@ module SubtitleProfanityFinder
       'bi' +
       'tc' + 104.chr => 'b....',
       'bas' +
-      'ta' + 'r' + 100.chr => 'ba.....',
+      'ta' + 
+	  'r' + 100.chr => 'ba.....',
       ((arse = 'a' +
       's'*2)) => ['a..', :full_word],
       arse + 'h' +
@@ -163,40 +181,54 @@ module SubtitleProfanityFinder
       arse + 'w' +
       'ipe' => 'a..w...',
       'jes' +
-      'u' + 's' => ['vain use', :partial_word, 'deity'],
+      'u' + 's' => ['___', :partial_word, 'deity'],
       'chri' +
-      'st'=> ['vain use', :full_word, 'deity'], # allow for christian[ity] 
+      'st'=> ['___', :full_word, 'deity'], # allow for christian[ity] 
       'sh' +
        'i' + 't' => 'sh..',
       'cu' +
       'nt' => 'c...',
-      'cocksucker' => 'cock......',
+      'cock' +
+	  'su' + 
+	  'cker' => 'cock......',
+	  'bloody' => 'bloo..'
     }
-    
-    bad_profanities.merge! extra_profanity_hash # LODO make easier to use...
-
+	
     semi_bad_profanities = {}
     ['moron', 'breast', 'idiot', 
       'sex', 'genital', 
+	  'naked', 
       'boob', 
       'tits',
       'make love', 'pen' +
-	    'is',
-      'pussy',
-      'fart',
+	  'is',
+      'pu' +
+	  'ssy',
+	  'gosh',
+	  'whore',
+	  'debauch',
+      'come to bed',
+      'lie with',
       'making' + 
 	    ' love', 'love mak', 
       'dumb', 'suck', 'piss', 'c' +
 	    'u' + 'nt',
-	    'd' + 'ick', 'vag' +
-	    'i' + 'na',
+	    'd' + 'ick', 'v' +
+		'ag' +
+	    'i' + 
+		'na',
+		'int' +
+		'er' +
+		'course'
 	  ].each{|name|
       semi_bad_profanities[name] = name
     }
-    semi_bad_profanities['bloody'] = 'bloo..'
-    semi_bad_profanities['crap'] = ['crap', :full_word]
-    semi_bad_profanities['butt'] = ['butt', :full_word]
-    # butter?
+	
+	for word in ['panties', 'crap', 'butt', 'dumb', 'fart']
+	  semi_bad_profanities[word] = [word, :full_word]
+	end
+	
+    semi_bad_profanities.merge! extra_profanity_hash
 
     all_profanity_combinationss = [convert_to_regexps(bad_profanities)]
     if include_minor_profanities
@@ -206,16 +238,17 @@ module SubtitleProfanityFinder
     output = ''
     entries = split_to_entries(subtitles)
     for all_profanity_combinations in all_profanity_combinationss
-      output += "\n"
+      output += "\n" # some space between greater and lesser prof's
       for entry in entries
         text = entry.text
         ts_begin = entry.beginning_time
-        ts_begin -= subtract_from_each_beginning_ts
+
         ts_begin = multiply_proc.call(ts_begin)
+        ts_begin -= subtract_from_each_beginning_ts
         
         ts_end = entry.ending_time
-        ts_end += add_to_end_each_ts
         ts_end = multiply_proc.call(ts_end)
+        ts_end += add_to_end_each_ts
         found_category = nil
         for (profanity, category, sanitized) in all_profanity_combinations
           if text =~ profanity
@@ -251,7 +284,7 @@ module SubtitleProfanityFinder
       entry.beginning_time = multiply_proc.call(entry.beginning_time)
       entry.ending_time = multiply_proc.call(entry.ending_time)
     end
-    [output, entries]
+    [output.strip, entries]
   end
 end
 

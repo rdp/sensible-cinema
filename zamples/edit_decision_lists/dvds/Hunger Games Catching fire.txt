@@ -1,0 +1,70 @@
+# copy and paste these into your "mute" section of A SEPARATE EDL already created with the other buttons, for lines you deem mute-worthy
+"mutes" => [
+  "0:20:39.00" , "0:20:40.20", "profanity", "sh..", "[sh..].",
+  #"0:41:19.02" , "0:41:20.52", "profanity", "deity", "Oh, [___].",
+  "1:11:47.70" , "1:11:48.40", "profanity", "deity", "[___]! Does anybody actually believe this?",
+  "1:14:34.26" , "1:14:36.52", "profanity", "deity", "Oh, my [___]!",
+  "1:27:49.50" , "1:27:50.00", "profanity", "deity", "[___], it's hot.",
+  "1:30:18.50" , "1:30:20.00", "profanity", "deity", "Oh, my [___].",
+  #"1:31:37.60" , "1:28:40.44", "profanity", "deity", "Oh, my [___]. You were dead.",
+  "1:39:00.00" , "1:39:03.50", "profanity", "deity", "[___]! [___]!",
+  "1:39:43.50" , "1:39:44.50", "profanity", "sh..", "[sh..]!",
+  "1:52:30.00" , "1:52:33.00", "profanity", "deity", "My [___], it's a clock! Wiress, you're a genius.",
+  "1:55:41.41" , "1:55:41.70", "profanity", "bloo..", "Let's just get what we need and get off the [bloo..] island.",
+  "1:57:56.70" , "1:57:57.00", "profanity", "d...", "forget the districts, there would be riots in the [d...] Capitol.",
+  "2:14:41.82" , "2:14:42.20", "profanity", "h...", "- What the [h...] are you doing in here? - Stop.",
+  "2:15:28.00" , "2:15:31.00", "profanity", "b....", "You son of a [b....]! You son of a...",
+
+  #"1:00:15.40" , "1:00:17.49", "profanity", "idiot", "My stylist is such an [idiot].",
+  #"1:51:24.22" , "1:51:28.10", "profanity", "dick", "Hickory [dick]ory dock. The mouse ran up the clock.",
+  #"1:51:31.06" , "1:51:32.65", "profanity", "dick", "Hickory [dick]ory dock.",
+  #"1:51:43.07" , "1:51:46.87", "profanity", "dick", "Hickory [dick]ory dock. The dog barked at the clock.",
+  #"1:51:51.50" , "1:51:52.54", "profanity", "dick", "Hickory [dick]ory dock.",
+  
+  ],
+  
+ "blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "01:02:23.42" , "01:02:53.60", "nudity", "of some sort",
+],
+  
+ "disk_unique_id" => "8a8ff462|fd46dbff",
+"volume_name" => "<The Hunger Games Catching Fire>",
+"dvd_title_track" => "26",
+"dvd_title_track_length" => 8873.233,
+"dvd_title_track_start_offset" => 0.28,
+"dvd_nav_packet_offset" => [0.5, 0.714399],
+#ID_DVD_TITLE_1_LENGTH=8608.533
+#ID_DVD_TITLE_2_LENGTH=404.000
+#ID_DVD_TITLE_3_LENGTH=151.433
+#ID_DVD_TITLE_4_LENGTH=151.433
+#ID_DVD_TITLE_5_LENGTH=74.500
+#ID_DVD_TITLE_6_LENGTH=92.500
+#ID_DVD_TITLE_7_LENGTH=95.500
+#ID_DVD_TITLE_8_LENGTH=13.000
+#ID_DVD_TITLE_9_LENGTH=22.666
+#ID_DVD_TITLE_10_LENGTH=7.333
+#ID_DVD_TITLE_11_LENGTH=5.000
+#ID_DVD_TITLE_12_LENGTH=5.000
+#ID_DVD_TITLE_13_LENGTH=1220.000
+#ID_DVD_TITLE_14_LENGTH=7280.000
+#ID_DVD_TITLE_15_LENGTH=73.500
+#ID_DVD_TITLE_16_LENGTH=6749.500
+#ID_DVD_TITLE_17_LENGTH=7467.533
+#ID_DVD_TITLE_18_LENGTH=8765.700
+#ID_DVD_TITLE_19_LENGTH=8765.700
+#ID_DVD_TITLE_20_LENGTH=8608.533
+#ID_DVD_TITLE_21_LENGTH=8765.700
+#ID_DVD_TITLE_22_LENGTH=8765.700
+#ID_DVD_TITLE_23_LENGTH=8765.700
+#ID_DVD_TITLE_24_LENGTH=6451.033
+#ID_DVD_TITLE_25_LENGTH=6749.500
+#ID_DVD_TITLE_26_LENGTH=8873.233
+#ID_DVD_TITLE_27_LENGTH=8608.533
+#ID_DVD_TITLE_28_LENGTH=8765.700
+#ID_DVD_TITLE_29_LENGTH=8608.533
+#ID_DVD_TITLE_30_LENGTH=8608.533
+#ID_DVD_TITLE_31_LENGTH=8873.233
+"timestamps_relative_to" => ["file", "29.97"],
+

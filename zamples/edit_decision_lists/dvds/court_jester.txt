@@ -21,8 +21,12 @@
 
 "volume_name" => "JESTER",
 "disk_unique_id" => "a0eadedd|449cd867",
+<<<<<<< HEAD
 "dvd_title_track" => "1",
 # "not edited out stuff" => "some violence",
+=======
+"dvd_title_track" => "1",# "not edited out stuff" => "some violence",
+>>>>>>> origin/master
 # "closing thoughts" => "still...",
 "dvd_title_track_length" => 6065.4,
 "dvd_start_offset" => 0.19,

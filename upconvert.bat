@@ -1,1 +1,0 @@
-j %* bin/sensible-cinema --upconvert-mode

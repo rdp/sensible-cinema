@@ -18,6 +18,8 @@ This file is part of Sensible Cinema.
 require File.dirname(__FILE__) + "/common"
 require_relative '../lib/muter'
 
+puts 'you manual test this one by playing something then watching it play or not'
+
 describe 'manual muter' do
   # functional test
   

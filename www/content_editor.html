@@ -22,10 +22,10 @@
 <html>
 <div style="float:right; margin-right: 50px; margin-left: 20px;">
 <img src="source/vendor/profs.png" width=150 />
-
-<h1>Sensible Cinema Movie Sanitizer</h1></div>
+</div>
+<h1>Clean Editing Movie Player</h1></div>
 <pre>
-Sensible Cinema allows you watch edited movies by applying edit lists (EDL's -- edit decision lists) 
+The CEMP allows you watch edited movies by applying edit lists (EDL's -- edit decision lists) 
 (i.e. "mute out" or "cut out" questionable scenes) to DVD's or movie files.
 
 A description and history/background of sensible-cinema can be found <a href="https://github.com/rdp/sensible-cinema/blob/master/README">here</a>.  
@@ -33,12 +33,16 @@ Don't forget to come back to this page to download it, though (from the "Downloa
 
 <h2 style="margin: 0px;">Download</h2>
 To download, please check the checkbox if you agree to the terms of the 
-license agreement (<a href="http://www.gnu.org/licenses/gpl.html">gplv3</a>) and wish to download and use sensible cinema.  
+license agreement (<a href="https://www.gnu.org/licenses/lgpl.html">lgpl</a>) and wish to download and use sensible cinema.  
 
 <input type="checkbox" class="trigger" onClick="$('#comments').toggle();"/>  I have read and agree to the license terms and conditions and wish to download.
 
 <div id="comments" style="display:none;  border-style:dotted; border-width:1px; border-color: #aaaaaa; padding: 5px;"> 
-  Please download the latest version of sensible cinema from <a href="https://sourceforge.net/projects/sensible-cinema/files/">sourceforge</a>.  You can also see the <a href="source">source</a>.
+  Please download the latest version of sensible cinema from <a href="http://code.google.com/p/sensible-cinema/downloads/list">google code</a>.
+  <br/>
+  You can also see the <a href="source">source</a>.
+  <br/>
+  You can also see the what's new <a href="https://github.com/rdp/sensible-cinema/blob/master/change_log_with_feature_list.txt">ChangeLog</a>.
 </div>
 After download, unzip it.  For windows users, that's like: 
    Reveal the file in explorer -> right click on the file -> Extract all -> Extract.  
@@ -46,15 +50,11 @@ Now open the newly created sensible-cinema-x.x.x folder, and run the file "run s
 You will be initially prompted to accept the license agreement(s) and also install a few 
 (non included, separate ownership/distribution) dependencies.
 Now insert a DVD you own, to see available options.
-Note that you want to download from sourceforge (here) not from github.com (github is just the raw source).
 There is more documentation <a href="https://github.com/rdp/sensible-cinema/wiki">here</a>.
 
-<h3>Mac user prerequisites</h3>Mac users will need to install some <a href="https://sourceforge.net/projects/sensible-cinema/files/mac-dependencies">mac dependencies</a> first.
+<h3>Mac user prerequisites</h3>Mac users will need to install some <a href="https://sourceforge.net/projects/mplayer-edl/files/mac-dependencies/">mac dependencies</a> first.  NB to uninstall them, should you ever desire to, open a terminal and carefully run this: $ sudo rm -rf /opt/rdp_project_local
 
 Note that by installing these dependencies, you're accepting their respective licenses/distributions.
-
-<h3>Upconverting/upscaling DVD/video player</h3>Sensible Cinema comes with its own upscaling/upconverting software DVD/movie file player. 
-See it and the various other things that sensible cinema does <a href="..">here</a>.
 
 <h3>Available edited movie lists</h3>You can see the (small) current list of DVD edit lists (EDL's) already created
 <a href="https://github.com/rdp/sensible-cinema/tree/master/zamples/edit_decision_lists/dvds">here</a> 
@@ -65,27 +65,27 @@ If yours isn't there, then we'd ask you to help us by creating and submitting yo
 see the <a href="https://github.com/rdp/sensible-cinema/wiki">documentation on the wiki</a> for instructions on creating 
 your own new delete list. <!-- this is actually a short line -->
 Then run the file "advanced-edit or create sensible cinema delete list files.bat" to create and edit your new delete list.  
-Sensible Cinema has a few buttons to help you there.
+CEM Player has a few buttons to help you there.
 Don't forget to upload your new EDL file back to us when you're done, so others can benefit (see "contact", below).
 
 That link is the full list--your help is wanted/needed to help us grow!
 
 <h2 style="margin: 0px;">Other Resources/Contact/Support</h2>
-Let me know via the <a href="http://groups.google.com/group/sensible-cinema?pli=1">google group</a> or <a href="mailto:sensible-cinema@googlegroups.com">email</a> if you have feedback or have any other ideas/suggestions.
+Let me know via the <a href="http://groups.google.com/group/clean-editing-movie-player">google group</a> or <a href="mailto:clean-editing-movie-player@googlegroups.com">email</a> if you have feedback or have any other ideas/suggestions.
 <h3>Source code</h3>Source code is all available <a href="http://github.com/rdp/sensible-cinema">here</a>.  
 Source code developers/contributors are welcome! See <a href="https://github.com/rdp/sensible-cinema/blob/master/notes_for_potential_developers.txt">here</a> for instructions.  
 For (non-techy or techy) contributions, write to the addresses above.
 
 You can see the <a href="source/change_log_with_feature_list.txt">change log with feature list</a>.
 
-You can get a list of DVD ISO's (creative commons licensed) <a href="releases/dvd_isos">here</a>, 
+You can get a list of free DVD/blu-ray ISO's (creative commons licensed) <a href="http://sourceforge.net/projects/sensible-cinema/files/open_source_dvd_isos/">here</a>, and <a href=http://archive.org/details/BigBuckBunny>here</a> and files <a href=http://www.bigbuckbunny.org/index.php/download/>here</a>, or <a href=http://download.blender.org/durian/movies/>here</a> etc.
 if you want to try them out for experimenting/development/research etc.
 
-Please click the license agreement checkbox at the top to see a list of some old releases (newer ones are found on sourceforge exclusively, old ones here).
-<div id="comments2">You can find an old list of older releases, as well as the MS based C <a href="releases/c_player">DVD player</a> listed <a href="releases">in the archives</a>.
+Please click the license agreement checkbox at the top to see a list of some old releases <a href=https://sourceforge.net/projects/sensible-cinema/files>here</a>.  A few versions also predated <a href=https://sourceforge.net/projects/sensible-cinema/files/older_releases/>those</a> and were archived there eventually.
+<div id="comments2">You can find the Microsoft DvdNavigator <a href="releases/c_player">DVD player</a> listed <a href="releases">here</a>.
 
 </div>
-Compatible with <a href="http://www.inmatrix.com/">Zoom Player MAX<img src="zoomplayer_max.png" width=45/></a> and <a href="http://www.mplayerhq.hu">MPlayer</a> (and <a href="http://videolan.org">VLC Player</a> if desired).
+Compatible with <a href="http://www.inmatrix.com/">Zoom Player MAX<img src="zoomplayer_max.png" width=45/></a> and <a href="http://www.mplayerhq.hu">MPlayer</a> (and <a href="http://videolan.org">VLC Player</a> if desired, the source is included).
 </pre>
 </html>
 </body>

@@ -1,20 +1,23 @@
 "name" => "Big Buck Bunny DVD",
 
 "mutes" => [
-  #
+  # skips are enough for this
 ],
 
 "blank_outs" => [
-  "00:00:00.0" , "00:00:33.5", "skip intro",
+  "00:00:00.0" , "00:00:33.5", "boring", "skip intro",
   "01:23", "01:25", "don't kill the nice butterfly!",
   "03:15.5", "03:29", "don't kill the nice butterfly 2!",
   "09:53", "09:58", "pooping"
 ],
 
 "audio_codec" => "lavc", # weird compatibility issues...
-# recalculate... "disk_unique_id" => "",
 "url" => "http://www.bigbuckbunny.org/",
 "dvd_title_track" => "2",
 "volume_name" => "BIG_BUCK_BUNNY_NTSC",
 "disk_unique_id" => "94a23146|afc6c923",
-"closing thoughts" => "feels more adult than a kids movie, but probably ok edited"
+"closing thoughts" => "feels more adult than a kids movie, but probably ok edited for kids",
+"dvd_title_track" => "2",
+"dvd_title_track_length" => 595.866,
+"dvd_start_offset" => 0.3,
+"dvd_nav_packet_offset" => [0.5, 0.738237],

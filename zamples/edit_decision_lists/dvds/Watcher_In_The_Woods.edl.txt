@@ -1,0 +1,31 @@
+# edl_version 1.2.1, sensible cinema v0.41.7
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Watcher In The Woods",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+],
+
+"blank_outs" => [
+ "0:44:24.76" , "0:44:31.56", "profanity", "deity", "I've seen her, Mr Keller. As [___]'s my witness, I've seen her.",
+  "1:12:13.89" , "1:12:18.01", "profanity", "deity", "[___] be with you, child.",
+],
+
+
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["I think this house will be exactly right for you.", "1:58.13", 2],
+"ending_subtitle_entry" => ["It's all right, baby. Everything is gonna be all right now.", "1:02:50.35", 484],
+
+"source" => "dvd",
+"volume_name" => "WATCHER_IN_THE_WOODS",
+"timestamps_relative_to" => ["file", "29.97"],
+"disk_unique_id" => "8900be68|434aee14",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "4994.0", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.35",
+"dvd_nav_packet_offset" => [0.4, 0.6143],

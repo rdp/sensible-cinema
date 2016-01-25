@@ -1,0 +1,41 @@
+# edl_version 1.2.1, sensible cinema v0.41.3
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Harry Potter and the Half-Blood Prince",
+
+"mutes" => [
+   "0:47:56.75" , "0:47:59.30", "profanity", "bloo..", "Not [bloo..] likely. He's top of the class.",
+  "0:48:56.80" , "0:49:00.65", "profanity", "bloo..", "I like a nice chat before I go to bed. Now all you do is read that [bloo..] book.",
+  "0:50:02.04" , "0:50:04.10", "profanity", "h...", "oh, [bloo..] [h...] ",
+  "1:10:08.17" , "1:10:11.19", "profanity", "deity", "oh, [___], here he comes.",
+  "1:12:57.39" , "1:12:58.52", "profanity", "h...", "oh, [bloo..] [h...] ",
+  "1:21:11.50" , "1:21:15.73", "profanity", "bloo..", "You're [bloo..] lucky you weren't killed. You have to realize who you are, Harry.",
+  "1:29:37.17" , "1:29:39.40", "profanity", "bloo..", "A [bloo..] strong one at that.",
+  "1:36:03.60" , "1:36:07.00", "profanity", "bloo..", "Don't get me wrong, I'm [bloo..] thrilled to be shot of her.",
+  "1:46:24.65" , "1:46:26.29", "profanity", "deity", "Good [___].",
+],
+"subtitle_file" => "Harry.Potter.and.the.Half-Blood.Prince.2009.DVDRIP.H264-ZEKTORM.srt",
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "2:06:46.51", "2:06:48.1", "scary hand grab",
+  "2:07:06.37","2:08:53.00", "scary undead fight",
+  "1:39:21.0", "1:39:25.5", "bloody body",  
+"1:39:44", "1:39:52", "blood being healed",
+
+],
+
+"source" => "dvd",
+"volume_name" => "HARRY_POTTER_HALF_BLOOD_PRINCE",
+"timestamps_relative_to" => ["file", "29.97"],
+"disk_unique_id" => "3276cc56|3a7f0d32",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "9199.833", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.13",
+"dvd_nav_packet_offset" => [0.5, 0.491774],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["I killed Sirius Black!", "20.89", 1],
+"ending_subtitle_entry" => ["Merlin's beard, Harry!", "1:44:47.03", 1086],

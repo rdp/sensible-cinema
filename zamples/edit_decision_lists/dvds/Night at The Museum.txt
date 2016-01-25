@@ -1,0 +1,54 @@
+# copy and paste these into your "mute" section of A SEPARATE EDL already created with the other buttons, for lines you deem mute-worthy
+"mutes" => [
+  #"0:06:58.78" , "0:07:02.04", "profanity", "l...", "October 27th, the year of our [l...] 1858.",
+  #"0:16:03.50" , "0:16:04.79", "profanity", "deity", "Yeah, well,  cool doesn't pay for your Guitar [___] VIor whatever.",
+  "0:26:27.20" , "0:26:29.20", "profanity", "deity", ". Oh, my [___]",
+  "0:39:26.60" , "0:39:27.00", "profanity", "d...", ". but because I smell adventure, and, [d...] it, I want in",
+  #"0:39:35.87" , "0:39:40.54", "profanity", "deity", "I am Kahmunrah. I am half [___],",
+  #"0:42:58.99" , "0:43:01.41", "profanity", "deitys", "They're cupids, Mr. Daley. [deitys] of love.",
+  #"0:48:12.42" , "0:48:14.92", "profanity", "d...", "my evil army of the [d...]ed,",
+  "1:05:33.68" , "1:05:35.68", "profanity", "d...", "LARRY Sorry. [d...], that was disappointing.",
+  #"1:11:39.64" , "1:11:41.14", "profanity", "deitys", "[deitys]peed, Amelia Earhart!",
+  "1:14:28.56" , "1:14:29.56", "profanity", "deity", "! Oh, my [___]! I can't believe you reached across like that again",
+  "1:14:34.20" , "1:14:34.80", "profanity", "deity", "! Oh, [___]!",
+  "1:14:55.58" , "1:14:57.50", "profanity", "deity", "Don't say it! Oh, [___], I see you getting ready.",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+
+"disk_unique_id" => "ae7f11b2|632526a6",
+"volume_name" => "NIGHT_AT_THE_MUSEUM_2",
+"dvd_title_track" => "1",
+"dvd_title_track_length" => 6278.233,
+"dvd_title_track_start_offset" => 0.2,
+"dvd_nav_packet_offset" => [0.433333, 0.533467],
+#ID_DVD_TITLE_1_LENGTH=6278.233
+#ID_DVD_TITLE_2_LENGTH=405.666
+#ID_DVD_TITLE_3_LENGTH=66.000
+#ID_DVD_TITLE_4_LENGTH=1197.300
+#ID_DVD_TITLE_5_LENGTH=689.866
+#ID_DVD_TITLE_6_LENGTH=339.266
+#ID_DVD_TITLE_7_LENGTH=74.100
+#ID_DVD_TITLE_8_LENGTH=46.966
+#ID_DVD_TITLE_9_LENGTH=92.933
+#ID_DVD_TITLE_10_LENGTH=74.100
+#ID_DVD_TITLE_11_LENGTH=65.000
+#ID_DVD_TITLE_12_LENGTH=491.966
+#ID_DVD_TITLE_13_LENGTH=290.500
+#ID_DVD_TITLE_14_LENGTH=233.966
+#ID_DVD_TITLE_15_LENGTH=82.000
+#ID_DVD_TITLE_16_LENGTH=121.000
+#ID_DVD_TITLE_17_LENGTH=58.500
+#ID_DVD_TITLE_18_LENGTH=32.500
+#ID_DVD_TITLE_19_LENGTH=9.500
+#ID_DVD_TITLE_20_LENGTH=0.500
+#ID_DVD_TITLE_21_LENGTH=1.500
+"timestamps_relative_to" => ["file", "29.97"],
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Hey, watch it.", "03:15.85", 1],
+"ending_subtitle_entry" => ["Ripped By Geniuses Group ir guitar yahoo.com", "1:44:50.42", 1216],
+

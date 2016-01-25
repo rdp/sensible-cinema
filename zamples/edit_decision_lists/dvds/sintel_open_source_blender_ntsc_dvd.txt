@@ -6,7 +6,6 @@
 "blank_outs" => [
   "00:00:56.0" , "00:00:57.0", "violence", "knife stabbing",
   "00:01:05.0" , "00:01:14.5", "violence", "stab through",
-  "90.0", "100.0", "violence", "test cut",
 ],
 
 "dvd_nav_packet_offset" => [0.5, 0.734067],
@@ -18,6 +17,6 @@
 "dvd_title_track" => "2",
 "dvd_start_offset" => "0.37", # for title 2
 "not edited out stuff" => "quite a bit of violence in there still",
- 
 
-"mplayer_dvd_splits" => [],
+
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],

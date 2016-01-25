@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "$0" )" && pwd )"
-cd $DIR/../sensible-cinema
-java -Xdock:name="Sensible Cinema" -Xdock:icon="./vendor/profs.png" -cp "./vendor/jruby-complete-1.6.2.jar" org.jruby.Main bin/sensible-cinema $1 $2 $3 || (echo ERROR. Please look for error message, above, and report back the error you see, or fix it && read -p "Press any key to continue...")
+cd $DIR/../clean-editing-movie-player
+java -Xdock:name="Clean Editing Movie Player" -Xdock:icon="./vendor/profs.png" -cp "./vendor/jruby-complete.jar" org.jruby.Main bin/sensible-cinema $1 $2 $3 || (echo ERROR. Please look for error message, above, and report back the error you see, or fix it && read -p "Press any key to continue...")
 

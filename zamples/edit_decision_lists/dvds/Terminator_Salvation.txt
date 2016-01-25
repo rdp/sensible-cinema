@@ -1,0 +1,50 @@
+# copy and paste these into your "mute" section of A SEPARATE EDL already created with the other buttons, for lines you deem mute-worthy
+
+"mutes" => [
+"0:08:16.94" , "0:08:18.45", "profanity", "h...", "What the [h...] s that smell, man?",
+  "0:09:54.91" , "0:09:56.21", "profanity", "ba.....", "Alright, let's cut these sorry [ba.....]s loose.",
+  "0:10:02.53" , "0:10:04.72", "profanity", "a..", "Connor, get your [a..] top-side.",
+  "0:16:08.00" , "0:16:08.99", "profanity", "h...", "What the [h...]  are you doing here?",
+  "0:24:06.70" , "0:24:07.25", "profanity", "h...", "What the [h...] was that thing?",
+  "0:26:13.20" , "0:26:14.04", "profanity", "sh..", "- Holy [sh..]. - Could you believe it?",
+  "0:33:45.00" , "0:33:45.80", "profanity", "piss", "This thing is [piss]ing me of.",
+  #"0:38:06.99" , "0:38:07.30", "profanity", "d...", "[d...]! You brought them here!",
+  "0:39:01.99" , "0:39:02.50", "profanity", "sh..", "[sh..]!",
+  "0:39:58.40" , "0:39:59.10", "profanity", "sh..", "[sh..]!", 
+  "0:40:32.28" , "0:40:33.50", "profanity", "h...", " [h...]  yeah!",
+  "0:41:05.00" , "0:41:07.10", "profanity", "b....", "Shoot that son of a [b....]!",
+  "0:47:46.60" , "0:47:47.10", "profanity", "h...", "Where the [h...]  are you going?",
+  "0:51:37.00" , "0:51:37.80", "profanity", "deity", "Ow! Oh, [___]!",
+  "0:52:52.00" , "0:52:52.50", "profanity", "deity", "[___], I love that sound.",
+  "0:56:08.00" , "0:56:09.25", "profanity", "d...", "Ashdown, Con... [d...] him!",
+  "0:58:20.87" , "0:58:22.10", "profanity", "b....", "- The son of a [b....] is here. - What do we've got here?",
+  #"0:59:56.16" , "0:59:58.21", "profanity", "h...", "- One machine. - What the [h...] would have they done?",
+  #"0:57:38.12" , "0:57:40.56", "profanity", "deity", "No! [___]!",
+  "1:01:00.20" , "1:01:01.70", "profanity", "sh..", "'Cause I ain't give a [sh..] about you.",
+  "1:07:46.80" , "1:07:47.11", "profanity", "deity", "Run! [___]--",
+  "1:08:50.05" , "1:08:50.80", "profanity", "deity", "[___]!",
+  "1:13:03.22" , "1:13:03.99", "profanity", "sh..", "That gun ain't gonna stop [sh..]!",
+  "1:39:13.50" , "1:39:15.75", "profanity", "b....", "You  son of a [b....]!",
+ 
+],
+
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["Marcus.", "01:59,03", 1],
+"ending_subtitle_entry" => ["Terminator Salvation. 2009 .R5.DVDRIP.XVID. Eng -DUQA", "1:42:30.05", 940],
+
+"disk_unique_id" => "95a1aec2|42ad559f",
+"volume_name" => "TERMINATOR_SALVATION",
+"dvd_title_track" => "1",
+"dvd_title_track_length" => 6869.2,
+"dvd_title_track_start_offset" => 0.13,
+"dvd_nav_packet_offset" => [0.5, 0.483432],
+#ID_DVD_TITLE_1_LENGTH=6869.200
+#ID_DVD_TITLE_2_LENGTH=12.033
+#ID_DVD_TITLE_3_LENGTH=12.000
+#ID_DVD_TITLE_4_LENGTH=21.666
+#ID_DVD_TITLE_5_LENGTH=7.500
+#ID_DVD_TITLE_6_LENGTH=0.500
+#ID_DVD_TITLE_7_LENGTH=103.833
+#ID_DVD_TITLE_8_LENGTH=330.466
+"timestamps_relative_to" => ["file", "-.28"],
+
