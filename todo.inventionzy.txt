@@ -29,6 +29,7 @@
     it can "infer" where the thumb slider would be, and "drag" it to where it infers the new timestamp location should likely be, for skipping et al.
     people can "vote" on certain sections, if they're profanity or not, should be skipped or not
     overlay one video on another
+	You can take a youtube that has been split into '10 minute parts' on youtube, and apply a (longer) EDL to it by splitting it into 10 minute sections.
     I can imagine a system that scans incoming audio, does voice recognition sofware analysis on it, search for (angry tones, profanities, "questionable" tones/text like making love), and excludes them from output [search forward, skip forward, just display nothing, either one, mute audio, decrease audio et al].
     make an API web service that can search for EDL's
 	  or with youtube, use the api to fast forwarrd there

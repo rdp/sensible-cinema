@@ -250,7 +250,7 @@ class EdlParser
     blanks = incoming["blank_outs"] || {}
     mutes = mutes.map{|k, v| [k,v,:mute]}
     blanks = blanks.map{|k, v| [k,v,:blank]}
-    combined = (mutes+blanks).sort.map{|s,e,type|  [translate_string_to_seconds(s),  translate_string_to_seconds(e), type]}
+    combined = (mutes+blanks).map{|s,e,type|  [translate_string_to_seconds(s),  translate_string_to_seconds(e), type]}.sort
     
     # detect any weirdness...
     previous = nil

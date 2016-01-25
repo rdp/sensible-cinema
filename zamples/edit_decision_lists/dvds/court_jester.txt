@@ -13,13 +13,18 @@
 ],
 
 "blank_outs" => [
-  "758.0", "852.0", "kissing scene",
-  "4130.0", "4237.0", "pretending to kiss the king",
+"0:54:55.0", "0:55:10.0", "kissing princess' arms",
+  "0:21:10.00", "0:23:45.00", "kissing scene",
+  "38:14.0", "38:21.0", "inspect wenches",
+  "1:09:20.00", "1:10:40.00", "pretending to kiss the king", # inaccurate still!
 ],
 
 "volume_name" => "JESTER",
 "disk_unique_id" => "a0eadedd|449cd867",
-#-> 1:41:11.465, ts 01:41:10.94, mkv 01:41:13.01
-"dvd_title_track" => "1",# "not edited out stuff" => "some violence",
+"dvd_title_track" => "1",
+# "not edited out stuff" => "some violence",
 # "closing thoughts" => "still...",
-# "mplayer_dvd_splits" => [lots...],
+"dvd_title_track_length" => 6065.4,
+"dvd_start_offset" => 0.19,
+"dvd_nav_packet_offset" => [0.433333, 0.521644],
+"timestamps_relative_to" => ["dvd_start_offset","29.97"],
