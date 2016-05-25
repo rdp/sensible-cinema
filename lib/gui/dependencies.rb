@@ -78,10 +78,10 @@ module SensibleSwing
       end
     end
     
-    def download_zip_file_and_extract english_name, url, to_this
+    def download_zip_file_and_extract english_name, url, to_this, file_name = nil
       download_7zip
       Dir.chdir('vendor/cache') do
-        file_name = url.split('/')[-1]
+        file_name ||= url.split('/')[-1]
         print "downloading #{english_name} ..."
         MainWindow.download(url, file_name)
         system_blocking("7za e #{file_name} -y -o#{to_this}")
@@ -105,10 +105,10 @@ module SensibleSwing
     end
 	
 	def check_for_ffmpeg_installed
-      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file basd normal needs ffmpeg
+      ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file based still uses ffmpeg locally...
       if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
         require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
-        download_zip_file_and_extract "ffmpeg (5MB)", "http://ffmpeg.zeranoe.com/builds/win32/static/ffmpeg-git-335bbe4-win32-static.7z", "ffmpeg"
+        download_zip_file_and_extract "ffmpeg (5MB)", "https://bintray.com/rdp/sensible-cinema/download_file?file_path=ffmpeg-20160525-git-9591ca7-win32-static.7z", "ffmpeg", "ffmpeg-20160525-git-9591ca7-win32-static.7z"
       end
 	
 	end
