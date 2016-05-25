@@ -268,8 +268,8 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 		def write_subs_to_file out_file, euphemized_synchronized_entries
           File.open(out_file, 'w') do |f|
             euphemized_synchronized_entries.each_with_index{|entry, idx|
-              beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time).gsub('.',',')
-              ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time).gsub('.',',')
+              beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time, true).gsub('.',',')
+              ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time, true).gsub('.',',')
               f.puts entry.index_number
               f.puts "#{beginning_time} --> #{ending_time}"
               f.puts entry.text

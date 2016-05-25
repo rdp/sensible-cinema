@@ -102,14 +102,14 @@ module SubtitleProfanityFinder
     all_profanity_combinations
   end
 
-  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0
+  def self.edl_output incoming_filename, extra_profanity_hash = {}, subtract_from_each_beginning_ts = 0, add_to_end_each_ts = 0, 
+               beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0
     # jruby is unkind to invalid encoding input, and these can come from "all over" unfortunately, and it doesn't guess it right [?] ai ai so scrub
     contents = File.read(incoming_filename)
     edl_output_from_string(contents, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
   end
   
-  # **_time means "a float"
-  
+  # **_time parameters are expected to be floats...
   def self.edl_output_from_string subtitles, extra_profanity_hash, subtract_from_each_beginning_ts, add_to_end_each_ts, starting_time_given_srt, starting_time_actual, ending_srt_time, ending_actual_time, include_minor_profanities=true # lodo may not need include_minor_profs :P
      raise if subtract_from_each_beginning_ts < 0 # these have to be positive...in my twisted paradigm
      raise if add_to_end_each_ts < 0
@@ -273,7 +273,7 @@ module SubtitleProfanityFinder
           text = text.gsub(/[\r\n]|\n/, ' ') # flatten up to 3 lines of text to just 1
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
-          unless output.contain? ts_begin_human # some previous profanity already found this line :P
+          unless output.contain? ts_begin_human # i.e. some previous profanity already found this line :P
             output += %!  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{found_category}", "#{text}",\n!
           end
         end
