@@ -112,18 +112,18 @@ def get_all_dependency_gems include_transitive_children=true
    out.values
 end
 
-desc 'create distro zippable dir'
+desc 'create distro zippable dir [i.e. like "finished product"] though not innosetup per se...'
 task 'create_distro_dir' => :gemspec do # depends on gemspec...
   require 'fileutils'
   spec = read_spec
-  dir_out = cur_folder_with_ver + '/clean-editing-movie-player'
-  old_glob = spec.name + '-*'
+  dir_out = 'pkg/' + cur_folder_with_ver + '/clean-editing-movie-player'
+  old_glob = 'pkg/' + spec.name + '-*'
   FileUtils.rm_rf Dir[old_glob] # remove any old versions' distro files
   raise 'unable to delete...' if Dir[old_glob].length > 0
   
-  existing = Dir['*']
+  all_local_files = Dir['*'] - ['pkg']
   FileUtils.mkdir_p dir_out
-  FileUtils.cp_r(existing, dir_out) # copies files, subdirs in
+  FileUtils.cp_r(all_local_files, dir_out) # copies files, subdirs in
   # these belong in the parent dir, by themselves.
   root_distro =  "#{dir_out}/.."
   FileUtils.cp_r(dir_out + '/template_bats/mac', root_distro) # the executable bit carries through...

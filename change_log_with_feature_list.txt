@@ -1,10 +1,12 @@
+0.42.1
+ hopefully better euphemized subtitle file (more kodi friendly)
+
 0.42.0
   bring back the "online player" editor!
   features:
     has a web user editable interface now [woot]
     can minimize a window to "blank" it instead of showing one over the top (overlay window)
     can click a mouse click to "mute" or "blank" instead of showing an overlay window
-    
 
 0.41.6,7,8
   use better icons, hopefully work for paths with spaces now
