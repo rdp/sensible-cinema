@@ -554,12 +554,15 @@ You will be prompted for a beginning and starting timestamp time to search for.\
 "dvd_title_track_start_offset" => "#{hashes['dvd_title_track_start_offset']}",
 "dvd_nav_packet_offset" => #{hashes['dvd_nav_packet_offset'].inspect},
         EOL
+		# unix2dos so notepad.exe can get them :|
+	  input.gsub!("\r\n", "\n")
+	  input.gsub!("\n", "\r\n")
 		
       filename = EdlParser::EDL_DIR + "/" + english_name.gsub(' ', '_') + '.edl.txt'
       if File.exist?(filename)
 	      show_blocking_message_dialog 'don\'t want to overwrite a file in the edit dir that already has same name, opening it instead...'
 	    else
-	      File.write(filename, input)
+	      File.binwrite(filename, input)
       end
       open_file_to_edit_it filename
     end    

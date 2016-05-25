@@ -1,0 +1,29 @@
+# edl_version 1.3, sensible cinema v0.42.0
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Wreck It Ralph",
+
+"mutes" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "0:00:01.0", "0:00:02.0", "profanity", "da..", 
+ "01:24:20.5", "01:24:44.9", "violence", "fighting bug",
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+  "00:05:24.0", "00:05:30.0", "violence", "rip out heart",
+"01:26:54.0", "01:26:55.3", "violence", "falling into lava",
+"00:19:42.5", "00:19:45.0", "violence", "getting eaten by cybugs",
+],
+
+"source" => "dvd",
+"volume_name" => "WRECK_IT_RALPH",
+"timestamps_relative_to" => ["file", "29.97"],
+"disk_unique_id" => "9f40c870|83aaa18e",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "6068.5", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.21",
+"dvd_nav_packet_offset" => [0.4, 0.207756],

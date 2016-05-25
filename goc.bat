@@ -1,2 +1,2 @@
-rem java -jar vendor\jruby-complete.jar %* bin\sensible-cinema --create-mode --developer-mode
-j %* bin\sensible-cinema --create-mode --developer-mode
+java -jar vendor\jruby-complete.jar %* bin\sensible-cinema --create-mode --developer-mode
+@rem j %* bin\sensible-cinema --create-mode --developer-mode
