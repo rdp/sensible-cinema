@@ -28,7 +28,7 @@ timer = setInterval(function () {
 
     
  var mutes=[[2.0,7.0]];   
- var skips=[[10.0, 100.0]]; // skip from here to here
+ var skips=[[10.0, 30.0]]; // skip from here to here
  
       function areWeWithin(thisArray, cur_time) {
           for (key in thisArray) {
@@ -46,29 +46,32 @@ timer = setInterval(function () {
         if(areWeWithin(mutes, cur_time)) {
             if (!video_element.muted) {
               video_element.muted = true;
-              console.log("muted");
+              console.log("muted " + cur_time);
             }
           }
         else {
             if (video_element.muted) {
               video_element.muted = false;
-              console.log("unmuted");
+              console.log("unmuted " + cur_time);
             }
         }
         if (window.location.href.includes("netflix.com")) {
             if(last_end = areWeWithin(skips, cur_time)) {
                 if (video_element.playbackRate == 5) {
+                  console.log("still fast forwarding to " + last_end);
                   // already and still fast forwarding
                 } else {
                   // begin fast forward
-                  video_element.style = "width:1%";
+                  console.log("begin fast forwarding " + cur_time);
+                  video_element.style = "width: 1%";
                   video_element.playbackRate = 5; // seems to be its max or freezes [?]
                 }
             } else {
                // not in a skip, or just past one
                if (video_element.playbackRate == 5) {
+                  console.log("cancel/done fast forwarding " + cur_time);
                  // end current fast forward
-                 video_element.style = "width:100%";
+                 video_element.style = "width: 100%";
                  video_element.playbackRate = 1;
                }
             }
@@ -82,39 +85,6 @@ timer = setInterval(function () {
             }
         }
 }
-
-// netflix stuff [most from netflix party] ( not used yet ) :|
-
-// load jquery
-javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();console.log('jQuery injected')};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
-
-
-var uiEventsHappening = 0;
-
-    // video duration in milliseconds
-    var lastDuration = 60 * 60 * 1000;
-    var getDuration = function() {
-      var video = jQuery('.player-video-wrapper video');
-      if (video.length > 0) {
-        lastDuration = Math.floor(video[0].duration * 1000);
-      }
-      return lastDuration;
-    };
-
-
-var showControls = function() {
-  uiEventsHappening += 1;
-  var scrubber = $('#scrubber-component');
-  var eventOptions = {
-    'bubbles': true,
-    'button': 0,
-    'currentTarget': scrubber[0]
-  };
-  scrubber[0].dispatchEvent(new MouseEvent('mousemove', eventOptions));
-  return to(10)().then(function() {
-    uiEventsHappening -= 1;
-  });
-};
 
 
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
