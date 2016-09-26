@@ -97,6 +97,7 @@ var showControls = function() {
 };
 
 
-
+// howto "skip" without UI elements:
+video_element.style = "width:50%"
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
 
