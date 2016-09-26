@@ -62,5 +62,41 @@ function checkStatus() {
             video_element.play(); // sometimes needed??
           }
 }
+
+// netflix stuff [most from netflix party] :|
+
+// load jquery
+javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();console.log('jQuery injected')};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
+
+
+var uiEventsHappening = 0;
+
+    // video duration in milliseconds
+    var lastDuration = 60 * 60 * 1000;
+    var getDuration = function() {
+      var video = jQuery('.player-video-wrapper video');
+      if (video.length > 0) {
+        lastDuration = Math.floor(video[0].duration * 1000);
+      }
+      return lastDuration;
+    };
+
+
+var showControls = function() {
+  uiEventsHappening += 1;
+  var scrubber = $('#scrubber-component');
+  var eventOptions = {
+    'bubbles': true,
+    'button': 0,
+    'currentTarget': scrubber[0]
+  };
+  scrubber[0].dispatchEvent(new MouseEvent('mousemove', eventOptions));
+  return to(10)().then(function() {
+    uiEventsHappening -= 1;
+  });
+};
+
+
+
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
 
