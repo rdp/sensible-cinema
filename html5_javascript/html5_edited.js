@@ -27,69 +27,69 @@ timer = setInterval(function () {
 }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
 
     
-      var mutes=[[2.0,7.0]];   
-      var skips=[[10.0, 30.0]]; // skip from here to here
- 
-      function areWeWithin(thisArray, cur_time) {
-          for (key in thisArray) {
-            var item = thisArray[key];
-            var start_time = item[0];
-            var end_time = item[1];
-            if(cur_time > start_time && cur_time < end_time) {
-              return item;
-            }
-          }
-          return [false];
+var mutes=[[2.0,7.0]];   
+var skips=[[10.0, 30.0]]; // skip from here to here
+
+function areWeWithin(thisArray, cur_time) {
+    for (key in thisArray) {
+      var item = thisArray[key];
+      var start_time = item[0];
+      var end_time = item[1];
+      if(cur_time > start_time && cur_time < end_time) {
+        return item;
       }
-	  
-      function checkStatus() {
-        var cur_time = video_element.currentTime;
-		[last_start, last_end] = areWeWithin(mutes, cur_time);
-        if(last_start) {
-            if (!video_element.muted) {
-              video_element.muted = true;
-              console.log("muted " + cur_time + " start=" + last_start + " end " + last_end);
-            }
-          }
-        else {
-            if (video_element.muted) {
-              video_element.muted = false;
-              console.log("unmuted " + cur_time);
-            }
-        }
-        if (window.location.href.includes("netflix.com")) {
-			[last_start, last_end] = areWeWithin(skips, cur_time);
-            if(last_start) {
-                if (video_element.playbackRate == 5) {
-                  console.log("still fast forwarding to " + last_end);
-                  // already and still fast forwarding
-                } else {
-                  // begin fast forward
-	              console.log("begin fast forwarding "+ cur_time + " start=" + last_start + " end " + last_end);
-                  video_element.style.width="1%"
-                  video_element.playbackRate = 5; // seems to be its max or freezes [?]
-                }
-            } else {
-               // not in a skip, did we just finish one?
-               if (video_element.playbackRate == 5) {
-                  console.log("cancel/done fast forwarding " + cur_time);
-                 // end current fast forward
-                 video_element.style.width="100%"
-                 video_element.playbackRate = 1;
-               }
-            }
-        } else {
-             // youtube, amazon et al, easy seeks :)
-			[last_start, last_end] = areWeWithin(skips, cur_time);
-			
-            if(last_start) {
-             console.log("seeking from " + cur_time + " to " + last_end);
-             video_element.pause(); // have to do this before seek so it resumes? huh?
-             video_element.currentTime = last_end; // seek past this split
-             video_element.play(); // sometimes needed??
-            }
-        }
+    }
+    return [false];
+}
+
+function checkStatus() {
+  var cur_time = video_element.currentTime;
+    [last_start, last_end] = areWeWithin(mutes, cur_time);
+  if(last_start) {
+      if (!video_element.muted) {
+        video_element.muted = true;
+        console.log("muted " + cur_time + " start=" + last_start + " end " + last_end);
       }
+    }
+  else {
+      if (video_element.muted) {
+        video_element.muted = false;
+        console.log("unmuted " + cur_time);
+      }
+  }
+  if (window.location.href.includes("netflix.com")) {
+        [last_start, last_end] = areWeWithin(skips, cur_time);
+      if(last_start) {
+          if (video_element.playbackRate == 5) {
+            console.log("still fast forwarding to " + last_end);
+            // already and still fast forwarding
+          } else {
+            // begin fast forward
+            console.log("begin fast forwarding "+ cur_time + " start=" + last_start + " end " + last_end);
+            video_element.style.width="1%"
+            video_element.playbackRate = 5; // seems to be its max or freezes [?]
+          }
+      } else {
+         // not in a skip, did we just finish one?
+         if (video_element.playbackRate == 5) {
+            console.log("cancel/done fast forwarding " + cur_time);
+           // end current fast forward
+           video_element.style.width="100%"
+           video_element.playbackRate = 1;
+         }
+      }
+  } else {
+       // youtube, amazon et al, easy seeks :)
+        [last_start, last_end] = areWeWithin(skips, cur_time);
+        
+      if(last_start) {
+       console.log("seeking from " + cur_time + " to " + last_end);
+       video_element.pause(); // have to do this before seek so it resumes? huh?
+       video_element.currentTime = last_end; // seek past this split
+       video_element.play(); // sometimes needed??
+      }
+  }
+}
 
 
 // netflix stuff [most from netflix party] ( not used yet ) :|
@@ -127,5 +127,5 @@ var showControls = function() {
 
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
 
-// load this file (github):
+// load this exact file (github):
 // javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/html5_edited.js')
