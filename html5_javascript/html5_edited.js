@@ -122,3 +122,5 @@ var showControls = function() {
 
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
 
+// load this file (github):
+// javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/html5_edited.js')
