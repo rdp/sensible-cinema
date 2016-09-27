@@ -63,7 +63,7 @@ timer = setInterval(function () {
                 } else {
                   // begin fast forward
                   console.log("begin fast forwarding " + cur_time);
-                  video_element.style = "width: 1%";
+                  video_element.style.width="1%"
                   video_element.playbackRate = 5; // seems to be its max or freezes [?]
                 }
             } else {
@@ -71,7 +71,7 @@ timer = setInterval(function () {
                if (video_element.playbackRate == 5) {
                   console.log("cancel/done fast forwarding " + cur_time);
                  // end current fast forward
-                 video_element.style = "width: 100%";
+                 video_element.style.width="100%"
                  video_element.playbackRate = 1;
                }
             }
