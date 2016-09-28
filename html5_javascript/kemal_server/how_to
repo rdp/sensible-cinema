@@ -1,2 +1,4 @@
-hards install
+shards install
+crystal build src/kemal_server.cr # --release
+./kemal_server
 
