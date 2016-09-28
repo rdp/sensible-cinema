@@ -45,8 +45,9 @@ get "/edit" do |env|
   if File.exists?(path)
     current_text = File.read(path)
   else
-    current_text = " // template:
-var mutes=[[2.0,7.0]];   
+    current_text = "// template [remove this line]:
+var name=\"movie name\";
+var mutes=[[2.0,7.0]]; 
 var skips=[[10.0, 30.0]]"
   end
   
@@ -61,9 +62,24 @@ end
 post "/save" do |env|
   path = env.get("path").as(String)
   got = env.params.body["stuff"]
-  log("saving #{path} as #{got}")
+  log("attempt save  #{path} as #{got}")
+  if got.lines.size != 3
+    raise "got non 3 lines?"
+  end
+  name = got.lines[0]
+  mutes = got.lines[1]
+  skips = got.lines[2]
+  if name !~ /var name="[^"]+";/
+    raise "bad name? use browser back arrow"
+  end
+  if mutes !~ /var mutes=[\[\]\d\., ]+;/
+    raise "bad mutes? use browser back arrow"
+  end
+  if skips !~ /var skips=[\[\]\d\., ]+;/
+    raise "bad mutes? use browser back arrow"
+  end
   File.write(path, got);
-  "saved it #{env.get("url_unescaped")} #{got}<a href=/index>index</a>"
+  "saved it #{env.get("url_unescaped")}<br>#{got.size}<a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit</a>"
 end
 
 Kemal.run

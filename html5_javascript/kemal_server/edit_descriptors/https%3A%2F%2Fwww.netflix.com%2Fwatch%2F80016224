@@ -1,0 +1,3 @@
+var name="meet the mormons";
+var mutes=[[2.0,7.0]];   
+var skips=[[10.0, 30.0]]
