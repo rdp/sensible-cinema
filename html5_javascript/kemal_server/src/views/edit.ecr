@@ -1,0 +1,10 @@
+<h1>Editing <%= env.get "url_unescaped" %></h1>
+
+<form action="/save?url=<%= env.get "url_escaped" %>" method="POST">
+<div>
+<textarea name="stuff" rows="40" cols="120" style="font-size: 12pt; font-family: Arial;"><%= current_text %></textarea>
+</div>
+
+<div><input type="submit" value="Save"></div>
+</form>
+<p>[<a href="/">index</a>]</p>

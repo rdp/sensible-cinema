@@ -1,0 +1,19 @@
+<title>Cinema Soap Index</title>
+<h1>Index</h1>
+
+<% names.each{|name| %>
+    <p>[<a href="/edit?url=<%= name %>"><%= name %>}</a>] <%= name %>
+<% } %>
+
+<pre>
+Or create a new one:
+<form action="/edit" method="GET">
+Movie url: <input type="text" name="url"/>
+<input type="submit">
+</form>
+Or test search by movie url
+<form action="/for_current" method="GET">
+Movie url: <input type="text" name="url"/>
+<input type="submit">
+</pre>
+
