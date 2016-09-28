@@ -1,7 +1,19 @@
+todo ===
+
+install all manner of DVD stuffs :|
+
+web site
+
+use it
+
+get feedback alpha :)
+
+notes ===
+
+
 they call "setState" or some odd :| on something...hrm...
 
 widevine?
-
 
 error code m7375
 
@@ -19,13 +31,10 @@ video_element has height
 
 so maybe coudl fake a seek there...I mean maybe LOL.
 
-(window.location.href
-
-remotes around???
+netflix remotes around???
 
 https://www.stephanboyer.com/post/105/netflix-party-synchronize-netflix-video-playback
 
-TODO install all manner of DVD stuffs :|
 
 netflix remote app... [?]
 netflix windows app? ... [?]
@@ -39,5 +48,6 @@ smart phone/tablets/android etc: I think chrome is the only thing with widevine 
    either hope for plugins or...hack their binary [yikes?]
     or ask for them to support it natively [already did'ish...]
     or playon.tv/cast'ing it [?]
+  probaly just provide a custom "rent a box" application for it (VPS) and RDP into it...
 
 

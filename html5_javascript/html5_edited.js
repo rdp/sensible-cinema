@@ -1,4 +1,4 @@
-// some pieces from this youtube API control demo: https://github.com/rdp/sensible-cinema/wiki/YouTube-Edited-List
+// some pieces from this youtube API control demo: https://github.com/rdp/sensible-cinema/wiki/YouTube-Edited-List [see accompanying license file]
 if (typeof timer !== 'undefined') {
   clearInterval(timer); // in case we need to reset from previous run
 }
