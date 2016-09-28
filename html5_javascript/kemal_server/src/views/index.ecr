@@ -1,8 +1,8 @@
 <title>Cinema Soap Index</title>
 <h1>Index</h1>
 
-<% names.each{|name| %>
-    <p>[<a href="/edit?url=<%= name %>"><%= name %>}</a>] <%= name %>
+<% urls_names.each{|url_name| %>
+    <p>[<a href="/edit?url=<%= url_name[0] %>"><%= url_name[0] %></a>] <%= url_name[1] %>
 <% } %>
 
 <pre>

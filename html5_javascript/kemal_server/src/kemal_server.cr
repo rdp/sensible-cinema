@@ -55,7 +55,12 @@ var skips=[[10.0, 30.0]]"
 end
 
 get "/index" do
-  names = Dir["edit_descriptors/*"].map{|fullish_name| URI.unescape File.basename(fullish_name) }
+  urls_names = Dir["edit_descriptors/*"].map{|fullish_name| 
+    url = URI.unescape File.basename(fullish_name) 
+    File.read(fullish_name) =~ /name="(.+)"/
+    name = $1
+    [url, name]
+  }
   render "src/views/index.ecr"
 end
 
@@ -66,17 +71,24 @@ post "/save" do |env|
   if got.lines.size != 3
     raise "got non 3 lines?"
   end
+  got = got.gsub("\r\n", "\n")
   name = got.lines[0]
   mutes = got.lines[1]
   skips = got.lines[2]
-  if name !~ /var name="[^"]+";/
+  if name !~ /(var name="[^"]+";)/
     raise "bad name? use browser back arrow"
   end
   if mutes !~ /var mutes=[\[\]\d\., ]+;/
     raise "bad mutes? use browser back arrow"
   end
   if skips !~ /var skips=[\[\]\d\., ]+;/
-    raise "bad mutes? use browser back arrow"
+    raise "bad skips? use browser back arrow"
+  end
+  # TODO security :|
+  #if got !~ /^var name="[^"]+";\nvar mutes=[\[\]\d\., ]+;\nvar mutes=[\[\]\d\., ]+;$/m # ??
+  desired_size = (name.size + mutes.size + skips.size) # wait they include \n ???
+  if got.size != desired_size
+    #raise "extra stuff? use browser back #{got} #{desired_size} != #{got.size} #{got.inspect}"
   end
   File.write(path, got);
   "saved it #{env.get("url_unescaped")}<br>#{got.size}<a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit</a>"
