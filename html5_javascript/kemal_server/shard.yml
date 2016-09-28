@@ -1,0 +1,12 @@
+name: kemal_server
+version: 0.1.0
+
+authors:
+  - rogerdpack <rogerpack2005@gmail.com>
+
+license: MIT
+
+dependencies:
+  kemal:
+    github: sdogruyol/kemal
+    branch: master
