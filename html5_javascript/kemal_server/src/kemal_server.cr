@@ -11,6 +11,10 @@ get "/" do
 end
 
 get "/for_current" do |env|
+
+  url = env.params.query["url_no_slashes"]
+  log("hello #{url}")
+
   env.response.content_type = "application/javascript"
   render "src/views/html5_edited.js.ecr"
 end
