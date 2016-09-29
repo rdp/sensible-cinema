@@ -1,4 +1,7 @@
 shards install
-crystal build src/kemal_server.cr # --release
+crystal build src/kemal_server.cr
 ./kemal_server
+
+# server:
+crystal run --release ./src/kemal_server.cr 
 
