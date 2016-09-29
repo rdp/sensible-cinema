@@ -96,7 +96,7 @@ function checkStatus() {
 
 
 // load jquery
-javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();console.log('jQuery injected')};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
+javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();logReady();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
 
 var uiEventsHappening = 0;
@@ -126,8 +126,11 @@ var showControls = function() {
   });
 };
 
-console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
+function logReady() {
+  var message = "ready to go edited " + name + " skips=" + skips + " mutes=" + mutes + " you may close developer javascript console now";
+  console.log(message);
+  alert(message);
+}
 
-// ssl fail: javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rdp.inet2.org:3000/for_current?url=' + window.location.href);
-
+// initial stuff to copy paste:
 // alert("hit OK to navigate to the source, then copy and paste it in here"); window.open("http://rdp.inet2.org:3000/for_current?url=" + window.location.href,"_blank");
