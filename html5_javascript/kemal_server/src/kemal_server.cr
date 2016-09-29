@@ -7,7 +7,7 @@ require "./kemal_server/*"
 require "kemal"
 
 get "/" do
-  "Hello World! Clean stream it! <a href=/index>index</a>"
+  "Hello World! Clean stream it! <a href=/index>index</a><br/>Email me for instructions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com."
 end
 
 def setup(env)
@@ -75,13 +75,13 @@ post "/save" do |env|
   name = got.lines[0]
   mutes = got.lines[1]
   skips = got.lines[2]
-  if name !~ /(var name="[^"]+";)/
+  if name !~ /^(var name="[^"]+";)$/
     raise "bad name? use browser back arrow"
   end
-  if mutes !~ /var mutes=[\[\]\d\., ]+;/
+  if mutes !~ /^var mutes=[\[\]\d\., ]+;$/
     raise "bad mutes? use browser back arrow"
   end
-  if skips !~ /var skips=[\[\]\d\., ]+;/
+  if skips !~ /^var skips=[\[\]\d\., ]+;$/
     raise "bad skips? use browser back arrow"
   end
   # TODO more security :| or just allow input like a normal site rather LOL
