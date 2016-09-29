@@ -34,7 +34,7 @@ get "/for_current" do |env|
     # never did figure out how to write this to the output :|
     "unable to find one yet for #{env.get("url_unescaped")} <a href=\"/edit?url=#{env.get("url_escaped")}\">create new</a>" # too afraid to do straight redirect :)
   else
-    eutes_and_skips = File.read path
+    mutes_and_skips = File.read path
     env.response.content_type = "application/javascript"
     render "src/views/html5_edited.js.ecr"
   end

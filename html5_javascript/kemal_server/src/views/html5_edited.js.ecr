@@ -1,3 +1,6 @@
+// begin auto inserted unique
+<%= mutes_and_skips %>    
+// end auto inserted unique
 // some pieces from this youtube API control demo: https://github.com/rdp/sensible-cinema/wiki/YouTube-Edited-List [see accompanying license file]
 if (typeof timer !== 'undefined') {
   clearInterval(timer); // in case we need to reset from previous run
@@ -26,9 +29,6 @@ timer = setInterval(function () {
     checkStatus();
 }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
 
-    
-var mutes=[[2.0,7.0]];   
-var skips=[[10.0, 30.0]]; // skip from here to here
 
 function areWeWithin(thisArray, cur_time) {
     for (key in thisArray) {

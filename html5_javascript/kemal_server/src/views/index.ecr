@@ -1,9 +1,10 @@
-<title>Cinema Soap Index</title>
+<title>Clean Stream Index</title>
 <h1>Index</h1>
 
-<% urls_names.each{|url_name| %>
-    <p>[<a href="/edit?url=<%= url_name[0] %>"><%= url_name[0] %></a>] <%= url_name[1] %>
+<% urls_names.each{|url_name|; url = url_name[0] %>
+    <p>[<a href="/edit?url=<%= url %>"><%= url %></a>] <a href=/for_current?url=<%= url %>>js</a> <%= url_name[1] %> <a href="<%= url %>">watch</a>
 <% } %>
+
 
 <pre>
 Or create a new one:
