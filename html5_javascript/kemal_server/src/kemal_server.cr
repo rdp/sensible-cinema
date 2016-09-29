@@ -84,7 +84,7 @@ post "/save" do |env|
   if skips !~ /var skips=[\[\]\d\., ]+;/
     raise "bad skips? use browser back arrow"
   end
-  # TODO security :|
+  # TODO more security :| or just allow input like a normal site rather LOL
   #if got !~ /^var name="[^"]+";\nvar mutes=[\[\]\d\., ]+;\nvar mutes=[\[\]\d\., ]+;$/m # ??
   desired_size = (name.size + mutes.size + skips.size) # wait they include \n ???
   if got.size != desired_size
