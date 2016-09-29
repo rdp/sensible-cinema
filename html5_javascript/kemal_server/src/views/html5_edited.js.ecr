@@ -1,4 +1,7 @@
-// begin auto inserted unique
+// copy and paste this whole thing into your console side bar please:
+
+
+// begin auto inserted unique for your movie:
 <%= mutes_and_skips %>    
 // end auto inserted unique
 // some pieces from this youtube API control demo: https://github.com/rdp/sensible-cinema/wiki/YouTube-Edited-List [see accompanying license file]
@@ -125,4 +128,6 @@ var showControls = function() {
 
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
 
-// javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rdp.inet2.org:3000/for_current?url=window.location.href')
+// ssl fail: javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rdp.inet2.org:3000/for_current?url=' + window.location.href);
+
+// alert("hit OK to navigate to the source, then copy and paste it in here"); window.open("http://rdp.inet2.org:3000/for_current?url=" + window.location.href,"_blank");
