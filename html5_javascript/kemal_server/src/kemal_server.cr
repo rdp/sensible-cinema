@@ -7,7 +7,7 @@ require "./kemal_server/*"
 require "kemal"
 
 get "/" do
-  "Hello World! <a href=for_current?url=https%3A%2F%2Fwww.netflix.com%2Fwatch%2F80016224>scriptz</a>i <a href=/index>index</a>"
+  "Hello World! Clean stream it! <a href=/index>index</a>"
 end
 
 def setup(env)
