@@ -92,8 +92,6 @@ function checkStatus() {
 }
 
 
-// netflix stuff [most from netflix party] ( not used yet ) :|
-
 // load jquery
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();console.log('jQuery injected')};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
@@ -127,5 +125,4 @@ var showControls = function() {
 
 console.log("ready to go edited skips=" + skips + " mutes=" + mutes); // prompt for the console
 
-// load this exact file (github):
-// javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/html5_edited.js')
+// javascript:(function(e,s){e.src=s;e.onload=function(){console.log('editor injected from github')};document.head.appendChild(e);})(document.createElement('script'),'//rdp.inet2.org:3000/for_current?url=window.location.href')
