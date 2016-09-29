@@ -7,7 +7,7 @@ require "./kemal_server/*"
 require "kemal"
 
 get "/" do
-  "Hello World! Clean stream it! <a href=/index>index</a><br/>Email me for instructions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com."
+  "Hello World! Clean stream it!<br/>Offering edited netflix instant/amazon prime etc.<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com."
 end
 
 def setup(env)
@@ -69,7 +69,7 @@ post "/save" do |env|
   got = env.params.body["stuff"]
   log("attempt save  #{path} as #{got}")
   if got.lines.size != 3
-    raise "got non 3 lines?"
+    raise "got non 3 lines? use browser back"
   end
   got = got.gsub("\r\n", "\n")
   name = got.lines[0]
@@ -84,12 +84,8 @@ post "/save" do |env|
   if skips !~ /^var skips=[\[\]\d\., ]+;$/
     raise "bad skips? use browser back arrow"
   end
-  # TODO more security :| or just allow input like a normal site rather LOL
+  # TODO or just allow input like a normal site rather LOL
   #if got !~ /^var name="[^"]+";\nvar mutes=[\[\]\d\., ]+;\nvar mutes=[\[\]\d\., ]+;$/m # ??
-  desired_size = (name.size + mutes.size + skips.size) # wait they include \n ???
-  if got.size != desired_size
-    #raise "extra stuff? use browser back #{got} #{desired_size} != #{got.size} #{got.inspect}"
-  end
   File.write(path, got);
   "saved it<br/>#{env.get("url_unescaped")}<br>#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
 end
