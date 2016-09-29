@@ -91,7 +91,7 @@ post "/save" do |env|
     #raise "extra stuff? use browser back #{got} #{desired_size} != #{got.size} #{got.inspect}"
   end
   File.write(path, got);
-  "saved it #{env.get("url_unescaped")}<br>#{got.size}<a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit</a>"
+  "saved it<br/>#{env.get("url_unescaped")}<br>#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
 end
 
 Kemal.run
