@@ -2,8 +2,13 @@
 
 
 // begin auto inserted unique for your movie: fast_forwards, mutes, skips
-<%= mutes_and_skips %>    
+<%= all_settings %>
+expected_url = "<%= expected_url %>";
 // end auto inserted unique
+
+if (window.location.href != expected_url) {
+  alert("danger: appears you may  have pasted to theh wrong paste this_page=" + window.location.href + " cuts from=" + expected_url);
+}
 
 if (typeof timer !== 'undefined') {
   clearInterval(timer); // in case we need to reset from previous load :)
@@ -107,7 +112,6 @@ getDuration = function() {
   }
   return lastDuration;
 };
-
 
 showControls = function() {
   uiEventsHappening += 1;
