@@ -7,7 +7,7 @@ require "./kemal_server/*"
 require "kemal"
 
 get "/" do
-  "Hello World! Clean stream it!<br/>Offering edited netflix instant/amazon prime etc.<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com."
+  "Hello World! Clean stream it!<br/>Offering edited netflix instant/amazon prime etc.<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com for instructions."
 end
 
 def setup(env)
@@ -40,7 +40,7 @@ get "/for_current" do |env|
   end
 end
 
-get "/edit" do |env|
+get "/edit" do |env| # same as "view" :)
   path = env.get("path").as(String)
   if File.exists?(path)
     current_text = File.read(path)
