@@ -6,7 +6,7 @@
 expected_url = "<%= expected_url %>";
 // end auto inserted unique
 
-if (window.location.href != expected_url) {
+if (window.location.href.split("?")[0] != expected_url) {
   alert("danger: appears you may  have pasted to theh wrong paste this_page=" + window.location.href + " cuts from=" + expected_url);
 }
 
@@ -31,10 +31,6 @@ function findFirstVideoTag(node) {
     }
 }
 
-video_element = findFirstVideoTag(document.body);
-if (video_element == null) { 
-  alert("failure: unable to find a video playing, did you paste this in the right place?"); 
-}
 
 function areWeWithin(thisArray, cur_time) {
   for (key in thisArray) {
@@ -50,7 +46,7 @@ function areWeWithin(thisArray, cur_time) {
 
 function checkStatus() {
   var cur_time = video_element.currentTime;
-  [last_start, last_end] = areWeWithin(mutes, cur_time);
+  var [last_start, last_end] = areWeWithin(mutes, cur_time);
   if(last_start) {
       if (!video_element.muted) {
         video_element.muted = true;
@@ -64,39 +60,51 @@ function checkStatus() {
     }
   }
   if (window.location.href.includes("netflix.com")) {
-    [last_start, last_end] = areWeWithin(skips, cur_time);
-    if (last_start) {
-        if (video_element.playbackRate == 5) {
-          console.log("still fast forwarding to " + last_end);
-          // already and still fast forwarding
-        } else {
-          // begin fast forward
-          console.log("begin fast forwarding "+ cur_time + " start=" + last_start + " end " + last_end);
-          video_element.style.visibility="hidden";
-          video_element.playbackRate = 5; // seems to be its max or freezes [?]
-        }
-    } else {
-       // not in a skip, did we just finish one?
-       if (video_element.playbackRate == 5) {
-          console.log("cancel/done fast forwarding " + cur_time);
-         // end current fast forward
-          video_element.style.visibility="";// non hidden
-         video_element.playbackRate = 1;
-       }
-    }
+    handleNetflixSeek(cur_time);
+
   } else {
      // youtube, amazon et al, easy seeks :)
     [last_start, last_end] = areWeWithin(skips, cur_time);
       
     if (last_start) {
-     console.log("seeking from " + cur_time + " to " + last_end);
-     video_element.pause(); // have to do this before seek so it resumes? huh?
-     video_element.currentTime = last_end; // seek past this split
-     video_element.play(); // sometimes needed??
+      console.log("seeking from " + cur_time + " to " + last_end);
+      video_element.pause(); // have to do this before seek so it resumes? huh?
+      video_element.currentTime = last_end; // seek past this split
+      video_element.play(); // sometimes needed??
     }
   }
 }
 
+function handleNetflixSeek(cur_time) {
+    fast_forward_to_skip_speed = 25; // even 4 was barfing ??
+    [last_start, last_end] = areWeWithin(skips, cur_time);
+    if (last_start) {
+        if (video_element.playbackRate == fast_forward_to_skip_speed) {
+          console.log("still fast forwarding to " + last_end);
+          // already and still fast forwarding
+        } else {
+          // fast forward
+          console.log("begin fast forwarding " + cur_time + " start=" + last_start + " end " + last_end);
+          console.log("muted to FF");
+          video_element.playbackRate = fast_forward_to_skip_speed; // seems to be its max or freezes [?]
+          video_element.onratechange = function() {
+            video_element.muted = true;
+            video_element.style.visibility="hidden";
+          }
+        }
+    } else {
+       // not in a skip, did we just finish one?
+       if (video_element.playbackRate == fast_forward_to_skip_speed) {
+          console.log("cancel/done fast forwarding " + cur_time);
+          // end current fast forward
+          video_element.onratechange = function() {
+            video_element.style.visibility="";// non hidden
+            video_element.muted = false;
+          }          
+          video_element.playbackRate = 1;
+       }
+    }
+}
 
 // load jquery
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
@@ -128,13 +136,19 @@ showControls = function() {
 };
 
 function readyToGo() {
-  timer = setInterval(function () {
-      checkStatus();
-  }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
 
-  var message = "ready to go edited " + name + " skips=" + skips + " mutes=" + mutes + " you may close developer javascript console now";
-  console.log(message);
-  alert(message);
+  video_element = findFirstVideoTag(document.body);
+  if (video_element == null) { 
+    alert("failure: unable to find a video playing, did you paste this in the right page?"); 
+  }
+  else {
+    timer = setInterval(function () {
+        checkStatus();
+    }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
+    var message = "ready to go edited\n" + name + "\nskips=" + skips.length + " mutes=" + mutes.length + " fast_forwards=" + fast_forwards.length +"\nyou may close developer javascript console now";
+    console.log(message);
+    //alert(message);
+  }
 }
 
-// initial stuff to copy paste moved to index.ecr:
+// initial stuff to copy paste moved to index.ecr
