@@ -47,8 +47,9 @@ get "/edit" do |env| # same as "view" :)
   else
     current_text = "// template [remove this line]:
 var name=\"movie name\";
+var fast_forwards=[[50.0, 51.0]];
 var mutes=[[2.0,7.0]]; 
-var skips=[[10.0, 30.0]]"
+var skips=[[10.0, 30.0]];"
   end
   
   render "src/views/edit.ecr"
@@ -73,10 +74,14 @@ post "/save" do |env|
   end
   got = got.gsub("\r\n", "\n")
   name = got.lines[0]
-  mutes = got.lines[1]
-  skips = got.lines[2]
+  ffs = got.lines[1]
+  mutes = got.lines[2]
+  skips = got.lines[3]
   if name !~ /^(var name="[^"]+";)$/
     raise "bad name? use browser back arrow"
+  end
+  if ffs !~ /^var fast_forwards=[\[\]\d\., ]+;$/
+     raise "bad fast forwards use browser back arrow"
   end
   if mutes !~ /^var mutes=[\[\]\d\., ]+;$/
     raise "bad mutes? use browser back arrow"

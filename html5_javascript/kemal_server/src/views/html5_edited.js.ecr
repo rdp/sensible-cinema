@@ -1,12 +1,12 @@
-// copy and paste this whole thing into your developer tools javascript console side ba, then hit enter, please:
+// copy and paste all of this text (including this line) into your developer tools javascript console side bar, then hit enter, please:
 
 
-// begin auto inserted unique for your movie:
+// begin auto inserted unique for your movie: fast_forwards, mutes, skips
 <%= mutes_and_skips %>    
 // end auto inserted unique
-// some pieces from this youtube API control demo: https://github.com/rdp/sensible-cinema/wiki/YouTube-Edited-List [see accompanying license file]
+
 if (typeof timer !== 'undefined') {
-  clearInterval(timer); // in case we need to reset from previous run
+  clearInterval(timer); // in case we need to reset from previous load :)
 }
 
 function findFirstVideoTag(node) {
@@ -27,92 +27,89 @@ function findFirstVideoTag(node) {
 }
 
 video_element = findFirstVideoTag(document.body);
-
-timer = setInterval(function () {
-    checkStatus();
-}, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
-
+if (video_element == null) { 
+  alert("failure: unable to find a video playing, did you paste this in the right place?"); 
+}
 
 function areWeWithin(thisArray, cur_time) {
-    for (key in thisArray) {
-      var item = thisArray[key];
-      var start_time = item[0];
-      var end_time = item[1];
-      if(cur_time > start_time && cur_time < end_time) {
-        return item;
-      }
+  for (key in thisArray) {
+    var item = thisArray[key];
+    var start_time = item[0];
+    var end_time = item[1];
+    if(cur_time > start_time && cur_time < end_time) {
+      return item;
     }
-    return [false];
+  }
+  return [false];
 }
 
 function checkStatus() {
   var cur_time = video_element.currentTime;
-    [last_start, last_end] = areWeWithin(mutes, cur_time);
+  [last_start, last_end] = areWeWithin(mutes, cur_time);
   if(last_start) {
       if (!video_element.muted) {
         video_element.muted = true;
         console.log("muted " + cur_time + " start=" + last_start + " end " + last_end);
       }
-    }
+  }
   else {
-      if (video_element.muted) {
-        video_element.muted = false;
-        console.log("unmuted " + cur_time);
-      }
+    if (video_element.muted) {
+      video_element.muted = false;
+      console.log("unmuted " + cur_time);
+    }
   }
   if (window.location.href.includes("netflix.com")) {
-        [last_start, last_end] = areWeWithin(skips, cur_time);
-      if(last_start) {
-          if (video_element.playbackRate == 5) {
-            console.log("still fast forwarding to " + last_end);
-            // already and still fast forwarding
-          } else {
-            // begin fast forward
-            console.log("begin fast forwarding "+ cur_time + " start=" + last_start + " end " + last_end);
-            video_element.style.visibility="hidden";
-            video_element.playbackRate = 5; // seems to be its max or freezes [?]
-          }
-      } else {
-         // not in a skip, did we just finish one?
-         if (video_element.playbackRate == 5) {
-            console.log("cancel/done fast forwarding " + cur_time);
-           // end current fast forward
-            video_element.style.visibility="";// non hidden
-           video_element.playbackRate = 1;
-         }
-      }
+    [last_start, last_end] = areWeWithin(skips, cur_time);
+    if (last_start) {
+        if (video_element.playbackRate == 5) {
+          console.log("still fast forwarding to " + last_end);
+          // already and still fast forwarding
+        } else {
+          // begin fast forward
+          console.log("begin fast forwarding "+ cur_time + " start=" + last_start + " end " + last_end);
+          video_element.style.visibility="hidden";
+          video_element.playbackRate = 5; // seems to be its max or freezes [?]
+        }
+    } else {
+       // not in a skip, did we just finish one?
+       if (video_element.playbackRate == 5) {
+          console.log("cancel/done fast forwarding " + cur_time);
+         // end current fast forward
+          video_element.style.visibility="";// non hidden
+         video_element.playbackRate = 1;
+       }
+    }
   } else {
-       // youtube, amazon et al, easy seeks :)
-        [last_start, last_end] = areWeWithin(skips, cur_time);
-        
-      if(last_start) {
-       console.log("seeking from " + cur_time + " to " + last_end);
-       video_element.pause(); // have to do this before seek so it resumes? huh?
-       video_element.currentTime = last_end; // seek past this split
-       video_element.play(); // sometimes needed??
-      }
+     // youtube, amazon et al, easy seeks :)
+    [last_start, last_end] = areWeWithin(skips, cur_time);
+      
+    if (last_start) {
+     console.log("seeking from " + cur_time + " to " + last_end);
+     video_element.pause(); // have to do this before seek so it resumes? huh?
+     video_element.currentTime = last_end; // seek past this split
+     video_element.play(); // sometimes needed??
+    }
   }
 }
 
 
 // load jquery
-javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();logReady();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
+javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
+
+uiEventsHappening = 0;
+
+// video duration in milliseconds
+lastDuration = 60 * 60 * 1000;
+getDuration = function() {
+  var video = jQuery('.player-video-wrapper video');
+  if (video.length > 0) {
+    lastDuration = Math.floor(video[0].duration * 1000);
+  }
+  return lastDuration;
+};
 
 
-var uiEventsHappening = 0;
-
-    // video duration in milliseconds
-    var lastDuration = 60 * 60 * 1000;
-    var getDuration = function() {
-      var video = jQuery('.player-video-wrapper video');
-      if (video.length > 0) {
-        lastDuration = Math.floor(video[0].duration * 1000);
-      }
-      return lastDuration;
-    };
-
-
-var showControls = function() {
+showControls = function() {
   uiEventsHappening += 1;
   var scrubber = $('#scrubber-component');
   var eventOptions = {
@@ -126,7 +123,11 @@ var showControls = function() {
   });
 };
 
-function logReady() {
+function readyToGo() {
+  timer = setInterval(function () {
+      checkStatus();
+  }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
+
   var message = "ready to go edited " + name + " skips=" + skips + " mutes=" + mutes + " you may close developer javascript console now";
   console.log(message);
   alert(message);
