@@ -144,18 +144,14 @@ function myFunction() {
 }
 
 myLayer = document.createElement('div');
-myLayer.id = 'bookingLayer';
 myLayer.style.position = 'absolute';
-myLayer.style.left = '10px';
-myLayer.style.top = '10px';
 myLayer.style.width = '300px';
 myLayer.style.height = '300px';
-myLayer.style.padding = '10px';
 myLayer.style.background = '#000000';
-myLayer.innerHTML = 'This is the layer created by the JavaScript.';
-myLayer.style.zIndex = "1";
+myLayer.style.zIndex = "1"; // on top :)
 myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-myLayer.style.opacity = 0.7;
+myLayer.style.opacity = 0.3;
+myLayer.style.fontSize = "13px";
 document.body.appendChild(myLayer);
 
 function readyToGo() {
