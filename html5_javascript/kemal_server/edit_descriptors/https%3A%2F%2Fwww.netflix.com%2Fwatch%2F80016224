@@ -1,4 +1,4 @@
 var name="meet the mormons";
 var fast_forwards=[[30.0, 35.0]];
-var skips=[[4.5, 114.5]];
+var skips=[[6.5, 9.5],[11.5,114.5]];
 var mutes=[[2.0,3.0]];

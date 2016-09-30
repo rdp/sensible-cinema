@@ -73,6 +73,7 @@ function checkStatus() {
       video_element.play(); // sometimes needed??
     }
   }
+  myLayer.innerHTML = cur_time.toFixed(2);;
 }
 
 function handleNetflixSeek(cur_time) {
@@ -134,6 +135,28 @@ showControls = function() {
     uiEventsHappening -= 1;
   });
 };
+
+function myFunction() {
+    var btn = document.createElement("BUTTON");
+    var t = document.createTextNode("CLICK ME");
+    btn.appendChild(t);
+    document.body.appendChild(btn);
+}
+
+myLayer = document.createElement('div');
+myLayer.id = 'bookingLayer';
+myLayer.style.position = 'absolute';
+myLayer.style.left = '10px';
+myLayer.style.top = '10px';
+myLayer.style.width = '300px';
+myLayer.style.height = '300px';
+myLayer.style.padding = '10px';
+myLayer.style.background = '#000000';
+myLayer.innerHTML = 'This is the layer created by the JavaScript.';
+myLayer.style.zIndex = "1";
+myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+myLayer.style.opacity = 0.7;
+document.body.appendChild(myLayer);
 
 function readyToGo() {
 
