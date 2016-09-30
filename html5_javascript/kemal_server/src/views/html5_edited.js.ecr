@@ -76,7 +76,7 @@ function checkStatus() {
 }
 
 function handleNetflixSeek(cur_time) {
-    fast_forward_to_skip_speed = 1.25; // even 4 was barfing ??
+    fast_forward_to_skip_speed = 25; // even 4 was barfing ?? with 1.25 barfs very rarely
     [last_start, last_end] = areWeWithin(skips, cur_time);
     if (last_start) {
         if (video_element.playbackRate == fast_forward_to_skip_speed) {
@@ -88,7 +88,8 @@ function handleNetflixSeek(cur_time) {
           console.log("muted to FF");
           video_element.playbackRate = fast_forward_to_skip_speed; // seems to be its max or freezes [?]
           video_element.onratechange = function() {
-            video_element.volume = 0.01;
+            //video_element.volume = 0.01;
+            video_element.muted = true;
             video_element.style.visibility="hidden";
           }
         }
@@ -99,14 +100,15 @@ function handleNetflixSeek(cur_time) {
           // end current fast forward
           video_element.onratechange = function() {
             video_element.style.visibility="";// non hidden
-            video_element.volume = 1;
+            //video_element.volume = 1;
+            video_element.muted = false;
           }          
           video_element.playbackRate = 1;
        }
     }
 }
 
-// load jquery
+// load jquery first
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
 uiEventsHappening = 0;
