@@ -76,7 +76,7 @@ function checkStatus() {
 }
 
 function handleNetflixSeek(cur_time) {
-    fast_forward_to_skip_speed = 25; // even 4 was barfing ?? with 1.25 barfs very rarely
+    fast_forward_to_skip_speed = 4.5; // even 4 was barfing ?? with 1.25 barfs very rarely
     [last_start, last_end] = areWeWithin(skips, cur_time);
     if (last_start) {
         if (video_element.playbackRate == fast_forward_to_skip_speed) {
