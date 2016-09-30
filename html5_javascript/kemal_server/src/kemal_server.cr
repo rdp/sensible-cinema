@@ -87,7 +87,7 @@ post "/save" do |env|
   # TODO or just allow input like a normal site rather LOL
   #if got !~ /^var name="[^"]+";\nvar mutes=[\[\]\d\., ]+;\nvar mutes=[\[\]\d\., ]+;$/m # ??
   File.write(path, got);
-  "saved it #{env.get("url_unescaped")}<br>#{got.size}<a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit</a>"
+  "saved it<br/>#{env.get("url_unescaped")}<br>#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
 end
 
 Kemal.run
