@@ -76,11 +76,11 @@ function checkStatus() {
 }
 
 function handleNetflixSeek(cur_time) {
-    fast_forward_to_skip_speed = 4.5; // even 4 was barfing ?? with 1.25 barfs very rarely
+    fast_forward_to_skip_speed = 1.01; // even 4 was barfing ?? with 1.25 barfs very rarely
     [last_start, last_end] = areWeWithin(skips, cur_time);
     if (last_start) {
         if (video_element.playbackRate == fast_forward_to_skip_speed) {
-          console.log("still fast forwarding to " + last_end);
+          console.log("still fast forwarding to " + last_end + " remaining=" + Math.round(last_end - cur_time));
           // already and still fast forwarding
         } else {
           // fast forward
@@ -88,8 +88,7 @@ function handleNetflixSeek(cur_time) {
           console.log("muted to FF");
           video_element.playbackRate = fast_forward_to_skip_speed; // seems to be its max or freezes [?]
           video_element.onratechange = function() {
-            //video_element.volume = 0.01;
-            video_element.muted = true;
+            video_element.volume = 0;
             video_element.style.visibility="hidden";
           }
         }
@@ -100,8 +99,7 @@ function handleNetflixSeek(cur_time) {
           // end current fast forward
           video_element.onratechange = function() {
             video_element.style.visibility="";// non hidden
-            //video_element.volume = 1;
-            video_element.muted = false;
+            video_element.volume = 1;
           }          
           video_element.playbackRate = 1;
        }
