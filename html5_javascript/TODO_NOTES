@@ -8,7 +8,20 @@ use it
 
 get feedback alpha :)
 
-notes ===
+move server :|
+
+real seek for netflix
+
+== business ==
+
+one free per month, otherwise choose your donation-level ware?
+     offer money if they find/want to do new one LOL. $2 $5 ? yeah simpler on my head LOL
+        $1 to check one? checklist?
+  definitely liking the free month
+    so basically paywall this thing <waaah>
+  TODO business survey :|
+
+== web server framework==
 
 kemal or amethyst 
 
@@ -22,14 +35,15 @@ frost (too old/toast/unmaintained'ish ? )
 
 toro == kemal but created 2016
   one of them [?]
+  sooo confusing :|
+
+== db ==
 
 https://github.com/waterlink/active_record.cr
 
 https://github.com/juanedi/micrate db migration :|
 
-initial:
-  kemal (everybody luvs kemal)
-    db??
+== netflix javascript ==
 
 they call "setState" or some odd :| on something...hrm...
 
