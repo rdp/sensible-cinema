@@ -73,7 +73,26 @@ function checkStatus() {
       video_element.play(); // sometimes needed??
     }
   }
-  myLayer.innerHTML = cur_time.toFixed(2);;
+  
+  [last_start, last_end] = areWeWithin(fast_forwards, cur_time);
+  fast_forward_speed = 2;
+  if(last_start) {
+    // we're within one
+    if (video_element.playbackRate != fast_forward_speed) {
+      console.log("fast forwarding from " + cur_time + " to " + last_end);
+      video_element.playbackRate = 2;
+      video_element.volume = 0.2;
+    }
+  }
+  else {
+    if (video_element.playbackRate == fast_forward_speed) {
+      console.log("done fast forwarding");
+      video_element.playbackRate = 1;
+      video_element.volume = 1;
+    }
+  }    
+  
+  myLayer.innerHTML = cur_time.toFixed(2);
 }
 
 function handleNetflixSeek(cur_time) {
@@ -86,22 +105,17 @@ function handleNetflixSeek(cur_time) {
         } else {
           // fast forward
           console.log("begin fast forwarding " + cur_time + " start=" + last_start + " end " + last_end);
-          console.log("muted to FF");
           video_element.playbackRate = fast_forward_to_skip_speed; // seems to be its max or freezes [?]
-          video_element.onratechange = function() {
-            video_element.volume = 0;
-            video_element.style.visibility="hidden";
-          }
+          video_element.volume = 0;
+          console.log("muted to FF");
+          video_element.style.visibility="hidden";
         }
     } else {
        // not in a skip, did we just finish one?
        if (video_element.playbackRate == fast_forward_to_skip_speed) {
           console.log("cancel/done fast forwarding " + cur_time);
-          // end current fast forward
-          video_element.onratechange = function() {
-            video_element.style.visibility="";// non hidden
-            video_element.volume = 1;
-          }          
+          video_element.style.visibility="";// non hidden
+          video_element.volume = 1;
           video_element.playbackRate = 1;
        }
     }

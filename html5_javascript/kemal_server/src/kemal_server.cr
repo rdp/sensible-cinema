@@ -69,14 +69,14 @@ post "/save" do |env|
   path = env.get("path").as(String)
   got = env.params.body["stuff"]
   log("attempt save  #{path} as #{got}")
-  if got.lines.size != 3
+  if got.lines.size != 4
     raise "got non 3 lines? use browser back"
   end
   got = got.gsub("\r\n", "\n")
   name = got.lines[0]
   ffs = got.lines[1]
-  mutes = got.lines[2]
-  skips = got.lines[3]
+  skips = got.lines[2]
+  mutes = got.lines[3]
   if name !~ /^(var name="[^"]+";)$/
     raise "bad name? use browser back arrow"
   end
