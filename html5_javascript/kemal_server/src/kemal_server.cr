@@ -56,7 +56,7 @@ var skips=[[10.0, 30.0]];"
 end
 
 get "/index" do
-  urls_names = Dir["edit_descriptors/*"].map{|fullish_name| 
+  urls_names = Dir["edit_descriptors/*"].reject{|file| file =~ /.rendered.js/}.map{ |fullish_name| 
     url = URI.unescape File.basename(fullish_name) 
     File.read(fullish_name) =~ /name="(.+)"/
     name = $1
