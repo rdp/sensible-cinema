@@ -1,1 +1,2 @@
-crystal run --release ./src/kemal_server.cr
+crystal build --release ./src/kemal_server.cr
+./kemal_server
