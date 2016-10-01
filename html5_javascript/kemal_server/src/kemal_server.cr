@@ -11,7 +11,7 @@ get "/" do
 end
 
 def setup(env)
-  env.set "url_unescaped", unescaped = env.params.query["url"] # already unescaped it on its way in...
+  env.set "url_unescaped", unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in...
   env.set "url_escaped", url_escaped = URI.escape(unescaped)
   env.set "path" , "edit_descriptors/#{url_escaped}" 
 end
