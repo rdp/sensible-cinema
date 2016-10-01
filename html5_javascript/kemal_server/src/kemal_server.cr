@@ -91,11 +91,11 @@ post "/save" do |env|
   end
   # TODO allow input like a normal site rather than raw javascript LOL
   File.write(path, got);
-  system("git pull && git add #{File.dirname path} && git cam "edl bump") # commit it to gitraw...kind of... ;|
   all_settings = got
   expected_url = env.get("url_unescaped")
-  out = render "src/views/html5_edited.js.ecr"
-  File.write(path + ".rendered.js", out)
+  out = (render( "src/views/html5_edited.js.ecr"))
+  File.write(path + ".rendered.js", "" + out)
+  system("git pull && git add #{File.dirname path} && git cam \"edl bump\"") # commit it to gitraw...kind of... ;|
   "saved it<br/>#{env.get("url_unescaped")}<br>#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
 end
 
