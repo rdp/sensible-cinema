@@ -31,7 +31,7 @@ get "/for_current" do |env|
   if (!File.exists?(path) || path.includes?(".."))
     env.response.status_code = 403
     # never did figure out how to write this to the output :|
-    "unable to find one yet for #{env.get("url_unescaped")} <a href=\"/edit?url=#{env.get("url_escaped")}\">create new</a>" # too afraid to do straight redirect :)
+    "unable to find one yet for #{env.get("url_unescaped")} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect :)
   else
     all_settings = File.read path
     expected_url = env.get("url_unescaped")
