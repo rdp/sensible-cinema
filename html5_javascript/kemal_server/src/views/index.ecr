@@ -23,6 +23,14 @@ alert("Hit OK to navigate to the source, then copy and paste that to here"); win
 
 That will load the player.  You can then safely close the developer console and enjoy your film edited "your way".
 
+If you know the thing already exists, then run this:
+
+<div style="background-color: blue;">
+
+javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//raw.githubusercontent.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/edit_descriptors/" + window.location.href.split("?")[0]' + ".rendered.js");
+
+</div>
+
 Features:
 mutes
 seeks (netflix and other html5 video sites)
