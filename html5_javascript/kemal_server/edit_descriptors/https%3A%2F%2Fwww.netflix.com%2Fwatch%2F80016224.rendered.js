@@ -5,7 +5,7 @@
 var name="guinea pig -- meet the mormons";
 var fast_forwards=[[2.0,30.0]];
 var skips=[[6.5, 9.5],[11.5,15.5]];
-var mutes=[[60, 62]];
+var mutes=[[60, 63]];
 expected_url = "https://www.netflix.com/watch/80016224";
 // end auto inserted unique
 
