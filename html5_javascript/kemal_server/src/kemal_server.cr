@@ -5,13 +5,25 @@ require "./kemal_server/*" # TODO complain name, complain one string didn't work
 # end
 
 require "kemal"
+require "http/client"
+
 
 get "/" do
   "Hello World! Clean stream it!<br/>Offering edited netflix instant/amazon prime etc.<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com to receive instructions."
 end
 
 def setup(env)
-  env.set "url_unescaped", unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in...
+  unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in, kind of them...
+  if (unescaped)
+    unescaped = unescaped.gsub("smile.amazon", "www.amazon") # :|
+    if unescaped.includes?("/dp/")
+      # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
+      # we want https://www.amazon.com/gp/product/B01994W9OC
+      id = unescaped.split("/")[5]
+      unescaped = " https://www.amazon.com/gp/product/" + id
+    end
+  end
+  env.set "url_unescaped", unescaped
   env.set "url_escaped", url_escaped = URI.escape(unescaped)
   env.set "path" , "edit_descriptors/#{url_escaped}" 
 end
@@ -45,8 +57,10 @@ get "/edit" do |env| # same as "view" :)
   if File.exists?(path)
     current_text = File.read(path)
   else
-    current_text = "// template [remove this line]:
-var name=\"movie name\";
+    response = HTTP::Client.get env.get("url_unescaped").as(String)
+    title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
+    current_text = "// template [DELETE THIS LINE]:
+var name=\"#{title}\";
 var fast_forwards=[[50.0, 51.0]];
 var mutes=[[2.0,7.0]]; 
 var skips=[[10.0, 30.0]];"
