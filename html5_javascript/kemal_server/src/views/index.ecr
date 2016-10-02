@@ -1,11 +1,11 @@
 <title>Clean Stream Index</title>
 <h1>Index</h1>
 
-<% urls_names.each{|url_name|; url = url_name[0] %>
+<% urls_names.each{|args| url, escaped_url, name = args %> <!--  have to use args -->
     <p>[<%= url %>] 
-       [<%= url_name[1] %>]
+       [<%= name %>]
        <a href="/edit?url=<%= url %>">edit</a>
-       <a href=/for_current?url=<%= url %>>js</a>
+       <a href=/for_current?url=<%= escaped_url %>>js</a>
        <a href="<%= url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
    </p>
 <% } %>
@@ -31,7 +31,7 @@ This should work with any major browser (chrome, firefox, safari, edge...)
 If you're a developer and want to make sure you get the latest after a change, run this in a javascript developer console:
 
 <div style="background-color: pink;">
-alert("Hit OK to navigate to the source, then copy and paste that to here"); window.open("http://rdp.inet2.org:3000/for_current?url=" + window.location.href,"_blank");
+alert("Hit OK to navigate to the source, then copy and paste that to here"); window.open("http://cleanstream.inet2.org:3000/for_current?url=" + encodeURIComponent(window.location.href), "_blank");
 
 </div>
 

@@ -69,12 +69,13 @@ var mutes=[[10.0, 30.0]];"
   render "src/views/edit.ecr"
 end
 
-get "/index" do
+get "/index" do |env|
   urls_names = Dir["edit_descriptors/*"].reject{|file| file =~ /.rendered.js/}.map{ |fullish_name| 
-    url = URI.unescape File.basename(fullish_name) 
+    escaped_url = File.basename(fullish_name)
+    url = URI.unescape escaped_url
     File.read(fullish_name) =~ /name="(.+)"/
     name = $1
-    [url, name]
+    [url, escaped_url, name]
   }
   render "src/views/index.ecr"
 end
