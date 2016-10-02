@@ -10,7 +10,7 @@ current_url_sanitized = window.location.href.split("?")[0];
 current_url_sanitized = current_url_sanitized.replace("smile.amazon", "www.amazon");
 if ( current_url_sanitized.includes("/dp/") ) {
   id = current_url_sanitized.split("/")[5]
-  current_url_sanitized = " https://www.amazon.com/gp/product/" + id
+  current_url_sanitized = "https://www.amazon.com/gp/product/" + id
 }
 
 

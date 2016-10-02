@@ -20,7 +20,7 @@ def setup(env)
       # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
       # we want https://www.amazon.com/gp/product/B01994W9OC
       id = unescaped.split("/")[5]
-      unescaped = " https://www.amazon.com/gp/product/" + id
+      unescaped = "https://www.amazon.com/gp/product/" + id
     end
   end
   env.set "url_unescaped", unescaped
@@ -65,7 +65,6 @@ var fast_forwards=[[50.0, 51.0]];
 var skips=[[2.0,7.0]];
 var mutes=[[10.0, 30.0]];"
   end
-  
   render "src/views/edit.ecr"
 end
 
