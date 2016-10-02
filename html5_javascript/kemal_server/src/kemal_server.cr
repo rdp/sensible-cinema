@@ -62,7 +62,7 @@ get "/edit" do |env| # same as "view" :)
     current_text = "// template [DELETE THIS LINE]:
 var name=\"#{title}\";
 var fast_forwards=[[50.0, 51.0]];
-var mutes=[[2.0,7.0]]; 
+var mutes=[[2.0,7.0]];
 var skips=[[10.0, 30.0]];"
   end
   
