@@ -2,7 +2,12 @@
 <h1>Index</h1>
 
 <% urls_names.each{|url_name|; url = url_name[0] %>
-    <p>[<%= url %>] <a href="/edit?url=<%= url %>">edit</a> <a href=/for_current?url=<%= url %>>js</a> <%= url_name[1] %> <a href="<%= url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
+    <p>[<%= url %>] 
+       [<%= url_name[1] %>]
+       <a href="/edit?url=<%= url %>">edit</a>
+       <a href=/for_current?url=<%= url %>>js</a>
+       <a href="<%= url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
+   </p>
 <% } %>
 
 <h1>Create new</h1>
