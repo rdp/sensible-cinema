@@ -2,33 +2,32 @@
 <h1>Index</h1>
 
 <% urls_names.each{|url_name|; url = url_name[0] %>
-    <p>[<%= url %>] <a href="/edit?url=<%= url %>">edit</a> <a href=/for_current?url=<%= url %>>js</a> <%= url_name[1] %> <a href="<%= url %>">watch</a>
+    <p>[<%= url %>] <a href="/edit?url=<%= url %>">edit</a> <a href=/for_current?url=<%= url %>>js</a> <%= url_name[1] %> <a href="<%= url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
 <% } %>
 
+<h1>Create new</h1>
 
 <pre>
-Or create a new one:
 <form action="/edit" method="GET">
-Your Movie url: <input type="text" name="url"/>
-<input type="submit">
+Your Movie's url: <input type="text" name="url"/>
+<input type="submit" value="Submit">
 </form>
 (works with netflix instant, amazon prime, others)
 
-If you know the edit list already exists, then run this:
+If you know the edit list already exists, then run this in a javascript developer console:
 
 <div style="background-color: lightblue;">
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/edit_descriptors/' + encodeURIComponent (encodeURIComponent(window.location.href.split("?")[0])) + ".rendered.js"); // double encode needed :|
 
 </div>
+That will load the editor.  You can then safely close the developer console and enjoy your film edited "your way".
 
-If you're a developer and want to make sure you get the latest after a change, run this:
+If you're a developer and want to make sure you get the latest after a change, run this in a javascript developer console:
 
 <div style="background-color: pink;">
 alert("Hit OK to navigate to the source, then copy and paste that to here"); window.open("http://rdp.inet2.org:3000/for_current?url=" + window.location.href,"_blank");
 
 </div>
-
-That will load the player.  You can then safely close the developer console and enjoy your film edited "your way".
 
 
 Features:
