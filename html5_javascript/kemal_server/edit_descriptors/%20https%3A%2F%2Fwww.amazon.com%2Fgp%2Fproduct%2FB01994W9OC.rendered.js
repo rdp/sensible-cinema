@@ -9,8 +9,16 @@ var mutes=[[10.0, 30.0]];
 expected_url = " https://www.amazon.com/gp/product/B01994W9OC";
 // end auto inserted unique
 
-if (window.location.href.split("?")[0] != expected_url) {
-  alert("danger: appears you may  have pasted to theh wrong paste this_page=" + window.location.href + " cuts from=" + expected_url);
+current_url_sanitized = window.location.href.split("?")[0];
+current_url_sanitized = current_url_sanitized.replace("smile.amazon", "www.amazon");
+if ( current_url_sanitized.includes("/dp/") ) {
+  id = current_url_sanitized.split("/")[5]
+  current_url_sanitized = " https://www.amazon.com/gp/product/" + id
+}
+
+
+if ( != expected_url) {
+  alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_url);
 }
 
 if (typeof timer !== 'undefined') {
