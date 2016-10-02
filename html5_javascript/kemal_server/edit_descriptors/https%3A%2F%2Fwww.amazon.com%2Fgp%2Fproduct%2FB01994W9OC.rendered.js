@@ -6,18 +6,18 @@ var name="Amazon.com: Inspired Guns: DavidLassetter, DashiellWolf, ChristianBusa
 var fast_forwards=[[50.0, 51.0]];
 var skips=[[2.0,7.0]];
 var mutes=[[10.0, 30.0]];
-expected_url = " https://www.amazon.com/gp/product/B01994W9OC";
+expected_url = "https://www.amazon.com/gp/product/B01994W9OC";
 // end auto inserted unique
 
 current_url_sanitized = window.location.href.split("?")[0];
 current_url_sanitized = current_url_sanitized.replace("smile.amazon", "www.amazon");
 if ( current_url_sanitized.includes("/dp/") ) {
   id = current_url_sanitized.split("/")[5]
-  current_url_sanitized = " https://www.amazon.com/gp/product/" + id
+  current_url_sanitized = "https://www.amazon.com/gp/product/" + id
 }
 
 
-if ( != expected_url) {
+if (current_url_sanitized != expected_url) {
   alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_url);
 }
 

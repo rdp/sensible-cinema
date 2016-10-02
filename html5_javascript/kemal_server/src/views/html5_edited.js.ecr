@@ -14,7 +14,7 @@ if ( current_url_sanitized.includes("/dp/") ) {
 }
 
 
-if ( != expected_url) {
+if (current_url_sanitized != expected_url) {
   alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_url);
 }
 
