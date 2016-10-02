@@ -2,7 +2,7 @@
 
 
 // begin auto inserted unique for your movie: fast_forwards, mutes, skips
-var name="Amazon.com: Inspired Guns: DavidLassetter, DashiellWolf, ChristianBusath, JakeBenSuazo: Amazon   Digital Services LLC";
+var name="Inspired Guns";
 var fast_forwards=[[50.0, 51.0]];
 var skips=[[2.0,7.0]];
 var mutes=[[10.0, 30.0]];
@@ -103,7 +103,10 @@ function checkStatus() {
     }
   }
   
-  myLayer.innerHTML = cur_time.toFixed(2);
+  myLayer.innerHTML = cur_time.toFixed(2) + extra_message;
+  if (window.location.href.includes("amazon.com")) {
+    console.log(myLayer.innerHTML);
+  }
 }
 
 function handleNetflixSeek(cur_time) {
@@ -133,7 +136,7 @@ function handleNetflixSeek(cur_time) {
 }
 
 // load jquery first
-javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
+javascript:(function(e,s){e.src=s;e.onload=function(){readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
 uiEventsHappening = 0;
 
@@ -142,7 +145,7 @@ lastDuration = 60 * 60 * 1000;
 getDuration = function() {
   var video = jQuery('.player-video-wrapper video');
   if (video.length > 0) {
-    lastDuration = Math.floor(video[0].duration * 1000);
+    lastDuration = Math.floor(video_element[0].duration * 1000);
   }
   return lastDuration;
 };
@@ -173,11 +176,13 @@ myLayer.style.position = 'absolute';
 myLayer.style.width = '300px';
 myLayer.style.height = '300px';
 myLayer.style.background = '#000000';
-myLayer.style.zIndex = "1"; // on top :)
+myLayer.style.zIndex = "500"; // on top :)
 myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
 myLayer.style.opacity = 0.3;
 myLayer.style.fontSize = "13px";
 document.body.appendChild(myLayer);
+
+extra_message = "";
 
 function readyToGo() {
 
