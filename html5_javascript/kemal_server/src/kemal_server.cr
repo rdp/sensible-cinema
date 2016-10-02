@@ -84,7 +84,7 @@ post "/save" do |env|
   got = env.params.body["stuff"]
   log("attempt save  #{path} as #{got}")
   if got.lines.size != 4
-    raise "got non 4 lines? use browser back"
+    raise "got non 4 lines? use browser back (delete top line?)"
   end
   got = got.gsub("\r\n", "\n")
   name = got.lines[0]
