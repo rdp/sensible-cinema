@@ -62,8 +62,8 @@ get "/edit" do |env| # same as "view" :)
     current_text = "// template [DELETE THIS LINE]:
 var name=\"#{title}\";
 var fast_forwards=[[50.0, 51.0]];
-var mutes=[[2.0,7.0]];
-var skips=[[10.0, 30.0]];"
+var skips=[[2.0,7.0]];
+var mutes=[[10.0, 30.0]];"
   end
   
   render "src/views/edit.ecr"
@@ -98,7 +98,7 @@ post "/save" do |env|
      raise "bad fast forwards use browser back arrow"
   end
   if mutes !~ /^var mutes=[\[\]\d\., ]+;$/
-    raise "bad mutes? use browser back arrow"
+    raise "bad mutes? use browser back arrow=" + mutes
   end
   if skips !~ /^var skips=[\[\]\d\., ]+;$/
     raise "bad skips? use browser back arrow"
