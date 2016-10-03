@@ -6,6 +6,9 @@ require "./kemal_server/*" # TODO complain name, complain one string didn't work
 
 require "kemal"
 require "http/client"
+require "sqlite3"
+
+#db = DB.open "sqlite3://./db/sqlite3_data.db" 
 
 
 get "/" do

@@ -1,0 +1,16 @@
+CREATE TABLE URL(
+   ID INT PRIMARY KEY     NOT NULL,
+   URL           TEXT    NOT NULL,
+   name          TEXT     NOT NULL, // CHAR(50)
+   SALARY         REAL
+);
+
+CREATE TABLE EDITS (
+   ID INT PRIMARY KEY     NOT NULL,
+   START          REAL,
+   END            REAL,
+   CATEGORY       TEXT NOT NULL,
+   DETAILS        TEXT NOT NULL,
+   URL_ID         INT,
+   FOREIGN KEY(URL_ID) REFERENCES URL(ID)
+);
