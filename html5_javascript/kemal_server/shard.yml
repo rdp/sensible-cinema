@@ -16,5 +16,3 @@ dependencies:
     github: crystal-lang/crystal-sqlite3
   pool:
     github: ysbaddaden/pool
-  micrate:
-    github: juanedi/micrate
