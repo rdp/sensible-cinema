@@ -1,6 +1,9 @@
 == todo ===
+real website where...you enter the timestamps and what it is, plz?
 
-display "muted"
+research dvdz :|
+
+display the word "muted"
 
 ask netflix :|
   "I would love to support you, 30000" etc. LOL
@@ -9,17 +12,12 @@ remove ff it's just doesn't match it closely enough :|
   make imperceptible small portions of audio or video
     just skip it for now, till after netflix :|
 
-real website where...you enter the timestamps and what it is, plz?
 
 use it me [?]
 
-import from subtitle jruby?
-
-install all manner of DVD stuffs :|
+import from subtitle outputs in jruby?
 
 reverse proxy for port 80 at least, why not? actually I only need this for work LOL
-
-SSL? :| how long does gitraw take I wonder [add timestamp?]???
 
 if it can't find video wait then try again?
 
@@ -28,6 +26,8 @@ pay people :|
 resurrect "fake" netflix :|
 
 == todo never LOL ==
+SSL? :| how long does gitraw take I wonder [add timestamp?]???
+  meh
  
 == business ==
 
@@ -37,6 +37,10 @@ one free per month, otherwise choose your donation-level?
   definitely liking the free month
     so basically paywall this thing <waaah>
   TODO business survey :|
+
+or "skew you, I'm going to pay through the nose for this thing"
+  "if you want to donate to support, please do so by clicking here"
+  I actually like this way too :)
 
 == web server framework==
 

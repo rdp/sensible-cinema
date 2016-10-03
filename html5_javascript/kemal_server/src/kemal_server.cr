@@ -109,7 +109,9 @@ post "/save" do |env|
   expected_url = env.get("url_unescaped")
   out = (render( "src/views/html5_edited.js.ecr"))
   File.write(path + ".rendered.js", "" + out) # crystal bug?
-  system("git pull && git add #{File.dirname path} && git cam \"edl bump\" && git pom ") # commit it to gitraw...kind of... ;|
+  if !File.exists?("./this_is_development")
+    system("git pull && git add #{File.dirname path} && git cam \"edl bump\" && git pom ") # commit it to gitraw...eventually :)
+  end
   "saved it<br/>#{env.get("url_unescaped")}<br>full size=#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
 end
 
