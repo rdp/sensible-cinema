@@ -18,3 +18,5 @@ dependencies:
     github: crystal-lang/crystal-mysql
   pool:
     github: ysbaddaden/pool
+  micrate:
+    github: juanedi/micrate
