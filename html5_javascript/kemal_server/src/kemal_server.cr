@@ -8,7 +8,25 @@ require "kemal"
 require "http/client"
 require "sqlite3"
 
-#db = DB.open "sqlite3://./db/sqlite3_data.db" 
+class Url
+  DB.mapping({
+    id: Int32,
+    url:   {type: String},
+    name: {type: String},
+  })
+end
+
+class Edit
+  DB.mapping({
+    id: Int32,
+    start:   {type: String},
+    endy: {type: String},
+    category: {type: String},
+    subcategory: {type: String},
+    details: {type: String},
+    url_id: Int32,
+  })
+end
 
 
 get "/" do
@@ -26,7 +44,7 @@ def setup(env)
       unescaped = "https://www.amazon.com/gp/product/" + id
     end
   end
-  env.set "url_unescaped", unescaped
+  env.set "real_url", unescaped
   env.set "url_escaped", url_escaped = URI.escape(unescaped)
   env.set "path" , "edit_descriptors/#{url_escaped}" 
 end
@@ -42,16 +60,22 @@ before_post "/save" do |env|
 end
 
 get "/for_current" do |env|
-  path = env.get("path").as(String)
-  if (!File.exists?(path) || path.includes?(".."))
-    env.response.status_code = 403
-    # never did figure out how to write this to the output :|
-    "unable to find one yet for #{env.get("url_unescaped")} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect :)
-  else
-    all_settings = File.read path
-    expected_url = env.get("url_unescaped")
-    env.response.content_type = "application/javascript"
-    render "src/views/html5_edited.js.ecr"
+  url = env.get("real_url").as(String)
+  DB.open "sqlite3://./db/sqlite3_data.db" do |conn|
+    
+    rs = conn.query("SELECT * from urls where url = ?", url) # do |rs| :|
+    urls = Url.from_rs(rs);
+    if urls.size == 0
+      env.response.status_code = 403
+      # never did figure out how to write this to the output :|
+      "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+    else
+      
+      #all_settings = File.read path
+      #env.response.content_type = "application/javascript"
+      #render "src/views/html5_edited.js.ecr"
+      "hello #{urls}"
+    end
   end
 end
 
@@ -60,7 +84,7 @@ get "/edit" do |env| # same as "view" :)
   if File.exists?(path)
     current_text = File.read(path)
   else
-    response = HTTP::Client.get env.get("url_unescaped").as(String)
+    response = HTTP::Client.get env.get("real_url").as(String)
     title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
     current_text = "// template [DELETE THIS LINE]:
 var name=\"#{title}\";
@@ -109,13 +133,13 @@ post "/save" do |env|
   # TODO allow input like a normal site rather than raw javascript LOL
   File.write(path, got);
   all_settings = got
-  expected_url = env.get("url_unescaped")
+  url = env.get("real_url")
   out = (render( "src/views/html5_edited.js.ecr"))
   File.write(path + ".rendered.js", "" + out) # crystal bug?
   if !File.exists?("./this_is_development")
     system("git pull && git add #{File.dirname path} && git cam \"edl bump\" && git pom ") # commit it to gitraw...eventually :)
   end
-  "saved it<br/>#{env.get("url_unescaped")}<br>full size=#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
+  "saved it<br/>#{env.get("real_url")}<br>full size=#{got.size}<br/><a href=/index>index</a><br/><a href=/edit?url=#{env.get "url_escaped"}>re-edit this movie</a>"
 end
 
 Kemal.run
