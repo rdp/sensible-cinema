@@ -14,22 +14,18 @@ class Url
     url:  {type: String},
     name: {type: String},
   })
-  def initialize(id : Int32, url : String, name : String)
-    @id = id
-    @url = url
-    @name = name
-  end
-  
 end
 
 class Edit
   DB.mapping({
     id: Int64,
-    start:   {type: String},
-    endy: {type: String},
+    start:   {type: Float64},
+    endy: {type: Float64},
     category: {type: String},
     subcategory: {type: String},
+    subcategory_level: Int32,
     details: {type: String},
+    default_action: {type: String},
     url_id: Int32,
   })
 end
@@ -71,31 +67,28 @@ def with_db
 end
 
 get "/for_current" do |env|
+  output = "";
   url = env.get("real_url").as(String)
-   with_db do |conn|
-    conn.query("SELECT ID, url, name from urls where url = ?", url) do |rs|
-      urls = Url.from_rs(rs);
-      if urls.size == 0
-        with_db do |conn2|
-          conn2.query("SELECT url from urls") do |rs|
-            rs.each do
-              puts rs.read(String)
-            end
-          end
-        end
-      
-        env.response.status_code = 400
-        # never did figure out how to write this to the output :|
-        "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
-      else
-      
-        #all_settings = File.read path
-        #env.response.content_type = "application/javascript"
-        #render "src/views/html5_edited.js.ecr"
-        "hello #{urls}"
+  with_db do |conn|
+    urls = conn.query("SELECT id, URL, name from urls where url = ?", url) do |rs|
+       Url.from_rs(rs);
+    end
+    if urls.size == 0
+       env.response.status_code = 400
+       # never did figure out how to write this to the output :|
+       output = "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+    else
+      edits = conn.query("select * from edits where url_id=?", urls[0].id) do |rs|
+        Edit.from_rs rs
       end
+      #all_settings = File.read path
+      #env.response.content_type = "application/javascript"
+      #render "src/views/html5_edited.js.ecr"
+      puts "Here1"
+      output = "hello #{urls} #{edits}"
     end
   end
+  output
 end
 
 get "/edit" do |env| # same as "view" :)
