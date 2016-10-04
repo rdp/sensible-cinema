@@ -24,7 +24,7 @@ class Edit
     category: {type: String},       #  profanity or violence
     subcategory: {type: String},    #  deity or gore
     subcategory_level: Int32,       #  3 out of 10
-    details: {type: String},        #  **** what is going on? said sally
+    details: {type: String},        #  **** what is going on? said sally...
     default_action: {type: String}, #  skip, mute, almost mute, no-video-yes-audio (only skip and mute supported currently)
     url_id: Int32
   })
@@ -79,16 +79,16 @@ get "/for_current" do |env|
        output = "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
     else
       db_url = urls[0]
-      edits = conn.query("select * from edits where url_id=?", db_url.id) do |rs|
+      mute_edls = conn.query("select * from edits where url_id=? and default_action = 'mute'", db_url.id) do |rs|
         Edit.from_rs rs
       end
-      skips = [] of Array(Float64)
-      mutes = [] of Array(Float64)
-#      for edit in edits
-#        
-#      end
+      skip_edls = conn.query("select * from edits where url_id=? and default_action = 'skip'", db_url.id) do |rs|
+        Edit.from_rs rs
+      end
+      skips = skip_edls.map{|edl| [edl.start, edl.endy]}
+      mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
       
-      name = URI.escape(db_url.name)
+      name = URI.escape(db_url.name) # XXX this is too restrictive I believe...
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
       output = render "src/views/html5_edited.js.ecr"
     end

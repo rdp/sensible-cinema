@@ -21,7 +21,7 @@ CREATE TABLE EDITS (
 
 insert into urls (url, name) values ("http://url", 'a_name";alert("xss");"'); -- no ID needed
 insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values
-    (20090.50, 20100.50, "a category", "a subcat", 3, "details", "def action", last_insert_rowid());
+    (20090.50, 20100.50, "a category", "a subcat", 3, "details", "mute", last_insert_rowid());
 -- output some to screen
 select * from urls;
 select * from edits;
