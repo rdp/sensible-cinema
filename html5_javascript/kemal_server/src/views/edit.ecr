@@ -11,7 +11,7 @@
 Edits
 <br/>
 <% edls.each do |edl|  %>
-  <%= h "#{edl.inspect}" %><a href=/delete_edl/<%= edl.id %>>delete</a>
+  <%= h "#{edl.inspect}" %><a href=/delete_edl/<%= edl.id %>>delete</a> <a href=/edit_edl/<%= edl.id %>>edit</a>
 <% end %>
 <a href=/add_edl?url=<%= h url.url %>>add new</a>
 

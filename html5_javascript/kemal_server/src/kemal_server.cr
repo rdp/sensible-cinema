@@ -41,6 +41,7 @@ class Url
   end
   
   def save
+    # TODO what if no id yet?
     with_db do |conn|
       conn.exec "update urls set name = ?, url = ? where id = ?", name, url, id
     end
@@ -117,6 +118,42 @@ class Edl
     @url_id = url.id
   end
   
+  
+  def save
+    with_db do |conn|
+      if id == 0
+        puts conn.exec("insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) value (?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory_level, @details, @default_action, @url_id)
+        @id = conn.query_one("select last_insert_rowid()", as: Int64)
+      else
+        conn.exec "update edits set start = ?, endy = ? where id = ?", start, endy, @id
+      end
+    end
+  end
+  
+end
+
+def seconds_to_human(ts_seconds)
+  hours = (ts_seconds / 3600).floor()
+  ts_seconds -= hours * 3600
+  minutes = (ts_seconds / 60).floor()
+  ts_seconds -= minutes * 60
+  # just seconds left
+  if (hours > 0)
+    "%02d:%02d:%02.2f" % [hours, minutes, ts_seconds]
+  else
+    "%02d:%02.2f" % [minutes, ts_seconds]
+  end
+end
+
+def human_to_seconds(ts_human)
+  # like 01:02:36.53
+  ts = 0.0
+  factor = 1
+  ts_human.split(":").reverse.each {|segment|
+    ts += segment.to_f + factor * 60
+    factor += 1
+  }
+  ts
 end
 
 get "/" do
@@ -184,23 +221,49 @@ get "/delete_edl/:id" do |env|
 	env.redirect "/edit?url=" + edl.url.url
 end
 
+get "/edit_edl/:id" do |env|
+  edl = Edl.get_single_by_id(env.params.url["id"])
+  url = edl.url.url
+  render "src/views/edit_edl.ecr"
+end
+
 get "/add_edl" do |env|
   url = real_url(env)
   edl = Edl.new(Url.get_single_by_url(url))
   render "src/views/edit_edl.ecr"
 end
 
+post "/save_edl" do |env|
+  real_url = real_url(env)
+  params = env.params.body
+  puts env.params.body
+  if env.params.body["id"]
+    edl = Edl.get_single_by_id(params["id"])
+  else
+    edl = Edl.new(Url.get_single_by_url(real_url))
+    edl.url_id = Url.get_single_by_url(real_url).id
+  end
+  edl.start = human_to_seconds params["start"]
+  edl.endy = human_to_seconds params["endy"]
+  
+  edl.save
+end
+
 get "/edit" do |env| # same as "view" and "new" LOL but we have the url
   real_url = real_url(env)
   url_or_nil = Url.get_single_or_nil_by_url(real_url)
 
-  if url_or_nil
+  if url_or_nil != Nil
     url = url_or_nil.as(Url)
   else
-    response = HTTP::Client.get real_url(env)
-    title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
-    url = Url.new(real_url, title)
-    # and no bound edl's yet :)
+    begin
+      response = HTTP::Client.get real_url
+      title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
+      url = Url.new(real_url, title)
+    rescue ex
+      raise("unable to download that url" + real_url + " #{ex}")
+    end
+    # unsaved, and no bound edl's yet :)
   end
   edls = url.edls
   render "src/views/edit.ecr"

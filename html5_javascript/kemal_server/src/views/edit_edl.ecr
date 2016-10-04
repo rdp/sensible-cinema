@@ -1,4 +1,4 @@
-<h1>Editing edit for <%= h edl.url.name %></h1>
+<h1>Editing edit for <a href=/edit?url=<%= edl.url %>><%= h edl.url.name %></a></h1>
 
 <form action="/save_edl?url=<%= h url %>" method="POST">
 <div>
@@ -7,8 +7,8 @@
   <input type="hidden" name="id" value="<%= edl.id %>">
 <% end %>
 
-<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.start %></textarea>
-<textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.endy %></textarea>
+<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea>
+<textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.endy %></textarea>
 </div>
 <div><input type="submit" value="Save"></div>
 </form>
