@@ -2,9 +2,16 @@
 
 <form action="/save?url=<%= h db_url.url %>" method="POST">
 <div>
-<textarea name="name" rows="40" cols="40" style="font-size: 12pt; font-family: Arial;"><%= db_url.name %></textarea>
-<textarea name="url" rows="40" cols="40" style="font-size: 12pt; font-family: Arial;"><%= db_url.url %></textarea>
+<textarea name="name" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= db_url.name %></textarea>
+<textarea name="url" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= db_url.url %></textarea>
 </div>
+
+
+Edits
+<br/>
+<% edls.each do |edl|  %>
+  <%= h "#{edl.inspect}" %>
+<% end %>
 
 <div><input type="submit" value="Save"></div>
 </form>

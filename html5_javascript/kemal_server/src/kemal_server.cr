@@ -56,6 +56,14 @@ class Url
     @name = name
   end
   
+  def edls
+    with_db do |conn|
+      conn.query("select * from edits where url_id=?", id) do |rs|
+        Edit.from_rs rs
+      end
+    end
+  end
+  
 end
 
 class Edit
@@ -159,6 +167,7 @@ get "/edit" do |env| # same as "view" and "new" LOL but we have the url
     db_url = Url.new(url, title)
     # and no bound mutes yet :)
   end
+  edls = db_url.edls
   render "src/views/edit.ecr"
 end
 
