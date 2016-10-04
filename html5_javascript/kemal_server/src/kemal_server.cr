@@ -81,11 +81,16 @@ get "/for_current" do |env|
       edits = conn.query("select * from edits where url_id=?", urls[0].id) do |rs|
         Edit.from_rs rs
       end
+      
+      # was
+      # var name="Inspired Guns";
+      # var skips=[[2.0,7.0]];
+      # var mutes=[[10.0, 30.0]];
+      
       #all_settings = File.read path
-      #env.response.content_type = "application/javascript"
-      #render "src/views/html5_edited.js.ecr"
-      puts "Here1"
-      output = "hello #{urls} #{edits}"
+      env.response.content_type = "application/javascript"
+      #output = render "src/views/html5_edited.js.ecr"
+      output = "yup"
     end
   end
   output
@@ -146,7 +151,7 @@ post "/save" do |env|
   File.write(path, got);
   all_settings = got
   url = env.get("real_url")
-  out = (render( "src/views/html5_edited.js.ecr"))
+  out = render "src/views/html5_edited.js.ecr"
   File.write(path + ".rendered.js", "" + out) # crystal bug?
   if !File.exists?("./this_is_development")
     system("git pull && git add #{File.dirname path} && git cam \"edl bump\" && git pom ") # commit it to gitraw...eventually :)
