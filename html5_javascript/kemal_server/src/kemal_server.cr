@@ -78,6 +78,29 @@ class Edit
     default_action: {type: String}, #  skip, mute, almost mute, no-video-yes-audio (only skip and mute supported currently)
     url_id: Int32
   })
+  
+  def self.get_single_by_id(id)
+    with_db do |conn|
+      conn.query("SELECT * from edits where id = ?", id) do |rs|
+         Edit.from_rs(rs)[0] # Index OOB if not there :|
+      end
+    end
+  end
+  
+  def destroy
+    with_db do |conn|
+      conn.exec("delete from edits where id = ?", id)
+    end
+  end
+  
+  def url
+    with_db do |conn|
+      conn.query("select * from urls where id=?", url_id) do |rs|
+        Url.from_rs(rs)[0]
+      end
+    end
+  end
+  
 end
 
 get "/" do
@@ -96,8 +119,6 @@ def setup(env)
     end
   end
   env.set "real_url", unescaped
-  env.set "url_escaped", url_escaped = URI.escape(unescaped)
-  env.set "path" , "edit_descriptors/#{url_escaped}" 
 end
 
 before_get "/for_current" do |env|
@@ -127,7 +148,7 @@ get "/for_current" do |env|
     if !db_url_or_nil
        env.response.status_code = 400
        # never did figure out how to write this to the output :|
-       output = "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+       output = "unable to find one yet for #{url} <a href=\"/edit?url=#{h url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
     else
       db_url = db_url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -154,6 +175,13 @@ def javascript_for(db_url)
   end
 end
 
+get "/delete_edl/:id" do |env|
+  id = env.params.url["id"]
+  edl = Edit.get_single_by_id(id)
+  edl.destroy
+  save_local_javascript edl.url
+	env.redirect "/edit?url=" + edl.url.url
+end
 
 get "/edit" do |env| # same as "view" and "new" LOL but we have the url
   url = real_url(env)
@@ -186,6 +214,15 @@ get "/index" do |env|
   render "src/views/index.ecr"
 end
 
+def save_local_javascript(db_url)
+  as_javascript = javascript_for(db_url)
+  url_escaped = URI.escape(db_url.url)
+  File.write("edit_descriptors/#{url_escaped}" + ".rendered.js", "" + as_javascript)
+  if !File.exists?("./this_is_development")
+    system("git pull && git add edit_descriptors && git cam \"edl bump\" && git pom ") # commit it to gitraw...eventually :)
+  end
+end
+
 post "/save" do |env|
   old_url = real_url(env)
   name = env.params.body["name"]
@@ -195,13 +232,7 @@ post "/save" do |env|
   db_url.url = url
   db_url.name = name
   db_url.save
-  
-  out = javascript_for(db_url)
-  url_escaped = env.get("url_escaped").as(String)
-  File.write("edit_descriptors/#{url_escaped}" + ".rendered.js", "" + out) # crystal bug?
-  if !File.exists?("./this_is_development")
-    system("git pull && git add edit_descriptors && git cam \"edl bump\" && git pom ") # commit it to gitraw...eventually :)
-  end
+  save_local_javascript db_url
   "saved it<br/>#{h url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{h url}>re-edit this movie</a>"
 end
 
