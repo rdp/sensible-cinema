@@ -25,3 +25,4 @@ insert into edits (start, endy, category, subcategory, subcategory_level, detail
 -- output some to screen
 select * from urls;
 select * from edits;
+

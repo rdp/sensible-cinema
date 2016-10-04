@@ -1,8 +1,9 @@
-<h1>Editing <%= env.get "url_unescaped" %></h1>
+<h1>Editing <%= h db_url.url %></h1>
 
-<form action="/save?url=<%= env.get "url_escaped" %>" method="POST">
+<form action="/save?url=<%= h db_url.url %>" method="POST">
 <div>
-<textarea name="stuff" rows="40" cols="120" style="font-size: 12pt; font-family: Arial;"><%= current_text %></textarea>
+<textarea name="name" rows="40" cols="40" style="font-size: 12pt; font-family: Arial;"><%= db_url.name %></textarea>
+<textarea name="url" rows="40" cols="40" style="font-size: 12pt; font-family: Arial;"><%= db_url.url %></textarea>
 </div>
 
 <div><input type="submit" value="Save"></div>
