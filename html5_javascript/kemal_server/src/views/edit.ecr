@@ -1,9 +1,9 @@
-<h1>Editing <%= h db_url.url %></h1>
+<h1>Editing <%= h url.url %></h1>
 
-<form action="/save?url=<%= h db_url.url %>" method="POST">
+<form action="/save?url=<%= h url.url %>" method="POST">
 <div>
-<textarea name="name" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= h db_url.name %></textarea>
-<textarea name="url" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= h db_url.url %></textarea>
+<textarea name="name" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= h url.name %></textarea>
+<textarea name="url" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= h url.url %></textarea>
 </div>
 <div><input type="submit" value="Save"></div>
 </form>
@@ -13,5 +13,6 @@ Edits
 <% edls.each do |edl|  %>
   <%= h "#{edl.inspect}" %><a href=/delete_edl/<%= edl.id %>>delete</a>
 <% end %>
+<a href=/add_edl?url=<%= h url.url %>>add new</a>
 
 <p>[<a href="/">index</a>]</p>

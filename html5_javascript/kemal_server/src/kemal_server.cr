@@ -23,6 +23,10 @@ class Url
     end
   end
   
+  def self.get_single_by_url(url)
+   get_single_or_nil_by_url(url).as(Url) # class cast I guess if we're wrong here :|
+  end
+  
   def self.get_single_or_nil_by_url(url)
     with_db do |conn|
       urls = conn.query("SELECT * from urls where url = ?", url) do |rs|
@@ -59,14 +63,14 @@ class Url
   def edls
     with_db do |conn|
       conn.query("select * from edits where url_id=?", id) do |rs|
-        Edit.from_rs rs
+        Edl.from_rs rs
       end
     end
   end
   
 end
 
-class Edit
+class Edl
   DB.mapping({
     id: Int64,
     start:   {type: Float64},
@@ -82,7 +86,7 @@ class Edit
   def self.get_single_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from edits where id = ?", id) do |rs|
-         Edit.from_rs(rs)[0] # Index OOB if not there :|
+         Edl.from_rs(rs)[0] # Index OOB if not there :|
       end
     end
   end
@@ -101,34 +105,22 @@ class Edit
     end
   end
   
+  def initialize(url)
+    @id = 0.to_i64
+    @start = 0.0
+    @endy = 0.0
+    @category = "profanity"
+    @subcategory = "gore"
+    @subcategory_level = 3
+    @details = "any details"
+    @default_action = "mute"
+    @url_id = url.id
+  end
+  
 end
 
 get "/" do
   "Hello World! Clean stream it!<br/>Offering edited netflix instant/amazon prime etc.<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com to receive instructions."
-end
-
-def setup(env)
-  unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in, kind of them...
-  if (unescaped)
-    unescaped = unescaped.gsub("smile.amazon", "www.amazon") # :|
-    if unescaped.includes?("/dp/")
-      # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
-      # we want https://www.amazon.com/gp/product/B01994W9OC
-      id = unescaped.split("/")[5]
-      unescaped = "https://www.amazon.com/gp/product/" + id
-    end
-  end
-  env.set "real_url", unescaped
-end
-
-before_get "/for_current" do |env|
-  setup(env)
-end
-before_get "/edit" do |env|
-  setup(env)
-end
-before_post "/save" do |env|
-  setup(env)
 end
 
 def with_db
@@ -137,22 +129,31 @@ def with_db
 end
  
 def real_url(env)
-  env.get("real_url").as(String)
+  unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in, kind of them...
+  # sanitize amazon
+  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # :|
+  if unescaped.includes?("/dp/")
+    # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
+    # we want https://www.amazon.com/gp/product/B01994W9OC
+    id = unescaped.split("/")[5]
+    unescaped = "https://www.amazon.com/gp/product/" + id
+  end
+  unescaped
 end
 
 get "/for_current" do |env|
   output = "";
-  url = real_url(env)
+  real_url = real_url(env)
   with_db do |conn|
-    db_url_or_nil = Url.get_single_or_nil_by_url(url)
-    if !db_url_or_nil
+    url_or_nil = Url.get_single_or_nil_by_url(real_url)
+    if !url_or_nil
        env.response.status_code = 400
        # never did figure out how to write this to the output :|
-       output = "unable to find one yet for #{url} <a href=\"/edit?url=#{h url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+       output = "unable to find one yet for #{h real_url} <a href=\"/edit?url=#{h real_url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
     else
-      db_url = db_url_or_nil.as(Url)
+      url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-      output = javascript_for(db_url)
+      output = javascript_for(url)
     end
   end
   output
@@ -161,10 +162,10 @@ end
 def javascript_for(db_url)
   with_db do |conn|
     mute_edls = conn.query("select * from edits where url_id=? and default_action = 'mute'", db_url.id) do |rs|
-      Edit.from_rs rs
+      Edl.from_rs rs
     end
     skip_edls = conn.query("select * from edits where url_id=? and default_action = 'skip'", db_url.id) do |rs|
-      Edit.from_rs rs
+      Edl.from_rs rs
     end
   
     skips = skip_edls.map{|edl| [edl.start, edl.endy]}
@@ -177,25 +178,31 @@ end
 
 get "/delete_edl/:id" do |env|
   id = env.params.url["id"]
-  edl = Edit.get_single_by_id(id)
+  edl = Edl.get_single_by_id(id)
   edl.destroy
   save_local_javascript edl.url
 	env.redirect "/edit?url=" + edl.url.url
 end
 
-get "/edit" do |env| # same as "view" and "new" LOL but we have the url
+get "/add_edl" do |env|
   url = real_url(env)
-  db_url_or_nil = Url.get_single_or_nil_by_url(url)
+  edl = Edl.new(Url.get_single_by_url(url))
+  render "src/views/edit_edl.ecr"
+end
 
-  if db_url_or_nil
-    db_url = db_url_or_nil.as(Url)
+get "/edit" do |env| # same as "view" and "new" LOL but we have the url
+  real_url = real_url(env)
+  url_or_nil = Url.get_single_or_nil_by_url(real_url)
+
+  if url_or_nil
+    url = url_or_nil.as(Url)
   else
-    response = HTTP::Client.get env.get("real_url").as(String)
+    response = HTTP::Client.get real_url(env)
     title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
-    db_url = Url.new(url, title)
-    # and no bound mutes yet :)
+    url = Url.new(real_url, title)
+    # and no bound edl's yet :)
   end
-  edls = db_url.edls
+  edls = url.edls
   render "src/views/edit.ecr"
 end
 
@@ -225,15 +232,15 @@ end
 
 post "/save" do |env|
   old_url = real_url(env)
-  name = env.params.body["name"]
-  url = env.params.body["url"]
-  log("attempt save #{old_url} ->  #{url} as #{name}")
-  db_url = Url.get_single_or_nil_by_url(old_url).as(Url)
-  db_url.url = url
+  name = h env.params.body["name"]
+  real_url = h env.params.body["url"]
+  log("attempt save #{old_url} ->  #{real_url} as #{name}")
+  db_url = Url.get_single_by_url(old_url)
+  db_url.url = real_url
   db_url.name = name
   db_url.save
   save_local_javascript db_url
-  "saved it<br/>#{h url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{h url}>re-edit this movie</a>"
+  "saved it<br/>#{h real_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{h real_url}>re-edit this movie</a>"
 end
 
 Kemal.run
