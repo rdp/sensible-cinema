@@ -64,29 +64,36 @@ before_post "/save" do |env|
   setup(env)
 end
 
+def with_db
+  db =  DB.open "sqlite3://./db/sqlite3_data.db"
+  yield db
+  db.close
+end
+
 get "/for_current" do |env|
   url = env.get("real_url").as(String)
-  DB.open "sqlite3://./db/sqlite3_data.db" do |conn|
-    
-    urls = [] of Url
-    conn.query("SELECT ID, url, name from urls where url = ?", url)  do |rs|
-          puts "#{rs.column_name(0)} (#{rs.column_name(1)})"
-      #urls = Url.from_rs(rs);
-      rs.each do
-puts         rs.read(Int32)
-      end
-
-    end
-    if urls.size == 0
-      env.response.status_code = 403
-      # never did figure out how to write this to the output :|
-      "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
-    else
+   with_db do |conn|
+    conn.query("SELECT ID, url, name from urls where url = ?", url) do |rs|
+      urls = Url.from_rs(rs);
+      if urls.size == 0
+        with_db do |conn2|
+          conn2.query("SELECT url from urls") do |rs|
+            rs.each do
+              puts rs.read(String)
+            end
+          end
+        end
       
-      #all_settings = File.read path
-      #env.response.content_type = "application/javascript"
-      #render "src/views/html5_edited.js.ecr"
-      "hello #{urls}"
+        env.response.status_code = 400
+        # never did figure out how to write this to the output :|
+        "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+      else
+      
+        #all_settings = File.read path
+        #env.response.content_type = "application/javascript"
+        #render "src/views/html5_edited.js.ecr"
+        "hello #{urls}"
+      end
     end
   end
 end
