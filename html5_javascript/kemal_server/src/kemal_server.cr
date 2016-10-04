@@ -147,13 +147,12 @@ end
 
 def human_to_seconds(ts_human)
   # like 01:02:36.53
-  ts = 0.0
-  factor = 1
-  ts_human.split(":").reverse.each {|segment|
-    ts += segment.to_f + factor * 60
-    factor += 1
+  puts "started as #{ts_human}"
+  sum = 0.0
+  ts_human.split(":").reverse.map(&.to_f).each_with_index{|segment, idx|
+    sum += segment * 60**idx
   }
-  ts
+  sum
 end
 
 get "/" do
