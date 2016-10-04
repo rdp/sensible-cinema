@@ -78,19 +78,17 @@ get "/for_current" do |env|
        # never did figure out how to write this to the output :|
        output = "unable to find one yet for #{url} <a href=\"/edit?url=#{env.get("url_escaped")}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
     else
-      edits = conn.query("select * from edits where url_id=?", urls[0].id) do |rs|
+      db_url = urls[0]
+      edits = conn.query("select * from edits where url_id=?", db_url.id) do |rs|
         Edit.from_rs rs
       end
       
       # was
-      # var name="Inspired Guns";
-      # var skips=[[2.0,7.0]];
-      # var mutes=[[10.0, 30.0]];
-      
-      #all_settings = File.read path
+      name = URI.escape(db_url.name)
+      skips = [] of Array(Float64)
+      mutes = [] of Array(Float64)
       env.response.content_type = "application/javascript"
-      #output = render "src/views/html5_edited.js.ecr"
-      output = "yup"
+      output = render "src/views/html5_edited.js.ecr"
     end
   end
   output
