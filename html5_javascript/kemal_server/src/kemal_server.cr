@@ -11,14 +11,20 @@ require "sqlite3"
 class Url
   DB.mapping({
     id: Int32,
-    url:   {type: String},
+    url:  {type: String},
     name: {type: String},
   })
+  def initialize(id : Int32, url : String, name : String)
+    @id = id
+    @url = url
+    @name = name
+  end
+  
 end
 
 class Edit
   DB.mapping({
-    id: Int32,
+    id: Int64,
     start:   {type: String},
     endy: {type: String},
     category: {type: String},
@@ -27,7 +33,6 @@ class Edit
     url_id: Int32,
   })
 end
-
 
 get "/" do
   "Hello World! Clean stream it!<br/>Offering edited netflix instant/amazon prime etc.<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com to receive instructions."
@@ -63,8 +68,15 @@ get "/for_current" do |env|
   url = env.get("real_url").as(String)
   DB.open "sqlite3://./db/sqlite3_data.db" do |conn|
     
-    rs = conn.query("SELECT * from urls where url = ?", url) # do |rs| :|
-    urls = Url.from_rs(rs);
+    urls = [] of Url
+    conn.query("SELECT ID, url, name from urls where url = ?", url)  do |rs|
+          puts "#{rs.column_name(0)} (#{rs.column_name(1)})"
+      #urls = Url.from_rs(rs);
+      rs.each do
+puts         rs.read(Int32)
+      end
+
+    end
     if urls.size == 0
       env.response.status_code = 403
       # never did figure out how to write this to the output :|
