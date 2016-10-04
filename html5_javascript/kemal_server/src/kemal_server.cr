@@ -21,12 +21,12 @@ class Edit
     id: Int64,
     start:   {type: Float64},
     endy: {type: Float64},
-    category: {type: String},
-    subcategory: {type: String},
-    subcategory_level: Int32,
-    details: {type: String},
-    default_action: {type: String},
-    url_id: Int32,
+    category: {type: String},       #  profanity or violence
+    subcategory: {type: String},    #  deity or gore
+    subcategory_level: Int32,       #  3 out of 10
+    details: {type: String},        #  **** what is going on? said sally
+    default_action: {type: String}, #  skip, mute, almost mute, no-video-yes-audio (only skip and mute supported currently)
+    url_id: Int32
   })
 end
 
@@ -82,12 +82,14 @@ get "/for_current" do |env|
       edits = conn.query("select * from edits where url_id=?", db_url.id) do |rs|
         Edit.from_rs rs
       end
-      
-      # was
-      name = URI.escape(db_url.name)
       skips = [] of Array(Float64)
       mutes = [] of Array(Float64)
-      env.response.content_type = "application/javascript"
+#      for edit in edits
+#        
+#      end
+      
+      name = URI.escape(db_url.name)
+      env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
       output = render "src/views/html5_edited.js.ecr"
     end
   end
