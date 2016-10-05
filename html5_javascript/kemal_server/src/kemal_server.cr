@@ -128,24 +128,25 @@ class Edl
   
 end
 
-def seconds_to_human(ts_seconds)
+def seconds_to_human(ts_total)
+  ts_seconds = ts_total
   hours = (ts_seconds / 3600).floor()
   ts_seconds -= hours * 3600
   minutes = (ts_seconds / 60).floor()
   ts_seconds -= minutes * 60
   # just seconds left
-  if (hours > 0 || ts_seconds == 0) # 0 is default
-    "%02d:%02d:%05.2f" % [hours, minutes, ts_seconds]
+  if (hours > 0 || ts_total == 0) # 0 is default so show everything so they can edit it more easily
+    "%01dh% 02dm %05.2fs" % [hours, minutes, ts_seconds]
   else
-    "%02d:%05.2f" % [minutes, ts_seconds]
+    "%01dm %05.2fs" % [minutes, ts_seconds]
   end
 end
 
 def human_to_seconds(ts_human)
-  # like 01:02:36.53
+  # ex: 01h 03m 02.52s
   sum = 0.0
-  ts_human.split(":").reverse.map(&.to_f).each_with_index{|segment, idx|
-    sum += segment * 60**idx
+  ts_human.split(/[hms ]/).reject{|separator| separator == ""}.reverse.each_with_index{|segment, idx|
+    sum += segment.to_f * 60**idx
   }
   sum
 end
@@ -201,7 +202,10 @@ def javascript_for(db_url)
     skip_edls = conn.query("select * from edits where url_id=? and default_action = 'skip'", db_url.id) do |rs|
       Edl.from_rs rs
     end
-  
+    yes_audio_no_video_edls = conn.query("select * from edits where url_id=? and default_action = 'yes_audio_no_video'", db_url.id) do |rs|
+      Edl.from_rs rs
+    end
+    yes_audio_no_videos = yes_audio_no_video_edls.map{|edl| [edl.start, edl.endy]}
     skips = skip_edls.map{|edl| [edl.start, edl.endy]}
     mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
     name = URI.escape(db_url.name) # XXX this is too restrictive I believe...but this gets injected...

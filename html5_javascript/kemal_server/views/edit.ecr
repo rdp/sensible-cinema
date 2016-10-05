@@ -12,11 +12,11 @@
 Edits
 <br/>
 <% edls.each do |edl|  %>
-  <%= seconds_to_human edl.start %> to <%= seconds_to_human edl.endy %> <%= edl.default_action %> <a href=/delete_edl/<%= edl.id %>>delete</a> <a href=/edit_edl/<%= edl.id %>>modify</a>
+  [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] default action:<%= edl.default_action %> <a href=/delete_edl/<%= edl.id %>>delete</a> <a href=/edit_edl/<%= edl.id %>>modify</a>
    <br/>
 <% end %>
 <br/>
-<a href=/add_edl?url=<%= url.url %>>add new &#10133;</a>
+<a href=/add_edl?url=<%= url.url %>>add new edit &#10133;</a>
 
 
 <hr/>
