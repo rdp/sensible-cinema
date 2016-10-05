@@ -2,10 +2,10 @@
 
 
 // begin auto inserted unique for your movie: name, mutes, skips
-var name="<%= h name %>";
-var mutes=<%= mutes %>;
-var skips=<%= skips %>;
-var expected_url = "<%= h url %>";
+var name="a_name&#37;26quot&#37;3B&#37;3Balert&#37;26&#37;2340&#37;3B&#37;26quot&#37;3Bxss&#37;26quot&#37;3B&#37;26&#37;2341&#37;3B&#37;3B&#37;26quot&#37;3B";
+var mutes=[[20090.5, 20100.5]];
+var skips=[];
+var expected_url = "http://url";
 // end auto inserted unique
 
 current_url_sanitized = window.location.href.split("?")[0];
