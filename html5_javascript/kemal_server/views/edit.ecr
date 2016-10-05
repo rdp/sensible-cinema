@@ -12,17 +12,18 @@
 Edits
 <br/>
 <% edls.each do |edl|  %>
-  <%= seconds_to_human edl.start %> to <%= seconds_to_human edl.endy %> <%= edl.default_action %> <a href=/delete_edl/<%= edl.id %>>delete</a> <a href=/edit_edl/<%= edl.id %>>edit</a>
+  <%= seconds_to_human edl.start %> to <%= seconds_to_human edl.endy %> <%= edl.default_action %> <a href=/delete_edl/<%= edl.id %>>delete</a> <a href=/edit_edl/<%= edl.id %>>modify</a>
    <br/>
 <% end %>
 <br/>
-<a href=/add_edl?url=<%= h url.url %>>add new</a>
+<a href=/add_edl?url=<%= h url.url %>>add new &#10133;</a>
 
 
 <hr/>
        <a href=/for_current?url=<%= url.url %>>js</a>
+       <br/>
        <a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
        
        <br/>
 
-<p>[<a href="/index">index</a>]</p>
+<p>[<a href="/index">back to index</a>]</p>

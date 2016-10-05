@@ -163,7 +163,7 @@ get "/" do
 end
 
 def with_db
-  db =  DB.open "sqlite3://./db/sqlite3_data.db"
+  db =  DB.open "sqlite3://./edit_descriptors/sqlite3_data.db"
   yield db ensure db.close
 end
  
@@ -250,7 +250,8 @@ post "/save_edl" do |env|
   edl.endy = human_to_seconds params["endy"]
   edl.default_action = params["default_action"]
   edl.save
-	env.redirect "/edit?url=" + edl.url.url
+  save_local_javascript edl.url
+  	env.redirect "/edit?url=" + edl.url.url
 end
 
 get "/edit" do |env| # same as "view" and "new" LOL but we have the url
@@ -291,7 +292,7 @@ def save_local_javascript(db_url)
   url_escaped = URI.escape(db_url.url)
   File.write("edit_descriptors/#{url_escaped}" + ".rendered.js", "" + as_javascript)
   if !File.exists?("./this_is_development")
-    system("git pull && git add edit_descriptors && git cam \"edl bump\" && git pom ") # commit it to gitraw...eventually :)
+    system("cd edit_descriptors && git pull && git add . && git cam \"edl was modified\" && git pom ") # commit it to gitraw...eventually :)
   end
 end
 
