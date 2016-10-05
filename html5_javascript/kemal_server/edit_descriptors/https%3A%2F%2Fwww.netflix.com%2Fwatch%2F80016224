@@ -1,4 +1,0 @@
-var name="guinea pig -- meet the mormons";
-var fast_forwards=[[2.0,30.0]];
-var skips=[[6.5, 9.5],[11.5,15.5]];
-var mutes=[[60, 63]];

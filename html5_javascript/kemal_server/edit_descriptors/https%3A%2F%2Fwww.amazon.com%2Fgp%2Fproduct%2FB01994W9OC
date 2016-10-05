@@ -1,4 +1,0 @@
-var name="Inspired Guns";
-var fast_forwards=[[50.0, 51.0]];
-var skips=[[2.0,7.0]];
-var mutes=[[10.0, 30.0]];
