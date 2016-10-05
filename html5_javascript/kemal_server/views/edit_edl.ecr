@@ -1,6 +1,6 @@
-<h1>Editing edit for <a href=/edit?url=<%= edl.url.url %>><%= h edl.url.name %></a></h1>
+<h1>Editing edit for <a href=/edit?url=<%= edl.url.url %>><%= edl.url.name %></a></h1>
 
-<form action="/save_edl?url=<%= h url %>" method="POST">
+<form action="/save_edl?url=<%= url %>" method="POST">
 <div>
 
 <% if edl.id != 0 %>

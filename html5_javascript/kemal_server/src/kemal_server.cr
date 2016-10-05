@@ -1,4 +1,4 @@
-require "./kemal_server/*" # TODO complain name, complain one string didn't work, one regex didn't work :|
+require "./include//*" # one regex didn't work :|
 
 # module KemalServer
   # TODO Put your code here
@@ -50,14 +50,6 @@ puts "here2 #{id}"
        conn.exec "update urls set name = ?, url = ? where id = ?", name, url, id
       end
     end
-  end
-  
-  def sanitized_url
-    sanitize_html(url)
-  end
-  
-  def sanitized_name
-    sanitize_html(name)
   end
   
   def initialize(url, name)
@@ -188,7 +180,7 @@ get "/for_current" do |env|
     url_or_nil = Url.get_single_or_nil_by_url(real_url)
     if !url_or_nil
        env.response.status_code = 400
-       sanitized_url = h real_url
+       sanitized_url = sanitize_html real_url
        # never did figure out how to write this to the output :|
        output = "unable to find one yet for #{sanitized_url} <a href=\"/edit?url=#{sanitized_url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
     else
@@ -240,7 +232,7 @@ end
 post "/save_edl" do |env|
   real_url = real_url(env)
   params = env.params.body
-  if env.params.body.has_key? "id"
+  if params.has_key? "id"
     edl = Edl.get_single_by_id(params["id"])
   else
     edl = Edl.new(Url.get_single_by_url(real_url))
@@ -248,7 +240,7 @@ post "/save_edl" do |env|
   end
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
-  edl.default_action = params["default_action"]
+  edl.default_action = sanitize_html params["default_action"]
   edl.save
   save_local_javascript edl.url, edl.inspect
   env.redirect "/edit?url=" + edl.url.url
@@ -272,10 +264,6 @@ get "/edit" do |env| # same as "view" and "new" LOL but we have the url
   end
   edls = url.edls
   render "views/edit.ecr"
-end
-
-def h(name) # rails style :|
-  sanitize_html(name)
 end
 
 def sanitize_html(name)
@@ -302,20 +290,20 @@ end
 
 post "/save" do |env|
   old_url = real_url(env)
-  name = h env.params.body["name"]
-  real_url = h env.params.body["url"]
-  log("attempt save #{old_url} ->  #{real_url} as #{name}")
+  name = sanitize_html HTML.unescape(env.params.body["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
+  incoming_url = sanitize_html HTML.unescape(env.params.body["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
+  log("attempt save #{old_url} ->  #{incoming_url} as #{name}")
   db_url = Url.get_single_or_nil_by_url(old_url)
   if db_url == Nil
-    db_url = Url.new real_url, name
+    db_url = Url.new incoming_url, name
   else
     db_url = db_url.as(Url)
   end
-  db_url.url = real_url
+  db_url.url = incoming_url
   db_url.name = name
   db_url.save
   save_local_javascript db_url, db_url.inspect
-  "saved it<br/>#{real_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{real_url}>re-edit this movie</a>"
+  "saved it<br/>#{incoming_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{incoming_url}>re-edit this movie</a>"
 end
 
 Kemal.run

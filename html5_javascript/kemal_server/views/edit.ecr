@@ -3,8 +3,8 @@
 
 <form action="/save?url=<%= url.url %>" method="POST">
 <div>
-<textarea name="name" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= h url.name %></textarea>
-<textarea name="url" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= h url.url %></textarea>
+<textarea name="name" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= url.name %></textarea>
+<textarea name="url" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= url.url %></textarea>
 </div>
 <div><input type="submit" value="Save"></div>
 </form>
@@ -16,7 +16,7 @@ Edits
    <br/>
 <% end %>
 <br/>
-<a href=/add_edl?url=<%= h url.url %>>add new &#10133;</a>
+<a href=/add_edl?url=<%= url.url %>>add new &#10133;</a>
 
 
 <hr/>
