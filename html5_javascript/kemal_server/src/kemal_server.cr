@@ -161,7 +161,7 @@ end
  
 def real_url(env)
   unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in, kind of them...
-  # sanitize amazon
+  # sanitize amazon which can come in multiple forms
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # :|
   if unescaped.includes?("/dp/")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
@@ -183,6 +183,7 @@ get "/for_current" do |env|
        sanitized_url = sanitize_html real_url
        # never did figure out how to write this to the output :|
        output = "unable to find one yet for #{sanitized_url} <a href=\"/edit?url=#{sanitized_url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+       
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -204,7 +205,7 @@ def javascript_for(db_url)
     skips = skip_edls.map{|edl| [edl.start, edl.endy]}
     mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
     name = URI.escape(db_url.name) # XXX this is too restrictive I believe...but this gets injected...
-    url = db_url.url
+    url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     render "views/html5_edited.js.ecr"
   end
 end
@@ -240,7 +241,7 @@ post "/save_edl" do |env|
   end
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
-  edl.default_action = sanitize_html params["default_action"]
+  edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
   edl.save
   save_local_javascript edl.url, edl.inspect
   env.redirect "/edit?url=" + edl.url.url
