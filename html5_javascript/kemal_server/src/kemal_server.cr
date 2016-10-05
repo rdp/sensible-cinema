@@ -137,7 +137,7 @@ def seconds_to_human(ts_seconds)
   minutes = (ts_seconds / 60).floor()
   ts_seconds -= minutes * 60
   # just seconds left
-  if (hours > 0)
+  if (hours > 0 || ts_seconds == 0) # 0 is default
     "%02d:%02d:%02.2f" % [hours, minutes, ts_seconds]
   else
     "%02d:%02.2f" % [minutes, ts_seconds]
