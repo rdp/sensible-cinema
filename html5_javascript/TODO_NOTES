@@ -1,8 +1,8 @@
 == todo ===
 
-real DB :|
+plugin plz? :|
 
-real website where...you enter the timestamps and what it is, plz?
+"more" real website for edl edit
 
 research dvdz :|
 
@@ -49,6 +49,52 @@ one free per month, otherwise choose your donation-level?
 or "skew you, I'm going to pay through the nose for this thing"
   "if you want to donate to support, please do so by clicking here"
   I actually like this way too :)
+
+== kemal notes ==
+database with kemal:
+
+https://github.com/sdogruyol/kemal-pg-sample/blob/master/src/app.cr (raw postgres...)
+
+https://gist.github.com/rdp/f099508e26934d20938c4ffe37ee3298
+connection pool, mysql...
+
+it's actually using the pool right which is good...
+
+other pool: https://github.com/crystal-lang/crystal-db/blob/master/src/db/pool.cr
+
+crystal-db only works with sqlite, mysql
+
+I can use pools later, just open and close them for now [?] 
+  what the...
+   
+ 
+I think "DB" is the main central DB fella...
+  this is terrifying...I mean it feels like you'll have threading issues immediately and *everywhere* LOL
+
+
+auth: filter
+before_all do |env|
+ raise "Unauthorized" unless authorized?(env)
+end
+
+
+
+before_all "/" do |env|
+  puts "Setting response content type"
+  env.response.content_type = "application/json"
+end
+
+db = ConnectionPool.new(capacity: 25, timeout: 0.01) do # its either this or open it raw yourself each method :|
+  DB.open(ENV["DATABASE_URL"]) # only strings :|
+end
+
+before_get "/" do |env|
+  env.set "is_kemal_cool", true
+end
+
+it needs some kind of session object store so you can store more than just strings in the env :|
+
+
 
 == web server framework==
 
