@@ -124,7 +124,7 @@ class Edl
       if @id == 0
         @id = conn.exec("insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @subcategory_level, @details, @default_action, @url_id).last_insert_id
       else
-        conn.exec "update edits set start = ?, endy = ? where id = ?", start, endy, id
+        conn.exec "update edits set start = ?, endy = ?, default_action = ? where id = ?", start, endy, default_action, id
       end
     end
   end
@@ -138,9 +138,9 @@ def seconds_to_human(ts_seconds)
   ts_seconds -= minutes * 60
   # just seconds left
   if (hours > 0 || ts_seconds == 0) # 0 is default
-    "%02d:%02d:%02.2f" % [hours, minutes, ts_seconds]
+    "%02d:%02d:%05.2f" % [hours, minutes, ts_seconds]
   else
-    "%02d:%02.2f" % [minutes, ts_seconds]
+    "%02d:%05.2f" % [minutes, ts_seconds]
   end
 end
 
