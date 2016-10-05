@@ -1,12 +1,12 @@
 <title>Clean Stream Index</title>
 <h1>Index</h1>
 
-<% urls_names.each{|args| url, escaped_url, name = args %> <!--  have to use args -->
-    <p>[<%= url %>] 
-       [<%= name %>]
-       <a href="/edit?url=<%= url %>">edit</a>
-       <a href=/for_current?url=<%= escaped_url %>>js</a>
-       <a href="<%= url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
+<% urls.each{|url|  %>
+    <p>[<%= url.url %>] 
+       [<%= url.name %>]
+       <a href="/edit?url=<%= url.url %>">edit</a>
+       <a href=/for_current?url=<%= url.url %>>js</a>
+       <a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
    </p>
 <% } %>
 

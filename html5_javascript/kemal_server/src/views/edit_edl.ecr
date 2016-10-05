@@ -9,6 +9,13 @@
 
 <textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea>
 <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.endy %></textarea>
+<select name="default_action" id='sel'>
+  <option value="mute">mute</option>
+  <option value="skip">skip</option>
+</select>
+<script>
+document.getElementById('sel').value = '<%= edl.default_action %>';
+</script>
 </div>
 <div><input type="submit" value="Save"></div>
 </form>

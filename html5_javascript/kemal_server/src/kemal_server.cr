@@ -121,11 +121,10 @@ class Edl
   
   def save
     with_db do |conn|
-      if id == 0
-        puts conn.exec("insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) value (?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory_level, @details, @default_action, @url_id)
-        @id = conn.query_one("select last_insert_rowid()", as: Int64)
+      if @id == 0
+        @id = conn.exec("insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @subcategory_level, @details, @default_action, @url_id).last_insert_id
       else
-        conn.exec "update edits set start = ?, endy = ? where id = ?", start, endy, @id
+        conn.exec "update edits set start = ?, endy = ? where id = ?", start, endy, id
       end
     end
   end
@@ -147,7 +146,6 @@ end
 
 def human_to_seconds(ts_human)
   # like 01:02:36.53
-  puts "started as #{ts_human}"
   sum = 0.0
   ts_human.split(":").reverse.map(&.to_f).each_with_index{|segment, idx|
     sum += segment * 60**idx
@@ -184,8 +182,9 @@ get "/for_current" do |env|
     url_or_nil = Url.get_single_or_nil_by_url(real_url)
     if !url_or_nil
        env.response.status_code = 400
+       sanitized_url = h real_url
        # never did figure out how to write this to the output :|
-       output = "unable to find one yet for #{h real_url} <a href=\"/edit?url=#{h real_url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
+       output = "unable to find one yet for #{sanitized_url} <a href=\"/edit?url=#{sanitized_url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -235,8 +234,7 @@ end
 post "/save_edl" do |env|
   real_url = real_url(env)
   params = env.params.body
-  puts env.params.body
-  if env.params.body["id"]
+  if env.params.body.has_key? "id"
     edl = Edl.get_single_by_id(params["id"])
   else
     edl = Edl.new(Url.get_single_by_url(real_url))
@@ -244,8 +242,9 @@ post "/save_edl" do |env|
   end
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
-  
+  edl.default_action = params["default_action"]
   edl.save
+	env.redirect "/edit?url=" + edl.url.url
 end
 
 get "/edit" do |env| # same as "view" and "new" LOL but we have the url
@@ -277,9 +276,7 @@ def sanitize_html(name)
 end
 
 get "/index" do |env|
-  urls_names = Url.all.map{ |url| 
-    [url.url, URI.escape(url.url), sanitize_html(url.name)]
-  }
+  urls = Url.all
   render "src/views/index.ecr"
 end
 
@@ -302,7 +299,7 @@ post "/save" do |env|
   db_url.name = name
   db_url.save
   save_local_javascript db_url
-  "saved it<br/>#{h real_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{h real_url}>re-edit this movie</a>"
+  "saved it<br/>#{real_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{real_url}>re-edit this movie</a>"
 end
 
 Kemal.run
