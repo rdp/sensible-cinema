@@ -213,7 +213,7 @@ def javascript_for(db_url)
     mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
     name = URI.escape(db_url.name) # XXX this is too restrictive I believe...but this gets injected...
     url = db_url.url
-    render "src/views/html5_edited.js.ecr"
+    render "views/html5_edited.js.ecr"
   end
 end
 
@@ -228,13 +228,13 @@ end
 get "/edit_edl/:id" do |env|
   edl = Edl.get_single_by_id(env.params.url["id"])
   url = edl.url.url
-  render "src/views/edit_edl.ecr"
+  render "views/edit_edl.ecr"
 end
 
 get "/add_edl" do |env|
   url = real_url(env)
   edl = Edl.new(Url.get_single_by_url(url))
-  render "src/views/edit_edl.ecr"
+  render "views/edit_edl.ecr"
 end
 
 post "/save_edl" do |env|
@@ -270,7 +270,7 @@ get "/edit" do |env| # same as "view" and "new" LOL but we have the url
     # unsaved, and no bound edl's yet :)
   end
   edls = url.edls
-  render "src/views/edit.ecr"
+  render "views/edit.ecr"
 end
 
 def h(name) # rails style :|
@@ -283,7 +283,7 @@ end
 
 get "/index" do |env|
   urls = Url.all
-  render "src/views/index.ecr"
+  render "views/index.ecr"
 end
 
 def save_local_javascript(db_url)
