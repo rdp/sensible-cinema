@@ -41,9 +41,14 @@ class Url
   end
   
   def save
-    # TODO what if no id yet?
     with_db do |conn|
-      conn.exec "update urls set name = ?, url = ? where id = ?", name, url, id
+      if @id == 0
+ puts "here1"
+       @id = conn.exec("insert into urls (name, url) values (?, ?)", name, url).last_insert_id.to_i32
+      else
+puts "here2 #{id}"
+       conn.exec "update urls set name = ?, url = ? where id = ?", name, url, id
+      end
     end
   end
   
@@ -168,8 +173,9 @@ def real_url(env)
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # :|
   if unescaped.includes?("/dp/")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
-    # we want https://www.amazon.com/gp/product/B01994W9OC
-    id = unescaped.split("/")[5]
+    # or https://smile.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
+    # we want https://www.amazon.com/gp/product/B01994W9OC in the end :|
+    id = unescaped.split("/dp/")[1].split("/")[0]
     unescaped = "https://www.amazon.com/gp/product/" + id
   end
   unescaped
@@ -294,7 +300,12 @@ post "/save" do |env|
   name = h env.params.body["name"]
   real_url = h env.params.body["url"]
   log("attempt save #{old_url} ->  #{real_url} as #{name}")
-  db_url = Url.get_single_by_url(old_url)
+  db_url = Url.get_single_or_nil_by_url(old_url)
+  if db_url == Nil
+    db_url = Url.new real_url, name
+  else
+    db_url = db_url.as(Url)
+  end
   db_url.url = real_url
   db_url.name = name
   db_url.save
