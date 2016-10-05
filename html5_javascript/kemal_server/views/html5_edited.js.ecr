@@ -5,8 +5,8 @@
 var name="<%= name %>";
 var mutes=<%= mutes %>;
 var skips=<%= skips %>;
-var expected_url = "<%= url %>";
 var yes_audio_no_videos=<%= yes_audio_no_videos %>;
+var expected_url = "<%= url %>";
 // end auto inserted unique
 
 current_url_sanitized = window.location.href.split("?")[0];
@@ -58,11 +58,11 @@ function areWeWithin(thisArray, cur_time) {
 function checkStatus() {
   var cur_time = video_element.currentTime;
   var [last_start, last_end] = areWeWithin(mutes, cur_time);
-  if(last_start) {
-      if (!video_element.muted) {
-        video_element.muted = true;
-        console.log("muted " + cur_time + " start=" + last_start + " end " + last_end);
-      }
+  if (last_start) {
+    if (!video_element.muted) {
+      video_element.muted = true;
+      console.log("muted " + cur_time + " start=" + last_start + " end " + last_end);
+    }
   }
   else {
     if (video_element.muted) {
@@ -71,27 +71,40 @@ function checkStatus() {
     }
   }
   if (window.location.href.includes("netflix.com")) {
-    handleNetflixSeek(cur_time);
-
+    handleNetflixSeekOrStop(cur_time);
   } else {
-     // youtube, amazon et al, easy seeks :)
+     // youtube, amazon et al, sane seeks with no stop :)      
     [last_start, last_end] = areWeWithin(skips, cur_time);
-      
     if (last_start) {
       console.log("seeking from " + cur_time + " to " + last_end);
       video_element.pause(); // have to do this before seek so it resumes? huh?
       video_element.currentTime = last_end; // seek past this split
       video_element.play(); // sometimes needed??
     }
+  }  
+  [last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
+  if (last_start) {
+    if (video_element.style.visibility != "hidden") {
+      timestamp_log("hiding video leaving audio ", cur_time, last_start, last_end);
+      video_element.style.visibility="hidden";
+    }
   }
-    
-  myLayer.innerHTML = cur_time.toFixed(2) + extra_message;
-  if (window.location.href.includes("amazon.com")) {
-    // console.log(myLayer.innerHTML); // amazon on screen is actually OK :)
+  else {
+    if (video_element.style.visibility != "") {
+      video_element.style.visibility=""; // non hidden :)
+      timestamp_log("unhiding video with left audio", cur_time, last_start, last_end);
+    }
   }
+  
+  myLayer.innerHTML = cur_time.toFixed(2) + extra_message; // TODO humanize LOL
 }
 
-function handleNetflixSeek(cur_time) {
+function timestamp_log(message, cur_time, last_start, last_end) {
+  extra_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end;
+  console.log(extra_message);
+}
+
+function handleNetflixSeekOrStop(cur_time) {
     fast_forward_to_skip_speed = 1.01; // even 4 was barfing ?? with 1.25 barfs very rarely
     [last_start, last_end] = areWeWithin(skips, cur_time);
     if (last_start) {
@@ -163,6 +176,10 @@ myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but als
 myLayer.style.opacity = 0.3;
 myLayer.style.fontSize = "13px";
 document.body.appendChild(myLayer);
+d = myLayer;
+d.style.position = "absolute";
+d.style.left = "0";
+d.style.top = "0";
 
 extra_message = "";
 

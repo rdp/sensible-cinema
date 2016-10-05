@@ -245,6 +245,7 @@ post "/save_edl" do |env|
   end
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
+  raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy)
   edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
   edl.save
   save_local_javascript edl.url, edl.inspect
