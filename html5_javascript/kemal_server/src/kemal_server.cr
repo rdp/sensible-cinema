@@ -221,7 +221,7 @@ get "/delete_edl/:id" do |env|
   id = env.params.url["id"]
   edl = Edl.get_single_by_id(id)
   edl.destroy
-  save_local_javascript edl.url
+  save_local_javascript edl.url, "removed #{edl}"
 	env.redirect "/edit?url=" + edl.url.url
 end
 
@@ -250,8 +250,8 @@ post "/save_edl" do |env|
   edl.endy = human_to_seconds params["endy"]
   edl.default_action = params["default_action"]
   edl.save
-  save_local_javascript edl.url
-  	env.redirect "/edit?url=" + edl.url.url
+  save_local_javascript edl.url, edl.inspect
+  env.redirect "/edit?url=" + edl.url.url
 end
 
 get "/edit" do |env| # same as "view" and "new" LOL but we have the url
@@ -287,9 +287,13 @@ get "/index" do |env|
   render "views/index.ecr"
 end
 
-def save_local_javascript(db_url)
+def save_local_javascript(db_url, log_message)
   as_javascript = javascript_for(db_url)
   url_escaped = URI.escape(db_url.url)
+  File.open("edit_descriptors/log.txt", "a") do |f|
+    f.puts log_message
+  end
+  
   File.write("edit_descriptors/#{url_escaped}" + ".rendered.js", "" + as_javascript)
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git pull && git add . && git cam \"edl was modified\" && git pom ") # commit it to gitraw...eventually :)
@@ -310,7 +314,7 @@ post "/save" do |env|
   db_url.url = real_url
   db_url.name = name
   db_url.save
-  save_local_javascript db_url
+  save_local_javascript db_url, db_url.inspect
   "saved it<br/>#{real_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{real_url}>re-edit this movie</a>"
 end
 
