@@ -55,6 +55,8 @@ function areWeWithin(thisArray, cur_time) {
   return [false];
 }
 
+extra_message = "";
+
 function checkStatus() {
   var cur_time = video_element.currentTime;
   var [last_start, last_end] = areWeWithin(mutes, cur_time);
@@ -102,9 +104,6 @@ function checkStatus() {
   }
   
   myLayer.innerHTML = cur_time.toFixed(2) + " " + extra_message;
-  if (window.location.href.includes("amazon.com")) {
-    <%= "console.log(myLayer.innerHTML);" if !File.exists?("./this_is_development") %>
-  }
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -154,7 +153,14 @@ d.style.position = "absolute";
 d.style.left = "0";
 d.style.top = "0"; // not enough unfortunately for amazon :|
 
-extra_message = "";
+
+function stepFrame() {
+  video_element.play();
+  setTimeout(function() { 
+    video_element.pause(); 
+    console.log("current timestamp=" + video_element.currentTime); 
+  }, 1/30*1000);
+}
 
 function readyToGo() {
 
@@ -168,7 +174,7 @@ function readyToGo() {
     }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
     var message = "ready to go edited\n" + name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyou may close developer javascript console now";
     console.log(message);
-    console.log("run 'video_element.currentTime' to get current timestamp...'video_element.playbackRate = 1.5' to x 1.5 speed playback")
+    console.log("run 'video_element.currentTime' to get current timestamp...'video_element.playbackRate = 1.5' to x 1.5 speed playback, stepFrame() to move forward one frame and/or display timestamp");
   }
 }
 
