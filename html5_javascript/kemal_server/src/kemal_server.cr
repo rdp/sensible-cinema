@@ -43,10 +43,8 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
- puts "here1"
        @id = conn.exec("insert into urls (name, url) values (?, ?)", name, url).last_insert_id.to_i32
       else
-puts "here2 #{id}"
        conn.exec "update urls set name = ?, url = ? where id = ?", name, url, id
       end
     end
@@ -65,7 +63,13 @@ puts "here2 #{id}"
       end
     end
   end
-  
+
+  def destroy
+    with_db do |conn|
+      conn.exec("delete from urls where id = ?", id)
+    end
+  end
+
 end
 
 class Edl
@@ -212,6 +216,13 @@ def javascript_for(db_url)
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     render "views/html5_edited.js.ecr"
   end
+end
+
+get "/delete_url" do |env|
+  real_url = real_url(env)
+  url = Url.get_single_by_url(real_url)
+  url.destroy
+  env.redirect "/index"
 end
 
 get "/delete_edl/:id" do |env|
