@@ -63,7 +63,7 @@ function checkStatus() {
   if (last_start) {
     if (!video_element.muted) {
       video_element.muted = true;
-      timestamp_log("muted", cur_time. last_start, last_end);
+      timestamp_log("muted", cur_time, last_start, last_end);
       extra_message = "muted";
     }
   }
@@ -103,7 +103,7 @@ function checkStatus() {
     }
   }
   
-  myLayer.innerHTML = cur_time.toFixed(2) + " " + extra_message;
+  myLayer.innerHTML = cur_time.toFixed(2) + " " + extra_message; // TODO humanize everywhere :)
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
