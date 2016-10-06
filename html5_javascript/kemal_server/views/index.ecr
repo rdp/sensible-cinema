@@ -20,13 +20,13 @@ Your Movie's url: <input type="text" name="url"/>
 </form>
 (works with google play, amazon prime, others)
 
-If you know the edit list already exists for the movie you're playing, then run this in a javascript developer console:
-https://rawgit.com/rdp/sensible-cinema-edit-descriptors/master/https%253A%252F%252Fwww.netflix.com%252Fwatch%252F80016224.rendered.js
+If you know the edit list already exists for the movie you're playing, then hit F12 to open the javascript developer console, then paste the following into the console (usually after the ">" sign):
+
 <div style="background-color: lightblue;">
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(window.location.href.split("?")[0])) + ".rendered.js"); // double encode needed apparently :|
 
 </div>
-That will load the editor.  You can then safely close the developer console and enjoy your film edited "your way".
+That should load the editor.  You can then safely close the developer console and enjoy your film edited "your way".
 This should work with any major browser (chrome, firefox, safari, edge...)
 
 If you're a developer and want to make sure you get the very latest after a change, add this to javascript developer console:
