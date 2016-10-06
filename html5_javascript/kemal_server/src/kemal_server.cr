@@ -320,7 +320,7 @@ post "/save" do |env|
   db_url.name = name
   db_url.save
   save_local_javascript db_url, db_url.inspect
-  "saved it<br/>#{incoming_url}<br/><a href=/index>index</a><br/><a href=/edit?url=#{incoming_url}>re-edit this movie</a>"
+  env.redirect "/edit?url=" + incoming_url
 end
 
 Kemal.run
