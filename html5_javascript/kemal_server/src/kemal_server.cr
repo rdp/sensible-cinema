@@ -301,7 +301,7 @@ def save_local_javascript(db_url, log_message)
   
   File.write("edit_descriptors/#{url_escaped}" + ".rendered.js", "" + as_javascript)
   if !File.exists?("./this_is_development")
-    system("cd edit_descriptors && git pull && git add . && git cam \"edl was modified\" && git pom ") # commit it to gitraw...eventually :)
+    system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to gitraw...eventually :)
   end
 end
 
