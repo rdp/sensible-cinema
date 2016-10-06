@@ -61,22 +61,25 @@ function checkStatus() {
   if (last_start) {
     if (!video_element.muted) {
       video_element.muted = true;
-      console.log("muted " + cur_time + " start=" + last_start + " end " + last_end);
+      timestamp_log("muted", cur_time. last_start, last_end);
+      extra_message = "muted";
     }
   }
   else {
     if (video_element.muted) {
       video_element.muted = false;
-      console.log("unmuted " + cur_time);
+      timestamp_log("unmuted", cur_time, last_start, last_end);
+      extra_message = "";
     }
   }
   if (window.location.href.includes("netflix.com")) {
     handleNetflixSeekOrStop(cur_time);
-  } else {
-     // youtube, amazon et al, sane seeks with no stop :)      
+  } 
+  else {
+     // youtube, amazon et al, sane seeks with no watching it :)    
     [last_start, last_end] = areWeWithin(skips, cur_time);
     if (last_start) {
-      console.log("seeking from " + cur_time + " to " + last_end);
+      timestamp_log("seeking", cur_time, last_start, last_end);
       video_element.pause(); // have to do this before seek so it resumes? huh?
       video_element.currentTime = last_end; // seek past this split
       video_element.play(); // sometimes needed??
@@ -85,23 +88,28 @@ function checkStatus() {
   [last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
   if (last_start) {
     if (video_element.style.visibility != "hidden") {
-      timestamp_log("hiding video leaving audio ", cur_time, last_start, last_end);
+      console.log("hiding video leaving audio ", cur_time, last_start, last_end);
+      extra_message = "no video yes audio";
       video_element.style.visibility="hidden";
     }
   }
   else {
     if (video_element.style.visibility != "") {
       video_element.style.visibility=""; // non hidden :)
-      timestamp_log("unhiding video with left audio", cur_time, last_start, last_end);
+      console.log("unhiding video with left audio" + cur_time);
+      extra_message = "";
     }
   }
   
-  myLayer.innerHTML = cur_time.toFixed(2) + extra_message; // TODO humanize LOL
+  myLayer.innerHTML = cur_time.toFixed(2) + " " + extra_message;
+  if (window.location.href.includes("amazon.com")) {
+    <%= "console.log(myLayer.innerHTML);" if !File.exists?("./this_is_development") %>
+  }
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
-  extra_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end;
-  console.log(extra_message);
+  local_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end;
+  console.log(local_message);
 }
 
 function handleNetflixSeekOrStop(cur_time) {
@@ -113,16 +121,17 @@ function handleNetflixSeekOrStop(cur_time) {
           // already and still fast forwarding
         } else {
           // fast forward
-          console.log("begin fast forwarding " + cur_time + " start=" + last_start + " end " + last_end);
+          timestamp_log("begin fast forward while muted", cur_time, last_start, last_end);
+          extra_message = "blanking and muting to skip";
           video_element.playbackRate = fast_forward_to_skip_speed; // seems to be its max or freezes [?]
           video_element.volume = 0;
-          console.log("muted to FF");
           video_element.style.visibility="hidden";
         }
     } else {
        // not in a skip, did we just finish one?
        if (video_element.playbackRate == fast_forward_to_skip_speed) {
           console.log("cancel/done fast forwarding " + cur_time);
+          extra_message = "";
           video_element.style.visibility="";// non hidden
           video_element.volume = 1;
           video_element.playbackRate = 1;
@@ -171,7 +180,7 @@ myLayer.style.position = 'absolute';
 myLayer.style.width = '300px';
 myLayer.style.height = '300px';
 myLayer.style.background = '#000000';
-myLayer.style.zIndex = "500"; // on top :)
+myLayer.style.zIndex = "99999999"; // on top :)
 myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
 myLayer.style.opacity = 0.3;
 myLayer.style.fontSize = "13px";
@@ -179,7 +188,7 @@ document.body.appendChild(myLayer);
 d = myLayer;
 d.style.position = "absolute";
 d.style.left = "0";
-d.style.top = "0";
+d.style.top = "0"; // not enough unfortunately
 
 extra_message = "";
 
@@ -195,8 +204,11 @@ function readyToGo() {
     }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
     var message = "ready to go edited\n" + name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyou may close developer javascript console now";
     console.log(message);
-    //alert(message);
+    <%= "alert(message);" if !File.exists?("./this_is_development") %>
+    console.log("run 'video_element.currentTime' to get current timestamp...'video_element.playbackRate = 1.5' to x 1.5 speed playback")
   }
 }
+
+
 
 // initial stuff to copy paste moved to index.ecr
