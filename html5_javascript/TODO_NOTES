@@ -1,14 +1,13 @@
 == todo ===
 
-better edit
+better edit (category...)
 
 add age thing :|
 
 research dvdz :|
 
-can "frame step" or something...hmm...yeah :)
-
-real popup like for editing :)
+can "turn on developer"
+better names for framestep
 
 ask netflix 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000" etc. LOL
@@ -25,8 +24,7 @@ import from subtitle outputs in jruby?
 reverse proxy for port 80 at least, why not? actually I only need this for work LOL
 
 if it can't find video wait then try again?
-
-google play video shows up later?
+  only if google play needs it :|
 
 add some examples for multiple websites to the default :)
 
@@ -41,7 +39,8 @@ SSL? :| how long does gitraw take I wonder [add timestamp?]???
   
 imdb url plz? and rating LOL
   and they can rate it locally 4 me :|
- 
+
+override which ones you want...LOL. 
 == business ==
 
 one free per month, otherwise choose your donation-level?
