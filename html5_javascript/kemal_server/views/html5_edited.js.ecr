@@ -167,7 +167,7 @@ function readyToGo() {
   else {
     timer = setInterval(function () {
         checkStatus();
-    }, 1000 / 30 / 5 /* 30 fps * 5, try to be frame accurate even during skips */);
+    }, 1000 / 30 / 2 ); // 30 fps * 2, try to be frame accurate assume max 30 fps
     var message = "ready to go edited\n" +  decodeURIComponent(name) + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyou may close developer javascript console now";
     console.log(message);
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
@@ -177,4 +177,4 @@ function readyToGo() {
 
 readyToGo();
 
-// initial stuff to copy paste moved to index.ecr
+// how to load snippet moved to index.ecr
