@@ -145,14 +145,10 @@ myLayer.style.height = '300px';
 myLayer.style.background = '#000000';
 myLayer.style.zIndex = "99999999"; // on top :)
 myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-myLayer.style.opacity = 0.3;
+//myLayer.style.opacity = 0.3; // good for netflix, not for amazon :|
 myLayer.style.fontSize = "13px";
+myLayer.style.top = "0";
 document.body.appendChild(myLayer);
-d = myLayer;
-d.style.position = "absolute";
-d.style.left = "0";
-d.style.top = "0"; // not enough unfortunately for amazon :|
-
 
 function stepFrame() {
   video_element.play();
