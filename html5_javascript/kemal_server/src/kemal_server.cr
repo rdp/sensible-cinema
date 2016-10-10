@@ -273,6 +273,8 @@ get "/edit" do |env| # same as "view" and "new" LOL but we have the url
     begin
       response = HTTP::Client.get real_url
       title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
+      title = title.gsub(": Amazon Digital Services LLC", "")
+      title = title.gsub("Amazon.com: ", "")
       url = Url.new(real_url, title)
     rescue ex
       raise("unable to download that url" + real_url + " #{ex}")
