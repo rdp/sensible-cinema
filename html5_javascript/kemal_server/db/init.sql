@@ -3,7 +3,7 @@
 CREATE TABLE URLS (
    id INTEGER PRIMARY KEY,
    url           TEXT    UNIQUE NOT NULL,
-   name          TEXT    NOT NULL -- CHAR(50) REAL
+   name          TEXT    NOT NULL,
 );
 create index url_url_index on URLS(URL); 
   
@@ -34,3 +34,4 @@ insert into edits (start, endy, category, subcategory, subcategory_level, detail
 select * from urls;
 select * from edits;
 
+alter table urls add episode_name      TEXT   NOT NULL;
