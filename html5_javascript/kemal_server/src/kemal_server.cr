@@ -13,6 +13,7 @@ class Url
     id: Int32,
     url:  {type: String},
     name: {type: String},
+    amazon_episode_name: {type: String},
   })
   
   def self.all
@@ -43,17 +44,19 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url) values (?, ?)", name, url).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_episode_name) values (?, ?, ?)", name, url, amazon_episode_name).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ? where id = ?", name, url, id
+       conn.exec "update urls set name = ?, url = ?, amazon_episode_name = ?  where id = ?", name, url, amazon_episode_name, id
       end
     end
   end
-  
-  def initialize(url, name)
+ 
+  # does anybody really use this 
+  def initialize(url, name, amazon_episode_name)
     @id = 0 # :|
     @url = url
     @name = name
+    @amazon_episode_name = amazon_episode_name
   end
   
   def edls
@@ -275,7 +278,8 @@ get "/edit" do |env| # same as "view" and "new" LOL but we have the url
       title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
       title = title.gsub(": Amazon Digital Services LLC", "")
       title = title.gsub("Amazon.com: ", "")
-      url = Url.new(real_url, title)
+      amazon_episode_name = "" # only series have this hmm :|
+      url = Url.new(real_url, title, amazon_episode_name)
     rescue ex
       raise("unable to download that url" + real_url + " #{ex}")
     end
@@ -309,17 +313,20 @@ end
 
 post "/save" do |env|
   old_url = real_url(env)
-  name = sanitize_html HTML.unescape(env.params.body["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
-  incoming_url = sanitize_html HTML.unescape(env.params.body["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
+  body = env.params.body
+  name = sanitize_html HTML.unescape(body["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
+  incoming_url = sanitize_html HTML.unescape(body["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
+  amazon_episode_name = sanitize_html(body["amazon_episode_name"])
   log("attempt save #{old_url} ->  #{incoming_url} as #{name}")
   db_url = Url.get_single_or_nil_by_url(old_url)
   if db_url == Nil
-    db_url = Url.new incoming_url, name
+    db_url = Url.new "", "", ""
   else
     db_url = db_url.as(Url)
   end
   db_url.url = incoming_url
   db_url.name = name
+  db_url.amazon_episode_name = amazon_episode_name
   db_url.save
   save_local_javascript db_url, db_url.inspect
   env.redirect "/edit?url=" + incoming_url

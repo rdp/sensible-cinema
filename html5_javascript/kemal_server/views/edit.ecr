@@ -2,10 +2,15 @@
 
 
 <form action="/save?url=<%= url.url %>" method="POST">
-<div>
-<textarea name="name" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= url.name %></textarea>
-<textarea name="url" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= url.url %></textarea>
-</div>
+name:
+<textarea name="name" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.name %></textarea>
+<br/>
+url:
+<textarea name="url" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.url %></textarea>
+<br/>
+amazon_episode_name
+<textarea name="amazon_episode_name" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.amazon_episode_name %></textarea>
+<br/>
 <div><input type="submit" value="Save"></div>
 </form>
 
