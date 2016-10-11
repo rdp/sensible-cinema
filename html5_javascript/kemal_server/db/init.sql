@@ -3,10 +3,9 @@
 CREATE TABLE URLS (
    id INTEGER PRIMARY KEY,
    url           TEXT    UNIQUE NOT NULL,
-   name          TEXT    NOT NULL,
+   name          TEXT    NOT NULL
 );
 
-create index url_url_index on URLS(URL); 
   
 CREATE TABLE EDITS (
    id             INTEGER PRIMARY KEY,
@@ -23,7 +22,6 @@ CREATE TABLE EDITS (
 insert into urls (url, name) values ("http://url", 'a_name";alert("xss");"'); -- no ID needed
 insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values
     (20090.50, 20100.50, "a category", "a subcat", 3, "details", "mute", last_insert_rowid());
--- output some to screen
 
 insert into urls (url, name) values ("https://www.netflix.com/watch/80016224", 'meet the mormons [test]');
 insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values
@@ -31,8 +29,12 @@ insert into edits (start, endy, category, subcategory, subcategory_level, detail
 insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values
           (10.0, 30.0, "a category", "a subcat", 3, "details", "mute", (select id from urls where url='https://www.netflix.com/watch/80016224'));
 
+alter table urls add amazon_episode_number INTEGER NOT NULL DEFAULT 0;
 
+-- guess I didn't have any unique url constraint before this, only id...
+-- also gets us an index by both :)
+CREATE UNIQUE INDEX url_episode_num ON urls(url, amazon_episode_number);
+
+-- output some to screen
 select * from urls;
 select * from edits;
-
-alter table urls add episode_name      TEXT   NOT NULL;

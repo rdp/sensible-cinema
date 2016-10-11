@@ -13,7 +13,7 @@ class Url
     id: Int32,
     url:  {type: String},
     name: {type: String},
-    amazon_episode_name: {type: String},
+    amazon_episode_number: {type: String},
   })
   
   def self.all
@@ -24,9 +24,9 @@ class Url
     end
   end
   
-  def self.get_single_or_nil_by_url_and_amazon_episode_name(url, amazon_episode_name)
+  def self.get_single_or_nil_by_url_and_amazon_episode_number(url, amazon_episode_number)
     with_db do |conn|
-      urls = conn.query("SELECT * from urls where url = ? and amazon_episode_name = ?", url, amazon_episode_name) do |rs|
+      urls = conn.query("SELECT * from urls where url = ? and amazon_episode_number = ?", url, amazon_episode_number) do |rs|
          Url.from_rs(rs);
       end
       if urls.size == 1
@@ -40,19 +40,19 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_episode_name) values (?, ?, ?)", name, url, amazon_episode_name).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_episode_number) values (?, ?, ?)", name, url, amazon_episode_number).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_episode_name = ?  where id = ?", name, url, amazon_episode_name, id
+       conn.exec "update urls set name = ?, url = ?, amazon_episode_number = ?  where id = ?", name, url, amazon_episode_number, id
       end
     end
   end
  
   # does anybody really use this 
-  def initialize(url, name, amazon_episode_name)
+  def initialize(url, name, amazon_episode_number)
     @id = 0 # :|
     @url = url
     @name = name
-    @amazon_episode_name = amazon_episode_name
+    @amazon_episode_number = amazon_episode_number
   end
   
   def edls
@@ -83,7 +83,7 @@ class Url
   end
 
   def url_lookup_params
-    "url=#{url}&amazon_episode_name=#{amazon_episode_name}"
+    "url=#{url}&amazon_episode_number=#{amazon_episode_number}"
   end
 
   def self.get_single_by_id(id)
@@ -203,9 +203,9 @@ end
 
 get "/for_current" do |env|
   real_url = real_url(env)
-  amazon_episode_name = env.params.query["amazon_episode_name"] # "always there" :)
+  amazon_episode_number = env.params.query["amazon_episode_number"] # "always there" :)
   with_db do |conn|
-    url_or_nil = Url.get_single_or_nil_by_url_and_amazon_episode_name(real_url, amazon_episode_name)
+    url_or_nil = Url.get_single_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
     if !url_or_nil
       "alert('none for this movie yet');"
     else
@@ -301,20 +301,19 @@ end
 
 get "/new_url" do |env|
   real_url = real_url(env)
-  if env.params.query.has_key? "amazon_episode_name"
-    amazon_episode_name = env.params.query["amazon_episode_name"] # if they sent one in :)
+  if env.params.query.has_key? "amazon_episode_number"
+    amazon_episode_number = env.params.query["amazon_episode_number"] # if they sent one in :)
   else
-    amazon_episode_name = ""
+    amazon_episode_number = ""
   end
 
   begin
     response = HTTP::Client.get real_url # download page :)
     title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
     # cleanup some amazon
-    title = "amazon season 4"
     title = title.gsub(": Amazon Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "")
-    url = Url.new(real_url, title, amazon_episode_name)
+    url = Url.new(real_url, title, amazon_episode_number)
   rescue ex
     raise "unable to download that url" + real_url + " #{ex}" # expect url to work for now :|
   end
@@ -333,7 +332,7 @@ end
 def save_local_javascript(db_url, log_message)
   as_javascript = javascript_for(db_url)
   url_escaped = URI.escape(db_url.url)
-  appendix_escaped = URI.escape(db_url.amazon_episode_name);
+  appendix_escaped = URI.escape(db_url.amazon_episode_number);
   File.open("edit_descriptors/log.txt", "a") do |f|
     f.puts log_message
   end
@@ -349,7 +348,7 @@ post "/save_url" do |env|
   params = env.params.body
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
-  amazon_episode_name = sanitize_html(params["amazon_episode_name"])
+  amazon_episode_number = sanitize_html(params["amazon_episode_number"])
 
   if params.has_key? "id"
     db_url = Url.get_single_by_id(params["id"])
@@ -359,7 +358,7 @@ post "/save_url" do |env|
 
   db_url.url = incoming_url
   db_url.name = name
-  db_url.amazon_episode_name = amazon_episode_name
+  db_url.amazon_episode_number = amazon_episode_number
   db_url.save
   save_local_javascript db_url, db_url.inspect
   env.redirect "/index"
