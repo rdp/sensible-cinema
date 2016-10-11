@@ -60,7 +60,7 @@ class Url
   
   def edls
     with_db do |conn|
-      conn.query("select * from edits where url_id=?", id) do |rs|
+      conn.query("select * from edits where url_id=? order by start desc", id) do |rs|
         Edl.from_rs rs
       end
     end
