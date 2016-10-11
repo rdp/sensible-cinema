@@ -7,7 +7,9 @@ Clean stream it!<br/>Offering edited google play/amazon prime etc. (ask for netf
 <% urls.each{ |url|  %>
     <p>[<%= url.url %>] 
        [<%= url.name %>]
-       [ep. <%= url.amazon_episode_number %>]
+       <% if url.amazon_episode_number != 0 %>
+         [ep. <%= url.amazon_episode_number %>]
+       <% end %>
        <a href="/edit_url/<%= url.id %>">edit</a>
        <a href=/for_current?<%= url.url_lookup_params %>>js</a>
        <a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
