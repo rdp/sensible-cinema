@@ -7,7 +7,7 @@
   <input type="hidden" name="id" value="<%= edl.id %>">
 <% end %>
 
-<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea>
+<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea> to:
 <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.endy %></textarea>
 <select name="default_action" id='sel'>
   <option value="mute">mute</option>
@@ -19,12 +19,11 @@
 <script>
 document.getElementById('sel').value = '<%= edl.default_action %>';
 </script>
-category
 <select name="category" id='category_select'>
   <option value="profanity">profanity</option>
   <option value="violence">violence</option>
+  <option value="physical profanity">physical profanity--lewdness/nudity/sex</option>
   <option value="boring">boring</option>
-  <option value="lewdness">lewdness</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= edl.category %>';
@@ -32,17 +31,27 @@ document.getElementById('category_select').value = '<%= edl.category %>';
 <br/>
 sub category
 <select name="subcategory" id='subcategory_select'>
-  <option value="deity">deity</option>
-  <option value="gore">gore</option>
+  <option value="deity">profanity -- deity</option>
+  <option value="lesser profanity">profanity -- lesser 4-letter words d*** h***</option>
+  <option value="harsher profanity">profanity -- harsher 4-letter words</option>
+  <option value="gore">violence -- gore</option>
+  <option value="gore">violence -- stabbing</option>
+  <option value="lewdness">physical -- lewdness</option>
+  <option value="nudity">physical -- nudity</option>
+  <option value="implied sex">physical -- implied sex</option>
+  <option value="sex">physical -- sex</option>
+  <option value="intro">boring -- theme song</option>
 </select>
 <script>
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
 </script>
 <br/>
-subcategory level
+age level might be OK
 <select name="subcategory_level" id='subcategory_level_select'>
-  <option value="1">1</option>
-  <option value="2">2</option>
+  <% (1..17).each{ |n| %>
+    <option value="<%= n %>"><%= n %></option>
+  <% } %>
+  <option value="99">99</option>
 </select>
 <br/>
 <script>
