@@ -11,9 +11,9 @@ require "sqlite3"
 class Url
   DB.mapping({
     id: Int32,
-    url:  {type: String},
-    name: {type: String},
-    amazon_episode_number: {type: String},
+    url:  String,
+    name: String,
+    amazon_episode_number: Int32,
   })
   
   def self.all
@@ -47,12 +47,15 @@ class Url
     end
   end
  
-  # does anybody really use this 
   def initialize(url, name, amazon_episode_number)
     @id = 0 # :|
     @url = url
     @name = name
     @amazon_episode_number = amazon_episode_number
+  end
+
+  def initialize
+    initialize("", "", 0)
   end
   
   def edls
@@ -302,9 +305,9 @@ end
 get "/new_url" do |env|
   real_url = real_url(env)
   if env.params.query.has_key? "amazon_episode_number"
-    amazon_episode_number = env.params.query["amazon_episode_number"] # if they sent one in :)
+    amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
   else
-    amazon_episode_number = ""
+    amazon_episode_number = 0
   end
 
   begin
@@ -332,12 +335,11 @@ end
 def save_local_javascript(db_url, log_message)
   as_javascript = javascript_for(db_url)
   url_escaped = URI.escape(db_url.url)
-  appendix_escaped = URI.escape(db_url.amazon_episode_number);
   File.open("edit_descriptors/log.txt", "a") do |f|
     f.puts log_message
   end
   
-  File.write("edit_descriptors/#{url_escaped}#{appendix_escaped}" + ".rendered.js", "" + as_javascript)
+  File.write("edit_descriptors/#{url_escaped}#{db_url.amazon_episode_number}" + ".rendered.js", "" + as_javascript)
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to gitraw...eventually :)
   end
@@ -348,12 +350,12 @@ post "/save_url" do |env|
   params = env.params.body
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
-  amazon_episode_number = sanitize_html(params["amazon_episode_number"])
+  amazon_episode_number = params["amazon_episode_number"].to_i
 
   if params.has_key? "id"
     db_url = Url.get_single_by_id(params["id"])
   else
-    db_url = Url.new "", "", ""
+    db_url = Url.new
   end
 
   db_url.url = incoming_url
