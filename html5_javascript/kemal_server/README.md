@@ -29,3 +29,6 @@ TODO: Write development instructions here
 ## Contributors
 
 - [[your-github-name]](https://github.com/[your-github-name]) rogerdpack - creator, maintainer
+git submodule update --init
+shards install
+./go
