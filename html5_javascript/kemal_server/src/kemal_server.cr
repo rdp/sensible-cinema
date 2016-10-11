@@ -233,7 +233,7 @@ get "/delete_edl/:id" do |env|
   edl = Edl.get_single_by_id(id)
   edl.destroy
   save_local_javascript edl.url, "removed #{edl}"
-	env.redirect "/edit?url=" + edl.url.url
+  env.redirect "/edit?url=" + edl.url.url
 end
 
 get "/edit_edl/:id" do |env|
@@ -273,15 +273,22 @@ get "/edit" do |env| # same as "view" and "new" LOL but we have the url
   if url_or_nil != Nil
     url = url_or_nil.as(Url)
   else
+    if env.params.query.has_key? "amazon_episode_name"
+      amazon_episode_name = env.params.query["amazon_episode_name"] # if they sent one in :)
+    else
+      amazon_episode_name = ""
+    end
+
     begin
       response = HTTP::Client.get real_url
       title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
+      # cleanup some amazon extra
+      title = "amazon season 4"
       title = title.gsub(": Amazon Digital Services LLC", "")
       title = title.gsub("Amazon.com: ", "")
-      amazon_episode_name = "" # only series have this hmm :|
       url = Url.new(real_url, title, amazon_episode_name)
     rescue ex
-      raise("unable to download that url" + real_url + " #{ex}")
+      raise "unable to download that url" + real_url + " #{ex}" # expect url to work for now :|
     end
     # unsaved, and no bound edl's yet :)
   end
@@ -329,7 +336,7 @@ post "/save" do |env|
   db_url.amazon_episode_name = amazon_episode_name
   db_url.save
   save_local_javascript db_url, db_url.inspect
-  env.redirect "/edit?url=" + incoming_url
+  env.redirect "/index"
 end
 
 Kemal.run
