@@ -36,7 +36,7 @@ class Url
       if urls.size == 1
         return urls[0]
       else
-        return Nil
+        return nil
       end
     end
   end
@@ -67,6 +67,19 @@ class Url
     end
   end
 
+  def last_edl_or_nil
+    all = with_db do |conn|
+      conn.query("select * from edits where url_id=? order by endy desc limit 1", id) do |rs|
+        Edl.from_rs(rs)
+      end
+    end
+    if all.size == 1
+      return all[0]
+    else
+      return nil
+    end
+  end
+
   def destroy
     with_db do |conn|
       conn.exec("delete from urls where id = ?", id)
@@ -87,15 +100,16 @@ class Url
 end
 
 class Edl
+  # see edit_edl.ecr for options
   DB.mapping({
     id: Int64,
     start:   {type: Float64},
     endy: {type: Float64},
-    category: {type: String},       #  profanity or violence
-    subcategory: {type: String},    #  deity or gore
-    subcategory_level: Int32,       #  3 out of 10
-    details: {type: String},        #  **** what is going on? said sally...
-    default_action: {type: String}, #  skip, mute, almost mute, no-video-yes-audio (only skip and mute supported currently)
+    category: {type: String},       
+    subcategory: {type: String},   
+    subcategory_level: Int32,   
+    details: {type: String},     
+    default_action: {type: String},
     url_id: Int32
   })
   
@@ -126,9 +140,9 @@ class Edl
     @start = 0.0
     @endy = 0.0
     @category = "profanity"
-    @subcategory = "gore"
+    @subcategory = ""
     @subcategory_level = 99
-    @details = "any details"
+    @details = "details like actual euphemized text..."
     @default_action = "mute"
     @url_id = url.id
   end
@@ -247,26 +261,31 @@ end
 
 get "/edit_edl/:id" do |env|
   edl = Edl.get_single_by_id(env.params.url["id"])
-  url = edl.url.url
+  url = edl.url
   render "views/edit_edl.ecr"
 end
 
 get "/add_edl" do |env|
-  url = real_url(env)
-  edl = Edl.new(Url.get_single_by_url(url))
+  real_url = real_url(env)
+  url = Url.get_single_by_url(real_url)
+  edl = Edl.new url
+  last_edl = url.last_edl_or_nil
+  if last_edl
+    last_end = last_edl.endy
+    edl.start = last_end + 1
+    edl.endy = last_end + 2
+  end
   render "views/edit_edl.ecr"
 end
 
-post "/save_edl" do |env|
-  real_url = real_url(env)
+post "/save_edl/:url_id" do |env|
+  url_id = env.params.url["url_id"]
   params = env.params.body
   if params.has_key? "id"
     edl = Edl.get_single_by_id(params["id"])
   else
-    edl = Edl.new(Url.get_single_by_url(real_url))
-    edl.url_id = Url.get_single_by_url(real_url).id
+    edl = Edl.new(Url.get_single_by_id(url_id))
   end
-  puts params
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
   edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
@@ -338,7 +357,7 @@ post "/save" do |env|
   amazon_episode_name = sanitize_html(body["amazon_episode_name"])
   log("attempt save #{old_url} ->  #{incoming_url} as #{name}")
   db_url = Url.get_single_or_nil_by_url(old_url)
-  if db_url == Nil
+  if !db_url
     db_url = Url.new "", "", ""
   else
     db_url = db_url.as(Url)
