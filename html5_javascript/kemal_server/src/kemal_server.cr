@@ -339,11 +339,12 @@ end
 def save_local_javascript(db_url, log_message)
   as_javascript = javascript_for(db_url)
   url_escaped = URI.escape(db_url.url)
+  appendix_escaped = URI.escape(db_url.amazon_episode_name);
   File.open("edit_descriptors/log.txt", "a") do |f|
     f.puts log_message
   end
   
-  File.write("edit_descriptors/#{url_escaped}" + ".rendered.js", "" + as_javascript)
+  File.write("edit_descriptors/#{url_escaped}#{appendix_escaped}" + ".rendered.js", "" + as_javascript)
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to gitraw...eventually :)
   end
