@@ -1,10 +1,11 @@
---run with recreate.sh
+--run with recreate.sh script...
 
 CREATE TABLE URLS (
    id INTEGER PRIMARY KEY,
    url           TEXT    UNIQUE NOT NULL,
    name          TEXT    NOT NULL,
 );
+
 create index url_url_index on URLS(URL); 
   
 CREATE TABLE EDITS (
