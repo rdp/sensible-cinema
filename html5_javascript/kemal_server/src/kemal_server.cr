@@ -127,7 +127,7 @@ class Edl
     @endy = 0.0
     @category = "profanity"
     @subcategory = "gore"
-    @subcategory_level = 3
+    @subcategory_level = 99
     @details = "any details"
     @default_action = "mute"
     @url_id = url.id
