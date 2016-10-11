@@ -21,6 +21,7 @@ Clean stream it!<br/>Offering edited google play/amazon prime etc. (ask for netf
 <h1>Create new</h1>
 <form action="/new_url" method="GET">
   Your Movie's url: <input type="text" name="url"/>
+  episode number (if amazon series) <input type="text" name="amazon_episode_number"/>
   <input type="submit" value="Submit">
 </form>
 (works with google play, amazon prime, others)
@@ -37,7 +38,7 @@ This should work with any major browser (chrome, firefox, safari, edge...)
 If you're a developer and want to make sure you get the very latest after a change, add this to javascript developer console:
 
 <div style="background-color: pink;">
-window.open("http://cleanstream.inet2.org:3000/for_current?url=" + encodeURIComponent(window.location.href) + "&amazon_episode_number=" + encodedURIComponenent($('div.subtitle').innerHTML), "_blank");
+window.open("http://cleanstream.inet2.org:3000/for_current?url=" + encodeURIComponent(window.location.href) + "&amazon_episode_number=" + encodedURIComponent(/Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1]), "_blank");
 
 </div>
 
