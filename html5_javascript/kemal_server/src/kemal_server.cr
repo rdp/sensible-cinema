@@ -73,6 +73,17 @@ class Url
     end
   end
 
+  def url_lookup_params
+    "url=#{url}&amazon_episode_name=#{amazon_episode_name}"
+  end
+
+  def self.get_single_by_id(id)
+    with_db do |conn|
+      conn.query("SELECT * from urls where id = ?", id) do |rs|
+         Url.from_rs(rs)[0] # Index OOB if not there :|
+      end
+    end
+  end
 end
 
 class Edl
@@ -121,7 +132,6 @@ class Edl
     @default_action = "mute"
     @url_id = url.id
   end
-  
   
   def save
     with_db do |conn|
@@ -221,9 +231,8 @@ def javascript_for(db_url)
   end
 end
 
-get "/delete_url" do |env|
-  real_url = real_url(env)
-  url = Url.get_single_by_url(real_url)
+get "/delete_url/:id" do |env|
+  url = Url.get_single_by_id(env.params.url["id"])
   url.destroy
   env.redirect "/index"
 end
@@ -257,43 +266,46 @@ post "/save_edl" do |env|
     edl = Edl.new(Url.get_single_by_url(real_url))
     edl.url_id = Url.get_single_by_url(real_url).id
   end
+  puts params
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
-  raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy)
   edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
+  edl.category = sanitize_html params["category"] # hope it's a legit value LOL
+  edl.subcategory = sanitize_html params["subcategory"]
+  edl.subcategory_level = params["subcategory_level"].to_i
+  edl.details = sanitize_html params["details"]
+  raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy)
   edl.save
   save_local_javascript edl.url, edl.inspect
-  env.redirect "/edit?url=" + edl.url.url
+  env.redirect "/edit_url/#{edl.url.id}"
 end
 
-get "/edit" do |env| # same as "view" and "new" LOL but we have the url
+get "/edit_url/:id" do |env| # same as "view" and "new" LOL but we have the url
+  id = env.params.url["id"]
+  url = Url.get_single_by_id(id)
+  render "views/edit_url.ecr"
+end
+
+get "/new_url" do |env|
   real_url = real_url(env)
-  url_or_nil = Url.get_single_or_nil_by_url(real_url)
-
-  if url_or_nil != Nil
-    url = url_or_nil.as(Url)
+  if env.params.query.has_key? "amazon_episode_name"
+    amazon_episode_name = env.params.query["amazon_episode_name"] # if they sent one in :)
   else
-    if env.params.query.has_key? "amazon_episode_name"
-      amazon_episode_name = env.params.query["amazon_episode_name"] # if they sent one in :)
-    else
-      amazon_episode_name = ""
-    end
-
-    begin
-      response = HTTP::Client.get real_url
-      title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
-      # cleanup some amazon extra
-      title = "amazon season 4"
-      title = title.gsub(": Amazon Digital Services LLC", "")
-      title = title.gsub("Amazon.com: ", "")
-      url = Url.new(real_url, title, amazon_episode_name)
-    rescue ex
-      raise "unable to download that url" + real_url + " #{ex}" # expect url to work for now :|
-    end
-    # unsaved, and no bound edl's yet :)
+    amazon_episode_name = ""
   end
-  edls = url.edls
-  render "views/edit.ecr"
+
+  begin
+    response = HTTP::Client.get real_url # download page :)
+    title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
+    # cleanup some amazon
+    title = "amazon season 4"
+    title = title.gsub(": Amazon Digital Services LLC", "")
+    title = title.gsub("Amazon.com: ", "")
+    url = Url.new(real_url, title, amazon_episode_name)
+  rescue ex
+    raise "unable to download that url" + real_url + " #{ex}" # expect url to work for now :|
+  end
+  render "views/edit_url.ecr"
 end
 
 def sanitize_html(name)

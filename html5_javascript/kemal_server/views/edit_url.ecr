@@ -1,5 +1,4 @@
-<h1>Editing <%= url.url %></h1>
-
+<h1>Editing for URL</h1>
 
 <form action="/save?url=<%= url.url %>" method="POST">
 name:
@@ -16,21 +15,25 @@ amazon_episode_name
 
 Edits
 <br/>
-<% edls.each do |edl|  %>
-  [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] default action:<%= edl.default_action %>
- <a href=/edit_edl/<%= edl.id %>>modify</a>
- <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure?')">delete &#10006; </a>
-   <br/>
+<% url.edls.each do |edl|  %>
+  [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] 
+  [<%= edl.default_action %>]
+  [<%= edl.category %>]
+  [<%= edl.subcategory %>]
+  [level:<%= edl.subcategory_level %>]
+  [<%= edl.details %>]
+  <a href=/edit_edl/<%= edl.id %>>modify</a>
+  <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure?')">delete &#10006; </a>
+  <br/>
 <% end %>
+
 <br/>
 <a href=/add_edl?url=<%= url.url %>>add new edit &#10133;</a>
 
-
 <hr/>
-       <a href=/for_current?url=<%= url.url %>>js</a>
+       <a href=/for_current?=<%= url.url_lookup_params %>>js</a>
        <br/>
        <a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
-       
        <br/>
 
 <p>[<a href="/index">back to index</a>]</p>

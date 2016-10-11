@@ -1,1 +1,2 @@
+#!/usr/bin/env fish
 crystal run ./src/kemal_server.cr
