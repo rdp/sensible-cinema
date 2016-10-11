@@ -24,13 +24,9 @@ class Url
     end
   end
   
-  def self.get_single_by_url(url)
-   get_single_or_nil_by_url(url).as(Url) # class cast I guess if we're wrong here :|
-  end
-  
-  def self.get_single_or_nil_by_url(url)
+  def self.get_single_or_nil_by_url_and_amazon_episode_name(url, amazon_episode_name)
     with_db do |conn|
-      urls = conn.query("SELECT * from urls where url = ?", url) do |rs|
+      urls = conn.query("SELECT * from urls where url = ? and amazon_episode_name = ?", url, amazon_episode_name) do |rs|
          Url.from_rs(rs);
       end
       if urls.size == 1
@@ -206,23 +202,18 @@ def real_url(env)
 end
 
 get "/for_current" do |env|
-  output = "";
   real_url = real_url(env)
+  amazon_episode_name = env.params.query["amazon_episode_name"] # "always there" :)
   with_db do |conn|
-    url_or_nil = Url.get_single_or_nil_by_url(real_url)
+    url_or_nil = Url.get_single_or_nil_by_url_and_amazon_episode_name(real_url, amazon_episode_name)
     if !url_or_nil
-       env.response.status_code = 400
-       sanitized_url = sanitize_html real_url
-       # never did figure out how to write this to the output :|
-       output = "unable to find one yet for #{sanitized_url} <a href=\"/edit?url=#{sanitized_url}\"><br/>create new for this movie</a><br/><a href=/index>go back to index</a>" # too afraid to do straight redirect since this "should" be javascript I think...
-       
+      "alert('none for this movie yet');"
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-      output = javascript_for(url)
+      javascript_for(url)
     end
   end
-  output
 end
 
 def javascript_for(db_url)
@@ -265,9 +256,12 @@ get "/edit_edl/:id" do |env|
   render "views/edit_edl.ecr"
 end
 
-get "/add_edl" do |env|
-  real_url = real_url(env)
-  url = Url.get_single_by_url(real_url)
+def get_url_from_url_id(env)
+  Url.get_single_by_id(env.params.url["url_id"])
+end
+
+get "/add_edl/:url_id" do |env|
+  url = get_url_from_url_id(env)
   edl = Edl.new url
   last_edl = url.last_edl_or_nil
   if last_edl
@@ -279,12 +273,11 @@ get "/add_edl" do |env|
 end
 
 post "/save_edl/:url_id" do |env|
-  url_id = env.params.url["url_id"]
   params = env.params.body
   if params.has_key? "id"
     edl = Edl.get_single_by_id(params["id"])
   else
-    edl = Edl.new(Url.get_single_by_id(url_id))
+    edl = Edl.new(get_url_from_url_id(env))
   end
   edl.start = human_to_seconds params["start"]
   edl.endy = human_to_seconds params["endy"]
@@ -304,6 +297,7 @@ get "/edit_url/:id" do |env| # same as "view" and "new" LOL but we have the url
   url = Url.get_single_by_id(id)
   render "views/edit_url.ecr"
 end
+
 
 get "/new_url" do |env|
   real_url = real_url(env)
@@ -350,19 +344,19 @@ def save_local_javascript(db_url, log_message)
   end
 end
 
-post "/save" do |env|
-  old_url = real_url(env)
-  body = env.params.body
-  name = sanitize_html HTML.unescape(body["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
-  incoming_url = sanitize_html HTML.unescape(body["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
-  amazon_episode_name = sanitize_html(body["amazon_episode_name"])
-  log("attempt save #{old_url} ->  #{incoming_url} as #{name}")
-  db_url = Url.get_single_or_nil_by_url(old_url)
-  if !db_url
-    db_url = Url.new "", "", ""
+post "/save_url" do |env|
+  # no GET params
+  params = env.params.body
+  name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
+  incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
+  amazon_episode_name = sanitize_html(params["amazon_episode_name"])
+
+  if params.has_key? "id"
+    db_url = Url.get_single_by_id(params["id"])
   else
-    db_url = db_url.as(Url)
+    db_url = Url.new "", "", ""
   end
+
   db_url.url = incoming_url
   db_url.name = name
   db_url.amazon_episode_name = amazon_episode_name

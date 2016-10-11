@@ -1,6 +1,11 @@
 <h1>Editing for URL</h1>
 
-<form action="/save?url=<%= url.url %>" method="POST">
+<form action="/save_url" method="POST">
+
+<% if url.id != 0 %>
+  <input type="hidden" name="id" value="<%= url.id %>">
+<% end %>
+
 name:
 <textarea name="name" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.name %></textarea>
 <br/>
@@ -28,8 +33,7 @@ Edits
 <% end %>
 
 <br/>
-<a href=/add_edl?url=<%= url.url %>>add new edit &#10133;</a>
-
+<a href=/add_edl/<%= url.id %>>add new edit &#10133;</a>
 <hr/>
        <a href=/for_current?=<%= url.url_lookup_params %>>js</a>
        <br/>
