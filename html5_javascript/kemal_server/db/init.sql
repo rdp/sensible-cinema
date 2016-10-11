@@ -2,7 +2,7 @@
 
 CREATE TABLE URLS (
    id INTEGER PRIMARY KEY,
-   url           TEXT    UNIQUE NOT NULL,
+   url           TEXT    NOT NULL,
    name          TEXT    NOT NULL
 );
 

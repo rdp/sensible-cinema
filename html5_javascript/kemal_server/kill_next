@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+kqwait **/*
+kill (pidof crystal | cut -d " " -f 1)
+sleep 0.1
+kill (pidof crystal | cut -d " " -f 1)
+

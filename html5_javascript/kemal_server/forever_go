@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+
+while true
+  ./kill_next &
+  ./go
+end

@@ -206,7 +206,7 @@ end
 
 get "/for_current" do |env|
   real_url = real_url(env)
-  amazon_episode_number = env.params.query["amazon_episode_number"] # "always there" :)
+  amazon_episode_number = env.params.query["amazon_episode_number"].to_i # "always there" :)
   with_db do |conn|
     url_or_nil = Url.get_single_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
     if !url_or_nil
