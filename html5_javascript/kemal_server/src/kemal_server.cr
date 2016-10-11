@@ -158,8 +158,8 @@ def human_to_seconds(ts_human)
   sum
 end
 
-get "/" do
-  "Hello World! Clean stream it!<br/>Offering edited google play/amazon prime etc. (ask for netflix)<br/><a href=/index>index and instructions</a><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com to receive instructions."
+get "/" do |env|
+  env.redirect "/index"
 end
 
 def with_db
