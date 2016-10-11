@@ -23,7 +23,7 @@ document.getElementById('sel').value = '<%= edl.default_action %>';
   <option value="profanity">profanity</option>
   <option value="violence">violence</option>
   <option value="physical profanity">physical profanity--lewdness/nudity/sex</option>
-  <option value="boring">boring</option>
+  <option value="skippable">skippable</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= edl.category %>';
@@ -38,18 +38,23 @@ sub category
   <option value="deity">profanity -- deity</option>
   <option value="lesser profanity">profanity -- lesser 4-letter words d***</option>
   <option value="harsher profanity">profanity -- harsher 4-letter words</option>
+
   <option class="select-dash" disabled="disabled">----</option>
   option value="gore">violence -- gore</option>
   <option value="stabbing">violence -- stabbing</option>
   <option value="shooting">violence -- shooting</option>
+
   <option class="select-dash" disabled="disabled">----</option>
   <option value="lewdness">physical -- lewdness</option>
   <option value="nudity">physical -- nudity</option>
   <option value="implied sex">physical -- implied sex</option>
   <option value="sex">physical -- sex</option>
+  <option value="partial nudity">physical -- partial nudity (butt crack)</option>
+  <option value="cleavage">physical -- cleavage</option>
+
   <option class="select-dash" disabled="disabled">----</option>
-  <option value="intro">boring -- theme song</option>
-  <option value="intro">boring -- credits</option>
+  <option value="initial theme song">skippable -- initial theme song/credits</option>
+  <option value="closing credits">skippable -- closing credits</option>
 </select>
 <script>
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
