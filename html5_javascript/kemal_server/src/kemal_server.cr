@@ -138,7 +138,7 @@ class Edl
       if @id == 0
         @id = conn.exec("insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @subcategory_level, @details, @default_action, @url_id).last_insert_id
       else
-        conn.exec "update edits set start = ?, endy = ?, default_action = ? where id = ?", start, endy, default_action, id
+        conn.exec "update edits set start = ?, endy = ?, category = ?, subcategory = ?, subcategory_level = ?, details = ?, default_action = ? where id = ?", start, endy, category, subcategory, subcategory_level, details, default_action, id
       end
     end
   end
