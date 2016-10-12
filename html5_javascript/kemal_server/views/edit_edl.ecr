@@ -7,7 +7,7 @@
   <input type="hidden" name="id" value="<%= edl.id %>">
 <% end %>
 
-<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea> to:
+from:<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea> to:
 <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.endy %></textarea>
 <select name="default_action" id='sel'>
   <option value="mute">mute</option>
@@ -21,10 +21,10 @@ document.getElementById('sel').value = '<%= edl.default_action %>';
 </script>
 <br/>
 category:
-<select name="category" id='category_select'>
+<select name="category" id='category_select' disabled> <!-- gets propagated by the subcat -->
   <option value="profanity">verbal profanity</option>
   <option value="violence">violence</option>
-  <option value="physical profanity">physical profanity (nudity, sex, drugs, etc.)</option>
+  <option value="physical">physical profanity (nudity, sex, drugs, etc.)</option>
   <option value="skippable">skippable</option>
   <option value="suspense">suspenseful/scary</option>
 </select>
@@ -33,7 +33,7 @@ document.getElementById('category_select').value = '<%= edl.category %>';
 </script>
 <br/>
 sub category
-<select name="subcategory" id='subcategory_select'>
+<select name="subcategory" id='subcategory_select' onchange="updateCategory();">
   <optgroup label="profanity">
     <option value="personal insult">profanity -- insult ("moron" etc.)</option>
     <option value="bathroom humor">profanity -- bathroom humor</option>
@@ -109,3 +109,37 @@ details (ex: euphemized actual text ??)
 <div><input type="submit" value="Save"></div>
 
 </form>
+
+
+<video id="video" controls="" preload="none" mediagroup="myVideoGroup" poster="https://media.w3.org/2010/05/sintel/poster.png" width="40px">
+      <source id="mp4" src="https://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
+      <source id="webm" src="https://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">
+      <source id="ogv" src="https://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
+      <p>Your user agent does not support the HTML5 Video element.</p>
+    </video>
+
+<script>
+function findFirstVideoTagLocal(node) {
+    if (node.nodeType == 1) {
+
+        if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
+            return node;
+        }
+        node = node.firstChild;
+
+        while (node) {
+            if ((out = findFirstVideoTag(node)) != null) {
+                return out;
+            }
+            node = node.nextSibling;
+        }
+    }
+}
+
+function updateCategory() {
+  var element = document.getElementById("subcategory_select");
+  var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
+  document.getElementById("category_select").value = cat_from_subcat;
+}
+
+</script>
