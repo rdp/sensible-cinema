@@ -12,7 +12,7 @@ name:
 url:
 <textarea name="url" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.url %></textarea>
 <br/>
-amazon_episode_number
+amazon_episode_number (if it's amazon and has an episode number, otherwise leave 0)
 <textarea name="amazon_episode_number" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.amazon_episode_number %></textarea>
 <br/>
 <div><input type="submit" value="Save"></div>
@@ -20,7 +20,8 @@ amazon_episode_number
 
 <% if url.id != 0 %>
 
-Edits
+Edits for this url:
+<br/>
 <br/>
 <% url.edls.each do |edl|  %>
   [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] 
