@@ -19,11 +19,14 @@
 <script>
 document.getElementById('sel').value = '<%= edl.default_action %>';
 </script>
+<br/>
+category:
 <select name="category" id='category_select'>
-  <option value="profanity">profanity</option>
+  <option value="profanity">verbal profanity</option>
   <option value="violence">violence</option>
-  <option value="physical profanity">physical profanity--lewdness/nudity/sex</option>
+  <option value="physical profanity">physical profanity (nudity, sex, drugs, etc.)</option>
   <option value="skippable">skippable</option>
+  <option value="suspense">suspenseful/scary</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= edl.category %>';
@@ -32,32 +35,57 @@ document.getElementById('category_select').value = '<%= edl.category %>';
 sub category
 <select name="subcategory" id='subcategory_select'>
   <optgroup label="profanity">
-    <option value="personal attack">profanity -- personal attack ("moron" etc.)</option> <!-- all this same level ? -->
+    <option value="personal insult">profanity -- insult ("moron" etc.)</option>
+    <option value="bathroom humor">profanity -- bathroom humor</option>
     <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm...)</option>
     <option value="bodily part reference harsh">profanity -- bodily part reference harsh (a-hole, etc.)</option>
-    <option value="sexual reference">profanity -- sexual reference</option>
-    <option value="deity">profanity -- deity</option>
-    <option value="lesser profanity">profanity -- lesser 4-letter words d***</option>
-    <option value="harsher profanity">profanity -- harsher 4-letter words</option>
+    <option value="sexual reference">profanity -- sexual reference/innuendo</option>
+    <option value="religious minor">profanity -- religious minor (L... etc.)</option>
+    <option value="deity">profanity -- deity (Lord's name in vain, etc.)</option>
+    <option value="euphemized four letter">profanity -- euphemized 4-letter (crap, dang, gosh)</option>
+    <option value="lesser four letter">profanity -- lesser 4-letter words d***</option>
+    <option value="harder four letter">profanity -- harder 4-letter words</option>
   </optgroup>
 
-  <option class="select-dash" disabled="disabled">&#x2500;&#x2500;&#x2500;&#x2500;</option>
-  option value="gore">violence -- gore</option>
-  <option value="stabbing">violence -- stabbing</option>
-  <option value="shooting">violence -- shooting</option>
-  <option value="light fight">violence -- almost fight</option>
+  <optgroup label="violence">
+    <option value="gore">violence -- gore/open wound</option>
+    <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>
+    <option value="stabbing/shooting yes blood">violence -- stabbing/shooting yes blood</option>
+    <option value="light fight">violence -- light fighting (single punch/kick)</option>
+    <option value="sustained fight">violence -- sustained fighting</option>
+    <!-- weapons? -->
+  </optgroup>
 
-  <option class="select-dash" disabled="disabled">----</option>
-  <option value="lewdness">physical -- lewdness</option>
-  <option value="nudity">physical -- nudity</option>
-  <option value="implied sex">physical -- implied sex</option>
-  <option value="sex">physical -- sex</option>
-  <option value="partial nudity">physical -- partial nudity (butt crack)</option>
-  <option value="cleavage">physical -- cleavage</option>
+  <optgroup label="physical profanity">
+    <option value="art nudity">physical -- art nudity</option>
+    <option value="partial nudity">physical -- partial nudity (cleavage, cracks, scantily clad)</option>
+    <option value="nudity posterior">physical -- nudity (posterior)</option>
+    <option value="nudity front">physical -- nudity (front)</option>
+    <option value="kissing peck">physical -- kiss (peck)</option>
+    <option value="kissing passionate">physical -- kiss (passionate)</option>
+    <option value="implied sex">physical -- implied sex</option>
+    <option value="sex">physical -- sex</option>
+    <option value="drugs">physical -- drugs</option>
+    <option value="alcohol">physical -- alcohol</option>
+    <option value="smoking">physical -- smoking</option>
+    <! -- tea coffee?? :) -->
+  </optgroup>
 
-  <option class="select-dash" disabled="disabled">----</option>
-  <option value="initial theme song">skippable -- initial theme song/credits</option>
-  <option value="closing credits">skippable -- closing credits</option>
+  <optgroup label="skippable">
+    <option value="initial theme song">skippable -- initial theme song/credits</option>
+    <option value="closing credits">skippable -- closing credits</option>
+  </optgroup>
+
+  <optgroup label="suspense">
+    <% ["suspenseful music", "monster fright/jump out", "suspenseful fight \"will they win\""].each do |type|  %>
+      <option value="<%= type %> OK age 6">suspense -- <%= type %> OK age 6</option>
+      <option value="<%= type %>" OK age 9>suspense -- <%= type %> OK age 9</option>
+      <option value="<%= type %>" OK age 12>suspense -- <%= type %> OK age 12</option>
+      <option value="<%= type %>" OK age 16 >suspense -- <%= type %> OK age 16</option>
+      <option value="<%= type %>">suspense -- <%= type %> (not OK)</option>
+    <% end %>
+  </optgroup>
+
 </select>
 <script>
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
@@ -75,7 +103,7 @@ age level might be OK
 document.getElementById('subcategory_level_select').value = '<%= edl.subcategory_level %>';
 </script>
 <br/>
-details
+details (ex: euphemized actual text ??)
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
 </div>
 <div><input type="submit" value="Save"></div>

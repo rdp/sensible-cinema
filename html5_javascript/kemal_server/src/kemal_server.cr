@@ -141,7 +141,7 @@ class Edl
     @category = "profanity"
     @subcategory = ""
     @subcategory_level = 99
-    @details = "details like actual euphemized text..."
+    @details = ""
     @default_action = "mute"
     @url_id = url.id
   end
