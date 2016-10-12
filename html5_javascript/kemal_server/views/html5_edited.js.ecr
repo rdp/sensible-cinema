@@ -152,16 +152,28 @@ function handleNetflixSeekOrStop(cur_time) {
 
 myLayer = document.createElement('div');
 myLayer.style.position = 'absolute';
-myLayer.style.width = '300px';
-myLayer.style.height = '300px';
+myLayer.style.width = '100px';
+myLayer.style.height = '30px';
 myLayer.style.background = '#000000';
 myLayer.style.zIndex = "99999999"; // on top :)
 myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-//myLayer.style.opacity = 0.3; // good for netflix, not for amazon :|
-myLayer.style.textShadow="2px 1px 0.5px white";
+myLayer.style.textShadow="2px 1px 0px white";
 myLayer.style.fontSize = "13px";
 myLayer.style.top = "0";
 document.body.appendChild(myLayer);
+
+edlLayer = document.createElement('div');
+edlLayer.style.position = 'absolute';
+edlLayer.style.width = '300px';
+edlLayer.style.height = '30px';
+edlLayer.style.background = '#000000';
+edlLayer.style.zIndex = "99999999"; // on top :)
+edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+edlLayer.style.textShadow="2px 1px 0px white";
+edlLayer.style.fontSize = "13px";
+edlLayer.style.top = "30px";
+document.body.appendChild(edlLayer);
+edlLayer.innerHTML = "second edl layer";
 
 function stepFrame() {
   video_element.play();
