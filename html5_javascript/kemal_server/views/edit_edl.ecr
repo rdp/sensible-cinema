@@ -35,6 +35,7 @@ category:
   <option value="physical">physical profanity (nudity, sex, drugs, etc.)</option>
   <option value="skippable">skippable</option>
   <option value="suspense">suspenseful/scary</option>
+  <option value="substance-abuse">substance-abuse</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= edl.category %>';
@@ -73,23 +74,26 @@ sub category
     <option value="kissing passionate">physical -- kiss (passionate)</option>
     <option value="implied sex">physical -- implied sex</option>
     <option value="sex">physical -- sex</option>
-    <option value="drugs">physical -- drugs</option>
-    <option value="alcohol">physical -- alcohol</option>
-    <option value="smoking">physical -- smoking</option>
-    <! -- tea coffee?? :) -->
+  </optgroup>
+
+  <optgroup label="substance abuse">
+    <option value="drugs">substance-abuse -- drugs</option>
+    <option value="alcohol">substance-abuse -- alcohol</option>
+    <option value="smoking">substance-abuse -- smoking</option>
   </optgroup>
 
   <optgroup label="skippable">
     <option value="initial theme song">skippable -- initial theme song/credits</option>
     <option value="closing credits">skippable -- closing credits</option>
+    <option value="closing credits">skippable -- closing credits before closing movie clip</option>
   </optgroup>
 
   <optgroup label="suspense">
-    <% ["suspenseful music", "monster fright/jump out", "suspenseful fight \"will they win\""].each do |type|  %>
-      <option value="<%= type %> OK age 6">suspense -- <%= type %> OK age 6</option>
-      <option value="<%= type %>" OK age 9>suspense -- <%= type %> OK age 9</option>
-      <option value="<%= type %>" OK age 12>suspense -- <%= type %> OK age 12</option>
-      <option value="<%= type %>" OK age 16 >suspense -- <%= type %> OK age 16</option>
+    <% ["frightening/startling scene", "suspenseful fight \"will they win?\""].each do |type|  %>
+      <option value="<%= type %> OK age 6">suspense -- <%= type %> (OK age 6+)</option>
+      <option value="<%= type %> OK age 9">suspense -- <%= type %> (OK age 9+)</option>
+      <option value="<%= type %> OK age 12">suspense -- <%= type %> (OK age 12+)</option>
+      <option value="<%= type %> OK age 16">suspense -- <%= type %> (OK age 16+)</option>
       <option value="<%= type %>">suspense -- <%= type %> (not OK)</option>
     <% end %>
   </optgroup>
@@ -102,14 +106,13 @@ document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
 details (ex: euphemized actual text ??)
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
 </div>
-<div><input type="submit" value="Save"></div>
-</form>
+
+<div><input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>
 
 <script>
 function updateCategory() {
   var element = document.getElementById("subcategory_select");
   var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
   document.getElementById("category_select").value = cat_from_subcat;
-  document.getElementById("category_select").disabled = false; //so it'll post 
 }
 </script>

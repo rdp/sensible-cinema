@@ -14,14 +14,13 @@ url:
 <textarea name="url" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.url %></textarea>
 <br/>
 <br/>
-amazon_episode_number (if it's amazon and has an episode number, otherwise leave 0)
+amazon_episode_number (0 if none)
 <textarea name="amazon_episode_number" rows="1" cols="10" style="font-size: 12pt; font-family: Arial;"><%= url.amazon_episode_number %></textarea>
+<br/>
 amazon_episode_name
 <textarea name="amazon_episode_name" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.amazon_episode_name %></textarea>
 <div><input type="submit" value="Save url info"></div>
 </form>
-
-<% if url.id != 0 %>
 
 Edits for this url:
 <br/>
@@ -35,6 +34,7 @@ Edits for this url:
   <a href=/edit_edl/<%= edl.id %>>modify</a>
   <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure?')">delete &#10006; </a>
   <br/>
+  <br/>
 <% end %>
 
 <br/>
@@ -45,5 +45,4 @@ Edits for this url:
 <a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
 <br/>
 
-<% end %>
 <p>[<a href="/index">back to index</a>]</p>
