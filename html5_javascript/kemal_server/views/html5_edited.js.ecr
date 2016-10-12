@@ -172,25 +172,44 @@ edlLayer.style.textShadow="2px 1px 0px white";
 edlLayer.style.fontSize = "13px";
 edlLayer.style.top = "30px";
 document.body.appendChild(edlLayer);
-edlLayer.innerHTML = "second edl layer";
+edlLayer.innerHTML = `
+from:<textarea name='start' rows='1' cols='40' style='font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
+<input id='clickMe' type='button' value='Set start to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+<br/>
+to:<textarea name='endy' rows='1' cols='40' style='font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
+<input id='clickMe' type='button' value='Set start to current time' onclick='document.getElementById(\'endy\').value = getCurrentVideoTimestampHuman();' />
+<br/>
+action:
+<select name='default_action' id='new_action'>
+  <option value='mute'>mute</option>
+  <option value='skip'>skip</option>
+  <option value='yes_audio_no_video'>yes_audio_no_video</option>
+  <option value='do_nothing'>do_nothing</option>
+</select>
+<input type='submit' value='New edit' onclick="newEditButton();">
+`;
 edlLayer.id = "edlLayer";
 
-newEdlButton = document.createElement('div');
-newEdlButton.style.position = 'absolute';
-newEdlButton.style.width = '300px';
-newEdlButton.style.height = '30px';
-newEdlButton.style.background = '#000000';
-newEdlButton.style.zIndex = "99999999"; // on top :)
-newEdlButton.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-newEdlButton.style.textShadow="2px 1px 0px white";
-newEdlButton.style.fontSize = "13px";
-newEdlButton.style.top = "60px";
-document.body.appendChild(newEdlButton);
-newEdlButton.innerHTML = "<input type='submit' value='New edit' onclick=\"newEditButton();\">";
+function getCurrentVideoTimestampHuman() {
+  return timeStampToHuman(video_element.currentTime);
+}
 
+function timeStampToHuman(timestamp) {
+  var hours = Math.round(timestamp / 3600);
+  timestamp -= hours * 3600;
+  var minutes  = Math.round(timestamp / 60);
+  timestamp -= hours * 60;
+  var seconds = timestamp.toFixed(2); //  -> "12.30";
+  // padding is "hard" LOL
+  if (hours > 0)
+    return hours + "h " + minutes + "m " + seconds + "s";
+  else
+    return minutes + "m " + seconds + "s";
+}
 
 function newEditButton() {
-  console.log("new edit button clicked");
+  console.log("new edit button clicked TODO pull in from UI");
+  // TODO auto do it for them there anyway :)
   var win = window.open("http://" + request_host + "/add_edl/" + url_id, '_blank');
 }
 
