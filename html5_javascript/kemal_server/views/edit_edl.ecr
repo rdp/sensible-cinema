@@ -31,18 +31,21 @@ document.getElementById('category_select').value = '<%= edl.category %>';
 <br/>
 sub category
 <select name="subcategory" id='subcategory_select'>
-  <option value="personal attack">profanity -- personal attack ("moron" etc.)</option> <!-- all this same level ? -->
-  <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm...)</option>
-  <option value="bodily part reference harsh">profanity -- bodily part reference harsh (a-hole, etc.)</option>
-  <option value="sexual reference">profanity -- sexual reference</option>
-  <option value="deity">profanity -- deity</option>
-  <option value="lesser profanity">profanity -- lesser 4-letter words d***</option>
-  <option value="harsher profanity">profanity -- harsher 4-letter words</option>
+  <optgroup label="profanity">
+    <option value="personal attack">profanity -- personal attack ("moron" etc.)</option> <!-- all this same level ? -->
+    <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm...)</option>
+    <option value="bodily part reference harsh">profanity -- bodily part reference harsh (a-hole, etc.)</option>
+    <option value="sexual reference">profanity -- sexual reference</option>
+    <option value="deity">profanity -- deity</option>
+    <option value="lesser profanity">profanity -- lesser 4-letter words d***</option>
+    <option value="harsher profanity">profanity -- harsher 4-letter words</option>
+  </optgroup>
 
-  <option class="select-dash" disabled="disabled">----</option>
+  <option class="select-dash" disabled="disabled">&#x2500;&#x2500;&#x2500;&#x2500;</option>
   option value="gore">violence -- gore</option>
   <option value="stabbing">violence -- stabbing</option>
   <option value="shooting">violence -- shooting</option>
+  <option value="light fight">violence -- almost fight</option>
 
   <option class="select-dash" disabled="disabled">----</option>
   <option value="lewdness">physical -- lewdness</option>
