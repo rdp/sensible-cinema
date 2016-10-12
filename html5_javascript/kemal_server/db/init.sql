@@ -29,6 +29,7 @@ insert into edits (start, endy, category, subcategory, details, default_action, 
           (10.0, 30.0, "a category", "a subcat", 3, "details", "mute", (select id from urls where url='https://www.netflix.com/watch/80016224'));
 
 alter table urls add amazon_episode_number INTEGER NOT NULL DEFAULT 0;
+alter table urls add amazon_episode_name TEXT NOT NULL DEFAULT "";
 
 -- guess I didn't have any unique url constraint before this, only id...
 -- also gets us an index by both :)

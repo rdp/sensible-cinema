@@ -188,7 +188,15 @@ newEdlButton.style.textShadow="2px 1px 0px white";
 newEdlButton.style.fontSize = "13px";
 newEdlButton.style.top = "60px";
 document.body.appendChild(newEdlButton);
-newEdlButton.innerHTML = "<input type='submit' value='New edit'/>";
+newEdlButton.innerHTML = "<input type='submit' value='New edit' onclick=\"newEditButton();\">";
+
+
+function newEditButton() {
+  alert("new edit button clicked");
+  jQuery("#edlLayer").load("//" + request_host + "/add_edl/" + url_id, function() {
+    alert( "Load was performed." );
+  });
+}
 
 function stepFrame() {
   video_element.play();
@@ -215,6 +223,7 @@ function readyToGo() {
   }
 }
 
-readyToGo();
+// load jquery first
+javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
-// how to load snippet moved to index.ecr
+// how to load self snippet moved to index.ecr
