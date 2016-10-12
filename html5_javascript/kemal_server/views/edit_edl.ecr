@@ -7,8 +7,12 @@
   <input type="hidden" name="id" value="<%= edl.id %>">
 <% end %>
 
-from:<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.start %></textarea> to:
-<textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;"><%= seconds_to_human edl.endy %></textarea>
+from:<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="start"><%= seconds_to_human edl.start %></textarea>
+<input id="clickMe" type="button" value="Set start to current time"" onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+<br/>
+to: <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="endy"><%= seconds_to_human edl.endy %></textarea>
+<input id="clickMe" type="button" value="Set end to current time"" onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+<br/>
 <select name="default_action" id='sel'>
   <option value="mute">mute</option>
   <option value="skip">skip</option>
@@ -111,12 +115,12 @@ details (ex: euphemized actual text ??)
 </form>
 
 
-<video id="video" controls="" preload="none" mediagroup="myVideoGroup" poster="https://media.w3.org/2010/05/sintel/poster.png" width="40px">
+<!--video id="video" controls="" preload="none" mediagroup="myVideoGroup" poster="https://media.w3.org/2010/05/sintel/poster.png" width="40px">
       <source id="mp4" src="https://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
       <source id="webm" src="https://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">
       <source id="ogv" src="https://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
       <p>Your user agent does not support the HTML5 Video element.</p>
-    </video>
+</video-->
 
 <script>
 function findFirstVideoTagLocal(node) {
@@ -128,12 +132,20 @@ function findFirstVideoTagLocal(node) {
         node = node.firstChild;
 
         while (node) {
-            if ((out = findFirstVideoTag(node)) != null) {
+            if ((out = findFirstVideoTagLocal(node)) != null) {
                 return out;
             }
             node = node.nextSibling;
         }
     }
+}
+
+function getCurrentVideoTimestampHuman() {
+  var video_element = findFirstVideoTagLocal(document.body);
+  if (video_element == null) 
+    alert("unable to find video element to get timestamp");
+  else
+    return timeStampToHuman(video_element.currentTime);
 }
 
 function updateCategory() {
@@ -142,4 +154,16 @@ function updateCategory() {
   document.getElementById("category_select").value = cat_from_subcat;
 }
 
+function timeStampToHuman(timestamp) {
+  var hours = Math.round(timestamp / 3600);
+  timestamp -= hours * 3600;
+  var minutes  = Math.round(timestamp / 60);
+  timestamp -= hours * 60;
+  var seconds = timestamp.toFixed(2); //  -> "12.30";
+  // padding is "hard" LOL
+  if (hours > 0)
+    return hours + "h " + minutes + "m " + seconds + "s";
+  else
+    return minutes + "m " + seconds + "s";
+}
 </script>
