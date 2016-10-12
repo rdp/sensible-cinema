@@ -306,18 +306,18 @@ get "/new_url" do |env|
   else
     amazon_episode_number = 0
   end
-
   begin
-    response = HTTP::Client.get real_url # download page :)
-    title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has one :)
-    # cleanup some amazon
-    title = title.gsub(": Amazon Digital Services LLC", "")
-    title = title.gsub("Amazon.com: ", "")
-    url = Url.new(real_url, title, amazon_episode_number)
+    response = HTTP::Client.get real_url # download that page :)
   rescue ex
-    raise "unable to download that url" + real_url + " #{ex}" # expect url to work for now :|
+    raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
   end
-  render "views/edit_url.ecr"
+  title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has a title :)
+  # cleanup some added stuff
+  title = title.gsub(": Amazon   Digital Services LLC", "")
+  title = title.gsub("Amazon.com: ", "")
+  url = Url.new(real_url, title, amazon_episode_number)
+  url.save # hope our data's OK 
+  env.redirect "/edit_url/#{url.id}"
 end
 
 def sanitize_html(name)

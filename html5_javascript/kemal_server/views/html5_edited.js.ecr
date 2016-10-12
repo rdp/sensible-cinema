@@ -1,14 +1,15 @@
 // copy and paste all of this text (including this line) into your developer tools javascript console side bar, then hit enter, please:
 
-// generated at <%= Time.now %>
-// begin auto inserted unique for your movie: name, mutes, skips
-var name="<%= name %>";
+// generated at <%= Time.now %>.
+// begin auto inserted unique for your movie:
+var name="<%= name %>"; // movie name
 var mutes=<%= mutes %>;
 var skips=<%= skips %>;
 var yes_audio_no_videos=<%= yes_audio_no_videos %>;
-var expected_url = "<%= url %>";
-var expected_episode = <%= db_url.amazon_episode_number %>;`
-// end auto inserted unique
+var expected_current_url="<%= url %>";
+var expected_episode=<%= db_url.amazon_episode_number %>;
+var url_id=<%= db_url.id %>;
+// end auto inserted unique stuffs
 
 current_url_sanitized = window.location.href.split("?")[0];
 current_url_sanitized = current_url_sanitized.replace("smile.amazon", "www.amazon");
@@ -17,19 +18,19 @@ if ( current_url_sanitized.includes("/dp/") ) {
   current_url_sanitized = "https://www.amazon.com/gp/product/" + id
 }
 
-if (current_url_sanitized != expected_url) {
-  alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_url);
+if (current_url_sanitized != expected_current_url) {
+  alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_current_url);
 }
-
 
 function getCurrentAmazonEpisode() {
-  /Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1] 
+  if($('div.subtitle') &&  $('div.subtitle').innerHTML.match(/Ep. (\d+)/))
+    return /Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1];
+  else
+    return "0"; // anything else
 }
 
-if (expected_episode != 0 ) {
-  if (getCurrentAmazonEpisode() != expected_episode) {
-    alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
-  }
+if (getCurrentAmazonEpisode() != expected_episode) {
+  alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
 }
 
 if (typeof timer !== 'undefined') {
