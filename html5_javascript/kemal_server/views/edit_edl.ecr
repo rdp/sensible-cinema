@@ -95,18 +95,6 @@ sub category
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
 </script>
 <br/>
-age level might be OK
-<select name="subcategory_level" id='subcategory_level_select'>
-  <% (1..17).each{ |n| %>
-    <option value="<%= n %>"><%= n %></option>
-  <% } %>
-  <option value="99">99</option>
-</select>
-<br/>
-<script>
-document.getElementById('subcategory_level_select').value = '<%= edl.subcategory_level %>';
-</script>
-<br/>
 details (ex: euphemized actual text ??)
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
 </div>

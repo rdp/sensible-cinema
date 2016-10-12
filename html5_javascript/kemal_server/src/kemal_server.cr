@@ -106,7 +106,6 @@ class Edl
     endy: {type: Float64},
     category: {type: String},       
     subcategory: {type: String},   
-    subcategory_level: Int32,   
     details: {type: String},     
     default_action: {type: String},
     url_id: Int32
@@ -140,7 +139,6 @@ class Edl
     @endy = 0.0
     @category = "profanity"
     @subcategory = ""
-    @subcategory_level = 99
     @details = ""
     @default_action = "mute"
     @url_id = url.id
@@ -149,9 +147,9 @@ class Edl
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into edits (start, endy, category, subcategory, subcategory_level, details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @subcategory_level, @details, @default_action, @url_id).last_insert_id
+        @id = conn.exec("insert into edits (start, endy, category, subcategory, details, default_action, url_id) values (?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @default_action, @url_id).last_insert_id
       else
-        conn.exec "update edits set start = ?, endy = ?, category = ?, subcategory = ?, subcategory_level = ?, details = ?, default_action = ? where id = ?", start, endy, category, subcategory, subcategory_level, details, default_action, id
+        conn.exec "update edits set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, default_action, id
       end
     end
   end
@@ -287,7 +285,6 @@ post "/save_edl/:url_id" do |env|
   edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
   edl.category = sanitize_html params["category"] # hope it's a legit value LOL
   edl.subcategory = sanitize_html params["subcategory"]
-  edl.subcategory_level = params["subcategory_level"].to_i
   edl.details = sanitize_html params["details"]
   raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy)
   edl.save
