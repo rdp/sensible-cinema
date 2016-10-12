@@ -1,4 +1,9 @@
-<h1>Editing edit for <a href=/edit_url/<%= url.id %>><%= url.name %> <%= url.amazon_episode_number %></a></h1>
+<h1>Editing edit for <a href=/edit_url/<%= url.id %>><%= url.name %>
+<% if url.amazon_episode_number != 0 %>
+  ep. <%= url.amazon_episode_number %>
+  <%= url.amazon_episode_name %>
+<% end %>
+</a></h1>
 
 <form action="/save_edl/<%= url.id %>" method="POST">
 <div>
@@ -13,6 +18,7 @@ from:<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-fami
 to: <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="endy"><%= seconds_to_human edl.endy %></textarea>
 <input id="clickMe" type="button" value="Set end to current time"" onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
 <br/>
+default action to take:
 <select name="default_action" id='sel'>
   <option value="mute">mute</option>
   <option value="skip">skip</option>
