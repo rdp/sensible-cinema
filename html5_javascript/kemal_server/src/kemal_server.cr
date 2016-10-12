@@ -212,12 +212,12 @@ get "/for_current" do |env|
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-      javascript_for(url)
+      javascript_for(url, env)
     end
   end
 end
 
-def javascript_for(db_url)
+def javascript_for(db_url, env)
   with_db do |conn|
     mute_edls = conn.query("select * from edits where url_id=? and default_action = 'mute'", db_url.id) do |rs|
       Edl.from_rs rs
@@ -233,6 +233,7 @@ def javascript_for(db_url)
     mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
     name = URI.escape(db_url.name) # XXX this is too restrictive I believe...but this gets injected...
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
+    request_host =  env.request.headers["Host"] # like localhost:3000
     render "views/html5_edited.js.ecr"
   end
 end
@@ -247,7 +248,7 @@ get "/delete_edl/:id" do |env|
   id = env.params.url["id"]
   edl = Edl.get_single_by_id(id)
   edl.destroy
-  save_local_javascript edl.url, "removed #{edl}"
+  save_local_javascript edl.url, "removed #{edl}", env
   env.redirect "/edit?url=" + edl.url.url
 end
 
@@ -288,7 +289,7 @@ post "/save_edl/:url_id" do |env|
   edl.details = sanitize_html params["details"]
   raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy)
   edl.save
-  save_local_javascript edl.url, edl.inspect
+  save_local_javascript edl.url, edl.inspect, env
   env.redirect "/edit_url/#{edl.url.id}"
 end
 
@@ -329,8 +330,8 @@ get "/index" do |env|
   render "views/index.ecr"
 end
 
-def save_local_javascript(db_url, log_message)
-  as_javascript = javascript_for(db_url)
+def save_local_javascript(db_url, log_message, env)
+  as_javascript = javascript_for(db_url, env)
   url_escaped = URI.escape(db_url.url)
   File.open("edit_descriptors/log.txt", "a") do |f|
     f.puts log_message
@@ -359,7 +360,7 @@ post "/save_url" do |env|
   db_url.name = name
   db_url.amazon_episode_number = amazon_episode_number
   db_url.save
-  save_local_javascript db_url, db_url.inspect
+  save_local_javascript db_url, db_url.inspect, env
   env.redirect "/index"
 end
 

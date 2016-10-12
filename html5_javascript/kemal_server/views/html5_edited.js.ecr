@@ -9,6 +9,7 @@ var yes_audio_no_videos=<%= yes_audio_no_videos %>;
 var expected_current_url="<%= url %>";
 var expected_episode=<%= db_url.amazon_episode_number %>;
 var url_id=<%= db_url.id %>;
+var request_host="<%= request_host %>"; // like localhost:3000
 // end auto inserted unique stuffs
 
 current_url_sanitized = window.location.href.split("?")[0];
@@ -174,6 +175,20 @@ edlLayer.style.fontSize = "13px";
 edlLayer.style.top = "30px";
 document.body.appendChild(edlLayer);
 edlLayer.innerHTML = "second edl layer";
+edlLayer.id = "edlLayer";
+
+newEdlButton = document.createElement('div');
+newEdlButton.style.position = 'absolute';
+newEdlButton.style.width = '300px';
+newEdlButton.style.height = '30px';
+newEdlButton.style.background = '#000000';
+newEdlButton.style.zIndex = "99999999"; // on top :)
+newEdlButton.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+newEdlButton.style.textShadow="2px 1px 0px white";
+newEdlButton.style.fontSize = "13px";
+newEdlButton.style.top = "60px";
+document.body.appendChild(newEdlButton);
+newEdlButton.innerHTML = "<input type='submit' value='New edit'/>";
 
 function stepFrame() {
   video_element.play();
