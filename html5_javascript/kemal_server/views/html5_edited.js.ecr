@@ -24,15 +24,13 @@ if (current_url_sanitized != expected_current_url) {
 }
 
 function getCurrentAmazonEpisode() {
-  if($('div.subtitle') &&  $('div.subtitle').innerHTML.match(/Ep. (\d+)/))
-    return /Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1];
+  var subtitle = jQuery('div.subtitle')[0];
+  if (subtitle &&  subtitle.innerHTML.match(/Ep. (\d+)/))
+    return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
   else
     return "0"; // anything else
 }
 
-if (getCurrentAmazonEpisode() != expected_episode) {
-  alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
-}
 
 if (typeof timer !== 'undefined') {
   clearInterval(timer); // in case we need to reset from previous load :)
@@ -192,10 +190,8 @@ newEdlButton.innerHTML = "<input type='submit' value='New edit' onclick=\"newEdi
 
 
 function newEditButton() {
-  alert("new edit button clicked");
-  jQuery("#edlLayer").load("//" + request_host + "/add_edl/" + url_id, function() {
-    alert( "Load was performed." );
-  });
+  console.log("new edit button clicked");
+  var win = window.open("http://" + request_host + "/add_edl/" + url_id, '_blank');
 }
 
 function stepFrame() {
@@ -207,6 +203,9 @@ function stepFrame() {
 }
 
 function readyToGo() {
+  if (getCurrentAmazonEpisode() != expected_episode) {
+    alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
+  }
 
   video_element = findFirstVideoTag(document.body);
   if (video_element == null) { 
@@ -223,7 +222,7 @@ function readyToGo() {
   }
 }
 
-// load jquery first
+// load jquery first, just cuz
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
 // how to load self snippet moved to index.ecr
