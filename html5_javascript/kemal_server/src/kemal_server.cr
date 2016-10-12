@@ -25,7 +25,7 @@ class Url
     end
   end
   
-  def self.get_single_or_nil_by_url_and_amazon_episode_number(url, amazon_episode_number)
+  def self.get_only_or_nil_by_url_and_amazon_episode_number(url, amazon_episode_number)
     with_db do |conn|
       urls = conn.query("SELECT * from urls where url = ? and amazon_episode_number = ?", url, amazon_episode_number) do |rs|
          Url.from_rs(rs);
@@ -91,7 +91,7 @@ class Url
     "url=#{url}&amazon_episode_number=#{amazon_episode_number}"
   end
 
-  def self.get_single_by_id(id)
+  def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from urls where id = ?", id) do |rs|
          Url.from_rs(rs)[0] # Index OOB if not there :|
@@ -113,7 +113,7 @@ class Edl
     url_id: Int32
   })
   
-  def self.get_single_by_id(id)
+  def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from edits where id = ?", id) do |rs|
          Edl.from_rs(rs)[0] # Index OOB if not there :|
@@ -209,7 +209,7 @@ get "/for_current" do |env|
   real_url = real_url(env)
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i # "always there" :)
   with_db do |conn|
-    url_or_nil = Url.get_single_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
+    url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
     if !url_or_nil
       "alert('none for this movie yet');"
     else
@@ -241,28 +241,28 @@ def javascript_for(db_url, env)
   end
 end
 
-get "/delete_url/:id" do |env|
-  url = Url.get_single_by_id(env.params.url["id"])
+get "/delete_url/:url_id" do |env|
+  url = get_url_from_url_id(env)
   url.destroy
   env.redirect "/index"
 end
 
 get "/delete_edl/:id" do |env|
   id = env.params.url["id"]
-  edl = Edl.get_single_by_id(id)
+  edl = Edl.get_only_by_id(id)
   edl.destroy
   save_local_javascript edl.url, "removed #{edl}", env
   env.redirect "/edit?url=" + edl.url.url
 end
 
 get "/edit_edl/:id" do |env|
-  edl = Edl.get_single_by_id(env.params.url["id"])
+  edl = Edl.get_only_by_id(env.params.url["id"])
   url = edl.url
   render "views/edit_edl.ecr"
 end
 
 def get_url_from_url_id(env)
-  Url.get_single_by_id(env.params.url["url_id"])
+  Url.get_only_by_id(env.params.url["url_id"])
 end
 
 get "/add_edl/:url_id" do |env|
@@ -280,7 +280,7 @@ end
 post "/save_edl/:url_id" do |env|
   params = env.params.body
   if params.has_key? "id"
-    edl = Edl.get_single_by_id(params["id"])
+    edl = Edl.get_only_by_id(params["id"])
   else
     edl = Edl.new(get_url_from_url_id(env))
   end
@@ -296,12 +296,10 @@ post "/save_edl/:url_id" do |env|
   env.redirect "/edit_url/#{edl.url.id}"
 end
 
-get "/edit_url/:id" do |env| # same as "view" and "new" LOL but we have the url
-  id = env.params.url["id"]
-  url = Url.get_single_by_id(id)
+get "/edit_url/:url_id" do |env| # same as "view" and "new" LOL but we have the url
+  url = get_url_from_url_id(env)
   render "views/edit_url.ecr"
 end
-
 
 get "/new_url" do |env|
   real_url = real_url(env)
@@ -355,7 +353,7 @@ post "/save_url" do |env|
   amazon_episode_name = sanitize_html HTML.unescape(params["amazon_episode_name"])
 
   if params.has_key? "id"
-    db_url = Url.get_single_by_id(params["id"])
+    db_url = Url.get_only_by_id(params["id"])
   else
     db_url = Url.new
   end
