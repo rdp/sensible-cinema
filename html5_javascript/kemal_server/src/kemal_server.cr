@@ -287,6 +287,7 @@ end
 
 post "/save_edl/:url_id" do |env|
   params = env.params.body
+  puts params
   if params.has_key? "id"
     edl = Edl.get_only_by_id(params["id"])
   else

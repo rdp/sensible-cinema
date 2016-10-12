@@ -104,3 +104,12 @@ details (ex: euphemized actual text ??)
 </div>
 <div><input type="submit" value="Save"></div>
 </form>
+
+<script>
+function updateCategory() {
+  var element = document.getElementById("subcategory_select");
+  var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
+  document.getElementById("category_select").value = cat_from_subcat;
+  document.getElementById("category_select").disabled = false; //so it'll post 
+}
+</script>
