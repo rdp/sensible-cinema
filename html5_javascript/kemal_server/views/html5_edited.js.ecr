@@ -114,7 +114,7 @@ function checkStatus() {
     }
   }
   
-  myLayer.innerHTML = cur_time.toFixed(2) + " " + extra_message; // TODO humanize everywhere :)
+  myLayer.innerHTML = timeStampToHuman(cur_time) + " " + extra_message;
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -174,10 +174,10 @@ edlLayer.style.top = "30px";
 document.body.appendChild(edlLayer);
 edlLayer.innerHTML = `
 from:<textarea name='start' rows='1' cols='20' style='width: 100px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
-<input id='clickMe' type='button' value='Set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+<input id='clickMe' type='button' value='currentify' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
 <br/>
-to:<textarea name='endy' rows='1' cols='20' style='width: 100px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
-<input id='clickMe' type='button' value='Set to current time' onclick='document.getElementById(\'endy\').value = getCurrentVideoTimestampHuman();' />
+to:<textarea name='endy' rows='1' cols='20' style='width: 100px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
+<input id='clickMe' type='button' value='currentify' onclick='document.getElementById(\'endy\').value = getCurrentVideoTimestampHuman();' />
 <br/>
 <select name='default_action' id='new_action'>
   <option value='mute'>mute</option>
@@ -186,7 +186,7 @@ to:<textarea name='endy' rows='1' cols='20' style='width: 100px; font-size: 12pt
   <option value='do_nothing'>do_nothing</option>
 </select>
 +<input type='submit' value='Test' onclick="alert('not implemented');">
-<input type='submit' value='New edit' onclick="newEditButton();">
+<input type='submit' value='Save edit' onclick="newEditButton();">
 `;
 edlLayer.id = "edlLayer";
 
@@ -195,12 +195,12 @@ function getCurrentVideoTimestampHuman() {
 }
 
 function timeStampToHuman(timestamp) {
-  var hours = Math.round(timestamp / 3600);
+  var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;
-  var minutes  = Math.round(timestamp / 60);
-  timestamp -= hours * 60;
+  var minutes  = Math.floor(timestamp / 60);
+  timestamp -= minutes * 60;
   var seconds = timestamp.toFixed(2); //  -> "12.30";
-  // padding is "hard" LOL
+  // padding is "hard" apparently in javascript LOL
   if (hours > 0)
     return hours + "h " + minutes + "m " + seconds + "s";
   else
