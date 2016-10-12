@@ -172,12 +172,13 @@ edlLayer.style.textShadow="2px 1px 0px white";
 edlLayer.style.fontSize = "13px";
 edlLayer.style.top = "30px";
 document.body.appendChild(edlLayer);
+// what a pain :|
 edlLayer.innerHTML = `
-from:<textarea name='start' rows='1' cols='20' style='width: 100px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
-<input id='clickMe' type='button' value='currentify' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
+<input id='clickMe' type='button' value='current-ify!' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
 <br/>
-to:<textarea name='endy' rows='1' cols='20' style='width: 100px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
-<input id='clickMe' type='button' value='currentify' onclick='document.getElementById(\'endy\').value = getCurrentVideoTimestampHuman();' />
+to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
+<input id='clickMe' type='button' value='current-ify!' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
 <br/>
 <select name='default_action' id='new_action'>
   <option value='mute'>mute</option>
@@ -188,7 +189,6 @@ to:<textarea name='endy' rows='1' cols='20' style='width: 100px; font-size: 12pt
 +<input type='submit' value='Test' onclick="alert('not implemented');">
 <input type='submit' value='Save edit' onclick="newEditButton();">
 `;
-edlLayer.id = "edlLayer";
 
 function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(video_element.currentTime);

@@ -105,34 +105,7 @@ details (ex: euphemized actual text ??)
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
 </div>
 <div><input type="submit" value="Save"></div>
-
 </form>
-
-
-<!--video id="video" controls="" preload="none" mediagroup="myVideoGroup" poster="https://media.w3.org/2010/05/sintel/poster.png" width="40px">
-      <source id="mp4" src="https://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
-      <source id="webm" src="https://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">
-      <source id="ogv" src="https://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
-      <p>Your user agent does not support the HTML5 Video element.</p>
-</video-->
-
-<script>
-function findFirstVideoTagLocal(node) {
-    if (node.nodeType == 1) {
-
-        if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
-            return node;
-        }
-        node = node.firstChild;
-
-        while (node) {
-            if ((out = findFirstVideoTagLocal(node)) != null) {
-                return out;
-            }
-            node = node.nextSibling;
-        }
-    }
-}
 
 function getCurrentVideoTimestampHuman() {
   var video_element = findFirstVideoTagLocal(document.body);
@@ -146,18 +119,5 @@ function updateCategory() {
   var element = document.getElementById("subcategory_select");
   var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
   document.getElementById("category_select").value = cat_from_subcat;
-}
-
-function timeStampToHuman(timestamp) {
-  var hours = Math.round(timestamp / 3600);
-  timestamp -= hours * 3600;
-  var minutes  = Math.round(timestamp / 60);
-  timestamp -= hours * 60;
-  var seconds = timestamp.toFixed(2); //  -> "12.30";
-  // padding is "hard" LOL
-  if (hours > 0)
-    return hours + "h " + minutes + "m " + seconds + "s";
-  else
-    return minutes + "m " + seconds + "s";
 }
 </script>
