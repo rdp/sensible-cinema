@@ -13,10 +13,8 @@
 <% end %>
 
 from:<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="start"><%= seconds_to_human edl.start %></textarea>
-<input id="clickMe" type="button" value="Set start to current time"" onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
 <br/>
 to: <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="endy"><%= seconds_to_human edl.endy %></textarea>
-<input id="clickMe" type="button" value="Set end to current time"" onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
 <br/>
 default action to take:
 <select name="default_action" id='sel'>
@@ -106,18 +104,3 @@ details (ex: euphemized actual text ??)
 </div>
 <div><input type="submit" value="Save"></div>
 </form>
-
-function getCurrentVideoTimestampHuman() {
-  var video_element = findFirstVideoTagLocal(document.body);
-  if (video_element == null) 
-    alert("unable to find video element to get timestamp");
-  else
-    return timeStampToHuman(video_element.currentTime);
-}
-
-function updateCategory() {
-  var element = document.getElementById("subcategory_select");
-  var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
-  document.getElementById("category_select").value = cat_from_subcat;
-}
-</script>

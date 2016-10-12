@@ -268,11 +268,19 @@ end
 get "/add_edl/:url_id" do |env|
   url = get_url_from_url_id(env)
   edl = Edl.new url
-  last_edl = url.last_edl_or_nil
-  if last_edl
-    last_end = last_edl.endy
-    edl.start = last_end + 1
-    edl.endy = last_end + 2
+  query = env.params.query
+  if query.has_key?("start")
+    edl.start = human_to_seconds query["start"]
+    edl.endy = human_to_seconds query["endy"]
+    edl.default_action = sanitize_html query["default_action"]
+  else
+    # just make it past the last instead of 0's XXX remove?
+    last_edl = url.last_edl_or_nil
+    if last_edl
+      last_end = last_edl.endy
+      edl.start = last_end + 1
+      edl.endy = last_end + 2
+    end
   end
   render "views/edit_edl.ecr"
 end

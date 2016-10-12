@@ -187,7 +187,7 @@ to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt
   <option value='do_nothing'>do_nothing</option>
 </select>
 +<input type='submit' value='Test' onclick="alert('not implemented');">
-<input type='submit' value='Save edit' onclick="newEditButton();">
+<input type='submit' value='Save edit' onclick="saveEditButton();">
 `;
 
 function getCurrentVideoTimestampHuman() {
@@ -207,10 +207,11 @@ function timeStampToHuman(timestamp) {
     return minutes + "m " + seconds + "s";
 }
 
-function newEditButton() {
-  console.log("new edit button clicked TODO pull in from UI");
-  // TODO auto do it for them there anyway :)
-  var win = window.open("http://" + request_host + "/add_edl/" + url_id, '_blank');
+function saveEditButton() {
+  var url = "http://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
+  "&endy=" + document.getElementById('endy').value + "&default_action=" + document.getElementById('new_action').value;
+  console.log(url);
+  var win = window.open(url, '_blank');
 }
 
 function stepFrame() {
