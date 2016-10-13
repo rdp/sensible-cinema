@@ -199,8 +199,17 @@ to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt
 <input type='submit' value='Save edit' onclick="saveEditButton();">
 `;
 }
+
 function testCurrent() {
-  alert("current array=" + currentEditArray());
+  start = humanToTimeStamp(document.getElementById('start').value);
+  endy = humanToTimeStamp(document.getElementById('endy').value);
+  currentEditArray().push([start, endy]);
+  video_element.currentTime = start - 3;
+  length = endy - start;
+  wait_time_millis = (length + 3 + 3)*1000;
+  setTimeout(function() {
+    currentEditArray().pop();
+  }, wait_time_millis)
 }
 
 function currentEditArray() {
@@ -210,9 +219,10 @@ function currentEditArray() {
     case 'skip':
       return skips;
     case 'yes_audio_no_video':
-      return yes_audio_no_videos;;
+      return yes_audio_no_videos;
     case 'do_nothing':
-      return [];;
+      alert("you want to test something thats do nothing?");
+      return [0.0]; // doesn't matter, but something to pop in case :)
     default:
       alert('internal error 1');
   }
@@ -233,6 +243,29 @@ function timeStampToHuman(timestamp) {
     return hours + "h " + minutes + "m " + seconds + "s";
   else
     return minutes + "m " + seconds + "s";
+}
+
+function removeA(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+
+function humanToTimeStamp(timestamp) {
+  // 0h 17m 34.54s
+  sum = 0.0
+  split = timestamp.split(/[hms ]/)
+  removeA(split, "");
+  split.reverse();
+  for (var i = 0; i < split.length; i++) {
+    sum += parseFloat(split[i]) * Math.pow(60, i);
+  }
+  return sum;
 }
 
 function saveEditButton() {
