@@ -162,25 +162,24 @@ myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but als
 myLayer.style.textShadow="2px 1px 0px white";
 myLayer.style.fontSize = "13px";
 myLayer.style.top = "0";
-var doc = document.documentElement;
-var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-myLayer.style.left = left + "px"; // TODO full screen button??
-myLayer.style.top = top + "px";;
 document.body.appendChild(myLayer);
 
 edlLayer = document.createElement('div');
 edlLayer.style.position = 'absolute';
-edlLayer.style.width = '300px';
+edlLayer.style.width = '500px';
 edlLayer.style.height = '30px';
 edlLayer.style.background = '#000000';
 edlLayer.style.zIndex = "99999999"; // on top :)
 edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
 edlLayer.style.textShadow="2px 1px 0px white";
 edlLayer.style.fontSize = "13px";
-edlLayer.style.left = left + "px";
-edlLayer.style.top = (top + 30) + "px";
 document.body.appendChild(edlLayer);
+
+setCurrentOnTop();
+// jquery is already loaded
+jQuery(window).resize(function(){
+  setCurrentOnTop();
+});
 
 // inject some UI
 edlLayer.innerHTML = `
@@ -197,7 +196,6 @@ action:
   <option value='yes_audio_no_video'>yes_audio_no_video</option>
   <option value='do_nothing'>do_nothing</option>
 </select>
-<br/>
 <input type='submit' value='Test once' onclick="testCurrent();">
 <input type='submit' value='Add edit' onclick="saveEditButton();">
 <a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
@@ -207,6 +205,18 @@ action:
 <a href="#" onclick="video_element.play()">&#9654;</a>
 <a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
 `;
+}
+
+function setCurrentOnTop() {
+  var doc = document.documentElement;
+  var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+  var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+  offset = 150; // allow kill amazon x-ray :|
+  left += offset;
+  myLayer.style.left = left + "px"; // TODO full screen button??
+  myLayer.style.top = top + "px";;
+  edlLayer.style.left = left + "px";
+  edlLayer.style.top = (top + 30) + "px";
 }
 
 function addFromCurrent() {
