@@ -204,9 +204,14 @@ function testCurrent() {
   start = humanToTimeStamp(document.getElementById('start').value);
   endy = humanToTimeStamp(document.getElementById('endy').value);
   currentEditArray().push([start, endy]);
-  video_element.currentTime = start - 3;
+  // shenanigans as usual
+  video_element.pause();
+  video_element.currentTime = start - 2; 
+  video_element.play();
   length = endy - start;
-  wait_time_millis = (length + 3 + 3)*1000;
+  if (document.getElementById('new_action').value == 'skip') 
+    length = 0; // it skips it after all
+  wait_time_millis = (length + 2 + 0.1)*1000; 
   setTimeout(function() {
     currentEditArray().pop();
   }, wait_time_millis)
