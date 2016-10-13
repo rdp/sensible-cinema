@@ -161,7 +161,11 @@ myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but als
 myLayer.style.textShadow="2px 1px 0px white";
 myLayer.style.fontSize = "13px";
 myLayer.style.top = "0";
-myLayer.style.left = jQuery(window).scrollLeft();
+var doc = document.documentElement;
+var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+myLayer.style.left = left + "px"; // TODO full screen button??
+myLayer.style.top = top + "px";;
 document.body.appendChild(myLayer);
 
 edlLayer = document.createElement('div');
@@ -173,10 +177,11 @@ edlLayer.style.zIndex = "99999999"; // on top :)
 edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
 edlLayer.style.textShadow="2px 1px 0px white";
 edlLayer.style.fontSize = "13px";
-edlLayer.style.top = "30px";
-myLayer.style.left = jQuery(window).scrollLeft();
+edlLayer.style.left = left + "px";
+edlLayer.style.top = (top + 30) + "px";
 document.body.appendChild(edlLayer);
-// what a pain :|
+
+// inject some UI
 edlLayer.innerHTML = `
 from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
 <input id='clickMe' type='button' value='current-ify!' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
