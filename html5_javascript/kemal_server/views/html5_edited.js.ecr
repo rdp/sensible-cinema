@@ -149,6 +149,8 @@ function handleNetflixSeekOrStop(cur_time) {
     }
 }
 
+function setupDeveloper() {
+
 myLayer = document.createElement('div');
 myLayer.style.position = 'absolute';
 myLayer.style.width = '100px';
@@ -159,6 +161,7 @@ myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but als
 myLayer.style.textShadow="2px 1px 0px white";
 myLayer.style.fontSize = "13px";
 myLayer.style.top = "0";
+myLayer.style.left = jQuery(window).scrollLeft();
 document.body.appendChild(myLayer);
 
 edlLayer = document.createElement('div');
@@ -171,6 +174,7 @@ edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but al
 edlLayer.style.textShadow="2px 1px 0px white";
 edlLayer.style.fontSize = "13px";
 edlLayer.style.top = "30px";
+myLayer.style.left = jQuery(window).scrollLeft();
 document.body.appendChild(edlLayer);
 // what a pain :|
 edlLayer.innerHTML = `
@@ -189,7 +193,7 @@ to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt
 <input type='submit' value='Test once' onclick="testCurrent();">
 <input type='submit' value='Save edit' onclick="saveEditButton();">
 `;
-
+}
 function testCurrent() {
   alert("current array=" + currentEditArray());
 }
@@ -251,10 +255,11 @@ function readyToGo() {
     alert("failure: unable to find a video playing, did you paste this in the right page?"); 
   }
   else {
+    setupDeveloper();
     timer = setInterval(function () {
         checkStatus();
     }, 1000 / 30 / 2 ); // 30 fps * 2, try to be frame accurate assume max 30 fps
-    var message = "ready to go edited\n" +  decodeURIComponent(name) + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyou may close developer javascript console now";
+    var message = "ready to go edited\n" +  decodeURIComponent(name) + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
     console.log(message);
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
     console.log("run 'video_element.currentTime' to get current timestamp...'video_element.playbackRate = 1.5' to x 1.5 speed playback, 'stepFrame()' to move forward one frame and/or display timestamp");
