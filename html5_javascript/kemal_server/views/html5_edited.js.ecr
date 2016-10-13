@@ -114,7 +114,8 @@ function checkStatus() {
     }
   }
   
-  myLayer.innerHTML = " " + timeStampToHuman(cur_time) + " " + video_element.playbackRate.toFixed(2) + "x " + extra_message;
+  myLayer.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
+  jQuery("#playback_rate").html(video_element.playbackRate.toFixed(2) + "x");
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -153,7 +154,7 @@ function setupDeveloper() {
 
 myLayer = document.createElement('div');
 myLayer.style.position = 'absolute';
-myLayer.style.width = '100px';
+//myLayer.style.width = '200px';
 myLayer.style.height = '30px';
 myLayer.style.background = '#000000';
 myLayer.style.zIndex = "99999999"; // on top :)
@@ -184,30 +185,43 @@ document.body.appendChild(edlLayer);
 // inject some UI
 edlLayer.innerHTML = `
 from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
-<input id='clickMe' type='button' value='current-ify!' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+<input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
 <br/>
 to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
-<input id='clickMe' type='button' value='current-ify!' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+<input id='clickMe' type='button' value='set to now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
 <br/>
+action:
 <select name='default_action' id='new_action'>
   <option value='mute'>mute</option>
   <option value='skip'>skip</option>
   <option value='yes_audio_no_video'>yes_audio_no_video</option>
   <option value='do_nothing'>do_nothing</option>
 </select>
-<input type='submit' value='Test once' onclick="testCurrent();">
-<input type='submit' value='Save edit' onclick="saveEditButton();">
 <br/>
-<a href="#" onclick="video_element.playbackRate -= 0.1">&lt;&lt;</a>
-<a href="#" onclick="video_element.playbackRate += 0.1">&gt;&gt;</a>
+<input type='submit' value='Test once' onclick="testCurrent();">
+<input type='submit' value='Add edit' onclick="saveEditButton();">
+<br/>
+<a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
+<span id='playback_rate'>1.00x</span>
+<a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
+<a href="#" onclick="stepFrame();">step</a>
 `;
 }
 
-function testCurrent() {
+function addFromCurrent() {
   start = humanToTimeStamp(document.getElementById('start').value);
   endy = humanToTimeStamp(document.getElementById('endy').value);
+  if (endy <= start) {
+    alert("seems your end is before your start, please fix!");
+    return; // abort
+  } 
   currentEditArray().push([start, endy]);
-  // shenanigans as usual
+  return [start, endy];
+}
+
+function testCurrent() {
+  var [start, endy] = addFromCurrent();
+  // shenanigans as usual to seek
   video_element.pause();
   video_element.currentTime = start - 2; 
   video_element.play();
@@ -277,10 +291,12 @@ function humanToTimeStamp(timestamp) {
 }
 
 function saveEditButton() {
+
   var url = "http://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
   "&endy=" + document.getElementById('endy').value + "&default_action=" + document.getElementById('new_action').value;
   console.log(url);
   var win = window.open(url, '_blank');
+  addFromCurrent(); // and leave it there
 }
 
 function stepFrame() {
