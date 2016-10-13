@@ -1,24 +1,24 @@
 == todo ===
-can "turn on developer" and it has buttons for stuff you want :)
+
+better bootstrap for amazon one liner
+  jQuery(".playing-title").text()
 
 research dvdz :|
-
-ask netflix 4 real (permission, or change ToS, or let's really partner LOL) :|
-  "I would love to support you, 30000" etc. LOL
 
 add iterm2 style paypal donate (link at least :)
 
 moh movies :|
 
-plugin plz? :|
+can turn off developer somehow...somehow...
 
-import from subtitle outputs in jruby?
-  maybe just instructions for relative for now :|
+chrome plugin at least, decrease the pain, man, for normal humans!
+
+instructions for jruby subtitle finder for now :)
 
 reverse proxy for port 80 at least, why not? actually I only need this for work LOL
 
 if it can't find video wait then try again?
-  only if google play needs it :|
+  google play needs it :|
 
 add some examples for multiple websites to the default :)
 
@@ -26,12 +26,17 @@ pay people for tons
   maybe for ones I care about first :)
 
 resurrect "fake" netflix :|
-  disable js :|
+  disable js netflix :|
 
 twitter bootstrap/prettify/main index persuasive page LOL
 
 == todo never LOL ==
-SSL? :| how long does gitraw take I wonder [add timestamp?]???
+more plugins for edge, safari anyway :|
+
+ask netflix 4 real (permission, or change ToS, or let's really partner LOL) :|
+  "I would love to support you, 30000" etc. LOL
+
+SSL? :| how long does gitraw take I wonder
   meh
   
 imdb url plz? and rating LOL
