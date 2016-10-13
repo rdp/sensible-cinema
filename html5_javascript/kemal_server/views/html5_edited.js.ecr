@@ -114,7 +114,7 @@ function checkStatus() {
     }
   }
   
-  myLayer.innerHTML = timeStampToHuman(cur_time) + " " + extra_message;
+  myLayer.innerHTML = timeStampToHuman(cur_time) + " " + video_element.playbackRate + " " + extra_message;
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -197,6 +197,9 @@ to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt
 </select>
 <input type='submit' value='Test once' onclick="testCurrent();">
 <input type='submit' value='Save edit' onclick="saveEditButton();">
+<br/>
+<a href="#" onclick="video_element.playbackRate -= 0.1">&lt;&lt;</a>
+<a href="#" onclick="video_element.playbackRate += 0.1">&lt;&lt;</a>
 `;
 }
 
