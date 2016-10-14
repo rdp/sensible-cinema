@@ -241,6 +241,10 @@ def javascript_for(db_url, env)
   end
 end
 
+get "/instructions" do
+  render "views/instructions.ecr"
+end
+
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   url.destroy

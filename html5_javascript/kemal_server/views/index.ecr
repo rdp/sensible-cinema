@@ -1,6 +1,21 @@
-<title>Clean Stream Index</title>
+<head>
+<style>
+body {
+    background-color: linen;
+}
 
-Clean stream it!<br/>Offering edited google play/amazon prime etc. (ask for netflix)<br/><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com to receive instructions.  See https://groups.google.com/forum/#!forum/clean-editing-movie-player to discuss it.
+h1 {
+    color: maroon;
+    margin-left: 40px;
+} 
+</style>
+<title>Clean Stream Index</title>
+</head>
+
+Clean stream it!<br/>Offering edited google play/amazon prime etc. (ask for netflix)<br/><br/>Email me for questions, you too can purchase this for $2, pay paypal rogerdpack@gmail.com to receive instructions.  See <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss it.
+<br/>
+<br/>
+If you know the edit list already exists for the movie you're playing, then go <a href=instructions>here</a> to start watching edited!
 
 <h1>Index</h1>
 
@@ -19,29 +34,19 @@ Clean stream it!<br/>Offering edited google play/amazon prime etc. (ask for netf
 <% } %>
 
 <pre>
-<h1>Create new</h1>
+<h1>Create new amazon</h1>
 <form action="/new_url" method="GET">Your Movie's url: <input type="text" name="url"/>
-  If amazon series, episode number (else 0) <input type="text" name="amazon_episode_number" value='0'/>
+  If a series, enter episode number (else 0) <input type="text" name="amazon_episode_number" value='0'/>
   <input type="submit" value="Submit">
 </form>
-(works with google play, amazon prime, others)
 
-If you know the edit list already exists for the movie you're playing, then hit F12 to open the javascript developer console, then paste the following into the console (usually after the ">" sign):
+<h1>Create new google play/other</h1>
+To find the url, go to <a href=play.google.com>play.google.com</a> then right click on the desired movie and select "open link in new tab" to get to its real url like https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc)
+<form action="/new_url" method="GET">Your Movie's url: <input type="text" name="url"/> (if google play, right click on the movie and "open link in new tab" to get to its real url like 
+  <input type="submit" value="Submit">
+This also works with other services like disneymoviesanywhere.com etc...
+</form>
 
-<div style="background-color: lightblue;">
-javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(window.location.href.split("?")[0] + /Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1]) + ".rendered.js"); 
-<!-- // double encode needed apparently :| jquery hopefully already loaded on every site?? hrm... -->
-</div>
-
-That should start theh edited playback.  You can then safely close the developer console and enjoy your film edited "your way".
-This should work with any major browser (chrome, firefox, safari, edge...)
-
-If you're a developer and want to make sure you get the very latest after a change, add this to javascript developer console:
-
-<div style="background-color: pink;">
-window.open("http://cleanstream.inet2.org:3000/for_current?url=" + encodeURIComponent(window.location.href) + "&amazon_episode_number=" + encodedURIComponent(/Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1]), "_blank");
-
-</div>
 
 Features:
 
