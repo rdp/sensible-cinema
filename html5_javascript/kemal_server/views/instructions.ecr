@@ -1,7 +1,9 @@
 <pre>
-OK you are ready to watch a film edited!
+OK if your film is already in the index, you are ready to watch a film edited!
 
-we don't have a browser plugin yet, so (for everything except hulu and netflix) you're going to have to "enter some code" to add the editor to your currently playing movie.
+We don't have a browser plugin yet, so (for everything except hulu and netflix--email for instructions on those) you're going to have to "enter some code" to add the editor to your currently playing movie.
+
+step 0: open the video you want to watch, start it playing, and hit the "pause button"
 
 step 1: open the "developer javascript console" for your browser.
 
@@ -15,17 +17,10 @@ If everything has gone well, within the "javascript console" you just opened, th
 Now you will want to paste this script snippet after that ">" :
 
 <div style="background-color: lightblue;">
-javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(window.location.href.split("?")[0] + /Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1]) + ".rendered.js");
-<!-- // double encode needed apparently :| jquery hopefully already loaded on every site?? hrm... -->
+javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/views/bootloader_dev.js');
 </div>
 
-That should start the edited playback.  You can then safely close the entire developer console and enjoy your film edited
-
-If you're a developer and want to make sure you get the very latest after a change, add this to javascript developer console:
-
-<div style="background-color: pink;">
-window.open("http://cleanstream.inet2.org:3000/for_current?url=" + encodeURIComponent(window.location.href) + "&amazon_episode_number=" + encodedURIComponent(/Ep. (\d+)/.exec($('div.subtitle').innerHTML)[1]), "_blank");
-
-</div>
+That should start the edited playback.  You can then safely close the entire developer console and hit play and enjoy your film edited.
+Watch full screen to get rid of the time entry prompts.
 
 </pre>
