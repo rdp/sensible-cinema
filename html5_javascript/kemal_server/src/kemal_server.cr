@@ -191,9 +191,12 @@ def with_db
 end
  
 def real_url(env)
-  unescaped = env.params.query["url"].split("?")[0] # already unescaped it on its way in, kind of them...
+  unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
+  if unescaped !~ /play.google.com/
+    unescaped = unescaped.split("?")[0] # strip off amazon extra cruft and there is a lot of it LOL but google play needs it
+  end
   # sanitize amazon which can come in multiple forms
-  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # :|
+  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize
   if unescaped.includes?("/dp/")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
     # or https://smile.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
@@ -325,8 +328,13 @@ get "/new_url" do |env|
   rescue ex
     raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
   end
-  title = response.body.scan(/<title>(.*)<\/title>/)[0][1] # hope it has a title :)
-  # cleanup some added stuff
+  if response.body =~ /<title[^>]*>(.*)<\/title>/i
+    title = response.body.scan(/<title[^>]*>(.*)<\/title>/i)[0][1]
+  else
+    title = "please enter title here"
+  end
+  # cleanup some cruft
+  title = title.gsub(" - Movies & TV on Google Play", "")
   title = title.gsub(": Amazon   Digital Services LLC", "")
   title = title.gsub("Amazon.com: ", "")
   url = Url.new(real_url, title, amazon_episode_number, "")

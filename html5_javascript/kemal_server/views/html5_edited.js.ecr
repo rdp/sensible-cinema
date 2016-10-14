@@ -24,7 +24,7 @@ if (current_url_sanitized != expected_current_url) {
 }
 
 function getCurrentAmazonEpisode() {
-  var subtitle = jQuery('div.subtitle')[0];
+  var subtitle = document.getElementsByClassName("subtitle")[0];
   if (subtitle &&  subtitle.innerHTML.match(/Ep. (\d+)/))
     return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
   else
