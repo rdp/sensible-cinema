@@ -8,8 +8,9 @@ CREATE TABLE URLS (
    imdb_url      TEXT    NOT NULL,
    trailer_urls  TEXT    NOT NULL,
 --   age_recommendation_after_edited INT NOT NULL,
-   uplifting_level INT   NULT NULL, -- out of 10
+   uplifting_level INT   NULT NULL, -- out of 10 wholesome as well?
    synopsis      TEXT    NOT NULL
+-- our_rating of movie [?]
 );
   
 CREATE TABLE EDITS (

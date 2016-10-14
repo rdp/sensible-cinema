@@ -207,10 +207,18 @@ def real_url(env)
   unescaped
 end
 
+get "/for_current_just_settings" do |env|
+  get_for_current(env, "html5_edited.just_settings")
+end
+
 get "/for_current" do |env|
-  # this one looks up by URL and episode number
+  get_for_current(env, "html5_edited")
+end
+
+def get_for_current(env, type)
   real_url = real_url(env)
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i # "always there" :)
+  # this one looks up by URL and episode number
   with_db do |conn|
     url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
     if !url_or_nil
@@ -218,12 +226,12 @@ get "/for_current" do |env|
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-      javascript_for(url, env)
+      javascript_for(url, env, type)
     end
   end
 end
 
-def javascript_for(db_url, env)
+def javascript_for(db_url, env, type)
   with_db do |conn|
     mute_edls = conn.query("select * from edits where url_id=? and default_action = 'mute'", db_url.id) do |rs|
       Edl.from_rs rs
@@ -240,7 +248,12 @@ def javascript_for(db_url, env)
     name = URI.escape(db_url.name) # XXX this is too restrictive I believe...but this gets injected...
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     request_host =  env.request.headers["Host"] # like localhost:3000
-    render "views/html5_edited.js.ecr"
+    if type == "html5_edited"
+      render "views/html5_edited.js.ecr"
+    else
+      raise "wrong type" + type if type != "html5_edited.just_settings"
+      render "views/html5_edited.just_settings.js.ecr"
+    end
   end
 end
 
@@ -352,13 +365,14 @@ get "/index" do |env|
 end
 
 def save_local_javascript(db_url, log_message, env)
-  as_javascript = javascript_for(db_url, env)
-  url_escaped = URI.escape(db_url.url)
   File.open("edit_descriptors/log.txt", "a") do |f|
     f.puts log_message
   end
-  
-  File.write("edit_descriptors/#{url_escaped}#{db_url.amazon_episode_number}" + ".rendered.js", "" + as_javascript)
+  ["html5_edited.just_settings", "html5_edited"].each  do |type|
+    as_javascript = javascript_for(db_url, env, type)
+    escaped_url_no_slashes = URI.escape db_url.url
+    File.write("edit_descriptors/#{escaped_url_no_slashes}#{db_url.amazon_episode_number}" + ".rendered.js", "" + as_javascript) # TODO
+  end
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to gitraw...eventually :)
   end
