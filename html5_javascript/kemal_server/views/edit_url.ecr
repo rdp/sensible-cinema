@@ -1,4 +1,4 @@
-<h1>Editing for URL</h1>
+<h1>Editing for <%= url.name %> <%= url.amazon_episode_name %> </h1>
 
 <form action="/save_url" method="POST">
 
@@ -41,6 +41,8 @@ Edits for this url:
 <a href=/add_edl/<%= url.id %>>add new edit &#10133;</a>
 <hr/>
 <a href=/for_current?=<%= url.url_lookup_params %>>js</a>
+<br/>
+<a href=/for_current_just_settings?=<%= url.url_lookup_params %>>js just settings</a>
 <br/>
 <a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
 <br/>

@@ -12,15 +12,17 @@ var url_id=<%= db_url.id %>;
 var request_host="<%= request_host %>"; // like localhost:3000
 // end auto inserted unique stuffs
 
-current_url_sanitized = window.location.href.split("?")[0];
-current_url_sanitized = current_url_sanitized.replace("smile.amazon", "www.amazon");
-if ( current_url_sanitized.includes("/dp/") ) {
-  id = current_url_sanitized.split("/dp/")[1].split("/")[0]
-  current_url_sanitized = "https://www.amazon.com/gp/product/" + id
-}
-
-if (current_url_sanitized != expected_current_url) {
-  alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_current_url);
+function getSanitizedCurrentUrl() {
+  current_url = window.location.href;
+  // and sanitize
+  if (!current_url.includes("play.google.com"))
+    current_url = current_url.split("?")[0];
+  current_url = current_url.replace("smile.amazon", "www.amazon");
+  if (current_url.includes("/dp/") ) {
+    id = current_url.split("/dp/")[1].split("/")[0]
+    current_url = "https://www.amazon.com/gp/product/" + id
+  }
+  return current_url;
 }
 
 function getCurrentAmazonEpisode() {
@@ -31,14 +33,13 @@ function getCurrentAmazonEpisode() {
     return "0"; // anything else
 }
 
-
 if (typeof timer !== 'undefined') {
-  clearInterval(timer); // in case we need to reset from previous load :)
+  clearInterval(timer); // in case we need to reset from previous load :) NB this is really not enough anymore :|
 }
 
 function findFirstVideoTag(node) {
+    // there's probably a jquery way to do this easier :)
     if (node.nodeType == 1) {
- 
         if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
             return node;
         }
@@ -52,7 +53,6 @@ function findFirstVideoTag(node) {
         }
     }
 }
-
 
 function areWeWithin(thisArray, cur_time) {
   for (key in thisArray) {
@@ -116,6 +116,22 @@ function checkStatus() {
   
   myLayer.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
   jQuery("#playback_rate").html(video_element.playbackRate.toFixed(2) + "x");
+  checkIfEpisodeChanged();
+}
+
+function checkIfEpisodeChanged() {
+  if (getSanitizedCurrentUrl() != old_current_url || getCurrentAmazonEpisode() != old_amazon_episode) {
+    alert("detected move to another video, will try to load its stuff now...");
+    var loaded=false;
+    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() + getCurrentAmazonEpisode() + ".just_settings.rendered.js")));
+    setTimeout(function(){ 
+      if (loaded == false) 
+        alert("unable to load for your switched to movie perhaps no edit for it exists?"); 
+    }, 3000);
+    // save them now so we don't do a re-request javascript on the next pass
+    old_current_url = getSanitizedCurrentUrl();
+    old_amazon_episode = getCurrentAmazonEpisode();
+  }
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -315,14 +331,20 @@ function stepFrame() {
   setTimeout(function() { 
     video_element.pause(); 
     console.log("current timestamp=" + video_element.currentTime); 
-  }, 1/30*1000);
+  }, 1/30*1000); // theoretically about a frame worth :)
 }
 
-function readyToGo() {
-  if (getCurrentAmazonEpisode() != expected_episode) {
-    alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
-  }
+if (getSanitizedCurrentUrl() != expected_current_url) {
+  alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_current_url);
+}
+old_current_url = getSanitizedCurrentUrl(); // remember which one we started on
 
+if (getCurrentAmazonEpisode() != expected_episode) {
+  alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
+}
+old_amazon_episode = getCurrentAmazonEpisode();
+
+function readyToGo() {
   video_element = findFirstVideoTag(document.body);
   if (video_element == null) { 
     alert("failure: unable to find a video playing, did you paste this in the right page?"); 
