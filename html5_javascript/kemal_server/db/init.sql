@@ -3,9 +3,14 @@
 CREATE TABLE URLS (
    id INTEGER PRIMARY KEY,
    url           TEXT    NOT NULL,
-   name          TEXT    NOT NULL
+   name          TEXT    NOT NULL,
+   editing_notes TEXT    NOT NULL,
+   imdb_url      TEXT    NOT NULL,
+   trailer_urls  TEXT    NOT NULL,
+--   age_recommendation_after_edited INT NOT NULL,
+   uplifting_level INT   NULT NULL, -- out of 10
+   synopsis      TEXT    NOT NULL
 );
-
   
 CREATE TABLE EDITS (
    id             INTEGER PRIMARY KEY,

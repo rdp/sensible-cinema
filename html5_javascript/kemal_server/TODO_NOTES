@@ -24,7 +24,8 @@ they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
 
 amazon warn if they're too early loading it...maybe...
-can go episode to episode amazon :|
+
+can go episode to episode amazon etc. :|
 
 == todo never LOL ==
 they can "change" movies from google play index

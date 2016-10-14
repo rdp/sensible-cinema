@@ -384,7 +384,7 @@ post "/save_url" do |env|
   db_url.amazon_episode_name = amazon_episode_name
   db_url.save
   save_local_javascript db_url, db_url.inspect, env
-  env.redirect "/index"
+  env.redirect "/edit_url/" + db_url.id.to_s
 end
 
 Kemal.run
