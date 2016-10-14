@@ -245,7 +245,8 @@ def javascript_for(db_url, env, type)
     yes_audio_no_videos = yes_audio_no_video_edls.map{|edl| [edl.start, edl.endy]}
     skips = skip_edls.map{|edl| [edl.start, edl.endy]}
     mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
-    name = URI.escape(db_url.name) # XXX this is too restrictive I believe...but this gets injected...
+    name = db_url.name
+    episode_name = URI.escape(db_url.amazon_episode_name) 
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     request_host =  env.request.headers["Host"] # like localhost:3000
     if type == "html5_edited"
@@ -371,7 +372,7 @@ def save_local_javascript(db_url, log_message, env)
   ["html5_edited.just_settings", "html5_edited"].each  do |type|
     as_javascript = javascript_for(db_url, env, type)
     escaped_url_no_slashes = URI.escape db_url.url
-    File.write("edit_descriptors/#{escaped_url_no_slashes}#{db_url.amazon_episode_number}" + ".rendered.js", "" + as_javascript) # TODO
+    File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
   end
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to gitraw...eventually :)

@@ -3,6 +3,7 @@
 // generated at <%= Time.now %>.
 // begin auto inserted unique for your movie:
 var name="<%= name %>"; // movie name
+var episode_name="<%= episode_name %>"; 
 var mutes=<%= mutes %>;
 var skips=<%= skips %>;
 var yes_audio_no_videos=<%= yes_audio_no_videos %>;
@@ -127,6 +128,8 @@ function checkIfEpisodeChanged() {
     setTimeout(function(){ 
       if (loaded == false) 
         alert("unable to load for your switched to movie perhaps no edit for it exists?"); 
+      else
+       logReadyToGo();
     }, 3000);
     // save them now so we don't do a re-request javascript on the next pass
     old_current_url = getSanitizedCurrentUrl();
@@ -344,7 +347,7 @@ if (getCurrentAmazonEpisode() != expected_episode) {
 }
 old_amazon_episode = getCurrentAmazonEpisode();
 
-function readyToGo() {
+function start() {
   video_element = findFirstVideoTag(document.body);
   if (video_element == null) { 
     alert("failure: unable to find a video playing, did you paste this in the right page?"); 
@@ -354,14 +357,19 @@ function readyToGo() {
     timer = setInterval(function () {
         checkStatus();
     }, 1000 / 30 / 2 ); // 30 fps * 2, try to be frame accurate assume max 30 fps
-    var message = "ready to go edited\n" +  decodeURIComponent(name) + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
-    console.log(message);
-    <%= "alert(message);" if !File.exists?("./this_is_development") %>
-    console.log("run stepFrame() to move forward one frame");
+    logReadyToGo();
   }
 }
 
+function logReadyToGo() {
+    var message = "ready to go edited\n" + name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
+    console.log(message);
+    <%= "alert(message);" if !File.exists?("./this_is_development") %>
+}
+
+
+
 // load jquery first, just cuz
-javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();readyToGo();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
+javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();start();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
 // how to load self snippet moved to index.ecr
