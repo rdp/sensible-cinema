@@ -207,12 +207,19 @@ action:
 `;
 }
 
+function getAbsoluteOffset(el) {
+  el = el.getBoundingClientRect();
+  return {
+    left: el.left + window.scrollX,
+    top: el.top + window.scrollY
+  }
+}
+
 function setCurrentOnTop() {
-  var doc = document.documentElement;
-  var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-  var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-  offset = 150; // allow kill amazon x-ray :|
-  left += offset;
+  var left = getAbsoluteOffset(video_element).left;
+  var top = getAbsoluteOffset(video_element).top;
+  offsetToRight = 150; // allow kill amazon x-ray :|
+  left += offsetToRight;
   myLayer.style.left = left + "px"; // TODO full screen button??
   myLayer.style.top = top + "px";;
   edlLayer.style.left = left + "px";
