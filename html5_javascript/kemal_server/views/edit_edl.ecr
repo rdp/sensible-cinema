@@ -103,8 +103,13 @@ sub category
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
 </script>
 <br/>
-details (ex: euphemized actual text ??)
+details (ex: d***, or "knife wound")
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
+</div>
+<br/>
+more details (ex: sally said X*)
+<textarea name="more_details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.more_details %></textarea>
+These won't be shown to the user.
 </div>
 
 <div><input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>

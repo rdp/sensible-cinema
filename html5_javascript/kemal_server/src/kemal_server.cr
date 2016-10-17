@@ -14,7 +14,12 @@ class Url
     url:  String,
     name: String,
     amazon_episode_number: Int32,
-    amazon_episode_name: String
+    amazon_episode_name: String,
+    editing_notes: String,
+    age_recommendation_after_edited: Int32,
+    uplifting_level: Int32,
+    overall_rating: Int32,
+    review: String
   })
   
   def self.all
@@ -48,16 +53,21 @@ class Url
     end
   end
  
-  def initialize(url, name, amazon_episode_number, amazon_episode_name)
+  def initialize(url, name, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, uplifting_level, overall_rating, review)
     @id = 0 # :|
     @url = url
     @name = name
     @amazon_episode_number = amazon_episode_number
     @amazon_episode_name = amazon_episode_name
+    @editing_notes = editing_notes
+    @age_recommendation_after_edited = age_recommendation_after_edited
+    @uplifting_level = uplifting_level
+    @overall_rating = overall_rating
+    @review = review
   end
 
   def initialize
-    initialize("", "", 0, "")
+    initialize("", "", 0, "", "", 0, 5, 5, "")
   end
   
   def edls
@@ -109,6 +119,7 @@ class Edl
     category: {type: String},       
     subcategory: {type: String},   
     details: {type: String},     
+    more_details: {type: String},     
     default_action: {type: String},
     url_id: Int32
   })
@@ -142,6 +153,7 @@ class Edl
     @category = "profanity"
     @subcategory = ""
     @details = ""
+    @more_details = ""
     @default_action = "mute"
     @url_id = url.id
   end
@@ -149,9 +161,9 @@ class Edl
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into edits (start, endy, category, subcategory, details, default_action, url_id) values (?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @default_action, @url_id).last_insert_id
+        @id = conn.exec("insert into edits (start, endy, category, subcategory, details, more_details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @more_details, @default_action, @url_id).last_insert_id
       else
-        conn.exec "update edits set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, default_action, id
+        conn.exec "update edits set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, more_details = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, more_details, default_action, id
       end
     end
   end
@@ -319,7 +331,8 @@ post "/save_edl/:url_id" do |env|
   edl.category = sanitize_html params["category"] # hope it's a legit value LOL
   edl.subcategory = sanitize_html params["subcategory"]
   edl.details = sanitize_html params["details"]
-  raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy)
+  edl.more_details = sanitize_html params["more_details"]
+  raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy) # before_save filter LOL
   edl.save
   save_local_javascript edl.url, edl.inspect, env
   env.redirect "/edit_url/#{edl.url.id}"
@@ -351,8 +364,11 @@ get "/new_url" do |env|
   title = title.gsub(" - Movies & TV on Google Play", "")
   title = title.gsub(": Amazon   Digital Services LLC", "")
   title = title.gsub("Amazon.com: ", "")
-  url = Url.new(real_url, title, amazon_episode_number, "")
-  url.save # hope our data's OK 
+  url = Url.new
+  url.url = real_url
+  url.name = title
+  url.amazon_episode_number = amazon_episode_number
+  url.save 
   env.redirect "/edit_url/#{url.id}"
 end
 
@@ -386,6 +402,10 @@ post "/save_url" do |env|
   incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
   amazon_episode_number = params["amazon_episode_number"].to_i
   amazon_episode_name = sanitize_html HTML.unescape(params["amazon_episode_name"])
+  age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
+  uplifting_level = params["uplifting_level"].to_i
+  overall_rating = params["overall_rating"].to_i
+  review = params["review"]
 
   if params.has_key? "id"
     db_url = Url.get_only_by_id(params["id"])
@@ -397,9 +417,14 @@ post "/save_url" do |env|
   db_url.name = name
   db_url.amazon_episode_number = amazon_episode_number
   db_url.amazon_episode_name = amazon_episode_name
+  db_url.age_recommendation_after_edited = age_recommendation_after_edited
+  db_url.uplifting_level = uplifting_level
+  db_url.overall_rating = overall_rating
+  db_url.review = review
   db_url.save
   save_local_javascript db_url, db_url.inspect, env
-  env.redirect "/edit_url/" + db_url.id.to_s
+  # env.redirect "/edit_url/" + db_url.id.to_s
+  env.redirect "/index" # so they can see that something happened otherwise it's like "did that buttont take?"
 end
 
 Kemal.run
