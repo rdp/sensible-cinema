@@ -8,7 +8,7 @@ var mutes=<%= mutes %>;
 var skips=<%= skips %>;
 var yes_audio_no_videos=<%= yes_audio_no_videos %>;
 var expected_current_url="<%= url %>";
-var expected_episode=<%= db_url.amazon_episode_number %>;
+var amazon_episode_number=<%= db_url.amazon_episode_number %>;
 var url_id=<%= db_url.id %>;
 var request_host="<%= request_host %>"; // like localhost:3000
 // end auto inserted unique stuffs
@@ -342,8 +342,8 @@ if (getSanitizedCurrentUrl() != expected_current_url) {
 }
 old_current_url = getSanitizedCurrentUrl(); // remember which one we started on
 
-if (getCurrentAmazonEpisode() != expected_episode) {
-  alert("danger: may have gotten wrong amazon episode expected=" + expected_episode + " got=" + getCurrentAmazonEpisode());
+if (getCurrentAmazonEpisode() != amazon_episode_number) {
+  alert("danger: may have gotten wrong amazon episode expected=" + amazon_episode_number + " got=" + getCurrentAmazonEpisode());
 }
 old_amazon_episode = getCurrentAmazonEpisode();
 
@@ -362,14 +362,12 @@ function start() {
 }
 
 function logReadyToGo() {
-    var message = "ready to go edited\n" + name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
+    var message = "ready to go edited\n" + name + " " + episode_name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
     console.log(message);
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
 }
 
-
-
 // load jquery first, just cuz
 javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();start();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
 
-// how to load self snippet moved to index.ecr
+// how to load self snippet moved to elsewhere

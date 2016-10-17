@@ -20,12 +20,15 @@ resurrect "fake" netflix :|
   disable js netflix/hulu :|
 
 twitter bootstrap/prettify/main index persuasive page LOL
+ "it's legal"
+  motto
 
 amazon warn if they're too early loading it...maybe...
 
-link to CC-BY-SA etc.
-
 == todo never LOL ==
+link to CC-BY-SA etc. synposes, links from wikipedia etc. LOL
+  just google it for now LOL
+
 they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
 
