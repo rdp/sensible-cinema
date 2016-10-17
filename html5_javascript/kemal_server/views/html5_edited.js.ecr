@@ -120,16 +120,27 @@ function checkStatus() {
   checkIfEpisodeChanged();
 }
 
+function currentEpisodeString() {
+  if (getCurrentAmazonEpisode() != "0")
+    return " episode:" + getCurrentAmazonEpisode() + " " + decodeURIComponent(episode_name);
+  else
+    return "";
+  end
+}
+
 function checkIfEpisodeChanged() {
   if (getSanitizedCurrentUrl() != old_current_url || getCurrentAmazonEpisode() != old_amazon_episode) {
     alert("detected move to another video, will try to load its stuff now...");
-    var loaded=false;
-    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() + getCurrentAmazonEpisode() + ".just_settings.rendered.js")));
-    setTimeout(function(){ 
-      if (loaded == false) 
-        alert("unable to load for your switched to movie perhaps no edit for it exists?"); 
-      else
+    var loaded = false;
+    var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.rendered.js"));
+    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'), url)));
+    setTimeout(function() { 
+      if (loaded == false)  {
+        alert("unable to load for your switched to movie perhaps no edit for it exists?\nWill continue playing unedited, please create one then reload this page" + "\nurl=" + getSanitizedCurrentUrl() + " " + currentEpisodeString()); 
+      }
+      else {
        logReadyToGo();
+      }
     }, 3000);
     // save them now so we don't do a re-request javascript on the next pass
     old_current_url = getSanitizedCurrentUrl();
@@ -362,7 +373,7 @@ function start() {
 }
 
 function logReadyToGo() {
-    var message = "ready to go edited\n" + name + " " + episode_name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
+    var message = "ready to go edited\n" + name + "\n" + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
     console.log(message);
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
 }
