@@ -5,11 +5,11 @@ CREATE TABLE URLS (
    url           TEXT    NOT NULL,
    name          TEXT    NOT NULL,
    editing_notes TEXT    NOT NULL,
-   imdb_url      TEXT    NOT NULL,
-   trailer_urls  TEXT    NOT NULL,
+--   imdb_url      TEXT    NOT NULL, -- can't use their rating :|
+--   trailer_urls  TEXT    NOT NULL,
 --   age_recommendation_after_edited INT NOT NULL,
    uplifting_level INT   NULT NULL, -- out of 10 wholesome as well?
-   synopsis      TEXT    NOT NULL
+--   synopsis      TEXT    NOT NULL
 -- our_rating of movie [?]
 );
   
