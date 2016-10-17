@@ -17,7 +17,7 @@ class Url
     amazon_episode_name: String,
     editing_notes: String,
     age_recommendation_after_edited: Int32,
-    uplifting_level: Int32,
+    wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     review: String
   })
@@ -53,7 +53,7 @@ class Url
     end
   end
  
-  def initialize(url, name, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, uplifting_level, good_movie_rating, review)
+  def initialize(url, name, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review)
     @id = 0 # :|
     @url = url
     @name = name
@@ -61,7 +61,7 @@ class Url
     @amazon_episode_name = amazon_episode_name
     @editing_notes = editing_notes
     @age_recommendation_after_edited = age_recommendation_after_edited
-    @uplifting_level = uplifting_level
+    @wholesome_uplifting_level = wholesome_uplifting_level
     @good_movie_rating = good_movie_rating
     @review = review
   end
@@ -243,20 +243,20 @@ def get_for_current(env, type)
   end
 end
 
+def get_timestamps_by_type(conn, db_url, type) 
+    edls = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
+      Edl.from_rs rs
+    end
+    edls.map{|edl| [edl.start, edl.endy]}
+end
+
 def javascript_for(db_url, env, type)
   with_db do |conn|
-    mute_edls = conn.query("select * from edits where url_id=? and default_action = 'mute'", db_url.id) do |rs|
-      Edl.from_rs rs
-    end
-    skip_edls = conn.query("select * from edits where url_id=? and default_action = 'skip'", db_url.id) do |rs|
-      Edl.from_rs rs
-    end
-    yes_audio_no_video_edls = conn.query("select * from edits where url_id=? and default_action = 'yes_audio_no_video'", db_url.id) do |rs|
-      Edl.from_rs rs
-    end
-    yes_audio_no_videos = yes_audio_no_video_edls.map{|edl| [edl.start, edl.endy]}
-    skips = skip_edls.map{|edl| [edl.start, edl.endy]}
-    mutes = mute_edls.map{|edl| [edl.start, edl.endy]}
+    yes_audio_no_videos = get_timestamps_by_type conn, db_url, "yes_audio_no_video"
+    skips = get_timestamps_by_type conn, db_url, "skip"
+    mutes = get_timestamps_by_type conn, db_url, "mute"
+    do_nothings = get_timestamps_by_type conn, db_url, "do_nothing"
+    
     name = db_url.name
     episode_name = URI.escape(db_url.amazon_episode_name) 
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
@@ -403,8 +403,9 @@ post "/save_url" do |env|
   amazon_episode_number = params["amazon_episode_number"].to_i
   amazon_episode_name = sanitize_html HTML.unescape(params["amazon_episode_name"])
   age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
-  uplifting_level = params["uplifting_level"].to_i
+  wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
+  editing_notes = params["editing_notes"]
   review = params["review"]
 
   if params.has_key? "id"
@@ -418,9 +419,10 @@ post "/save_url" do |env|
   db_url.amazon_episode_number = amazon_episode_number
   db_url.amazon_episode_name = amazon_episode_name
   db_url.age_recommendation_after_edited = age_recommendation_after_edited
-  db_url.uplifting_level = uplifting_level
+  db_url.wholesome_uplifting_level = wholesome_uplifting_level
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
+  db_url.editing_notes = editing_notes
   db_url.save
   save_local_javascript db_url, db_url.inspect, env
   # env.redirect "/edit_url/" + db_url.id.to_s
