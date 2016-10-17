@@ -23,6 +23,8 @@ twitter bootstrap/prettify/main index persuasive page LOL
 
 amazon warn if they're too early loading it...maybe...
 
+link to CC-BY-SA etc.
+
 == todo never LOL ==
 they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
