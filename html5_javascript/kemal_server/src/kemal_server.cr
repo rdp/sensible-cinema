@@ -18,7 +18,7 @@ class Url
     editing_notes: String,
     age_recommendation_after_edited: Int32,
     uplifting_level: Int32,
-    overall_rating: Int32,
+    good_movie_rating: Int32,
     review: String
   })
   
@@ -53,7 +53,7 @@ class Url
     end
   end
  
-  def initialize(url, name, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, uplifting_level, overall_rating, review)
+  def initialize(url, name, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, uplifting_level, good_movie_rating, review)
     @id = 0 # :|
     @url = url
     @name = name
@@ -62,7 +62,7 @@ class Url
     @editing_notes = editing_notes
     @age_recommendation_after_edited = age_recommendation_after_edited
     @uplifting_level = uplifting_level
-    @overall_rating = overall_rating
+    @good_movie_rating = good_movie_rating
     @review = review
   end
 
@@ -404,7 +404,7 @@ post "/save_url" do |env|
   amazon_episode_name = sanitize_html HTML.unescape(params["amazon_episode_name"])
   age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   uplifting_level = params["uplifting_level"].to_i
-  overall_rating = params["overall_rating"].to_i
+  good_movie_rating = params["good_movie_rating"].to_i
   review = params["review"]
 
   if params.has_key? "id"
@@ -419,7 +419,7 @@ post "/save_url" do |env|
   db_url.amazon_episode_name = amazon_episode_name
   db_url.age_recommendation_after_edited = age_recommendation_after_edited
   db_url.uplifting_level = uplifting_level
-  db_url.overall_rating = overall_rating
+  db_url.good_movie_rating = good_movie_rating
   db_url.review = review
   db_url.save
   save_local_javascript db_url, db_url.inspect, env
