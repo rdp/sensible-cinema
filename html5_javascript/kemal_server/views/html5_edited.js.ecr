@@ -82,7 +82,7 @@ function checkStatus() {
   else {
     if (video_element.muted) {
       video_element.muted = false;
-      timestamp_log("unmuted", cur_time, last_start, last_end);
+      console.log("unmuted at=" + cur_time);
       extra_message = "";
     }
   }
@@ -137,6 +137,7 @@ function checkIfEpisodeChanged() {
     setTimeout(function() { 
       if (loaded == false)  {
         alert("unable to load for your switched to movie perhaps no edit for it exists?\nWill continue playing unedited, please create one then reload this page" + "\nurl=" + getSanitizedCurrentUrl() + " " + currentEpisodeString()); 
+       mutes = []; skips = []; yes_audio_no_videos = []; // reset so it doesn't have last episodes edits
       }
       else {
        logReadyToGo();
