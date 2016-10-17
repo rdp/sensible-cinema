@@ -46,9 +46,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_episode_number, amazon_episode_name) values (?, ?, ?, ?)", name, url, amazon_episode_number, amazon_episode_name).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_episode_number = ?, amazon_episode_name = ?  where id = ?", name, url, amazon_episode_number, amazon_episode_name, id
+       conn.exec "update urls set name = ?, url = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_notes = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, review = ?  where id = ?", name, url, amazon_episode_number, amazon_episode_name, editing_notes, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review, id
       end
     end
   end
