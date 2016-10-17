@@ -133,7 +133,7 @@ function checkIfEpisodeChanged() {
     alert("detected move to another video, will try to load its stuff now...");
     var loaded = false;
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.rendered.js"));
-    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'), url)));
+    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'), url);
     setTimeout(function() { 
       if (loaded == false)  {
         alert("unable to load for your switched to movie perhaps no edit for it exists?\nWill continue playing unedited, please create one then reload this page" + "\nurl=" + getSanitizedCurrentUrl() + " " + currentEpisodeString()); 
