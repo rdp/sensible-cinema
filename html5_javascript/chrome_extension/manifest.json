@@ -13,4 +13,5 @@
   "permissions": [
     "<all_urls>", "tabs" 
   ],
+  "web_accessible_resources": ["load_editor.js", "bootloader_dev.js"]
 }

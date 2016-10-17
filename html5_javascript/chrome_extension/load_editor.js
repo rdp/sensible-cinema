@@ -26,18 +26,24 @@ function findFirstVideoTag(node) {
 
 document.addEventListener('DOMContentLoaded', function() {
   // only enters here after they click on the icon
+  video_element = findFirstVideoTag(document.body);
   var h=document.getElementById("edited_requested");
   h.addEventListener("click", loadEditedPlayback());
+  alert('did something' + h + " " + video_element);
+(function(d, script) {
+    script = d.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.onload = function(){
+        // remote script has loaded
+    };
+    script.src = 'https://rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/views/bootloader_dev.js';
+    d.getElementsByTagName('head')[0].appendChild(script);
+}(document));
 });
 
-function loadEditedPlayback() {
-  var s = document.createElement('script');
-  s.src = chrome.extension.getURL('bootloader_dev.js');
-  s.onload = function() {
-    this.remove();
-  };
-  (document.head || document.documentElement).appendChild(s);
 
-  alert('attempted something' + s);
-};
+function loadEditedPlayback() {
+javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/views/bootloader_dev.js');
+}
 
