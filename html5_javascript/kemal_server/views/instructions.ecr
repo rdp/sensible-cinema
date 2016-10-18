@@ -1,28 +1,33 @@
 <pre>
-OK if your film is already in the index, you are ready to watch a film edited!
+OK if your movie is already in the index, you just need to install the plugin.
 
-We don't have a browser plugin yet, so (for everything except hulu and netflix--email for instructions on those) you're going to have to "enter some code" to add the editor to your currently playing movie.
+for chrome, download this file <a href=https://github.com/rdp/sensible-cinema/raw/master/html5_javascript/chrome_extension/chrome_extension.crx>this plugin</a>,
+then go to <a href=chrome://extensions>chrome://extensions</a> and then you need to *drag and drop* that .crx file from wherever you downloaded it, onto that
+chrome extensions page.  A prompt should come up and you're good to go, navigate to your movie and enjoy watching it..
 
-step 0: open the video you want to watch, start it playing, and hit the "pause button"
+This works for everything except netflix and hulu, ask us about those.
 
-step 1: open the "developer javascript console" for your browser.
+If you are using a browser other than chrome, you're going to have to manually "enter some computer code" to add the editor to your current movie.
+
+step 1: start the video you want to watch, start it playing, and hit the "pause button"
+
+step 2: open the "developer javascript console" for your particular browser.
 
 Chrome mac: view menu -> developer submenu -> "javascript console"
+Chrome windows: click the little "options" dropdown in the upper right (3 bars) -> "tools" -> developer console
 Safari mac: right click anywhere on the web page -> "Inspect Element" -> choose the "console" tab of the newly opened developer tools "pane"
 Firefox: tools menu -> web developer -> Web Console
 Microsoft edge: some menu -> console [not sure but it is possible]
 Microsoft IE: not sure
 
+If everything has gone well, the "javascript console" side panel should have just opened.  Now look around, and somewher there should be a prompt somewhere like ">"
 
-If everything has gone well, within the "javascript console" you just opened, there should be a prompt somewhere like ">"
-
-Now you will want to paste this script snippet after that ">" :
+Now you will want to paste this blue code snippet after that ">" and then hit enter:
 
 <div style="background-color: lightblue;">
 javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/views/bootloader_dev.js');
 </div>
 
-That should start the edited playback.  You can then safely close the entire developer console and hit play and enjoy your film edited.
-Watch full screen to get rid of the time entry prompts.
+That should start the edited playback.  You can then safely close the entire developer console and hit play and enjoy your film edited (if it has edits already).
 
 </pre>
