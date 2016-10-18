@@ -57,17 +57,19 @@ function checkAndLoadEditor() {
   if (clean_stream_extension_ever_loaded)
      return; // should be self-updating
   var video_element = findFirstVideoTag(document.body);
-  if (video_element && (getSanitizedCurrentUrl() != clean_stream_extension_old_url || getCurrentAmazonEpisode() != clean_stream_extension_old_amazon_episode)) {
+  currentUrl = getSanitizedCurrentUrl();
+  // this thing is annoying on facebook :|
+  if (video_element && (currentUrl != clean_stream_extension_old_url || getCurrentAmazonEpisode() != clean_stream_extension_old_amazon_episode) && !currentUrl.contains("facebook.com")) {
     var loaded=false;
-    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true; clean_stream_extension_ever_loaded=true};document.head.appendChild(e);})(document.createElement('script'),'https://rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode() + ".html5_edited.rendered.js")));
+    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true; clean_stream_extension_ever_loaded=true};document.head.appendChild(e);})(document.createElement('script'),'https://rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(currentUrl() + ".ep" + getCurrentAmazonEpisode() + ".html5_edited.rendered.js")));
     <!-- // double encode needed apparently :| jquery hopefully already loaded on every site?? hrm... -->
     setTimeout(function(){ 
       if (loaded == false) 
         if (confirm("unable to load for your current movie " + currentMovieName() + " would you like to create one now?")) {
           alert("OK after you create it you'll need to refresh this browser window for it to take here...");
-          window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getSanitizedCurrentUrl()) + "&amazon_episode_number=" + getCurrentAmazonEpisode(), "_blank");
+          window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(currentUrl()) + "&amazon_episode_number=" + getCurrentAmazonEpisode(), "_blank");
         } 
-        clean_stream_extension_old_url = getSanitizedCurrentUrl();
+        clean_stream_extension_old_url = currentUrl();
         clean_stream_extension_old_amazon_episode = getCurrentAmazonEpisode();
      }, 3000); // 3000 < 5000 :|
   }

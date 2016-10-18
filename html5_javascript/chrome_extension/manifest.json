@@ -18,6 +18,6 @@
       "matches": ["<all_urls>"]
       // document_idle run_at default
   }],
-  "web_accessible_resources": ["bootloader_dev.js"]
+  "web_accessible_resources": ["bootloader_dev.js"],
+   "icons": { "128": "icon.png" }
 }
-
