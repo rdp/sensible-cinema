@@ -204,7 +204,7 @@ end
  
 def real_url(env)
   unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
-  if unescaped !~ /play.google.com/
+  if unescaped =~ /amazon.com/
     unescaped = unescaped.split("?")[0] # strip off amazon extra cruft and there is a lot of it LOL but google play needs it
   end
   # sanitize amazon which can come in multiple forms
@@ -364,6 +364,7 @@ get "/new_url" do |env|
   title = title.gsub(" - Movies & TV on Google Play", "")
   title = title.gsub(": Amazon   Digital Services LLC", "")
   title = title.gsub("Amazon.com: ", "")
+  title = title.gsub(" - YouTube", "")
   url = Url.new
   url.url = real_url
   url.name = title
