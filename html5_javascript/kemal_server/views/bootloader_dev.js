@@ -1,7 +1,7 @@
 function getSanitizedCurrentUrl() {
   current_url = window.location.href;
   // and sanitize
-  if (!current_url.includes("play.google.com"))
+  if (current_url.includes("amazon.com"))
     current_url = current_url.split("?")[0];
   current_url = current_url.replace("smile.amazon", "www.amazon");
   if (current_url.includes("/dp/") ) {

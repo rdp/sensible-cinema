@@ -20,7 +20,7 @@ function findFirstVideoTag(node) {
 function getSanitizedCurrentUrl() {
   current_url = window.location.href;
   // and sanitize
-  if (!current_url.includes("play.google.com"))
+  if (current_url.includes("amazon.com"))
     current_url = current_url.split("?")[0];
   current_url = current_url.replace("smile.amazon", "www.amazon");
   if (current_url.includes("/dp/") ) {
@@ -47,11 +47,16 @@ function checkAndLoadEditor() {
   if (clean_stream_extension_ever_loaded)
      return; // should be self-updating
   var video_element = findFirstVideoTag(document.body);
-  if (video_element) {
+  if (video_element && (getSanitizedCurrentUrl() != clean_stream_extension_old_url || getCurrentAmazonEpisode() != clean_stream_extension_old_amazon_episode)) {
     var loaded=false;
     javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true; clean_stream_extension_ever_loaded=true};document.head.appendChild(e);})(document.createElement('script'),'https://rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode() + ".html5_edited.rendered.js")));
     <!-- // double encode needed apparently :| jquery hopefully already loaded on every site?? hrm... -->
-    setTimeout(function(){ if (loaded == false) alert("unable to load for your current movie " + getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode()); }, 3000); // 3000 < 5000 :|
+    setTimeout(function(){ 
+      if (loaded == false) 
+        alert("unable to load for your current movie " + getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode()); 
+        clean_stream_extension_old_url = getSanitizedCurrentUrl();
+        clean_stream_extension_old_amazon_episode = getCurrentAmazonEpisode();
+     }, 3000); // 3000 < 5000 :|
   }
   // else no video, do nothing :|
 }
