@@ -8,4 +8,4 @@ function injectJs(link) {
   //document.body.appendChild(scr);
 }
 
-injectJs(chrome.extension.getURL('injected.js'));
+injectJs(chrome.extension.getURL('bootloader_dev.js'));
