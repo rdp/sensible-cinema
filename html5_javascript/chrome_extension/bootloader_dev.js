@@ -38,6 +38,16 @@ function getCurrentAmazonEpisode() {
     return "0"; // anything else
 }
 
+
+function currentMovieName() {
+  var out = getSanitizedCurrentUrl() + " " + document.getElementsByTagName("title")[0].innerHTML;
+  if (getCurrentAmazonEpisode() != "0")
+    return out + " episode " + getCurrentAmazonEpisode();
+  else
+    return out;
+  end
+}
+
 clean_stream_extension_ever_loaded = false;
 clean_stream_extension_old_url = "";
 clean_stream_extension_old_amazon_episode = "";
@@ -53,7 +63,10 @@ function checkAndLoadEditor() {
     <!-- // double encode needed apparently :| jquery hopefully already loaded on every site?? hrm... -->
     setTimeout(function(){ 
       if (loaded == false) 
-        alert("unable to load for your current movie " + getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode()); 
+        if (confirm("unable to load for your current movie " + currentMovieName() + " would you like to create one now?")) {
+          alert("OK after you create it you'll need to refresh this browser window for it to take here...");
+          window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getSanitizedCurrentUrl()) + "&amazon_episode_number=" + getCurrentAmazonEpisode(), "_blank");
+        } 
         clean_stream_extension_old_url = getSanitizedCurrentUrl();
         clean_stream_extension_old_amazon_episode = getCurrentAmazonEpisode();
      }, 3000); // 3000 < 5000 :|
