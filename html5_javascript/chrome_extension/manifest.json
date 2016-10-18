@@ -8,12 +8,15 @@
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
-    "default_title": "Click here!" // tooltip
+    "default_title": "If this plugin is installed, it should ask you per video if you want to try edited" // tooltip
   },
   "permissions": [
     "<all_urls>", "tabs", "http://*/", "https://*/"
   ],
-//  "content_scripts": ["contentscript.js"],
+  "content_scripts": [{
+      "js": ["contentscript.js"],
+      "matches": ["<all_urls>"]
+  }],
   "content_security_policy": "script-src 'self' https://rawgit.com https://*.rawgit.com 'sha256-qDggtJ0ZQS79xsMxbArH5hKSHI/hKg5qU1OGLMcyXgQ='; object-src 'self'",
   "web_accessible_resources": ["load_editor.js", "bootloader_dev.js", "injected.js"]
 }

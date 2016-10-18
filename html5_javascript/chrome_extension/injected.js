@@ -1,5 +1,5 @@
 function main() {
-     alert('Hello World!');
+     alert('Hello World! from injected');
 }
 
 main();
