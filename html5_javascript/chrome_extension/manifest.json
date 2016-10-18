@@ -16,6 +16,7 @@
   "content_scripts": [{
       "js": ["contentscript.js"],
       "matches": ["<all_urls>"]
+      // document_idle run_at default
   }],
   "content_security_policy": "script-src 'self' https://rawgit.com https://*.rawgit.com 'sha256-qDggtJ0ZQS79xsMxbArH5hKSHI/hKg5qU1OGLMcyXgQ='; object-src 'self'",
   "web_accessible_resources": ["load_editor.js", "bootloader_dev.js", "injected.js"]
