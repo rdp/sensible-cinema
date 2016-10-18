@@ -21,8 +21,9 @@ function getCurrentAmazonEpisode() {
 
 loaded=false;
 
+alert('do I have access to window' + window);
 javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode() + ".html5_edited.rendered.js")));
 <!-- // double encode needed apparently :| jquery hopefully already loaded on every site?? hrm... -->
 
-setTimeout(function(){ if (loaded == false) alert("unable to load for your current movie"); }, 3000);
+setTimeout(function(){ if (loaded == false) alert("unable to load for your current movie " + getSanitizedCurrentUrl() + ".ep" + getCurrentAmazonEpisode()); }, 3000);
 

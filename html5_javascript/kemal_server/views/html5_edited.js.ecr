@@ -1,5 +1,10 @@
 // copy and paste all of this text (including this line) into your developer tools javascript console side bar, then hit enter, please:
 
+if (typeof clean_stream_timer !== 'undefined') {
+  alert("clean stream already loaded...");
+  throw "dont know how to load it twice"; // in case they click a plugin button twice :|
+}
+
 // generated at <%= Time.now %>.
 // begin auto inserted unique for your movie:
 var name="<%= name %>"; // movie name
@@ -35,9 +40,6 @@ function getCurrentAmazonEpisode() {
     return "0"; // anything else
 }
 
-if (typeof timer !== 'undefined') {
-  clearInterval(timer); // in case we need to reset from previous load :) NB this is really not enough anymore :|
-}
 
 function findFirstVideoTag(node) {
     // there's probably a jquery way to do this easier :)
@@ -367,7 +369,7 @@ function start() {
   }
   else {
     setupDeveloper();
-    timer = setInterval(function () {
+    clean_stream_timer = setInterval(function () {
         checkStatus();
     }, 1000 / 30 / 2 ); // 30 fps * 2, try to be frame accurate assume max 30 fps
     logReadyToGo();

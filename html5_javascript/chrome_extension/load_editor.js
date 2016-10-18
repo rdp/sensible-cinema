@@ -6,7 +6,6 @@ function renderStatus(statusText) {
   document.getElementById('status').textContent = statusText;
 }
 
-
 function findFirstVideoTag(node) {
     // there's probably a jquery way to do this easier :)
     if (node.nodeType == 1) {
@@ -29,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
   video_element = findFirstVideoTag(document.body);
   var h=document.getElementById("edited_requested");
   h.addEventListener("click", loadEditedPlayback());
-  alert('did something' + h + " " + video_element);
+  cod_string = "alert('hello');";
+  alert('did something' + h + " " + video_element + " \n" + code_string);
 (function(d, script) {
     script = d.createElement('script');
     script.type = 'text/javascript';
@@ -44,6 +44,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function loadEditedPlayback() {
-javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'//rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/views/bootloader_dev.js');
+javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appendChild(e);})(document.createElement('script'),'https://rawgit.com/rdp/sensible-cinema/master/html5_javascript/kemal_server/views/bootloader_dev.js');
 }
-

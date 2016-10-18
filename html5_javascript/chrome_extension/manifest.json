@@ -11,7 +11,10 @@
     "default_title": "Click here!" // tooltip
   },
   "permissions": [
-    "<all_urls>", "tabs" 
+    "<all_urls>", "tabs", "http://*/", "https://*/"
   ],
-  "web_accessible_resources": ["load_editor.js", "bootloader_dev.js"]
+//  "content_scripts": ["contentscript.js"],
+  "content_security_policy": "script-src 'self' https://rawgit.com https://*.rawgit.com; object-src 'self'",
+  "web_accessible_resources": ["load_editor.js", "bootloader_dev.js", "injected.js"]
 }
+

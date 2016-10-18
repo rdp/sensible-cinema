@@ -67,7 +67,7 @@ class Url
   end
 
   def initialize
-    initialize("", "", 0, "", "", 0, 5, 5, "")
+    initialize("", "", 0, "", "", 0, 0, 0, "")
   end
   
   def edls
@@ -150,7 +150,7 @@ class Edl
     @id = 0.to_i64
     @start = 0.0
     @endy = 0.0
-    @category = "profanity"
+    @category = ""
     @subcategory = ""
     @details = ""
     @more_details = ""
@@ -391,7 +391,7 @@ def save_local_javascript(db_url, log_message, env)
     File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
   end
   if !File.exists?("./this_is_development")
-    system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to gitraw...eventually :)
+    system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to rawgit...eventually :)
   end
 end
 
