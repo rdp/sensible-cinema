@@ -76,7 +76,9 @@ function checkAndLoadEditor() {
   // else no video, do nothing :|
 }
 
+video_element = findFirstVideoTag(document.body)
+if (video_element == null)
+  alert('requested edited playback but no movie found...will keep polling to see if one appears');
+
 checkAndLoadEditor();
 setInterval(checkAndLoadEditor, 5000);
-
-// TODO only "try" once per video :|

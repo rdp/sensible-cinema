@@ -7,18 +7,22 @@ function injectJs(link) {
   document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
+already_loaded = false;
+
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        alert('here1');
-        console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
+        console.log(request);
 
         if (request.greeting == "hello")
             sendResponse({farewell: "goodbye"});
 
-       if (request.action == "start") 
-         injectJs(chrome.extension.getURL('bootloader_dev.js'));
-      alert('here3');
-
+        if (request.action == "start") {
+             if (already_loaded) {
+               alert('edited player already loaded for this page');
+             }
+             else {
+                 injectJs(chrome.extension.getURL('bootloader_dev.js'));
+                 already_loaded = true;
+             }
+         }
 });

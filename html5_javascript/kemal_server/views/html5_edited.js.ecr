@@ -133,7 +133,7 @@ function currentEpisodeString() {
 
 function checkIfEpisodeChanged() {
   if (getSanitizedCurrentUrl() != old_current_url || getCurrentAmazonEpisode() != old_amazon_episode) {
-    alert("detected move to another video, will try to load its stuff now...");
+    alert("detected move to another video, from " + old_current_url + old_amazon_episode + " to " getSanitizedCurrentUrl() + getCurrentAmazonEpisode() + "\nwill try to load its edited settings now for the new movie...");
     var loaded = false;
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.rendered.js"));
     javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'), url);
@@ -209,13 +209,8 @@ edlLayer.style.textShadow="2px 1px 0px white";
 edlLayer.style.fontSize = "13px";
 document.body.appendChild(edlLayer);
 
-setCurrentOnTop();
-// jquery is already loaded
-jQuery(window).resize(function(){
-  setCurrentOnTop();
-});
 
-// inject some UI
+// inject some UI :|
 edlLayer.innerHTML = `
 from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
 <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
@@ -239,9 +234,19 @@ action:
 <a href="#" onclick="video_element.play()">&#9654;</a>
 <a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
 `;
+
+jQuery(window).resize(function(){
+  setEditedControlsToTopLeft();
+});
+setEditedControlsToTopLeft();
+
+chrome.runtime.sendMessage({action: "started"}, function(response) {
+  console.log("response from html5 viewer": response);
+});
+
 }
 
-function setCurrentOnTop() {
+function setEditedControlsToTopLeft() {
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
