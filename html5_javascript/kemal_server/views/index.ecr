@@ -28,7 +28,7 @@ If you know the edit list already exists for the movie you're playing, then go <
        [<a href="<%= url.url %>" target="_blank"><%= url.name_with_episode %></a>]
        [<%= url.url =~ /\/\/([^\/]+).*/; $1 %>]
        <a href="/edit_url/<%= url.id %>">edit</a>
-       [ editing notes: <%= url.editing_notes %>]
+       [ edit count <%= url.edls.size %> editing notes: <%= url.editing_notes %>]
        [ age recommendation after edited: <%= url.age_recommendation_after_edited %> ]
        [ wholesome/uplifting level: <%= url.wholesome_uplifting_level %> / 10 ]
        [ good movie rating: <%= url.good_movie_rating %> / 10 ]

@@ -103,7 +103,11 @@ class Url
 
   def name_with_episode
     if amazon_episode_number != 0
-      "#{name} episode #{amazon_episode_number} (#{amazon_episode_name})"
+      local_name = name
+      if local_name.size > 150
+        local_name = local_name[0..150] + "..."
+      end
+      "#{local_name} episode #{amazon_episode_number} (#{amazon_episode_name})"
     else
       name
     end
