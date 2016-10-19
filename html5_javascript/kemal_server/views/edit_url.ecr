@@ -70,6 +70,9 @@ review (synopsis + explain good movie rating, age recommendation)
 Edits for this movie:
 <br/>
 <br/>
+<% if url.edls.size == 0 %>
+  No edits for this movie yet, add one now!
+<% end %>
 <% url.edls.each do |edl|  %>
   [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] 
   [<%= edl.default_action %>]
