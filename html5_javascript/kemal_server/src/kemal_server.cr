@@ -426,8 +426,27 @@ post "/save_url" do |env|
   db_url.editing_notes = editing_notes
   db_url.save
   save_local_javascript db_url, db_url.inspect, env
-  # env.redirect "/edit_url/" + db_url.id.to_s
-  env.redirect "/index" # so they can see that something happened otherwise it's like "did that buttont take?"
+  set_flash_for_next_time(env, "saved #{db_url.name}")
+  env.redirect "/edit_url/" + db_url.id.to_s
+end
+
+####### view methods :)
+
+def get_any_flash_as_box(env)
+  if env.session["flash"]?
+    out = "<p class=\"bg-info\">" + env.session["flash"] + "</p>"
+    env.session.delete "flash"
+    out
+  else
+    ""
+  end
+end
+
+def set_flash_for_next_time(env, string)
+  env.session["flash"] ||= ""
+  env.session["flash"] += string # save old flash too LOL
 end
 
 Kemal.run
+
+
