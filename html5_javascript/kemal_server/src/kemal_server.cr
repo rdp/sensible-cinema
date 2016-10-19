@@ -216,7 +216,7 @@ end
  
 def real_url(env)
   unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
-  if unescaped =~ /amazon.com/
+  if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off amazon extra cruft and there is a lot of it LOL but google play needs it
   end
   # sanitize amazon which can come in multiple forms
