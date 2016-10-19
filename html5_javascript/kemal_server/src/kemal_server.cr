@@ -379,6 +379,7 @@ get "/new_url" do |env|
     end
     # cleanup some cruft
     puts title
+    title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies &amp; TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "")
