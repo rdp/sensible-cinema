@@ -89,7 +89,7 @@ Edits for this movie:
 <br/>
 <a href=/for_current_just_settings?=<%= url.url_lookup_params %>>js just settings</a>
 <br/>
-<a href="<%= url.url %>" onclick="alert('after opening this window, please inject the javascript snippet from below');"  target="_blank">watch</a>
+<a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete</a>
 <br/>
 
 <p>[<a href="/index">back to index</a>]</p>

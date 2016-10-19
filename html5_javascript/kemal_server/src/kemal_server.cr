@@ -374,7 +374,8 @@ get "/new_url" do |env|
       title = "please enter title here"
     end
     # cleanup some cruft
-    title = title.gsub(" - Movies & TV on Google Play", "")
+    puts title
+    title = title.gsub(" - Movies &amp; TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
