@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Clean stream plugin",
+  "name": "Clean stream edited movie extension",
   "description": "This extension uses the clean stream player to any online video",
   "version": "0.2",
 
@@ -19,5 +19,6 @@
       // document_idle run_at default
   }],
   "web_accessible_resources": ["bootloader_dev.js"],
-   "icons": { "128": "icon.png" }
+   "icons": { "128": "icon.png" },
+   "background": { "scripts": ["background.js"] } 
 }
