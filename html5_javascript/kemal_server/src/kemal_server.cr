@@ -350,27 +350,33 @@ get "/new_url" do |env|
   else
     amazon_episode_number = 0
   end
-  begin
-    response = HTTP::Client.get real_url # download that page :)
-  rescue ex
-    raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
-  end
-  if response.body =~ /<title[^>]*>(.*)<\/title>/i
-    title = response.body.scan(/<title[^>]*>(.*)<\/title>/i)[0][1]
+  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
+  if url_or_nil != nil
+    set_flash_for_next_time(env, "a movie with that info already exists, showing that instead...")
+    env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
-    title = "please enter title here"
+    begin
+      response = HTTP::Client.get real_url # download that page :)
+    rescue ex
+      raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
+    end
+    if response.body =~ /<title[^>]*>(.*)<\/title>/i
+      title = response.body.scan(/<title[^>]*>(.*)<\/title>/i)[0][1]
+    else
+      title = "please enter title here"
+    end
+    # cleanup some cruft
+    title = title.gsub(" - Movies & TV on Google Play", "")
+    title = title.gsub(": Amazon   Digital Services LLC", "")
+    title = title.gsub("Amazon.com: ", "")
+    title = title.gsub(" - YouTube", "")
+    url = Url.new
+    url.url = real_url
+    url.name = title
+    url.amazon_episode_number = amazon_episode_number
+    url.save 
+    env.redirect "/edit_url/#{url.id}"
   end
-  # cleanup some cruft
-  title = title.gsub(" - Movies & TV on Google Play", "")
-  title = title.gsub(": Amazon   Digital Services LLC", "")
-  title = title.gsub("Amazon.com: ", "")
-  title = title.gsub(" - YouTube", "")
-  url = Url.new
-  url.url = real_url
-  url.name = title
-  url.amazon_episode_number = amazon_episode_number
-  url.save 
-  env.redirect "/edit_url/#{url.id}"
 end
 
 def sanitize_html(name)

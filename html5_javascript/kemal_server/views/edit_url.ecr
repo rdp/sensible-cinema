@@ -16,7 +16,12 @@
     <![endif]-->
 
 </head>
+<body>
 
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) put at top just for fun in case I need it [?] but could go at bottom -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<div class="container">
 <h1>Editing for <%= url.name %> <%= url.amazon_episode_name %> </h1>
 
 <%= get_any_flash_as_box(env) %>
@@ -88,3 +93,12 @@ Edits for this movie:
 <br/>
 
 <p>[<a href="/index">back to index</a>]</p>
+
+</div>
+
+    <!-- Include all compiled plugins (below) -->
+
+<!-- Latest compiled and minified JavaScript, sez should be in body...-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
