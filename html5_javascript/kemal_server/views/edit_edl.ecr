@@ -1,9 +1,6 @@
-<h1>Edit details of edit for <a href=/edit_url/<%= url.id %>><%= url.name %>
-<% if url.amazon_episode_number != 0 %>
-  ep. <%= url.amazon_episode_number %>
-  <%= url.amazon_episode_name %>
-<% end %>
-</a></h1>
+<h1>Edit details of edit for 
+<a href=/edit_url/<%= url.id %>><%= url.name_with_episode %> </a>
+</h1>
 
 <form action="/save_edl/<%= url.id %>" method="POST">
 <div>

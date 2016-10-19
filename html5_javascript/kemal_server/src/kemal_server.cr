@@ -101,6 +101,14 @@ class Url
     "url=#{url}&amazon_episode_number=#{amazon_episode_number}"
   end
 
+  def name_with_episode
+    if amazon_episode_number != 0
+      "#{name} episode #{amazon_episode_number} (#{amazon_episode_name})"
+    else
+      name
+    end
+  end
+
   def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from urls where id = ?", id) do |rs|
