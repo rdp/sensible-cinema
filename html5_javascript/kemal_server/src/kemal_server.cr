@@ -360,7 +360,7 @@ get "/new_url" do |env|
   end
   url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
   if url_or_nil != nil
-    set_flash_for_next_time(env, "a movie with that info already exists, showing that instead...")
+    set_flash_for_next_time(env, "a movie with that description already exists, showing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
     begin
@@ -441,7 +441,7 @@ post "/save_url" do |env|
   db_url.editing_notes = editing_notes
   db_url.save
   save_local_javascript db_url, db_url.inspect, env
-  set_flash_for_next_time(env, "saved #{db_url.name}")
+  set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/edit_url/" + db_url.id.to_s
 end
 
