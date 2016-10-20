@@ -1,28 +1,28 @@
 <img src=/drop_icon.png width=25px;/>
 <h1>Clean stream it!</h1>
-<br/>Offering edited google play/amazon prime etc. (ask for netflix/hulu)<br/><br/>
+<br/>Offering edited google play/amazon prime etc. (ask for netflix/hulu)<
 <br/>
 See <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss it.
 <br/>
-You too can purchase this for $2 (currently free however), pay paypal rogerdpack@gmail.com to receive instructions. <br/>
 
-If you know the edit list already exists for the movie you're playing, then go <a href=instructions>here</a> for instructions, then start watching edited!  Relax and just enjoy as you watch your movies :)
+If you know the edits already exists for the movie you're playing, then go <a href=instructions>here</a> for instalation instructions, then start watching edited!  Relax and just enjoy as you watch your movies :)
 
 <h1>Index</h1>
-These are movies that we currently have edits for.  Don't see one you want? Please create it and contribute back!
+These are movies that we currently have edits for.  Don't see one you want? Please add it and contribute back!
 
 <table class="table">
   <thead>
     <tr>
-      <th>name</th>
+      <th>Movie Name (click to open movie)</th>
       <th>host</th>
-      <th># edits</th>
-      <th>editing notes</th>
-      <th>age recommendation<br>after edited</th>
-      <th>wholesome<br/>uplifting level / 10</th>
-      <th>good movie rating / 10</th>
+      <th>editing status</th>
+      <th>num edits</th>
+      <th>age recommendation with edits</th>
+      <th>wholesome<br/>uplifting level / 10 max.</th>
+      <th>good movie rating / 10 max.</th>
       <th>our review</th>
-      <th>google info<br/>about video</th>
+      <th>edit</th>
+      <th>info >about video</th>
     </tr>
   </thead>
   <tbody>
@@ -30,20 +30,21 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
 <% urls.each{ |url|  %>
     <tr>
        <td><a href="<%= url.url %>" target="_blank"><%= url.name_with_episode %></a></td>
-       <td><%= url.url =~ /\/\/([^\/]+).*/; $1 %></td> <!-- host -->
-       <td><a href="/edit_url/<%= url.id %>"><%= url.edls.size %></a></td>
+       <td><%= url.host_like_netflix %></td>
        <td><%= url.editing_notes %></td>
+       <td><%= url.edls.size %></td>
        <td><%= url.age_recommendation_after_edited %></td>
        <td> <%= url.wholesome_uplifting_level %> </td>
        <td> <%= url.good_movie_rating %></td>
-       <td>review: <%= url.review[0..100] + "..." %> </td> <!-- todo link into it? -->
+       <td><%= url.review_with_ellipses %></td> <!-- todo link into it? -->
        <%
          google_search = URI.escape(url.name, true)
          if url.amazon_episode_number != 0
            google_search += URI.escape(" " + url.amazon_episode_number.to_s + " " + url.amazon_episode_name, true)
          end
        %>
-       <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">google info</a></td>
+       <td><a href="/edit_url/<%= url.id %>">edit</a></td>
+       <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">google it</a></td>
    </tr>
 <% } %>
 
@@ -66,5 +67,6 @@ This also works with other services like disneymoviesanywhere.com etc...
 </form>
 
 <a href=/regenerate_all >regenerate all</a> (if developers change underlying javascript they should do this)
+You too can purchase this for $2 (currently free however), email rogerdpack@gmail.com to receive instructions.<br/>
 
 </pre>

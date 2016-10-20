@@ -101,6 +101,23 @@ class Url
     "url=#{url}&amazon_episode_number=#{amazon_episode_number}"
   end
 
+  def host_like_netflix
+   check =  /\/\/([^\/]+).*/
+    if url =~ check
+      $1.split(".")[-2]
+    else
+      url
+    end
+  end
+
+  def review_with_ellipses
+    if review.size > 100
+      review[0..100] + "&#8230;" # :|
+    else
+      review
+    end
+  end
+
   def name_with_episode
     if amazon_episode_number != 0
       local_name = name
