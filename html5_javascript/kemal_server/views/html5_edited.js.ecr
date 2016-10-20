@@ -118,7 +118,7 @@ function checkStatus() {
     }
   }
   
-  myLayer.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
+  topLineEditDiv.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
   jQuery("#playback_rate").html(video_element.playbackRate.toFixed(2) + "x");
   checkIfEpisodeChanged();
 }
@@ -185,78 +185,98 @@ function handleNetflixSeekOrStop(cur_time) {
 }
 
 function setupDeveloper() {
+  exposeEditScreenDiv = document.createElement('div');
+  exposeEditScreenDiv.style.position = 'absolute';
+  exposeEditScreenDiv.style.height = '30px';
+  exposeEditScreenDiv.style.background = '#000000';
+  exposeEditScreenDiv.style.zIndex = "99999999"; // on top :)
+  exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  exposeEditScreenDiv.style.textShadow="2px 1px 0px white";
+  exposeEditScreenDiv.style.fontSize = "13px";
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add edit</a>`;
+  // and stay visible
+  document.body.appendChild(exposeEditScreenDiv);
 
-myLayer = document.createElement('div');
-myLayer.style.position = 'absolute';
-//myLayer.style.width = '200px';
-myLayer.style.height = '30px';
-myLayer.style.background = '#000000';
-myLayer.style.zIndex = "99999999"; // on top :)
-myLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-myLayer.style.textShadow="2px 1px 0px white";
-myLayer.style.fontSize = "13px";
-myLayer.style.top = "0";
-document.body.appendChild(myLayer);
+  topLineEditDiv = document.createElement('div');
+  topLineEditDiv.style.position = 'absolute';
+  //topLineEditDiv.style.width = '200px';
+  topLineEditDiv.style.height = '30px';
+  topLineEditDiv.style.background = '#000000';
+  topLineEditDiv.style.zIndex = "99999999"; // on top :)
+  topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  topLineEditDiv.style.textShadow="2px 1px 0px white";
+  topLineEditDiv.style.fontSize = "13px";
+  topLineEditDiv.style.display = 'none';
+  document.body.appendChild(topLineEditDiv);
+  
+  edlLayer = document.createElement('div');
+  edlLayer.style.position = 'absolute';
+  edlLayer.style.width = '500px';
+  edlLayer.style.height = '30px';
+  edlLayer.style.background = '#000000';
+  edlLayer.style.zIndex = "99999999"; // on top :)
+  edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  edlLayer.style.textShadow="2px 1px 0px white";
+  edlLayer.style.fontSize = "13px";
+  edlLayer.style.display = 'none';
+  document.body.appendChild(edlLayer);
+  
+  // inject the HTML UI 
+  edlLayer.innerHTML = `
+  from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
+  <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+  <br/>
+  to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
+  <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+  <br/>
+  action:
+  <select name='default_action' id='new_action'>
+    <option value='mute'>mute</option>
+    <option value='skip'>skip</option>
+    <option value='yes_audio_no_video'>yes_audio_no_video</option>
+    <option value='do_nothing'>do_nothing</option>
+  </select>
+  <input type='submit' value='Test once' onclick="testCurrent();">
+  <input type='submit' value='Add edit' onclick="saveEditButton();">
+  <a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
+  <span id='playback_rate'>1.00x</span>
+  <a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
+  <a href="#" onclick="stepFrame();">step</a>
+  <a href="#" onclick="video_element.play()">&#9654;</a>
+  <a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
+  `;
+  
+  
+  // this doesn't do anything currently
+  var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+  chrome.runtime.sendMessage(editorExtensionId, {action: "started"}, function(response) {
+    console.log("response after sending started" + response);
+  });
+  jQuery(window).resize(function(){
+    setEditedControlsToTopLeft();
+  });
+  setEditedControlsToTopLeft(); // and call immediately :)
+}
 
-edlLayer = document.createElement('div');
-edlLayer.style.position = 'absolute';
-edlLayer.style.width = '500px';
-edlLayer.style.height = '30px';
-edlLayer.style.background = '#000000';
-edlLayer.style.zIndex = "99999999"; // on top :)
-edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-edlLayer.style.textShadow="2px 1px 0px white";
-edlLayer.style.fontSize = "13px";
-document.body.appendChild(edlLayer);
-
-
-// inject some UI :|
-edlLayer.innerHTML = `
-from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
-<input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
-<br/>
-to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
-<input id='clickMe' type='button' value='set to now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
-<br/>
-action:
-<select name='default_action' id='new_action'>
-  <option value='mute'>mute</option>
-  <option value='skip'>skip</option>
-  <option value='yes_audio_no_video'>yes_audio_no_video</option>
-  <option value='do_nothing'>do_nothing</option>
-</select>
-<input type='submit' value='Test once' onclick="testCurrent();">
-<input type='submit' value='Add edit' onclick="saveEditButton();">
-<a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
-<span id='playback_rate'>1.00x</span>
-<a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
-<a href="#" onclick="stepFrame();">step</a>
-<a href="#" onclick="video_element.play()">&#9654;</a>
-<a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
-`;
-
-jQuery(window).resize(function(){
-  setEditedControlsToTopLeft();
-});
-setEditedControlsToTopLeft();
-
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
-chrome.runtime.sendMessage(editorExtensionId, {action: "started"}, function(response) {
-  console.log("response after sending started" + response);
-});
-
+function addForNewEditToScreen() {
+  topLineEditDiv.style.display = ''; // visible forever LOL
+  edlLayer.style.display = ''; // visible
 }
 
 function setEditedControlsToTopLeft() {
+  // discover where the "currently viewed" top left actually is (not always 0,0 apparently)
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
   offset = 150; // allow kill amazon x-ray :|
   left += offset;
-  myLayer.style.left = left + "px"; // TODO full screen button??
-  myLayer.style.top = top + "px";;
+  exposeEditScreenDiv.style.left = (left - offset) + "px"; // real zero for this one :|
+  exposeEditScreenDiv.style.top = top + "px";
+  topLineEditDiv.style.left = left + "px"; 
+  topLineEditDiv.style.top = top + "px";
   edlLayer.style.left = left + "px";
   edlLayer.style.top = (top + 30) + "px";
+
 }
 
 function addToCurrentEditArray() {
@@ -275,7 +295,7 @@ function currentTestAction() {
 }
 
 function testCurrent() {
-  if (currentTestAction() == 'do_nothing") {
+  if (currentTestAction() == 'do_nothing') {
     alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing before hitting save button finally');
     return; // abort
   }
