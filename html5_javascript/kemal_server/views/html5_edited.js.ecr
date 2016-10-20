@@ -133,7 +133,7 @@ function currentEpisodeString() {
 
 function checkIfEpisodeChanged() {
   if (getSanitizedCurrentUrl() != old_current_url || getCurrentAmazonEpisode() != old_amazon_episode) {
-    alert("detected move to another video, from " + old_current_url + old_amazon_episode + " to " getSanitizedCurrentUrl() + getCurrentAmazonEpisode() + "\nwill try to load its edited settings now for the new movie...");
+    alert("detected move to another video, from " + old_current_url + old_amazon_episode + " to " + getSanitizedCurrentUrl() + getCurrentAmazonEpisode() + "\nwill try to load its edited settings now for the new movie...");
     var loaded = false;
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.rendered.js"));
     javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'), url);
