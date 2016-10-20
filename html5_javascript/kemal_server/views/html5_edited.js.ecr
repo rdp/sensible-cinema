@@ -241,7 +241,7 @@ jQuery(window).resize(function(){
 setEditedControlsToTopLeft();
 
 chrome.runtime.sendMessage({action: "started"}, function(response) {
-  console.log("response from html5 viewer": response);
+  console.log("response from html5 viewer" + response);
 });
 
 }
