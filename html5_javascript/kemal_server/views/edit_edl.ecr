@@ -11,7 +11,9 @@
 
 from:<input type="text" name="start"  size="40" value="<%= seconds_to_human edl.start %>"/>
 <br/>
-to: <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="endy"><%= seconds_to_human edl.endy %></textarea>
+
+to: <textarea name="endy" rows="1" cols="40"  id="endy"><%= seconds_to_human edl.endy %></textarea>
+
 <br/>
 default action to take:
 <select name="default_action" id='sel'>
@@ -20,13 +22,14 @@ default action to take:
   <option value="yes_audio_no_video">yes_audio_no_video</option>
   <option value="do_nothing">do_nothing</option>
 </select>
-
 <script>
 document.getElementById('sel').value = '<%= edl.default_action %>';
 </script>
 <br/>
-category:
-<select name="category" id='category_select' disabled> <!-- gets propagated by the subcat -->
+
+<div id="category_div_id" style="display: none">
+category (gets automatically set for you when you choose sub category):
+<select name="category" id='category_select' disabled="true">
   <option value="profanity">verbal profanity</option>
   <option value="violence">violence</option>
   <option value="physical">physical profanity (nudity, sex, drugs, etc.)</option>
@@ -38,6 +41,8 @@ category:
 document.getElementById('category_select').value = '<%= edl.category %>';
 </script>
 <br/>
+</div>
+
 sub category
 <select name="subcategory" id='subcategory_select' onchange="updateCategory();">
   <optgroup label="profanity">
@@ -100,24 +105,27 @@ sub category
 <script>
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
 </script>
+<br/>
 If there are any missing please let us know!
 <br/>
-two word details (ex: d***, "deity" or "knife stabbing" "song")
-<textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
+few word details (ex: d***, "deity" or "knife stabbing" "song")
+<br/>
+<textarea name="details" rows="3" cols="40" ><%= edl.details %></textarea>
 <br/>
 more details (ex: "sally said ... OK?" (dots instead of real profanity, "song name") 
-<textarea name="more_details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.more_details %></textarea>
-<div><input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>
+<textarea name="more_details" rows="3" cols="40" ><%= edl.more_details %></textarea>
+<br/>
 
-NB you need to hit this save button for each edit or they will be lost!
+Note: you need to hit this save button for each edit or they will be lost!
+<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>
 
 <script>
 function updateCategory() {
   var element = document.getElementById("subcategory_select");
   var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
   document.getElementById("category_select").value = cat_from_subcat;
+  $('#category_div_id').fadeIn();
 }
 </script>
 
 </div>
-

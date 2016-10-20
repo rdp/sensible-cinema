@@ -16,30 +16,30 @@ url:
 <input type="text" name="url" size="150" value="<%= url.url %>"/>
 <br/>
 
-<% if url.name =~ /amazon.com/ %>
+<div style="<%= "display: none;" unless url.name =~ /amazon.com/ %>">
   amazon_episode_number (0 if none)
   <input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
   <br/>
   amazon_episode_name (if any)
-  <input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>/>"/>
+  <input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>"/>
   <br/>
-<% end %>
+</div>
 
-editing_notes (ex: "needs second review" "not done yet", "still has X not excluded [bare midriffs]")
+editing_notes (ex: "needs second review" "not done yet", "still has X not excluded [bare midriffs]" "editing done")
 <textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>
 <br/>
+
 age_recommendation_after_edited (ex: 10)
 <input type="text" name="age_recommendation_after_edited" size="5" value="<%= url.age_recommendation_after_edited %>"/>
-
 <br/>
 wholesome_uplifting_level (out of 10)
 <input type="text" name="wholesome_uplifting_level" size="5" value="<%= url.wholesome_uplifting_level %>"/>
-
 <br/>
+
 good_movie_rating (out of 10)
 <input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
-
 <br/>
+
 review (synopsis + explain good movie rating, explain age recommendation)
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 
