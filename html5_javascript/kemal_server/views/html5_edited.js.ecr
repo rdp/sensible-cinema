@@ -390,7 +390,7 @@ function start() {
 }
 
 function logReadyToGo() {
-    var message = "ready to go edited\n" + name + "\n" + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
+    var message = "ready to go edited\n" + name + " " + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
     console.log(message);
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
 }
