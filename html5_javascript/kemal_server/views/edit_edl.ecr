@@ -30,7 +30,7 @@ category:
   <option value="profanity">verbal profanity</option>
   <option value="violence">violence</option>
   <option value="physical">physical profanity (nudity, sex, drugs, etc.)</option>
-  <option value="skippable">skippable</option>
+  <option value="movie-content">movie-content</option>
   <option value="suspense">suspenseful/scary</option>
   <option value="substance-abuse">substance-abuse</option>
 </select>
@@ -41,6 +41,7 @@ document.getElementById('category_select').value = '<%= edl.category %>';
 sub category
 <select name="subcategory" id='subcategory_select' onchange="updateCategory();">
   <optgroup label="profanity">
+    <option value="personal attack command">profanity -- attack command ("shut up" etc.)</option>
     <option value="personal insult">profanity -- insult ("moron" etc.)</option>
     <option value="bathroom humor">profanity -- bathroom humor</option>
     <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm...)</option>
@@ -79,10 +80,10 @@ sub category
     <option value="smoking">substance-abuse -- smoking</option>
   </optgroup>
 
-  <optgroup label="skippable">
-    <option value="initial theme song">skippable -- initial theme song/credits</option>
-    <option value="closing credits">skippable -- closing credits</option>
-    <option value="closing credits">skippable -- closing credits before closing movie clip</option>
+  <optgroup label="movie-content">
+    <option value="initial theme song">movie-content -- initial theme song/initial credits</option>
+    <option value="closing credits">movie-content -- closing credits</option>
+    <option value="closing credits">movie-content -- song occurrence</option>
   </optgroup>
 
   <optgroup label="suspense">
@@ -99,14 +100,14 @@ sub category
 <script>
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
 </script>
+If there are any missing please let us know!
 <br/>
-details (ex: d***, "deity" or "knife stabbing")
+two word details (ex: d***, "deity" or "knife stabbing" "song")
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
 </div>
 <br/>
-more details (ex: sally said X*, if you happen to be working off an automated script that provides such)
+more details (ex: "sally said ... OK?" (dots instead of real profanity, "song name") 
 <textarea name="more_details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.more_details %></textarea>
-These won't be shown to the user.
 </div>
 
 <div><input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>
