@@ -19,5 +19,5 @@ chrome.runtime.onMessageExternal.addListener(
       // message from real page, but can't use wildcards for this :|
 });
 
-chrome.browserAction.setBadgeText({ text: "n" }); // default :)
+chrome.browserAction.setBadgeText({ text: "off" }); // default :)
 
