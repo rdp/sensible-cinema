@@ -9,11 +9,17 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- WARNING: Respond.js doesn't work if </input>you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+  <style>
+    input[type="text"] {
+      font-size: 12pt; font-family: Arial;
+    }
+  </style>
 
 </head>
 <body>
@@ -33,36 +39,38 @@
 <% end %>
 
 name:
-<textarea name="name" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.name %></textarea>
-<br/>
+<input type="text" name="name" size="150" value="<%= url.name %>"/>
 <br/>
 url:
-<textarea name="url" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.url %></textarea>
+<input type="text" name="url" size="150" value="<%= url.url %>"/>
 <br/>
-<br/>
-amazon_episode_number (0 if none)
-<textarea name="amazon_episode_number" rows="1" cols="10" style="font-size: 12pt; font-family: Arial;"><%= url.amazon_episode_number %></textarea>
-<br/>
-amazon_episode_name (if any)
-<textarea name="amazon_episode_name" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.amazon_episode_name %></textarea>
-<br/>
+
+<% if url.name =~ /amazon.com/ %>
+  amazon_episode_number (0 if none)
+  <input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
+  <br/>
+  amazon_episode_name (if any)
+  <input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>/>"/>
+  <br/>
+<% end %>
+
 editing_notes (ex: "needs second review" "not done yet", "still has X not excluded [bare midriffs]")
-<textarea name="editing_notes" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.editing_notes %></textarea>
+<textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>
 <br/>
 age_recommendation_after_edited (ex: 10)
-<textarea name="age_recommendation_after_edited" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.age_recommendation_after_edited %></textarea>
+<input type="text" name="age_recommendation_after_edited" size="5" value="<%= url.age_recommendation_after_edited %>"/>
 
 <br/>
 wholesome_uplifting_level (out of 10)
-<textarea name="wholesome_uplifting_level" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.wholesome_uplifting_level %></textarea>
+<input type="text" name="wholesome_uplifting_level" size="5" value="<%= url.wholesome_uplifting_level %>"/>
 
 <br/>
 good_movie_rating (out of 10)
-<textarea name="good_movie_rating" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.good_movie_rating %></textarea>
+<input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
 
 <br/>
-review (synopsis + explain good movie rating, age recommendation)
-<textarea name="review" rows="1" cols="150" style="font-size: 12pt; font-family: Arial;"><%= url.review %></textarea>
+review (synopsis + explain good movie rating, explain age recommendation)
+<textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 
 <div><input type="submit" value="Save url info"></div>
 </form>
