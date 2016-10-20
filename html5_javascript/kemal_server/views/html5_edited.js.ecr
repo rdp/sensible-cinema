@@ -240,8 +240,9 @@ jQuery(window).resize(function(){
 });
 setEditedControlsToTopLeft();
 
-chrome.runtime.sendMessage({action: "started"}, function(response) {
-  console.log("response from html5 viewer" + response);
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+chrome.runtime.sendMessage(editorExtensionId, {action: "started"}, function(response) {
+  console.log("response after sending started" + response);
 });
 
 }
