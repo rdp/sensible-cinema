@@ -229,7 +229,7 @@ get "/" do |env|
 end
 
 def with_db
-  db =  DB.open "sqlite3://./edit_descriptors/sqlite3_data.db"
+  db =  DB.open File.read("db/db_connection_string.txt")
   yield db ensure db.close
 end
  
@@ -486,7 +486,7 @@ end
 
 def get_any_flash_as_box(env)
   if env.session["flash"]?
-    out = "<p class=\"bg-info\">" + env.session["flash"] + "</p>"
+    out = "<p class=\"bg-info\">#{env.session["flash"]}</p>"
     env.session.delete "flash"
     out
   else
@@ -496,7 +496,7 @@ end
 
 def set_flash_for_next_time(env, string)
   env.session["flash"] ||= ""
-  env.session["flash"] += string # save old flash too LOL
+  env.session["flash"] = "#{env.session["flash"]}" + string # save old flash too LOL
 end
 
 Kemal.run
