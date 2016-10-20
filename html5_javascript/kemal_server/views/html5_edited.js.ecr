@@ -258,7 +258,7 @@ function setEditedControlsToTopLeft() {
   edlLayer.style.top = (top + 30) + "px";
 }
 
-function addFromCurrent() {
+function addToCurrentEditArray() {
   start = humanToTimeStamp(document.getElementById('start').value);
   endy = humanToTimeStamp(document.getElementById('endy').value);
   if (endy <= start) {
@@ -269,15 +269,23 @@ function addFromCurrent() {
   return [start, endy];
 }
 
+function currentTestAction() {
+  return document.getElementById('new_action').value;
+}
+
 function testCurrent() {
-  var [start, endy] = addFromCurrent();
-  // shenanigans as usual to seek
+  if (currentTestAction() == 'do_nothing") {
+    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing before hitting save button finally');
+    return; // abort
+  }
+  var [start, endy] = addToCurrentEditArray();
+  // shenanigans as required to actually seek html5 video
   video_element.pause();
   video_element.currentTime = start - 2; 
   video_element.play();
   length = endy - start;
-  if (document.getElementById('new_action').value == 'skip') 
-    length = 0; // it skips it after all
+  if (currentTestAction() == 'skip') 
+    length = 0; // it skips it, so the amount of time before reverting is less it :)
   wait_time_millis = (length + 2 + 0.1)*1000; 
   setTimeout(function() {
     currentEditArray().pop();
@@ -285,7 +293,7 @@ function testCurrent() {
 }
 
 function currentEditArray() {
-  switch (document.getElementById('new_action').value) {
+  switch (currentTestAction()) {
     case 'mute':
       return mutes;
     case 'skip':
@@ -293,10 +301,9 @@ function currentEditArray() {
     case 'yes_audio_no_video':
       return yes_audio_no_videos;
     case 'do_nothing':
-      alert("you want to test something thats do nothing?");
-      return [0.0]; // doesn't matter, but something to pop in case :)
+      return do_nothings;
     default:
-      alert('internal error 1');
+      alert('internal error 1...'); // hopefully never see this
   }
 }
 
@@ -343,10 +350,10 @@ function humanToTimeStamp(timestamp) {
 function saveEditButton() {
 
   var url = "http://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
-  "&endy=" + document.getElementById('endy').value + "&default_action=" + document.getElementById('new_action').value;
+  "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   console.log(url);
   var win = window.open(url, '_blank');
-  addFromCurrent(); // and leave it there
+  addToCurrentEditArray(); // and leave it there
 }
 
 function stepFrame() {

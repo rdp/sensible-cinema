@@ -255,7 +255,7 @@ def get_for_current(env, type)
   end
 end
 
-def get_timestamps_by_type(conn, db_url, type) 
+def timestamps_of_type_for_video(conn, db_url, type) 
     edls = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
       Edl.from_rs rs
     end
@@ -264,10 +264,10 @@ end
 
 def javascript_for(db_url, env, type)
   with_db do |conn|
-    yes_audio_no_videos = get_timestamps_by_type conn, db_url, "yes_audio_no_video"
-    skips = get_timestamps_by_type conn, db_url, "skip"
-    mutes = get_timestamps_by_type conn, db_url, "mute"
-    do_nothings = get_timestamps_by_type conn, db_url, "do_nothing"
+    yes_audio_no_videos = timestamps_of_type_for_video conn, db_url, "yes_audio_no_video"
+    skips = timestamps_of_type_for_video conn, db_url, "skip"
+    mutes = timestamps_of_type_for_video conn, db_url, "mute"
+    do_nothings = timestamps_of_type_for_video conn, db_url, "do_nothing"
     
     name = db_url.name
     episode_name = URI.escape(db_url.amazon_episode_name) 
