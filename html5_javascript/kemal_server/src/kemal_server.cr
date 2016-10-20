@@ -296,7 +296,7 @@ get "/delete_edl/:id" do |env|
   id = env.params.url["id"]
   edl = Edl.get_only_by_id(id)
   edl.destroy
-  save_local_javascript edl.url, "removed #{edl}", env
+  save_local_javascript [edl.url], "removed #{edl}", env
   env.redirect "/edit?url=" + edl.url.url
 end
 
@@ -346,8 +346,13 @@ post "/save_edl/:url_id" do |env|
   edl.more_details = sanitize_html params["more_details"]
   raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy) # before_save filter LOL
   edl.save
-  save_local_javascript edl.url, edl.inspect, env
+  save_local_javascript [edl.url], edl.inspect, env
   env.redirect "/edit_url/#{edl.url.id}"
+end
+
+get "/regenerate_all" do |env|
+  save_local_javascript Url.all, "regen_all called", env
+  env.redirect "/index"
 end
 
 get "/edit_url/:url_id" do |env| # same as "view" and "new" LOL but we have the url
@@ -402,15 +407,17 @@ get "/index" do |env|
   render "views/index.ecr"
 end
 
-def save_local_javascript(db_url, log_message, env)
-  File.open("edit_descriptors/log.txt", "a") do |f|
-    f.puts log_message
-  end
-  ["html5_edited.just_settings", "html5_edited"].each  do |type|
-    as_javascript = javascript_for(db_url, env, type)
-    escaped_url_no_slashes = URI.escape db_url.url
-    File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
-  end
+def save_local_javascript(db_urls, log_message, env)
+  db_urls.each { |db_url|
+    File.open("edit_descriptors/log.txt", "a") do |f|
+      f.puts log_message
+    end
+    ["html5_edited.just_settings", "html5_edited"].each  do |type|
+      as_javascript = javascript_for(db_url, env, type)
+      escaped_url_no_slashes = URI.escape db_url.url
+      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
+    end
+  }
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to rawgit...eventually :)
   end
@@ -445,7 +452,7 @@ post "/save_url" do |env|
   db_url.review = review
   db_url.editing_notes = editing_notes
   db_url.save
-  save_local_javascript db_url, db_url.inspect, env
+  save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/edit_url/" + db_url.id.to_s
 end
