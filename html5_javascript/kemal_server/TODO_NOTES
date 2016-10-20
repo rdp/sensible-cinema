@@ -1,16 +1,17 @@
 == todo ===
 
-gitraw is actually slow for initial update :(
+
+separate space for actors?
+  rename column details -> status or some odd
 
 whether prime or not
-  cost?
+  cost? sure rental, purchase :|
 
-sortable titles?
+sortable index?
 
 research dvdz :|
 
-can turn off developer somehow...somehow...
-  different load ?
+don't load javascript code, my friend :|
 
 chrome extension
   opt in :|
@@ -26,14 +27,16 @@ pay people for tons
 resurrect "fake" netflix :|
   disable js netflix/hulu :|
 
-twitter bootstrap/prettify/main index persuasive page LOL
+main persuasive page LOL
  "it's legal/approved," motto
-
-add iterm2 style paypal donate (link at least :)
 
 instructions (only) for jruby subtitle finder for now :)
 
 == todo never LOL ==
+gitraw is actually slow for initial update :(
+  but still functional LOL
+
+add iterm2 style paypal donate (link at least :)
 plugin:
   netflix doesn't send in right full title
 

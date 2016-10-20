@@ -14,6 +14,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
   <thead>
     <tr>
       <th>Movie Name (click to open movie)</th>
+      <th>view edits</th>
       <th>host</th>
       <th>editing status</th>
       <th>num edits</th>
@@ -21,8 +22,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
       <th>wholesome<br/>uplifting level / 10 max.</th>
       <th>good movie rating / 10 max.</th>
       <th>our review</th>
-      <th>edit</th>
-      <th>info >about video</th>
+      <th>info about movie</th>
     </tr>
   </thead>
   <tbody>
@@ -30,6 +30,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
 <% urls.each{ |url|  %>
     <tr>
        <td><a href="<%= url.url %>" target="_blank"><%= url.name_with_episode %></a></td>
+       <td><a href="/edit_url/<%= url.id %>">edit</a></td>
        <td><%= url.host_like_netflix %></td>
        <td><%= url.editing_notes %></td>
        <td><%= url.edls.size %></td>
@@ -43,8 +44,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
            google_search += URI.escape(" " + url.amazon_episode_number.to_s + " " + url.amazon_episode_name, true)
          end
        %>
-       <td><a href="/edit_url/<%= url.id %>">edit</a></td>
-       <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">google it</a></td>
+       <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">info</a></td>
    </tr>
 <% } %>
 

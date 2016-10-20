@@ -368,6 +368,10 @@ post "/save_edl/:url_id" do |env|
 end
 
 get "/regenerate_all" do |env|
+  # cleanse :)
+  Dir["edit_descriptors/*.js"].each{|file|
+    File.delete file
+  }
   save_local_javascript Url.all, "regen_all called", env
   env.redirect "/index"
 end
