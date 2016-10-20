@@ -11,14 +11,13 @@
     "default_title": "If this plugin is installed, it should ask you per video\nafter opening its windows url, if you want to try edited" // tooltip
   },
   "permissions": [
-    "<all_urls>", "tabs", "http://*/", "https://*/"
+    "<all_urls>", "tabs", "http://*/", "https://*/" // LOL
   ],
   "content_scripts": [{
       "js": ["contentscript.js"],
       "matches": ["<all_urls>"]
-      // document_idle run_at default
   }],
   "web_accessible_resources": ["bootloader_dev.js"],
-   "icons": { "128": "icon.png" },
-   "background": { "scripts": ["background.js"] } 
+  "icons": { "128": "icon.png" },
+  "background": { "scripts": ["background.js"] }
 }

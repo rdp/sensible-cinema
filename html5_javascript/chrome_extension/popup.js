@@ -11,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadEditedPlayback() {
-    console.log('popup.js here2');
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {action: 'start', greeting: "hello"}, function(response) {
-            console.log(response.farewell);
+        chrome.tabs.sendMessage(tabs[0].id, {action: 'please_start'}, function(response) {
+            console.log("send start message from popup");
         });
     });
-    console.log('popup.js here3');
 }
