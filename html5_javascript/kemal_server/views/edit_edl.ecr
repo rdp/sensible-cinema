@@ -3,13 +3,13 @@
 </h1>
 
 <form action="/save_edl/<%= url.id %>" method="POST">
-<div>
+<div class="container">
 
 <% if edl.id != 0 %>
   <input type="hidden" name="id" value="<%= edl.id %>">
 <% end %>
 
-from:<textarea name="start" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="start"><%= seconds_to_human edl.start %></textarea>
+from:<input type="text" name="start"  size="40" value="<%= seconds_to_human edl.start %>"/>
 <br/>
 to: <textarea name="endy" rows="1" cols="40" style="font-size: 12pt; font-family: Arial;" id="endy"><%= seconds_to_human edl.endy %></textarea>
 <br/>
@@ -104,12 +104,9 @@ If there are any missing please let us know!
 <br/>
 two word details (ex: d***, "deity" or "knife stabbing" "song")
 <textarea name="details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.details %></textarea>
-</div>
 <br/>
 more details (ex: "sally said ... OK?" (dots instead of real profanity, "song name") 
 <textarea name="more_details" rows="3" cols="40" style="font-size: 12pt; font-family: Arial;"><%= edl.more_details %></textarea>
-</div>
-
 <div><input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>
 
 NB you need to hit this save button for each edit or they will be lost!
@@ -121,3 +118,6 @@ function updateCategory() {
   document.getElementById("category_select").value = cat_from_subcat;
 }
 </script>
+
+</div>
+

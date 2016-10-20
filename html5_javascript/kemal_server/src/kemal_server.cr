@@ -283,7 +283,7 @@ def javascript_for(db_url, env, type)
 end
 
 get "/instructions" do
-  render "views/instructions.ecr"
+  render "views/instructions.ecr", "views/layout.ecr"
 end
 
 get "/delete_url/:url_id" do |env|
@@ -303,7 +303,7 @@ end
 get "/edit_edl/:id" do |env|
   edl = Edl.get_only_by_id(env.params.url["id"])
   url = edl.url
-  render "views/edit_edl.ecr"
+  render "views/edit_edl.ecr", "views/layout.ecr"
 end
 
 def get_url_from_url_id(env)
@@ -327,7 +327,7 @@ get "/add_edl/:url_id" do |env|
       edl.endy = last_end + 2
     end
   end
-  render "views/edit_edl.ecr"
+  render "views/edit_edl.ecr", "views/layout.ecr"
 end
 
 post "/save_edl/:url_id" do |env|
@@ -352,7 +352,7 @@ end
 
 get "/edit_url/:url_id" do |env| # same as "view" and "new" LOL but we have the url
   url = get_url_from_url_id(env)
-  render "views/edit_url.ecr"
+  render "views/edit_url.ecr", "views/layout.ecr"
 end
 
 get "/new_url" do |env|
