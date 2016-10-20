@@ -37,6 +37,9 @@ insert into edits (start, endy, category, subcategory, details, default_action, 
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
       (10.0, 30.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.netflix.com/watch/80016224'), "");
 
+alter table URLS ADD COLUMN details TEXT NOT NULL DEFAULT '';
+alter table URLS rename column editing_notes to editing_status;
+
 -- output some to screen
 select * from urls;
 select * from edits;

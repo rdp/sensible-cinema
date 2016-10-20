@@ -21,6 +21,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
       <th>age recommendation with edits</th>
       <th>wholesome<br/>uplifting level / 10 max.</th>
       <th>good movie rating / 10 max.</th>
+      <th>details</th>
       <th>our review</th>
       <th>info about movie</th>
     </tr>
@@ -32,11 +33,12 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
        <td><a href="<%= url.url %>" target="_blank"><%= url.name_with_episode %></a></td>
        <td><a href="/edit_url/<%= url.id %>">edit</a></td>
        <td><%= url.host_like_netflix %></td>
-       <td><%= url.editing_notes %></td>
+       <td><%= url.editing_status %></td>
        <td><%= url.edls.size %></td>
        <td><%= url.age_recommendation_after_edited %></td>
        <td> <%= url.wholesome_uplifting_level %> </td>
        <td> <%= url.good_movie_rating %></td>
+       <td><%= url.details %></td>
        <td><%= url.review_with_ellipses %></td> <!-- todo link into it? -->
        <%
          google_search = URI.escape(url.name, true)

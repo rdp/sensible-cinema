@@ -11,8 +11,13 @@
 name:
 <input type="text" name="name" size="150" value="<%= url.name %>"/>
 <br/>
+
 url:
 <input type="text" name="url" size="150" value="<%= url.url %>"/>
+<br/>
+
+details (actors, etc.):
+<input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 
 <div style="<%= "display: none;" unless url.name =~ /amazon.com/ %>">
@@ -24,8 +29,8 @@ url:
   <br/>
 </div>
 
-editing_notes (current editing status, ex: "needs second review" "not done yet", "still has X not excluded [bare midriffs]" "editing done")
-<textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>
+editing_status (ex: "needs second review" "not done yet", "still has X not excluded [bare midriffs]" "editing done")
+<textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
 <br/>
 
 age_recommendation_after_edited (ex: 10)
