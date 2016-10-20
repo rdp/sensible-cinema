@@ -20,6 +20,7 @@ chrome.runtime.onMessage.addListener(
              else {
                  injectJs(chrome.extension.getURL('bootloader_dev.js'));
                  already_loaded = true;
+                 // appears background is the only thing that can adjust the icon :|
                  chrome.runtime.sendMessage({action: "loaded"}, function(response) {
                    console.log("sent loaded message from contentscripts");
                  });
