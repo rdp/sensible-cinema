@@ -6,7 +6,8 @@ require "./include//*" # one regex didn't work :|
 
 require "kemal"
 require "http/client"
-require "sqlite3"
+#require "sqlite3"
+require "mysql"
 
 class Url
   DB.mapping({
@@ -144,7 +145,7 @@ end
 class Edl
   # see edit_edl.ecr for options
   DB.mapping({
-    id: Int64,
+    id: Int32,
     start:   {type: Float64},
     endy: {type: Float64},
     category: {type: String},       
@@ -178,7 +179,7 @@ class Edl
   end
   
   def initialize(url)
-    @id = 0.to_i64
+    @id = 0
     @start = 0.0
     @endy = 0.0
     @category = ""
@@ -192,7 +193,7 @@ class Edl
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into edits (start, endy, category, subcategory, details, more_details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @more_details, @default_action, @url_id).last_insert_id
+        @id = conn.exec("insert into edits (start, endy, category, subcategory, details, more_details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @more_details, @default_action, @url_id).last_insert_id.to_i32
       else
         conn.exec "update edits set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, more_details = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, more_details, default_action, id
       end
@@ -229,7 +230,8 @@ get "/" do |env|
 end
 
 def with_db
-  db =  DB.open File.read("db/db_connection_string.txt")
+  db_url = File.read("db/db_connection_string.txt").strip
+  db =  DB.open db_url
   yield db ensure db.close
 end
  
