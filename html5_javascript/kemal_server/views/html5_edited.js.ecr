@@ -191,9 +191,8 @@ function setupDeveloper() {
   exposeEditScreenDiv.style.background = '#000000';
   exposeEditScreenDiv.style.zIndex = "99999999"; // on top :)
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  exposeEditScreenDiv.style.textShadow="2px 1px 0px white";
   exposeEditScreenDiv.style.fontSize = "13px";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add edit</a>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add clean stream edit</a>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -236,8 +235,9 @@ function setupDeveloper() {
     <option value='yes_audio_no_video'>yes_audio_no_video</option>
     <option value='do_nothing'>do_nothing</option>
   </select>
-  <input type='submit' value='Test once' onclick="testCurrent();">
-  <input type='submit' value='Add edit' onclick="saveEditButton();">
+  <input type='submit' value='Test edit once' onclick="testCurrent();">
+  <input type='submit' value='Save edit' onclick="saveEditButton();">
+  <br/>
   <a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
   <span id='playback_rate'>1.00x</span>
   <a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
@@ -296,7 +296,7 @@ function currentTestAction() {
 
 function testCurrent() {
   if (currentTestAction() == 'do_nothing') {
-    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing before hitting save button finally');
+    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, then hit save button');
     return; // abort
   }
   var [start, endy] = addToCurrentEditArray();
