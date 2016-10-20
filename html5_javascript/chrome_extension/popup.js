@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
    var h=document.getElementById("edited_requested");
    h.addEventListener("click", loadEditedPlayback);
+   var y = document.getElementById("index_link");
+   y.addEventListener("click", openIndex);
 });
 
 function loadEditedPlayback() {
@@ -16,4 +18,8 @@ function loadEditedPlayback() {
             console.log("send start message from popup");
         });
     });
+}
+
+function openIndex() {
+  chrome.tabs.create({active: true, url: "http://cleanstream.inet2.org"});
 }
