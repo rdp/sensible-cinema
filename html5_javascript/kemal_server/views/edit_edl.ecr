@@ -3,7 +3,6 @@
 </h1>
 
 <form action="/save_edl/<%= url.id %>" method="POST">
-<div class="container">
 
 <% if edl.id != 0 %>
   <input type="hidden" name="id" value="<%= edl.id %>">
@@ -127,5 +126,3 @@ function updateCategory() {
   $('#category_div_id').fadeIn();
 }
 </script>
-
-</div>

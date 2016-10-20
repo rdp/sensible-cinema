@@ -404,7 +404,7 @@ end
 
 get "/index" do |env|
   urls = Url.all
-  render "views/index.ecr"
+  render "views/index.ecr", "views/layout.ecr"
 end
 
 def save_local_javascript(db_urls, log_message, env)
