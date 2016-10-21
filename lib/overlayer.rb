@@ -135,7 +135,6 @@ class OverLayer
     # now it's like {Mutes => {"1:02.0" => "1:3.0"}}
     # translate to all floats like {62.0 => 63.0}
 
-    _dbg
     for type in EditTypes
       maps = all[type] || {}
       new = {}
