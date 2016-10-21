@@ -170,13 +170,9 @@ describe OverLayer do
     @o.status # cause it to refresh from the file
     sleep 0.1 # blugh avoid race condition since we use notify, let the message be received...
     puts 'current state', @o.get_current_state
-    puts 'here0.5'
     assert_muted_sleep_1
-    puts 'here1'
     sleep 1
-    puts 'here2'
     assert_not_muted_sleep_1
-    puts 'here3'
   end
   
   it "should not accept any of the input when you pass it any poor json" do
@@ -193,32 +189,27 @@ describe OverLayer do
   
   it "should not accept any zero start input" do
     dump_json({:mutes => {0=> 1, 2.0 => 4.0}}) # we don't like zeroes...for now at least, as they can mean parsing failure...
-    out = OverLayer.parse_from_json_string json
+    out = OverLayer.parse_from_json_string File.read("temp.json")
     out[:mutes].should == [[3,4]]
   end
   
   it "should disallow zero or less length intervals" do
     write_json_single_mute('1', '1')
-    out = OverLayer.parse_from_json_string json
+    out = OverLayer.parse_from_json_string File.read("temp.json")
     out[:mutes].should == []  
   end
   
   it "should sort json input" do
     dump_json({:mutes => {3=> 4, 1 => 2}})
-    out = OverLayer.parse_from_json_string json
+    out = OverLayer.parse_from_json_string File.red("temp.json")
     out[:mutes].should == [[1,2], [3,4]]
   end
   
   it "should accept numbers that are unreasonably large" do
     write_json_single_mute "1000000", "1000001"
-    out = OverLayer.parse_from_json_string json
+    out = OverLayer.parse_from_json_string File.read("temp.json")
     out[:mutes].should == [[1_000_000, 1_000_001]]
   end
-  
-  it "should accept blank json" do
-    out = OverLayer.parse_from_json_string ""
-    out[:mutes].should be_blank
-  end  
   
   it 'should reject overlapping settings...maybe?' # actually I'm thinking respect as long as they're not the same types...this should be done on the server anyway :|
   
