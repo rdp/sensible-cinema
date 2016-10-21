@@ -54,7 +54,7 @@ describe OverLayer do
   end
 
   def start_bad
-    assert @o.muted? # note this uses @o!
+    assert @o.muted?
     sleep 1
   end
 
@@ -71,6 +71,7 @@ describe OverLayer do
 
   it 'should mute based on time' do
     @o.start_thread
+    assert !@o.muted?
     # make sure we enter the mute section, 2-4
     sleep 2.5
     start_bad # sleeps 1

@@ -99,7 +99,7 @@ class OverLayer
   end
   
   
-  EditTypes = ['Mutes', 'Skips'] 
+  EditTypes = ['mutes', 'skips'] 
   
   @parse_cache = {}
   
@@ -135,13 +135,14 @@ class OverLayer
     # now it's like {Mutes => {"1:02.0" => "1:3.0"}}
     # translate to all floats like {62.0 => 63.0}
 
+    _dbg
     for type in EditTypes
       maps = all[type] || {}
       new = {}
       maps.each{ |full_edit|
         # both are like "1:02.0"
-        start = full_edit['Start']
-        endy = full_edit['End']
+        start = full_edit[0]
+        endy = full_edit[1]
         start2 = EdlParser.translate_string_to_seconds(start) if start.present?
         endy2 = EdlParser.translate_string_to_seconds(endy) if endy.present?
         if !start2 || !endy2
