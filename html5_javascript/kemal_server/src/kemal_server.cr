@@ -318,7 +318,8 @@ get "/delete_edl/:id" do |env|
   edl = Edl.get_only_by_id(id)
   edl.destroy
   save_local_javascript [edl.url], "removed #{edl}", env
-  env.redirect "/edit_url?url=" + edl.url.url
+  set_flash_for_next_time env, "deleted one edit"
+  env.redirect "/edit_url/#{edl.url.id}"
 end
 
 get "/edit_edl/:id" do |env|

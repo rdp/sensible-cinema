@@ -47,10 +47,12 @@ good_movie_rating (out of 10)
 review (non spoiler synopsis, explain good movie rating if needed, explain age recommendation if needed)
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 
-<div><input type="submit" value="Save url info"></div>
+<div><input type="submit" value="Save movie info (above)"></div>
 </form>
 
-Edits for this movie:
+<hr/>
+
+Edit edits for this movie (modify, add, remove):
 <br/>
 <br/>
 <% if url.edls.size == 0 %>
@@ -71,9 +73,9 @@ Edits for this movie:
 <br/>
 <a href=/add_edl/<%= url.id %>>add new edit &#10133;</a>
 <hr/>
-<a href=/for_current?=<%= url.url_lookup_params %>>js</a>
+<a href=/for_current?=<%= url.url_lookup_params %> target="_blank">js</a>
 <br/>
-<a href=/for_current_just_settings?=<%= url.url_lookup_params %>>js just settings</a>
+<a href=/for_current_just_settings?=<%= url.url_lookup_params %> target="_blank">js just settings</a>
 <br>
 <a href=<%= url.url %> target="_blank">watch</a>
 <br/>

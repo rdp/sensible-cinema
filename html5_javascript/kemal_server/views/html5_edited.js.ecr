@@ -264,8 +264,8 @@ function seekToTime(ts) {
 }
 
 function addForNewEditToScreen() {
-  topLineEditDiv.style.display = ''; // visible forever LOL
-  edlLayer.style.display = ''; // visible
+  jQuery(topLineEditDiv).toggle();
+  jQuery(edlLayer).toggle();
 }
 
 function setEditedControlsToTopLeft() {
