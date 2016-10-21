@@ -1,5 +1,5 @@
 <h1>Edit details of edit for 
-<a href=/edit_url/<%= url.id %>><%= url.name_with_episode %> </a>
+<%= url.name_with_episode %> 
 </h1>
 
 <form action="/save_edl/<%= url.id %>" method="POST">
@@ -11,9 +11,9 @@
 from:<input type="text" name="start"  size="40" value="<%= seconds_to_human edl.start %>"/>
 <br/>
 
-to: <textarea name="endy" rows="1" cols="40"  id="endy"><%= seconds_to_human edl.endy %></textarea>
-
+to: <input type="text" name="endy" size="40" id="endy" value="<%= seconds_to_human edl.endy %>"/>
 <br/>
+
 default action to take:
 <select name="default_action" id='sel'>
   <option value="mute">mute</option>
@@ -109,14 +109,22 @@ If there are any missing please let us know!
 <br/>
 few word details (ex: d***, "deity" or "knife stabbing" "song")
 <br/>
-<textarea name="details" rows="3" cols="40" ><%= edl.details %></textarea>
+<input type="text" name="details" size="50" value="<%= edl.details %>"/>
 <br/>
 more details (ex: "sally said ... OK?" (dots instead of real profanity, or "specific song name") 
+<br/>
 <textarea name="more_details" rows="3" cols="40" ><%= edl.more_details %></textarea>
 <br/>
 
 Note: you need to hit this save button for each edit or they will be lost!
-<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' ></div></form>
+<br/>
+
+<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
+</form>
+
+or
+<br/>
+<a href=/edit_url/<%= url.id %>><< back to movie edit page</a> (changes will be lost)
 
 <script>
 function updateCategory() {

@@ -20,7 +20,7 @@ details (actors, etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 
-<div style="<%= "display: none;" unless url.name =~ /amazon.com/ %>">
+<div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
   amazon_episode_number (0 if none)
   <input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
   <br/>
