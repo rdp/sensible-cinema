@@ -162,7 +162,7 @@ class OverLayer
       all.delete(type.to_s) # cleanup
       all[type] = new.sort
     end
-    p "read in from json as ", all
+    p "converted from json as #{all}"
     all
   end
   

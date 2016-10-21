@@ -171,11 +171,17 @@ describe OverLayer do
    @o = OverLayer.new 'temp.yml'
   end
 
+  def dump_json to_dump
+    File.write 'temp.yml', JSON.dump(to_dump)
+    @o = OverLayer.new 'temp.yml'
+  end
+
+  def write_json_single_mute(start, endy)
+    write_json "{\"mutes\":[[\"#{start}\",\"#{endy}\"]],\"skips\":[]}"
+  end
+
   it 'should allow for 1:00.0 minute style input' do
-    write_json <<-JSON
-    mutes:
-      "0:02.0" : "0:03.0"
-    JSON
+    write_json_single_mute("0:02.0", "0:03.0")
     @o.start_thread
     start_good
     start_good
@@ -186,16 +192,10 @@ describe OverLayer do
 
   it "should reload the JSON file on the fly to allow for editing it" do
     # start it with one set to mute far later
-    write_json <<-JSON
-    mutes: 
-      "0:11.0" : "0:12.0"
-    JSON
+    write_json_single_mute("0:11.0", "0:12.0")
     @o.start_thread
     start_good
-    File.write 'temp.yml',  <<-JSON
-    mutes:
-      "0:00.0001" : "0:01.5"
-    JSON
+    write_json_single_mute("0:00.0001", "0:01.5")
     @o.status # cause it to refresh from the file
     sleep 0.1 # blugh avoid race condition since we use notify...
     start_bad
@@ -203,140 +203,48 @@ describe OverLayer do
   end
   
   it "should not accept any of the input when you pass it any poor json" do
-    write_json <<-JSON
-    mutes:
-       a : 08:56.0 # first one there is invalid
-    JSON
-    out = OverLayer.new 'temp.yml'
+    write_json_single_mute("a", "08:56.0") # first one there is invalid
+    out = OverLayer.new 'temp.yml' # so I can call reload
     out.all_sequences[:mutes].should be_blank    
-    write_json <<-JSON
-    mutes:
-       01 : 02
-    JSON
+    write_json_single_mute("01", "02")
     out.reload_json!
     out.all_sequences[:mutes].should == [[1,2]]
-    write_json <<-JSON
-    mutes:
-       05 : # failure
-    JSON
+    write_json_single_mute("05", "") # failure on second
     # should have kept the old
     out.all_sequences[:mutes].should == [[1,2]]
   end
   
   it "should not accept any zero start input" do
-    json = <<-JSON
-    mutes:
-       0 : 1 # we don't like zeroes...for now at least, as they can mean parsing failure...
-       3 : 4
-    JSON
-    out = OverLayer.translate_json json
+    dump_json({:mutes => {0=> 1, 2.0 => 4.0}}) # we don't like zeroes...for now at least, as they can mean parsing failure...
+    out = OverLayer.parse_from_json_string json
     out[:mutes].should == [[3,4]]
   end
   
   it "should disallow zero or less length intervals" do
-    json = <<-JSON
-    mutes:
-       1 : 1
-    JSON
-    out = OverLayer.translate_json json
+    write_json_single_mute('1', '1')
+    out = OverLayer.parse_from_json_string json
     out[:mutes].should == []  
   end
-
   
   it "should sort json input" do
-    json = <<-JSON
-    mutes:
-      3 : 4
-      1 : 2
-    JSON
-    out = OverLayer.translate_json json
+    dump_json({:mutes => {3=> 4, 1 => 2}})
+    out = OverLayer.parse_from_json_string json
     out[:mutes].should == [[1,2], [3,4]]
   end
   
-  it "should handle non quoted style numbers in json" do
-    json = <<-JSON
-    mutes:
-       08:55 : 08:56.0 # valid, will return large Fixnum's
-    JSON
-    out = OverLayer.translate_json json
-    out[:mutes].should == [[535, 536]]
-    json = <<-JSON
-    mutes:
-       01:08:55 : 01:09:55 # actually valid
-    JSON
-    out = OverLayer.translate_json json
-    out[:mutes].should == [[4135, 4195]]
-  end
-
-  it "should translate json with the two different types in it" do
-    json = <<-JSON
-    mutes:
-       "0:02.0" : "0:03.0"
-    blank_outs:
-       "0:02.0" : "0:03.0"  
-    JSON
-    out = OverLayer.translate_json json
-    out[:mutes].should == [[2.0, 3.0]]
-    out[:blank_outs].should == [[2.0, 3.0]]
-    json = <<-JSON
-    mutes:
-       "1:02.11" : "1:03.0"
-    JSON
-    out = OverLayer.translate_json json
-    out[:mutes].first.should == [62.11, 63.0]
-  end
-
-  it "should accept fixnum 56 => 57 style input" do
-    json = <<-JSON
-    mutes:
-      "0:02" : "0:03"
-      3 : 4
-    JSON
-    out = OverLayer.translate_json json
-    out[:mutes].should == [[2.0, 3.0], [3, 4]]
-  end
-  
   it "should accept numbers that are unreasonably large" do
-    json = <<-JSON
-    mutes:
-      1000000 : 1000001
-    JSON
-    out = OverLayer.translate_json json
+    write_json_single_mute "1000000", "1000001"
+    out = OverLayer.parse_from_json_string json
     out[:mutes].should == [[1_000_000, 1_000_001]]
   end
   
   it "should accept blank json" do
-    out = OverLayer.translate_json ""
+    out = OverLayer.parse_from_json_string ""
     out[:mutes].should be_blank
   end  
   
-  it "should not translate symbols"
+  it 'should reject overlapping settings...maybe?' # actually I'm thinking respect as long as they're not the same types...this should be done on the server anyway :|
   
-  it "should translate strings as well as symbols" do
-    json = <<-JSON
-    mutes:
-      "1" : "3"
-    JSON
-    out = OverLayer.translate_json json
-    out[:mutes].should == [[1, 3]]
-  end  
-
-  it 'should reject overlapping settings...maybe?'
-  
-  it "should allow for 1:01:00.0 (double colon) style json input" do
-    write_json <<-JSON
-    mutes:
-      "1:00.11" : "1:03.0"
-    JSON
-    @o.start_thread
-    start_good
-    @o.set_seconds 61
-    sleep 0.1 # ruby rox again!
-    start_bad
-    sleep 2
-    start_good
-  end
-
   it "should be able to handle it when the sync message includes a new timestamp" do
     @o.start_thread
     @o.timestamp_changed "1:00:01", 0
