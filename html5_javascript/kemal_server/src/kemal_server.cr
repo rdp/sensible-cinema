@@ -266,8 +266,8 @@ def standardized_param_url(env)
   end
   # sanitize amazon which can come in multiple forms
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize
-  if unescaped.includes("/gp/") && unescaped.includes?("amazon.com")
-    throw "that appears to be an older amazon url could you search for it again on amazon and find its newer url, usually something like amazon.com/.../dp/... and use that instead?"
+  if unescaped.includes?("/gp/") && unescaped.includes?("amazon.com")
+    raise "that appears to be an older amazon url could you search for it again on amazon and find its newer url, usually something like amazon.com/.../dp/... and use that instead?"
   end
   if unescaped.includes?("/dp/")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
