@@ -230,7 +230,7 @@ get "/" do |env|
 end
 
 def with_db
-  db_url = File.read("db/db_connection_string.txt").strip
+  db_url = File.read("db/connection_string_local_box_no_commit.txt").strip
   db =  DB.open db_url
   yield db ensure db.close
 end
