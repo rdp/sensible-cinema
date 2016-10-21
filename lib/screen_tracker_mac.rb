@@ -19,6 +19,7 @@ This file is part of Sensible Cinema.
 require 'java'
 
 class ScreenTracker
+  # kind of inherits from the other ScreenTracker :|
   
   # digits are like {:hours => [100,5], :minute_tens, :minute_ones, :second_tens, :second_ones}
   # digits share the height start point, have their own x and width...
