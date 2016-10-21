@@ -79,7 +79,7 @@ class OverLayer
   
   def reload_yaml!
     @all_sequences = OverLayer.translate_url @url
-    puts '(re) loaded mute sequences from ' + @url + ' as', pretty_sequences.pretty_inspect, "" if $VERBOSE
+    puts '(re) loaded sequences from ' + @url + ' as', pretty_sequences.pretty_inspect, "" if $VERBOSE
     signal_change
   end  
   

@@ -21,39 +21,40 @@ require_relative '../lib/overlayer'
 
 $AM_IN_UNIT_TEST = true
 
-def start_good_blank
+def assert_not_blank
   assert !@o.blank?
 end
 
-def start_bad_blank
+def assert_blank
   assert @o.blank?
 end
 
 def new_raw ruby_hash
-  File.write 'temp.yml', JSON.dump(ruby_hash)
-  OverLayer.new('temp.yml')
+  File.write 'temp.json', JSON.dump(ruby_hash)
+  OverLayer.new('temp.json')
 end
 
 describe OverLayer do
 
   before do
-    File.write 'temp.yml', JSON.dump({:mutes => {2.0 => 4.0}} )
-    @o = OverLayer.new('temp.yml')
+    File.write 'temp.json', JSON.dump({:mutes => {2.0 => 4.0}} )
+    @o = OverLayer.new('temp.json')
     Blanker.warmup
   end
 
   after do
-    Thread.join_all_others
-    File.delete 'temp.yml'
+    # sometimes blocks on some cruppy UI threds
+    # Thread.join_all_others
+    File.delete 'temp.json'
     Blanker.shutdown
   end
 
-  def start_good
+  def assert_not_muted_sleep_1
     assert !@o.muted?
     sleep 1
   end
 
-  def start_bad
+  def assert_muted_sleep_1
     assert @o.muted?
     sleep 1
   end
@@ -74,34 +75,34 @@ describe OverLayer do
     assert !@o.muted?
     # make sure we enter the mute section, 2-4
     sleep 2.5
-    start_bad # sleeps 1
+    assert_muted_sleep_1 # sleeps 1
     sleep 1.0
-    start_good
+    assert_not_muted_sleep_1
   end
   
   it 'should unmute after the ending scene, and also be able to go past the end of scenes at all' do
-    File.write 'temp.yml', JSON.dump({:mutes => {0.5 => 1.0}})
-    @o = OverLayer.new 'temp.yml'
+    File.write 'temp.json', JSON.dump({:mutes => {0.5 => 1.0}})
+    @o = OverLayer.new 'temp.json'
     @o.start_thread true
     begin
       # make sure we enter the mute section
       sleep 0.75
-      start_bad # sleeps 1
-      start_good
-      start_good
+      assert_muted_sleep_1 # sleeps 1
+      assert_not_muted_sleep_1
+      assert_not_muted_sleep_1
     ensure
       @o.kill_thread!
     end
   end
 
   it 'should handle multiple mutes in a row' do
-    File.write 'temp.yml', JSON.dump({:mutes => {2.0 => 4.0, 5.0 => 7.0}})
-    @o = OverLayer.new 'temp.yml'
+    File.write 'temp.json', JSON.dump({:mutes => {2.0 => 4.0, 5.0 => 7.0}})
+    @o = OverLayer.new 'temp.json'
     @o.start_thread
     sleep 2.5
-    start_bad # 1s
+    assert_muted_sleep_1 # 1s
     sleep 2 # => 5.5
-    start_bad    # unfortunately this doesn't actually reproduce the bug,
+    assert_muted_sleep_1    # unfortunately this doesn't actually reproduce the bug,
     # which is that it actually needs to barely "over sleep" or there is the race condition of
     # wake up oh nothing to do *just* yet
     # but by the time you check again, you just passed it, so you wait till the next one in an errant state
@@ -109,8 +110,8 @@ describe OverLayer do
 
   it 'should be able to mute teeny timed sequences' do
     # it once failed on this...
-    File.write 'temp.yml', JSON.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
-    o = OverLayer.new 'temp.yml'
+    File.write 'temp.json', JSON.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
+    o = OverLayer.new 'temp.json'
     o.continue_until_past_all false
   end
 
@@ -124,56 +125,26 @@ describe OverLayer do
     assert @o.cur_time > 5
   end
 
-  it 'should be able to accept keyboard input do adjust time' do
-    @o = OverLayer.new 'test_json.yml'
-    @o.cur_time
-    @o.keyboard_input 'm'
-    assert @o.cur_time > 59
-    @o.keyboard_input 'M'
-    assert @o.cur_time < 59
-    60.times {
-      @o.keyboard_input 's'
-    }
-    assert @o.cur_time > 59
-    60.times {
-      @o.keyboard_input 'S'
-    }
-    assert @o.cur_time < 59
-    600.times {
-      @o.keyboard_input 't'
-    }
-    assert @o.cur_time > 59
-    600.times {
-      @o.keyboard_input 'T'
-    }
-    assert @o.cur_time < 59
-
-  end
-
-  it 'should have key list output on screen' do
-    @o.status.should include("ctrl+c to quit")
-  end
-
   it 'should allow for json input and parse it appropo' do
     # 2 - 3 , 4-5 should be muted
-    @o = OverLayer.new 'test_json.yml'
+    @o = OverLayer.new 'test_json.json'
     @o.start_thread
-    start_good # takes 1s
+    assert_not_muted_sleep_1 # takes 1s
     sleep 1.25
-    start_bad
-    start_good
-    start_bad
-    start_good
+    assert_muted_sleep_1
+    assert_not_muted_sleep_1
+    assert_muted_sleep_1
+    assert_not_muted_sleep_1
   end
 
   def write_json json
-   File.write 'temp.yml', json
-   @o = OverLayer.new 'temp.yml'
+   File.write 'temp.json', json
+   @o = OverLayer.new 'temp.json'
   end
 
   def dump_json to_dump
-    File.write 'temp.yml', JSON.dump(to_dump)
-    @o = OverLayer.new 'temp.yml'
+    File.write 'temp.json', JSON.dump(to_dump)
+    @o = OverLayer.new 'temp.json'
   end
 
   def write_json_single_mute(start, endy)
@@ -183,28 +154,34 @@ describe OverLayer do
   it 'should allow for 1:00.0 minute style input' do
     write_json_single_mute("0:02.0", "0:03.0")
     @o.start_thread
-    start_good
-    start_good
+    assert_not_muted_sleep_1
+    assert_not_muted_sleep_1
     sleep 0.25
-    start_bad
-    start_good
+    assert_muted_sleep_1
+    assert_not_muted_sleep_1
   end
 
   it "should reload the JSON file on the fly to allow for editing it" do
     # start it with one set to mute far later
     write_json_single_mute("0:11.0", "0:12.0")
     @o.start_thread
-    start_good
+    assert_not_muted_sleep_1
     write_json_single_mute("0:00.0001", "0:01.5")
     @o.status # cause it to refresh from the file
-    sleep 0.1 # blugh avoid race condition since we use notify...
-    start_bad
-    start_good
+    sleep 0.1 # blugh avoid race condition since we use notify, let the message be received...
+    puts 'current state', @o.get_current_state
+    puts 'here0.5'
+    assert_muted_sleep_1
+    puts 'here1'
+    sleep 1
+    puts 'here2'
+    assert_not_muted_sleep_1
+    puts 'here3'
   end
   
   it "should not accept any of the input when you pass it any poor json" do
     write_json_single_mute("a", "08:56.0") # first one there is invalid
-    out = OverLayer.new 'temp.yml' # so I can call reload
+    out = OverLayer.new 'temp.json' # so I can call reload
     out.all_sequences[:mutes].should be_blank    
     write_json_single_mute("01", "02")
     out.reload_json!
@@ -260,7 +237,6 @@ describe OverLayer do
   end
 
   context "should handle blanks, too" do
-
     it "should be able to discover next states well" do
       for type in [:blank_outs, :mutes] do
         @o = new_raw({type => {2.0 => 4.0}})
@@ -277,13 +253,13 @@ describe OverLayer do
       it "should allow for blanks" do
         @o = new_raw({:blank_outs => {2.0 => 4.0}})
         @o.start_thread
-        start_good_blank
+        assert_not_blank
         sleep 1
-        start_good_blank
+        assert_not_blank
         sleep 1.1
-        start_bad_blank
+        assert_blank
         sleep 2
-        start_good_blank
+        assert_not_blank
       end
     end
 
@@ -341,7 +317,7 @@ describe OverLayer do
     end
     
     it "should no longer accept human readable style as starting seconds" do
-      proc { OverLayer.new 'temp.yml', "01:01.5" }.should raise_error(ArgumentError)
+      proc { OverLayer.new 'temp.json', "01:01.5" }.should raise_error(ArgumentError)
     end
 
   end

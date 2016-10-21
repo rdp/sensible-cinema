@@ -15,7 +15,7 @@ This file is part of Sensible Cinema.
     You should have received a copy of the GNU General Public License
     along with Sensible Cinema.  If not, see <http://www.gnu.org/licenses/>.
 =end
-require 'rubygems'
+require File.dirname(__FILE__) + "/../lib/add_any_bundled_gems_to_load_path.rb"
 require 'rspec' # rspec2
 require 'rspec/autorun' # ???
 # some useful utilities...
@@ -28,8 +28,10 @@ require 'fileutils'
 require 'pathname'
 require 'java' if OS.java?
 
-Dir.chdir File.dirname(__FILE__) # always run from the spec dir...
+Dir.chdir File.dirname(__FILE__) # always run from the spec dir...for my personal convenience :)
 autoload :YAML, 'yaml'
+
+
 
 begin
   require 'hitimes'
