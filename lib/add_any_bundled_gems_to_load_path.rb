@@ -20,7 +20,7 @@ def add_any_bundled_gems_to_load_path
   vendor_dir = File.dirname(__FILE__) +  '/../vendor/vendor_gems'
   raise 'no vendor dir?' unless File.directory?(vendor_dir)
   if File.directory? vendor_dir
-    Dir[vendor_dir + '/**/lib'].sort.reverse.each{|lib_dir| # prefers newer versioned copies of gems in case I have duplicates locally
+    Dir[vendor_dir + '/**/{lib,cli}'].sort.reverse.each{|lib_dir| # sort to prefer newer versioned copies of gems in case I have duplicates locally
       $: << lib_dir
     }
   else

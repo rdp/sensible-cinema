@@ -45,6 +45,7 @@ describe OverLayer do
   after do
     # sometimes blocks on some cruppy UI threds
     # Thread.join_all_others
+    # @o.kill_thread! # ??
     File.delete 'temp.json'
     Blanker.shutdown
   end
@@ -167,11 +168,13 @@ describe OverLayer do
     @o.start_thread
     assert_not_muted_sleep_1
     write_json_single_mute("0:00.0001", "0:01.5")
+    _dbg
     @o.status # cause it to refresh from the file
     sleep 0.1 # blugh avoid race condition since we use notify, let the message be received...
-    puts 'current state', @o.get_current_state
+    puts 'current state', @o.get_current_state, @o.status
+    # now it's 1.1 so should be muted
     assert_muted_sleep_1
-    sleep 1
+    # now its 2.1 so should not be muted
     assert_not_muted_sleep_1
   end
   
@@ -231,11 +234,11 @@ describe OverLayer do
     it "should be able to discover next states well" do
       for type in [:blank_outs, :mutes] do
         @o = new_raw({type => {2.0 => 4.0}})
-        @o.discover_state(type, 3).should == [2.0, 4.0, true]
-        @o.discover_state(type, 0.5).should == [2.0, 4.0, false]
-        @o.discover_state(type, 5).should == [nil, nil, :done]
-        @o.discover_state(type, 2.0).should == [2.0, 4.0, true]
-        @o.discover_state(type, 4.0).should == [nil, nil, :done]
+        @o.get_next_edit_for_type(type, 3).should == [2.0, 4.0, true]
+        @o.get_next_edit_for_type(type, 0.5).should == [2.0, 4.0, false]
+        @o.get_next_edit_for_type(type, 5).should == [nil, nil, :done]
+        @o.get_next_edit_for_type(type, 2.0).should == [2.0, 4.0, true]
+        @o.get_next_edit_for_type(type, 4.0).should == [nil, nil, :done]
       end
     end
 

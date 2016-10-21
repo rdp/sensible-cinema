@@ -36,7 +36,7 @@ def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_num
   
   if just_screen_snapshot
     $VERBOSE=true # also add some extra output :|
-    raise if movie_url
+    raise if movie_url # should have *not* passed me one :)
   else
     lookup_options = "url=#{CGI.escape movie_url}&amazon_episode_number=#{CGI.escape amazon_episode_number}"
     query_url = "http://cleanstream.inet2.org/for_current_just_settings_json?#{lookup_options}"
@@ -46,10 +46,9 @@ def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_num
       if(SimpleGuiCreator.show_select_buttons_prompt("Appears that movie is not in our list of movies with edits yet, create it? #{movie_url}", :yes => 'Create it', :no => 'not right now', :cancel => 'cancel') == :yes)
          SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cleanstream.inet2.org/new_url?#{lookup_options}"
       end
-      return nil
+      return nil # abort :|
     end
-    File.write('temp.yml', edl_json) # for some old unit tests :|
-    overlay = OverLayer.new('temp.yml')
+    overlay = OverLayer.new(query_url)
   end
   
   # this one doesn't use any updates, so just pass in file contents, not filename
@@ -63,10 +62,7 @@ def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_num
   end
 
   # exit early if we just wanted a screen dump...a little kludgey...
-  if !just_screen_snapshot
-    Blanker.warmup
-    screen_tracker.process_forever_in_thread
-  else
+  if just_screen_snapshot
     parent_window.update_playing_well_status 'warning--only doing screen dump in t-minus 2s...'      
     Thread.new {
       # new thread so the UI can get the above message :)
@@ -76,14 +72,16 @@ def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_num
     }
     return nil
   end
-  
+
+  Blanker.warmup
+  screen_tracker.process_forever_in_thread
   OCR.unserialize_cache_from_disk # do this every time so we don't overwrite it ever on accident with a fresh blank slate and lose everything
 
   overlay.start_thread true
-  callback = proc { |status|
+  status_callback = proc { |status|
     parent_window.update_online_player_status status
   }
-  status_line = StatusLine.new overlay, callback
+  status_line = StatusLine.new overlay, status_callback
   status_line.start_thread
   
   puts "Opening the curtains, all systems started... (please play in your other video player now)"

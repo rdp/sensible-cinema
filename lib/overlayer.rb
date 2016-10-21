@@ -226,11 +226,11 @@ class OverLayer
     @thread.kill
   end
   
-  # returns [start, end, active (true|false)|:done]
+  # returns [start, end, active (true|false)] or [nil, nil, :done]
   # true means "we're in it"
   # false means "we're not to it yet"
   # done means "none more forthcoming"
-  def discover_state type, cur_time
+  def get_next_edit_for_type type, cur_time
       for start, endy in @all_sequences[type]
         if cur_time < endy
           # first one that we haven't passed the *end* of yet
@@ -245,19 +245,18 @@ class OverLayer
       return [nil, nil, :done]
   end
   
-  #
-  # returns [true, false, next_moment_of_importance|:done] ( true, false for if it should be currently muted, blanked )
-  #
+  # returns [muted_true?, blanked_true?, next_upcoming_boundary|:done]
   def get_current_state
     all = []
     time = cur_time
+    puts "evaluating for time #{time}"
     for type in EditTypes do
-      all << discover_state(type, time)
+      all << get_next_edit_for_type(type, time)
     end
     output = []
-    # all is [[start, end, active]...] or [:done, :done]
+    # all is [[start, end, active]...] or [:done, :done] for mute and blank, respectively
     earliest_moment = 1_000_000
-    all.each{|start, endy, active|
+    all.each{ |start, endy, active|
       if active == :done
         output << false
         next
@@ -299,6 +298,7 @@ class OverLayer
         end
         
         # pps 'sleeping until next action (%s) begins in %fs (%f) %f' % [next_point, time_till_next_mute_starts, Time.now_f, cur_time] if $VERBOSE
+        # why do we do this instead of polling? seriously what?
         @cv.wait(@mutex, time_till_next_mute_starts) if time_till_next_mute_starts > 0
         set_states!
       end
