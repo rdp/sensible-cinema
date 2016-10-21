@@ -95,10 +95,8 @@ function checkStatus() {
      // youtube, amazon et al, sane seeks with no watching it :)    
     [last_start, last_end] = areWeWithin(skips, cur_time);
     if (last_start) {
-      timestamp_log("seeking", cur_time, last_start, last_end);
-      video_element.pause(); // have to do this before seek so it resumes? huh?
-      video_element.currentTime = last_end; // seek past this split
-      video_element.play(); // sometimes needed??
+      timestamp_log("seeking to " + last_end, cur_time, last_start, last_end);
+      seekToTime(last_end);
     }
   }  
   [last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
@@ -238,6 +236,7 @@ function setupDeveloper() {
   <input type='submit' value='Test edit once' onclick="testCurrent();">
   <input type='submit' value='Save edit' onclick="saveEditButton();">
   <br/>
+  <a href='#' onclick="seekToTime(video_element.currentTime -5);">-5</a>
   <a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
   <span id='playback_rate'>1.00x</span>
   <a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
@@ -246,16 +245,22 @@ function setupDeveloper() {
   <a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
   `;
   
-  
-  // this doesn't do anything currently
+  // this doesn't do anything currently, not wired in
   var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
   chrome.runtime.sendMessage(editorExtensionId, {action: "started"}, function(response) {
-    console.log("response after sending started" + response);
+    //console.log("response after sending started" + response);
   });
   jQuery(window).resize(function(){
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
+}
+
+function seekToTime(ts) {
+  // try and avoid pauses when seeking
+  video_element.pause();
+  video_element.currentTime = ts;
+  video_element.play();
 }
 
 function addForNewEditToScreen() {
@@ -300,14 +305,11 @@ function testCurrent() {
     return; // abort
   }
   var [start, endy] = addToCurrentEditArray();
-  // shenanigans as required to actually seek html5 video
-  video_element.pause();
-  video_element.currentTime = start - 2; 
-  video_element.play();
+  seekToTime(start - 2);
   length = endy - start;
   if (currentTestAction() == 'skip') 
     length = 0; // it skips it, so the amount of time before reverting is less it :)
-  wait_time_millis = (length + 2 + 0.1)*1000; 
+  wait_time_millis = (length + 2 + 1)*1000; 
   setTimeout(function() {
     currentEditArray().pop();
   }, wait_time_millis)
@@ -369,7 +371,6 @@ function humanToTimeStamp(timestamp) {
 }
 
 function saveEditButton() {
-
   var url = "http://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
   "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   console.log(url);
@@ -381,7 +382,6 @@ function stepFrame() {
   video_element.play();
   setTimeout(function() { 
     video_element.pause(); 
-    console.log("current timestamp=" + video_element.currentTime); 
   }, 1/30*1000); // theoretically about a frame worth :)
 }
 
@@ -410,7 +410,7 @@ function start() {
 }
 
 function logReadyToGo() {
-    var message = "ready to go edited\n" + name + " " + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\nyou may close developer javascript console now";
+    var message = "Editing successfully loaded!\n" + name + " " + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length;
     console.log(message);
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
 }
