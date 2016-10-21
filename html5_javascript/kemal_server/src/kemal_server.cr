@@ -1,4 +1,4 @@
-require "./include//*" # one regex didn't work :|
+require "./include/*" 
 
 # module KemalServer
   # TODO Put your code here
@@ -42,7 +42,7 @@ class Url
   
   def self.all
     with_db do |conn|
-      conn.query("SELECT * from urls") do |rs|
+      conn.query("SELECT * from urls order by url desc") do |rs|
          Url.from_rs(rs);
       end
     end

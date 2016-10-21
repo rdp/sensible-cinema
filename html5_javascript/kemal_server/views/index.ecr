@@ -14,17 +14,17 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
   <thead>
     <tr>
       <th>Movie Name</th>
-      <th>Link</th>
-      <th>View Edits</th>
       <th>Host</th>
+      <th>Link</th>
+      <th>View edits for this movie</th>
       <th>Editing status</th>
-      <th>num edits</th>
-      <th>age recommendation with edits</th>
-      <th>wholesome<br/>uplifting level / 10 max.</th>
-      <th>good movie rating / 10 max.</th>
-      <th>details</th>
-      <th>our review</th>
-      <th>info about movie</th>
+      <th>Age recommendation with edits</th>
+      <th>Wholesome<br/>uplifting level / 10 max.</th>
+      <th>Good movie rating / 10 max.</th>
+      <th>Details</th>
+      <th>Our review</th>
+      <th>Num edits</th>
+      <th>Info about movie</th>
     </tr>
   </thead>
   <tbody>
@@ -32,16 +32,16 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
 <% urls.each{ |url|  %>
     <tr>
        <td><%= url.name_with_episode %></td>
+       <td><%= url.host_like_netflix %></td>
        <td><a href="<%= url.url %>" target="_blank">watch</a></td>
        <td><a href="/edit_url/<%= url.id %>">edit</a></td>
-       <td><%= url.host_like_netflix %></td>
        <td><%= url.editing_status %></td>
-       <td><%= url.edls.size %></td>
        <td><%= url.age_recommendation_after_edited %></td>
        <td> <%= url.wholesome_uplifting_level %> </td>
        <td> <%= url.good_movie_rating %></td>
        <td><%= url.details %></td>
-       <td><%= url.review_with_ellipses %></td> <!-- todo link into it? -->
+       <td><%= url.review_with_ellipses %></td> <!-- todo link into it? or something that can auto expand inline? -->
+       <td><%= url.edls.size %></td>
        <%
          google_search = URI.escape(url.name, true)
          if url.amazon_episode_number != 0
