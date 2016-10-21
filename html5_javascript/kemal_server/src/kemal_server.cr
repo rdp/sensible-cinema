@@ -450,7 +450,7 @@ get "/new_url" do |env|
     title = title.gsub(" - YouTube", "")
     url = Url.new
     url.url = real_url
-    if title.includes?(":") && real_url.includes("amazon.com")
+    if title.includes?(":") && real_url.includes?("amazon.com")
       url.name = title.split(":")[0].strip
       url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # I think it has actors after a colon...
     else
