@@ -2,7 +2,7 @@ All files (c) Roger Pack 2010-2011
 
 All files released under the LGPL license [1] unless otherwise specified.  Ping me if you want/need this changed at some point.
 
-EDL (delete list/edit list/EDL) files are released under the Creative Commons License, however.
+EDL (delete list/edit list/EDL) files are released under the Creative Commons License CC-BYSA 4.0+, however.
 
 Note: may call out to some 3rd party libraries/executables under their own (separate, open source) licenses and distributions, but they are contained
 packaged for convenience.  They have their own source codes available.
@@ -16,7 +16,5 @@ unzip.exe is herein included, under the info-zip license: http://www.info-zip.or
 Some binary builds of dvdid are also distributed here.  See http://www.srcf.ucam.org/~cjk32/dvdid (in an email he said he'd release them under a BSD or other permissive type license)
 
 TsMuxer binaries are included, with their own license, see vendor/tsmuxer1.10.6/licence.txt (it allows for redistribution).
-
-See first also the file "documentation/is_it_legal_to_copy_dvds.txt" for more information on legal implications in your country.
 
 [1] https://www.gnu.org/licenses/lgpl.txt 
