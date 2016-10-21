@@ -259,13 +259,16 @@ def with_db
   yield db ensure db.close
 end
  
-def real_url(env)
+def standardized_param_url(env)
   unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off amazon extra cruft and there is a lot of it LOL but google play needs it
   end
   # sanitize amazon which can come in multiple forms
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize
+  if unescaped.includes("/gp/") && unescaped.includes?("amazon.com")
+    throw "that appears to be an older amazon url could you search for it again on amazon and find its newer url, usually something like amazon.com/.../dp/... and use that instead?"
+  end
   if unescaped.includes?("/dp/")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
     # or https://smile.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
@@ -289,11 +292,11 @@ get "/for_current" do |env|
 end
 
 def get_for_current(env, type)
-  real_url = real_url(env)
+  standardized_param_url = standardized_param_url(env)
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i # "always there" :)
   # this one looks up by URL and episode number
   with_db do |conn|
-    url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
+    url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(standardized_param_url, amazon_episode_number)
     if !url_or_nil
       "alert('none for this movie yet');" # no 404 might be useful here :|
     else
@@ -417,21 +420,21 @@ get "/edit_url/:url_id" do |env| # same as "view" and "new" LOL but we have the 
 end
 
 get "/new_url" do |env|
-  real_url = real_url(env)
+  standardized_param_url = standardized_param_url(env)
   if env.params.query.has_key? "amazon_episode_number"
     amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
   else
     amazon_episode_number = 0
   end
-  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
+  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(standardized_param_url, amazon_episode_number)
   if url_or_nil != nil
     set_flash_for_next_time(env, "a movie with that description already exists, showing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
     begin
-      response = HTTP::Client.get real_url # download that page :)
+      response = HTTP::Client.get standardized_param_url # download that page :)
     rescue ex
-      raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
+      raise "unable to download that url" + standardized_param_url + " #{ex}" # expect url to work :|
     end
     if response.body =~ /<title[^>]*>(.*)<\/title>/i
       title = response.body.scan(/<title[^>]*>(.*)<\/title>/i)[0][1]
@@ -446,7 +449,7 @@ get "/new_url" do |env|
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
     url = Url.new
-    url.url = real_url
+    url.url = standardized_param_url
     if title.includes?(":")
       url.name = title.split(":")[0]
       url.details = title[title.index(":").as(Int32)..-1] # I think this is how amazon does it, actors after a colon...

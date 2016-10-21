@@ -47,12 +47,13 @@ good_movie_rating (out of 10, or 0 for none)
 
 review (explain good movie rating if needed, explain age recommendation if needed)
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
+<br/>
 
 image_url for movie (like http://wikipedia/original_image.svg)
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
 <br/>
 
-<div><input type="submit" value="Save movie info (above)" class="btn btn-primary" <!-- blue --> ></div>
+<div><input type="submit" value="Save movie info (above)" class="btn btn-primary" class_means="blue"> ></div>
 </form>
 
 <hr/>

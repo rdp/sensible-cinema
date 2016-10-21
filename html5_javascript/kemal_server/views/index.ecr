@@ -33,7 +33,13 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
     <tr>
        <td><%= url.name_with_episode %></td>
        <td><%= url.host_like_netflix %></td>
-       <td><a href="<%= url.url %>" target="_blank">watch</a></td>
+       <td>
+         <a href="<%= url.url %>" target="_blank"
+         <% if url.amazon_episode_number != 0 %>
+            onclick="alert('after opening the season list, select episode <%= url.amazon_episode_number %>');"
+         <% end %>
+         >watch</a>
+       </td>
        <td><a href="/edit_url/<%= url.id %>">edit</a></td>
        <td><%= url.editing_status %></td>
        <td><%= url.age_recommendation_after_edited %></td>
@@ -60,18 +66,23 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
 </table>
 
 <pre>
-<h1>Create new amazon</h1>
+<h3>Create new amazon</h1>
 <form action="/new_url" method="GET">Your Movie's url: <input type="text" name="url"/>
   If a series, enter episode number (else 0) <input type="text" name="amazon_episode_number" value='0'/>
   <input type="submit" value="Submit">
 </form>
 
-<h1>Create new google play/other</h1>
-To find the url, go to <a href=play.google.com>play.google.com</a> then right click on the desired movie and select "open link in new tab" 
-to get to its real url like https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc )
-<form action="/new_url" method="GET">Your Movie's url: <input type="text" name="url"/> (if google play, right click on the movie and "open link in new tab" to get to its real url like 
+<h3>Create new google play</h3>
+To find a movie's url on google play, go to <a href=play.google.com>play.google.com</a> then right click on the desired movie and select "open link in new tab" 
+, should give you a url like like https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc.
+<form action="/new_url" method="GET">Your Movie's url: <input type="text" name="url"/>
   <input type="submit" value="Submit">
-This also works with other services like disneymoviesanywhere.com etc...
+</form>
+
+<h3>Create new other (netflix, disneymoviesanywhere, youtube, etc.)</h3>
+Enter url here:
+<form action="/new_url" method="GET">Your Movie's url: <input type="text" name="url"/>
+  <input type="submit" value="Submit">
 </form>
 
 <a href=/regenerate_all >regenerate all</a> (if developers change underlying javascript they should do this)
