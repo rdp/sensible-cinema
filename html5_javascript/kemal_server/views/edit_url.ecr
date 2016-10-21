@@ -16,7 +16,7 @@ url:
 <input type="text" name="url" size="150" value="<%= url.url %>"/>
 <br/>
 
-details (actors, etc.):
+details (non-spoiler synopsis, actor names, etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 
@@ -36,6 +36,7 @@ editing_status (ex: "needs second review" "not done yet", "still has X not exclu
 age_recommendation_after_edited (ex: 10, or 0 for none)
 <input type="text" name="age_recommendation_after_edited" size="5" value="<%= url.age_recommendation_after_edited %>"/>
 <br/>
+
 wholesome_uplifting_level (out of 10, or 0 for none)
 <input type="text" name="wholesome_uplifting_level" size="5" value="<%= url.wholesome_uplifting_level %>"/>
 <br/>
@@ -44,10 +45,14 @@ good_movie_rating (out of 10, or 0 for none)
 <input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
 <br/>
 
-review (non spoiler synopsis, explain good movie rating if needed, explain age recommendation if needed)
+review (explain good movie rating if needed, explain age recommendation if needed)
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 
-<div><input type="submit" value="Save movie info (above)"></div>
+image_url for movie (like http://wikipedia/original_image.svg)
+<input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
+<br/>
+
+<div><input type="submit" value="Save movie info (above)" class="btn btn-primary" <!-- blue --> ></div>
 </form>
 
 <hr/>

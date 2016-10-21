@@ -43,6 +43,10 @@ insert into edits (start, endy, category, subcategory, details, default_action, 
 alter table urls ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
 alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
 
+--
+
+alter table urls ADD COLUMN image_url VARCHAR(2014) NOT NULL DEFAULT '';
+
 -- output some to screen
 select * from urls;
 select * from edits;

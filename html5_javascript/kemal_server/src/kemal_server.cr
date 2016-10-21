@@ -21,6 +21,7 @@ class Url
     age_recommendation_after_edited: Int32,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
+    image_url: String,
     review: String
   })
 
@@ -35,6 +36,7 @@ class Url
     age_recommendation_after_edited: Int32,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
+    image_url: String,
     review: String
   })
   
@@ -62,31 +64,28 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, review = ?  where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review, id
+       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?  where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, id
       end
     end
   end
  
-  def initialize(url, name, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review)
+  def initialize
     @id = 0 # :|
-    @url = url
-    @name = name
-    @details = details
-    @amazon_episode_number = amazon_episode_number
-    @amazon_episode_name = amazon_episode_name
-    @editing_status = editing_status
-    @age_recommendation_after_edited = age_recommendation_after_edited
-    @wholesome_uplifting_level = wholesome_uplifting_level
-    @good_movie_rating = good_movie_rating
-    @review = review
+    @url = ""
+    @name = ""
+    @details = ""
+    @amazon_episode_number = 0
+    @amazon_episode_name = ""
+    @editing_status = ""
+    @age_recommendation_after_edited = 0
+    @wholesome_uplifting_level = 0
+    @good_movie_rating = 0
+    @image_url = ""
+    @review = ""
   end
 
-  def initialize
-    initialize("", "", "", 0, "", "", 0, 0, 0, "")
-  end
-  
   def edls
     with_db do |conn|
       conn.query("select * from edits where url_id=? order by start asc", id) do |rs|
@@ -489,14 +488,15 @@ post "/save_url" do |env|
   # no GET params
   params = env.params.body
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
-  incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize once up front, should be enough... :|
+  incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize everything up front... :|
   details = sanitize_html HTML.unescape(params["details"])
+  editing_status = params["editing_status"]
   amazon_episode_number = params["amazon_episode_number"].to_i
   amazon_episode_name = sanitize_html HTML.unescape(params["amazon_episode_name"])
   age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
-  editing_status = params["editing_status"]
+  image_url = sanitize_html HTML.unescape(params["image_url"])
   review = params["review"]
 
   if params.has_key? "id"
@@ -510,11 +510,12 @@ post "/save_url" do |env|
   db_url.details = details
   db_url.amazon_episode_number = amazon_episode_number
   db_url.amazon_episode_name = amazon_episode_name
+  db_url.editing_status = editing_status
   db_url.age_recommendation_after_edited = age_recommendation_after_edited
   db_url.wholesome_uplifting_level = wholesome_uplifting_level
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
-  db_url.editing_status = editing_status
+  db_url.image_url = image_url
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
