@@ -22,7 +22,6 @@ if RUBY_VERSION < '1.9.2' && !OS.jruby?
   raise 'need 1.9.2+ for MRI for the mutex #wait method'
 end
 require 'timeout'
-require 'yaml'
 require_relative 'muter'
 require_relative 'blanker'
 require_relative 'edl_parser'
@@ -227,7 +226,10 @@ class OverLayer
     @thread.kill
   end
   
-  # returns [start, end, active|:done]
+  # returns [start, end, active (true|false)|:done]
+  # true means "we're in it"
+  # false means "we're not to it yet"
+  # done means "none more forthcoming"
   def discover_state type, cur_time
       for start, endy in @all_sequences[type]
         if cur_time < endy

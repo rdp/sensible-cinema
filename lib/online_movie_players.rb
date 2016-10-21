@@ -40,16 +40,16 @@ def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_num
   else
     lookup_options = "url=#{CGI.escape movie_url}&amazon_episode_number=#{CGI.escape amazon_episode_number}"
     query_url = "http://cleanstream.inet2.org/for_current_just_settings_json?#{lookup_options}"
-    puts "doing #{query_url}"
-    edl_url = SensibleSwing::MainWindow.download_to_string query_url
-    puts "got from server#{edl_url}"
-    if edl_url =~ /none for this movie yet/ 
+    edl_json = SensibleSwing::MainWindow.download_to_string query_url
+    puts "got from server#{edl_json}"
+    if edl_json =~ /none for this movie yet/ 
       if(SimpleGuiCreator.show_select_buttons_prompt("Appears that movie is not in our list of movies with edits yet, create it? #{movie_url}", :yes => 'Create it', :no => 'not right now', :cancel => 'cancel') == :yes)
          SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cleanstream.inet2.org/new_url?#{lookup_options}"
       end
       return nil
     end
-    overlay = OverLayer.new(edl_url)
+    File.write('temp.yml', edl_json) # for some old unit tests :|
+    overlay = OverLayer.new('temp.yml')
   end
   
   # this one doesn't use any updates, so just pass in file contents, not filename

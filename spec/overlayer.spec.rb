@@ -30,16 +30,16 @@ def start_bad_blank
 end
 
 def new_raw ruby_hash
-  File.write 'temp.yml', YAML.dump(ruby_hash)
+  File.write 'temp.yml', JSON.dump(ruby_hash)
   OverLayer.new('temp.yml')
 end
 
 describe OverLayer do
 
   before do
-    File.write 'temp.yml', YAML.dump({:mutes => {2.0 => 4.0}} )
+    File.write 'temp.yml', JSON.dump({:mutes => {2.0 => 4.0}} )
     @o = OverLayer.new('temp.yml')
-    Blanker.startup
+    Blanker.warmup
   end
 
   after do
@@ -79,7 +79,7 @@ describe OverLayer do
   end
   
   it 'should unmute after the ending scene, and also be able to go past the end of scenes at all' do
-    File.write 'temp.yml', YAML.dump({:mutes => {0.5 => 1.0}})
+    File.write 'temp.yml', JSON.dump({:mutes => {0.5 => 1.0}})
     @o = OverLayer.new 'temp.yml'
     @o.start_thread true
     begin
@@ -94,7 +94,7 @@ describe OverLayer do
   end
 
   it 'should handle multiple mutes in a row' do
-    File.write 'temp.yml', YAML.dump({:mutes => {2.0 => 4.0, 5.0 => 7.0}})
+    File.write 'temp.yml', JSON.dump({:mutes => {2.0 => 4.0, 5.0 => 7.0}})
     @o = OverLayer.new 'temp.yml'
     @o.start_thread
     sleep 2.5
@@ -108,7 +108,7 @@ describe OverLayer do
 
   it 'should be able to mute teeny timed sequences' do
     # it once failed on this...
-    File.write 'temp.yml', YAML.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
+    File.write 'temp.yml', JSON.dump({:mutes => {0.0001 => 0.0002, 1.0 => 1.0001}})
     o = OverLayer.new 'temp.yml'
     o.continue_until_past_all false
   end
@@ -124,7 +124,7 @@ describe OverLayer do
   end
 
   it 'should be able to accept keyboard input do adjust time' do
-    @o = OverLayer.new 'test_yaml.yml'
+    @o = OverLayer.new 'test_json.yml'
     @o.cur_time
     @o.keyboard_input 'm'
     assert @o.cur_time > 59
@@ -153,9 +153,9 @@ describe OverLayer do
     @o.status.should include("ctrl+c to quit")
   end
 
-  it 'should allow for yaml input and parse it appropo' do
+  it 'should allow for json input and parse it appropo' do
     # 2 - 3 , 4-5 should be muted
-    @o = OverLayer.new 'test_yaml.yml'
+    @o = OverLayer.new 'test_json.yml'
     @o.start_thread
     start_good # takes 1s
     sleep 1.25
@@ -165,16 +165,16 @@ describe OverLayer do
     start_good
   end
 
-  def write_yaml yaml
-   File.write 'temp.yml', yaml
+  def write_json json
+   File.write 'temp.yml', json
    @o = OverLayer.new 'temp.yml'
   end
 
   it 'should allow for 1:00.0 minute style input' do
-    write_yaml <<-YAML
+    write_json <<-JSON
     mutes:
       "0:02.0" : "0:03.0"
-    YAML
+    JSON
     @o.start_thread
     start_good
     start_good
@@ -183,150 +183,150 @@ describe OverLayer do
     start_good
   end
 
-  it "should reload the YAML file on the fly to allow for editing it" do
+  it "should reload the JSON file on the fly to allow for editing it" do
     # start it with one set to mute far later
-    write_yaml <<-YAML
+    write_json <<-JSON
     mutes: 
       "0:11.0" : "0:12.0"
-    YAML
+    JSON
     @o.start_thread
     start_good
-    File.write 'temp.yml',  <<-YAML
+    File.write 'temp.yml',  <<-JSON
     mutes:
       "0:00.0001" : "0:01.5"
-    YAML
+    JSON
     @o.status # cause it to refresh from the file
     sleep 0.1 # blugh avoid race condition since we use notify...
     start_bad
     start_good
   end
   
-  it "should not accept any of the input when you pass it any poor yaml" do
-    write_yaml <<-YAML
+  it "should not accept any of the input when you pass it any poor json" do
+    write_json <<-JSON
     mutes:
        a : 08:56.0 # first one there is invalid
-    YAML
+    JSON
     out = OverLayer.new 'temp.yml'
     out.all_sequences[:mutes].should be_blank    
-    write_yaml <<-YAML
+    write_json <<-JSON
     mutes:
        01 : 02
-    YAML
-    out.reload_yaml!
+    JSON
+    out.reload_json!
     out.all_sequences[:mutes].should == [[1,2]]
-    write_yaml <<-YAML
+    write_json <<-JSON
     mutes:
        05 : # failure
-    YAML
+    JSON
     # should have kept the old
     out.all_sequences[:mutes].should == [[1,2]]
   end
   
   it "should not accept any zero start input" do
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
        0 : 1 # we don't like zeroes...for now at least, as they can mean parsing failure...
        3 : 4
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[3,4]]
   end
   
   it "should disallow zero or less length intervals" do
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
        1 : 1
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == []  
   end
 
   
-  it "should sort yaml input" do
-    yaml = <<-YAML
+  it "should sort json input" do
+    json = <<-JSON
     mutes:
       3 : 4
       1 : 2
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[1,2], [3,4]]
   end
   
-  it "should handle non quoted style numbers in yaml" do
-    yaml = <<-YAML
+  it "should handle non quoted style numbers in json" do
+    json = <<-JSON
     mutes:
        08:55 : 08:56.0 # valid, will return large Fixnum's
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[535, 536]]
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
        01:08:55 : 01:09:55 # actually valid
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[4135, 4195]]
   end
 
-  it "should translate yaml with the two different types in it" do
-    yaml = <<-YAML
+  it "should translate json with the two different types in it" do
+    json = <<-JSON
     mutes:
        "0:02.0" : "0:03.0"
     blank_outs:
        "0:02.0" : "0:03.0"  
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[2.0, 3.0]]
     out[:blank_outs].should == [[2.0, 3.0]]
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
        "1:02.11" : "1:03.0"
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].first.should == [62.11, 63.0]
   end
 
   it "should accept fixnum 56 => 57 style input" do
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
       "0:02" : "0:03"
       3 : 4
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[2.0, 3.0], [3, 4]]
   end
   
   it "should accept numbers that are unreasonably large" do
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
       1000000 : 1000001
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[1_000_000, 1_000_001]]
   end
   
-  it "should accept blank yaml" do
-    out = OverLayer.translate_yaml ""
+  it "should accept blank json" do
+    out = OverLayer.translate_json ""
     out[:mutes].should be_blank
   end  
   
   it "should not translate symbols"
   
   it "should translate strings as well as symbols" do
-    yaml = <<-YAML
+    json = <<-JSON
     mutes:
       "1" : "3"
-    YAML
-    out = OverLayer.translate_yaml yaml
+    JSON
+    out = OverLayer.translate_json json
     out[:mutes].should == [[1, 3]]
   end  
 
   it 'should reject overlapping settings...maybe?'
   
-  it "should allow for 1:01:00.0 (double colon) style yaml input" do
-    write_yaml <<-YAML
+  it "should allow for 1:01:00.0 (double colon) style json input" do
+    write_json <<-JSON
     mutes:
       "1:00.11" : "1:03.0"
-    YAML
+    JSON
     @o.start_thread
     start_good
     @o.set_seconds 61
