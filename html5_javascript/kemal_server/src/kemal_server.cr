@@ -435,7 +435,7 @@ end
 def save_local_javascript(db_urls, log_message, env)
   db_urls.each { |db_url|
     File.open("edit_descriptors/log.txt", "a") do |f|
-      f.puts log_message
+      f.puts log_message + " " + db_url.name_with_episode
     end
     ["html5_edited.just_settings", "html5_edited"].each  do |type|
       as_javascript = javascript_for(db_url, env, type)
