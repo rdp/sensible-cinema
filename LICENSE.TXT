@@ -19,4 +19,4 @@ TsMuxer binaries are included, with their own license, see vendor/tsmuxer1.10.6/
 
 See first also the file "documentation/is_it_legal_to_copy_dvds.txt" for more information on legal implications in your country.
 
-[1] lgpl.txt file, or https://www.gnu.org/licenses/lgpl.txt 
+[1] https://www.gnu.org/licenses/lgpl.txt 

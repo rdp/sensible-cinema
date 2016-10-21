@@ -238,3 +238,27 @@
 
   netflix instant: somehow download sub automatically, then play the movie, then OCR the screen playback to determine exact instant of playback [or OCR the whole thing, to determine where profanities].  Or have a "delayed playback" system that OCR's as you go along, tries to predict profanity/nudity/etc. based on subtitles [or sounds of what's going on?].
     could also download sub, manual synchronize, then translate it/display it back to the user somehow.
+
+  The design, not the idea.
+
+OCR can work on internet or standalone players.
+time elapsed "since the timestamp changed" on screen infers the more precise millisecond
+you are at, for being able to skip, mute, overlay, apply overlaid transparent image/video more precisely.
+You can grab the specific coordinates by precise location, or by iterating over windows, or by relative location to screen coordinates/window coordinates.
+You can use the url to infer the title desired.
+You can use user preferences to infer how to use each setting within the "EDL" by saving the user preference, and comparing it
+against each entry in the EDL when you parse it.
+
+It can mute by clicking a mute button, by accessing an API.
+It can work by monitoring, using an API, the current playback time.
+
+It can react to "seek" commands to coordinate position within EDL's.
+
+Another invention: it can apply editing "commands" to a player that is playing back blu-ray discs (hardware or software), as originally described in other clearplay
+patents, like US6889383 and those issued to them afterward.
+
+You can get the specific digits by "absolute digit location" or by "OCR on the entire timestamp"
+
+Could also playback using avisynth.
+
+Can create edited files.
