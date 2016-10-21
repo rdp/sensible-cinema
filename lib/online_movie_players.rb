@@ -39,7 +39,7 @@ def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_num
     raise if movie_url
   else
     lookup_options = "url=#{CGI.escape movie_url}&amazon_episode_number=#{CGI.escape amazon_episode_number}"
-    query_url = "http://cleanstream.inet2.org/for_current_just_settings?#{lookup_options}"
+    query_url = "http://cleanstream.inet2.org/for_current_just_settings_json?#{lookup_options}"
     puts "doing #{query_url}"
     edl_url = SensibleSwing::MainWindow.download_to_string query_url
     puts "got from server#{edl_url}"
