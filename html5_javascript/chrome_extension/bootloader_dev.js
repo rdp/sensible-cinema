@@ -1,5 +1,3 @@
-// this is run "on load" so hope video elements already exist :|
-
 function findFirstVideoTag(node) {
     // there's probably a jquery way to do this easier :)
     if (node.nodeType == 1) {
@@ -55,7 +53,7 @@ clean_stream_extension_old_amazon_episode = "";
 function checkAndLoadEditor() {
 
   if (clean_stream_extension_ever_loaded)
-     return; // should be self-updating
+     return; // already loaded, it should self update if episodes change
   var video_element = findFirstVideoTag(document.body);
   var currentUrl = getSanitizedCurrentUrl();
   // this thing is annoying on facebook :|
