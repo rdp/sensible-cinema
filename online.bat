@@ -1,3 +1,3 @@
-@rem NB that you can call it like go --debug, except you can't since there's no gems in a jruby-complete jar...
-@rem call java -jar vendor\jruby-complete.jar %* bin\sensible-cinema  --online-player-mode --go
-call j --debug  %* bin\sensible-cinema  --online-player-mode --advanced
+#@rem NB that you can call it like go --debug, except you can't since there's no gems in a jruby-complete jar...
+java -jar vendor/jruby-complete.jar $1 $2 $3 bin/sensible-cinema  --online-player-mode --go
+#@ j --debug  %* bin\sensible-cinema  --online-player-mode --advanced

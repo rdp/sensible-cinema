@@ -40,8 +40,8 @@ module SensibleSwing
       end            
 
       new_jbutton("Open Website for viewing/editing all movie edit choice lists") do
-         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org/"
-      end	    
+         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cleanstream.inet2.org/"
+      end
 
       @online_status_label = add_text_line "Player status:"
       @playing_well_label = add_text_line "Status: hit start to being..."

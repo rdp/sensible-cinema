@@ -30,12 +30,19 @@ end
 # helper for OCR'ing single digits that were screen captured
 module OCR
   if OS.windows? 
-    GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr049.exe -C 0-9:/ ")
+    GOCR = File.expand_path(File.dirname(__FILE__) + "/../vendor/gocr049.exe") # known to work :)
   else
-    require_relative 'check_installed_mac'
-    exit 1 unless CheckInstalledMac.check_for_installed 'gocr'
-    GOCR = "gocr"
+    if OS.mac?
+      GOCR = "./vendor/gocr_mac"
+      throw "Unable to run gocr? please report..." unless system(GOCR + " --help") # and hope :|
+    else
+      # linux
+      require_relative 'check_installed_mac_linux'
+      exit 1 unless CheckInstalledMacLinux.check_for_installed 'gocr'
+      GOCR = "gocr"
+    end
   end
+  GOCR << " -C 0-9:/ " # these are the chars you are looking for...
   
   CACHE = {}
   

@@ -51,7 +51,7 @@ module SensibleSwing
       connection = open(full_url, 'rb', :content_length_proc => proc {|cl| content_length = cl}, :progress_proc => progress_proc)
       contents = connection.read
       connection.close
-	    writeOut.write contents
+      writeOut.write contents
       writeOut.close
       out_frame.close
       FileUtils.mv temp_filename, to_here # avoid partial downloads corrupting us
@@ -95,8 +95,8 @@ module SensibleSwing
       if OS.windows?
         File.exist?(windows_full_loc)
       else
-        require 'lib/check_installed_mac.rb'
-        if !CheckInstalledMac.check_for_installed(unix_name_in_opt_rdp)
+        require 'lib/check_installed_mac_linux.rb'
+        if !CheckInstalledMacLinux.check_for_installed(unix_name_in_opt_rdp)
           exit 1 # it'll have already displayed a message...
         else
           true
@@ -104,7 +104,7 @@ module SensibleSwing
       end
     end
 	
-	def check_for_ffmpeg_installed
+    def check_for_ffmpeg_installed
       ffmpeg_exe_loc = File.expand_path('vendor/cache/ffmpeg/ffmpeg.exe') # I think file based still uses ffmpeg locally...
       if !check_for_exe(ffmpeg_exe_loc, 'ffmpeg')
         require_blocking_license_accept_dialog 'ffmpeg', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: ffmpeg."
@@ -123,7 +123,7 @@ module SensibleSwing
     
     def check_for_various_dependencies
       if OS.doze?	
-	    if !check_for_exe(mplayer_local(false), nil)
+        if !check_for_exe(mplayer_local(false), nil)
           require_blocking_license_accept_dialog 'Mplayer-EDL', 'gplv2', 'http://www.gnu.org/licenses/gpl-2.0.html', "Appears that you need to install a dependency: mplayer EDL "
           FileUtils.mkdir_p 'vendor/cache/mplayer_edl'
           puts 'downloading mplayer edl [12 MB]'
