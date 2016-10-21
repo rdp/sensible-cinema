@@ -1,0 +1,25 @@
+name: !ruby/regexp /microsoftsilverlight|geckopluginwindow|NativeWindowClass/i # does this work in non FF? nativewindowclass for chrome, but needs some serious love before that will work well...
+use_class_name: true
+x: -241
+y: -45
+width: 40
+height: 11
+digits:
+      :hours:
+      - -241
+      - 8
+      :minute_tens:
+      - -230
+      - 6
+      :minute_ones:
+      - -223
+      - 6
+      :second_tens:
+      - -213
+      - 6
+      :second_ones:
+      - -206
+      - 6
+      :should_invert: true
+      :levels:
+      - 0

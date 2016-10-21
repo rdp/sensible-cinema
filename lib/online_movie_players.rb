@@ -21,6 +21,8 @@ for file in ['overlayer', 'status_line', 'screen_tracker', 'ocr', 'vlc_programme
   require_relative file
 end
 
+require 'cgi'
+
 def choose_file title, dir
   filename = SimpleGuiCreator.new_previously_existing_file_selector_and_go title, dir
   if !filename
@@ -29,32 +31,21 @@ def choose_file title, dir
   filename
 end
 
-def go_online parent_window, just_screen_snapshot, movie_url, player_description_path
-  
+def go_online parent_window, just_screen_snapshot, movie_url, amazon_episode_number, player_description_path
   OCR.clear_cache! # ??
-  puts 'cleared OCR cache'
   
   if just_screen_snapshot
-    $VERBOSE=true # also add some extra output
+    $VERBOSE=true # also add some extra output :|
     raise if movie_url
   else
-    query_url = "http://cinemasoap.inet2.org/search?movieurl=" + movie_url
+    lookup_options = "url=#{CGI.escape movie_url}&amazon_episode_number=#{CGI.escape amazon_episode_number}"
+    query_url = "http://cleanstream.inet2.org/for_current_just_settings?#{lookup_options}"
+    puts "doing #{query_url}"
     edl_url = SensibleSwing::MainWindow.download_to_string query_url
-    if edl_url =~ /not found/
-      webpage_itself = SensibleSwing::MainWindow.download_to_string movie_url
-      webpage_itself =~ /<title>(.*)<\/title>/i
-      SimpleGuiCreator.show_message "movie not yet in our database, please edit it now #{movie_url} in browser window" 
-      if $1
-         movie_name = $1
-         if movie_url =~ /hulu.com/
-           movie_name =~ /^Watch (.*) Online | Hulu/
-           if $1
-             movie_name = $1
-           end
-         end
-         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org/new?moviename=#{movie_name}&movieurl=#{movie_url}"
-      else
-         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cinemasoap.inet2.org/" # index page  has add at the bottom :)
+    puts "got from server#{edl_url}"
+    if edl_url =~ /none for this movie yet/ 
+      if(SimpleGuiCreator.show_select_buttons_prompt("Appears that movie is not in our list of movies with edits yet, create it? #{movie_url}", :yes => 'Create it', :no => 'not right now', :cancel => 'cancel') == :yes)
+         SimpleGuiCreator.open_url_to_view_it_non_blocking "http://cleanstream.inet2.org/new_url?#{lookup_options}"
       end
       return nil
     end

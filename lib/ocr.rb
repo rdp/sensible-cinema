@@ -34,7 +34,7 @@ module OCR
   else
     if OS.mac?
       GOCR = "./vendor/gocr_mac"
-      throw "Unable to run gocr? please report..." unless system(GOCR + " --help") # and hope :|
+      throw "Unable to run gocr? please report..." unless system(GOCR + " --help 2>/dev/null") # and hope :|
     else
       # linux
       require_relative 'check_installed_mac_linux'
@@ -118,7 +118,7 @@ module OCR
   end
   
   def load_from_ocr_seed
-    for file in Dir[__DIR__ + "/ocr_seed/*.bmp"]
+    for file in Dir[__DIR__ + "/seed_ocr/*.bmp"]
       file =~ /(\d+)\.bmp/i
       digit = $1.to_i
       raise unless digit < 10
