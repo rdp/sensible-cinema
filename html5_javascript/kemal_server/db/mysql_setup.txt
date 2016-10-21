@@ -1,0 +1,3 @@
+ create user 'username'@'localhost' identified by 'XX';
+create database db_name
+GRANT ALL PRIVILEGES ON db_name . * TO 'username'@'localhost';

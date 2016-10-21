@@ -18,7 +18,7 @@ CREATE TABLE urls (
 
 CREATE UNIQUE INDEX url_episode_num ON urls(url(256), amazon_episode_number); -- for unique *and* lookups (256 to avoid some mysql index too long)
 
-CREATE TABLE EDITS (
+CREATE TABLE edits (
    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    start          REAL NOT NULL,
    endy           REAL NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE EDITS (
    details        VARCHAR(1024) NOT NULL, 
    more_details   VARCHAR(1024) NOT NULL, 
    default_action VARCHAR(1024) NOT NULL, 
-   url_id         INT NOT NULL, FOREIGN KEY(URL_ID) REFERENCES URLS(ID)
+   url_id         INT NOT NULL, FOREIGN KEY(URL_ID) REFERENCES urls(id)
 );
 
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
@@ -40,8 +40,7 @@ insert into edits (start, endy, category, subcategory, details, default_action, 
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
       (10.0, 30.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.netflix.com/watch/80016224'), "");
 
-alter table URLS ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
--- editing_notes -> editing_status :|
+alter table urls ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
 alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
 
 -- output some to screen
