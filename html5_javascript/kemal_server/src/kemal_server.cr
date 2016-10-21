@@ -158,6 +158,17 @@ end
 
 class Edl
   # see edit_edl.ecr for options
+  JSON.mapping({
+    id: Int32,
+    start:   {type: Float64},
+    endy: {type: Float64},
+    category: {type: String},       
+    subcategory: {type: String},   
+    details: {type: String},     
+    more_details: {type: String},     
+    default_action: {type: String},
+    url_id: Int32
+  })
   DB.mapping({
     id: Int32,
     start:   {type: Float64},
@@ -463,7 +474,7 @@ def save_local_javascript(db_urls, log_message, env)
     File.open("edit_descriptors/log.txt", "a") do |f|
       f.puts log_message + " " + db_url.name_with_episode
     end
-    ["html5_edited.just_settings", "html5_edited"].each  do |type|
+    ["html5_edited.just_settings.js", "html5_edited.js", "html5_edited.just_settings.json"].each  do |type|
       as_javascript = javascript_for(db_url, env, type)
       escaped_url_no_slashes = URI.escape db_url.url
       File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO

@@ -1,2 +1,6 @@
-// generated at <%= Time.now %>.
-<%= db_url.to_json %>
+{
+"_comment": "generated at <%= Time.now %>.",
+"url": <%= db_url.to_json %>,
+"edits":
+[ <%= db_url.edls.map{| edl| edl.to_json}.join(",") %> ]
+}
