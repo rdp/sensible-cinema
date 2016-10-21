@@ -23,6 +23,20 @@ class Url
     good_movie_rating: Int32,
     review: String
   })
+
+  JSON.mapping({
+    id: Int32,
+    url:  String,
+    name: String,
+    details: String,
+    amazon_episode_number: Int32,
+    amazon_episode_name: String,
+    editing_status: String,
+    age_recommendation_after_edited: Int32,
+    wholesome_uplifting_level: Int32,
+    good_movie_rating: Int32,
+    review: String
+  })
   
   def self.all
     with_db do |conn|
@@ -253,11 +267,15 @@ def real_url(env)
 end
 
 get "/for_current_just_settings" do |env|
-  get_for_current(env, "html5_edited.just_settings")
+  get_for_current(env, "html5_edited.just_settings.js")
+end
+
+get "/for_current_just_settings_json" do |env|
+  get_for_current(env, "html5_edited.just_settings.json")
 end
 
 get "/for_current" do |env|
-  get_for_current(env, "html5_edited")
+  get_for_current(env, "html5_edited.js")
 end
 
 def get_for_current(env, type)
@@ -267,7 +285,7 @@ def get_for_current(env, type)
   with_db do |conn|
     url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
     if !url_or_nil
-      "alert('none for this movie yet');"
+      "alert('none for this movie yet');" # no 404 might be useful here :|
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -294,10 +312,12 @@ def javascript_for(db_url, env, type)
     episode_name = URI.escape(db_url.amazon_episode_name) 
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     request_host =  env.request.headers["Host"] # like localhost:3000
-    if type == "html5_edited"
+    if type == "html5_edited.js"
       render "views/html5_edited.js.ecr"
+    elsif type == "html5_edited.just_settings.json"
+      render "views/html5_edited.just_settings.json.ecr"
     else
-      raise "wrong type" + type if type != "html5_edited.just_settings"
+      raise "wrong type" + type if type != "html5_edited.just_settings.js"
       render "views/html5_edited.just_settings.js.ecr"
     end
   end
