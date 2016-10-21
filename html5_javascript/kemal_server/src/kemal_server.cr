@@ -48,7 +48,7 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review).last_insert_id.to_i32
       else
        conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, review = ?  where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review, id
       end
@@ -416,7 +416,12 @@ get "/new_url" do |env|
     title = title.gsub(" - YouTube", "")
     url = Url.new
     url.url = real_url
-    url.name, url.details = title.split(":") # I think this is how amazon does it, actors after a colon...
+    if title.includes?(":")
+      url.name = title.split(":")[0]
+      url.details = title[title.index(":").as(Int32)..-1] # I think this is how amazon does it, actors after a colon...
+    else
+      url.name = title
+    end
     url.amazon_episode_number = amazon_episode_number
     url.save 
     env.redirect "/edit_url/#{url.id}"
