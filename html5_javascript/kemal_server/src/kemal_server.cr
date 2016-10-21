@@ -420,21 +420,21 @@ get "/edit_url/:url_id" do |env| # same as "view" and "new" LOL but we have the 
 end
 
 get "/new_url" do |env|
-  standardized_param_url = standardized_param_url(env)
+  real_url = standardized_param_url(env)
   if env.params.query.has_key? "amazon_episode_number"
     amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
   else
     amazon_episode_number = 0
   end
-  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(standardized_param_url, amazon_episode_number)
+  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
   if url_or_nil != nil
     set_flash_for_next_time(env, "a movie with that description already exists, showing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
     begin
-      response = HTTP::Client.get standardized_param_url # download that page :)
+      response = HTTP::Client.get real_url # download that page :)
     rescue ex
-      raise "unable to download that url" + standardized_param_url + " #{ex}" # expect url to work :|
+      raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
     end
     if response.body =~ /<title[^>]*>(.*)<\/title>/i
       title = response.body.scan(/<title[^>]*>(.*)<\/title>/i)[0][1]
@@ -449,10 +449,10 @@ get "/new_url" do |env|
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
     url = Url.new
-    url.url = standardized_param_url
-    if title.includes?(":")
-      url.name = title.split(":")[0]
-      url.details = title[title.index(":").as(Int32)..-1] # I think this is how amazon does it, actors after a colon...
+    url.url = real_url
+    if title.includes?(":") && real_url.includes("amazon.com")
+      url.name = title.split(":")[0].strip
+      url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # I think it has actors after a colon...
     else
       url.name = title
     end
