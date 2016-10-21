@@ -40,7 +40,6 @@ function getCurrentAmazonEpisode() {
     return "0"; // anything else
 }
 
-
 function findFirstVideoTag(node) {
     // there's probably a jquery way to do this easier :)
     if (node.nodeType == 1) {
@@ -119,6 +118,7 @@ function checkStatus() {
   }
   
   topLineEditDiv.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
+  jQuery("#add_edit_span_id_for_extra_message").html(extra_message);
   jQuery("#playback_rate").html(video_element.playbackRate.toFixed(2) + "x");
   checkIfEpisodeChanged();
 }
@@ -192,7 +192,7 @@ function setupDeveloper() {
   exposeEditScreenDiv.style.zIndex = "99999999"; // on top :)
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add edit</a>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add edit</a><span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
