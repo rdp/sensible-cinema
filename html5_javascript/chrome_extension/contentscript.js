@@ -51,7 +51,7 @@ function injectBootLoaderOnce() {
 
 function autoStartOnBigThree() {
   var location = window.location.href;
-  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com") && findfirstVideoTag(document.body) != null) {
+  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com") && findFirstVideoTag(document.body) != null) {
     injectBootLoaderOnce();
     clearInterval(timer); 
   }
