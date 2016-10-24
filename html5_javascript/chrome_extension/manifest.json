@@ -19,5 +19,8 @@
   }],
   "web_accessible_resources": ["bootloader_dev.js"],
   "icons": { "128": "icon.png" },
-  "background": { "scripts": ["background.js"] }
+  "background": { "scripts": ["background.js"] },
+  "externally_connectable": {
+    "matches": ["*://*.amazon.com/*", "*://play.google.com/*", "*://*.youtube.com/*"] // don't have to even list netflix :|
+  }
 }

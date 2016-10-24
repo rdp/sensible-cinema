@@ -245,10 +245,10 @@ function setupDeveloper() {
   <a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
   `;
   
-  // this doesn't do anything currently, not wired in
+  // this only works for the few mentioned in externally_connectable in manifest.json :|
   var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
-  chrome.runtime.sendMessage(editorExtensionId, {action: "started"}, function(response) {
-    //console.log("response after sending started" + response);
+  chrome.runtime.sendMessage(editorExtensionId, {action: "really_started"}, function(response) {
+    //console.log("response after telling started" + response);
   });
   jQuery(window).resize(function(){
     setEditedControlsToTopLeft();

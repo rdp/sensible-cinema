@@ -2,22 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-chrome.runtime.onMessage.addListener(
-  // message presumably from contentscript.js [?]
-  function(request, sender, sendResponse) {
+
+update_icon = function(request, sender, sendResponse) {
     console.log('received message to background');
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       var active_tab_id = tabs[0].id;
       if (request.action == "loaded") {
+        // not "really" loaded yet :|
+        chrome.browserAction.setBadgeText({ text: "??? tabId: active_tab_id })
+        chrome.browserAction.setBadgeBackgroundColor({ color: "#000080" }); // blue meaning ambiguous :)
+        // TODO show on the background UI the current status as well
+      }
+      else if (request.action == "really_started") {
         chrome.browserAction.setBadgeText({ text: "YES", tabId: active_tab_id })
+        chrome.browserAction.setBadgeBackgroundColor({ color: "#008000" }); // green
       }
     });
-});
 
-chrome.runtime.onMessageExternal.addListener(
-    function(request, sender, sendResponse) {
-      // message from real page, but can't use wildcards for this :|
-});
+chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js
 
-chrome.browserAction.setBadgeText({ text: "off" }); // default :)
+chrome.runtime.onMessageExternal.addListener(update_icon); // from real page [those allowed to anyway :| ]
 
+// start:
+chrome.browserAction.setBadgeText({ text: "off" });
+chrome.browserAction.setBadgeBackgroundColor({ color:"#808080" });
