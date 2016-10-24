@@ -76,7 +76,7 @@ function checkAndLoadEditor() {
 
 video_element = findFirstVideoTag(document.body)
 if (video_element == null)
-  alert('you requested edited playback but no movie found on current page.\nWill be unable to play edited...');
+  alert('you requested edited playback but no movie found on current page.\nWill be unable to play edited...'); // this should never happen anymore on the big 3 anyway :|
 
 checkAndLoadEditor();
 setInterval(checkAndLoadEditor, 5000);

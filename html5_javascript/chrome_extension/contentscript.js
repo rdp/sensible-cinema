@@ -18,6 +18,23 @@ chrome.runtime.onMessage.addListener(
          }
 });
 
+function findFirstVideoTag(node) {
+    // there's probably a jquery way to do this easier :)
+    if (node.nodeType == 1) {
+        if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
+            return node;
+        }
+        node = node.firstChild;
+
+        while (node) {
+            if ((out = findFirstVideoTag(node)) != null) {
+                return out;
+            }
+            node = node.nextSibling;
+        }
+    }
+}
+
 function injectBootLoaderOnce() {
              if (already_loaded) {
                alert('edited player already loaded for this page, it should pick up when you start a movie on this page');
@@ -34,10 +51,10 @@ function injectBootLoaderOnce() {
 
 function autoStartOnBigThree() {
   var location = window.location.href;
-  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
-     // can't seem to send message to self here :|
+  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com") && findfirstVideoTag(document.body) != null) {
     injectBootLoaderOnce();
+    clearInterval(timer); 
   }
 }
 
-setTimeout(autoStartOnBigThree, 3000); // amazon takes awhile to load its video, avoid a spurious 'not ready' message :|
+timer = setInterval(autoStartOnBigThree, 3000); // amazon takes awhile to load its video, avoid a spurious 'not ready' message :|
