@@ -29,7 +29,7 @@ details (non-spoiler synopsis, actor names, etc.):
   <br/>
 </div>
 
-editing_status (ex: "needs second review" "not done yet", "still has X not excluded [bare midriffs]" "editing done")
+editing_status (ex: "needs second review" "not done yet" "editing done")
 <textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
 <br/>
 
@@ -45,7 +45,7 @@ good_movie_rating (out of 10, or 0 for none)
 <input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
 <br/>
 
-review (explain good movie rating if needed, explain age recommendation if needed)
+review (explain good movie rating if needed, explain age recommendation if needed, "still has X not edited [bare midriffs adult them...]")
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 <br/>
 
@@ -56,6 +56,9 @@ image_url for movie (like http://wikipedia/original_image.svg)
 <input type="submit" value="Save movie info (above)" class="btn btn-primary" class_means="blue">
 </form>
 
+<p>[<a href="/index"><< back to index</a>]</p>
+<hr/>
+<hr/>
 <hr/>
 
 Edit edits for this movie:
@@ -90,4 +93,3 @@ Edit edits for this movie:
 <a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete</a>
 <br/>
 
-<p>[<a href="/index">back to index</a>]</p>
