@@ -389,6 +389,8 @@ end
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   url.destroy
+  set_flash_for_next_time env, "deleted #{env}"
+  # could/should remove from cache :|
   env.redirect "/index"
 end
 
@@ -492,8 +494,7 @@ def get_title_and_canonical_url(real_url)
       real_url = $1
     end
     if real_url.includes?("amazon.com") && real_url.includes?("/gp/") # gp is old, dp is new, we only want dp ever 
-      # TODO the url request should use canonical [!]
-      # we should never get here now FWIW
+      # we should never get here now FWIW, since it converts to /dp/ with canonical above
       raise "appears you're using an amazon web page that is an old style like /gp/ if this is a new movie, please search in amazon for it again, and you should find a url like /dp/, and use that
              if it is an existing movie, enter it as the amazon_second_url instead of main url"
     end
