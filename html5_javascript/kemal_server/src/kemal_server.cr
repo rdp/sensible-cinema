@@ -50,7 +50,7 @@ class Url
   
   def self.all
     with_db do |conn|
-      conn.query("SELECT * from urls order by url desc") do |rs|
+      conn.query("SELECT * from urls order by url, is_amazon_prime desc") do |rs|
          Url.from_rs(rs);
       end
     end
