@@ -56,6 +56,8 @@ alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
 alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
 CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
 
+create unique index url_title_episode ON urls(name(256), amazon_episode_number); -- try to avoid accidental dupes
+
 -- output some to screen
 select * from urls;
 select * from edits;
