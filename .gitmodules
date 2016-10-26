@@ -1,6 +1,3 @@
 [submodule "lib/jruby-swing-helpers"]
 	path = lib/jruby-swing-helpers
 	url = https://github.com/rdp/ruby_simple_gui_creator.git
-[submodule "html5_javascript/kemal_server/edit_descriptors"]
-	path = html5_javascript/kemal_server/edit_descriptors
-	url = https://github.com/rdp/sensible-cinema-edit-descriptors.git

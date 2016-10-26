@@ -8,10 +8,10 @@
   <input type="hidden" name="id" value="<%= edl.id %>">
 <% end %>
 
-from:<input type="text" name="start"  size="40" value="<%= seconds_to_human edl.start %>"/>
+from:<input type="text" name="start"  size="40" value="<%= seconds_to_human edl.start, url %>"/>
 <br/>
 
-to: <input type="text" name="endy" size="40" id="endy" value="<%= seconds_to_human edl.endy %>"/>
+to: <input type="text" name="endy" size="40" id="endy" value="<%= seconds_to_human edl.endy, url %>"/>
 <br/>
 
 default action to take:

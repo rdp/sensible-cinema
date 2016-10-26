@@ -132,9 +132,21 @@ class Url
   def host_like_netflix
    check =  /\/\/([^\/]+).*/
     if url =~ check
-      $1.split(".")[-2]
+      host = $1.split(".")[-2]
     else
-      url
+      host = url # ??
+    end
+    if is_amazon_prime?
+      host += " prime"
+    end
+    host
+  end
+
+  def is_amazon_prime?
+    if is_amazon_prime == 0
+      false
+    else
+      true
     end
   end
 
@@ -250,6 +262,15 @@ class Edl
   
 end
 
+def seconds_to_human(ts, url)
+  if (url.total_time > 0 && url.url =~ /netflix.com/)
+    # negative for easier entry :)
+    "-" + seconds_to_human(url.total_time - ts)
+  else
+    seconds_to_human(ts)
+  end
+end
+
 def seconds_to_human(ts_total)
   ts_seconds = ts_total
   hours = (ts_seconds / 3600).floor()
@@ -296,7 +317,7 @@ def standardize_url(unescaped)
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs it
   end
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to www
-  if unescaped.includes?("/dp/") && unescaped.includes("amazon.com")
+  if unescaped.includes?("/dp/") && unescaped.includes?("amazon.com")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
     # or https://www.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
     # we want https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK but hopefully canonical gives us that?
@@ -470,16 +491,15 @@ def get_title_and_canonical_url(real_url)
       title = "please enter title here"
     end
     if response.body =~ /<link rel="canonical" href="([^"]+)"/i
-      // https://smile.amazon.com/gp/product/B001J6Y03C did canonical to B0190R77GS
-      // however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
-      //         data-asin = 'B001J6GZXK' in both :|
-      // amzn.com no luck
+      # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to B0190R77GS
+      # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
+      #         data-asin = 'B001J6GZXK' in both :|
       puts "using canonical #{$1}"
       real_url = standardize_url($1)
       if real_url.includes?("/gp/") && real_url.includes?("amazon.com")
         # startlingly, canonical from /gp/ sometimes => /gp/ yikes
         raise "appears you're using an amazon web page that is an old style like /gp/ please search it again on amazon and enter its url that looks like .../dp/..."
-      endg
+      end
     end
     [title, standardize_url(real_url)] # standardize because it might still be smile.amazon :|
 end
@@ -548,7 +568,7 @@ post "/save_url" do |env|
   params = env.params.body # POST params
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = HTML.unescape(params["url"])
-  _, incoming_url = get_title_and_canonical_url incoming_url # in case url changed :|
+  _ , incoming_url = get_title_and_canonical_url incoming_url # in case url changed :|
   # these get injected everywhere later so sanitize everything up front... :|
   incoming_url = sanitize_html incoming_url
   details = sanitize_html HTML.unescape(params["details"])
