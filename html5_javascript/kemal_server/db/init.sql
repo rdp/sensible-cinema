@@ -54,7 +54,7 @@ alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
 alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
 
 alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
-CREATE UNIQUE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- XXX do we use this?
+CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
 
 -- output some to screen
 select * from urls;
