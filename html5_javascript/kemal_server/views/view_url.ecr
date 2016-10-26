@@ -33,8 +33,12 @@ our review  <%= url.review %>
 <br/>
 <% end %>
 
-<% if url.rental_cost > 0 || url.purchase_cost > 0 %>
-  price (rent/buy) <%= url.cost_string %>
+<% if url.rental_cost > 0 %>
+  price to rent: <%= "%.2f" % url.rental_cost %>$.
+  <br/>
+<% end %>
+<% if url.purchase_cost > 0 %>
+  price to purchase digital: <%= "%.2f" % url.purchase_cost %>$.
   <br/>
 <% end %>
 
