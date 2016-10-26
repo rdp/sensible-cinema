@@ -31,7 +31,7 @@ CREATE TABLE edits (
 );
 
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
-   values ("https://www.netflix.com/watch/80016225", 'dunno name', "not done yet2", 0, "", 10, 8, 4, "review");
+   values ("https://www.amazon.com/gp/product/B001J6GZXK", 'ALTA season 3', "not done yet2", 5, "Beach test", 10, 8, 4, "review");
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
    values ("https://www.netflix.com/watch/80016224", 'meet the mormons [test]', "not done yet", 0, "", 10, 8, 4, "review");
 
@@ -51,6 +51,8 @@ alter table urls ADD COLUMN rental_cost DECIMAL NOT NULL DEFAULT 0.0; -- too sca
 alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
 
 alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
+
+update urls set image_url = 'https://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg';
 
 -- output some to screen
 select * from urls;
