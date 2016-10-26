@@ -25,7 +25,8 @@ class Url
     review: String,
     is_amazon_prime: Int32,
     rental_cost: Float64,
-    purchase_cost: Float64
+    purchase_cost: Float64, # XXX actually Decimal [?]
+    total_time: Float64
   })
 
   JSON.mapping({
@@ -43,7 +44,8 @@ class Url
     review: String,
     is_amazon_prime: Int32,
     rental_cost: Float64,
-    purchase_cost: Float64
+    purchase_cost: Float64,
+    total_time: Float64
   })
   
   def self.all
@@ -70,9 +72,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?  where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, id
+       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
       end
     end
   end
@@ -93,6 +95,7 @@ class Url
     @is_amazon_prime = 0
     @rental_cost = 0.0
     @purchase_cost = 0.0
+    @total_time = 0.0
   end
 
   def edls
@@ -450,18 +453,7 @@ get "/view_url/:url_id" do |env|
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
-get "/new_url" do |env|
-  real_url = standardize_url(env.params.query["url"]) # might be an old amazon url so skip that check :|
-  if env.params.query.has_key? "amazon_episode_number"
-    amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
-  else
-    amazon_episode_number = 0
-  end
-  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
-  if url_or_nil != nil
-    set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
-    env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
-  else
+def get_title_and_canonical_url(real_url)
     begin
       response = HTTP::Client.get real_url # download that page :)
     rescue ex
@@ -476,7 +468,24 @@ get "/new_url" do |env|
       puts "using canonical #{$1}"
       real_url = standardize_url($1)
     end
-      
+    [title, standardize_url(real_url)] # standardize because it might still be smile.amazon :|
+end
+
+get "/new_url" do |env|
+  real_url = standardize_url(env.params.query["url"]) # might be an old amazon url so skip that check :|
+  if env.params.query.has_key? "amazon_episode_number"
+    amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
+  else
+    amazon_episode_number = 0
+  end
+  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
+  if url_or_nil != nil
+    set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
+    env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
+  else
+    title, real_url = get_title_and_canonical_url real_url  
+    sanitized_url = sanitize_html real_url
+    title = sanitize_html title
     # cleanup some title cruft
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies &amp; TV on Google Play", "")
@@ -484,7 +493,7 @@ get "/new_url" do |env|
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
     url = Url.new
-    url.url = real_url
+    url.url = sanitized_url
     if title.includes?(":") && real_url.includes?("amazon.com")
       url.name = title.split(":")[0].strip
       url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # I think it has actors after a colon...
@@ -523,10 +532,12 @@ def save_local_javascript(db_urls, log_message, env)
 end
 
 post "/save_url" do |env|
-  # no GET params
-  params = env.params.body
+  params = env.params.body # POST params
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
-  incoming_url = sanitize_html HTML.unescape(params["url"]) # these get injected everywhere later so sanitize everything up front... :|
+  incoming_url = HTML.unescape(params["url"])
+  _, incoming_url = get_title_and_canonical_url incoming_url # in case url changed :|
+  # these get injected everywhere later so sanitize everything up front... :|
+  incoming_url = sanitize_html incoming_url
   details = sanitize_html HTML.unescape(params["details"])
   editing_status = params["editing_status"]
   amazon_episode_number = params["amazon_episode_number"].to_i
@@ -539,8 +550,10 @@ post "/save_url" do |env|
   is_amazon_prime = params["is_amazon_prime"].to_i
   rental_cost = params["rental_cost"].to_f
   purchase_cost = params["purchase_cost"].to_f
+  total_time = human_to_seconds params["total_time"]
 
   if params.has_key? "id"
+    # these day
     db_url = Url.get_only_by_id(params["id"])
   else
     db_url = Url.new
@@ -560,6 +573,7 @@ post "/save_url" do |env|
   db_url.is_amazon_prime = is_amazon_prime
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
+  db_url.total_time = total_time
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")

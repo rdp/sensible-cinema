@@ -72,6 +72,10 @@ image_url for movie (like http://wikipedia/original_image.svg)
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
 <br/>
 
+total time (total movie length, netflix needs this)
+<input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
+<br/>
+
 <input type="submit" value="Save movie info (above)" class="btn btn-primary" class_means="blue">
 </form>
 

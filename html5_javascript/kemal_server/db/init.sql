@@ -50,6 +50,8 @@ alter table urls ADD COLUMN is_amazon_prime INT NOT NULL DEFAULT 0; -- probably 
 alter table urls ADD COLUMN rental_cost DECIMAL NOT NULL DEFAULT 0.0; -- too scared to use floats
 alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
 
+alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
+
 -- output some to screen
 select * from urls;
 select * from edits;

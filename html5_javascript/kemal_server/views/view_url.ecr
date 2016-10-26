@@ -26,24 +26,31 @@ good_movie_rating (out of 10, or 0 for none) <%= url.good_movie_rating %>
 <br/>
 
 our review  <%= url.review %>
+<br/>
 
 <% if url.image_url.size > 0 %>
   <img src="<%= url.image_url %>" style="max-width: 250px;/>
-<% end %>
 <br/>
+<% end %>
 
 <% if url.rental_cost > 0 %>
   price (rent/buy) <%= url.cost_string %>
+  <br/>
+<% end %>
+
+<% if url.total_time > 0 %>
+  total movie time: <%= seconds_to_human url.total_time %>
+  <br/>
 <% end %>
 
 <a href=/edit_url/<%= url.id %>>modify any of the above</a>
+<br/>
 
-<p>[<a href="/index"><< back to index</a>]</p>
-<hr/>
+<p><a href="/index"><< back to index</a></p>
 <hr/>
 <hr/>
 
-Edit edits for this movie:
+View and edit editss for this movie:
 <br/>
 <br/>
 <% if url.edls.size == 0 %>
