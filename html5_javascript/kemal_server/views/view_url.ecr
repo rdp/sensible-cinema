@@ -9,7 +9,7 @@
 Details: <br/><%= url.details %>
 <br/>
 <% if url.url =~ /amazon.com/ %>
-  <%= url.is_amazon_prime == 0 ? "not amazon prime": "is amazon prime" %>
+  <%= url.is_amazon_prime? ? "amazon prime": "not amazon prime" %>
   <br/>
 <% end %>
 
