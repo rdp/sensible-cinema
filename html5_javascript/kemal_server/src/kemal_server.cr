@@ -13,6 +13,7 @@ class Url
   DB.mapping({
     id: Int32,
     url:  String,
+    amazon_second_url:  String,
     name: String,
     details: String,
     amazon_episode_number: Int32,
@@ -32,6 +33,7 @@ class Url
   JSON.mapping({
     id: Int32,
     url:  String,
+    amazon_second_url:  String,
     name: String,
     details: String,
     amazon_episode_number: Int32,
@@ -58,7 +60,7 @@ class Url
   
   def self.get_only_or_nil_by_url_and_amazon_episode_number(url, amazon_episode_number)
     with_db do |conn|
-      urls = conn.query("SELECT * from urls where url = ? and amazon_episode_number = ?", url, amazon_episode_number) do |rs|
+      urls = conn.query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND amazon_episode_number = ?", url, url, amazon_episode_number) do |rs|
          Url.from_rs(rs);
       end
       if urls.size == 1
@@ -72,9 +74,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
       end
     end
   end
@@ -82,6 +84,7 @@ class Url
   def initialize
     @id = 0 # :|
     @url = ""
+    @amazon_second_url = ""
     @name = ""
     @details = ""
     @amazon_episode_number = 0
@@ -306,9 +309,6 @@ end
  
 def standardized_param_url(env)
   unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
-  if unescaped.includes?("/gp/") && unescaped.includes?("amazon.com")
-    raise "that appears to be an older amazon url could you search for it again on amazon and find its newer url, usually something like amazon.com/.../dp/... and use that instead?"
-  end
   standardize_url unescaped
 end
 
@@ -316,16 +316,8 @@ def standardize_url(unescaped)
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs it
   end
-  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to www
-  if unescaped.includes?("/dp/") && unescaped.includes?("amazon.com")
-    # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
-    # or https://www.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
-    # we want https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK but hopefully canonical gives us that?
-    # may not need this anymore since canonical already strips most of this out :|
-    if unescaped =~ /(.*\/dp\/[^\/]+)\/.*/
-      unescaped = $1
-    end
-  end
+  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
+  # canonical is like https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK try and use that for now :|
   unescaped
 end
 
@@ -466,6 +458,7 @@ get "/regenerate_all" do |env|
     File.delete file
   }
   save_local_javascript Url.all, "regen_all called", env
+  set_flash_for_next_time(env, "regenerated for all...")
   env.redirect "/index"
 end
 
@@ -485,23 +478,26 @@ def get_title_and_canonical_url(real_url)
     rescue ex
       raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
     end
+    real_url = standardize_url(real_url) # put after so the error message is friendlier :)
     if response.body =~ /<title[^>]*>(.*)<\/title>/i
-      title = response.body.scan(/<title[^>]*>(.*)<\/title>/i)[0][1]
+      title = $1.strip
     else
-      title = "please enter title here"
+      title = "please enter title here" # hopefully never get here :|
     end
+    # startlingly, canonical from /gp/ sometimes => /gp/ yikes
     if response.body =~ /<link rel="canonical" href="([^"]+)"/i
-      # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to B0190R77GS
-      # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
-      #         data-asin = 'B001J6GZXK' in both :|
+      # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to https://smile.amazon.com/Avatar-Last-Airbender-Season-3/dp/B0190R77GS
+      # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah! 
       puts "using canonical #{$1}"
-      real_url = standardize_url($1)
-      if real_url.includes?("/gp/") && real_url.includes?("amazon.com")
-        # startlingly, canonical from /gp/ sometimes => /gp/ yikes
-        raise "appears you're using an amazon web page that is an old style like /gp/ please search it again on amazon and enter its url that looks like .../dp/..."
-      end
+      real_url = $1
     end
-    [title, standardize_url(real_url)] # standardize because it might still be smile.amazon :|
+    if real_url.includes?("amazon.com") && real_url.includes?("/gp/") # gp is old, dp is new, we only want dp ever 
+      # TODO the url request should use canonical [!]
+      # we should never get here now FWIW
+      raise "appears you're using an amazon web page that is an old style like /gp/ if this is a new movie, please search in amazon for it again, and you should find a url like /dp/, and use that
+             if it is an existing movie, enter it as the amazon_second_url instead of main url"
+    end
+    [title, standardize_url(real_url)] # standardize in case it is smile.amazon
 end
 
 get "/new_url" do |env|
@@ -550,14 +546,16 @@ end
 
 def save_local_javascript(db_urls, log_message, env)
   db_urls.each { |db_url|
-    File.open("edit_descriptors/log.txt", "a") do |f|
-      f.puts log_message + " " + db_url.name_with_episode
-    end
-    ["html5_edited.just_settings.js", "html5_edited.js", "html5_edited.just_settings.json"].each  do |type|
-      as_javascript = javascript_for(db_url, env, type)
-      escaped_url_no_slashes = URI.escape db_url.url
-      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
-    end
+    [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
+      File.open("edit_descriptors/log.txt", "a") do |f|
+        f.puts log_message + " " + db_url.name_with_episode
+      end
+      ["html5_edited.just_settings.js", "html5_edited.js", "html5_edited.just_settings.json"].each  do |type|
+        as_javascript = javascript_for(db_url, env, type)
+        escaped_url_no_slashes = URI.escape url
+        File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
+      end
+   }
   }
   if !File.exists?("./this_is_development")
     system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to rawgit...eventually :)
@@ -568,9 +566,12 @@ post "/save_url" do |env|
   params = env.params.body # POST params
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = HTML.unescape(params["url"])
-  _ , incoming_url = get_title_and_canonical_url incoming_url # in case url changed :|
+  _ , incoming_url = get_title_and_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
   # these get injected everywhere later so sanitize everything up front... :|
   incoming_url = sanitize_html incoming_url
+  amazon_second_url = HTML.unescape(params["amazon_second_url"])
+  _ , amazon_second_url = get_title_and_canonical_url amazon_second_url
+  amazon_second_url = sanitize_html amazon_second_url
   details = sanitize_html HTML.unescape(params["details"])
   editing_status = params["editing_status"]
   amazon_episode_number = params["amazon_episode_number"].to_i
@@ -593,6 +594,7 @@ post "/save_url" do |env|
   end
 
   db_url.url = incoming_url
+  db_url.amazon_second_url = amazon_second_url
   db_url.name = name
   db_url.details = details
   db_url.amazon_episode_number = amazon_episode_number

@@ -46,13 +46,15 @@ alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
 --
 
 alter table urls ADD COLUMN image_url VARCHAR(2014) NOT NULL DEFAULT '';
+update urls set image_url = 'https://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg';
 alter table urls ADD COLUMN is_amazon_prime INT NOT NULL DEFAULT 0; -- probably should be TINYINT(1) but crystal mysql adapter no support it [?]
 alter table urls ADD COLUMN rental_cost DECIMAL NOT NULL DEFAULT 0.0; -- too scared to use floats
 alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
 
 alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
 
-update urls set image_url = 'https://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg';
+alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
+CREATE UNIQUE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- XXX do we use this?
 
 -- output some to screen
 select * from urls;
