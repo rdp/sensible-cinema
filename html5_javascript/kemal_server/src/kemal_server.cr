@@ -293,16 +293,17 @@ end
 
 def standardize_url(unescaped)
   if unescaped =~ /amazon.com|netflix.com/
-    unescaped = unescaped.split("?")[0] # strip off amazon extra cruft and there is a lot of it LOL but google play needs it
+    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs it
   end
-  # sanitize amazon which can come in multiple forms
-  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize
-  if unescaped.includes?("/dp/")
+  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to www
+  if unescaped.includes?("/dp/") && unescaped.includes("amazon.com")
     # like https://www.amazon.com/Inspired-Guns-DavidLassetter/dp/B01994W9OC/ref=sr_1_1?ie=UTF8&qid=1475369158&sr=8-1&keywords=inspired+guns
-    # or https://smile.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
-    # we want https://www.amazon.com/gp/product/B01994W9OC in the end :|
-    id = unescaped.split("/dp/")[1].split("/")[0]
-    unescaped = "https://www.amazon.com/gp/product/" + id
+    # or https://www.amazon.com/dp/B000GFD4C0/ref=dv_web_wtls_list_pr_28
+    # we want https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK but hopefully canonical gives us that?
+    # may not need this anymore since canonical already strips most of this out :|
+    if unescaped =~ /(.*\/dp\/[^\/]+)\/.*/
+      unescaped = $1
+    end
   end
   unescaped
 end
@@ -469,28 +470,36 @@ def get_title_and_canonical_url(real_url)
       title = "please enter title here"
     end
     if response.body =~ /<link rel="canonical" href="([^"]+)"/i
+      // https://smile.amazon.com/gp/product/B001J6Y03C did canonical to B0190R77GS
+      // however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
+      //         data-asin = 'B001J6GZXK' in both :|
+      // amzn.com no luck
       puts "using canonical #{$1}"
       real_url = standardize_url($1)
+      if real_url.includes?("/gp/") && real_url.includes?("amazon.com")
+        # startlingly, canonical from /gp/ sometimes => /gp/ yikes
+        raise "appears you're using an amazon web page that is an old style like /gp/ please search it again on amazon and enter its url that looks like .../dp/..."
+      endg
     end
     [title, standardize_url(real_url)] # standardize because it might still be smile.amazon :|
 end
 
 get "/new_url" do |env|
-  real_url = standardize_url(env.params.query["url"]) # might be an old amazon url so skip that check :|
+  real_url = standardize_url(env.params.query["url"]) # might be an amazon url that has canonical so skip /gp/ check 
   if env.params.query.has_key? "amazon_episode_number"
     amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
   else
     amazon_episode_number = 0
   end
+  title, real_url = get_title_and_canonical_url real_url  
   url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
   if url_or_nil != nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
-    title, real_url = get_title_and_canonical_url real_url  
     sanitized_url = sanitize_html real_url
     title = sanitize_html title
-    # cleanup some title cruft
+    # cleanup title cruft
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies &amp; TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
