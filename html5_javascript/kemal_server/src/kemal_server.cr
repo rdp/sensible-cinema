@@ -363,7 +363,7 @@ get "/delete_edl/:id" do |env|
   edl.destroy
   save_local_javascript [edl.url], "removed #{edl}", env
   set_flash_for_next_time env, "deleted one edit"
-  env.redirect "/edit_url/#{edl.url.id}"
+  env.redirect "/view_url/#{edl.url.id}"
 end
 
 get "/edit_edl/:id" do |env|
@@ -413,11 +413,12 @@ post "/save_edl/:url_id" do |env|
   raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy) # before_save filter LOL
   edl.save
   save_local_javascript [edl.url], edl.inspect, env
-  env.redirect "/edit_url/#{edl.url.id}"
+  set_flash_for_next_time(env, "saved edit!")
+  env.redirect "/view_url/#{edl.url.id}"
 end
 
 get "/regenerate_all" do |env|
-  # cleanse :)
+  # cleanse all :)
   Dir["edit_descriptors/*.js"].each{|file|
     File.delete file
   }
@@ -540,6 +541,7 @@ post "/save_url" do |env|
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
   db_url.image_url = image_url
+  db_url.is_amazon_prime = is_amazon_prime
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")

@@ -2,24 +2,14 @@
 
 <%= get_any_flash_as_box(env) %>
 
-name: <%= url.name %>
+<%= url.name_with_episode %>
 <br/>
+<%= url.url %>
 <br/>
-url: <%= url.url %>
+Details: <br/><%= url.details %>
 <br/>
-<br/>
-details: <%= url.details %>
-<br/>
-<br/>
-<% if url.amazon_episode_number > 0 %>
-  amazon_episode_number
-  <%= url.amazon_episode_number %>
-  <br/>
-  amazon_episode_name <%= url.amazon_episode_name %>
-  <br/>
-<% end %>
 <% if url.url =~ /amazon.com/ %>
-  is_amazon_prime <%= url.is_amazon_prime == 0 ? "no": "yes" %>
+  <%= url.is_amazon_prime == 0 ? "not amazon prime": "is amazon prime" %>
   <br/>
 <% end %>
 
