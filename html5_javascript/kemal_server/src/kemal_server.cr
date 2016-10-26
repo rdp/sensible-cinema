@@ -378,11 +378,11 @@ def javascript_for(db_url, env, type)
   end
 end
 
-get "/instructions" do
+get "/instructions" do |env|
   render "views/instructions.ecr", "views/layout.ecr"
 end
 
-get "/create_new" do
+get "/create_new" do | env|
   render "views/create_new.ecr", "views/layout.ecr"
 end
 
