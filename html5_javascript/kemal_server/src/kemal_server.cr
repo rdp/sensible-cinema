@@ -425,9 +425,14 @@ get "/regenerate_all" do |env|
   env.redirect "/index"
 end
 
-get "/edit_url/:url_id" do |env| # same as "view" and "new" LOL but we have the url
+get "/edit_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   render "views/edit_url.ecr", "views/layout.ecr"
+end
+
+get "/view_url/:url_id" do |env|
+  url = get_url_from_url_id(env)
+  render "views/view_url.ecr", "views/layout.ecr"
 end
 
 get "/new_url" do |env|
@@ -538,7 +543,7 @@ post "/save_url" do |env|
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
-  env.redirect "/edit_url/" + db_url.id.to_s
+  env.redirect "/view_url/" + db_url.id.to_s
 end
 
 ####### view methods :)

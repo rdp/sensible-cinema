@@ -67,40 +67,17 @@ image_url for movie (like http://wikipedia/original_image.svg)
 <input type="submit" value="Save movie info (above)" class="btn btn-primary" class_means="blue">
 </form>
 
-<p>[<a href="/index"><< back to index</a>]</p>
-<hr/>
-<hr/>
-<hr/>
+<p>[<a href="/view_url/#{url.id}""><< back to movie page</a>] (changes will be lost)</p>
 
-Edit edits for this movie:
-<br/>
-<br/>
-<% if url.edls.size == 0 %>
-  No edits for this movie yet, add one now!
-<% end %>
-<% url.edls.each do |edl|  %>
-  [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] 
-  [<%= edl.default_action %>]
-  [<%= edl.category %>]
-  [<%= edl.subcategory %>]
-  [<%= edl.details %>]
-  <a href=/edit_edl/<%= edl.id %>>modify</a>
-  <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure?')">delete &#10006; </a>
-  <br/>
-  <br/>
-<% end %>
-
-<br/>
-<a href=/add_edl/<%= url.id %>>add new edit &#10133;</a>
 <hr/>
+Links for developers:
+
 <a href=/for_current?=<%= url.url_lookup_params %> target="_blank">js</a>
 <br/>
 <a href=/for_current_just_settings?=<%= url.url_lookup_params %> target="_blank">js just settings</a>
 <br>
 <a href=/for_current_just_settings_json?=<%= url.url_lookup_params %> target="_blank">json</a>
 <br>
-<a href=<%= url.url %> target="_blank">watch</a>
-<br/>
 <a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete</a>
 <br/>
-
+<a href=/regenerate_all>regen javascript cache for all (developers should do this if they change internal javascript)</a>

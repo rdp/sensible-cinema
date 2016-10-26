@@ -1,0 +1,73 @@
+<h1>Editing for <%= url.name_with_episode %></h1>
+
+<%= get_any_flash_as_box(env) %>
+
+name: <%= url.name %>
+<br/>
+<br/>
+url: <%= url.url %>
+<br/>
+<br/>
+details: <%= url.details %>
+<br/>
+<br/>
+<% if url.amazon_episode_number > 0 %>
+  amazon_episode_number
+  <%= url.amazon_episode_number %>
+  <br/>
+  amazon_episode_name <%= url.amazon_episode_name %>
+  <br/>
+<% end %>
+<% if url.url =~ /amazon.com/ %>
+  is_amazon_prime <%= url.is_amazon_prime == 0 ? "no": "yes" %>
+  <br/>
+<% end %>
+
+editing_status <%= url.editing_status %>
+<br/>
+
+age_recommendation_after_edited (year) <%= url.age_recommendation_after_edited %>
+<br/>
+
+wholesome_uplifting_level (out of 10, or 0 for none) <%= url.wholesome_uplifting_level %>
+<br/>
+
+good_movie_rating (out of 10, or 0 for none) <%= url.good_movie_rating %>
+<br/>
+
+our review  <%= url.review %>
+
+<% if url.image_url.size > 0 %>
+  <img src="<%= url.image_url %>" style="max-width: 250px;/>
+<% end %>
+<br/>
+
+<a href=/edit_url/<%= url.id %>>modify any of the above</a>
+
+<p>[<a href="/index"><< back to index</a>]</p>
+<hr/>
+<hr/>
+<hr/>
+
+Edit edits for this movie:
+<br/>
+<br/>
+<% if url.edls.size == 0 %>
+  No edits for this movie yet, add one now!
+<% end %>
+<% url.edls.each do |edl|  %>
+  [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] 
+  [<%= edl.default_action %>]
+  [<%= edl.category %>]
+  [<%= edl.subcategory %>]
+  [<%= edl.details %>]
+  <a href=/edit_edl/<%= edl.id %>>modify</a>
+  <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure?')">delete &#10006; </a>
+  <br/>
+  <br/>
+<% end %>
+
+<br/>
+<a href=/add_edl/<%= url.id %>>add new edit &#10133;</a>
+<hr/>
+
