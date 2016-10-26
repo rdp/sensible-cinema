@@ -60,6 +60,14 @@ review (explain good movie rating if needed, explain age recommendation if neede
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 <br/>
 
+rental cost (rental for 2 days, or 7, ex "2.00") (0 if part of subscription like netflix, amazon: enter cost for episode even if on prime)
+<input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>
+<br/>
+
+purchase cost (ex: full purchase this episode)
+<input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>
+<br/>
+
 image_url for movie (like http://wikipedia/original_image.svg)
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
 <br/>

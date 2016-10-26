@@ -32,6 +32,10 @@ our review  <%= url.review %>
 <% end %>
 <br/>
 
+<% if url.rental_cost > 0 %>
+  price (rent/buy) <%= url.cost_string %>
+<% end %>
+
 <a href=/edit_url/<%= url.id %>>modify any of the above</a>
 
 <p>[<a href="/index"><< back to index</a>]</p>
