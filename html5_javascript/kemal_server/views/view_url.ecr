@@ -4,13 +4,8 @@
 
 <%= url.name_with_episode %>
 <br/>
-<a href="<%= url.url %>"><%= url.url %></a>
+<a href="<%= url.url %>" target="_blank"><%= url.url %></a>
 <br/>
-<% if !url.amazon_second_url.empty? %>
-  alternate url:
-  <a href="<%= url.amazon_second_url %>"><%= url.amazon_second_url %></a>
-  <br/>
-<% end %>
 Details: <br/><%= url.details %>
 <br/>
 <% if url.url =~ /amazon.com/ %>
