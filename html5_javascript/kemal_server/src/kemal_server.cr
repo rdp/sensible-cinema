@@ -22,7 +22,8 @@ class Url
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     image_url: String,
-    review: String
+    review: String,
+    is_amazon_prime: Int32
   })
 
   JSON.mapping({
@@ -37,7 +38,8 @@ class Url
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     image_url: String,
-    review: String
+    review: String,
+    is_amazon_prime: Int32
   })
   
   def self.all
@@ -64,9 +66,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?  where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, id
+       conn.exec "update urls set name = ?, url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?  where id = ?", name, url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, id
       end
     end
   end
@@ -84,6 +86,7 @@ class Url
     @good_movie_rating = 0
     @image_url = ""
     @review = ""
+    @is_amazon_prime = 0
   end
 
   def edls
@@ -340,6 +343,10 @@ get "/instructions" do
   render "views/instructions.ecr", "views/layout.ecr"
 end
 
+get "/create_new" do
+  render "views/create_new.ecr", "views/layout.ecr"
+end
+
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   url.destroy
@@ -501,6 +508,7 @@ post "/save_url" do |env|
   good_movie_rating = params["good_movie_rating"].to_i
   image_url = sanitize_html HTML.unescape(params["image_url"])
   review = params["review"]
+  is_amazon_prime = params["is_amazon_prime"].to_i
 
   if params.has_key? "id"
     db_url = Url.get_only_by_id(params["id"])

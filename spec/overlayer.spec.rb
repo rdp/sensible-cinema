@@ -138,22 +138,22 @@ describe OverLayer do
     assert_not_muted_sleep_1
   end
 
-  def write_json json
-   File.write 'temp.json', json
-   @o = OverLayer.new 'temp.json'
-  end
-
   def dump_json to_dump
     File.write 'temp.json', JSON.dump(to_dump)
     @o = OverLayer.new 'temp.json'
   end
 
-  def write_json_single_mute(start, endy)
-    write_json "{\"mutes\":[[\"#{start}\",\"#{endy}\"]],\"skips\":[]}"
+  def write_single_mute_reset(start, endy)
+   File.write 'temp.json', single_mute_to_json(start, endy)
+   @o = OverLayer.new 'temp.json'
+  end
+ 
+  def single_mute_to_json start, endy
+    "{\"mutes\":[[\"#{start}\",\"#{endy}\"]],\"skips\":[]}"
   end
 
   it 'should allow for 1:00.0 minute style input' do
-    write_json_single_mute("0:02.0", "0:03.0")
+    write_single_mute_reset("0:02.0", "0:03.0")
     @o.start_thread
     assert_not_muted_sleep_1
     assert_not_muted_sleep_1
@@ -164,11 +164,10 @@ describe OverLayer do
 
   it "should reload the JSON file on the fly to allow for editing it" do
     # start it with one set to mute far later
-    write_json_single_mute("0:11.0", "0:12.0")
+    write_single_mute_reset("0:11.0", "0:12.0")
     @o.start_thread
     assert_not_muted_sleep_1
-    write_json_single_mute("0:00.0001", "0:01.5")
-    _dbg
+    File.write('temp.json', single_mute_to_json("0:00.0001", "0:01.5"))
     @o.status # cause it to refresh from the file
     sleep 0.1 # blugh avoid race condition since we use notify, let the message be received...
     puts 'current state', @o.get_current_state, @o.status
@@ -179,13 +178,13 @@ describe OverLayer do
   end
   
   it "should not accept any of the input when you pass it any poor json" do
-    write_json_single_mute("a", "08:56.0") # first one there is invalid
+    write_single_mute_reset("a", "08:56.0") # first one is invalid
     out = OverLayer.new 'temp.json' # so I can call reload
     out.all_sequences[:mutes].should be_blank    
-    write_json_single_mute("01", "02")
+    write_single_mute_reset("01", "02")
     out.reload_json!
     out.all_sequences[:mutes].should == [[1,2]]
-    write_json_single_mute("05", "") # failure on second
+    write_single_mute_reset("05", "") # failure on second
     # should have kept the old
     out.all_sequences[:mutes].should == [[1,2]]
   end
@@ -197,7 +196,7 @@ describe OverLayer do
   end
   
   it "should disallow zero or less length intervals" do
-    write_json_single_mute('1', '1')
+    write_single_mute_reset('1', '1')
     out = OverLayer.parse_from_json_string File.read("temp.json")
     out[:mutes].should == []  
   end
@@ -209,7 +208,7 @@ describe OverLayer do
   end
   
   it "should accept numbers that are unreasonably large" do
-    write_json_single_mute "1000000", "1000001"
+    write_single_mute_reset "1000000", "1000001"
     out = OverLayer.parse_from_json_string File.read("temp.json")
     out[:mutes].should == [[1_000_000, 1_000_001]]
   end

@@ -54,13 +54,13 @@ class OverLayer
   
   def mute!
     @am_muted = true
-    puts 'muting!'
+    puts 'muting!' unless $AM_IN_UNIT_TEST
     Muter.mute! unless $AM_IN_UNIT_TEST
   end
   
   def unmute!
     @am_muted = false
-    puts 'unmuting!'
+    puts 'unmuting!' unless $AM_IN_UNIT_TEST
     Muter.unmute! unless $AM_IN_UNIT_TEST
   end
   

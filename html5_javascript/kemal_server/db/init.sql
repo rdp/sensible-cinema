@@ -46,6 +46,7 @@ alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
 --
 
 alter table urls ADD COLUMN image_url VARCHAR(2014) NOT NULL DEFAULT '';
+alter table urls ADD COLUMN is_amazon_prime INT NOT NULL DEFAULT 0; -- probably should be TINYINT(1) but crystal mysql adapter no support it [?]
 
 -- output some to screen
 select * from urls;

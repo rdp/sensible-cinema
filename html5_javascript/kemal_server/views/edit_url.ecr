@@ -24,8 +24,19 @@ details (non-spoiler synopsis, actor names, etc.):
   amazon_episode_number (0 if none)
   <input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
   <br/>
+
   amazon_episode_name (if any)
   <input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>"/>
+  <br/>
+
+  is_amazon_prime
+  <select name="is_amazon_prime" id='is_amazon_prime_select'>
+    <option value="0">no</option>
+    <option value="1">yes</option>
+  </select>
+  <script>
+  document.getElementById('is_amazon_prime_select').value = '<%= url.is_amazon_prime %>';
+  </script>
   <br/>
 </div>
 
