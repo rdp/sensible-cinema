@@ -77,8 +77,8 @@ image_url for movie (like http://wikipedia/original_image.svg)
 total time (total movie length, netflix needs this)
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
-
-<input type="submit" value="Save movie info (above)" class="btn btn-primary" class_means="blue">
+<br/>
+<input type="submit" value="Save movie info" class="btn btn-primary" class_means="blue" onclick="this.form.submit(); this.disabled=true; this.value='Sending…';"> <!-- takes awhile so do something to know their click was accepted -->
 </form>
 
 <p><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)</p>
@@ -92,6 +92,6 @@ Links for developers:
 <br>
 <a href=/for_current_just_settings_json?=<%= url.url_lookup_params %> target="_blank">json</a>
 <br>
-<a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete</a>
+<a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete this movie from database</a>
 <br/>
-<a href=/regenerate_all>regen javascript cache for all (developers should do this if they change internal javascript)</a>
+<a href=/regenerate_all>regen all</a> javascript cache for all (developers should do this if they change internal javascript)
