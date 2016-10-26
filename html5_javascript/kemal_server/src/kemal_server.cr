@@ -570,8 +570,10 @@ post "/save_url" do |env|
   # these get injected everywhere later so sanitize everything up front... :|
   incoming_url = sanitize_html incoming_url
   amazon_second_url = HTML.unescape(params["amazon_second_url"])
-  _ , amazon_second_url = get_title_and_canonical_url amazon_second_url
-  amazon_second_url = sanitize_html amazon_second_url
+  if amazon_second_url.size > 0
+    _ , amazon_second_url = get_title_and_canonical_url amazon_second_url
+    amazon_second_url = sanitize_html amazon_second_url
+  end
   details = sanitize_html HTML.unescape(params["details"])
   editing_status = params["editing_status"]
   amazon_episode_number = params["amazon_episode_number"].to_i
@@ -616,16 +618,6 @@ post "/save_url" do |env|
 end
 
 ####### view methods :)
-
-def get_any_flash_as_box(env)
-  if env.session["flash"]?
-    out = "<p class=\"bg-info\">#{env.session["flash"]}</p>"
-    env.session.delete "flash"
-    out
-  else
-    ""
-  end
-end
 
 def set_flash_for_next_time(env, string)
   env.session["flash"] ||= ""
