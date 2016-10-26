@@ -29,11 +29,11 @@ our review  <%= url.review %>
 <br/>
 
 <% if url.image_url.size > 0 %>
-  <img src="<%= url.image_url %>" style="max-width: 250px;/>
+  <img src="<%= url.image_url %>" style="max-width: 250px;"/>
 <br/>
 <% end %>
 
-<% if url.rental_cost > 0 %>
+<% if url.rental_cost > 0 || url.purchase_cost > 0 %>
   price (rent/buy) <%= url.cost_string %>
   <br/>
 <% end %>
@@ -46,11 +46,11 @@ our review  <%= url.review %>
 <a href=/edit_url/<%= url.id %>>modify any of the above</a>
 <br/>
 
-<p><a href="/index"><< back to index</a></p>
+<p><a href="/index">&lt;&lt; back to index</a></p>
 <hr/>
 <hr/>
 
-View and edit editss for this movie:
+View and modify edits for this movie:
 <br/>
 <br/>
 <% if url.edls.size == 0 %>

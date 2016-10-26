@@ -148,7 +148,11 @@ class Url
 
   def cost_string
     if rental_cost > 0 || purchase_cost > 0
-      "%.2f/%.2f" % [rental_cost, purchase_cost]
+      out = "%.2f/%.2f" % [rental_cost, purchase_cost]
+      if is_amazon_prime == 1
+        out += " (free on prime)"
+      end
+      out
      else
       ""
      end
