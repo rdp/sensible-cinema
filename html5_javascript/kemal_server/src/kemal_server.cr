@@ -552,6 +552,7 @@ get "/new_url" do |env|
     end
     url.amazon_episode_name = amazon_episode_name
     url.amazon_episode_number = amazon_episode_number
+    url.editing_status = "not started yet"
     url.save 
     env.redirect "/edit_url/#{url.id}"
   end
