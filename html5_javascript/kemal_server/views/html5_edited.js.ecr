@@ -398,7 +398,7 @@ function stepFrame() {
 function loadForCurrentUrl() {
     var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.json.rendered.js");
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
-    <% if File.exist?("./this_is_development") %>
+    <% if File.exists?("./this_is_development") %>
       url = '//localhost:3000/for_current?url=' + filename;
     <% end %>
     var loaded = false;
@@ -422,9 +422,11 @@ function checkIfEpisodeChanged() {
 function loadFailed() {
   if (confirm("unable to load for your current movie " + currentMovieName() + " would you like to create one now?")) {
     alert("OK after you create it you'll need to refresh this browser window for it to take here...");
-    window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getSanitizedCurrentUrl()) + "&amazon_episode_number=" + getCurrentAmazonEpisode(), "_blank");
+    window.open("http://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + getCurrentAmazonEpisode(), "_blank");
   }
   mutes = []; skips = []; yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
+  old_current_url = getStandardizedCurrentUrl();
+  old_amazon_episode = getCurrentAmazonEpisode(); 
   startWatcher(); // so it can check if episode changes
 }
 
