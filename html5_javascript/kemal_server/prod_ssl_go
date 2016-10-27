@@ -1,0 +1,2 @@
+echo "use like https://cleanstream.inet2.org"
+crystal build ./src/kemal_server.cr && sudo setcap cap_net_bind_service=+ep ./kemal_server && ./kemal_server --ssl --ssl-key-file key.pem --ssl-cert-file cert.pem -p 443
