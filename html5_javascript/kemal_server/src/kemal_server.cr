@@ -145,6 +145,26 @@ class Url
     host
   end
 
+  def seconds_to_human(ts)
+    if total_time > 0 && url =~ /netflix.com/
+      "-" + ::seconds_to_human(total_time - ts)
+    else
+      ::seconds_to_human(ts)
+    end 
+  end
+
+  def human_to_seconds(ts_string)
+    ts_string = ts_string.strip
+    if ts_string[0] == "-"
+      if total_time == 0
+        raise "cannot enter negative time entry to a movie that doesn't have the 'total time' set, please set that first, then come back and save your edit again"
+      end
+      total_time - ::human_to_seconds(ts_string[1..-1])
+    else
+      ::human_to_seconds(ts_string)
+    end
+  end
+
   def is_amazon_prime?
     if is_amazon_prime == 0
       false
@@ -263,15 +283,6 @@ class Edl
     end
   end
   
-end
-
-def seconds_to_human(ts, url)
-  if (url.total_time > 0 && url.url =~ /netflix.com/)
-    # negative for easier entry :)
-    "-" + seconds_to_human(url.total_time - ts)
-  else
-    seconds_to_human(ts)
-  end
 end
 
 def seconds_to_human(ts_total)
@@ -418,16 +429,20 @@ get "/add_edl/:url_id" do |env|
   edl = Edl.new url
   query = env.params.query
   if query.has_key?("start")
-    edl.start = human_to_seconds query["start"]
-    edl.endy = human_to_seconds query["endy"]
+    edl.start = url.human_to_seconds query["start"]
+    edl.endy = url.human_to_seconds query["endy"]
     edl.default_action = sanitize_html query["default_action"]
   else
-    # just make it past the last instead of 0's XXX remove?
+    # a "new" EDL
     last_edl = url.last_edl_or_nil
     if last_edl
+      # just make it slightly past the last 
       last_end = last_edl.endy
       edl.start = last_end + 1
       edl.endy = last_end + 2
+    else
+      edl.start = 0.0
+      edl.endy = 1.0 # later than 0 :)
     end
   end
   render "views/edit_edl.ecr", "views/layout.ecr"
@@ -440,8 +455,11 @@ post "/save_edl/:url_id" do |env|
   else
     edl = Edl.new(get_url_from_url_id(env))
   end
-  edl.start = human_to_seconds params["start"]
-  edl.endy = human_to_seconds params["endy"]
+  url = edl.url
+  start = params["start"].strip
+  endy = params["endy"].strip
+  edl.start = url.human_to_seconds start
+  edl.endy = url.human_to_seconds endy
   edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
   edl.category = sanitize_html params["category"] # hope it's a legit value LOL
   edl.subcategory = sanitize_html params["subcategory"]
@@ -449,9 +467,9 @@ post "/save_edl/:url_id" do |env|
   edl.more_details = sanitize_html params["more_details"]
   raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy) # before_save filter LOL
   edl.save
-  save_local_javascript [edl.url], edl.inspect, env
+  save_local_javascript [url], edl.inspect, env
   set_flash_for_next_time(env, "saved edit!")
-  env.redirect "/view_url/#{edl.url.id}"
+  env.redirect "/view_url/#{url.id}"
 end
 
 get "/regenerate_all" do |env|
