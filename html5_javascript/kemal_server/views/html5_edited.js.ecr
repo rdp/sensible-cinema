@@ -1,8 +1,8 @@
-// copy and paste all of this text (including this line) into your developer tools javascript console side bar, then hit enter, please:
+// copy and paste all of this text (including this line) into the "developer tools javascript console" ">" prompt, then hit enter:
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("clean stream already loaded...");
-  throw "dont know how to load it twice"; // in case they click a plugin button twice :|
+  throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
 // generated at <%= Time.now %>.
@@ -14,12 +14,13 @@ var skips=<%= skips %>;
 var yes_audio_no_videos=<%= yes_audio_no_videos %>;
 var do_nothings=<%= do_nothings %>;
 var expected_current_url="<%= url %>";
+var amazon_second_url="<%= db_url.amazon_second_url %>";
 var amazon_episode_number=<%= db_url.amazon_episode_number %>;
 var url_id=<%= db_url.id %>;
 var request_host="<%= request_host %>"; // like localhost:3000
 // end auto inserted unique stuffs
 
-function getSanitizedCurrentUrl() {
+function getStandardizedCurrentUrl() {
   current_url = window.location.href;
   if (current_url.includes("amazon.com")) {
   if (document.querySelector('link[rel="canonical"]') != null)
@@ -130,25 +131,8 @@ function currentEpisodeString() {
   end
 }
 
-function checkIfEpisodeChanged() {
-  if (getSanitizedCurrentUrl() != old_current_url || getCurrentAmazonEpisode() != old_amazon_episode) {
-    alert("detected move to another video, from " + old_current_url + old_amazon_episode + " to " + getSanitizedCurrentUrl() + getCurrentAmazonEpisode() + "\nwill try to load its edited settings now for the new movie...");
-    var loaded = false;
-    var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (encodeURIComponent(getSanitizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.rendered.js"));
-    javascript:(function(e,s){e.src=s;e.onload=function(){loaded=true;};document.head.appendChild(e);})(document.createElement('script'), url);
-    setTimeout(function() { 
-      if (loaded == false)  {
-        alert("unable to load for your switched to movie perhaps no edit for it exists?\nWill continue playing unedited, please create one then reload this page" + "\nurl=" + getSanitizedCurrentUrl() + " " + currentEpisodeString()); 
-       mutes = []; skips = []; yes_audio_no_videos = []; // reset so it doesn't have last episodes edits
-      }
-      else {
-       logReadyToGo();
-      }
-    }, 3000);
-    // save them now so we don't do a re-request javascript on the next pass
-    old_current_url = getSanitizedCurrentUrl();
-    old_amazon_episode = getCurrentAmazonEpisode();
-  }
+function currentMovieName() {
+  var out = getStandardizedCurrentUrl() + " " + document.getElementsByTagName("title")[0].innerHTML + " " + currentEpisodeString();;
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -183,7 +167,7 @@ function handleNetflixSeekOrStop(cur_time) {
     }
 }
 
-function setupDeveloper() {
+function addEditUi() {
   exposeEditScreenDiv = document.createElement('div');
   exposeEditScreenDiv.style.position = 'absolute';
   exposeEditScreenDiv.style.height = '30px';
@@ -234,7 +218,7 @@ function setupDeveloper() {
     <option value='yes_audio_no_video'>yes_audio_no_video</option>
     <option value='do_nothing'>do_nothing</option>
   </select>
-  <input type='submit' value='Test edit once' onclick="testCurrent();">
+  <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
   <input type='submit' value='Save edit' onclick="saveEditButton();">
   <br/>
   <a href='#' onclick="seekToTime(video_element.currentTime -5);">-5</a>
@@ -308,7 +292,6 @@ function setEditedControlsToTopLeft() {
   topLineEditDiv.style.top = top + "px";
   edlLayer.style.left = left + "px";
   edlLayer.style.top = (top + 30) + "px";
-
 }
 
 function addToCurrentEditArray() {
@@ -326,7 +309,7 @@ function currentTestAction() {
   return document.getElementById('new_action').value;
 }
 
-function testCurrent() {
+function testCurrentFromUi() {
   if (currentTestAction() == 'do_nothing') {
     alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, then hit save button');
     return; // abort
@@ -374,7 +357,7 @@ function timeStampToHuman(timestamp) {
     return minutes + "m " + seconds + "s";
 }
 
-function removeA(arr) {
+function removeFromArray(arr) {
     var what, a = arguments, L = a.length, ax;
     while (L > 1 && arr.length) {
         what = a[--L];
@@ -389,7 +372,7 @@ function humanToTimeStamp(timestamp) {
   // 0h 17m 34.54s
   sum = 0.0
   split = timestamp.split(/[hms ]/)
-  removeA(split, "");
+  removeFromArray(split, "");
   split.reverse();
   for (var i = 0; i < split.length; i++) {
     sum += parseFloat(split[i]) * Math.pow(60, i);
@@ -412,35 +395,82 @@ function stepFrame() {
   }, 1/30*1000); // theoretically about a frame worth :)
 }
 
-if (getSanitizedCurrentUrl() != expected_current_url) {
-  alert("danger: appears you may have pasted to the wrong path this_page=" + window.location.href + " cuts from=" + expected_current_url);
+function loadForCurrentUrl() {
+    var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.json.rendered.js");
+    var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
+    <% if File.exist?("./this_is_development") %>
+      url = '//localhost:3000/for_current?url=' + filename;
+    <% end %>
+    var loaded = false;
+    javascript:(function(e,s){e.src=s;e.onload=function(){loaded = true; loadSuccessful();};document.head.appendChild(e);})(document.createElement('script'), url);
+    setTimeout(function() { 
+      if (loaded == false)  {
+        loadFailed();
+      }
+    }, 3000);
 }
-old_current_url = getSanitizedCurrentUrl(); // remember which one we started on
 
-if (getCurrentAmazonEpisode() != amazon_episode_number) {
-  alert("danger: may have gotten wrong amazon episode expected=" + amazon_episode_number + " got=" + getCurrentAmazonEpisode());
+function checkIfEpisodeChanged() {
+  if (getStandardizedCurrentUrl() != old_current_url || getCurrentAmazonEpisode() != old_amazon_episode) {
+    alert("detected move to another video, from " + old_current_url + old_amazon_episode + " to " + getStandardizedCurrentUrl() + getCurrentAmazonEpisode() + "\nwill try to load its edited settings now for the new movie...");
+    old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
+    old_amazon_episode = getCurrentAmazonEpisode(); 
+    loadForCurrentUrl(); 
+  }
 }
-old_amazon_episode = getCurrentAmazonEpisode();
+
+function loadFailed() {
+  if (confirm("unable to load for your current movie " + currentMovieName() + " would you like to create one now?")) {
+    alert("OK after you create it you'll need to refresh this browser window for it to take here...");
+    window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getSanitizedCurrentUrl()) + "&amazon_episode_number=" + getCurrentAmazonEpisode(), "_blank");
+  }
+  mutes = []; skips = []; yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
+  startWatcher(); // so it can check if episode changes
+}
+
+function loadSuccessful() {
+  if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
+    alert("danger: this may have been the wrong url? this_page=" + window.location.href + " edits expected from=" + expected_current_url + " or " + amazon_second_url);
+  }
+  old_current_url = getStandardizedCurrentUrl();
+  if (getCurrentAmazonEpisode() != amazon_episode_number) {
+    alert("danger: may have gotten wrong amazon episode expected=" + amazon_episode_number + " got=" + getCurrentAmazonEpisode());
+  }
+  old_amazon_episode = getCurrentAmazonEpisode();
+  startWatcher();
+  logReadyToGo();
+}
+
+var clean_stream_timer;
+
+function startWatcher() {
+  clean_stream_timer = clean_stream_timer || setInterval(function () {
+      checkStatus();
+  }, 1000 / 100 ); // 100 fps since that's the granularity of our time entries :|
+  // guess we just never turn it off
+}
 
 function start() {
   video_element = findFirstVideoTag(document.body);
   if (video_element == null) { 
-    alert("failure: unable to find a video playing, did you paste this in the right page?"); 
+    alert("failure: unable to find a video playing, not loading edited playback...");
+    // this one's pretty serious, just let it die...
   }
   else {
-    setupDeveloper();
-    clean_stream_timer = setInterval(function () {
-        checkStatus();
-    }, 1000 / 30 / 2 ); // 30 fps * 2, try to be frame accurate assume max 30 fps
-    logReadyToGo();
+    addEditUi();
+    loadForCurrentUrl();
   }
 }
 
 function logReadyToGo() {
     var message = "Editing successfully loaded!\n" + name + " " + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length;
     console.log(message);
-    <%= "alert(message);" if !File.exists?("./this_is_development") %>
+    <% if !File.exists?("./this_is_development") %>
+      alert(message);
+    <% else %>
+      console.log("not showing popup since is development");
+    <% end %>
 }
 
-// no jquery since this page might already have it loaded, jQuery free zone, man! [plus speedup lol]
+// no jquery since this page might already have it loaded, so avoid any fonclit.  [plus speedup load times LOL]
 start();
