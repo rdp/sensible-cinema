@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-27 19:25:07 -0400.
+// generated at 2016-10-27 19:49:45 -0400.
 
 function getStandardizedCurrentUrl() {
   current_url = window.location.href;
@@ -418,6 +418,7 @@ function parseSuccessfulJson(json) {
   // assume right format LOL
   url = out.url;
   name=url.name;
+  editing_status = url.editing_status;
   amazon_episode_name=url.amazon_episode_name;
   // now lazy :|
   mutes=out.mutes;
@@ -464,6 +465,7 @@ function checkIfEpisodeChanged() {
 
 function loadFailed() {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
+  editing_status = "unknown to system";
   name = liveFullMovieName();
   amazon_episode_name = liveEpisodeString();
   expected_amazon_episode_number = liveAmazonEpisodeNumber();
@@ -491,7 +493,11 @@ function loadSuccessful() {
   }
   old_amazon_episode = liveAmazonEpisodeNumber();
   startWatcherOnce();
-  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullMovieName() + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\nYou may sit back and relax while you enjoy it now!";;
+  var post_message = "This movie is currently marked as " + editing_status + ", please groom edits to our system and mark status as done when it's complete";
+  if (editing_status == "done")
+    post_message = "\nYou may sit back and relax while you enjoy it now!";
+
+  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullMovieName() + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   
     alert(message);
   

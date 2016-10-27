@@ -37,26 +37,27 @@ function findFirstVideoTag(node) {
 
 function injectEditedPlayerOnce() {
              if (already_loaded) {
-               alert('edited player already loaded for this page, it should pick up when you start a movie on this page');
+               alert('edited player already loaded for this page, it should pick up when you start a movie on this page, so is loaded...');
              }
              else {
-                injectJs(chrome.extension.getURL('edited_generic_player.js'));
                 already_loaded = true;
-                // appears background.js is the only thing that can adjust the icon, so send it a message
-                chrome.runtime.sendMessage({action: "loaded"}, function(response) {
-                  console.log("sent loaded message from contentscripts");
-                });
+                injectJs(chrome.extension.getURL('edited_generic_player.js'));
+                // appears background.js is the only thing that can adjust the icon, so could send it a message, but why these days...
              }
 }
 
 function autoStartOnBigThree() {
   var location = window.location.href;
-  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com") && findFirstVideoTag(document.body) != null) {
+  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
     injectEditedPlayerOnce();
-    clearInterval(timer); 
   }
+  // for the rest, they have to click plugin link :|
 }
 
-timer = setInterval(autoStartOnBigThree, 3000); // amazon takes awhile to load its video, avoid a spurious 'not ready' message :|
+var interval = setInterval(function(){
+  if (findFirstVideoTag(document.body) != null && !findFirstVideoTag(document.body).src.endsWith(".mp4")) { // amazon.com main used mp4's, avoid prompt there :|
+    autoStartOnBigThree();
+    clearInterval(interval);
+  }
+}, 50); 
 
-// for the rest, they have to click plugin link :|
