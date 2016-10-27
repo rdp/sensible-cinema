@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(
         // got probably a message from them clicking the link in the browser popup icon
         if (request.action == "please_start") {
             console.log('got message to start');
-            injectBootLoaderOnce();
+            injectEditedPlayerOnce();
          }
 });
 
@@ -35,12 +35,12 @@ function findFirstVideoTag(node) {
     }
 }
 
-function injectBootLoaderOnce() {
+function injectEditedPlayerOnce() {
              if (already_loaded) {
                alert('edited player already loaded for this page, it should pick up when you start a movie on this page');
              }
              else {
-                injectJs(chrome.extension.getURL('bootloader_dev.js'));
+                injectJs(chrome.extension.getURL('edited_generic_player.js'));
                 already_loaded = true;
                 // appears background.js is the only thing that can adjust the icon, so send it a message
                 chrome.runtime.sendMessage({action: "loaded"}, function(response) {
@@ -52,9 +52,11 @@ function injectBootLoaderOnce() {
 function autoStartOnBigThree() {
   var location = window.location.href;
   if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com") && findFirstVideoTag(document.body) != null) {
-    injectBootLoaderOnce();
+    injectEditedPlayerOnce();
     clearInterval(timer); 
   }
 }
 
 timer = setInterval(autoStartOnBigThree, 3000); // amazon takes awhile to load its video, avoid a spurious 'not ready' message :|
+
+// for the rest, they have to click plugin link :|

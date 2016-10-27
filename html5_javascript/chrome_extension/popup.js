@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // only enters here after they click on the icon
   // no access *at all* to the current tab DOM apparently :|
 
-   var h=document.getElementById("edited_requested");
+   var h = document.getElementById("edited_requested");
    h.addEventListener("click", loadEditedPlayback);
    var y = document.getElementById("index_link");
    y.addEventListener("click", openIndex);
@@ -21,5 +21,6 @@ function loadEditedPlayback() {
 }
 
 function openIndex() {
+  // this is how you have to do links in a popup [yikeserz]
   chrome.tabs.create({active: true, url: "http://cleanstream.inet2.org"});
 }

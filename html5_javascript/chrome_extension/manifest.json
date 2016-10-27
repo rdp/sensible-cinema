@@ -2,22 +2,22 @@
   "manifest_version": 2,
 
   "name": "Clean stream edited movie extension",
-  "description": "This extension uses the clean stream player to any online video",
-  "version": "0.2",
+  "description": "This extension uses the clean stream player to online videos",
+  "version": "0.3",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
-    "default_title": "If this plugin is installed, it should ask you per video\nafter opening its windows url, if you want to try edited" // tooltip
+    "default_title": "Clean stream editor plugin" // tooltip
   },
   "permissions": [
-    "<all_urls>", "tabs", "http://*/", "https://*/" // LOL
+    "<all_urls>", "tabs" 
   ],
   "content_scripts": [{
       "js": ["contentscript.js"],
       "matches": ["<all_urls>"]
   }],
-  "web_accessible_resources": ["bootloader_dev.js"],
+  "web_accessible_resources": ["edited_generic_player.js"],
   "icons": { "128": "icon.png" },
   "background": { "scripts": ["background.js"] },
   "externally_connectable": {

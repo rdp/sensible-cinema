@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at <%= Time.now %>.
+// generated at 2016-10-27 18:27:30 -0400.
 
 function getStandardizedCurrentUrl() {
   current_url = window.location.href;
@@ -224,6 +224,7 @@ function addEditUi() {
   });
 
   addEvent(window, "resize", function(event) {
+    console.log("received resize..");
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
@@ -267,7 +268,6 @@ function addForNewEditToScreen() {
 }
 
 function setEditedControlsToTopLeft() {
-  console.log("moving edited controls to top left...");
   // discover where the "currently viewed" top left actually is (not always 0,0 apparently)
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
@@ -390,9 +390,7 @@ function stepFrame() {
 function loadForCurrentUrl() {
     var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
-    <% if File.exists?("./this_is_development") %>
-      url = '//localhost:3000/for_current_just_settings_json?url=' + getStandardizedCurrentUrl() + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
-    <% end %>
+    
     getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
 
@@ -456,7 +454,7 @@ function loadFailed() {
   old_amazon_episode = liveAmazonEpisodeNumber(); 
   if (confirm("unable to load for your current movie " + liveMovieName() + " would you like to create one now?")) {
     alert("OK after you create it you'll need to refresh this browser window for it to take here...");
-    window.open("http://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber(), "_blank");
+    window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber(), "_blank");
   }
   startWatcher(); // so it can check if episode changes to one we like :)
 }
@@ -498,11 +496,9 @@ function start() {
 function logReadyToGo() {
     var message = "Editing successfully loaded!\n" + name + " " + episode_name + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length;
     console.log(message);
-    <% if !File.exists?("./this_is_development") %>
+    
       alert(message);
-    <% else %>
-      console.log("not showing popup since is development");
-    <% end %>
+    
 }
 
 // no jquery since this page might already have it loaded, so avoid any fonclit.  [plus speedup load times LOL]
