@@ -399,7 +399,7 @@ function loadForCurrentUrl() {
     var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + getCurrentAmazonEpisode() + ".html5_edited.just_settings.json.rendered.js");
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
     <% if File.exists?("./this_is_development") %>
-      url = '//localhost:3000/for_current?url=' + filename;
+      url = '//localhost:3000/for_current_just_settings_json?url=' + getStandardizedCurrentUrl() + '&amazon_episode_number=' + getCurrentAmazonEpisode();
     <% end %>
     var loaded = false;
     javascript:(function(e,s){e.src=s;e.onload=function(){loaded = true; loadSuccessful();};document.head.appendChild(e);})(document.createElement('script'), url);
