@@ -38,7 +38,7 @@ insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episod
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
       (2.0, 7.0, "a category", "a subcat", "details", "skip", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
-      (10.0, 30.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
+      (10.0, 20.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
 
 alter table urls ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
 alter table urls CHANGE editing_notes editing_status VARCHAR(1024);

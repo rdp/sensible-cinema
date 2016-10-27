@@ -21,7 +21,7 @@ function getStandardizedCurrentUrl() {
   return current_url;
 }
 
-function currentAmazonEpisodeNumber() {
+function liveAmazonEpisodeNumber() {
   var subtitle = document.getElementsByClassName("subtitle")[0]; // like "2. The headband"
   if (subtitle &&  subtitle.innerHTML.match(/Ep. (\d+)/))
     return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
@@ -66,7 +66,7 @@ function checkStatus() {
   if (last_start) {
     if (!video_element.muted) {
       video_element.muted = true;
-      timestamp_log("muted", cur_time, last_start, last_end);
+      timestamp_log("muting", cur_time, last_start, last_end);
       extra_message = "muted";
     }
   }
@@ -110,20 +110,20 @@ function checkStatus() {
   checkIfEpisodeChanged();
 }
 
-function currentEpisodeString() {
-  if (currentAmazonEpisodeNumber() != "0")
-    return " episode:" + currentAmazonEpisodeNumber() + " " + decodeURIComponent(episode_name);
+function liveEpisodeString() {
+  if (liveAmazonEpisodeNumber() != "0")
+    return " episode:" + liveAmazonEpisodeNumber() + " " + (document.getElementsByClassName("subtitle") && document.getElementsByClassName("subtitle")[0].innerHTML); // so we never use episode_name or what?
   else
     return "";
   end
 }
 
-function currentMovieName() {
-  return document.getElementsByTagName("title")[0].innerHTML + " " + currentEpisodeString(); // who needs a URL when you have a title? :)
+function liveMovieName() {
+  return document.getElementsByTagName("title")[0].innerHTML + " " + liveEpisodeString(); // who needs a URL when you have a title? :)
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
-  local_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end;
+  local_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end + " in " + (last_end - cur_time)+ "s";;
   console.log(local_message);
 }
 
@@ -224,6 +224,7 @@ function addEditUi() {
   });
 
   addEvent(window, "resize", function(event) {
+    console.log("received resize..");
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
@@ -254,7 +255,7 @@ function seekToTime(ts) {
 
 function addForNewEditToScreen() {
   // hope these never get confused LOL
-  if (exposeEditScreenDiv.innerHTML.contains("Add")) {
+  if (exposeEditScreenDiv.innerHTML.includes("Add")) {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
     exposeEditScreenDiv.innerHTML = "Close editor";
@@ -387,10 +388,10 @@ function stepFrame() {
 }
 
 function loadForCurrentUrl() {
-    var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + currentAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
+    var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
     var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
     <% if File.exists?("./this_is_development") %>
-      url = '//localhost:3000/for_current_just_settings_json?url=' + getStandardizedCurrentUrl() + '&amazon_episode_number=' + currentAmazonEpisodeNumber();
+      url = '//localhost:3000/for_current_just_settings_json?url=' + getStandardizedCurrentUrl() + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
     <% end %>
     getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
@@ -408,7 +409,7 @@ function parseSuccessfulJson(json) {
   do_nothings=out.do_nothings;
   expected_current_url=url.url;
   amazon_second_url=out.url;
-  amazon_episode_number=url.amazon_episode_number;
+  expected_amazon_episode_number=url.amazon_episode_number;
   url_id=url.id;
   request_host=out.request_host; // XXXX should this live at the top only?
   loadSuccessful();
@@ -416,6 +417,7 @@ function parseSuccessfulJson(json) {
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
 function getRequest (url, success, error) {  
+  console.log("starting attempt to download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
   xhr.onreadystatechange = function(){ 
@@ -434,28 +436,27 @@ function getRequest (url, success, error) {
 }
 
 function checkIfEpisodeChanged() {
-  if (getStandardizedCurrentUrl() != old_current_url || currentAmazonEpisodeNumber() != old_amazon_episode) {
-currentMovieName
-    alert("detected move to another video, to " + currentMovieName() + "\nfrom\n" +
+  if (getStandardizedCurrentUrl() != old_current_url || liveAmazonEpisodeNumber() != old_amazon_episode) {
+    alert("detected move to another video, to " + liveMovieName() + "\nfrom\n" +
     old_current_url + " ep. " + old_amazon_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
-    old_amazon_episode = currentAmazonEpisodeNumber(); 
+    old_amazon_episode = liveAmazonEpisodeNumber(); 
     loadForCurrentUrl(); 
   }
 }
 
 function loadFailed() {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
-  name = episode_name = document.getElementsByClassName("subtitle") && document.getElementsByClassName("subtitle")[0].innerHTML; // just pick it out, this is so when it
-  // shifts to the next it can say "from x" :)
-  amazon_episode_number = currentAmazonEpisodeNumber();
-  url_id = 0;
-  // request_host leave same ?
+  name = liveMovieName();
+  episode_name = liveEpisodeString();
+  expected_amazon_episode_number = liveAmazonEpisodeNumber();
+  url_id = 0; // reset
+  // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
-  old_amazon_episode = currentAmazonEpisodeNumber(); 
-  if (confirm("unable to load for your current movie " + currentMovieName() + " would you like to create one now?")) {
+  old_amazon_episode = liveAmazonEpisodeNumber(); 
+  if (confirm("unable to load for your current movie " + liveMovieName() + " would you like to create one now?")) {
     alert("OK after you create it you'll need to refresh this browser window for it to take here...");
-    window.open("http://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + currentAmazonEpisodeNumber(), "_blank");
+    window.open("http://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber(), "_blank");
   }
   startWatcher(); // so it can check if episode changes to one we like :)
 }
@@ -465,10 +466,10 @@ function loadSuccessful() {
     alert("danger: this may have been the wrong url? this_page=" + window.location.href + " edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
-  if (currentAmazonEpisodeNumber() != amazon_episode_number) {
-    alert("danger: may have gotten wrong amazon episode expected=" + amazon_episode_number + " got=" + currentAmazonEpisodeNumber());
+  if (liveAmazonEpisodeNumber() != expected_amazon_episode_number) {
+    alert("danger: may have gotten wrong amazon episode expected=" + expected_amazon_episode_number + " got=" + liveAmazonEpisodeNumber());
   }
-  old_amazon_episode = currentAmazonEpisodeNumber();
+  old_amazon_episode = liveAmazonEpisodeNumber();
   startWatcher();
   logReadyToGo();
 }
@@ -495,7 +496,7 @@ function start() {
 }
 
 function logReadyToGo() {
-    var message = "Editing successfully loaded!\n" + name + " " + currentEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length;
+    var message = "Editing successfully loaded!\n" + name + " " + episode_name + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length;
     console.log(message);
     <% if !File.exists?("./this_is_development") %>
       alert(message);
