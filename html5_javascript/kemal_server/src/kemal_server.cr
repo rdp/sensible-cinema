@@ -74,7 +74,7 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
       else
        conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
       end
@@ -380,7 +380,7 @@ def javascript_for(db_url, env, type)
     do_nothings = timestamps_of_type_for_video conn, db_url, "do_nothing"
     
     name = db_url.name
-    episode_name = URI.escape(db_url.amazon_episode_name) 
+    amazon_episode_name = URI.escape(db_url.amazon_episode_name) 
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     request_host =  env.request.headers["Host"] # like localhost:3000
     if type == "html5_edited.js"
@@ -526,11 +526,8 @@ end
 
 get "/new_url" do |env|
   real_url = standardize_url(env.params.query["url"]) # might be an amazon url that has canonical so skip /gp/ check 
-  if env.params.query.has_key? "amazon_episode_number"
-    amazon_episode_number = env.params.query["amazon_episode_number"].to_i # if they sent one in :)
-  else
-    amazon_episode_number = 0
-  end
+  amazon_episode_number = env.params.query["amazon_episode_number"].to_i
+  amazon_episode_name = env.params.query["amazon_episode_name"]
   title, real_url = get_title_and_canonical_url real_url  
   url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
   if url_or_nil != nil
@@ -553,6 +550,7 @@ get "/new_url" do |env|
     else
       url.name = title
     end
+    url.amazon_episode_name = amazon_episode_name
     url.amazon_episode_number = amazon_episode_number
     url.save 
     env.redirect "/edit_url/#{url.id}"
