@@ -31,14 +31,14 @@ CREATE TABLE edits (
 );
 
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
-   values ("https://www.amazon.com/gp/product/B001J6GZXK", 'ALTA season 3', "not done yet2", 5, "Beach test", 10, 8, 4, "review");
+   values ("https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK", 'ALTA season 3', "not done yet2", 5, "Beach test", 10, 8, 4, "review");
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
    values ("https://www.netflix.com/watch/80016224", 'meet the mormons [test]', "not done yet", 0, "", 10, 8, 4, "review");
 
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
-      (2.0, 7.0, "a category", "a subcat", "details", "skip", (select id from urls where url='https://www.netflix.com/watch/80016224'), "");
+      (2.0, 7.0, "a category", "a subcat", "details", "skip", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
-      (10.0, 30.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.netflix.com/watch/80016224'), "");
+      (10.0, 30.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
 
 alter table urls ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
 alter table urls CHANGE editing_notes editing_status VARCHAR(1024);

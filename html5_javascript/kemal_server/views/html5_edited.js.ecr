@@ -117,8 +117,8 @@ function checkStatus() {
   }
   
   topLineEditDiv.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
-  jQuery("#add_edit_span_id_for_extra_message").html(extra_message);
-  jQuery("#playback_rate").html(video_element.playbackRate.toFixed(2) + "x");
+  document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
+  document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
 }
 
@@ -251,10 +251,27 @@ function setupDeveloper() {
   chrome.runtime.sendMessage(editorExtensionId, {action: "really_started"}, function(response) {
     //console.log("response after telling started" + response);
   });
-  jQuery(window).resize(function(){
+
+  addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
+}
+
+// method to bind easily to resize event
+var addEvent = function(object, type, callback) {
+    if (object == null || typeof(object) == 'undefined') return;
+    if (object.addEventListener) {
+        object.addEventListener(type, callback, false);
+    } else if (object.attachEvent) {
+        object.attachEvent("on" + type, callback);
+    } else {
+        object["on"+type] = callback;
+    }
+};
+
+function toggleDiv(div) {
+    div.style.display = div.style.display == "none" ? "block" : "none";
 }
 
 function seekToTime(ts) {
@@ -267,13 +284,13 @@ function seekToTime(ts) {
 function addForNewEditToScreen() {
   // hope these never get confused LOL
   if (exposeEditScreenDiv.innerHTML.contains("Add")) {
-    jQuery(topLineEditDiv).toggle();
-    jQuery(edlLayer).toggle();
+    toggleDiv(topLineEditDiv);
+    toggleDiv(edlLayer);
     exposeEditScreenDiv.innerHTML = "Close editor";
   }
   else {
-    jQuery(topLineEditDiv).toggle();
-    jQuery(edlLayer).toggle();
+    toggleDiv(topLineEditDiv);
+    toggleDiv(edlLayer);
     exposeEditScreenDiv.innerHTML = "Add cleanstream edit";
   }
 }
@@ -425,7 +442,5 @@ function logReadyToGo() {
     <%= "alert(message);" if !File.exists?("./this_is_development") %>
 }
 
-// load jquery first, just cuz
-javascript:(function(e,s){e.src=s;e.onload=function(){jQuery.noConflict();start();};document.head.appendChild(e);})(document.createElement('script'),'//code.jquery.com/jquery-latest.min.js')
-
-// how to load self snippet moved to elsewhere
+// no jquery since this page might already have it loaded, jQuery free zone, man! [plus speedup lol]
+start();
