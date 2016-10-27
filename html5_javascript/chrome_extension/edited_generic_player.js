@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-27 19:49:45 -0400.
+// generated at 2016-10-27 19:54:27 -0400.
 
 function getStandardizedCurrentUrl() {
   current_url = window.location.href;
@@ -493,7 +493,7 @@ function loadSuccessful() {
   }
   old_amazon_episode = liveAmazonEpisodeNumber();
   startWatcherOnce();
-  var post_message = "This movie is currently marked as " + editing_status + ", please groom edits to our system and mark status as done when it's complete";
+  var post_message = "This movie is currently marked as \"" + editing_status + "\" in our system, which means it is incomplete.  Please help us groom edits to our system and mark status as done when it's complete, thanks so much!";
   if (editing_status == "done")
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 
