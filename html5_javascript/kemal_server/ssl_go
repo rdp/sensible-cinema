@@ -1,0 +1,2 @@
+echo "use like https://localhost:3000"
+crystal run ./src/kemal_server.cr -- --ssl --ssl-key-file key.pem --ssl-cert-file cert.pem
