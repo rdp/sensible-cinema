@@ -308,6 +308,10 @@ def human_to_seconds(ts_human)
   sum
 end
 
+before_all do |env|
+  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from amazon.com phew
+end
+
 get "/" do |env|
   env.redirect "/index"
 end

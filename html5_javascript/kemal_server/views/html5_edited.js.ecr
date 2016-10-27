@@ -401,13 +401,31 @@ function loadForCurrentUrl() {
     <% if File.exists?("./this_is_development") %>
       url = '//localhost:3000/for_current_just_settings_json?url=' + getStandardizedCurrentUrl() + '&amazon_episode_number=' + getCurrentAmazonEpisode();
     <% end %>
-    var loaded = false;
-    javascript:(function(e,s){e.src=s;e.onload=function(){loaded = true; loadSuccessful();};document.head.appendChild(e);})(document.createElement('script'), url);
-    setTimeout(function() { 
-      if (loaded == false)  {
-        loadFailed();
-      }
-    }, 3000);
+    getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
+}
+
+function parseSuccessfulJson(json) {
+  console.log('wurking' + json);
+  loadSuccessful();
+}
+
+// http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
+function getRequest (url, success, error) {  
+  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
+  xhr.open("GET", url); 
+  xhr.onreadystatechange = function(){ 
+    if ( xhr.readyState == 4 ) { 
+      if ( xhr.status == 200 ) { 
+        success(xhr.responseText); 
+      } else { 
+        error(); 
+      } 
+    } 
+  }; 
+  xhr.onerror = function () { 
+    error(xhr, xhr.status); 
+  }; 
+  xhr.send(); 
 }
 
 function checkIfEpisodeChanged() {
