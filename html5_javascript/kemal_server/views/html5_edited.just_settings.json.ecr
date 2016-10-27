@@ -2,5 +2,6 @@
 "_comment": "generated at <%= Time.now %>.",
 "url": <%= db_url.to_json %>,
 "edits":
-[ <%= db_url.edls.map{| edl| edl.to_json}.join(",") %> ]
+[ <%= db_url.edls.map{| edl| edl.to_json}.join(",") %> ],
+"request_host": "<%= request_host %>"
 }
