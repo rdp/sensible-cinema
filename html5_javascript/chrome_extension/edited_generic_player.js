@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-27 18:27:30 -0400.
+// generated at 2016-10-27 19:25:07 -0400.
 
 function getStandardizedCurrentUrl() {
   current_url = window.location.href;
@@ -21,9 +21,22 @@ function getStandardizedCurrentUrl() {
   return current_url;
 }
 
+function liveAmazonEpisodeName() {
+  if (document.getElementsByClassName("subtitle").length > 0) {
+    split = document.getElementsByClassName("subtitle")[0].innerHTML.split(/Ep. \d+/); // like "Season 3, Ep. 3 The Painted Lady"
+    if(split.length == 2)
+      return split[1].trim();
+    else
+      return split[0].trim();
+  }
+  else
+    return "";
+  end
+}
+
 function liveAmazonEpisodeNumber() {
-  var subtitle = document.getElementsByClassName("subtitle")[0]; // like "2. The headband"
-  if (subtitle &&  subtitle.innerHTML.match(/Ep. (\d+)/))
+  var subtitle = document.getElementsByClassName("subtitle")[0];
+  if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/))
     return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
   else
     return "0"; // anything else
@@ -112,13 +125,13 @@ function checkStatus() {
 
 function liveEpisodeString() {
   if (liveAmazonEpisodeNumber() != "0")
-    return " episode:" + liveAmazonEpisodeNumber() + " " + (document.getElementsByClassName("subtitle") && document.getElementsByClassName("subtitle")[0].innerHTML); // so we never use episode_name or what?
+    return " episode:" + liveAmazonEpisodeNumber() + " " + liveAmazonEpisodeName();
   else
     return "";
   end
 }
 
-function liveMovieName() {
+function liveFullMovieName() {
   return document.getElementsByTagName("title")[0].innerHTML + " " + liveEpisodeString(); // who needs a URL when you have a title? :)
 }
 
@@ -163,7 +176,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()" id="add_edit_link_id">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -218,17 +231,22 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
-  var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
   chrome.runtime.sendMessage(editorExtensionId, {action: "really_started"}, function(response) {
     //console.log("response after telling started" + response);
   });
 
   addEvent(window, "resize", function(event) {
-    console.log("received resize..");
+    console.log("got resize");
+    setEditedControlsToTopLeft();
+  });
+  addEvent(window, "scroll", function(event) {
+    console.log("got scroll");
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
 }
+
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
 // method to bind easily to resize event
 var addEvent = function(object, type, callback) {
@@ -254,20 +272,25 @@ function seekToTime(ts) {
 }
 
 function addForNewEditToScreen() {
-  // hope these never get confused LOL
-  if (exposeEditScreenDiv.innerHTML.includes("Add")) {
+  if (url_id == 0) {
+    alert('cannot add edits to non existing movie in our database yet, please create it, then reload this page after a few minutes');
+    return; // abort
+  }
+  // hope these never get mixed LOL
+  if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    exposeEditScreenDiv.innerHTML = "Close editor";
+    getElementById("add_edit_link_id").innerHTML = "Close editor";
   }
   else {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    exposeEditScreenDiv.innerHTML = "Add cleanstream edit";
+    getElementById("add_edit_link_id").innerHTML = "Add edit";
   }
 }
 
 function setEditedControlsToTopLeft() {
+  console.log("moving edited controls to top left...");
   // discover where the "currently viewed" top left actually is (not always 0,0 apparently)
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
@@ -369,11 +392,7 @@ function humanToTimeStamp(timestamp) {
 }
 
 function saveEditButton() {
-  if (url_id == 0) {
-    alert('cannot save it to none existing movie in our database yet, please create it, then reload this page');
-    return; // abort
-  }
-  var url = "http://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
+  var url = "https://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
   "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   console.log(url);
   var win = window.open(url, '_blank');
@@ -388,10 +407,10 @@ function stepFrame() {
 }
 
 function loadForCurrentUrl() {
-    var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
-    var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
-    
-    getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
+  var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
+  var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
+  
+  getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
 
 function parseSuccessfulJson(json) {
@@ -399,7 +418,7 @@ function parseSuccessfulJson(json) {
   // assume right format LOL
   url = out.url;
   name=url.name;
-  episode_name=url.amazon_episode_name;
+  amazon_episode_name=url.amazon_episode_name;
   // now lazy :|
   mutes=out.mutes;
   skips=out.skips;
@@ -435,7 +454,7 @@ function getRequest (url, success, error) {
 
 function checkIfEpisodeChanged() {
   if (getStandardizedCurrentUrl() != old_current_url || liveAmazonEpisodeNumber() != old_amazon_episode) {
-    alert("detected move to another video, to " + liveMovieName() + "\nfrom\n" +
+    console.log("detected move to another video, to " + liveFullMovieName() + "\nfrom\n" +
     old_current_url + " ep. " + old_amazon_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_amazon_episode = liveAmazonEpisodeNumber(); 
@@ -445,18 +464,21 @@ function checkIfEpisodeChanged() {
 
 function loadFailed() {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
-  name = liveMovieName();
-  episode_name = liveEpisodeString();
+  name = liveFullMovieName();
+  amazon_episode_name = liveEpisodeString();
   expected_amazon_episode_number = liveAmazonEpisodeNumber();
   url_id = 0; // reset
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
-  if (confirm("unable to load for your current movie " + liveMovieName() + " would you like to create one now?")) {
-    alert("OK after you create it you'll need to refresh this browser window for it to take here...");
-    window.open("http://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber(), "_blank");
+  chrome.runtime.sendMessage(editorExtensionId, {action: "really_stopped"}, function(response) {
+    //console.log("response after telling started" + response);
+  });
+  if (confirm("We don't appear to have edits for\n" + liveFullMovieName() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
+    alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
+    window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
   }
-  startWatcher(); // so it can check if episode changes to one we like :)
+  startWatcherOnce(); // so it can check if episode changes to one we like :)
 }
 
 function loadSuccessful() {
@@ -468,13 +490,16 @@ function loadSuccessful() {
     alert("danger: may have gotten wrong amazon episode expected=" + expected_amazon_episode_number + " got=" + liveAmazonEpisodeNumber());
   }
   old_amazon_episode = liveAmazonEpisodeNumber();
-  startWatcher();
-  logReadyToGo();
+  startWatcherOnce();
+  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullMovieName() + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\nYou may sit back and relax while you enjoy it now!";;
+  
+    alert(message);
+  
 }
 
 var clean_stream_timer;
 
-function startWatcher() {
+function startWatcherOnce() {
   clean_stream_timer = clean_stream_timer || setInterval(function () {
       checkStatus();
   }, 1000 / 100 ); // 100 fps since that's the granularity of our time entries :|
@@ -493,13 +518,5 @@ function start() {
   }
 }
 
-function logReadyToGo() {
-    var message = "Editing successfully loaded!\n" + name + " " + episode_name + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length;
-    console.log(message);
-    
-      alert(message);
-    
-}
-
-// no jquery since this page might already have it loaded, so avoid any fonclit.  [plus speedup load times LOL]
+// load no jquery since this page might already have it loaded, so avoid any fonclit.  [plus speedup load times LOL]
 start();
