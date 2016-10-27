@@ -82,16 +82,3 @@ total time (total movie length, netflix needs this)
 </form>
 
 <p><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)</p>
-
-<hr/>
-Links for developers:
-<br/>
-<a href=/for_current?<%= url.url_lookup_params %> target="_blank">js</a>
-<br/>
-<a href=/for_current_just_settings?<%= url.url_lookup_params %> target="_blank">js just settings</a>
-<br>
-<a href=/for_current_just_settings_json?<%= url.url_lookup_params %> target="_blank">json</a>
-<br>
-<a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete this movie from database</a>
-<br/>
-<a href=/regenerate_all>regen all</a> javascript cache for all (developers should do this if they change internal javascript)

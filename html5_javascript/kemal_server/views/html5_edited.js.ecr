@@ -163,7 +163,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()" id="add_edit_link_id">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -218,16 +218,22 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
-  var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
   chrome.runtime.sendMessage(editorExtensionId, {action: "really_started"}, function(response) {
     //console.log("response after telling started" + response);
   });
 
   addEvent(window, "resize", function(event) {
+    console.log("got resize");
+    setEditedControlsToTopLeft();
+  });
+  addEvent(window, "scroll", function(event) {
+    console.log("got scroll");
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
 }
+
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
 // method to bind easily to resize event
 var addEvent = function(object, type, callback) {
@@ -254,15 +260,15 @@ function seekToTime(ts) {
 
 function addForNewEditToScreen() {
   // hope these never get confused LOL
-  if (exposeEditScreenDiv.innerHTML.includes("Add")) {
+  if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    exposeEditScreenDiv.innerHTML = "Close editor";
+    getElementById("add_edit_link_id").innerHTML = "Close editor";
   }
   else {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    exposeEditScreenDiv.innerHTML = "Add cleanstream edit";
+    getElementById("add_edit_link_id").innerHTML = "Add edit";
   }
 }
 
@@ -454,6 +460,9 @@ function loadFailed() {
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
+  chrome.runtime.sendMessage(editorExtensionId, {action: "really_stopped"}, function(response) {
+    //console.log("response after telling started" + response);
+  });
   if (confirm("unable to load for your current movie " + liveMovieName() + " would you like to create one now?")) {
     alert("OK after you create it you'll need to refresh this browser window for it to take here...");
     window.open("http://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber(), "_blank");
