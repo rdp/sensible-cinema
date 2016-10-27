@@ -23,7 +23,7 @@ function getStandardizedCurrentUrl() {
 
 function liveAmazonEpisodeName() {
   if (document.getElementsByClassName("subtitle").length > 0) {
-    split = document.getElementsByClassName("subtitle")[0].innerHTML.split("Ep."); // like "Season 3, Ep. 3 The Painted Lady"
+    split = document.getElementsByClassName("subtitle")[0].innerHTML.split(/Ep. \d+/); // like "Season 3, Ep. 3 The Painted Lady"
     if(split.length == 2)
       return split[1].trim();
     else
