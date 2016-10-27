@@ -355,7 +355,8 @@ def get_for_current(env, type)
   with_db do |conn|
     url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(standardized_param_url, amazon_episode_number)
     if !url_or_nil
-      "alert('none for this movie yet');" # no 404 might be useful here :|
+      "none for this movie yet" # not sure if json or javascript LOL
+      env.response.status_code = 404
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|

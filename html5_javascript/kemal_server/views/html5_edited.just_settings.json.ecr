@@ -3,5 +3,9 @@
 "url": <%= db_url.to_json %>,
 "edits":
 [ <%= db_url.edls.map{| edl| edl.to_json}.join(",") %> ],
-"request_host": "<%= request_host %>"
+"request_host": "<%= request_host %>",
+"mutes": <%= mutes %>,
+"skips": <%= skips %>,
+"yes_audio_no_videos": <%= yes_audio_no_videos %>,
+"do_nothings": <%= do_nothings  %>
 }
