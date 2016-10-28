@@ -82,3 +82,6 @@ total time (total movie length, netflix needs this)
 </form>
 
 <p><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)</p>
+
+<a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete this movie from database</a>
+<br/>
