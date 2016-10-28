@@ -437,9 +437,11 @@ function stepFrame() {
 
 function loadForCurrentUrl() {
   var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
   var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
+  url = '//cleanstream.inet2.org/ + direct_lookup; # SSL FTW
   <% if File.exists?("./this_is_development") %>
-    url = '//localhost:3000/for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
+    url = '//localhost:3000/' + direct_lookup;
   <% end %>
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
