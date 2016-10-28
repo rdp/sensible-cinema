@@ -44,7 +44,7 @@ function liveAmazonEpisodeName() {
 
 function liveAmazonEpisodeNumber() {
   if (isGoogleIframe()) {
-    var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0];
+    var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0]; // apparently I have backward but not forward visibility. phew.
     if (numberNameDiv) {
       var numberName = numberNameDiv.innerHTML; // like " 3. Return to Omashu "
       var numberName = numberName.trim();
