@@ -163,13 +163,7 @@ function liveFullNameEpisode() {
     title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :)
     console.log("playing title:" + document.querySelectorAll('.playing-title')[0]);
     if (document.querySelectorAll('.playing-title')[0]) {
-      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though, works for non episodes
-    }
-    var epname = window.parent.document.querySelectorAll('.epname-number')[0];
-    console.log("epname" + epname);
-    if (document.querySelectorAll('.epname-number')[0]) {
-      // episode name, seems to accidentally work LOL
-      return document.querySelectorAll('.epname-number')[0].innerHTML; // like " 3. Return to Omashu " 
+      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" no ep. (also works non episode)
     }
   }
   return title + liveEpisodeString(); // who needs a URL when you have a title? :)

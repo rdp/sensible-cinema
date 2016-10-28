@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-28 17:42:41 -0600.
+// generated at 2016-10-28 17:47:33 -0600.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -163,12 +163,7 @@ function liveFullNameEpisode() {
     title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :)
     console.log("playing title:" + document.querySelectorAll('.playing-title')[0]);
     if (document.querySelectorAll('.playing-title')[0]) {
-      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though, works for non episodes
-    }
-    console.log("epname" + document.querySelectorAll('.epname-number')[0]);
-    if (document.querySelectorAll('.epname-number')[0]) {
-      // episode name, seems to accidentally work LOL
-      return document.querySelectorAll('.epname-number')[0].innerHTML; // like " 3. Return to Omashu " 
+      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" no ep. (also works non episode)
     }
   }
   return title + liveEpisodeString(); // who needs a URL when you have a title? :)
