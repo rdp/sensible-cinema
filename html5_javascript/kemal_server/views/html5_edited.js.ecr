@@ -518,14 +518,18 @@ function startWatcherOnce() {
 
 function start() {
   video_element = findFirstVideoTag();
+
+  if ((window.location != window.parent.location)) {
+    if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
+    // iframe started from a non "details" page
+    // TODO we have access to the ID's, use it instead of hard fail, allow the index, man!
+    alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
+  }
   if (video_element == null) { 
     alert("failure: unable to find a video playing, not loading edited playback...");
     // this one's pretty serious, just let it die...plugin should not have let us get this far
   }
   else if ((window.location != window.parent.location) && !window.parent.location.pathname.startsWith("/store/movies/details"))
-    // iframe started from a non "details" movie page
-    // TODO we have access to the ID, use it instead of hard fail :|
-    alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work today.');
   else {
     addEditUi();
     loadForCurrentUrl();
