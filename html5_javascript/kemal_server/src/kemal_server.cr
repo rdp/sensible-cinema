@@ -329,7 +329,7 @@ end
 
 def standardize_url(unescaped)
   if unescaped =~ /amazon.com|netflix.com/
-    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs it
+    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
   end
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
   # canonical is like https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK try and use that for now :|
