@@ -8,12 +8,12 @@ if (typeof clean_stream_timer !== 'undefined') {
 // generated at <%= Time.now %>.
 
 function isGoogleIframe() {
-  return window.location.hostname =~ /play.google.com/; // assume we're in an iframe, should be safe assumption
+  return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
 }
 
 function getStandardizedCurrentUrl() {
-  current_url = window.location.href;
-  if (isGoogleIframe()} {
+  var current_url = window.location.href;
+  if (isGoogleIframe()) {
     current_url = document.referrer; // iframe parent url
   }
   if (current_url.includes("amazon.com")) {
@@ -43,6 +43,21 @@ function liveAmazonEpisodeName() {
 }
 
 function liveAmazonEpisodeNumber() {
+  if (isGoogleIframe()) {
+    var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0];
+    if (numberNameDiv) {
+      var numberName = numberNameDiv.innerHTML; // like " 3. Return to Omashu "
+      var numberName = numberName.trim();
+      var regex =  /(\d+)\. /;
+      if (regex.test(numberName)) {
+        return /(\d+)\. /.exec(numberName)[1];
+      }
+      else {
+        return "0";
+      }
+    }
+  }
+  // amazon :)
   var subtitle = document.getElementsByClassName("subtitle")[0];
   if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/))
     return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
@@ -142,10 +157,14 @@ function liveEpisodeString() {
   end
 }
 
-function liveFullMovieName() {
+function liveFullNameEpisode() {
   var title = document.getElementsByTagName("title")[0].innerHTML;
-  if (isGooglePlayIframe()) {
+  if (isGoogleIframe()) {
     title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though
+    if (document.querySelectorAll('.epname-number')[0]) {
+      // episode name
+      return document.querySelectorAll('.epname-number')[0].innerHTML; // like " 3. Return to Omashu " 
+    }
   }
   return title + liveEpisodeString(); // who needs a URL when you have a title? :)
 }
@@ -469,7 +488,7 @@ function getRequest (url, success, error) {
 
 function checkIfEpisodeChanged() {
   if (getStandardizedCurrentUrl() != old_current_url || liveAmazonEpisodeNumber() != old_amazon_episode) {
-    console.log("detected move to another video, to " + liveFullMovieName() + "\nfrom\n" +
+    console.log("detected move to another video, to " + liveFullNameEpisode() + "\nfrom\n" +
     old_current_url + " ep. " + old_amazon_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_amazon_episode = liveAmazonEpisodeNumber(); 
@@ -480,7 +499,7 @@ function checkIfEpisodeChanged() {
 function loadFailed() {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   editing_status = "unknown to system";
-  name = liveFullMovieName();
+  name = liveFullNameEpisode();
   amazon_episode_name = liveEpisodeString();
   expected_amazon_episode_number = liveAmazonEpisodeNumber();
   url_id = 0; // reset
@@ -490,7 +509,7 @@ function loadFailed() {
   chrome.runtime.sendMessage(editorExtensionId, {action: "really_stopped"}, function(response) {
     //console.log("response after telling started" + response);
   });
-  if (confirm("We don't appear to have edits for\n" + liveFullMovieName() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
+  if (confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
     alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
     window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
   }
@@ -511,7 +530,7 @@ function loadSuccessful() {
   if (editing_status == "done")
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 
-  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullMovieName() + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
+  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   <% if !File.exists?("./this_is_development") %>
     alert(message);
   <% else %>
