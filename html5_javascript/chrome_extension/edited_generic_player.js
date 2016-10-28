@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-27 19:54:27 -0400.
+// generated at 2016-10-27 19:58:01 -0400.
 
 function getStandardizedCurrentUrl() {
   current_url = window.location.href;
@@ -236,11 +236,9 @@ function addEditUi() {
   });
 
   addEvent(window, "resize", function(event) {
-    console.log("got resize");
     setEditedControlsToTopLeft();
   });
   addEvent(window, "scroll", function(event) {
-    console.log("got scroll");
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
@@ -280,18 +278,17 @@ function addForNewEditToScreen() {
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    getElementById("add_edit_link_id").innerHTML = "Close editor";
+    document.getElementById("add_edit_link_id").innerHTML = "Close editor";
   }
   else {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    getElementById("add_edit_link_id").innerHTML = "Add edit";
+    document.getElementById("add_edit_link_id").innerHTML = "Add edit";
   }
 }
 
 function setEditedControlsToTopLeft() {
-  console.log("moving edited controls to top left...");
-  // discover where the "currently viewed" top left actually is (not always 0,0 apparently)
+  // discover where the "currently viewed" top left actually is (not always 0,0 apparently, it seems)
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
