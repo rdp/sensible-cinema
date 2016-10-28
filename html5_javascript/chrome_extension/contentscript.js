@@ -25,12 +25,11 @@ function findFirstVideoTag() {
     else {
        // don't *want* to work with iframes from the plugin side since they'll get their own edited playback copy
        // hopefully this is enough to prevent double loading (once windows.document, one iframe if they happen to be allowed :|
-     }
-     return null;
-   }
+    }
+    return null;
 }
 
-   function onReady(yourMethod) {
+function onReady(yourMethod) {
      if (document.readyState === 'complete') {
        setTimeout(yourMethod, 1); // schedule to run immediately
      }
@@ -42,7 +41,7 @@ function findFirstVideoTag() {
         }
         }, 10);
      }
-   }
+}
 
 function injectEditedPlayerOnce() {
              if (already_loaded) {
