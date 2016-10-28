@@ -58,12 +58,15 @@ function autoStartOnBigThree() {
   var location = window.location.href;
   if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
     var interval = setInterval(function(){
-      if (findFirstVideoTag(document.body) != null && !findFirstVideoTag(document.body).src.endsWith(".mp4")) { // amazon.com main used mp4's, avoid prompt there :|
+      if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
     }, 50);  // initial delay 50ms but not too bad :)
-  } // else don't do useless timer :)
+  }
+  else {
+    console.log("not auto starting non big 3 " + location);
+  }
 }
 
 onReady(autoStartOnBigThree);

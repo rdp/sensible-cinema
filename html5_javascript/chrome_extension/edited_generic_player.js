@@ -5,17 +5,25 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-27 19:58:01 -0400.
+// generated at 2016-10-28 14:42:13 -0600.
+
+function isGoogleIframe() {
+  return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
+}
 
 function getStandardizedCurrentUrl() {
-  current_url = window.location.href;
+  var current_url = window.location.href;
+  if (isGoogleIframe()) {
+    current_url = document.referrer; // iframe parent url
+  }
   if (current_url.includes("amazon.com")) {
-  if (document.querySelector('link[rel="canonical"]') != null)
-    current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
+    if (document.querySelector('link[rel="canonical"]') != null) {
+      current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
+    }
   }
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
-  if (current_url.includes("amazon.com") || current_url.includes("netflix.com")) {
+  if (current_url.includes("amazon.com") || current_url.includes("netflix.com")) { // known to want to strip off cruft
     current_url = current_url.split("?")[0];
   }
   return current_url;
@@ -35,6 +43,21 @@ function liveAmazonEpisodeName() {
 }
 
 function liveAmazonEpisodeNumber() {
+  if (isGoogleIframe()) {
+    var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0]; // apparently I have backward but not forward visibility. phew.
+    if (numberNameDiv) {
+      var numberName = numberNameDiv.innerHTML; // like " 3. Return to Omashu "
+      var numberName = numberName.trim();
+      var regex =  /(\d+)\. /;
+      if (regex.test(numberName)) {
+        return /(\d+)\. /.exec(numberName)[1];
+      }
+      else {
+        return "0";
+      }
+    }
+  }
+  // amazon :)
   var subtitle = document.getElementsByClassName("subtitle")[0];
   if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/))
     return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
@@ -42,21 +65,24 @@ function liveAmazonEpisodeNumber() {
     return "0"; // anything else
 }
 
-function findFirstVideoTag(node) {
-    // there's probably a jquery way to do this easier :)
-    if (node.nodeType == 1) {
-        if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
-            return node;
-        }
-        node = node.firstChild;
- 
-        while (node) {
-            if ((out = findFirstVideoTag(node)) != null) {
-                return out;
-            }
-            node = node.nextSibling;
-        }
-    }
+
+function findFirstVideoTag() {
+    var all = document.getElementsByTagName("video");
+    if (all.length > 0)
+      return all[0];
+    else {
+     // leave this in here in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
+     // it won't hurt anything...
+     var i, frames;
+     frames = document.getElementsByTagName("iframe");
+     for (i = 0; i < frames.length; ++i) {
+       try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
+        all = frames[i].contentDocument.document.getElementsByTagName("video");
+        if (all.length > 1)
+          return all[0];
+     }
+     return null;
+   }
 }
 
 function areWeWithin(thisArray, cur_time) {
@@ -131,8 +157,16 @@ function liveEpisodeString() {
   end
 }
 
-function liveFullMovieName() {
-  return document.getElementsByTagName("title")[0].innerHTML + " " + liveEpisodeString(); // who needs a URL when you have a title? :)
+function liveFullNameEpisode() {
+  var title = document.getElementsByTagName("title")[0].innerHTML;
+  if (isGoogleIframe()) {
+    title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though
+    if (document.querySelectorAll('.epname-number')[0]) {
+      // episode name
+      return document.querySelectorAll('.epname-number')[0].innerHTML; // like " 3. Return to Omashu " 
+    }
+  }
+  return title + liveEpisodeString(); // who needs a URL when you have a title? :)
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -231,9 +265,7 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
-  chrome.runtime.sendMessage(editorExtensionId, {action: "really_started"}, function(response) {
-    //console.log("response after telling started" + response);
-  });
+  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#00800"}); // green
 
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
@@ -407,6 +439,8 @@ function loadForCurrentUrl() {
   var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
   var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
   
+    url = '//localhost:3000/for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
+  
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
 
@@ -452,7 +486,7 @@ function getRequest (url, success, error) {
 
 function checkIfEpisodeChanged() {
   if (getStandardizedCurrentUrl() != old_current_url || liveAmazonEpisodeNumber() != old_amazon_episode) {
-    console.log("detected move to another video, to " + liveFullMovieName() + "\nfrom\n" +
+    console.log("detected move to another video, to " + liveFullNameEpisode() + "\nfrom\n" +
     old_current_url + " ep. " + old_amazon_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_amazon_episode = liveAmazonEpisodeNumber(); 
@@ -463,26 +497,24 @@ function checkIfEpisodeChanged() {
 function loadFailed() {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   editing_status = "unknown to system";
-  name = liveFullMovieName();
+  name = liveFullNameEpisode();
   amazon_episode_name = liveEpisodeString();
   expected_amazon_episode_number = liveAmazonEpisodeNumber();
   url_id = 0; // reset
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {action: "really_stopped"}, function(response) {
-    //console.log("response after telling started" + response);
-  });
-  if (confirm("We don't appear to have edits for\n" + liveFullMovieName() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
+  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
+  if (confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
     alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
-    window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
+    window.open("https://localhost:3000/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
   }
   startWatcherOnce(); // so it can check if episode changes to one we like :)
 }
 
 function loadSuccessful() {
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    alert("danger: this may have been the wrong url? this_page=" + window.location.href + " edits expected from=" + expected_current_url + " or " + amazon_second_url);
+    alert("danger: this may have been the wrong url? this_page=" + window.location.href + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
   if (liveAmazonEpisodeNumber() != expected_amazon_episode_number) {
@@ -494,9 +526,9 @@ function loadSuccessful() {
   if (editing_status == "done")
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 
-  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullMovieName() + " " + liveEpisodeString() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
+  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   
-    alert(message);
+    console.log("not showing message as popup since is development:\n" + message);
   
 }
 
@@ -510,16 +542,25 @@ function startWatcherOnce() {
 }
 
 function start() {
-  video_element = findFirstVideoTag(document.body);
+  video_element = findFirstVideoTag();
+
   if (video_element == null) { 
     alert("failure: unable to find a video playing, not loading edited playback...");
-    // this one's pretty serious, just let it die...
+    // this one's pretty serious, just let it die...plugin should not have let us get this far
   }
-  else {
-    addEditUi();
-    loadForCurrentUrl();
+
+  if (isGoogleIframe()) {
+    if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
+      // iframe started from a non "details" page
+      // TODO we have access to the ID's, use it instead of hard fail, allow the index, man!
+      alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
+    }
   }
+
+  // ready to try and load the editor LOL
+  addEditUi();
+  loadForCurrentUrl();
 }
 
-// load no jquery since this page might already have it loaded, so avoid any fonclit.  [plus speedup load times LOL]
+// no jquery since this page might already have it loaded, so avoid any conflict.  [plus speedup load times LOL]
 start();

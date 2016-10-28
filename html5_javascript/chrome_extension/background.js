@@ -4,18 +4,10 @@
 
 
 update_icon = function(request, sender, sendResponse) {
-    console.log('received message to background');
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       var active_tab_id = tabs[0].id;
-      // TODO show on the background UI text current status as well :|
-      if (request.action == "really_stopped") {
-        chrome.browserAction.setBadgeText({ text: "NO", tabId: active_tab_id });
-        chrome.browserAction.setBadgeBackgroundColor({ color: "#800000" }); // red
-      }
-      else if (request.action == "really_started") {
-        chrome.browserAction.setBadgeText({ text: "YES", tabId: active_tab_id });
-        chrome.browserAction.setBadgeBackgroundColor({ color: "#008000" }); // green
-      }
+      chrome.browserAction.setBadgeText({ text: request.text, tabId: active_tab_id });
+      chrome.browserAction.setBadgeBackgroundColor({ color: request.color }); // red
     });
 };
 
@@ -23,6 +15,6 @@ chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js
 
 chrome.runtime.onMessageExternal.addListener(update_icon); // from real page [those allowed to anyway :| ]
 
-// start:
+// default:
 chrome.browserAction.setBadgeText({ text: "off" });
 chrome.browserAction.setBadgeBackgroundColor({ color:"#808080" }); // grey
