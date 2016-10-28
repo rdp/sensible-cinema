@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-28 16:47:30 -0400.
+// generated at 2016-10-28 16:51:15 -0400.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -437,7 +437,9 @@ function stepFrame() {
 
 function loadForCurrentUrl() {
   var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
   var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
+  url = '//cleanstream.inet2.org/ + direct_lookup; # SSL FTW
   
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
