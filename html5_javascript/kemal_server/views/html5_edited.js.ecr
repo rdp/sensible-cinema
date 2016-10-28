@@ -7,11 +7,19 @@ if (typeof clean_stream_timer !== 'undefined') {
 
 // generated at <%= Time.now %>.
 
+function isGoogleIframe() {
+  return window.location.hostname =~ /play.google.com/; // assume we're in an iframe, should be safe assumption
+}
+
 function getStandardizedCurrentUrl() {
   current_url = window.location.href;
+  if (isGoogleIframe()} {
+    current_url = document.referrer; // iframe parent url
+  }
   if (current_url.includes("amazon.com")) {
-  if (document.querySelector('link[rel="canonical"]') != null)
-    current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
+    if (document.querySelector('link[rel="canonical"]') != null) {
+      current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
+    }
   }
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
@@ -135,7 +143,11 @@ function liveEpisodeString() {
 }
 
 function liveFullMovieName() {
-  return document.getElementsByTagName("title")[0].innerHTML + " " + liveEpisodeString(); // who needs a URL when you have a title? :)
+  var title = document.getElementsByTagName("title")[0].innerHTML;
+  if (isGooglePlayIframe()) {
+    title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though
+  }
+  return title + liveEpisodeString(); // who needs a URL when you have a title? :)
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -487,7 +499,7 @@ function loadFailed() {
 
 function loadSuccessful() {
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    alert("danger: this may have been the wrong url? this_page=" + window.location.href + " edits expected from=" + expected_current_url + " or " + amazon_second_url);
+    alert("danger: this may have been the wrong url? this_page=" + window.location.href + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
   if (liveAmazonEpisodeNumber() != expected_amazon_episode_number) {
@@ -519,7 +531,7 @@ function startWatcherOnce() {
 function start() {
   video_element = findFirstVideoTag();
 
-  if ((window.location != window.parent.location)) {
+  if (isGoogleIframe()) {
     if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
     // iframe started from a non "details" page
     // TODO we have access to the ID's, use it instead of hard fail, allow the index, man!
@@ -529,8 +541,8 @@ function start() {
     alert("failure: unable to find a video playing, not loading edited playback...");
     // this one's pretty serious, just let it die...plugin should not have let us get this far
   }
-  else if ((window.location != window.parent.location) && !window.parent.location.pathname.startsWith("/store/movies/details"))
   else {
+    // ready to try and load the editor LOL
     addEditUi();
     loadForCurrentUrl();
   }
