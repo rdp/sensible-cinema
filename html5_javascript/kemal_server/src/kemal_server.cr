@@ -214,7 +214,7 @@ def get_title_and_canonical_url(real_url)
     [title, standardize_url(real_url)] # standardize in case it is smile.amazon
 end
 
-get "/new_url" do |env|
+get "/new_url" do |env| # add_url
   real_url = standardize_url(env.params.query["url"])
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i
   amazon_episode_name = env.params.query["amazon_episode_name"]
