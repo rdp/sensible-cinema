@@ -517,7 +517,7 @@ function startWatcherOnce() {
 }
 
 function start() {
-  video_element = findFirstVideoTag(document.body);
+  video_element = findFirstVideoTag();
   if (video_element == null) { 
     alert("failure: unable to find a video playing, not loading edited playback...");
     // this one's pretty serious, just let it die...
