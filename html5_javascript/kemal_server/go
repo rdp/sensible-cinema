@@ -1,3 +1,0 @@
-#!/usr/bin/env fish
-echo "non ssl"
-crystal run ./src/kemal_server.cr
