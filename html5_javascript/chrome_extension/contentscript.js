@@ -1,4 +1,4 @@
-// content script runs on every page...
+// content script runs on every page...and once again on each embedded iframe
 
 function injectJs(link) {
   var scr = document.createElement('script');
@@ -23,13 +23,8 @@ function findFirstVideoTag() {
     if (all.length > 0)
       return all[0];
     else {
-     var i, frames;
-     frames = document.getElementsByTagName("iframe");
-     for (i = 0; i < frames.length; ++i) {
-       try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
-        all = frames[i].contentDocument.document.getElementsByTagName("video");
-        if (all.length > 1)
-          return all[0];
+       // don't *want* to work with iframes from the plugin side since they'll get their own edited playback copy
+       // hopefully this is enough to prevent double loading (once windows.document, one iframe if they happen to be allowed :|
      }
      return null;
    }

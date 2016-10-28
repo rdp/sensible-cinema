@@ -42,21 +42,24 @@ function liveAmazonEpisodeNumber() {
     return "0"; // anything else
 }
 
-function findFirstVideoTag(node) {
-    // there's probably a jquery way to do this easier :)
-    if (node.nodeType == 1) {
-        if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
-            return node;
-        }
-        node = node.firstChild;
- 
-        while (node) {
-            if ((out = findFirstVideoTag(node)) != null) {
-                return out;
-            }
-            node = node.nextSibling;
-        }
-    }
+
+function findFirstVideoTag() {
+    var all = document.getElementsByTagName("video");
+    if (all.length > 0)
+      return all[0];
+    else {
+     // leave this in here in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
+     // it won't hurt anything...
+     var i, frames;
+     frames = document.getElementsByTagName("iframe");
+     for (i = 0; i < frames.length; ++i) {
+       try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
+        all = frames[i].contentDocument.document.getElementsByTagName("video");
+        if (all.length > 1)
+          return all[0];
+     }
+     return null;
+   }
 }
 
 function areWeWithin(thisArray, cur_time) {
