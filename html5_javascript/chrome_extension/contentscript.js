@@ -18,22 +18,36 @@ chrome.runtime.onMessage.addListener(
          }
 });
 
-function findFirstVideoTag(node) {
-    // there's probably a jquery way to do this easier :)
-    if (node.nodeType == 1) {
-        if (node.tagName.toUpperCase() == 'VIDEO') { // assume html 5 <VIDEO  ...
-            return node;
-        }
-        node = node.firstChild;
-
-        while (node) {
-            if ((out = findFirstVideoTag(node)) != null) {
-                return out;
-            }
-            node = node.nextSibling;
-        }
-    }
+function findFirstVideoTag() {
+    var all = document.getElementsByTagName("video");    
+    if (all.length > 0)
+      return all[0];
+    else {
+     var i, frames;
+     frames = document.getElementsByTagName("iframe");
+     for (i = 0; i < frames.length; ++i) {
+       try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
+        all = frames[i].contentDocument.document.getElementsByTagName("video");
+        if (all.length > 1)
+          return all[0];
+     }
+     return null;
+   }
 }
+
+   function onReady(yourMethod) {
+     if (document.readyState === 'complete') {
+       setTimeout(yourMethod, 1); // schedule to run immediately
+     }
+     else {
+       readyStateCheckInterval = setInterval(function() {
+         if (document.readyState === 'complete') {
+           clearInterval(readyStateCheckInterval);
+           yourMethod();
+        }
+        }, 10);
+     }
+   }
 
 function injectEditedPlayerOnce() {
              if (already_loaded) {
@@ -49,15 +63,14 @@ function injectEditedPlayerOnce() {
 function autoStartOnBigThree() {
   var location = window.location.href;
   if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
-    injectEditedPlayerOnce();
-  }
-  // for the rest, they have to click plugin link :|
+    var interval = setInterval(function(){
+      if (findFirstVideoTag(document.body) != null && !findFirstVideoTag(document.body).src.endsWith(".mp4")) { // amazon.com main used mp4's, avoid prompt there :|
+        injectEditedPlayerOnce();
+        clearInterval(interval);
+      }
+    }, 50);  // initial delay 50ms but not too bad :)
+  } // else don't do useless timer :)
 }
 
-var interval = setInterval(function(){
-  if (findFirstVideoTag(document.body) != null && !findFirstVideoTag(document.body).src.endsWith(".mp4")) { // amazon.com main used mp4's, avoid prompt there :|
-    autoStartOnBigThree();
-    clearInterval(interval);
-  }
-}, 50); 
+onReady(autoStartOnBigThree);
 

@@ -14,6 +14,7 @@
     "<all_urls>", "tabs" 
   ],
   "content_scripts": [{
+      "all_frames": true,
       "js": ["contentscript.js"],
       "matches": ["<all_urls>"]
   }],
