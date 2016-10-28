@@ -32,10 +32,6 @@ def standardize_url(unescaped)
   unescaped
 end
 
-get "/for_current_just_settings" do |env|
-  get_for_current(env, "html5_edited.just_settings.js")
-end
-
 get "/for_current_just_settings_json" do |env|
   get_for_current(env, "html5_edited.just_settings.json")
 end
@@ -81,11 +77,9 @@ def javascript_for(db_url, env, type)
     request_host =  env.request.headers["Host"] # like localhost:3000
     if type == "html5_edited.js"
       render "views/html5_edited.js.ecr"
-    elsif type == "html5_edited.just_settings.json"
-      render "views/html5_edited.just_settings.json.ecr"
     else
-      raise "wrong type" + type if type != "html5_edited.just_settings.js"
-      render "views/html5_edited.just_settings.js.ecr"
+      raise("huh type") if type != "html5_edited.just_settings.json"
+      render "views/html5_edited.just_settings.json.ecr"
     end
   end
 end
@@ -269,7 +263,7 @@ def save_local_javascript(db_urls, log_message, env)
       File.open("edit_descriptors/log.txt", "a") do |f|
         f.puts log_message + " " + db_url.name_with_episode
       end
-      ["html5_edited.just_settings.js", "html5_edited.js", "html5_edited.just_settings.json"].each  do |type|
+      ["html5_edited.js", "html5_edited.just_settings.json"].each  do |type|
         as_javascript = javascript_for(db_url, env, type)
         escaped_url_no_slashes = URI.escape url
         File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
