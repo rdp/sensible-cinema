@@ -225,13 +225,14 @@ get "/new_url" do |env|
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
     sanitized_url = sanitize_html real_url
-    title = sanitize_html title
     # cleanup title cruft
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies &amp; TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
+    puts "title ended as #{title}"
+    title = sanitize_html title # do after to avoid &amp;amp; weirdness
     url = Url.new
     url.url = sanitized_url
     if title.includes?(":") && real_url.includes?("amazon.com")
