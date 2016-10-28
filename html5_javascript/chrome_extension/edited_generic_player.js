@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-28 16:57:09 -0400.
+// generated at 2016-10-28 17:42:41 -0600.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -160,9 +160,14 @@ function liveEpisodeString() {
 function liveFullNameEpisode() {
   var title = document.getElementsByTagName("title")[0].innerHTML;
   if (isGoogleIframe()) {
-    title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though
+    title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :)
+    console.log("playing title:" + document.querySelectorAll('.playing-title')[0]);
+    if (document.querySelectorAll('.playing-title')[0]) {
+      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though, works for non episodes
+    }
+    console.log("epname" + document.querySelectorAll('.epname-number')[0]);
     if (document.querySelectorAll('.epname-number')[0]) {
-      // episode name
+      // episode name, seems to accidentally work LOL
       return document.querySelectorAll('.epname-number')[0].innerHTML; // like " 3. Return to Omashu " 
     }
   }
@@ -441,6 +446,8 @@ function loadForCurrentUrl() {
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
   url = '//cleanstream.inet2.org/' + direct_lookup; // SSL FTW
   
+    url = '//localhost:3000/' + direct_lookup;
+  
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
 
@@ -472,13 +479,23 @@ function getRequest (url, success, error) {
   xhr.onreadystatechange = function(){ 
     if ( xhr.readyState == 4 ) { 
       if ( xhr.status == 200 ) { 
+        console.log("success download");
         success(xhr.responseText); 
       } else { 
+        console.log("fail download 1" + error);
+try {
         error(); 
+}
+catch(err) {
+    alert(err.message);
+    alert(err.stack);
+}
+        console.log("done calling error..");
       } 
     } 
   }; 
   xhr.onerror = function () { 
+    console.log("fail download 2");
     error(xhr, xhr.status); 
   }; 
   xhr.send(); 
@@ -504,10 +521,11 @@ function loadFailed() {
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
+  console.log("here1");
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
   if (confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
     alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
-    window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
+    window.open("https://localhost:3000/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
   }
   startWatcherOnce(); // so it can check if episode changes to one we like :)
 }
@@ -528,7 +546,7 @@ function loadSuccessful() {
 
   var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   
-    alert(message);
+    console.log("not showing message as popup since is development:\n" + message);
   
 }
 

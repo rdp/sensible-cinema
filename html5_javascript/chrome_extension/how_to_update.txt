@@ -1,2 +1,5 @@
 generate any one movie from "live" site, copy it to generic, done.
 curl -k "https://cleanstream.inet2.org/for_current?url=https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK&amazon_episode_number=5" > ./edited_generic_player.js
+or
+curl -k "https://localhost:3000/for_current?url=https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK&amazon_episode_number=5" > ./edited_generic_player.js
+and try and remember not to commit it LOL

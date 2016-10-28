@@ -22,15 +22,15 @@ details (non-spoiler synopsis, actor names, etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 
+episode_number (0 if none)
+<input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
+<br/>
+
+amazon_episode_name (if any)
+<input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>"/>
+<br/>
+
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon_episode_number (0 if none)
-  <input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
-  <br/>
-
-  amazon_episode_name (if any)
-  <input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>"/>
-  <br/>
-
   is_amazon_prime
   <select name="is_amazon_prime" id='is_amazon_prime_select'>
     <option value="0">no</option>

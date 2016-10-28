@@ -215,7 +215,7 @@ def get_title_and_canonical_url(real_url)
 end
 
 get "/new_url" do |env|
-  real_url = standardize_url(env.params.query["url"]) # might be an amazon url that has canonical so skip /gp/ check 
+  real_url = standardize_url(env.params.query["url"])
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i
   amazon_episode_name = env.params.query["amazon_episode_name"]
   title, real_url = get_title_and_canonical_url real_url  

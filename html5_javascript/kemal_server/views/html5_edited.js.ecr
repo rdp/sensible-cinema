@@ -160,9 +160,15 @@ function liveEpisodeString() {
 function liveFullNameEpisode() {
   var title = document.getElementsByTagName("title")[0].innerHTML;
   if (isGoogleIframe()) {
-    title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though
+    title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :)
+    console.log("playing title:" + document.querySelectorAll('.playing-title')[0]);
+    if (document.querySelectorAll('.playing-title')[0]) {
+      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" lacks ep. though, works for non episodes
+    }
+    var epname = window.parent.document.querySelectorAll('.epname-number')[0];
+    console.log("epname" + epname);
     if (document.querySelectorAll('.epname-number')[0]) {
-      // episode name
+      // episode name, seems to accidentally work LOL
       return document.querySelectorAll('.epname-number')[0].innerHTML; // like " 3. Return to Omashu " 
     }
   }
@@ -474,13 +480,23 @@ function getRequest (url, success, error) {
   xhr.onreadystatechange = function(){ 
     if ( xhr.readyState == 4 ) { 
       if ( xhr.status == 200 ) { 
+        console.log("success download");
         success(xhr.responseText); 
       } else { 
+        console.log("fail download 1" + error);
+try {
         error(); 
+}
+catch(err) {
+    alert(err.message);
+    alert(err.stack);
+}
+        console.log("done calling error..");
       } 
     } 
   }; 
   xhr.onerror = function () { 
+    console.log("fail download 2");
     error(xhr, xhr.status); 
   }; 
   xhr.send(); 
@@ -506,6 +522,7 @@ function loadFailed() {
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
+  console.log("here1");
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
   if (confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
     alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
