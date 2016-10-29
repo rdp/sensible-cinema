@@ -6,33 +6,24 @@
  -->
 <html>
   <head>
-    <title>my popupp</title> <!-- never shown ?? -->
     <style>
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
       }
       #request_edit_div {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
         min-width: 450px;
         max-width: 1400px;
       }
     </style>
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
+    <!-- JavaScript and HTML must be in separate files: see Content Security -->
     <script src="popup.js"></script>
   </head>
   <body>
     <div id="request_edit_div"><a href=# id=edited_requested>Enable edited playback for video currently playing here</a></div>
     <br/>
+    <span id="status_text_popup"></span>
     <br/>
     <a href="http://cleanstream.inet2.org" id="index_link">View list of all movies that currently have edits.</a>
   </body>

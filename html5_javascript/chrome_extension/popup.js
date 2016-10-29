@@ -21,6 +21,12 @@ function loadEditedPlayback() {
 }
 
 function openIndex() {
-  // this is how you have to do links in a popup [yikeserz]
+  // this is how you have to do links from popup [yikeserz]
   chrome.tabs.create({active: true, url: "http://cleanstream.inet2.org"});
 }
+
+update_status = function(request, sender, sendResponse) {
+  document.getElementById("status_text_popup").innerHTML = request.text; // also request.color hrm
+}
+
+chrome.runtime.onMessageExternal.addListener(update_status); // message from real page [those allowed to anyway :| ]
