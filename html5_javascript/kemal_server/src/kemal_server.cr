@@ -226,13 +226,12 @@ get "/new_url" do |env| # add_url
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
-    # cleanup title cruft
+    # cleanup various title crufts
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies &amp; TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
-    puts "title ended as #{title}"
     title = sanitize_html title # do after to avoid &amp;amp; weirdness
     url = Url.new
     url.url = sanitized_url
@@ -244,7 +243,7 @@ get "/new_url" do |env| # add_url
     end
     url.amazon_episode_name = amazon_episode_name
     url.amazon_episode_number = amazon_episode_number
-    url.editing_status = "not started yet"
+    url.editing_status = "just begun editing process"
     url.save 
     env.redirect "/edit_url/#{url.id}"
   end

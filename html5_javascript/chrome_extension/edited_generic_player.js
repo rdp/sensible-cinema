@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-28 22:16:49 -0400.
+// generated at 2016-10-29 00:22:44 -0400.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -518,10 +518,14 @@ function loadFailed() {
   console.log("here1");
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
   if (confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
-    alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
     window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
+    setTimeout(function() {
+      loadForCurrentUrl();
+    }, 2000); // it should auto save so we should be like live instantly...
   }
-  startWatcherOnce(); // so it can check if episode changes to one we like :)
+  else {
+    startWatcherOnce(); // so it can check if episode changes to one we like :)
+  }
 }
 
 function loadSuccessful() {
