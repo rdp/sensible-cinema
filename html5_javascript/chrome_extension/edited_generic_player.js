@@ -285,7 +285,7 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
-  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#00800"}); // green
+  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000"}); // green
 
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
@@ -529,7 +529,7 @@ function loadFailed(status) {
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
+  chrome.runtime.sendMessage(editorExtensionId, {color: "#900000", text: "NO"}); // red
   if (status > 0 && confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
     window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {

@@ -285,7 +285,7 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
-  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#00800"}); // green
+  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000"}); // green
 
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();

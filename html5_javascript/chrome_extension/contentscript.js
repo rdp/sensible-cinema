@@ -11,9 +11,8 @@ already_loaded = false;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        // got probably a message from them clicking the link in the browser popup icon
         if (request.action == "please_start") {
-            console.log('got message to start');
+            console.log('got message to start from popup');
             injectEditedPlayerOnce();
          }
 });
@@ -50,13 +49,14 @@ function injectEditedPlayerOnce() {
              else {
                 already_loaded = true;
                 injectJs(chrome.extension.getURL('edited_generic_player.js'));
-                // appears background.js is the only thing that can adjust the icon, so could send it a message, but why these days...
+                // appears background.js is the only thing that can adjust the icon, so could send it a message, but why these days...the script sends it an immediate message either way anyway
              }
 }
 
 function autoStartOnBigThree() {
   var location = window.location.href;
   if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
+    chrome.runtime.sendMessage({text: "wait", color: "#0000FF"}); 
     var interval = setInterval(function(){
       if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
         injectEditedPlayerOnce();
@@ -66,6 +66,8 @@ function autoStartOnBigThree() {
   }
   else {
     console.log("not auto starting non big 3 " + location);
+    // light blue #ADD8E6
+    chrome.runtime.sendMessage({text: "non", color: "#3333FF"}); 
   }
 }
 
