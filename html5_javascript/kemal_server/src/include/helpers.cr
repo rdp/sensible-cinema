@@ -1,5 +1,9 @@
+require "html"
+
+# and override :)
 module HTML
-  def self.unescape(string : String)
+
+  def self.unescape(string : String) # possibly don't need this anymore dep. on crystal version
     return string unless string.includes? '&'
     charlimit = 0x10ffff
 
@@ -28,6 +32,29 @@ module HTML
       else
         "&#{match};"
       end
+    end
+  end
+
+  # see https://github.com/crystal-lang/crystal/issues/3233
+  # I should be OK "ignoring" javascript since I use JSON anyway now...
+  # and attributes? who cares, right? :)
+  SUBSTITUTIONS.clear()
+  SUBSTITUTIONS.merge({
+    '&'      => "&amp;",
+    '<'      => "&lt;",
+    '>'      => "&gt;",
+    '"'      => "&quot;",
+    '\''      => "&#x27;",
+    '/'      => "&#x2F;"
+  })
+
+  def self.escape(string : String)
+    string.gsub(SUBSTITUTIONS)
+  end
+
+  def self.escape(string : String, io : IO)
+    string.each_char do |char|
+      io << SUBSTITUTIONS.fetch(char, char)
     end
   end
 end
