@@ -32,6 +32,7 @@ function getStandardizedCurrentUrl() {
 
 function liveAmazonEpisodeName() {
   if (document.getElementsByClassName("subtitle").length > 0) {
+    // amazon
     split = document.getElementsByClassName("subtitle")[0].innerHTML.split(/Ep. \d+/); // like "Season 3, Ep. 3 The Painted Lady"
     if(split.length == 2)
       return split[1].trim();
@@ -39,6 +40,19 @@ function liveAmazonEpisodeName() {
       return split[0].trim();
   }
   else
+    if (isGoogleIframe()) {
+      var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0]; // apparently I have backward but not forward visibility. phew.
+      if (numberNameDiv) {
+        var numberName = numberNameDiv.innerHTML; // like " 3. Return to Omashu "
+        var numberName = numberName.trim();
+        var regex =  /(\d+)\. /; 
+        if (regex.test(numberName)) {
+          return numberName.split(regex)[2];
+        }
+        // ??
+        return numberName;
+     }
+    }
     return "";
   end
 }
@@ -158,16 +172,21 @@ function liveEpisodeString() {
   end
 }
 
-function liveFullNameEpisode() {
+function liveTitleNoEpisode() {
   var title = document.getElementsByTagName("title")[0].innerHTML;
   if (isGoogleIframe()) {
-    title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :)
-    console.log("playing title:" + document.querySelectorAll('.playing-title')[0]);
-    if (document.querySelectorAll('.playing-title')[0]) {
-      title = document.querySelectorAll('.playing-title')[0].innerHTML; // like "Return to Omashu" no ep. (also works non episode)
+    title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :) "Avatar Extras - Movies &amp; TV on Google Play"
+    var season_episode = window.parent.document.querySelectorAll('.title-season-episode-num')[0];
+    if (season_episode) {
+      title += season_episode.innerHTML.split(",")[0]; // like " Season 2, Episode 2 "
     }
+    // don't add episode name
   }
-  return title + liveEpisodeString(); // who needs a URL when you have a title? :)
+  return title;
+}
+
+function liveFullNameEpisode() {
+  return liveTitleNoEpisode() + liveEpisodeString(); 
 }
 
 function timestamp_log(message, cur_time, last_start, last_end) {
@@ -454,13 +473,12 @@ function parseSuccessfulJson(json) {
   name=url.name;
   editing_status = url.editing_status;
   amazon_episode_name=url.amazon_episode_name;
-  // now lazy :|
+  // don't parse them, be lazy for now
   mutes=out.mutes;
   skips=out.skips;
   yes_audio_no_videos=out.yes_audio_no_videos;
   do_nothings=out.do_nothings;
   expected_current_url=out.expected_url_unescaped;
-  console.log("from url=" + url.url + " decoded=" + expected_current_url);
   amazon_second_url=out.url;
   expected_amazon_episode_number=url.amazon_episode_number;
   url_id=url.id;
@@ -515,10 +533,10 @@ function loadFailed(status) {
   old_amazon_episode = liveAmazonEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
   if (status > 0 && confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
-    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
+    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {
       loadForCurrentUrl();
-    }, 2000); // it should auto save so we should be like live instantly...
+    }, 3000); // it should auto save so we should be like live instantly...
   }
   else {
     // server down or want to watch unedited...

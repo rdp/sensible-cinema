@@ -216,11 +216,21 @@ def get_title_and_sanitized_canonical_url(real_url)
     [title, sanitize_html standardize_url(real_url)] # standardize in case it is smile.amazon
 end
 
+class String
+  def present?
+    size > 0
+  end
+end
+
 get "/new_url" do |env| # add_url
   real_url = standardize_url(env.params.query["url"])
-  amazon_episode_number = env.params.query["amazon_episode_number"].to_i
-  amazon_episode_name = env.params.query["amazon_episode_name"]
-  title, sanitized_url = get_title_and_sanitized_canonical_url real_url  
+  incoming = env.params.query
+  amazon_episode_number = incoming["amazon_episode_number"].to_i
+  amazon_episode_name = incoming["amazon_episode_name"]
+  title, sanitized_url = get_title_and_sanitized_canonical_url real_url
+  if incoming["title"].present?
+    title = incoming["title"] # XX always just use this :|
+  end
   url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
   if url_or_nil != nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
@@ -284,7 +294,7 @@ post "/save_url" do |env|
   # these get injected everywhere later so sanitize everything up front... :|
   incoming_url = sanitize_html incoming_url
   amazon_second_url = HTML.unescape(params["amazon_second_url"])
-  if amazon_second_url.size > 0
+  if amazon_second_url.present?
     _ , amazon_second_url = get_title_and_sanitized_canonical_url amazon_second_url
   end
   details = sanitize_html HTML.unescape(params["details"])
