@@ -520,10 +520,14 @@ function loadFailed() {
   console.log("here1");
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
   if (confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
-    alert("OK after you save it you'll need to refresh this browser window  after a few minutes, for it to be loadable here...");
     window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()), "_blank");
+    setTimeout(function() {
+      loadForCurrentUrl();
+    }, 2000); // it should auto save so we should be like live instantly...
   }
-  startWatcherOnce(); // so it can check if episode changes to one we like :)
+  else {
+    startWatcherOnce(); // so it can check if episode changes to one we like :)
+  }
 }
 
 function loadSuccessful() {
