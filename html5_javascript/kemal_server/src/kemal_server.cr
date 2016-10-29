@@ -20,6 +20,7 @@ end
  
 def standardized_param_url(env)
   unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
+  puts "unescape #{unescaped}"
   standardize_url unescaped
 end
 
@@ -41,14 +42,15 @@ get "/for_current" do |env|
 end
 
 def get_for_current(env, type)
-  standardized_param_url = standardized_param_url(env)
-  amazon_episode_number = env.params.query["amazon_episode_number"].to_i # "always there" :)
+  sanitized_url = sanitize_html standardized_param_url(env)
+  amazon_episode_number = env.params.query["amazon_episode_number"].to_i # should always be present :)
+  puts "looking for #{sanitized_url} #{amazon_episode_number}"
   # this one looks up by URL and episode number
   with_db do |conn|
-    url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(standardized_param_url, amazon_episode_number)
+    url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
     if !url_or_nil
-      "none for this movie yet" # not sure if json or javascript LOL
-      env.response.status_code = 404
+      env.response.status_code = 403 # avoid kemal default 404 handler :|
+      "none for this movie yet #{sanitized_url} #{amazon_episode_number}" # not sure if json or javascript LOL
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -187,7 +189,7 @@ get "/view_url/:url_id" do |env|
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
-def get_title_and_canonical_url(real_url)
+def get_title_and_sanitized_canonical_url(real_url)
     begin
       response = HTTP::Client.get real_url # download that page :)
     rescue ex
@@ -211,20 +213,19 @@ def get_title_and_canonical_url(real_url)
       raise "appears you're using an amazon web page that is an old style like /gp/ if this is a new movie, please search in amazon for it again, and you should find a url like /dp/, and use that
              if it is an existing movie, enter it as the amazon_second_url instead of main url"
     end
-    [title, standardize_url(real_url)] # standardize in case it is smile.amazon
+    [title, sanitize_html standardize_url(real_url)] # standardize in case it is smile.amazon
 end
 
 get "/new_url" do |env| # add_url
   real_url = standardize_url(env.params.query["url"])
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i
   amazon_episode_name = env.params.query["amazon_episode_name"]
-  title, real_url = get_title_and_canonical_url real_url  
-  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(real_url, amazon_episode_number)
+  title, sanitized_url = get_title_and_sanitized_canonical_url real_url  
+  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
   if url_or_nil != nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
-    sanitized_url = sanitize_html real_url
     # cleanup title cruft
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies &amp; TV on Google Play", "")
@@ -279,14 +280,13 @@ end
 post "/save_url" do |env|
   params = env.params.body # POST params
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
-  incoming_url = HTML.unescape(params["url"])
-  _ , incoming_url = get_title_and_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
+  incoming_url = params["url"] # already unescaped I think...
+  _ , incoming_url = get_title_and_sanitized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
   # these get injected everywhere later so sanitize everything up front... :|
   incoming_url = sanitize_html incoming_url
   amazon_second_url = HTML.unescape(params["amazon_second_url"])
   if amazon_second_url.size > 0
-    _ , amazon_second_url = get_title_and_canonical_url amazon_second_url
-    amazon_second_url = sanitize_html amazon_second_url
+    _ , amazon_second_url = get_title_and_sanitized_canonical_url amazon_second_url
   end
   details = sanitize_html HTML.unescape(params["details"])
   editing_status = params["editing_status"]

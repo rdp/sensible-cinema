@@ -5,7 +5,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (both disallowed these days)
 }
 
-// generated at 2016-10-28 17:47:33 -0600.
+// generated at 2016-10-28 20:13:10 -0600.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -447,7 +447,7 @@ function loadForCurrentUrl() {
 }
 
 function parseSuccessfulJson(json) {
-  var out = JSON.parse(json);
+  out = JSON.parse(json);
   // assume right format LOL
   url = out.url;
   name=url.name;
@@ -458,7 +458,8 @@ function parseSuccessfulJson(json) {
   skips=out.skips;
   yes_audio_no_videos=out.yes_audio_no_videos;
   do_nothings=out.do_nothings;
-  expected_current_url=url.url;
+  expected_current_url=out.expected_url_unescaped;
+  console.log("from url=" + url.url + " decoded=" + expected_current_url);
   amazon_second_url=out.url;
   expected_amazon_episode_number=url.amazon_episode_number;
   url_id=url.id;

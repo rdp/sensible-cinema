@@ -1,6 +1,7 @@
 {
 "_comment": "generated at <%= Time.now %>.",
 "url": <%= db_url.to_json %>,
+"expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescpe or stably escape in javascript :? %>
 "edits":
 [ <%= db_url.edls.map{| edl| edl.to_json}.join(",") %> ],
 "request_host": "<%= request_host %>",

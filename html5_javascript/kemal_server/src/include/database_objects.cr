@@ -5,7 +5,7 @@ require "json"
 class Url
   DB.mapping({
     id: Int32,
-    url:  String,
+    url:  String, # actually "HTML" encoded, along with everything else :)
     amazon_second_url:  String,
     name: String,
     details: String,
@@ -116,13 +116,16 @@ class Url
   end
 
   def destroy
+    edls.each{|edl|
+      edl.destroy
+    }
     with_db do |conn|
       conn.exec("delete from urls where id = ?", id)
     end
   end
 
   def url_lookup_params
-    "url=#{url}&amazon_episode_number=#{amazon_episode_number}"
+    "url=#{URI.escape url}&amazon_episode_number=#{amazon_episode_number}" # URI.escape == escapeComponent
   end
 
   def host_like_netflix
