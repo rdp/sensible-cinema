@@ -53,10 +53,24 @@ function injectEditedPlayerOnce() {
              }
 }
 
+function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
 function autoStartOnBigThree() {
   var location = window.location.href;
   if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
-    chrome.runtime.sendMessage({text: "wait", color: "#0000FF", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if can playback edited"}); 
+    if (inIframe()) { // checking for google not reliable here since some of its iframes are like play5.google.com
+      // google iframes popup after it says YES and reset it back to wait in error :|
+      console.log("not setting to wait from iframe");
+    }
+    else {
+      chrome.runtime.sendMessage({text: "wait", color: "#0000FF", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if can playback edited"}); 
+    }
     var interval = setInterval(function(){
       if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
         injectEditedPlayerOnce();

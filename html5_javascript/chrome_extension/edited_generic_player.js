@@ -6,10 +6,18 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-10-31 13:21:55 -0600.
+// generated at 2016-10-31 13:35:33 -0600.
+
+function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
 
 function isGoogleIframe() {
-  return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
+  return inIframe() && /google.com/.test(window.location.hostname); 
 }
 
 function getStandardizedCurrentUrl() {
@@ -459,7 +467,7 @@ function loadForCurrentUrl() {
   var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
   var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
-  url = '//localhost:3000/' + direct_lookup; // SSL for both in theory :)
+  url = '//cleanstream.inet2.org/' + direct_lookup; // SSL for both in theory :)
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
 
@@ -530,7 +538,7 @@ function loadFailed(status) {
   old_amazon_episode = liveAmazonEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0 && confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
-    window.open("https://localhost:3000/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
+    window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {
       loadForCurrentUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|

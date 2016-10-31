@@ -8,8 +8,16 @@ if (typeof clean_stream_timer !== 'undefined') {
 
 // generated at <%= Time.now %>.
 
+function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
 function isGoogleIframe() {
-  return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
+  return inIframe() && /google.com/.test(window.location.hostname); 
 }
 
 function getStandardizedCurrentUrl() {

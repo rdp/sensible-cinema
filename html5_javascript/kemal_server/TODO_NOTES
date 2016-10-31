@@ -1,10 +1,4 @@
 == todo ===
-iframes no loading..
-"resync" button :|
-
-can duplicate episodes :)
-  add_url duplicate from "any previous episode" LOL
-
 auto start "if exists"
   does mine work wiht utube?
 
@@ -13,14 +7,12 @@ SSL cert??
 bootloader is broken :|
 show on "Add it" that it never loaded "OFF" as it were...
 
-can set the OFF ON from other pages :|
-
 publish more browser dev consoles :)
 
 chrome extension
   publish :)
-
-link "open last for editing" :)
+  "resync" button :|
+  link "open last for editing" :)
 
 pay people for tons
   maybe for ones I care about first :)
@@ -34,7 +26,13 @@ main persuasive page LOL
 instructions (only) for jruby subtitle finder for now :)
 
 == todo never LOL ==
-more CC files?
+
+can duplicate episodes :)
+  add_url duplicate from "any previous episode" LOL
+
+extension: can set "YES" from other pages (window message or what not :| )
+more CC files? :)
+  or at least real local subtitles ?
 
 research dvdz :|
 
