@@ -50,6 +50,14 @@ class Url
       end
     end
   end
+
+  def self.first
+    with_db do |conn|
+      conn.query("SELECT * from urls order by url, is_amazon_prime desc limit 1") do |rs|
+        Url.from_rs(rs); # is there no easy "get one" option?
+      end
+    end[0]
+  end
   
   def self.get_only_or_nil_by_url_and_amazon_episode_number(url, amazon_episode_number)
     with_db do |conn|

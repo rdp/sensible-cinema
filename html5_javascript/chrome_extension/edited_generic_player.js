@@ -6,7 +6,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-10-29 19:30:32 -0400.
+// generated at 2016-10-31 13:21:55 -0600.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -285,7 +285,7 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
-  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000"}); // green
+  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
@@ -459,8 +459,7 @@ function loadForCurrentUrl() {
   var filename = encodeURIComponent(getStandardizedCurrentUrl() +  ".ep" + liveAmazonEpisodeNumber() + ".html5_edited.just_settings.json.rendered.js");
   var url = '//rawgit.com/rdp/sensible-cinema-edit-descriptors/master/' + encodeURIComponent (filename);
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
-  url = '//cleanstream.inet2.org/' + direct_lookup; // SSL FTW
-  
+  url = '//localhost:3000/' + direct_lookup; // SSL for both in theory :)
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
 
@@ -529,9 +528,9 @@ function loadFailed(status) {
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
+  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0 && confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
-    window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
+    window.open("https://localhost:3000/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {
       loadForCurrentUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
@@ -561,7 +560,7 @@ function loadSuccessful() {
 
   var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   
-    alert(message);
+    console.log("not showing message as popup since is development:\n" + message);
   
 }
 

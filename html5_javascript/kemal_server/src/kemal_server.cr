@@ -68,6 +68,13 @@ end
 
 def javascript_for(db_url, env, type)
   with_db do |conn|
+    request_host =  env.request.headers["Host"] # like localhost:3000
+    render_javascript_for(db_url, type, request_host)
+  end
+end
+
+def render_javascript_for(db_url, type, request_host)
+  with_db do |conn|
     yes_audio_no_videos = timestamps_of_type_for_video conn, db_url, "yes_audio_no_video"
     skips = timestamps_of_type_for_video conn, db_url, "skip"
     mutes = timestamps_of_type_for_video conn, db_url, "mute"
@@ -76,7 +83,6 @@ def javascript_for(db_url, env, type)
     name = db_url.name
     amazon_episode_name = URI.escape(db_url.amazon_episode_name) 
     url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
-    request_host =  env.request.headers["Host"] # like localhost:3000
     if type == "html5_edited.js"
       render "views/html5_edited.js.ecr"
     else
@@ -347,6 +353,15 @@ def set_flash_for_next_time(env, string)
   env.session["flash"] = "#{env.session["flash"]}" + string # save old flash too LOL
 end
 
+
+def setup_for_chrome_extension
+  localhost = render_javascript_for(Url.first, "html5_edited.js", "localhost:3000")
+  production = render_javascript_for(Url.first, "html5_edited.js", "cleanstream.inet2.org")
+  File.write("../chrome_extension/edited_generic_player.localhost.js", localhost)
+  File.write("../chrome_extension/edited_generic_player.production.js", production)
+end
+
+setup_for_chrome_extension # auto setup :)
+puts "wrote .js files, but didn't rename them"
+
 Kemal.run
-
-
