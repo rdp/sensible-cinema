@@ -36,7 +36,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
        <td><%= url.host_like_netflix %></td>
        <td>
          <a href="<%= url.url %>" target="_blank"
-         <% if url.amazon_episode_number != 0 %>
+         <% if url.amazon_episode_number != 0  && url.url =~ /amazon.com/ %>
             onclick="alert('after opening the season list, select episode <%= url.amazon_episode_number %>');"
          <% end %>
          >watch</a>
