@@ -27,3 +27,9 @@ function openIndex() {
 
 // XXXX somehow get status or request status from content script at load time :|
 // until then, guess the "..." will have to do...
+
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.browserAction.getTitle({ tabId: tabs[0].id }, function(title) {
+      document.getElementById("status_text").innerHTML = title; // refresh with the latest
+    });
+});

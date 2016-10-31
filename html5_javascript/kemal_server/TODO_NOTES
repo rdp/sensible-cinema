@@ -1,16 +1,17 @@
 == todo ===
-
+iframes no loading..
 "resync" button :|
 
 can duplicate episodes :)
   add_url duplicate from "any previous episode" LOL
 
+auto start "if exists"
+  does mine work wiht utube?
+
 SSL cert??
 
 bootloader is broken :|
 show on "Add it" that it never loaded "OFF" as it were...
-
-differentiatie 403 and 404
 
 can set the OFF ON from other pages :|
 
@@ -18,10 +19,8 @@ publish more browser dev consoles :)
 
 chrome extension
   publish :)
-  popup should say whether it's "really really active" right now or not (somehow)
-    change its own icon for it? whoa! :)
 
-button "open last for editing" :)
+link "open last for editing" :)
 
 pay people for tons
   maybe for ones I care about first :)

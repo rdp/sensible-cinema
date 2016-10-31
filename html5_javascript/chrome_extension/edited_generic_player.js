@@ -6,7 +6,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-10-29 01:21:55 -0400.
+// generated at 2016-10-29 19:30:32 -0400.
 
 function isGoogleIframe() {
   return /play.google.com/.test(window.location.hostname); // assume we're in an iframe, should be safe assumption...should disallow starting if not
@@ -529,12 +529,12 @@ function loadFailed(status) {
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {color: "#900000", text: "NO"}); // red
+  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO"}); // red
   if (status > 0 && confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
     window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {
       loadForCurrentUrl();
-    }, 3000); // it should auto save so we should be like live instantly...
+    }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
   }
   else {
     // server down or want to watch unedited...

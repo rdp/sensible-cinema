@@ -56,7 +56,7 @@ function injectEditedPlayerOnce() {
 function autoStartOnBigThree() {
   var location = window.location.href;
   if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
-    chrome.runtime.sendMessage({text: "wait", color: "#0000FF"}); 
+    chrome.runtime.sendMessage({text: "wait", color: "#0000FF", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if can playback edited"}); 
     var interval = setInterval(function(){
       if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
         injectEditedPlayerOnce();
@@ -66,8 +66,10 @@ function autoStartOnBigThree() {
   }
   else {
     console.log("not auto starting non big 3 " + location);
-    // light blue #ADD8E6
-    chrome.runtime.sendMessage({text: "non", color: "#3333FF"}); 
+    // light blue #ADD8E6 super light blue too light
+    // lightish blue 3333FF
+    // 808080 grey
+    chrome.runtime.sendMessage({text: "n/a", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"}); 
   }
 }
 
