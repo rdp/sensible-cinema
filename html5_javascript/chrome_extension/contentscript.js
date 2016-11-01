@@ -14,7 +14,6 @@ chrome.runtime.onMessage.addListener(
         if (request.action == "please_start") {
             if (findFirstVideoTag() != null) {
               console.log('got request to start from popup message...starting');
-              chrome.runtime.sendMessage({text: "try", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 3 :|
               injectEditedPlayerOnce();
             }
             else {
@@ -51,14 +50,16 @@ function onReady(yourMethod) {
 }
 
 function injectEditedPlayerOnce() {
-             if (already_loaded) {
-               alert('edited player already loaded for this page...please use its UI. If edits created recently use your browser refresh button to try again if it exists now.');
-             }
-             else {
-                already_loaded = true;
-                injectJs(chrome.extension.getURL('edited_generic_player.js'));
-                // appears background.js is the only thing that can adjust the icon, so could send it a message, but why these days...the script sends it an immediate message either way anyway
-             }
+    console.log("injecting editor code...");
+    chrome.runtime.sendMessage({text: "try", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 3 :|
+    if (already_loaded) {
+        alert('edited player already loaded for this page...please use its UI. If edits created recently use your browser refresh button to try again if it exists now.');
+    }
+    else {
+        already_loaded = true;
+        injectJs(chrome.extension.getURL('edited_generic_player.js'));
+        // appears background.js is the only thing that can adjust the icon, so could send it a message, but why these days...the script sends it an immediate message either way anyway
+   }
 }
 
 function inIframe () {
@@ -82,7 +83,6 @@ function autoStartOnBigThree() {
     // iframe wants to load it though, for google play
     var interval = setInterval(function(){
       if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
-        console.log("injecting editor code...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
@@ -116,7 +116,12 @@ function loadIfCurrentHasOne() {
   var url = currentUrlNotIframe();
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&amazon_episode_number=0'; // simplified, assume just URL wurx, with GET params
   url = '//cleanstream.inet2.org/' + direct_lookup;  // assume prod :)
-  getRequest(url, function() { console.log("got existant non big 3 " + url); injectEditedPlayerOnce}, currentHasNone); // TODO retry with GET params off now?
+  getRequest(url, currentHasEdits, currentHasNone); // TODO retry with GET params off now?
+}
+
+function currentHasEdits() {
+  console.log("got extant non big 3 " + currentUrlNotIframe());
+  injectEditedPlayerOnce();
 }
 
 function currentHasNone() {
