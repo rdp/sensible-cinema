@@ -237,12 +237,23 @@ get "/new_url" do |env| # add_url
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
   else
     # cleanup various title crufts
+    puts "title started as #{title}" # still some cruft
+    title = HTML.unescape(title) # &amp => & and there are some :|
+    title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
+    puts "title 2 as #{title}" # still some cruft
     title = title.gsub(" | Netflix", "");
-    title = title.gsub(" - Movies &amp; TV on Google Play", "")
+    title = title.gsub(" - Movies & TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
     title = title.gsub("Amazon.com: ", "")
     title = title.gsub(" - YouTube", "")
-    title = sanitize_html title # do after to avoid &amp;amp; weirdness
+    if sanitized_url =~ /disneymoviesanywhere/
+      title = title.gsub(/^Watch /, "") # prefix :|
+      puts "subtracgin [#{title}]"
+      title = title.gsub(" | Disney Movies Anywhere", "")
+      puts "post subtracgin [#{title}]"
+    end
+    title = sanitize_html title
+    puts "title ended as #{title}" # still some cruft
     url = Url.new
     url.url = sanitized_url
     if title.includes?(":") && real_url.includes?("amazon.com")
