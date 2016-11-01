@@ -12,7 +12,7 @@ already_loaded = false;
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.action == "please_start") {
-            console.log('got message to start from popup');
+            console.log('got message to start from popup, starting...');
             injectEditedPlayerOnce();
          }
 });
@@ -83,7 +83,7 @@ function autoStartOnBigThree() {
     // light blue #ADD8E6 super light blue too light
     // lightish blue 3333FF
     // 808080 grey
-    chrome.runtime.sendMessage({text: "n/a", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"}); 
+    chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"}); 
   }
 }
 
