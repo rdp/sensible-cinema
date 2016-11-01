@@ -165,7 +165,7 @@ post "/save_edl/:url_id" do |env|
   raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy) # before_save filter LOL
   edl.save
   save_local_javascript [url], edl.inspect, env
-  set_flash_for_next_time(env, "saved edit!")
+  set_flash_for_next_time(env, "saved edit! reload browser if you entered it manually...")
   env.redirect "/view_url/#{url.id}"
 end
 
