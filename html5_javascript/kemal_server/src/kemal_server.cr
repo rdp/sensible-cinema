@@ -37,10 +37,6 @@ get "/for_current_just_settings_json" do |env|
   get_for_current(env, "html5_edited.just_settings.json")
 end
 
-get "/for_current" do |env|
-  get_for_current(env, "html5_edited.js")
-end
-
 def get_for_current(env, type)
   sanitized_url = sanitize_html standardized_param_url(env)
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i # should always be present :)
@@ -280,11 +276,9 @@ def save_local_javascript(db_urls, log_message, env)
       File.open("edit_descriptors/log.txt", "a") do |f|
         f.puts log_message + " " + db_url.name_with_episode
       end
-      ["html5_edited.js", "html5_edited.just_settings.json"].each  do |type|
-        as_javascript = javascript_for(db_url, env, type)
-        escaped_url_no_slashes = URI.escape url
-        File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".#{type}.rendered.js", "" + as_javascript) # TODO
-      end
+      as_javascript = javascript_for(db_url, env, "html5_edited.just_settings.json")
+      escaped_url_no_slashes = URI.escape url
+      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_javascript) 
    }
   }
   if !File.exists?("./this_is_development")
