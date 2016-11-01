@@ -347,9 +347,8 @@ function seekToTime(ts) {
 
 function addForNewEditToScreen() {
   if (url_id == 0) {
-    alert('cannot add edits to non existing movie in our database yet, please create it first, then reload this page.');
-    // leave text as Unedited LOL
-    return false; // abort!
+    promptIfWantToCreate();
+    return false; // abort link
   }
   // hope these never get mixed LOL
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
@@ -362,7 +361,7 @@ function addForNewEditToScreen() {
     toggleDiv(edlLayer);
     document.getElementById("add_edit_link_id").innerHTML = "Add edit";
   }
-  return false;
+  return false; // always abort link
 }
 
 function setEditedControlsToTopLeft() {
@@ -542,6 +541,15 @@ function checkIfEpisodeChanged() {
   }
 }
 
+function promptIfWantToCreate() {
+  if(confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
+    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
+    setTimeout(function() {
+      loadForCurrentUrl();
+    }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
+  }
+}
+
 function loadFailed(status) {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   editing_status = "unknown to system";
@@ -554,24 +562,18 @@ function loadFailed(status) {
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
-  if (status > 0 && confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database."))) {
-    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
-    setTimeout(function() {
-      loadForCurrentUrl();
-    }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
+  if (status > 0) {
+     promptIfWantToCreate(); 
   }
   else {
-    // server down or want to watch unedited...
-    if (status == 0) {
-      alert("appears the cleanstream server is currently down, please alert us!");
-    }
-    startWatcherOnce(); // so it can check if episode changes to one we like :)
+    alert("appears the cleanstream server is currently down, please alert us! Edits disabled for now...");
   }
+  startWatcherOnce(); // so it can check if episode changes to one we like magically LOL [mostly amazon]
 }
 
 function loadSuccessful() {
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    alert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
+    Llert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
   if (liveAmazonEpisodeNumber() != expected_amazon_episode_number) {
