@@ -85,8 +85,40 @@ function autoStartOnBigThree() {
     // light blue #ADD8E6 super light blue too light
     // lightish blue 3333FF
     // 808080 grey
-    chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"}); 
+    chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"});
+    loadIfCurrentHasOne();
   }
+}
+
+function loadIfCurrentHasOne() {
+  var url = window.location.href;
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&amazon_episode_number=0'; // simplified, assume just URL wurx, with GET params
+  url = '//cleanstream.inet2.org/' + direct_lookup;  // assume prod :)
+  getRequest(url, function() { console.log("got existant non big 3 " + url); injectEditedPlayerOnce}, function() { console.log("non exists " + window.location.href);}); // TODO retry with GET params off now?
+}
+
+function getRequest (url, success, error) {
+  console.log("starting attempt to download " + url);
+  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+  xhr.open("GET", url);
+  xhr.onreadystatechange = function(){
+    if ( xhr.readyState == 4 ) {
+      if ( xhr.status == 200 ) {
+        console.log("success download");
+        success(xhr.responseText);
+      } else {
+        console.log("fail download 1");
+        error && error(xhr.status);
+        error = null;
+      }
+    }
+  };
+  xhr.onerror = function () {
+    console.log("fail download 2");
+    error && error(xhr.status);
+    error = null;
+  };
+  xhr.send();
 }
 
 onReady(autoStartOnBigThree);
