@@ -20,7 +20,6 @@ end
  
 def standardized_param_url(env)
   unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
-  puts "unescape #{unescaped}"
   standardize_url unescaped
 end
 
@@ -40,7 +39,6 @@ end
 def get_for_current(env, type)
   sanitized_url = sanitize_html standardized_param_url(env)
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i # should always be present :)
-  puts "looking for #{sanitized_url} #{amazon_episode_number}"
   # this one looks up by URL and episode number
   with_db do |conn|
     url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
