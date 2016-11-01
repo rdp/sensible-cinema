@@ -23,7 +23,7 @@ function isGoogleIframe() {
 function currentUrlNotIframe() { // hopefully saner alternate to window.location.href
   return (window.location != window.parent.location)
             ? document.referrer
-            : document.location;
+            : document.location.href;
 } 
 
 function getStandardizedCurrentUrl() {
@@ -602,6 +602,7 @@ function start() {
       // iframe started from a non "details" page
       // TODO we have access to the ID's, use it instead of hard fail, allow the index, man!
       alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
+      return; // avoid future prompts for now :|
     }
   }
 

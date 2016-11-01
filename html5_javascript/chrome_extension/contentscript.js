@@ -106,7 +106,7 @@ function autoStartOnBigThree() {
 function currentUrlNotIframe() {
   return (window.location != window.parent.location)
             ? document.referrer
-            : document.location;
+            : document.location.href;
 }
 
 function loadIfCurrentHasOne() {
@@ -118,6 +118,7 @@ function loadIfCurrentHasOne() {
 
 function currentHasNone() {
   console.log("unable to find one for " + currentUrlNotIframe() + " so not auto loading it, doing nothing");
+  chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We do not have this video in our system yet, please add it!"}); 
 }
 
 function getRequest (url, success, error) {

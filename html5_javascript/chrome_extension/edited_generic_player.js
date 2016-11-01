@@ -6,7 +6,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-11-01 13:43:44 -0600.
+// generated at 2016-11-01 13:59:35 -0600.
 
 function inIframe () {
     try {
@@ -23,7 +23,7 @@ function isGoogleIframe() {
 function currentUrlNotIframe() { // hopefully saner alternate to window.location.href
   return (window.location != window.parent.location)
             ? document.referrer
-            : document.location;
+            : document.location.href;
 } 
 
 function getStandardizedCurrentUrl() {
@@ -600,6 +600,7 @@ function start() {
       // iframe started from a non "details" page
       // TODO we have access to the ID's, use it instead of hard fail, allow the index, man!
       alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
+      return; // avoid future prompts for now :|
     }
   }
 
