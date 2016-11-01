@@ -239,6 +239,7 @@ get "/new_url" do |env| # add_url
     # cleanup various title crufts
     puts "title started as #{title}" # still some cruft
     title = HTML.unescape(title) # &amp => & and there are some :|
+    puts "after unescape [#{title}]"
     title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
     puts "title 2 as #{title}" # still some cruft
     title = title.gsub(" | Netflix", "");
@@ -249,9 +250,10 @@ get "/new_url" do |env| # add_url
     if sanitized_url =~ /disneymoviesanywhere/
       title = title.gsub(/^Watch /, "") # prefix :|
       puts "subtracgin [#{title}]"
-      title = title.gsub(" | Disney Movies Anywhere", "")
+      title = title.gsub(" | Disney Movies Anywhere", "")
       puts "post subtracgin [#{title}]"
     end
+    title = title.strip
     title = sanitize_html title
     puts "title ended as #{title}" # still some cruft
     url = Url.new
