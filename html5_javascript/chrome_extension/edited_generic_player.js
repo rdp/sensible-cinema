@@ -2,11 +2,11 @@
 // if you have the chrome plugin, it automatically should do all this for you, no copy paste needed... :|
 
 if (typeof clean_stream_timer !== 'undefined') {
-  alert("clean stream already loaded...not loading it again...");
+  alert("clean stream already loaded...not loading it again...please use your browser refresh button to try again"); // we should never *get* here though :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-11-01 13:59:35 -0600.
+// generated at 2016-11-01 15:39:38 -0600.
 
 function inIframe () {
     try {
@@ -109,6 +109,16 @@ function findFirstVideoTag() {
      }
      return null;
    }
+}
+
+function decodeHTMLEntities(text) {
+    var entities = [
+        ['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']
+    ];
+    for (var i = 0, max = entities.length; i < max; ++i) {
+        text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
+    }
+    return text;
 }
 
 function areWeWithin(thisArray, cur_time) {
@@ -244,7 +254,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="addForNewEditToScreen()" id="add_edit_link_id">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -338,7 +348,7 @@ function seekToTime(ts) {
 function addForNewEditToScreen() {
   if (url_id == 0) {
     alert('cannot add edits to non existing movie in our database yet, please create it, then reload this page after a few minutes');
-    return; // abort
+    return false; // abort!
   }
   // hope these never get mixed LOL
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
@@ -351,6 +361,7 @@ function addForNewEditToScreen() {
     toggleDiv(edlLayer);
     document.getElementById("add_edit_link_id").innerHTML = "Add edit";
   }
+  return false;
 }
 
 function setEditedControlsToTopLeft() {
@@ -537,11 +548,12 @@ function loadFailed(status) {
   amazon_episode_name = liveEpisodeString();
   expected_amazon_episode_number = liveAmazonEpisodeNumber();
   url_id = 0; // reset
+  document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_amazon_episode = liveAmazonEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
-  if (status > 0 && confirm("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database.")) {
+  if (status > 0 && confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database."))) {
     window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {
       loadForCurrentUrl();

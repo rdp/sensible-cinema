@@ -51,7 +51,7 @@ function onReady(yourMethod) {
 
 function injectEditedPlayerOnce() {
              if (already_loaded) {
-               alert('edited player already loaded for this page, it should pick up when you start a movie on this page, so is loaded...');
+               alert('edited player already loaded for this page, it should pick up when you start a movie on this page, so is loaded...please use your browser refresh button to try again"');
              }
              else {
                 already_loaded = true;
@@ -92,7 +92,9 @@ function autoStartOnBigThree() {
     // light blue #ADD8E6 super light blue too light
     // lightish blue 3333FF
     // 808080 grey
-    chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"});
+    if (!inIframe()) {
+      chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"});
+    } // don't send it for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {
       if (findFirstVideoTag() != null) {
         console.log("detected video element on this page, checking if we have edits...");
