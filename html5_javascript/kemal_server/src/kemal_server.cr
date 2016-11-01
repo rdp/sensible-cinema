@@ -353,9 +353,10 @@ def setup_for_chrome_extension
   production = render_javascript_for(Url.first, "html5_edited.js", "cleanstream.inet2.org")
   File.write("../chrome_extension/edited_generic_player.localhost.js", localhost)
   File.write("../chrome_extension/edited_generic_player.production.js", production)
+  File.write("../chrome_extension/edited_generic_player.js", production)
+  puts "wrote .js files, default production"
 end
 
 setup_for_chrome_extension # auto setup :)
-puts "wrote .js files, but didn't rename them"
 
 Kemal.run
