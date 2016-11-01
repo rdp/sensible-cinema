@@ -14,6 +14,7 @@ chrome.runtime.onMessage.addListener(
         if (request.action == "please_start") {
             if (findFirstVideoTag() != null) {
               console.log('got request to start from popup message...starting');
+              chrome.runtime.sendMessage({text: "try", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 3 :|
               injectEditedPlayerOnce();
             }
             else {
@@ -51,7 +52,7 @@ function onReady(yourMethod) {
 
 function injectEditedPlayerOnce() {
              if (already_loaded) {
-               alert('edited player already loaded for this page, it should pick up when you start a movie on this page, so is loaded...please use your browser refresh button to try again"');
+               alert('edited player already loaded for this page...please use its UI. If edits created recently use your browser refresh button to try again if it exists now.');
              }
              else {
                 already_loaded = true;
