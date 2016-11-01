@@ -45,7 +45,7 @@ def get_for_current(env, type)
   with_db do |conn|
     url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
     if !url_or_nil
-      env.response.status_code = 403 # avoid kemal default 404 handler :|
+      env.response.status_code = 412 # avoid kemal default 404 handler :| 412 => precondition failed LOL
       "none for this movie yet #{sanitized_url} #{amazon_episode_number}" # not sure if json or javascript LOL
     else
       url = url_or_nil.as(Url)

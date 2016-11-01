@@ -12,8 +12,15 @@ already_loaded = false;
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.action == "please_start") {
-            console.log('got message to start from popup, starting...');
-            injectEditedPlayerOnce();
+            if (findFirstVideoTag() != null) {
+              console.log('got request to start from popup message...starting');
+              injectEditedPlayerOnce();
+            }
+            else {
+              if (!inIframe()) {
+                alert("you requested to start edited playback, but we do not detect a video playing yet, possibly need to hit the play button first, then try again?");
+              }
+            }
          }
 });
 
@@ -86,15 +93,31 @@ function autoStartOnBigThree() {
     // lightish blue 3333FF
     // 808080 grey
     chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"});
-    loadIfCurrentHasOne();
+    var interval = setInterval(function() {
+      if (findFirstVideoTag() != null) {
+        console.log("detected video element on this page, checking if we have edits...");
+        loadIfCurrentHasOne(); 
+        clearInterval(interval);
+      }
+    }, 1000); // hopefully doesn't burden stuff too much :)
   }
 }
 
+function currentUrlNotIframe() {
+  return (window.location != window.parent.location)
+            ? document.referrer
+            : document.location;
+}
+
 function loadIfCurrentHasOne() {
-  var url = window.location.href;
+  var url = currentUrlNotIframe();
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&amazon_episode_number=0'; // simplified, assume just URL wurx, with GET params
   url = '//cleanstream.inet2.org/' + direct_lookup;  // assume prod :)
-  getRequest(url, function() { console.log("got existant non big 3 " + url); injectEditedPlayerOnce}, function() { console.log("non exists " + window.location.href);}); // TODO retry with GET params off now?
+  getRequest(url, function() { console.log("got existant non big 3 " + url); injectEditedPlayerOnce}, currentHasNone); // TODO retry with GET params off now?
+}
+
+function currentHasNone() {
+  console.log("unable to find one for " + currentUrlNotIframe() + " so not auto loading it, doing nothing");
 }
 
 function getRequest (url, success, error) {
@@ -122,4 +145,3 @@ function getRequest (url, success, error) {
 }
 
 onReady(autoStartOnBigThree);
-

@@ -20,11 +20,14 @@ function isGoogleIframe() {
   return inIframe() && /google.com/.test(window.location.hostname); 
 }
 
+function currentUrlNotIframe() { // hopefully saner alternate to window.location.href
+  return (window.location != window.parent.location)
+            ? document.referrer
+            : document.location;
+} 
+
 function getStandardizedCurrentUrl() {
-  var current_url = window.location.href;
-  if (isGoogleIframe()) {
-    current_url = document.referrer; // iframe parent url
-  }
+  var current_url = currentUrlNotIframe();
   if (current_url.includes("amazon.com")) {
     if (document.querySelector('link[rel="canonical"]') != null) {
       current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
@@ -139,7 +142,7 @@ function checkStatus() {
       extra_message = "";
     }
   }
-  if (window.location.href.includes("netflix.com")) {
+  if (currentUrlNotIframe().includes("netflix.com")) {
     handleNetflixSeekOrStop(cur_time);
   } 
   else {
@@ -181,7 +184,10 @@ function liveEpisodeString() {
 }
 
 function liveTitleNoEpisode() {
-  var title = document.getElementsByTagName("title")[0].innerHTML;
+  var title = "unknown title";
+  if (document.getElementsByTagName("title")[0]) {
+    title = document.getElementsByTagName("title")[0].innerHTML;
+  } // some might not have it [iframes?]
   if (isGoogleIframe()) {
     title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :) "Avatar Extras - Movies &amp; TV on Google Play"
     var season_episode = window.parent.document.querySelectorAll('.title-season-episode-num')[0];
@@ -552,7 +558,7 @@ function loadFailed(status) {
 
 function loadSuccessful() {
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    alert("danger: this may have been the wrong url? this_page=" + window.location.href + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
+    alert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
   if (liveAmazonEpisodeNumber() != expected_amazon_episode_number) {
@@ -584,9 +590,11 @@ function startWatcherOnce() {
 function start() {
   video_element = findFirstVideoTag();
 
-  if (video_element == null) { 
-    alert("failure: unable to find a video playing, not loading edited playback...");
-    // this one's pretty serious, just let it die...plugin should not have let us get this far
+  if (video_element == null) {
+    // this one's pretty serious, just let it die...
+    // maybe could get here if they raw load the javascript?
+    alert("failure: unable to find a video playing, not loading edited playback...possibly need to reload then hit a play button before loading edited playback?");
+    return;
   }
 
   if (isGoogleIframe()) {
