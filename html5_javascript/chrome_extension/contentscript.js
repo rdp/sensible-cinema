@@ -71,8 +71,10 @@ function autoStartOnBigThree() {
     else {
       chrome.runtime.sendMessage({text: "wait", color: "#0000FF", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if can playback edited"}); 
     }
+    // iframe wants to load it though, for google play
     var interval = setInterval(function(){
       if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
+        console.log("injecting editor code...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
