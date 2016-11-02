@@ -109,6 +109,16 @@ class Url
       end
     end
   end
+  
+  def edls_by_type
+    with_db do |conn|
+      yes_audio_no_videos = timestamps_of_type_for_video conn, self, "yes_audio_no_video"
+      skips = timestamps_of_type_for_video conn, self, "skip"
+      mutes = timestamps_of_type_for_video conn, self, "mute"
+      do_nothings = timestamps_of_type_for_video conn, self, "do_nothing"
+      {yes_audio_no_videos: yes_audio_no_videos, skips: skips, mutes: mutes, do_nothings: do_nothings}  # named tuple :)
+    end
+  end
 
   def last_edl_or_nil
     all = with_db do |conn|

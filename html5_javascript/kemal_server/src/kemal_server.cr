@@ -69,14 +69,6 @@ end
 
 def render_javascript_for(db_url, type, request_host)
   with_db do |conn|
-    yes_audio_no_videos = timestamps_of_type_for_video conn, db_url, "yes_audio_no_video"
-    skips = timestamps_of_type_for_video conn, db_url, "skip"
-    mutes = timestamps_of_type_for_video conn, db_url, "mute"
-    do_nothings = timestamps_of_type_for_video conn, db_url, "do_nothing"
-    
-    name = db_url.name
-    amazon_episode_name = URI.escape(db_url.amazon_episode_name) 
-    url = db_url.url # HTML.escape doesn't munge : and / so this actually matches still FWIW
     if type == "html5_edited.js"
       render "views/html5_edited.js.ecr"
     else

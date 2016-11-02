@@ -50,6 +50,12 @@ our review  <%= url.review %>
 
 <p><a href="/index">&lt;&lt; back to index</a></p>
 <hr/>
+Current edits in our system for this movie:
+<% url.edls_by_type.each{ |name, value| %>
+  <% if value.size > 0 %>
+    <%= value.size %> of <%= name %>
+  <% end %>
+<% } %> 
 <hr/>
 
 View and modify edits for this movie:
