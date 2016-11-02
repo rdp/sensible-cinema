@@ -33,10 +33,6 @@ def standardize_url(unescaped)
 end
 
 get "/for_current_just_settings_json" do |env|
-  get_for_current(env, "html5_edited.just_settings.json")
-end
-
-def get_for_current(env, type)
   sanitized_url = sanitize_html standardized_param_url(env)
   amazon_episode_number = env.params.query["amazon_episode_number"].to_i # should always be present :)
   # this one looks up by URL and episode number
@@ -48,7 +44,7 @@ def get_for_current(env, type)
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-      javascript_for(url, env, type)
+      json_for(url, env)
     end
   end
 end
@@ -60,21 +56,10 @@ def timestamps_of_type_for_video(conn, db_url, type)
     edls.map{|edl| [edl.start, edl.endy]}
 end
 
-def javascript_for(db_url, env, type)
+def json_for(db_url, env)
   with_db do |conn|
     request_host =  env.request.headers["Host"] # like localhost:3000
-    render_javascript_for(db_url, type, request_host)
-  end
-end
-
-def render_javascript_for(db_url, type, request_host)
-  with_db do |conn|
-    if type == "html5_edited.js"
-      render "views/html5_edited.js.ecr"
-    else
-      raise("huh type") if type != "html5_edited.just_settings.json"
-      render "views/html5_edited.just_settings.json.ecr"
-    end
+    render "views/html5_edited.just_settings.json.ecr"
   end
 end
 
@@ -275,9 +260,9 @@ def save_local_javascript(db_urls, log_message, env)
       File.open("edit_descriptors/log.txt", "a") do |f|
         f.puts log_message + " " + db_url.name_with_episode
       end
-      as_javascript = javascript_for(db_url, env, "html5_edited.just_settings.json")
+      as_json = json_for(db_url, env)
       escaped_url_no_slashes = URI.escape url
-      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_javascript) 
+      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
    }
   }
   if !File.exists?("./this_is_development")
@@ -346,12 +331,13 @@ def set_flash_for_next_time(env, string)
   env.session["flash"] = "#{env.session["flash"]}" + string # save old flash too LOL
 end
 
+def plugin_javascript(request_host)
+ render("views/html5_edited.js.ecr")
+end
 
 def setup_for_chrome_extension
-  localhost = render_javascript_for(Url.first, "html5_edited.js", "localhost:3000")
-  production = render_javascript_for(Url.first, "html5_edited.js", "cleanstream.inet2.org")
-  File.write("../chrome_extension/edited_generic_player.localhost.js", localhost)
-  File.write("../chrome_extension/edited_generic_player.production.js", production)
+  localhost = plugin_javascript "localhost:3000"
+  production = plugin_javascript "cleanstream.inet2.org"
   File.write("../chrome_extension/edited_generic_player.js", production)
   puts "wrote .js files, default production"
 end
