@@ -6,7 +6,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-11-02 12:50:45 -0600.
+// generated at 2016-11-02 14:53:45 -0400.
 
 function inIframe () {
     try {
@@ -609,7 +609,7 @@ function loadSuccessful() {
 
   var message = "Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   
-    console.log("not showing message as popup since is development:\n" + message);
+    alert(message);
   
 }
 
