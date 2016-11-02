@@ -338,6 +338,7 @@ function addEditUi() {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
+  addMouseMoveListener(showOnMouseMove);
 }
 
 var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
@@ -389,6 +390,9 @@ function setEditedControlsToTopLeft() {
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+  if (currentUrlNotIframe().includes("youtube.com")) {
+    top += 75; // couldn't see it when at the top XXXX why?
+  }
   offset = 150; // allow kill amazon x-ray :|
   left += offset;
   exposeEditScreenDiv.style.left = (left - offset) + "px"; // real zero for this one :|
@@ -640,9 +644,43 @@ function start() {
   }
 
   // ready to try and load the editor LOL
-  addEditUi();
+  addEditUi(); // only do once...
   loadForCurrentUrl();
 }
 
+function showOnMouseMove() {
+  document.getElementById("add_edit_link_id").style.visibility=""; // non hidden
+  setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 5000); // kind of over simplified but hey... :|
+}
+
+function addMouseMoveListener(func) {
+  // some "old IE" compat :|
+  var addListener, removeListener;
+  if (document.addEventListener) {
+      addListener = function (el, evt, f) { return el.addEventListener(evt, f, false); };
+      removeListener = function (el, evt, f) { return el.removeEventListener(evt, f, false); };
+  } else {
+      addListener = function (el, evt, f) { return el.attachEvent('on' + evt, f); };
+      removeListener = function (el, evt, f) { return el.detachEvent('on' + evt, f); };
+  }
+
+  addListener(document, 'mousemove', func);
+}
+
+function onReady(yourMethod) {
+  if (document.readyState === 'complete') {
+    setTimeout(yourMethod, 1); // schedule to run immediately
+  }
+  else {
+    readyStateCheckInterval = setInterval(function() {
+      if (document.readyState === 'complete') {
+        clearInterval(readyStateCheckInterval);
+        yourMethod();
+     }
+     }, 10);
+  }
+}
+
 // no jquery since this page might already have it loaded, so avoid any conflict.  [plus speedup load times LOL]
-start();
+// on ready just in case LOL
+onReady(start);
