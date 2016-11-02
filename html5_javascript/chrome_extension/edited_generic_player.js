@@ -390,9 +390,7 @@ function setEditedControlsToTopLeft() {
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-  if (currentUrlNotIframe().includes("youtube.com")) {
-    top += 75; // couldn't see it when at the top XXXX why?
-  }
+  top += 75; // couldn't see it when at the top youtube XXXX why? but just in case others are the same LOL
   offset = 150; // allow kill amazon x-ray :|
   left += offset;
   exposeEditScreenDiv.style.left = (left - offset) + "px"; // real zero for this one :|
