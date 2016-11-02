@@ -6,8 +6,6 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-11-02 14:53:45 -0400.
-
 function inIframe () {
     try {
         return window.self !== window.top;
@@ -416,11 +414,14 @@ function currentTestAction() {
   return document.getElementById('new_action').value;
 }
 
+var inTest = false;
+
 function testCurrentFromUi() {
   if (currentTestAction() == 'do_nothing') {
-    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, then hit save button');
+    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, before hitting save button');
     return; // abort
   }
+  inTest = true;
   var [start, endy] = addToCurrentEditArray();
   seekToTime(start - 2);
   length = endy - start;
@@ -429,6 +430,7 @@ function testCurrentFromUi() {
   wait_time_millis = (length + 2 + 1)*1000; 
   setTimeout(function() {
     currentEditArray().pop();
+    inTest = false;
   }, wait_time_millis)
 }
 
@@ -632,10 +634,9 @@ function start() {
 
   if (isGoogleIframe()) {
     if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
-      // iframe started from a non "details" page
-      // TODO we have access to the ID's, use it instead of hard fail, allow the index, man!
+      // iframe started from a non "details" page with full url
       alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
-      return; // avoid future prompts for now :|
+      return; // avoid future prompts which don't matter anyway for now :|
     }
   }
 
@@ -649,6 +650,7 @@ function showOnMouseMove() {
   setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 5000); // kind of over simplified but hey... :|
 }
 
+// helper method
 function addMouseMoveListener(func) {
   // some "old IE" compat :|
   var addListener, removeListener;
@@ -663,6 +665,7 @@ function addMouseMoveListener(func) {
   addListener(document, 'mousemove', func);
 }
 
+// helper method
 function onReady(yourMethod) {
   if (document.readyState === 'complete') {
     setTimeout(yourMethod, 1); // schedule to run immediately
