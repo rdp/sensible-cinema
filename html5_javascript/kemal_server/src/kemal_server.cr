@@ -5,7 +5,7 @@ require "http/client"
 require "mysql"
 
 before_all do |env|
-  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from amazon.com phew
+  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.]
 end
 
 get "/" do |env|
@@ -27,20 +27,18 @@ def standardize_url(unescaped)
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
   end
-  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
-  # canonical is like https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK try and use that for now :|
-  unescaped
+  unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
 end
 
 get "/for_current_just_settings_json" do |env|
   sanitized_url = sanitize_html standardized_param_url(env)
-  amazon_episode_number = env.params.query["amazon_episode_number"].to_i # should always be present :)
+  episode_number = env.params.query["episode_number"].to_i # should always be present :)
   # this one looks up by URL and episode number
   with_db do |conn|
-    url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
+    url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
     if !url_or_nil
       env.response.status_code = 412 # avoid kemal default 404 handler :| 412 => precondition failed LOL
-      "none for this movie yet #{sanitized_url} #{amazon_episode_number}" # not sure if json or javascript LOL
+      "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
     else
       url = url_or_nil.as(Url)
       env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -73,6 +71,10 @@ end
 
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
+  url.edls.each { |edl|
+    save_local_javascript [edl.url], "removed #{edl}", env
+    edl.destroy 
+  }
   url.destroy
   set_flash_for_next_time env, "deleted movie from db"
   # could/should remove from cache :|
@@ -181,7 +183,8 @@ def get_title_and_sanitized_canonical_url(real_url)
     # startlingly, canonical from /gp/ sometimes => /gp/ yikes
     if response.body =~ /<link rel="canonical" href="([^"]+)"/i
       # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to https://smile.amazon.com/Avatar-Last-Airbender-Season-3/dp/B0190R77GS
-      # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah! 
+      # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
+      # but still some improvement FWIW :|
       puts "using canonical #{$1}"
       real_url = $1
     end
@@ -202,13 +205,13 @@ end
 get "/new_url" do |env| # add_url
   real_url = standardize_url(env.params.query["url"])
   incoming = env.params.query
-  amazon_episode_number = incoming["amazon_episode_number"].to_i
-  amazon_episode_name = incoming["amazon_episode_name"]
+  episode_number = incoming["episode_number"].to_i
+  episode_name = incoming["episode_name"]
   title, sanitized_url = get_title_and_sanitized_canonical_url real_url
   if incoming["title"].present?
     title = incoming["title"] # XX always just use this :|
   end
-  url_or_nil = Url.get_only_or_nil_by_url_and_amazon_episode_number(sanitized_url, amazon_episode_number)
+  url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
   if url_or_nil != nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
@@ -231,14 +234,14 @@ get "/new_url" do |env| # add_url
     puts "title ended as #{title}" # still some cruft
     url = Url.new
     url.url = sanitized_url
-    if title.includes?(":") && real_url.includes?("amazon.com")
+    if sanitized_url.includes?("amazon.com") && title.includes?(":")
       url.name = title.split(":")[0].strip
-      url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # I think it has actors after a colon...
+      url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # has actors after a colon...
     else
       url.name = title
     end
-    url.amazon_episode_name = amazon_episode_name
-    url.amazon_episode_number = amazon_episode_number
+    url.episode_name = episode_name
+    url.episode_number = episode_number
     url.editing_status = "just begun editing process"
     url.save 
     env.redirect "/edit_url/#{url.id}"
@@ -262,7 +265,7 @@ def save_local_javascript(db_urls, log_message, env)
       end
       as_json = json_for(db_url, env)
       escaped_url_no_slashes = URI.escape url
-      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.amazon_episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
+      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
    }
   }
   if !File.exists?("./this_is_development")
@@ -283,8 +286,8 @@ post "/save_url" do |env|
   end
   details = sanitize_html HTML.unescape(params["details"])
   editing_status = params["editing_status"]
-  amazon_episode_number = params["amazon_episode_number"].to_i
-  amazon_episode_name = sanitize_html HTML.unescape(params["amazon_episode_name"])
+  episode_number = params["episode_number"].to_i
+  episode_name = sanitize_html HTML.unescape(params["episode_name"])
   age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
@@ -306,8 +309,8 @@ post "/save_url" do |env|
   db_url.amazon_second_url = amazon_second_url
   db_url.name = name
   db_url.details = details
-  db_url.amazon_episode_number = amazon_episode_number
-  db_url.amazon_episode_name = amazon_episode_name
+  db_url.episode_number = episode_number
+  db_url.episode_name = episode_name
   db_url.editing_status = editing_status
   db_url.age_recommendation_after_edited = age_recommendation_after_edited
   db_url.wholesome_uplifting_level = wholesome_uplifting_level

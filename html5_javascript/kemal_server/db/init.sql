@@ -46,7 +46,7 @@ alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
 --
 
 alter table urls ADD COLUMN image_url VARCHAR(2014) NOT NULL DEFAULT '';
-update urls set image_url = 'https://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg' where id = 1;;
+update urls set image_url = 'https://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg' where id = 1; -- test data :)
 alter table urls ADD COLUMN is_amazon_prime INT NOT NULL DEFAULT 0; -- probably should be TINYINT(1) but crystal mysql adapter no support it [?]
 alter table urls ADD COLUMN rental_cost DECIMAL NOT NULL DEFAULT 0.0; -- too scared to use floats
 alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
@@ -58,6 +58,9 @@ CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), 
 
 create unique index url_title_episode ON urls(name(256), amazon_episode_number); -- try to avoid accidental dupes
 ALTER TABLE urls RENAME INDEX url_title_episode TO unique_name_with_episode;
+
+ALTER TABLE urls CHANGE amazon_episode_name episode_name VARCHAR(1024);
+ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
 
 -- output some to screen
 select * from urls;

@@ -9,8 +9,8 @@ class Url
     amazon_second_url:  String,
     name: String,
     details: String,
-    amazon_episode_number: Int32,
-    amazon_episode_name: String,
+    episode_number: Int32,
+    episode_name: String,
     editing_status: String,
     age_recommendation_after_edited: Int32,
     wholesome_uplifting_level: Int32,
@@ -29,8 +29,8 @@ class Url
     amazon_second_url:  String,
     name: String,
     details: String,
-    amazon_episode_number: Int32,
-    amazon_episode_name: String,
+    episode_number: Int32,
+    episode_name: String,
     editing_status: String,
     age_recommendation_after_edited: Int32,
     wholesome_uplifting_level: Int32,
@@ -59,9 +59,9 @@ class Url
     end[0]
   end
   
-  def self.get_only_or_nil_by_url_and_amazon_episode_number(url, amazon_episode_number)
+  def self.get_only_or_nil_by_url_and_episode_number(url, episode_number)
     with_db do |conn|
-      urls = conn.query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND amazon_episode_number = ?", url, url, amazon_episode_number) do |rs|
+      urls = conn.query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND episode_number = ?", url, url, episode_number) do |rs|
          Url.from_rs(rs);
       end
       if urls.size == 1
@@ -75,9 +75,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, amazon_episode_number = ?, amazon_episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, amazon_episode_number, amazon_episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
       end
     end
   end
@@ -88,8 +88,8 @@ class Url
     @amazon_second_url = ""
     @name = ""
     @details = ""
-    @amazon_episode_number = 0
-    @amazon_episode_name = ""
+    @episode_number = 0
+    @episode_name = ""
     @editing_status = ""
     @age_recommendation_after_edited = 0
     @wholesome_uplifting_level = 0
@@ -134,16 +134,14 @@ class Url
   end
 
   def destroy
-    edls.each{|edl|
-      edl.destroy
-    }
+    # no cascade, it should do that first itself now
     with_db do |conn|
       conn.exec("delete from urls where id = ?", id)
     end
   end
 
   def url_lookup_params
-    "url=#{URI.escape url}&amazon_episode_number=#{amazon_episode_number}" # URI.escape == escapeComponent
+    "url=#{URI.escape url}&episode_number=#{episode_number}" # URI.escape == escapeComponent
   end
 
   def host_like_netflix
@@ -208,12 +206,12 @@ class Url
   end
 
   def name_with_episode
-    if amazon_episode_number != 0
+    if episode_number != 0
       local_name = name
       if local_name.size > 150
         local_name = local_name[0..150] + "..."
       end
-      "#{local_name} episode #{amazon_episode_number} (#{amazon_episode_name})"
+      "#{local_name} episode #{episode_number} (#{episode_name})"
     else
       name
     end

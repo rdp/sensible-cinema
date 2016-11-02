@@ -26,9 +26,13 @@ function currentUrlNotIframe() { // hopefully saner alternate to window.location
             : document.location.href;
 } 
 
+function isAmazon() {
+  return currentUrlNotIframe().includes("amazon.com");
+}
+
 function getStandardizedCurrentUrl() {
   var current_url = currentUrlNotIframe();
-  if (current_url.includes("amazon.com")) {
+  if (isAmazon()) {
     if (document.querySelector('link[rel="canonical"]') != null) {
       current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
     }
@@ -41,9 +45,8 @@ function getStandardizedCurrentUrl() {
   return current_url;
 }
 
-function liveAmazonEpisodeName() {
-  if (document.getElementsByClassName("subtitle").length > 0) {
-    // amazon
+function liveEpisodeName() {
+  if (isAmazon() && document.getElementsByClassName("subtitle").length > 0) {
     split = document.getElementsByClassName("subtitle")[0].innerHTML.split(/Ep. \d+/); // like "Season 3, Ep. 3 The Painted Lady"
     if(split.length == 2)
       return split[1].trim();
@@ -68,7 +71,7 @@ function liveAmazonEpisodeName() {
   end
 }
 
-function liveAmazonEpisodeNumber() {
+function liveEpisodeNumber() {
   if (isGoogleIframe()) {
     var numberNameDiv = window.parent.document.querySelectorAll('.epname-number')[0]; // apparently I have backward but not forward visibility. phew.
     if (numberNameDiv) {
@@ -83,12 +86,15 @@ function liveAmazonEpisodeNumber() {
       }
     }
   }
-  // amazon :)
-  var subtitle = document.getElementsByClassName("subtitle")[0];
-  if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/))
-    return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
-  else
+  if (isAmazon()) {
+    var subtitle = document.getElementsByClassName("subtitle")[0];
+    if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/)) {
+      return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
+    }
+  }
+  else {
     return "0"; // anything else
+  }
 }
 
 
@@ -186,8 +192,8 @@ function checkStatus() {
 }
 
 function liveEpisodeString() {
-  if (liveAmazonEpisodeNumber() != "0")
-    return " episode:" + liveAmazonEpisodeNumber() + " " + liveAmazonEpisodeName();
+  if (liveEpisodeNumber() != "0")
+    return " episode:" + liveEpisodeNumber() + " " + liveEpisodeName();
   else
     return "";
   end
@@ -495,7 +501,7 @@ function stepFrame() {
 }
 
 function loadForCurrentUrl() {
-  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&amazon_episode_number=' + liveAmazonEpisodeNumber();
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=' + liveEpisodeNumber();
   url = '//<%= request_host %>/' + direct_lookup; // SSL for both in theory :)
   getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
 }
@@ -506,7 +512,7 @@ function parseSuccessfulJson(json) {
   url = out.url;
   name=url.name;
   editing_status = url.editing_status;
-  amazon_episode_name=url.amazon_episode_name;
+  episode_name=url.episode_name;
   // don't parse them, be lazy for now
   mutes=out.mutes;
   skips=out.skips;
@@ -514,7 +520,7 @@ function parseSuccessfulJson(json) {
   do_nothings=out.do_nothings;
   expected_current_url=out.expected_url_unescaped;
   amazon_second_url=out.url;
-  expected_amazon_episode_number=url.amazon_episode_number;
+  expected_episode_number=url.episode_number;
   url_id=url.id;
   request_host=out.request_host; // XXXX should this live at the top only?
   loadSuccessful();
@@ -546,18 +552,18 @@ function getRequest (url, success, error) {
 }
 
 function checkIfEpisodeChanged() {
-  if (getStandardizedCurrentUrl() != old_current_url || liveAmazonEpisodeNumber() != old_amazon_episode) {
+  if (getStandardizedCurrentUrl() != old_current_url || liveEpisodeNumber() != old_episode) {
     console.log("detected move to another video, to " + liveFullNameEpisode() + "\nfrom\n" +
-    old_current_url + " ep. " + old_amazon_episode + "\nwill try to load its edited settings now for the new movie...");
+    old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
-    old_amazon_episode = liveAmazonEpisodeNumber(); 
+    old_episode = liveEpisodeNumber(); 
     loadForCurrentUrl(); 
   }
 }
 
 function promptIfWantToCreate() {
   if(confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
-    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&amazon_episode_number=" + liveAmazonEpisodeNumber() + "&amazon_episode_name=" + encodeURIComponent(liveAmazonEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
+    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
     setTimeout(function() {
       loadForCurrentUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
@@ -568,13 +574,13 @@ function loadFailed(status) {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   editing_status = "unknown to system";
   name = liveFullNameEpisode();
-  amazon_episode_name = liveEpisodeString();
-  expected_amazon_episode_number = liveAmazonEpisodeNumber();
+  episode_name = liveEpisodeString();
+  expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
   document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
   // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
-  old_amazon_episode = liveAmazonEpisodeNumber(); 
+  old_episode = liveEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
      promptIfWantToCreate(); 
@@ -590,16 +596,16 @@ function loadSuccessful() {
     Llert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
-  if (liveAmazonEpisodeNumber() != expected_amazon_episode_number) {
-    alert("danger: may have gotten wrong amazon episode expected=" + expected_amazon_episode_number + " got=" + liveAmazonEpisodeNumber());
+  if (liveEpisodeNumber() != expected_episode_number) {
+    alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
-  old_amazon_episode = liveAmazonEpisodeNumber();
+  old_episode = liveEpisodeNumber();
   startWatcherOnce();
   var post_message = "This movie is currently marked as \"" + editing_status + "\" in our system, which means it is incomplete.  Please help us groom edits to our system and mark status as done when it's complete, thanks so much!";
   if (editing_status == "done")
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 
-  var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
+  var message = "Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   <% if !File.exists?("./this_is_development") %>
     alert(message);
   <% else %>
