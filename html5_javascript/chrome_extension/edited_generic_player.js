@@ -336,7 +336,7 @@ function addEditUi() {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
-  addMouseMoveListener(showOnMouseMove);
+  addMouseMoveListener(showEditLinkOnMouseMove);
 }
 
 var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
@@ -504,10 +504,37 @@ function stepFrame() {
   }, 1/30*1000); // theoretically about a frame worth :)
 }
 
-function loadForCurrentUrl() {
-  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=' + liveEpisodeNumber();
-  url = '//cleanstream.inet2.org/' + direct_lookup; // SSL for both in theory :)
-  getRequest(url, parseSuccessfulJson, loadFailed); // only works because we set CORS header :|
+function lookupUrl() {
+  return '//cleanstream.inet2.org/for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=' + liveEpisodeNumber();
+}
+
+function loadForNewUrl() {
+  getRequest(lookupUrl(), parseSuccessfulJsonWithAlert, loadFailed); // only works because we set CORS header :|
+}
+
+function reloadForCurrentUrl() {
+  if (url_id != 0) {
+    getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared?");  }); 
+  }
+}
+
+function parseSuccessfulJsonWithAlert(json) {
+  parseSuccessfulJson(json);
+  // and alert
+  if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
+    alert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
+  }
+  old_current_url = getStandardizedCurrentUrl();
+  if (liveEpisodeNumber() != expected_episode_number) {
+    alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
+  }
+  old_episode = liveEpisodeNumber();
+  startWatcherTimerOnce();
+  var post_message = "This movie is currently marked as \"" + editing_status + "\" in our system, which means it is incomplete.  Please help us groom edits to our system and mark status as done when it's complete, thanks so much!";
+  if (editing_status == "done")
+    post_message = "\nYou may sit back and relax while you enjoy it now!";
+
+  alert("Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message);
 }
 
 function parseSuccessfulJson(json) {
@@ -527,7 +554,6 @@ function parseSuccessfulJson(json) {
   expected_episode_number=url.episode_number;
   url_id=url.id;
   request_host=out.request_host; // XXXX should this live at the top only?
-  loadSuccessful();
 }
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
@@ -559,7 +585,10 @@ function checkIfEpisodeChanged() {
     old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_episode = liveEpisodeNumber(); 
-    loadForCurrentUrl(); 
+    loadForNewUrl(); 
+  }
+  else {
+
   }
 }
 
@@ -567,7 +596,7 @@ function promptIfWantToCreate() {
   if(confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
     window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
     setTimeout(function() {
-      loadForCurrentUrl();
+      loadForNewUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
   }
 }
@@ -590,36 +619,16 @@ function loadFailed(status) {
   else {
     alert("appears the cleanstream server is currently down, please alert us! Edits disabled for now...");
   }
-  startWatcherOnce(); // so it can check if episode changes to one we like magically LOL [mostly amazon]
-}
-
-function loadSuccessful() {
-  if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    Llert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
-  }
-  old_current_url = getStandardizedCurrentUrl();
-  if (liveEpisodeNumber() != expected_episode_number) {
-    alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
-  }
-  old_episode = liveEpisodeNumber();
-  startWatcherOnce();
-  var post_message = "This movie is currently marked as \"" + editing_status + "\" in our system, which means it is incomplete.  Please help us groom edits to our system and mark status as done when it's complete, thanks so much!";
-  if (editing_status == "done")
-    post_message = "\nYou may sit back and relax while you enjoy it now!";
-
-  var message = "Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
-  
-    alert(message);
-  
+  startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [mostly amazon]
 }
 
 var clean_stream_timer;
+var reload_timer;
 
-function startWatcherOnce() {
-  clean_stream_timer = clean_stream_timer || setInterval(function () {
-      checkStatus();
-  }, 1000 / 100 ); // 100 fps since that's the granularity of our time entries :|
-  // guess we just never turn it off
+function startWatcherTimerOnce() {
+  clean_stream_timer = clean_stream_timer || setInterval(checkStatus, 1000 / 100 ); // 100 fps since that's the granularity of our time entries :|
+  // guess we just never turn these off :)
+  reload_timer = reload_timer || setInterval(reloadForCurrentUrl, 3000);
 }
 
 function start() {
@@ -642,10 +651,10 @@ function start() {
 
   // ready to try and load the editor LOL
   addEditUi(); // only do once...
-  loadForCurrentUrl();
+  loadForNewUrl();
 }
 
-function showOnMouseMove() {
+function showEditLinkOnMouseMove() {
   document.getElementById("add_edit_link_id").style.visibility=""; // non hidden
   setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 5000); // kind of over simplified but hey... :|
 }
