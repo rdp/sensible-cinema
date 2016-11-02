@@ -193,6 +193,17 @@ function liveEpisodeString() {
   end
 }
 
+function youtubeChannelName() {
+
+    var all = document.getElementsByTagName("img");
+    var arrayLength = all.length;
+    for (var i = 0; i < arrayLength; i++) {
+        if (all[i].alt != "") {
+          return all[i].alt + " "; // "Studio C" but hacky
+        }
+    }
+    return "";
+}
 function liveTitleNoEpisode() {
   var title = "unknown title";
   if (document.getElementsByTagName("title")[0]) {
@@ -205,6 +216,9 @@ function liveTitleNoEpisode() {
       title += season_episode.innerHTML.split(",")[0]; // like " Season 2, Episode 2 "
     }
     // don't add episode name
+  }
+  if (currentUrlNotIframe().includes("youtube.com")) {
+    title = youtubeChannelName() + title; 
   }
   return title;
 }

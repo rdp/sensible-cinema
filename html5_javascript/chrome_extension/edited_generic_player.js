@@ -6,7 +6,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// generated at 2016-11-01 18:35:00 -0400.
+// generated at 2016-11-02 11:18:31 -0600.
 
 function inIframe () {
     try {
@@ -193,6 +193,17 @@ function liveEpisodeString() {
   end
 }
 
+function youtubeChannelName() {
+
+    var all = document.getElementsByTagName("img");
+    var arrayLength = all.length;
+    for (var i = 0; i < arrayLength; i++) {
+        if (all[i].alt != "") {
+          return all[i].alt + " "; // "Studio C" but hacky
+        }
+    }
+    return "";
+}
 function liveTitleNoEpisode() {
   var title = "unknown title";
   if (document.getElementsByTagName("title")[0]) {
@@ -205,6 +216,9 @@ function liveTitleNoEpisode() {
       title += season_episode.innerHTML.split(",")[0]; // like " Season 2, Episode 2 "
     }
     // don't add episode name
+  }
+  if (currentUrlNotIframe().includes("youtube.com")) {
+    title = youtubeChannelName() + title; 
   }
   return title;
 }
@@ -587,7 +601,7 @@ function loadSuccessful() {
 
   var message = "Editing playback successfully enabled for\n" + name + " " + amazon_episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message;
   
-    alert(message);
+    console.log("not showing message as popup since is development:\n" + message);
   
 }
 
