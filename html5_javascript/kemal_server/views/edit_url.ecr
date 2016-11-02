@@ -9,25 +9,31 @@
 name:
 <input type="text" name="name" size="150" value="<%= url.name %>"/>
 <br/>
+<br/>
 
 url:
 <input type="text" name="url" size="150" value="<%= url.url %>"/>
+<br/>
 <br/>
 
 amazon second url (if your amazon episode is part of a series, you can find this by clicking the "series" dropdown and it shows a different URL that we also need/want here)::
 <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
 <br/>
+<br/>
 
 details (non-spoiler synopsis, actor names, etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
+<br/>
 <br/>
 
 episode_number (0 if none)
 <input type="text" name="amazon_episode_number" size="5" value="<%= url.amazon_episode_number %>"/>
 <br/>
+<br/>
 
 amazon_episode_name (if any)
 <input type="text" name="amazon_episode_name" size="50" value="<%= url.amazon_episode_name %>"/>
+<br/>
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
@@ -40,43 +46,54 @@ amazon_episode_name (if any)
   document.getElementById('is_amazon_prime_select').value = '<%= url.is_amazon_prime %>';
   </script>
   <br/>
+  <br/>
 </div>
 
 editing_status (ex: "done", "needs second review" "not done yet" "editing done" -- set to done when movie fully complete and reviewed for friendly prompt about this movie)
 <textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
 <br/>
+<br/>
 
 age_recommendation_after_edited (ex: 10, or 0 for none)
 <input type="text" name="age_recommendation_after_edited" size="5" value="<%= url.age_recommendation_after_edited %>"/>
+<br/>
 <br/>
 
 wholesome_uplifting_level (out of 10, or 0 for none)
 <input type="text" name="wholesome_uplifting_level" size="5" value="<%= url.wholesome_uplifting_level %>"/>
 <br/>
+<br/>
 
 good_movie_rating (out of 10, or 0 for none)
 <input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
+<br/>
 <br/>
 
 review (explain good movie rating if needed, explain age recommendation if needed, "still has X not edited [bare midriffs adult them...]")
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 <br/>
-
-rental cost (rental for 2 days, or 7, ex "2.00") (0 if part of subscription like netflix, amazon: enter cost for episode even if on prime)
-<input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>
 <br/>
 
-purchase cost (ex: full purchase this episode)
-<input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>
+rental cost (rental for 2 days, or 7, ex "2.00") (leave as 0 if part of subscription like netflix, or free like youtube. amazon: enter cost for episode even if on prime)
+<input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>$
+<br/>
 <br/>
 
-image_url for movie (like http://wikipedia/original_image.svg)
+purchase cost (ex: full purchase this episode, see above for details)
+<input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>$
+<br/>
+<br/>
+
+image_url for movie (like http://wikipedia/original_image.svg if you can find an image for this movie)
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
+<br/>
 <br/>
 
 total time (total movie length, netflix needs this)
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
+<br/>
+
 <br/>
 <input type="submit" value="Save movie info" class="btn btn-primary" class_means="blue" onclick="this.form.submit(); this.disabled=true; this.value='Sending…';"> <!-- takes awhile so do something to know their click was accepted -->
 </form>
