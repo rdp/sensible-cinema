@@ -1,9 +1,7 @@
-# kemal_server
-
 Clean stream player server source
+See cleanstream.inet2.org for details on using it.
 
-## Installation
+## Installation of server:
 
-git submodule update --init
 shards install
-./go
+./goXX
