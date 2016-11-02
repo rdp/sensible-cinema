@@ -350,17 +350,4 @@ def set_flash_for_next_time(env, string)
   env.session["flash"] = "#{env.session["flash"]}" + string # save old flash too LOL
 end
 
-def plugin_javascript(request_host)
- render("views/html5_edited.js.ecr")
-end
-
-def setup_for_chrome_extension
-  localhost = plugin_javascript "localhost:3000"
-  production = plugin_javascript "cleanstream.inet2.org"
-  File.write("../chrome_extension/edited_generic_player.js", production)
-  puts "wrote .js files, default production"
-end
-
-setup_for_chrome_extension # auto setup :)
-
 Kemal.run
