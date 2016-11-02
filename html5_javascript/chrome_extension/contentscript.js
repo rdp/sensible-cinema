@@ -89,7 +89,7 @@ function autoStartOnBigThree() {
     }, 50);  // initial delay 50ms but not too bad :)
   }
   else {
-    console.log("not auto starting non big 3 " + location);
+    console.log("not auto loading with prompt b/c non big 3 " + location);
     // light blue #ADD8E6 super light blue too light
     // lightish blue 3333FF
     // 808080 grey
@@ -102,7 +102,7 @@ function autoStartOnBigThree() {
         loadIfCurrentHasOne(); 
         clearInterval(interval);
       }
-    }, 1000); // hopefully doesn't burden stuff too much :)
+    }, 1000); // hopefully doesn't burden unrelated web pages too much :)
   }
 }
 
@@ -114,7 +114,7 @@ function currentUrlNotIframe() {
 
 function loadIfCurrentHasOne() {
   var url = currentUrlNotIframe();
-  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&amazon_episode_number=0'; // simplified, assume just URL wurx, with GET params
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&episode_number=0'; // simplified, assume just URL wurx, with GET params, no episode at play LOL
   url = '//cleanstream.inet2.org/' + direct_lookup;  // assume prod :)
   getRequest(url, currentHasEdits, currentHasNone); // TODO retry with GET params off now?
 }

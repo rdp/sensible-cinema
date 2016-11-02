@@ -537,14 +537,12 @@ function getRequest (url, success, error) {
         console.log("success download");
         success(xhr.responseText); 
       } else { 
-        console.log("fail download 1");
         error && error(xhr.status); 
         error = null;
       } 
     } 
   }; 
   xhr.onerror = function () { 
-    console.log("fail download 2");
     error && error(xhr.status); 
     error = null;
   }; 
@@ -563,7 +561,7 @@ function checkIfEpisodeChanged() {
 
 function promptIfWantToCreate() {
   if(confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
-    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()), "_blank");
+    window.open("https://<%= request_host %>/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
     setTimeout(function() {
       loadForCurrentUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|

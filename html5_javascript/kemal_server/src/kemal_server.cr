@@ -168,7 +168,7 @@ get "/view_url/:url_id" do |env|
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
-def get_title_and_sanitized_canonical_url(real_url)
+def get_title_and_sanitized_standardized_canonical_url(real_url)
     begin
       response = HTTP::Client.get real_url # download that page :)
     rescue ex
@@ -202,14 +202,30 @@ class String
   end
 end
 
-get "/new_url" do |env| # add_url
-  real_url = standardize_url(env.params.query["url"])
+get "/new_url" do |env| # add_url add_new
+  real_url = env.params.query["url"]
   incoming = env.params.query
   episode_number = incoming["episode_number"].to_i
   episode_name = incoming["episode_name"]
-  title, sanitized_url = get_title_and_sanitized_canonical_url real_url
-  if incoming["title"].present?
-    title = incoming["title"] # XX always just use this :|
+  title = incoming["title"]
+  duration = incoming["duration"].to_f
+  create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
+end
+
+get "/new_manual_url" do |env|
+  real_url = env.params.query["url"]
+  if env.params.query["episode_number"]?
+    episode_number = env.params.query["episode_number"].to_i
+  else
+    episode_number = 0
+  end
+  create_new_and_redir(real_url, episode_number, "", "", 0.0, env)
+end
+
+def create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
+  title_incoming, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
+  if title == ""
+    title = title_incoming
   end
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
   if url_or_nil != nil
@@ -243,6 +259,7 @@ get "/new_url" do |env| # add_url
     url.episode_name = episode_name
     url.episode_number = episode_number
     url.editing_status = "just begun editing process"
+    url.total_time = duration
     url.save 
     env.redirect "/edit_url/#{url.id}"
   end
@@ -277,12 +294,11 @@ post "/save_url" do |env|
   params = env.params.body # POST params
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = params["url"] # already unescaped I think...
-  _ , incoming_url = get_title_and_sanitized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
+  _ , incoming_url = get_title_and_sanitized_standardized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
   # these get injected everywhere later so sanitize everything up front... :|
-  incoming_url = sanitize_html incoming_url
   amazon_second_url = HTML.unescape(params["amazon_second_url"])
   if amazon_second_url.present?
-    _ , amazon_second_url = get_title_and_sanitized_canonical_url amazon_second_url
+    _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url amazon_second_url
   end
   details = sanitize_html HTML.unescape(params["details"])
   editing_status = params["editing_status"]
