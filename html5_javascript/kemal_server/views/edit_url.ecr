@@ -16,27 +16,26 @@ url:
 <br/>
 <br/>
 
-amazon second url (if your amazon episode is part of a series, you can find this by clicking the "series" dropdown and it shows a different URL that we also need/want here)::
-<input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
-<br/>
-<br/>
-
 details (non-spoiler synopsis, actor names, etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 <br/>
 
-episode_number (0 if none)
+episode_number (0 if not part of a series)
 <input type="text" name="episode_number" size="5" value="<%= url.episode_number %>"/>
 <br/>
 <br/>
 
-episode_name (if any)
+episode_name (if part of a series)
 <input type="text" name="episode_name" size="50" value="<%= url.episode_name %>"/>
 <br/>
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
+  amazon second url (if your amazon episode is part of a series, you can find this by clicking the "series" dropdown and it shows a different URL that we also need/want here)::
+  <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
+  <br/>
+  <br/>
   is_amazon_prime
   <select name="is_amazon_prime" id='is_amazon_prime_select'>
     <option value="0">no</option>
@@ -49,7 +48,7 @@ episode_name (if any)
   <br/>
 </div>
 
-editing_status (ex: "done", "needs second review" "not done yet" "editing done" -- set to done when movie fully complete and reviewed for friendly prompt about this movie)
+editing_status (ex: "done", "needs second review" "lacks Y edited out"-- set to "done" when movie fully complete and reviewed)
 <textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
 <br/>
 <br/>
@@ -84,7 +83,7 @@ purchase cost (ex: full purchase this episode, see above for details)
 <br/>
 <br/>
 
-image_url for movie (like http://wikipedia/original_image.svg if you can find an image for this movie)
+image_url for movie (like http://wikipedia/original_image.svg if you can find an image for this movie [or episode or series])
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
 <br/>
 <br/>
