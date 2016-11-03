@@ -1,11 +1,9 @@
 == todo ===
 name
-SSL cert??
+  SSL cert??
 
 chrome extension
   publish :)
-  link "open last for editing" :)
-  auto reload
 
 pay people for tons
   maybe for ones I care about first :)
@@ -19,6 +17,11 @@ main persuasive page LOL
 instructions (only) for jruby subtitle finder for now :)
 
 publish more browser dev console instructions :)
+
+prettier index
+
+prettier index that differtiaties "done" or not :)
+
 == todo never LOL ==
 
 can duplicate episodes :)
@@ -27,7 +30,7 @@ can duplicate episodes :)
 chrome extension: 
   can set "YES" from other pages (window message or what not  why not :| )
   after one cancel, never prompt again LOL
-  gplay from index :)
+  play.google.com from index :)
 
 more CC files? :)
   or at least real local subtitles ?
