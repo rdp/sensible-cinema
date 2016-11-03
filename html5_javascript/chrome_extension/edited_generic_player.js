@@ -293,7 +293,7 @@ function addEditUi() {
   <a href="#" onclick="stepFrame(); return false;">step</a>
   <a href="#" onclick="video_element.play(); return false;">&#9654;</a>
   <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">edit last</a>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a>
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
@@ -309,7 +309,7 @@ function addEditUi() {
   addMouseMoveListener(showEditLinkOnMouseMove);
 }
 
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // hard coded to my plugin
 
 // method to bind easily to resize event
 var addEvent = function(object, type, callback) {
