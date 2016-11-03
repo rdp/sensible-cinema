@@ -100,33 +100,39 @@ def get_url_from_url_id(env)
   Url.get_only_by_id(env.params.url["url_id"])
 end
 
-get "/add_edl/:url_id" do |env|
+get "new_empty_edl" do |env|
   url = get_url_from_url_id(env)
-  edl = Edl.new url
-  query = env.params.query
-  if query.has_key?("start")
-    edl.start = url.human_to_seconds query["start"]
-    edl.endy = url.human_to_seconds query["endy"]
-    edl.default_action = sanitize_html query["default_action"]
+  last_edl = url.last_edl_or_nil
+  if last_edl
+    # just make it slightly past the last 
+    last_end = last_edl.endy
+    edl.start = last_end + 1
+    edl.endy = last_end + 2
   else
-    # a "new" EDL
-    last_edl = url.last_edl_or_nil
-    if last_edl
-      # just make it slightly past the last 
-      last_end = last_edl.endy
-      edl.start = last_end + 1
-      edl.endy = last_end + 2
-    else
-      edl.start = 0.0
-      edl.endy = 1.0 # later than 0 :)
-    end
+    # non zero anyway :|
+    edl.start = 1.0
+    edl.endy = 2.0
   end
   render "views/edit_edl.ecr", "views/layout.ecr"
 end
 
+get "/add_edl_from_plugin/:url_id" do |env|
+  url = get_url_from_url_id(env)
+  edl = Edl.new url
+  query = env.params.query
+  edl.start = url.human_to_seconds query["start"]
+  edl.endy = url.human_to_seconds query["endy"]
+  edl.default_action = sanitize_html query["default_action"]
+  # immediate save so that I can rely on repolling this from the UI to get the ID's etc. in a few seconds after submitting it :|
+  edl.category = "unknown"
+  edl.subcategory = "unknown"
+  edl.save
+  env.redirect "/edit_edl/#{edl.id}"
+end
+
 post "/save_edl/:url_id" do |env|
   params = env.params.body
-  if params.has_key? "id"
+  if params["id"]?
     edl = Edl.get_only_by_id(params["id"])
   else
     edl = Edl.new(get_url_from_url_id(env))

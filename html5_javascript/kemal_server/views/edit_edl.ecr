@@ -31,10 +31,11 @@ category (gets automatically set for you when you choose sub category):
 <select name="category" id='category_select' disabled="true">
   <option value="profanity">verbal profanity</option>
   <option value="violence">violence</option>
-  <option value="physical">physical profanity (nudity, sex, drugs, etc.)</option>
+  <option value="physical">physical body related content</option>
   <option value="movie-content">movie-content</option>
   <option value="suspense">suspenseful/scary</option>
   <option value="substance-abuse">substance-abuse</option>
+  <option value="unknown">unknown</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= edl.category %>';
@@ -100,6 +101,10 @@ sub category
     <% end %>
   </optgroup>
 
+  <optgroup label="unknown">>
+    <option value="unknown">unknown -- unknown</option>
+  </optgroup>
+
 </select>
 <script>
 document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
@@ -116,15 +121,13 @@ more details (ex: "sally said ... OK?" (dots instead of real profanity, or "spec
 <textarea name="more_details" rows="3" cols="40" ><%= edl.more_details %></textarea>
 <br/>
 
-Note: you need to hit this save button for each edit or they will be lost!
 <br/>
-
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 </form>
 
 or
 <br/>
-<a href=/edit_url/<%= url.id %>><< back to movie edit page</a> (changes will be lost)
+<a href=/edit_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 
 <script>
 function updateCategory() {

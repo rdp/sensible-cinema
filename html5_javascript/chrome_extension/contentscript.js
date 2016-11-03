@@ -12,6 +12,11 @@ already_loaded = false;
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if (request.action == "please_start") {
+            var url = currentUrlNotIframe();
+            if (url.includes("netflix.com/") || url.includes("hulu.com/")) {
+              alert("terms of use on this website disallow us injecting code, please ask on the mailing list for support for watching these edited if it has been created yet");
+              return; 
+            }
             if (findFirstVideoTag() != null) {
               console.log('got request to start from popup message...starting');
               injectEditedPlayerOnce();
@@ -71,8 +76,8 @@ function inIframe () {
 }
 
 function autoStartOnBigThree() {
-  var location = window.location.href;
-  if (location.includes("netflix.com") || location.includes("play.google.com") || location.includes("amazon.com")) {
+  var url = currentUrlNotIframe();
+  if (url.includes("play.google.com") || url.includes("amazon.com")) {
     if (inIframe()) { // checking for google not reliable here since some of its iframes are like play5.google.com
       // google iframes popup after it says YES and reset it back to wait in error :|
       console.log("not setting to wait from iframe");
@@ -81,6 +86,7 @@ function autoStartOnBigThree() {
       chrome.runtime.sendMessage({text: "wait", color: "#0000FF", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if can playback edited"}); 
     }
     // iframe wants to load it though, for google play
+    console.log("big 3 polling for video tag...");
     var interval = setInterval(function(){
       if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
         injectEditedPlayerOnce();
@@ -88,14 +94,13 @@ function autoStartOnBigThree() {
       }
     }, 50);  // initial delay 50ms but not too bad :)
   }
-  else {
-    console.log("not auto loading with prompt b/c non big 3 " + location);
-    // light blue #ADD8E6 super light blue too light
+  else if (!url.includes("netflix.com/") && !url.includes("hulu.com/")) {
+    console.log("not auto prompting, not big 3, will poll for video element " + url);
     // lightish blue 3333FF
     // 808080 grey
     if (!inIframe()) {
-      chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not netflix/google play/amazon"});
-    } // don't send it for iframes since they might override the "real" iframe as it were, which told it "none"
+      chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon"});
+    } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {
       if (findFirstVideoTag() != null) {
         console.log("detected video element on this page, checking if we have edits...");
@@ -103,6 +108,10 @@ function autoStartOnBigThree() {
         clearInterval(interval);
       }
     }, 1000); // hopefully doesn't burden unrelated web pages too much :)
+  }
+  else {
+    console.log("doing nothing netflix :|");
+      chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
 }
 

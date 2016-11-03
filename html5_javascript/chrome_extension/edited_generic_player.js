@@ -299,7 +299,7 @@ function addEditUi() {
   edlLayer.style.display = 'none';
   document.body.appendChild(edlLayer);
   
-  // inject the HTML UI 
+  // inject the add edit UI HTML
   edlLayer.innerHTML = `
   from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
   <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
@@ -317,7 +317,7 @@ function addEditUi() {
   <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
   <input type='submit' value='Save edit' onclick="saveEditButton();">
   <br/>
-  <a href='#' onclick="seekToTime(video_element.currentTime -5);">-5</a>
+  <a href='#' onclick="seekToTime(video_element.currentTime -5);">-5s</a>
   <a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
   <span id='playback_rate'>1.00x</span>
   <a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
@@ -490,11 +490,12 @@ function humanToTimeStamp(timestamp) {
 }
 
 function saveEditButton() {
-  var url = "https://" + request_host + "/add_edl/" + url_id + '?start=' + document.getElementById('start').value + 
-  "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
+  var url = "https://" + request_host + "/add_edl_from_plugin/" + url_id + '?start=' + document.getElementById('start').value + 
+            "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   console.log(url);
-  var win = window.open(url, '_blank');
-  addToCurrentEditArray(); // and leave it there
+  window.open(url, '_blank');
+  setTimeout(reloadForCurrentUrl, 2000);
+  setTimeout(reloadForCurrentUrl, 20000); // and get details :)
 }
 
 function stepFrame() {
@@ -513,8 +514,8 @@ function loadForNewUrl() {
 }
 
 function reloadForCurrentUrl() {
-  if (url_id != 0) {
-    getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared?");  }); 
+  if (url_id != 0 && !inTest) {
+    getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared but used to be here?");  }); 
   }
 }
 
@@ -623,12 +624,10 @@ function loadFailed(status) {
 }
 
 var clean_stream_timer;
-var reload_timer;
 
 function startWatcherTimerOnce() {
   clean_stream_timer = clean_stream_timer || setInterval(checkStatus, 1000 / 100 ); // 100 fps since that's the granularity of our time entries :|
-  // guess we just never turn these off :)
-  reload_timer = reload_timer || setInterval(reloadForCurrentUrl, 3000);
+  // guess we just never turn it off on purpose :)
 }
 
 function start() {
