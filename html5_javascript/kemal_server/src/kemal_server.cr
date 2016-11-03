@@ -354,4 +354,8 @@ def set_flash_for_next_time(env, string)
   env.session["flash"] = "#{env.session["flash"]}" + string # save old flash too LOL
 end
 
+def table_row(first_cell, second_cell)
+  "<tr><td>#{first_cell}</td><td>#{second_cell}</td></tr>";
+end
+
 Kemal.run
