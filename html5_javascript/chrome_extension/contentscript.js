@@ -145,17 +145,14 @@ function getRequest (url, success, error) {
   xhr.onreadystatechange = function(){
     if ( xhr.readyState == 4 ) {
       if ( xhr.status == 200 ) {
-        console.log("success download");
         success(xhr.responseText);
       } else {
-        console.log("fail download 1");
         error && error(xhr.status);
         error = null;
       }
     }
   };
   xhr.onerror = function () {
-    console.log("fail download 2");
     error && error(xhr.status);
     error = null;
   };

@@ -6,9 +6,10 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-var request_host=cleanstream.inet2.org;
+var request_host="cleanstream.inet2.org";
 
-function inIframe () {
+// helper
+function inIframe() {
     try {
         return window.self !== window.top;
     } catch (e) {
@@ -20,10 +21,8 @@ function isGoogleIframe() {
   return inIframe() && /google.com/.test(window.location.hostname); 
 }
 
-function currentUrlNotIframe() { // hopefully saner alternate to window.location.href
-  return (window.location != window.parent.location)
-            ? document.referrer
-            : document.location.href;
+function currentUrlNotIframe() { // hopefully better alternate to window.location.href, though somehow this doesn't always work still [ex: netflix.com iframes?]
+  return (window.location != window.parent.location) ? document.referrer : document.location.href;
 } 
 
 function isAmazon() {
@@ -194,7 +193,6 @@ function liveEpisodeString() {
 }
 
 function youtubeChannelName() {
-
     var all = document.getElementsByTagName("img");
     var arrayLength = all.length;
     for (var i = 0; i < arrayLength; i++) {
@@ -251,7 +249,8 @@ function addEditUi() {
   topLineEditDiv.style.background = '#000000';
   topLineEditDiv.style.zIndex = "99999999"; // on top :)
   topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  topLineEditDiv.style.textShadow="2px 1px 0px white";
+  topLineEditDiv.style.color = "white";
+  topLineEditDiv.style.textShadow="2px 1px 0px black";
   topLineEditDiv.style.fontSize = "13px";
   topLineEditDiv.style.display = 'none';
   document.body.appendChild(topLineEditDiv);
@@ -470,14 +469,30 @@ function saveEditButton() {
 }
 
 function openEditMostRecentPassed() {
+  var lastest = 0;
+  var last_id = 0;
+  var cur_time = video_element.currentTime;
+  var edits = current_json.edits;
+  for (var i = 0; i < edits.length; i++) {
+    if (edits[i].endy < cur_time && edits[i].endy > lastest) {
+      last_id = edits[i].id;
+      lastest = edits[i].endy;
+    }
+  } 
 
+  if (last_id > 0) {
+    window.open("https://" + request_host + "/edit_edl/" + last_id);
+  }
+  else {
+    alert("could not find one earlier than your currently playing back location");
+  }
 }
 
 function stepFrame() {
   video_element.play();
   setTimeout(function() { 
     video_element.pause(); 
-  }, 1/30*1000); // theoretically about a frame worth :)
+  }, 1/30*1000); // theoretically about an NTSC frame worth :)
 }
 
 function lookupUrl() {
@@ -541,7 +556,6 @@ function getRequest (url, success, error) {
   xhr.onreadystatechange = function(){ 
     if ( xhr.readyState == 4 ) { 
       if ( xhr.status == 200 ) { 
-        console.log("success download");
         success(xhr.responseText); 
       } else { 
         error && error(xhr.status); 
@@ -559,19 +573,16 @@ function getRequest (url, success, error) {
 function checkIfEpisodeChanged() {
   if (getStandardizedCurrentUrl() != old_current_url || liveEpisodeNumber() != old_episode) {
     console.log("detected move to another video, to " + liveFullNameEpisode() + "\nfrom\n" +
-    old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
+                 old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_episode = liveEpisodeNumber(); 
     loadForNewUrl(); 
   }
-  else {
-
-  }
 }
 
 function promptIfWantToCreate() {
-  if(confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
-    window.open("https://' + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
+  if (confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
+    window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
     setTimeout(function() {
       loadForNewUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
@@ -580,7 +591,11 @@ function promptIfWantToCreate() {
 
 function loadFailed(status) {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
-  editing_status = "unknown to system";
+  // plus if they paste it in it gets here, so...basically load the no-op :|
+  if (current_json != null) {
+    current_json.edls = [];
+  }
+  editing_status = "unknown to system"; // just in case :)
   name = liveFullNameEpisode();
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
