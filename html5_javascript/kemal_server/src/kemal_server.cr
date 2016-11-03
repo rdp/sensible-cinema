@@ -102,6 +102,7 @@ end
 
 get "new_empty_edl" do |env|
   url = get_url_from_url_id(env)
+  edl = Edl.new url
   last_edl = url.last_edl_or_nil
   if last_edl
     # just make it slightly past the last 
