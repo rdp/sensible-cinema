@@ -177,7 +177,7 @@ function checkStatus() {
     }
   }
   
-  topLineEditDiv.innerHTML = " " + timeStampToHuman(cur_time) + " " + extra_message + " Add new edit:";
+  topLineEditDiv.innerHTML = "Add new edit: " + timeStampToHuman(cur_time) + " " + extra_message;
   document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
@@ -341,7 +341,7 @@ function addForNewEditToScreen() {
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
     toggleDiv(topLineEditDiv);
     toggleDiv(edlLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "Close editor";
+    document.getElementById("add_edit_link_id").innerHTML = "Hide editor";
   }
   else {
     toggleDiv(topLineEditDiv);
@@ -621,9 +621,11 @@ function start() {
   loadForNewUrl();
 }
 
+var mouse_move_timeout;
 function showEditLinkOnMouseMove() {
   document.getElementById("add_edit_link_id").style.visibility=""; // non hidden
-  setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 5000); // kind of over simplified but hey... :|
+  clearTimeout(mouse_move_timeout); // clear old
+  mouse_move_timeout = setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 5000);
 }
 
 // helper method
