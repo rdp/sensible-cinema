@@ -1,65 +1,57 @@
-<h1>Editing for <%= url.name_with_episode %></h1>
+<h1>Details for <%= url.name_with_episode %></h1>
 
 <%= url.name_with_episode %>
 <br/>
-<a href="<%= url.url %>" target="_blank"><%= url.url %></a>
-<br/>
-Details: <br/><%= url.details %>
-<br/>
-<% if url.url =~ /amazon.com/ %>
-  <%= url.is_amazon_prime? ? "amazon prime": "not amazon prime" %>
-  <br/>
-<% end %>
-
-editing_status <%= url.editing_status %>
-<br/>
-
-age_recommendation_after_edited (year) <%= url.age_recommendation_after_edited %>
-<br/>
-
-wholesome_uplifting_level (out of 10, or 0 for none) <%= url.wholesome_uplifting_level %>
-<br/>
-
-good_movie_rating (out of 10, or 0 for none) <%= url.good_movie_rating %>
-<br/>
-
-our review  <%= url.review %>
-<br/>
-
 <% if url.image_url.size > 0 %>
   <img src="<%= url.image_url %>" style="max-width: 250px;"/>
 <br/>
 <% end %>
+<a href="<%= url.url %>" target="_blank">link</a>
+<br/>
 
-<% if url.rental_cost > 0 %>
-  price to rent: <%= "%.2f" % url.rental_cost %>$.
-  <br/>
+<table class="table" style="width: auto;">
+  <thead>
+    <tr></tr>
+    <tr></tr>
+  </thead>
+  <tbody>
+    <%= table_row("Details", url.details) %>
+<% if url.url =~ /amazon.com/ %>
+    <%= table_row("prime?", url.is_amazon_prime? ? "amazon prime": "not amazon prime") %>
 <% end %>
-<% if url.purchase_cost > 0 %>
-  price to purchase digital: <%= "%.2f" % url.purchase_cost %>$.
-  <br/>
-<% end %>
+    <%= table_row("Editing status", url.editing_status) %>
+    <%= table_row("age_recommendation_after_edited (year)", url.age_recommendation_after_edited) %>
+    <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>
+    <%= table_row("good movie rating (out of 10, or 0 for not set)", url.good_movie_rating) %>
+    <% if url.rental_cost > 0 %>
+        <%= table_row("price to rent", "%.2f$" % url.rental_cost) %>
+    <% end %>
+    <% if url.purchase_cost > 0 %>
+        <%= table_row("price to purchase", "%.2f$" % url.purchase_cost) %>
+    <% end %>
+    <% if url.total_time > 0 %>
+       <%= table_row("total movie time",  seconds_to_human url.total_time) %>
+    <% end %>
+    <%= table_row("Our review", url.review) %>
+  </tbody>
+</table>
+<br/>
 
-<% if url.total_time > 0 %>
-  total movie time: <%= seconds_to_human url.total_time %>
-  <br/>
-<% end %>
-
-<a href=/edit_url/<%= url.id %>>modify movie details</a>
+<a href=/edit_url/<%= url.id %>>modify these movie details</a>
 <br/>
 
 <p><a href="/index">&lt;&lt; back to index</a></p>
 <hr/>
+<!-- summary -->
 Current edits in our system for this movie:
 <% url.edls_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
-    <%= value.size %> of <%= name %>
+    <%= name %>: <%= value.size %>
+    <br/>
   <% end %>
 <% } %> 
 <hr/>
 
-View and modify edits for this movie:
-<br/>
 <br/>
 <% if url.edls.size == 0 %>
   No edits for this movie yet, add one now!
@@ -79,9 +71,10 @@ View and modify edits for this movie:
 <br/>
 <a href=/new_empty_edl/<%= url.id %>>add new edit &#10133;<!-- thick plus --> </a>
 <hr/>
-<hr/>
+<!--
 Links for developers:
 <br/>
 <a href=/for_current_just_settings_json?<%= url.url_lookup_params %> target="_blank">json</a>
 <br>
 <a href=/regenerate_all>regen all</a> javascript cache for all (developers should do this if they change internal javascript)
+-->

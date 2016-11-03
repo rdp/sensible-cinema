@@ -117,7 +117,7 @@ one or two word "end user friendly" (euphemized) details (ex: d***, "deity" or "
 <br/>
 <input type="text" name="details" size="50" value="<%= edl.details %>"/>
 <br/>
-more details (ex: "sally said ... OK?" (dots instead of real profanity, or "specific song name")) optional 
+internal details (ex: "sally said .... OK?" (dots instead of real profanity)) optional, will only be seen by editors
 <br/>
 <textarea name="more_details" rows="3" cols="40" ><%= edl.more_details %></textarea>
 <br/>
@@ -126,11 +126,7 @@ more details (ex: "sally said ... OK?" (dots instead of real profanity, or "spec
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 </form>
 
-or
-
-<a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure? This removes this edit entirely...')">delete &#10006; </a>
-<br/>
-or
+<a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure? This removes this edit entirely...')">delete edit from system &#10006; </a>
 <br/>
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 
