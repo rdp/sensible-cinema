@@ -55,10 +55,7 @@ def timestamps_of_type_for_video(conn, db_url, type)
 end
 
 def json_for(db_url, env)
-  with_db do |conn|
-    request_host =  env.request.headers["Host"] # like localhost:3000
-    render "views/html5_edited.just_settings.json.ecr"
-  end
+  render "views/html5_edited.just_settings.json.ecr"
 end
 
 get "/instructions" do |env|

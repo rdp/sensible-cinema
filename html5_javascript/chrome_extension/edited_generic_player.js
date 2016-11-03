@@ -6,6 +6,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
+var request_host=cleanstream.inet2.org;
+
 function inIframe () {
     try {
         return window.self !== window.top;
@@ -292,6 +294,7 @@ function addEditUi() {
   <a href="#" onclick="stepFrame(); return false;">step</a>
   <a href="#" onclick="video_element.play(); return false;">&#9654;</a>
   <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">edit last</a>
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
@@ -466,6 +469,10 @@ function saveEditButton() {
   setTimeout(reloadForCurrentUrl, 20000); // and get details :)
 }
 
+function openEditMostRecentPassed() {
+
+}
+
 function stepFrame() {
   video_element.play();
   setTimeout(function() { 
@@ -474,7 +481,7 @@ function stepFrame() {
 }
 
 function lookupUrl() {
-  return '//cleanstream.inet2.org/for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=' + liveEpisodeNumber();
+  return '//' + request_host + '/for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=' + liveEpisodeNumber();
 }
 
 function loadForNewUrl() {
@@ -506,23 +513,24 @@ function parseSuccessfulJsonWithAlert(json) {
   alert(decodeHTMLEntities("Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));
 }
 
+var current_json;
+
 function parseSuccessfulJson(json) {
-  out = JSON.parse(json);
+  current_json = JSON.parse(json);
   // assume right format LOL
-  url = out.url;
-  name=url.name;
+  url = current_json.url;
+  name=current_json.name;
   editing_status = url.editing_status;
   episode_name=url.episode_name;
   // don't parse them, be lazy for now
-  mutes=out.mutes;
-  skips=out.skips;
-  yes_audio_no_videos=out.yes_audio_no_videos;
-  do_nothings=out.do_nothings;
-  expected_current_url=out.expected_url_unescaped;
-  amazon_second_url=out.url;
+  mutes=current_json.mutes;
+  skips=current_json.skips;
+  yes_audio_no_videos=current_json.yes_audio_no_videos;
+  do_nothings=current_json.do_nothings;
+  expected_current_url=current_json.expected_url_unescaped;
+  amazon_second_url=current_json.url;
   expected_episode_number=url.episode_number;
   url_id=url.id;
-  request_host=out.request_host; // XXXX should this live at the top only?
 }
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
@@ -563,7 +571,7 @@ function checkIfEpisodeChanged() {
 
 function promptIfWantToCreate() {
   if(confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
-    window.open("https://cleanstream.inet2.org/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
+    window.open("https://' + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
     setTimeout(function() {
       loadForNewUrl();
     }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
@@ -578,7 +586,6 @@ function loadFailed(status) {
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
   document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
-  // request_host leave ?
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
