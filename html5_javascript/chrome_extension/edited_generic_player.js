@@ -261,7 +261,8 @@ function addEditUi() {
   edlLayer.style.background = '#000000';
   edlLayer.style.zIndex = "99999999"; // on top :)
   edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  edlLayer.style.textShadow="2px 1px 0px white";
+  edlLayer.style.color = "white";
+  edlLayer.style.textShadow="2px 1px 0px black";
   edlLayer.style.fontSize = "13px";
   edlLayer.style.display = 'none';
   document.body.appendChild(edlLayer);
@@ -284,13 +285,13 @@ function addEditUi() {
   <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
   <input type='submit' value='Save edit' onclick="saveEditButton();">
   <br/>
-  <a href='#' onclick="seekToTime(video_element.currentTime -5);">-5s</a>
-  <a href="#" onclick="video_element.playbackRate -= 0.1;">&lt;&lt;</a>
+  <a href='#' onclick="seekToTime(video_element.currentTime -5); return false;">-5s</a>
+  <a href="#" onclick="video_element.playbackRate -= 0.1; return false;">&lt;&lt;</a>
   <span id='playback_rate'>1.00x</span>
-  <a href="#" onclick="video_element.playbackRate += 0.1;">&gt;&gt;</a>
-  <a href="#" onclick="stepFrame();">step</a>
-  <a href="#" onclick="video_element.play()">&#9654;</a>
-  <a href="#" onclick="video_element.pause()">&#9612;&#9612;</a>
+  <a href="#" onclick="video_element.playbackRate += 0.1; return false;">&gt;&gt;</a>
+  <a href="#" onclick="stepFrame(); return false;">step</a>
+  <a href="#" onclick="video_element.play(); return false;">&#9654;</a>
+  <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json :|
@@ -502,7 +503,7 @@ function parseSuccessfulJsonWithAlert(json) {
   if (editing_status == "done")
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 
-  alert("Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message);
+  alert(decodeHTMLEntities("Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));
 }
 
 function parseSuccessfulJson(json) {
