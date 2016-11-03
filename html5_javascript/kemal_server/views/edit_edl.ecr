@@ -45,6 +45,10 @@ document.getElementById('category_select').value = '<%= edl.category %>';
 
 sub category
 <select name="subcategory" id='subcategory_select' onchange="updateCategory();">
+  <optgroup label="unknown">>
+    <option value="unknown">unknown -- unknown</option>
+  </optgroup>
+
   <optgroup label="profanity">
     <option value="personal attack command">profanity -- attack command ("shut up" etc.)</option>
     <option value="personal insult">profanity -- insult ("moron" etc.)</option>
@@ -93,16 +97,13 @@ sub category
 
   <optgroup label="suspense">
     <% ["frightening/startling scene", "suspenseful fight \"will they win?\""].each do |type|  %>
+      <option value="<%= type %> OK age 3">suspense -- <%= type %> (OK age 3+)</option>
       <option value="<%= type %> OK age 6">suspense -- <%= type %> (OK age 6+)</option>
       <option value="<%= type %> OK age 9">suspense -- <%= type %> (OK age 9+)</option>
       <option value="<%= type %> OK age 12">suspense -- <%= type %> (OK age 12+)</option>
       <option value="<%= type %> OK age 16">suspense -- <%= type %> (OK age 16+)</option>
       <option value="<%= type %>">suspense -- <%= type %> (not OK)</option>
     <% end %>
-  </optgroup>
-
-  <optgroup label="unknown">>
-    <option value="unknown">unknown -- unknown</option>
   </optgroup>
 
 </select>
