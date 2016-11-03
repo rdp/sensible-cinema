@@ -48,10 +48,10 @@ get "/for_current_just_settings_json" do |env|
 end
 
 def timestamps_of_type_for_video(conn, db_url, type) 
-    edls = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
-      Edl.from_rs rs
-    end
-    edls.map{|edl| [edl.start, edl.endy]}
+  edls = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
+    Edl.from_rs rs
+  end
+  edls.map{|edl| [edl.start, edl.endy]}
 end
 
 def json_for(db_url, env)
@@ -153,7 +153,7 @@ post "/save_edl/:url_id" do |env|
 end
 
 get "/regenerate_all" do |env|
-  # cleanse all :)
+  # cleanse :)
   Dir["edit_descriptors/*.js"].each{|file|
     File.delete file
   }
