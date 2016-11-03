@@ -37,7 +37,7 @@ function getStandardizedCurrentUrl() {
   }
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
-  if (current_url.includes("amazon.com") || current_url.includes("netflix.com")) { // known to want to strip off cruft
+  if (current_url.includes("amazon.com")) { // known to want to strip off cruft
     current_url = current_url.split("?")[0];
   }
   return current_url;
@@ -156,17 +156,11 @@ function checkStatus() {
       extra_message = "";
     }
   }
-  if (currentUrlNotIframe().includes("netflix.com")) {
-    handleNetflixSeekOrStop(cur_time);
-  } 
-  else {
-     // youtube, amazon et al, sane seeks with no watching it :)    
-    [last_start, last_end] = areWeWithin(skips, cur_time);
-    if (last_start) {
-      timestamp_log("seeking to " + last_end, cur_time, last_start, last_end);
-      seekToTime(last_end);
-    }
-  }  
+  [last_start, last_end] = areWeWithin(skips, cur_time);
+  if (last_start) {
+    timestamp_log("seeking to " + last_end, cur_time, last_start, last_end);
+    seekToTime(last_end);
+  }
   [last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
   if (last_start) {
     if (video_element.style.visibility != "hidden") {
@@ -234,33 +228,6 @@ function liveFullNameEpisode() {
 function timestamp_log(message, cur_time, last_start, last_end) {
   local_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end + " in " + (last_end - cur_time)+ "s";;
   console.log(local_message);
-}
-
-function handleNetflixSeekOrStop(cur_time) {
-    fast_forward_to_skip_speed = 1.01; // even 4 was barfing ?? with 1.25 barfs very rarely
-    [last_start, last_end] = areWeWithin(skips, cur_time);
-    if (last_start) {
-        if (video_element.playbackRate == fast_forward_to_skip_speed) {
-          console.log("still fast forwarding to " + last_end + " remaining=" + Math.round(last_end - cur_time));
-          // already and still fast forwarding
-        } else {
-          // fast forward
-          timestamp_log("begin fast forward while muted", cur_time, last_start, last_end);
-          extra_message = "blanking and muting to skip";
-          video_element.playbackRate = fast_forward_to_skip_speed; // seems to be its max or freezes [?]
-          video_element.volume = 0;
-          video_element.style.visibility="hidden";
-        }
-    } else {
-       // not in a skip, did we just finish one?
-       if (video_element.playbackRate == fast_forward_to_skip_speed) {
-          console.log("cancel/done fast forwarding " + cur_time);
-          extra_message = "";
-          video_element.style.visibility="";// non hidden
-          video_element.volume = 1;
-          video_element.playbackRate = 1;
-       }
-    }
 }
 
 function addEditUi() {
