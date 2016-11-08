@@ -104,8 +104,9 @@ function autoStartOnBigThree() {
       chrome.runtime.sendMessage({text: ".", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
     } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {
-      if (findFirstVideoTag() != null) {
-        console.log("detected video element on this page, checking if we have edits...");
+      var video_tag;
+      if ((video_tag = findFirstVideoTag()) != null) {
+        console.log("detected video element on this page, checking if we have edits..." + video_tag.src);
         loadIfCurrentHasOne(); 
         clearInterval(interval);
       }
@@ -114,9 +115,7 @@ function autoStartOnBigThree() {
 }
 
 function currentUrlNotIframe() {
-  return (window.location != window.parent.location)
-            ? document.referrer
-            : document.location.href;
+  return (window.location != window.parent.location) ? document.referrer : document.location.href;
 }
 
 function loadIfCurrentHasOne() {
@@ -133,7 +132,7 @@ function currentHasEdits() {
 
 function currentHasNone() {
   console.log("unable to find one for " + currentUrlNotIframe() + " so not auto loading it, doing nothing");
-  chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We do not have this video in our system yet, please add it!"}); 
+  chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please add it!"}); 
 }
 
 function getRequest (url, success, error) {
