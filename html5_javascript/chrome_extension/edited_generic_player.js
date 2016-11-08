@@ -250,7 +250,7 @@ function addEditUi() {
   topLineEditDiv.style.zIndex = "99999999"; // on top :)
   topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   topLineEditDiv.style.color = "white";
-  topLineEditDiv.style.textShadow="2px 1px 0px black";
+  topLineEditDiv.style.textShadow="2px 1px 0px grey";
   topLineEditDiv.style.fontSize = "13px";
   topLineEditDiv.style.display = 'none';
   document.body.appendChild(topLineEditDiv);
@@ -263,7 +263,7 @@ function addEditUi() {
   edlLayer.style.zIndex = "99999999"; // on top :)
   edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   edlLayer.style.color = "white";
-  edlLayer.style.textShadow="2px 1px 0px black";
+  edlLayer.style.textShadow="2px 1px 0px grey";
   edlLayer.style.fontSize = "13px";
   edlLayer.style.display = 'none';
   document.body.appendChild(edlLayer);
@@ -647,7 +647,7 @@ var mouse_move_timeout;
 function showEditLinkOnMouseMove() {
   document.getElementById("add_edit_link_id").style.visibility=""; // non hidden
   clearTimeout(mouse_move_timeout); // clear old
-  mouse_move_timeout = setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 5000);
+  mouse_move_timeout = setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 3000);
 }
 
 // helper method

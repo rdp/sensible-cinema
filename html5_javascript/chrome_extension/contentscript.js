@@ -94,12 +94,14 @@ function autoStartOnBigThree() {
       }
     }, 50);  // initial delay 50ms but not too bad :)
   }
-  else if (!url.includes("netflix.com/") && !url.includes("hulu.com/")) {
-    console.log("not auto prompting, not big 3, will poll for video element " + url);
-    // lightish blue 3333FF
+  else if (url.includes("netflix.com/") || url.includes("hulu.com/")) {
+    console.log("doing nothing netflix et al :|");
+    chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
+  }
+  else {
     // 808080 grey
     if (!inIframe()) {
-      chrome.runtime.sendMessage({text: "non", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon"});
+      chrome.runtime.sendMessage({text: ".", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
     } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {
       if (findFirstVideoTag() != null) {
@@ -108,10 +110,6 @@ function autoStartOnBigThree() {
         clearInterval(interval);
       }
     }, 1000); // hopefully doesn't burden unrelated web pages too much :)
-  }
-  else {
-    console.log("doing nothing netflix :|");
-      chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
 }
 
