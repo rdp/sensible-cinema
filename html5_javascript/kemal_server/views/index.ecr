@@ -15,8 +15,8 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
     <tr>
       <th>Movie Name</th>
       <th>Host</th>
-      <th>Link</th>
-      <th>View edits for this movie</th>
+      <th></th>
+      <th>Edits for this movie</th>
       <th>Editing status</th>
       <th>Age recommendation with edits</th>
       <th>Wholesome<br/>uplifting level / 10 max.</th>
@@ -41,7 +41,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
          <% end %>
          >watch</a>
        </td>
-       <td><a href="/view_url/<%= url.id %>">edit</a></td>
+       <td><a href="/view_url/<%= url.id %>">view edits</a></td>
        <td><%= url.editing_status %></td>
        <td><%= url.age_recommendation_after_edited %></td>
        <td> <%= url.wholesome_uplifting_level %> </td>
@@ -67,8 +67,5 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
   </tbody>
 </table>
 
-Movie you want not in this list?  Please
-<a href=/create_new>add it</a>!
-
-You too can purchase this for $2 (currently free however), email rogerdpack@gmail.com to receive instructions on how to pay if you'd like to go that route.<br/>
+You too can purchase this program for $2 (currently free however), email rogerdpack@gmail.com to receive instructions on how to pay.
 </pre>

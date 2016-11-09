@@ -37,10 +37,10 @@
 </table>
 <br/>
 
-<a href=/edit_url/<%= url.id %>>modify these movie details</a>
+<a href=/edit_url/<%= url.id %>>modify movie details</a>
 <br/>
 
-<p><a href="/index">&lt;&lt; back to index</a></p>
+<p><a href="/index">&lt;&lt; back to movie index</a></p>
 <hr/>
 <!-- summary -->
 Current edits in our system for this movie:
@@ -56,25 +56,24 @@ Current edits in our system for this movie:
 <% if url.edls.size == 0 %>
   No edits for this movie yet, add one now!
 <% end %>
+<table class="table table-striped" style="width: auto;">
+  <thead>
+    <tr>
+      <th>start</th>
+      <th>end</th>
+    </tr>
+  </thead>
 <% url.edls.each do |edl|  %>
-  [<%= seconds_to_human edl.start %>] to [<%= seconds_to_human edl.endy %>] 
-  [<%= edl.default_action %>]
-  [<%= edl.category %>]
-  [<%= edl.subcategory %>]
-  [<%= edl.details %>]
-  <a href=/edit_edl/<%= edl.id %>>modify</a>
-  <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure?')">delete &#10006; </a>
-  <br/>
-  <br/>
+  <tr>
+  <td><%= seconds_to_human edl.start %></td><td><%= seconds_to_human edl.endy %></td>
+  <td><%= edl.default_action %></td>
+  <td><%= edl.category %></td>
+  <td><%= edl.subcategory %></td>
+  <td><%= edl.details %></td>
+  <td><a href=/edit_edl/<%= edl.id %>>modify</a></td>
+  </tr>
 <% end %>
 
-<br/>
+</table>
+
 <a href=/new_empty_edl/<%= url.id %>>add new edit &#10133;<!-- thick plus --> </a>
-<hr/>
-<!--
-Links for developers:
-<br/>
-<a href=/for_current_just_settings_json?<%= url.url_lookup_params %> target="_blank">json</a>
-<br>
-<a href=/regenerate_all>regen all</a> javascript cache for all (developers should do this if they change internal javascript)
--->
