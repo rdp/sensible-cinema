@@ -42,7 +42,12 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
          >watch</a>
        </td>
        <td><a href="/view_url/<%= url.id %>">view edits</a></td>
-       <td><%= url.editing_status %></td>
+       <td>
+       <% if url.editing_status == "done" %>
+         <SPAN STYLE="color: green;">
+       <% end %>
+         <%= url.editing_status %>
+       </td>
        <td><%= url.age_recommendation_after_edited %></td>
        <td> <%= url.wholesome_uplifting_level %> </td>
        <td> <%= url.good_movie_rating %></td>
