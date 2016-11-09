@@ -179,7 +179,7 @@ You will be prompted for a beginning and starting timestamp time to search for.\
                %!\n"ending_subtitle_entry" => ["#{end_text}", "#{end_movie_sig}", #{end_entry.index_number}],\n!
 	    end
 		
-		File.write filename, out
+		File.write filename, out.gsub("\n", "\r\n") # notepad friendly ai ai
         open_file_to_edit_it filename
         sleep 1 # let it open in notepad
 		
@@ -266,14 +266,17 @@ You will be prompted for a beginning and starting timestamp time to search for.\
     end
 
 		def write_subs_to_file out_file, euphemized_synchronized_entries
-          File.open(out_file, 'w') do |f|
+          File.open(out_file, 'wb') do |f|
             euphemized_synchronized_entries.each_with_index{|entry, idx|
               beginning_time = EdlParser.translate_time_to_human_readable(entry.beginning_time, true).gsub('.',',')
               ending_time = EdlParser.translate_time_to_human_readable(entry.ending_time, true).gsub('.',',')
-              f.puts entry.index_number
-              f.puts "#{beginning_time} --> #{ending_time}"
-              f.puts entry.text
-              f.puts ''
+              f.print entry.index_number
+              f.print "\r\n" # jruby bug that puts doesn't do this right with permissions 'w' ?
+              f.print "#{beginning_time} --> #{ending_time}"
+              f.print "\r\n"
+              f.print entry.text
+              f.print "\r\n"
+              f.print "\r\n"
             }
 		  end
 	    end
