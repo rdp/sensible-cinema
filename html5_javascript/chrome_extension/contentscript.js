@@ -83,7 +83,7 @@ function autoStartOnBigThree() {
       console.log("not setting to wait from iframe");
     }
     else {
-      chrome.runtime.sendMessage({text: "wait", color: "#0000FF", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if can playback edited"}); 
+      chrome.runtime.sendMessage({text: "wait", color: "#808080", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
     console.log("big 3 polling for video tag...");
