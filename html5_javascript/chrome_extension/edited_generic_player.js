@@ -576,7 +576,7 @@ function checkIfEpisodeChanged() {
                  old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_episode = liveEpisodeNumber(); 
-    loadForNewUrl(); 
+    setTimeout(loadForNewUrl, 1000); // youtube gets the "old name" still for the new prompt :|
   }
 }
 
@@ -603,7 +603,7 @@ function loadFailed(status) {
   document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "NO", details: "No edited settings found for movie, not playing edited"}); // red
+  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
      promptIfWantToCreate(); 
   }
