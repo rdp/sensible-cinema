@@ -1,6 +1,5 @@
-<h1>Edit details of edit for 
+<h1>Modify details of edit</h1> for 
 <%= url.name_with_episode %> 
-</h1>
 
 <form action="/save_edl/<%= url.id %>" method="POST">
 
@@ -125,7 +124,10 @@ internal details (ex: "sally said .... OK?" (dots instead of real profanity)) op
 <br/>
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 </form>
-<a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure? This removes this edit entirely...');">delete edit from system &#10006; </a>
+<% if edl.id != 0 %>
+  <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure? This removes this edit entirely, you may want to shorten it or fix it instead...');">delete this edit from system &#10006; </a>
+<% end %>
+<br/>
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 
 <script>

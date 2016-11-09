@@ -78,8 +78,8 @@ get "/delete_url/:url_id" do |env|
   env.redirect "/index"
 end
 
-get "/delete_edl/:id" do |env|
-  id = env.params.url["id"]
+get "/delete_edl/:edl_id" do |env|
+  id = env.params.url["edl_id"]
   edl = Edl.get_only_by_id(id)
   edl.destroy
   save_local_javascript [edl.url], "removed #{edl}", env
@@ -87,8 +87,8 @@ get "/delete_edl/:id" do |env|
   env.redirect "/view_url/#{edl.url.id}"
 end
 
-get "/edit_edl/:id" do |env|
-  edl = Edl.get_only_by_id(env.params.url["id"])
+get "/edit_edl/:edl_id" do |env|
+  edl = Edl.get_only_by_id(env.params.url["edl_id"])
   url = edl.url
   render "views/edit_edl.ecr", "views/layout.ecr"
 end
@@ -97,7 +97,8 @@ def get_url_from_url_id(env)
   Url.get_only_by_id(env.params.url["url_id"])
 end
 
-get "/new_empty_edl" do |env|
+get "/new_empty_edl/:url_id" do |env|
+ 
   url = get_url_from_url_id(env)
   edl = Edl.new url
   last_edl = url.last_edl_or_nil
@@ -111,6 +112,7 @@ get "/new_empty_edl" do |env|
     edl.start = 1.0
     edl.endy = 2.0
   end
+  set_flash_for_next_time env, "edit is not yet saved, hit the save button when you are done"
   render "views/edit_edl.ecr", "views/layout.ecr"
 end
 
