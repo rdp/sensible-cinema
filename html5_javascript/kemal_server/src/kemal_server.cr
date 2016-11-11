@@ -234,9 +234,9 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = title_incoming
   end
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
-  if url_or_nil != nil
+  if url_or_nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
-    env.redirect "/edit_url/#{url_or_nil.as(Url).id}"
+    env.redirect "/edit_url/#{url_or_nil.id}"
   else
     # cleanup various title crufts
     title = HTML.unescape(title) # &amp => & and there are some :|
