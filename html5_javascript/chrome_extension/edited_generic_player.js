@@ -96,24 +96,22 @@ function liveEpisodeNumber() {
   }
 }
 
-
-function findFirstVideoTag() {
-    var all = document.getElementsByTagName("video");
-    if (all.length > 0)
-      return all[0];
-    else {
-     // leave this in here in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
-     // it won't hurt anything...
-     var i, frames;
-     frames = document.getElementsByTagName("iframe");
-     for (i = 0; i < frames.length; ++i) {
-       try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
-        all = frames[i].contentDocument.document.getElementsByTagName("video");
-        if (all.length > 1)
-          return all[0];
-     }
-     return null;
-   }
+function findFirstVideoTagOrNull() {
+  var all = document.getElementsByTagName("video");
+  // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
+  // it hopefully won't hurt anything...
+  var i, frames;
+  frames = document.getElementsByTagName("iframe");
+  for (i = 0; i < frames.length; ++i) {
+    try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
+    all.concat(frames[i].contentDocument.document.getElementsByTagName("video"));
+  }
+  for(var i = 0, len = all.length; i < len; i++) {
+    if (all[i].currentTime > 0) {
+      return all[i];
+    }
+  }
+  return null;
 }
 
 function decodeHTMLEntities(text) {
@@ -182,6 +180,7 @@ function checkStatus() {
   document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
+  video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
 }
 
 function liveEpisodeString() {
@@ -583,9 +582,7 @@ function checkIfEpisodeChanged() {
 function promptIfWantToCreate() {
   if (confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
     window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
-    setTimeout(function() {
-      loadForNewUrl();
-    }, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
+    setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
   }
 }
 
@@ -621,7 +618,7 @@ function startWatcherTimerOnce() {
 }
 
 function start() {
-  video_element = findFirstVideoTag();
+  video_element = findFirstVideoTagOrNull();
 
   if (video_element == null) {
     // this one's pretty serious, just let it die...

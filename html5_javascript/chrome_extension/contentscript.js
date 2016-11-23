@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(
               alert("terms of use on this website disallow us injecting code, please ask on the mailing list for support for watching these edited if it has been created yet");
               return; 
             }
-            if (findFirstVideoTag() != null) {
+            if (findFirstVideoTagOrNull() != null) {
               console.log('got request to start from popup message...starting');
               injectEditedPlayerOnce();
             }
@@ -29,15 +29,17 @@ chrome.runtime.onMessage.addListener(
          }
 });
 
-function findFirstVideoTag() {
-    var all = document.getElementsByTagName("video");    
-    if (all.length > 0)
-      return all[0];
-    else {
-       // don't *want* to work with iframes from the plugin side since they'll get their own edited playback copy
-       // hopefully this is enough to prevent double loading (once windows.document, one iframe if they happen to be allowed :|
-    }
-    return null;
+function findFirstVideoTagOrNull() {
+   var all = document.getElementsByTagName("video");
+    // look for first "real" playing vid as it were [byu.tv needs this, it has two, first is an add player, i.e. wrong one]
+   for(var i = 0, len = all.length; i < len; i++) {
+     if (all[i].currentTime > 0) {
+       return all[i];
+     } 
+   }
+   // don't *want* to work with iframes from the plugin side since they'll get their own edited playback copy
+   // hopefully this is enough to prevent double loading (once windows.document, one iframe if they happen to be allowed :|
+   return null;
 }
 
 function onReady(yourMethod) {
@@ -88,7 +90,7 @@ function autoStartOnBigThree() {
     // iframe wants to load it though, for google play
     console.log("big 3 polling for video tag...");
     var interval = setInterval(function(){
-      if (findFirstVideoTag() != null && !findFirstVideoTag().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
+      if (findFirstVideoTagOrNull() != null && !findFirstVideoTagOrNull().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
@@ -99,14 +101,14 @@ function autoStartOnBigThree() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
-    // 808080 grey
+    // non big 2, just poll
     if (!inIframe()) {
       chrome.runtime.sendMessage({text: ".", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
     } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {
-      var video_tag;
-      if ((video_tag = findFirstVideoTag()) != null) {
-        console.log("detected video element on this page, checking if we have edits..." + video_tag.src);
+      var local_video_tag;
+      if ((local_video_tag = findFirstVideoTagOrNull()) != null) {
+        console.log("detected video element on this page, checking if we have edits..." + local_video_tag.src);
         loadIfCurrentHasOne(); 
         clearInterval(interval);
       }
