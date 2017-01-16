@@ -1,3 +1,3 @@
-echo "use like https://cleanstream.inet2.org"
+echo "use like https://playitmyway.inet2.org"
 sudo echo "root successfully enabled...we'll need that in a sec..."
 crystal build ./src/kemal_server.cr && sudo setcap cap_net_bind_service=+ep ./kemal_server && ./kemal_server --ssl --ssl-key-file key.pem --ssl-cert-file cert.pem -p 443

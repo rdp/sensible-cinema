@@ -123,7 +123,7 @@ function currentUrlNotIframe() {
 function loadIfCurrentHasOne() {
   var url = currentUrlNotIframe();
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&episode_number=0'; // simplified, assume just URL wurx, with GET params, no episode at play LOL
-  url = '//cleanstream.inet2.org/' + direct_lookup;  // assume prod :)
+  url = '//playitmyway.inet2.org/' + direct_lookup;  // assume prod :)
   getRequest(url, currentHasEdits, currentHasNone); // TODO retry with GET params off now?
 }
 

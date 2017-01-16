@@ -6,7 +6,7 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-var request_host="cleanstream.inet2.org";
+var request_host="playitmyway.inet2.org";
 
 // helper
 function inIframe() {
