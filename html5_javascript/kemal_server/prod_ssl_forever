@@ -1,6 +1,10 @@
-#!/usr/bin/env fish
-echo "you must run this as root!"
-while true
-  sudo -u rdp ./prod_ssl_go # wait for it to get killed by cron
+#!/bin/bash
+# bash for now until I know how to check for root using fish
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 
+   exit 1
+fi
+while true; do
+  ./prod_ssl_go # wait for it to get killed by cron
   sleep 1 # allow ctrl+c to ever work LOL
-end
+done
