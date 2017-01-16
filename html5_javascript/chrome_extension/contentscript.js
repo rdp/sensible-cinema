@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(
               return; 
             }
             if (findFirstVideoTagOrNull() != null) {
-              console.log('got request to start from popup message...starting');
+              console.log('got request to start from popup message...');
               injectEditedPlayerOnce();
             }
             else {
