@@ -22,7 +22,7 @@ function loadEditedPlayback() {
 
 function openIndex() {
   // this is how you have to do any links from the popup box [yikeserz]
-  chrome.tabs.create({active: true, url: "https://cleanstream.inet2.org"});
+  chrome.tabs.create({active: true, url: "https://playitmyway.inet2.org"});
 }
 
 // XXXX somehow get status or request status from content script at load time :|
