@@ -1,0 +1,49 @@
+# edl_version 1.3, sensible cinema v0.41.8
+# comments can go be created by placing text after a # on any line, for example this one.
+"name" => "Saving Mr Banks",
+
+"mutes" => [
+  "0:03:42.72" , "0:03:44.04", "profanity", "h...", "If I believed in a [h...]  I'd be sitting in its waiting room.",
+  "0:05:41.92" , "0:05:45.44", "profanity", "l...", "Good [l...], I've quite forgotten.",
+  "0:18:41.68" , "0:18:43.80", "profanity", "dick", "This is [dick] and Bob Sherman, music and lyrics.",  
+  "0:26:05.56" , "0:26:06.84", "profanity", "d...", "[d...].",
+  "0:28:11.32" , "0:28:12.81", "profanity", "dick", "[dick] is one of the greats.",
+  "0:28:14.28" , "0:28:15.48", "profanity", "dick", "[dick] Van Dyke?",
+  "0:28:27.44" , "0:28:32.01", "profanity", "dick", "I can assure... I can assure you that [dick] Van Dyke is not.",
+  "0:28:32.64" , "0:28:34.13", "profanity", "dick", "[dick] Van Dyke.",
+  "0:34:33.16" , "0:34:36.52", "profanity", "sex", "Something a bit, I don't know, [sex]y.",
+  "0:37:57.00" , "0:37:59.80", "profanity", "dick", "She won't approve [dick] Van Dyke.",
+  "0:42:56.48" , "0:42:58.96", "profanity", "h...", "And I thought, To [h...] with it.",
+  "0:44:31.56" , "0:44:34.08", "profanity", "deity", "No. [___], no.",
+  "0:44:45.72" , "0:44:47.48", "profanity", "deity", "Oh, [___], not Ellie.",
+  "0:51:12.32" , "0:51:14.81", "profanity", "bloo..", "Bleak and [bloo..] as it is.",
+  "0:56:36.32" , "0:56:38.97", "profanity", "deity", "Honest to [___], would've killed me.",
+  "1:08:16.48" , "1:08:17.88", "profanity", "deity", "Oh, [___] [d...] it!",
+  "1:15:34.00" , "1:15:36.08", "profanity", "deity", "Oh, my [___].",
+  "1:21:08.00" , "1:21:10.57", "profanity", "deity", "- Gosh. - They said only [___] could make a tree.",
+  "1:25:21.08" , "1:25:23.44", "profanity", "deity", "Oh, [___], I hope you like it.",
+  "1:30:33.44" , "1:30:35.32", "profanity", "dick", "- They're animated. - [dick]...",
+  "1:30:39.44" , "1:30:40.85", "profanity", "dick", "[dick]!",
+  "1:38:38.76" , "1:38:40.20", "profanity", "deity", "Oh, dear [___]!",
+
+],
+
+"blank_outs" => [
+  # an example line, uncomment the leading "#" to make it active
+  # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
+],
+
+"source" => "dvd",
+"volume_name" => "SAVING_MR_BANKS",
+"timestamps_relative_to" => ["file", "29.97"],
+"disk_unique_id" => "c1dbd591|0825b379",
+"dvd_title_track" => "1", # our guess for it
+"dvd_title_track_length" => "7532.966", 
+# "not edited out stuff" => "some...",
+# "closing thoughts" => "only ...",
+# "subtitles_to_display_relative_path" => "some_file.srt" # if you want to display some custom subtitles alongside your movie
+"dvd_title_track_start_offset" => "0.0",
+"dvd_nav_packet_offset" => [0.0, 0.5375],
+#Also add these lines at the bottom of the EDL (for later coordination):
+"beginning_subtitle" => ["mist coming in", "01:06.52", 2],
+"ending_subtitle_entry" => ["Because he's always been sweet", "2:02:48.76", 1829],
