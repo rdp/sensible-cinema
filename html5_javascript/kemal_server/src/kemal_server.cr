@@ -11,6 +11,7 @@ end
 
 before_all do |env|
   env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.]
+  env.session.string("flash", "") unless env.session.string?("flash") # default
 end
 
 get "/" do |env|
@@ -357,8 +358,7 @@ end
 ####### view methods :)
 
 def set_flash_for_next_time(env, string)
-  env.session.string("flash", env.session.string("flash") || "")
-  env.session.string("flash", env.session.string("flash") + " " + string)
+  env.session.string("flash", env.session.string("flash") + " " + string) # hopefully HTML strips the preceding stuff :)
 end
 
 def table_row(first_cell, second_cell)
