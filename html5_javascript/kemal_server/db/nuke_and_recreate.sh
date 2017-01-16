@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-#rm ./edit_descriptors/sqlite3_data.db
-#sqlite3 ./edit_descriptors/sqlite3_data.db < ./db/init.sql
 
-mysql -uroot mysql < ./db/init.sql # read your creds from ./db/settingsXXX
+mysql -uroot mysql < ./db/init.sql # read your creds from ./db/XXX if required
+
+# to *not* nuke one just run
+# mysql -uXXX -p db_name
+# and enter commands manually from bottom of init.sql
