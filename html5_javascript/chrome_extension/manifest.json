@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "Clean stream edited movie extension",
-  "description": "Enables the clean stream player to playback online videos edited",
+  "name": "Play it my way",
+  "description": "Enables the playback of online videos edited",
   "version": "0.5",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
-    "default_title": "Clean stream editor plugin" // initial tooltip, though overridden
+    "default_title": "Play it my way" // initial tooltip, though overridden
   },
   "permissions": [
     "<all_urls>", "tabs" 

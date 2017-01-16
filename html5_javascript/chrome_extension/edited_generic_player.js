@@ -2,7 +2,7 @@
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
 if (typeof clean_stream_timer !== 'undefined') {
-  alert("clean stream already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
+  alert("already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
