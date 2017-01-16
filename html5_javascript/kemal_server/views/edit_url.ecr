@@ -32,17 +32,20 @@ episode_name (if part of a series)
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon second url (if your amazon episode is part of a series, you can find this by clicking the "series" dropdown and it shows a different URL that we also need/want here)::
+  amazon second url (if your amazon episode is part of a series, you can find this by clicking the "series" dropdown and it shows a different URL that we also need/want here):
   <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
   <br/>
   <br/>
-  is_amazon_prime
-  <select name="is_amazon_prime" id='is_amazon_prime_select'>
-    <option value="0">no</option>
-    <option value="1">yes</option>
+  amazon_prime_free_type:
+  <select name="amazon_prime_free_type" id='amazon_prime_free_type'>
+    <option value="">none (purchase/rent only)</option>
+    <option value="Prime">free with prime</option>
+    <option value="Starz">free with prime + Starz subscription</option>
+    <option value="HBO">free with prime + HBO subscription</option>
+    <option value="Showtime">free with prime + Showtime subscription</option>
   </select>
   <script>
-  document.getElementById('is_amazon_prime_select').value = '<%= url.is_amazon_prime %>';
+  document.getElementById('amazon_prime_free_type').value = '<%= url.amazon_prime_free_type %>';
   </script>
   <br/>
   <br/>

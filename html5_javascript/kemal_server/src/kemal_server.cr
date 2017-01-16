@@ -321,7 +321,7 @@ post "/save_url" do |env|
   good_movie_rating = params["good_movie_rating"].to_i
   image_url = sanitize_html HTML.unescape(params["image_url"])
   review = params["review"]
-  is_amazon_prime = params["is_amazon_prime"].to_i
+  amazon_prime_free_type = params["amazon_prime_free_type"]
   rental_cost = params["rental_cost"].to_f
   purchase_cost = params["purchase_cost"].to_f
   total_time = human_to_seconds params["total_time"]
@@ -345,7 +345,7 @@ post "/save_url" do |env|
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
   db_url.image_url = image_url
-  db_url.is_amazon_prime = is_amazon_prime
+  db_url.amazon_prime_free_type = amazon_prime_free_type
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
   db_url.total_time = total_time

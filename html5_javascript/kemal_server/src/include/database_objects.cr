@@ -17,7 +17,7 @@ class Url
     good_movie_rating: Int32,
     image_url: String,
     review: String,
-    is_amazon_prime: Int32,
+    amazon_prime_free_type: String, # "prime" "HBO"
     rental_cost: Float64,
     purchase_cost: Float64, # XXX actually Decimal [?]
     total_time: Float64
@@ -37,7 +37,7 @@ class Url
     good_movie_rating: Int32,
     image_url: String,
     review: String,
-    is_amazon_prime: Int32,
+    amazon_prime_free_type: String,
     rental_cost: Float64,
     purchase_cost: Float64,
     total_time: Float64
@@ -45,7 +45,7 @@ class Url
   
   def self.all
     with_db do |conn|
-      conn.query("SELECT * from urls order by url, is_amazon_prime desc") do |rs|
+      conn.query("SELECT * from urls order by url, amazon_prime_free_type desc") do |rs|
          Url.from_rs(rs);
       end
     end
@@ -53,7 +53,7 @@ class Url
 
   def self.first
     with_db do |conn|
-      conn.query("SELECT * from urls order by url, is_amazon_prime desc limit 1") do |rs|
+      conn.query("SELECT * from urls order by url, amazon_prime_free_type desc limit 1") do |rs|
         Url.from_rs(rs); # is there no easy "get one" option?
       end
     end[0]
@@ -75,9 +75,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, is_amazon_prime = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, is_amazon_prime, rental_cost, purchase_cost, total_time, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, id
       end
     end
   end
@@ -96,7 +96,7 @@ class Url
     @good_movie_rating = 0
     @image_url = ""
     @review = ""
-    @is_amazon_prime = 0
+    @amazon_prime_free_type = ""
     @rental_cost = 0.0
     @purchase_cost = 0.0
     @total_time = 0.0
@@ -144,15 +144,20 @@ class Url
     "url=#{URI.escape url}&episode_number=#{episode_number}" # URI.escape == escapeComponent
   end
 
-  def host_like_netflix
+  def human_readable_company
+   # get from url host...
    check =  /\/\/([^\/]+).*/
     if url =~ check
       host = $1.split(".")[-2]
     else
       host = url # ??
     end
-    if is_amazon_prime?
-      host += " prime"
+    if amazon_prime_free_type != ""
+      if amazon_prime_free_type == "Prime"
+        host +=  " prime"
+      else
+        host += "#{amazon_prime_free_type} prime add-on, or buy"
+      end
     end
     host
   end
@@ -177,14 +182,6 @@ class Url
     end
   end
 
-  def is_amazon_prime?
-    if is_amazon_prime == 0
-      false
-    else
-      true
-    end
-  end
-
   def review_with_ellipses
     if review.size > 100
       review[0..100] + "&#8230;" # :|
@@ -196,7 +193,7 @@ class Url
   def cost_string
     if rental_cost > 0 || purchase_cost > 0
       out = "%.2f/%.2f" % [rental_cost, purchase_cost]
-      if is_amazon_prime == 1
+      if amazon_prime_free_type != ""
         out += " (free on prime)"
       end
       out

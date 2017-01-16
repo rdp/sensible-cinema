@@ -16,9 +16,9 @@
   </thead>
   <tbody>
     <%= table_row("Details", url.details) %>
-<% if url.url =~ /amazon.com/ %>
-    <%= table_row("prime?", url.is_amazon_prime? ? "amazon prime": "not amazon prime") %>
-<% end %>
+    <% if url.url =~ /amazon.com/ %>
+        <%= table_row("prime?", url.human_readable_company) %>
+    <% end %>
     <%= table_row("Editing status", url.editing_status) %>
     <%= table_row("age_recommendation_after_edited (year)", url.age_recommendation_after_edited) %>
     <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>

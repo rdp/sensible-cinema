@@ -62,6 +62,10 @@ ALTER TABLE urls RENAME INDEX url_title_episode TO unique_name_with_episode;
 ALTER TABLE urls CHANGE amazon_episode_name episode_name VARCHAR(1024);
 ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
 
+alter table urls add column amazon_prime_free_type VARCHAR(2014) NOT NULL DEFAULT '';;
+update urls set amazon_prime_free_type = 'Prime' where is_amazon_prime = 1;
+alter table urls drop column is_amazon_prime;
+
 -- output some to screen
 select * from urls;
 select * from edits;

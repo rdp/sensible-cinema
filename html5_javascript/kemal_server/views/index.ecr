@@ -33,7 +33,7 @@ These are movies that we currently have edits for.  Don't see one you want? Plea
 <% urls.each{ |url|  %>
     <tr>
        <td><%= url.name_with_episode %></td>
-       <td><%= url.host_like_netflix %></td>
+       <td><%= url.human_readable_company %></td>
        <td>
          <a href="<%= url.url %>" target="_blank"
          <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
