@@ -2,5 +2,5 @@
 
 while true
   ./kill_next &
-  ./go
+  ./go_ssl_dev
 end

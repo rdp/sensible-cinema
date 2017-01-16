@@ -197,7 +197,7 @@ function youtubeChannelName() {
     var arrayLength = all.length;
     for (var i = 0; i < arrayLength; i++) {
         if (all[i].alt != "") {
-          return all[i].alt + " "; // "Studio C" but hacky
+          return all[i].alt + " "; // "Studio C" channel name, but hacky...
         }
     }
     return "";
