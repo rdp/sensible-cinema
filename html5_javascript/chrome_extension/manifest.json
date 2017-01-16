@@ -3,12 +3,12 @@
 
   "name": "Play it my way",
   "description": "Enables the playback of online videos edited",
-  "version": "0.6",
+  "version": "0.0.2",
 
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "camera.128.png",
     "default_popup": "popup.html",
-    "default_title": "Play it my way" // initial tooltip, though overridden
+    "default_title": "Play it my way" 
   },
   "permissions": [
     "<all_urls>", "tabs" 
@@ -19,9 +19,9 @@
       "matches": ["<all_urls>"]
   }],
   "web_accessible_resources": ["edited_generic_player.js"],
-  "icons": { "128": "icon.png" },
+  "icons": { "128": "camera.128.png" },
   "background": { "scripts": ["background.js"] },
   "externally_connectable": {
-    "matches": ["*://*.amazon.com/*", "*://play.google.com/*", "*://*.youtube.com/*"] // don't have to even list netflix :|
+    "matches": ["*://*.amazon.com/*", "*://play.google.com/*", "*://*.youtube.com/*"]
   }
 }

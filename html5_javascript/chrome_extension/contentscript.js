@@ -1,7 +1,7 @@
 // content script runs on every page...and once again on each embedded iframe
 
-var request_host="localhost:3000";
-//var request_host="playitmyway.inet2.org";
+// var request_host="localhost:3000";
+var request_host="playitmyway.inet2.org";
 
 function injectJs(link) {
   var scr = document.createElement('script');
