@@ -8,7 +8,7 @@
  "10:26", "10:36", "some lewd'ish dancing",
 ],
 
-# TODO add this other side of DVD
+# TODO add this other side of DVD it didn't match up tho :|
 # "disk_unique_id" => "e75236da|39c26c9b", # CONDOR_MAN_FF_PROJECT
 "volume_name" => "CONDOR_MAN_LB_PROJECT",
 "disk_unique_id" => "7cde4a1b|6c57c31e",

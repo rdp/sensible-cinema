@@ -2,11 +2,11 @@ version: 1.0
 shards:
   db:
     github: crystal-lang/crystal-db
-    version: 0.2.0
+    version: 0.3.3
 
   kemal:
     github: sdogruyol/kemal
-    commit: a794c3dae2632bd7d956e03e1b922a0bfcb4bcdf
+    commit: 99ae8c376e2de8afa35ce70439b9c0107848403b
 
   kilt:
     github: jeromegn/kilt
@@ -14,11 +14,11 @@ shards:
 
   multipart:
     github: RX14/multipart.cr
-    version: 0.1.0
+    version: 0.1.1
 
   mysql:
     github: crystal-lang/crystal-mysql
-    version: 0.2.0
+    version: 0.3.1
 
   pool:
     github: ysbaddaden/pool
@@ -26,9 +26,9 @@ shards:
 
   radix:
     github: luislavena/radix
-    version: 0.3.1
+    version: 0.3.5
 
   sqlite3:
     github: crystal-lang/crystal-sqlite3
-    version: 0.7.0
+    version: 0.8.1
 
