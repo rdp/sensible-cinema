@@ -10,6 +10,9 @@ dependencies:
   kemal:
     github: sdogruyol/kemal
     branch: master
+  kemal-session:
+    github: kemalcr/kemal-session
+    branch: master
   db:
     github: crystal-lang/crystal-db
   mysql:

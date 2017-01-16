@@ -1,8 +1,13 @@
 require "./include/*" 
 
 require "kemal"
+require "kemal-session"
 require "http/client"
 require "mysql"
+
+Session.config do |config|
+  Session.config.secret = "my_super_secret"
+end
 
 before_all do |env|
   env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.]
@@ -352,8 +357,8 @@ end
 ####### view methods :)
 
 def set_flash_for_next_time(env, string)
-  env.session["flash"] ||= ""
-  env.session["flash"] = "#{env.session["flash"]}" + string # save old flash too LOL
+  env.session.string("flash", env.session.string("flash") || "")
+  env.session.string("flash", env.session.string("flash") + " " + string)
 end
 
 def table_row(first_cell, second_cell)
