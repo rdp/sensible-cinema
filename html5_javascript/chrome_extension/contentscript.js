@@ -1,5 +1,8 @@
 // content script runs on every page...and once again on each embedded iframe
 
+var request_host="localhost:3000";
+//var request_host="playitmyway.inet2.org";
+
 function injectJs(link) {
   var scr = document.createElement('script');
   scr.type = "text/javascript";
@@ -123,8 +126,8 @@ function currentUrlNotIframe() {
 function loadIfCurrentHasOne() {
   var url = currentUrlNotIframe();
   var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&episode_number=0'; // simplified, assume just URL wurx, with GET params, no episode at play LOL
-  url = '//playitmyway.inet2.org/' + direct_lookup;  // assume prod :)
-  getRequest(url, currentHasEdits, currentHasNone); // TODO retry with GET params off now?
+  url = '//' + request_host + '/' + direct_lookup;
+  getRequest(url, currentHasEdits, currentHasNone);
 }
 
 function currentHasEdits() {
@@ -134,7 +137,7 @@ function currentHasEdits() {
 
 function currentHasNone() {
   console.log("unable to find one for " + currentUrlNotIframe() + " so not auto loading it, doing nothing");
-  chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please add it!"}); 
+  chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please click above to add it!"}); 
 }
 
 function getRequest (url, success, error) {
