@@ -1,0 +1,6 @@
+#!/usr/bin/env fish
+echo "you must run this as root!"
+while true
+  sudo -u rdp ./prod_ssl_go # wait for it to get killed by cron
+  sleep 1 # allow ctrl+c to ever work LOL
+end
