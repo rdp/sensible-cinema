@@ -6,8 +6,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-var request_host="localhost:3000";
-//var request_host="playitmyway.inet2.org";
+// var request_host="localhost:3000";
+var request_host="playitmyway.inet2.org";
 
 function inIframe() {
     try {
@@ -238,7 +238,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add edit</a> <span id=add_edit_span_id_for_extra_message></span>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add tag</a> <span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -249,7 +249,7 @@ function addEditUi() {
   topLineEditDiv.style.zIndex = "99999999"; // on top :)
   topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   topLineEditDiv.style.color = "white";
-  topLineEditDiv.style.textShadow="2px 1px 0px grey";
+  topLineEditDiv.style.textShadow="2px 1px 0px black";
   topLineEditDiv.style.fontSize = "13px";
   topLineEditDiv.style.display = 'none';
   document.body.appendChild(topLineEditDiv);
@@ -262,12 +262,12 @@ function addEditUi() {
   tagLayer.style.zIndex = "99999999"; // on top :)
   tagLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   tagLayer.style.color = "white";
-  tagLayer.style.textShadow="2px 1px 0px grey";
+  tagLayer.style.textShadow="2px 1px 0px black";
   tagLayer.style.fontSize = "13px";
   tagLayer.style.display = 'none';
   document.body.appendChild(tagLayer);
   
-  // inject the add edit UI HTML
+  // inject the "add tag" UI
   tagLayer.innerHTML = `
   from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
   <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
@@ -290,12 +290,13 @@ function addEditUi() {
   <span id='playback_rate'>1.00x</span>
   <a href="#" onclick="video_element.playbackRate += 0.1; return false;">&gt;&gt;</a>
   <a href="#" onclick="stepFrame(); return false;">step</a>
-  <a href="#" onclick="video_element.play(); return false;">&#9654;</a>
+  <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
   <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">open most recent</a>
+  <a href="#" onclick="return addForNewEditToScreen();">Hide editor</a>
   `;
   
-  // this only works for the few mentioned in externally_connectable in manifest.json :|
+  // this only works for the few mentioned in externally_connectable in manifest.json TODO
   chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 
   addEvent(window, "resize", function(event) {
@@ -308,7 +309,7 @@ function addEditUi() {
   addMouseMoveListener(showEditLinkOnMouseMove);
 }
 
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // hard coded to my plugin
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // hard coded to my plugin TODO
 
 // method to bind easily to resize event
 var addEvent = function(object, type, callback) {
@@ -531,7 +532,6 @@ var current_json;
 
 function parseSuccessfulJson(json) {
   current_json = JSON.parse(json);
-  // assume right format LOL
   url = current_json.url;
   name = current_json.name;
   editing_status = url.editing_status;
@@ -562,7 +562,7 @@ function parseSuccessfulJson(json) {
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
 function getRequest (url, success, error) {  
-  console.log("starting attempt to download " + url);
+  console.log("starting attempt download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
   xhr.onreadystatechange = function(){ 
