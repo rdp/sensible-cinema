@@ -41,11 +41,11 @@
 <br/>
 
 <% if url.tags.size == 0 %>
-  No timestamp tags for this movie yet, add yours now!
+  No content tags for this movie yet, add yours now!
 <% else %>
 
 <!-- tag summary -->
-Current timestamp tags in our system for this movie:
+Current content tags in our system for this movie:
 <% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
     <%= name %>: <%= value.size %>
@@ -74,7 +74,7 @@ Current timestamp tags in our system for this movie:
 
 </table>
 
-<a href=/new_empty_tag/<%= url.id %>>Create timestamp tag &#10133;<!-- thick plus --> </a>
+<a href=/new_empty_tag/<%= url.id %>>Create content tag &#10133;<!-- thick plus --> </a>
 <a href=/edit_url/<%= url.id %>>modify movie</a>
 <hr/>
 <br/>
