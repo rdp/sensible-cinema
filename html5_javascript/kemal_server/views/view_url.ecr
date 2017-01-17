@@ -6,7 +6,7 @@
   <img src="<%= url.image_url %>" style="max-width: 150px;"/>
 <br/>
 <% end %>
-<a href="<%= url.url %>" target="_blank">watch</a>
+<a href="<%= url.url %>" target="_blank">watch movie</a>
 <br/>
 
 <h2>Details</h2>
@@ -23,16 +23,15 @@
     <%= table_row("Editing status", url.editing_status) %>
     <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>
     <%= table_row("good movie rating (out of 10, or 0 for not set)", url.good_movie_rating) %>
-    <% if url.rental_cost > 0 %>
-        <%= table_row("price to rent", "%.2f$" % url.rental_cost) %>
-    <% end %>
-    <% if url.purchase_cost > 0 %>
-        <%= table_row("price to purchase", "%.2f$" % url.purchase_cost) %>
+    <% if url.purchase_cost > 0 || url.rental_cost > 0 %>
+        <%= table_row("price to purchase/rent", url.cost_string) %>
     <% end %>
     <% if url.total_time > 0 %>
        <%= table_row("total movie time",  seconds_to_human url.total_time) %>
     <% end %>
-    <%= table_row("Our review", url.review) %>
+		<% if url.review.size > 0 %>
+      <%= table_row("Our local review", url.review) %>
+		<% end %>
   </tbody>
 </table>
 <br/>
@@ -41,15 +40,15 @@
 
 <hr/>
 <h3>Content Lists</h3>
-You can optionally use a content list that exists, or create your own personalized content playback list, using the content tags below. 
+You can optionally create or use an existing "personalized" edit list for this movie.
 </br>
-These are all "community editable" currently, feel free and please do contribute!
+These are all "community edited" currently, feel free and please do contribute!
 <br/>
 <br/>
 <% if url.tag_edit_lists.size == 0 %>
-  No specialized content lists for this movie yet, add one you can!
+  No content lists for this movie yet, add one you can!
 <% else %>
-  Pre-Existing content lists:
+  Already Existing content lists:
   <br/>
   <% url.tag_edit_lists.each{ |tag_edit_list| %>
 	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
@@ -57,7 +56,7 @@ These are all "community editable" currently, feel free and please do contribute
   <% } %>
 <% end %>
 <br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new content list &#10133;</a>.
+<a href=/new_tag_edit_list/<%= url.id %>>Create new editable content list &#10133;</a>.
 
 <hr/>
 <br/>
@@ -67,7 +66,9 @@ These are all "community editable" currently, feel free and please do contribute
 
 <!-- tag summary -->
 <h3>Content tags</h3>
-All content tags in our system for this movie:
+Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones if you run into something that should be tagged but isn't in our system yet.
+
+<br/>All content tags in our system for this movie:
 <% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
     <%= name %>: <%= value.size %>
@@ -81,6 +82,7 @@ All content tags in our system for this movie:
     <tr>
       <th>start</th>
       <th>end</th>
+      <th>default action</th>
     </tr>
   </thead>
 <% url.tags.each do |tag|  %>
@@ -96,7 +98,7 @@ All content tags in our system for this movie:
 
 </table>
 
-<a href=/new_empty_tag/<%= url.id %>>Create content tag &#10133;<!-- thick plus --> </a>
+<a href=/new_empty_tag/<%= url.id %>>Create new content tag &#10133;<!-- thick plus --> </a>
 
 <br/>
 <br/>

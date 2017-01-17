@@ -51,7 +51,7 @@ episode_name (blank if not part of a series)
   <br/>
 </div>
 
-editing_status (ex: "done", "needs second review" "lacks X edited out"-- set to "done" when movie fully complete and reviewed)
+editing_status (ex: "done", "needs second review" set to "done" when movie fully complete and reviewed at least once)
 <textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
 <br/>
 <br/>
@@ -61,7 +61,7 @@ wholesome_uplifting_level (out of 10, or 0 for none)
 <br/>
 <br/>
 
-good_movie_rating (out of 10, or 0 for none)
+good_movie_rating (out of 10, or 0 for none, kind of like "out of 10 stars on IMDB")
 <input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
 <br/>
 <br/>
@@ -97,5 +97,5 @@ total time (total movie length, netflix needs this)
 
 <p><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)</p>
 
-<a href=/delete_url/<%= url.id %> onclick="return confirm('Are you sure? This removes the entire movie...')">delete this movie from database</a>
+<a href=http://freeldssheetmusic.org/questions/ask?prefill=<%= HTML.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from database</a>
 <br/>
