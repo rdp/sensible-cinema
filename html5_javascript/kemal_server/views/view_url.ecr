@@ -1,14 +1,15 @@
 <h1>Details for <%= url.name_with_episode %></h1>
 
 <br/>
+<p><a href="/index">&lt;&lt; back to movie index</a></p>
 <% if url.image_url.size > 0 %>
   <img src="<%= url.image_url %>" style="max-width: 150px;"/>
 <br/>
 <% end %>
 <a href="<%= url.url %>" target="_blank">watch</a>
 <br/>
-<p><a href="/index">&lt;&lt; back to movie index</a></p>
 
+<h2>Details</h2>
 <table class="table table-striped" style="width: auto;">
   <thead>
     <tr></tr>
@@ -37,14 +38,36 @@
 <br/>
 <a href=/edit_url/<%= url.id %>>modify movie details</a>
 
+
+<hr/>
+<h3>Content Lists</h3>
+You can optionally use a content list that exists, or create your own personalized content playback list, using the content tags below. 
+</br>
+These are all "community editable" currently, feel free and please do contribute!
+<br/>
+<br/>
+<% if url.tag_edit_lists.size == 0 %>
+  No specialized content lists for this movie yet, add one you can!
+<% else %>
+  Pre-Existing content lists:
+  <br/>
+  <% url.tag_edit_lists.each{ |tag_edit_list| %>
+	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
+		<br/>
+  <% } %>
+<% end %>
+<br/>
+<a href=/new_tag_edit_list/<%= url.id %>>Create new content list &#10133;</a>.
+
 <hr/>
 <br/>
 <% if url.tags.size == 0 %>
-  No timestamp tags for this movie yet, add yours now!
+  No content tags for this movie yet, add yours now!
 <% else %>
 
 <!-- tag summary -->
-Current timestamp tags in our system for this movie:
+<h3>Content tags</h3>
+All content tags in our system for this movie:
 <% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
     <%= name %>: <%= value.size %>
@@ -73,20 +96,8 @@ Current timestamp tags in our system for this movie:
 
 </table>
 
-<a href=/new_empty_tag/<%= url.id %>>Create timestamp tag &#10133;<!-- thick plus --> </a>
-<hr/>
-<br/>
-<% if url.tag_edit_lists.size == 0 %>
-  No specialized "tag edit combo lists" for this movie yet, add one you can!
-<% else %>
-  Pre made tag edit list combos: <br/>
-  <% url.tag_edit_lists.each{ |tag_edit_list| %>
-	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
-		<br/>
-	<% } %>
-<% end %>
-<br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit combo list &#10133;</a>.
+<a href=/new_empty_tag/<%= url.id %>>Create content tag &#10133;<!-- thick plus --> </a>
 
 <br/>
-<a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>devs</a>
+<br/>
+<a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>.</a>
