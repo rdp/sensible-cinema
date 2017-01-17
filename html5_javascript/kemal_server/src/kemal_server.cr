@@ -288,12 +288,12 @@ end
 
 get "/new_tag_edit_list/:url_id" do |env|
   tag_edit_list = TagEditList.new env.params.url["url_id"].to_i
-	render "views/edit_tag_edit_list.ecr"
+	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
 end
 
 get "/2edit_tag_edit_list/:tag_id" do |env|
   tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
-	render "views/edit_tag_edit_list.ecr"
+	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
 end
 
 post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff here whaat?
@@ -304,8 +304,19 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
     tag_edit_list = TagEditList.new params["url_id"].to_i
   end
 
-	puts "got #{env.params} #{tag_edit_list}"
-  tag_edit_list.create_or_refresh([] of Tag,[] of String)# tags, actions
+	tag_edit_list.description = sanitize_html params["description"]
+	tag_edit_list.notes = sanitize_html params["notes"]
+	tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
+	tag_ids = [] of Int32
+	actions = [] of String
+	env.params.body.each{|name, value|
+	  if name =~ /tag_select_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :|
+		  tag_ids << $1.to_i
+			actions << value
+		end
+	}
+	
+  tag_edit_list.create_or_refresh(tag_ids, actions)
   env.redirect "/2edit_tag_edit_list/#{tag_edit_list.id}"
 end
 

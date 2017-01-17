@@ -70,11 +70,9 @@ ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
 alter table urls add column amazon_prime_free_type VARCHAR(2014) NOT NULL DEFAULT '';;
 update urls set amazon_prime_free_type = 'Prime' where is_amazon_prime = 1;
 alter table urls drop column is_amazon_prime;
--- done
+-- done prod
 
 RENAME TABLE edits TO tags; 
-
--- done dev
 
 CREATE TABLE tag_edit_list (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -94,10 +92,14 @@ CREATE TABLE tag_edit_list_to_tag (
    action VARCHAR(1024) NOT NULL
 );
 
+alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
+ -- done dev
+
+
 -- TODO some indices for these two?
 
 --TODO rename all tables to singular
 
 -- output some to screen to show success...
 select * from urls;
-select * from tag;
+select * from tags;

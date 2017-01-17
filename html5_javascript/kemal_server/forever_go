@@ -2,5 +2,5 @@
 
 while true
   ./kill_next &
-  ./go_ssl_dev or; sleep 5
+  ./go_ssl_dev or; sleep 2
 end

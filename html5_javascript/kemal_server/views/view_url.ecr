@@ -5,8 +5,9 @@
   <img src="<%= url.image_url %>" style="max-width: 150px;"/>
 <br/>
 <% end %>
-<a href="<%= url.url %>" target="_blank">watch</a>
+<a href="<%= url.url %>" target="_blank">movie page</a>
 <br/>
+<p><a href="/index">&lt;&lt; back to movie index</a></p>
 
 <table class="table table-striped" style="width: auto;">
   <thead>
@@ -35,35 +36,37 @@
 </table>
 <br/>
 
-<a href=/edit_url/<%= url.id %>>modify movie details</a>
-<br/>
-
-<p><a href="/index">&lt;&lt; back to movie index</a></p>
-<hr/>
-<!-- summary -->
-Current content tags in our system for this movie:
-<% url.tags_by_type.each{ |name, value| %>
-  <% if value.size > 0 %>
-    <%= name %>: <%= value.size %>
-    <br/>
-  <% end %>
-<% } %> 
+<a href=/edit_url/<%= url.id %>>modify movie</a>
 <hr/>
 <br/>
 <% if url.tag_edit_lists.size == 0 %>
   No specialized "tag edit lists" for this movie yet, add one you can!
 <% else %>
-  <% url.tag_edit_lists.each{|tag_edit_list| %>
-	  <a href=/edit_tag_edidt_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
+  Pre made tag edit lists:
+  <% url.tag_edit_lists.each{ |tag_edit_list| %>
+	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
+		<br/>
 	<% } %>
 <% end %>
 <br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit list</a>.
+<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit list &#10133;</a>.
 
 <hr/>
 <br/>
+
 <% if url.tags.size == 0 %>
-  No content tags for this movie yet, add one now!
+  No timestamp tags for this movie yet, add yours now!
+<% else %>
+
+<!-- tag summary -->
+Current timestamp tags in our system for this movie:
+<% url.tags_by_type.each{ |name, value| %>
+  <% if value.size > 0 %>
+    <%= name %>: <%= value.size %>
+  <% end %>
+<% } %> 
+<hr/>
+
 <% end %>
 <table class="table table-striped" style="width: auto;">
   <thead>
@@ -85,4 +88,4 @@ Current content tags in our system for this movie:
 
 </table>
 
-<a href=/new_empty_tag/<%= url.id %>>add new content tag &#10133;<!-- thick plus --> </a>
+<a href=/new_empty_tag/<%= url.id %>>Create timestamp tag &#10133;<!-- thick plus --> </a>

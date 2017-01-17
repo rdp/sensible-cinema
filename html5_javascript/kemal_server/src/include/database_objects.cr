@@ -328,35 +328,37 @@ class TagEditList
     id: Int32,
     url_id: Int32,
     description: {type: String},       
-    notes: {type: String},       
+    status_notes: {type: String},       
     age_recommendation_after_edited: Int32
   })
   DB.mapping({
     id: Int32,
     url_id: Int32,
     description: {type: String},       
-    notes: {type: String},       
+    status_notes: {type: String},       
     age_recommendation_after_edited: Int32
   })
 	
 	def initialize(@url_id)
     @id = 0
 		@description = ""
-		@notes = ""
+		@status_notes = ""
 		@age_recommendation_after_edited = 0
  	end
 
-	def create_or_refresh(tags, actions)
+	def create_or_refresh(tag_ids, actions)
     with_db do |conn|
 		  # TODO conn.exec("START TRANSACTION"); once they support it LOL
 		  if (@id == 0)
-			   @id = conn.exec("insert into tag_edit_list (url_id, description, notes, age_recommendation_after_edited) VALUES (?, ?, ?, ?)", url_id, description, notes, age_recommendation_after_edited).last_insert_id.to_i32
+			   @id = conn.exec("insert into tag_edit_list (url_id, description, status_notes, age_recommendation_after_edited) VALUES (?, ?, ?, ?)", url_id, description, status_notes, age_recommendation_after_edited).last_insert_id.to_i32
 			else
-			  conn.exec("update tag_edit_list set url_id = ?, description = ?, notes = ?, age_recommendation_after_edited = ? where id = ?", url_id, description, notes, age_recommendation_after_edited, id)
+			  conn.exec("update tag_edit_list set url_id = ?, description = ?, status_notes = ?, age_recommendation_after_edited = ? where id = ?", url_id, description, status_notes, age_recommendation_after_edited, id)
 			end
       conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id) # just nuke, transaction's got our back
-			tags.each_with_index{|tag, idx|
-			  conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, action) values (?, ?, ?)", self.id, tag.id, actions[idx])
+			tag_ids.each_with_index{|tag_id, idx|
+			  tag = Tag.get_only_by_id(tag_id)
+				raise "tag movie mismatch #{tag_id}??" unless tag.url_id == self.url_id
+			  conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, action) values (?, ?, ?)", self.id, tag_id, actions[idx])
 			}
 	  end	
 	end
@@ -371,10 +373,14 @@ class TagEditList
 		  all_tags.map{|tag|
 			  count = conn.scalar("select count(*) from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id)
 				if count == 1
-				  action = conn.query_one("select action from tag_edit_list_to_tagwhere tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
+				  action = conn.query_one("select action from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
 				  {tag, action}
 				elsif count == 0
-				  {tag, "do_nothing"}
+				  if self.id == 0
+  				  {tag, tag.default_action}
+					else
+  				  {tag, "do_nothing"} # they already decided against this at some point...
+					end					
 				else
 				  raise "double tag? #{tag}"
 				end
