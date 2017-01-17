@@ -22,9 +22,8 @@ We are a community driven resource and we want to have you help us out!
       <th></th>
       <th>Edits for this movie</th>
       <th>Editing status</th>
-      <th>Age recommendation with all edits</th>
       <th>Wholesome<br/>uplifting level / 10 max.</th>
-      <th>Good movie rating / 10 max.</th>
+      <th>Mvie rating / 10 max.</th>
       <th>Details</th>
       <th>Our review</th>
       <th>Num tags</th>
@@ -45,11 +44,11 @@ We are a community driven resource and we want to have you help us out!
          <% end %>
          >watch</a>
        </td>
-       <td><a href="/view_url/<%= url.id %>">view tags</a></td>
+       <td><a href="/view_url/<%= url.id %>">view edits</a></td>
        <td>
-       <% if url.editing_status == "done" %>
-         <SPAN STYLE="color: green;">
-       <% end %>
+         <% if url.editing_status == "done" %>
+           <SPAN STYLE="color: green;">
+         <% end %>
          <%= url.editing_status %>
        </td>
        <td> <%= url.wholesome_uplifting_level %> </td>
@@ -64,7 +63,7 @@ We are a community driven resource and we want to have you help us out!
            google_search += URI.escape(" " + url.episode_number.to_s + " " + url.episode_name, true)
          end
        %>
-       <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">info</a>
+       <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">search</a>
           <% if url.image_url.size > 0 %>
             <img src="<%= url.image_url %>" style="height: 150px; max-width: 200px;"/>
           <% end %>

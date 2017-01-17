@@ -2,9 +2,11 @@
 {
 "_comment": "generated at <%= Time.now %>.",
 "url": <%= db_url.to_json %>,
-"expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescpe or stably escape in javascript :? %>
+"expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescape or stably escape in javascript :? %>
 "edits":
-[ <%= db_url.tags.map{| tag| tag.to_json}.join(",") %> ],
+[ <%= db_url.tags.to_json %> ],
+"tag_edit_lists":
+[ <% db_url.tag_edit_lists.to_json %>],
 "mutes": <%= edits[:mutes] %>,
 "skips": <%= edits[:skips] %>,
 "yes_audio_no_videos": <%= edits[:yes_audio_no_videos] %>,
