@@ -1,9 +1,8 @@
 <h1>Details for <%= url.name_with_episode %></h1>
 
-<%= url.name_with_episode %>
 <br/>
 <% if url.image_url.size > 0 %>
-  <img src="<%= url.image_url %>" style="max-width: 250px;"/>
+  <img src="<%= url.image_url %>" style="max-width: 150px;"/>
 <br/>
 <% end %>
 <a href="<%= url.url %>" target="_blank">watch</a>
