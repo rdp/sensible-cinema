@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(
                 alert("you requested to start edited playback, but we do not detect a video playing yet, possibly need to hit the play button first, then try again?");
               }
             }
-         }
+         });
 });
 
 function findFirstVideoTagOrNull() {

@@ -8,7 +8,7 @@ update_icon = function(request, sender, sendResponse) {
     chrome.browserAction.setTitle({title: request.details, tabId: active_tab_id});
   }
   if (request.version_request) {
-    sendResponse({version: 0.06});
+    sendResponse({version: 0.06}); // :|
    }
 };
 
