@@ -40,20 +40,24 @@
 
 
 <hr/>
+<h3>Content Lists</h3>
+You can optionally use a content list that exists, or create your own personalized content playback list, using the content tags below. 
+</br>
+These are all "community editable" currently, feel free and please do contribute!
 <br/>
-<div style="border: 1px dashed black">
+<br/>
 <% if url.tag_edit_lists.size == 0 %>
-  No specialized "pre existing filter list" for this movie yet, add one you can!
+  No specialized content lists for this movie yet, add one you can!
 <% else %>
-  Pre existing filter list combos: <br/>
+  Pre-Existing content lists:
+  <br/>
   <% url.tag_edit_lists.each{ |tag_edit_list| %>
 	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
 		<br/>
-	<% } %>
+  <% } %>
 <% end %>
 <br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new pre existing filter list &#10133;</a>.
-</div>
+<a href=/new_tag_edit_list/<%= url.id %>>Create new content list &#10133;</a>.
 
 <hr/>
 <br/>
@@ -95,4 +99,5 @@ All content tags in our system for this movie:
 <a href=/new_empty_tag/<%= url.id %>>Create content tag &#10133;<!-- thick plus --> </a>
 
 <br/>
-<a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>devs</a>
+<br/>
+<a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>.</a>
