@@ -307,7 +307,9 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
 	}
 	
   tag_edit_list.create_or_refresh(tag_ids, actions)
-  env.redirect "/2edit_tag_edit_list/#{tag_edit_list.id}"
+  set_flash_for_next_time(env, "successfully saved tag edit list #{tag_edit_list.description}")
+	
+  env.redirect "/view_url/#{tag_edit_list.url_id}"
 end
 
 def save_local_javascript(db_urls, log_message, env) # actually just json these days...

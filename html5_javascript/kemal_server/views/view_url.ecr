@@ -42,7 +42,7 @@
 <% if url.tag_edit_lists.size == 0 %>
   No specialized "tag edit lists" for this movie yet, add one you can!
 <% else %>
-  Pre made tag edit lists:
+  Pre made tag edit list combos:
   <% url.tag_edit_lists.each{ |tag_edit_list| %>
 	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
 		<br/>
