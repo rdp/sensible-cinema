@@ -307,8 +307,7 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
 	}
 	
   tag_edit_list.create_or_refresh(tag_ids, actions)
-  set_flash_for_next_time(env, "successfully saved tag edit list #{tag_edit_list.description}")
-	
+  set_flash_for_next_time(env, "successfully saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
   env.redirect "/view_url/#{tag_edit_list.url_id}"
 end
 

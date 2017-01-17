@@ -40,7 +40,7 @@
 <hr/>
 <br/>
 <% if url.tag_edit_lists.size == 0 %>
-  No specialized "tag edit lists" for this movie yet, add one you can!
+  No specialized "tag edit combo lists" for this movie yet, add one you can!
 <% else %>
   Pre made tag edit list combos:
   <% url.tag_edit_lists.each{ |tag_edit_list| %>
@@ -49,7 +49,7 @@
 	<% } %>
 <% end %>
 <br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit list &#10133;</a>.
+<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit combo list &#10133;</a>.
 
 <hr/>
 <br/>
@@ -89,3 +89,6 @@ Current timestamp tags in our system for this movie:
 </table>
 
 <a href=/new_empty_tag/<%= url.id %>>Create timestamp tag &#10133;<!-- thick plus --> </a>
+
+<br/>
+<a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>devs</a>
