@@ -12,6 +12,7 @@ chrome extension, click here</a>.</h2>
 var hasExtension = false;
 var requiredVersion = 0.05; // heh
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev
 
 chrome.runtime.sendMessage(editorExtensionId, { version_request: "yes_please" },
     function (reply) {
