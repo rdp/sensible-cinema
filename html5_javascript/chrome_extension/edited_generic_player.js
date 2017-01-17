@@ -6,8 +6,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-var request_host="localhost:3000";
-// var request_host="playitmyway.inet2.org";
+// var request_host="localhost:3000";
+var request_host="playitmyway.inet2.org";
 
 var editorExtensionIds = ["ogneemgeahimaaefffhfkeeakkjajenb", "ionkpaepibbmmhcijkhmamakpeclkdml"]; // one for local one for published gah
 
@@ -513,6 +513,7 @@ function reloadForCurrentUrl() {
 
 function parseSuccessfulJsonWithAlert(json) {
   parseSuccessfulJson(json);
+  startWatcherTimerOnce();
   // and alert
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
     alert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
@@ -522,12 +523,19 @@ function parseSuccessfulJsonWithAlert(json) {
     alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
   old_episode = liveEpisodeNumber();
-  startWatcherTimerOnce();
   var post_message = "This movie is currently marked as \"" + editing_status + "\" in our system, which means it is incomplete.  Please help us groom edits to our system and mark status as done when it's complete, thanks so much!";
-  if (editing_status == "done")
+  if (editing_status == "done") {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
+	}
+	
+	// do it later so it can setup the UI and not scare us that it's not already loaded
+  setTimeout(function() { 
+		alertEditorWorking("all edits", post_message);
+  }, 100);
+}
 
-  alert(decodeHTMLEntities("Editing playback successfully enabled for this page \n" + name + " " + episode_name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));
+function alertEditorWorking(message, post_message) {
+  alert(decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));    	
 }
 
 var current_json;
@@ -551,12 +559,31 @@ function parseSuccessfulJson(json) {
   amazon_second_url = current_json.url;
   expected_episode_number = url.episode_number;
   url_id = url.id;
+	setTheseTagsAsTheOnesToUse(current_json.tags);
+	
+	var dropdown = document.getElementById("tag_edit_list_dropdown");
+	removeAllOptions(dropdown); // out with any old...	
+	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
+		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
+		var option = document.createElement("option");
+		option.text = tag_edit_list_and_tags[0].description;
+		option.value = tag_edit_list_and_tags[0].id;
+		dropdown.add(option, dropdown[0]); // put it at the top XX
+	}
+	var option = document.createElement("option");
+	option.text = "all"; // so they can go back to "all" if wanted :|
+	option.value = "-1"; // special case :|
+  option.setAttribute('selected', true); // default :| TODO not refresh
+	dropdown.add(option, dropdown[0]);
+}
+
+function setTheseTagsAsTheOnesToUse(tags) {
 	mutes = []
 	skips = []
 	yes_audio_no_videos = []
 	do_nothings = [] // :|
-	for (var i = 0; i < current_json.tags.length; i++) {
-		var tag = current_json.tags[i];
+	for (var i = 0; i < tags.length; i++) {
+		var tag = tags[i];
 		var push_to_array;
 		if (tag.default_action == 'mute') {
       push_to_array = mutes;
@@ -568,24 +595,26 @@ function parseSuccessfulJson(json) {
       push_to_array = do_nothings;
 		}
 		push_to_array.push([tag.start, tag.endy]);
-	}
-	
-	var dropdown = document.getElementById("tag_edit_list_dropdown");
-	removeAllOptions(dropdown); // out with the old...	
-	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
-		var option = document.createElement("option");
-		option.text = current_json.tag_edit_lists[i][0].description;
-		dropdown.add(option, dropdown[0]); // put it at the top?
-	}
-	var option = document.createElement("option");
-	option.text = "all"; // the default LOL
-  option.setAttribute('selected', true);
-	dropdown.add(option, dropdown[0]);
+	}	
 }
 
 function tagEditListDropdownChanged() {
-	console.log("TODO");
-	// make it disappear??
+	var dropdown = document.getElementById("tag_edit_list_dropdown");
+	var selected_edit_list_id = dropdown.value; // or -1 :|
+	if (selected_edit_list_id == "-1") {
+		setTheseTagsAsTheOnesToUse(current_json.tags);
+		alertEditorWorking("all edits", "");
+		return;
+	}
+	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
+		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
+		if (tag_edit_list_and_tags[0].id == selected_edit_list_id) {
+			setTheseTagsAsTheOnesToUse(tag_edit_list_and_tags[1]);
+			alertEditorWorking(tag_edit_list_and_tags[0].description, "");
+			return;
+		}		
+	}
+	alert("unable to select " + dropdown.value); // shouldn't get here ever LOL.
 }
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
@@ -616,7 +645,7 @@ function checkIfEpisodeChanged() {
                  old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_episode = liveEpisodeNumber(); 
-    setTimeout(loadForNewUrl, 1000); // youtube gets the "old name" still for the new prompt :|
+    setTimeout(loadForNewUrl, 1000); // youtube gets the "old name" still for the new prompt so wait 1s
   }
 }
 
