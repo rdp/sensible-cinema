@@ -286,6 +286,29 @@ get "/index" do |env|
   render "views/index.ecr", "views/layout.ecr"
 end
 
+get "/new_tag_edit_list/:url_id" do |env|
+  tag_edit_list = TagEditList.new env.params.url["url_id"].to_i
+	render "views/edit_tag_edit_list.ecr"
+end
+
+get "/2edit_tag_edit_list/:tag_id" do |env|
+  tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
+	render "views/edit_tag_edit_list.ecr"
+end
+
+post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff here whaat?
+  params = env.params.body # POST params
+  if params["id"]?
+    tag_edit_list = TagEditList.get_only_by_id params["id"]
+  else
+    tag_edit_list = TagEditList.new params["url_id"].to_i
+  end
+
+	puts "got #{env.params} #{tag_edit_list}"
+  tag_edit_list.create_or_refresh([] of Tag,[] of String)# tags, actions
+  env.redirect "/2edit_tag_edit_list/#{tag_edit_list.id}"
+end
+
 def save_local_javascript(db_urls, log_message, env)
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
@@ -316,7 +339,6 @@ post "/save_url" do |env|
   editing_status = params["editing_status"]
   episode_number = params["episode_number"].to_i
   episode_name = sanitize_html HTML.unescape(params["episode_name"])
-  age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
   image_url = sanitize_html HTML.unescape(params["image_url"])
@@ -340,7 +362,6 @@ post "/save_url" do |env|
   db_url.episode_number = episode_number
   db_url.episode_name = episode_name
   db_url.editing_status = editing_status
-  db_url.age_recommendation_after_edited = age_recommendation_after_edited
   db_url.wholesome_uplifting_level = wholesome_uplifting_level
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review

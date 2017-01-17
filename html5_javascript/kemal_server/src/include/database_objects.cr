@@ -12,7 +12,6 @@ class Url
     episode_number: Int32,
     episode_name: String,
     editing_status: String,
-    age_recommendation_after_edited: Int32,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     image_url: String,
@@ -32,7 +31,6 @@ class Url
     episode_number: Int32,
     episode_name: String,
     editing_status: String,
-    age_recommendation_after_edited: Int32,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
     image_url: String,
@@ -75,9 +73,9 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, age_recommendation_after_edited = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, id
       end
     end
   end
@@ -91,7 +89,6 @@ class Url
     @episode_number = 0
     @episode_name = ""
     @editing_status = ""
-    @age_recommendation_after_edited = 0
     @wholesome_uplifting_level = 0
     @good_movie_rating = 0
     @image_url = ""
@@ -109,6 +106,14 @@ class Url
       end
     end
   end
+	
+	def tag_edit_lists
+    with_db do |conn|
+      conn.query("select * from tag_edit_list where url_id=?", id) do |rs|
+        TagEditList.from_rs rs
+      end
+    end
+	end
   
   def tags_by_type
     with_db do |conn|
@@ -315,5 +320,76 @@ def human_to_seconds(ts_human)
     sum += segment.to_f * 60**idx
   }
   sum
+end
+
+
+class TagEditList
+  JSON.mapping({
+    id: Int32,
+    url_id: Int32,
+    description: {type: String},       
+    notes: {type: String},       
+    age_recommendation_after_edited: Int32
+  })
+  DB.mapping({
+    id: Int32,
+    url_id: Int32,
+    description: {type: String},       
+    notes: {type: String},       
+    age_recommendation_after_edited: Int32
+  })
+	
+	def initialize(@url_id)
+    @id = 0
+		@description = ""
+		@notes = ""
+		@age_recommendation_after_edited = 0
+ 	end
+
+	def create_or_refresh(tags, actions)
+    with_db do |conn|
+		  # TODO conn.exec("START TRANSACTION"); once they support it LOL
+		  if (@id == 0)
+			   @id = conn.exec("insert into tag_edit_list (url_id, description, notes, age_recommendation_after_edited) VALUES (?, ?, ?, ?)", url_id, description, notes, age_recommendation_after_edited).last_insert_id.to_i32
+			else
+			  conn.exec("update tag_edit_list set url_id = ?, description = ?, notes = ?, age_recommendation_after_edited = ? where id = ?", url_id, description, notes, age_recommendation_after_edited, id)
+			end
+      conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id) # just nuke, transaction's got our back
+			tags.each_with_index{|tag, idx|
+			  conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, action) values (?, ?, ?)", self.id, tag.id, actions[idx])
+			}
+	  end	
+	end
+	
+	def url
+	  Url.get_only_by_id(url_id)
+	end
+	
+	def tags_with_selected_or_not
+	  all_tags = url.tags # not sure how to do this without double somethin' ... :|
+    with_db do |conn|
+		  all_tags.map{|tag|
+			  count = conn.scalar("select count(*) from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id)
+				if count == 1
+				  action = conn.query_one("select action from tag_edit_list_to_tagwhere tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
+				  {tag, action}
+				elsif count == 0
+				  {tag, "do_nothing"}
+				else
+				  raise "double tag? #{tag}"
+				end
+			}
+		end
+	end
+	
+  def self.get_only_by_id(id)
+    with_db do |conn|
+      conn.query("SELECT * from tag_edit_list where id = ?", id) do |rs|
+         TagEditList.from_rs(rs)[0] # Index OOB if not there :|
+      end
+    end
+  end
+	
+
 end
 

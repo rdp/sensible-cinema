@@ -19,7 +19,6 @@
         <%= table_row("prime?", url.human_readable_company) %>
     <% end %>
     <%= table_row("Editing status", url.editing_status) %>
-    <%= table_row("age_recommendation_after_edited (year)", url.age_recommendation_after_edited) %>
     <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>
     <%= table_row("good movie rating (out of 10, or 0 for not set)", url.good_movie_rating) %>
     <% if url.rental_cost > 0 %>
@@ -50,7 +49,18 @@ Current content tags in our system for this movie:
   <% end %>
 <% } %> 
 <hr/>
+<br/>
+<% if url.tag_edit_lists.size == 0 %>
+  No specialized "tag edit lists" for this movie yet, add one you can!
+<% else %>
+  <% url.tag_edit_lists.each{|tag_edit_list| %>
+	  <a href=/edit_tag_edidt_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
+	<% } %>
+<% end %>
+<br/>
+<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit list</a>.
 
+<hr/>
 <br/>
 <% if url.tags.size == 0 %>
   No content tags for this movie yet, add one now!

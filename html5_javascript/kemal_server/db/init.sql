@@ -1,5 +1,10 @@
 drop table if exists edits;
 drop table if exists urls;
+drop table if exists tags;
+drop table if exists tag;
+drop table if exists tag_edit_list;
+drop table if exists tag_edit_list_to_tag;
+
 CREATE TABLE urls (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    url VARCHAR(1024)              NOT NULL DEFAULT '',
@@ -69,7 +74,30 @@ alter table urls drop column is_amazon_prime;
 
 RENAME TABLE edits TO tags; 
 
+-- done dev
 
--- output some to screen to show success
+CREATE TABLE tag_edit_list (
+   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   url_id INT NOT NULL FOREIGN KEY(URL_ID) REFERENCES urls(id),
+   description          VARCHAR(1024)    NOT NULL DEFAULT '',
+   notes VARCHAR(1024)    NOT NULL DEFAULT '',
+   age_recommendation_after_edited INT NOT NULL DEFAULT 0
+   -- "community" :)
+);
+
+ALTER TABLE urls drop column age_recommendation_after_edited;
+
+CREATE TABLE tag_edit_list_to_tag (
+   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   tag_edit_list_id INT NOT NULL, FOREIGN KEY(tag_edit_list_id) references tag_edit_list(id),
+   tag_id INT NOT NULL, FOREIGN KEY (tag_id) references tag(id),
+   action VARCHAR(1024) NOT NULL
+);
+
+-- TODO some indices for these two?
+
+--TODO rename all tables to singular
+
+-- output some to screen to show success...
 select * from urls;
-select * from tags;
+select * from tag;
