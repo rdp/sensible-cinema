@@ -160,16 +160,6 @@ post "/save_tag/:url_id" do |env|
   env.redirect "/view_url/#{url.id}"
 end
 
-get "/regenerate_all" do |env|
-  # cleanse :)
-  Dir["edit_descriptors/*.js"].each{|file|
-    File.delete file
-  }
-  save_local_javascript Url.all, "regen_all called", env
-  set_flash_for_next_time(env, "regenerated for all...")
-  env.redirect "/index"
-end
-
 get "/edit_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   render "views/edit_url.ecr", "views/layout.ecr"
@@ -305,7 +295,7 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
   end
 
 	tag_edit_list.description = sanitize_html params["description"]
-	tag_edit_list.notes = sanitize_html params["notes"]
+	tag_edit_list.status_notes = sanitize_html params["status_notes"]
 	tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
 	tag_ids = [] of Int32
 	actions = [] of String
@@ -320,7 +310,7 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
   env.redirect "/2edit_tag_edit_list/#{tag_edit_list.id}"
 end
 
-def save_local_javascript(db_urls, log_message, env)
+def save_local_javascript(db_urls, log_message, env) # actually just json these days...
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
       File.open("edit_descriptors/log.txt", "a") do |f|

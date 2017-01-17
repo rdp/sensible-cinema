@@ -1,22 +1,11 @@
 <pre>
-OK if your movie is already in the index, you just need to install the plugin.
 
-for chrome web browser (recommended), download this <a href=https://github.com/rdp/sensible-cinema/raw/master/html5_javascript/chrome_extension.crx>chrome extension file</a>,
-then go to <a href=chrome://extensions>chrome://extensions</a> and then you need to *drag and drop* your newly downloaded
- .crx file from wherever you downloaded it, onto the chrome://extensions page (drop it right onto the top).
-This will be simplified soon.  A blue droplet icon should appear.
-Next navigate to <a href=/index>the list</a>, choose a movie, and enjoy watching it...
-Or if you want to create a new edit for a new movie, navigate your web browser to your movie's url, and then
-select "enable edited playback" by clicking on the blue droplet icon.
-
-If you happen to stop and restart chrome, the extension might become automatically disabled.
-Uninstall it (using chrome://extensions page), then reinstall it with the above instructions.
-
+The normal way is to use chrome and its extension.
 This works for everything except netflix and hulu, ask if you'd like those...
 
 
-
-If you would like to use a browser other than chrome, you're going to have to manually "enter some computer code" to edit a movie, as follows:
+If you would like to use a browser other than chrome, you're going to have to manually "enter some computer code" to edit a movie, as follows
+(warning, this is non trivial and only for serious power users, danger beware! Turn back now and go and use the chrome extension!):
 
 step 1: start the video you want to watch, start it playing, and hit the "pause button"
 
@@ -28,8 +17,9 @@ Safari mac: right click anywhere on the web page -> "Inspect Element" -> choose 
 Firefox: tools menu -> web developer -> Web Console
 Microsoft edge: some menu -> console [not sure but it is possible]
 Microsoft IE: not sure
+etc...
 
-If everything has gone well, a "javascript console" side panel should have just opened.  Now look around, and somewhere there should be a prompt 
+A "javascript console" side panel should have just opened.  Now look around, and somewhere there should be a prompt 
 like ">"
 
 Now you will want to copy and paste the following blue code snippet after that ">" and then hit enter:
@@ -39,6 +29,6 @@ javascript:(function(e,s){e.src=s;e.onload=function(){;;;;;};document.head.appen
 </div>
 
 That should start the edited playback for that movie.  
-You can then safely close the entire developer console and hit play and enjoy your film edited.
+You can then safely close the entire developer console and hit play and enjoy your film edited. Phew!
 
 </pre>
