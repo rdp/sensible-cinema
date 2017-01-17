@@ -89,7 +89,7 @@ get "/delete_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(id)
   tag.destroy
   save_local_javascript [tag.url], "removed #{tag}", env
-  set_flash_for_next_time env, "deleted one edit"
+  set_flash_for_next_time env, "deleted one tag"
   env.redirect "/view_url/#{tag.url.id}"
 end
 
@@ -118,7 +118,7 @@ get "/new_empty_tag/:url_id" do |env|
     tag.start = 1.0
     tag.endy = 2.0
   end
-  set_flash_for_next_time env, "edit is not yet saved, hit the save button when you are done"
+  set_flash_for_next_time env, "tag is not yet saved, hit the save button when you are done"
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
@@ -148,15 +148,15 @@ post "/save_tag/:url_id" do |env|
   endy = params["endy"].strip
   tag.start = url.human_to_seconds start
   tag.endy = url.human_to_seconds endy
-  tag.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
-  tag.category = sanitize_html params["category"] # hope it's a legit value LOL
+  tag.default_action = sanitize_html params["default_action"] # TODO restrict more various somehow :|
+  tag.category = sanitize_html params["category"]
   tag.subcategory = sanitize_html params["subcategory"]
   tag.details = sanitize_html params["details"]
   tag.more_details = sanitize_html params["more_details"]
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   tag.save
   save_local_javascript [url], tag.inspect, env
-  set_flash_for_next_time(env, "saved edit! reload browser if you are watching that movie in a different tab right now...")
+  set_flash_for_next_time(env, "saved tag! reload browser if you are watching that movie in a different tab right now...")
   env.redirect "/view_url/#{url.id}"
 end
 
