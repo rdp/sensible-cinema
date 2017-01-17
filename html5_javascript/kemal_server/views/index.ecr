@@ -11,7 +11,7 @@ Using something else, and you're a power user? go <a href=instructions>here</a> 
 So start watching it your way!
 
 <h1>Index</h1>
-These are movies that we currently have edits for.  Don't see one you want? Please <a href=/create_new>add it</a> and contribute back!
+These are movies that we currently have content tags for.  Don't see one you want? Please <a href=/create_new>add it</a> and contribute back!
 We are a community driven resource and we want to have you help us out!
 
 <table class="table table-striped">
@@ -22,12 +22,12 @@ We are a community driven resource and we want to have you help us out!
       <th></th>
       <th>Edits for this movie</th>
       <th>Editing status</th>
-      <th>Age recommendation with edits</th>
+      <th>Age recommendation with all edits</th>
       <th>Wholesome<br/>uplifting level / 10 max.</th>
       <th>Good movie rating / 10 max.</th>
       <th>Details</th>
       <th>Our review</th>
-      <th>Num edits</th>
+      <th>Num tags</th>
       <th>Rental/purchase cost</th>
       <th>Info about movie</th>
     </tr>
@@ -45,7 +45,7 @@ We are a community driven resource and we want to have you help us out!
          <% end %>
          >watch</a>
        </td>
-       <td><a href="/view_url/<%= url.id %>">view edits</a></td>
+       <td><a href="/view_url/<%= url.id %>">view tags</a></td>
        <td>
        <% if url.editing_status == "done" %>
          <SPAN STYLE="color: green;">

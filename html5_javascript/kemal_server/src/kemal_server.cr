@@ -54,7 +54,7 @@ get "/for_current_just_settings_json" do |env|
 end
 
 def timestamps_of_type_for_video(conn, db_url, type) 
-  tags = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
+  tags = conn.query("select * from tags where url_id=? and default_action = ?", db_url.id, type) do |rs|
     Tag.from_rs rs
   end
   tags.map{|tag| [tag.start, tag.endy]}

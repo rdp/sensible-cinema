@@ -104,7 +104,7 @@ class Url
 
   def tags
     with_db do |conn|
-      conn.query("select * from edits where url_id=? order by start asc", id) do |rs|
+      conn.query("select * from tags where url_id=? order by start asc", id) do |rs|
         Tag.from_rs rs
       end
     end
@@ -122,7 +122,7 @@ class Url
 
   def last_tag_or_nil
     all = with_db do |conn|
-      conn.query("select * from edits where url_id=? order by endy desc limit 1", id) do |rs|
+      conn.query("select * from tags where url_id=? order by endy desc limit 1", id) do |rs|
         Tag.from_rs(rs)
       end
     end
@@ -250,7 +250,7 @@ class Tag
   
   def self.get_only_by_id(id)
     with_db do |conn|
-      conn.query("SELECT * from edits where id = ?", id) do |rs|
+      conn.query("SELECT * from tags where id = ?", id) do |rs|
          Tag.from_rs(rs)[0] # Index OOB if not there :|
       end
     end
@@ -258,7 +258,7 @@ class Tag
   
   def destroy
     with_db do |conn|
-      conn.exec("delete from edits where id = ?", id)
+      conn.exec("delete from tags where id = ?", id)
     end
   end
   

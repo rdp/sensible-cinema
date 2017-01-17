@@ -43,7 +43,7 @@
 <p><a href="/index">&lt;&lt; back to movie index</a></p>
 <hr/>
 <!-- summary -->
-Current edits in our system for this movie:
+Current content tags in our system for this movie:
 <% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
     <%= name %>: <%= value.size %>
@@ -54,7 +54,7 @@ Current edits in our system for this movie:
 
 <br/>
 <% if url.tags.size == 0 %>
-  No edits for this movie yet, add one now!
+  No content tags for this movie yet, add one now!
 <% end %>
 <table class="table table-striped" style="width: auto;">
   <thead>
@@ -76,4 +76,4 @@ Current edits in our system for this movie:
 
 </table>
 
-<a href=/new_empty_tag/<%= url.id %>>add new edit &#10133;<!-- thick plus --> </a>
+<a href=/new_empty_tag/<%= url.id %>>add new content tag &#10133;<!-- thick plus --> </a>

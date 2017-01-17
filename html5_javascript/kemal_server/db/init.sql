@@ -72,4 +72,4 @@ RENAME TABLE edits TO tags;
 
 -- output some to screen to show success
 select * from urls;
-select * from edits;
+select * from tags;
