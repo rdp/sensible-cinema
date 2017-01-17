@@ -70,16 +70,16 @@ ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
 alter table urls add column amazon_prime_free_type VARCHAR(2014) NOT NULL DEFAULT '';;
 update urls set amazon_prime_free_type = 'Prime' where is_amazon_prime = 1;
 alter table urls drop column is_amazon_prime;
--- done prod
 
 RENAME TABLE edits TO tags; 
 
 CREATE TABLE tag_edit_list (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-   url_id INT NOT NULL FOREIGN KEY(URL_ID) REFERENCES urls(id),
+   url_id INT NOT NULL,
    description          VARCHAR(1024)    NOT NULL DEFAULT '',
    notes VARCHAR(1024)    NOT NULL DEFAULT '',
-   age_recommendation_after_edited INT NOT NULL DEFAULT 0
+   age_recommendation_after_edited INT NOT NULL DEFAULT 0,
+	  FOREIGN KEY(URL_ID) REFERENCES urls(id)
    -- "community" :)
 );
 
@@ -88,12 +88,13 @@ ALTER TABLE urls drop column age_recommendation_after_edited;
 CREATE TABLE tag_edit_list_to_tag (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    tag_edit_list_id INT NOT NULL, FOREIGN KEY(tag_edit_list_id) references tag_edit_list(id),
-   tag_id INT NOT NULL, FOREIGN KEY (tag_id) references tag(id),
+   tag_id INT NOT NULL, FOREIGN KEY (tag_id) references tags(id),
    action VARCHAR(1024) NOT NULL
 );
 
 alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
  -- done dev
+ -- done prod
 
 
 -- TODO some indices for these two?

@@ -9,6 +9,8 @@ if (typeof clean_stream_timer !== 'undefined') {
 // var request_host="localhost:3000";
 var request_host="playitmyway.inet2.org";
 
+var editorExtensionIds = ["ogneemgeahimaaefffhfkeeakkjajenb", "ionkpaepibbmmhcijkhmamakpeclkdml"]; // one for local one for published gah
+
 function inIframe() {
     try {
         return window.self !== window.top;
@@ -297,7 +299,8 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json TODO
-  chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
+  chrome.runtime.sendMessage(editorExtensionIds[0], {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"});   
+	chrome.runtime.sendMessage(editorExtensionIds[1], {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
@@ -308,8 +311,6 @@ function addEditUi() {
   setEditedControlsToTopLeft(); // and call immediately :)
   addMouseMoveListener(showEditLinkOnMouseMove);
 }
-
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // hard coded to my plugin TODO
 
 // method to bind easily to resize event
 var addEvent = function(object, type, callback) {
@@ -613,7 +614,8 @@ function loadFailed(status) {
   document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  chrome.runtime.sendMessage(editorExtensionIds[0], {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  chrome.runtime.sendMessage(editorExtensionId[1], {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
      promptIfWantToCreate(); 
   }
