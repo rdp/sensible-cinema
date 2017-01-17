@@ -1,4 +1,5 @@
 update_icon = function(request, sender, sendResponse) {
+	console.log("got request to background" + request);
   var active_tab_id = sender.tab.id; // sender
   if (request.text) {
     console.log("changing " + request.text + " color:" + request.color + " details:" + request.details);

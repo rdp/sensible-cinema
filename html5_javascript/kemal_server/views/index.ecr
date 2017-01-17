@@ -20,7 +20,8 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "yes_please" },
             if (reply.version) {
                 if (reply.version >= requiredVersion) {
                     hasExtension = true;
-										document.getElementById('install_chrome_extension_message_id').style.visibility='hidden';
+//										document.getElementById('install_chrome_extension_message_id').style.visibility='hidden';
+										document.getElementById('install_chrome_extension_message_id').style.display = 'none';
                 }
 								else {
 								  alert("warning, your chrome extension is too old at version " + reply.version + ", please update it to " + requiredVersion);
