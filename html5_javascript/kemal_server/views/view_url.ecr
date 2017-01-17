@@ -5,7 +5,7 @@
   <img src="<%= url.image_url %>" style="max-width: 150px;"/>
 <br/>
 <% end %>
-<a href="<%= url.url %>" target="_blank">movie page</a>
+<a href="<%= url.url %>" target="_blank">watch</a>
 <br/>
 <p><a href="/index">&lt;&lt; back to movie index</a></p>
 
@@ -35,11 +35,10 @@
   </tbody>
 </table>
 <br/>
-
+<a href=/edit_url/<%= url.id %>>modify movie details</a>
 
 <hr/>
 <br/>
-
 <% if url.tags.size == 0 %>
   No content tags for this movie yet, add yours now!
 <% else %>
@@ -75,13 +74,12 @@ Current content tags in our system for this movie:
 </table>
 
 <a href=/new_empty_tag/<%= url.id %>>Create content tag &#10133;<!-- thick plus --> </a>
-<a href=/edit_url/<%= url.id %>>modify movie</a>
 <hr/>
 <br/>
 <% if url.tag_edit_lists.size == 0 %>
   No specialized "tag edit combo lists" for this movie yet, add one you can!
 <% else %>
-  Pre made tag edit list combos:
+  Pre made tag edit list combos: <br/>
   <% url.tag_edit_lists.each{ |tag_edit_list| %>
 	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
 		<br/>

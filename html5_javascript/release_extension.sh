@@ -1,1 +1,1 @@
-zip -r chrome_extension.zip chrome_extension
+zip -r chrome_extension_release.zip chrome_extension
