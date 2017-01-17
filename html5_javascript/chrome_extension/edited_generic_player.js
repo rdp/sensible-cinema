@@ -471,11 +471,11 @@ function openEditMostRecentPassed() {
   var lastest = 0;
   var last_id = 0;
   var cur_time = video_element.currentTime;
-  var edits = current_json.edits;
-  for (var i = 0; i < edits.length; i++) {
-    if (edits[i].endy < cur_time && edits[i].endy > lastest) {
-      last_id = edits[i].id;
-      lastest = edits[i].endy;
+  var tags = current_json.tags;
+  for (var i = 0; i < tags.length; i++) {
+    if (edits[i].endy < cur_time && tags[i].endy > lastest) {
+      last_id = tags[i].id;
+      lastest = tags[i].endy;
     }
   } 
 
@@ -533,18 +533,31 @@ function parseSuccessfulJson(json) {
   current_json = JSON.parse(json);
   // assume right format LOL
   url = current_json.url;
-  name=current_json.name;
+  name = current_json.name;
   editing_status = url.editing_status;
-  episode_name=url.episode_name;
-  // don't parse them, be lazy for now
-  mutes=current_json.mutes;
-  skips=current_json.skips;
-  yes_audio_no_videos=current_json.yes_audio_no_videos;
-  do_nothings=current_json.do_nothings;
-  expected_current_url=current_json.expected_url_unescaped;
-  amazon_second_url=current_json.url;
-  expected_episode_number=url.episode_number;
-  url_id=url.id;
+  episode_name = url.episode_name;
+  expected_current_url = current_json.expected_url_unescaped;
+  amazon_second_url = current_json.url;
+  expected_episode_number = url.episode_number;
+  url_id = url.id;
+	mutes = []
+	skips = []
+	yes_audio_no_videos = []
+	do_nothings = [] // :|
+	for (var i = 0; i < current_json.tags.length; i++) {
+		var tag = current_json.tags[i];
+		var push_to_array;
+		if (tag.default_action == 'mute') {
+      push_to_array = mutes;
+		} else if (tag.default_action = 'skip') {
+      push_to_array = skips;
+		} else if (tag.default_action == 'yes_audio_no_video') {
+      push_to_array = yes_audio_no_videos;
+		} else {
+      push_to_array = do_nothings;
+		}
+		push_to_array.push([tag.start, tag.endy]);
+	}
 }
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page

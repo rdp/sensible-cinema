@@ -3,10 +3,10 @@
 "_comment": "generated at <%= Time.now %>.",
 "url": <%= db_url.to_json %>,
 "expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescape or stably escape in javascript :? %>
-"edits":
-[ <%= db_url.tags.to_json %> ],
+"tags":
+  <%= db_url.tags.to_json %>,
 "tag_edit_lists":
-[ <%= db_url.tag_edit_lists.map{|tel| [tel, tel.tags_with_selected_or_not]}.to_json %>],
+  <%= db_url.tag_edit_lists.map{|tel| [tel, tel.tags_with_selected_or_not]}.to_json %>,
 "mutes": <%= edits[:mutes] %>,
 "skips": <%= edits[:skips] %>,
 "yes_audio_no_videos": <%= edits[:yes_audio_no_videos] %>,
