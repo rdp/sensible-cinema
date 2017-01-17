@@ -44,7 +44,7 @@
 <hr/>
 <!-- summary -->
 Current edits in our system for this movie:
-<% url.edls_by_type.each{ |name, value| %>
+<% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
     <%= name %>: <%= value.size %>
     <br/>
@@ -53,7 +53,7 @@ Current edits in our system for this movie:
 <hr/>
 
 <br/>
-<% if url.edls.size == 0 %>
+<% if url.tags.size == 0 %>
   No edits for this movie yet, add one now!
 <% end %>
 <table class="table table-striped" style="width: auto;">
@@ -63,17 +63,17 @@ Current edits in our system for this movie:
       <th>end</th>
     </tr>
   </thead>
-<% url.edls.each do |edl|  %>
+<% url.tags.each do |tag|  %>
   <tr>
-  <td><%= seconds_to_human edl.start %></td><td><%= seconds_to_human edl.endy %></td>
-  <td><%= edl.default_action %></td>
-  <td><%= edl.category %></td>
-  <td><%= edl.subcategory %></td>
-  <td><%= edl.details %></td>
-  <td><a href=/edit_edl/<%= edl.id %>>modify</a></td>
+  <td><%= seconds_to_human tag.start %></td><td><%= seconds_to_human tag.endy %></td>
+  <td><%= tag.default_action %></td>
+  <td><%= tag.category %></td>
+  <td><%= tag.subcategory %></td>
+  <td><%= tag.details %></td>
+  <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
   </tr>
 <% end %>
 
 </table>
 
-<a href=/new_empty_edl/<%= url.id %>>add new edit &#10133;<!-- thick plus --> </a>
+<a href=/new_empty_tag/<%= url.id %>>add new edit &#10133;<!-- thick plus --> </a>

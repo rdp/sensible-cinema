@@ -1,16 +1,16 @@
 <h1>Modify details of edit</h1> for 
 <%= url.name_with_episode %> 
 
-<form action="/save_edl/<%= url.id %>" method="POST">
+<form action="/save_tag/<%= url.id %>" method="POST">
 
-<% if edl.id != 0 %>
-  <input type="hidden" name="id" value="<%= edl.id %>">
+<% if tag.id != 0 %>
+  <input type="hidden" name="id" value="<%= tag.id %>">
 <% end %>
 
-from:<input type="text" name="start"  size="40" value="<%= url.seconds_to_human edl.start %>"/>
+from:<input type="text" name="start"  size="40" value="<%= url.seconds_to_human tag.start %>"/>
 <br/>
 
-to: <input type="text" name="endy" size="40" id="endy" value="<%= url.seconds_to_human edl.endy %>"/>
+to: <input type="text" name="endy" size="40" id="endy" value="<%= url.seconds_to_human tag.endy %>"/>
 <br/>
 
 default action to take:
@@ -21,7 +21,7 @@ default action to take:
   <option value="do_nothing">do_nothing</option>
 </select>
 <script>
-document.getElementById('sel').value = '<%= edl.default_action %>';
+document.getElementById('sel').value = '<%= tag.default_action %>';
 </script>
 <br/>
 
@@ -37,7 +37,7 @@ category (gets automatically set for you when you choose sub category):
   <option value="unknown">unknown</option>
 </select>
 <script>
-document.getElementById('category_select').value = '<%= edl.category %>';
+document.getElementById('category_select').value = '<%= tag.category %>';
 </script>
 <br/>
 </div>
@@ -107,25 +107,25 @@ sub category
 
 </select>
 <script>
-document.getElementById('subcategory_select').value = '<%= edl.subcategory %>';
+document.getElementById('subcategory_select').value = '<%= tag.subcategory %>';
 </script>
 <br/>
 If there are any missing please let us know!
 <br/>
 one or two word "end user friendly" (euphemized) details (ex: d***, "deity" or "knife stabbing" or "specific song name")
 <br/>
-<input type="text" name="details" size="50" value="<%= edl.details %>"/>
+<input type="text" name="details" size="50" value="<%= tag.details %>"/>
 <br/>
 internal details (ex: "sally said .... OK?" (dots instead of real profanity)) optional, will only be seen by editors
 <br/>
-<textarea name="more_details" rows="3" cols="40" ><%= edl.more_details %></textarea>
+<textarea name="more_details" rows="3" cols="40" ><%= tag.more_details %></textarea>
 <br/>
 
 <br/>
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 </form>
-<% if edl.id != 0 %>
-  <a href=/delete_edl/<%= edl.id %> onclick="return confirm('Are you sure? This removes this edit entirely, you may want to shorten it or fix it instead...');">delete this edit from system &#10006; </a>
+<% if tag.id != 0 %>
+  <a href=/delete_tag/<%= tag.id %> onclick="return confirm('Are you sure? This removes this edit entirely, you may want to shorten it or fix it instead...');">delete this edit from system &#10006; </a>
 <% end %>
 <br/>
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)

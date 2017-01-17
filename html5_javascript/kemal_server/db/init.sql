@@ -65,7 +65,11 @@ ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
 alter table urls add column amazon_prime_free_type VARCHAR(2014) NOT NULL DEFAULT '';;
 update urls set amazon_prime_free_type = 'Prime' where is_amazon_prime = 1;
 alter table urls drop column is_amazon_prime;
+-- done
 
--- output some to screen
+RENAME TABLE edits TO tags; 
+
+
+-- output some to screen to show success
 select * from urls;
 select * from edits;

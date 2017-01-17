@@ -6,8 +6,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var request_host="localhost:3000";
-var request_host="playitmyway.inet2.org";
+var request_host="localhost:3000";
+//var request_host="playitmyway.inet2.org";
 
 function inIframe() {
     try {
@@ -254,21 +254,21 @@ function addEditUi() {
   topLineEditDiv.style.display = 'none';
   document.body.appendChild(topLineEditDiv);
   
-  edlLayer = document.createElement('div');
-  edlLayer.style.position = 'absolute';
-  edlLayer.style.width = '500px';
-  edlLayer.style.height = '30px';
-  edlLayer.style.background = '#000000';
-  edlLayer.style.zIndex = "99999999"; // on top :)
-  edlLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  edlLayer.style.color = "white";
-  edlLayer.style.textShadow="2px 1px 0px grey";
-  edlLayer.style.fontSize = "13px";
-  edlLayer.style.display = 'none';
-  document.body.appendChild(edlLayer);
+  tagLayer = document.createElement('div');
+  tagLayer.style.position = 'absolute';
+  tagLayer.style.width = '500px';
+  tagLayer.style.height = '30px';
+  tagLayer.style.background = '#000000';
+  tagLayer.style.zIndex = "99999999"; // on top :)
+  tagLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  tagLayer.style.color = "white";
+  tagLayer.style.textShadow="2px 1px 0px grey";
+  tagLayer.style.fontSize = "13px";
+  tagLayer.style.display = 'none';
+  document.body.appendChild(tagLayer);
   
   // inject the add edit UI HTML
-  edlLayer.innerHTML = `
+  tagLayer.innerHTML = `
   from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
   <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -341,12 +341,12 @@ function addForNewEditToScreen() {
   // hope these never get mixed LOL
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
     toggleDiv(topLineEditDiv);
-    toggleDiv(edlLayer);
+    toggleDiv(tagLayer);
     document.getElementById("add_edit_link_id").innerHTML = "Hide editor";
   }
   else {
     toggleDiv(topLineEditDiv);
-    toggleDiv(edlLayer);
+    toggleDiv(tagLayer);
     document.getElementById("add_edit_link_id").innerHTML = "Add edit";
   }
   return false; // always abort link
@@ -364,8 +364,8 @@ function setEditedControlsToTopLeft() {
   exposeEditScreenDiv.style.top = top + "px";
   topLineEditDiv.style.left = left + "px"; 
   topLineEditDiv.style.top = top + "px";
-  edlLayer.style.left = left + "px";
-  edlLayer.style.top = (top + 30) + "px";
+  tagLayer.style.left = left + "px";
+  tagLayer.style.top = (top + 30) + "px";
 }
 
 function addToCurrentEditArray() {
@@ -459,7 +459,7 @@ function humanToTimeStamp(timestamp) {
 }
 
 function saveEditButton() {
-  var url = "https://" + request_host + "/add_edl_from_plugin/" + url_id + '?start=' + document.getElementById('start').value + 
+  var url = "https://" + request_host + "/add_tag_from_plugin/" + url_id + '?start=' + document.getElementById('start').value + 
             "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   console.log(url);
   window.open(url, '_blank');
@@ -480,7 +480,7 @@ function openEditMostRecentPassed() {
   } 
 
   if (last_id > 0) {
-    window.open("https://" + request_host + "/edit_edl/" + last_id);
+    window.open("https://" + request_host + "/edit_tag/" + last_id);
   }
   else {
     alert("could not find one earlier than your currently playing back location");
@@ -590,7 +590,7 @@ function loadFailed(status) {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   // plus if they paste it in it gets here, so...basically load the no-op :|
   if (current_json != null) {
-    current_json.edls = [];
+    current_json.tags = [];
   }
   editing_status = "unknown to system"; // just in case :)
   name = liveFullNameEpisode();

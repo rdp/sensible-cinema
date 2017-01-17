@@ -102,15 +102,15 @@ class Url
     @total_time = 0.0
   end
 
-  def edls
+  def tags
     with_db do |conn|
       conn.query("select * from edits where url_id=? order by start asc", id) do |rs|
-        Edl.from_rs rs
+        Tag.from_rs rs
       end
     end
   end
   
-  def edls_by_type
+  def tags_by_type
     with_db do |conn|
       yes_audio_no_videos = timestamps_of_type_for_video conn, self, "yes_audio_no_video"
       skips = timestamps_of_type_for_video conn, self, "skip"
@@ -120,10 +120,10 @@ class Url
     end
   end
 
-  def last_edl_or_nil
+  def last_tag_or_nil
     all = with_db do |conn|
       conn.query("select * from edits where url_id=? order by endy desc limit 1", id) do |rs|
-        Edl.from_rs(rs)
+        Tag.from_rs(rs)
       end
     end
     if all.size == 1
@@ -223,8 +223,8 @@ class Url
   end
 end
 
-class Edl
-  # see edit_edl.ecr for options
+class Tag
+  # see edit_tag.ecr for options
   JSON.mapping({
     id: Int32,
     start:   {type: Float64},
@@ -251,7 +251,7 @@ class Edl
   def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from edits where id = ?", id) do |rs|
-         Edl.from_rs(rs)[0] # Index OOB if not there :|
+         Tag.from_rs(rs)[0] # Index OOB if not there :|
       end
     end
   end

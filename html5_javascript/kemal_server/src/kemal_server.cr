@@ -54,10 +54,10 @@ get "/for_current_just_settings_json" do |env|
 end
 
 def timestamps_of_type_for_video(conn, db_url, type) 
-  edls = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
-    Edl.from_rs rs
+  tags = conn.query("select * from edits where url_id=? and default_action = ?", db_url.id, type) do |rs|
+    Tag.from_rs rs
   end
-  edls.map{|edl| [edl.start, edl.endy]}
+  tags.map{|tag| [tag.start, tag.endy]}
 end
 
 def json_for(db_url, env)
@@ -74,9 +74,9 @@ end
 
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
-  url.edls.each { |edl|
-    save_local_javascript [edl.url], "removed #{edl}", env
-    edl.destroy 
+  url.tags.each { |tag|
+    save_local_javascript [tag.url], "removed #{tag}", env
+    tag.destroy 
   }
   url.destroy
   set_flash_for_next_time env, "deleted movie from db"
@@ -84,78 +84,78 @@ get "/delete_url/:url_id" do |env|
   env.redirect "/index"
 end
 
-get "/delete_edl/:edl_id" do |env|
-  id = env.params.url["edl_id"]
-  edl = Edl.get_only_by_id(id)
-  edl.destroy
-  save_local_javascript [edl.url], "removed #{edl}", env
+get "/delete_tag/:tag_id" do |env|
+  id = env.params.url["tag_id"]
+  tag = Tag.get_only_by_id(id)
+  tag.destroy
+  save_local_javascript [tag.url], "removed #{tag}", env
   set_flash_for_next_time env, "deleted one edit"
-  env.redirect "/view_url/#{edl.url.id}"
+  env.redirect "/view_url/#{tag.url.id}"
 end
 
-get "/edit_edl/:edl_id" do |env|
-  edl = Edl.get_only_by_id(env.params.url["edl_id"])
-  url = edl.url
-  render "views/edit_edl.ecr", "views/layout.ecr"
+get "/edit_tag/:tag_id" do |env|
+  tag = Tag.get_only_by_id(env.params.url["tag_id"])
+  url = tag.url
+  render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
 def get_url_from_url_id(env)
   Url.get_only_by_id(env.params.url["url_id"])
 end
 
-get "/new_empty_edl/:url_id" do |env|
+get "/new_empty_tag/:url_id" do |env|
  
   url = get_url_from_url_id(env)
-  edl = Edl.new url
-  last_edl = url.last_edl_or_nil
-  if last_edl
+  tag = Tag.new url
+  last_tag = url.last_tag_or_nil
+  if last_tag
     # just make it slightly past the last 
-    last_end = last_edl.endy
-    edl.start = last_end + 1
-    edl.endy = last_end + 2
+    last_end = last_tag.endy
+    tag.start = last_end + 1
+    tag.endy = last_end + 2
   else
     # non zero anyway :|
-    edl.start = 1.0
-    edl.endy = 2.0
+    tag.start = 1.0
+    tag.endy = 2.0
   end
   set_flash_for_next_time env, "edit is not yet saved, hit the save button when you are done"
-  render "views/edit_edl.ecr", "views/layout.ecr"
+  render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
-get "/add_edl_from_plugin/:url_id" do |env|
+get "/add_tag_from_plugin/:url_id" do |env|
   url = get_url_from_url_id(env)
-  edl = Edl.new url
+  tag = Tag.new url
   query = env.params.query
-  edl.start = url.human_to_seconds query["start"]
-  edl.endy = url.human_to_seconds query["endy"]
-  edl.default_action = sanitize_html query["default_action"]
+  tag.start = url.human_to_seconds query["start"]
+  tag.endy = url.human_to_seconds query["endy"]
+  tag.default_action = sanitize_html query["default_action"]
   # immediate save so that I can rely on repolling this from the UI to get the ID's etc. in a few seconds after submitting it :|
-  edl.category = "unknown"
-  edl.subcategory = "unknown"
-  edl.save
-  env.redirect "/edit_edl/#{edl.id}"
+  tag.category = "unknown"
+  tag.subcategory = "unknown"
+  tag.save
+  env.redirect "/edit_tag/#{tag.id}"
 end
 
-post "/save_edl/:url_id" do |env|
+post "/save_tag/:url_id" do |env|
   params = env.params.body
   if params["id"]?
-    edl = Edl.get_only_by_id(params["id"])
+    tag = Tag.get_only_by_id(params["id"])
   else
-    edl = Edl.new(get_url_from_url_id(env))
+    tag = Tag.new(get_url_from_url_id(env))
   end
-  url = edl.url
+  url = tag.url
   start = params["start"].strip
   endy = params["endy"].strip
-  edl.start = url.human_to_seconds start
-  edl.endy = url.human_to_seconds endy
-  edl.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
-  edl.category = sanitize_html params["category"] # hope it's a legit value LOL
-  edl.subcategory = sanitize_html params["subcategory"]
-  edl.details = sanitize_html params["details"]
-  edl.more_details = sanitize_html params["more_details"]
-  raise "start is after or equal to end? please use browser back button to correct..." if (edl.start >= edl.endy) # before_save filter LOL
-  edl.save
-  save_local_javascript [url], edl.inspect, env
+  tag.start = url.human_to_seconds start
+  tag.endy = url.human_to_seconds endy
+  tag.default_action = sanitize_html params["default_action"] # TODO restrict somehow :|
+  tag.category = sanitize_html params["category"] # hope it's a legit value LOL
+  tag.subcategory = sanitize_html params["subcategory"]
+  tag.details = sanitize_html params["details"]
+  tag.more_details = sanitize_html params["more_details"]
+  raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
+  tag.save
+  save_local_javascript [url], tag.inspect, env
   set_flash_for_next_time(env, "saved edit! reload browser if you are watching that movie in a different tab right now...")
   env.redirect "/view_url/#{url.id}"
 end

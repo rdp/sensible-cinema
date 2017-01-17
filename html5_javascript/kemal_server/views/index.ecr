@@ -57,7 +57,7 @@ We are a community driven resource and we want to have you help us out!
        <td> <%= url.good_movie_rating %></td>
        <td><%= url.details %></td>
        <td><%= url.review_with_ellipses %></td> <!-- todo link into it? or something that can auto expand inline? -->
-       <td><%= url.edls.size %></td>
+       <td><%= url.tags.size %></td>
        <td><%= url.cost_string %></td>
        <%
          google_search = URI.escape(url.name, true)
