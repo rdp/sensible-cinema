@@ -6,8 +6,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var request_host="localhost:3000";
-var request_host="playitmyway.inet2.org";
+var request_host="localhost:3000";
+// var request_host="playitmyway.inet2.org";
 
 var editorExtensionIds = ["ogneemgeahimaaefffhfkeeakkjajenb", "ionkpaepibbmmhcijkhmamakpeclkdml"]; // one for local one for published gah
 
@@ -178,7 +178,7 @@ function checkStatus() {
     }
   }
   
-  topLineEditDiv.innerHTML = "Add new edit: " + timeStampToHuman(cur_time) + " " + extra_message;
+  topLineEditDiv.innerHTML = "Add new tag: " + timeStampToHuman(cur_time) + " " + extra_message;
   document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
@@ -240,7 +240,8 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add tag</a> <span id=add_edit_span_id_for_extra_message></span>`;
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add tag</a> 
+	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -349,7 +350,7 @@ function addForNewEditToScreen() {
   else {
     toggleDiv(topLineEditDiv);
     toggleDiv(tagLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "Add edit";
+    document.getElementById("add_edit_link_id").innerHTML = "Add tag";
   }
   return false; // always abort link
 }
@@ -531,10 +532,19 @@ function parseSuccessfulJsonWithAlert(json) {
 
 var current_json;
 
+function removeOptions(selectbox)
+{
+    var i;
+    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+    {
+        selectbox.remove(i);
+    }
+}
+
 function parseSuccessfulJson(json) {
   current_json = JSON.parse(json);
   url = current_json.url;
-  name = current_json.name;
+  name = url.name;
   editing_status = url.editing_status;
   episode_name = url.episode_name;
   expected_current_url = current_json.expected_url_unescaped;
@@ -550,7 +560,7 @@ function parseSuccessfulJson(json) {
 		var push_to_array;
 		if (tag.default_action == 'mute') {
       push_to_array = mutes;
-		} else if (tag.default_action = 'skip') {
+		} else if (tag.default_action == 'skip') {
       push_to_array = skips;
 		} else if (tag.default_action == 'yes_audio_no_video') {
       push_to_array = yes_audio_no_videos;
@@ -559,6 +569,22 @@ function parseSuccessfulJson(json) {
 		}
 		push_to_array.push([tag.start, tag.endy]);
 	}
+	
+	var dropdown = document.getElementById("tag_edit_list_dropdown");
+	removeOptions(dropdown); // out with the old...	
+	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
+		var option = document.createElement("option");
+		option.text = current_json.tag_edit_lists[i][0].description;
+		dropdown.add(option, dropdown[0]); // put it at the top?
+	}
+	var option = document.createElement("option");
+	option.text = "all"; // the default LOL
+  option.setAttribute('selected', true);
+	dropdown.add(option, dropdown[0]);
+}
+
+function tagEditListDropdownChanged() {
+	console.log("TODO");
 }
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
