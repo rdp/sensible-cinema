@@ -6,10 +6,11 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var request_host="localhost:3000";
-var request_host="playitmyway.inet2.org";
+var request_host="localhost:3000";
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
-var editorExtensionIds = ["ogneemgeahimaaefffhfkeeakkjajenb", "ionkpaepibbmmhcijkhmamakpeclkdml"]; // one for local one for published gah
+// var request_host="playitmyway.inet2.org";
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
 function inIframe() {
     try {
@@ -300,8 +301,7 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json TODO
-  chrome.runtime.sendMessage(editorExtensionIds[0], {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"});   
-	chrome.runtime.sendMessage(editorExtensionIds[1], {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
+	chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
@@ -672,8 +672,7 @@ function loadFailed(status) {
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionIds[0], {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
-  chrome.runtime.sendMessage(editorExtensionId[1], {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
      promptIfWantToCreate(); 
   }

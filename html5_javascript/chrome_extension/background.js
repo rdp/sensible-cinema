@@ -1,9 +1,14 @@
 update_icon = function(request, sender, sendResponse) {
   var active_tab_id = sender.tab.id; // sender
-  console.log("changing " + request.text + " color:" + request.color + " details:" + request.details);
-  chrome.browserAction.setBadgeText({ text: request.text, tabId: active_tab_id });
-  chrome.browserAction.setBadgeBackgroundColor({ color: request.color, tabId: active_tab_id });
-  chrome.browserAction.setTitle({title: request.details, tabId: active_tab_id});
+  if (request.text) {
+    console.log("changing " + request.text + " color:" + request.color + " details:" + request.details);
+    chrome.browserAction.setBadgeText({ text: request.text, tabId: active_tab_id });
+    chrome.browserAction.setBadgeBackgroundColor({ color: request.color, tabId: active_tab_id });
+    chrome.browserAction.setTitle({title: request.details, tabId: active_tab_id});
+  }
+  if (request.version_request) {
+    sendResponse({version: 0.06});
+   }
 };
 
 chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js 
