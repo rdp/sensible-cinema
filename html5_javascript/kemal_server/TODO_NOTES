@@ -6,7 +6,7 @@ better JSON out
 pay people for corpus
   maybe just the easy/cheap ones to start :)
 
-resurrect "fake" netflix editor :|
+resurrect "fake" netflix playback :|
 
 resurrect avatar my one episode LOL
   just redo it LOL
@@ -17,7 +17,7 @@ legal/ethics page
 
 if it goes to new youtube doesn't "disable" the popup right somehow...
 
-polish chrome extension
+polish chrome extension, especially installation looks still a bit confusing...
 
 instructions (only) for jruby subtitle finder for now :)
   integrate them into websitez how hard can it be? LOL
@@ -30,14 +30,15 @@ disallow full deletes :|
 more about pay me LOL
 
 == todo never LOL ==
+make it turn green if it detects they have the plugin installed, otherwise huge "go here and install it" LOL
+
 warn if edits overlap
 
 personalized edits?
 
-studio c -> details (it's in title right now??)
-  more market research...maybe?
+more market research...maybe?
 
-prettier index that differentiates "done" or not :)
+prettier index that also differentiates "done" or not :)
 
 publish more browser dev console instructions :)
 
@@ -47,25 +48,14 @@ can duplicate episodes :)
 chrome extension: 
   can set "YES" from other pages (window message or what not  why not :| )
   after one cancel, never prompt again LOL
-  play.google.com from index :)
 
-more CC files? :)
+more srt files? :)
   or at least real local subtitles ?
-
-research dvdz :|
-  after april?
 
 sortable index?
   once I get started :)
 
-gitraw is actually slow for initial update :(
-  but still functional LOL
-
 add iterm2 style paypal donate (link at least :)
-plugin:
-  netflix doesn't send in right full title
-
-facebook movies LOL
 
 resurrect DVD's, tie to online? :)
 
@@ -76,17 +66,13 @@ they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
   they can "change" movies from google play index
 
-if it can't find video element wait then try again?
-  google play index may need it :|
+more plugins for edge, safari at least...if helpful :|
 
-more plugins for edge, safari at least :|
-
-ask netflix 4 real (permission, or change ToS, or let's really partner LOL) :|
+ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000" etc. LOL
 
 they can rate it locally 4 me :| in everything LOL
 
-override which ones you want...LOL. 
 == random notes ==
 
 == streamerz ==
@@ -96,7 +82,7 @@ netflix of course
 
 hbo something...
 
-hulu has some movies
+hulu has some movies, seemingly none free LOL
 
 amazon prime normal
 
