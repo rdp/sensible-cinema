@@ -527,12 +527,12 @@ function parseSuccessfulJsonWithAlert(json) {
   if (editing_status == "done")
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 
-  alert(decodeHTMLEntities("Editing playback successfully enabled for\n" + name + " " + episode_name + "\n" + liveFullNameEpisode() + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));
+  alert(decodeHTMLEntities("Editing playback successfully enabled for this page \n" + name + " " + episode_name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));
 }
 
 var current_json;
 
-function removeOptions(selectbox)
+function removeAllOptions(selectbox)
 {
     var i;
     for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
@@ -571,7 +571,7 @@ function parseSuccessfulJson(json) {
 	}
 	
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
-	removeOptions(dropdown); // out with the old...	
+	removeAllOptions(dropdown); // out with the old...	
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var option = document.createElement("option");
 		option.text = current_json.tag_edit_lists[i][0].description;
@@ -585,6 +585,7 @@ function parseSuccessfulJson(json) {
 
 function tagEditListDropdownChanged() {
 	console.log("TODO");
+	// make it disappear??
 }
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
@@ -621,7 +622,8 @@ function checkIfEpisodeChanged() {
 
 function promptIfWantToCreate() {
   if (confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
-    window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name=" + encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank"); // add_new
+    window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
+		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
     setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
   }
 }
@@ -638,6 +640,7 @@ function loadFailed(status) {
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
   document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
+	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionIds[0], {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
