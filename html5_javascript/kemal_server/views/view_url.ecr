@@ -1,14 +1,15 @@
 <h1>Details for <%= url.name_with_episode %></h1>
 
 <br/>
+<p><a href="/index">&lt;&lt; back to movie index</a></p>
 <% if url.image_url.size > 0 %>
   <img src="<%= url.image_url %>" style="max-width: 150px;"/>
 <br/>
 <% end %>
 <a href="<%= url.url %>" target="_blank">watch</a>
 <br/>
-<p><a href="/index">&lt;&lt; back to movie index</a></p>
 
+<h2>Details</h2>
 <table class="table table-striped" style="width: auto;">
   <thead>
     <tr></tr>
@@ -37,6 +38,23 @@
 <br/>
 <a href=/edit_url/<%= url.id %>>modify movie details</a>
 
+
+<hr/>
+<br/>
+<div style="border: 1px dashed black">
+<% if url.tag_edit_lists.size == 0 %>
+  No specialized "pre existing filter list" for this movie yet, add one you can!
+<% else %>
+  Pre existing filter list combos: <br/>
+  <% url.tag_edit_lists.each{ |tag_edit_list| %>
+	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
+		<br/>
+	<% } %>
+<% end %>
+<br/>
+<a href=/new_tag_edit_list/<%= url.id %>>Create new pre existing filter list &#10133;</a>.
+</div>
+
 <hr/>
 <br/>
 <% if url.tags.size == 0 %>
@@ -44,7 +62,8 @@
 <% else %>
 
 <!-- tag summary -->
-Current content tags in our system for this movie:
+<h3>Content tags</h3>
+All content tags in our system for this movie:
 <% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
     <%= name %>: <%= value.size %>
@@ -74,19 +93,6 @@ Current content tags in our system for this movie:
 </table>
 
 <a href=/new_empty_tag/<%= url.id %>>Create content tag &#10133;<!-- thick plus --> </a>
-<hr/>
-<br/>
-<% if url.tag_edit_lists.size == 0 %>
-  No specialized "tag edit combo lists" for this movie yet, add one you can!
-<% else %>
-  Pre made tag edit list combos: <br/>
-  <% url.tag_edit_lists.each{ |tag_edit_list| %>
-	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
-		<br/>
-	<% } %>
-<% end %>
-<br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new tag edit combo list &#10133;</a>.
 
 <br/>
 <a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>devs</a>
