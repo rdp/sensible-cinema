@@ -12,8 +12,8 @@ chrome extension</a></h2>
 <script>
 var isInstalled = false;
 var requiredVersion = 0.05;
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev messaging to it from localhost doesn't work so have to deploy it to test :|
-//var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
+//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev messaging to it from localhost doesn't work so have to deploy it to test :|
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 
 chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
     function (reply) {
