@@ -16,13 +16,17 @@
     <tr></tr>
   </thead>
   <tbody>
-    <%= table_row("Details", url.details) %>
+    <%= table_row("Movie details", url.details) %>
     <% if url.url =~ /amazon.com/ %>
         <%= table_row("prime?", url.human_readable_company) %>
     <% end %>
     <%= table_row("Editing status", url.editing_status) %>
-    <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>
-    <%= table_row("good movie rating (out of 10, or 0 for not set)", url.good_movie_rating) %>
+		<% if url.wholesome_uplifting_level > 0 %>
+      <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>
+	  <% end %>
+		<% if url.good_movie_rating > 0 %>
+      <%= table_row("good movie rating (out of 10, or 0 for not set)", url.good_movie_rating) %>
+		<% end %>
     <% if url.purchase_cost > 0 || url.rental_cost > 0 %>
         <%= table_row("price to purchase/rent", url.cost_string) %>
     <% end %>
@@ -98,7 +102,8 @@ Content tags are basically timestamps and descriptions of content that exists in
 
 </table>
 
-<a href=/new_empty_tag/<%= url.id %>>Create new content tag &#10133;<!-- thick plus --> </a>
+<a href=/new_empty_tag/<%= url.id %>>Create new content tag &#10133;<!-- thick plus --> </a> (the best way to create a new content tag is to start it playing, then click the "add new tag" link the chrome extension inserts over your playing video.
+But if you want to create one manually, click here!)
 
 <br/>
 <br/>

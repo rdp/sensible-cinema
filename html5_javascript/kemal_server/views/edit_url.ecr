@@ -66,27 +66,27 @@ good_movie_rating (out of 10, or 0 for none, kind of like "out of 10 stars on IM
 <br/>
 <br/>
 
-review (explain good movie rating if needed, explain age recommendation if needed, "still has X not edited [bare midriffs adult them...]")
+review (explain good movie/whole uplifting level also, if needed)
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 <br/>
 <br/>
 
-rental cost (rental for 2 days, or 7, ex "2.00") (leave as 0 if part of subscription like netflix, or free like youtube. amazon: enter cost for episode even if on prime)
+rental cost (rental for 2 days, or 7, ex "2.00") (leave as 0 if part of subscription that doesn't charge per video, i.e. netflix/youtube, amazon: enter cost for rental this episode assuming not on prime)
 <input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>$
 <br/>
 <br/>
 
-purchase cost (ex: full purchase this episode, see above for details)
+purchase cost (ex: full purchase this episode, assuming no discounts, see above)
 <input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>$
 <br/>
 <br/>
 
-image_url for movie (like http://wikipedia/original_image.svg if you can find an image for this movie [or episode or series])
+an image_url (on a different site) for movie (ex: http://wikipedia/original_image.png or http://wikipedia/original_image.svg if you can find an image for this movie [or episode or series somewhere...)
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
 <br/>
 <br/>
 
-total time (total movie length, netflix needs this)
+total movie length (netflix wants this, others can leave it at zero)
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
 <br/>

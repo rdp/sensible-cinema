@@ -102,7 +102,7 @@ function liveEpisodeNumber() {
 function findFirstVideoTagOrNull() {
   var all = document.getElementsByTagName("video");
   // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
-  // it hopefully won't hurt anything...
+  // it hopefully won't hurt anything tho...since with the plugin way and most pages "can't access child iframes" the content script injected into all iframes will take care of business instead.
   var i, frames;
   frames = document.getElementsByTagName("iframe");
   for (i = 0; i < frames.length; ++i) {
@@ -118,6 +118,7 @@ function findFirstVideoTagOrNull() {
 }
 
 function decodeHTMLEntities(text) {
+   	// I guess there's an HTML way to do this, but this way looked funner! :)
     var entities = [
         ['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']
     ];
@@ -241,7 +242,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add tag</a> 
+  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tagr</a> 
 	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
@@ -535,7 +536,7 @@ function parseSuccessfulJsonWithAlert(json) {
 }
 
 function alertEditorWorking(message, post_message) {
-  alert(decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + "\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));    	
+  alert(decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + "\n\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));    	
 }
 
 var current_json;
