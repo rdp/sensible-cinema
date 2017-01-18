@@ -6,7 +6,7 @@
   <input type="hidden" name="id" value="<%= url.id %>">
 <% end %>
 
-name:
+movie name or series name:
 <input type="text" name="name" size="150" value="<%= url.name %>"/>
 <br/>
 <br/>
@@ -16,7 +16,7 @@ url:
 <br/>
 <br/>
 
-details (non-spoiler synopsis, actor names, etc.):
+details (brief synopsis [non-spoiler], principal actor names, etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 <br/>
@@ -26,13 +26,13 @@ episode_number (0 if not part of a series)
 <br/>
 <br/>
 
-episode_name (blank if not part of a series)
+episode_name (blank if not episode of a series)
 <input type="text" name="episode_name" size="50" value="<%= url.episode_name %>"/>
 <br/>
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon second url (if your amazon episode is part of a series, you can find this by clicking the "series" dropdown and it shows a different URL that we also need/want here):
+  amazon second url (if your amazon episode is part of a series, it actually has two urls.  you can find the second url by clicking the "series" dropdown to select the series you're interested in.
   <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
   <br/>
   <br/>

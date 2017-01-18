@@ -43,7 +43,7 @@ setTimeout(function() {
 Now start playing movies your way!
 
 <h1>Index</h1>
-These are movies that we currently have edits for.  Don't see one you want? Please <a href=/create_new>add it</a> and contribute back!
+These are movies that we currently have tags for.  Don't see one you want? Please <a href=/create_new>add it</a> and contribute back!
 We are a community driven resource and we would love the help, we can't do it all alone!
 
 <table class="table table-striped">
@@ -51,7 +51,7 @@ We are a community driven resource and we would love the help, we can't do it al
     <tr>
       <th>Movie Name</th>
       <th>Host</th>
-      <th>Edits</th>
+      <th>Tags</th>
       <th>Editing status</th>
       <th>Wholesome<br/>uplifting level / 10 max.</th>
       <th>Mvie rating / 10 max.</th>
@@ -74,7 +74,7 @@ We are a community driven resource and we would love the help, we can't do it al
          >watch</a>
        </td>
        <td><%= url.human_readable_company %></td>
-       <td><a href="/view_url/<%= url.id %>">view our edits</a></td>
+       <td><a href="/view_url/<%= url.id %>">view content tags</a></td>
        <td>
          <% if url.editing_status == "done" %>
            <SPAN STYLE="color: green;">

@@ -181,7 +181,7 @@ function checkStatus() {
     }
   }
   
-  topLineEditDiv.innerHTML = "Add new tag: " + timeStampToHuman(cur_time) + " " + extra_message;
+  topLineEditDiv.innerHTML = "Test tag: " + timeStampToHuman(cur_time) + " " + extra_message;
   document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
@@ -247,7 +247,7 @@ function addEditUi() {
 	<div id=currently_filtering_id>currently filtering:
 	  <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
 	</div>
-	<span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty for now -->
+	<span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
 	<br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tag</a>
 	</div>`;
   // and stay visible
@@ -303,7 +303,11 @@ function addEditUi() {
   <a href="#" onclick="stepFrame(); return false;">step</a>
   <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
   <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">last</a>
+	<br/>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a>
+	<br/>
+  <a href="#" onclick="return showMoviePage();">Movie page</a>
+	<br/>
   <a href="#" onclick="return addForNewEditToScreen();">✕ Hide editor</a>
   `;
   
@@ -372,10 +376,11 @@ function setEditedControlsToTopLeft() {
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
   top += 75; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
-  exposeEditScreenDiv.style.left = left + "px"; // real left side for this one :|
+	if (isAmazon()) {
+		top += 35; // allow them to expand x-ray to disable it
+	}
+  exposeEditScreenDiv.style.left = left + "px";
   exposeEditScreenDiv.style.top = top + "px";
-  var shift_right = 50; // allow kill amazon x-ray :| by heading a bit to the right
-  left += shift_right;
 	top += 35; // put rest below the exposeEditScreenDiv line
   topLineEditDiv.style.left = left + "px"; 
   topLineEditDiv.style.top = top + "px";
@@ -482,6 +487,10 @@ function saveEditButton() {
   setTimeout(reloadForCurrentUrl, 20000); // and get details :)
 }
 
+function showMoviePage() {
+  window.open("https://" + request_host + "/view_url/" + current_json.url.id);
+}
+
 function openEditMostRecentPassed() {
   var lastest = 0;
   var last_id = 0;
@@ -523,8 +532,8 @@ function reloadForCurrentUrl() {
   }
 }
 
-function parseSuccessfulJsonNonReload(json) {
-  parseSuccessfulJson(json);
+function parseSuccessfulJsonNonReload(json_string) {
+  parseSuccessfulJson(json_string);
   startWatcherTimerOnce();
   // and alert
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
@@ -535,20 +544,16 @@ function parseSuccessfulJsonNonReload(json) {
     alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
   old_episode = liveEpisodeNumber();
-  var post_message = "This movie is currently marked as \"" + json.url.editing_status + "\" in our system, which means it is incomplete.  Please help us with it!";
-  if (json.url.editing_status == "done") {
+  var post_message = "This movie is currently marked as \"" + current_json.url.editing_status + "\" in our system, which means it is incomplete.  Please help us with it!";
+  if (current_json.url.editing_status == "done") {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 	}
-	showDiv(document.getElementById("currently_filtering_id"));
-	
-	// do it later so it can setup the UI and not scare us that it's not already loaded
-  setTimeout(function() { 
-		// alertEditorWorking("all content tags", post_message); // seemed redundant to UI
-  }, 100);
+	displayDiv(document.getElementById("currently_filtering_id"));
 }
 
 function alertEditorWorking(message, post_message) {
-  alert(decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + "\n\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message));    	
+  alert(decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + 
+	      "\n\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message + "\n" + liveFullNameEpisode()));    	
 }
 
 var current_json;
@@ -560,16 +565,15 @@ function removeAllOptions(selectbox)
   }
 }
 
-function parseSuccessfulJson(json) {
-  current_json = JSON.parse(json);
-  url = current_json.url;
+function parseSuccessfulJson(json_string) {
+  current_json = JSON.parse(json_string);
+  var url = current_json.url;
   name = url.name;
   episode_name = url.episode_name;
   expected_current_url = current_json.expected_url_unescaped;
   amazon_second_url = current_json.url;
   expected_episode_number = url.episode_number;
   url_id = url.id;
-	setTheseTagsAsTheOnesToUse(current_json.tags);
 	
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	removeAllOptions(dropdown); // out with any old...	
@@ -585,6 +589,8 @@ function parseSuccessfulJson(json) {
 	option.value = "-1"; // special case :|
   option.setAttribute('selected', true); // default :| TODO not refresh
 	dropdown.add(option, dropdown[0]);
+	
+	tagEditListDropdownChanged(); // alert and use, alert still useful since otherwise on amazon series page it's like "what's it editing already?"	
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
@@ -655,7 +661,7 @@ function checkIfEpisodeChanged() {
                  old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_episode = liveEpisodeNumber(); 
-    setTimeout(loadForNewUrl, 1000); // youtube gets the "old name" still for the new prompt so wait 1s
+    setTimeout(loadForNewUrl, 1000); // youtube has the "old name" still for awhile, so for the new prompt wait
   }
 }
 
@@ -677,14 +683,14 @@ function loadFailed(status) {
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
-  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to add..."; // she's dead jim XX confirm prompt on it to create?
+  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to edit..."; // she's dead jim XX confirm prompt on it to create?
 	hideDiv(document.getElementById("currently_filtering_id"));
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
-     promptIfWantToCreate(); 
+		setTimeout(promptIfWantToCreate, 500); // do later so UI can update and not show behind this prompt as if loaded :|
   }
   else {
     alert("appears the cleanstream server is currently down, please alert us! Edits disabled for now...");
