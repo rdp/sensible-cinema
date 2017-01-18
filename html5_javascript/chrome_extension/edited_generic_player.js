@@ -34,10 +34,9 @@ function isAmazon() {
 
 function getStandardizedCurrentUrl() {
   var current_url = currentUrlNotIframe();
-  if (isAmazon()) {
-    if (document.querySelector('link[rel="canonical"]') != null) {
-      current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
-    }
+  if (document.querySelector('link[rel="canonical"]') != null) {
+		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
+    current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
@@ -167,6 +166,7 @@ function checkStatus() {
   }
   [last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
   if (last_start) {
+		// use style.visibility here so it retains the space it would have otherwise used
     if (video_element.style.visibility != "hidden") {
       console.log("hiding video leaving audio ", cur_time, last_start, last_end);
       extra_message = "no video yes audio";
@@ -244,8 +244,10 @@ function addEditUi() {
   exposeEditScreenDiv.style.fontSize = "15px";
   exposeEditScreenDiv.style.color = "Grey";
   exposeEditScreenDiv.innerHTML = `<div id='top_left'>
-	currently filtering:
-	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span>
+	<div id=currently_filtering_id>currently filtering:
+	  <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
+	</div>
+	<span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty for now -->
 	<br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tag</a>
 	</div>`;
   // and stay visible
@@ -330,8 +332,12 @@ var addEvent = function(object, type, callback) {
     }
 };
 
-function toggleDiv(div) {
-    div.style.display = div.style.display == "none" ? "block" : "none";
+function displayDiv(div) {
+	div.style.display = "block";
+}
+
+function hideDiv(div) {
+	div.style.display = "none";
 }
 
 function seekToTime(ts) {
@@ -348,13 +354,13 @@ function addForNewEditToScreen() {
   }
   // hope these never get mixed LOL
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
-    toggleDiv(topLineEditDiv);
-    toggleDiv(tagLayer);
+    displayDiv(topLineEditDiv);
+    displayDiv(tagLayer);
     document.getElementById("add_edit_link_id").innerHTML = "";
   }
   else {
-    toggleDiv(topLineEditDiv);
-    toggleDiv(tagLayer);
+    hideDiv(topLineEditDiv);
+    hideDiv(tagLayer);
     document.getElementById("add_edit_link_id").innerHTML = "Add new content tag";
   }
   return false; // always abort link
@@ -370,7 +376,7 @@ function setEditedControlsToTopLeft() {
   exposeEditScreenDiv.style.top = top + "px";
   var shift_right = 50; // allow kill amazon x-ray :| by heading a bit to the right
   left += shift_right;
-	top += 50; // put rest below the exposeEditScreenDiv line
+	top += 35; // put rest below the exposeEditScreenDiv line
   topLineEditDiv.style.left = left + "px"; 
   topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
@@ -508,7 +514,7 @@ function lookupUrl() {
 }
 
 function loadForNewUrl() {
-  getRequest(lookupUrl(), parseSuccessfulJsonWithAlert, loadFailed); // only works because we set CORS header :|
+  getRequest(lookupUrl(), parseSuccessfulJsonNonReload, loadFailed);
 }
 
 function reloadForCurrentUrl() {
@@ -517,7 +523,7 @@ function reloadForCurrentUrl() {
   }
 }
 
-function parseSuccessfulJsonWithAlert(json) {
+function parseSuccessfulJsonNonReload(json) {
   parseSuccessfulJson(json);
   startWatcherTimerOnce();
   // and alert
@@ -529,10 +535,11 @@ function parseSuccessfulJsonWithAlert(json) {
     alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
   old_episode = liveEpisodeNumber();
-  var post_message = "This movie is currently marked as \"" + editing_status + "\" in our system, which means it is incomplete.  Please help us groom edits to our system and mark status as done when it's complete, thanks so much!";
-  if (editing_status == "done") {
+  var post_message = "This movie is currently marked as \"" + json.url.editing_status + "\" in our system, which means it is incomplete.  Please help us with it!";
+  if (json.url.editing_status == "done") {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 	}
+	showDiv(document.getElementById("currently_filtering_id"));
 	
 	// do it later so it can setup the UI and not scare us that it's not already loaded
   setTimeout(function() { 
@@ -548,9 +555,7 @@ var current_json;
 
 function removeAllOptions(selectbox)
 {
-  var i;
-  for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-  {
+  for(var i = selectbox.options.length - 1 ; i >= 0 ; i--) {
     selectbox.remove(i);
   }
 }
@@ -559,7 +564,6 @@ function parseSuccessfulJson(json) {
   current_json = JSON.parse(json);
   url = current_json.url;
   name = url.name;
-  editing_status = url.editing_status;
   episode_name = url.episode_name;
   expected_current_url = current_json.expected_url_unescaped;
   amazon_second_url = current_json.url;
@@ -669,12 +673,12 @@ function loadFailed(status) {
   if (current_json != null) {
     current_json.tags = [];
   }
-  editing_status = "unknown to system"; // just in case :)
   name = liveFullNameEpisode();
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
-  document.getElementById("add_edit_link_id").innerHTML = "Unedited..."; // she's dead jim XX confirm prompt on it to create?
+  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to add..."; // she's dead jim XX confirm prompt on it to create?
+	hideDiv(document.getElementById("currently_filtering_id"));
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
@@ -685,7 +689,7 @@ function loadFailed(status) {
   else {
     alert("appears the cleanstream server is currently down, please alert us! Edits disabled for now...");
   }
-  startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [mostly amazon]
+  startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
 
 var clean_stream_timer;
@@ -718,11 +722,11 @@ function start() {
   loadForNewUrl();
 }
 
-var mouse_move_timeout;
+var mouse_move_timer;
 function showEditLinkMouseJustMoved() {
-  document.getElementById("top_left").style.visibility=""; // non hidden
-  clearTimeout(mouse_move_timeout); // clear previous timer...
-  mouse_move_timeout = setTimeout(function() { document.getElementById("top_left").style.visibility="hidden"; }, 3000);
+	displayDiv(document.getElementById("top_left"));
+  clearTimeout(mouse_move_timer);
+  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); }, 3000);
 }
 
 // helper method

@@ -30,7 +30,7 @@ def standardized_param_url(env)
 end
 
 def standardize_url(unescaped)
-  # wait why are we doing this here *and* in javascript land? hrm...
+  # wait why are we doing this here *and* in javascript land? I guess its so the manual can enter here but...but...
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
   end
@@ -231,6 +231,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   if title == ""
     title = title_incoming
   end
+	puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")

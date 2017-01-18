@@ -65,9 +65,9 @@ function onReady(yourMethod) {
 
 function injectEditedPlayerOnce() {
     console.log("injecting editor code...");
-    chrome.runtime.sendMessage({text: "try", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 3 :|
+    chrome.runtime.sendMessage({text: "load", color: "#008000", details: "Trying to load edited playback..."}); // last thing they see for non big 3 :|
     if (already_loaded) {
-        alert('edited player already loaded for this page...please use its UI. If edits created recently use your browser refresh button to try again if it exists now.');
+        alert('edited player already loaded for this page...please use its UI. Try clicking "unedited" or the refresh button on your browser.');
     }
     else {
         already_loaded = true;
@@ -86,13 +86,13 @@ function inIframe () {
 
 function autoStartOnBigThree() {
   var url = currentUrlNotIframe();
-  if (url.includes("play.google.com") || url.includes("amazon.com")) {
-    if (inIframe()) { // checking for google not reliable here since some of its iframes are like play5.google.com
-      // google iframes popup after it says YES and reset it back to wait in error :|
-      console.log("not setting to wait from iframe");
+  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("youtube.com")) {
+    if (inIframe()) { 
+      // avoid google iframes popup after it says YES and reset it back even though it is playing OK
+      console.log("not setting to ... from an iframe");
     }
     else {
-      chrome.runtime.sendMessage({text: "wait", color: "#808080", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
+      chrome.runtime.sendMessage({text: "...", color: "#808080", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
     console.log("big 3 polling for video tag...");
@@ -108,7 +108,7 @@ function autoStartOnBigThree() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
-    // non big 2, just poll
+    // non big 3, just poll, if we find a video *and* filter do something about it...
     if (!inIframe()) {
       chrome.runtime.sendMessage({text: ".", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
     } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
@@ -151,6 +151,7 @@ function currentHasNone(status) {
 	else {
     console.log("unable to find one on server for " + currentUrlNotIframe() + " so not auto loading it, doing nothing " + status);
 	}
+	// thought it was too invasive to inject the javascript for say facebook :|
   chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please click above to add it!"}); 
 }
 
