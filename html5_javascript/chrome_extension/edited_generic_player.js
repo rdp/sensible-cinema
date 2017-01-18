@@ -41,9 +41,10 @@ function getStandardizedCurrentUrl() {
   }
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
-  if (current_url.includes("amazon.com")) { // known to want to strip off cruft
+  if (current_url.includes("amazon.com")) { // known to want to strip off cruft here
     current_url = current_url.split("?")[0];
   }
+  current_url = current_url.split('#')[0]; // https://www.youtube.com/watch?v=LXSj1y9kl2Y# -> https://www.youtube.com/watch?v=LXSj1y9kl2Y since we don't do hashes
   return current_url;
 }
 
@@ -240,12 +241,12 @@ function addEditUi() {
   exposeEditScreenDiv.style.background = '#000000';
   exposeEditScreenDiv.style.zIndex = "99999999"; // on top :)
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  exposeEditScreenDiv.style.fontSize = "13px";
+  exposeEditScreenDiv.style.fontSize = "15px";
   exposeEditScreenDiv.style.color = "Grey";
   exposeEditScreenDiv.innerHTML = `<div id='top_left'>
 	currently editing:
 	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span>
-	<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add content tag</a>
+	<br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tag</a>
 	</div>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);

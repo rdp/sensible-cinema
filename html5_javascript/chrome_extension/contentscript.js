@@ -104,7 +104,7 @@ function autoStartOnBigThree() {
     }, 50);  // initial delay 50ms but not too bad :)
   }
   else if (url.includes("netflix.com/") || url.includes("hulu.com/")) {
-    console.log("doing nothing netflix et al :|");
+    console.log("doing nothing netflix hulu :|");
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
@@ -127,9 +127,14 @@ function currentUrlNotIframe() {
   return (window.location != window.parent.location) ? document.referrer : document.location.href;
 }
 
+function getStandardizedCurrentUrl() {
+	// simplified should work here since it auto starts for the other ones that we know how to parse well...
+  return currentUrlNotIframe().split('#')[0]; // https://www.youtube.com/watch?v=LXSj1y9kl2Y# -> https://www.youtube.com/watch?v=LXSj1y9kl2Y since we don't do hashes
+}
+
 function loadIfCurrentHasOne() {
   var url = currentUrlNotIframe();
-  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(url) + '&episode_number=0'; // simplified, assume just URL wurx, with GET params, no episode at play LOL
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=0'; // simplified, no episode yet
   url = '//' + request_host + '/' + direct_lookup;
   getRequest(url, currentHasEdits, currentHasNone);
 }

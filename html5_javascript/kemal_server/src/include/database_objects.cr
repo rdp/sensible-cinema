@@ -19,7 +19,8 @@ class Url
     amazon_prime_free_type: String, # "prime" "HBO"
     rental_cost: Float64,
     purchase_cost: Float64, # XXX actually Decimal [?]
-    total_time: Float64
+    total_time: Float64,
+		create_timestamp: Time
   })
 
   JSON.mapping({
@@ -38,7 +39,8 @@ class Url
     amazon_prime_free_type: String,
     rental_cost: Float64,
     purchase_cost: Float64,
-    total_time: Float64
+    total_time: Float64,
+		create_timestamp: Time
   })
   
   def self.all
@@ -74,6 +76,7 @@ class Url
     with_db do |conn|
       if @id == 0
        @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+			 # get create_timestamp for free by its default
       else
        conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, id
       end
@@ -97,6 +100,7 @@ class Url
     @rental_cost = 0.0
     @purchase_cost = 0.0
     @total_time = 0.0
+		@create_timestamp = Time.now
   end
 
   def tags

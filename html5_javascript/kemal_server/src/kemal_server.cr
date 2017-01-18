@@ -30,10 +30,12 @@ def standardized_param_url(env)
 end
 
 def standardize_url(unescaped)
+  # wait why are we doing this here *and* in javascript land? hrm...
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
   end
-  unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
+  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www for amazon
+	unescaped.split("#")[0]
 end
 
 get "/for_current_just_settings_json" do |env|

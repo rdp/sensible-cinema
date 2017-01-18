@@ -96,6 +96,8 @@ alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DE
  -- done dev
  -- done prod
 
+alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
+
 
 -- TODO some indices for these two?
 

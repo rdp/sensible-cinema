@@ -36,6 +36,7 @@
 		<% if url.review.size > 0 %>
       <%= table_row("Our local review", url.review) %>
 		<% end %>
+		<%= table_row("Created at", url.create_timestamp) %>
   </tbody>
 </table>
 <br/>
@@ -69,7 +70,7 @@ These are all "community edited" currently, feel free and please do contribute!
 <% else %>
 
 <!-- tag summary -->
-<h3>Content tags</h3>
+<h3>Individual Content tags</h3>
 Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones if you run into something that should be tagged but isn't in our system yet.
 
 <br/>All content tags in our system for this movie:
