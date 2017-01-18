@@ -7,6 +7,7 @@
 <h2 id="install_chrome_extension_message_id" style="display: none;"> <!-- invisible to start -->
 Install the edited playback software by first installing our <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank">
 chrome extension</a></h2>
+<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green">This is some text!</font></div>
 
 <script>
 var isInstalled = false;
@@ -21,7 +22,7 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
                 if (reply.version >= requiredVersion) {
     								isInstalled = true;
 										console.log("got back good chrome version installed " + reply.version);
-										document.getElementById('install_chrome_extension_message_id').innerHTML = `<font face="verdana" color="green">This is some text!</font>`;
+										document.getElementById('success_chrome_extension_id')..style.display = 'block';
                 }
 								else {
 								  alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
