@@ -242,8 +242,8 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "13px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tagr</a> 
-	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span>`;
+  exposeEditScreenDiv.innerHTML = `<div id='top_left'><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tag</a> 
+	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span></div>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -311,7 +311,7 @@ function addEditUi() {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
-  addMouseMoveListener(showEditLinkOnMouseMove);
+  addMouseMoveListener(showEditLinkMouseJustMoved);
 }
 
 // method to bind easily to resize event
@@ -543,11 +543,11 @@ var current_json;
 
 function removeAllOptions(selectbox)
 {
-    var i;
-    for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
-    {
-        selectbox.remove(i);
-    }
+  var i;
+  for(i = selectbox.options.length - 1 ; i >= 0 ; i--)
+  {
+    selectbox.remove(i);
+  }
 }
 
 function parseSuccessfulJson(json) {
@@ -714,10 +714,10 @@ function start() {
 }
 
 var mouse_move_timeout;
-function showEditLinkOnMouseMove() {
-  document.getElementById("add_edit_link_id").style.visibility=""; // non hidden
-  clearTimeout(mouse_move_timeout); // clear old
-  mouse_move_timeout = setTimeout(function() { document.getElementById("add_edit_link_id").style.visibility="hidden"; }, 3000);
+function showEditLinkMouseJustMoved() {
+  document.getElementById("top_left").style.visibility=""; // non hidden
+  clearTimeout(mouse_move_timeout); // clear previous timer...
+  mouse_move_timeout = setTimeout(function() { document.getElementById("top_left").style.visibility="hidden"; }, 3000);
 }
 
 // helper method
