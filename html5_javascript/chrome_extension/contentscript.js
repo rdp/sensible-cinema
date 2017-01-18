@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(
                 alert("you requested to start edited playback, but we do not detect a video playing yet, possibly need to hit the play button first, then try again?");
               }
             }
-         });
+         };
 });
 
 function findFirstVideoTagOrNull() {
@@ -139,30 +139,35 @@ function currentHasEdits() {
   injectEditedPlayerOnce();
 }
 
-function currentHasNone() {
-  console.log("unable to find one for " + currentUrlNotIframe() + " so not auto loading it, doing nothing");
+function currentHasNone(status) {
+	if (status == 0) {
+    console.log("appears the cleanstream server is currently down, please alert us! Edits unable to load for now..."); // barely scared it could become too annoying :|
+	}
+	else {
+    console.log("unable to find one on server for " + currentUrlNotIframe() + " so not auto loading it, doing nothing " + status);
+	}
   chrome.runtime.sendMessage({text: "none", color: "#808080", details: "We found a video playing, do not have edits for this video in our system yet, please click above to add it!"}); 
 }
 
-function getRequest (url, success, error) {
-  console.log("starting attempt to download " + url);
-  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-  xhr.open("GET", url);
-  xhr.onreadystatechange = function(){
-    if ( xhr.readyState == 4 ) {
-      if ( xhr.status == 200 ) {
-        success(xhr.responseText);
-      } else {
-        error && error(xhr.status);
+function getRequest (url, success, error) {  
+  console.log("starting attempt download " + url);
+  var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
+  xhr.open("GET", url); 
+  xhr.onreadystatechange = function(){ 
+    if ( xhr.readyState == 4 ) { 
+      if ( xhr.status == 200 ) { 
+        success(xhr.responseText); 
+      } else { 
+        error && error(xhr.status); 
         error = null;
-      }
-    }
-  };
-  xhr.onerror = function () {
-    error && error(xhr.status);
+      } 
+    } 
+  }; 
+  xhr.onerror = function () { 
+    error && error(xhr.status); 
     error = null;
-  };
-  xhr.send();
+  }; 
+  xhr.send(); 
 }
 
 onReady(autoStartOnBigThree);
