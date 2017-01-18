@@ -16,9 +16,11 @@
     <tr></tr>
   </thead>
   <tbody>
-    <%= table_row("Movie details", url.details) %>
+	  <% if url.details.size > 0 %>
+      <%= table_row("Movie details", url.details) %>
+		<% end %>
     <% if url.url =~ /amazon.com/ %>
-        <%= table_row("prime?", url.human_readable_company) %>
+      <%= table_row("prime?", url.human_readable_company) %>
     <% end %>
     <%= table_row("Editing status", url.editing_status) %>
 		<% if url.wholesome_uplifting_level > 0 %>

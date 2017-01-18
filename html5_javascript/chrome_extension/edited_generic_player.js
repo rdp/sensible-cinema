@@ -244,7 +244,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.fontSize = "15px";
   exposeEditScreenDiv.style.color = "Grey";
   exposeEditScreenDiv.innerHTML = `<div id='top_left'>
-	currently editing:
+	currently filtering:
 	<select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select><span id=add_edit_span_id_for_extra_message></span>
 	<br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tag</a>
 	</div>`;
@@ -302,7 +302,7 @@ function addEditUi() {
   <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
   <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
   <a href="#" onclick="openEditMostRecentPassed(); return false;">last</a>
-  <a href="#" onclick="return addForNewEditToScreen();">Hide editor</a>
+  <a href="#" onclick="return addForNewEditToScreen();">✕ Hide editor</a>
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json TODO
@@ -350,12 +350,12 @@ function addForNewEditToScreen() {
   if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
     toggleDiv(topLineEditDiv);
     toggleDiv(tagLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "Hide editor";
+    document.getElementById("add_edit_link_id").innerHTML = "";
   }
   else {
     toggleDiv(topLineEditDiv);
     toggleDiv(tagLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "Add tag";
+    document.getElementById("add_edit_link_id").innerHTML = "Add new content tag";
   }
   return false; // always abort link
 }
@@ -365,11 +365,12 @@ function setEditedControlsToTopLeft() {
   var doc = document.documentElement;
   var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
   var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
-  top += 175; // couldn't see it when at the top youtube XXXX why? but just in case others are the same LOL
-  offset = 150; // allow kill amazon x-ray :| by heading a bit to the right
-  left += offset;
-  exposeEditScreenDiv.style.left = (left - offset) + "px"; // real zero for this one :|
+  top += 75; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
+  exposeEditScreenDiv.style.left = left + "px"; // real left side for this one :|
   exposeEditScreenDiv.style.top = top + "px";
+  var shift_right = 50; // allow kill amazon x-ray :| by heading a bit to the right
+  left += shift_right;
+	top += 50; // put rest below the exposeEditScreenDiv line
   topLineEditDiv.style.left = left + "px"; 
   topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
@@ -380,7 +381,7 @@ function addToCurrentEditArray() {
   start = humanToTimeStamp(document.getElementById('start').value);
   endy = humanToTimeStamp(document.getElementById('endy').value);
   if (endy <= start) {
-    alert("seems your end is before your start, please fix!");
+    alert("seems your end is before your start, please fix then try again!");
     return; // abort
   } 
   currentEditArray().push([start, endy]);
@@ -535,7 +536,7 @@ function parseSuccessfulJsonWithAlert(json) {
 	
 	// do it later so it can setup the UI and not scare us that it's not already loaded
   setTimeout(function() { 
-		alertEditorWorking("all edits", post_message);
+		// alertEditorWorking("all content tags", post_message); // seemed redundant to UI
   }, 100);
 }
 
@@ -576,7 +577,7 @@ function parseSuccessfulJson(json) {
 		dropdown.add(option, dropdown[0]); // put it at the top XX
 	}
 	var option = document.createElement("option");
-	option.text = "all content"; // so they can go back to "all" if wanted :|
+	option.text = "all content tags"; // so they can go back to "all" if wanted :|
 	option.value = "-1"; // special case :|
   option.setAttribute('selected', true); // default :| TODO not refresh
 	dropdown.add(option, dropdown[0]);
@@ -608,7 +609,7 @@ function tagEditListDropdownChanged() {
 	var selected_edit_list_id = dropdown.value; // or -1 :|
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
-		alertEditorWorking("all content", "");
+		alertEditorWorking("all content tags", "");
 		return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
