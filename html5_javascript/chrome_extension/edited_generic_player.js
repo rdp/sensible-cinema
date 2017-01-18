@@ -2,7 +2,7 @@
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
 if (typeof clean_stream_timer !== 'undefined') {
-  alert("already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
+  alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
@@ -181,7 +181,7 @@ function checkStatus() {
     }
   }
   
-  topLineEditDiv.innerHTML = "Test tag: " + timeStampToHuman(cur_time) + " " + extra_message;
+  topLineEditDiv.innerHTML = "Test new tag: " + timeStampToHuman(cur_time) + " " + extra_message;
   document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
@@ -353,7 +353,10 @@ function seekToTime(ts) {
 
 function addForNewEditToScreen() {
   if (url_id == 0) {
-    promptIfWantToCreate();
+		// assume it said "unedited..." I guess...
+    window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
+		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
+		setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
     return false; // abort link
   }
   // hope these never get mixed LOL
@@ -507,7 +510,7 @@ function openEditMostRecentPassed() {
     window.open("https://" + request_host + "/edit_tag/" + last_id);
   }
   else {
-    alert("could not find one earlier than your currently playing back location");
+    alert("play it my way:\ncould not find one earlier than your currently playing back location");
   }
 }
 
@@ -537,11 +540,11 @@ function parseSuccessfulJsonNonReload(json_string) {
   startWatcherTimerOnce();
   // and alert
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    alert("danger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
+    alert("play it my way:\ndanger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
   old_current_url = getStandardizedCurrentUrl();
   if (liveEpisodeNumber() != expected_episode_number) {
-    alert("danger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
+    alert("play it my way\ndanger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
   old_episode = liveEpisodeNumber();
   var post_message = "This movie is currently marked as \"" + current_json.url.editing_status + "\" in our system, which means it is incomplete.  Please help us with it!";
@@ -551,9 +554,12 @@ function parseSuccessfulJsonNonReload(json_string) {
 	displayDiv(document.getElementById("currently_filtering_id"));
 }
 
-function alertEditorWorking(message, post_message) {
-  alert(decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + 
-	      "\n\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + "\n" + post_message + "\n" + liveFullNameEpisode()));    	
+function alertEditorWorkingAfterTimeout(message, post_message) {
+	setTimeout(function() {
+    alert("Play it my way:\n" + decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + 
+	      "\n\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + 
+		    "\n" + post_message + "\n" + liveFullNameEpisode()));
+			}, 100);
 }
 
 var current_json;
@@ -585,7 +591,7 @@ function parseSuccessfulJson(json_string) {
 		dropdown.add(option, dropdown[0]); // put it at the top XX
 	}
 	var option = document.createElement("option");
-	option.text = "all content tags"; // so they can go back to "all" if wanted :|
+	option.text = "all content tags (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
 	option.value = "-1"; // special case :|
   option.setAttribute('selected', true); // default :| TODO not refresh
 	dropdown.add(option, dropdown[0]);
@@ -619,14 +625,14 @@ function tagEditListDropdownChanged() {
 	var selected_edit_list_id = dropdown.value; // or -1 :|
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
-		alertEditorWorking("all content tags", "");
+		alertEditorWorkingAfterTimeout(dropdown.options[dropdown.selectedIndex].text, "");
 		return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		if (tag_edit_list_and_tags[0].id == selected_edit_list_id) {
 			setTheseTagsAsTheOnesToUse(tag_edit_list_and_tags[1]);
-			alertEditorWorking(tag_edit_list_and_tags[0].description, "");
+			alertEditorWorkingAfterTimeout(tag_edit_list_and_tags[0].description, "");
 			return;
 		}		
 	}
@@ -665,12 +671,8 @@ function checkIfEpisodeChanged() {
   }
 }
 
-function promptIfWantToCreate() {
-  if (confirm(decodeHTMLEntities("We don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, would you like to create it in our system now?\n (cancel to watch unedited, OK to add to our edit database)."))) {
-    window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
-		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
-    setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|
-  }
+function alertHaveNoneClickOverThereToAddOne() {
+  alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, create them if desired by clicking the 'unedited click to create' link to the left"));
 }
 
 function loadFailed(status) {
@@ -683,17 +685,17 @@ function loadFailed(status) {
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
-  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to edit..."; // she's dead jim XX confirm prompt on it to create?
+  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to credte..."; // she's dead jim XX confirm prompt on it to create?
 	hideDiv(document.getElementById("currently_filtering_id"));
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
-		setTimeout(promptIfWantToCreate, 500); // do later so UI can update and not show behind this prompt as if loaded :|
+		setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
   }
   else {
-    alert("appears the cleanstream server is currently down, please alert us! Edits disabled for now...");
+    alert("appears the play it my way server is currently down, please alert us! Edits disabled for now...");
   }
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
@@ -711,14 +713,14 @@ function start() {
   if (video_element == null) {
     // this one's pretty serious, just let it die...
     // maybe could get here if they raw load the javascript?
-    alert("failure: unable to find a video playing, not loading edited playback...possibly need to reload then hit a play button before loading edited playback?");
+    alert("play it my way:\nfailure: unable to find a video playing, not loading edited playback...possibly need to reload then hit a play button before loading edited playback?");
     return;
   }
 
   if (isGoogleIframe()) {
     if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
       // iframe started from a non "details" page with full url
-      alert('failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
+      alert('play it my way: failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
       return; // avoid future prompts which don't matter anyway for now :|
     }
   }

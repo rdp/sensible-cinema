@@ -98,5 +98,12 @@ total movie length (netflix wants this, others can leave it at zero)
 <p><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)</p>
 
 <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from database</a>
-<!--a href=/delete_url/<%= url.id %>>delete</a-->
+
+<a href=/delete_url/<%= url.id %>>
+<br/>
+<% if File.exists?("this_is_development") %>
+  delete (dev only)
+<% end %>
+</a>
+
 <br/>

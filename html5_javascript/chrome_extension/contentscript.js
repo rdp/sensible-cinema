@@ -98,6 +98,7 @@ function autoStartOnBigThree() {
     console.log("big 3 polling for video tag...");
     var interval = setInterval(function(){
       if (findFirstVideoTagOrNull() != null && !findFirstVideoTagOrNull().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
+				console.log("big 3 found video...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
