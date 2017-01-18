@@ -11,7 +11,7 @@ chrome extension</a></h2>
 <script>
 var isInstalled = false;
 var requiredVersion = 0.05;
-//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev
+//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev not as useful since we can't send version_request to a localhost url :|
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 
 chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
@@ -21,6 +21,7 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
                 if (reply.version >= requiredVersion) {
     								isInstalled = true;
 										console.log("got back good chrome version installed " + reply.version);
+										document.getElementById('install_chrome_extension_message_id').innerHTML = `<font face="verdana" color="green">This is some text!</font>`;
                 }
 								else {
 								  alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
@@ -31,10 +32,10 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
 
 setTimeout(function() {
   if (!isInstalled) {
-	  console.log("no response in 500ms...assuming uninstalled");
+	  console.log("no response to version query...assuming uninstalled");
     document.getElementById('install_chrome_extension_message_id').style.display = 'block'; // not sure how to do it the other way, probably would be a timeout to know if it isn't installed...
 	}
-}, 500 /* ms */);
+}, 250 /* ms */);
 </script>
 
 
