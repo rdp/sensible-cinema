@@ -91,18 +91,16 @@ CREATE TABLE tag_edit_list_to_tag (
    tag_id INT NOT NULL, FOREIGN KEY (tag_id) references tags(id),
    action VARCHAR(1024) NOT NULL
 );
-
-alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
- -- done dev
- -- done prod
-
-alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
-
-
 -- TODO some indices for these two?
 
---TODO rename all tables to singular
+alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
 
--- output some to screen to show success...
+alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
+-- done dev
+-- done prod
+
+--XXX rename all tables to singular
+
+-- output to screen to show success...
 select * from urls;
 select * from tags;
