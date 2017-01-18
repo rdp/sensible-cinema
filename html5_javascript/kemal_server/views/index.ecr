@@ -96,8 +96,10 @@ We are a community driven resource and we would love the help, we can't do it al
          end
        %>
        <td><a href=https://www.google.com/search?&q=<%= google_search %> target="_blank">search</a>
-          <% if url.image_url.size > 0 %>
-            <img src="<%= url.image_url %>" style="height: 150px; max-width: 200px;"/>
+          <% if url.image_url.size > 0 %>"
+	          <a href="<%= url.url %>" target="_blank">
+              <img src="<%= url.image_url %>" style="height: 150px; max-width: 200px;"/>
+						</a>
           <% end %>
        </td>
    </tr>
@@ -106,12 +108,12 @@ We are a community driven resource and we would love the help, we can't do it al
   </tbody>
 </table>
 
-<a href=/create_new>Add video to our edited system by clicking here! &#10133;<!-- thick plus --> </a>
+<a href=/create_new>Add another video to our edited system by clicking here!➕</a>
 <br/>
 <br/>
 
-See <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss it, or for any questions.
+See <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss the program, or for any questions.
 <br/>
 <br/>
-You too can purchase this program for $2 (currently free however), email the google group for details.
+You too can purchase this program for $2 (currently free however), email the google group for details if you'd like to contribute monetarily!
 </pre>
