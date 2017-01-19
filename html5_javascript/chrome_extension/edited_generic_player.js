@@ -6,11 +6,11 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var request_host="localhost:3000"; // dev
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+var request_host="localhost:3000"; // dev
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
-var request_host="playitmyway.inet2.org"; // prod
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
+// var request_host="playitmyway.inet2.org"; // prod
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
 function inIframe() {
     try {
@@ -34,10 +34,11 @@ function isAmazon() {
 
 function getStandardizedCurrentUrl() {
   var current_url = currentUrlNotIframe();
-  if (document.querySelector('link[rel="canonical"]') != null) {
+  if (isAmazon() && document.querySelector('link[rel="canonical"]') != null) {
 		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
+	// else don't get canonical here or youtube will not track its move from one to another right, canonical retains the old one apparently hrm...
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
   if (current_url.includes("amazon.com")) { // known to want to strip off cruft here
@@ -185,7 +186,7 @@ function checkStatus() {
     }
   }
   
-  topLineEditDiv.innerHTML = "Test new tag: " + timeStampToHuman(cur_time) + " " + extra_message;
+  topLineEditDiv.innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current_time=" + timeStampToHuman(cur_time) + " " + extra_message;
   document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
@@ -252,7 +253,7 @@ function addEditUi() {
 	`<div id='top_left'>
 	  <style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
 	
-	  <div id=currently_filtering_id>currently editing:
+	  <div id=currently_filtering_id>Currently editing:
 	    <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
@@ -267,7 +268,7 @@ function addEditUi() {
   topLineEditDiv.style.background = '#000000';
   topLineEditDiv.style.zIndex = "99999999"; // on top :)
   topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  topLineEditDiv.style.color = "white";
+  topLineEditDiv.style.color = "rgb(200,200,200) ";
   topLineEditDiv.style.textShadow="2px 1px 0px black";
   topLineEditDiv.style.fontSize = "13px";
   topLineEditDiv.style.display = 'none';
@@ -281,21 +282,22 @@ function addEditUi() {
   tagLayer.style.background = '#000000';
   tagLayer.style.zIndex = "99999999"; // on top :)
   tagLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  tagLayer.style.color = "white";
+  tagLayer.style.color = "white"; // unused I think?
   tagLayer.style.textShadow="2px 1px 0px black";
   tagLayer.style.fontSize = "13px";
   tagLayer.style.display = 'none';
+	
   document.body.appendChild(tagLayer);
   
   // inject the "add tag" UI
   tagLayer.innerHTML = `
   <div class="moccasin">
 	<style>.moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}</style>
-	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
-  <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
+  <input id='clickMe' type='button' value='set to movie's now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
-  to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
-  <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+  to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0m 0.00s</textarea>
+  <input id='clickMe' type='button' value='set to movie's now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
   <br/>
   action:
   <select name='default_action' id='new_action'>
@@ -317,7 +319,7 @@ function addEditUi() {
 	<!--br/>
   <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
-  <a href="#" onclick="return showMoviePage();">Movie edit page</a>
+  <a href="#" onclick="return showMoviePage();">Movie main edit page</a>
 	<br/>
   <a href="#" onclick="return hideAddTagStuff();">✕ Hide editor</a>
 	</div>
