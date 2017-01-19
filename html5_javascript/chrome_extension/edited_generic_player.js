@@ -373,11 +373,18 @@ function addForNewEditToScreen() {
   return false; // always abort link
 }
 
+function getLocationOfElement(el) {
+  el = el.getBoundingClientRect();
+  return {
+    left: el.left + window.scrollX,
+    top: el.top + window.scrollY
+  }
+}
+
 function setEditedControlsToTopLeft() {
   // discover where the "currently viewed" top left actually is (not always 0,0 apparently, it seems)
-  var doc = document.documentElement;
-  var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-  var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+  var left = getLocationOfElement(video_element).left;
+  var top = getLocationOfElement(video_element).top;
   top += 75; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
@@ -557,7 +564,7 @@ function parseSuccessfulJsonNonReload(json_string) {
 function alertEditorWorkingAfterTimeout(message, post_message) {
 	setTimeout(function() {
     alert("Play it my way:\n" + decodeHTMLEntities("Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
-	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + 
+	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length +
 		    "\n" + post_message + "\n" + liveFullNameEpisode()));
 			}, 100);
 }
