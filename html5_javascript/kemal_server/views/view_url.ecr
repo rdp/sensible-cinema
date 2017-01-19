@@ -46,32 +46,7 @@
 
 
 <hr/>
-<h3>Custom Edit Lists</h3>
-You can optionally create or use an existing "personalized" edit list for this movie, which is a way for you to choose which content tags are edited out of your movie.
-</br>
-These are all "community edited" currently, wikipedia-style, feel free and please do contribute your own if useful, so everyone can benefit!
 <br/>
-<br/>
-<% if url.tag_edit_lists.size == 0 %>
-  No custom edit lists for this movie yet, add one you can!
-<% else %>
-  Already Existing custom edit lists, click to view list:
-  <br/>
-  <% url.tag_edit_lists.each{ |tag_edit_list| %>
-	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
-		<br/>
-  <% } %>
-<% end %>
-<br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new custom edit list &#10133;</a>.
-
-<hr/>
-<br/>
-<% if url.tags.size == 0 %>
-  No content tags for this movie yet, add yours now!
-<% else %>
-
-<!-- tag summary -->
 <h3>Individual Content tags</h3>
 Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones if you run into something that should be tagged but isn't in our system yet.
 
@@ -83,7 +58,6 @@ Content tags are basically timestamps and descriptions of content that exists in
 <% } %> 
 <hr/>
 
-<% end %>
 <table class="table table-striped" style="width: auto;">
   <thead>
     <tr>
@@ -104,14 +78,39 @@ Content tags are basically timestamps and descriptions of content that exists in
 <% end %>
 
 </table>
+<% if  url.tags.size == 0 %>
+none yet, add one now!<br/><br/>
+<% end %>
+
 (the best way to create a new content tag is to start it playing, then click the "add new tag" link the chrome extension inserts over your playing video.
 <br/>
 <img src=/add_tag_example.png width=300; />
 <br/>
-But if you want to create one manually, click here!)
-<br/>
-
+But if you want to create one manually, click here (not recommended)!)
 <a href=/new_empty_tag/<%= url.id %>>Create new content tag &#10133;<!-- thick plus --> </a> 
+
+
+<hr/>
+<h3>Custom Edit Lists</h3>
+You can optionally create or use an existing "personalized" edit list for this movie, which is a way for you to choose which content tags are edited out of your movie.
+</br>
+These are all "community edited" currently, wikipedia-style, feel free and please do contribute your own if useful, so everyone can benefit!
+<br/>
+<br/>
+<% if url.tag_edit_lists.size == 0 %>
+  No custom edit lists for this movie yet, add one you can!
+<% else %>
+  Already Existing custom edit lists, click to view list:
+  <br/>
+  <% url.tag_edit_lists.each{ |tag_edit_list| %>
+	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
+		<br/>
+  <% } %>
+<% end %>
+<br/>
+<a href=/new_tag_edit_list/<%= url.id %>>Create new custom edit list &#10133;</a>.
+
+
 <br/>
 <br/>
 <a href=/for_current_just_settings_json?<%= url.url_lookup_params %>>.</a>
