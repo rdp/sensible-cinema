@@ -97,7 +97,9 @@ function autoStartOnBigThree() {
     // iframe wants to load it though, for google play
     console.log("big 3 polling for video tag...");
     var interval = setInterval(function(){
-      if (findFirstVideoTagOrNull() != null && !findFirstVideoTagOrNull().src.endsWith(".mp4")) { // amazon.com main page used mp4's, avoid prompt edited :|
+			var video_element = findFirstVideoTagOrNull();
+			// check for paused so it doesn't prompt you before you're watching on amazon series, slightly annoying
+      if (video_element != null && !video_element.src.endsWith(".mp4") && !video_element.paused) { // amazon.com main page used mp4's, avoid prompt edited :|				
 				console.log("big 3 found video...");
         injectEditedPlayerOnce();
         clearInterval(interval);

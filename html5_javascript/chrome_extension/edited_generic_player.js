@@ -186,6 +186,7 @@ function checkStatus() {
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
+	setEditedControlsToTopLeft(); // in case something changed
 }
 
 function liveEpisodeString() {
@@ -325,7 +326,7 @@ function addEditUi() {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
-  addMouseMoveListener(showEditLinkMouseJustMoved);
+  //addMouseMoveListener(showEditLinkMouseJustMoved); // we just do it always now so it'll show on amazon
 }
 
 // method to bind easily to resize event
@@ -388,11 +389,8 @@ function getLocationOfElement(el) {
 
 function setEditedControlsToTopLeft() {
   // discover where the "currently viewed" top left actually is (not always 0,0 apparently, it seems)
-  // var left = getLocationOfElement(video_element).left; // couldn't get this to be right on amazon since it starts with its video player obscured, then moves is so I didn't detect when they moved the video player yet
-  // var top = getLocationOfElement(video_element).top;
-	var doc = document.documentElement;
-	var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-	var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+  var left = getLocationOfElement(video_element).left; 
+  var top = getLocationOfElement(video_element).top;
   top += 75; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
@@ -404,7 +402,6 @@ function setEditedControlsToTopLeft() {
   topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
   tagLayer.style.top = (top + 30) + "px";
-	console.log("set them to left=" + left + " top=" + top);
 }
 
 function addToCurrentEditArray() {
@@ -422,14 +419,14 @@ function currentTestAction() {
   return document.getElementById('new_action').value;
 }
 
-var inTest = false;
+var inMiddleOfTestingEdit = false;
 
 function testCurrentFromUi() {
   if (currentTestAction() == 'do_nothing') {
     alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, before hitting save button');
     return; // abort
   }
-  inTest = true;
+  inMiddleOfTestingEdit = true;
   var [start, endy] = addToCurrentEditArray();
   seekToTime(start - 2);
   length = endy - start;
@@ -438,7 +435,7 @@ function testCurrentFromUi() {
   wait_time_millis = (length + 2 + 1)*1000; 
   setTimeout(function() {
     currentEditArray().pop();
-    inTest = false;
+    inMiddleOfTestingEdit = false;
   }, wait_time_millis)
 }
 
@@ -546,7 +543,7 @@ function loadForNewUrl() {
 }
 
 function reloadForCurrentUrl() {
-  if (url_id != 0 && !inTest) {
+  if (url_id != 0 && !inMiddleOfTestingEdit) {
     getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared but used to be here?");  }); 
   }
 }
@@ -568,11 +565,13 @@ function parseSuccessfulJsonNonReload(json_string) {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 	}
 	displayDiv(document.getElementById("currently_filtering_id"));
+  document.getElementById("add_edit_link_id").innerHTML = "Add new content tag"; // in case it said unedited... before
+	
 }
 
 function alertEditorWorkingAfterTimeout(message, post_message) {
 	setTimeout(function() {
-    alert("Play it my way:\n" + decodeHTMLEntities("Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
+    alert("Play it my way:\n" + decodeHTMLEntities("SUCCESS: Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
 	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length +
 		    "\n" + post_message + "\n" + liveFullNameEpisode()));
 			}, 100);
@@ -657,7 +656,7 @@ function tagEditListDropdownChanged() {
 
 // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
 function getRequest (url, success, error) {  
-  console.log("starting attempt download " + url);
+  console.log("starting attempt GET download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
   xhr.onreadystatechange = function(){ 
@@ -679,8 +678,8 @@ function getRequest (url, success, error) {
 
 function checkIfEpisodeChanged() {
   if (getStandardizedCurrentUrl() != old_current_url || liveEpisodeNumber() != old_episode) {
-    console.log("detected move to another video, to " + liveFullNameEpisode() + "\nfrom\n" +
-                 old_current_url + " ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
+    console.log("detected move to another video, to\n" + getStandardizedCurrentUrl() + "\nep. " + liveEpisodeNumber() + "\nfrom\n" +
+                 old_current_url + "\n ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
     old_episode = liveEpisodeNumber(); 
     setTimeout(loadForNewUrl, 1000); // youtube has the "old name" still for awhile, so for the new prompt wait
@@ -742,6 +741,7 @@ function start() {
   }
 
   // ready to try and load the editor LOL
+	console.log("adding edit UI, looking for URL");
   addEditUi(); // only do once...
   loadForNewUrl();
 }
