@@ -91,8 +91,12 @@ function liveEpisodeNumber() {
   if (isAmazon()) {
     var subtitle = document.getElementsByClassName("subtitle")[0];
     if (subtitle && subtitle.innerHTML.match(/Ep. (\d+)/)) {
-      return /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
+      var out = /Ep. (\d+)/.exec(subtitle.innerHTML)[1];
+			return out;
     }
+		else {
+			return "0";
+		}
   }
   else {
     return "0"; // anything else...
@@ -544,12 +548,13 @@ function loadForNewUrl() {
 
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
-    getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared but used to be here?");  }); 
+    getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared but used to be there??");  }); 
   }
 }
 
 function parseSuccessfulJsonNonReload(json_string) {
   parseSuccessfulJson(json_string);
+	tagEditListDropdownChanged(); // alert and use, alert still useful since otherwise on amazon series page it's like "what's it editing already?"	
   startWatcherTimerOnce();
   // and alert
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
@@ -610,8 +615,6 @@ function parseSuccessfulJson(json_string) {
 	option.value = "-1"; // special case :|
   option.setAttribute('selected', true); // default :| TODO not refresh
 	dropdown.add(option, dropdown[0]);
-	
-	tagEditListDropdownChanged(); // alert and use, alert still useful since otherwise on amazon series page it's like "what's it editing already?"	
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
@@ -677,7 +680,12 @@ function getRequest (url, success, error) {
 }
 
 function checkIfEpisodeChanged() {
-  if (getStandardizedCurrentUrl() != old_current_url || liveEpisodeNumber() != old_episode) {
+	var current_episode_number = liveEpisodeNumber();
+  if (getStandardizedCurrentUrl() != old_current_url || current_episode_number != old_episode) {
+		if (old_episode != "0" && current_episode_number == "0") {
+			console.log("got change from an episode " + old_episode + " to non episode? ignoring..."); // amazon when you hit the x
+			return;
+		}
     console.log("detected move to another video, to\n" + getStandardizedCurrentUrl() + "\nep. " + liveEpisodeNumber() + "\nfrom\n" +
                  old_current_url + "\n ep. " + old_episode + "\nwill try to load its edited settings now for the new movie...");
     old_current_url = getStandardizedCurrentUrl(); // set them now so it doesn't re-get them next loop
