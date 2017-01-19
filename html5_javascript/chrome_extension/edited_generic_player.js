@@ -294,10 +294,10 @@ function addEditUi() {
   <div class="moccasin">
 	<style>.moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}</style>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
-  <input id='clickMe' type='button' value='set to movie's now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+  <input id='clickMe' type='button' value='set to movies now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
   to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0m 0.00s</textarea>
-  <input id='clickMe' type='button' value='set to movie's now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+  <input id='clickMe' type='button' value='set to movies now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
   <br/>
   action:
   <select name='default_action' id='new_action'>
