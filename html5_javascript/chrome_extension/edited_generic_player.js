@@ -244,7 +244,7 @@ function addEditUi() {
   exposeEditScreenDiv.style.fontSize = "15px";
   exposeEditScreenDiv.style.color = "Grey";
   exposeEditScreenDiv.innerHTML = `<div id='top_left'>
-	<div id=currently_filtering_id>currently filtering:
+	<div id=currently_filtering_id>currently editing:
 	  <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
 	</div>
 	<span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
@@ -556,8 +556,8 @@ function parseSuccessfulJsonNonReload(json_string) {
 
 function alertEditorWorkingAfterTimeout(message, post_message) {
 	setTimeout(function() {
-    alert("Play it my way:\n" + decodeHTMLEntities("Editing playback successfully enabled for " + message + "\n" + name + " " + episode_name + 
-	      "\n\nskips=" + skips.length + " mutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + 
+    alert("Play it my way:\n" + decodeHTMLEntities("Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
+	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length + "\ndo_nothings=" + do_nothings.length + 
 		    "\n" + post_message + "\n" + liveFullNameEpisode()));
 			}, 100);
 }
