@@ -190,7 +190,7 @@ function checkStatus() {
   document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
-	setEditedControlsToTopLeft(); // in case something changed
+	setEditedControlsToTopLeft(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
 }
 
 function liveEpisodeString() {
@@ -248,12 +248,15 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "15px";
   exposeEditScreenDiv.style.color = "Grey";
-  exposeEditScreenDiv.innerHTML = `<div id='top_left'>
-	<div id=currently_filtering_id>currently editing:
-	  <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
-	</div>
-	<span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
-	<br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content tag</a>
+  exposeEditScreenDiv.innerHTML = 
+	`<div id='top_left'>
+	  <style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
+	
+	  <div id=currently_filtering_id>currently editing:
+	    <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
+	  </div>
+	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
+	  <br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content edit tag</a>
 	</div>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
@@ -286,8 +289,8 @@ function addEditUi() {
   
   // inject the "add tag" UI
   tagLayer.innerHTML = `
-  <div class="gold">
-	<style>.gold a:link { color: yellow;} .gold a:visited { color: yellow;}</style>
+  <div class="moccasin">
+	<style>.moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}</style>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
   <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -323,6 +326,7 @@ function addEditUi() {
   // this only works for the few mentioned in externally_connectable in manifest.json TODO
 	chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 
+  // don't really need these anymore FWIW we call it once per frame
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
   });
@@ -330,7 +334,7 @@ function addEditUi() {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
-  //addMouseMoveListener(showEditLinkMouseJustMoved); // we just do it always now so it'll show on amazon
+  addMouseMoveListener(showEditLinkMouseJustMoved);
 }
 
 // method to bind easily to resize event
@@ -379,7 +383,7 @@ function addForNewEditToScreen() {
 function hideAddTagStuff() {
   hideDiv(topLineEditDiv);
   hideDiv(tagLayer);
-  document.getElementById("add_edit_link_id").innerHTML = "Add new content tag";
+  document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag";
 	return false; // always abort link
 }
 
@@ -570,7 +574,7 @@ function parseSuccessfulJsonNonReload(json_string) {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 	}
 	displayDiv(document.getElementById("currently_filtering_id"));
-  document.getElementById("add_edit_link_id").innerHTML = "Add new content tag"; // in case it said unedited... before
+  document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag"; // in case it said unedited... before
 	
 }
 
@@ -763,7 +767,7 @@ function showEditLinkMouseJustMoved() {
 
 // helper method
 function addMouseMoveListener(func) {
-  // some "old IE" compat :|
+  // some "old IE" compat stuff :|
   var addListener, removeListener;
   if (document.addEventListener) {
       addListener = function (el, evt, f) { return el.addEventListener(evt, f, false); };
