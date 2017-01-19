@@ -266,6 +266,7 @@ function addEditUi() {
   document.body.appendChild(topLineEditDiv);
   
   tagLayer = document.createElement('div');
+	tagLayer.id = "tagLayer";
   tagLayer.style.position = 'absolute';
   tagLayer.style.width = '500px';
   tagLayer.style.height = '30px';
@@ -280,7 +281,9 @@ function addEditUi() {
   
   // inject the "add tag" UI
   tagLayer.innerHTML = `
-  from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
+  <div class="gold">
+	<style>.gold a:link { color: yellow;}</style>
+	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
   <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
   to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0.00s</textarea>
@@ -309,6 +312,7 @@ function addEditUi() {
   <a href="#" onclick="return showMoviePage();">Movie page</a>
 	<br/>
   <a href="#" onclick="return addForNewEditToScreen();">✕ Hide editor</a>
+	</div>
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json TODO
