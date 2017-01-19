@@ -7,27 +7,32 @@
 <h2 id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
 Install the edited playback software by installing our <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml><!-- not target blank so they can use the back arrow to get back --> 
 chrome extension</a> then come back here!</h2>
-<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green"><br/>Detected chrome extension successfully installed, thanks!</font></div>
+<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green"><br/>Detected chrome extension successfully installed, now get watching!</font></div>
 
 <script>
 var isInstalled = false;
 //var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev messaging to it from localhost doesn't work so have to deploy it to test :|
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
-
+console.log("sending version request...");
 chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
     function (reply) {
+        console.log("got back reply");
         if (reply) {
-            if (reply.version) {
-	    var requiredVersion = 0.00;
+            if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
+                var requiredVersion = 0.00;
                 if (reply.version >= requiredVersion) {
                   console.log("got back good chrome version installed " + reply.version);
     	          isInstalled = true;
-  		document.getElementById('install_chrome_extension_message_id').style.display = 'none';
+  		  document.getElementById('install_chrome_extension_message_id').style.display = 'none';
+                  document.getElementById('success_chrome_extension_id').style.display = 'block';
                 }
 		else {
 		  alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
 		}
             }
+        }
+        else {
+          console.log("no reply?");
         }
 });
 </script>
