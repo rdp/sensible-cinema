@@ -1,11 +1,11 @@
 // content script runs on every page...and once again on each embedded iframe...
 // we only use it to bootstrap the real player...
 
-var request_host="localhost:3000"; // dev
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+// var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
-// var request_host="playitmyway.inet2.org"; // prod
-// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
+var request_host="playitmyway.inet2.org"; // prod
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
 function injectJs(link) {
   var scr = document.createElement('script');
