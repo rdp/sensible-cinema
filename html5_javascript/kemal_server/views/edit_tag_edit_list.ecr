@@ -1,4 +1,4 @@
-<h1>Modify tag edit playback list</h1> for <%= tag_edit_list.url.name_with_episode %>
+<h1>Modify custom edit list</h1> for <%= tag_edit_list.url.name_with_episode %>
 
 <br/>
 <br/>
@@ -19,6 +19,11 @@ status_notes
 <textarea name="status_notes" rows="1" cols="150" ><%= tag_edit_list.status_notes %></textarea>
 <br/>
 <br/>
+
+<% if tag_edit_list.tags_with_selected_or_not.size == 0 %>
+  There are no content tags for this custom edit list to personalize yet, please go add some first then come back here.
+	<br/>
+<% end %>
 
 <% tag_edit_list.tags_with_selected_or_not.each{ |tag, action| %>
 

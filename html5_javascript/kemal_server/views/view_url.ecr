@@ -46,16 +46,16 @@
 
 
 <hr/>
-<h3>Content Lists</h3>
-You can optionally create or use an existing "personalized" edit list for this movie.
+<h3>Custom Edit Lists</h3>
+You can optionally create or use an existing "personalized" edit list for this movie, which is a way for you to choose which content tags are edited out of your movie.
 </br>
-These are all "community edited" currently, feel free and please do contribute!
+These are all "community edited" currently, wikipedia-style, feel free and please do contribute your own if useful, so everyone can benefit!
 <br/>
 <br/>
 <% if url.tag_edit_lists.size == 0 %>
-  No content lists for this movie yet, add one you can!
+  No custom edit lists for this movie yet, add one you can!
 <% else %>
-  Already Existing content lists:
+  Already Existing custom edit lists, click to view list:
   <br/>
   <% url.tag_edit_lists.each{ |tag_edit_list| %>
 	  <a href=/2edit_tag_edit_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
@@ -63,7 +63,7 @@ These are all "community edited" currently, feel free and please do contribute!
   <% } %>
 <% end %>
 <br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new editable content list &#10133;</a>.
+<a href=/new_tag_edit_list/<%= url.id %>>Create new custom edit list &#10133;</a>.
 
 <hr/>
 <br/>

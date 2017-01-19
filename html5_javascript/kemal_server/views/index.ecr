@@ -11,7 +11,6 @@ chrome extension</a></h2>
 
 <script>
 var isInstalled = false;
-var requiredVersion = 0.05;
 //var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev messaging to it from localhost doesn't work so have to deploy it to test :|
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 
@@ -19,8 +18,9 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
     function (reply) {
         if (reply) {
             if (reply.version) {
+						    var requiredVersion = 0.00;
                 if (reply.version >= requiredVersion) {
-										                   console.log("got back good chrome version installed " + reply.version);
+										console.log("got back good chrome version installed " + reply.version);
     								isInstalled = true;
 										document.getElementById('success_chrome_extension_id').style.display = 'block';
                 }
@@ -36,7 +36,7 @@ setTimeout(function() {
 	  console.log("no response to version query...assuming uninstalled");
     document.getElementById('install_chrome_extension_message_id').style.display = 'block'; // not sure how to do it the other way, probably would be a timeout to know if it isn't installed...
 	}
-}, 250 /* ms */);
+}, 150 /* ms */);
 </script>
 
 
