@@ -388,8 +388,11 @@ function getLocationOfElement(el) {
 
 function setEditedControlsToTopLeft() {
   // discover where the "currently viewed" top left actually is (not always 0,0 apparently, it seems)
-  var left = getLocationOfElement(video_element).left;
-  var top = getLocationOfElement(video_element).top;
+  // var left = getLocationOfElement(video_element).left; // couldn't get this to be right on amazon since it starts with its video player obscured, then moves is so I didn't detect when they moved the video player yet
+  // var top = getLocationOfElement(video_element).top;
+	var doc = document.documentElement;
+	var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+	var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
   top += 75; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
@@ -401,6 +404,7 @@ function setEditedControlsToTopLeft() {
   topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
   tagLayer.style.top = (top + 30) + "px";
+	console.log("set them to left=" + left + " top=" + top);
 }
 
 function addToCurrentEditArray() {
@@ -697,7 +701,7 @@ function loadFailed(status) {
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
-  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to credte..."; // she's dead jim XX confirm prompt on it to create?
+  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to create..."; // she's dead jim XX confirm prompt on it to create?
 	hideDiv(document.getElementById("currently_filtering_id"));
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
