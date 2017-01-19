@@ -282,7 +282,7 @@ function addEditUi() {
   // inject the "add tag" UI
   tagLayer.innerHTML = `
   <div class="gold">
-	<style>.gold a:link { color: yellow;}</style>
+	<style>.gold a:link { color: yellow;} .gold a:visited { color: yellow;}</style>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0.00s</textarea>
   <input id='clickMe' type='button' value='set to now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -306,12 +306,12 @@ function addEditUi() {
   <a href="#" onclick="stepFrame(); return false;">step</a>
   <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
   <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
+	<!--br/>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a>
+  <a href="#" onclick="return showMoviePage();">Movie edit page</a>
 	<br/>
-  <a href="#" onclick="return showMoviePage();">Movie page</a>
-	<br/>
-  <a href="#" onclick="return addForNewEditToScreen();">✕ Hide editor</a>
+  <a href="#" onclick="return hideAddTagStuff();">✕ Hide editor</a>
 	</div>
   `;
   
@@ -355,26 +355,27 @@ function seekToTime(ts) {
   video_element.play();
 }
 
+
 function addForNewEditToScreen() {
   if (url_id == 0) {
-		// assume it said "unedited..." I guess...
+		// the typical case I presume...
     window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
 		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
 		setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
     return false; // abort link
   }
-  // hope these never get mixed LOL
-  if (exposeEditScreenDiv.innerHTML.includes("Add ")) {
-    displayDiv(topLineEditDiv);
-    displayDiv(tagLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "";
-  }
-  else {
-    hideDiv(topLineEditDiv);
-    hideDiv(tagLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "Add new content tag";
-  }
-  return false; // always abort link
+  displayDiv(topLineEditDiv);
+  displayDiv(tagLayer);
+  document.getElementById("add_edit_link_id").innerHTML = "";
+	return false; // always abort link
+}
+
+
+function hideAddTagStuff() {
+  hideDiv(topLineEditDiv);
+  hideDiv(tagLayer);
+  document.getElementById("add_edit_link_id").innerHTML = "Add new content tag";
+	return false; // always abort link
 }
 
 function getLocationOfElement(el) {
@@ -683,7 +684,7 @@ function checkIfEpisodeChanged() {
 }
 
 function alertHaveNoneClickOverThereToAddOne() {
-  alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have edits for\n" + liveFullNameEpisode() + "\n yet, create them if desired by clicking the 'unedited click to create' link to the left"));
+  alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have tags for\n\n" + liveFullNameEpisode() + "\n\n yet, you can add this movie to the system by clicking the 'unedited click to create' link to the left"));
 }
 
 function loadFailed(status) {
