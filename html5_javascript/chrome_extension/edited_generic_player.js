@@ -1,3 +1,4 @@
+// (c) 2016 Roger Pack released under LGPL
 // for non chrome browser: copy and paste all of this text (including this line) into the "developer tools javascript console" ">" prompt, and hit enter:
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
