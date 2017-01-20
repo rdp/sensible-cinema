@@ -7,11 +7,11 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-var request_host="localhost:3000"; // dev
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+// var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
-// var request_host="playitmyway.inet2.org"; // prod
-// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
+var request_host="playitmyway.inet2.org"; // prod
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
 function inIframe() {
     try {
