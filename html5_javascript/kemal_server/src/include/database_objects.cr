@@ -200,15 +200,20 @@ class Url
   end
 
   def cost_string
-    if rental_cost > 0 || purchase_cost > 0
-      out = "$%.2f/$%.2f" % [rental_cost, purchase_cost]
-      if amazon_prime_free_type != ""
-        out += " (free with #{amazon_prime_free_type})"
-      end
-      out
-     else
-      ""
-     end
+    if human_readable_company.in? ["netflix", "hulu"]
+      return "subscription"
+    end
+    out = if rental_cost > 0 || purchase_cost > 0
+       "$%.2f/$%.2f" % [rental_cost, purchase_cost]
+    elsif human_readable_company == "youtube" # 0 is OK here :)
+       "free (youtube)"
+    else
+       ""
+    end
+    if amazon_prime_free_type != ""
+      out += " (free with #{amazon_prime_free_type})"
+    end
+    out
   end
 
   def name_with_episode

@@ -58,3 +58,9 @@ module HTML
     end
   end
 end
+
+class ::Object
+  def in?(container)
+    return container.includes?(self)
+  end
+end
