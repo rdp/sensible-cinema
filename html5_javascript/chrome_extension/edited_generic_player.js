@@ -256,7 +256,6 @@ function addEditUi() {
   exposeEditScreenDiv.innerHTML = 
 	`<div id='top_left'>
 	  <style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
-	
 	  <div id=currently_filtering_id>Currently editing:
 	    <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
 	  </div>
@@ -312,7 +311,7 @@ function addEditUi() {
   </select>
   <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
 	<br/>
-  <input type='submit' value='Save edit' onclick="saveEditButton();">
+  <input type='submit' value='Save edit' onclick="saveEditButton();pauseVideo();">
   <br/>
   <a href='#' onclick="seekToTime(video_element.currentTime -5); return false;">-5s</a>
   <a href="#" onclick="video_element.playbackRate -= 0.1; return false;">&lt;&lt;</a>
@@ -320,7 +319,7 @@ function addEditUi() {
   <a href="#" onclick="video_element.playbackRate += 0.1; return false;">&gt;&gt;</a>
   <a href="#" onclick="stepFrame(); return false;">step</a>
   <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
-  <a href="#" onclick="video_element.pause(); return false;">&#9612;&#9612;</a>
+  <a href="#" onclick="pauseVideo(); return false;">&#9612;&#9612;</a>
 	<!--br/>
   <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
@@ -342,6 +341,10 @@ function addEditUi() {
   });
   setEditedControlsToTopLeft(); // and call immediately :)
   addMouseMoveListener(showEditLinkMouseJustMoved);
+}
+
+function pauseVideo() {
+	video_element.pause();
 }
 
 // method to bind easily to resize event
@@ -383,6 +386,7 @@ function addForNewEditToScreen() {
   displayDiv(topLineEditDiv);
   displayDiv(tagLayer);
   document.getElementById("add_edit_link_id").innerHTML = "";
+	pauseVideo();
 	return false; // always abort link
 }
 
