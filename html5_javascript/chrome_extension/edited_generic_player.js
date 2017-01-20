@@ -148,50 +148,64 @@ function areWeWithin(thisArray, cur_time) {
 
 extra_message = "";
 
+function checkIfShouldDoActionAndUpdateUI() {
+	var cur_time = video_element.currentTime;
+	var [last_start, last_end] = areWeWithin(mutes, cur_time);
+	if (last_start) {
+	  if (!video_element.muted) {
+	    video_element.muted = true;
+	    timestamp_log("muting", cur_time, last_start, last_end);
+	    extra_message = "muted";
+	  }
+	}
+	else {
+	  if (video_element.muted) {
+	    video_element.muted = false;
+	    console.log("unmuted at=" + cur_time);
+	    extra_message = "";
+	  }
+	}
+	[last_start, last_end] = areWeWithin(skips, cur_time);
+	if (last_start) {
+	  timestamp_log("seeking to " + last_end, cur_time, last_start, last_end);
+	  seekToTime(last_end);
+	}
+	[last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
+	if (last_start) {
+		// use style.visibility here so it retains the space it would have otherwise used
+	  if (video_element.style.visibility != "hidden") {
+	    console.log("hiding video leaving audio ", cur_time, last_start, last_end);
+	    extra_message = "no video yes audio";
+	    video_element.style.visibility="hidden";
+	  }
+	}
+	else {
+	  if (video_element.style.visibility != "") {
+	    video_element.style.visibility=""; // non hidden :)
+	    console.log("unhiding video with left audio" + cur_time);
+	    extra_message = "";
+	  }
+	}
+
+	topLineEditDiv.innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current_time=" + timeStampToHuman(cur_time) + " " + extra_message;
+	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
+	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
+}
+
+function withinDelta(first, second, delta) {
+	var diff = Math.abs(first - second);
+	return diff < delta;
+}
+
 function checkStatus() {
 	// we call this on the big 3 even if there's not one being edited...
   if (url_id != 0) { // avoid unmuting videos playing that we don't even control [like youtube main page LOL]
-	  var cur_time = video_element.currentTime;
-	  var [last_start, last_end] = areWeWithin(mutes, cur_time);
-	  if (last_start) {
-	    if (!video_element.muted) {
-	      video_element.muted = true;
-	      timestamp_log("muting", cur_time, last_start, last_end);
-	      extra_message = "muted";
-	    }
-	  }
-	  else {
-	    if (video_element.muted) {
-	      video_element.muted = false;
-	      console.log("unmuted at=" + cur_time);
-	      extra_message = "";
-	    }
-	  }
-	  [last_start, last_end] = areWeWithin(skips, cur_time);
-	  if (last_start) {
-	    timestamp_log("seeking to " + last_end, cur_time, last_start, last_end);
-	    seekToTime(last_end);
-	  }
-	  [last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
-	  if (last_start) {
-			// use style.visibility here so it retains the space it would have otherwise used
-	    if (video_element.style.visibility != "hidden") {
-	      console.log("hiding video leaving audio ", cur_time, last_start, last_end);
-	      extra_message = "no video yes audio";
-	      video_element.style.visibility="hidden";
-	    }
-	  }
-	  else {
-	    if (video_element.style.visibility != "") {
-	      video_element.style.visibility=""; // non hidden :)
-	      console.log("unhiding video with left audio" + cur_time);
-	      extra_message = "";
-	    }
-	  }
-  
-	  topLineEditDiv.innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current_time=" + timeStampToHuman(cur_time) + " " + extra_message;
-	  document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
-	  document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
+		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
+			console.log("watching add?");
+		}
+		else {
+      checkIfShouldDoActionAndUpdateUI();
+		}
 	}
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
@@ -772,10 +786,9 @@ function start() {
 
 var mouse_move_timer;
 function showEditLinkMouseJustMoved() {
-	console.log("mouse moved showing top_left");
 	displayDiv(document.getElementById("top_left"));
   clearTimeout(mouse_move_timer);
-  mouse_move_timer = setTimeout(function() { console.log("hiding top left"); hideDiv(document.getElementById("top_left")); }, 1000);
+  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); }, 1000);
 }
 
 // helper method
