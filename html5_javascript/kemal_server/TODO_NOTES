@@ -1,13 +1,14 @@
 == current plan ==
 
 Amazon: new releases, popular prime
-???
+netflix ?? (hulu if demand)
+
 == todo ==
 
 pay people for corpus
-  maybe just the easy/cheap ones to start :)
+  Rickey Amazon to start. Yep...just a start :|
 
-amazon reseller account
+amazon reseller account...
 
 More beta testers...
 
@@ -20,8 +21,6 @@ legal/ethics page
 
 if it goes to new youtube doesn't "disable" the popup right somehow...
 
-polish chrome extension, especially installation looks still a bit confusing...
-
 instructions (only) for jruby subtitle finder for now :)
   integrate them into websitez how hard can it be? LOL
     It's unfunctional today!
@@ -33,6 +32,7 @@ more about pay me LOL
 allow upload images :|
 
 facebook page
+
 mention uservoice
 
 can you obscure quarters of the screen possibly? or percentage...or circle...check FMA LOL
@@ -42,10 +42,11 @@ resurrect "fake" netflix playback :|
 allow them to still mute vids themselves if they want to though LOL...
 
 == todo never LOL ==
+edit facebook
 kickstarter
 "original author" for edit lists...[?]
 
-real facebook login
+real facebook login etc. etc...
 
 "remember" which ones they chose last [?]
 
@@ -55,22 +56,15 @@ personalized uneditable content lists?
 
 more market research...maybe?
 
-prettier index that also differentiates "done" or not :)
-
-publish more browser dev console instructions :)
-
 can duplicate episodes :)
   add_url duplicate from "any previous episode" LOL
-
-chrome extension: 
-  can set "YES" from other pages (window message or what not  why not :| )
-  after one cancel, never prompt again LOL
 
 more srt files? :)
   or at least real local subtitles ?
 
 sortable index?
   once I get started :)
+  prettier?
 
 add iterm2 style paypal donate (link at least :)
 
@@ -83,12 +77,12 @@ they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
   they can "change" movies from google play index
 
-more plugins for edge, safari at least...if helpful :|
+more plugins for edge, safari at least...if people care...
 
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
-  "I would love to support you, 30000" etc. LOL
+  "I would love to support you, 30000 users" etc. LOL
 
-they can rate it locally 4 me :| in everything LOL
+Real ratings for shows so we can get an average rating :|
 
 == random notes ==
 
@@ -99,7 +93,7 @@ netflix of course
 
 hbo something...
 
-hulu has some movies, seemingly none free LOL
+hulu also has some movies, seemingly none free LOL
 
 amazon prime normal
 
@@ -108,6 +102,8 @@ pure [?]
 vudu has "free with adz" movies [!]
 
 CBS has a subscription offering
+
+more: crackle, showtime anywhere, mgo, youtube movies
 == which movies to screen'ish ==
 
 2750 amazon reviews or 10K  + LOL
