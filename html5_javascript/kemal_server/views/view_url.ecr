@@ -23,10 +23,10 @@
     <% end %>
     <%= table_row("Editing status", url.editing_status) %>
 		<% if url.wholesome_uplifting_level > 0 %>
-      <%= table_row("wholesome_uplifting_level (out of 10, or 0 for not set)", url.wholesome_uplifting_level) %>
+      <%= table_row("wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
 	  <% end %>
 		<% if url.good_movie_rating > 0 %>
-      <%= table_row("good movie rating (out of 10, or 0 for not set)", url.good_movie_rating) %>
+      <%= table_row("good movie rating (out of 10)", url.good_movie_rating) %>
 		<% end %>
     <% if url.purchase_cost > 0 || url.rental_cost > 0 %>
         <%= table_row("price to purchase/rent", url.cost_string) %>
