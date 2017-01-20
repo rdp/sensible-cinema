@@ -191,14 +191,6 @@ class Url
     end
   end
 
-  def review_with_ellipses
-    if review.size > 100
-      review[0..100] + "&#8230;" # :|
-    else
-      review
-    end
-  end
-
   def cost_string
     if human_readable_company.in? ["netflix", "hulu"]
       return "subscription"

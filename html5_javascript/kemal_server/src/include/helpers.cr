@@ -64,3 +64,13 @@ class ::Object
     return container.includes?(self)
   end
 end
+
+class ::String
+  def truncate_with_ellipses
+    if size > 99
+      self[0..100] + "&#8230;" # :|
+    else
+      self
+    end
+  end
+end

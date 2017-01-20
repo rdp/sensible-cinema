@@ -102,8 +102,8 @@ We are a community driven resource and we would love your help!  By helping your
        </td>
        <td> <%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
        <td> <%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
-       <td><%= url.details %></td>
-       <td><%= url.review_with_ellipses %></td> <!-- todo link into it? or something that can auto expand inline? -->
+       <td><%= url.details.truncate_with_ellipses %></td>
+       <td><%= url.review.truncate_with_ellipses %></td> <!-- todo link into it? or something that can auto expand inline? -->
        <td><%= url.cost_string %></td>
        <%
          google_search = URI.escape(url.name, true)
@@ -124,7 +124,7 @@ We are a community driven resource and we would love your help!  By helping your
   </tbody>
 </table>
 
-<a href=/create_new>Add another video to our edited system by clicking here!➕</a>
+<a href=/create_new>Add another (not yet present) video to our edited system by clicking here!➕</a>
 <br/>
 <br/>
 
