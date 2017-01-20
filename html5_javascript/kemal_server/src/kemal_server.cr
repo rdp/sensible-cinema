@@ -231,7 +231,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   if title == ""
     title = title_incoming
   end
-	puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
+  puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
     set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
@@ -266,6 +266,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.editing_status = "just begun editing process"
     url.total_time = duration
     url.save 
+    set_flash_for_next_time(env, "Successfully added it to our system! Please add some information and go back and add some content tags for it!")
     env.redirect "/edit_url/#{url.id}"
   end
 end
