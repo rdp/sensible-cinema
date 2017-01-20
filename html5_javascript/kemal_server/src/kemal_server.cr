@@ -135,6 +135,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.category = "unknown"
   tag.subcategory = "unknown"
   tag.save
+  set_flash_for_next_time env, "tag saved, please fill in details about it..."
   env.redirect "/edit_tag/#{tag.id}"
 end
 
