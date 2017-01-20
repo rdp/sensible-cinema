@@ -67,8 +67,10 @@ end
 
 class ::String
   def truncate_with_ellipses
-    if size > 99
-      self[0..100] + "&#8230;" # :|
+    target_size = 100
+    if size > target_size
+      sum = 0
+      self.split(" ").select{|word| sum += word.size; sum < target_size}.join(" ") + "&#8230;"
     else
       self
     end
