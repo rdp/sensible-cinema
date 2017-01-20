@@ -295,10 +295,10 @@ function addEditUi() {
   <div class="moccasin">
 	<style>.moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}</style>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
-  <input id='clickMe' type='button' value='set to movies now' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
   to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0m 0.00s</textarea>
-  <input id='clickMe' type='button' value='set to movies now' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
   <br/>
   action:
   <select name='default_action' id='new_action'>
@@ -308,6 +308,7 @@ function addEditUi() {
     <option value='do_nothing'>do_nothing</option>
   </select>
   <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
+	<br/>
   <input type='submit' value='Save edit' onclick="saveEditButton();">
   <br/>
   <a href='#' onclick="seekToTime(video_element.currentTime -5); return false;">-5s</a>
@@ -320,7 +321,7 @@ function addEditUi() {
 	<!--br/>
   <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
-  <a href="#" onclick="return showMoviePage();">Movie main edit page</a>
+  <a href="#" onclick="return showMoviePage();">Movie edit page</a>
 	<br/>
   <a href="#" onclick="return hideAddTagStuff();">✕ Hide editor</a>
 	</div>
@@ -381,7 +382,6 @@ function addForNewEditToScreen() {
   document.getElementById("add_edit_link_id").innerHTML = "";
 	return false; // always abort link
 }
-
 
 function hideAddTagStuff() {
   hideDiv(topLineEditDiv);
@@ -702,7 +702,7 @@ function checkIfEpisodeChanged() {
 }
 
 function alertHaveNoneClickOverThereToAddOne() {
-  alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have tags for\n\n" + liveFullNameEpisode() + "\n\n yet, you can add this movie to the system by clicking the 'unedited click to create' link to the left"));
+  alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have tags for\n\n" + liveFullNameEpisode() + "\n\n yet, you can add this movie to the system by clicking the 'Unedited, click to enable edited' link to the left"));
 }
 
 function loadFailed(status) {
@@ -715,14 +715,16 @@ function loadFailed(status) {
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
-  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to create..."; // she's dead jim XX confirm prompt on it to create?
+	hideAddTagStuff();
+  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to enable edited..."; // she's dead jim XX confirm prompt on it to create?
 	hideDiv(document.getElementById("currently_filtering_id"));
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
-		setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
+		// too annoying/frequent :|
+		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
   }
   else {
     alert("appears the play it my way server is currently down, please alert us! Edits disabled for now...");
