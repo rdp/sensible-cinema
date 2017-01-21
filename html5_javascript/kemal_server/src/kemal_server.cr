@@ -136,6 +136,9 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.subcategory = "unknown"
   tag.save
   set_flash_for_next_time env, "tag saved, please fill in details about it..."
+  spawn do
+    save_local_javascript [url], tag.inspect, env
+  end
   env.redirect "/edit_tag/#{tag.id}"
 end
 
@@ -313,7 +316,8 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
 	
   tag_edit_list.create_or_refresh(tag_ids, actions)
   set_flash_for_next_time(env, "successfully saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
-  env.redirect "/view_url/#{tag_edit_list.url_id}"
+  save_local_javascript [tag_edit_list.url], tag_edit_list.inspect, env
+  env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end
 
 def save_local_javascript(db_urls, log_message, env) # actually just json these days...
