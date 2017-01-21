@@ -274,7 +274,7 @@ function addEditUi() {
 	    <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
-	  <br/><a href=# onclick="return addForNewEditToScreen();" id="add_edit_link_id">Add new content edit tag</a>
+	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new content edit tag</a>
 	</div>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
@@ -337,9 +337,9 @@ function addEditUi() {
 	<!--br/>
   <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
-  <a href="#" onclick="return showMoviePage();">Movie edit page</a>
+  <a href="#" onclick="showMoviePage(); return false;">Movie edit page</a>
 	<br/>
-  <a href="#" onclick="return hideAddTagStuff();">✕ Hide editor</a>
+  <a href="#" onclick="hideAddTagStuff(); return false;">✕ Hide editor</a>
 	</div>
   `;
   
@@ -391,24 +391,24 @@ function seekToTime(ts) {
 
 function addForNewEditToScreen() {
   if (url_id == 0) {
-		// the typical case I presume...
+		// case "unedited click to add.."
     window.open("https://" + request_host + "/new_url?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
 		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
 		setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
-    return false; // abort link
+		pauseVideo();		
   }
-  displayDiv(topLineEditDiv);
-  displayDiv(tagLayer);
-  document.getElementById("add_edit_link_id").innerHTML = "";
-	pauseVideo();
-	return false; // always abort link
+	else {
+		// case "Add new content tag" XXX this is screwy messing with innerHTML
+    displayDiv(topLineEditDiv);
+    displayDiv(tagLayer);
+    document.getElementById("add_edit_link_id").innerHTML = "";
+	}
 }
 
 function hideAddTagStuff() {
   hideDiv(topLineEditDiv);
   hideDiv(tagLayer);
   document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag";
-	return false; // always abort link
 }
 
 function getLocationOfElement(el) {
