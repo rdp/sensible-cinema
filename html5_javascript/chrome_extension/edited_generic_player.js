@@ -325,7 +325,7 @@ function addEditUi() {
   </select>
   <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
 	<br/>
-  <input type='submit' value='Save edit' onclick="saveEditButton();pauseVideo();">
+  <input type='submit' value='Save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
   <a href='#' onclick="seekToTime(video_element.currentTime -5); return false;">-5s</a>
   <a href="#" onclick="video_element.playbackRate -= 0.1; return false;">&lt;&lt;</a>
@@ -382,10 +382,17 @@ function hideDiv(div) {
 }
 
 function seekToTime(ts) {
-  // try and avoid pauses when seeking
+  // try and avoid pauses after seeking
   video_element.pause();
-  video_element.currentTime = ts;
-	setTimeout(video_element.play, 50); // let the seek take'ish, amazon needed this
+  video_element.currentTime = ts; // if this is far enough away from current, it implies a "play" call...oddly. I mean seriously that is junk.
+	// however if it close enough, then we need to call play
+	// some shenanigans to pretend to know what is going on...
+	var timer = setInterval(function() {
+		if (video_element.paused && video_element.readyState ==4 || !video_element.paused) {
+			video_element.play();
+			clearInterval(timer);
+		}		
+	}, 50);
 }
 
 
@@ -540,9 +547,10 @@ function humanToTimeStamp(timestamp) {
 function saveEditButton() {
   var url = "https://" + request_host + "/add_tag_from_plugin/" + url_id + '?start=' + document.getElementById('start').value + 
             "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
-  console.log(url);
   window.open(url, '_blank');
-  setTimeout(reloadForCurrentUrl, 2000);
+	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
+	document.getElementById('endy').value = '0m 0.00s';
+  setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server now
   setTimeout(reloadForCurrentUrl, 20000); // and get details :)
 }
 
@@ -587,8 +595,12 @@ function loadForNewUrl() {
 
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
+		console.log("reloading...");
     getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared but used to be there??");  }); 
   }
+	else {
+		console.log("not reloading...?");
+	}
 }
 
 function parseSuccessfulJsonNonReload(json_string) {
