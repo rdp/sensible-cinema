@@ -271,7 +271,7 @@ function addEditUi() {
 	`<div id='top_left'>
 	  <style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
 	  <div id=currently_filtering_id>Currently editing:
-	    <select id='tag_edit_list_dropdown' onChange='tagEditListDropdownChanged();'></select>
+	    <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
 	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new content edit tag</a>
@@ -590,22 +590,27 @@ function lookupUrl() {
 }
 
 function loadForNewUrl() {
-  getRequest(lookupUrl(), parseSuccessfulJsonNonReload, loadFailed);
+  getRequest(lookupUrl(), parseSuccessfulJsonNewUrl, loadFailed);
 }
 
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
 		console.log("reloading...");
-    getRequest(lookupUrl(), parseSuccessfulJson, function() { console.log("huh wuh edits disappeared but used to be there??");  }); 
+    getRequest(lookupUrl(), parseSuccessfulJsonReload, function() { console.log("huh wuh edits disappeared but used to be there??");  }); 
   }
 	else {
 		console.log("not reloading...?");
 	}
 }
 
-function parseSuccessfulJsonNonReload(json_string) {
+function parseSuccessfulJsonReload(json_sring) {
   parseSuccessfulJson(json_string);
-	tagEditListDropdownChanged(); // alert and use, alert still useful since otherwise on amazon series page it's like "what's it editing already?"	
+	getEditsFromTagListAndAlert(false);
+}
+
+function parseSuccessfulJsonNewUrl(json_string) {
+  parseSuccessfulJson(json_string);
+	getEditsFromTagListAndAlert(true); // alert and use, alert still useful since otherwise on amazon series page it's like "what's it editing already?"	
   startWatcherTimerOnce();
   // and alert
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
@@ -666,6 +671,7 @@ function parseSuccessfulJson(json_string) {
 	option.value = "-1"; // special case :|
   option.setAttribute('selected', true); // default :| TODO not refresh
 	dropdown.add(option, dropdown[0]);
+	console.log("finished parsing response");
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
@@ -689,19 +695,21 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	}	
 }
 
-function tagEditListDropdownChanged() {
+function getEditsFromTagListAndAlert(shouldAlert) {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
-	var selected_edit_list_id = dropdown.value; // or -1 :|
+	var selected_edit_list_id = dropdown.value;
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
-		alertEditorWorkingAfterTimeout(dropdown.options[dropdown.selectedIndex].text, "");
+		if (shouldAlert) 
+  		alertEditorWorkingAfterTimeout(dropdown.options[dropdown.selectedIndex].text, "");
 		return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		if (tag_edit_list_and_tags[0].id == selected_edit_list_id) {
 			setTheseTagsAsTheOnesToUse(tag_edit_list_and_tags[1]);
-			alertEditorWorkingAfterTimeout(tag_edit_list_and_tags[0].description, "");
+			if (shouldAlert)
+  			alertEditorWorkingAfterTimeout(dropdown.options[dropdown.selectedIndex].text, "");
 			return;
 		}		
 	}
