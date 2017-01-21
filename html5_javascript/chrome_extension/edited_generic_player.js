@@ -187,7 +187,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	topLineEditDiv.innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current_time=" + timeStampToHuman(cur_time) + " " + extra_message;
+	topLineEditDiv.innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current time=" + timeStampToHuman(cur_time) + " " + extra_message;
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
@@ -331,7 +331,7 @@ function addEditUi() {
   <a href="#" onclick="video_element.playbackRate -= 0.1; return false;">&lt;&lt;</a>
   <span id='playback_rate'>1.00x</span>
   <a href="#" onclick="video_element.playbackRate += 0.1; return false;">&gt;&gt;</a>
-  <a href="#" onclick="stepFrame(); return false;">step</a>
+  <a href="#" onclick="stepFrame(); return false;">frame</a>
   <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
   <a href="#" onclick="pauseVideo(); return false;">&#9612;&#9612;</a>
 	<!--br/>
@@ -385,7 +385,7 @@ function seekToTime(ts) {
   // try and avoid pauses when seeking
   video_element.pause();
   video_element.currentTime = ts;
-  video_element.play();
+	setTimeout(video_element.play, 50); // let the seek take'ish, amazon needed this
 }
 
 
@@ -423,7 +423,7 @@ function setEditedControlsToTopLeft() {
   // discover where the "currently viewed" top left actually is (not always 0,0 apparently, it seems)
   var left = getLocationOfElement(video_element).left; 
   var top = getLocationOfElement(video_element).top;
-  top += 75; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
+  top += 85; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
 	}
@@ -433,7 +433,7 @@ function setEditedControlsToTopLeft() {
   topLineEditDiv.style.left = left + "px"; 
   topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
-  tagLayer.style.top = (top + 30) + "px";
+  tagLayer.style.top = (top + 50) + "px"; // below topLineEditDiv
 }
 
 function addToCurrentEditArray() {
@@ -458,17 +458,28 @@ function testCurrentFromUi() {
     alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, before hitting save button');
     return; // abort
   }
+	if (inMiddleOfTestingEdit) {
+		alert('cant test two edits simultaneously, please wait for the first to finish first'); // otherwise I'm not sure what is going to happen to those arrays :|
+	}
   inMiddleOfTestingEdit = true;
   var [start, endy] = addToCurrentEditArray();
   seekToTime(start - 2);
+	console.info("just seeked to " + (start - 2));
   length = endy - start;
-  if (currentTestAction() == 'skip') 
+  if (currentTestAction() == 'skip') {
     length = 0; // it skips it, so the amount of time before reverting is less it :)
-  wait_time_millis = (length + 2 + 1)*1000; 
-  setTimeout(function() {
-    currentEditArray().pop();
-    inMiddleOfTestingEdit = false;
-  }, wait_time_millis)
+	}
+	// just in case the seek takes really really long...netflix used to once, who knows, maybe useful LOL
+	var waitTillRewind = setInterval(function() {
+		if (video_element.currentTime < endy && !video_element.paused) {
+			clearInterval(waitTillRewind);
+		  wait_time_millis = (length + 2 + 1)*1000; 
+		  setTimeout(function() {
+		    currentEditArray().pop();
+		    inMiddleOfTestingEdit = false;
+		  }, wait_time_millis);
+		}
+	}, 50);
 }
 
 function currentEditArray() {
@@ -749,6 +760,7 @@ function loadFailed(status) {
   }
   else {
     alert("appears the play it my way server is currently down, please alert us! Edits disabled for now...");
+		document.getElementById("add_edit_link_id").innerHTML = "Play it my way Server down, try again later...";
   }
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
