@@ -603,7 +603,7 @@ function reloadForCurrentUrl() {
 	}
 }
 
-function parseSuccessfulJsonReload(json_sring) {
+function parseSuccessfulJsonReload(json_string) {
   parseSuccessfulJson(json_string);
 	getEditsFromTagListAndAlert(false);
 }
