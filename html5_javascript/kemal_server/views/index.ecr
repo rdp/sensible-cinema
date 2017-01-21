@@ -58,7 +58,7 @@ function alertIfNoExtension() {
 
 
 
-<h3>Index</h3>
+<h3>Movies</h3>
 These are movies that we currently have in our system.  Don't see one you want? <a href=/create_new>Add it</a> and contribute!
 We are a community driven resource and we would love your help!  By helping yourself you help everyone :)
 
@@ -86,7 +86,7 @@ We are a community driven resource and we would love your help!  By helping your
 			 <td>
 			   <a href="<%= url.url %>" target="_blank"
 	       <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
-	         onclick="alertIfNoExtension(); alert('after opening the series, select episode <%= url.episode_number %> for the edits to be effective');"
+	         onclick="alertIfNoExtension(); alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');"
 	       <% else %>
 				   onclick="alertIfNoExtension();"
 				 <% end %>

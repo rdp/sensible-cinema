@@ -328,7 +328,9 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
    }
   }
   if !File.exists?("./this_is_development")
-    system("cd edit_descriptors && git co master && git pull && git add . && git cam \"something was modified\" && git pom") # send it to rawgit...eventually :)
+    spawn do
+      system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"something was modified\" && git push origin master") # backup :|
+    end
   end
 end
 
