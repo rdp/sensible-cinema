@@ -12,6 +12,7 @@ function injectJs(link) {
   var scr = document.createElement('script');
   scr.type = "text/javascript";
   scr.src = link;
+	src.charset = "UTF-8"
   document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
@@ -87,7 +88,7 @@ function inIframe () {
 
 function autoStartOnBigThree() {
   var url = currentUrlNotIframe();
-  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("youtube.com")) {
+  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("youtube.com") || url.includes("playitmyway.inet2.org")) {
     if (inIframe()) { 
       // avoid google iframes popup after it says YES and reset it back even though it is playing OK
       console.log("not setting to ... from an iframe");
