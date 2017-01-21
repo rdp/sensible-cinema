@@ -48,6 +48,13 @@ sub category
     <option value="unknown">unknown -- unknown</option>
   </optgroup>
 
+  <optgroup label="movie-content">
+    <option value="initial theme song">movie-content -- initial theme song/initial credits</option>
+    <option value="closing credits">movie-content -- closing credits</option>
+    <option value="song occurrence">movie-content -- song occurrence</option>
+    <option value="joke edit">movie-content -- joke edit -- when edited makes it play funny</option>
+  </optgroup>
+
   <optgroup label="profanity">
     <option value="personal attack command">profanity -- attack command ("shut up" etc.)</option>
     <option value="personal insult">profanity -- insult ("moron" etc.)</option>
@@ -88,11 +95,6 @@ sub category
     <option value="smoking">substance-abuse -- smoking</option>
   </optgroup>
 
-  <optgroup label="movie-content">
-    <option value="initial theme song">movie-content -- initial theme song/initial credits</option>
-    <option value="closing credits">movie-content -- closing credits</option>
-    <option value="closing credits">movie-content -- song occurrence</option>
-  </optgroup>
 
   <optgroup label="suspense">
     <% ["frightening/startling scene", "suspenseful fight \"will they win?\""].each do |type|  %>
@@ -107,7 +109,18 @@ sub category
 
 </select>
 <script>
-document.getElementById('subcategory_select').value = '<%= tag.subcategory %>';
+select = document.getElementById('subcategory_select');
+select.value = '<%= tag.subcategory %>';
+
+select.addEventListener(
+     'change',
+     function() {
+       if (select.options[select.selectedIndex].value == "joke edit") {
+         alert("for joking edits please select do_nothing as the default, then create your own custom edit list where you modify it to get a mute or skip, that way for default playback it isn't edited out");
+       }
+      },
+     false
+  );
 </script>
 <br/>
 If there are any missing please let us know!
