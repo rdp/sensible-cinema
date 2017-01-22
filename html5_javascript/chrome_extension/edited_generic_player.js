@@ -267,15 +267,14 @@ function addEditUi() {
   exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   exposeEditScreenDiv.style.fontSize = "15px";
   exposeEditScreenDiv.style.color = "Grey";
+	exposeEditScreenDiv.id = "top_left";
   exposeEditScreenDiv.innerHTML = 
-	`<div id='top_left'>
-	  <style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
+	`<style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
 	  <div id=currently_filtering_id>Currently editing:
 	    <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
-	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new content edit tag</a>
-	</div>`;
+	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new content edit tag</a>`;
   // and stay visible
   document.body.appendChild(exposeEditScreenDiv);
 
@@ -339,7 +338,7 @@ function addEditUi() {
 	<br/>
   <a href="#" onclick="showMoviePage(); return false;">Movie edit page</a>
 	<br/>
-  <a href="#" onclick="hideAddTagStuff(); return false;">✕ Hide editor</a>
+  <a href="#" onclick="closeEditor(); return false;">✕ Hide editor</a>
 	</div>
   `;
   
@@ -405,17 +404,31 @@ function addForNewEditToScreen() {
 		pauseVideo();		
   }
 	else {
-		// case "Add new content tag" XXX this is screwy messing with innerHTML
+		// case "Add new content tag" XXX this is screwy messing with innerHTML :|
+    document.getElementById("add_edit_link_id").innerHTML = "";
+		displayAddTagStuffIfInAddMode();
+	}
+}
+
+function inAddMode() {
+	return document.getElementById("add_edit_link_id").innerHTML == "" ;
+}
+
+function displayAddTagStuffIfInAddMode() {
+  if (inAddMode()){
     displayDiv(topLineEditDiv);
     displayDiv(tagLayer);
-    document.getElementById("add_edit_link_id").innerHTML = "";
 	}
 }
 
 function hideAddTagStuff() {
   hideDiv(topLineEditDiv);
   hideDiv(tagLayer);
+}
+
+function closeEditor() {
   document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag";
+	hideAddTagStuff();
 }
 
 function getLocationOfElement(el) {
@@ -767,7 +780,7 @@ function loadFailed(status) {
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
-	hideAddTagStuff();
+	closeEditor();
   document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to enable edited..."; // she's dead jim XX confirm prompt on it to create?
 	hideDiv(document.getElementById("currently_filtering_id"));
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
@@ -819,8 +832,9 @@ function start() {
 var mouse_move_timer;
 function showEditLinkMouseJustMoved() {
 	displayDiv(document.getElementById("top_left"));
+	displayAddTagStuffIfInAddMode();
   clearTimeout(mouse_move_timer);
-  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); }, 1000);
+  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, inAddMode() ? 5000 : 1000); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
 }
 
 // helper method

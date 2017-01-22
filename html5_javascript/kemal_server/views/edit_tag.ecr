@@ -77,10 +77,12 @@ sub category
 
   <optgroup label="violence">
     <option value="gore">violence -- gore/open wound</option>
+    <option value="meanness">violence -- off screen</option>
     <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>
     <option value="stabbing/shooting yes blood">violence -- stabbing/shooting yes blood</option>
     <option value="light fight">violence -- light fighting (single punch/kick)</option>
     <option value="sustained fight">violence -- sustained punching/fighting</option>
+    <option value="violence other">violence -- other</option>
     <!-- weapons? -->
   </optgroup>
 
@@ -119,11 +121,9 @@ sub category
 select = document.getElementById('subcategory_select');
 select.value = '<%= tag.subcategory %>';
 
-setTimeout(function() {
   if (document.getElementById('category_select').value != 'unknown') {
 	updateSubCat();
   }
-}, 300); // let jQuery load. Wait what??
 
 select.addEventListener(
      'change',
