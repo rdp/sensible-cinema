@@ -12,7 +12,6 @@ function injectJs(link) {
   var scr = document.createElement('script');
   scr.type = "text/javascript";
   scr.src = link;
-	src.charset = "UTF-8"
   document.getElementsByTagName('head')[0].appendChild(scr)
 }
 
