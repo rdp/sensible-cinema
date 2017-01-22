@@ -14,18 +14,18 @@ to: <input type="text" name="endy" size="40" id="endy" value="<%= url.seconds_to
 <br/>
 
 default action to take if this tag is included in edit list:
-<select name="default_action" id='sel'>
+<select name="default_action" id='action_sel'>
   <option value="mute">mute</option>
   <option value="skip">skip</option>
   <option value="yes_audio_no_video">yes_audio_no_video</option>
   <option value="do_nothing">do_nothing</option>
 </select>
 <script>
-document.getElementById('sel').value = '<%= tag.default_action %>';
+document.getElementById('action_sel').value = '<%= tag.default_action %>';
 </script>
 <br/>
 
-<div id="category_div_id" style="display: none">>
+<div id="category_div_id" style="display: none">
 category (gets automatically set for you when you choose sub category):
 <select name="category" id='category_select' disabled="true">
   <option value="profanity">verbal profanity</option>
@@ -121,6 +121,7 @@ select.addEventListener(
      function() {
        if (select.options[select.selectedIndex].value == "joke edit") {
          alert("for joking edits please select do_nothing as the default, then create your own custom edit list where you modify it to get a mute or skip, that way for default playback it isn't edited out");
+         document.getElementById('action_sel').value = 'do_nothing';
        }
       },
      false

@@ -33,7 +33,6 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
                 var requiredVersion = 0.00;
                 if (reply.version >= requiredVersion) {
                   console.log("got back good chrome version installed " + reply.version);
-    	            isInstalled = true;
                     markAsGoodChromeExtension();
                     clearInterval(timer);
                 }
@@ -71,7 +70,7 @@ We are a community driven resource and we would love your help!  By helping your
   <thead>
     <tr>
       <th>Movie Name</th>
-      <th>Link</th>
+      <th></th>
       <th>Host</th>
       <th>Tags</th>
       <th>Editing status</th>
@@ -87,8 +86,8 @@ We are a community driven resource and we would love your help!  By helping your
 
 <% urls.each{ |url|  %>
     <tr>
-       <td><%= url.name_with_episode %></td>
-			 <td>
+       <td><a href="/view_url/<%= url.id %>"><%= url.name_with_episode %></a></td>
+       <td>
 			   <a href="<%= url.url %>" target="_blank"
 	       <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
 	         onclick="alertIfNoExtension(); alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');"
