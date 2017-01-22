@@ -1,8 +1,7 @@
 <img src=/camera.128.png width=125px;/> <h1>Play it your way!</h1>
 
-<br/>Offering personalized playback of google play/amazon/amazon prime movies, and more! (ask for netflix/hulu)
+<br/>Offering personalized playback of amazon/amazon prime/youtube, and more! (ask if you want more, like netflix/hulu).  We believe you have the right to watch things the way you'd like from the privacy of your home, and we're here to help you get there.
 <br/>
-
 
 <h2 id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
 Install the edited playback software by installing our <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank -->
@@ -19,6 +18,7 @@ var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 console.log("sending version request...");
 
 function markAsGoodChromeExtension() {
+  isInstalled = true;
   document.getElementById('install_chrome_extension_message_id').style.display = 'none';
   document.getElementById('success_chrome_extension_id').style.display = 'block';
 }
@@ -86,16 +86,15 @@ We are a community driven resource and we would love your help!  By helping your
 
 <% urls.each{ |url|  %>
     <tr>
-       <td><a href="/view_url/<%= url.id %>"><%= url.name_with_episode %></a></td>
+       <td><a href="/view_url/<%= url.id %>" onclick="alertIfNoExtension();"><%= url.name_with_episode %></a></td>
        <td>
-			   <a href="<%= url.url %>" target="_blank"
+	   <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
 	       <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
-	         onclick="alertIfNoExtension(); alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');"
-	       <% else %>
-				   onclick="alertIfNoExtension();"
-				 <% end %>
+	          alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
+	       <% end %>
+               "
 	       >watch</a>
-			 </td>
+       </td>
        <td><%= url.human_readable_company %></td>
        <td><a href="/view_url/<%= url.id %>">view our tags (<%= url.tags.size %>)</a></td>
        <td>

@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
 while true
-  ./kill_next &
+  ./kill_next & # failure here can mean you are on production!
   ./dev_go_ssl or; sleep 2
 end
