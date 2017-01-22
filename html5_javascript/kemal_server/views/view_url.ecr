@@ -2,11 +2,19 @@
 
 <br/>
 <% if url.image_url.size > 0 %>
-  <img src="<%= url.image_url %>" style="max-width: 150px;"/>
+  <img src="<%= url.image_url %>" style="max-width: 250px;"/>
 <br/>
 <% end %>
 <a href="<%= url.url %>" target="_blank">watch movie</a>
+
 <br/>
+<br/>All content tags in our system for this movie:
+<% url.tags_by_type.each{ |name, value| %>
+  <% if value.size > 0 %>
+    <%= name %>: <%= value.size %>
+  <% end %>
+<% } %> 
+<hr/>
 
 <h2>Details</h2>
 <table class="table table-striped" style="width: auto;">
@@ -47,16 +55,9 @@
 
 <hr/>
 <br/>
-<h3>Individual Content tags</h3>
+<h3>Content tags for this movie</h3>
 Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones if you run into something that should be tagged but isn't in our system yet.
 
-<br/>All content tags in our system for this movie:
-<% url.tags_by_type.each{ |name, value| %>
-  <% if value.size > 0 %>
-    <%= name %>: <%= value.size %>
-  <% end %>
-<% } %> 
-<hr/>
 
 <table class="table table-striped" style="width: auto;">
   <thead>
