@@ -45,18 +45,13 @@ document.getElementById('category_select').value = '<%= tag.category %>';
 <div id="subcategory_div_id" style="display:none;">
 sub category
 <select name="subcategory" id='subcategory_select'>
-  <optgroup label="unknown">>
     <option value="unknown">unknown</option>
-  </optgroup>
 
-  <optgroup label="movie-content">
     <option value="initial theme song">movie-content -- initial theme song/initial credits</option>
     <option value="closing credits">movie-content -- closing credits</option>
     <option value="song occurrence">movie-content -- song occurrence</option>
     <option value="joke edit">movie-content -- joke edit -- edits that make it funny when edited</option>
-  </optgroup>
-
-  <optgroup label="profanity">
+		
     <option value="personal attack command">profanity -- attack ("shut up" etc.)</option>
     <option value="personal insult">profanity -- insult ("moron", "idiot" etc.)</option>
     <option value="bathroom humor">profanity -- bathroom humor, poop, anything gross, etc.</option>
@@ -73,20 +68,16 @@ sub category
     <option value="s***">profanity -- s***</option>
     <option value="f***">profanity -- f-bomb expletive</option>
     <option value="f*** sexual">profanity -- f-bomb sexual connotation</option>
-  </optgroup>
-
-  <optgroup label="violence">
+		
     <option value="gore">violence -- gore/open wound</option>
-    <option value="meanness">violence -- off screen</option>
     <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>
     <option value="stabbing/shooting yes blood">violence -- stabbing/shooting yes blood</option>
     <option value="light fight">violence -- light fighting (single punch/kick)</option>
     <option value="sustained fight">violence -- sustained punching/fighting</option>
+    <option value="killing">violence -- killing</option>
     <option value="violence other">violence -- other</option>
     <!-- weapons? -->
-  </optgroup>
 
-  <optgroup label="physical profanity">
     <option value="art nudity">physical -- art nudity</option>
     <option value="revealing">physical -- revealing clothing (cleavage, scantily clad)</option>
     <option value="nudity posterior">physical -- nudity (posterior)</option>
@@ -96,15 +87,11 @@ sub category
     <option value="foreplay">physical -- sex foreplay</option>
     <option value="implied sex">physical -- implied sex</option>
     <option value="sex">physical -- explicit sex</option>
-  </optgroup>
 
-  <optgroup label="substance abuse">
     <option value="drugs">substance-abuse -- drug use</option>
     <option value="alcohol">substance-abuse -- alcohol drinking</option>
     <option value="smoking">substance-abuse -- smoking</option>
-  </optgroup>
 
-  <optgroup label="suspense">
     <% ["frightening/startling scene", "suspenseful fight \"will they win?\""].each do |type|  %>
       <option value='<%= type %> OK age 3'>suspense -- <%= type %> (OK age 3+)</option>
       <option value='<%= type %> OK age 6'>suspense -- <%= type %> (OK age 6+)</option>
@@ -113,7 +100,6 @@ sub category
       <option value='<%= type %> OK age 16'>suspense -- <%= type %> (OK age 16+)</option>
       <option value='<%= type %> (not OK)'>suspense -- <%= type %> (not OK)</option>
     <% end %>       '
-  </optgroup>
 </select>
 </div>
 
@@ -121,9 +107,11 @@ sub category
 select = document.getElementById('subcategory_select');
 select.value = '<%= tag.subcategory %>';
 
+$(document).ready(function() {
   if (document.getElementById('category_select').value != 'unknown') {
-	updateSubCat();
+    updateSubCat(); // show it, prune it :)
   }
+});
 
 select.addEventListener(
      'change',
@@ -155,7 +143,7 @@ function updateSubCat() {
 <br/>
 If there are any missing please let us know!
 <br/>
-one or two word "end user friendly" (euphemized) details (ex: d***, "deity" or "knife stabbing" or "specific song name")
+one or two word "end user friendly" non spoiler (euphemized) details (e.g. "kill a butterfly" or "specific song name")
 <br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 <br/>

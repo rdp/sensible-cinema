@@ -64,6 +64,8 @@ Content tags are basically timestamps and descriptions of content that exists in
       <th>start</th>
       <th>end</th>
       <th>default action</th>
+      <th>category</th>
+      <th>subcategory</th>
     </tr>
   </thead>
 <% url.tags.each do |tag|  %>
@@ -72,7 +74,6 @@ Content tags are basically timestamps and descriptions of content that exists in
   <td><%= tag.default_action %></td>
   <td><%= tag.category %></td>
   <td><%= tag.subcategory %></td>
-  <td><%= tag.details %></td>
   <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
   </tr>
 <% end %>
