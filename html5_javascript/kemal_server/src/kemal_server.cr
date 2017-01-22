@@ -14,10 +14,6 @@ before_all do |env|
   env.session.string("flash", "") unless env.session.string?("flash") # default
 end
 
-get "/" do |env|
-  env.redirect "/index"
-end
-
 def with_db
   db_url = File.read("db/connection_string_local_box_no_commit.txt").strip
   db =  DB.open db_url
@@ -83,7 +79,7 @@ get "/delete_url/:url_id" do |env|
   url.destroy
   set_flash_for_next_time env, "deleted movie from db"
   # could/should remove from cache :|
-  env.redirect "/index"
+  env.redirect "/"
 end
 
 get "/delete_tag/:tag_id" do |env|
@@ -279,7 +275,7 @@ def sanitize_html(name)
   HTML.escape name
 end
 
-get "/index" do |env|
+get "/" do |env|
   urls = Url.all
   render "views/index.ecr", "views/layout.ecr"
 end
