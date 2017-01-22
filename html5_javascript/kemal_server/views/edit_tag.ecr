@@ -25,16 +25,16 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 </script>
 <br/>
 
-<div id="category_div_id" style="display: none">
-category (gets automatically set for you when you choose sub category):
-<select name="category" id='category_select' disabled="true">
-  <option value="profanity">verbal profanity</option>
+<div id="category_div_id">
+category:
+<select name="category" id='category_select' onchange="updateSubCat();">
+  <option value="unknown">unknown -- please select an option</option>
+  <option value="profanity">spoken words (profanity, attacks, etc.)</option>
   <option value="violence">violence</option>
-  <option value="physical">physical body related content</option>
-  <option value="movie-content">movie-content</option>
-  <option value="suspense">suspenseful/scary</option>
-  <option value="substance-abuse">substance-abuse</option>
-  <option value="unknown">unknown</option>
+  <option value="physical">sex/nudity</option>
+  <option value="movie-content">movie content (credits, joke edits, etc.)</option>
+  <option value="suspense">suspenseful (frightening, scary fighting, tension)</option>
+  <option value="substance-abuse">substance use</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= tag.category %>';
@@ -42,35 +42,37 @@ document.getElementById('category_select').value = '<%= tag.category %>';
 <br/>
 </div>
 
+<div id="subcategory_div_id" style="display:none;">
 sub category
-<select name="subcategory" id='subcategory_select' onchange="updateCategory();">
+<select name="subcategory" id='subcategory_select'>
   <optgroup label="unknown">>
-    <option value="unknown">unknown -- unknown</option>
+    <option value="unknown">unknown</option>
   </optgroup>
 
   <optgroup label="movie-content">
     <option value="initial theme song">movie-content -- initial theme song/initial credits</option>
     <option value="closing credits">movie-content -- closing credits</option>
     <option value="song occurrence">movie-content -- song occurrence</option>
-    <option value="joke edit">movie-content -- joke edit -- when edited makes it play funny</option>
+    <option value="joke edit">movie-content -- joke edit -- edits that make it funny when edited</option>
   </optgroup>
 
   <optgroup label="profanity">
-    <option value="personal attack command">profanity -- attack command ("shut up" etc.)</option>
-    <option value="personal insult">profanity -- insult ("moron" "idiot" etc.)</option>
-    <option value="bathroom humor">profanity -- bathroom humor, poop, etc.</option>
+    <option value="personal attack command">profanity -- attack ("shut up" etc.)</option>
+    <option value="personal insult">profanity -- insult ("moron", "idiot" etc.)</option>
+    <option value="bathroom humor">profanity -- bathroom humor, poop, anything gross, etc.</option>
     <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm...)</option>
-    <option value="a**">profanity -- a**</option>
     <option value="bodily part reference harsh">profanity -- bodily part reference harsh</option>
     <option value="sexual reference">profanity -- sexual reference/innuendo</option>
-    <option value="religious minor">profanity -- deity minor (improper use of "lord" etc.)</option>
-    <option value="deity omg">profanity -- deity (OMG)</option>
+    <option value="deity heaven help us">profanity -- deity "the good lord" "heaven help us" type</option>
+    <option value="deity omg">profanity -- deity expletive (OMG)</option>
     <option value="deity g**">profanity -- deity (gosh dang but the real words)</option>
     <option value="euphemized four letter">profanity -- euphemized 4-letter (crap, dang, gosh)</option>
+    <option value="a**">profanity -- a** anything</option>
     <option value="d***">profanity -- d***</option>
+    <option value="h***">profanity -- h***</option>
     <option value="s***">profanity -- s***</option>
     <option value="f***">profanity -- f-bomb expletive</option>
-    <option value="f*** sexual">profanity -- f-bomb sexual context</option>
+    <option value="f*** sexual">profanity -- f-bomb sexual connotation</option>
   </optgroup>
 
   <optgroup label="violence">
@@ -78,7 +80,7 @@ sub category
     <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>
     <option value="stabbing/shooting yes blood">violence -- stabbing/shooting yes blood</option>
     <option value="light fight">violence -- light fighting (single punch/kick)</option>
-    <option value="sustained fight">violence -- sustained fighting</option>
+    <option value="sustained fight">violence -- sustained punching/fighting</option>
     <!-- weapons? -->
   </optgroup>
 
@@ -102,19 +104,26 @@ sub category
 
   <optgroup label="suspense">
     <% ["frightening/startling scene", "suspenseful fight \"will they win?\""].each do |type|  %>
-      <option value="<%= type %> OK age 3">suspense -- <%= type %> (OK age 3+)</option>
-      <option value="<%= type %> OK age 6">suspense -- <%= type %> (OK age 6+)</option>
-      <option value="<%= type %> OK age 9">suspense -- <%= type %> (OK age 9+)</option>
-      <option value="<%= type %> OK age 12">suspense -- <%= type %> (OK age 12+)</option>
-      <option value="<%= type %> OK age 16">suspense -- <%= type %> (OK age 16+)</option>
-      <option value="<%= type %>">suspense -- <%= type %> (not OK)</option>
-    <% end %>
+      <option value='<%= type %> OK age 3'>suspense -- <%= type %> (OK age 3+)</option>
+      <option value='<%= type %> OK age 6'>suspense -- <%= type %> (OK age 6+)</option>
+      <option value='<%= type %> OK age 9'>suspense -- <%= type %> (OK age 9+)</option>
+      <option value='<%= type %> OK age 12'>suspense -- <%= type %> (OK age 12+)</option>
+      <option value='<%= type %> OK age 16'>suspense -- <%= type %> (OK age 16+)</option>
+      <option value='<%= type %> (not OK)'>suspense -- <%= type %> (not OK)</option>
+    <% end %>       '
   </optgroup>
-
 </select>
+</div>
+
 <script>
 select = document.getElementById('subcategory_select');
 select.value = '<%= tag.subcategory %>';
+
+setTimeout(function() {
+  if (document.getElementById('category_select').value != 'unknown') {
+	updateSubCat();
+  }
+}, 300); // let jQuery load. Wait what??
 
 select.addEventListener(
      'change',
@@ -125,7 +134,23 @@ select.addEventListener(
        }
       },
      false
-  );
+);
+	
+function updateSubCat() {
+  $('#subcategory_div_id').fadeIn();
+  var type = document.getElementById("category_select").value; // profanity
+  $('option').each(function () {
+    console.log(this.text + '= ' + this.value);
+		var cat_from_subcat = this.text.split(" ")[0]; // profanity
+		if (cat_from_subcat != type && this.text.includes(" -- ")) {
+		  this.style.display = "none";
+		}
+		else {
+		  this.style.display = "block";
+		}
+	});
+}
+
 </script>
 <br/>
 If there are any missing please let us know!
@@ -148,11 +173,3 @@ internal details (ex: "sally said .... OK?" (dots instead of real profanity)) op
 <br/>
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 
-<script>
-function updateCategory() {
-  var element = document.getElementById("subcategory_select");
-  var cat_from_subcat = element.options[element.selectedIndex].text.split(" ")[0];
-  document.getElementById("category_select").value = cat_from_subcat;
-  $('#category_div_id').fadeIn();
-}
-</script>

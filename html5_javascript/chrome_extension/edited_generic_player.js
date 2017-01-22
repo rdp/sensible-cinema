@@ -7,11 +7,11 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var request_host="localhost:3000"; // dev
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
+var request_host="localhost:3000"; // dev
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
-var request_host="playitmyway.inet2.org"; // prod
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
+// var request_host="playitmyway.inet2.org"; // prod
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
 function inIframe() {
     try {
@@ -285,8 +285,8 @@ function addEditUi() {
   topLineEditDiv.style.background = '#000000';
   topLineEditDiv.style.zIndex = "99999999"; // on top :)
   topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  topLineEditDiv.style.color = "rgb(200,200,200) ";
-  topLineEditDiv.style.textShadow="2px 1px 0px black";
+  topLineEditDiv.style.color = "rgb(255,255,255) "; // grey
+  topLineEditDiv.style.textShadow="2px 1px 1px black";
   topLineEditDiv.style.fontSize = "13px";
   topLineEditDiv.style.display = 'none';
   document.body.appendChild(topLineEditDiv);
@@ -470,8 +470,7 @@ function testCurrentFromUi() {
 	}
   inMiddleOfTestingEdit = true;
   var [start, endy] = addToCurrentEditArray();
-  seekToTime(start - 2);
-	console.info("just seeked to " + (start - 2));
+  seekToTime(start - 1);
   length = endy - start;
   if (currentTestAction() == 'skip') {
     length = 0; // it skips it, so the amount of time before reverting is less it :)
@@ -482,6 +481,7 @@ function testCurrentFromUi() {
 			clearInterval(waitTillRewind);
 		  wait_time_millis = (length + 2 + 1)*1000; 
 		  setTimeout(function() {
+				console.log("assuming done with edit...");
 		    currentEditArray().pop();
 		    inMiddleOfTestingEdit = false;
 		  }, wait_time_millis);
