@@ -83,6 +83,10 @@ purchase cost (ex: full purchase this episode, assuming no discounts, see above)
 <br/>
 
 an image_url (on a different site) for movie (ex: http://wikipedia/original_image.png or http://wikipedia/original_image.svg if you can find an image for this movie [or episode or series somewhere...)
+<% if url.image_url.present? %>
+  <br/>
+  <img src="<%= url.image_url %>" width=250px;/>
+<% end %>
 <input type="text" name="image_url" size="150" value="<%= url.image_url %>"/>
 <br/>
 <br/>

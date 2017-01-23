@@ -1,9 +1,8 @@
 <img src=/camera.128.png width=125px;/> <h1>Play it your way!</h1>
 
-<br/>Offering personalized playback of amazon/amazon prime/youtube, and more!
-<br/>We believe you have the right to watch shows the way you'd like from the privacy of your home, and we're here to help you get there.
-<br/>Play it your way is free (and hopes to remain so)!  
-<br/>That being said, we know a lot of you are passionate about this space and we'd love your support.  If you'd like us to add a donate or "donate monthly"  option, let us know and we'll get it started!  Every little bit will help! :)
+<br/>Offering personalized playback of amazon/amazon prime/youtube videos, and more!
+<br/>We believe you have the right to watch shows the way you'd like to in the privacy of your home, and we're here to help you get there.
+<br/>Play it your way is free (and hopes to remain so)!  That being said, we know a lot of you are passionate about this and we'd love your support.  If you'd like us to add a donate or "donate monthly"  option, let us know and we'll get it!  Every little bit will help! :)
 <br/>
 
 <div id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
@@ -11,15 +10,15 @@
 Play it your way works by monitoring your computer as it plays back your legally streamed movies online (ex: amazon, youtube, etc.).  When it detects you're in a part your would prefer to not see, or not hear, it jumps over those scenes or mutes them for you.  
 <br>You can watch it on your laptop, or to hookup to your TV, you're going to want to run a long (<a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/BlueRigger-Wall-High-Speed-Cable/dp/B004GW25WY?sa-no-redirect=1'>50'</a>) HDMI cable from your computer to your TV.
 
-<h2>Install the edited playback software by installing our <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank -->
-chrome extension</a> then come back here!</h2>
-<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green"><br/>You successfully installed the  chrome extension, now get watching! Start playing it your way!</font>
+<h2>Install the edited playback software by <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank -->
+clicking here to install our chrome extension</a> then come back and watch!</h2>
 </div>
 
+<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green"><br/>You successfully installed the  chrome extension, now get watching! Start playing it your way!</font></div>
 
 <script>
 var isInstalled = false;
-//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // shouldn't need this ever again tho...
+//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev shouldn't need this ever again tho...
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 console.log("sending version request...");
 
@@ -57,7 +56,7 @@ checkIfChromeExtensionInstalled();
 timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
 
 <% if File.exists? "this_is_development" %>
-  //markAsGoodChromeExtension(); // fake it out LOL
+  markAsGoodChromeExtension(); // fake it out LOL
 <% end %>
 
 function alertIfNoExtension() {
@@ -69,8 +68,8 @@ function alertIfNoExtension() {
 </script>
 
 <h3>Movies</h3>
-These are movies that we currently have in our system.  Don't see one you want? <a href=/instructions_create_new_url>Add it</a> and contribute!
-We are a community driven resource, where anybody can notice content in movies they watch and add it to our system.  We would love your help!
+These are movies that we currently have in our system.  Don't see one you want? <a href=/instructions_create_new_url>Add it</a> to contribute!
+We are a community driven resource, where anybody can notice content in movies they watch and add it to our system.  We would loooove your help!
 
 <table class="table table-striped">
   <thead>
