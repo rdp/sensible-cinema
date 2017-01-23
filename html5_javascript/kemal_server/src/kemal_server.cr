@@ -20,22 +20,18 @@ def with_db
   yield db ensure db.close
 end
  
-def standardized_param_url(env)
-  unescaped = env.params.query["url"] # already unescaped it on its way in, kind of them..
-  standardize_url unescaped
-end
-
 def standardize_url(unescaped)
   # wait why are we doing this here *and* in javascript land? I guess its so the manual can enter here but...but...
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
   end
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www for amazon
-	unescaped.split("#")[0]
+  unescaped.split("#")[0]
 end
 
 get "/for_current_just_settings_json" do |env|
-  sanitized_url = sanitize_html standardized_param_url(env)
+  real_url = env.params.query["url"] # already unescaped it on its way in, kind of them..
+  sanitized_url = sanitize_html standardize_url(real_url)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   # this one looks up by URL and episode number
   with_db do |conn|
@@ -102,7 +98,6 @@ def get_url_from_url_id(env)
 end
 
 get "/new_empty_tag/:url_id" do |env|
- 
   url = get_url_from_url_id(env)
   tag = Tag.new url
   last_tag = url.last_tag_or_nil
@@ -173,31 +168,31 @@ get "/view_url/:url_id" do |env|
 end
 
 def get_title_and_sanitized_standardized_canonical_url(real_url)
-    begin
-      response = HTTP::Client.get real_url # download that page :)
-    rescue ex
-      raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
-    end
-    real_url = standardize_url(real_url) # put after so the error message is friendlier :)
-    if response.body =~ /<title[^>]*>(.*)<\/title>/i
-      title = $1.strip
-    else
-      title = "please enter title here" # hopefully never get here :|
-    end
-    # startlingly, canonical from /gp/ sometimes => /gp/ yikes
-    if response.body =~ /<link rel="canonical" href="([^"]+)"/i
-      # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to https://smile.amazon.com/Avatar-Last-Airbender-Season-3/dp/B0190R77GS
-      # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
-      # but still some improvement FWIW :|
-      puts "using canonical #{$1}"
-      real_url = $1
-    end
-    if real_url.includes?("amazon.com") && real_url.includes?("/gp/") # gp is old, dp is new, we only want dp ever 
-      # we should never get here now FWIW, since it converts to /dp/ with canonical above
-      raise "appears you're using an amazon web page that is an old style like /gp/ if this is a new movie, please search in amazon for it again, and you should find a url like /dp/, and use that
-             if it is an existing movie, enter it as the amazon_second_url instead of main url"
-    end
-    [title, sanitize_html standardize_url(real_url)] # standardize in case it is smile.amazon
+  begin
+    response = HTTP::Client.get real_url # download that page :)
+  rescue ex
+    raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
+  end
+  real_url = standardize_url(real_url) # put after so the error message is friendlier :)
+  if response.body =~ /<title[^>]*>(.*)<\/title>/i
+    title = $1.strip
+  else
+    title = "please enter title here" # hopefully never get here :|
+  end
+  # startlingly, canonical from /gp/ sometimes => /gp/ yikes
+  if response.body =~ /<link rel="canonical" href="([^"]+)"/i
+    # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to https://smile.amazon.com/Avatar-Last-Airbender-Season-3/dp/B0190R77GS
+    # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
+    # but still some improvement FWIW :|
+    puts "using canonical #{$1}"
+    real_url = $1
+  end
+  if real_url.includes?("amazon.com") && real_url.includes?("/gp/") # gp is old, dp is new, we only want dp ever 
+    # we should never get here now FWIW, since it converts to /dp/ with canonical above
+    raise "appears you're using an amazon web page that is an old style like /gp/ if this is a new movie, please search in amazon for it again, and you should find a url like /dp/, and use that
+           if it is an existing movie, enter it as the amazon_second_url instead of main url"
+  end
+  [title, sanitize_html standardize_url(real_url)] # standardize in case it is smile.amazon
 end
 
 class String
@@ -298,18 +293,18 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
     tag_edit_list = TagEditList.new params["url_id"].to_i
   end
 
-	tag_edit_list.description = sanitize_html params["description"]
-	tag_edit_list.status_notes = sanitize_html params["status_notes"]
-	tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
-	tag_ids = [] of Int32
-	actions = [] of String
-	env.params.body.each{|name, value|
-	  if name =~ /tag_select_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :|
-		  tag_ids << $1.to_i
-			actions << value
-		end
-	}
-	
+  tag_edit_list.description = sanitize_html params["description"]
+  tag_edit_list.status_notes = sanitize_html params["status_notes"]
+  tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
+  tag_ids = [] of Int32
+  actions = [] of String
+  env.params.body.each{|name, value|
+  if name =~ /tag_select_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :|
+     tag_ids << $1.to_i
+    actions << value
+    end
+  }
+
   tag_edit_list.create_or_refresh(tag_ids, actions)
   set_flash_for_next_time(env, "successfully saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
   save_local_javascript [tag_edit_list.url], tag_edit_list.inspect, env
