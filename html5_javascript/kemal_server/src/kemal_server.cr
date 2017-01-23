@@ -63,6 +63,7 @@ end
 
 get "/nuke_test_by_url" do |env|
   real_url = env.params.query["url"]
+  raise("cannot nuke non test movies, please ask us if you want to delete movie")  unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
   url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
 	if url
