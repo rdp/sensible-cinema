@@ -187,7 +187,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	topLineEditDiv.innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current time=" + timeStampToHuman(cur_time) + " " + extra_message;
+	document.getElementById('tag_layer_top_line').innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current time=" + timeStampToHuman(cur_time);
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
@@ -264,8 +264,7 @@ function addEditUi() {
 	allEditStuffDiv.id = "all_edit_stuff";
 	allEditStuffDiv.innerHTML = `
 	<style>
-	  #all_edit_stuff a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}
-	  .moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}
+	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: -1px -1px #000000;} #all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: -1px -1px #000000;}
 	</style>;`
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
@@ -284,16 +283,10 @@ function addEditUi() {
 	    Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later -->
-	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new content edit tag</a>`;
+	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new movie content tag</a>`;
   // and stay visible
   allEditStuffDiv.appendChild(currentlyEditingDiv);
 
-  topLineEditDiv = document.createElement('div');
-  topLineEditDiv.style.position = 'absolute';
-  topLineEditDiv.style.height = '30px';
-  topLineEditDiv.style.display = 'none';
-  allEditStuffDiv.appendChild(topLineEditDiv);
-  
   tagLayer = document.createElement('div');
 	tagLayer.id = "tagLayer";
   tagLayer.style.position = 'absolute';
@@ -305,6 +298,7 @@ function addEditUi() {
   
   tagLayer.innerHTML = `
   <div class="moccasin">
+	<div id='tag_layer_top_line'><!-- filled in later --></div>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -414,13 +408,11 @@ function inAddMode() {
 
 function displayAddTagStuffIfInAddMode() {
   if (inAddMode()){
-    displayDiv(topLineEditDiv);
     displayDiv(tagLayer);
 	}
 }
 
 function hideAddTagStuff() {
-  hideDiv(topLineEditDiv);
   hideDiv(tagLayer);
 }
 
@@ -448,10 +440,8 @@ function setEditedControlsToTopLeft() {
   currentlyEditingDiv.style.left = left + "px";
   currentlyEditingDiv.style.top = top + "px";
 	top += 35; // put rest below the currentlyEditingDiv line
-  topLineEditDiv.style.left = left + "px"; 
-  topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
-  tagLayer.style.top = (top + 50) + "px"; // below topLineEditDiv
+  tagLayer.style.top = top + "px";
 }
 
 function addToCurrentEditArray() {
