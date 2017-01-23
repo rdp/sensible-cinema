@@ -73,7 +73,7 @@ get "/nuke_test_by_url" do |env|
 		}
 		url.tags.each &.destroy
 		url.destroy
-	  set_flash_for_next_time env, "nuked movie from db"
+	  set_flash_for_next_time env, "nuked testmovie from db, you can start over and do some more test editing on a blank/clean slate now"
 	else
 	  raise "not found?"
 	end
