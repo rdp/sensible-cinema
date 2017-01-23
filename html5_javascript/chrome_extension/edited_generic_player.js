@@ -284,7 +284,7 @@ function addEditUi() {
 	    Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later -->
-	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new movie content tag</a>`;
+	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new tag or create movie, this will be replaced...</a>`;
   // and stay visible
   allEditStuffDiv.appendChild(currentlyEditingDiv);
 
@@ -328,8 +328,8 @@ function addEditUi() {
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
 	<br/>
   <a href=% onclick="showMoviePage(); return false;" </a>Movie edit page</a>
-	<br/>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">re-edit just passed</a>
+	<!-- broken br/>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">re-edit just passed</a-->
 	<br/>
   <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
 	</div>
@@ -628,7 +628,7 @@ function parseSuccessfulJsonNewUrl(json_string) {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 	}
 	displayDiv(document.getElementById("currently_filtering_id"));
-  document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag"; // in case it said unedited... before
+  document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag click here"; // in case it said unedited... before
 	
 }
 
