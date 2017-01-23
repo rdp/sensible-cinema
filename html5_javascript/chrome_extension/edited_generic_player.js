@@ -326,19 +326,19 @@ function addEditUi() {
 	<br/>
   <input type='submit' value='Save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
-  <a href='#' onclick="seekToTime(video_element.currentTime -5); return false;">-5s</a>
-  <a href="#" onclick="video_element.playbackRate -= 0.1; return false;">&lt;&lt;</a>
+  <input type='button' onclick="seekToTime(video_element.currentTime -5); return false;" value='-5s'/>
+  <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
   <span id='playback_rate'>1.00x</span>
-  <a href="#" onclick="video_element.playbackRate += 0.1; return false;">&gt;&gt;</a>
-  <a href="#" onclick="stepFrame(); return false;">frame</a>
-  <a href="#" onclick="video_element.play(); return false;">&#9654;</and>
-  <a href="#" onclick="pauseVideo(); return false;">&#9612;&#9612;</a>
+  <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
+  <input type='button' onclick="stepFrame(); return false;" value='frame'/>
+  <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
+  <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
 	<!--br/>
   <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
-  <a href="#" onclick="showMoviePage(); return false;">Movie edit page</a>
+  <input type='button' onclick="showMoviePage(); return false;" value='Movie edit page'/>
 	<br/>
-  <a href="#" onclick="closeEditor(); return false;">✕ Hide editor</a>
+  <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
 	</div>
   `;
   
