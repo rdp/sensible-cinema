@@ -1,12 +1,17 @@
 <img src=/camera.128.png width=125px;/> <h1>Play it your way!</h1>
 
-<br/>Offering personalized playback of amazon/amazon prime/youtube, and more! (ask if you want more, like netflix/hulu).
+<br/>Offering personalized playback of amazon/amazon prime/youtube, and more!
 <br/>We believe you have the right to watch shows the way you'd like from the privacy of your home, and we're here to help you get there.
-Play it your way is free (and hopes to remain so)!  That being said, we know a lot of you are passionate about this space and we'd love your support.  If you'd like us to add a donate or "donate monthly"  option, let us know and we'll get it started!  Every little bit will help! :)
+<br/>Play it your way is free (and hopes to remain so)!  
+<br/>That being said, we know a lot of you are passionate about this space and we'd love your support.  If you'd like us to add a donate or "donate monthly"  option, let us know and we'll get it started!  Every little bit will help! :)
 <br/>
 
-<h2 id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
-Install the edited playback software by installing our <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank -->
+<div id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
+<h2> How it works:</h2>
+Play it your way works by monitoring your computer as it plays back your legally streamed movies online (ex: amazon, youtube, etc.).  When it detects you're in a part your would prefer to not see, or not hear, it jumps over those scenes or mutes them for you.  
+<br>You can watch it on your laptop, or to hookup to your TV, you're going to want to run a long (<a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/BlueRigger-Wall-High-Speed-Cable/dp/B004GW25WY?sa-no-redirect=1'>50'</a>) HDMI cable from your computer to your TV.
+
+<h2>Install the edited playback software by installing our <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank -->
 chrome extension</a> then come back here!</h2>
 <div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green"><br/>You successfully installed the  chrome extension, now get watching! Start playing it your way!</font>
 </div>
@@ -52,7 +57,7 @@ checkIfChromeExtensionInstalled();
 timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
 
 <% if File.exists? "this_is_development" %>
-  markAsGoodChromeExtension(); // fake it out LOL
+  //markAsGoodChromeExtension(); // fake it out LOL
 <% end %>
 
 function alertIfNoExtension() {
@@ -132,8 +137,6 @@ We are a community driven resource, where anybody can notice content in movies t
 <br/>
 <br/>
 
-See <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss the program, or for any questions.
+See <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss the program, or for any questions, (ask if you want more, like netflix/hulu).
 <br/>
-<br/>
-You too can purchase this program for $2 (currently free however), email the google group for details if you'd like to contribute monetarily!
 </pre>
