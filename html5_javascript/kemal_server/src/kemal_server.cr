@@ -168,7 +168,7 @@ post "/save_tag/:url_id" do |env|
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   tag.save
   save_local_javascript [url], tag.inspect, env
-  set_flash_for_next_time(env, "saved tag! reload browser if this was a manual edit where you didn't click to create it...")
+  set_flash_for_next_time(env, "saved tag details, you can close this window now, it will have already been adopted by your playing movie...")
   env.redirect "/view_url/#{url.id}"
 end
 

@@ -259,56 +259,52 @@ function timestamp_log(message, cur_time, last_start, last_end) {
 }
 
 function addEditUi() {
-  exposeEditScreenDiv = document.createElement('div');
-  exposeEditScreenDiv.style.position = 'absolute';
-  exposeEditScreenDiv.style.height = '30px';
-  exposeEditScreenDiv.style.background = '#000000';
-  exposeEditScreenDiv.style.zIndex = "99999999"; // on top :)
-  exposeEditScreenDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  exposeEditScreenDiv.style.fontSize = "15px";
-  exposeEditScreenDiv.style.color = "Grey";
-	exposeEditScreenDiv.id = "top_left";
-  exposeEditScreenDiv.innerHTML = 
-	`<style>#top_left a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}</style>
-	  <div id=currently_filtering_id>Currently editing:
-	    <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
+	
+	allEditStuffDiv = document.createElement('div');
+	allEditStuffDiv.id = "all_edit_stuff";
+	allEditStuffDiv.innerHTML = `
+	<style>
+	  #all_edit_stuff a:link { text-shadow: -1px -1px #000000;} #top_left a:visited { text-shadow: -1px -1px #000000;}
+	  .moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}
+	</style>;`
+  allEditStuffDiv.style.color = "white";
+  allEditStuffDiv.style.background = '#000000';
+  allEditStuffDiv.style.zIndex = "99999999"; // on top :)
+  allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  allEditStuffDiv.style.fontSize = "15px";
+  allEditStuffDiv.style.textShadow="2px 1px 1px black";
+  document.body.appendChild(allEditStuffDiv);
+	
+  currentlyEditingDiv = document.createElement('div');
+  currentlyEditingDiv.style.position = 'absolute';
+  currentlyEditingDiv.style.height = '30px';
+	currentlyEditingDiv.id = "top_left";
+  currentlyEditingDiv.innerHTML = 
+	` <div id=currently_filtering_id>
+	    Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
-	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully empty to start -->
+	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later -->
 	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new content edit tag</a>`;
   // and stay visible
-  document.body.appendChild(exposeEditScreenDiv);
+  allEditStuffDiv.appendChild(currentlyEditingDiv);
 
   topLineEditDiv = document.createElement('div');
   topLineEditDiv.style.position = 'absolute';
   topLineEditDiv.style.height = '30px';
-  topLineEditDiv.style.background = '#000000';
-  topLineEditDiv.style.zIndex = "99999999"; // on top :)
-  topLineEditDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  topLineEditDiv.style.color = "rgb(255,255,255) "; // grey
-  topLineEditDiv.style.textShadow="2px 1px 1px black";
-  topLineEditDiv.style.fontSize = "13px";
   topLineEditDiv.style.display = 'none';
-  document.body.appendChild(topLineEditDiv);
+  allEditStuffDiv.appendChild(topLineEditDiv);
   
   tagLayer = document.createElement('div');
 	tagLayer.id = "tagLayer";
   tagLayer.style.position = 'absolute';
   tagLayer.style.width = '500px';
   tagLayer.style.height = '30px';
-  tagLayer.style.background = '#000000';
-  tagLayer.style.zIndex = "99999999"; // on top :)
-  tagLayer.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  tagLayer.style.color = "white"; // unused I think?
-  tagLayer.style.textShadow="2px 1px 0px black";
-  tagLayer.style.fontSize = "13px";
   tagLayer.style.display = 'none';
 	
-  document.body.appendChild(tagLayer);
+  allEditStuffDiv.appendChild(tagLayer);
   
-  // inject the "add tag" UI
   tagLayer.innerHTML = `
   <div class="moccasin">
-	<style>.moccasin a:link { color: rgb(255,228,181);} .moccasin a:visited { color: rgb(255,228,181);}</style>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -324,19 +320,21 @@ function addEditUi() {
   </select>
   <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
 	<br/>
-  <input type='submit' value='Save edit' onclick="saveEditButton(); pauseVideo();">
+  <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
-  <input type='button' onclick="seekToTime(video_element.currentTime -5); return false;" value='-5s'/>
+  <br/>
+  <input type='button' onclick="seekToTime(video_element.currentTime - 5); return false;" value='-5s'/>
+  <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/>
   <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
   <span id='playback_rate'>1.00x</span>
   <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
   <input type='button' onclick="stepFrame(); return false;" value='frame'/>
   <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
-	<!--br/>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">open last</a-->
 	<br/>
-  <input type='button' onclick="showMoviePage(); return false;" value='Movie edit page'/>
+  <a href=% onclick="showMoviePage(); return false;" </a>Movie edit page</a>
+	<br/>
+  <a href="#" onclick="openEditMostRecentPassed(); return false;">re-edit just passed</a>
 	<br/>
   <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
 	</div>
@@ -447,9 +445,9 @@ function setEditedControlsToTopLeft() {
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
 	}
-  exposeEditScreenDiv.style.left = left + "px";
-  exposeEditScreenDiv.style.top = top + "px";
-	top += 35; // put rest below the exposeEditScreenDiv line
+  currentlyEditingDiv.style.left = left + "px";
+  currentlyEditingDiv.style.top = top + "px";
+	top += 35; // put rest below the currentlyEditingDiv line
   topLineEditDiv.style.left = left + "px"; 
   topLineEditDiv.style.top = top + "px";
   tagLayer.style.left = left + "px";
@@ -562,7 +560,7 @@ function saveEditButton() {
             "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   window.open(url, '_blank');
 	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-	document.getElementById('endy').value = '0m 0.00s';
+	// too disconcerting to see it all cleared :| document.getElementById('endy').value = '0m 0.00s';
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server now
   setTimeout(reloadForCurrentUrl, 20000); // and get details :)
 }
