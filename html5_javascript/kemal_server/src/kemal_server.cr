@@ -66,8 +66,8 @@ get "/instructions" do |env|
   render "views/instructions.ecr", "views/layout.ecr"
 end
 
-get "/create_new" do | env|
-  render "views/create_new.ecr", "views/layout.ecr"
+get "/instructions_create_new_url" do | env|
+  render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
 get "/delete_url/:url_id" do |env|
@@ -206,7 +206,7 @@ class String
   end
 end
 
-get "/new_url" do |env| # add_url add_new
+get "/new_url_from_plugin" do |env| # add_url add_new
   real_url = env.params.query["url"]
   incoming = env.params.query
   episode_number = incoming["episode_number"].to_i
