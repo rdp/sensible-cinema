@@ -27,7 +27,7 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 
 <div id="category_div_id">
 category:
-<select name="category" id='category_select' onchange="updateSubCat();">
+<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = 'unknown'; // reset in case changed from other">
   <option value="unknown">unknown -- please select an option</option>
   <option value="profanity">spoken words (profanity, attacks, etc.)</option>
   <option value="violence">violence</option>
@@ -47,14 +47,15 @@ sub category
 <select name="subcategory" id='subcategory_select'>
     <option value="unknown">unknown</option>
 
-    <option value="initial theme song">movie-content -- initial theme song/initial credits</option>
+    <option value="initial theme song">movie-content -- initial song/initial credits</option>
     <option value="closing credits">movie-content -- closing credits</option>
     <option value="song occurrence">movie-content -- song occurrence</option>
     <option value="joke edit">movie-content -- joke edit -- edits that make it funny when edited</option>
+    <option value="content other">movie-content -- other</option>
 		
-    <option value="personal attack command">profanity -- attack ("shut up" etc.)</option>
     <option value="personal insult">profanity -- insult ("moron", "idiot" etc.)</option>
-    <option value="bathroom humor">profanity -- bathroom humor, poop, anything gross, etc.</option>
+    <option value="personal attack command">profanity -- attack ("shut up" etc.)</option>
+    <option value="bathroom humor">profanity -- bathroom humor, poop, gross, crude, etc.</option>
     <option value="bodily part reference mild">profanity -- bodily part reference mild (butt, bumm...)</option>
     <option value="bodily part reference harsh">profanity -- bodily part reference harsh</option>
     <option value="sexual reference">profanity -- sexual reference/innuendo</option>
@@ -63,15 +64,16 @@ sub category
     <option value="deity g**">profanity -- deity (gosh dang but the real words)</option>
     <option value="euphemized four letter">profanity -- euphemized 4-letter (crap, dang, gosh)</option>
     <option value="a**">profanity -- a** anything</option>
-    <option value="d***">profanity -- d***</option>
+    <option value="d***">profanity -- d*** anything</option>
     <option value="h***">profanity -- h***</option>
     <option value="s***">profanity -- s***</option>
     <option value="f***">profanity -- f-bomb expletive</option>
     <option value="f*** sexual">profanity -- f-bomb sexual connotation</option>
+		<option value="verbal other">profanity -- other </option>
 		
-    <option value="gore">violence -- gore/open wound</option>
     <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>
     <option value="stabbing/shooting yes blood">violence -- stabbing/shooting yes blood</option>
+    <option value="gore">violence -- gore/open wound</option>
     <option value="light fight">violence -- light fighting (single punch/kick)</option>
     <option value="sustained fight">violence -- sustained punching/fighting</option>
     <option value="killing">violence -- killing</option>
@@ -87,10 +89,12 @@ sub category
     <option value="foreplay">physical -- sex foreplay</option>
     <option value="implied sex">physical -- implied sex</option>
     <option value="sex">physical -- explicit sex</option>
+    <option value="physical other">physical -- other</option>
 
     <option value="drugs">substance-abuse -- drug use</option>
     <option value="alcohol">substance-abuse -- alcohol drinking</option>
     <option value="smoking">substance-abuse -- smoking</option>
+		<option value="substance-abuse other">substance-abuse -- other</option>
 
     <% ["frightening/startling scene", "suspenseful fight \"will they win?\""].each do |type|  %>
       <option value='<%= type %> OK age 3'>suspense -- <%= type %> (OK age 3+)</option>
@@ -109,7 +113,7 @@ select.value = '<%= tag.subcategory %>';
 
 $(document).ready(function() {
   if (document.getElementById('category_select').value != 'unknown') {
-    updateSubCat(); // show it, prune it :)
+    showSubCatWithRightOptionsAvailable(); // show it, prune it :)
   }
 });
 
@@ -124,11 +128,10 @@ select.addEventListener(
      false
 );
 	
-function updateSubCat() {
+function showSubCatWithRightOptionsAvailable() {
   $('#subcategory_div_id').fadeIn();
   var type = document.getElementById("category_select").value; // profanity
-  $('option').each(function () {
-    console.log(this.text + '= ' + this.value);
+  $('#subcategory_div_id option').each(function () {
 		var cat_from_subcat = this.text.split(" ")[0]; // profanity
 		if (cat_from_subcat != type && this.text.includes(" -- ")) {
 		  this.style.display = "none";
@@ -143,11 +146,11 @@ function updateSubCat() {
 <br/>
 If there are any missing please let us know!
 <br/>
-one or two word "end user friendly" non spoiler (euphemized) details (e.g. "kill a butterfly" or "specific song name")
+one or two word "end user friendly" (euphemized) details (e.g. "animated violence" or "specific song name") (no spoilers here):
 <br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 <br/>
-internal details (ex: "sally said .... OK?" (dots instead of real profanity)) optional, will only be seen by editors
+internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:
 <br/>
 <textarea name="more_details" rows="3" cols="40" ><%= tag.more_details %></textarea>
 <br/>
