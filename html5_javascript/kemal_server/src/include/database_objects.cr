@@ -404,6 +404,18 @@ class TagEditList
     end
   end
 	
+  def destroy_no_cascade
+    with_db do |conn|
+      conn.exec("delete from tag_edit_list where id = ?", id)
+    end
+  end
+	
+	def destroy_tag_edit_list_to_tags
+    with_db do |conn|
+      conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id)
+    end	
+	end
+	
 
 end
 

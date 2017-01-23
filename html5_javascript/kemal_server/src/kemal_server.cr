@@ -29,9 +29,13 @@ def standardize_url(unescaped)
   unescaped.split("#")[0]
 end
 
-get "/for_current_just_settings_json" do |env|
+def db_style_from_query_url(env)
   real_url = env.params.query["url"] # already unescaped it on its way in, kind of them..
-  sanitized_url = sanitize_html standardize_url(real_url)
+  sanitize_html standardize_url(real_url)
+end
+
+get "/for_current_just_settings_json" do |env|
+  sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   # this one looks up by URL and episode number
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
@@ -57,9 +61,23 @@ get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
-get "/delete_url_by_url" do |env|
+get "/nuke_test_by_url" do |env|
   real_url = env.params.query["url"]
-  sanitized = sanitize_html(standardize_url(real_url))
+  sanitized_url = db_style_from_query_url(env)
+  url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
+	if url
+	
+	  url.tag_edit_lists.each{|tag_edit_list|
+		  tag_edit_list.destroy_tag_edit_list_to_tags
+		  tag_edit_list.destroy_no_cascade
+		}
+		url.tags.each &.destroy
+		url.destroy
+	  set_flash_for_next_time env, "nuked movie from db"
+	else
+	  raise "not found?"
+	end
+	
 end
 
 get "/delete_url/:url_id" do |env|
@@ -69,7 +87,7 @@ get "/delete_url/:url_id" do |env|
     tag.destroy 
   }
   url.destroy
-  set_flash_for_next_time env, "deleted movie from db"
+  set_flash_for_next_time env, "deleted movie from db " + url.url
   # could/should remove from cache :|
   env.redirect "/"
 end
