@@ -118,6 +118,13 @@ class Url
       end
     end
 	end
+	
+	private def timestamps_of_type_for_video(conn, db_url, type) 
+	  tags = conn.query("select * from tags where url_id=? and default_action = ?", db_url.id, type) do |rs|
+	    Tag.from_rs rs
+	  end
+	  tags.map{|tag| [tag.start, tag.endy]}
+	end
   
   def tags_by_type
     with_db do |conn|

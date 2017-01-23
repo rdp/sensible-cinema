@@ -34,24 +34,15 @@ get "/for_current_just_settings_json" do |env|
   sanitized_url = sanitize_html standardize_url(real_url)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   # this one looks up by URL and episode number
-  with_db do |conn|
-    url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
-    if !url_or_nil
-      env.response.status_code = 412 # avoid kemal default 404 handler :| 412 => precondition failed LOL
-      "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
-    else
-      url = url_or_nil.as(Url)
-      env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-      json_for(url, env)
-    end
+  url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
+  if !url_or_nil
+    env.response.status_code = 412 # avoid kemal default 404 handler :| 412 => precondition failed LOL
+    "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
+  else
+    url = url_or_nil.as(Url)
+    env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
+    json_for(url, env)
   end
-end
-
-def timestamps_of_type_for_video(conn, db_url, type) 
-  tags = conn.query("select * from tags where url_id=? and default_action = ?", db_url.id, type) do |rs|
-    Tag.from_rs rs
-  end
-  tags.map{|tag| [tag.start, tag.endy]}
 end
 
 def json_for(db_url, env)
@@ -64,6 +55,11 @@ end
 
 get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
+end
+
+get "/delete_url_by_url" do |env|
+  real_url = env.params.query["url"]
+  sanitized = sanitize_html(standardize_url(real_url))
 end
 
 get "/delete_url/:url_id" do |env|
