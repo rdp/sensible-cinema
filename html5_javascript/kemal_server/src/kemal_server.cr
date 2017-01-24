@@ -304,6 +304,14 @@ get "/new_tag_edit_list/:url_id" do |env|
 	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
 end
 
+get "/delete_tag_edit_list/:tag_id" do |env|
+  tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
+	tag_edit_list.destroy_tag_edit_list_to_tags
+	tag_edit_list.destroy_no_cascade
+  set_flash_for_next_time env, "deleted one tag edit list"
+  env.redirect "/view_url/#{tag_edit_list.url.id}"
+end
+
 get "/2edit_tag_edit_list/:tag_id" do |env|
   tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
 	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
