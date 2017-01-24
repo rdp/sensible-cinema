@@ -418,4 +418,13 @@ def table_row(first_cell, second_cell)
   "<tr><td>#{first_cell}</td><td>#{second_cell}</td></tr>";
 end
 
+def google_search_string(url)
+         google_search = URI.escape(url.name, true)
+         if url.episode_number != 0
+           google_search += URI.escape(" " + url.episode_number.to_s + " " + url.episode_name, true)
+         end
+				 google_search
+end
+
+
 Kemal.run
