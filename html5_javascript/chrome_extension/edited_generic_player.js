@@ -337,9 +337,6 @@ function addEditUi() {
 	</div>
   `;
   
-  // this only works for the few mentioned in externally_connectable in manifest.json TODO
-	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
-
   // don't really need these anymore FWIW we call it once per frame
   addEvent(window, "resize", function(event) {
     setEditedControlsToTopLeft();
@@ -637,7 +634,7 @@ function parseSuccessfulJsonNewUrl(json_string) {
 	}
 	displayDiv(document.getElementById("currently_filtering_id"));
   document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag click here"; // in case it said unedited... before
-	
+	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 }
 
 function alertEditorWorkingAfterTimeout(message, post_message) {

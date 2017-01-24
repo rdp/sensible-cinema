@@ -105,7 +105,7 @@ function autoStartOnBigThree() {
       console.log("not setting to ... from an iframe");
     }
     else {
-      chrome.runtime.sendMessage({text: "wait", color: "#808080", 
+      chrome.runtime.sendMessage({text: "vid?", color: "#808080", 
 			      details: "edited playback is enabled and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
@@ -127,7 +127,7 @@ function autoStartOnBigThree() {
   else {
     // non big 3, just poll, if we find a video *and* filter do something about it...
     if (!inIframe()) {
-      chrome.runtime.sendMessage({text: "n st", color: "#808080", 
+      chrome.runtime.sendMessage({text: "vid?", color: "#808080", 
 			         details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
     } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {

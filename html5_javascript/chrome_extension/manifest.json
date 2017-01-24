@@ -20,8 +20,5 @@
   }],
   "web_accessible_resources": ["edited_generic_player.js"],
   "icons": { "128": "camera.128.png" },
-  "background": { "scripts": ["background.js"] },
-  "externally_connectable": {
-    "matches": ["*://*.amazon.com/*", "*://play.google.com/*", "*://*.youtube.com/*"]
-  }
+  "background": { "scripts": ["background.js"] }
 }
