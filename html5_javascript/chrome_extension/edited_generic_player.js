@@ -210,6 +210,7 @@ function checkStatus() {
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
 	setEditedControlsToTopLeft(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
+//	console.log("done checking status");
 }
 
 function liveEpisodeString() {
@@ -269,7 +270,6 @@ function addEditUi() {
 	</style>;`
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
-  allEditStuffDiv.style.zIndex = "99999999"; // on top :)
   allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   allEditStuffDiv.style.fontSize = "15px";
   allEditStuffDiv.style.textShadow="2px 1px 1px black";
@@ -278,6 +278,7 @@ function addEditUi() {
   currentlyEditingDiv = document.createElement('div');
   currentlyEditingDiv.style.position = 'absolute';
   currentlyEditingDiv.style.height = '30px';
+  currentlyEditingDiv.style.zIndex = "99999999"; // doesn't inherit? gah
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id>
@@ -294,7 +295,8 @@ function addEditUi() {
   tagLayer.style.width = '500px';
   tagLayer.style.height = '30px';
   tagLayer.style.display = 'none';
-	
+  tagLayer.style.zIndex = "99999999";
+		
   allEditStuffDiv.appendChild(tagLayer);
   
   tagLayer.innerHTML = `
@@ -553,7 +555,7 @@ function saveEditButton() {
 	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
 	// too disconcerting to see it all cleared :| document.getElementById('endy').value = '0m 0.00s';
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server now
-  setTimeout(reloadForCurrentUrl, 20000); // and get details :)
+  //  setTimeout(reloadForCurrentUrl, 20000); // and get details :) but we don't use them today really :|
 }
 
 function showMoviePage() {
@@ -823,7 +825,7 @@ function showEditLinkMouseJustMoved() {
 	displayDiv(document.getElementById("top_left"));
 	displayAddTagStuffIfInAddMode();
   clearTimeout(mouse_move_timer);
-  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, inAddMode() ? 5000 : 1000); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, (inAddMode() ? 5000 : 2000)); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
 }
 
 // helper method
