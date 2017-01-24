@@ -84,8 +84,8 @@ end
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   url.tags.each { |tag|
-    save_local_javascript [tag.url], "removed #{tag}", env
-    tag.destroy 
+    #save_local_javascript [tag.url], "removed #{tag}", env
+    #tag.destroy 
   }
   url.destroy
   set_flash_for_next_time env, "deleted movie from db " + url.url
