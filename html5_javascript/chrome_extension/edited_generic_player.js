@@ -281,11 +281,12 @@ function addEditUi() {
   currentlyEditingDiv.style.zIndex = "99999999"; // doesn't inherit? gah
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
-	` <div id=currently_filtering_id>
+	` <div id=currently_filtering_id style='display: none;'>
 	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
+	  <div id=loading_div_id>Loading...</div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later -->
-	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new tag or create movie, this will be replaced...</a>`;
+	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_or_add_movie_link_id"><!-- will be filled in --></a>`;
   // and stay visible
   allEditStuffDiv.appendChild(currentlyEditingDiv);
 
@@ -402,14 +403,14 @@ function addForNewEditToScreen() {
 		pauseVideo();		
   }
 	else {
-		// case "Add new content tag" XXX this is screwy messing with innerHTML :|
-    document.getElementById("add_edit_link_id").innerHTML = "";
+		// case "Add new content tag" XXX this is screwy but...but...LOL
+    document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "";
 		displayAddTagStuffIfInAddMode();
 	}
 }
 
 function inAddMode() {
-	return document.getElementById("add_edit_link_id").innerHTML == "" ;
+	return document.getElementById("add_edit_or_add_movie_link_id").innerHTML == "" ;
 }
 
 function displayAddTagStuffIfInAddMode() {
@@ -423,7 +424,7 @@ function hideAddTagStuff() {
 }
 
 function closeEditor() {
-  document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag";
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Add new content edit tag click here";
 	hideAddTagStuff();
 }
 
@@ -633,9 +634,42 @@ function parseSuccessfulJsonNewUrl(json_string) {
     post_message = "\nYou may sit back and relax while you enjoy it now!";
 	}
 	displayDiv(document.getElementById("currently_filtering_id"));
-  document.getElementById("add_edit_link_id").innerHTML = "Add new content edit tag click here"; // in case it said unedited... before
+	hideDiv(document.getElementById("loading_div_id"));
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Add new content edit tag click here"; // in case it said unedited... before
 	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 }
+
+
+function loadFailed(status) {
+  mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
+  // plus if they paste it in it gets here, so...basically load the no-op :|
+  if (current_json != null) {
+    current_json.tags = [];
+  }
+  name = liveFullNameEpisode();
+  episode_name = liveEpisodeString();
+  expected_episode_number = liveEpisodeNumber();
+  url_id = 0; // reset
+	closeEditor();
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Unedited, click to enable edited..."; // she's dead jim XX confirm prompt on it to create?
+	hideDiv(document.getElementById("currently_filtering_id"));
+	hideDiv(document.getElementById("loading_div_id"));
+	
+	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
+  old_current_url = getStandardizedCurrentUrl();
+  old_episode = liveEpisodeNumber(); 
+  sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  if (status > 0) {
+		// too annoying/frequent :|
+		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
+  }
+  else {
+    alert("appears the play it my way server is currently down, please alert us! Edits disabled for now...");
+		document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Play it my way Server down, try again later...";
+  }
+  startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
+}
+
 
 function alertEditorWorkingAfterTimeout(message, post_message) {
 	setTimeout(function() {
@@ -762,34 +796,6 @@ function checkIfEpisodeChanged() {
 
 function alertHaveNoneClickOverThereToAddOne() {
   alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have tags for\n\n" + liveFullNameEpisode() + "\n\n yet, you can add this movie to the system by clicking the 'Unedited, click to enable edited' link to the left"));
-}
-
-function loadFailed(status) {
-  mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
-  // plus if they paste it in it gets here, so...basically load the no-op :|
-  if (current_json != null) {
-    current_json.tags = [];
-  }
-  name = liveFullNameEpisode();
-  episode_name = liveEpisodeString();
-  expected_episode_number = liveEpisodeNumber();
-  url_id = 0; // reset
-	closeEditor();
-  document.getElementById("add_edit_link_id").innerHTML = "Unedited, click to enable edited..."; // she's dead jim XX confirm prompt on it to create?
-	hideDiv(document.getElementById("currently_filtering_id"));
-	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
-  old_current_url = getStandardizedCurrentUrl();
-  old_episode = liveEpisodeNumber(); 
-  sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
-  if (status > 0) {
-		// too annoying/frequent :|
-		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
-  }
-  else {
-    alert("appears the play it my way server is currently down, please alert us! Edits disabled for now...");
-		document.getElementById("add_edit_link_id").innerHTML = "Play it my way Server down, try again later...";
-  }
-  startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
 
 var clean_stream_timer;
