@@ -101,7 +101,7 @@ We are a community driven resource, where anybody can notice content in movies t
 	       >watch</a>
        </td>
        <td><%= url.human_readable_company %></td>
-       <td><a href="/view_url/<%= url.id %>">view our tags (<%= url.tags.size %>)</a></td>
+       <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
        <td>
          <% if url.editing_status == "done" %>
            <SPAN STYLE="color: green;">
