@@ -19,7 +19,7 @@ already_loaded = false;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.action == "please_start") {
+        if (request.action == "please_start") { // message from popup
             var url = currentUrlNotIframe();
             if (url.includes("netflix.com/") || url.includes("hulu.com/")) {
               alert("terms of use on this website disallow us injecting code, please ask on the mailing list for support for watching these edited if it has been created yet");
@@ -36,6 +36,18 @@ chrome.runtime.onMessage.addListener(
             }
          };
 });
+
+// capture messages from the page and re-broadcast them: http://stackoverflow.com/a/41836393/32453
+window.addEventListener("message", function(event) {
+	console.log("got somefin");
+  if (event.source != window)
+    return;
+
+  if (event.data.type && (event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT")) {
+		console.log("sending on from site..." + event.data.payload)
+    chrome.runtime.sendMessage(event.data.payload); // send to rest of extension
+  }
+}, false);
 
 function findFirstVideoTagOrNull() {
    var all = document.getElementsByTagName("video");
@@ -93,7 +105,8 @@ function autoStartOnBigThree() {
       console.log("not setting to ... from an iframe");
     }
     else {
-      chrome.runtime.sendMessage({text: "...", color: "#808080", details: "edited playback is enabled and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
+      chrome.runtime.sendMessage({text: "wait", color: "#808080", 
+			      details: "edited playback is enabled and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
     console.log("big 3 polling for video tag...");
@@ -114,7 +127,8 @@ function autoStartOnBigThree() {
   else {
     // non big 3, just poll, if we find a video *and* filter do something about it...
     if (!inIframe()) {
-      chrome.runtime.sendMessage({text: ".", color: "#808080", details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
+      chrome.runtime.sendMessage({text: "n st", color: "#808080", 
+			         details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
     } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
     var interval = setInterval(function() {
       var local_video_tag;

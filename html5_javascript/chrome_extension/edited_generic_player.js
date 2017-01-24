@@ -338,7 +338,7 @@ function addEditUi() {
   `;
   
   // this only works for the few mentioned in externally_connectable in manifest.json TODO
-	chrome.runtime.sendMessage(editorExtensionId, {text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
+	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 
   // don't really need these anymore FWIW we call it once per frame
   addEvent(window, "resize", function(event) {
@@ -353,6 +353,12 @@ function addEditUi() {
 
 function pauseVideo() {
 	video_element.pause();
+}
+
+function sendMessageToPlugin(message) {
+window.postMessage({ type: "FROM_PAGE_TO_CONTENT_SCRIPT", 
+     payload: message }, "*");
+		 console.log("sent message" + message);
 }
 
 // method to bind easily to resize event
@@ -673,9 +679,9 @@ function parseSuccessfulJson(json_string) {
 	var option = document.createElement("option");
 	option.text = "all content tags (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
 	option.value = "-1"; // special case :|
-  option.setAttribute('selected', true); // default :| TODO not refresh
+  option.setAttribute('selected', true); // default :| XXXX I bet if we add an edit we lose the right value :|
 	dropdown.add(option, dropdown[0]);
-	console.log("finished parsing response");
+	console.log("finished parsing response JSON");
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
@@ -777,7 +783,7 @@ function loadFailed(status) {
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
-  chrome.runtime.sendMessage(editorExtensionId, {color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
 		// too annoying/frequent :|
 		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
