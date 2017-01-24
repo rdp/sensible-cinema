@@ -62,7 +62,7 @@ alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
 CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
 
 create unique index url_title_episode ON urls(name(256), amazon_episode_number); -- try to avoid accidental dupes
-ALTER TABLE urls RENAME INDEX url_title_episode TO unique_name_with_episode;
+ALTER TABLE urls RENAME INDEX url_title_episode TO unique_name_with_episode; -- rename an index
 
 ALTER TABLE urls CHANGE amazon_episode_name episode_name VARCHAR(1024);
 ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
@@ -96,8 +96,10 @@ CREATE TABLE tag_edit_list_to_tag (
 alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
 
 alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
--- done dev
 -- done prod
+
+ALTER TABLE `urls` CHANGE COLUMN `image_url` `image_local_filename` VARCHAR(2014) NOT NULL DEFAULT '';
+-- done dev
 
 --XXX rename all tables to singular
 

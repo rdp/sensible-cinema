@@ -14,7 +14,7 @@ class Url
     editing_status: String,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
-    image_url: String,
+    image_local_filename: String,
     review: String,
     amazon_prime_free_type: String, # "prime" "HBO"
     rental_cost: Float64,
@@ -34,7 +34,7 @@ class Url
     editing_status: String,
     wholesome_uplifting_level: Int32,
     good_movie_rating: Int32,
-    image_url: String,
+    image_local_filename: String,
     review: String,
     amazon_prime_free_type: String,
     rental_cost: Float64,
@@ -75,10 +75,10 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time).last_insert_id.to_i32
 			 # get create_timestamp for free by its default
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_url = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_url, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, id
       end
     end
   end
@@ -94,7 +94,7 @@ class Url
     @editing_status = ""
     @wholesome_uplifting_level = 0
     @good_movie_rating = 0
-    @image_url = ""
+    @image_local_filename = ""
     @review = ""
     @amazon_prime_free_type = ""
     @rental_cost = 0.0

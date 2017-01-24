@@ -362,7 +362,7 @@ post "/save_url" do |env|
   episode_name = sanitize_html HTML.unescape(params["episode_name"])
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
-  image_url = sanitize_html HTML.unescape(params["image_url"])
+  image_local_filename = sanitize_html HTML.unescape(params["image_local_filename"])
   review = params["review"]
   amazon_prime_free_type = params["amazon_prime_free_type"]
   rental_cost = params["rental_cost"].to_f
@@ -386,7 +386,7 @@ post "/save_url" do |env|
   db_url.wholesome_uplifting_level = wholesome_uplifting_level
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
-  db_url.image_url = image_url
+  db_url.image_local_filename = image_local_filename
   db_url.amazon_prime_free_type = amazon_prime_free_type
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
