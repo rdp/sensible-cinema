@@ -227,7 +227,7 @@ class Url
     end
   end
 	
-	def download_url(full_url)
+	def download_image_url(full_url)
 	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
 	  outgoing_filename = "#{id}_#{image_name}"
 		@image_local_filename = outgoing_filename

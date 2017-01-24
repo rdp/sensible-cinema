@@ -326,6 +326,7 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
   end
 
   tag_edit_list.description = sanitize_html params["description"]
+  raise "must have name" unless tag_edit_list.description.present?
   tag_edit_list.status_notes = sanitize_html params["status_notes"]
   tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   tag_ids = [] of Int32
@@ -408,13 +409,18 @@ post "/save_url" do |env|
   db_url.total_time = total_time
   db_url.save
 	
-	download_url = params["image_url"]
-	if download_url.size > 0
-	  # wait till now so it is guarantteed an id though this is paranoia
-  	db_url.download_url download_url
+  download_url = params["image_url"]
+  if !download_url.present? && !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
+    # one fer free!
+    youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
+    download_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+  end
+  if download_url.present?
+    # wait till now so it is guaranteed an id though this is odd :|
+    db_url.download_image_url download_url
     db_url.save # and don't store it as a DB key
-	end
-	
+  end
+
   save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s
