@@ -6,47 +6,36 @@ netflix ??
 == todo ==
 
 pay people for corpus
-  Rickey Amazon to start. Yep...just a start :|
-    most popular or new releases or just lots here or what? just anazon anyway...
-
-amazon reseller account...
-
-More beta testers...
+  my movies I want to see LOL
+  popular prime
+  new releases
+  plus feedback (beta test LOL)
 
 resurrect avatar my one episode LOL
   just redo it LOL
+  Melissa test too, kids LOL
+
+jruby subtitle finder integrate web site...maybe upload
 
 main page more persuasive/awesome [nik?]
+  legal/ethics page meh...
 
-if it goes to new youtube doesn't "disable" the popup right somehow...
+guinea pigs to consume (beta test consumption?)
 
-instructions (only) for jruby subtitle finder for now :)
-  integrate them into websitez how hard can it be? LOL
-    It's unfunctional today!
-
-legal/ethics page meh...
-
-guinea pigs to consume
-
-more about pay me LOL
+more pay me donation options/ amazon reseller account...
 
 some way to link "to your own edit" of something [prompt to install this of course LOL]
 
-allow upload images :|
-
-facebook page
-
-mention uservoice
-
-can you obscure quarters of the screen possibly? or percentage...or circle...check FMA LOL
+mention uservoice [?] why not?
 
 resurrect "fake" netflix playback :|
 
 allow them to still mute vids themselves if they want to though LOL...
 
 == todo never LOL ==
-deletes don't auto do constraints [make sure I have all constraints useful?]
-my own facebook
+Real ratings for shows so we can get an average rating :|
+allow upload images from file :|
+facebook page icon even more/promote...
 kickstarter
 "original author" for edit lists...[?]
 
@@ -54,28 +43,19 @@ real facebook login etc. etc...
 
 "remember" which ones they chose last [?]
 
+can you obscure quarters of the screen possibly? or percentage...or circle...check FMA LOL
+
 warn if edits overlap
 
 personalized uneditable content lists?
 
 more market research...maybe?
 
-can duplicate episodes :)
-  add_url duplicate from "any previous episode" LOL
-
-more srt files? :)
-  or at least real local subtitles ?
-
 sortable index?
   once I get started :)
   prettier?
 
 add iterm2 style paypal donate (link at least :)
-
-resurrect DVD's, tie to online? :)
-
-link to CC-BY-SA etc. synposes, links from wikipedia etc. LOL
-  just google it for now LOL
 
 they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
@@ -86,7 +66,6 @@ more plugins for edge, safari at least...if people care...
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000 users" etc. LOL
 
-Real ratings for shows so we can get an average rating :|
 
 == random notes ==
 
