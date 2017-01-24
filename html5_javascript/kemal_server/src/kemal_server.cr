@@ -182,20 +182,25 @@ get "/view_url/:url_id" do |env|
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
-def get_title_and_sanitized_standardized_canonical_url(real_url)
+def download(raw_url)
   begin
-    response = HTTP::Client.get real_url # download that page :)
+    response = HTTP::Client.get raw_url
+		response.body
   rescue ex
-    raise "unable to download that url" + real_url + " #{ex}" # expect url to work :|
+    raise "unable to download that url" + raw_url + " #{ex}" # expect url to work :|
   end
+end
+
+def get_title_and_sanitized_standardized_canonical_url(real_url)
   real_url = standardize_url(real_url) # put after so the error message is friendlier :)
-  if response.body =~ /<title[^>]*>(.*)<\/title>/i
+	downloaded = download(real_url)
+  if downloaded =~ /<title[^>]*>(.*)<\/title>/i
     title = $1.strip
   else
     title = "please enter title here" # hopefully never get here :|
   end
   # startlingly, canonical from /gp/ sometimes => /gp/ yikes
-  if response.body =~ /<link rel="canonical" href="([^"]+)"/i
+  if downloaded =~ /<link rel="canonical" href="([^"]+)"/i
     # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to https://smile.amazon.com/Avatar-Last-Airbender-Season-3/dp/B0190R77GS
     # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
     # but still some improvement FWIW :|
@@ -362,7 +367,6 @@ post "/save_url" do |env|
   episode_name = sanitize_html HTML.unescape(params["episode_name"])
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
-  image_local_filename = sanitize_html HTML.unescape(params["image_local_filename"])
   review = params["review"]
   amazon_prime_free_type = params["amazon_prime_free_type"]
   rental_cost = params["rental_cost"].to_f
@@ -386,12 +390,19 @@ post "/save_url" do |env|
   db_url.wholesome_uplifting_level = wholesome_uplifting_level
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
-  db_url.image_local_filename = image_local_filename
   db_url.amazon_prime_free_type = amazon_prime_free_type
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
   db_url.total_time = total_time
   db_url.save
+	
+	download_url = params["image_url"]
+	if download_url.size > 0
+	  # wait till now so it is guarantteed an id though this is paranoia
+  	db_url.download_url download_url
+    db_url.save # and don't store it as a DB key
+	end
+	
   save_local_javascript [db_url], db_url.inspect, env
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s

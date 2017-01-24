@@ -226,6 +226,21 @@ class Url
       name
     end
   end
+	
+	def download_url(full_url)
+	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
+	  outgoing_filename = "#{id}_#{image_name}"
+		@image_local_filename = outgoing_filename
+	  File.write("public/movie_images/#{outgoing_filename}", download(full_url)) # guess this is OK non windows :|
+	end
+	
+	def image_tag(size, extra_html = "")
+	  if image_local_filename.present?
+		  "<img src='/movie_images/#{image_local_filename}' #{size}/>#{extra_html}"
+		else
+		  ""
+		end
+	end
 
   def self.get_only_by_id(id)
     with_db do |conn|
