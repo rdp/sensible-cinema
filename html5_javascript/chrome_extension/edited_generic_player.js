@@ -282,7 +282,7 @@ function addEditUi() {
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id>
-	    Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
+	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
 	  </div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later -->
 	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_link_id">Add new tag or create movie, this will be replaced...</a>`;
