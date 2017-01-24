@@ -290,9 +290,13 @@ def sanitize_html(name)
   HTML.escape name
 end
 
-get "/" do |env|
+get "/" do |env| # index
   urls = Url.all
   render "views/index.ecr", "views/layout.ecr"
+end
+
+get "/faq" do |env|
+  render "views/faq.ecr", "views/layout.ecr"
 end
 
 get "/new_tag_edit_list/:url_id" do |env|
