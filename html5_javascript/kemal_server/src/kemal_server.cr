@@ -304,7 +304,7 @@ get "/new_tag_edit_list/:url_id" do |env|
 	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
 end
 
-get "/delete_tag_edit_list/:tag_id" do |env|
+get "/3delete_tag_edit_list/:tag_id" do |env|
   tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
 	tag_edit_list.destroy_tag_edit_list_to_tags
 	tag_edit_list.destroy_no_cascade
