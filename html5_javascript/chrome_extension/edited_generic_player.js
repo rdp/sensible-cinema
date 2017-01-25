@@ -349,7 +349,7 @@ function addEditUi() {
     setEditedControlsToTopLeft();
   });
   setEditedControlsToTopLeft(); // and call immediately :)
-  addMouseMoveListener(showEditLinkMouseJustMoved);
+  addMouseAnythingListener(showEditLinkMouseJustMoved);
 }
 
 function pauseVideo() {
@@ -837,10 +837,11 @@ function showEditLinkMouseJustMoved() {
 }
 
 // helper method
-function addMouseMoveListener(func) {
+function addMouseAnythingListener(func) {
   // some "old IE" compat stuff :|
   var addListener, removeListener;
   if (document.addEventListener) {
+		  // some kind of browser compat :|
       addListener = function (el, evt, f) { return el.addEventListener(evt, f, false); };
       removeListener = function (el, evt, f) { return el.removeEventListener(evt, f, false); };
   } else {
@@ -849,6 +850,8 @@ function addMouseMoveListener(func) {
   }
 
   addListener(document, 'mousemove', func);
+  addListener(document, 'mouseup', func);
+  addListener(document, 'mousedown', func);
 }
 
 // helper method
