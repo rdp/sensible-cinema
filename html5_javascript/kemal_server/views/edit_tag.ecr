@@ -13,7 +13,7 @@ from:<input type="text" name="start"  size="40" value="<%= url.seconds_to_human 
 to: <input type="text" name="endy" size="40" id="endy" value="<%= url.seconds_to_human tag.endy %>"/>
 <br/>
 
-default action to take if this tag is included in edit list:
+default action to take if user selects to edit all content tags:
 <select name="default_action" id='action_sel'>
   <option value="mute">mute</option>
   <option value="skip">skip</option>
@@ -28,7 +28,7 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 <div id="category_div_id">
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = 'unknown'; // reset in case changed from other">
-  <option value="unknown">unknown -- please select an option</option>
+  <option value="unknown">unknown -- please select category</option>
   <option value="profanity">verbal (profanity, attacks, etc.)</option>
   <option value="violence">violence</option>
   <option value="physical">sex/nudity</option>
