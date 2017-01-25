@@ -382,16 +382,20 @@ function hideDiv(div) {
 	div.style.display = "none";
 }
 
-function seekToTime(ts) {
+function seekToTime(ts, callback) {
+	callback = callback || function() {}
   // try and avoid pauses after seeking
+	console.log("seeking to " + ts);
   video_element.pause();
-  video_element.currentTime = ts; // if this is far enough away from current, it implies a "play" call...oddly. I mean seriously that is junk.
+  video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
-	// some shenanigans to pretend to know what is going on...
+	// some shenanigans to pretend to work around...
 	var timer = setInterval(function() {
 		if (video_element.paused && video_element.readyState ==4 || !video_element.paused) {
+			console.log("appears it sought " + ts);
 			video_element.play();
 			clearInterval(timer);
+			callback();
 		}		
 	}, 50);
 }
@@ -481,23 +485,18 @@ function testCurrentFromUi() {
 	}
   inMiddleOfTestingEdit = true;
   var [start, endy] = addToCurrentEditArray();
-  seekToTime(start - 1);
-  length = endy - start;
-  if (currentTestAction() == 'skip') {
-    length = 0; // it skips it, so the amount of time before reverting is less it :)
-	}
-	// just in case the seek takes really really long...netflix used to once, who knows, maybe useful LOL
-	var waitTillRewind = setInterval(function() {
-		if (video_element.currentTime < endy && !video_element.paused) {
-			clearInterval(waitTillRewind);
-		  wait_time_millis = (length + 2 + 1)*1000; 
-		  setTimeout(function() {
-				console.log("assuming done with edit...");
-		    currentEditArray().pop();
-		    inMiddleOfTestingEdit = false;
-		  }, wait_time_millis);
+  seekToTime(start - 1, function() { // TODO disallow double simultaneous seeks, it broke amazon??
+	  length = endy - start;
+	  if (currentTestAction() == 'skip') {
+	    length = 0; // it skips it, so the amount of time before reverting is less it :)
 		}
-	}, 50);
+	  wait_time_millis = (length + 1 + 1) * 1000; 
+	  setTimeout(function() {
+			console.log("assuming done with edit...");
+	    currentEditArray().pop();
+	    inMiddleOfTestingEdit = false;
+	  }, wait_time_millis);
+	});
 }
 
 function currentEditArray() {
