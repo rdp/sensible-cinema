@@ -305,10 +305,10 @@ function addEditUi() {
 	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
 	<br/>
 	<div id='tag_layer_top_line'><!-- filled in later "create a new tag...current_time=" --></div>
-	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
+	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
-  to:<textarea name='endy' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='endy'>0m 0.00s</textarea>
+  &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
   <br/>
   action:
