@@ -317,8 +317,8 @@ function addEditUi() {
     <option value='yes_audio_no_video'>yes_audio_no_video</option>
     <option value='do_nothing'>do_nothing</option>
   </select>
-  <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
 	<br/>
+  <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
   <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
   <br/>
