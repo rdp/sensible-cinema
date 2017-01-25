@@ -283,7 +283,6 @@ function addEditUi() {
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id style='display: none;'>
 	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert();'></select>
-	    <br/><span id='below_select_dropdown'/>
 	  </div>
 	  <div id=loading_div_id>Loading...</div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
@@ -303,7 +302,9 @@ function addEditUi() {
   
   tagLayer.innerHTML = `
   <div class="moccasin">
-	<div id='tag_layer_top_line'><!-- filled in later "create a new tag..." --></div>
+	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
+	<br/>
+	<div id='tag_layer_top_line'><!-- filled in later "create a new tag...current_time=" --></div>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -322,6 +323,7 @@ function addEditUi() {
   <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
   <br/>
+  <input type='button' onclick="seekToTime(video_element.currentTime - 10); return false;" value='-10s'/>
   <input type='button' onclick="seekToTime(video_element.currentTime - 5); return false;" value='-5s'/>
   <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/>
   <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
@@ -734,7 +736,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 		}
 		push_to_array.push([tag.start, tag.endy]);
 	}
-	document.getElementById('below_select_dropdown').innerHTML = "skips=" + skips.length + " mutes=" + mutes.length +" yes_audio_no_videos=" + yes_audio_no_videos.length;
+	document.getElementById('tag_layer_top_right').innerHTML = "Current content edit list: skips=" + skips.length + " mutes=" + mutes.length +" yes_audio_no_videos=" + yes_audio_no_videos.length;
 }
 
 function getEditsFromTagListAndAlert() {
