@@ -836,13 +836,11 @@ function showEditLinkMouseJustMoved() {
   mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, (inAddMode() ? 5000 : 2000)); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
 }
 
-// helper method
 function addMouseAnythingListener(func) {
-  // some "old IE" compat stuff :|
+  // some "old IE" browser compat stuff :|
   var addListener, removeListener;
   if (document.addEventListener) {
-		  // some kind of browser compat :|
-      addListener = function (el, evt, f) { return el.addEventListener(evt, f, false); };
+		addListener = function (el, evt, f) { return el.addEventListener(evt, f, false); };
       removeListener = function (el, evt, f) { return el.removeEventListener(evt, f, false); };
   } else {
       addListener = function (el, evt, f) { return el.attachEvent('on' + evt, f); };
@@ -854,7 +852,6 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mousedown', func);
 }
 
-// helper method
 function onReady(yourMethod) {
   if (document.readyState === 'complete') {
     setTimeout(yourMethod, 1); // schedule to run immediately
@@ -869,6 +866,6 @@ function onReady(yourMethod) {
   }
 }
 
-// no jquery since this page might already have it loaded, so avoid any conflict.  [plus speedup load times LOL]
-// on ready just in case LOL
+// no jquery since this page might already have it loaded, so don't load/use it to avoid any conflict.  [plus speedup load times :| ]
+// on ready just in case here LOL
 onReady(start);
