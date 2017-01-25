@@ -282,10 +282,11 @@ function addEditUi() {
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id style='display: none;'>
-	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert(true);'></select>
+	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert();'></select>
+	    <br/><span id='below_select_dropdown'/>
 	  </div>
 	  <div id=loading_div_id>Loading...</div>
-	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later -->
+	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
 	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_or_add_movie_link_id"><!-- will be filled in --></a>`;
   // and stay visible
   allEditStuffDiv.appendChild(currentlyEditingDiv);
@@ -613,14 +614,13 @@ function reloadForCurrentUrl() {
 
 function parseSuccessfulJsonReload(json_string) {
   parseSuccessfulJson(json_string);
-	getEditsFromTagListAndAlert(false);
+	getEditsFromTagListAndAlert();
 }
 
 function parseSuccessfulJsonNewUrl(json_string) {
   parseSuccessfulJson(json_string);
-	getEditsFromTagListAndAlert(true); // alert and use, alert still useful since otherwise on amazon series page it's like "what's it editing already?"	
+	getEditsFromTagListAndAlert(); // alert was useful on amazon, but annoying on youtube [?]
   startWatcherTimerOnce();
-  // and alert
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
     alert("play it my way:\ndanger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
   }
@@ -671,11 +671,11 @@ function loadFailed(status) {
 }
 
 
-function alertEditorWorkingAfterTimeout(message, post_message) {
+function alertEditorWorkingAfterTimeout(message) {
 	setTimeout(function() {
     alert("Play it my way:\n" + decodeHTMLEntities("SUCCESS: Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
 	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length +
-		    "\n" + post_message + "\n" + liveFullNameEpisode()));
+		    "\n" + liveFullNameEpisode()));
 			}, 100);
 }
 
@@ -733,24 +733,21 @@ function setTheseTagsAsTheOnesToUse(tags) {
       push_to_array = do_nothings;
 		}
 		push_to_array.push([tag.start, tag.endy]);
-	}	
+	}
+	document.getElementById('below_select_dropdown').innerHTML = "skips=" + skips.length + " mutes=" + mutes.length +" yes_audio_no_videos=" + yes_audio_no_videos.length;
 }
 
-function getEditsFromTagListAndAlert(shouldAlert) {
+function getEditsFromTagListAndAlert() {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	var selected_edit_list_id = dropdown.value;
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
-		if (shouldAlert) 
-  		alertEditorWorkingAfterTimeout(dropdown.options[dropdown.selectedIndex].text, "");
 		return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		if (tag_edit_list_and_tags[0].id == selected_edit_list_id) {
 			setTheseTagsAsTheOnesToUse(tag_edit_list_and_tags[1]);
-			if (shouldAlert)
-  			alertEditorWorkingAfterTimeout(dropdown.options[dropdown.selectedIndex].text, "");
 			return;
 		}		
 	}
