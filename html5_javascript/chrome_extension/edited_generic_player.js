@@ -303,7 +303,7 @@ function addEditUi() {
   
   tagLayer.innerHTML = `
   <div class="moccasin">
-	<div id='tag_layer_top_line'><!-- filled in later --></div>
+	<div id='tag_layer_top_line'><!-- filled in later "create a new tag..." --></div>
 	from:<textarea name='start' rows='1' cols='20' style='width: 150px; font-size: 12pt; font-family: Arial;' id='start'>0m 0.00s</textarea>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>
@@ -447,7 +447,7 @@ function setEditedControlsToTopLeft() {
 	}
   currentlyEditingDiv.style.left = left + "px";
   currentlyEditingDiv.style.top = top + "px";
-	top += 35; // put rest below the currentlyEditingDiv line
+	top += 55; // put rest below the currentlyEditingDiv line
   tagLayer.style.left = left + "px";
   tagLayer.style.top = top + "px";
 }
