@@ -141,7 +141,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.category = "unknown"
   tag.subcategory = "unknown"
   tag.save
-  set_flash_for_next_time env, "tag saved, please fill in details about it..."
+  set_flash_for_next_time env, "content tag saved, please fill in details about it..."
   spawn do
     save_local_javascript [url], tag.inspect, env
   end
