@@ -39,12 +39,10 @@ chrome.runtime.onMessage.addListener(
 
 // capture messages from the page and re-broadcast them: http://stackoverflow.com/a/41836393/32453
 window.addEventListener("message", function(event) {
-	console.log("got somefin");
   if (event.source != window)
     return;
 
   if (event.data.type && (event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT")) {
-		console.log("sending on from site..." + event.data.payload)
     chrome.runtime.sendMessage(event.data.payload); // send to rest of extension
   }
 }, false);
