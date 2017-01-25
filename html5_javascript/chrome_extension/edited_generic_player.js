@@ -619,7 +619,7 @@ function parseSuccessfulJsonReload(json_string) {
 
 function parseSuccessfulJsonNewUrl(json_string) {
   parseSuccessfulJson(json_string);
-	getEditsFromTagListAndAlert(); // alert was useful on amazon, but annoying on youtube [?]
+	getEditsFromTagListAndAlert(); // alert was useful on amazon, but annoying when you create new movie [?]
   startWatcherTimerOnce();
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
     alert("play it my way:\ndanger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
