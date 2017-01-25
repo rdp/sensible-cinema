@@ -391,7 +391,7 @@ function seekToTime(ts, callback) {
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around...
 	var timer = setInterval(function() {
-		if (video_element.paused && video_element.readyState ==4 || !video_element.paused) {
+		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
 			console.log("appears it sought " + ts);
 			video_element.play();
 			clearInterval(timer);
