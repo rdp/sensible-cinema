@@ -17,7 +17,7 @@ end
 class MyDb
   @@db : DB::Database | Nil
   def self.setup # has to be in a method or weird error thrown https://github.com/crystal-lang/crystal-mysql/issues/22
-    @@db = DB.open File.read("db/connection_string_local_box_no_commit.txt").strip
+    @@db ||= DB.open File.read("db/connection_string_local_box_no_commit.txt").strip
     # pool'ish...share it for now despite that feeling odd per request, as it pulls per #query one from the pool, but until they fix that *other* bug...
     # https://github.com/crystal-lang/crystal-db/issues/13 https://github.com/crystal-lang/crystal-db/issues/39 
     @@db.not_nil!
