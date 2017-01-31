@@ -148,9 +148,9 @@ If there are any missing please let us know!
 <br/>
 internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
-<!--br/>
-<textarea name="more_details" rows="3" cols="40" ><%= tag.more_details %></textarea>
-<br/-->
+
+<!-- todo remove ... -->
+<textarea style="display: none;" name="more_details" rows="3" cols="40" ><%= tag.more_details %></textarea>
 
 <br/>
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
