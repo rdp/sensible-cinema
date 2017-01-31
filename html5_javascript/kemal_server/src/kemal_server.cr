@@ -42,6 +42,10 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
+get "/ping" do
+  "yes"
+end
+
 get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
