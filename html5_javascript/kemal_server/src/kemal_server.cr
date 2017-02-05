@@ -14,6 +14,14 @@ before_all do |env|
   env.session.string("flash", "") unless env.session.string?("flash") # default
 end
 
+# https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? Yet not enough see 3333 as well :|
+spawn do
+  loop do
+    sleep 0.5
+    GC.collect
+  end
+end
+
 class MyDb
   @@db : DB::Database | Nil
   def self.setup # has to be in a method or weird error thrown https://github.com/crystal-lang/crystal-mysql/issues/22
