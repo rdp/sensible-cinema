@@ -3,7 +3,7 @@ sudo echo "root successfully enabled...we'll need that in a sec..."
 
 # run certbot-auto to get certs it seems... then 
 # sudo crontab =>  30 2 * * 1 /home/rdp/certbot-auto renew --quiet --no-self-upgrade && killall kemal_server
-# dev openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+# dev keys: openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 
-# no --release here since it just takes forever on DO for now LOL also release was broken https://github.com/crystal-lang/crystal/issues/3905
+# no --release here since it just takes forever on DO, also doesn't give as good of backtraces or some odd 
 sudo -u rdp crystal build --debug ./src/kemal_server.cr && sudo setcap cap_net_bind_service=+ep ./kemal_server && sudo -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.inet2.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.inet2.org/fullchain.pem -p 443
