@@ -332,7 +332,7 @@ get "/3delete_tag_edit_list/:tag_id" do |env|
   env.redirect "/view_url/#{tag_edit_list.url.id}"
 end
 
-get "/2edit_tag_edit_list/:tag_id" do |env|
+get "/edit_tag_edit_list/:tag_id" do |env|
   tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
 	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
 end
