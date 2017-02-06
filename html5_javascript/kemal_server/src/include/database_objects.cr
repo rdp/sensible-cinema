@@ -260,7 +260,7 @@ class Tag
     category: {type: String},       
     subcategory: {type: String},   
     details: {type: String},     
-    more_details: {type: String},     
+    oval_percentage_coords: {type: String},     
     default_action: {type: String},
     url_id: Int32
   })
@@ -271,7 +271,7 @@ class Tag
     category: {type: String},       
     subcategory: {type: String},   
     details: {type: String},     
-    more_details: {type: String},     
+    oval_percentage_coords: {type: String},     
     default_action: {type: String},
     url_id: Int32
   })
@@ -305,7 +305,7 @@ class Tag
     @category = ""
     @subcategory = ""
     @details = ""
-    @more_details = ""
+    @oval_percentage_coords = ""
     @default_action = "mute"
     @url_id = url.id
   end
@@ -313,9 +313,9 @@ class Tag
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, more_details, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @more_details, @default_action, @url_id).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, oval_percentage_coords, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @oval_percentage_coords, @default_action, @url_id).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, more_details = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, more_details, default_action, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, oval_percentage_coords = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, oval_percentage_coords, default_action, id
       end
     end
   end

@@ -94,15 +94,18 @@ CREATE TABLE tag_edit_list_to_tag (
 -- TODO some indices for these two?
 
 alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
+--XXX rename all tables to singular... :)
 
 alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
--- done prod
 
 ALTER TABLE `urls` CHANGE COLUMN `image_url` `image_local_filename` VARCHAR(2014) NOT NULL DEFAULT '';
+-- done prod
+
+alter table tags add column oval_percentage_coords VARCHAR(12)    NOT NULL DEFAULT ''; -- largest would be 99x99,10x10 right?
 -- done dev
+alter table tags drop column more_details;
 
---XXX rename all tables to singular
 
--- output to screen to show success...
+-- and output to screen to show success...
 select * from urls;
 select * from tags;

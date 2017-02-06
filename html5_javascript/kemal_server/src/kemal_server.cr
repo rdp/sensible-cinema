@@ -184,7 +184,7 @@ post "/save_tag/:url_id" do |env|
   tag.category = sanitize_html params["category"]
   tag.subcategory = sanitize_html params["subcategory"]
   tag.details = sanitize_html params["details"]
-  tag.more_details = sanitize_html params["more_details"]
+  tag.oval_percentage_coords = sanitize_html params["oval_percentage_coords"]
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   tag.save
   save_local_javascript [url], tag.inspect, env

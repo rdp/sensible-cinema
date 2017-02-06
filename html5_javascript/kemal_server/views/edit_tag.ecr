@@ -45,7 +45,7 @@ document.getElementById('category_select').value = '<%= tag.category %>';
 <div id="subcategory_div_id" style="display:none;">
 sub category
 <select name="subcategory" id='subcategory_select'>
-    <option value="unknown">unknown</option>
+    <option value="unknown">unknown -- please select subcategory</option>
 
     <option value="initial theme song">movie-content -- initial song/initial credits</option>
     <option value="closing credits">movie-content -- closing credits</option>
@@ -149,8 +149,12 @@ If there are any missing please let us know!
 internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
-<!-- todo remove ... -->
-<textarea style="display: none;" name="more_details" rows="3" cols="40" ><%= tag.more_details %></textarea>
+
+<br/>
+oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
+<br/>
+Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%"
+<input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
 
 <br/>
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
