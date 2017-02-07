@@ -140,15 +140,17 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	document.getElementById('tag_layer_top_line').innerHTML = "Create a new tag by entering the timestamp, testing it, then saving it: <br/>current time=" + timeStampToHuman(cur_time);
+	document.getElementById('top_line_current_time').innerHTML = "" + timeStampToHuman(cur_time);
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
+
 function checkStatus() {
-	// we call this on the big 3 even if there's not one being edited...
-  if (url_id != 0) { // avoid unmuting videos playing that we don't even control [like youtube main page LOL]
+	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
+  if (url_id != 0) { 
 		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
 			console.log("watching add?");
+			// and do nothing
 		}
 		else {
       checkIfShouldDoActionAndUpdateUI();
@@ -157,49 +159,8 @@ function checkStatus() {
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
 	setEditedControlsToTopLeft(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
-//	console.log("done checking status");
 }
 
-function liveEpisodeString() {
-  if (liveEpisodeNumber() != "0")
-    return " episode:" + liveEpisodeNumber() + " " + liveEpisodeName();
-  else
-    return "";
-  end
-}
-
-function youtubeChannelName() {
-    var all = document.getElementsByTagName("img");
-    var arrayLength = all.length;
-    for (var i = 0; i < arrayLength; i++) {
-        if (all[i].alt != "") {
-          return all[i].alt + " "; // "Studio C" channel name, but hacky...
-        }
-    }
-    return "";
-}
-function liveTitleNoEpisode() {
-  var title = "unknown title";
-  if (document.getElementsByTagName("title")[0]) {
-    title = document.getElementsByTagName("title")[0].innerHTML;
-  } // some might not have it [iframes?]
-  if (isGoogleIframe()) {
-    title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :) "Avatar Extras - Movies &amp; TV on Google Play"
-    var season_episode = window.parent.document.querySelectorAll('.title-season-episode-num')[0];
-    if (season_episode) {
-      title += season_episode.innerHTML.split(",")[0]; // like " Season 2, Episode 2 "
-    }
-    // don't add episode name
-  }
-  if (currentUrlNotIframe().includes("youtube.com")) {
-    title = youtubeChannelName() + title; 
-  }
-  return title;
-}
-
-function liveFullNameEpisode() {
-  return liveTitleNoEpisode() + liveEpisodeString(); 
-}
 
 function timestamp_log(message, cur_time, last_start, last_end) {
   local_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end + " in " + (last_end - cur_time)+ "s";;
@@ -251,7 +212,10 @@ function addEditUi() {
   <div class="moccasin">
 	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
 	<br/>
-	<div id='tag_layer_top_line'><!-- filled in later "create a new tag...current_time=" --></div>
+	<div id='tag_layer_top_line'>
+	  Create a new tag by entering the timestamp, testing it, then saving it: 
+		<br/>current time=<span id="top_line_current_time" />
+	</div>
 	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
   <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
   <br/>

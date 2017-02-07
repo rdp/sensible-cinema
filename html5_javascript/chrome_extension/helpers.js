@@ -116,3 +116,46 @@ function getLocationOfElement(el) {
     top: el.top + window.scrollY
   }
 }
+
+
+function liveEpisodeString() {
+  if (liveEpisodeNumber() != "0")
+    return " episode:" + liveEpisodeNumber() + " " + liveEpisodeName();
+  else
+    return "";
+  end
+}
+
+function youtubeChannelName() {
+    var all = document.getElementsByTagName("img");
+    var arrayLength = all.length;
+    for (var i = 0; i < arrayLength; i++) {
+        if (all[i].alt != "") {
+          return all[i].alt + " "; // "Studio C" channel name, but hacky...
+        }
+    }
+    return "";
+}
+
+function liveTitleNoEpisode() {
+  var title = "unknown title";
+  if (document.getElementsByTagName("title")[0]) {
+    title = document.getElementsByTagName("title")[0].innerHTML;
+  } // some might not have it [iframes?]
+  if (isGoogleIframe()) {
+    title = window.parent.document.getElementsByTagName("title")[0].innerHTML; // always there :) "Avatar Extras - Movies &amp; TV on Google Play"
+    var season_episode = window.parent.document.querySelectorAll('.title-season-episode-num')[0];
+    if (season_episode) {
+      title += season_episode.innerHTML.split(",")[0]; // like " Season 2, Episode 2 "
+    }
+    // don't add episode name
+  }
+  if (currentUrlNotIframe().includes("youtube.com")) {
+    title = youtubeChannelName() + title; 
+  }
+  return title;
+}
+
+function liveFullNameEpisode() {
+  return liveTitleNoEpisode() + liveEpisodeString(); 
+}
