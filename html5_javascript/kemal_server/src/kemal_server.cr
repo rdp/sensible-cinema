@@ -1,4 +1,4 @@
-require "./include/*" 
+require "./*" 
 
 require "kemal"
 require "kemal-session"

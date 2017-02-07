@@ -122,7 +122,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	if (last_start) {
 		// use style.visibility here so it retains the space it would have otherwise used
 	  if (video_element.style.visibility != "hidden") {
-	    console.log("hiding video leaving audio ", cur_time, last_start, last_end);
+	    tiemstamp_log("hiding video leaving audio ", cur_time, last_start, last_end);
 	    extra_message = "no video yes audio";
 	    video_element.style.visibility="hidden";
 	  }
@@ -133,6 +133,24 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    console.log("unhiding video with left audio" + cur_time);
 	    extra_message = "";
 	  }
+	}
+
+	[last_start, last_end] = areWeWithin(black_oval_over_videos, cur_time);
+	var black_oval = document.getElementById('black_oval_div_id');
+	if (last_start) {
+		// TODO set location :|
+		// TODO set size :)
+		if (black_oval.style.display == "none") {
+			timestamp_log("showing oval", cur_time, last_start, last_end);
+			black_oval.style.display = "block";
+		}
+	}
+	else {
+		if (black_oval.style.display == "block") {
+			console.log("hiding oval " + cur_time);
+			black_oval.style.display = "none";
+			
+		}
 	}
 
 	document.getElementById('top_line_current_time').innerHTML = timeStampToHuman(cur_time); // TODO next and previous edit starts as well :|
@@ -170,7 +188,9 @@ function addEditUi() {
 	<style>
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-	</style>;`
+	</style>;
+	<div id='black_oval_div_id' style='display: none;'/>
+	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
   allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
