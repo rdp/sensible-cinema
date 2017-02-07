@@ -138,18 +138,22 @@ function checkIfShouldDoActionAndUpdateUI() {
 	[last_start, last_end] = areWeWithin(black_oval_over_videos, cur_time);
 	var black_oval = document.getElementById('black_oval_div_id');
 	if (last_start) {
-		// TODO set location :|
-		// TODO set size :)
+		// TODO set location, size  50%,50%:25%,25%
+		var video_location = getLocationOfElement(video_element);
+		black_oval.style.left = video_location.left;
+		black_oval.style.top = video_location.top;
+		
 		if (black_oval.style.display == "none") {
 			timestamp_log("showing oval", cur_time, last_start, last_end);
 			black_oval.style.display = "block";
+			extra_message = "black_oval_over_video";
 		}
 	}
 	else {
 		if (black_oval.style.display == "block") {
 			console.log("hiding oval " + cur_time);
 			black_oval.style.display = "none";
-			
+			extra_message = ""; // hope we don't have overlapping tags for this LOL
 		}
 	}
 
@@ -189,7 +193,7 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none;'/>
+	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute;'>some black oval stuff</div>
 	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';

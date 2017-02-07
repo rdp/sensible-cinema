@@ -190,7 +190,10 @@ post "/save_tag/:url_id" do |env|
   tag.category = sanitize_html params["category"]
   tag.subcategory = sanitize_html params["subcategory"]
   tag.details = sanitize_html params["details"]
-  tag.oval_percentage_coords = sanitize_html params["oval_percentage_coords"]
+  tag.oval_percentage_coords = sanitize_html params["oval_percentage_coords"].strip
+	if tag.oval_percentage_coords.present?
+	  raise "bad oval coords should look like 50%,50%:25%,25%" unless tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%\d+%$/
+	end
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   tag.save
   save_local_javascript [url], tag.inspect, env

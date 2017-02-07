@@ -15,17 +15,14 @@ function currentUrlNotIframe() { // hopefully better alternate to window.locatio
   return (window.location != window.parent.location) ? document.referrer : document.location.href;
 } 
 
-
 function isAmazon() {
   return currentUrlNotIframe().includes("amazon.com");
 }
-
 
 function withinDelta(first, second, delta) {
 	var diff = Math.abs(first - second);
 	return diff < delta;
 }
-
 
 function findFirstVideoTagOrNull() {
   var all = document.getElementsByTagName("video");
@@ -64,7 +61,6 @@ function seekToTime(ts, callback) {
 	}, 50);
 }
 
-
 // method to bind easily to resize event
 var addEvent = function(object, type, callback) {
     if (object == null || typeof(object) == 'undefined') return;
@@ -76,7 +72,6 @@ var addEvent = function(object, type, callback) {
         object["on"+type] = callback;
     }
 };
-
 
 function decodeHTMLEntities(text) {
    	// I guess there's an HTML way to do this, but this way looked funner! :)
@@ -190,16 +185,6 @@ function timeStampToHuman(timestamp) {
     return minutes + "m " + seconds + "s";
 }
 
-function removeFromArray(arr) {
-    var what, a = arguments, L = a.length, ax;
-    while (L > 1 && arr.length) {
-        what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
-}
 
 function humanToTimeStamp(timestamp) {
   // 0h 17m 34.54s
@@ -211,4 +196,15 @@ function humanToTimeStamp(timestamp) {
     sum += parseFloat(split[i]) * Math.pow(60, i);
   }
   return sum;
+}
+
+function removeFromArray(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
 }
