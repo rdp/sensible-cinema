@@ -16,6 +16,7 @@ var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 var extra_message = "";
 var inMiddleOfTestingEdit = false;
 var current_json;
+var mouse_move_timer;
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
@@ -432,16 +433,11 @@ function parseSuccessfulJsonNewUrl(json_string) {
     alert("play it my way\ndanger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
   old_episode = liveEpisodeNumber();
-  var post_message = "This movie is currently marked as \"" + current_json.url.editing_status + "\" in our system, which means it is incomplete.  Please help us with it!";
-  if (current_json.url.editing_status == "done") {
-    post_message = "\nYou may sit back and relax while you enjoy it now!";
-	}
 	displayDiv(document.getElementById("currently_filtering_id"));
 	hideDiv(document.getElementById("loading_div_id"));
   document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Add new content edit tag click here"; // in case it said unedited... before
 	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 }
-
 
 function loadFailed(status) {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
@@ -474,13 +470,6 @@ function loadFailed(status) {
 }
 
 
-function removeAllOptions(selectbox)
-{
-  for(var i = selectbox.options.length - 1 ; i >= 0 ; i--) {
-    selectbox.remove(i);
-  }
-}
-
 function parseSuccessfulJson(json_string) {
   current_json = JSON.parse(json_string);
   var url = current_json.url;
@@ -496,7 +485,7 @@ function parseSuccessfulJson(json_string) {
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		var option = document.createElement("option");
-		option.text = tag_edit_list_and_tags[0].description + "(" + tag_edit_list_and_tags[1].length + ")";
+		option.text = tag_edit_list_and_tags[0].description + "(" + tag_edit_list_and_tags[1].length + ")"; // TODO this is wrong since some of those tags are "do_nothing"
 		option.value = tag_edit_list_and_tags[0].id;
 		dropdown.add(option, dropdown[0]); // put it at the top XX
 	}
@@ -619,7 +608,6 @@ function start() {
   loadForNewUrl();
 }
 
-var mouse_move_timer;
 function showEditLinkMouseJustMoved() {
 	displayDiv(document.getElementById("top_left"));
 	displayAddTagStuffIfInAddMode();

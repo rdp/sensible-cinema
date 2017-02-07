@@ -171,6 +171,13 @@ function alertEditorWorkingAfterTimeout(message) {
 }
 
 
+function removeAllOptions(selectbox)
+{
+  for(var i = selectbox.options.length - 1 ; i >= 0 ; i--) {
+    selectbox.remove(i);
+  }
+}
+
 function timeStampToHuman(timestamp) {
   var hours = Math.floor(timestamp / 3600);
   timestamp -= hours * 3600;
