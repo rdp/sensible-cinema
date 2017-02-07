@@ -108,7 +108,9 @@ function getLocationOfElement(el) {
   el = el.getBoundingClientRect();
   return {
     left: el.left + window.scrollX,
-    top: el.top + window.scrollY
+    top: el.top + window.scrollY,
+		width: el.width,
+		height: el.height
   }
 }
 

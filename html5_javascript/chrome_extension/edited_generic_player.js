@@ -84,25 +84,25 @@ function liveEpisodeNumber() {
   }
 }
 
-function areWeWithin(thisArray, cur_time) {
-  for (var i = 0; i < thisArray.length; i++) {
-    var item = thisArray[i];
-    var start_time = item[0];
-    var end_time = item[1];
+function areWeWithin(thisTagArray, cur_time) {
+  for (var i = 0; i < thisTagArray.length; i++) {
+    var tag = thisTagArray[i];
+    var start_time = tag.start;
+    var end_time = tag.endy;
     if(cur_time > start_time && cur_time < end_time) {
-      return item;
+      return tag;
     }
   }
-  return [false];
+  return false;
 }
 
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
-	var [last_start, last_end] = areWeWithin(mutes, cur_time);
-	if (last_start) {
+	var tag = areWeWithin(mutes, cur_time);
+	if (tag) {
 	  if (!video_element.muted) {
 	    video_element.muted = true;
-	    timestamp_log("muting", cur_time, last_start, last_end);
+	    timestamp_log("muting", cur_time, tag);
 	    extra_message = "muted";
 	  }
 	}
@@ -113,16 +113,18 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    extra_message = "";
 	  }
 	}
-	[last_start, last_end] = areWeWithin(skips, cur_time);
-	if (last_start) {
-	  timestamp_log("seeking to " + last_end, cur_time, last_start, last_end);
-	  seekToTime(last_end);
-	}
-	[last_start, last_end] = areWeWithin(yes_audio_no_videos, cur_time);
-	if (last_start) {
+	
+	tag = areWeWithin(skips, cur_time);
+	if (tag) {
+	  timestamp_log("seeking to ", cur_time, tag);
+	  seekToTime(tag.endy);
+	} // no else
+	
+	tag = areWeWithin(yes_audio_no_videos, cur_time);
+	if (tag) {
 		// use style.visibility here so it retains the space it would have otherwise used
 	  if (video_element.style.visibility != "hidden") {
-	    tiemstamp_log("hiding video leaving audio ", cur_time, last_start, last_end);
+	    timestamp_log("hiding video leaving audio ", cur_time, tag);
 	    extra_message = "no video yes audio";
 	    video_element.style.visibility="hidden";
 	  }
@@ -135,18 +137,23 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	[last_start, last_end] = areWeWithin(black_oval_over_videos, cur_time);
+	tag = areWeWithin(black_oval_over_videos, cur_time);
 	var black_oval = document.getElementById('black_oval_div_id');
-	if (last_start) {
-		// TODO set location, size  50%,50%:25%,25%
-		var video_location = getLocationOfElement(video_element);
-		black_oval.style.left = video_location.left;
-		black_oval.style.top = video_location.top;
-		black_oval.style.height = "100px";
-		black_oval.style.width = "100px";
+	if (tag) {
+		// 50%,50%:25%,25% etc.
+		[topy, _, left, _, height, _, width] = tag.oval_percentage_coords.split(/%(,|:|)/);
+		topy = parseInt(topy) / 100.0;
+		left = parseInt(left) / 100.0;
+		height = parseInt(height) / 100.0;
+		width = parseInt(width) / 100.0;
+		var video_position = getLocationOfElement(video_element);
+		black_oval.style.top = video_position.top + (topy * video_position.height);
+		black_oval.style.left = video_position.left + (left * video_position.width);
+		black_oval.style.height = video_position.height * height; 
+		black_oval.style.width = video_position.width * width;
 		
 		if (black_oval.style.display == "none") {
-			timestamp_log("showing oval", cur_time, last_start, last_end);
+			timestamp_log("showing oval", cur_time, tag);
 			black_oval.style.display = "block";
 			extra_message = "black_oval_over_video";
 		}
@@ -180,9 +187,8 @@ function checkStatus() {
 	setEditedControlsToTopLeft(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
 }
 
-
-function timestamp_log(message, cur_time, last_start, last_end) {
-  local_message = message + " at " + cur_time + " start:" + last_start + " will_end:" + last_end + " in " + (last_end - cur_time)+ "s";;
+function timestamp_log(message, cur_time, tag) {
+  local_message = message + " at " + cur_time + " start:" + tag.start + " will_end:" + tag.endy + " in " + (tag.endy - cur_time)+ "s";;
   console.log(local_message);
 }
 
@@ -195,8 +201,7 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 100px / 50px;
-'>some black oval stuff</div>
+	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 100px / 50%;'/>
 	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
@@ -545,7 +550,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 		} else {
       push_to_array = do_nothings;
 		}
-		push_to_array.push([tag.start, tag.endy]);
+		push_to_array.push(tag);
 	}
 	document.getElementById('tag_layer_top_right').innerHTML = "Current content edit list: skips=" + skips.length + " mutes=" + mutes.length +" yes_audio_no_videos=" + yes_audio_no_videos.length;
 }
