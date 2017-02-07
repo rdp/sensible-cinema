@@ -142,6 +142,8 @@ function checkIfShouldDoActionAndUpdateUI() {
 		var video_location = getLocationOfElement(video_element);
 		black_oval.style.left = video_location.left;
 		black_oval.style.top = video_location.top;
+		black_oval.style.height = "100px";
+		black_oval.style.width = "100px";
 		
 		if (black_oval.style.display == "none") {
 			timestamp_log("showing oval", cur_time, last_start, last_end);
@@ -193,7 +195,8 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute;'>some black oval stuff</div>
+	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 100px / 50px;
+'>some black oval stuff</div>
 	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
