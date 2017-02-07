@@ -39,12 +39,13 @@ end
 def standardize_url(unescaped)
   # basically do it all here, except canonicalize, which we do in javascript...
   if unescaped =~ /amazon.com|netflix.com/
-    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
+    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc
   end
-	if unescaped =~ /amazon.com/
-    unescaped = unescaped.gsub("smile.amazon", "www.amazon")
-	end
-  unescaped.split("#")[0] # https://www.youtube.com/watch?v=LXSj1y9kl2Y# -> https://www.youtube.com/watch?v=LXSj1y9kl2Y 
+  unescaped = unescaped.split("&")[0] # strip off cruft ex: https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&index=21 :|
+  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www for amazon
+  unescaped = unescaped.split("#")[0] # trailing #, die!
+  puts "standardized as #{unescaped}"
+  unescaped
 end
 
 def db_style_from_query_url(env)
@@ -215,7 +216,7 @@ end
 
 def get_title_and_sanitized_standardized_canonical_url(real_url)
   real_url = standardize_url(real_url) # put after so the error message is friendlier :)
-	downloaded = download(real_url)
+  downloaded = download(real_url)
   if downloaded =~ /<title[^>]*>(.*)<\/title>/i
     title = $1.strip
   else
@@ -234,7 +235,7 @@ def get_title_and_sanitized_standardized_canonical_url(real_url)
     raise "appears you're using an amazon web page that is an old style like /gp/ if this is a new movie, please search in amazon for it again, and you should find a url like /dp/, and use that
            if it is an existing movie, enter it as the amazon_second_url instead of main url"
   end
-  [title, sanitize_html standardize_url(real_url)] # standardize in case it is smile.amazon
+  [title, sanitize_html(real_url)]
 end
 
 class String
