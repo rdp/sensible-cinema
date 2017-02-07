@@ -22,15 +22,6 @@ default action to take if user selects to edit all content tags:
   <option value="do_nothing">do_nothing</option>
 </select>
 <script>
-function default_action_changed() {
-  if (document.getElementById('action_sel').value == "black_oval_over_video") {
-    document.getElementById('oval_coords_div').style.display = "block";
-  }
-	else {
-    document.getElementById('oval_coords_div').style.display = "none";
-	}
-}
-
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
 </script>
 <br/>
@@ -117,6 +108,30 @@ sub category
 </select>
 </div>
 
+<br/>
+If there are any missing please let us know!
+<br/>
+internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
+<input type="text" name="details" size="50" value="<%= tag.details %>"/>
+
+<div id="oval_coords_div" style="display: none;" >
+  <br/>
+  oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
+  <br/>
+  Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%"
+  <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
+</div>
+
+<br/>
+<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
+</form>
+<% if tag.id != 0 %>
+  <a href=/delete_tag/<%= tag.id %> onclick="return confirm('Are you sure? This removes this edit entirely, you may want to shorten it or fix it instead...');">delete this edit from system &#10006; </a>
+<% end %>
+<br/>
+<a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
+
+
 <script>
 select = document.getElementById('subcategory_select');
 select.value = '<%= tag.subcategory %>';
@@ -153,27 +168,14 @@ function showSubCatWithRightOptionsAvailable() {
 	});
 }
 
+function default_action_changed() {
+  if (document.getElementById('action_sel').value == "black_oval_over_video") {
+    document.getElementById('oval_coords_div').style.display = "block";
+  }
+	else {
+    document.getElementById('oval_coords_div').style.display = "none";
+	}
+}
+default_action_changed(); // have to do this apparently :|
+
 </script>
-<br/>
-If there are any missing please let us know!
-<br/>
-internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
-<input type="text" name="details" size="50" value="<%= tag.details %>"/>
-
-<div id="oval_coords_div" style="display: none;" >
-  <br/>
-  oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
-  <br/>
-  Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%"
-  <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
-</div>
-
-<br/>
-<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
-</form>
-<% if tag.id != 0 %>
-  <a href=/delete_tag/<%= tag.id %> onclick="return confirm('Are you sure? This removes this edit entirely, you may want to shorten it or fix it instead...');">delete this edit from system &#10006; </a>
-<% end %>
-<br/>
-<a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
-

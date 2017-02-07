@@ -201,7 +201,7 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 100px / 50%;'/>
+	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 50% / 50%'/>
 	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
