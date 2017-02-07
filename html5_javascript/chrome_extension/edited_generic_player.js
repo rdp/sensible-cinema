@@ -191,7 +191,7 @@ function addEditUi() {
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id style='display: none;'>
-	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromTagListAndAlert();'></select>
+	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
 	  </div>
 	  <div id=loading_div_id>Loading...</div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
@@ -425,12 +425,12 @@ function reloadForCurrentUrl() {
 
 function parseSuccessfulJsonReload(json_string) {
   parseSuccessfulJson(json_string);
-	getEditsFromTagListAndAlert();
+	getEditsFromCurrentTagList();
 }
 
 function parseSuccessfulJsonNewUrl(json_string) {
   parseSuccessfulJson(json_string);
-	getEditsFromTagListAndAlert(); // alert was useful on amazon, but annoying when you create new movie [?]
+	getEditsFromCurrentTagList(); // used to alert was useful on amazon, but annoying when you create new movie [?]
   startWatcherTimerOnce();
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
     alert("play it my way:\ndanger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
@@ -538,7 +538,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	document.getElementById('tag_layer_top_right').innerHTML = "Current content edit list: skips=" + skips.length + " mutes=" + mutes.length +" yes_audio_no_videos=" + yes_audio_no_videos.length;
 }
 
-function getEditsFromTagListAndAlert() {
+function getEditsFromCurrentTagList() {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	var selected_edit_list_id = dropdown.value;
 	if (selected_edit_list_id == "-1") {
