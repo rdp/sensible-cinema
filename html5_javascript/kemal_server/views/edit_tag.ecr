@@ -14,13 +14,23 @@ to: <input type="text" name="endy" size="40" id="endy" value="<%= url.seconds_to
 <br/>
 
 default action to take if user selects to edit all content tags:
-<select name="default_action" id='action_sel'>
+<select name="default_action" id='action_sel' onchange="default_action_changed();">
   <option value="mute">mute</option>
   <option value="skip">skip</option>
   <option value="yes_audio_no_video">yes_audio_no_video</option>
+  <option value="black_oval_over_video">black_oval_over_video</option>
   <option value="do_nothing">do_nothing</option>
 </select>
 <script>
+function default_action_changed() {
+  if (document.getElementById('action_sel').value == "black_oval_over_video") {
+    document.getElementById('oval_coords_div').style.display = "block";
+  }
+	else {
+    document.getElementById('oval_coords_div').style.display = "none";
+	}
+}
+
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
 </script>
 <br/>
@@ -117,6 +127,7 @@ $(document).ready(function() {
   }
 });
 
+
 select.addEventListener(
      'change',
      function() {
@@ -149,12 +160,13 @@ If there are any missing please let us know!
 internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
-
-<br/>
-oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
-<br/>
-Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%"
-<input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
+<div id="oval_coords_div" style="display: none;" >
+  <br/>
+  oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
+  <br/>
+  Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%"
+  <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
+</div>
 
 <br/>
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
