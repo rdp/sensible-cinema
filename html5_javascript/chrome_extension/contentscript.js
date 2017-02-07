@@ -155,14 +155,18 @@ function currentUrlNotIframe() {
   return (window.location != window.parent.location) ? document.referrer : document.location.href;
 }
 
-function getStandardizedCurrentUrl() {
-	// simplified should work here since it auto starts for the other ones that we know how to parse well...
-  return currentUrlNotIframe().split('#')[0]; // https://www.youtube.com/watch?v=LXSj1y9kl2Y# -> https://www.youtube.com/watch?v=LXSj1y9kl2Y since we don't do hashes
+function getStandardizedCurrentUrl() { // duplicated with other .js
+  var current_url = currentUrlNotIframe();
+  if (document.querySelector('link[rel="canonical"]') != null) {
+		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
+    current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
+  }
+  return current_url;
 }
 
 function loadIfCurrentHasOne() {
   var url = currentUrlNotIframe();
-  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=0'; // simplified, no episode yet
+  var direct_lookup = 'for_current_just_settings_json?url=' + encodeURIComponent(getStandardizedCurrentUrl()) + '&episode_number=0'; // simplified, no episode yet here :|
   url = '//' + request_host + '/' + direct_lookup;
   getRequest(url, currentHasEdits, currentHasNone);
 }

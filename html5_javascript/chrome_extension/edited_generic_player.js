@@ -17,20 +17,12 @@ var extra_message = "";
 var inMiddleOfTestingEdit = false;
 var current_json;
 
-function getStandardizedCurrentUrl() {
+function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
-  if (isAmazon() && document.querySelector('link[rel="canonical"]') != null) {
+  if (document.querySelector('link[rel="canonical"]') != null) {
 		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
-	// TODO move everything except canonical to crystal land...
-	// else don't get canonical here or youtube will not track its move from one to another right, canonical retains the old one apparently hrm...
-  // standardize
-  current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
-  if (current_url.includes("amazon.com")) { // known to want to strip off cruft here
-    current_url = current_url.split("?")[0];
-  }
-  current_url = current_url.split('#')[0]; // https://www.youtube.com/watch?v=LXSj1y9kl2Y# -> https://www.youtube.com/watch?v=LXSj1y9kl2Y since we don't do hashes
   return current_url;
 }
 
@@ -616,7 +608,7 @@ function start() {
   if (isGoogleIframe()) {
     if (!window.parent.location.pathname.startsWith("/store/movies/details") && !window.parent.location.pathname.startsWith("/store/tv/show")) {
       // iframe started from a non "details" page with full url
-      alert('play it my way: failure: for google play movies, you need to right click on them and choosen "open in new tab" for it to work edited.');
+      alert('play it my way: failure: for google play movies, you need to right click on them and choosen "open link in new tab" for it to work edited in google play...');
       return; // avoid future prompts which don't matter anyway for now :|
     }
   }

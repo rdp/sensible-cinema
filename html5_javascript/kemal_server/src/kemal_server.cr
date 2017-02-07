@@ -37,12 +37,14 @@ def with_db
 end
  
 def standardize_url(unescaped)
-  # wait why are we doing this here *and* in javascript land? I guess its so the manual can enter here but...but...
+  # basically do it all here, except canonicalize, which we do in javascript...
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
   end
-  unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www for amazon
-  unescaped.split("#")[0]
+	if unescaped =~ /amazon.com/
+    unescaped = unescaped.gsub("smile.amazon", "www.amazon")
+	end
+  unescaped.split("#")[0] # https://www.youtube.com/watch?v=LXSj1y9kl2Y# -> https://www.youtube.com/watch?v=LXSj1y9kl2Y 
 end
 
 def db_style_from_query_url(env)
