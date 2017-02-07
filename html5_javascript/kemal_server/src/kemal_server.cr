@@ -39,10 +39,11 @@ end
 def standardize_url(unescaped)
   # wait why are we doing this here *and* in javascript land? I guess its so the manual can enter here but...but...
   if unescaped =~ /amazon.com|netflix.com/
-    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it
+    unescaped = unescaped.split("?")[0] # strip off extra cruft and there is a lot of it LOL but google play needs to keep it https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc
   end
+  unescaped = unescaped.split("&")[0] # strip off cruft ex: https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&index=21 :|
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www for amazon
-  unescaped = unescaped.split("#")[0]
+  unescaped = unescaped.split("#")[0] # trailing #, die!
   puts "standardized as #{unescaped}"
   unescaped
 end
