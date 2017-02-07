@@ -160,7 +160,6 @@ function liveFullNameEpisode() {
   return liveTitleNoEpisode() + liveEpisodeString(); 
 }
 
-
 // unused?
 function alertEditorWorkingAfterTimeout(message) {
 	setTimeout(function() {
