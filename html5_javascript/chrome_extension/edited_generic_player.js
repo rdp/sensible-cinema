@@ -17,6 +17,7 @@ var extra_message = "";
 var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
+var mutes, skips, yes_audio_no_videos, do_nothings, black_oval_over_videos;
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
@@ -498,10 +499,11 @@ function parseSuccessfulJson(json_string) {
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
-	mutes = []
-	skips = []
-	yes_audio_no_videos = []
-	do_nothings = [] // :|
+	mutes = []; // it gets filled in this method :)
+	skips = [];
+	yes_audio_no_videos = [];
+	do_nothings = []; // :|
+	black_oval_over_videos = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -511,6 +513,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
       push_to_array = skips;
 		} else if (tag.default_action == 'yes_audio_no_video') {
       push_to_array = yes_audio_no_videos;
+		} else if (tag.default_action == 'black_oval_over_video') {
+      push_to_array = black_oval_over_videos;
 		} else {
       push_to_array = do_nothings;
 		}
