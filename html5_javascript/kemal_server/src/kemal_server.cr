@@ -365,13 +365,12 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
 end
 
 def save_local_javascript(db_urls, log_message, env) # actually just json these days...
+  return if File.exists?("this_is_development") # avoid restarting web server locally :|
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
-		  if !File.exists?("this_is_development") # avoid restarting web server locally :|
-        File.open("edit_descriptors/log.txt", "a") do |f|
-          f.puts log_message + " " + db_url.name_with_episode
-        end
-			end
+      File.open("edit_descriptors/log.txt", "a") do |f|
+        f.puts log_message + " " + db_url.name_with_episode
+      end
       as_json = json_for(db_url, env)
       escaped_url_no_slashes = URI.escape url
       File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
