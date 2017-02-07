@@ -252,14 +252,6 @@ function addEditUi() {
 	</div>
   `;
   
-  // don't really need these anymore FWIW we call it once per frame
-  addEvent(window, "resize", function(event) {
-    setEditedControlsToTopLeft();
-  });
-  addEvent(window, "scroll", function(event) {
-    setEditedControlsToTopLeft();
-  });
-  setEditedControlsToTopLeft(); // and call immediately :)
   addMouseAnythingListener(showEditLinkMouseJustMoved);
 }
 
