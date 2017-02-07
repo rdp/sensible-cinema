@@ -8,12 +8,23 @@ var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 // var request_host="playitmyway.inet2.org"; // prod
 // var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
-function injectJs(link) {
-  var scr = document.createElement('script');
-  scr.type = "text/javascript";
-  scr.src = link;
-  document.getElementsByTagName('head')[0].appendChild(scr);
+function loadScript(url, callback)
+{
+    // Adding the script tag to the head as suggested before
+    var head = document.getElementsByTagName('head')[0];
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+
+    // Then bind the event to the callback function.
+    // There are several events for cross browser compatibility.
+    script.onreadystatechange = callback;
+    script.onload = callback;
+
+    // Fire the loading
+    head.appendChild(script);
 }
+
 
 already_loaded = false;
 
@@ -82,10 +93,9 @@ function injectEditedPlayerOnce() {
     }
     else {
         already_loaded = true;
-        injectJs(chrome.extension.getURL('helpers.js')); // hope it loads! :)
-				setTimeout(function() {
-          injectJs(chrome.extension.getURL('edited_generic_player.js'));
-				}, 50); // wait just in case :)
+        loadScript(chrome.extension.getURL('helpers.js'), function() {
+          loadScript(chrome.extension.getURL('edited_generic_player.js')); // one after another 
+				});
    }
 }
 

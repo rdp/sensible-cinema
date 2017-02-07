@@ -45,6 +45,39 @@ function findFirstVideoTagOrNull() {
   return null;
 }
 
+
+function seekToTime(ts, callback) {
+	callback = callback || function() {}
+  // try and avoid pauses after seeking
+	console.log("seeking to " + ts);
+  video_element.pause();
+  video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
+	// however if it close enough, then we need to call play
+	// some shenanigans to pretend to work around...
+	var timer = setInterval(function() {
+		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
+			console.log("appears it sought " + ts);
+			video_element.play();
+			clearInterval(timer);
+			callback();
+		}		
+	}, 50);
+}
+
+
+// method to bind easily to resize event
+var addEvent = function(object, type, callback) {
+    if (object == null || typeof(object) == 'undefined') return;
+    if (object.addEventListener) {
+        object.addEventListener(type, callback, false);
+    } else if (object.attachEvent) {
+        object.attachEvent("on" + type, callback);
+    } else {
+        object["on"+type] = callback;
+    }
+};
+
+
 function decodeHTMLEntities(text) {
    	// I guess there's an HTML way to do this, but this way looked funner! :)
     var entities = [
@@ -54,4 +87,32 @@ function decodeHTMLEntities(text) {
         text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
     }
     return text;
+}
+
+
+function displayDiv(div) {
+	div.style.display = "block";
+}
+
+function hideDiv(div) {
+	div.style.display = "none";
+}
+
+
+function pauseVideo() {
+	video_element.pause();
+}
+
+function sendMessageToPlugin(message) {
+	window.postMessage({ type: "FROM_PAGE_TO_CONTENT_SCRIPT", payload: message }, "*");
+  console.log("sent message from page to content script " + JSON.stringify(message));
+}
+
+
+function getLocationOfElement(el) {
+  el = el.getBoundingClientRect();
+  return {
+    left: el.left + window.scrollX,
+    top: el.top + window.scrollY
+  }
 }
