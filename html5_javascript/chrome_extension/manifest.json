@@ -18,7 +18,7 @@
       "js": ["contentscript.js"],
       "matches": ["<all_urls>"]
   }],
-  "web_accessible_resources": ["edited_generic_player.js"],
+  "web_accessible_resources": ["edited_generic_player.js", "helpers.js"],
   "icons": { "128": "camera.128.png" },
   "background": { "scripts": ["background.js"] }
 }

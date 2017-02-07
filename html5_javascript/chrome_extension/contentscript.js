@@ -12,7 +12,7 @@ function injectJs(link) {
   var scr = document.createElement('script');
   scr.type = "text/javascript";
   scr.src = link;
-  document.getElementsByTagName('head')[0].appendChild(scr)
+  document.getElementsByTagName('head')[0].appendChild(scr);
 }
 
 already_loaded = false;
@@ -82,8 +82,10 @@ function injectEditedPlayerOnce() {
     }
     else {
         already_loaded = true;
-        injectJs(chrome.extension.getURL('edited_generic_player.js'));
-        // appears background.js is the only thing that can adjust the icon, so could send it a message, but why these days...the script sends it an immediate message either way anyway
+        injectJs(chrome.extension.getURL('helpers.js')); // hope it loads! :)
+				setTimeout(function() {
+          injectJs(chrome.extension.getURL('edited_generic_player.js'));
+				}, 50); // wait just in case :)
    }
 }
 

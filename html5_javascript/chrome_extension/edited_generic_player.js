@@ -13,25 +13,7 @@ var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 // var request_host="playitmyway.inet2.org"; // prod
 // var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
 
-function inIframe() {
-    try {
-        return window.self !== window.top;
-    } catch (e) {
-        return true;
-    }
-}
-
-function isGoogleIframe() {
-  return inIframe() && /google.com/.test(window.location.hostname); 
-}
-
-function currentUrlNotIframe() { // hopefully better alternate to window.location.href, though somehow this doesn't always work still [ex: netflix.com iframes?]
-  return (window.location != window.parent.location) ? document.referrer : document.location.href;
-} 
-
-function isAmazon() {
-  return currentUrlNotIframe().includes("amazon.com");
-}
+extra_message = "";
 
 function getStandardizedCurrentUrl() {
   var current_url = currentUrlNotIframe();
@@ -39,6 +21,7 @@ function getStandardizedCurrentUrl() {
 		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
+	// TODO move everything except canonical to crystal land...
 	// else don't get canonical here or youtube will not track its move from one to another right, canonical retains the old one apparently hrm...
   // standardize
   current_url = current_url.replace("smile.amazon.com", "www.amazon.com");
@@ -105,35 +88,6 @@ function liveEpisodeNumber() {
   }
 }
 
-function findFirstVideoTagOrNull() {
-  var all = document.getElementsByTagName("video");
-  // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
-  // it hopefully won't hurt anything tho...since with the plugin way and most pages "can't access child iframes" the content script injected into all iframes will take care of business instead.
-  var i, frames;
-  frames = document.getElementsByTagName("iframe");
-  for (i = 0; i < frames.length; ++i) {
-    try { var childDocument = frame.contentDocument } catch (e) { continue }; // skip ones we can't access :|
-    all.concat(frames[i].contentDocument.document.getElementsByTagName("video"));
-  }
-  for(var i = 0, len = all.length; i < len; i++) {
-    if (all[i].currentTime > 0) {
-      return all[i];
-    }
-  }
-  return null;
-}
-
-function decodeHTMLEntities(text) {
-   	// I guess there's an HTML way to do this, but this way looked funner! :)
-    var entities = [
-        ['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']
-    ];
-    for (var i = 0, max = entities.length; i < max; ++i) {
-        text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
-    }
-    return text;
-}
-
 function areWeWithin(thisArray, cur_time) {
   for (key in thisArray) {
     var item = thisArray[key];
@@ -145,8 +99,6 @@ function areWeWithin(thisArray, cur_time) {
   }
   return [false];
 }
-
-extra_message = "";
 
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
@@ -191,12 +143,6 @@ function checkIfShouldDoActionAndUpdateUI() {
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
-
-function withinDelta(first, second, delta) {
-	var diff = Math.abs(first - second);
-	return diff < delta;
-}
-
 function checkStatus() {
 	// we call this on the big 3 even if there's not one being edited...
   if (url_id != 0) { // avoid unmuting videos playing that we don't even control [like youtube main page LOL]
@@ -359,7 +305,7 @@ function pauseVideo() {
 function sendMessageToPlugin(message) {
 window.postMessage({ type: "FROM_PAGE_TO_CONTENT_SCRIPT", 
      payload: message }, "*");
-		 console.log("sent message" + message);
+		 console.log("sent message from page to content script " + JSON.stringify(message));
 }
 
 // method to bind easily to resize event
@@ -704,7 +650,7 @@ function parseSuccessfulJson(json_string) {
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		var option = document.createElement("option");
-		option.text = tag_edit_list_and_tags[0].description;
+		option.text = tag_edit_list_and_tags[0].description + "(" + tag_edit_list_and_tags[1].length + ")";
 		option.value = tag_edit_list_and_tags[0].id;
 		dropdown.add(option, dropdown[0]); // put it at the top XX
 	}
