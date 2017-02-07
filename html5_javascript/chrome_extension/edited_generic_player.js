@@ -91,8 +91,8 @@ function liveEpisodeNumber() {
 }
 
 function areWeWithin(thisArray, cur_time) {
-  for (key in thisArray) {
-    var item = thisArray[key];
+  for (var i = 0; i < thisArray.length; i++) {
+    var item = thisArray[i];
     var start_time = item[0];
     var end_time = item[1];
     if(cur_time > start_time && cur_time < end_time) {
