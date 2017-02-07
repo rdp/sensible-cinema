@@ -159,3 +159,50 @@ function liveTitleNoEpisode() {
 function liveFullNameEpisode() {
   return liveTitleNoEpisode() + liveEpisodeString(); 
 }
+
+
+// unused?
+function alertEditorWorkingAfterTimeout(message) {
+	setTimeout(function() {
+    alert("Play it my way:\n" + decodeHTMLEntities("SUCCESS: Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
+	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length +
+		    "\n" + liveFullNameEpisode()));
+			}, 100);
+}
+
+
+function timeStampToHuman(timestamp) {
+  var hours = Math.floor(timestamp / 3600);
+  timestamp -= hours * 3600;
+  var minutes  = Math.floor(timestamp / 60);
+  timestamp -= minutes * 60;
+  var seconds = timestamp.toFixed(2); //  -> "12.30";
+  // padding is "hard" apparently in javascript LOL
+  if (hours > 0)
+    return hours + "h " + minutes + "m " + seconds + "s";
+  else
+    return minutes + "m " + seconds + "s";
+}
+
+function removeFromArray(arr) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && arr.length) {
+        what = a[--L];
+        while ((ax= arr.indexOf(what)) !== -1) {
+            arr.splice(ax, 1);
+        }
+    }
+    return arr;
+}
+
+function humanToTimeStamp(timestamp) {
+  // 0h 17m 34.54s
+  sum = 0.0
+  split = timestamp.split(/[hms ]/)
+  removeFromArray(split, "");
+  split.reverse();
+  for (var i = 0; i < split.length; i++) {
+    sum += parseFloat(split[i]) * Math.pow(60, i);
+  }
+  return sum;
+}

@@ -15,6 +15,7 @@ var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
 
 var extra_message = "";
 var inMiddleOfTestingEdit = false;
+var current_json;
 
 function getStandardizedCurrentUrl() {
   var current_url = currentUrlNotIframe();
@@ -140,7 +141,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	document.getElementById('top_line_current_time').innerHTML = "" + timeStampToHuman(cur_time);
+	document.getElementById('top_line_current_time').innerHTML = timeStampToHuman(cur_time); // TODO next and previous edit starts as well :|
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
@@ -363,42 +364,6 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(video_element.currentTime);
 }
 
-function timeStampToHuman(timestamp) {
-  var hours = Math.floor(timestamp / 3600);
-  timestamp -= hours * 3600;
-  var minutes  = Math.floor(timestamp / 60);
-  timestamp -= minutes * 60;
-  var seconds = timestamp.toFixed(2); //  -> "12.30";
-  // padding is "hard" apparently in javascript LOL
-  if (hours > 0)
-    return hours + "h " + minutes + "m " + seconds + "s";
-  else
-    return minutes + "m " + seconds + "s";
-}
-
-function removeFromArray(arr) {
-    var what, a = arguments, L = a.length, ax;
-    while (L > 1 && arr.length) {
-        what = a[--L];
-        while ((ax= arr.indexOf(what)) !== -1) {
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
-}
-
-function humanToTimeStamp(timestamp) {
-  // 0h 17m 34.54s
-  sum = 0.0
-  split = timestamp.split(/[hms ]/)
-  removeFromArray(split, "");
-  split.reverse();
-  for (var i = 0; i < split.length; i++) {
-    sum += parseFloat(split[i]) * Math.pow(60, i);
-  }
-  return sum;
-}
-
 function saveEditButton() {
   var url = "https://" + request_host + "/add_tag_from_plugin/" + url_id + '?start=' + document.getElementById('start').value + 
             "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
@@ -516,16 +481,6 @@ function loadFailed(status) {
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
 
-
-function alertEditorWorkingAfterTimeout(message) {
-	setTimeout(function() {
-    alert("Play it my way:\n" + decodeHTMLEntities("SUCCESS: Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
-	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length +
-		    "\n" + liveFullNameEpisode()));
-			}, 100);
-}
-
-var current_json;
 
 function removeAllOptions(selectbox)
 {
