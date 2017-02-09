@@ -349,14 +349,16 @@ function setEditedControlsToTopLeft() {
 }
 
 function addToCurrentEditArray() {
-  start = humanToTimeStamp(document.getElementById('start').value);
-  endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (endy <= start) {
-    alert("seems your end is before your start, please fix then try again!");
+	var faux_tag = {
+		start: humanToTimeStamp(document.getElementById('start').value),
+		endy: humanToTimeStamp(document.getElementById('endy').value)
+	}
+  if (faux_tag.endy <= faux_tag.start) {
+    alert("seems your end is before your start, please fix this, then try again!");
     return; // abort!
   } 
-  currentEditArray().push([start, endy]);
-  return [start, endy];
+  currentEditArray().push(faux_tag);
+  return faux_tag;
 }
 
 function currentTestAction() {
@@ -369,14 +371,15 @@ function testCurrentFromUi() {
     return; // abort
   }
 	if (inMiddleOfTestingEdit) {
-		alert('cant test two edits simultaneously, please wait for the first to finish first'); // otherwise I'm not sure what is going to happen to those arrays :|
+		alert('cant test two edits simultaneously, please wait for the first to finish first'); // otherwise I'm not sure what is going to happen to those arrays with their temp add-on at the end 
+		return; // abort
 	}
   inMiddleOfTestingEdit = true;
-  var [start, endy] = addToCurrentEditArray();
-  seekToTime(start - 1, function() { // TODO disallow double simultaneous seeks, it broke amazon??
-	  length = endy - start;
+  var faux_tag = addToCurrentEditArray();
+  seekToTime(faux_tag.start - 1, function() {
+	  length = faux_tag.endy - faux_tag.start;
 	  if (currentTestAction() == 'skip') {
-	    length = 0; // it skips it, so the amount of time before reverting is less it :)
+	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
 	  wait_time_millis = (length + 1 + 1) * 1000; 
 	  setTimeout(function() {
