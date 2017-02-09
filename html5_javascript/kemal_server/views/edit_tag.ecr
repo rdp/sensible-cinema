@@ -18,7 +18,7 @@ default action to take if user selects to edit all content tags:
   <option value="mute">mute</option>
   <option value="skip">skip</option>
   <option value="yes_audio_no_video">yes_audio_no_video</option>
-  <option value="black_oval_over_video">black_oval_over_video</option>
+  <option value="shape_over_video">shape_over_video</option>
   <option value="do_nothing">do_nothing</option>
 </select>
 <script>
@@ -170,7 +170,7 @@ function showSubCatWithRightOptionsAvailable() {
 }
 
 function default_action_changed() {
-  if (document.getElementById('action_sel').value == "black_oval_over_video") {
+  if (document.getElementById('action_sel').value == "shape_over_video") {
     document.getElementById('oval_coords_div').style.display = "block";
   }
 	else {

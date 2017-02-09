@@ -2,19 +2,20 @@
 // for non chrome browser: copy and paste all of this text (including this line) into the "developer tools javascript console" ">" prompt, and hit enter:
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
+
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
-
 var extra_message = "";
 var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, black_oval_over_videos;
+var mutes, skips, yes_audio_no_videos, do_nothings, shapes_over_videos;
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
@@ -134,34 +135,34 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	tag = areWeWithin(black_oval_over_videos, cur_time);
-	/*var*/ black_oval = document.getElementById('black_oval_div_id');
-	/*var*/ black_square = document.getElementById('black_square_div_id');
+	tag = areWeWithin(shapes_over_videos, cur_time);
+	var oval_div = document.getElementById('color_oval_div_id');
+	var square_div = document.getElementById('color_square_div_id');
 	if (tag) {
 		// 50%,50%:25%,25% etc.
 		coords = tag.oval_percentage_coords;
-		move_div_to_position(coords.split("--")[0], black_oval);
+		move_div_to_position(coords.split("--")[0], oval_div);
 		if (coords.includes("--")) {
-			move_div_to_position(coords.split("--")[1], black_square);			
+			move_div_to_position(coords.split("--")[1], square_div);			
 		}
 		else {
 			// optional, so else hide it
-			black_square.style.width = "0px";
-			black_square.style.height = "0px";			
+			square_div.style.width = "0px";
+			square_div.style.height = "0px";			
 		}
 		
-		if (black_oval.style.display == "none") {
+		if (oval_div.style.display == "none") {
 			timestamp_log("showing oval/square", cur_time, tag);
-			black_oval.style.display = "block";
-			black_square.style.display = "block";
-			extra_message = "black_oval_over_video";
+			oval_div.style.display = "block";
+			square_div.style.display = "block";
+			extra_message = "shape_over_video";
 		}
 	}
 	else {
-		if (black_oval.style.display == "block") {
+		if (oval_div.style.display == "block") {
 			console.log("hiding oval/square " + cur_time);
-			black_oval.style.display = "none";
-			black_square.style.display = "none";
+			oval_div.style.display = "none";
+			square_div.style.display = "none";
 			extra_message = ""; // hope we don't have overlapping tags for this LOL
 		}
 	}
@@ -172,7 +173,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 }
 
 function move_div_to_position(coords, div_to_adjust) {
-	[topy, _, left, _, height, _, width] = coords.split(/%(,|:|)/);
+	[topy, _, left, _, height, _, width, _, color] = coords.split(/%(,|:|)/);
 	topy = parseInt(topy) / 100.0;
 	left = parseInt(left) / 100.0;
 	height = parseInt(height) / 100.0;
@@ -182,6 +183,7 @@ function move_div_to_position(coords, div_to_adjust) {
 	div_to_adjust.style.left = video_position.left + (left * video_position.width);
 	div_to_adjust.style.height = video_position.height * height; 
 	div_to_adjust.style.width = video_position.width * width;
+	div_to_adjust.style.backgroundColor = color;
 }
 
 function checkStatus() {
@@ -214,8 +216,8 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: yellow; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
-	<div id='black_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
+	<div id='color_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: yellow; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
+	<div id='color_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
 	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
@@ -549,7 +551,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	skips = [];
 	yes_audio_no_videos = [];
 	do_nothings = []; // :|
-	black_oval_over_videos = [];
+	shapes_over_videos = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -559,8 +561,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
       push_to_array = skips;
 		} else if (tag.default_action == 'yes_audio_no_video') {
       push_to_array = yes_audio_no_videos;
-		} else if (tag.default_action == 'black_oval_over_video') {
-      push_to_array = black_oval_over_videos;
+		} else if (tag.default_action == 'shape_over_video') {
+      push_to_array = shapes_over_videos;
 		} else {
       push_to_array = do_nothings;
 		}
