@@ -92,19 +92,18 @@ get "/nuke_test_by_url" do |env|
   raise("cannot nuke non test movies, please ask us if you want to delete movie")  unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
   url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
-	if url
-	
-	  url.tag_edit_lists.each{|tag_edit_list|
-		  tag_edit_list.destroy_tag_edit_list_to_tags
-		  tag_edit_list.destroy_no_cascade
-		}
-		url.tags.each &.destroy
-		url.destroy
-	  set_flash_for_next_time env, "nuked testmovie from db, you can start over and do some more test editing on a blank/clean slate now"
-	else
-	  raise "not found?"
-	end
-	
+  if url
+
+    url.tag_edit_lists.each{|tag_edit_list|
+      tag_edit_list.destroy_tag_edit_list_to_tags
+      tag_edit_list.destroy_no_cascade
+    }
+    url.tags.each &.destroy
+    url.destroy
+    "nuked testmovie from db, you can start over and do some more test editing on a blank/clean slate now"
+  else
+   raise "not found to nuke?"
+  end
 end
 
 get "/delete_url/:url_id" do |env|
