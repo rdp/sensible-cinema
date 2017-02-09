@@ -90,9 +90,7 @@ function injectEditedPlayerOnce() {
     }
     else {
         already_loaded = true;
-        loadScript(chrome.extension.getURL('helpers.js'), function() {
-          loadScript(chrome.extension.getURL('edited_generic_player.js')); // one after another 
-				});
+				loadScript(chrome.extension.getURL('edited_generic_player.js'));
    }
 }
 
