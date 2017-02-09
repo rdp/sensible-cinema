@@ -99,12 +99,12 @@ alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DE
 alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
 
 ALTER TABLE `urls` CHANGE COLUMN `image_url` `image_local_filename` VARCHAR(2014) NOT NULL DEFAULT '';
--- done prod
 
 alter table tags add column oval_percentage_coords VARCHAR(24)    NOT NULL DEFAULT '';
--- done dev
 alter table tags drop column more_details;
-
+-- done prod
+alter table tags change oval_percentage_coords oval_percentage_coords  VARCHAR(100) NOT NULL DEFAULT '';
+-- done dev
 
 -- and output to screen to show success...
 select * from urls;

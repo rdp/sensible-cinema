@@ -192,7 +192,7 @@ post "/save_tag/:url_id" do |env|
   tag.details = sanitize_html params["details"]
   tag.oval_percentage_coords = sanitize_html params["oval_percentage_coords"].strip
 	if tag.oval_percentage_coords.present?
-	  raise "bad oval coords should look like 50%,50%:25%,25%" unless tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%$/
+	  raise "bad oval coords should look like 50%,50%:25%,25% [--same for black square]" unless (tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%$/) || (tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%--\d+%,\d+%:\d+%,\d+%/ )
 	end
 	if tag.default_action == "black_oval_over_video" && !tag.oval_percentage_coords.present?
 	  raise "black_oval_over_video requires oval_percentage_coords to be set..."

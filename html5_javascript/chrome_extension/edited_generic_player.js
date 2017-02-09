@@ -7,11 +7,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-// var request_host="localhost:3000"; // dev
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";
-
-var request_host="playitmyway.inet2.org"; // prod
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml";
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
 
 var extra_message = "";
 var inMiddleOfTestingEdit = false;
@@ -138,30 +135,33 @@ function checkIfShouldDoActionAndUpdateUI() {
 	}
 
 	tag = areWeWithin(black_oval_over_videos, cur_time);
-	var black_oval = document.getElementById('black_oval_div_id');
+	/*var*/ black_oval = document.getElementById('black_oval_div_id');
+	/*var*/ black_square = document.getElementById('black_square_div_id');
 	if (tag) {
 		// 50%,50%:25%,25% etc.
-		[topy, _, left, _, height, _, width] = tag.oval_percentage_coords.split(/%(,|:|)/);
-		topy = parseInt(topy) / 100.0;
-		left = parseInt(left) / 100.0;
-		height = parseInt(height) / 100.0;
-		width = parseInt(width) / 100.0;
-		var video_position = getLocationOfElement(video_element);
-		black_oval.style.top = video_position.top + (topy * video_position.height);
-		black_oval.style.left = video_position.left + (left * video_position.width);
-		black_oval.style.height = video_position.height * height; 
-		black_oval.style.width = video_position.width * width;
+		coords = tag.oval_percentage_coords;
+		move_div_to_position(coords.split("--")[0], black_oval);
+		if (coords.includes("--")) {
+			move_div_to_position(coords.split("--")[1], black_square);			
+		}
+		else {
+			// optional, so else hide it
+			black_square.style.width = "0px";
+			black_square.style.height = "0px";			
+		}
 		
 		if (black_oval.style.display == "none") {
-			timestamp_log("showing oval", cur_time, tag);
+			timestamp_log("showing oval/square", cur_time, tag);
 			black_oval.style.display = "block";
+			black_square.style.display = "block";
 			extra_message = "black_oval_over_video";
 		}
 	}
 	else {
 		if (black_oval.style.display == "block") {
-			console.log("hiding oval " + cur_time);
+			console.log("hiding oval/square " + cur_time);
 			black_oval.style.display = "none";
+			black_square.style.display = "none";
 			extra_message = ""; // hope we don't have overlapping tags for this LOL
 		}
 	}
@@ -169,6 +169,19 @@ function checkIfShouldDoActionAndUpdateUI() {
 	document.getElementById('top_line_current_time').innerHTML = timeStampToHuman(cur_time); // TODO next and previous edit starts as well :|
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
+}
+
+function move_div_to_position(coords, div_to_adjust) {
+	[topy, _, left, _, height, _, width] = coords.split(/%(,|:|)/);
+	topy = parseInt(topy) / 100.0;
+	left = parseInt(left) / 100.0;
+	height = parseInt(height) / 100.0;
+	width = parseInt(width) / 100.0;
+	var video_position = getLocationOfElement(video_element);
+	div_to_adjust.style.top = video_position.top + (topy * video_position.height);
+	div_to_adjust.style.left = video_position.left + (left * video_position.width);
+	div_to_adjust.style.height = video_position.height * height; 
+	div_to_adjust.style.width = video_position.width * width;
 }
 
 function checkStatus() {
@@ -201,7 +214,8 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 50% / 50%'/>
+	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
+	<div id='black_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
 	`;
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
@@ -496,7 +510,7 @@ function loadFailed(status) {
 		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
   }
   else {
-    alert("appears the play it my way server is currently down, please alert us! Edits disabled for now...");
+    alert("appears the play it my way server is currently down, please alert us! Edits disabled for now..." + request_host);
 		document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Play it my way Server down, try again later...";
   }
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]

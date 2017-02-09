@@ -118,7 +118,8 @@ internal details (ex: "sally said .... OK?" (dots instead of real profanity, or 
   <br/>
   oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
   <br/>
-  Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%"
+  Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%" if you want a square add the same with a "--" like "0%,0%:0%,0%--50%,50%:25%,25%" or you can have both, like  "25%,25%:10%,10%--50%,50%:25%,25%" 
+	<br/>
   <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
 </div>
 
