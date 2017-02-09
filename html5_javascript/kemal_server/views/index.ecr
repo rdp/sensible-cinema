@@ -38,7 +38,7 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
                 }
                 else { alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
                }
-           } else { console.log("no reply.version?""); }
+           } else { console.log("no reply.version?"); }
        }  else {  console.log("no reply, probably means extension not installed");  }
 });
 
