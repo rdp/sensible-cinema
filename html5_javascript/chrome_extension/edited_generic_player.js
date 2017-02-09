@@ -7,8 +7,8 @@ if (typeof clean_stream_timer !== 'undefined') {
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
 }
 
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
 
 var extra_message = "";
 var inMiddleOfTestingEdit = false;
@@ -214,7 +214,7 @@ function addEditUi() {
 	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
 		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
 	</style>;
-	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: black; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
+	<div id='black_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: yellow; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
 	<div id='black_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
 	`;
   allEditStuffDiv.style.color = "white";
@@ -231,7 +231,7 @@ function addEditUi() {
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id style='display: none;'>
-	    Success! Currently editing: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
+	    Success! Currently editing [your playback will differ from the original content]: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
 	  </div>
 	  <div id=loading_div_id>Loading...</div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
