@@ -3,8 +3,8 @@
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
 
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -23,6 +23,7 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
 		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
+	// attempt to leave the rest in cyrstal
   return current_url;
 }
 
@@ -478,7 +479,7 @@ function parseSuccessfulJsonNewUrl(json_string) {
 	getEditsFromCurrentTagList(); // used to alert was useful on amazon, but annoying when you create new movie [?]
   startWatcherTimerOnce();
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-    alert("play it my way:\ndanger: this may have been the wrong url? this_page=" + currentUrlNotIframe() + "(" + getStandardizedCurrentUrl() + ") edits expected from=" + expected_current_url + " or " + amazon_second_url);
+     // there can be false alerts like yours has a # or something so don't alert :|
   }
   old_current_url = getStandardizedCurrentUrl();
   if (liveEpisodeNumber() != expected_episode_number) {

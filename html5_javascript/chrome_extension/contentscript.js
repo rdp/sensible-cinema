@@ -2,8 +2,8 @@
 // content script runs on every page...and once again on each embedded iframe...
 // we mostly use this to bootstrap the real player...
 
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
 
 function loadScript(url, callback)
 {
@@ -155,6 +155,7 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
 		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
+	// attempt to leave the rest in cyrstal
   return current_url;
 }
 
