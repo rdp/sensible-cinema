@@ -45,9 +45,6 @@ def standardize_url(unescaped)
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
   unescaped = unescaped.split("#")[0] # trailing #, die!
   puts "standardized as #{unescaped}"
-  if unescaped =~ /youtube.com/ && !unescaped.includes?("?v=")
-    raise "youtube nonstandard url detected, please report #{unescaped}" # https://www.youtube.com/user/paulsoaresjr are wrong today :|
-  end
   unescaped
 end
 
@@ -261,6 +258,9 @@ get "/new_url_from_plugin" do |env| # add_url add_new
   episode_name = incoming["episode_name"]
   title = incoming["title"]
   duration = incoming["duration"].to_f
+  if real_url =~ /youtube.com/ && !real_url.includes?("?v=")
+    raise "youtube nonstandard url detected, please report #{real_url}" # reject https://www.youtube.com/user/paulsoaresjr etc. which are screwy today :| though js does this too...
+  end
   create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
 end
 
@@ -398,6 +398,7 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
+	puts "params=#{params}"
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = params["url"] # already unescaped I think...
   _ , incoming_url = get_title_and_sanitized_standardized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
@@ -454,6 +455,11 @@ post "/save_url" do |env|
   end
 
   save_local_javascript [db_url], db_url.inspect, env
+	
+	if params["srt_upload"].present?
+	
+	end
+	
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s
 end

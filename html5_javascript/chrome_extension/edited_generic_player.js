@@ -3,8 +3,8 @@
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
 
-var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -303,10 +303,17 @@ function addEditUi() {
 function addForNewEditToScreen() {
   if (url_id == 0) {
 		// case "unedited click to add.."
-    window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
-		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
-		setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
-		pauseVideo();		
+		if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
+			alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
+			// XXXX more generic here somehow possible???
+			// TPDP don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
+		}
+		else {
+	    window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
+			      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
+			setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
+			pauseVideo();
+		}
   }
 	else {
 		// case "Add new content tag" XXX this is screwy but...but...LOL

@@ -94,13 +94,17 @@ an image_url (on a different site) for movie (ex: http://wikipedia/original_imag
 total movie length (netflix wants this, others can leave it at zero)
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
-<br/>
 
+<br/>
+Want to upload a subtitle file and *automatically* detect where profanities are? Download a subtitle file for it, ex: <a href=http://www.english-subtitles.club/>here</a>.  Then synchronize it by displaying the subtitles on your video, and entering in a file values into <a href=http://subsyncer.appspot.com/step1>this synchronization tool</a> (we recommend one at the very beginning, one at the middle, one 3/4 of the way through), then upload it here. <input type="file" name="srt_upload">
+
+<br/>
 <br/>
 <input type="submit" value="Update movie info" class="btn btn-primary" class_means="blue" onclick="this.form.submit(); this.disabled=true; this.value='Sending…';"> <!-- takes awhile so do something to know their click was accepted -->
 </form>
 
-<p><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)</p>
+<br/><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)
+<br/>
 
 <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from database</a>
 
