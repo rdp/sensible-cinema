@@ -102,7 +102,7 @@ module SubtitleProfanityFinder
                beginning_srt = 0.0, beginning_actual_movie = 0.0, ending_srt = 7200.0, ending_actual = 7200.0)
     # jruby is unkind to invalid encoding input, and these can come from "all over" unfortunately, and it doesn"t guess it right [?] ai ai so scrub
     contents = File.read(incoming_filename)
-    edl_output_from_string(contents, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)[0]
+    edl_output_from_string(contents, subtract_from_each_beginning_ts, add_to_end_each_ts, beginning_srt, beginning_actual_movie, ending_srt, ending_actual)
   end
   
   # **_time parameters are expected to be floats...
@@ -221,10 +221,9 @@ module SubtitleProfanityFinder
       all_profanity_combinationss += [convert_to_regexps(semi_bad_profanities)]
     end
     
-    output = ""
+    output = [] of NamedTuple(start: String, endy: String, category: String, details: String)
     entries = split_to_entries(subtitles)
     all_profanity_combinationss.each{|all_profanity_combinations|
-      output += "\n" # some space between greater and lesser prof"s
       entries.each{ |entry|
         text = entry[:text]
         ts_begin = entry[:beginning_time]
@@ -242,7 +241,7 @@ module SubtitleProfanityFinder
         }
         
         if found_category
-          # sanitize/euphemize the subtitle text for all profanities...
+          # sanitize/euphemize the subtitle text for this and all profanities...
           all_profanity_combinationss.each{ |all_profanity_combinations2|
             all_profanity_combinations2.each{|profanity, category, sanitized|
               text = text.gsub(profanity, sanitized)
@@ -252,18 +251,18 @@ module SubtitleProfanityFinder
           # because we now have duplicate"s for the letter l/i, refactor [[[word]]] to just [word]
           text = text.gsub(/\[+/, "[")
           text = text.gsub(/\]+/, "]")
-          # crstayl gah! entry[:text] = text
+          # crystal gah! entry[:text] = text
           #add_single_line_minimized_text_from_multiline entry
           text = text.gsub(/[\r\n]|\n/, " ") # flatten up to 3 lines of text to just 1
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
           unless output.includes? ts_begin_human # i.e. some previous profanity already found this line :P
-            output += %{  "#{ts_begin_human}" , "#{ts_end_human}", "profanity", "#{found_category}", "#{text}",\n}
+            output << {start: ts_begin_human, endy: ts_end_human, category: found_category, details: text.strip}
           end
         end
       }
     }
-    [output.strip, entries]
+    output
   end
 end
 
