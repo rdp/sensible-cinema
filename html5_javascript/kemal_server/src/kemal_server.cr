@@ -440,22 +440,35 @@ post "/save_url" do |env|
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
   db_url.total_time = total_time
-  if env.params.files["srt_upload"]?
-	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path)
-	end
   db_url.save
 	
-  download_url = params["image_url"]
-  if !download_url.present? && !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
-    # one fer free!
+  image_url = params["image_url"]
+  if !image_url.present? && !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
+    # image fer free! :)
     youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
-    download_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+    image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
   end
-  if download_url.present?
-    # wait till now so it is guaranteed an id though this is odd :|
-    db_url.download_image_url download_url
-    db_url.save # and don't store it as a DB key
+  if image_url.present?
+    # wait till now so it is guaranteed an id though do we have to?
+    db_url.download_image_url image_url
+    db_url.save
   end
+  
+  if env.params.files["srt_upload"]?
+    # assume a fresh upload here...
+	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path)
+    SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles).each{ |prof|
+      tag = Tag.new(db_url)
+      tag.start = prof[:start]
+      tag.endy =  prof[:endy]
+      tag.default_action = "mute"
+      tag.category = "profanity"
+      tag.subcategory = prof[:category]
+      tag.details = prof[:details]
+      tag.save
+      puts "saved from srt #{tag}"
+    }
+	end  
 
   save_local_javascript [db_url], db_url.inspect, env
 	
