@@ -5,7 +5,7 @@ class EdlParser
   def self.translate_string_to_seconds(s)
     # might actually already be a float, or int, depending on the yaml
     # int for 8 => 9 and also for 1:09 => 1:10
-    if s.is_a? Numeric
+    if s.is_a? Number
       return s.to_f # easy out.
     end
     
@@ -15,7 +15,7 @@ class EdlParser
     seconds = nil
     seconds = s.split(":")[-1]
     raise "does not look like a timestamp? " + seconds.inspect unless seconds =~ /^\d+(|[,.]\d+)$/
-    seconds.gsub!("," , ".")
+    seconds = seconds.gsub("," , ".")
     total += seconds.to_f
     minutes = s.split(":")[-2] || "0"
     total += 60 * minutes.to_i
@@ -32,7 +32,7 @@ class EdlParser
       # assume that it (could be, at least) start_time, end_time, category, number
       category = single_element[-2]
       category_number = single_element[-1]
-      out << single_element 
+      out = out +  single_element 
     end
     out
   end
@@ -52,7 +52,7 @@ class EdlParser
     }
     while(from_this[0] && from_this[0] !~ TimeStamp)
       raise SyntaxError.new("straight digits not allowed use 1000.0 instead") if from_this[0] =~ /^\d+$/
-      out << from_this.shift
+      out = out +  from_this.shift
     end
     out
   end
@@ -63,20 +63,20 @@ class EdlParser
     out = ""
     hours = seconds.to_i / 3600
     if hours > 0 || force_hour_stamp
-      out << "%d" % hours
-      out << ":"
+      out = out + "%d" % hours
+      out = out + ":"
     end
     seconds = seconds - hours*3600
     minutes = seconds.to_i / 60
-    out << "%02d" % minutes
+    out = out + "%02d" % minutes
     seconds = seconds - minutes * 60
-    out << ":"
+    out = out + ":"
     
     # avoid an ugly .0 at the end
 #    if seconds == seconds.to_i
 #      out << "%02d" % seconds
 #    else
-      out << "%05.2f" % seconds # man that printf syntax is tricky...
+      out = out + "%05.2f" % seconds # man that printf syntax is tricky...
 #    end
     
   end
