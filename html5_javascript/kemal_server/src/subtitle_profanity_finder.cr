@@ -267,13 +267,8 @@ module SubtitleProfanityFinder
   end
 end
 
-if ARGV[0] == "--create-edl"
-  if ARGV.empty?
-    p "syntax: [filename.srt | [--create-edl|--create-edl-including-minor-profanities] input_name.srt output_name.edl]"
-    exit
-  elsif ARGV[0].in? ["--create-edl"]
-    incoming_filename = ARGV[1]
-    stuff = SubtitleProfanityFinder.edl_output incoming_filename
-    puts "got #{stuff}"
-  end
+if ARGV[0] == "--create-edl" # then .srt name
+  incoming_filename = ARGV[1]
+  stuff = SubtitleProfanityFinder.edl_output incoming_filename
+  puts "got #{stuff.inspect}"
 end
