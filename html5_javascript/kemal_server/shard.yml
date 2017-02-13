@@ -17,7 +17,3 @@ dependencies:
     github: crystal-lang/crystal-db
   mysql:
     github: crystal-lang/crystal-mysql
-  sqlite3:
-    github: crystal-lang/crystal-sqlite3
-  pool:
-    github: ysbaddaden/pool

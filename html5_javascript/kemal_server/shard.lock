@@ -6,7 +6,7 @@ shards:
 
   kemal:
     github: sdogruyol/kemal
-    commit: 72dc6cf77513e7b392dbeea260eaee4ffb9624b0
+    commit: e4e71541e7797e5e4bcdbcb8997715066c82996b
 
   kemal-session:
     github: kemalcr/kemal-session
@@ -24,15 +24,7 @@ shards:
     github: crystal-lang/crystal-mysql
     version: 0.3.1
 
-  pool:
-    github: ysbaddaden/pool
-    version: 0.2.3
-
   radix:
     github: luislavena/radix
     version: 0.3.7
-
-  sqlite3:
-    github: crystal-lang/crystal-sqlite3
-    version: 0.8.1
 

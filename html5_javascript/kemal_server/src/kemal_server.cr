@@ -440,6 +440,9 @@ post "/save_url" do |env|
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
   db_url.total_time = total_time
+  if env.params.files["srt_upload"]?
+	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path)
+	end
   db_url.save
 	
   download_url = params["image_url"]
@@ -455,10 +458,6 @@ post "/save_url" do |env|
   end
 
   save_local_javascript [db_url], db_url.inspect, env
-	
-	if params["srt_upload"].present?
-	  # env.params.files ...
-	end
 	
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s
