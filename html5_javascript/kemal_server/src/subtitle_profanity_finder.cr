@@ -20,11 +20,12 @@ module SubtitleProfanityFinder
        lines = glop[0].lines.to_a
        index_line = lines[0]
        timing_line = lines[1].strip
-       text = lines.to_a[2..-1].join("") # they still have separating "\n""s
+       text = lines.to_a[2..-1].join(" ")
        # create english-ified version
        test = text.gsub(/<(.|)(\/|)i>/i, "") # kill <i> type things
-       text = text.gsub(/[^a-zA-Z0-9\-!,.\?"\n\(\)]/, " ") # kill weird stuff like ellipseses, also quotes would hurt so kill them too
+       text = text.gsub(/[^'a-zA-Z0-9\-!,.\?"\n\(\)]/, " ") # kill weird stuff like ellipseses, also quotes would hurt so kill them too
        text = text.gsub(/  +/, " ") # remove duplicate "  " "s now since we may have inserted many
+       text = text.strip
        # extract timing info
        # "00:03:00.0" , "00:04:00.0", "violence", "of some sort",
        timing_line =~ /((\d\d:\d\d:\d\d),(\d\d\d) --> (\d\d:\d\d:\d\d),(\d\d\d))/
@@ -33,17 +34,16 @@ module SubtitleProfanityFinder
        out = { index_number: index_line.strip.to_i,
          beginning_time: EdlParser.translate_string_to_seconds(ts_begin),
          ending_time: EdlParser.translate_string_to_seconds(ts_end),
-         text: text.strip,
-         single_line_text: ""
+         text: text,
        }
-       # TODO add_single_line_minimized_text_from_multiline(out)
+       # add_single_line_minimized_text_from_multiline(text)
        out
      }
      if all.size < @@expected_min_size
        raise "unable to parse subtitle file? size=#{all.size}"
      end
 
-     # strip out auto inserted trailers/headers
+     # strip out auto inserted trailer/header subtitles since they don't actually match up to text
      reg =  / by|download| eng|www|http|sub/i
      while all[0][:text] =~ reg
       all.shift
@@ -54,9 +54,9 @@ module SubtitleProfanityFinder
      all
    end
 
-   def self.add_single_line_minimized_text_from_multiline(entry)
-     entry[:single_line_text] = entry[:text].strip.gsub(/^[- ,_\.]+/, "").gsub(/[- ,_]+$/, "").gsub(/[\r\n]/, " ")
-   end
+   #def self.strip_trailer_header_punctuation(text) # useful?
+   #  text.strip.gsub(/^[- ,_\.]+/, "").gsub(/[- ,_]+$/, "")
+   #end
 
    # convert string to regexp, also accomodating for "full word" type profanities
    def self.convert_to_regexps(profanity_hash)
@@ -239,7 +239,7 @@ module SubtitleProfanityFinder
           text = text.gsub(/\[+/, "[")
           text = text.gsub(/\]+/, "]")
           # crystal gah! entry[:text] = text
-          #add_single_line_minimized_text_from_multiline entry
+          # add_single_line_minimized_text_from_multiline text
           text = text.gsub(/[\r\n]|\n/, " ") # flatten up to 3 lines of text to just 1
           ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true # wrong formatfor new??
           ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
