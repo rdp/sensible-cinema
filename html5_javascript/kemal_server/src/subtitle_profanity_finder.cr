@@ -58,21 +58,23 @@ module SubtitleProfanityFinder
    #  text.strip.gsub(/^[- ,_\.]+/, "").gsub(/[- ,_]+$/, "")
    #end
 
-   # convert string to regexp, also accomodating for "full word" type profanities
    def self.convert_to_regexps(profanity_hash)
-    all_profanity_combinations = [] of {Regex, String, String}
-    profanity_hash.to_a.reverse.each{ |profanity, sanitized| #  used to sort...
+    all_profanity_combinations = [] of {Regex, String, String} # category, replace_with
+    profanity_hash.to_a.reverse.each{ |profanity, sanitized|
       as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE)
       if sanitized.is_a? Array
-        # like "bad word" => ["vain use", :partial_word, "deity"]
+        # always like "actual bad word" => "sanitized" | ["sanitized", :partial_word, "category ex deity" = sanitized]
         raise "huh3" unless sanitized.size.in? [2, 3]
         raise "huh4" unless sanitized[1].in? [:full_word, :partial_word]
         is_single_word_profanity = true if sanitized[1] == :full_word
         if sanitized.size == 3
           category = sanitized[2].as(String)
         end
-        sanitized = sanitized[0].as(String)
+        sanitized = sanitized[0].as(String) # not bad enough to merit any sanitization apparently
+      else
+        # non array is the sanitized
       end
+      category ||= sanitized
       
       permutations = [profanity]
       if profanity =~ /l/
@@ -82,8 +84,7 @@ module SubtitleProfanityFinder
         permutations << profanity.gsub(/i/i, "i")
       end
       
-      replace_with = "[" + sanitized.to_s + "]"
-      category ||= sanitized
+      replace_with = "[" + sanitized + "]"
       
       permutations.each{ |permutation| 
         if is_single_word_profanity
@@ -125,7 +126,10 @@ module SubtitleProfanityFinder
 
 
 
-
+    # OK the types are
+    # full -> category, sanitized
+    # partial -> category, sanitized
+    # want "bad" => ["sanitized", :partial_word, "category ex deity" = sanitized]
 
 
 
@@ -171,7 +175,50 @@ module SubtitleProfanityFinder
 	  "cker" => "cock......",
 	  "bloody" => "bloo.."
     }
-	
+    
+    full_word_profanities = {"hell" => ["h...", :full_word],
+      "g" +
+      111.chr + 
+      100.chr => ["___", :partial_word, "deity"], "g" +
+      111.chr + 
+      100.chr +
+      "s" => "deitys",
+      "meu deus" => "l...",
+      "lo" + 
+	  "rd" => "l...", "da" +
+      "mn" => "d...", 
+      "f" +
+      117.chr +
+      99.chr +
+      107.chr =>
+      "f...",
+      "allah" => "all..",
+      "bi" +
+      "tc" + 104.chr => "b....",
+      "bas" +
+      "ta" + 
+	  "r" + 100.chr => "ba.....",
+      ((arse = "a" +
+      "s"*2)) => ["a..", :full_word],
+      arse + "h" +
+      "ole" => "a..h...",
+      "dieu" => ["deity", :full_word],
+      arse + "w" +
+      "ipe" => "a..w...",
+      "jes" +
+      "u" + "s" => ["___", :partial_word, "deity"],
+      "chri" +
+      "st"=> ["___", :full_word, "deity"], # allow for christian[ity] 
+      "sh" +
+       "i" + "t" => "sh..",
+      "cu" +
+      "nt" => "c...",
+      "cock" +
+	  "su" + 
+	  "cker" => "cock......",
+	  "bloody" => "bloo.."
+    }
+    
     semi_bad_profanities = {} of String => String | Array(String | Symbol)
     ["moron", "breast", "idiot", 
       "sex", "genital", 
@@ -213,7 +260,7 @@ module SubtitleProfanityFinder
     
     output = [] of NamedTuple(start: Float64, endy: Float64, category: String, details: String)
     entries = split_to_entries(subtitles)
-    all_profanity_combinationss.each{|all_profanity_combinations|
+    all_profanity_combinationss.each{ |all_profanity_combinations|
       entries.each{ |entry|
         text = entry[:text]
         ts_begin = entry[:beginning_time]
