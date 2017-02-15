@@ -1,9 +1,8 @@
-drop table if exists edits;
-drop table if exists urls;
-drop table if exists tags;
-drop table if exists tag;
-drop table if exists tag_edit_list;
+-- reverse order here
 drop table if exists tag_edit_list_to_tag;
+drop table if exists tag_edit_list;
+drop table if exists tags;
+drop table if exists urls;
 
 CREATE TABLE urls (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -94,7 +93,8 @@ CREATE TABLE tag_edit_list_to_tag (
 -- TODO some indices for these two?
 
 alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
---XXX rename all tables to singular... :)
+
+-- XXX rename all tables to singular... :)
 
 alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
 

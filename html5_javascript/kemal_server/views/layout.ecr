@@ -25,7 +25,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- have to put this at the top else can't use jQuery for methods called straight at load time :| -->
   <% if env.session.string("flash").size > 0 %>
     <p class="bg-info" style="padding: 10px;">
-		  <h2> <%= out = env.session.string("flash"); env.session.string("flash", ""); out %> </h2>
+		  <span style="font-size: 30px;"><%= out = env.session.string("flash"); env.session.string("flash", ""); out %> </span>
 		</p>
   <% end %>
   <%= content %>

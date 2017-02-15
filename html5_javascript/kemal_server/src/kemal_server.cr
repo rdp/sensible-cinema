@@ -398,7 +398,7 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
-	puts "params=#{params}"
+	puts "save_url params=#{params}"
   name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
   incoming_url = params["url"] # already unescaped I think...
   _ , incoming_url = get_title_and_sanitized_standardized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
@@ -440,7 +440,6 @@ post "/save_url" do |env|
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
   db_url.total_time = total_time
-  db_url.save
 	
   image_url = params["image_url"]
   if !image_url.present? && !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
@@ -448,16 +447,18 @@ post "/save_url" do |env|
     youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
     image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
   end
+  
   if image_url.present?
-    # wait till now so it is guaranteed an id though do we have to?
-    db_url.download_image_url image_url
+    # save it here now..otherwise we might orphan a file possibly maybe???
     db_url.save
+    db_url.download_image_url image_url
   end
   
-  if env.params.files["srt_upload"]?
-    # assume a fresh upload here...
-	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path)
-    SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles).each{ |prof|
+  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename.size > 0 # kemal bug? :|
+    # a fresh upload here...
+	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path) # save contents, why not? :)
+    profs = SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles)
+    profs.each{ |prof|
       tag = Tag.new(db_url)
       tag.start = prof[:start]
       tag.endy =  prof[:endy]
@@ -466,10 +467,11 @@ post "/save_url" do |env|
       tag.subcategory = prof[:category]
       tag.details = prof[:details]
       tag.save
-      puts "saved from srt #{tag}"
     }
+    puts "saved from srt #{profs.size}"
 	end  
 
+  db_url.save
   save_local_javascript [db_url], db_url.inspect, env
 	
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")

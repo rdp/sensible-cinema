@@ -3,8 +3,8 @@
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
 
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -579,7 +579,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 		}
 		push_to_array.push(tag);
 	}
-	document.getElementById('tag_layer_top_right').innerHTML = "Current content edit list: skips=" + skips.length + " mutes=" + mutes.length +" yes_audio_no_videos=" + yes_audio_no_videos.length;
+	document.getElementById('tag_layer_top_right').innerHTML = ""; // it was...just...so...ugly... XXX put next/prev here?
 }
 
 function getEditsFromCurrentTagList() {
