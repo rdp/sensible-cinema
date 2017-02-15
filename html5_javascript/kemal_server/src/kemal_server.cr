@@ -399,10 +399,20 @@ end
 post "/save_url" do |env|
   params = env.params.body # POST params
 	puts "save_url params=#{params}"
-  name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it builds and builds...]
+
+  if params.has_key? "id"
+    # these day
+    db_url = Url.get_only_by_id(params["id"])
+  else
+    db_url = Url.new
+  end
+  
+  # these get injected into HTML later so sanitize everything up front... :|
+  name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it grows and grows in error...]
   incoming_url = params["url"] # already unescaped I think...
-  _ , incoming_url = get_title_and_sanitized_standardized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title :)
-  # these get injected everywhere later so sanitize everything up front... :|
+  if db_url.url != incoming_url
+    _ , incoming_url = get_title_and_sanitized_standardized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title since it's already here manually :|
+  end
   amazon_second_url = HTML.unescape(params["amazon_second_url"])
   if amazon_second_url.present?
     _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url amazon_second_url
@@ -419,12 +429,6 @@ post "/save_url" do |env|
   purchase_cost = params["purchase_cost"].to_f
   total_time = human_to_seconds params["total_time"]
 
-  if params.has_key? "id"
-    # these day
-    db_url = Url.get_only_by_id(params["id"])
-  else
-    db_url = Url.new
-  end
 
   db_url.url = incoming_url
   db_url.amazon_second_url = amazon_second_url
@@ -468,7 +472,7 @@ post "/save_url" do |env|
       tag.details = prof[:details]
       tag.save
     }
-    puts "saved from srt #{profs.size}"
+    set_flash_for_next_time(env, "created mute tags from subtitle file: #{profs.size}")
 	end  
 
   db_url.save

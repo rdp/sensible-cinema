@@ -15,7 +15,7 @@ module SubtitleProfanityFinder
    def self.split_to_entries(subtitles_raw_text)
      # p subtitles_raw_text.valid_encoding? # no crystal equiv.
      # also crystal length => size hint plz
-     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings so that it parses right when linux reads a windows file <huh?>
+     all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings first so that it parses right when linux reads a windows file [maybe?]
      all = all.map{ |glop|
        lines = glop[0].lines.to_a
        index_line = lines[0]
@@ -40,7 +40,7 @@ module SubtitleProfanityFinder
        out
      }
      if all.size < @@expected_min_size
-       raise "unable to parse subtitle file? size=#{all.size}"
+       raise "unable to parse subtitle file? size=#{all.size} from #{subtitles_raw_text}"
      end
 
      # strip out auto inserted trailer/header subtitles since they don't actually match up to text
