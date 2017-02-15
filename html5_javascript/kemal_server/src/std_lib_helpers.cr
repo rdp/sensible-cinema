@@ -1,3 +1,11 @@
+# sane
+
+class Object
+  def in?(container)
+    container.includes?(self)
+  end
+end
+
 require "html"
 
 # and override :)
