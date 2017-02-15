@@ -203,15 +203,16 @@ module SubtitleProfanityFinder
        "cour" +
        "se" => "sexual reference",
        "panties" => "bodily part reference minor",
-       "butt" => "bodily part reference minor",
        "dumb" => "personal insult minor",
        "fart" => "bodily part reference minor"
 	  }.map{ |name, category|
       {bad_word: name, sanitized: name, type: :partial, category: category} # no sanitized deemed needed uh guess
     }
 	
-	  semi_bad_profanities << {bad_word: "crap", type: :full_word_only, category: "euphemized", sanitized: "crap"} # avoid scrap LOL
-	
+   {"butt" => "bodily part reference minor", "crap" => "euphemized"}.each{|bad_word, category| # avoid scrap, butter
+    semi_bad_profanities << {bad_word: bad_word, type: :full_word_only, category: category, sanitized: bad_word}    
+   }
+  
     bad_profanities = bad_full_word_profanities_with_sanitized_and_category.map{|bad_word, sanitized_and_category|
       {bad_word: bad_word, type: :full_word_only, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
     }
