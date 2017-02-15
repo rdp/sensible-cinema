@@ -11,8 +11,8 @@
 Total content tags in our system for this movie:
 <% url.tags_by_type.each{ |name, value| %>
   <% if value.size > 0 %>
-    <%= name %>: <%= value.size %>
 		<br/>
+    <%= name %>: <%= value.size %>
   <% end %>
 <% } %> 
 <hr/>
@@ -82,15 +82,20 @@ Content tags are basically timestamps and descriptions of content that exists in
 none yet, add one now!<br/><br/>
 <% end %>
 
-<a href=# onclick="document.getElementById('new_content_tag_instructions').style.display = 'block'; return false;">Create new content tag &#10133;<!-- thick plus --> </a>
+<!-- actually a dropdown + -->
+<a href=# onclick="document.getElementById('new_content_tag_instructions').style.display = 'block'; return false;">Create new content tag for this movie &#10133;<!-- thick plus --> </a>
 
 <div id="new_content_tag_instructions" style="display: none;">
 (the best way to create a new content tag is to go back to your movie, and start it playing, then click the "add new tag" link in the upper left.
 <br/>
 <img src=/add_tag_example.png width=300; />
+
 <br/>
-But if you want to create one manually, click here (not recommended)!)
-<a href=/new_empty_tag/<%= url.id %>>Create new content tag &#10133;<!-- thick plus --> </a> 
+You can also add "lots" of mute content tags automatically by letting PlayItMyWay parse a subtitle file for you, see <a href=/edit_url/<%= url.id %>#anchor1>here</a>.
+
+<br/>
+<br/>
+If you want to create one manually, the old way, click <a href=/new_empty_tag/<%= url.id %>>here<!-- thick plus --> </a> (not recommended)!
 </div>
 
 <hr/>
@@ -111,7 +116,7 @@ These are all "community edited" currently, wikipedia-style, feel free and pleas
   <% } %>
 <% end %>
 <br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new custom edit list &#10133;</a>.
+<a href=/new_tag_edit_list/<%= url.id %>>Create new customized edit list &#10133;</a>.
 
 
 <br/>
