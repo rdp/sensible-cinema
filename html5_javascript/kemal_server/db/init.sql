@@ -103,10 +103,10 @@ ALTER TABLE `urls` CHANGE COLUMN `image_url` `image_local_filename` VARCHAR(2014
 alter table tags add column oval_percentage_coords VARCHAR(24)    NOT NULL DEFAULT '';
 alter table tags drop column more_details;
 alter table tags change oval_percentage_coords oval_percentage_coords  VARCHAR(100) NOT NULL DEFAULT '';
--- done prod
 
 alter table urls add column subtitles LONGTEXT NOT NULL;
 -- done dev
+-- done prod
 
 -- and output to screen to show success...
 select * from urls;
