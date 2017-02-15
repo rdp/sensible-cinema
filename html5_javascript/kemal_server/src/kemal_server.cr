@@ -84,13 +84,20 @@ get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
+get "/nuke_url/:url_id" do |env| # nb: never link to this to avoid crawlers accidental nukage :|
+  hard_nuke_url_or_nil(get_url_from_url_id(env))
+end
+
 get "/nuke_test_by_url" do |env|
   real_url = env.params.query["url"]
-  raise("cannot nuke non test movies, please ask us if you want to delete movie")  unless real_url.includes?("test_movie") # LOL
+  raise("cannot nuke non test movies, please ask us if you want to delete a different movie")  unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
   url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
-  if url
+  hard_nuke_url_or_nil(url)
+end
 
+def hard_nuke_url_or_nil(url)
+  if url
     url.tag_edit_lists.each{|tag_edit_list|
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
@@ -458,7 +465,7 @@ post "/save_url" do |env|
     db_url.download_image_url image_url
   end
   
-  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename.size > 0 # kemal bug? :|
+  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename.size > 0 # kemal bug'ish :|
     # a fresh upload here...
 	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path) # save contents, why not? :)
     profs = SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles)
