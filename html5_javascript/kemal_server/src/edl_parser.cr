@@ -24,18 +24,6 @@ class EdlParser
     total
   end
 
-
-  # converts "blanks" => ["00:00:00", "00", "reason", "01", "01", "02", "02"] into sane arrays
-  def self.convert_to_timestamp_arrays(array)
-    out = [] of String
-    while(single_element = extract_entry!(array))
-      # assume that it (could be, at least) start_time, end_time, category, number
-      category = single_element[-2]
-      category_number = single_element[-1]
-      out = out +  single_element 
-    end
-    out
-  end
   
   # TimeStamp = /(^\d+:\d\d[\d:\.]*$|\d+)/ # this one also allows for 4444 [?] and also weirdness like "don't kill the nice butterfly 2!" ...
   TimeStamp = /^\s*(\d+:\d\d[\d:\.]*|\d+\.\d+)\s*$/ # allow 00:00:00 00:00:00.0 1222.4 " 2:04 "
@@ -51,34 +39,10 @@ class EdlParser
       end
     }
     while(from_this[0] && from_this[0] !~ TimeStamp)
-      raise SyntaxError.new("straight digits not allowed use 1000.0 instead") if from_this[0] =~ /^\d+$/
+      raise SyntaxError.new("straight non fractional digits not allowed use 1000.0 instead") if from_this[0] =~ /^\d+$/
       out = out +  from_this.shift
     end
     out
-  end
-  
-  # its reverse: translate_string_to_seconds
-  def self.translate_time_to_human_readable(seconds, force_hour_stamp = false)
-    # 3600 => "1:00:00"
-    out = ""
-    hours = seconds.to_i / 3600
-    if hours > 0 || force_hour_stamp
-      out = out + "%d" % hours
-      out = out + ":"
-    end
-    seconds = seconds - hours*3600
-    minutes = seconds.to_i / 60
-    out = out + "%02d" % minutes
-    seconds = seconds - minutes * 60
-    out = out + ":"
-    
-    # avoid an ugly .0 at the end
-#    if seconds == seconds.to_i
-#      out << "%02d" % seconds
-#    else
-      out = out + "%05.2f" % seconds # man that printf syntax is tricky...
-#    end
-    
   end
   
 end

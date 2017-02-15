@@ -58,23 +58,12 @@ module SubtitleProfanityFinder
    #  text.strip.gsub(/^[- ,_\.]+/, "").gsub(/[- ,_]+$/, "")
    #end
 
-   def self.convert_to_regexps(profanity_hash)
+   def self.convert_to_regexps(profanity_tuples)
     all_profanity_combinations = [] of {Regex, String, String} # category, replace_with
-    profanity_hash.to_a.reverse.each{ |profanity, sanitized|
-      as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE)
-      if sanitized.is_a? Array
-        # always like "actual bad word" => "sanitized" | ["sanitized", :partial_word, "category ex deity" = sanitized]
-        raise "huh3" unless sanitized.size.in? [2, 3]
-        raise "huh4" unless sanitized[1].in? [:full_word, :partial_word]
-        is_single_word_profanity = true if sanitized[1] == :full_word
-        if sanitized.size == 3
-          category = sanitized[2].as(String)
-        end
-        sanitized = sanitized[0].as(String) # not bad enough to merit any sanitization apparently
-      else
-        # non array is the sanitized
-      end
-      category ||= sanitized
+    profanity_tuples.each{ |profanity_tuple|
+      category = profanity_tuple[:category]
+      profanity = profanity_tuple[:bad_word]
+      sanitized = profanity_tuple[:sanitized]
       
       permutations = [profanity]
       if profanity =~ /l/
@@ -87,11 +76,12 @@ module SubtitleProfanityFinder
       replace_with = "[" + sanitized + "]"
       
       permutations.each{ |permutation| 
-        if is_single_word_profanity
-	  # \s is whitespace
+        if profanity_tuple[:type] == :full_word_only
+          # \s is whitespace
           as_regexp = Regex.new("(?:\s|^|[^a-zA-Z])" + permutation + "(?:\s|$|[^a-zA-Z])", Regex::Options::IGNORE_CASE)
           all_profanity_combinations << {as_regexp, category, " " + replace_with + " "} # might introduce an extra space in there, but that"s prolly ok since they"re full-word already, and we collapse them
         else
+          as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE) # partial is the default
           all_profanity_combinations << {as_regexp, category, replace_with}
         end
       }
@@ -126,134 +116,109 @@ module SubtitleProfanityFinder
 
 
 
-    # OK the types are
+    # OK the types are basically
     # full -> category, sanitized
     # partial -> category, sanitized
-    # want "bad" => ["sanitized", :partial_word, "category ex deity" = sanitized]
+    # want in end "bad" => ["sanitized", :partial_word, "category ex deity"]
+    # some "lesser" too ai ai...
+    arse = "a" +
+      "s"*2
+    bad_full_word_profanities_with_sanitized_and_category = 
+    {"hell" => ["h***", "h***"],
+      arse => ["a**", "a**"],
+      "dieu" => ["deity", "deity omg"],
+      "chri" +
+      "st"=> ["___", "deity omg"],
+      "cock" => ["....", "bodily part reference harsh"]
+    }
 
-
-
-    bad_profanities = {"hell" => ["h...", :full_word],
-      "g" +
-      111.chr + 
-      100.chr => ["___", :partial_word, "deity"], "g" +
+    bad_partial_profanities_with_sanitized_and_category =
+      { "g" +
       111.chr + 
       100.chr +
-      "s" => "deitys",
-      "meu deus" => "l...",
+      "s" => ["deitys", "deity"],
+      "g" +
+      111.chr + 
+      100.chr => ["___", "deity"],  # get aggressive with this one
+      "meu deus" => ["___", "deity omg"],
       "lo" + 
-	  "rd" => "l...", "da" +
-      "mn" => "d...", 
+      "rd" => ["l...", "deity omg"],
+      "da" +
+      "mn" => ["d***", "d***"],
       "f" +
       117.chr +
       99.chr +
-      107.chr =>
-      "f...",
-      "allah" => "all..",
+      107.chr => ["f***", "f***"], 
+      "allah" => ["all..", "deity omg"],
       "bi" +
-      "tc" + 104.chr => "b....",
+      "tc" + 104.chr => ["b****", "personal insult harsh"],
       "bas" +
       "ta" + 
-	  "r" + 100.chr => "ba.....",
-      ((arse = "a" +
-      "s"*2)) => ["a..", :full_word],
+      "r" + 100.chr => ["ba.....", "personal insult harsh"],
+      # unfortunately there are too many words like assistant so can't just do a**
       arse + "h" +
-      "ole" => "a..h...",
-      "dieu" => ["deity", :full_word],
+      "ole" => ["a..h...", "a**"],
       arse + "w" +
-      "ipe" => "a..w...",
+      "ipe" => ["a..w...", "a**"],
       "jes" +
-      "u" + "s" => ["___", :partial_word, "deity"],
-      "chri" +
-      "st"=> ["___", :full_word, "deity"], # allow for christian[ity] 
+      "u" + "s" => ["___", "deity"],
       "sh" +
-       "i" + "t" => "sh..",
+       "i" + "t" => ["s***", "s***"],
       "cu" +
-      "nt" => "c...",
-      "cock" +
-	  "su" + 
-	  "cker" => "cock......",
-	  "bloody" => "bloo.."
+      "nt" => ["c...", "bodily part reference harsh"]
     }
-    
-    full_word_profanities = {"hell" => ["h...", :full_word],
-      "g" +
-      111.chr + 
-      100.chr => ["___", :partial_word, "deity"], "g" +
-      111.chr + 
-      100.chr +
-      "s" => "deitys",
-      "meu deus" => "l...",
-      "lo" + 
-	  "rd" => "l...", "da" +
-      "mn" => "d...", 
-      "f" +
-      117.chr +
-      99.chr +
-      107.chr =>
-      "f...",
-      "allah" => "all..",
-      "bi" +
-      "tc" + 104.chr => "b....",
-      "bas" +
-      "ta" + 
-	  "r" + 100.chr => "ba.....",
-      ((arse = "a" +
-      "s"*2)) => ["a..", :full_word],
-      arse + "h" +
-      "ole" => "a..h...",
-      "dieu" => ["deity", :full_word],
-      arse + "w" +
-      "ipe" => "a..w...",
-      "jes" +
-      "u" + "s" => ["___", :partial_word, "deity"],
-      "chri" +
-      "st"=> ["___", :full_word, "deity"], # allow for christian[ity] 
-      "sh" +
-       "i" + "t" => "sh..",
-      "cu" +
-      "nt" => "c...",
-      "cock" +
-	  "su" + 
-	  "cker" => "cock......",
-	  "bloody" => "bloo.."
-    }
-    
-    semi_bad_profanities = {} of String => String | Array(String | Symbol)
-    ["moron", "breast", "idiot", 
-      "sex", "genital", 
-	  "naked", 
-      "boob", 
-      "tits",
-      "make love", "pen" +
-	  "is",
+        
+    semi_bad_profanities = 
+    { "moron" => "personal insult minor",
+      "breast" => "bodily part reference minor",
+      "idiot" => "personal insult minor",
+      "sex" => "sexual reference",
+      "genital" => "bodily part reference minor",
+      "bloody" => "minor expletive",
+      "boob" => "bodily part reference minor",
+      "naked" => "bodily part reference minor",
+      "tits" => "bodily part reference minor",
+      "make love" => "sexual reference",
+      "pen" +
+      "is" => "bodily part reference harsh",
       "pu" +
-	  "ssy",
-	  "gosh",
-	  "whore",
-	  "debauch",
-      "come to bed",
-      "lie with",
-      "making" + 
-	    " love", "love mak", 
-      "dumb", "suck", "piss", "c" +
-	    "u" + "nt",
-	    "d" + "ick", "v" +
-		"ag" +
-	    "i" + 
-		"na",
-		"int" +
-		"er" +
-		"course"
-	  ].each{|name|
-      semi_bad_profanities[name] = name
+      "ssy" => "bodily part reference harsh",
+      "gosh" => "euphemized",
+      "whore" => "personal insult harsh",
+      "debauch" => "sexual reference",
+      "come to bed" => "sexual reference",
+      "lie with" => "sexual reference",
+      "making love" => "sexual reference",
+      "love mak" => "sexual reference",
+      "dumb" => "personal insult minor",
+      "suck" => "bodily part reference minor",
+      "piss" => "bathroom humor",
+      "d" + "ick"=> "bodily part reference harsh",
+       "v" +
+       "ag" +
+       "i" + 
+       "na" => "bodily part reference harsh",
+       "int" +
+       "er" +
+       "cour" +
+       "se" => "sexual reference",
+       "panties" => "bodily part reference minor",
+       "butt" => "bodily part reference minor",
+       "dumb" => "personal insult minor",
+       "fart" => "bodily part reference minor"
+	  }.map{ |name, category|
+      {bad_word: name, sanitized: name, type: :partial, category: category} # no sanitized deemed needed uh guess
     }
 	
-	["panties", "crap", "butt", "dumb", "fart"].each{|word|
-	  semi_bad_profanities[word] = [word, :full_word]
-	}
+	  semi_bad_profanities << {bad_word: "crap", type: :full_word_only, category: "euphemized", sanitized: "crap"} # avoid scrap LOL
 	
-    all_profanity_combinationss = [convert_to_regexps(bad_profanities)]
+    bad_profanities = bad_full_word_profanities_with_sanitized_and_category.map{|bad_word, sanitized_and_category|
+      {bad_word: bad_word, type: :full_word_only, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
+    }
+    bad_partial_profanities_with_sanitized_and_category.each{ |bad_word, sanitized_and_category|
+      bad_profanities << {bad_word: bad_word, type: :partial, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
+    }
+    all_profanity_combinationss = [convert_to_regexps(bad_profanities)] # double array so we can do the lesser ones second
     if include_minor_profanities
       all_profanity_combinationss += [convert_to_regexps(semi_bad_profanities)]
     end
@@ -282,15 +247,13 @@ module SubtitleProfanityFinder
             }
           }
           
-          # because we now have duplicate"s for the letter l/i, refactor [[[word]]] to just [word]
+          # because we now may have duplicates for profs containing the letter l/i, refactor [[[euph]]] to just [euph]
           text = text.gsub(/\[+/, "[")
           text = text.gsub(/\]+/, "]")
-          # crystal gah! entry[:text] = text
-          # add_single_line_minimized_text_from_multiline text
-          text = text.gsub(/[\r\n]|\n/, " ") # flatten up to 3 lines of text to just 1
-          ts_begin_human = EdlParser.translate_time_to_human_readable ts_begin, true # wrong formatfor new??
-          ts_end_human = EdlParser.translate_time_to_human_readable ts_end, true
-          unless output.includes? ts_begin_human # i.e. some previous profanity already found this line :P
+          # crystal gah! entry[:text] = text # add_single_line_minimized_text_from_multiline text
+          text = text.gsub(/[\r\n]|\n/, " ") # flatten up to x lines of text to just 1
+          # crystal poor includes? here?
+          unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line :P
             output << {start: ts_begin, endy: ts_end, category: found_category, details: text.strip}
           end
         end
@@ -303,5 +266,6 @@ end
 if ARGV[0] == "--create-edl" # then .srt name
   incoming_filename = ARGV[1]
   stuff = SubtitleProfanityFinder.edl_output_from_string File.read(incoming_filename)
-  puts "got #{stuff.inspect}"
+  puts "got"
+  pp stuff
 end
