@@ -667,7 +667,7 @@ function start() {
 
   // ready to try and load the editor LOL
 	console.log("adding edit UI, looking for URL");
-  addEditUi(); // only do once...
+  addEditUi(); // and only do once...
   loadForNewUrl();
 }
 
