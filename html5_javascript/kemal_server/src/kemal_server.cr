@@ -1,4 +1,4 @@
-require "./*" 
+require "./helpers/*" 
 
 require "kemal"
 require "kemal-session"
@@ -482,7 +482,7 @@ post "/save_url" do |env|
       tag.details = prof[:details]
       tag.save
     }
-    set_flash_for_next_time(env, "created mute tags from subtitle file: #{profs.size}")
+    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file.")
 	end  
 
   db_url.save
