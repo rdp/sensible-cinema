@@ -20,7 +20,7 @@ module SubtitleProfanityFinder
        timing_line = lines[1].strip
        text = lines.to_a[2..-1].join(" ")
        # create english-ified version
-       test = text.gsub(/<(.|)(\/|)i>/i, "") # kill <i> type things
+       text = text.gsub(/<(.|)(\/|)i>/i, "") # kill <i> type things, which are in there sometimes :|
        text = text.gsub(/[^'a-zA-Z0-9\-!,.\?"\n\(\)]/, " ") # kill weird stuff like ellipseses, also quotes would hurt so kill them too
        text = text.gsub(/  +/, " ") # remove duplicate "  " "s now since we may have inserted many
        text = text.strip
@@ -42,7 +42,7 @@ module SubtitleProfanityFinder
      end
 
      # strip out auto inserted trailer/header subtitles since they don't actually match up to text
-     reg =  / by|download| eng|www|http|sub/i
+     reg =  / by|download| eng|www|http|subtitle|sub-title/i
      while all[0][:text] =~ reg
       all.shift
      end
@@ -52,14 +52,11 @@ module SubtitleProfanityFinder
      all
    end
 
-   #def self.strip_trailer_header_punctuation(text) # useful?
-   #  text.strip.gsub(/^[- ,_\.]+/, "").gsub(/[- ,_]+$/, "")
-   #end
-
    def self.convert_to_regexps(profanity_tuples)
     all_profanity_combinations = [] of {Regex, String, String} # category, replace_with
     profanity_tuples.each{ |profanity_tuple|
       category = profanity_tuple[:category]
+      raise "unknown cat #{category}" unless subcategory_map.has_key?(category)
       profanity = profanity_tuple[:bad_word]
       sanitized = profanity_tuple[:sanitized]
       

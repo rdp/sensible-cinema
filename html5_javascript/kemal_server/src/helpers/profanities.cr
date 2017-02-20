@@ -3,6 +3,76 @@
 
 
 
+Subcats = {} of String => String
+
+def subcategory_map
+   # I guess this is like "end consumer friendly" and "creator instructions" the double dash is needed
+   
+   if (Subcats.size == 0)  # I couldn't resist though probably unneeded LOL
+   Subcats.merge!({
+    "initial theme song" => "movie-content -- initial song/initial credits",
+    "closing credits" => "movie-content -- closing credits",
+    "song instance" => "movie-content -- song occurrence",
+    "joke edit" => "movie-content -- joke edit -- edits that make it funny when edited",
+    "movie content other" => "movie-content -- other",
+		
+    "personal insult mild" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
+    "personal insult harsh" => "profanity -- insult harsh (b**** etc.)",
+    "personal attack mild" => "profanity -- attack command (\"shut up\" etc.)",
+    "crude humor" => "profanity -- crude humor, like poop, bathroom, gross, etc.",
+    "bodily part reference mild" => "profanity -- bodily part reference mild (butt, bumm...)",
+    "bodily part reference harsh" => "profanity -- bodily part reference harsh",
+    "sexual reference" => "profanity -- sexual innuendo/reference",
+    "euphemized profanities" => "profanity -- euphemized 4-letter (crap, dang, gosh)",
+    "deity appropriate context" => "profanity -- deity use in appropriate context like \"the l... is good\"",
+    "deity exclamation mild" => "profanity -- deity exclamation like **** L***,  the gods, etc.",
+    "deity exclamation harsh" => "profanity -- deity exclamation name of the Lord (omg, etc.)",
+    "deity expletive" => "profanity -- deity expletive (es: goll durn but the real words)",
+    "mild expletive" => "profanity -- mild expletive ex \"bloomin'\"",
+    "a word" => "profanity -- a** followed by anything else",
+    "d word" => "profanity -- d word",
+    "h word" => "profanity -- h word",
+    "s word" => "profanity -- s word",
+    "f word" => "profanity -- f-bomb expletive",
+    "f word sex connotation" => "profanity -- f-bomb sexual connotation",
+		"profanity (other)" => "profanity -- other",
+		
+    "stabbing/shooting no blood" => "violence -- stabbing/shooting no blood",
+    "stabbing/shooting with blood" => "violence -- stabbing/shooting yes blood",
+    "open wounds" => "violence -- gore/open wound",
+    "light fight" => "violence -- light fighting (single punch/kick/hit)",
+    "sustained fight" => "violence -- sustained punching/fighting",
+    "killing" => "violence -- killing",
+    "circumstantial death" => "violence -- death through other means like falls",
+    "violence (other)" => "violence -- other",
+
+    "art nudity" => "physical -- art nudity",
+    "revealing clothing" => "physical -- revealing clothing (cleavage, scantily clad)",
+    "nudity posterior male" => "physical -- nudity (posterior) male",
+    "nudity posterior female" => "physical -- nudity (posterior) female",
+    "nudity anterior male" => "physical -- nudity (anterior) male",
+    "nudity anterior female" => "physical -- nudity (anterior) female",
+    "nudity breast" => "physical -- nudity (breast)",
+    "kissing peck" => "physical -- kiss (peck)",
+    "kissing passionate" => "physical -- kiss (passionate)",
+    "sex foreplay" => "physical -- sex foreplay",
+    "implied sex" => "physical -- implied sex",
+    "explicit sex" => "physical -- explicit sex",
+    "physical (other)" => "physical -- other",
+
+    "drugs" => "substance-abuse -- drug use",
+    "alcohol" => "substance-abuse -- alcohol drinking",
+    "smoking" => "substance-abuse -- smoking",
+		"substance-abuse other" => "substance-abuse -- other"})    
+
+    ["frightening/startling scene", "suspenseful fight \"will they win?\""].each{ |type|
+      ["age 3", "age 6", "age 9", "age 12", "age 16", "(not OK)"].each do |intensity|
+        Subcats[type+ " " + intensity] = "suspense -- " + type  + " " + intensity
+      end
+    }
+  end
+  Subcats
+end
 
 
 
@@ -49,11 +119,11 @@
     Arse = "a" +
       "s"*2
     Bad_full_word_profanities_with_sanitized_and_category = 
-    {"hell" => ["h***", "h***"],
-      Arse => ["a**", "a**"],
-      "dieu" => ["deity", "deity omg"],
+    {"hell" => ["h***", "h word"],
+      Arse => ["a**", "a word"],
+      "dieu" => ["deity", "deity exclamation harsh"],
       "chri" +
-      "st"=> ["___", "deity omg"],
+      "st"=> ["___", "deity exclamation harsh"],
       "cock" => ["....", "bodily part reference harsh"]
     }
 
@@ -61,20 +131,20 @@
       { "g" +
       111.chr + 
       100.chr +
-      "s" => ["deitys", "deity"],
+      "s" => ["deitys", "deity exclamation mild"],
       "g" +
       111.chr + 
-      100.chr => ["___", "deity"],  # get aggressive with this one
-      "meu deus" => ["___", "deity omg"],
+      100.chr => ["___", "deity exclamation harsh"],
+      "meu deus" => ["___", "deity exclamation harsh"],
       "lo" + 
-      "rd" => ["l...", "deity omg"],
+      "rd" => ["l...", "deity exclamation harsh"],
       "da" +
-      "mn" => ["d***", "d***"],
+      "mn" => ["d***", "d word"],
       "f" +
       117.chr +
       99.chr +
-      107.chr => ["f***", "f***"], 
-      "allah" => ["all..", "deity omg"],
+      107.chr => ["f***", "f word"], 
+      "allah" => ["all..", "deity exclamation harsh"],
       "bi" +
       "tc" + 104.chr => ["b****", "personal insult harsh"],
       "bas" +
@@ -82,42 +152,42 @@
       "r" + 100.chr => ["ba.....", "personal insult harsh"],
       # unfortunately there are too many words like assistant so can't just do a**
       Arse + "h" +
-      "ole" => ["a..h...", "a**"],
+      "ole" => ["a..h...", "a word"],
       Arse + "w" +
-      "ipe" => ["a..w...", "a**"],
+      "ipe" => ["a..w...", "a word"],
       "jes" +
-      "u" + "s" => ["___", "deity"],
+      "u" + "s" => ["___", "deity exclamation mild"],
       "sh" +
-       "i" + "t" => ["s***", "s***"],
+       "i" + "t" => ["s***", "s word"],
       "cu" +
       "nt" => ["c...", "bodily part reference harsh"]
     }
         
     Semi_bad_profanities = 
-    { "moron" => "personal insult minor",
-      "breast" => "bodily part reference minor",
-      "idiot" => "personal insult minor",
+    { "moron" => "personal insult mild",
+      "breast" => "bodily part reference mild",
+      "idiot" => "personal insult mild",
       "sex" => "sexual reference",
-      "genital" => "bodily part reference minor",
-      "bloody" => "minor expletive",
-      "boob" => "bodily part reference minor",
-      "naked" => "bodily part reference minor",
-      "tits" => "bodily part reference minor",
+      "genital" => "bodily part reference mild",
+      "bloody" => "mild expletive",
+      "boob" => "bodily part reference mild",
+      "naked" => "bodily part reference mild",
+      "tits" => "bodily part reference mild",
       "make love" => "sexual reference",
       "pen" +
       "is" => "bodily part reference harsh",
       "pu" +
       "ssy" => "bodily part reference harsh",
-      "gosh" => "euphemized",
+      "gosh" => "euphemized profanities",
       "whore" => "personal insult harsh",
       "debauch" => "sexual reference",
       "come to bed" => "sexual reference",
       "lie with" => "sexual reference",
       "making love" => "sexual reference",
       "love mak" => "sexual reference",
-      "dumb" => "personal insult minor",
-      "suck" => "bodily part reference minor",
-      "piss" => "bathroom humor",
+      "dumb" => "personal insult mild",
+      "suck" => "bodily part reference mild",
+      "piss" => "crude humor",
       "d" + "ick"=> "bodily part reference harsh",
        "v" +
        "ag" +
@@ -127,14 +197,14 @@
        "er" +
        "cour" +
        "se" => "sexual reference",
-       "panties" => "bodily part reference minor",
-       "dumb" => "personal insult minor",
-       "fart" => "bodily part reference minor"
+       "panties" => "bodily part reference mild",
+       "dumb" => "personal insult mild",
+       "fart" => "bodily part reference mild"
 	  }.map{ |name, category|
       {bad_word: name, sanitized: name, type: :partial, category: category} # no sanitized deemed needed uh guess
     }
 	
-   {"butt" => "bodily part reference minor", "crap" => "euphemized"}.each{|bad_word, category| # avoid scrap, butter
+   {"butt" => "bodily part reference mild", "crap" => "euphemized profanities"}.each{|bad_word, category| # avoid scrap, butter
     Semi_bad_profanities << {bad_word: bad_word, type: :full_word_only, category: category, sanitized: bad_word}    
    }
 
