@@ -440,7 +440,72 @@ class TagEditList
       conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id)
     end	
 	end
-	
 
 end
 
+
+def subcategory_map
+    #  if you change any of these also make sure unused ??
+   subcats = {
+    "initial theme song" => "movie-content -- initial song/initial credits",
+    "closing credits" => "movie-content -- closing credits",
+    "song occurrence" => "movie-content -- song occurrence",
+    "joke edit" => "movie-content -- joke edit -- edits that make it funny when edited",
+    "content other" => "movie-content -- other",
+		
+    "personal insult minor" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
+    "personal insult harsh" => "profanity -- insult harsh (b**** etc.)",
+    "personal attack command" => "profanity -- attack command (\"shut up\" etc.)",
+    "bathroom humor" => "profanity -- bathroom humor, poop, gross, crude, etc.",
+    "bodily part reference minor" => "profanity -- bodily part reference minor (butt, bumm...)",
+    "bodily part reference harsh" => "profanity -- bodily part reference harsh",
+    "sexual reference" => "profanity -- sexual reference/innuendo",
+    "euphemized" => "profanity -- euphemized 4-letter (crap, dang, gosh)",
+    "deity heaven help us" => "profanity -- deity use in appropriate context like \"the l... is good\"",
+    "deity omg lesser" => "profanity -- deity exclamation like **** L*** etc.",
+    "deity omg" => "profanity -- deity exclamation name of the Lord (ex: oh my gosh but the real words, etc.)",
+    "deity g******" => "profanity -- deity expletive (gosh dang but the real words)",
+    "deity" => "profanity -- deity",
+    "minor expletive" => "profanity -- minor expletive like \"bloomin'\"",
+    "a**" => "profanity -- a** anything",
+    "d***" => "profanity -- d***",
+    "h***" => "profanity -- h***",
+    "s***" => "profanity -- s***",
+    "f***" => "profanity -- f-bomb expletive",
+    "f*** sexual" => "profanity -- f-bomb sexual connotation",
+		"verbal other" => "profanity -- other",
+		
+    "stabbing/shooting no blood" => "violence -- stabbing/shooting no blood",
+    "stabbing/shooting yes blood" => "violence -- stabbing/shooting yes blood",
+    "gore" => "violence -- gore/open wound",
+    "light fight" => "violence -- light fighting (single punch/kick/hit)",
+    "sustained fight" => "violence -- sustained punching/fighting",
+    "killing" => "violence -- killing",
+    "violence other" => "violence -- other",
+    # weapons?
+
+    "art nudity" => "physical -- art nudity",
+    "revealing" => "physical -- revealing clothing (cleavage, scantily clad)",
+    "nudity posterior" => "physical -- nudity (posterior)",
+    "nudity breast" => "physical -- nudity (breast)",
+    "kissing peck" => "physical -- kiss (peck)",
+    "kissing passionate" => "physical -- kiss (passionate)",
+    "foreplay" => "physical -- sex foreplay",
+    "implied sex" => "physical -- implied sex",
+    "sex" => "physical -- explicit sex",
+    "physical other" => "physical -- other",
+
+    "drugs" => "substance-abuse -- drug use",
+    "alcohol" => "substance-abuse -- alcohol drinking",
+    "smoking" => "substance-abuse -- smoking",
+		"substance-abuse other" => "substance-abuse -- other"}
+    
+
+    ["frightening/startling scene", "suspenseful fight \"will they win?\""].each{ |type|
+      ["age 3", "age 6", "age 9", "age 12", "age 16", "(not OK)"].each do |intensity|
+        subcats[type+ " " + intensity] = "suspense -- " + type  + " " + intensity
+      end
+    }
+
+  subcats
+end
