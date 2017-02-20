@@ -72,17 +72,23 @@ module SubtitleProfanityFinder
       
       permutations.each{ |permutation| 
         # \s is whitespace, but escape it right :|
-        word_begins_with_this_regex = "(?:\\s|^|[^a-zA-Z])"
-        word_ending_after =  "(?:\\s|$|[^a-zA-Z])"
+        word_begins_with_this_regex = "(?:\\s|^|[^a-z])"
+        word_ending_after =  "(?:\\s|$|[^a-z])"
         if profanity_tuple[:type] == :full_word_only
           as_regexp = Regex.new(word_begins_with_this_regex + permutation + word_ending_after, Regex::Options::IGNORE_CASE)
           all_profanity_combinations << {as_regexp, category, " " + replace_with + " "} # we'll be replacing (white space)(word)(white space) so don't lose the whitespace...kind of...
         elsif profanity_tuple[:type] == :beginning_word
-          as_regexp = Regex.new(word_begins_with_this_regex + permutation, Regex::Options::IGNORE_CASE)        
-          all_profanity_combinations << {as_regexp, category, " " + replace_with}
+          # basically just he.. :|
+          # so do either he.. or he.... # avoid hello LOL
+          # full word he..
+          all_profanity_combinations << { Regex.new(word_begins_with_this_regex + permutation + word_ending_after, Regex::Options::IGNORE_CASE), category, " " + replace_with + " "}
+          # he.....
+          all_profanity_combinations << {Regex.new(word_begins_with_this_regex + permutation + "[a-z][a-z]+", Regex::Options::IGNORE_CASE), category, " " + replace_with} # the replacement is still kind of off but not as bad as it was nukes the whole word now not 3/4 LOL
+          # plural for fun [?]
+          all_profanity_combinations << {Regex.new(word_begins_with_this_regex + permutation + "s", Regex::Options::IGNORE_CASE), category, " " + replace_with} # the replacement is still off.gah...
         else
           raise "unknown type #{profanity_tuple}" unless profanity_tuple[:type] == :partial
-          as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE) # partial is the default
+          as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE) # just normal here
           all_profanity_combinations << {as_regexp, category, replace_with}
         end
       }

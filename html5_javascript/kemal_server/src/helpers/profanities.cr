@@ -121,7 +121,7 @@ end
       
     Bad_beginning_word_profanities_with_sanitized_and_category =
     {
-      "hell" => ["h...", "h word"] # avoid shell, catch heckfire, hello also catch :|
+      "hell" => ["h...", "h word"] # avoid shell, catch heckfire, hello also catches unfortunately, misses helicoper though :|
     }
     Bad_full_word_profanities_with_sanitized_and_category = 
     {

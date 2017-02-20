@@ -469,7 +469,6 @@ post "/save_url" do |env|
     db_url.download_image_url image_url
   end
   
-  redirect_to_url =  "/view_url/" + db_url.id.to_s 
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename.size > 0 # kemal bug'ish :|
     # a fresh upload here...
 	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path) # save contents, why not? :)
@@ -484,15 +483,14 @@ post "/save_url" do |env|
       tag.details = prof[:details]
       tag.save
     }
-    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please remove inaccurate ones.")
-    redirect_to_url += "?show_tag_details=true"
+    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please remove inaccurate ones if you desire.")
 	end  
 
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
 	
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
-  env.redirect redirect_to_url
+  env.redirect "/view_url/" + db_url.id.to_s
 end
 
 ####### view methods :)
