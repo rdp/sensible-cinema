@@ -102,9 +102,10 @@ select.addEventListener(
 	
 function showSubCatWithRightOptionsAvailable() {
   $('#subcategory_div_id').fadeIn();
-  var type = document.getElementById("category_select").value; // profanity
+  var type = document.getElementById("category_select").value; // like "profanity"
   $('#subcategory_div_id option').each(function () {
 		var cat_from_subcat = this.text.split(" ")[0]; // profanity
+    console.log("comparing " + cat_from_subcat + " " + type);
 		if (cat_from_subcat != type && this.text.includes(" -- ")) {
 		  this.style.display = "none";
 		}

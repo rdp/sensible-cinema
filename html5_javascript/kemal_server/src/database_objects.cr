@@ -443,69 +443,73 @@ class TagEditList
 
 end
 
+Subcats = {} of String => String
 
 def subcategory_map
-    #  if you change any of these also make sure unused ??
-   subcats = {
+   # I guess this is like "end consumer friendly" and "creator instructions" the double dash is needed
+   
+   if (Subcats.size == 0)  # I couldn't resist though probably unneeded LOL
+   Subcats.merge!({
     "initial theme song" => "movie-content -- initial song/initial credits",
     "closing credits" => "movie-content -- closing credits",
-    "song occurrence" => "movie-content -- song occurrence",
+    "song instance" => "movie-content -- song occurrence",
     "joke edit" => "movie-content -- joke edit -- edits that make it funny when edited",
-    "content other" => "movie-content -- other",
+    "movie content other" => "movie-content -- other",
 		
-    "personal insult minor" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
-    "personal insult harsh" => "profanity -- insult harsh (b**** etc.)",
-    "personal attack command" => "profanity -- attack command (\"shut up\" etc.)",
-    "bathroom humor" => "profanity -- bathroom humor, poop, gross, crude, etc.",
-    "bodily part reference minor" => "profanity -- bodily part reference minor (butt, bumm...)",
+    "personal insult, mild" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
+    "personal insult, profane" => "profanity -- insult harsh (b**** etc.)",
+    "personal attack, mild" => "profanity -- attack command (\"shut up\" etc.)",
+    "crude humor" => "profanity -- crude humor, like poop, bathroom, gross, etc.",
+    "bodily part reference mild" => "profanity -- bodily part reference minor (butt, bumm...)",
     "bodily part reference harsh" => "profanity -- bodily part reference harsh",
-    "sexual reference" => "profanity -- sexual reference/innuendo",
-    "euphemized" => "profanity -- euphemized 4-letter (crap, dang, gosh)",
-    "deity heaven help us" => "profanity -- deity use in appropriate context like \"the l... is good\"",
-    "deity omg lesser" => "profanity -- deity exclamation like **** L*** etc.",
-    "deity omg" => "profanity -- deity exclamation name of the Lord (ex: oh my gosh but the real words, etc.)",
-    "deity g******" => "profanity -- deity expletive (gosh dang but the real words)",
-    "deity" => "profanity -- deity",
-    "minor expletive" => "profanity -- minor expletive like \"bloomin'\"",
-    "a**" => "profanity -- a** anything",
-    "d***" => "profanity -- d***",
-    "h***" => "profanity -- h***",
-    "s***" => "profanity -- s***",
-    "f***" => "profanity -- f-bomb expletive",
-    "f*** sexual" => "profanity -- f-bomb sexual connotation",
-		"verbal other" => "profanity -- other",
+    "sexual innuendo" => "profanity -- sexual innuendo/reference",
+    "euphemized words like \"darn\"" => "profanity -- euphemized 4-letter (crap, dang, gosh)",
+    "deity appropriate context" => "profanity -- deity use in appropriate context like \"the l... is good\"",
+    "deity exclamation mild" => "profanity -- deity exclamation like **** L***,  etc.",
+    "deity exclamation oh my..." => "profanity -- deity exclamation name of the Lord (omg, etc.)",
+    "deity expletive" => "profanity -- deity expletive (es: goll durn but the real words)",
+    "mild expletive" => "profanity -- minor expletive ex \"bloomin'\"",
+    "a word" => "profanity -- a** anything",
+    "d word" => "profanity -- d word",
+    "h word" => "profanity -- h word",
+    "s word" => "profanity -- s word",
+    "f bomb" => "profanity -- f-bomb expletive",
+    "f bomb sexual" => "profanity -- f-bomb sexual connotation",
+		"profanity (other)" => "profanity -- other",
 		
     "stabbing/shooting no blood" => "violence -- stabbing/shooting no blood",
-    "stabbing/shooting yes blood" => "violence -- stabbing/shooting yes blood",
-    "gore" => "violence -- gore/open wound",
+    "stabbing/shooting with blood" => "violence -- stabbing/shooting yes blood",
+    "open wounds" => "violence -- gore/open wound",
     "light fight" => "violence -- light fighting (single punch/kick/hit)",
     "sustained fight" => "violence -- sustained punching/fighting",
     "killing" => "violence -- killing",
-    "violence other" => "violence -- other",
-    # weapons?
+    "circumstantial death" => "violence -- death through other means like falls",
+    "violence (other)" => "violence -- other",
 
     "art nudity" => "physical -- art nudity",
-    "revealing" => "physical -- revealing clothing (cleavage, scantily clad)",
-    "nudity posterior" => "physical -- nudity (posterior)",
+    "revealing clothing" => "physical -- revealing clothing (cleavage, scantily clad)",
+    "nudity posterior male" => "physical -- nudity (posterior) male",
+    "nudity posterior female" => "physical -- nudity (posterior) female",
+    "nudity anterior male" => "physical -- nudity (anterior) male",
+    "nudity anterior female" => "physical -- nudity (anterior) female",
     "nudity breast" => "physical -- nudity (breast)",
     "kissing peck" => "physical -- kiss (peck)",
     "kissing passionate" => "physical -- kiss (passionate)",
-    "foreplay" => "physical -- sex foreplay",
+    "sex foreplay" => "physical -- sex foreplay",
     "implied sex" => "physical -- implied sex",
-    "sex" => "physical -- explicit sex",
-    "physical other" => "physical -- other",
+    "explicit sex" => "physical -- explicit sex",
+    "physical (other)" => "physical -- other",
 
     "drugs" => "substance-abuse -- drug use",
     "alcohol" => "substance-abuse -- alcohol drinking",
     "smoking" => "substance-abuse -- smoking",
-		"substance-abuse other" => "substance-abuse -- other"}
-    
+		"substance-abuse other" => "substance-abuse -- other"})    
 
     ["frightening/startling scene", "suspenseful fight \"will they win?\""].each{ |type|
       ["age 3", "age 6", "age 9", "age 12", "age 16", "(not OK)"].each do |intensity|
-        subcats[type+ " " + intensity] = "suspense -- " + type  + " " + intensity
+        Subcats[type+ " " + intensity] = "suspense -- " + type  + " " + intensity
       end
     }
-
-  subcats
+  end
+  Subcats
 end
