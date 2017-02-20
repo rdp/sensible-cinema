@@ -68,7 +68,7 @@ module SubtitleProfanityFinder
         permutations << profanity.gsub(/i/i, "i")
       end
       
-      replace_with = "[" + sanitized + "]"
+      replace_with = "_" + sanitized + "_"
       
       permutations.each{ |permutation| 
         # \s is whitespace, but escape it right :|
@@ -116,13 +116,11 @@ module SubtitleProfanityFinder
         }
         
         if found_category
-        puts "started as #{text}"
           # we're actually going to sanitize/euphemize the subtitle text for every profanity now...since our found_category was "its first" the major/initial euephemize should match, phew...
           all_profanity_combinationss.each{ |all_profanity_combinations2|
             all_profanity_combinations2.each{|profanity_reg, category, sanitized|
               if text =~ profanity_reg
                 text = text.gsub(profanity_reg, sanitized)
-                puts "after #{profanity_reg} #{text}"
               end
             }
           }
