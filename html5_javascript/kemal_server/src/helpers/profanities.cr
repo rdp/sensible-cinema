@@ -168,7 +168,8 @@ end
       "nt" => ["c...", "bodily part reference harsh"]
     }
         
-    Semi_bad_profanities = 
+    # start with partials, though some don't seem to be...
+    Semi_bad_profanities =  
     { "moron" => "personal insult mild",
       "breast" => "bodily part reference mild",
       "idiot" => "personal insult mild",
@@ -241,7 +242,7 @@ end
     
     
     
-    
+      # SemiBadProfanities = this.map
       {bad_word: name, sanitized: name, type: :partial, category: category} # no sanitized deemed needed uh guess
     }
 	

@@ -71,9 +71,9 @@ module SubtitleProfanityFinder
       replace_with = "[" + sanitized + "]"
       
       permutations.each{ |permutation| 
-        # \s is whitespace
-        word_begins_with_this_regex = "(?:\s|^|[^a-zA-Z])"
-        word_ending_after =  "(?:\s|$|[^a-zA-Z])"
+        # \s is whitespace, but escape it right :|
+        word_begins_with_this_regex = "(?:\\s|^|[^a-zA-Z])"
+        word_ending_after =  "(?:\\s|$|[^a-zA-Z])"
         if profanity_tuple[:type] == :full_word_only
           as_regexp = Regex.new(word_begins_with_this_regex + permutation + word_ending_after, Regex::Options::IGNORE_CASE)
           all_profanity_combinations << {as_regexp, category, " " + replace_with + " "} # we'll be replacing (white space)(word)(white space) so don't lose the whitespace...kind of...
@@ -108,29 +108,32 @@ module SubtitleProfanityFinder
 
         ts_end = entry[:ending_time]
         found_category = nil
-        all_profanity_combinations.each{ |profanity, category, sanitized|
-          if text =~ profanity
-            found_category = category
+        all_profanity_combinations.each{ |profanity_reg, category, sanitized|
+          if text =~ profanity_reg
+            found_category = category # just get the first, assume it's the worst [?]
             break
           end
         }
         
         if found_category
-          # sanitize/euphemize the subtitle text for this and all profanities...
+          # we're actually going to sanitize/euphemize the subtitle text for every profanity now...since our found_category was "its first" the major/initial euephemize should match, phew...
           all_profanity_combinationss.each{ |all_profanity_combinations2|
-            all_profanity_combinations2.each{|profanity, category, sanitized|
-              text = text.gsub(profanity, sanitized)
+            all_profanity_combinations2.each{|profanity_reg, category, sanitized|
+              if text =~ profanity_reg
+                text = text.gsub(profanity_reg, sanitized)
+              end
             }
           }
           
-          # because we now may have duplicates for profs containing the letter l/i, refactor [[[euph]]] to just [euph]
+          # because we now may have duplicates for profs containing the letter l/i, refactor [[[euph]]] to just [euph] [wait what?]
           text = text.gsub(/\[+/, "[")
           text = text.gsub(/\]+/, "]")
-          # crystal gah! entry[:text] = text # add_single_line_minimized_text_from_multiline text
           text = text.gsub(/[\r\n]|\n/, " ") # flatten up to x lines of text to just 1
-          # crystal poor includes? here?
+          text = text.strip
+          # crystal gah! entry[:text] = text # add_single_line_minimized_text_from_multiline text
+          # crystal poor includes? when I used it here?
           unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line :P
-            output << {start: ts_begin, endy: ts_end, category: found_category, details: text.strip}
+            output << {start: ts_begin, endy: ts_end, category: found_category, details: text}
           end
         end
       }
