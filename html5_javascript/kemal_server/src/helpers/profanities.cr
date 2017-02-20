@@ -25,8 +25,8 @@ def subcategory_map
     "sexual reference" => "profanity -- sexual innuendo/reference",
     "euphemized profanities" => "profanity -- euphemized 4-letter (crap, dang, gosh)",
     "deity appropriate context" => "profanity -- deity use in appropriate context like \"the l... is good\"",
-    "deity exclamation mild" => "profanity -- deity exclamation like **** L***,  the gods, etc.",
-    "deity exclamation harsh" => "profanity -- deity exclamation name of the Lord (omg, etc.)",
+    "deity exclamation mild" => "profanity -- deity exclamation  mildlike **** L***,  the gods, etc.",
+    "deity exclamation harsh" => "profanity -- deity exclamation harsh, name of the Lord (omg, etc.)",
     "deity expletive" => "profanity -- deity expletive (es: goll durn but the real words)",
     "mild expletive" => "profanity -- mild expletive ex \"bloomin'\"",
     "a word" => "profanity -- a** followed by anything else",
@@ -118,8 +118,13 @@ end
     # some "lesser" too ai ai...
     Arse = "a" +
       "s"*2
+      
+    Bad_beginning_word_profanities_with_sanitized_and_category =
+    {
+      "hell" => ["h***", "h word"] # avoid shell, catch heckfire, hello also catch :|
+    }
     Bad_full_word_profanities_with_sanitized_and_category = 
-    {"hell" => ["h***", "h word"],
+    {
       Arse => ["a**", "a word"],
       "dieu" => ["deity", "deity exclamation harsh"],
       "chri" +
@@ -137,7 +142,7 @@ end
       100.chr => ["___", "deity exclamation harsh"],
       "meu deus" => ["___", "deity exclamation harsh"],
       "lo" + 
-      "rd" => ["l...", "deity exclamation harsh"],
+      "rd" => ["l...", "deity exclamation mild"], # there are things like "fire lord" that aren't harsh...
       "da" +
       "mn" => ["d***", "d word"],
       "f" +
@@ -150,9 +155,9 @@ end
       "bas" +
       "ta" + 
       "r" + 100.chr => ["ba.....", "personal insult harsh"],
-      # unfortunately there are too many words like assistant so can't just do a**
+      # unfortunately there are too many words like assistant, associate etc. so can't just do "starts with a**" :|
       Arse + "h" +
-      "ole" => ["a..h...", "a word"],
+      "ole" => ["a..h...", "a word"], 
       Arse + "w" +
       "ipe" => ["a..w...", "a word"],
       "jes" +
@@ -201,6 +206,42 @@ end
        "dumb" => "personal insult mild",
        "fart" => "bodily part reference mild"
 	  }.map{ |name, category|
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
       {bad_word: name, sanitized: name, type: :partial, category: category} # no sanitized deemed needed uh guess
     }
 	
@@ -213,4 +254,7 @@ end
   }
   Bad_partial_profanities_with_sanitized_and_category.each{ |bad_word, sanitized_and_category|
     Bad_profanities << {bad_word: bad_word, type: :partial, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
+  }
+  Bad_beginning_word_profanities_with_sanitized_and_category.each{ |bad_word, sanitized_and_category|
+    Bad_profanities << {bad_word: bad_word, type: :beginning_word, category: sanitized_and_category[1], sanitized: sanitized_and_category[0] }
   }

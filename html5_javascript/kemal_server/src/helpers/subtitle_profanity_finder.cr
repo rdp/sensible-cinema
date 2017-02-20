@@ -56,7 +56,7 @@ module SubtitleProfanityFinder
     all_profanity_combinations = [] of {Regex, String, String} # category, replace_with
     profanity_tuples.each{ |profanity_tuple|
       category = profanity_tuple[:category]
-      raise "unknown cat #{category}" unless subcategory_map.has_key?(category)
+      raise "unknown cat #{category} option!" unless subcategory_map.has_key?(category) # these should match up :|
       profanity = profanity_tuple[:bad_word]
       sanitized = profanity_tuple[:sanitized]
       
@@ -71,11 +71,17 @@ module SubtitleProfanityFinder
       replace_with = "[" + sanitized + "]"
       
       permutations.each{ |permutation| 
+        # \s is whitespace
+        word_begins_with_this_regex = "(?:\s|^|[^a-zA-Z])"
+        word_ending_after =  "(?:\s|$|[^a-zA-Z])"
         if profanity_tuple[:type] == :full_word_only
-          # \s is whitespace
-          as_regexp = Regex.new("(?:\s|^|[^a-zA-Z])" + permutation + "(?:\s|$|[^a-zA-Z])", Regex::Options::IGNORE_CASE)
-          all_profanity_combinations << {as_regexp, category, " " + replace_with + " "} # might introduce an extra space in there, but that"s prolly ok since they"re full-word already, and we collapse them
+          as_regexp = Regex.new(word_begins_with_this_regex + permutation + word_ending_after, Regex::Options::IGNORE_CASE)
+          all_profanity_combinations << {as_regexp, category, " " + replace_with + " "} # we'll be replacing (white space)(word)(white space) so don't lose the whitespace...kind of...
+        elsif profanity_tuple[:type] == :beginning_word
+          as_regexp = Regex.new(word_begins_with_this_regex + permutation, Regex::Options::IGNORE_CASE)        
+          all_profanity_combinations << {as_regexp, category, replace_with}
         else
+          raise "unknown type #{profanity_tuple}" unless profanity_tuple[:type] == :partial
           as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE) # partial is the default
           all_profanity_combinations << {as_regexp, category, replace_with}
         end

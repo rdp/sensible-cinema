@@ -216,6 +216,7 @@ end
 
 get "/view_url/:url_id" do |env|
   url = get_url_from_url_id(env)
+  show_tag_details =  env.params.query["show_tag_details"]?
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
@@ -468,6 +469,7 @@ post "/save_url" do |env|
     db_url.download_image_url image_url
   end
   
+  redirect_to_url =  "/view_url/" + db_url.id.to_s 
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename.size > 0 # kemal bug'ish :|
     # a fresh upload here...
 	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path) # save contents, why not? :)
@@ -483,13 +485,14 @@ post "/save_url" do |env|
       tag.save
     }
     set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file.")
+    redirect_to_url += "?show_tag_details=true"
 	end  
 
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
 	
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
-  env.redirect "/view_url/" + db_url.id.to_s
+  env.redirect redirect_to_url
 end
 
 ####### view methods :)
@@ -505,11 +508,11 @@ def table_row_or_nothing(first_cell, second_cell)
 end
 
 def google_search_string(url)
-         google_search = URI.escape(url.name, true)
-         if url.episode_number != 0
-           google_search += URI.escape(" " + url.episode_number.to_s + " " + url.episode_name, true)
-         end
-				 google_search
+   google_search = URI.escape(url.name, true)
+   if url.episode_number != 0
+     google_search += URI.escape(" " + url.episode_number.to_s + " " + url.episode_name, true)
+   end
+	 google_search
 end
 
 
