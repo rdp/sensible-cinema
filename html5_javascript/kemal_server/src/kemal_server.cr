@@ -484,7 +484,7 @@ post "/save_url" do |env|
       tag.details = prof[:details]
       tag.save
     }
-    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file.")
+    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please remove inaccurate ones.")
     redirect_to_url += "?show_tag_details=true"
 	end  
 

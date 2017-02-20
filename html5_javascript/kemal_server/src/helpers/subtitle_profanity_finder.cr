@@ -79,7 +79,7 @@ module SubtitleProfanityFinder
           all_profanity_combinations << {as_regexp, category, " " + replace_with + " "} # we'll be replacing (white space)(word)(white space) so don't lose the whitespace...kind of...
         elsif profanity_tuple[:type] == :beginning_word
           as_regexp = Regex.new(word_begins_with_this_regex + permutation, Regex::Options::IGNORE_CASE)        
-          all_profanity_combinations << {as_regexp, category, replace_with}
+          all_profanity_combinations << {as_regexp, category, " " + replace_with}
         else
           raise "unknown type #{profanity_tuple}" unless profanity_tuple[:type] == :partial
           as_regexp = Regex.new(profanity, Regex::Options::IGNORE_CASE) # partial is the default
@@ -116,20 +116,16 @@ module SubtitleProfanityFinder
         }
         
         if found_category
+        puts "started as #{text}"
           # we're actually going to sanitize/euphemize the subtitle text for every profanity now...since our found_category was "its first" the major/initial euephemize should match, phew...
           all_profanity_combinationss.each{ |all_profanity_combinations2|
             all_profanity_combinations2.each{|profanity_reg, category, sanitized|
               if text =~ profanity_reg
                 text = text.gsub(profanity_reg, sanitized)
+                puts "after #{profanity_reg} #{text}"
               end
             }
           }
-          
-          # because we now may have duplicates for profs containing the letter l/i, refactor [[[euph]]] to just [euph] [wait what?]
-          text = text.gsub(/\[+/, "[")
-          text = text.gsub(/\]+/, "]")
-          text = text.gsub(/[\r\n]|\n/, " ") # flatten up to x lines of text to just 1
-          text = text.strip
           # crystal gah! entry[:text] = text # add_single_line_minimized_text_from_multiline text
           # crystal poor includes? when I used it here?
           unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line :P
@@ -170,6 +166,7 @@ end
 
 if ARGV[0] == "--create-edl" # then .srt name
   incoming_filename = ARGV[1]
+  SubtitleProfanityFinder.expected_min_size = 1
   stuff = SubtitleProfanityFinder.edl_output_from_string File.read(incoming_filename)
   puts "got"
   pp stuff

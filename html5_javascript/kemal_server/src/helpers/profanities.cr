@@ -17,7 +17,7 @@ def subcategory_map
     "movie content other" => "movie-content -- other",
 		
     "personal insult mild" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
-    "personal insult harsh" => "profanity -- insult harsh (b**** etc.)",
+    "personal insult harsh" => "profanity -- insult harsh (b.... etc.)",
     "personal attack mild" => "profanity -- attack command (\"shut up\" etc.)",
     "crude humor" => "profanity -- crude humor, like poop, bathroom, gross, etc.",
     "bodily part reference mild" => "profanity -- bodily part reference mild (butt, bumm...)",
@@ -25,11 +25,11 @@ def subcategory_map
     "sexual reference" => "profanity -- sexual innuendo/reference",
     "euphemized profanities" => "profanity -- euphemized 4-letter (crap, dang, gosh)",
     "deity appropriate context" => "profanity -- deity use in appropriate context like \"the l... is good\"",
-    "deity exclamation mild" => "profanity -- deity exclamation  mildlike **** L***,  the gods, etc.",
+    "deity exclamation mild" => "profanity -- deity exclamation  mildlike Good L...,  the gods, etc.",
     "deity exclamation harsh" => "profanity -- deity exclamation harsh, name of the Lord (omg, etc.)",
     "deity expletive" => "profanity -- deity expletive (es: goll durn but the real words)",
     "mild expletive" => "profanity -- mild expletive ex \"bloomin'\"",
-    "a word" => "profanity -- a** followed by anything else",
+    "a word" => "profanity -- a.. followed by anything else",
     "d word" => "profanity -- d word",
     "h word" => "profanity -- h word",
     "s word" => "profanity -- s word",
@@ -121,11 +121,11 @@ end
       
     Bad_beginning_word_profanities_with_sanitized_and_category =
     {
-      "hell" => ["h***", "h word"] # avoid shell, catch heckfire, hello also catch :|
+      "hell" => ["h...", "h word"] # avoid shell, catch heckfire, hello also catch :|
     }
     Bad_full_word_profanities_with_sanitized_and_category = 
     {
-      Arse => ["a**", "a word"],
+      Arse => ["a..", "a word"],
       "dieu" => ["deity", "deity exclamation harsh"],
       "chri" +
       "st"=> ["___", "deity exclamation harsh"],
@@ -144,18 +144,18 @@ end
       "lo" + 
       "rd" => ["l...", "deity exclamation mild"], # there are things like "fire lord" that aren't harsh...
       "da" +
-      "mn" => ["d***", "d word"],
+      "mn" => ["d...", "d word"],
       "f" +
       117.chr +
       99.chr +
-      107.chr => ["f***", "f word"], 
+      107.chr => ["____", "f word"], 
       "allah" => ["all..", "deity exclamation harsh"],
       "bi" +
-      "tc" + 104.chr => ["b****", "personal insult harsh"],
+      "tc" + 104.chr => ["b....", "personal insult harsh"],
       "bas" +
       "ta" + 
       "r" + 100.chr => ["ba.....", "personal insult harsh"],
-      # unfortunately there are too many words like assistant, associate etc. so can't just do "starts with a**" :|
+      # unfortunately there are too many words like assistant, associate etc. so can't just do "starts with a.." :|
       Arse + "h" +
       "ole" => ["a..h...", "a word"], 
       Arse + "w" +
@@ -163,7 +163,7 @@ end
       "jes" +
       "u" + "s" => ["___", "deity exclamation mild"],
       "sh" +
-       "i" + "t" => ["s***", "s word"],
+       "i" + "t" => ["s...", "s word"],
       "cu" +
       "nt" => ["c...", "bodily part reference harsh"]
     }
