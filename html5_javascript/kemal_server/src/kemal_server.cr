@@ -435,7 +435,8 @@ post "/save_url" do |env|
   rental_cost = params["rental_cost"].to_f
   purchase_cost = params["purchase_cost"].to_f
   total_time = human_to_seconds params["total_time"]
-
+  genre = sanitize_html HTML.unescape(params["genre"])
+  original_rating = sanitize_html HTML.unescape(params["original_rating"])
 
   db_url.url = incoming_url
   db_url.amazon_second_url = amazon_second_url
@@ -451,10 +452,12 @@ post "/save_url" do |env|
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost
   db_url.total_time = total_time
+  db_url.genre = genre
+  db_url.original_rating = original_rating
 	
   image_url = params["image_url"]
   if !image_url.present? && !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
-    # image fer free! :)
+    # image fer free! :) The only ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
     youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
     image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
   end
@@ -495,8 +498,10 @@ def set_flash_for_next_time(env, string)
   env.session.string("flash", env.session.string("flash") + " " + string) # hopefully HTML strips the preceding stuff :)
 end
 
-def table_row(first_cell, second_cell)
-  "<tr><td>#{first_cell}</td><td>#{second_cell}</td></tr>";
+def table_row_or_nothing(first_cell, second_cell)
+  if second_cell.to_s.size > 0
+    "<tr><td>#{first_cell}</td><td>#{second_cell}</td></tr>";
+  end
 end
 
 def google_search_string(url)

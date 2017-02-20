@@ -23,29 +23,19 @@ Total content tags in our system for this movie:
     <tr></tr>
   </thead>
   <tbody>
-	  <% if url.details.size > 0 %>
-      <%= table_row("Movie details", url.details) %>
-		<% end %>
+    <%= table_row_or_nothing("Movie details", url.details) %>
     <% if url.url =~ /amazon.com/ %>
-      <%= table_row("prime?", url.human_readable_company) %>
+      <%= table_row_or_nothing("prime?", url.human_readable_company) %>
     <% end %>
-    <%= table_row("Editing status", url.editing_status) %>
-		<% if url.wholesome_uplifting_level > 0 %>
-      <%= table_row("wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
-	  <% end %>
-		<% if url.good_movie_rating > 0 %>
-      <%= table_row("good movie rating (out of 10)", url.good_movie_rating) %>
-		<% end %>
-    <% if url.purchase_cost > 0 || url.rental_cost > 0 %>
-        <%= table_row("price to purchase/rent", url.cost_string) %>
-    <% end %>
-    <% if url.total_time > 0 %>
-       <%= table_row("total movie time",  seconds_to_human url.total_time) %>
-    <% end %>
-		<% if url.review.size > 0 %>
-      <%= table_row("Our local review", url.review) %>
-		<% end %>
-		<%= table_row("Created at", url.create_timestamp) %>
+    <%= table_row_or_nothing("Editing status", url.editing_status) %>
+    <%= table_row_or_nothing("wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
+    <%= table_row_or_nothing("good movie rating (out of 10)", url.good_movie_rating) %>
+    <%= table_row_or_nothing("price to purchase/rent", url.cost_string) %>
+    <%= table_row_or_nothing("total movie time", seconds_to_human url.total_time) %>
+    <%= table_row_or_nothing("Our local review", url.review) %>
+    <%= table_row_or_nothing("Genre", url.genre) %>
+    <%= table_row_or_nothing("Original Rating", url.original_rating) %>
+		<%= table_row_or_nothing("Created at", url.create_timestamp) %>
   </tbody>
 </table>
 <br/>

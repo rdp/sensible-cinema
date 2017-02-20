@@ -108,6 +108,9 @@ alter table urls add column subtitles LONGTEXT NOT NULL;
 -- done dev
 -- done prod
 
+alter table urls add column genre VARCHAR(100) NOT NULL DEFAULT '';
+alter table urls add column original_rating VARCHAR(10) NOT NULL DEFAULT '';
+
 -- and output to screen to show success...
 select * from urls;
 select * from tags;

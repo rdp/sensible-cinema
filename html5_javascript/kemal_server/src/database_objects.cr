@@ -3,8 +3,6 @@ require "mysql"
 require "json"
 
 class Url
-
-  @subtitles = "" # default for JSON use
 	
   DB.mapping({
     id: Int32,
@@ -24,7 +22,9 @@ class Url
     purchase_cost: Float64, # XXX actually Decimal [?]
     total_time: Float64,
 		create_timestamp: Time,
-		subtitles: String
+		subtitles: String,
+    genre: String,
+    original_rating: String
   })
 
   JSON.mapping({
@@ -44,8 +44,10 @@ class Url
     rental_cost: Float64,
     purchase_cost: Float64,
     total_time: Float64,
-		create_timestamp: Time
-		# no subtitles LOL out only as of today...
+		create_timestamp: Time,
+    subtitles: String,
+    genre: String,
+    original_rating: String    
   })
   
   def self.all
@@ -80,14 +82,14 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating).last_insert_id.to_i32
 			 # get create_timestamp for free by its default crystal value
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, id
       end
     end
   end
- 
+  
   def initialize
     @id = 0 # :|
     @url = ""
@@ -107,6 +109,8 @@ class Url
     @total_time = 0.0
 		@create_timestamp = Time.now
 		@subtitles = ""
+    @genre = ""
+    @original_rating = ""
   end
 
   def tags

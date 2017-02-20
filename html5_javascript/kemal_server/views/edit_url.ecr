@@ -82,16 +82,45 @@ purchase cost (ex: full purchase this episode, assuming no discounts, see above)
 <br/>
 <br/>
 
+
+genre:
+  <select name="genre" id='genre'>
+    <option value="">unknown</option>
+    <% ["thriller", "chick flick/romance", "thriller", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "war", "comedy", "family", "music[al]", "drama", "sport", "fantasy", "sci-fi", "mystery"].each{| name| %>
+      <option value="<%= name %>"><%= name %></option>
+    <% } %>
+   </select>    
+   <script>
+   document.getElementById('genre').value = '<%= url.genre %>';
+   </script>
+<br/>
+<br/>
+
+
+original_rating:
+  <select name="original_rating" id='original_rating'>
+    <option value="">unknown</option>
+    <% ["G", "PG", "PG-13", "R", "NR"].each{| name|  %>
+      <option value="<%= name %>"><%= name %></option>
+    <% } %>
+   </select>    
+   <script>
+   document.getElementById('original_rating').value = '<%= url.original_rating %>';
+   </script>
+<br/>
+<br/>
+
+
 <%= url.image_tag "width=250px", "<br/>" %>
 an image_url (on a different site) for movie (ex: http://wikipedia/original_image.png or http://wikipedia/original_image.svg 
 			    <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
- for this movie, wikipedia also typically has some royalty free images.  This overrides any previous image it may have had.
+ for this movie, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.
 <br>
 <input type="text" name="image_url" size="150" value=""/> <!-- value empty on purpose --> 
 <br/>
 <br/>
 
-total movie length (netflix wants this, others can leave it at zero)
+total movie length (netflix needs this, others can survive without it but still nice to have
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
 
