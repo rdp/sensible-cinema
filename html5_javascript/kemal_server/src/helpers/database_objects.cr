@@ -339,10 +339,13 @@ def seconds_to_human(ts_total)
   minutes = (ts_seconds / 60).floor()
   ts_seconds -= minutes * 60
   # just seconds left
+  
   if (hours > 0 || ts_total == 0) # 0 is default so show everything so they can edit it more easily
     "%01dh% 02dm %05.2fs" % [hours, minutes, ts_seconds]
-  else
+  elsif minutes > 0  
     "%01dm %05.2fs" % [minutes, ts_seconds]
+  else
+    "%04.2fs" % [ts_seconds]
   end
 end
 
