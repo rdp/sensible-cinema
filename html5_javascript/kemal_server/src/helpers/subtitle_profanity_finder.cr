@@ -82,9 +82,9 @@ module SubtitleProfanityFinder
           # so do either he.. or he.... # avoid hello LOL
           # full word he.. too
           all_profanity_combinations << { Regex.new(word_begins_with_this_regex + permutation + word_ending_after, Regex::Options::IGNORE_CASE), category, " " + replace_with + " "}
-          # he.....
-          all_profanity_combinations << {Regex.new(word_begins_with_this_regex + permutation + "[a-z][a-z]+", Regex::Options::IGNORE_CASE), category, " " + replace_with} # the replacement is still kind of off but not as bad as it was nukes the whole word now not 3/4 LOL
-          # plural for fun [?]
+          # he..... leave as much in as possible to kind of guess what it was...
+          all_profanity_combinations << {Regex.new(word_begins_with_this_regex + permutation + "[a-z][a-z]", Regex::Options::IGNORE_CASE), category, " " + replace_with  + ".."} # close enough
+          # leave in the plural for fun :|
           all_profanity_combinations << {Regex.new(word_begins_with_this_regex + permutation + "s", Regex::Options::IGNORE_CASE), category, " " + replace_with} # the replacement is still off.gah...
         else
           raise "unknown type #{profanity_tuple}" unless profanity_tuple[:type] == :partial
