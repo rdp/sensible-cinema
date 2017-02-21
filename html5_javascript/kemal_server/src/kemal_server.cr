@@ -336,6 +336,10 @@ get "/" do |env| # index
   render "views/index.ecr", "views/layout.ecr"
 end
 
+get "/privacy" do |env|
+  render "views/privacy.ecr", "views/layout.ecr"
+end
+
 get "/faq" do |env|
   render "views/faq.ecr", "views/layout.ecr"
 end
