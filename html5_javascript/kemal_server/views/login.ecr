@@ -1,0 +1,37 @@
+<div id="amazon-root"></div>
+<script type="text/javascript">
+
+  window.onAmazonLoginReady = function() {
+    amazon.Login.setClientId('amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6');
+  };
+  (function(d) {
+    var a = d.createElement('script'); a.type = 'text/javascript';
+    a.async = true; a.id = 'amazon-login-sdk';
+    a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
+    d.getElementById('amazon-root').appendChild(a);
+  })(document);
+
+</script>
+
+
+In order to keep your credentials secure, we don't even track your login password, but rely on a third party (amazon) which allows you to login.
+Login with them here:
+
+<a href="#" id="LoginWithAmazon">
+  <img border="0" alt="Login with Amazon"
+    src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
+    width="156" height="32" />
+</a>
+
+<script type="text/javascript">
+
+  document.getElementById('LoginWithAmazon').onclick = function() {
+    options = { scope : 'profile', popup: false }; // popup doesn't work in...somefin somefin...
+    amazon.Login.authorize(options, 'https://playitmyway.inet2.org/login_from_amazon');
+    return false;
+  };
+
+</script>
+
+<a id="Logout">Logout</a>
+

@@ -344,6 +344,10 @@ get "/faq" do |env|
   render "views/faq.ecr", "views/layout.ecr"
 end
 
+get "/login" do |env|
+  render "views/login.ecr", "views/layout.ecr"
+end
+
 get "/new_tag_edit_list/:url_id" do |env|
   tag_edit_list = TagEditList.new env.params.url["url_id"].to_i
 	render "views/edit_tag_edit_list.ecr", "views/layout.ecr"
