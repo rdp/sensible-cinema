@@ -6,7 +6,10 @@ require "http/client"
 require "mysql"
 
 Session.config do |config|
-  Session.config.secret = "my_super_secret"
+  config.secret = "my_super_secret"
+  config.gc_interval = 1.day
+  # memory engine I believe :|
+  config.secure = true # secure cookies
 end
 
 before_all do |env|
@@ -218,6 +221,15 @@ get "/view_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   render "views/view_url.ecr", "views/layout.ecr"
+end
+
+get "/login_from_amazon" do |env|
+  
+end
+
+get "/logout" do |env|
+  env.session.destroy
+  "You have been logged out."
 end
 
 def download(raw_url)
@@ -477,11 +489,11 @@ post "/save_url" do |env|
     db_url.download_image_url image_url
   end
   
-  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename.size > 0 # kemal bug'ish :|
-    # a fresh upload here...
-	  db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile_path) # save contents, why not? :)
+  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename # kemal bug'ish :|?? also nil??
+    # a fresh upload...
+    db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
     profs = SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles)
-    profs.each{ |prof|
+    profs.each { |prof|
       tag = Tag.new(db_url)
       tag.start = prof[:start]
       tag.endy =  prof[:endy]
@@ -492,7 +504,7 @@ post "/save_url" do |env|
       tag.save
     }
     set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please remove inaccurate ones if you desire.")
-	end  
+  end  
 
   db_url.save
   save_local_javascript [db_url], db_url.inspect, env
