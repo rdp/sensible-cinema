@@ -16,7 +16,7 @@
 
 In order to keep your credentials secure, we don't even track your login password, but rely on a third party (amazon) which allows you to login.
 Login with them here:
-
+<br/>
 <a href="#" id="LoginWithAmazon">
   <img border="0" alt="Login with Amazon"
     src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
@@ -26,7 +26,7 @@ Login with them here:
 <script type="text/javascript">
 
   document.getElementById('LoginWithAmazon').onclick = function() {
-    options = { scope : 'profile', popup: false }; // popup doesn't work in...somefin somefin...
+    options = { scope : 'profile', popup: true }; // popup doesn't work in...nativve iOS apps [LOL] but if set to false, you have to do extra hoops yikes!
     amazon.Login.authorize(options, 'https://playitmyway.inet2.org/login_from_amazon');
     return false;
   };
