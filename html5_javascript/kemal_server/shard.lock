@@ -6,7 +6,7 @@ shards:
 
   kemal:
     github: sdogruyol/kemal
-    commit: 54e501e964ceb5053f16fd3061c005dd875b5f9e
+    commit: 735a882478558f145b25283ad6a96313171545f4
 
   kemal-session:
     github: kemalcr/kemal-session
@@ -15,10 +15,6 @@ shards:
   kilt:
     github: jeromegn/kilt
     version: 0.3.3
-
-  multipart:
-    github: RX14/multipart.cr
-    version: 0.1.2
 
   mysql:
     github: crystal-lang/crystal-mysql
