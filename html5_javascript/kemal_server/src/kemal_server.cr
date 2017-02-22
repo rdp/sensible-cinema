@@ -222,15 +222,26 @@ get "/view_url/:url_id" do |env|
   show_tag_details =  env.params.query["show_tag_details"]?
   render "views/view_url.ecr", "views/layout.ecr"
 end
-
-get "/login_from_amazon" do |env|
-  out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{ env.params.query["access_token"]}")
-  raise "access token does not belong to us??" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
-  info = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
-  "got token back from amazon! #{info}" # user_id, name, email
+class AmazonUser
+  JSON.mapping({
+    user_id: String,
+    name: String,
+    email: String
+  })
+  include Session::StorableObject
 end
 
-get "/logout" do |env|
+get "/login_from_amazon" do |env| # amazon changes the url to this after successful auth
+  out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{ env.params.query["access_token"]}")
+  raise "access token does not belong to us??" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
+  info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
+  puts "got token back from amazon! #{info}" # user_id, name, email
+  user = AmazonUser.from_json(info)  # or JSON.parse info
+  env.session.object("user", user)
+  "set it #{env.inspect}"
+end
+
+get "/logout_session" do |env|
   env.session.destroy
   "You have been logged out."
 end
