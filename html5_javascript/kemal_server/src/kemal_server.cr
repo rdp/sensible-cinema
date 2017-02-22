@@ -224,7 +224,10 @@ get "/view_url/:url_id" do |env|
 end
 
 get "/login_from_amazon" do |env|
-  
+  out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{ env.params.query["access_token"]}")
+  raise "access token does not belong to us??" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
+  info = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
+  "got token back from amazon! #{info}" # user_id, name, email
 end
 
 get "/logout" do |env|
@@ -232,10 +235,10 @@ get "/logout" do |env|
   "You have been logged out."
 end
 
-def download(raw_url)
+def download(raw_url, headers = nil)
   begin
-    response = HTTP::Client.get raw_url
-		response.body
+    response = HTTP::Client.get raw_url, headers
+    response.body
   rescue ex
     raise "unable to download that url" + raw_url + " #{ex}" # expect url to work :|
   end
