@@ -107,13 +107,11 @@ module SubtitleProfanityFinder
     
     mutes = [] of NamedTuple(start: Float64, endy: Float64, category: String, details: String)
     entries = split_to_entries(subtitles)
-    euphemized = [] of NamedTuple(start: Float64, endy: Float64, category: String | Nil, details: String) # reset second time through so not double it :)
-    all_profanity_combinationss.each{ |all_profanity_combinations|
-      euphemized.clear # crystal clear! [?]
+    euphemized = [] of NamedTuple(start: Float64, endy: Float64, category: String | Nil, details: String) 
+    all_profanity_combinations = all_profanity_combinationss.flatten # used to care about grouping them :|
       entries.each{ |entry|
         text = entry[:text]
         ts_begin = entry[:beginning_time]
-
         ts_end = entry[:ending_time]
         found_category = nil
         all_profanity_combinations.each{ |profanity_reg, category, sanitized|
@@ -138,7 +136,6 @@ module SubtitleProfanityFinder
         end
         euphemized << {start: ts_begin, endy: ts_end, category: found_category, details: text}
       }
-    }
     return mutes, euphemized
   end
   

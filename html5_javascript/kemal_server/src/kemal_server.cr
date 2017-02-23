@@ -116,7 +116,7 @@ end
 get "/delete_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   url.tags.each { |tag|
-    #save_local_javascript [tag.url], "removed #{tag}", env
+    #save_local_javascript [tag.url], "removed #{tag.inspect}", env
     #tag.destroy 
   }
   url.destroy
@@ -146,7 +146,7 @@ get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
   tag = Tag.get_only_by_id(id)
   tag.destroy
-  save_local_javascript [tag.url], "removed #{tag}", env
+  save_local_javascript [tag.url], "removed #{tag.inspect}", env
   set_flash_for_next_time env, "deleted one tag"
   env.redirect "/view_url/#{tag.url.id}"
 end
@@ -447,7 +447,6 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
 end
 
 def save_local_javascript(db_urls, log_message, env) # actually just json these days...
-  return if File.exists?("this_is_development") # avoid restarting web server locally :|
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
       File.open("edit_descriptors/log.txt", "a") do |f|
