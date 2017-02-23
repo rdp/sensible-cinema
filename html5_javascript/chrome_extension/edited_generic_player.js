@@ -19,8 +19,8 @@ var mutes, skips, yes_audio_no_videos, do_nothings, shapes_over_videos;
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
-  if (document.querySelector('link[rel="canonical"]') != null) {
-		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
+  if (document.querySelector('link[rel="canonical"]') != null && !current_url.includes("youtube.com")) {
+		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
 	// attempt to leave the rest in cyrstal
@@ -336,9 +336,9 @@ function displayAddTagStuffIfInAddMode() {
 function hideAddTagStuff() {
   hideDiv(tagLayer);
 }
-
+var addString = "See something you don't like? Add new content edit tag click here";
 function closeEditor() {
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Add new content edit tag click here";
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString;
 	hideAddTagStuff();
 }
 
@@ -496,7 +496,7 @@ function parseSuccessfulJsonNewUrl(json_string) {
   old_episode = liveEpisodeNumber();
 	displayDiv(document.getElementById("currently_filtering_id"));
 	hideDiv(document.getElementById("loading_div_id"));
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Add new content edit tag click here"; // in case it said unedited... before
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString; // in case it said unedited... before
 	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 }
 
