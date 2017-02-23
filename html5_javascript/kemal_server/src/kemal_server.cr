@@ -238,12 +238,18 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
   puts "got token back from amazon! #{info}" # user_id, name, email
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
-  "set it #{env.inspect}"
+  set_flash_for_next_time(env, "welcome #{user.name}, logged in")
+  env.redirect "/"
 end
 
-get "/logout_session" do |env|
+get "/logout" do |env|
+  render "views/logout.ecr", "views/logout.ecr"
+end
+
+get "/logout_session" do |env| # j.s. sends us here...
   env.session.destroy
-  "You have been logged out."
+  set_flash_for_next_time(env, "You have been logged out.")
+  env.redirect "/login" # amazon says to "show login page" :|
 end
 
 def download(raw_url, headers = nil)
