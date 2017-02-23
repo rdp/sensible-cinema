@@ -8,7 +8,7 @@ require "mysql"
 Session.config do |config|
   config.secret = "my_super_secret"
   config.gc_interval = 30.days
-  config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # survive restarts, mainly :|
+  config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # to survive restarts, mainly :|
   config.secure = true # secure cookies
 end
 
@@ -58,10 +58,6 @@ end
 def db_style_from_query_url(env)
   real_url = env.params.query["url"] # already unescaped it on its way in, kind of them..
   sanitize_html standardize_url(real_url)
-end
-
-get "/ping" do
-  "yes"
 end
 
 get "/for_current_just_settings_json" do |env|
@@ -512,8 +508,8 @@ post "/save_url" do |env|
     db_url.save
     db_url.download_image_url image_url
   end
-  
-  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename # kemal bug'ish :|?? also nil??
+  puts "got #{env.params.files}" 
+  if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
     # a fresh upload...
     db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
     profs = SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles)
