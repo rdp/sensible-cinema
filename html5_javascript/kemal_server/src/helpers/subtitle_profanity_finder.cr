@@ -96,7 +96,7 @@ module SubtitleProfanityFinder
     all_profanity_combinations
   end
 
-  def self.edl_output_from_string(subtitles, include_minor_profanities=true) 
+  def self.mutes_from_srt_string(subtitles, include_minor_profanities=true) 
     subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
 
     all_profanity_combinationss = [convert_to_regexps(Bad_profanities)] # double array so we can do the lesser ones second
@@ -129,7 +129,7 @@ module SubtitleProfanityFinder
               end
             }
           }
-          unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line :P
+          unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line [?]
             output << {start: ts_begin, endy: ts_end, category: found_category, details: text}
           end
         end
@@ -168,7 +168,7 @@ end
 if ARGV[0] == "--create-edl" # then .srt name
   incoming_filename = ARGV[1]
   SubtitleProfanityFinder.expected_min_size = 1
-  stuff = SubtitleProfanityFinder.edl_output_from_string File.read(incoming_filename)
+  stuff = SubtitleProfanityFinder.mutes_from_srt_string File.read(incoming_filename)
   puts "got"
   pp stuff
 end

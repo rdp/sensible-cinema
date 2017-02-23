@@ -534,7 +534,7 @@ post "/save_url" do |env|
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
     # a fresh upload...
     db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
-    profs = SubtitleProfanityFinder.edl_output_from_string(db_url.subtitles)
+    profs = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
     profs.each { |prof|
       tag = Tag.new(db_url)
       tag.start = prof[:start]
@@ -545,7 +545,10 @@ post "/save_url" do |env|
       tag.details = prof[:details]
       tag.save
     }
-    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please remove inaccurate ones if you desire.")
+    clean_profs = profs.reject{|p| p[:details] =~ /_/ }
+    middle_prof = clean_profs[clean_profs.size / 2]
+    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.
+      you should see #{middle_prof[:details]} at #{seconds_to_human middle_prof[:start]} if the timing is right, please double check it!")
   end  
 
   db_url.save
