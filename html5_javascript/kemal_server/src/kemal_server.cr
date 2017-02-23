@@ -131,7 +131,7 @@ end
 
 class CustomHandler < Kemal::Handler
   def call(env)
-    if env.request.path =~ /delete|nuke/ && !logged_in?(env)
+    if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
       set_flash_for_next_time env, "login first required" # TODO remember where they came from to get here :|
       env.redirect "/login" 
     else
@@ -252,7 +252,6 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
   out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{ env.params.query["access_token"]}")
   raise "access token does not belong to us??" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
   info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
-  puts "got token back from amazon! #{info}" # user_id, name, email
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
   set_flash_for_next_time(env, "Successfully logged in, welcome!")
@@ -530,11 +529,10 @@ post "/save_url" do |env|
     db_url.save
     db_url.download_image_url image_url
   end
-  puts "got #{env.params.files}" 
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
     # a fresh upload...
     db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
-    profs = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
+    profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
     profs.each { |prof|
       tag = Tag.new(db_url)
       tag.start = prof[:start]
@@ -545,10 +543,11 @@ post "/save_url" do |env|
       tag.details = prof[:details]
       tag.save
     }
-    clean_profs = profs.reject{|p| p[:details] =~ /_/ }
-    middle_prof = clean_profs[clean_profs.size / 2]
-    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.
-      you should see #{middle_prof[:details]} at #{seconds_to_human middle_prof[:start]} if the timing is right, please double check it!")
+    clean_subs = all_euphemized.reject{|p| p[:category] != nil }
+    middle_sub = clean_subs[clean_subs.size / 2]
+    puts "clean_subs = euphsize=#{all_euphemized.size} clean_size=#{clean_subs.size} idx=#{clean_subs.size / 2} middle_sub = #{middle_sub}"
+    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
+    set_flash_for_next_time(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it!")
   end  
 
   db_url.save
@@ -561,7 +560,11 @@ end
 ####### view methods :)
 
 def set_flash_for_next_time(env, string)
-  env.session.string("flash", env.session.string("flash") + " " + string) # hopefully HTML strips the preceding stuff :)
+  if env.session.string("flash").size > 0
+    env.session.string("flash", env.session.string("flash") + "<br/>" + string)
+  else
+    env.session.string("flash", string)
+  end
 end
 
 def table_row_or_nothing(first_cell, second_cell)

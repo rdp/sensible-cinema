@@ -9,7 +9,7 @@ module SubtitleProfanityFinder
      @@expected_min_size = new_min
    end
 
-   # splits into timestamps -> timestamps\ncontent blocks
+   # splits into NamedTuple
    def self.split_to_entries(subtitles_raw_text)
      p subtitles_raw_text.valid_encoding?
      # also crystal length => size hint plz
@@ -49,6 +49,7 @@ module SubtitleProfanityFinder
      while all[-1][:text] =~ reg
       all.pop
      end
+     puts "parsed size=#{all.size}"
      all
    end
 
@@ -104,9 +105,11 @@ module SubtitleProfanityFinder
       all_profanity_combinationss += [convert_to_regexps(Semi_bad_profanities)]
     end
     
-    output = [] of NamedTuple(start: Float64, endy: Float64, category: String, details: String)
+    mutes = [] of NamedTuple(start: Float64, endy: Float64, category: String, details: String)
     entries = split_to_entries(subtitles)
+    euphemized = [] of NamedTuple(start: Float64, endy: Float64, category: String | Nil, details: String) # reset second time through so not double it :)
     all_profanity_combinationss.each{ |all_profanity_combinations|
+      euphemized.clear # crystal clear! [?]
       entries.each{ |entry|
         text = entry[:text]
         ts_begin = entry[:beginning_time]
@@ -129,13 +132,14 @@ module SubtitleProfanityFinder
               end
             }
           }
-          unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line [?]
-            output << {start: ts_begin, endy: ts_end, category: found_category, details: text}
+          unless mutes.index{|me| me[:start] == ts_begin} # i.e. some previous profanity combination already found this line :|
+            mutes << {start: ts_begin, endy: ts_end, category: found_category, details: text}
           end
         end
+        euphemized << {start: ts_begin, endy: ts_end, category: found_category, details: text}
       }
     }
-    output
+    return mutes, euphemized
   end
   
   # this one is 1:01:02.0 => 36692.0
@@ -168,7 +172,8 @@ end
 if ARGV[0] == "--create-edl" # then .srt name
   incoming_filename = ARGV[1]
   SubtitleProfanityFinder.expected_min_size = 1
-  stuff = SubtitleProfanityFinder.mutes_from_srt_string File.read(incoming_filename)
+  mutes, euphes = SubtitleProfanityFinder.mutes_from_srt_string File.read(incoming_filename)
   puts "got"
-  pp stuff
+  pp mutes
+  puts "size=#{euphes.size}"
 end
