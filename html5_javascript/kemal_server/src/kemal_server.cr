@@ -7,14 +7,18 @@ require "mysql"
 
 Session.config do |config|
   config.secret = "my_super_secret"
-  config.gc_interval = 1.day
-  # memory engine I believe :|
+  config.gc_interval = 30.days
+  config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # survive restarts, mainly :|
   config.secure = true # secure cookies
 end
 
 before_all do |env|
-  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.]
-  env.session.string("flash", "") unless env.session.string?("flash") # default
+  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.] do we need this?
+  env.session.string("flash", "") unless env.session.string?("flash") # set a default
+end
+
+after_all do |env|
+  env.session.string("keep alive", "") # force mtime adjust until https://github.com/kemalcr/kemal-session/issues/27 fixed
 end
 
 # https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? 

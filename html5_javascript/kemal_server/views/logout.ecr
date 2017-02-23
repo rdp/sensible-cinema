@@ -1,0 +1,25 @@
+<div id="amazon-root"></div>
+<script type="text/javascript">
+
+  window.onAmazonLoginReady = function() {
+    amazon.Login.setClientId('amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6');
+  };
+  (function(d) {
+    var a = d.createElement('script'); a.type = 'text/javascript';
+    a.async = true; a.id = 'amazon-login-sdk';
+    a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
+    d.getElementById('amazon-root').appendChild(a);
+  })(document);
+
+</script>
+
+Click here to <a id="Logout">Logout</a> of our site via amazon login.
+<script type="text/javascript">
+  document.getElementById('Logout').onclick = function() {
+  amazon.Login.logout(); ; // then what?
+  console.log("amazon logout ended fwiw...");
+  window.location.href = "/logout_session"; // redir
+  console.log("send us to /logout_session");
+};
+</script>
+
