@@ -17,7 +17,7 @@ before_all do |env|
   env.session.string("flash", "") unless env.session.string?("flash") # default
 end
 
-# https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? Yet not enough see 3333 as well :|
+# https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? 
 spawn do
   loop do
     sleep 0.5
@@ -243,13 +243,13 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
 end
 
 get "/logout" do |env|
-  render "views/logout.ecr", "views/logout.ecr"
+  render "views/logout.ecr", "views/layout.ecr" # TODO just logout immediately j.s. here, but still it will then send us to logout_session
 end
 
 get "/logout_session" do |env| # j.s. sends us here...
-  env.session.destroy
-  set_flash_for_next_time(env, "You have been logged out.")
-  env.redirect "/login" # amazon says to "show login page" :|
+  env.session.destroy # :| can't set flash after if I do this kemal-session #34 :|
+  # set_flash_for_next_time(env, "You have been logged out.") # no personalized message for now :|
+  "logged you out, click <a href=/login>here to login</a>" # amazon says to "show login page" after wait whaat?
 end
 
 def download(raw_url, headers = nil)
