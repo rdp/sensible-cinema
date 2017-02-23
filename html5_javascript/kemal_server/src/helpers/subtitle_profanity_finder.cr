@@ -11,7 +11,7 @@ module SubtitleProfanityFinder
 
    # splits into timestamps -> timestamps\ncontent blocks
    def self.split_to_entries(subtitles_raw_text)
-     # p subtitles_raw_text.valid_encoding? # no crystal equiv.
+     p subtitles_raw_text.valid_encoding?
      # also crystal length => size hint plz
      all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings first so that it parses right when linux reads a windows file [maybe?]
      all = all.map{ |glop|
@@ -97,8 +97,7 @@ module SubtitleProfanityFinder
   end
 
   def self.edl_output_from_string(subtitles, include_minor_profanities=true) 
-     # no crystal equiv? subtitles = subtitles.scrub # invalid UTF-8 creeps in at times... ruby 2.1+
-
+    subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
 
     all_profanity_combinationss = [convert_to_regexps(Bad_profanities)] # double array so we can do the lesser ones second
     if include_minor_profanities
@@ -130,8 +129,6 @@ module SubtitleProfanityFinder
               end
             }
           }
-          # crystal gah! entry[:text] = text # add_single_line_minimized_text_from_multiline text
-          # crystal poor includes? when I used it here?
           unless output.index{|me| me[:start] == ts_begin} # i.e. some previous profanity already found this line :P
             output << {start: ts_begin, endy: ts_end, category: found_category, details: text}
           end
