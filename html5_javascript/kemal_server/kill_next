@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-kqwait (find . | grep -v session)
+kqwait (find . | grep -v session | grep -v edit_descriptors)
 kill (pidof crystal | cut -d " " -f 1)
 sleep 0.1
 kill (pidof crystal | cut -d " " -f 1)
