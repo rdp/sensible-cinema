@@ -302,7 +302,7 @@ function addEditUi() {
 
 function addForNewEditToScreen() {
   if (url_id == 0) {
-		// case "unedited click to add.."
+		// case "unedited click to add..."
 		if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
 			alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
 			// XXXX more generic here somehow possible???
@@ -311,7 +311,8 @@ function addForNewEditToScreen() {
 		else {
 	    window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
 			      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
-			setTimeout(loadForNewUrl, 2000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
+			setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
+      // once took longer than 2000 :|
 			pauseVideo();
 		}
   }

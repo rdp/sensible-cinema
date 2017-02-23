@@ -125,6 +125,15 @@ get "/delete_url/:url_id" do |env|
   env.redirect "/"
 end
 
+class CustomHandler < Kemal::Handler
+  def call(context)
+    puts "context=#{context}"
+    call_next context
+  end
+end
+
+add_handler CustomHandler.new
+
 get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
   tag = Tag.get_only_by_id(id)
@@ -240,6 +249,10 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
   env.session.object("user", user)
   set_flash_for_next_time(env, "welcome #{user.name}, logged in")
   env.redirect "/"
+end
+
+def logged_in?(env)
+  env.session.object?("user")
 end
 
 get "/logout" do |env|
