@@ -336,7 +336,7 @@ function displayAddTagStuffIfInAddMode() {
 function hideAddTagStuff() {
   hideDiv(tagLayer);
 }
-var addString = "See something you don't like? Add new content edit tag click here";
+var addString = "See something you don't like?<br/>Add new content edit tag click here";
 function closeEditor() {
   document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString;
 	hideAddTagStuff();
@@ -672,11 +672,16 @@ function start() {
   loadForNewUrl();
 }
 
-function showEditLinkMouseJustMoved() {
-	displayDiv(document.getElementById("top_left"));
-	displayAddTagStuffIfInAddMode();
-  clearTimeout(mouse_move_timer);
-  mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, (inAddMode() ? 5000 : 2000)); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+function showEditLinkMouseJustMoved(event) {
+  var cursorX = event.pageX;
+  var cursorY = event.pageY;
+  var coords = getLocationOfElement(video_element);
+  if (!mouse_move_timer || (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top)) {
+  	displayDiv(document.getElementById("top_left"));
+  	displayAddTagStuffIfInAddMode();
+    clearTimeout(mouse_move_timer);
+    mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, (inAddMode() ? 5000 : 2000)); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+  }
 }
 
 function addMouseAnythingListener(func) {
@@ -684,10 +689,10 @@ function addMouseAnythingListener(func) {
   var addListener, removeListener;
   if (document.addEventListener) {
 		addListener = function (el, evt, f) { return el.addEventListener(evt, f, false); };
-      removeListener = function (el, evt, f) { return el.removeEventListener(evt, f, false); };
+    removeListener = function (el, evt, f) { return el.removeEventListener(evt, f, false); };
   } else {
-      addListener = function (el, evt, f) { return el.attachEvent('on' + evt, f); };
-      removeListener = function (el, evt, f) { return el.detachEvent('on' + evt, f); };
+    addListener = function (el, evt, f) { return el.attachEvent('on' + evt, f); };
+    removeListener = function (el, evt, f) { return el.detachEvent('on' + evt, f); };
   }
 
   addListener(document, 'mousemove', func);
