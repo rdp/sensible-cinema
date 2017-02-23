@@ -26,8 +26,8 @@
 <div class="container-fluid">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- have to put this at the top else can't use jQuery for methods called straight at load time :| -->
   <% if env.session.object?("user"); user = env.session.object("user").as(AmazonUser) %>
-    <div class="alert alert-info">
-      logged in as <%= user.name %>
+    <div class="alert alert-success">
+      Logged in as <%= user.name %> <a href=/logout>logout</a>
     </div>
   <% end %>
   <% if env.session.string("flash").size > 0 %>

@@ -125,10 +125,14 @@ get "/delete_url/:url_id" do |env|
   env.redirect "/"
 end
 
+def logged_in?(env)
+  env.session.object?("user")
+end
+
 class CustomHandler < Kemal::Handler
   def call(env)
-    if env.request.path =~ /delete|nuke/ && !env.session.object?("user")
-      set_flash_for_next_time env, "login first required" # TODO remember where they came from
+    if env.request.path =~ /delete|nuke/ && !logged_in?(env)
+      set_flash_for_next_time env, "login first required" # TODO remember where they came from to get here :|
       env.redirect "/login" 
     else
       call_next env
@@ -251,10 +255,9 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
   puts "got token back from amazon! #{info}" # user_id, name, email
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
-  set_flash_for_next_time(env, "welcome #{user.name}, logged in")
+  set_flash_for_next_time(env, "Successfully logged in, welcome!")
   env.redirect "/"
 end
-
 
 get "/logout" do |env|
   render "views/logout.ecr", "views/layout.ecr" # TODO just logout immediately j.s. here, but still it will then send us to logout_session
@@ -391,7 +394,12 @@ get "/faq" do |env|
 end
 
 get "/login" do |env|
-  render "views/login.ecr", "views/layout.ecr"
+  if logged_in?(env)
+    set_flash_for_next_time env, "already logged in!"
+    env.redirect "/"
+  else
+    render "views/login.ecr", "views/layout.ecr"
+  end
 end
 
 get "/new_tag_edit_list/:url_id" do |env|
