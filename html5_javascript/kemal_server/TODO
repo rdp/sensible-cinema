@@ -4,7 +4,8 @@ Amazon: new releases, popular prime, netflix ??
 
 == todo ==
 
-amazon login...pay...
+amazon login...
+  require it for delete_tag, nuke_XX
 
 me...melissa...beat the tires in a dry production real run
   resurrect avatar my one episode LOL
@@ -25,7 +26,7 @@ grey-er if unedited :)
   or only show if mouse near it or somefing :|
 
 == meh ===
-
+more amazon auth: it remembers who you are [?] DB [?]
 more personlized edits, everybody wants to be able to edit their own thing...??
 
 if they click "enable edited" then click that other thiing for them...wait why not superimpose everywhere?
