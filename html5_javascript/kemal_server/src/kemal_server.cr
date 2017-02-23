@@ -126,9 +126,13 @@ get "/delete_url/:url_id" do |env|
 end
 
 class CustomHandler < Kemal::Handler
-  def call(context)
-    puts "context=#{context}"
-    call_next context
+  def call(env)
+    if env.request.path =~ /delete|nuke/ && !env.session.object?("user")
+      set_flash_for_next_time env, "login first required" # TODO remember where they came from
+      env.redirect "/login" 
+    else
+      call_next env
+    end
   end
 end
 
@@ -251,9 +255,6 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
   env.redirect "/"
 end
 
-def logged_in?(env)
-  env.session.object?("user")
-end
 
 get "/logout" do |env|
   render "views/logout.ecr", "views/layout.ecr" # TODO just logout immediately j.s. here, but still it will then send us to logout_session
