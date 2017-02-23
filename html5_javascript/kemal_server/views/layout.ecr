@@ -5,12 +5,14 @@
     <title>Play it my Way <%= action = env.request.path.split("/")[1].gsub("_", " "); "-- #{action}" if action.present? %>
       <%= "DEV" if File.exists?("this_is_development") %>
     </title>
+    <!-- bootstrap stuff -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
+      <!-- my own hacky css LOL -->
       input[type="text"] {
         font-size: 12pt; font-family: Arial;
       }
@@ -23,6 +25,11 @@
 <body>
 <div class="container-fluid">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- have to put this at the top else can't use jQuery for methods called straight at load time :| -->
+  <% if env.session.object?("user"); user = env.session.object("user").as(AmazonUser) %>
+    <div class="alert alert-info">
+      logged in as <%= user.name %>
+    </div>
+  <% end %>
   <% if env.session.string("flash").size > 0 %>
     <p class="bg-info" style="padding: 10px;">
 		  <span style="font-size: 30px;"><%= out = env.session.string("flash"); env.session.string("flash", ""); out %> </span>
