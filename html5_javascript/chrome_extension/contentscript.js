@@ -155,8 +155,8 @@ function currentUrlNotIframe() {
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
-  if (document.querySelector('link[rel="canonical"]') != null) {
-		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off &t=2 or something...
+  if (document.querySelector('link[rel="canonical"]') != null && !current_url.includes("youtube.com")) {
+		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
 	// attempt to leave the rest in cyrstal
