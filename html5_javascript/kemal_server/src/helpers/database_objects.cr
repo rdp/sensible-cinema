@@ -245,9 +245,9 @@ class Url
 	  File.write("public/movie_images/#{outgoing_filename}", download(full_url)) # guess this is OK non windows :|
 	end
 	
-	def image_tag(size, extra_html = "")
+	def image_tag(size, postpend_html = "")
 	  if image_local_filename.present?
-		  "<img src='/movie_images/#{image_local_filename}' #{size}/>#{extra_html}"
+		  "<img src='/movie_images/#{image_local_filename}' #{size}/>#{postpend_html}"
 		else
 		  ""
 		end
