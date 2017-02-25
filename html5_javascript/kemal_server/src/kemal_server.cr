@@ -185,7 +185,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   query = env.params.query
   tag.start = url.human_to_seconds query["start"]
   tag.endy = url.human_to_seconds query["endy"]
-  tag.default_action = sanitize_html query["default_action"]
+  tag.default_action = resanitize_html(query["default_action"])
   # immediate save so that I can rely on repolling this from the UI to get the ID's etc. in a few seconds after submitting it :|
   tag.category = "unknown"
   tag.subcategory = "unknown"
@@ -209,11 +209,11 @@ post "/save_tag/:url_id" do |env|
   endy = params["endy"].strip
   tag.start = url.human_to_seconds start
   tag.endy = url.human_to_seconds endy
-  tag.default_action = sanitize_html params["default_action"] # TODO restrict more various somehow :|
-  tag.category = sanitize_html params["category"]
-  tag.subcategory = sanitize_html params["subcategory"]
-  tag.details = sanitize_html params["details"]
-  tag.oval_percentage_coords = sanitize_html params["oval_percentage_coords"].strip
+  tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
+  tag.category = resanitize_html params["category"]
+  tag.subcategory = resanitize_html params["subcategory"]
+  tag.details = resanitize_html params["details"]
+  tag.oval_percentage_coords = resanitize_html params["oval_percentage_coords"].strip
 	if tag.oval_percentage_coords.present?
 	  unless (tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%,[^\d]+$/) || (tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%,[^\d]+--\d+%,\d+%:\d+%,\d+%,[^\d]+/ )
 		  raise "bad oval coords #{tag.oval_percentage_coords} should look like 50%,50%:25%,25%,green [or that--that for oval and square]" 
@@ -427,9 +427,9 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
     tag_edit_list = TagEditList.new params["url_id"].to_i
   end
 
-  tag_edit_list.description = sanitize_html params["description"]
+  tag_edit_list.description = resanitize_html params["description"]
   raise "must have name" unless tag_edit_list.description.present?
-  tag_edit_list.status_notes = sanitize_html params["status_notes"]
+  tag_edit_list.status_notes = resanitize_html params["status_notes"]
   tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   tag_ids = [] of Int32
   actions = [] of String
@@ -464,6 +464,10 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
   end
 end
 
+def resanitize_html(string)
+  sanitize_html HTML.unescape(string)
+end
+
 post "/save_url" do |env|
   params = env.params.body # POST params
 	puts "save_url params=#{params}"
@@ -485,19 +489,19 @@ post "/save_url" do |env|
   if amazon_second_url.present?
     _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url amazon_second_url
   end
-  details = sanitize_html HTML.unescape(params["details"])
-  editing_status = params["editing_status"]
+  details = resanitize_html(params["details"])
+  editing_status = resanitize_html(params["editing_status"])
   episode_number = params["episode_number"].to_i
-  episode_name = sanitize_html HTML.unescape(params["episode_name"])
+  episode_name = resanitize_html(params["episode_name"])
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
-  review = params["review"]
-  amazon_prime_free_type = params["amazon_prime_free_type"]
+  review = resanitize_html(params["review"])
+  amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
   rental_cost = params["rental_cost"].to_f
   purchase_cost = params["purchase_cost"].to_f
   total_time = human_to_seconds params["total_time"]
-  genre = sanitize_html HTML.unescape(params["genre"])
-  original_rating = sanitize_html HTML.unescape(params["original_rating"])
+  genre = resanitize_html(params["genre"])
+  original_rating = resanitize_html(params["original_rating"])
 
   db_url.url = incoming_url
   db_url.amazon_second_url = amazon_second_url
