@@ -470,8 +470,6 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
-	puts "save_url params=#{params}"
-
   if params.has_key? "id"
     # these day
     db_url = Url.get_only_by_id(params["id"])
@@ -480,12 +478,12 @@ post "/save_url" do |env|
   end
   
   # these get injected into HTML later so sanitize everything up front... :|
-  name = sanitize_html HTML.unescape(params["name"]) # unescape in case previously escaped case of re-save [otherwise it grows and grows in error...]
-  incoming_url = params["url"] # already unescaped I think...
+  name = resanitize_html(params["name"]) # unescape in case previously escaped case of re-save [otherwise it grows and grows in error...]
+  incoming_url = resanitize_html(params["url"])
   if db_url.url != incoming_url
     _ , incoming_url = get_title_and_sanitized_standardized_canonical_url incoming_url # in case url changed make sure they didn't change it to a /gp/, ignore title since it's already here manually :|
   end
-  amazon_second_url = HTML.unescape(params["amazon_second_url"])
+  amazon_second_url = resanitize_html(params["amazon_second_url"])
   if amazon_second_url.present?
     _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url amazon_second_url
   end
