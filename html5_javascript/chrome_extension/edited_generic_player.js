@@ -95,27 +95,33 @@ function areWeWithin(thisTagArray, cur_time) {
   return false;
 }
 
+var i_muted_it = false; // attempt to let them still control their mute button :|
+
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
 	var tag = areWeWithin(mutes, cur_time);
 	if (tag) {
 	  if (!video_element.muted) {
 	    video_element.muted = true;
+      i_muted_it = true;
 	    timestamp_log("muting", cur_time, tag);
 	    extra_message = "muted";
 	  }
 	}
 	else {
 	  if (video_element.muted) {
-	    video_element.muted = false;
-	    console.log("unmuted at=" + cur_time);
-	    extra_message = "";
+      if (i_muted_it) {
+  	    video_element.muted = false;
+  	    console.log("unmuted at=" + cur_time);
+  	    extra_message = "";
+        i_muted_it = false;      
+      }
 	  }
 	}
 	
 	tag = areWeWithin(skips, cur_time);
 	if (tag) {
-	  timestamp_log("seeking to ", cur_time, tag);
+	  timestamp_log("seeking", cur_time, tag);
 	  seekToTime(tag.endy);
 	} // no else
 	
