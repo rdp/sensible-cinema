@@ -278,9 +278,8 @@ function addEditUi() {
   <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
   <br/>
-  <input type='button' onclick="seekToTime(video_element.currentTime - 10); return false;" value='-10s'/>
-  <input type='button' onclick="seekToTime(video_element.currentTime - 5); return false;" value='-5s'/>
-  <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/>
+  <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+  <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
   <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
   <span id='playback_rate'>1.00x</span>
   <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
@@ -299,6 +298,20 @@ function addEditUi() {
   addMouseAnythingListener(showEditLinkMouseJustMoved);
 }
 
+function seekToBeforeEdit(delta) {
+  var desired_time = video_element.currentTime + delta;
+  var all = mutes.concat(skips);
+  all = all.concat(yes_audio_no_videos);
+  all = all.concat(shapes_over_videos);
+	var tag = areWeWithin(all, desired_time);  
+  if (tag) {
+    console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
+    seekToBeforeEdit(tag.start - (video_element.currentTime + 1));
+  }
+  else {
+    seekToTime(desired_time);
+  }
+}
 
 function addForNewEditToScreen() {
   if (url_id == 0) {
@@ -764,6 +777,10 @@ function findFirstVideoTagOrNull() {
 
 
 function seekToTime(ts, callback) {
+  if (ts < 0) {
+    console.log("not seeking to before 0 " + ts);
+    ts = 0;
+  }
 	callback = callback || function() {}
   // try and avoid pauses after seeking
 	console.log("seeking to " + ts);
