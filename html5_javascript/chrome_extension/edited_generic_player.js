@@ -511,7 +511,7 @@ function loadFailed(status) {
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
 	closeEditor();
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Unedited, click to enable edited..."; // she's dead jim XX confirm prompt on it to create?
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Unedited, click here to enable Play it my way...";
 	hideDiv(document.getElementById("currently_filtering_id"));
 	hideDiv(document.getElementById("loading_div_id"));
 	

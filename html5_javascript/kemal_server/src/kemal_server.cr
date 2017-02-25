@@ -132,7 +132,7 @@ end
 class CustomHandler < Kemal::Handler
   def call(env)
     if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
-      set_flash_for_next_time env, "login first required" # TODO remember where they came from to get here :|
+      set_flash_for_next_time env, "login required before you can do that..." # TODO remember where they came from to get here :|
       env.redirect "/login" 
     else
       call_next env
@@ -254,7 +254,7 @@ get "/login_from_amazon" do |env| # amazon changes the url to this after success
   info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
-  set_flash_for_next_time(env, "Successfully logged in, welcome!")
+  set_flash_for_next_time(env, "Successfully logged in, welcome #{user.name}!")
   env.redirect "/"
 end
 
