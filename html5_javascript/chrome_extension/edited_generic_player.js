@@ -234,7 +234,7 @@ function addEditUi() {
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id style='display: none;'>
-	    Success! Currently editing [your playback will differ from the original content]: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
+	    Success! Currently playing edited <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
 	  </div>
 	  <div id=loading_div_id>Loading...</div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
@@ -336,7 +336,7 @@ function displayAddTagStuffIfInAddMode() {
 function hideAddTagStuff() {
   hideDiv(tagLayer);
 }
-var addString = "See something you don't like?<br/>Add new content edit tag click here";
+var addString = "Anybody can add a new content tag, click here!";
 function closeEditor() {
   document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString;
 	hideAddTagStuff();
