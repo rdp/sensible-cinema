@@ -385,8 +385,12 @@ function testCurrentFromUi() {
 	}
   inMiddleOfTestingEdit = true;
   var faux_tag = addToCurrentEditArray();
-  seekToTime(faux_tag.start - 1, function() {
-	  length = faux_tag.endy - faux_tag.start;
+  var start = faux_tag.start - 1;
+  if (start < 0) {
+    start = 0;
+  }
+  seekToTime(start, function() {
+	  length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}

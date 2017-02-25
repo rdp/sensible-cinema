@@ -481,7 +481,7 @@ post "/save_url" do |env|
   name = resanitize_html(params["name"]) # unescape in case previously escaped case of re-save [otherwise it grows and grows in error...]
   incoming_url = resanitize_html(params["url"])
   if db_url.url != incoming_url
-    _ , incoming_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(incoming_url) # in case url changed make sure they didn't change it to a /gp/, ignore title since it's already here manually :|
+    _ , incoming_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(incoming_url) # in case url changed make sure they didn't change it to a /gp/, ignore title since it's already here manually already :|
   end
   amazon_second_url = resanitize_html(params["amazon_second_url"])
   if amazon_second_url.present?
