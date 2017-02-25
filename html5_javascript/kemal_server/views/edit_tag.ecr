@@ -7,10 +7,10 @@
   <input type="hidden" name="id" value="<%= tag.id %>">
 <% end %>
 
-from:<input type="text" name="start"  size="40" value="<%= url.seconds_to_human tag.start %>"/>
+from:<input type="text" name="start"  size="25" value="<%= url.seconds_to_human tag.start %>"/>
 <br/>
 
-to: <input type="text" name="endy" size="40" id="endy" value="<%= url.seconds_to_human tag.endy %>"/>
+to: <input type="text" name="endy" size="25" id="endy" value="<%= url.seconds_to_human tag.endy %>"/>
 <br/>
 
 default action to take if user selects to edit all content tags:
