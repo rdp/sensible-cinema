@@ -171,12 +171,13 @@ class Url
   end
 
   def human_readable_company
-   # get from url host...
-   check =  /\/\/([^\/]+).*/
-    if url =~ check
+    # get from url...
+    check =  /\/\/([^\/]+).*/ # anything after // like //(.*)/
+    real_url = HTML.unescape(url) # want the slashes present :|
+    if real_url =~ check
       host = $1.split(".")[-2]
     else
-      host = url # ??
+      host = url # ?? hope we never get here LOL
     end
     if amazon_prime_free_type != ""
       if amazon_prime_free_type == "Prime"
