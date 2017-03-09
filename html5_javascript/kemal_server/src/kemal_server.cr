@@ -367,7 +367,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
     url.episode_name = episode_name
     url.episode_number = episode_number
-    url.editing_status = "not yet fully edited"
+    url.editing_status = "needs review, may not yet be fully edited"
     url.total_time = duration
     url.save 
     set_flash_for_next_time(env, "Successfully added it to our system! Please add some information and go back and add some content tags for it!")
