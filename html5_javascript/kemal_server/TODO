@@ -21,14 +21,15 @@ pay people for seeding corpus
 if it can't load the first time, try, try again :)
 
 == meh ===
+more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, this blind is annoying...
 
-better logout [?]
+count number of times something is played [popularity contest]
+
 more add work: it says "play unedited" during ads...or previews...or something...somewhere...
   guess ads too? hrm...
 
 during adds show "nothing" somehow...
 
-more amazon auth: it remembers who you are [?] DB [?]
 more personlized edits, everybody wants to be able to edit their own thing...??
 
 if they click "enable edited" then click that other thiing for them...wait why not superimpose everywhere?
@@ -53,6 +54,7 @@ the main page wants to be little icons that...can pop out to bigger? mouse over?
 realer session cookie secret
 
 == todo never LOL ==
+better logout [?]
 an option "never show me r, or horror" :|
 
 edited facebook vids LOL
