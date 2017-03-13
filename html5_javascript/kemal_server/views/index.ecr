@@ -43,6 +43,26 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
 checkIfChromeExtensionInstalled();
 timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
 
+
+    function isChrome() {
+      var isChromium = window.chrome,
+        winNav = window.navigator,
+        vendorName = winNav.vendor,
+        isOpera = winNav.userAgent.indexOf("OPR") > -1,
+        isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+        isIOSChrome = winNav.userAgent.match("CriOS");
+    
+      if(isIOSChrome){
+        return true;
+      } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+        return true;
+      } else { 
+        return false;
+      }
+    }
+
+
+
 <% if File.exists? "this_is_development" %>
   markAsGoodChromeExtension(); // fake it out LOL
 <% end %>
@@ -60,6 +80,16 @@ This service intends to remain free, and we know a lot of you are passionate abo
 <br/>In the future we hope to have an amazon reseller account, after which point any movies you click through from our website to rent (and any other retail purchases on amazon.com for 24 hours) will generate a small revenue to us, ping us if that sounds interesting!
 <br/>
 Other ways you can help: tag some movie content for us, leave us feedback for the <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml>chrome extension</a>. Join our facebooks and share a post with your friends, help us get the word out! :)
+
+<div id="switch_to_chrome" style="display: none;">
+<h2>In order for our plugin to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>.
+</div>
+
+<script>
+if (!isChrome()) {
+   document.getElementById('switch_to_chrome').style.display = 'block'; 
+}
+</script>
 
 <div id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
 <h2>Install the edited playback software by <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank --> clicking here to install our chrome extension</a> then come back and watch!</h2>
