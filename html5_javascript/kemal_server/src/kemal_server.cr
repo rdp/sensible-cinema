@@ -13,7 +13,7 @@ Session.config do |config|
 end
 
 before_all do |env|
-  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.] do we need this?
+  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.] do we still need this?
   env.session.string("flash", "") unless env.session.string?("flash") # set a default
 end
 

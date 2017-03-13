@@ -13,13 +13,12 @@ from:<input type="text" name="start"  size="25" value="<%= url.seconds_to_human 
 to: <input type="text" name="endy" size="25" id="endy" value="<%= url.seconds_to_human tag.endy %>"/>
 <br/>
 
-default action to take if user selects to edit all content tags:
+default action to take if user selects to "edit all offensive content out":
 <select name="default_action" id='action_sel' onchange="default_action_changed();">
   <option value="mute">mute</option>
   <option value="skip">skip</option>
   <option value="yes_audio_no_video">yes_audio_no_video</option>
-  <option value="shape_over_video">shape_over_video</option>
-  <option value="do_nothing">do_nothing</option>
+  <option value="do_nothing">do_nothing (ex: movie content)</option>
 </select>
 <script>
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
@@ -59,7 +58,7 @@ If there are any missing please let us know!
 internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
-<div id="oval_coords_div" style="display: none;" >
+<div id="oval_coords_div" style="display: none;" > <!-- just leave it blank for now -->
   <br/>
   oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
   <br/>
@@ -114,15 +113,5 @@ function showSubCatWithRightOptionsAvailable() {
 		}
 	});
 }
-
-function default_action_changed() {
-  if (document.getElementById('action_sel').value == "shape_over_video") {
-    document.getElementById('oval_coords_div').style.display = "block";
-  }
-	else {
-    document.getElementById('oval_coords_div').style.display = "none";
-	}
-}
-default_action_changed(); // have to do this apparently :|
 
 </script>
