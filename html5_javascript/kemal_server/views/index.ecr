@@ -1,105 +1,36 @@
-Offering personalized playback of amazon/amazon prime/youtube videos, and more!  
 <br/>We believe you have the right to watch shows the way you'd like to in the privacy of your home, and we're here to help you get there.  Anybody can edit any movie anytime!
-<br/>Ever wished you could mute profanities or skip scenes that distract during movies? We hope to become a community driven resource where people share their suggested edits and everybody benefits.  We also hope to give you control over what you watch.
-<br/>The best part? Play It My Way is free!
+<br/>Ever wished you could mute profanities or skip objectionable scenes that distract during movies? We hope to finally give you control over what you watch.
+Offering personalized playback of amazon/amazon prime/youtube videos, and more!  
 <br/>
-See our <a href=/faq>FAQ</a> for details if you're wondering if this is legal :)
+The best part? Play It My Way is currently free! We eventually might make it into a "subscribe for $2/month" or "buy an edit for $1" but during Beta, use it all you want, we'd love your feedback and help!<br/>
 <h2>How it works:</h2>
-You watch a movie/show that you can legally stream (ex: Amazon that you purchased, Amazon prime, Youtube) and Play it My Way monitors your movie.  At the appropriate time Play it My Way uses content to tags to know if it should mute, skip, etc. scenes that you would rather not see or hear.  Plus if you notice something that should be tagged, you can tag it and add it to our system and everybody, including yourself, benefits!
+You watch a movie/show that you own online (ex: Amazon that you purchased, Amazon prime, Youtube).  If Play it My Way has "content tags" for that movie then it will mute or skip objectionable parts of it. Plus if you notice something that should be tagged, you can tag it in our system and everybody, including yourself, will benefit!
 <br>
-Currently, it works as a plug in on your browser and can play on your computer.  You can also use a cable to connect your computer/laptop to your tv and watch it there.  You could for instance run a long (<a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/BlueRigger-Wall-High-Speed-Cable/dp/B004GW25WY?sa-no-redirect=1'>50'</a>) HDMI cable from your computer to your TV.
-
-<script>
-var isInstalled = false;
-//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev shouldn't need this ever again tho...
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
-console.log("sending version request...");
-
-function markAsGoodChromeExtension() {
-  isInstalled = true;
-  document.getElementById('install_chrome_extension_message_id').style.display = 'none';
-  document.getElementById('success_chrome_extension_id').style.display = 'block';
-}
-
-function checkIfChromeExtensionInstalled() {
-
-chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
-    function (reply) {
-        if (reply) {
-            if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
-                var requiredVersion = 0.00;
-                if (reply.version >= requiredVersion) {
-                    console.log("got back good chrome version installed " + reply.version);
-                    markAsGoodChromeExtension();
-                    clearInterval(timer);
-                }
-                else { alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
-               }
-           } else { console.log("no reply.version?"); }
-       }  else {  console.log("no reply, probably means extension not installed");  }
-});
-
-}
-checkIfChromeExtensionInstalled();
-timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
-
-
-    function isChrome() {
-      var isChromium = window.chrome,
-        winNav = window.navigator,
-        vendorName = winNav.vendor,
-        isOpera = winNav.userAgent.indexOf("OPR") > -1,
-        isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-        isIOSChrome = winNav.userAgent.match("CriOS");
-    
-      if(isIOSChrome){
-        return true;
-      } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-        return true;
-      } else { 
-        return false;
-      }
-    }
-
-
-
-<% if File.exists? "this_is_development" %>
-  markAsGoodChromeExtension(); // fake it out LOL
-<% end %>
-
-function alertIfNoExtension() {
-  if (!isInstalled) {
-	  alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
-  }
-}
-
-</script>
+Currently, it works as a plugin on the chrome web browser browser and can play edited only on your computer.  You can use a cable to connect your computer/laptop to your tv and watch it there.  You could for instance run a long (<a href='https://smile.amazon.com/BlueRigger-Speed-Ethernet-Supports-Return/dp/B003XM73P2'>25'</a> or <a href='https://smile.amazon.com/BlueRigger-Wall-High-Speed-Cable/dp/B004GW25WY?sa-no-redirect=1'>50'</a>) HDMI cable from your computer to your TV, and watch in HD.
+<br/>
+We'll be honest with you, we don't have signed contracts with the movie studios, nor with Amazon, about this.  It's just a little plugin that "helps you playback" your movies, so you can control which portions youw watch.  We encourage our users to purchase movies legally and watch them legally, and we believe using a plugin to watch movies is compatible with the terms of use of some online streaming companies.  Though if they contact us and tell us to stop, we'll do so (and instruct our users of other places where it is allowed).
+<br/>We know studios have mentioned before they're OK with "secondary editing" as long as every gets their dues, and we support them there.
+<br/>
+See our <a href=/faq>FAQ</a> for details if you're wondering about legality.
 
 <h2>Your help</h2>
-This service intends to remain free, and we know a lot of you are passionate about this and would love to help more.  And we'd love any support you can give.  If you'd like us to add a donate or "donate monthly"  option, let us know and we'll get it set up!  Every little bit will help! :)
-<br/>In the future we hope to have an amazon reseller account, after which point any movies you click through from our website to rent (and any other retail purchases on amazon.com for 24 hours) will generate a small revenue to us, ping us if that sounds interesting!
-<br/>
-Other ways you can help: tag some movie content for us, leave us feedback for the <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml>chrome extension</a>. Join our facebooks and share a post with your friends, help us get the word out! :)
+Wee know a lot of you are passionate about this and would love to help more.  And we'd love any support you can give.  
+The best way to help us is to join our <a href=https://www.facebook.com/groups/1241049372650953/>facebook group</a>.  We hope to launch a Kickstarter soon and we'd love to have you involved!
+Other ways you can help: tag some movie content for us.  Post on facebook that you found us! (the easiest way is to go to our <a href=https://www.facebook.com/groups/1241049372650953/>facebook groups</a> and re-share a post), to help us get the word out! :)
 
 <div id="switch_to_chrome" style="display: none;">
 <h2>In order for our plugin to work, you'll need to first switch to the <a href=https://www.google.com/chrome/>Chrome web browser</a>.
 </div>
 
-<script>
-if (!isChrome()) {
-   document.getElementById('switch_to_chrome').style.display = 'block'; 
-}
-</script>
-
 <div id="install_chrome_extension_message_id" style="display: block;"> <!-- visible to start so that it'll continue to show in non chrome browsers -->
-<h2>Install the edited playback software by <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank --> clicking here to install our chrome extension</a> then come back and watch!</h2>
+<h2>First install the edited playback software by <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank"> <!-- sooo confusing without target _blank --> clicking here to install our chrome extension</a> then come back and start playing it your way!</h2>
 </div>
 
 <div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green"><br/>You successfully installed the chrome extension, now get watching! Start playing it your way!</font></div>
 
-<h2>Movies</h2>
-These are movies that we currently have in our system.  Don't see one you want? <a href=/instructions_create_new_url>Add it</a> and help us out!
-<br/>Your playback will differ from the original content (we're required by law to say that :)
+<h2>Our Movies</h2>
+These are movies that we currently have in our system.  Don't see one you want? <a href=/instructions_create_new_url>Add it</a> and help us out by contributing it back to the system!
+<br/>Your playback is going to differ from the original content (we're required by law to say that :)
 
 <table class="table table-striped">
   <thead>
@@ -157,7 +88,9 @@ These are movies that we currently have in our system.  Don't see one you want? 
 <br/>
 
 
-<h2> Contact </h2>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
+<h2> Contact </h2>
+<h3> Facebook </h3>
+<a name=facebook_groups/></a>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
 <br/>
 <br/>
 There is also <a href=https://groups.google.com/forum/#!forum/clean-editing-movie-player>our google group</a> to discuss the program, or for any questions, (ask if you want more, like netflix/hulu support, for instance, etc).
@@ -177,3 +110,71 @@ Thanks for stopping by!
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+
+<script>
+var isInstalled = false;
+//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev shouldn't need this ever again tho...
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
+console.log("sending version request...");
+
+function markAsGoodChromeExtension() {
+  isInstalled = true;
+  document.getElementById('install_chrome_extension_message_id').style.display = 'none';
+  document.getElementById('success_chrome_extension_id').style.display = 'block';
+}
+
+function checkIfChromeExtensionInstalled() {
+
+chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
+    function (reply) {
+        if (reply) {
+            if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
+                var requiredVersion = 0.00;
+                if (reply.version >= requiredVersion) {
+                    console.log("got back good chrome version installed " + reply.version);
+                    markAsGoodChromeExtension();
+                    clearInterval(timer);
+                }
+                else { alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
+               }
+           } else { console.log("no reply.version?"); }
+       }  else {  console.log("no reply, probably means extension not installed");  }
+});
+
+}
+checkIfChromeExtensionInstalled();
+timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
+
+
+    function isChrome() {
+      var isChromium = window.chrome,
+        winNav = window.navigator,
+        vendorName = winNav.vendor,
+        isOpera = winNav.userAgent.indexOf("OPR") > -1,
+        isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+        isIOSChrome = winNav.userAgent.match("CriOS");
+    
+      if(isIOSChrome){
+        return true;
+      } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+        return true;
+      } else { 
+        return false;
+      }
+    }
+
+<% if File.exists? "this_is_development" %>
+  markAsGoodChromeExtension(); // fake it out LOL
+<% end %>
+
+function alertIfNoExtension() {
+  if (!isInstalled) {
+	  alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
+  }
+}
+
+if (!isChrome()) {
+   document.getElementById('switch_to_chrome').style.display = 'block'; 
+}
+</script>
+

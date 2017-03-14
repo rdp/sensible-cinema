@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Play it my Way <%= action = env.request.path.split("/")[1].gsub("_", " "); "-- #{action}" if action.present? %>
+    <title>Play it my Way <%= action = env.request.path.split("/")[1].gsub("_", " "); "-- #{action}" if action.present? %> -- edited streaming movies
       <%= "DEV" if File.exists?("this_is_development") %>
     </title>
     <!-- bootstrap stuff -->
@@ -31,7 +31,7 @@
 		</p>
   <% end %>
   <img src=/camera.128.png width="100px;" />
-  <h1>Play It My Way! <span style="text-shadow: 0 0 1em green, 0 0 0.2em blue; ">Beta.</span></h1>
+  <h1>Play It My Way! <span style="text-shadow: 0 0 1em green, 0 0 0.2em blue; ">Beta.</span><br/>Streaming Edited Movie playback for you and your family.</h1>
   <hr/> 
   <%= content %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
