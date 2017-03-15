@@ -44,6 +44,7 @@ def with_db
 end
  
 def standardize_url(unescaped)
+  original = unescaped
   # basically do it all here, except canonicalize, which we do in javascript...
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft but google play needs to keep it https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc
@@ -51,7 +52,7 @@ def standardize_url(unescaped)
   unescaped = unescaped.split("&")[0] # strip off cruft https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&index=21 :|
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
   unescaped = unescaped.split("#")[0] # trailing #, die!
-  puts "standardized as #{unescaped}"
+  puts "standardized as #{unescaped} from #{original}"
   unescaped
 end
 
@@ -199,6 +200,7 @@ end
 
 post "/save_tag/:url_id" do |env|
   params = env.params.body
+  puts "got params=#{params}"
   if params["id"]?
     tag = Tag.get_only_by_id(params["id"])
   else
@@ -475,6 +477,7 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
+  puts "params=#{params}"
   if params.has_key? "id"
     # these day
     db_url = Url.get_only_by_id(params["id"])
@@ -490,7 +493,7 @@ post "/save_url" do |env|
   end
   amazon_second_url = resanitize_html(params["amazon_second_url"])
   if amazon_second_url.present?
-    _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url amazon_second_url
+    _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(amazon_second_url)
   end
   details = resanitize_html(params["details"])
   editing_status = resanitize_html(params["editing_status"])
