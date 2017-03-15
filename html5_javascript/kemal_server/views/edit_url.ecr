@@ -32,7 +32,7 @@ episode_name (blank if not episode of a series)
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon second url (if your amazon episode is part of a series, it actually has two urls.  you can find the second url by clicking the "series" dropdown to select the series you're interested in.
+  amazon second url (if your amazon episode is part of a series, it actually has two urls.  you can find the second url by clicking the "series" dropdown to select the series you're interested in).  If it's not a series, it will have one url if you click to play it from "Your video library" and another url if you search for the movie in the amazon search bar, so enter the other one here:
   <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
   <br/>
   <br/>

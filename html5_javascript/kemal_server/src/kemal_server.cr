@@ -278,7 +278,7 @@ def download(raw_url, headers = nil)
     response = HTTP::Client.get raw_url, headers
     response.body
   rescue ex
-    raise "unable to download that url" + raw_url + " #{ex}" # expect url to work :|
+    raise "unable to download that url=" + raw_url + " #{ex}" # expect url to work :|
   end
 end
 
