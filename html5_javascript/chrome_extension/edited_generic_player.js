@@ -478,7 +478,7 @@ function openEditMostRecentPassed() {
 }
 
 function stepFrameBack() {
-  seekToTime(video_element.currentTime - 1/30, function () {
+  seekToTime(video_element.currentTime - 2/30, function () { // go back 2 frames, 1 seems hard...
     video_element.pause();
   });
 }
