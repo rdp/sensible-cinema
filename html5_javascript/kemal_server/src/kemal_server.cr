@@ -549,13 +549,17 @@ end
 
 post "/upload_from_subtitles_post/:url_id" do |env|
   db_url = get_url_from_url_id(env)
+  params = env.params.body # POST params
+  add_to_beginning = params["add_to_beginning"].to_f
+  add_to_end = params["add_to_end"].to_f
+  
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
     db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
     profs.each { |prof|
       tag = Tag.new(db_url)
-      tag.start = prof[:start]
-      tag.endy =  prof[:endy]
+      tag.start = prof[:start] - add_to_beginning
+      tag.endy =  prof[:endy] + add_to_end
       tag.default_action = "mute"
       tag.category = "profanity"
       tag.subcategory = prof[:category]

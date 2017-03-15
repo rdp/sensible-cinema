@@ -4,8 +4,6 @@ Amazon: new releases, popular prime, netflix ??
 
 == todo ==
 
-yes_audio_no_video work full screen
-
 me...beat the tires in a dry production real run
   try out the subtitle thinger "in real life" me a real movie
 
@@ -20,11 +18,11 @@ pay people for seeding corpus
   plus feedback (beta test LOL)
 
 glean anybody's email address that uses it :| ??
-youtube for creators
+youtube for how to create
 title on index should go above
   that thing just needs sooo much love...
 realer session cookie secret
-second header only for index page
+more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, this blind is annoying...
 
 == meh ===
 if it can't load the first time, try, try again :)
@@ -34,7 +32,6 @@ logout say something like "successfully logged out, click here if you'd like to 
 entering a "blank" for rental cost caused failure at save time
 more facebook feeds on the front
 
-more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, this blind is annoying...
 youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
   but just for volunteers so lower-ish priority :)
 
@@ -62,8 +59,9 @@ resurrect "fake" netflix playback :|
 
 the main page wants to be little icons that...can pop out to bigger? mouse over? something? youtube preview too? LOL
 
-
 == todo never LOL ==
+
+somehow better subtitle thinger, his doesn't work awesome :(
 
 if they click "enable edited" from the plugin then click that other thiing for them...wait that wasn't possible?
 better logout [?]
