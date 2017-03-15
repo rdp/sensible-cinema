@@ -289,7 +289,8 @@ function addEditUi() {
   <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
   <span id='playback_rate'>1.00x</span>
   <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-  <input type='button' onclick="stepFrame(); return false;" value='frame'/>
+  <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
+  <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
   <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
 	<br/>
@@ -474,6 +475,12 @@ function openEditMostRecentPassed() {
   else {
     alert("play it my way:\ncould not find one earlier than your currently playing back location");
   }
+}
+
+function stepFrameBack() {
+  seekToTime(video_element.currentTime - 1/30, function () {
+    video_element.pause();
+  });
 }
 
 function stepFrame() {
