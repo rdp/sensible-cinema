@@ -112,7 +112,7 @@ original_rating:
 
 
 <%= url.image_tag "width=250px", "<br/>" %>
-an image_url (on a different site) for movie (ex: http://wikipedia/original_image.png or http://wikipedia/original_image.svg 
+an image_url (on a different site) for movie (ex: http://wikipedia/original_image.svg or http://wikipedia/original_image.jpg 
 <br/>
 			    <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
  for this movie, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.
@@ -139,7 +139,7 @@ If you want to "revert" a subtitle upload, remove each tag one by one that it up
 <input type="submit" value="Update movie info" class="btn btn-primary" class_means="blue" />
 </form>
 
-<br/><a href="/view_url/<%= url.id %>"><< back to movie page</a> (changes will be lost)
+<br/><a href="/view_url/<%= url.id %>"><< back to movie page</a> (if you made any changes, hit "Update movie info" or changes will be lost)
 <br/>
 
 <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from database</a>
