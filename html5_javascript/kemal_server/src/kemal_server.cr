@@ -234,6 +234,11 @@ get "/edit_url/:url_id" do |env|
   render "views/edit_url.ecr", "views/layout.ecr"
 end
 
+get "/mass_upload_from_subtitle_file/:url_id" do |env|
+  url = get_url_from_url_id(env)
+  render "views/mass_upload_from_subtitle_file.ecr", "views/layout.ecr"
+end
+
 get "/view_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
@@ -530,8 +535,17 @@ post "/save_url" do |env|
     db_url.save
     db_url.download_image_url image_url
   end
+
+  db_url.save
+  save_local_javascript [db_url], db_url.inspect, env
+	
+  set_flash_for_next_time(env, "successfully saved #{db_url.name}")
+  env.redirect "/view_url/" + db_url.id.to_s
+end
+
+post "/upload_from_subtitles_post/:url_id" do |env|
+  db_url = get_url_from_url_id(env)
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
-    # a fresh upload...
     db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
     profs.each { |prof|
@@ -550,11 +564,6 @@ post "/save_url" do |env|
     set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
     set_flash_for_next_time(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   end  
-
-  db_url.save
-  save_local_javascript [db_url], db_url.inspect, env
-	
-  set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
