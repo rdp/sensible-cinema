@@ -174,7 +174,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 		}
 	}
 
-	document.getElementById('top_line_current_time').innerHTML = timeStampToHuman(cur_time); // TODO next and previous edit starts as well :|
+	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
 	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
@@ -923,12 +923,30 @@ function timeStampToHuman(timestamp) {
   timestamp -= hours * 3600;
   var minutes  = Math.floor(timestamp / 60);
   timestamp -= minutes * 60;
-  var seconds = timestamp.toFixed(2); //  -> "12.30";
+  var seconds = timestamp.toFixed(2); //  -> "12.31" or "2.3"
   // padding is "hard" apparently in javascript LOL
   if (hours > 0)
     return hours + "h " + minutes + "m " + seconds + "s";
   else
     return minutes + "m " + seconds + "s";
+}
+
+
+function timeStampToEuropean(timestamp) { // for the subsyncer :|
+  var hours = Math.floor(timestamp / 3600);
+  timestamp -= hours * 3600;
+  var minutes  = Math.floor(timestamp / 60);
+  timestamp -= minutes * 60;
+  var seconds = Math.floor(timestamp);
+  timestamp -= seconds;
+  var fractions = timestamp;
+  // want 00:00:12,074
+  return paddTo2(hours) + ":" + paddTo2(minutes) + ":" + paddTo2(seconds) + "," + paddTo2(Math.floor(fractions * 100));
+}
+
+function paddTo2(n) {
+  var pad = new Array(1 + 2).join('0');
+  return (pad + n).slice(-pad.length);
 }
 
 
