@@ -87,11 +87,18 @@ genre:
   <select name="genre" id='genre'>
     <option value="">unknown</option>
     <% ["thriller", "chick flick/romance", "thriller", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "war", "comedy", "family", "music[al]", "drama", "sport", "fantasy", "sci-fi", "mystery"].each{| name| %>
-      <option value="<%= HTML.escape(name) %>"><%= name %></option>
+      <option value="<%= HTML.escape(name) %>"><%= HTML.escape name %></option>
     <% } %>
-   </select>    
+   </select> 
    <script>
-   document.getElementById('genre').value = '<%= url.genre %>';
+
+function htmlDecode(input)
+{
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
+
+   document.getElementById('genre').value = htmlDecode("<%= url.genre %>"); // gah ...
    </script>
 <br/>
 <br/>
