@@ -361,7 +361,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.url = sanitized_url
     if sanitized_url.includes?("amazon.com") && title.includes?(":")
       url.name = title.split(":")[0].strip
-      url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # has actors after a colon...
+      # url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # has actors after a colon...but feels too much like ripping their data LOL
     else
       url.name = title
     end
