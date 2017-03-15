@@ -87,7 +87,7 @@ genre:
   <select name="genre" id='genre'>
     <option value="">unknown</option>
     <% ["thriller", "chick flick/romance", "thriller", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "war", "comedy", "family", "music[al]", "drama", "sport", "fantasy", "sci-fi", "mystery"].each{| name| %>
-      <option value="<%= name %>"><%= name %></option>
+      <option value="<%= HTML.escape(name) %>"><%= name %></option>
     <% } %>
    </select>    
    <script>
