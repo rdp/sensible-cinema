@@ -472,7 +472,7 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
 end
 
 def resanitize_html(string)
-  sanitize_html HTML.unescape(string)
+  sanitize_html HTML.unescape(URI.unescape(string))
 end
 
 post "/save_url" do |env|
