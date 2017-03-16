@@ -6,7 +6,7 @@ require "http/client"
 require "mysql"
 
 Session.config do |config|
-  config.secret = "my_super_secret"
+  config.secret = File.read("./sessions/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)'
   config.gc_interval = 30.days
   config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # to survive restarts, mainly :|
   config.secure = true # secure cookies
