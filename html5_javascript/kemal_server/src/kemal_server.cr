@@ -388,7 +388,7 @@ end
 
 get "/" do |env| # index
   urls = Url.all
-  urls.sort_by!{|url| url.url =~ /inet2.org/ ? 0 : 1} # put last
+  urls.sort_by!{|url| url.url =~ /inet2.org/ ? 1 : 0} # put last
   render "views/index.ecr", "views/layout.ecr"
 end
 
