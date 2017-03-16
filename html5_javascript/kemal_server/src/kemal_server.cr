@@ -587,7 +587,7 @@ def set_flash_for_next_time(env, string)
 end
 
 def table_row_or_nothing(first_cell, second_cell)
-  if second_cell.to_s.size > 0
+  if second_cell.to_s.size > 0 && second_cell != 0
     "<tr><td>#{first_cell}</td><td>#{second_cell}</td></tr>";
   end
 end
