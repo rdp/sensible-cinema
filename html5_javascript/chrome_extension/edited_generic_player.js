@@ -175,7 +175,9 @@ function checkIfShouldDoActionAndUpdateUI() {
 	}
 
 	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
-	document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
+  if (extra_message != "") {
+	  document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
+  }
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
 
@@ -195,7 +197,7 @@ function move_div_to_position(coords, div_to_adjust) {
 
 function checkStatus() {
 	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
-  if (url_id != 0) { 
+  if (url_id != 0) {
 		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
 			console.log("watching add?");
 			// and do nothing
@@ -357,7 +359,7 @@ function displayAddTagStuffIfInAddMode() {
 function hideAddTagStuff() {
   hideDiv(tagLayer);
 }
-var addString = "Add a new content tag to edit out something";
+var addString = "Add a new content tag if we missed something!";
 function closeEditor() {
   document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString;
 	hideAddTagStuff();
