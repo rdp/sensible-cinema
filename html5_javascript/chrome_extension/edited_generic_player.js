@@ -105,7 +105,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    video_element.muted = true;
       i_muted_it = true;
 	    timestamp_log("muting", cur_time, tag);
-	    extra_message = "muted";
+	    extra_message = "muting";
 	  }
 	}
 	else {
@@ -130,7 +130,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 		// use style.visibility here so it retains the space it would have otherwise used
 	  if (video_element.style.visibility != "hidden") {
 	    timestamp_log("hiding video leaving audio ", cur_time, tag);
-	    extra_message = "no video yes audio";
+	    extra_message = "doing a no video yes audio";
 	    video_element.style.visibility="hidden";
 	  }
 	}
@@ -162,7 +162,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 			timestamp_log("showing oval/square", cur_time, tag);
 			oval_div.style.display = "block";
 			square_div.style.display = "block";
-			extra_message = "shape_over_video";
+			extra_message = "showing a shape_over_video";
 		}
 	}
 	else {
@@ -175,9 +175,12 @@ function checkIfShouldDoActionAndUpdateUI() {
 	}
 
 	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
+  var message = "";
   if (extra_message != "") {
-	  document.getElementById("add_edit_span_id_for_extra_message").innerHTML = extra_message;
+    message = "play it my way is currently:" + extra_message;
   }
+  document.getElementById("add_edit_span_id_for_extra_message").innerHTML = message;
+  
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
 
