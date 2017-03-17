@@ -238,11 +238,12 @@ class Url
     end
   end
 	
-	def download_image_url(full_url)
+	def download_image_url_and_save(full_url)
 	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
 	  outgoing_filename = "#{id}_#{image_name}"
-		@image_local_filename = outgoing_filename
+	  @image_local_filename = outgoing_filename
 	  File.write("public/movie_images/#{outgoing_filename}", download(full_url)) # guess this is OK non windows :|
+          save # save our new filename
 	end
 	
 	def image_tag(size, postpend_html = "")
