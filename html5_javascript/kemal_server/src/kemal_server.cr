@@ -6,14 +6,14 @@ require "http/client"
 require "mysql"
 
 Session.config do |config|
-  config.secret = File.read("./sessions/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)'
+  config.secret = File.read("./db/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > local_cookie_secret
   config.gc_interval = 30.days
   config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # to survive restarts, mainly :|
   config.secure = true # secure cookies
 end
 
 before_all do |env|
-  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.] do we still need this?
+  env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.] XXX do we still need this?
   env.session.string("flash", "") unless env.session.string?("flash") # set a default
 end
 
@@ -377,7 +377,8 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.editing_status = "needs review, may not yet be fully edited"
     url.total_time = duration
     url.save 
-    set_flash_for_next_time(env, "Successfully added #{url.name} to our system! Please add some detailed information, then go back and add some content tags for it!")
+    set_flash_for_next_time(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
+    download_youtube_image_if_none url
     env.redirect "/edit_url/#{url.id}"
   end
 end
@@ -529,23 +530,27 @@ post "/save_url" do |env|
   db_url.original_rating = original_rating
 	
   image_url = params["image_url"]
-  if !image_url.present? && !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
-    # image fer free! :) The only ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
-    youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
-    image_url = "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
-  end
-  
-  if image_url.present?
-    # save it here now..otherwise we might orphan a file possibly maybe???
-    db_url.save
-    db_url.download_image_url image_url
-  end
 
   db_url.save
+  
+  if image_url.present?
+    db_url.download_image_url_and_save image_url
+  else
+    download_youtube_image_if_none db_url
+  end
+
   save_local_javascript [db_url], db_url.inspect, env
 	
   set_flash_for_next_time(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s
+end
+
+def download_youtube_image_if_none(db_url)
+  if !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
+    # we can get an image fer free! :) The default ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
+    youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
+    db_url.download_image_url_and_save "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
+  end
 end
 
 post "/upload_from_subtitles_post/:url_id" do |env|

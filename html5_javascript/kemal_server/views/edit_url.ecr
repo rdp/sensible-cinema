@@ -122,7 +122,7 @@ original_rating:
 an image_url (on a different site) for movie (ex: http://wikipedia/original_image.svg or http://wikipedia/original_image.jpg 
 <br/>
 			    <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
- for this movie, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.
+ for this movie, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.<%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
 <br>
 <input type="text" name="image_url" size="150" value=""/> <!-- value empty on purpose --> 
 <br/>
