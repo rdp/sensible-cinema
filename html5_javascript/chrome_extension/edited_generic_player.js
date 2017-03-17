@@ -712,7 +712,8 @@ function showEditLinkMouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
   var coords = getLocationOfElement(video_element);
-  if (!mouse_move_timer || (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top)) {
+  var mouse_within_video = (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top);
+  if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
   	displayDiv(document.getElementById("top_left"));
   	displayAddTagStuffIfInAddMode();
     clearTimeout(mouse_move_timer);
