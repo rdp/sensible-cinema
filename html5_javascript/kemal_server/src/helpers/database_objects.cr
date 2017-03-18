@@ -172,8 +172,9 @@ class Url
 
   def human_readable_company
     # get from url...
-    check =  /\/\/([^\/]+).*/ # anything after // like //(.*)/
+    check =  /\/\/([^\/]\.[^\/]+).*/ # anything after // like //(.*)/ with a dot
     real_url = HTML.unescape(url) # want the slashes present :|
+    puts "real=#{real_url}"
     if real_url =~ check
       host = $1.split(".")[-2]
     else

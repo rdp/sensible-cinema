@@ -1,6 +1,6 @@
 == current plan ==
 
-Amazon: new releases, popular prime, netflix ??
+Amazon: popular prime, new releases, then netflix ??
 
 == todo ==
 
@@ -8,26 +8,30 @@ general feedback
   Nik + website...
   volunteers
   rickey etc.
+  Indiana Jones srt
 
 pay people for seeding corpus
   my movies I want to see LOL
   prime
   plus feedback (beta test LOL)
 
-youtube for how to create [multiple lists?]
+"real permission"
+
+main page groom persuasive/awesome/catchy [nik?] split pages
 
 == meh ===
-preview for image upload url
-index wants sooo much love...
+youtube for how to create [multiple lists?]
+  upload url, multiple edit lists [?], multiple url's for amazon
+don't show if you move off the youtube immediately don't show
+  also too long longer than amazon?
+index wants sooo much love...make it look like Netflix anyway :) tabs?
 more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, this blind is annoying...
 glean anybody's email address that uses it :| ?? 
   after advertise to companies :|
-seed corpus  new releases
-if it can't load the first time, try, try again :)
-  if I run into it again? what? yet it happened once, and is devastating...
+seed corpus new releases
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
 entering a "blank" for rental cost caused failure at save time
-more facebook feeds on the front
+facebook feeds on the front
 
 youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
   but just for volunteers so lower-ish priority :)
@@ -39,13 +43,9 @@ more add work: it says "play unedited" during ads...or previews...or something..
 
 during adds show "nothing" somehow...or less...
 
-more personlized edits, everybody wants to be able to edit their own thing...??
+more personlized edit lists, everybody wants to be able to edit their own thing...??
 
-can filter previews/trailers *based on duration* woot
-
-add questions to discuss after as family :|
-
-main page groom persuasive/awesome/catchy [nik?]
+allow star rating for ordering purposes
 
 more pay me donation options/amazon reseller account...
   focus on "getting paying people" LOL
@@ -54,9 +54,11 @@ some way to link "to your own edit" of something [prompt to install this of cour
 
 resurrect "fake" netflix playback :|
 
-the main page wants to be little icons that...can pop out to bigger? mouse over? something? youtube preview too? LOL
+the "give a free one away to get a credit" promo
 
 == todo never LOL ==
+add questions to discuss after as family :|
+can filter previews/trailers *based on duration* woot
 can upload file for image
 
 somehow better subtitle thinger, his doesn't work awesome :(
@@ -72,12 +74,9 @@ missing any database indexes? check my queries uh guess...
 international subtitle support somehow-er-other LOL
   ooh edited too LOL
 
-wrong movie for https://www.youtube.com/user/paulsoaresjr
-  disabled fer now :|
-
 auto get more images from the page if non youtube :|
 ask those one people to link to me
-real adv.: on our site, etc.
+real adv.: on flds, etc.
 Real ratings for shows so we can get an average rating :|
 allow upload movie images from file :|
 facebook promote more...
