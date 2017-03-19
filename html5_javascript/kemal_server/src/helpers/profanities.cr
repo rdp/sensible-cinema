@@ -35,10 +35,11 @@ def subcategory_map
     "s word" => "profanity -- s word",
     "f word" => "profanity -- f-bomb expletive",
     "f word sex connotation" => "profanity -- f-bomb sexual connotation",
-		"profanity (other)" => "profanity -- other",
+    "profanity (other)" => "profanity -- other",
 		
     "stabbing/shooting no blood" => "violence -- stabbing/shooting no blood",
     "stabbing/shooting with blood" => "violence -- stabbing/shooting yes blood",
+    "visible blood" => "violence -- visible blood on wound",
     "open wounds" => "violence -- gore/open wound",
     "light fight" => "violence -- light fighting (single punch/kick/hit)",
     "sustained fight" => "violence -- sustained punching/fighting",
@@ -63,8 +64,11 @@ def subcategory_map
     "drugs" => "substance-abuse -- drug use",
     "alcohol" => "substance-abuse -- alcohol drinking",
     "smoking" => "substance-abuse -- smoking",
-		"substance-abuse other" => "substance-abuse -- other"})    
+    "poor moral choice" => "substance-abuse -- any kind of poor moral choice, ex: theft",
+    "substance-abuse other" => "substance-abuse -- other"
+    })
 
+    # or do they all need this? I mean...visible blood but what *degree* of visible blood?
     ["frightening/startling scene", "suspenseful fight \"will they win?\""].each{ |type|
       ["age 3", "age 6", "age 9", "age 12", "age 16", "(not OK)"].each do |intensity|
         Subcats[type+ " " + intensity] = "suspense -- " + type  + " " + intensity

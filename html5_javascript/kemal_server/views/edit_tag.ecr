@@ -29,12 +29,12 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = 'unknown'; // reset in case changed from other">
   <option value="unknown">unknown -- please select category</option>
-  <option value="profanity">profanity (verbal attacks, etc.)</option>
-  <option value="violence">violence</option>
-  <option value="physical">sex/nudity/lewdness</option>
+  <option value="profanity">profanity (verbal anything, etc.)</option>
+  <option value="violence">violence/blood etc.</option>
+  <option value="physical">sex/nudity/lewd etc.</option>
+  <option value="suspense">suspense (frightening, scary fighting, tension)</option>
   <option value="movie-content">movie content (credits, etc.)</option>
-  <option value="suspense">suspenseful (frightening, scary fighting, tension)</option>
-  <option value="substance-abuse">substance use</option>
+  <option value="substance-abuse">substance use, theft</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= tag.category %>';
@@ -59,11 +59,6 @@ internal details (ex: "sally said .... OK?" (dots instead of real profanity, or 
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
 <div id="oval_coords_div" style="display: none;" > <!-- just leave it blank for now -->
-  <br/>
-  oval percentage coordinates: if you are doing a "yes_audio_no_video" you can specify only a portion of the screen that you don't want to see, by percentages.  
-  <br/>
-  Ex, an oval starting at the middle (50%) and extending 1/4 of the screen down and right (25%) would be "50%,50%:25%,25%,black" if you want a square, its the second option, so like "0%,0%:0%,0%--50%,50%:25%,25%,green" or you can have oval and square at the same time, like "25%,25%:10%,10%,green--50%,50%:25%,25%,purple" <a href=http://www.w3schools.com/colors/colors_names.asp>color options</a>.
-	<br/>
   <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
 </div>
 
