@@ -47,7 +47,7 @@ sub category
 <select name="subcategory" id='subcategory_select'>
     <option value="unknown">unknown -- subcategory</option>
     <% subcategory_map().each{|k, v| %>
-      <option value="<%= k %>"><%= v %></option>    
+      <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
     <% } %>
 </select>
 </div>
@@ -74,7 +74,15 @@ internal details (ex: "sally said .... OK?" (dots instead of real profanity, or 
 
 <script>
 select = document.getElementById('subcategory_select');
-select.value = '<%= tag.subcategory %>';
+
+
+function htmlDecode(input)
+{
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
+
+select.value = htmlDecode('<%= tag.subcategory %>');
 
 $(document).ready(function() {
   if (document.getElementById('category_select').value != 'unknown') {
