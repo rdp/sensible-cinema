@@ -12,13 +12,14 @@ def subcategory_map
    Subcats.merge!({
     "initial theme song" => "movie-content -- initial song/initial credits",
     "closing credits" => "movie-content -- closing credits",
-    "song instance" => "movie-content -- song occurrence",
-    "joke edit" => "movie-content -- joke edit -- edits that make it funny when edited",
+    "joke edit" => "movie-content -- joke edit -- edits that make it funny when used",
+    "movie content morally questionable choice" => "movie-content -- morally questionable choice",
     "movie content other" => "movie-content -- other",
 		
     "personal insult mild" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
     "personal insult harsh" => "profanity -- insult harsh (b.... etc.)",
     "personal attack mild" => "profanity -- attack command (\"shut up\" etc.)",
+    "being mean" => "profanity -- being mean/cruel to another",
     "crude humor" => "profanity -- crude humor, like poop, bathroom, gross, etc.",
     "bodily part reference mild" => "profanity -- bodily part reference mild (butt, bumm...)",
     "bodily part reference harsh" => "profanity -- bodily part reference harsh",
@@ -64,7 +65,6 @@ def subcategory_map
     "drugs" => "substance-abuse -- drug use",
     "alcohol" => "substance-abuse -- alcohol drinking",
     "smoking" => "substance-abuse -- smoking",
-    "poor moral choice" => "substance-abuse -- any kind of poor moral choice, ex: theft",
     "substance-abuse other" => "substance-abuse -- other"
     })
 

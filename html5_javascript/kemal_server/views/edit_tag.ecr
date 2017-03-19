@@ -29,12 +29,12 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = 'unknown'; // reset in case changed from other">
   <option value="unknown">unknown -- please select category</option>
-  <option value="profanity">profanity (verbal anything, etc.)</option>
+  <option value="profanity">profanity (verbal attacks, etc.)</option>
   <option value="violence">violence/blood etc.</option>
   <option value="physical">sex/nudity/lewd etc.</option>
   <option value="suspense">suspense (frightening, scary fighting, tension)</option>
   <option value="movie-content">movie content (credits, etc.)</option>
-  <option value="substance-abuse">substance use, theft</option>
+  <option value="substance-abuse">substance use</option>
 </select>
 <script>
 document.getElementById('category_select').value = '<%= tag.category %>';
