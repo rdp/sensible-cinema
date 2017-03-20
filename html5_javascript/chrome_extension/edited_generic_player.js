@@ -15,7 +15,7 @@ var extra_message = "";
 var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, shapes_over_videos;
+var mutes, skips, yes_audio_no_videos, do_nothings;
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
@@ -142,39 +142,11 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	tag = areWeWithin(shapes_over_videos, cur_time);
-	var oval_div = document.getElementById('color_oval_div_id');
-	var square_div = document.getElementById('color_square_div_id');
-	if (tag) {
-		// 50%,50%:25%,25% etc.
-		coords = tag.oval_percentage_coords;
-		move_div_to_position(coords.split("--")[0], oval_div);
-		if (coords.includes("--")) {
-			move_div_to_position(coords.split("--")[1], square_div);			
-		}
-		else {
-			// optional, so else hide it
-			square_div.style.width = "0px";
-			square_div.style.height = "0px";			
-		}
-		
-		if (oval_div.style.display == "none") {
-			timestamp_log("showing oval/square", cur_time, tag);
-			oval_div.style.display = "block";
-			square_div.style.display = "block";
-			extra_message = "showing a shape_over_video";
-		}
-	}
-	else {
-		if (oval_div.style.display == "block") {
-			console.log("hiding oval/square " + cur_time);
-			oval_div.style.display = "none";
-			square_div.style.display = "none";
-			extra_message = ""; // hope we don't have overlapping tags for this LOL
-		}
-	}
-
 	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
+  var next_tag = getNextTagAfterCurrentPos();
+  if (next_tag) {
+    document.getElementById('top_line_current_time').innerHTML += " next tag start: " + timeStampToHuman(next_tag.start);
+  }
   var message = "";
   if (extra_message != "") {
     message = "play it my way is currently:" + extra_message;
@@ -315,7 +287,6 @@ function seekToBeforeEdit(delta) {
   var desired_time = video_element.currentTime + delta;
   var all = mutes.concat(skips);
   all = all.concat(yes_audio_no_videos);
-  all = all.concat(shapes_over_videos);
 	var tag = areWeWithin(all, desired_time);  
   if (tag) {
     console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
@@ -324,6 +295,34 @@ function seekToBeforeEdit(delta) {
   else {
     seekToTime(desired_time);
   }
+}
+
+function compareTagStarts(tag1, tag2) {
+  if (tag1.start < tag2.start) {
+    return -1;
+  }
+  if (tag1.start > tag2.start) {
+    return 1;
+  }
+  return 0;
+}
+
+function getNextTagAfterCurrentPos() {
+  var cur_time = video_element.currentTime;
+  // or current_json.tags; // sorted :|
+  var all = mutes.concat(skips);
+  all = all.concat(yes_audio_no_videos);
+  // don't include do_nothings [?]
+  all.sort(compareTagStarts);
+  for (var i = 0; i < all.length; i++) {
+    var tag = all[i];
+    var start_time = tag.start;
+    var end_time = tag.endy;
+    if(end_time > cur_time) {
+      return tag;
+    }
+  }
+  return null;
 }
 
 function addForNewEditToScreen() {
@@ -466,7 +465,7 @@ function openEditMostRecentPassed() {
   var lastest = 0;
   var last_id = 0;
   var cur_time = video_element.currentTime;
-  var tags = current_json.tags;
+  var tags = current_json.tags; // are these sorted?
   for (var i = 0; i < tags.length; i++) {
     if (edits[i].endy < cur_time && tags[i].endy > lastest) {
       last_id = tags[i].id;
@@ -599,7 +598,6 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	skips = [];
 	yes_audio_no_videos = [];
 	do_nothings = []; // :|
-	shapes_over_videos = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -609,8 +607,6 @@ function setTheseTagsAsTheOnesToUse(tags) {
       push_to_array = skips;
 		} else if (tag.default_action == 'yes_audio_no_video') {
       push_to_array = yes_audio_no_videos;
-		} else if (tag.default_action == 'shape_over_video') {
-      push_to_array = shapes_over_videos;
 		} else {
       push_to_array = do_nothings;
 		}
