@@ -6,9 +6,9 @@ Amazon: popular prime, new releases, then netflix ??
 
 general feedback
   Nik + website...
-  volunteers
   rickey etc.
   Indiana Jones srt
+  watch a few of my own :)
 
 pay people for seeding corpus
   my movies I want to see LOL
@@ -21,7 +21,9 @@ main page groom persuasive/awesome/catchy [nik?] split tabs
 
 == meh ===
 
-remember where at on login redir
+status needs to be a dropdown?
+
+remember where at on login redir...pretty annoying...
 
 needs/wants editing status as different than synopsis different than whatever...
 two reviews need/want to be split
@@ -30,43 +32,36 @@ next one will be at x
 
 youtube for how to create [multiple lists?]
   upload url, multiple edit lists [?], multiple url's for amazon
-don't show if you move off the youtube immediately don't show
-  also too long longer than amazon?
 index wants sooo much love...make it look like Netflix anyway :) tabs?
 more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, this blind is annoying...
 glean anybody's email address that uses it :| ?? 
-  after advertise to companies :|
-seed corpus new releases
-logout say something like "successfully logged out, click here if you'd like to disable one click login"
 entering a "blank" for rental cost caused failure at save time
-facebook feeds on the front
+facebook feeds on front page [?]
 
-youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
-  but just for volunteers so lower-ish priority :)
-
-count number of times something is played [popularity contest]
-
-more add work: it says "play unedited" during ads...or previews...or something...somewhere...
-  guess ads too? hrm...
+count number of times something is played [popularity contest :) ]
 
 during adds show "nothing" somehow...or less...
 
-more personlized edit lists, everybody wants to be able to edit their own thing...??
+more personlized edit lists, everybody wants to be able to edit their own private... [linkable?]
 
-allow star rating for ordering purposes
+allow star rating for ordering purposes, and for reviewing :|
 
 more pay me donation options/amazon reseller account...
   focus on "getting paying people" LOL
 
 complain crystal to_s
 
-some way to link "to your own edit" of something [prompt to install this of course LOL]
-
-resurrect "fake" netflix playback :|
-
 the "give a free one away to get a credit" promo
 
 == todo never LOL ==
+resurrect "fake" netflix playback :|
+youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
+  but just for volunteers so lower-ish priority :)
+some way to disable it on youtube...or not track people anyway?
+more add work: it says "play unedited" during ads...or previews...or something...somewhere...
+  guess ads too 15.00 is an add [?]? hrm...
+logout say something like "successfully logged out, click here if you'd like to disable one click login"
+seed corpus new releases
 add questions to discuss after as family :|
 can filter previews/trailers *based on duration* woot
 can upload file for image

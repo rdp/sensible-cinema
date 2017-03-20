@@ -307,8 +307,8 @@ function addEditUi() {
 	</div>
   `;
   
-  addMouseAnythingListener(showEditLinkMouseJustMoved);
-  showEditLinkMouseJustMoved({pageX: 0, pageY: 0}); // start timer
+  addMouseAnythingListener(mouseJustMoved);
+  mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
 }
 
 function seekToBeforeEdit(delta) {
@@ -708,7 +708,7 @@ function start() {
   loadForNewUrl();
 }
 
-function showEditLinkMouseJustMoved(event) {
+function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
   var coords = getLocationOfElement(video_element);
@@ -717,8 +717,18 @@ function showEditLinkMouseJustMoved(event) {
   	displayDiv(document.getElementById("top_left"));
   	displayAddTagStuffIfInAddMode();
     clearTimeout(mouse_move_timer);
-    mouse_move_timer = setTimeout(function() { hideDiv(document.getElementById("top_left")); hideAddTagStuff(); }, (inAddMode() ? 5000 : 2000)); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+    mouse_move_timer = setTimeout(hideAllEditStuff, inAddMode() ? 5000 : 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
   }
+  else if (!mouse_within_video) {
+    // match youtube UI :|
+    hideAllEditStuff();
+    clearTimeout(mouse_move_timer);
+  }
+}
+
+function hideAllEditStuff() {
+  hideDiv(document.getElementById("top_left")); 
+  hideAddTagStuff();
 }
 
 function addMouseAnythingListener(func) {
