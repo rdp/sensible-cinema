@@ -17,34 +17,35 @@ pay people for seeding corpus
 
 "real permission"
 
-main page groom persuasive/awesome/catchy [nik?] split tabs
-
-== meh ===
-
-status needs to be a dropdown?
+count number of times something is played [popularity contest :) ]
 
 remember where at on login redir...pretty annoying...
+
+ages for every tag?
+
+youtube for how to create [multiple lists?]
+  upload url, multiple edit lists [?], multiple url's for amazon
+
+status needs to be a dropdown?
 
 needs/wants editing status as different than synopsis different than whatever...
 two reviews need/want to be split
   or just implement real reviews [star rating, other rating, every rating is a single rating]
-next one will be at x
 
-youtube for how to create [multiple lists?]
-  upload url, multiple edit lists [?], multiple url's for amazon
+== meh ===
+main page groom persuasive/awesome/catchy [nik?] split tabs
+
 index wants sooo much love...make it look like Netflix anyway :) tabs?
 more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, this blind is annoying...
 glean anybody's email address that uses it :| ?? 
+  facebook auth
 entering a "blank" for rental cost caused failure at save time
 facebook feeds on front page [?]
 
-count number of times something is played [popularity contest :) ]
-
-during adds show "nothing" somehow...or less...
-
 more personlized edit lists, everybody wants to be able to edit their own private... [linkable?]
 
-allow star rating for ordering purposes, and for reviewing :|
+allow star rating for ordering purposes, and for reviews :|
+  is this getting ahead of myself?
 
 more pay me donation options/amazon reseller account...
   focus on "getting paying people" LOL
@@ -54,10 +55,12 @@ complain crystal to_s
 the "give a free one away to get a credit" promo
 
 == todo never LOL ==
+
+during adds show "nothing" somehow...or less...youtube 15.'s
 resurrect "fake" netflix playback :|
 youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
   but just for volunteers so lower-ish priority :)
-some way to disable it on youtube...or not track people anyway?
+some way to disable it on youtube...or not track things? disable it everywhere?
 more add work: it says "play unedited" during ads...or previews...or something...somewhere...
   guess ads too 15.00 is an add [?]? hrm...
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
