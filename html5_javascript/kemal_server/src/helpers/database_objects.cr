@@ -17,6 +17,7 @@ class Url
     good_movie_rating: Int32,
     image_local_filename: String,
     review: String,
+    wholesome_review: String,
     amazon_prime_free_type: String, # "prime" "HBO"
     rental_cost: Float64,
     purchase_cost: Float64, # XXX actually Decimal [?]
@@ -40,6 +41,7 @@ class Url
     good_movie_rating: Int32,
     image_local_filename: String,
     review: String,
+    wholesome_review: String,
     amazon_prime_free_type: String,
     rental_cost: Float64,
     purchase_cost: Float64,
@@ -82,10 +84,10 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating).last_insert_id.to_i32
 			 # get create_timestamp for free by its default crystal value
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, id
       end
     end
   end
@@ -103,6 +105,7 @@ class Url
     @good_movie_rating = 0
     @image_local_filename = ""
     @review = ""
+    @wholesome_review = ""
     @amazon_prime_free_type = ""
     @rental_cost = 0.0
     @purchase_cost = 0.0
@@ -172,13 +175,12 @@ class Url
 
   def human_readable_company
     # get from url...
-    check =  /\/\/([^\/]+\.[^\/]+).*/ # anything after // like //(.*)/ with a dot in it so splittable
+    check =  /\/\/([^\/]+\.[^\/]+).*/ #  //(.*)/ with a dot in it so splittable
     real_url = HTML.unescape(url) # want the slashes present :|
-    puts "real=#{real_url}"
     if real_url =~ check
       host = $1.split(".")[-2]
     else
-      host = url # ?? hope we never get here LOL
+      host = url # ?? hope we never get here LOL localhost does that's it
     end
     if amazon_prime_free_type != ""
       if amazon_prime_free_type == "Prime"
@@ -275,6 +277,7 @@ class Tag
     details: {type: String},     
     oval_percentage_coords: {type: String},     
     default_action: {type: String},
+    age_maybe_ok: {type: Int32},
     url_id: Int32
   })
   DB.mapping({
@@ -286,6 +289,7 @@ class Tag
     details: {type: String},     
     oval_percentage_coords: {type: String},     
     default_action: {type: String},
+    age_maybe_ok: {type: Int32},
     url_id: Int32
   })
   
@@ -320,15 +324,16 @@ class Tag
     @details = ""
     @oval_percentage_coords = ""
     @default_action = "mute"
+    @age_maybe_ok = 0
     @url_id = url.id
   end
   
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, oval_percentage_coords, default_action, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @oval_percentage_coords, @default_action, @url_id).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, oval_percentage_coords, default_action, age_maybe_ok, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details, @oval_percentage_coords, @default_action, @age_maybe_ok, @url_id).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, oval_percentage_coords = ?, default_action = ? where id = ?", start, endy, category, subcategory, details, oval_percentage_coords, default_action, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, oval_percentage_coords = ?, default_action = ?, age_maybe_ok = ? where id = ?", start, endy, category, subcategory, details, oval_percentage_coords, default_action, age_maybe_ok, id
       end
     end
   end

@@ -55,10 +55,25 @@ sub category
 <br/>
 If there are any missing please let us know!
 <br/>
-internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers OK here:<br/>
+
+age_maybe_ok (if it needs more granularity than subcategory, "level of blood", etc.): <select name="age_maybe_ok" id="age_maybe_ok_id">
+  <option value="0">not applicable</option>
+  <option value="3">age 3</option>
+  <option value="6">age 6</option>
+  <option value="9">age 9</option>
+  <option value="12">age 12</option>
+  <option value="16">age 15</option>
+  <option value="-1">no age OK</option>
+</select>
+<script>
+document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
+</script>
+
+<br/>
+internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers are OK:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
-<div id="oval_coords_div" style="display: none;" > <!-- just leave it blank for now -->
+<div id="oval_coords_div" style="display: none;" > <!-- just leave it invisible for now -->
   <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
 </div>
 

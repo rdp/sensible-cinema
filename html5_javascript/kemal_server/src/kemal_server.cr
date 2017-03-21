@@ -215,23 +215,15 @@ post "/save_tag/:url_id" do |env|
   endy = params["endy"].strip
   tag.start = url.human_to_seconds start
   tag.endy = url.human_to_seconds endy
+  raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
   tag.category = resanitize_html params["category"]
   tag.subcategory = resanitize_html params["subcategory"]
   tag.details = resanitize_html params["details"]
-  tag.oval_percentage_coords = resanitize_html params["oval_percentage_coords"].strip
-	if tag.oval_percentage_coords.present?
-	  unless (tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%,[^\d]+$/) || (tag.oval_percentage_coords =~ /^\d+%,\d+%:\d+%,\d+%,[^\d]+--\d+%,\d+%:\d+%,\d+%,[^\d]+/ )
-		  raise "bad oval coords #{tag.oval_percentage_coords} should look like 50%,50%:25%,25%,green [or that--that for oval and square]" 
-		end
-	end
-	if tag.default_action == "black_oval_over_video" && !tag.oval_percentage_coords.present?
-	  raise "black_oval_over_video requires oval_percentage_coords to be set..."
-	end
-  raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
+  tag.age_maybe_ok = params["age_maybe_ok"].to_i
   tag.save
   save_local_javascript [url], tag.inspect, env
-  set_flash_for_next_time(env, "saved tag details, you can close this window now, it will have already been adopted by your playing movie...")
+  set_flash_for_next_time(env, "saved that tag's details, you can close this window now, it will have already been adopted by your playing movie, or hit reload in your browser...")
   env.redirect "/view_url/#{url.id}"
 end
 
@@ -514,6 +506,7 @@ post "/save_url" do |env|
   wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
   good_movie_rating = params["good_movie_rating"].to_i
   review = resanitize_html(params["review"])
+  wholesome_review = resanitize_html(params["wholesome_review"])
   amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
   rental_cost = params["rental_cost"].to_f
   purchase_cost = params["purchase_cost"].to_f
@@ -531,6 +524,7 @@ post "/save_url" do |env|
   db_url.wholesome_uplifting_level = wholesome_uplifting_level
   db_url.good_movie_rating = good_movie_rating
   db_url.review = review
+  db_url.wholesome_review = wholesome_review
   db_url.amazon_prime_free_type = amazon_prime_free_type
   db_url.rental_cost = rental_cost
   db_url.purchase_cost = purchase_cost

@@ -65,15 +65,11 @@ def subcategory_map
     "drugs" => "substance-abuse -- drug use",
     "alcohol" => "substance-abuse -- alcohol drinking",
     "smoking" => "substance-abuse -- smoking",
-    "substance-abuse other" => "substance-abuse -- other"
-    })
+    "substance-abuse other" => "substance-abuse -- other",
 
-    # or do they all need this? I mean...visible blood but what *degree* of visible blood?
-    ["frightening/startling scene", "suspenseful fight \"will they win?\""].each{ |type|
-      ["age 3", "age 6", "age 9", "age 12", "age 16", "(not OK)"].each do |intensity|
-        Subcats[type+ " " + intensity] = "suspense -- " + type  + " " + intensity
-      end
-    }
+    "frightening/startling scene/event" => "suspense -- frightening/startling scene/event",
+    "suspenseful fight \"will they win?\"" => "suspense -- suspenseful fight \"will they win?\""
+    })
   end
   Subcats
 end

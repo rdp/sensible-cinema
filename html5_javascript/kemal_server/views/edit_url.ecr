@@ -51,7 +51,7 @@ episode_name (blank if not episode of a series)
   <br/>
 </div>
 
-editing_status (ex: "done", "needs second review" set to "done" when movie fully complete and reviewed at least once)
+editing_status (ex: "removed the profanity, some violence remains. needs second review")
 <textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
 <br/>
 <br/>
@@ -67,8 +67,14 @@ good_movie_rating (out of 10, or 0 for none, kind of like "out of 10 stars on IM
 <br/>
 
 our local review (explain good movie/whole uplifting level also, if needed)<br/>
-Ex: "A little dark" "clean, just skips the subscription plea" or more in depth if you'd like "Keanu Reeves does a good job, but plot is lacking.  Quite a bit of profanity removed."
+Ex: or more in depth if you'd like "Keanu Reeves does a good job, but plot is lacking."
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
+<br/>
+<br/>
+
+whole some review (explain wholesome/uplifting level)<br/>
+Ex: "A little dark"
+<textarea name="wholesome_review" rows="2" cols="150" ><%= url.wholesome_review %></textarea>
 <br/>
 <br/>
 

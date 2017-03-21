@@ -90,7 +90,7 @@ CREATE TABLE tag_edit_list_to_tag (
    tag_id INT NOT NULL, FOREIGN KEY (tag_id) references tags(id),
    action VARCHAR(1024) NOT NULL
 );
--- TODO some indices for these two?
+-- TODO some indices for these?
 
 alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DEFAULT '';
 
@@ -105,11 +105,13 @@ alter table tags drop column more_details;
 alter table tags change oval_percentage_coords oval_percentage_coords  VARCHAR(100) NOT NULL DEFAULT '';
 
 alter table urls add column subtitles LONGTEXT NOT NULL;
--- done dev
--- done prod
 
 alter table urls add column genre VARCHAR(100) NOT NULL DEFAULT '';
 alter table urls add column original_rating VARCHAR(10) NOT NULL DEFAULT '';
+-- done prod
+alter table tags add column age_maybe_ok INT NOT NULL DEFAULT 0;
+alter table urls add column wholesome_review TEXT; -- said my row was too big otherwise :|
+update urls set wholesome_review = '';
 
 -- and output to screen to show success...
 select * from urls;
