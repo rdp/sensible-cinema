@@ -134,6 +134,10 @@ class CustomHandler < Kemal::Handler
   def call(env)
     if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
       set_flash_for_next_time env, "login required before you can do that..." # TODO remember where they came from to get here :|
+      if env.request.method == "GET"
+        puts "saving #{env.request.path}"
+        env.session.string("redirect_to_after_login", env.request.path) 
+      end
       env.redirect "/login" 
     else
       call_next env
@@ -255,14 +259,19 @@ class AmazonUser
   include Session::StorableObject
 end
 
-get "/login_from_amazon" do |env| # amazon changes the url to this after successful auth
-  out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{ env.params.query["access_token"]}")
-  raise "access token does not belong to us??" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
+get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
+  out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{env.params.query["access_token"]}")
+  raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
   info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
   set_flash_for_next_time(env, "Successfully logged in, welcome #{user.name}!")
-  env.redirect "/"
+  if env.session.string?("redirect_to_after_login") && env.session.string("redirect_to_after_login").present?
+    env.redirect  env.session.string("redirect_to_after_login")
+    env.session.string("redirect_to_after_login", "")  # no delete :|
+  else
+    env.redirect "/"
+  end
 end
 
 get "/logout" do |env|
