@@ -68,12 +68,14 @@ good_movie_rating (out of 10, or 0 for none, kind of like "out of 10 stars on IM
 
 our local review (explain good movie/whole uplifting level also, if needed)<br/>
 Ex: or more in depth if you'd like "Keanu Reeves does a good job, but plot is lacking."
+<br/>
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 <br/>
 <br/>
 
 whole some review (explain wholesome/uplifting level)<br/>
 Ex: "A little dark"
+<br/>
 <textarea name="wholesome_review" rows="2" cols="150" ><%= url.wholesome_review %></textarea>
 <br/>
 <br/>
@@ -123,8 +125,6 @@ original_rating:
 <br/>
 <br/>
 
-
-<%= url.image_tag "width=250px", "<br/>" %>
 an image_url (on a different site) for movie (ex: http://wikipedia/original_image.svg or http://wikipedia/original_image.jpg 
 <br/>
 			    <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>

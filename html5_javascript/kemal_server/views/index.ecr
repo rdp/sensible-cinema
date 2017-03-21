@@ -65,9 +65,6 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
        <td><%= url.human_readable_company %></td>
        <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
        <td>
-         <% if url.editing_status == "done" %>
-           <SPAN STYLE="color: green;">
-         <% end %>
          <%= url.editing_status %>
        </td>
        <td> <%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
