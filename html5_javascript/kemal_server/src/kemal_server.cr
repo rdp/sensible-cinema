@@ -135,8 +135,8 @@ class CustomHandler < Kemal::Handler
     if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
       set_flash_for_next_time env, "login required before you can do that..." # TODO remember where they came from to get here :|
       if env.request.method == "GET"
-        puts "saving #{env.request.path}"
-        env.session.string("redirect_to_after_login", env.request.path) 
+        env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
+        puts "saving #{env.session.string("redirect_to_after_login")}"
       end
       env.redirect "/login" 
     else
