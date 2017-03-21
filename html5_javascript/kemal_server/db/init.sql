@@ -108,10 +108,10 @@ alter table urls add column subtitles LONGTEXT NOT NULL;
 
 alter table urls add column genre VARCHAR(100) NOT NULL DEFAULT '';
 alter table urls add column original_rating VARCHAR(10) NOT NULL DEFAULT '';
--- done prod
 alter table tags add column age_maybe_ok INT NOT NULL DEFAULT 0;
 alter table urls add column wholesome_review TEXT; -- said my row was too big otherwise :|
-update urls set wholesome_review = '';
+update urls set wholesome_review = ''; -- default :|
+-- done prod
 
 -- and output to screen to show success...
 select * from urls;
