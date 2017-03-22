@@ -16,7 +16,7 @@ url:
 <br/>
 <br/>
 
-details (brief synopsis [non-spoiler], principal actor names, etc.):
+details (brief synopsis [non-spoilers], etc.):
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 <br/>
@@ -32,11 +32,12 @@ episode_name (blank if not episode of a series)
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon second url (if your amazon episode is part of a series, it actually has two urls.  you can find the second url by clicking the "series" dropdown to select the series you're interested in).  If it's not a series, it will have one url if you click to play it from "Your video library" and another url if you search for the movie in the amazon search bar, so enter the other one here:
+  amazon second url (if your amazon episode is part of a series, it might have two urls.  You might find its second url by clicking the "series" dropdown to select the series you're interested in).  
+  <br/>If it's not a series, it might have a second url.  It will have one url if you click to play it from "Your video library" and another different url if you search for the movie in the amazon search bar, so if you can find its second url, enter it here:
   <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
   <br/>
   <br/>
-  amazon_prime_free_type:
+  amazon_prime_free_type (if any):
   <select name="amazon_prime_free_type" id='amazon_prime_free_type'>
     <option value="">none (purchase/rent only)</option>
     <option value="Prime">free with prime</option>
@@ -66,21 +67,22 @@ good_movie_rating (out of 10, or 0 for none, kind of like "out of 10 stars on IM
 <br/>
 <br/>
 
-our local review (explain good movie/whole uplifting level also, if needed)<br/>
+Our local review<br/>
 Ex: or more in depth if you'd like "Keanu Reeves does a good job, but plot is lacking."
 <br/>
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
 <br/>
 <br/>
 
-whole some review (explain wholesome/uplifting level)<br/>
-Ex: "A little dark"
+wholesome review (explain wholesome/uplifting level)<br/>
+Ex: "A little dark", "a good question to discuss as a family afterward would be..."
 <br/>
 <textarea name="wholesome_review" rows="2" cols="150" ><%= url.wholesome_review %></textarea>
 <br/>
 <br/>
 
-rental cost (rental for 2 days, or 7, ex "2.00") (leave as 0 if part of subscription that doesn't charge per video, i.e. netflix/youtube, amazon: enter cost for rental this episode assuming not on prime)
+rental cost (rental for 2 days, or 7 days, ex "2.00")<br/>
+(enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube), for amazon, enter cost for rental this episode assuming non-prime)
 <input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>$
 <br/>
 <br/>
@@ -89,7 +91,6 @@ purchase cost (ex: full purchase this episode, assuming no discounts, see above)
 <input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>$
 <br/>
 <br/>
-
 
 genre:
   <select name="genre" id='genre'>
@@ -114,7 +115,7 @@ function htmlDecode(input)
 
 original_rating:
   <select name="original_rating" id='original_rating'>
-    <option value="">unknown</option>
+    <option value="">unknown/not applicable</option>
     <% ["G", "PG", "PG-13", "R", "NR"].each{| name|  %>
       <option value="<%= name %>"><%= name %></option>
     <% } %>
@@ -127,10 +128,10 @@ original_rating:
 
 an image_url (on a different site) for movie (ex: http://wikipedia/original_image.svg or http://wikipedia/original_image.jpg 
 <br/>
-			    <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
- for this movie, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.<%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
+You can <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
+ for an image, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.<%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
 <br>
-<input type="text" name="image_url" size="150" value=""/> <!-- value empty on purpose --> 
+<input type="text" name="image_url" size="150" placeholder="http://wikipedia.org/some_image.jpg" value=""/> <!-- value empty on purpose --> 
 <br/>
 <br/>
 
