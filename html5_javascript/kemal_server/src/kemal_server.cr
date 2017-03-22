@@ -7,15 +7,33 @@ require "mysql"
 
 Session.config do |config|
   config.secret = File.read("./db/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > local_cookie_secret
-  config.gc_interval = 30.days
-  config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # to survive restarts, mainly :|
-  config.secure = true # secure cookies
+  config.gc_interval = 1.days
+  config.timeout = Time::Span.new(days: 30, hours: 0, minutes: 0, seconds: 0)
+  config.engine = Session::FileEngine.new({:sessions_dir => "./sessions/"}) # file based to survive restarts, mainly :|
+  config.secure = true # send "secure only" cookies
 end
 
 before_all do |env|
-  #env.response.headers.add "Access-Control-Allow-Origin", "*" # so it can load JSON from other origin [amazon.com etc.] XXX do we still need this?
+  env.response.headers.add "Access-Control-Allow-Origin", "*" # apparently has to have this for "amazon.com" to request something from my site. Weird browsers...
   env.session.string("flash", "") unless env.session.string?("flash") # set a default as empty string since we can't delete today :|
 end
+
+class CustomHandler < Kemal::Handler
+  def call(env)
+    if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
+      set_flash_for_next_time env, "login required before you can do that..." # TODO remember where they came from to get here :|
+      if env.request.method == "GET"
+        env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
+        puts "saving #{env.session.string("redirect_to_after_login")}"
+      end
+      env.redirect "/login" 
+    else
+      call_next env
+    end
+  end
+end
+
+add_handler CustomHandler.new
 
 after_all do |env|
   env.session.string("keep alive", "") # force mtime adjust until https://github.com/kemalcr/kemal-session/issues/27 fixed
@@ -122,22 +140,6 @@ def logged_in?(env)
   env.session.object?("user")
 end
 
-class CustomHandler < Kemal::Handler
-  def call(env)
-    if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
-      set_flash_for_next_time env, "login required before you can do that..." # TODO remember where they came from to get here :|
-      if env.request.method == "GET"
-        env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
-        puts "saving #{env.session.string("redirect_to_after_login")}"
-      end
-      env.redirect "/login" 
-    else
-      call_next env
-    end
-  end
-end
-
-add_handler CustomHandler.new
 
 get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
