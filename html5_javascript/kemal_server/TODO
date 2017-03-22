@@ -7,20 +7,24 @@ Amazon: popular prime, new releases, then netflix ??
 general feedback
   Nik + website...
   rickey etc.
-  watch a few of my own :)
+  watch a few on my own :)
 
 pay people for seeding corpus
   prime
   my movies I want to see LOL
   plus feedback
 
-youtube for how to create 'em...
-
 count number of times something is played [popularity contest :) ]
+
+mull on what to do with multiple EDL lists...for creators? ask M
+
+warn if edits overlap
+
+youtube for how to create 'em...
 
 == meh ===
 
-mull on what to do with multiple EDL lists...
+more personlized edit lists, everybody wants to be able to edit their own private... [linkable?]
 
 use .srt's for "another movie" (me)
 
@@ -28,43 +32,32 @@ main page groom persuasive/awesome/catchy [nik?] split tabs
   facebook feeds on front page [?]
   index wants sooo much love...make it look like Netflix :)
 
-more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies with who created them, blind is annoying...
+more amazon auth: it remembers who you are DB [?] and marks edits/movies with who created them, blind is annoying...
 
 glean anybody's email address that uses it :| ?? 
-  facebook auth
+  add facebook auth
 
-implement real reviews [star rating, other rating, every rating is a single rating]
-
-more personlized edit lists, everybody wants to be able to edit their own private... [linkable?]
-
-allow star rating for ordering purposes, and for reviews :|
-  is this getting ahead of myself?
+real reviews [star rating, other rating, every rating is a single rating] synopsis?
 
 more pay me donation options/amazon reseller account...
   focus on "getting paying people" LOL
-
-complain crystal to_s
 
 the "give a free one away to get a credit" promo
 
 == todo never LOL ==
 
-during adds show "nothing" somehow...or less...youtube 15.'s
+during adds show "nothing" somehow...or less...youtube 15.'s but it's not enough...
 resurrect "fake" netflix playback :|
 youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
   but just for volunteers so lower-ish priority :)
-some way to disable it on youtube...or not track things? disable it everywhere?
-more add work: it says "play unedited" during ads...or previews...or something...somewhere...
-  guess ads too 15.00 is an add [?]? hrm...
+some way to disable it on youtube...or not track things? disable verywhere?
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
 seed corpus new releases
-add questions to discuss after as family :|
 can filter previews/trailers *based on duration* woot
 can upload file for image
 
-somehow better subtitle thinger, his doesn't work awesome :(
+somehow better subtitle thinger, his doesn't work awesome? :(
 
-if they click "enable edited" from the plugin then click that other thiing for them...wait that wasn't possible?
 better logout [?]
 an option "never show me r, or horror" :|
 
@@ -90,7 +83,6 @@ real facebook or amazon login oauth etc. etc...
 
 can you obscure quarters of the screen possibly? or percentage...or circle...check FMA LOL
 
-warn if edits overlap
 
 personalized uneditable content lists?
 

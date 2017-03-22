@@ -236,7 +236,7 @@ function addEditUi() {
   allEditStuffDiv.appendChild(tagLayer);
   
   tagLayer.innerHTML = `
-  <div class="moccasin">
+  <div class="moccasin" id="moccasin_id">
 	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
 	<br/>
 	<div id='tag_layer_top_line'>
@@ -271,7 +271,7 @@ function addEditUi() {
   <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
 	<br/>
-  <input type='button' onclick="closeEditor(); return false;" value='✕ Close editor'/>
+  <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
 	<br/>
   <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
 	</div>`;
@@ -681,19 +681,29 @@ function start() {
   loadForNewUrl();
 }
 
+function coordsWithinElement(cursorX, cursorY, element) {
+  var coords = getLocationOfElement(element);
+  return (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top);
+}
+
 function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
-  var coords = getLocationOfElement(video_element);
-  var mouse_within_video = (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top);
+  var top_left = document.getElementById("top_left");
+  var moccasin = document.getElementById("moccasin_id");
+  var mouse_within_video = coordsWithinElement(cursorX, cursorY, video_element);
+  var mouse_within_add = coordsWithinElement(cursorX, cursorY, moccasin); // only the "add tag" window FWIW
+  var mouse_within_top_left = coordsWithinElement(cursorX, cursorY, top_left);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
-  	displayDiv(document.getElementById("top_left"));
+  	displayDiv(top_left);
   	displayAddTagStuffIfInAddMode();
-    clearTimeout(mouse_move_timer);
-    mouse_move_timer = setTimeout(hideAllEditStuff, inAddMode() ? 5000 : 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+    clearTimeout(mouse_move_timer); // in case previously set
+    if (!mouse_within_add && !mouse_within_top_left) {
+      mouse_move_timer = setTimeout(hideAllEditStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+    }
   }
   else if (!mouse_within_video) {
-    // match youtube UI :|
+    // mimic youtube :|
     hideAllEditStuff();
     clearTimeout(mouse_move_timer);
   }

@@ -126,7 +126,7 @@ def hard_nuke_url_or_nil(url, env)
       tag_edit_list.destroy_no_cascade
     }
     url.tags.each &.destroy
-    if url.image_local_filename
+    if url.image_local_filename.present?
       File.delete "./public/movie_images/#{url.image_local_filename}"
     end
     url.destroy
