@@ -21,7 +21,7 @@ end
 class CustomHandler < Kemal::Handler
   def call(env)
     if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
-      set_flash_for_next_time env, "login required before you can do that..." # TODO remember where they came from to get here :|
+      add_to_flash env, "login required before you can do that..." # TODO remember where they came from to get here :|
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
         puts "saving #{env.session.string("redirect_to_after_login")}"
@@ -146,7 +146,7 @@ get "/delete_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(id)
   tag.destroy
   save_local_javascript [tag.url], "removed #{tag.inspect}", env
-  set_flash_for_next_time env, "deleted one tag"
+  add_to_flash env, "deleted one tag"
   env.redirect "/view_url/#{tag.url.id}"
 end
 
@@ -174,7 +174,7 @@ get "/new_empty_tag/:url_id" do |env|
     tag.start = 1.0
     tag.endy = 2.0
   end
-  set_flash_for_next_time env, "tag is not yet saved, hit the save button when you are done"
+  add_to_flash env, "tag is not yet saved, hit the save button when you are done"
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
@@ -189,7 +189,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.category = "unknown"
   tag.subcategory = "unknown"
   tag.save
-  set_flash_for_next_time env, "content tag saved, please fill in details about it..."
+  add_to_flash env, "content tag saved, please fill in details about it..."
   spawn do
     save_local_javascript [url], tag.inspect, env
   end
@@ -216,8 +216,13 @@ post "/save_tag/:url_id" do |env|
   tag.details = resanitize_html params["details"]
   tag.age_maybe_ok = params["age_maybe_ok"].to_i
   tag.save
+  url.tags.reject{|tag2| tag2.id == tag.id}.each{|tag2|
+    if (tag2.start >= tag.start && tag2.start <= tag.endy) || (tag2.endy >= tag.start && tag2.endy <= tag.endy)
+      add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
+    end
+  }
   save_local_javascript [url], tag.inspect, env
-  set_flash_for_next_time(env, "saved that tag's details, you can close this window now, it will have already been adopted by your playing movie, or hit reload in your browser...")
+  add_to_flash(env, "saved that tag's details, you can close this window now, hit reload in your browser...")
   env.redirect "/view_url/#{url.id}"
 end
 
@@ -251,7 +256,7 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
   info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
-  set_flash_for_next_time(env, "Successfully logged in, welcome #{user.name}!")
+  add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") && env.session.string("redirect_to_after_login").present?
     env.redirect  env.session.string("redirect_to_after_login")
     env.session.string("redirect_to_after_login", "")  # no delete :|
@@ -266,7 +271,7 @@ end
 
 get "/logout_session" do |env| # j.s. sends us here...
   env.session.destroy # :| can't set flash after if I do this kemal-session #34 :|
-  # set_flash_for_next_time(env, "You have been logged out.") # no personalized message for now :|
+  # add_to_flash(env, "You have been logged out.") # no personalized message for now :|
   "logged you out, click <a href=/login>here to login</a>" # amazon says to "show login page" after wait whaat?
 end
 
@@ -340,7 +345,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
-    set_flash_for_next_time(env, "a movie with that description already exists, editing that instead...")
+    add_to_flash(env, "a movie with that description already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.id}"
   else
     # cleanup various title crufts
@@ -372,7 +377,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.editing_status = "needs review, may not yet be fully edited"
     url.total_time = duration
     url.save 
-    set_flash_for_next_time(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
+    add_to_flash(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
     download_youtube_image_if_none url
     env.redirect "/edit_url/#{url.id}"
   end
@@ -398,7 +403,7 @@ end
 
 get "/login" do |env|
   if logged_in?(env)
-    set_flash_for_next_time env, "already logged in!"
+    add_to_flash env, "already logged in!"
     env.redirect "/"
   else
     render "views/login.ecr", "views/layout.ecr"
@@ -414,7 +419,7 @@ get "/delete_tag_edit_list/:tag_id" do |env|
   tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
-  set_flash_for_next_time env, "deleted one tag edit list"
+  add_to_flash env, "deleted one tag edit list"
   env.redirect "/view_url/#{tag_edit_list.url.id}"
 end
 
@@ -445,7 +450,7 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
   }
 
   tag_edit_list.create_or_refresh(tag_ids, actions)
-  set_flash_for_next_time(env, "successfully saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
+  add_to_flash(env, "successfully saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
   save_local_javascript [tag_edit_list.url], tag_edit_list.inspect, env
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end
@@ -554,7 +559,7 @@ post "/save_url" do |env|
 
   save_local_javascript [db_url], db_url.inspect, env
 	
-  set_flash_for_next_time(env, "successfully saved #{db_url.name}")
+  add_to_flash(env, "successfully saved #{db_url.name}")
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
@@ -588,15 +593,15 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     clean_subs = all_euphemized.reject{|p| p[:category] != nil }
     middle_sub = clean_subs[clean_subs.size / 2]
     puts "clean_subs = euphsize=#{all_euphemized.size} clean_size=#{clean_subs.size} idx=#{clean_subs.size / 2} middle_sub = #{middle_sub}"
-    set_flash_for_next_time(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
-    set_flash_for_next_time(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
+    add_to_flash(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
+    add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   end  
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
 ####### view methods :)
 
-def set_flash_for_next_time(env, string)
+def add_to_flash(env, string)
   if env.session.string("flash").size > 0
     env.session.string("flash", env.session.string("flash") + "<br/>" + string)
   else

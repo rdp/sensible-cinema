@@ -523,7 +523,7 @@ function loadFailed(status) {
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
 	closeEditor();
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Unedited...";
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "<span style='font-size: 18px;'>Unedited...</span>";
 	hideDiv(document.getElementById("currently_filtering_id"));
 	hideDiv(document.getElementById("loading_div_id"));
 	
