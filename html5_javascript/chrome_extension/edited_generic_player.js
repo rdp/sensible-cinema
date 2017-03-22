@@ -546,7 +546,7 @@ function loadFailed(status) {
   expected_episode_number = liveEpisodeNumber();
   url_id = 0; // reset
 	closeEditor();
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Unedited, click here to enable Play it my way...";
+  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Unedited...";
 	hideDiv(document.getElementById("currently_filtering_id"));
 	hideDiv(document.getElementById("loading_div_id"));
 	
