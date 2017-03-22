@@ -471,6 +471,22 @@ def resanitize_html(string)
   sanitize_html outy # this is HTML.escape
 end
 
+def get_float(params, name)
+  if params[name]? && params[name].present?
+    params[name].to_f
+  else
+    0.0
+  end
+end
+
+def get_int(params, name)
+  if params[name]? && params[name].present?
+    params[name].to_i
+  else
+   0
+  end
+end
+
 post "/save_url" do |env|
   params = env.params.body # POST params
   puts "params=#{params}"
@@ -493,15 +509,15 @@ post "/save_url" do |env|
   end
   details = resanitize_html(params["details"])
   editing_status = resanitize_html(params["editing_status"])
-  episode_number = params["episode_number"].to_i
+  episode_number = get_int(params, "episode_number")
   episode_name = resanitize_html(params["episode_name"])
-  wholesome_uplifting_level = params["wholesome_uplifting_level"].to_i
-  good_movie_rating = params["good_movie_rating"].to_i
+  wholesome_uplifting_level = get_int(params, "wholesome_uplifting_level")
+  good_movie_rating = get_int(params, "good_movie_rating")
   review = resanitize_html(params["review"])
   wholesome_review = resanitize_html(params["wholesome_review"])
   amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
-  rental_cost = params["rental_cost"].to_f
-  purchase_cost = params["purchase_cost"].to_f
+  rental_cost = get_float(params, "rental_cost")
+  purchase_cost = get_float(params, "purcahse_cost")
   total_time = human_to_seconds params["total_time"]
   genre = resanitize_html(params["genre"])
   original_rating = resanitize_html(params["original_rating"])

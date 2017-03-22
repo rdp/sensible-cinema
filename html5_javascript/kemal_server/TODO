@@ -15,17 +15,13 @@ pay people for seeding corpus
   plus feedback
 
 youtube for how to create
-  how to find multiple url's for amazon
 
-status needs to be a dropdown?
-
-needs/wants editing status as different than synopsis different than whatever...
-two reviews need/want to be split
-  or just implement real reviews [star rating, other rating, every rating is a single rating]
+entering a "blank" for rental cost caused failure at save time
 
 count number of times something is played [popularity contest :) ]
 
 == meh ===
+
 mull on what to do with multiple EDL lists...
 
 use .srt's for "another movie" (me)
@@ -39,7 +35,7 @@ more amazon auth: it remembers who you are [?] DB [?] and marks edits/movies wit
 glean anybody's email address that uses it :| ?? 
   facebook auth
 
-entering a "blank" for rental cost caused failure at save time
+implement real reviews [star rating, other rating, every rating is a single rating]
 
 more personlized edit lists, everybody wants to be able to edit their own private... [linkable?]
 

@@ -40,11 +40,13 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
       <th>Movie</th>
       <th></th>
       <th>Tags</th>
-      <th>Editing status</th>
+      <th>Our local review</th>
       <th>Wholesome<br/>uplifting level / 10</th>
       <th>Movie rating / 10</th>
       <th>Details</th>
-      <th>Our local review</th>
+      <th>Editing status</th>
+      <th>Wholesome review</th>
+      <th>Original Rating</th>
       <th>Cost</th>
       <th>Movie info</th>
     </tr>
@@ -64,16 +66,16 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
        </td>
        <td><%= url.human_readable_company %></td>
        <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
-       <td>
-         <%= url.editing_status %>
-       </td>
-       <td> <%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
-       <td> <%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
-       <td><%= url.details.truncate_with_ellipses %></td>
        <td><%= url.review.truncate_with_ellipses %></td> <!-- todo link into it? or something that can auto expand inline? -->
+       <td><%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
+       <td><%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
+       <td><%= url.details.truncate_with_ellipses %></td>
+       <td><%= url.editing_status %> </td>
+       <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
+       <td><%= url.original_rating %> </td>
        <td><%= url.cost_string %></td>
        <td>
-			    <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
+	    <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
        </td>
    </tr>
 <% } %>

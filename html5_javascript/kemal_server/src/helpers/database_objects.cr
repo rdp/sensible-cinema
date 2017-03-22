@@ -179,8 +179,10 @@ class Url
     real_url = HTML.unescape(url) # want the slashes present :|
     if real_url =~ check
       host = $1.split(".")[-2]
+    elsif url.includes?("://")
+      host = url.split("://")[1].split("/")[0] # localhost:3000
     else
-      host = url # ?? hope we never get here LOL localhost does that's it
+      host = url # ?? hope we never get here...
     end
     if amazon_prime_free_type != ""
       if amazon_prime_free_type == "Prime"
