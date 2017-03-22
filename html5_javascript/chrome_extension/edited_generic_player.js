@@ -270,14 +270,12 @@ function addEditUi() {
   <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
   <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
+	<!-- broken br/><a href="#" onclick="openEditMostRecentPassed(); return false;">re-edit just passed</a-->
 	<br/>
-  <a href=% onclick="showMoviePage(); return false;" </a>Movie edit page</a>
-	<!-- broken br/>
-  <a href="#" onclick="openEditMostRecentPassed(); return false;">re-edit just passed</a-->
+  <input type='button' onclick="closeEditor(); return false;" value='✕ Close editor'/>
 	<br/>
-  <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
-	</div>
-  `;
+  <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
+	</div>`;
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
