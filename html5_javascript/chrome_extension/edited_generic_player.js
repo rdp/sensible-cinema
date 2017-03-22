@@ -145,7 +145,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
   var next_tag = getNextTagAfterCurrentPos();
   if (next_tag) {
-    document.getElementById('top_line_current_time').innerHTML += " next tag start: " + timeStampToHuman(next_tag.start);
+    document.getElementById('top_line_current_time').innerHTML += " next tag start: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
   }
   var message = "";
   if (extra_message != "") {
@@ -228,7 +228,7 @@ function addEditUi() {
   tagLayer = document.createElement('div');
 	tagLayer.id = "tagLayer";
   tagLayer.style.position = 'absolute';
-  tagLayer.style.width = '500px';
+  tagLayer.style.width = '600px';
   tagLayer.style.height = '30px';
   tagLayer.style.display = 'none';
   tagLayer.style.zIndex = "99999999";
@@ -270,7 +270,6 @@ function addEditUi() {
   <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
   <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
-	<!-- broken br/><a href="#" onclick="openEditMostRecentPassed(); return false;">re-edit just passed</a-->
 	<br/>
   <input type='button' onclick="closeEditor(); return false;" value='✕ Close editor'/>
 	<br/>
@@ -457,26 +456,6 @@ function saveEditButton() {
 
 function showMoviePage() {
   window.open("https://" + request_host + "/view_url/" + current_json.url.id);
-}
-
-function openEditMostRecentPassed() {
-  var lastest = 0;
-  var last_id = 0;
-  var cur_time = video_element.currentTime;
-  var tags = current_json.tags; // are these sorted?
-  for (var i = 0; i < tags.length; i++) {
-    if (edits[i].endy < cur_time && tags[i].endy > lastest) {
-      last_id = tags[i].id;
-      lastest = tags[i].endy;
-    }
-  } 
-
-  if (last_id > 0) {
-    window.open("https://" + request_host + "/edit_tag/" + last_id);
-  }
-  else {
-    alert("play it my way:\ncould not find one earlier than your currently playing back location");
-  }
 }
 
 function stepFrameBack() {
