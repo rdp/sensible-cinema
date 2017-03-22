@@ -25,18 +25,19 @@ status_notes
 	<br/>
 <% end %>
 
+<table class="table table-striped">
 <% tag_edit_list.tags_with_selected_or_not.each{ |tag, action| %>
 
-<table class="table table-striped">
 <tr>
-  <td><%= seconds_to_human tag.start %></td><td><%= seconds_to_human tag.endy %></td>
+  <td><%= seconds_to_human tag.start %></td>
+  <td><%= seconds_to_human tag.endy %></td>
   <td><%= tag.default_action %></td>
   <td><%= tag.category %></td>
   <td><%= tag.subcategory %></td>
   <td><%= tag.details %></td>
   <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
   <td>
-		action to take:
+		action to take for this personalized list:
 		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>'>
 		  <option value="mute">mute</option>
 		  <option value="skip">skip</option>
@@ -46,13 +47,13 @@ status_notes
 		<script>
 	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= action %>';
 		</script>
-	</td>
+  </td>
 </tr>
-</table>
   
 <% } %>
+</table>
 
-age_recommendation_after_edited (ex: 10, or 0 for none)
+age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for none)
 <input type="text" name="age_recommendation_after_edited" size="5" value="<%= tag_edit_list.age_recommendation_after_edited %>"/>
 <br/>
 <br/>
