@@ -2,7 +2,7 @@ version: 1.0
 shards:
   db:
     github: crystal-lang/crystal-db
-    version: 0.3.3
+    version: 0.4.0
 
   kemal:
     github: sdogruyol/kemal
@@ -18,9 +18,9 @@ shards:
 
   mysql:
     github: crystal-lang/crystal-mysql
-    version: 0.3.1
+    version: 0.3.2
 
   radix:
     github: luislavena/radix
-    version: 0.3.7
+    version: 0.3.8
 
