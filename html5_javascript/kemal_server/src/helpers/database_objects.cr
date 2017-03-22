@@ -18,6 +18,7 @@ class Url
     image_local_filename: String,
     review: String,
     wholesome_review: String,
+    count_downloads: Int32,
     amazon_prime_free_type: String, # "prime" "HBO"
     rental_cost: Float64,
     purchase_cost: Float64, # XXX actually Decimal [?]
@@ -42,6 +43,7 @@ class Url
     image_local_filename: String,
     review: String,
     wholesome_review: String,
+    count_downloads: Int32,
     amazon_prime_free_type: String,
     rental_cost: Float64,
     purchase_cost: Float64,
@@ -84,10 +86,10 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating).last_insert_id.to_i32
 			 # get create_timestamp for free by its default crystal value
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, id
       end
     end
   end
@@ -106,6 +108,7 @@ class Url
     @image_local_filename = ""
     @review = ""
     @wholesome_review = ""
+    @count_downloads = 0
     @amazon_prime_free_type = ""
     @rental_cost = 0.0
     @purchase_cost = 0.0

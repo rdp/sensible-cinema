@@ -90,6 +90,8 @@ get "/for_current_just_settings_json" do |env|
   else
     url = url_or_nil.as(Url)
     env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
+    url.count_downloads += 1
+    url.save # :| XXX too slow?
     json_for(url, env)
   end
 end

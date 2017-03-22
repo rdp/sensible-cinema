@@ -113,6 +113,7 @@ alter table tags add column age_maybe_ok INT NOT NULL DEFAULT 0;
 alter table urls add column wholesome_review TEXT; -- said my row was too big otherwise :|
 update urls set wholesome_review = ''; -- default :|
 -- done prod
+alter table urls add column count_downloads INT NOT NULL DEFAULT 0;
 
 -- and output to screen to show success...
 select * from urls;
