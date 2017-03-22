@@ -127,7 +127,7 @@ def hard_nuke_url_or_nil(url, env)
     }
     url.tags.each &.destroy
     if url.image_local_filename
-      File.delete "./movie_images/#{url.image_local_filename}"
+      File.delete "./public/movie_images/#{url.image_local_filename}"
     end
     url.destroy
     "nuked testmovie #{url} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
