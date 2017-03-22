@@ -89,7 +89,7 @@ get "/instructions_create_new_url" do | env|
 end
 
 get "/nuke_url/:url_id" do |env| # nb: never link to this to avoid crawlers accidental nukage :|
-  hard_nuke_url_or_nil(get_url_from_url_id(env))
+  hard_nuke_url_or_nil(get_url_from_url_id(env), env)
 end
 
 get "/nuke_test_by_url" do |env|
@@ -97,33 +97,25 @@ get "/nuke_test_by_url" do |env|
   raise("cannot nuke non test movies, please ask us if you want to delete a different movie") unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
   url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
-  hard_nuke_url_or_nil(url)
+  hard_nuke_url_or_nil(url, env)
 end
 
-def hard_nuke_url_or_nil(url)
+def hard_nuke_url_or_nil(url, env)
   if url
+    save_local_javascript [url], "nuking...", env
     url.tag_edit_lists.each{|tag_edit_list|
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
     }
     url.tags.each &.destroy
+    if url.image_local_filename
+      File.delete "./movie_images/#{url.image_local_filename}"
+    end
     url.destroy
-    "nuked testmovie from db, you can start over and do some more test editing on a blank/clean slate now"
+    "nuked testmovie #{url} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
   else
    raise "not found to nuke?"
   end
-end
-
-get "/delete_url/:url_id" do |env|
-  url = get_url_from_url_id(env)
-  url.tags.each { |tag|
-    #save_local_javascript [tag.url], "removed #{tag.inspect}", env
-    #tag.destroy 
-  }
-  url.destroy
-  set_flash_for_next_time env, "deleted movie from db " + url.url
-  # could/should remove from cache :|
-  env.redirect "/"
 end
 
 def logged_in?(env)
