@@ -126,13 +126,14 @@ original_rating:
 <br/>
 <br/>
 
-an image_url (on a different site) for movie (ex: http://wikipedia/original_image.svg or http://wikipedia/original_image.jpg 
+an image_url for a picture for this movie
 <br/>
 You can <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
- for an image, wikipedia sometime has some royalty unencumbered images.  This overrides any previous image it may have had.<%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
-<br>
+ for an image, wikipedia seems a good source.  Click on "search" then click on an image then select "view image" to find its url, ex: https://upload.wikimedia.org/wikipedia/en/1/10/Indiana_Jones_and_the_Temple_of_Doom_PosterB.jpg
+<br/> then enter that url here.
 <input type="text" name="image_url" size="150" placeholder="http://wikipedia.org/some_image.jpg" value=""/> <!-- value empty on purpose --> 
 <br/>
+<br/>This overrides any previous image it may have: <%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
 <br/>
 
 total movie length (netflix needs this, others can survive without it but still nice to have
