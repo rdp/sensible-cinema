@@ -583,10 +583,10 @@ post "/upload_from_subtitles_post/:url_id" do |env|
     db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # saves contents, why not? :) XXX save euphemized? actually original might be more powerful somehow...
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
   elsif params["amazon_subtitle_url"]?
-    db_url.subtitles = download(params["amazon_subtitles_url"]
-    prof, all_euphemized = SubtitleProfanityFinder.mutes_from_amazon_string(db_url.subtitles)
+    db_url.subtitles = download(params["amazon_subtitle_url"])
+    profs, all_euphemized = SubtitleProfanityFinder.mutes_from_amazon_string(db_url.subtitles)
   else
-    raise "no file to parse?"
+    raise "no subtitle file to parse?"
   end
   profs.each { |prof|
     tag = Tag.new(db_url)
