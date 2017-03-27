@@ -130,7 +130,7 @@ an image_url for a picture for this movie
 You can <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
  for an image, wikipedia seems a good source.  Click on "search" then click on an image then select "view image" to find its url, ex: https://upload.wikimedia.org/wikipedia/en/1/10/Indiana_Jones_and_the_Temple_of_Doom_PosterB.jpg
 <br/> then enter that url here.
-<input type="text" name="image_url" size="150" placeholder="http://wikipedia.org/some_image.jpg" value=""/> <!-- value empty on purpose --> 
+<input type="text" name="image_url" size="150" placeholder="http://wikipedia.org/.../some_image.jpg" value=""/> <!-- value empty on purpose --> 
 <br/>
 <br/>This overrides any previous image it may have: <%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
 <br/>

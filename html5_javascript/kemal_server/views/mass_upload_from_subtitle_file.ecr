@@ -4,8 +4,11 @@
 Want to upload a subtitle file and *automatically* detect where profanities are, so you don't have to enter them?  We do that!  Unfortunately it yields "imprecise" mutes that also mute some of the surrounding sentence, but it's still useful.
 <br/>Download a subtitle file for your movie from an online site, ex: <a href=http://www.english-subtitles.club/ target=_blank>here</a> and search for your movie name.
 <br/>Next, synchronize your file (otherwise mutes will be off by several seconds).  Unzip any .zip file, upload .srt file to <a href=http://subsyncer.appspot.com/step1 target=_blank>in this synchronization tool</a>, then watch your video with CC's on and pause it right when some text appears on the screen.  Enter that current playback time into the synchronization tool.  We recommend entering several "synchronization points", one at the very beginning, one 3/4 of the way through).  If you're editing a youtube, you can download some pre-synchronized subs <a href="http://www.yousubtitles.com/"/>here</a>
-<br/>This will download a new "synchronized" .srt file for you.  Upload synchronized .srt file here:
+<br/>This will download a new "synchronized" .srt file for you.  Then upload synchronized .srt file here:
 <br/> <input type="file" name="srt_upload" id="srt_upload_id"/>
+<br/>
+If it's amazon, place subtitle URL here:
+<input type="text" name="amazon_subtitle_url" size="100" placeholder="https://cloudfont.../...dfxp" />
 <br/>
 Add extra time to beginning of each (if subtitles end up not being able to be sync'ed perfectly):
 <input type="text" name="add_to_beginning" size="10" value="0.0"/>

@@ -1,7 +1,6 @@
 # see also todo.subtitle file, though what"s here is mostly pretty well functional/complete
 require "./std_lib_helpers"
-  require "./profanities.cr"
-
+require "./profanities.cr"
 
 module SubtitleProfanityFinder
    @@expected_min_size = 10 # so unit tests can change it
@@ -97,6 +96,11 @@ module SubtitleProfanityFinder
     all_profanity_combinations
   end
 
+  def self.mutes_from_amazon_string(subtitles_string)
+
+
+  end
+
   def self.mutes_from_srt_string(subtitles, include_minor_profanities=true) 
     subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
 
@@ -165,8 +169,7 @@ module SubtitleProfanityFinder
   
 end
 
-
-if ARGV[0] == "--create-edl" # then .srt name
+if false && ARGV[0] == "--create-edl" # then .srt name breaks specs?
   incoming_filename = ARGV[1]
   SubtitleProfanityFinder.expected_min_size = 1
   mutes, euphes = SubtitleProfanityFinder.mutes_from_srt_string File.read(incoming_filename)

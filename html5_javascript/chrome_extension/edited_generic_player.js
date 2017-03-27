@@ -274,6 +274,8 @@ function addEditUi() {
   <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
 	<br/>
   <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
+	<br/>
+  <a href=% onclick="getSubtitleLink(); return false;" </a>subtitles</a>
 	</div>`;
   
   addMouseAnythingListener(mouseJustMoved);
@@ -458,6 +460,18 @@ function showMoviePage() {
   window.open("https://" + request_host + "/view_url/" + current_json.url.id);
 }
 
+function getSubtitleLink() {
+  var arr = window.performance.getEntriesByType("resource");
+  for (var i = arr.length - 1; i >= 0; --i) {
+    console.log("name=" + arr[i].name);
+    if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
+      alert("this appears to be a subtitles file: " + arr[i].name);
+      return;
+    }
+  }
+  alert("didn't find a subtitles file, try pausing the movie, then turning subtitles off then on, then try again");
+}
+
 function stepFrameBack() {
   seekToTime(video_element.currentTime - 2/30, function () { // go back 2 frames, 1 seems hard...
     video_element.pause();
@@ -466,7 +480,7 @@ function stepFrameBack() {
 
 function stepFrame() {
   video_element.play();
-  setTimeout(function() { 
+  setTimeout(function() {
     video_element.pause(); 
   }, 1/30*1000); // theoretically about an NTSC frame worth :)
 }
@@ -803,7 +817,7 @@ function seekToTime(ts, callback) {
 	// some shenanigans to pretend to work around...
 	var timer = setInterval(function() {
 		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
-			console.log("appears it sought " + ts);
+			console.log("appears it sought successfully to " + ts + " " + timeStampToHuman(ts));
 			video_element.play();
 			clearInterval(timer);
 			callback();

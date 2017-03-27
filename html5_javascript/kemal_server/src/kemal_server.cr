@@ -580,24 +580,29 @@ post "/upload_from_subtitles_post/:url_id" do |env|
   add_to_end = params["add_to_end"].to_f
   
   if env.params.files["srt_upload"]? && env.params.files["srt_upload"].filename && env.params.files["srt_upload"].filename.not_nil!.size > 0 # kemal bug'ish :|?? also nil??
-    db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # save contents, why not? :) XXX save euphemized :)
+    db_url.subtitles = File.read(env.params.files["srt_upload"].tmpfile.path) # saves contents, why not? :) XXX save euphemized? actually original might be more powerful somehow...
     profs, all_euphemized = SubtitleProfanityFinder.mutes_from_srt_string(db_url.subtitles)
-    profs.each { |prof|
-      tag = Tag.new(db_url)
-      tag.start = prof[:start] - add_to_beginning
-      tag.endy =  prof[:endy] + add_to_end
-      tag.default_action = "mute"
-      tag.category = "profanity"
-      tag.subcategory = prof[:category]
-      tag.details = prof[:details]
-      tag.save
-    }
-    clean_subs = all_euphemized.reject{|p| p[:category] != nil }
-    middle_sub = clean_subs[clean_subs.size / 2]
-    puts "clean_subs = euphsize=#{all_euphemized.size} clean_size=#{clean_subs.size} idx=#{clean_subs.size / 2} middle_sub = #{middle_sub}"
-    add_to_flash(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
-    add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
-  end  
+  elsif params["amazon_subtitle_url"]?
+    db_url.subtitles = download(params["amazon_subtitles_url"]
+    prof, all_euphemized = SubtitleProfanityFinder.mutes_from_amazon_string(db_url.subtitles)
+  else
+    raise "no file to parse?"
+  end
+  profs.each { |prof|
+    tag = Tag.new(db_url)
+    tag.start = prof[:start] - add_to_beginning
+    tag.endy =  prof[:endy] + add_to_end
+    tag.default_action = "mute"
+    tag.category = "profanity"
+    tag.subcategory = prof[:category]
+    tag.details = prof[:details]
+    tag.save
+  }
+  clean_subs = all_euphemized.reject{|p| p[:category] != nil }
+  middle_sub = clean_subs[clean_subs.size / 2]
+  puts "clean_subs = euphsize=#{all_euphemized.size} clean_size=#{clean_subs.size} idx=#{clean_subs.size / 2} middle_sub = #{middle_sub}"
+  add_to_flash(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
+  add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
