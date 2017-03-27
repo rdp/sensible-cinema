@@ -99,6 +99,7 @@ module SubtitleProfanityFinder
   def self.mutes_from_amazon_string(raw_subs)
     raw_subs = raw_subs.scrub # invalid UTF-8 creeps in at times...
     entries = split_from_amazon(raw_subs)
+    detect_profanities(entries)
   end
 
   def self.split_from_amazon(raw_subs)

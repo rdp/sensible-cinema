@@ -22,5 +22,11 @@ describe SubtitleProfanityFinder do
       outty[:ending_time].should eq 190.924
       outty[:text].should eq "but I say wonder and magic don't come easy, pal. "
     end
+
+    it "should find profanities in amazon stuff" do
+      mutes, euphes = SubtitleProfanityFinder.mutes_from_amazon_string File.read("sing.amazon.dfxp")
+      mutes.size.should eq 14
+      euphes.size.should eq 2406
+    end
   end
 end
