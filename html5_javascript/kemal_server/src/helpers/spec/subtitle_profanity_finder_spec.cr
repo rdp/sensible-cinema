@@ -9,5 +9,18 @@ describe SubtitleProfanityFinder do
       euphes.size.should eq 1331
     end
   end
-end
 
+  describe "parse amazon" do
+    it "should split" do
+      splitted = SubtitleProfanityFinder.split_from_amazon File.read("sing.amazon.dfxp")
+      splitted.size.should eq 2406
+    end
+
+    it "should parse amazon line" do
+      outty = SubtitleProfanityFinder.translate_amazon_line_to_entry("<tt:p begin=\"00:03:07.321\" end=\"00:03:10.924\">but I say wonder and magic<tt:br/>don't come easy, pal.</tt:p>").not_nil!
+      outty[:beginning_time].should eq 187.321
+      outty[:ending_time].should eq 190.924
+      outty[:text].should eq "but I say wonder and magic don't come easy, pal. "
+    end
+  end
+end

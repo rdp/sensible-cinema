@@ -96,21 +96,43 @@ module SubtitleProfanityFinder
     all_profanity_combinations
   end
 
-  def self.mutes_from_amazon_string(subtitles_string)
-
-
+  def self.mutes_from_amazon_string(raw_subs)
+    raw_subs = raw_subs.scrub # invalid UTF-8 creeps in at times...
+    entries = split_from_amazon(raw_subs)
   end
 
-  def self.mutes_from_srt_string(subtitles, include_minor_profanities=true) 
-    subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
+  def self.split_from_amazon(raw_subs)
+    raw_subs.lines.map{|line|
+      translate_amazon_line_to_entry(line)
+    }.compact
+  end
 
-    all_profanity_combinationss = [convert_to_regexps(Bad_profanities)] # double array so we can do the lesser ones second
-    if include_minor_profanities
-      all_profanity_combinationss += [convert_to_regexps(Semi_bad_profanities)]
+  def self.translate_amazon_line_to_entry(line)
+    # <tt:p begin="00:03:07.321" end="00:03:10.924">but I say wonder and magic<tt:br/>don't come easy, pal.</tt:p>
+    timestamp_regex = /begin="(\d\d:\d\d:\d\d.\d\d\d)" end="(\d\d:\d\d:\d\d.\d\d\d)">(.*)/
+    if line =~ timestamp_regex
+       text = $3.gsub(/<tt:[^>]+>/, " ").gsub(/<\/tt:[^>]+>/, " ")
+       { 
+         beginning_time: translate_string_to_seconds($1),
+         ending_time: translate_string_to_seconds($2),
+         text: text,
+       } 
+    else
+      nil
     end
+  end
+
+  def self.mutes_from_srt_string(subtitles)
+    subtitles = subtitles.scrub # invalid UTF-8 creeps in at times...
+    entries = split_to_entries(subtitles)
+    detect_profanities(entries)
+  end
+
+  def self.detect_profanities(entries)
+    all_profanity_combinationss = [convert_to_regexps(Bad_profanities)] # double array so we can do the lesser ones second
+    all_profanity_combinationss += [convert_to_regexps(Semi_bad_profanities)] # include 'em why not?
     
     mutes = [] of NamedTuple(start: Float64, endy: Float64, category: String, details: String)
-    entries = split_to_entries(subtitles)
     euphemized = [] of NamedTuple(start: Float64, endy: Float64, category: String | Nil, details: String) 
     all_profanity_combinations = all_profanity_combinationss.flatten # used to care about grouping them :|
       entries.each{ |entry|
