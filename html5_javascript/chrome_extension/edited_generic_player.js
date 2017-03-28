@@ -461,6 +461,10 @@ function showMoviePage() {
 }
 
 function getSubtitleLink() {
+  if (!isAmazon()) {
+    alert("not supported except on amazon today");
+    return;
+  }
   var arr = window.performance.getEntriesByType("resource");
   for (var i = arr.length - 1; i >= 0; --i) {
     console.log("name=" + arr[i].name);
@@ -469,7 +473,7 @@ function getSubtitleLink() {
       return;
     }
   }
-  alert("didn't find a subtitles file, try pausing the movie, then turning subtitles off then on, then try again");
+  alert("didn't find a subtitles file, try turning subtitles on, then reload your browser, then try again");
 }
 
 function stepFrameBack() {
