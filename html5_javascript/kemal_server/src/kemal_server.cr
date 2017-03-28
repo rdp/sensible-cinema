@@ -379,7 +379,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.url = sanitized_url
     url.episode_name = episode_name
     url.episode_number = episode_number
-    url.editing_status = "needs review, may not yet be fully edited"
+    url.editing_status = "Community contributed just started, tags might not be fully done yet" # must match other file :|
     url.total_time = duration
     url.save 
     add_to_flash(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
@@ -510,7 +510,6 @@ post "/save_url" do |env|
   end
   
   # these get injected into HTML later so sanitize everything up front... :|
-  name = resanitize_html(params["name"]) # unescape in case previously escaped case of re-save [otherwise it grows and grows in error...]
   incoming_url = resanitize_html(params["url"])
   if db_url.url != incoming_url
     _ , incoming_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(incoming_url) # in case url changed make sure they didn't change it to a /gp/, ignore title since it's already here manually already :|
@@ -519,43 +518,28 @@ post "/save_url" do |env|
   if amazon_second_url.present?
     _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(amazon_second_url)
   end
-  details = resanitize_html(params["details"])
-  editing_status = resanitize_html(params["editing_status"])
-  episode_number = get_int(params, "episode_number")
-  episode_name = resanitize_html(params["episode_name"])
-  wholesome_uplifting_level = get_int(params, "wholesome_uplifting_level")
-  good_movie_rating = get_int(params, "good_movie_rating")
-  review = resanitize_html(params["review"])
-  wholesome_review = resanitize_html(params["wholesome_review"])
-  amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
-  rental_cost = get_float(params, "rental_cost")
-  purchase_cost = get_float(params, "purcahse_cost")
-  total_time = human_to_seconds params["total_time"]
-  genre = resanitize_html(params["genre"])
-  original_rating = resanitize_html(params["original_rating"])
 
+  db_url.name = resanitize_html(params["name"]) # resanitize in case previously escaped case of re-save [otherwise it grows and grows in error...]
   db_url.url = incoming_url
+  db_url.details = resanitize_html(params["details"])
+  db_url.editing_status = resanitize_html(params["editing_status"])
   db_url.amazon_second_url = amazon_second_url
-  db_url.name = name
-  db_url.details = details
-  db_url.episode_number = episode_number
-  db_url.episode_name = episode_name
-  db_url.editing_status = editing_status
-  db_url.wholesome_uplifting_level = wholesome_uplifting_level
-  db_url.good_movie_rating = good_movie_rating
-  db_url.review = review
-  db_url.wholesome_review = wholesome_review
-  db_url.amazon_prime_free_type = amazon_prime_free_type
-  db_url.rental_cost = rental_cost
-  db_url.purchase_cost = purchase_cost
-  db_url.total_time = total_time
-  db_url.genre = genre
-  db_url.original_rating = original_rating
-	
-  image_url = params["image_url"]
-
+  db_url.episode_number = get_int(params, "episode_number")
+  db_url.episode_name = resanitize_html(params["episode_name"])
+  db_url.wholesome_uplifting_level = get_int(params, "wholesome_uplifting_level")
+  db_url.good_movie_rating = get_int(params, "good_movie_rating")
+  db_url.review = resanitize_html(params["review"])
+  db_url.wholesome_review = resanitize_html(params["wholesome_review"])
+  db_url.amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
+  db_url.rental_cost = get_float(params, "rental_cost")
+  db_url.purchase_cost = get_float(params, "purcahse_cost")
+  db_url.total_time = human_to_seconds params["total_time"]
+  db_url.genre = resanitize_html(params["genre"])
+  db_url.original_rating = resanitize_html(params["original_rating"])
+  db_url.editing_notes = resanitize_html(params["editing_notes"])
   db_url.save
   
+  image_url = params["image_url"]
   if image_url.present?
     db_url.download_image_url_and_save image_url
   else

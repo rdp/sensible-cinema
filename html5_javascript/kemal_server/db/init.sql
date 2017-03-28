@@ -112,11 +112,12 @@ alter table urls add column genre VARCHAR(100) NOT NULL DEFAULT '';
 alter table urls add column original_rating VARCHAR(10) NOT NULL DEFAULT '';
 alter table tags add column age_maybe_ok INT NOT NULL DEFAULT 0;
 alter table urls add column wholesome_review TEXT; -- said my row was too big otherwise :|
-update urls set wholesome_review = ''; -- default :|
+update urls set wholesome_review = ''; -- default for existing :|
 alter table urls add column count_downloads INT NOT NULL DEFAULT 0;
 -- done prod
 alter table tags drop column oval_percentage_coords;
-alter table urls add column editing_notes TEXT; -- said my row was too big otherwise :|
+alter table urls add column editing_notes TEXT;
+update urls set editing_notes = ''; -- default for existing :|
 
 -- and output to screen to show success...
 select * from urls;

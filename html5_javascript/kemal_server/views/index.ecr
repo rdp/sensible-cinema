@@ -45,6 +45,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
       <th>Movie rating / 10</th>
       <th>Our local review</th>
       <th>Editing status</th>
+      <th>Editing notes</th>
       <th>Wholesome review</th>
       <th>Original MPAA Rating</th>
       <th>Cost</th>
@@ -71,6 +72,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
        <td><%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
        <td><%= url.review.truncate_with_ellipses %></td>
        <td><%= url.editing_status %> </td>
+       <td><%= url.editing_notes %> </td>
        <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
        <td><%= url.original_rating %> </td>
        <td><%= url.cost_string %></td>

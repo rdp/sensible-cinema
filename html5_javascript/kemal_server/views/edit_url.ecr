@@ -16,7 +16,7 @@ url:
 <br/>
 <br/>
 
-details (brief synopsis [non-spoilers], etc.):
+details (brief synopsis [non-spoilers], etc.) try to make up your own here instead of copy-pasting:
 <input type="text" name="details" size="150" value="<%= url.details %>"/>
 <br/>
 <br/>
@@ -32,20 +32,18 @@ episode_name (blank if not episode of a series)
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon second url
-  <br/>.  This is kind of a weird one.  Amazon in their system seems to "sometimes" have to two different URL's that can lead to the same movie or series.
-  <br/>  So if you can find "the other one" enter it here.  For series', you might find its different second url by clicking the "series" dropdown to select the series you're watching, versus finding it through normal amazon search.
-  <br/>  For movies,  it will have one url if you click to play it from "Your video library" or "your watch list" and possibly another different url if you search for the movie in the amazon search bar.
-  <br/> so if you can find its second url, enter it here: <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
+  amazon second url:
+  <br/>This is kind of a weird one.  Amazon in their system "sometimes" has  two different URL's that can lead to the same movie or series.
+  <br/>For series', you might find its different second url by clicking the "series" dropdown to select the series you're watching, versus finding it through normal amazon search.
+  <br/>For movies,  it will have one url if you click to play it from "Your video library" or "your watch list" and possibly another different url if you search for the movie in the amazon search bar.
+  <br/>So if you can discvoer  its second url, enter it here: <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
   <br/>
   <br/>
   amazon_prime_free_type (if part of any subscription model):
   <select name="amazon_prime_free_type" id='amazon_prime_free_type'>
     <option value="">none (purchase/rent only)</option>
     <option value="Prime">free with prime</option>
-    <option value="Starz">free with prime + Starz subscription</option>
-    <option value="HBO">free with prime + HBO subscription</option>
-    <option value="Showtime">free with prime + Showtime subscription</option>
+    <option value="Add-on">free with prime plus an add-on subscription</option>
   </select>
   <script>
   document.getElementById('amazon_prime_free_type').value = '<%= url.amazon_prime_free_type %>';
@@ -54,8 +52,20 @@ episode_name (blank if not episode of a series)
   <br/>
 </div>
 
-editing_status (ex: "removed the profanity, some violence remains. needs second review")
-<textarea name="editing_status" rows="1" cols="150" ><%= url.editing_status %></textarea>
+editing status:
+<select name="editing_status" id="editing_status">
+  <% ["just started, non community", "Community contributed just started, tags might not be fully done yet", "Done with first pass, needs second review, non community", "Community contributed done with first pass, could use second review", "Done with second review, so tags are complete", "Community contributed done with second review so tags are complete"].each {|option| %>
+   <option value="<%= option %>"><%= option %></option>
+  <% } %>
+</select>
+<script>
+  document.getElementById('editing_status').value = '<%= url.editing_status %>';
+</script>
+<br/>
+<br/>
+
+editing_notes (ex: "removed the profanity, some violence remains" or "got to minute 45", "only did the mutes")
+<textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>
 <br/>
 <br/>
 

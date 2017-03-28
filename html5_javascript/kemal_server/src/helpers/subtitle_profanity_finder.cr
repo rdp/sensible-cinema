@@ -1,6 +1,6 @@
-# see also todo.subtitle file, though what"s here is mostly pretty well functional/complete
 require "./std_lib_helpers"
 require "./profanities.cr"
+require "./subcategories.cr"
 
 module SubtitleProfanityFinder
    @@expected_min_size = 10 # so unit tests can change it

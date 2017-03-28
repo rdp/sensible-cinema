@@ -29,10 +29,10 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = 'unknown'; // reset in case changed from other">
   <option value="unknown">unknown -- please select category</option>
-  <option value="profanity">profanity (verbal attacks, etc.)</option>
+  <option value="profanity">profanity (verbal attacks, anything spoken)</option>
   <option value="violence">violence/blood etc.</option>
-  <option value="physical">sex/nudity/lewd etc.</option>
-  <option value="suspense">suspense (frightening, scary fighting, tension)</option>
+  <option value="physical">sex/nudity/lewd acts etc.</option>
+  <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
   <option value="movie-content">movie content (credits, etc.)</option>
   <option value="substance-abuse">substance use</option>
 </select>
@@ -71,10 +71,6 @@ document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
 <br/>
 internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers are OK:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
-
-<div id="oval_coords_div" style="display: none;" > <!-- just leave it invisible for now -->
-  <input type="text" name="oval_percentage_coords" size="15" value="<%= tag.oval_percentage_coords %>"/>
-</div>
 
 <br/>
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
