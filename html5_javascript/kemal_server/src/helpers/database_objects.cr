@@ -60,7 +60,8 @@ class Url
   
   def self.all
     with_db do |conn|
-      conn.query("SELECT * from urls order by amazon_prime_free_type desc, substring(url from 1 for 40) asc") do |rs|
+      # sort by host, amazon type, name for series together
+      conn.query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type desc, name") do |rs|
          Url.from_rs(rs);
       end
     end

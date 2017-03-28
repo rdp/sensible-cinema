@@ -106,8 +106,7 @@ Ex: "A little dark", "a good question to discuss as a family afterward would be.
 <br/>
 <br/>
 
-rental cost (HD rental for 1 to 30 days, ex "2.00")<br/>
-(enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube), for amazon, enter cost for rental this episode assuming non-prime)
+rental cost (HD rental for 1 to 30 days, ex "2.00") (enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube), for amazon, enter cost for rental this episode assuming non-prime)
 <input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>$
 <br/>
 <br/>
@@ -137,7 +136,7 @@ function htmlDecode(input)
 <br/>
 <br/>
 
-original MPAA rating, if any:
+original MPAA rating, if a movie:
   <select name="original_rating" id='original_rating'>
     <option value="">unknown/not applicable</option>
     <% ["G", "PG", "PG-13", "R", "NR"].each{| name|  %>
@@ -150,22 +149,25 @@ original MPAA rating, if any:
 <br/>
 <br/>
 
-an image_url for a picture for this movie
+Url for an image/picture for this movie:
 <br/>
+<% if url.image_local_filename.present? %>
+  <br/>This will override its current image: <%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
+<br/>
+<% end %>
 You can <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>
  for an image, wikipedia seems a good source.  Click on "search" then click on an image then select "view image" to find its url, ex: https://upload.wikimedia.org/wikipedia/en/1/10/Indiana_Jones_and_the_Temple_of_Doom_PosterB.jpg
-<br/> then enter that url here.
+<br/> then enter that complete url here:
 <input type="text" name="image_url" size="150" placeholder="http://wikipedia.org/.../some_image.jpg" value=""/> <!-- value empty on purpose --> 
 <br/>
-<br/>This overrides any previous image it may have: <%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
-<br/>
 
-total movie length (netflix needs this, others can survive without it but still nice to have
+<br/>
+total movie length (netflix needs this, others can survive without it but still good if available)
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
 
 <br/>
-<input type="submit" value="Update movie info" class="btn btn-primary" class_means="blue" />
+<input type="submit" value="Update Movie Info" class="btn btn-primary" class_means="blue" />
 </form>
 
 <br/><a href="/view_url/<%= url.id %>"><< back to movie page</a> (if you made any changes, hit "Update movie info" or changes will be lost)
