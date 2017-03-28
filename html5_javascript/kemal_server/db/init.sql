@@ -1,4 +1,4 @@
--- reverse order here
+e- reverse order here
 drop table if exists tag_edit_list_to_tag;
 drop table if exists tag_edit_list;
 drop table if exists tags;
@@ -61,7 +61,7 @@ alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
 CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
 
 create unique index url_title_episode ON urls(name(256), amazon_episode_number); -- try to avoid accidental dupes
-ALTER TABLE urls RENAME INDEX url_title_episode TO unique_name_with_episode; -- rename an index
+ALTER TABLE urls DROP INDEX url_title_episode; CREATE UNIQUE INDEX unique_name_with_episode ON urls(name(256), amazon_episode_number); -- rename same index
 
 ALTER TABLE urls CHANGE amazon_episode_name episode_name VARCHAR(1024);
 ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;

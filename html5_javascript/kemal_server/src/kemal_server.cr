@@ -366,19 +366,17 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     end
     title = title.strip
     title = sanitize_html title
-    puts "title ended as #{title}" # still some cruft
-    already_by_name = Url.get_only_or_nil_by_url_title_and_episode_number(sanitized_url, title, episode_number) # don't just blow up on DB constraint
+    if sanitized_url.includes?("amazon.com") && title.includes?(":")
+      title = title.split(":")[0].strip # begone actors
+    end
+    puts "title ended as #{title}"
+    already_by_name = Url.get_only_or_nil_by_url_name_and_episode_number(sanitized_url, title, episode_number) # don't just blow up on DB constraint
     if already_by_name
       return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this message to us, we'll fix it"
     end
     url = Url.new
+    url.name = title
     url.url = sanitized_url
-    if sanitized_url.includes?("amazon.com") && title.includes?(":")
-      url.name = title.split(":")[0].strip
-      # url.details = title[(title.index(":").as(Int32) + 1)..-1].strip # has actors after a colon...but feels too much like ripping their data LOL
-    else
-      url.name = title
-    end
     url.episode_name = episode_name
     url.episode_number = episode_number
     url.editing_status = "needs review, may not yet be fully edited"
