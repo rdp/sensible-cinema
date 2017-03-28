@@ -29,6 +29,7 @@ Total content tags in our system for this movie:
       <%= table_row_or_nothing("prime?", url.human_readable_company) %>
     <% end %>
     <%= table_row_or_nothing("Editing status", url.editing_status) %>
+    <%= table_row_or_nothing("Community contributed?", url.community_contrib) %>
     <%= table_row_or_nothing("Editing notes", url.editing_notes) %>
     <%= table_row_or_nothing("wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
     <%= table_row_or_nothing("good movie rating (out of 10)", url.good_movie_rating) %>

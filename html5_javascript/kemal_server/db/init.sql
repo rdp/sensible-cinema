@@ -118,6 +118,7 @@ alter table urls add column count_downloads INT NOT NULL DEFAULT 0;
 alter table tags drop column oval_percentage_coords;
 alter table urls add column editing_notes TEXT;
 update urls set editing_notes = ''; -- default for existing :|
+alter table urls add column community_contrib BOOL DEFAULT true; -- actually 0 or 1 apparently
 
 -- and output to screen to show success...
 select * from urls;
