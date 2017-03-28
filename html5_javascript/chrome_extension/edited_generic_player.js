@@ -19,7 +19,7 @@ var mutes, skips, yes_audio_no_videos, do_nothings;
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
-  if (document.querySelector('link[rel="canonical"]') != null && !current_url.includes("youtube.com")) {
+  if (document.querySelector('link[rel="canonical"]') != null && !isYoutube()) {
 		// -> canonical, the crystal code does this for everything so guess we should do here as well...ex youtube it strips off any &t=2 or something...
     current_url = document.querySelector('link[rel="canonical"]').href; // seems to always convert from "/gp/" to "/dp/" and sometimes even change the ID :|
   }
@@ -461,8 +461,12 @@ function showMoviePage() {
 }
 
 function getSubtitleLink() {
+  if (isYoutube()) {
+    window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // got git 'em
+    return;
+  }
   if (!isAmazon()) {
-    alert("not supported except on amazon today");
+    alert("not supported except on amazon/youtube today");
     return;
   }
   var arr = window.performance.getEntriesByType("resource");
@@ -783,6 +787,10 @@ function isAmazon() {
   return currentUrlNotIframe().includes("amazon.com");
 }
 
+function isYoutube() {
+  return currentUrlNotIframe().includes("www.youtube.com");  
+}
+
 function withinDelta(first, second, delta) {
 	var diff = Math.abs(first - second);
 	return diff < delta;
@@ -915,7 +923,7 @@ function liveTitleNoEpisode() {
     }
     // don't add episode name
   }
-  if (currentUrlNotIframe().includes("youtube.com")) {
+  if (isYoutube()) {
     title = youtubeChannelName() + title; 
   }
   return title;

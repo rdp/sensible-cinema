@@ -55,7 +55,7 @@ episode_name (blank if not episode of a series)
 
 editing status:
 <select name="editing_status" id="editing_status"> <!-- if you change this also change kemal -->
-  <% ["just started, tags might not be fully complete yet", "Done with first pass tagging, could use second review", "Done with second review, tags viewed as complete"].each {|option| %>
+  <% ["Just started, tags might not be fully complete yet", "Done with first pass tagging, could use second review", "Done with second review, tags viewed as complete"].each {|option| %>
    <option value="<%= option %>"><%= option %></option>
   <% } %>
 </select>
