@@ -350,6 +350,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     add_to_flash(env, "a movie with that description already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.id}"
   else
+    # a new one
     # cleanup various title crufts
     title = HTML.unescape(title) # &amp => & and there are some :|
     puts "title started as #{title}" 
@@ -366,6 +367,10 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = title.strip
     title = sanitize_html title
     puts "title ended as #{title}" # still some cruft
+    already_by_name = Url.get_only_or_nil_by_url_title_and_episode_number(sanitized_url, title, episode_number) # don't just blow up on DB constraint
+    if already_by_name
+      return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this message to us, we'll fix it"
+    end
     url = Url.new
     url.url = sanitized_url
     if sanitized_url.includes?("amazon.com") && title.includes?(":")

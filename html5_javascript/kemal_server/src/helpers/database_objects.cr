@@ -69,6 +69,19 @@ class Url
       end
     end[0]
   end
+
+  def self.get_only_or_nil_by_url_title_and_episode_number(url, title, episode_number) # we have a DB constraint like this
+    with_db do |conn|
+      urls = conn.query("SELECT * FROM urls WHERE url = ? and title = ? and episode_number = ?", url, title, episode_number) do |rs|
+         Url.from_rs(rs);
+      end
+      if urls.size == 1
+        return urls[0]
+      else
+        return nil
+      end
+    end
+  end
   
   def self.get_only_or_nil_by_url_and_episode_number(url, episode_number)
     with_db do |conn|
