@@ -379,7 +379,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.url = sanitized_url
     url.episode_name = episode_name
     url.episode_number = episode_number
-    url.editing_status = "Community contributed just started, tags might not be fully done yet" # must match other file :|
+    url.editing_status = "just started, tags might not be fully complete yet"
     url.total_time = duration
     url.save 
     add_to_flash(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
@@ -537,6 +537,7 @@ post "/save_url" do |env|
   db_url.genre = resanitize_html(params["genre"])
   db_url.original_rating = resanitize_html(params["original_rating"])
   db_url.editing_notes = resanitize_html(params["editing_notes"])
+  db_url.community_contrib = params["community_contrib"] == "true" # the string
   db_url.save
   
   image_url = params["image_url"]

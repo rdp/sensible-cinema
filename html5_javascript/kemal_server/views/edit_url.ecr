@@ -53,13 +53,24 @@ episode_name (blank if not episode of a series)
 </div>
 
 editing status:
-<select name="editing_status" id="editing_status">
-  <% ["just started, non community", "Community contributed just started, tags might not be fully done yet", "Done with first pass, needs second review, non community", "Community contributed done with first pass, could use second review", "Done with second review, so tags are complete", "Community contributed done with second review so tags are complete"].each {|option| %>
+<select name="editing_status" id="editing_status"> <!-- if you change this also change kemal -->
+  <% ["just started, tags might not be fully complete yet", "Done with first pass tagging, could use second review", "Done with second review, tags viewed as complete"].each {|option| %>
    <option value="<%= option %>"><%= option %></option>
   <% } %>
 </select>
 <script>
   document.getElementById('editing_status').value = '<%= url.editing_status %>';
+</script>
+<br/>
+<br/>
+
+community contrib? 
+<select name="community_contrib" id="community_contrib"> <!-- check boxes have caveats to avoid for now -->
+  <option value="true">true</option>
+  <option value="false">false</option>
+</select>
+<script>
+  document.getElementById('community_contrib').value = '<%= url.community_contrib %>';
 </script>
 <br/>
 <br/>
