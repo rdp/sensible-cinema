@@ -11,15 +11,15 @@ general feedback/filterers
 pay people for seeding corpus
   prime
   my movies I want to see LOL
-  new rel's
+  new rel's just hot :)
 
 youtube for how to create...
+
+task list to get acquainted
 
 == meh ===
 
 more personlized edit lists, everybody wants to be able to edit their own private...
-
-use amazon .srt's once
 
 main page groom persuasive/awesome/catchy [nik?] split tabs
   index wants sooo much love...make it look like a Netflix :)
@@ -29,7 +29,7 @@ more amazon auth: it remembers who you are DB [?] and marks edits/movies with wh
 glean anybody's email address that uses it :| ?? 
   add facebook auth?
 
-real reviews [star rating, other rating, every rating is a single rating] synopsis?
+real user reviews [star rating, other rating, every rating is a single rating] synopsis?
 
 more pay me donation options/amazon reseller account...
   focus on "getting paying people" LOL
@@ -37,6 +37,9 @@ more pay me donation options/amazon reseller account...
 the "give a free one away to get a credit" promo
 
 facebook feeds on front page [?]
+plugin analytics to see where ppl coming from
+
+advertise? facebook? flds?
 
 == todo never LOL ==
 created_at plz
@@ -50,7 +53,6 @@ youtube for .srt [also make it its own page whoa] it is waaaay complicated today
   but just for volunteers so lower-ish priority :)
 some way to disable it on youtube...or not track things? disable verywhere?
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
-seed corpus new releases
 can filter previews/trailers *based on duration* woot
 can upload file for image
 
@@ -68,9 +70,6 @@ international subtitle support somehow-er-other LOL
 
 auto get more images from the page if non youtube :|
 ask those one people to link to me
-real adv.: on flds, etc.
-Real ratings for shows so we can get an average rating :|
-allow upload movie images from file :|
 facebook promote more...
 kickstarter
 "original author" for edit lists...[?]
@@ -78,9 +77,6 @@ kickstarter
 real facebook or amazon login oauth etc. etc...
 
 "remember" which ones they chose last [?] for their kids to default to a good one...
-
-can you obscure quarters of the screen possibly? or percentage...or circle...check FMA LOL
-
 
 personalized uneditable content lists?
 
@@ -96,7 +92,7 @@ they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
   they can "change" movies from google play index
 
-more plugins for edge, safari...if people care...
+more plugins for edge, safari...if anybody cares...
 
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
   "I would love to support you, 30000 users" etc. LOL
