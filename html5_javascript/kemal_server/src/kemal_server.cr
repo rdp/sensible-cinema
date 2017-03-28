@@ -370,7 +370,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
       title = title.split(":")[0].strip # begone actors
     end
     puts "title ended as #{title}"
-    already_by_name = Url.get_only_or_nil_by_url_name_and_episode_number(sanitized_url, title, episode_number) # don't just blow up on DB constraint
+    already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint :|
     if already_by_name
       return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this message to us, we'll fix it"
     end

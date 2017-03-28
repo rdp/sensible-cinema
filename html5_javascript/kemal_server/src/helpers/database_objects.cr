@@ -70,9 +70,9 @@ class Url
     end[0]
   end
 
-  def self.get_only_or_nil_by_url_name_and_episode_number(url, name, episode_number)
+  def self.get_only_or_nil_by_name_and_episode_number(name, episode_number)
     with_db do |conn|
-      urls = conn.query("SELECT * FROM urls WHERE url = ? and name = ? and episode_number = ?", url, name, episode_number) do |rs|
+      urls = conn.query("SELECT * FROM urls WHERE name = ? and episode_number = ?", name, episode_number) do |rs|
         Url.from_rs(rs);
       end
       if urls.size == 1
