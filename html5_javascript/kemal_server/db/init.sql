@@ -1,4 +1,4 @@
-e- reverse order here
+-- reverse order here
 drop table if exists tag_edit_list_to_tag;
 drop table if exists tag_edit_list;
 drop table if exists tags;
@@ -113,8 +113,10 @@ alter table urls add column original_rating VARCHAR(10) NOT NULL DEFAULT '';
 alter table tags add column age_maybe_ok INT NOT NULL DEFAULT 0;
 alter table urls add column wholesome_review TEXT; -- said my row was too big otherwise :|
 update urls set wholesome_review = ''; -- default :|
--- done prod
 alter table urls add column count_downloads INT NOT NULL DEFAULT 0;
+-- done prod
+alter table tags drop column oval_percentage_coords;
+alter table urls add column editing_notes TEXT; -- said my row was too big otherwise :|
 
 -- and output to screen to show success...
 select * from urls;
