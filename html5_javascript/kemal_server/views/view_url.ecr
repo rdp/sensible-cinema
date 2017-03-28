@@ -42,6 +42,7 @@ Total content tags in our system for this movie:
     <%= table_row_or_nothing("Genre", url.genre) %>
     <%= table_row_or_nothing("Original MPAA Rating", url.original_rating) %>
     <%= table_row_or_nothing("Download Count", url.count_downloads) %>
+    <%= table_row_or_nothing("Added to our system", url.create_timestamp) %>
   </tbody>
 </table>
 <br/>
