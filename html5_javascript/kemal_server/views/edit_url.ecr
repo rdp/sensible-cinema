@@ -32,12 +32,14 @@ episode_name (blank if not episode of a series)
 <br/>
 
 <div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
-  amazon second url (if your amazon episode is part of a series, it might have two urls.  You might find its second url by clicking the "series" dropdown to select the series you're interested in).  
-  <br/>If it's not a series, it might have a second url.  It will have one url if you click to play it from "Your video library" and another different url if you search for the movie in the amazon search bar, so if you can find its second url, enter it here:
-  <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
+  amazon second url
+  <br/>.  This is kind of a weird one.  Amazon in their system seems to "sometimes" have to two different URL's that can lead to the same movie or series.
+  <br/>  So if you can find "the other one" enter it here.  For series', you might find its different second url by clicking the "series" dropdown to select the series you're watching, versus finding it through normal amazon search.
+  <br/>  For movies,  it will have one url if you click to play it from "Your video library" or "your watch list" and possibly another different url if you search for the movie in the amazon search bar.
+  <br/> so if you can find its second url, enter it here: <input type="text" name="amazon_second_url" size="150" value="<%= url.amazon_second_url %>"/>
   <br/>
   <br/>
-  amazon_prime_free_type (if any):
+  amazon_prime_free_type (if part of any subscription model):
   <select name="amazon_prime_free_type" id='amazon_prime_free_type'>
     <option value="">none (purchase/rent only)</option>
     <option value="Prime">free with prime</option>
