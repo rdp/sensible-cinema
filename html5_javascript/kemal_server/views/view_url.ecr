@@ -48,8 +48,7 @@ Total content tags in our system for this movie:
 <hr/>
 <br/>
 <h3>Content tags for this movie</h3><a  name="tags"></a>
-Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones yourself if you run into something that should be tagged but isn't in our system yet.  
-<br/>If you'd like to see the internal details of each tag, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
+Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones yourself if you run into something that should be tagged but isn't in our system yet.  Here's what we have so far:
 
 <table class="table table-striped" style="width: auto;">
   <thead>
@@ -91,18 +90,26 @@ Content tags are basically timestamps and descriptions of content that exists in
 none yet, add one now!<br/><br/>
 <% end %>
 
-<!-- actually a dropdown + -->
+<br/>If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
+<br/>
+
+<!-- actually a fold down -->
 <a href=# onclick="document.getElementById('new_content_tag_instructions').style.display = 'block'; return false;">
 Add additional content tags for this movie &#10133;<!-- thick plus --> </a>
 
 <div id="new_content_tag_instructions" style="display: none;">
-(the best way to create a new content tag is to go back to your movie, and start it playing, then click the "add new tag" link in the upper left.
+The best way to create a new content tag is to go back to your movie, and start it playing, then click the "add new tag" link in the upper left.
 <br/>
 <img src=/add_tag_example.png width=300; />
+<br/>
+After that it will give you a prompt and you enter the start time, the end time, and the action, then click "test" to try it out and "save" to automatically save it to our database.
 
 <br/>
-You can also add "lots" of mute content tags automatically by giving PlayItMyWay a subtitle file this movie, see <a href=/mass_upload_from_subtitle_file/<%= url.id %>>here</a>
-<br/>If you want to create a new tag manually, the old way, click <a href=/new_empty_tag/<%= url.id %>>here<!-- thick plus --> </a> (not recommended)!
+<br/>
+If you want to create a new tag manually, the old way, click <a href=/new_empty_tag/<%= url.id %>>here<!-- thick plus --> </a> (not recommended)!
+<br/>
+You can also add "lots" of mute content tags automatically by giving PlayItMyWay a subtitle file this movie, and it will scan it for profanities, see <a href=/mass_upload_from_subtitle_file/<%= url.id %>>here</a> for instructions.
+<br/>
 </div>
 
 <hr/>

@@ -275,7 +275,7 @@ function addEditUi() {
 	<br/>
   <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
 	<br/>
-  <a href=% onclick="getSubtitleLink(); return false;" </a>subtitles</a>
+  <a href=% onclick="getSubtitleLink(); return false;" </a>subtitle link</a>
 	</div>`;
   
   addMouseAnythingListener(mouseJustMoved);
