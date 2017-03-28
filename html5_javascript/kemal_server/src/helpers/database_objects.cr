@@ -210,8 +210,12 @@ class Url
     if amazon_prime_free_type != ""
       if amazon_prime_free_type == "Prime"
         host +=  " prime"
-      else
-        host += " #{amazon_prime_free_type} prime (or purchase)"
+      else # assume Add-on
+        host += " prime with add-on subscription"
+      end
+    else
+      if host == "amazon"
+        host += " (rent/buy)"
       end
     end
     host
