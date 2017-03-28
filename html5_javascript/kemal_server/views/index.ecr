@@ -56,11 +56,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 
 <% urls.each{ |url|  %>
     <tr>
-       <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
-	       <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
-	          alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
-	       <% end %>
-            ">
+       <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
              <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
              <%= url.name_with_episode %>
            </a>
