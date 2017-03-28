@@ -47,6 +47,7 @@ plugin analytics to see where ppl coming from
 advertise? facebook? flds?
 
 == todo never LOL ==
+shut down server more gracefully for restarts than hard kill :|
 it "auto gets" the series name wrong for Star Trek TNG season 1
 allow multiple genres
 Amazon add-on prime appears wrong in index
