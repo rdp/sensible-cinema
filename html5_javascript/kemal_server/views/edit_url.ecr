@@ -119,7 +119,7 @@ purchase cost (ex: full purchase this episode HD, assume no discounts, see above
 genre:
   <select name="genre" id='genre'>
     <option value="">unknown</option>
-    <% ["chick flick/romance", "thriller", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "military and war", "comedy", "family and kids", "music[al]", "drama", "sports", "fantasy", "sci-fi", "mystery", "faith and spirituality"].sort.each{| name| %>
+    <% ["chick flick/romance", "thriller", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "military and war", "comedy", "family and kids", "music[al]", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery", "faith and spirituality"].sort.each{| name| %>
       <option value="<%= HTML.escape(name) %>"><%= HTML.escape name %></option>
     <% } %>
    </select> 
