@@ -10,7 +10,8 @@ def subcategory_map
     "joke edit" => "movie-content -- joke edit -- edits that make it funny when applied",
     "movie content morally questionable choice" => "movie-content -- morally questionable choice",
     "movie content other" => "movie-content -- other",
-		
+
+    "loud noise" => "profanity -- loud noise/screaming",
     "personal insult mild" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
     "personal insult harsh" => "profanity -- insult harsh (b.... etc.)",
     "personal attack mild" => "profanity -- attack command (\"shut up\" etc.)",
@@ -24,7 +25,7 @@ def subcategory_map
     "deity exclamation mild" => "profanity -- deity exclamation  mildlike Good L...,  the gods, etc.",
     "deity exclamation harsh" => "profanity -- deity exclamation harsh, name of the Lord (omg, etc.)",
     "deity expletive" => "profanity -- deity expletive (es: goll durn but the real words)",
-    "mild expletive" => "profanity -- mild expletive ex \"bloomin'\"",
+    "medium expletive" => "profanity -- medium expletive ex \"bloomin'\" etc.",
     "a word" => "profanity -- a.. (and/or followed by anything else)",
     "d word" => "profanity -- d word",
     "h word" => "profanity -- h word",

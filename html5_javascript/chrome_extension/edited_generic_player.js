@@ -17,6 +17,101 @@ var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings;
 
+
+function addEditUi() {
+	
+	allEditStuffDiv = document.createElement('div');
+	allEditStuffDiv.id = "all_edit_stuff";
+	allEditStuffDiv.innerHTML = `
+	<style>
+	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
+		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+	</style>;
+	<div id='color_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: yellow; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
+	<div id='color_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
+	`;
+  allEditStuffDiv.style.color = "white";
+  allEditStuffDiv.style.background = '#000000';
+  allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  allEditStuffDiv.style.fontSize = "15px";
+  allEditStuffDiv.style.textShadow="2px 1px 1px black";
+  document.body.appendChild(allEditStuffDiv);
+	
+  currentlyEditingDiv = document.createElement('div');
+  currentlyEditingDiv.style.position = 'absolute';
+  currentlyEditingDiv.style.height = '30px';
+  currentlyEditingDiv.style.zIndex = "99999999"; // doesn't inherit? gah
+	currentlyEditingDiv.id = "top_left";
+  currentlyEditingDiv.innerHTML = 
+	` <div id=currently_filtering_id style='display: none;'>
+	    Success! Currently Playing it my way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
+	  </div>
+	  <div id=loading_div_id>Loading...</div>
+	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
+	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_or_add_movie_link_id"><!-- will be filled in --></a>`;
+  // and stay visible
+  allEditStuffDiv.appendChild(currentlyEditingDiv);
+
+  tagLayer = document.createElement('div');
+	tagLayer.id = "tagLayer";
+  tagLayer.style.position = 'absolute';
+  tagLayer.style.width = '600px';
+  tagLayer.style.height = '30px';
+  tagLayer.style.display = 'none';
+  tagLayer.style.zIndex = "99999999";
+		
+  allEditStuffDiv.appendChild(tagLayer);
+  
+  tagLayer.innerHTML = `
+  <div class="moccasin" id="moccasin_id">
+	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
+	<br/>
+	<div id='tag_layer_top_line'>
+	  Create a new tag by entering the timestamp, testing it, then saving it: 
+		<br/>current time=<span id="top_line_current_time" />
+	</div>
+	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
+  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+  <br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
+  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+  <br/>
+  action:
+  <select name='default_action' id='new_action'>
+    <option value='mute'>mute</option>
+    <option value='skip'>skip</option>
+    <option value='yes_audio_no_video'>yes_audio_no_video</option>
+    <option value='do_nothing'>do_nothing</option>
+  </select>
+	<br/>
+  <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
+  <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
+  <br/>
+  <br/>
+  <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+  <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
+  <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
+  <span id='playback_rate'>1.00x</span>
+  <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
+  <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
+  <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
+  <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
+  <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
+	<br/>
+  <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
+	<br/>
+  <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
+	<br/>
+	<br/>
+  <a href=% onclick="getSubtitleLink(); return false;" </a>subtitle link</a>
+	<br/>
+  <a href=% onclick="reloadForCurrentUrl(); return false;" </a>reload tags</a>
+	</div>`;
+  
+  addMouseAnythingListener(mouseJustMoved);
+  mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
+}
+
 function getStandardizedCurrentUrl() { // duplicated with other .js
   var current_url = currentUrlNotIframe();
   if (document.querySelector('link[rel="canonical"]') != null && !isYoutube()) {
@@ -145,7 +240,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
   var next_tag = getNextTagAfterCurrentPos();
   if (next_tag) {
-    document.getElementById('top_line_current_time').innerHTML += " next tag start: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
+    document.getElementById('top_line_current_time').innerHTML += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
   }
   var message = "";
   if (extra_message != "") {
@@ -191,96 +286,6 @@ function timestamp_log(message, cur_time, tag) {
   console.log(local_message);
 }
 
-function addEditUi() {
-	
-	allEditStuffDiv = document.createElement('div');
-	allEditStuffDiv.id = "all_edit_stuff";
-	allEditStuffDiv.innerHTML = `
-	<style>
-	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
-		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-	</style>;
-	<div id='color_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: yellow; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
-	<div id='color_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
-	`;
-  allEditStuffDiv.style.color = "white";
-  allEditStuffDiv.style.background = '#000000';
-  allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  allEditStuffDiv.style.fontSize = "15px";
-  allEditStuffDiv.style.textShadow="2px 1px 1px black";
-  document.body.appendChild(allEditStuffDiv);
-	
-  currentlyEditingDiv = document.createElement('div');
-  currentlyEditingDiv.style.position = 'absolute';
-  currentlyEditingDiv.style.height = '30px';
-  currentlyEditingDiv.style.zIndex = "99999999"; // doesn't inherit? gah
-	currentlyEditingDiv.id = "top_left";
-  currentlyEditingDiv.innerHTML = 
-	` <div id=currently_filtering_id style='display: none;'>
-	    Success! Currently Playing it my way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
-	  </div>
-	  <div id=loading_div_id>Loading...</div>
-	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
-	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_or_add_movie_link_id"><!-- will be filled in --></a>`;
-  // and stay visible
-  allEditStuffDiv.appendChild(currentlyEditingDiv);
-
-  tagLayer = document.createElement('div');
-	tagLayer.id = "tagLayer";
-  tagLayer.style.position = 'absolute';
-  tagLayer.style.width = '600px';
-  tagLayer.style.height = '30px';
-  tagLayer.style.display = 'none';
-  tagLayer.style.zIndex = "99999999";
-		
-  allEditStuffDiv.appendChild(tagLayer);
-  
-  tagLayer.innerHTML = `
-  <div class="moccasin" id="moccasin_id">
-	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
-	<br/>
-	<div id='tag_layer_top_line'>
-	  Create a new tag by entering the timestamp, testing it, then saving it: 
-		<br/>current time=<span id="top_line_current_time" />
-	</div>
-	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
-  <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
-  <br/>
-  action:
-  <select name='default_action' id='new_action'>
-    <option value='mute'>mute</option>
-    <option value='skip'>skip</option>
-    <option value='yes_audio_no_video'>yes_audio_no_video</option>
-    <option value='do_nothing'>do_nothing</option>
-  </select>
-	<br/>
-  <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
-  <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
-  <br/>
-  <br/>
-  <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
-  <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
-  <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
-  <span id='playback_rate'>1.00x</span>
-  <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-  <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
-  <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
-  <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
-  <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
-	<br/>
-  <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
-	<br/>
-  <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
-	<br/>
-  <a href=% onclick="getSubtitleLink(); return false;" </a>subtitle link</a>
-	</div>`;
-  
-  addMouseAnythingListener(mouseJustMoved);
-  mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
-}
 
 function seekToBeforeEdit(delta) {
   var desired_time = video_element.currentTime + delta;
