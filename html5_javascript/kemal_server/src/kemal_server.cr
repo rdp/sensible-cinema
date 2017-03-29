@@ -81,8 +81,12 @@ end
 
 get "/sync_web_server" do |env|
   Kemal.stop
-  system("~/sync.sh") # restarts this too TODO graceful restart
-  "restarted it" # never see this?
+  spawn do
+    sleep 0.2 # faux quiesce LOL
+      system("~/sync.sh") # restarts this too TODO graceful restart
+    end
+  end
+  "restarting it" 
 end
 
 get "/for_current_just_settings_json" do |env|
