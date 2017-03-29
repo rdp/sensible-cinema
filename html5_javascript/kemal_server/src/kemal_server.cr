@@ -1,4 +1,4 @@
-require "./helpers/*" 
+require "./helpers/*"  
 
 require "kemal"
 require "kemal-session"
