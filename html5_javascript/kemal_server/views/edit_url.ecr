@@ -136,10 +136,10 @@ function htmlDecode(input)
 <br/>
 <br/>
 
-original MPAA rating, if a movie:
+original MPAA/TV rating, if any:
   <select name="original_rating" id='original_rating'>
-    <option value="">unknown/not applicable</option>
-    <% ["G", "PG", "PG-13", "R", "NR"].each{| name|  %>
+    <option value="">unknown/none/NR</option>
+    <% ["G", "PG", "PG-13", "R", "TV-Y", "TV-Y7", "TV-Y7-FV", "TV-G", "TV-PG", "TV-14", "TV-MA"].each{| name|  %>
       <option value="<%= name %>"><%= name %></option>
     <% } %>
    </select>    
