@@ -83,8 +83,7 @@ get "/sync_web_server" do |env|
   Kemal.stop
   spawn do
     sleep 0.2 # faux quiesce LOL
-      system("~/sync.sh") # restarts this too TODO graceful restart
-    end
+    system("~/sync.sh") # restarts this TODO even more graceful restart...hrm...
   end
   "restarting it" 
 end
