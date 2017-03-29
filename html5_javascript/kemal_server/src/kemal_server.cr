@@ -79,6 +79,11 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
+get "/sync_web_server" do |env|
+  Kemal.stop
+  system("~/sync.sh") # restarts this too TODO graceful restart
+end
+
 get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
@@ -619,6 +624,5 @@ def google_search_string(url)
    end
 	 google_search
 end
-
 
 Kemal.run
