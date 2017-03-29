@@ -394,7 +394,9 @@ end
 
 get "/" do |env| # index
   urls = Url.all
-  urls.sort_by!{|url| url.url =~ /inet2.org/ ? 1 : 0} # put last
+  if urls[0].human_readable_host == "inet2"
+    urls.push urls.shift # put it last :|
+  end
   render "views/index.ecr", "views/layout.ecr"
 end
 
