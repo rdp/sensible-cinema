@@ -394,7 +394,7 @@ end
 
 get "/" do |env| # index
   urls = Url.all
-  if urls[0].human_readable_host == "inet2"
+  if urls[0].human_readable_company == "inet2"
     urls.push urls.shift # put it last :|
   end
   render "views/index.ecr", "views/layout.ecr"
