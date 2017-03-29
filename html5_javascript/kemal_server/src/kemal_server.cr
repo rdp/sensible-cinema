@@ -80,10 +80,10 @@ def db_style_from_query_url(env)
 end
 
 get "/sync_web_server" do |env|
-  Kemal.stop
+  Kemal.stop # AFAICT only stops accepting new...
   spawn do
-    sleep 0.2 # faux quiesce LOL
-    system("~/sync.sh") # restarts this TODO even more graceful restart...hrm...
+    sleep 0.1 # faux quiesce LOL
+    system("~/sync.sh") # kills this process XXXX even more graceful restart...hrm...
   end
   "restarting it" 
 end
@@ -630,3 +630,4 @@ def google_search_string(url)
 end
 
 Kemal.run
+sleep # needed for my cruddy sync stuff?
