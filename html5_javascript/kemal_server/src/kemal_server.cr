@@ -82,6 +82,7 @@ end
 get "/sync_web_server" do |env|
   Kemal.stop
   system("~/sync.sh") # restarts this too TODO graceful restart
+  "restarted it" # never see this?
 end
 
 get "/for_current_just_settings_json" do |env|
