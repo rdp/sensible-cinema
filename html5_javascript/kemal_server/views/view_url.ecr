@@ -64,6 +64,7 @@ Content tags are basically timestamps and descriptions of content that exists in
       <th>default action</th>
       <th>category</th>
       <th>subcategory</th>
+      <th>age</th>
       <th>modify</th>
       <% if show_tag_details %>
         <th>details</th>
@@ -79,10 +80,12 @@ Content tags are basically timestamps and descriptions of content that exists in
   <td><%= tag.category %></td>
   <td>
     <%= tag.subcategory %>
+  </td>
+  <td>
     <% if tag.age_maybe_ok > 0 %>
-      (not OK age <%= tag.age_maybe_ok %> and under)
+      not OK age <%= tag.age_maybe_ok %> and under
     <% end %>
-   </td>
+  </td>
   <td><a href=/edit_tag/<%= tag.id %>>modify tag</a></td>
   <% if show_tag_details %>
     <td><%= tag.details %></td>

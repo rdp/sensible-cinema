@@ -4,22 +4,26 @@ Amazon: popular prime, new releases, then netflix ??
 
 == todo ==
 
-youtube for how to create...since we have awesomeness now :)
+edit a few on my own (PG? auto subs that melissa fine tunes for the deity?) :)
+  +30 button
 
-watch a few on my own (PG? auto subs that melissa fine tunes for the deity?) :)
+youtube for how to create...since we have awesomeness now :)
 
 pay people for seeding corpus (see list)
 
-task list to learn the system
+task list how to learn the system
 
 == meh, unordered ===
 
-add youtube_preview_id so workers can propagate it as they go
+add youtube_preview_id so workers can add youtube previews...
 
 does not every tag want an age param?
 
 add year with dropdown [?]
-  low prior for now lets hope mclintock was a freak...
+  low prior for now let's hope mclintock was a freak...
+  year is still barely kind of useful to people though...
+  yeah prefer dropdown...
+  low priority
 
 "0 if none" -> empty if 0 :)
 
@@ -29,11 +33,12 @@ main page groom persuasive/awesome/catchy [nik?] split tabs
   index wants sooo much love...make it look like a Netflix :)
 
 more amazon auth: it remembers who you are DB [?] and marks edits/movies with who created them, blind is annoying...
+  no more anonymous :|
 
 glean anybody's email address that uses it :| ?? 
   add facebook auth?
 
-real user reviews [star rating, other rating, every rating is a single rating] synopsis?
+allow user reviews [star rating, other rating, every rating is a single rating] synopsis?
 
 more pay me donation options/amazon reseller account...
   focus on "getting paying people" LOL
@@ -41,12 +46,12 @@ more pay me donation options/amazon reseller account...
 the "give a free one away to get a credit" promo
 
 facebook feeds on front page [?]
-plugin analytics to see where ppl coming from
+analytics to see where ppl coming from
 
 advertise? facebook? flds?
 
 == todo never LOL ==
-test roku stream :|
+test roku stream from desktop :|
 shut down server more gracefully for restarts than hard kill :|
 it "auto gets" the series name wrong for Star Trek TNG season 1
 allow multiple genres
