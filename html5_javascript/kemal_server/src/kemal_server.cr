@@ -560,7 +560,7 @@ post "/save_url" do |env|
 
   save_local_javascript [db_url], db_url.inspect, env
 	
-  add_to_flash(env, "successfully saved #{db_url.name}")
+  add_to_flash(env, "successfully saved #{db_url.name_with_episode}")
   env.redirect "/view_url/" + db_url.id.to_s
 end
 
