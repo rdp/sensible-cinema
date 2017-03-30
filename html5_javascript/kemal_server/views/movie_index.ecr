@@ -10,10 +10,11 @@
           <a href="<%= url.url %>" target="_blank" onclick="">
             <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto;
     margin-right: auto; display: block;'", "<br/>" %>
-            <%= url.name_with_episode %>
-            <%= url.details.truncate_with_ellipses %>
-            <p><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a>
-            </p>
+          <%= url.name_with_episode %>
+          </a>
+          <br/>
+          <a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a>
+          <%= url.details.truncate_with_ellipses %>
           </a>
        </div>
   <% } %>
