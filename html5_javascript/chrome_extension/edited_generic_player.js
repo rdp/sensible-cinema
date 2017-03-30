@@ -100,12 +100,12 @@ function addEditUi() {
 	<br/>
   <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
 	<br/>
+	<br/>
   <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
 	<br/>
+  <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
 	<br/>
-  <a href=% onclick="getSubtitleLink(); return false;" </a>subtitle link</a>
-	<br/>
-  <a href=% onclick="reloadForCurrentUrl(); return false;" </a>reload tags</a>
+  <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
 	</div>`;
   
   addMouseAnythingListener(mouseJustMoved);
