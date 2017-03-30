@@ -6,14 +6,15 @@
   <h3><%= host %>:</h3>
   <br/>
   <% host_urls.each{ |url|  %>
-       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px; height: 400px; width: 210px; margin-right: 10px; margin-bottom: 10px;" > <!-- 210 is 200 image max + 5*2 padding -->
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px; height: 400px; width: 210px; margin-right: 10px; margin-bottom: 10px; overflow:scroll;" > <!-- 210 is 200 image max + 5*2 padding -->
           <a href="<%= url.url %>" target="_blank" onclick="">
             <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto;
     margin-right: auto; display: block;'", "<br/>" %>
           <%= url.name_with_episode %>
           </a>
           <br/>
-          <a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a>
+          <a href="/view_url/<%= url.id %>">View/edit our tags (<%= url.tags.size %>)</a>
+          <br/>
           <%= url.details.truncate_with_ellipses %>
           </a>
        </div>
