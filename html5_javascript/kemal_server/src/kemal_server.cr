@@ -67,7 +67,7 @@ def standardize_url(unescaped)
   if unescaped =~ /amazon.com|netflix.com/
     unescaped = unescaped.split("?")[0] # strip off extra cruft but google play needs to keep it https://play.google.com/store/movies/details/Ice_Age_Dawn_of_the_Dinosaurs?id=FkVpRvzYblc
   end
-  unescaped = unescaped.split("&")[0] # strip off cruft https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&index=21 :|
+  unescaped = unescaped.split("&")[0] # strip off cruft https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&ndex=21 :|
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
   unescaped = unescaped.split("#")[0] # trailing #, die!
   puts "standardized as #{unescaped} from #{original}"
@@ -401,11 +401,21 @@ def sanitize_html(name)
   HTML.escape name
 end
 
-get "/" do |env| # index
+def get_all_urls
   urls = Url.all
   if urls[0].human_readable_company == "inet2"
     urls.push urls.shift # put it last :|
   end
+  urls
+end
+
+get "/" do |env| # index
+  urls = get_all_urls
+  render "views/index.ecr", "views/layout.ecr"
+end
+
+get "/movie_index" do |env|
+  urls = get_all_urls
   render "views/index.ecr", "views/layout.ecr"
 end
 

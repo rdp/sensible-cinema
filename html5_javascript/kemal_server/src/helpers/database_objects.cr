@@ -264,7 +264,7 @@ class Url
       if local_name.size > 150
         local_name = local_name[0..150] + "..."
       end
-      "#{local_name} episode #{episode_number} (#{episode_name})"
+      "#{local_name} episode #{episode_number} : #{episode_name}"
     else
       name
     end
