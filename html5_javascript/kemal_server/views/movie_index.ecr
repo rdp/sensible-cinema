@@ -5,12 +5,10 @@
   <%= host %>
   <br/>
   <% host_urls.each{ |url|  %>
-       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px;" >
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px; height: 500px; width: 200px;" >
           <a href="<%= url.url %>" target="_blank" onclick="">
             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
-            <div style="max-width: 200px;">
-              <%= url.name_with_episode %>
-            </div>
+            <%= url.name_with_episode %>
             <p><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a>
             </p>
           </a>
