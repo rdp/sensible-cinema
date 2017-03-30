@@ -416,7 +416,7 @@ end
 
 get "/movie_index" do |env|
   urls = get_all_urls
-  render "views/index.ecr", "views/layout.ecr"
+  render "views/movie_index.ecr", "views/layout.ecr"
 end
 
 get "/privacy" do |env|

@@ -1,0 +1,17 @@
+<h2>Movie list</h2>
+<% host_to_urls = urls.group_by &.human_readable_company %>
+<% host_to_urls.each{ |host, host_urls|  %>
+  <div>
+  <%= host %>
+  <br/>
+  <% host_urls.each{ |url|  %>
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px;" >
+          <a href="<%= url.url %>" target="_blank" onclick="">
+            <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
+            <%= url.name_with_episode %>
+          </a>
+       </div>
+  <% } %>
+  </div>
+  <div style="clear: both;"></div>
+<% } %>
