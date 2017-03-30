@@ -8,7 +8,11 @@
        <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px;" >
           <a href="<%= url.url %>" target="_blank" onclick="">
             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
-            <%= url.name_with_episode %>
+            <div style="max-width: 200px;">
+              <%= url.name_with_episode %>
+            </div>
+            <p><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a>
+            </p>
           </a>
        </div>
   <% } %>
