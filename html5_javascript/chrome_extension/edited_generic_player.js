@@ -106,7 +106,9 @@ function addEditUi() {
   <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
 	<br/>
   <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
-	</div>`;
+  <br/>
+  <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a>
+  </div>`;
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
@@ -120,6 +122,10 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
   }
 	// attempt to leave the rest in cyrstal
   return current_url;
+}
+
+function createNewEditList() {
+  window.open("https://" + request_host + "/new_tag_edit_list/" + current_json.url.id);
 }
 
 function liveEpisodeName() {
@@ -579,12 +585,6 @@ function parseSuccessfulJson(json_string) {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	removeAllOptions(dropdown); // out with any old...	
   
-  // add first so it ends up at bottom :|
-	var createOwnOption = document.createElement("option");
-	createOwnOption.text = "Create your own list"
-  createOwnOption.value = "-2"; // special case
-	dropdown.add(createOwnOption, dropdown[0]);
-  
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		var option = document.createElement("option");
@@ -629,9 +629,6 @@ function getEditsFromCurrentTagList() {
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
 		return;
-	} else if (selected_edit_list_id == "-2") {
-	  window.open("https://" + request_host + "/new_tag_edit_list/" + current_json.url.id);
-    return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];

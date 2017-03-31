@@ -553,7 +553,7 @@ post "/save_url" do |env|
   db_url.wholesome_review = resanitize_html(params["wholesome_review"])
   db_url.amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
   db_url.rental_cost = get_float(params, "rental_cost")
-  db_url.purchase_cost = get_float(params, "purcahse_cost")
+  db_url.purchase_cost = get_float(params, "purchase_cost")
   db_url.total_time = human_to_seconds params["total_time"]
   db_url.genre = resanitize_html(params["genre"])
   db_url.original_rating = resanitize_html(params["original_rating"])
