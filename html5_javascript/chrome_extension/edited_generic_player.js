@@ -578,6 +578,13 @@ function parseSuccessfulJson(json_string) {
 	
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	removeAllOptions(dropdown); // out with any old...	
+  
+  // add first so it ends up at bottom :|
+	var createOwnOption = document.createElement("option");
+	createOwnOption.text = "Create your own list"
+  createOwnOption.value = "-2"; // special case
+	dropdown.add(createOwnOption, dropdown[0]);
+  
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
 		var option = document.createElement("option");
@@ -588,8 +595,9 @@ function parseSuccessfulJson(json_string) {
 	var option = document.createElement("option");
 	option.text = "Default (all tags) (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
 	option.value = "-1"; // special case :|
-  option.setAttribute('selected', true); // default :| XXXX I bet if we add an edit we lose the right value :|
+  option.setAttribute('selected', true); // default is selected :| XXXX I bet if we add an edit we lose the selected
 	dropdown.add(option, dropdown[0]);
+  
 	console.log("finished parsing response JSON");
 }
 
@@ -621,6 +629,9 @@ function getEditsFromCurrentTagList() {
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
 		return;
+	} else if (selected_edit_list_id == "-2") {
+	  window.open("https://" + request_host + "/new_tag_edit_list/" + current_json.url.id);
+    return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];

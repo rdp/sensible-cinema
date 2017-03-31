@@ -16,7 +16,6 @@ task list how to learn the system
 == meh, unordered ===
 
 require login for all edits [tweak FAQ?]
- 
 
 add youtube_preview_id so workers can add youtube previews...
 
@@ -56,6 +55,7 @@ advertise? facebook? flds?
 seasons have their own page, really [so one link]
 
 == todo never LOL ==
+some way to prevent vandalism?
 test roku stream from desktop :|
 shut down server more gracefully for restarts than hard kill :|
 it "auto gets" the series name wrong for Star Trek TNG season 1
