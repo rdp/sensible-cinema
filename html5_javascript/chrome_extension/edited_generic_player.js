@@ -386,19 +386,6 @@ function setEditedControlsToTopLeft() {
   tagLayer.style.top = top + "px";
 }
 
-function addToCurrentEditArray() {
-	var faux_tag = {
-		start: humanToTimeStamp(document.getElementById('start').value),
-		endy: humanToTimeStamp(document.getElementById('endy').value)
-	}
-  if (faux_tag.endy <= faux_tag.start) {
-    alert("seems your end is before your start, please fix this, then try again!");
-    return; // abort!
-  } 
-  currentEditArray().push(faux_tag);
-  return faux_tag;
-}
-
 function currentTestAction() {
   return document.getElementById('new_action').value;
 }
@@ -412,11 +399,20 @@ function testCurrentFromUi() {
 		alert('cant test two edits simultaneously, please wait for the first to finish first'); // otherwise I'm not sure what is going to happen to those arrays with their temp add-on at the end 
 		return; // abort
 	}
+	var faux_tag = {
+		start: humanToTimeStamp(document.getElementById('start').value),
+		endy: humanToTimeStamp(document.getElementById('endy').value)
+	}
+  if (faux_tag.endy <= faux_tag.start) {
+    alert("appears your end is before your start, please fix this, then try again!");
+    return; // abort!
+  } 
+  currentEditArray().push(faux_tag);
+  
   inMiddleOfTestingEdit = true;
-  var faux_tag = addToCurrentEditArray();
-  var start = faux_tag.start - 1;
+  var start = faux_tag.start - 2;
   if (start < 0) {
-    start = 0;
+    start = 0; // allow edits to start at or near 0
   }
   seekToTime(start, function() {
 	  length = faux_tag.endy - start;
