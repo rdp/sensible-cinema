@@ -44,7 +44,7 @@ function addEditUi() {
 	currentlyEditingDiv.id = "top_left";
   currentlyEditingDiv.innerHTML = 
 	` <div id=currently_filtering_id style='display: none;'>
-	    Success! Currently Playing it my way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
+	    Currently Playing it my way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
 	  </div>
 	  <div id=loading_div_id>Loading...</div>
 	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
@@ -586,7 +586,7 @@ function parseSuccessfulJson(json_string) {
 		dropdown.add(option, dropdown[0]); // put it at the top XX
 	}
 	var option = document.createElement("option");
-	option.text = "all content tags (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
+	option.text = "Default (all tags) (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
 	option.value = "-1"; // special case :|
   option.setAttribute('selected', true); // default :| XXXX I bet if we add an edit we lose the right value :|
 	dropdown.add(option, dropdown[0]);
