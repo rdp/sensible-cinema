@@ -338,6 +338,10 @@ class Tag
       conn.exec("delete from tag_edit_list_to_tag where tag_id = ?", id)
     end
   end
+
+  def duration
+    endy - start
+  end
   
   def url
     with_db do |conn|

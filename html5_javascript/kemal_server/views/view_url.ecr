@@ -75,7 +75,7 @@ Content tags are basically timestamps and descriptions of content that exists in
 <% url.tags.each do |tag|  %>
   <tr>
   <td><%= seconds_to_human tag.start %></td>
-  <td><%= seconds_to_human (tag.endy - tag.start) %></td>
+  <td><%= seconds_to_human tag.duration %></td>
   <td><%= tag.default_action %></td>
   <td><%= tag.category %></td>
   <td>
