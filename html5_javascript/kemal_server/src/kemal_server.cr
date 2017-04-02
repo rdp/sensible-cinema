@@ -136,11 +136,11 @@ def hard_nuke_url_or_nil(url, env)
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
     }
-    url.tags.each &.destroy
+    url.tags.each &.destroy_no_cascade # already nuked its edit lists bindings
     if url.image_local_filename.present?
       File.delete "./public/movie_images/#{url.image_local_filename}"
     end
-    url.destroy
+    url.destroy_no_cascade
     "nuked testmovie #{url} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
   else
    raise "not found to nuke?"
@@ -155,7 +155,8 @@ end
 get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
   tag = Tag.get_only_by_id(id)
-  tag.destroy
+  tag.destroy_in_tag_edit_lists
+  tag.destroy_no_cascade
   save_local_javascript [tag.url], "removed #{tag.inspect}", env
   add_to_flash env, "deleted one tag"
   env.redirect "/view_url/#{tag.url.id}"

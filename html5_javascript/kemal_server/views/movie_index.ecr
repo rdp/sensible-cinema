@@ -1,3 +1,24 @@
+<!-- bootstrap modal will pop over everything, I assume it uses its own javascript for shtuff for it, really -->
+
+<div class="modal fade" tabindex="-1" role="dialog"> <!-- open with $("#myModal").modal() -->
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modal-title-id">Modal Title</h4>
+      </div>
+      <div class="modal-body">
+        <p>modal body text...</p>
+        <iframe src="" style="border:none;"></iframe> <!-- document.getElementById('calendar').src = loc; -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <h2>Movie list</h2>
 <% host_to_urls = urls.group_by &.human_readable_company %>
 <% host_to_urls.each{ |host, host_urls|  %>
@@ -6,17 +27,16 @@
   <h3><%= host %>:</h3>
   <br/>
   <% host_urls.each{ |url|  %>
-       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 5px; height: 400px; width: 214px; margin-right: 10px; margin-bottom: 10px; overflow:scroll;" > <!-- 214 is 200 image max + 5*2 padding  + 2*2 margin-->
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; height: 400px; width: 224px; margin-right: 10px; margin-bottom: 10px; overflow:scroll;" > <!-- 224 is 200 image max + 10*2 padding  + 2*2 margin-->
           <a href="<%= url.url %>" target="_blank" onclick="">
             <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto;
     margin-right: auto; display: block;'", "<br/>" %>
           <%= url.name_with_episode %>
           </a>
           <br/>
-          <a href="/view_url/<%= url.id %>">View/edit our tags (<%= url.tags.size %>)</a>
-          <br/>
           <%= url.details.truncate_with_ellipses %>
-          </a>
+          <br/>
+          <a href="/view_url/<%= url.id %>">View info (<%= url.tags.size %> tags)</a>
        </div>
   <% } %>
   </div>

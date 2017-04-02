@@ -185,8 +185,7 @@ class Url
     end
   end
 
-  def destroy
-    # no cascade, it should do that first itself now
+  def destroy_no_cascade
     with_db do |conn|
       conn.exec("delete from urls where id = ?", id)
     end
@@ -296,7 +295,7 @@ class Url
 end
 
 class Tag
-  # see edit_tag.ecr for options
+
   JSON.mapping({
     id: Int32,
     start:   {type: Float64},
@@ -328,9 +327,15 @@ class Tag
     end
   end
   
-  def destroy
+  def destroy_no_cascade
     with_db do |conn|
       conn.exec("delete from tags where id = ?", id)
+    end
+  end
+
+  def destroy_in_tag_edit_lists
+    with_db do |conn|
+      conn.exec("delete from tag_edit_list_to_tag where tag_id = ?", id)
     end
   end
   
@@ -392,8 +397,8 @@ def human_to_seconds(ts_human)
   sum
 end
 
-
 class TagEditList
+
   JSON.mapping({
     id: Int32,
     url_id: Int32,
