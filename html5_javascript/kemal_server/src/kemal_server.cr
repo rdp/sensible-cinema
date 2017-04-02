@@ -235,7 +235,7 @@ post "/save_tag/:url_id" do |env|
   }
   save_local_javascript [url], tag.inspect, env
   if tag.duration > 10*60
-    add_to_flash("warning, duration is > 10 minutes of tag just saved??")
+    add_to_flash(env, "warning, duration is > 10 minutes of tag just saved??")
   end
   add_to_flash(env, "saved tag's details, you can close this window now, hit reload in your browser...")
   env.redirect "/edit_tag/#{tag.id}"
