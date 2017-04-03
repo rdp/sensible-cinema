@@ -25,7 +25,7 @@ Total content tags in our system for this movie:
   <tbody>
     <%= table_row_or_nothing("URL", url.url) %>
     <%= table_row_or_nothing("Alternate URL", url.amazon_second_url) %>
-    <%= table_row_or_nothing("details", url.details) %>
+    <%= table_row_or_nothing("Synopsis", url.details) %>
     <% if url.url =~ /amazon.com/ %>
       <%= table_row_or_nothing("prime?", url.human_readable_company) %>
     <% end %>
@@ -35,13 +35,13 @@ Total content tags in our system for this movie:
     <% # else its a bit downheartening "not" community contrib LOL
       end %>
     <%= table_row_or_nothing("Editing notes", url.editing_notes) %>
-    <%= table_row_or_nothing("wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
-    <%= table_row_or_nothing("good movie rating (out of 10)", url.good_movie_rating) %>
-    <%= table_row_or_nothing("price to purchase/rent", url.cost_string) %>
+    <%= table_row_or_nothing("Price to purchase/rent", url.cost_string) %>
     <% if url.total_time > 0 %>
-      <%= table_row_or_nothing("total movie time", seconds_to_human url.total_time) %>
+      <%= table_row_or_nothing("Total movie time", seconds_to_human url.total_time) %>
     <% end %>
+    <%= table_row_or_nothing("Good movie rating (out of 10)", url.good_movie_rating) %>
     <%= table_row_or_nothing("Our local review", url.review) %>
+    <%= table_row_or_nothing("Wholesome_uplifting_level (out of 10)", url.wholesome_uplifting_level) %>
     <%= table_row_or_nothing("Wholesome review", url.wholesome_review) %>
     <%= table_row_or_nothing("Genre", url.genre) %>
     <%= table_row_or_nothing("Original MPAA Rating", url.original_rating) %>
@@ -50,7 +50,8 @@ Total content tags in our system for this movie:
   </tbody>
 </table>
 <br/>
-<a href=/edit_url/<%= url.id %>>modify these movie details</a> Anybody can contribute, kind of like wikipedia!
+<a href=/edit_url/<%= url.id %>>modify these movie details</a>
+<br/>Anybody can contribute, kind of like wikipedia!
 
 <hr/>
 <br/>
