@@ -249,11 +249,11 @@ class Url
       out += "free (#{amazon_prime_free_type})"
     end
     if rental_cost > 0 || purchase_cost > 0
-       " $%.2f/$%.2f" % [purchase_cost, rental_cost]
+       out += " $%.2f/$%.2f" % [purchase_cost, rental_cost]
     elsif human_readable_company == "youtube" # 0 is OK here :)
-       "free (youtube)"
-    else
-       ""
+       out = "free (youtube)"
+    else 
+      # leave empty
     end
     out
   end
