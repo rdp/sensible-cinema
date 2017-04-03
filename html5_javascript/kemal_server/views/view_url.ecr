@@ -74,7 +74,12 @@ Content tags are basically timestamps and descriptions of content that exists in
   </thead>
 <% url.tags.each do |tag|  %>
   <tr>
-  <td><%= seconds_to_human tag.start %></td>
+  <td>
+    <%= seconds_to_human tag.start %>
+    <% if tag2 = tag.overlaps_any?(url.tags) %>
+      (overlaps with tag starting at <%= seconds_to_human tag2.start %>)
+    <% end %>
+  </td>
   <td><%= seconds_to_human tag.duration %></td>
   <td><%= tag.default_action %></td>
   <td><%= tag.category %></td>

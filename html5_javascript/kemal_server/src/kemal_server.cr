@@ -228,11 +228,9 @@ post "/save_tag/:url_id" do |env|
   tag.details = resanitize_html params["details"]
   tag.age_maybe_ok = params["age_maybe_ok"].to_i
   tag.save
-  url.tags.reject{|tag2| tag2.id == tag.id}.each{|tag2|
-    if (tag2.start >= tag.start && tag2.start <= tag.endy) || (tag2.endy >= tag.start && tag2.endy <= tag.endy)
-      add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
-    end
-  }
+  if (tag2 = tag.overlaps_any? url.tags)
+    add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
+  end
   save_local_javascript [url], tag.inspect, env
   if tag.duration > 10*60
     add_to_flash(env, "warning, duration is > 10 minutes of tag just saved??")
