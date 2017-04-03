@@ -24,6 +24,7 @@ Total content tags in our system for this movie:
   </thead>
   <tbody>
     <%= table_row_or_nothing("URL", url.url) %>
+    <%= table_row_or_nothing("Alternate URL", url.amazon_second_url) %>
     <%= table_row_or_nothing("details", url.details) %>
     <% if url.url =~ /amazon.com/ %>
       <%= table_row_or_nothing("prime?", url.human_readable_company) %>
