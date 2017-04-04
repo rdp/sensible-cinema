@@ -22,12 +22,12 @@ details (brief synopsis [non-spoilers], etc.) try to make up your own here inste
 <br/>
 <br/>
 
-episode_number (0 if not part of a series)
-<input type="text" name="episode_number" size="5" value="<%= url.episode_number %>"/>
+episode_number (if any)
+<input type="text" name="episode_number" size="5" value="<%= url.episode_number if url.episode_number != 0 %>"/>
 <br/>
 <br/>
 
-episode_name (blank if not episode of a series)
+episode_name (if any)
 <input type="text" name="episode_name" size="50" value="<%= url.episode_name %>"/>
 <br/>
 <br/>
@@ -66,7 +66,7 @@ editing status:
 <br/>
 <br/>
 
-editing_notes (ex: "removed the profanity, some violence remains" or "got to minute 45", "only did the mutes")
+editing_notes (ex: "removed the profanity, some violence remains" or "got to minute 45", "only did the mutes so far")
 <br/>
 <textarea name="editing_notes" rows="1" cols="150" ><%= url.editing_notes %></textarea>
 <br/>
@@ -83,8 +83,8 @@ community contrib? (set to false if you are being paid for this)
 <br/>
 <br/>
 
-good_movie_rating (out of 10, or 0 for no rating, kind of like "out of 10 stars" on IMDB)
-<input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating %>"/>
+good_movie_rating (out of 10, kind of like "out of 10 stars" on IMDB)
+<input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating if url.good_movie_rating > 0 %>"/>
 <br/>
 <br/>
 
@@ -95,8 +95,8 @@ Ex: "This movie is part of a series that is...Keanu Reeves does a good job, but 
 <br/>
 <br/>
 
-wholesome_uplifting_level (out of 10, or 0 for no rating)
-<input type="text" name="wholesome_uplifting_level" size="5" value="<%= url.wholesome_uplifting_level %>"/>
+wholesome_uplifting_level (out of 10)
+<input type="text" name="wholesome_uplifting_level" size="5" value="<%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %>"/>
 <br/>
 <br/>
 
@@ -108,12 +108,12 @@ Ex: "A little dark", "a good question to discuss as a family afterward would be.
 <br/>
 
 rental cost (HD rental for 1 to 30 days, ex "2.00") (enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube), for amazon, enter cost for rental this episode assuming non-prime)
-<input type="text" name="rental_cost" size="5" value="<%= url.rental_cost %>"/>$
+<input type="text" name="rental_cost" size="5" value="<%= url.rental_cost if url.rental_cost %>"/>$
 <br/>
 <br/>
 
 purchase cost (ex: full purchase this episode HD, assuming no discounts, see above)
-<input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>$
+<input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost if url.purchase_cost %>"/>$
 <br/>
 <br/>
 
@@ -174,6 +174,6 @@ total movie length <!-- (netflix needs this, others can survive without it but s
 <br/><a href="/view_url/<%= url.id %>"><< back to movie page</a> (if you made any changes, hit "Update movie info" or changes will be lost)
 <br/>
 
-<a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from database</a>
+<a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "Request to delete url #{url.name} #{url.id}" %> target="_blank" onClick="alert('redirecting you to another website where you can fill out a form to request its deletion...');">delete this movie from system</a>
 
 <br/>
