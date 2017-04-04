@@ -101,7 +101,7 @@ wholesome_uplifting_level (out of 10, or 0 for no rating)
 <br/>
 
 wholesome review (explain wholesome/uplifting level)<br/>
-Ex: "A little dark", "a good question to discuss as a family afterward would be..."
+Ex: "A little dark", "a good question to discuss as a family afterward would be..." "even edited, probably OK only for age 13 because of theme"
 <br/>
 <textarea name="wholesome_review" rows="2" cols="150" ><%= url.wholesome_review %></textarea>
 <br/>
@@ -112,12 +112,12 @@ rental cost (HD rental for 1 to 30 days, ex "2.00") (enter 0 if no rental option
 <br/>
 <br/>
 
-purchase cost (ex: full purchase this episode HD, assume no discounts, see above)
+purchase cost (ex: full purchase this episode HD, assuming no discounts, see above)
 <input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost %>"/>$
 <br/>
 <br/>
 
-genre:
+main genre:
   <select name="genre" id='genre'>
     <option value="">unknown</option>
     <% ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "military and war", "comedy", "family and kids", "music[al]", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery and thriller", "faith and spirituality"].sort.each{| name| %>
@@ -163,7 +163,7 @@ You can <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_strin
 <br/>
 
 <br/>
-total movie length (netflix needs this, others can survive without it but still good if available)
+total movie length <!-- (netflix needs this, others can survive without it but still useful if possible) -->
 <input type="text" name="total_time" size="40" value="<%= seconds_to_human url.total_time %>"/>
 <br/>
 
