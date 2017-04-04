@@ -416,7 +416,8 @@ function testCurrentFromUi() {
   currentEditArray().push(faux_tag);
   
   inMiddleOfTestingEdit = true;
-  var start = faux_tag.start - 2;
+  var rewindSeconds = 2;
+  var start = faux_tag.start - rewindSeconds;
   if (start < 0) {
     start = 0; // allow edits to start at or near 0
   }
@@ -425,7 +426,7 @@ function testCurrentFromUi() {
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
-	  wait_time_millis = (length + 1 + 1) * 1000; 
+	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000; 
 	  setTimeout(function() {
 			console.log("assuming done with edit...");
 	    currentEditArray().pop();
