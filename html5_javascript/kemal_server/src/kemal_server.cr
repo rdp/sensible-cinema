@@ -141,7 +141,7 @@ def hard_nuke_url_or_nil(url, env)
       File.delete "./public/movie_images/#{url.image_local_filename}"
     end
     url.destroy_no_cascade
-    "nuked testmovie #{url} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
+    "nuked testmovie #{HTML.escape url.inspect} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
   else
    raise "not found to nuke?"
   end
