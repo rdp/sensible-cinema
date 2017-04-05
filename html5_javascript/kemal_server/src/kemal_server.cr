@@ -234,7 +234,7 @@ post "/save_tag/:url_id" do |env|
   end
   save_local_javascript [url], tag.inspect, env
   add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, you can close this window now, hit reload in your browser...")
-  env.redirect "/edit_url/#{url.id}"
+  env.redirect "/view_url/#{url.id}"
 end
 
 get "/edit_url/:url_id" do |env|
