@@ -418,7 +418,7 @@ end
 
 get "/" do |env| # index
   urls = get_all_urls
-  render "views/index.ecr", "views/layout.ecr"
+  render "views/home.ecr", "views/layout.ecr"
 end
 
 get "/movie_index" do |env|
