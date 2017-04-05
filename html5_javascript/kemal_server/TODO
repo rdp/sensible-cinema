@@ -4,53 +4,45 @@ Amazon: popular prime, new releases, then netflix ??
 
 == todo ==
 
-edit a few on my own (PG? auto subs that melissa fine tunes for the deity?) :) no sex or Melissa can fine tune that, what?
-  +30 button? pretend I'm looking for it...
-  awakenings no sex
-  lorenzo's (no sex, yes profanity)
-
-youtube for how to create...plus we have awesomeness now :)
-  look at kids in mind?
-  we have ages...
+edit a few on my own (PG? auto subs that melissa fine tunes for the deity?) :)
+  I better stick to PG for myself :| gah
+  finish sing
 
 pay people for seeding corpus (its list)
 
-== meh, unordered ===
+a way to "turn it off on this video I want it uncut" useful for reviewing...
+
+no more anonymous edits :|
+  but anonymous playback OK for now
+
+youtube for how to create...plus we have awesome subs now :)
+  ask Melissa?
+
+== pre launch ==
+
+add youtube_preview_id so workers can add youtube previews...actually vimeo :)
+  super easy to do later tho
 
 more personlized edit lists, everybody wants to be able to edit their own private...yeah...
   checkboxes ? select all?
   we have a link for it, so should take care of this
   just "one per user" for now
   first add more auth :|
-
-put the nice index as front page somehow :)
-  don't *have to have* until launch
-
-a way to "turn it off on this video I want it uncut" LOL
-
-on amazon previews it says "success!..." LOL
-
-require login for all edits [+tweak FAQ?]
-
-add youtube_preview_id so workers can add youtube previews...actually we want vimeo :)
-
-does not every tag want that age param??
-
-add year with dropdown [?]
-  low prior for now let's hope mclintock was a freak...
-  year is still barely kind of useful to people though...
-  yeah prefer dropdown...  low priority
-
-"0 if none" -> empty if 0 :)
+  an option to see all details
 
 main page groom persuasive/awesome/catchy [nik?] split tabs
   index wants sooo much love...make it look like a Netflix :)
+  put the nice index as front page somehow :)
 
-more amazon auth: it remembers who you are DB [?] and marks edits/movies with who created them, blind is annoying...
-  no more anonymous :|
+== meh, unordered ===
 
 glean anybody's email address that uses it :| ?? 
-  add facebook auth?
+  allow facebook auth
+  add emails to our system
+  it remembers who you are DB [?] and marks edits/movies with who created them, blind is annoying...
+  don't actually *need* this at launch...but close
+
+on amazon previews it says "success!..." LOL
 
 allow user reviews [star rating, other rating, every rating is a single rating] synopsis?
 
@@ -69,6 +61,14 @@ seasons have their own page, really [so one link]
 easier/some kind of "contact us" ...
 
 == todo never LOL ==
+
+does not every tag want that age param?? maybe OK for now
+
+add year with dropdown [?]
+  low prior for now let's hope mclintock was a freak...
+  year is still barely kind of useful to people though...
+  yeah prefer dropdown...  low priority
+
 do we need more things people can enter in, like what common sense media has 3 different things?
 add SD price (if anybody else requests it)
 new icon for the chrome plugin [various?]

@@ -90,6 +90,7 @@ function addEditUi() {
   <br/>
   <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
   <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
+  <input type='button' onclick="seekToTime(video_element.currentTime + 60); return false;" value='+1m'/> <!-- at worst this one seeks forward, so ok -->
   <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
   <span id='playback_rate'>1.00x</span>
   <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
