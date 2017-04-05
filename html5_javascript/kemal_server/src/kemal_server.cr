@@ -93,6 +93,10 @@ get "/sync_web_server" do |env|
   "restarting it" 
 end
 
+get "/all_tags" do |env|
+  Tag.all.inspect
+end
+
 get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)

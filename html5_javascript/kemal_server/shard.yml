@@ -17,3 +17,5 @@ dependencies:
     github: crystal-lang/crystal-db
   mysql:
     github: crystal-lang/crystal-mysql
+    branch: master
+

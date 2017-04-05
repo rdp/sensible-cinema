@@ -140,6 +140,7 @@ class Url
   end
 
   def tags
+    puts "searching for tags for url=#{id}"
     with_db do |conn|
       conn.query("select * from tags where url_id=? order by start asc", id) do |rs|
         Tag.from_rs rs
@@ -276,7 +277,12 @@ class Url
   def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from urls where id = ?", id) do |rs|
-         Url.from_rs(rs)[0] # Index OOB if not there :|
+         all = Url.from_rs(rs) # Index OOB if not there :|
+         if all.size == 1
+           return all[0]
+         else
+           raise "unable to find url with id #{id} size=#{all.size}"
+         end
       end
     end
   end
@@ -306,6 +312,15 @@ class Tag
     age_maybe_ok: {type: Int32},
     url_id: Int32
   })
+
+  def self.all
+    with_db do |conn|
+      conn.query("SELECT * from tags order by url_id") do |rs|
+         Tag.from_rs(rs);
+      end
+    end
+  end
+
   
   def self.get_only_by_id(id)
     with_db do |conn|
