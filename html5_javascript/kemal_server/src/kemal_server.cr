@@ -222,7 +222,8 @@ post "/save_tag/:url_id" do |env|
   tag.start = url.human_to_seconds start
   tag.endy = url.human_to_seconds endy
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
-  raise "tag is more than 10 minutes long? This should not be expected" if tag.endy - tag.start > 60*10
+  raise "tag is more than 15 minutes long? This should not typically be expected?" if tag.endy - tag.start > 60*15
+  raise "got negative?" if tag.start < 0 || tag.endy < 0
   tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
   tag.category = resanitize_html params["category"]
   tag.subcategory = resanitize_html params["subcategory"]
