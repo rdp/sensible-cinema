@@ -57,6 +57,12 @@ class Url
     editing_notes: String,
     community_contrib: Bool
   })
+
+  def self.count
+    with_db do |conn|
+      conn.scalar "select count(*) from urls"
+    end
+  end
   
   def self.all
     with_db do |conn|
@@ -67,12 +73,20 @@ class Url
     end
   end
 
-  def self.first
+  def self.latest
     with_db do |conn|
-      conn.query("SELECT * from urls order by url, amazon_prime_free_type desc limit 1") do |rs|
-        Url.from_rs(rs); # is there no easy "get one" option?
+      conn.query("SELECT * from urls ORDER BY create_timestamp desc limit 1") do |rs|
+        Url.from_rs(rs)[0]; # is there no easy "get one" option?
       end
-    end[0]
+    end
+  end
+
+  def self.random
+    with_db do |conn|
+      conn.query("SELECT * from urls ORDER BY rand() limit 1") do |rs| # lame, I know
+        Url.from_rs(rs)[0]; # is there no easy "get one" option?
+      end
+    end
   end
 
   def self.get_only_or_nil_by_name_and_episode_number(name, episode_number)

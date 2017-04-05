@@ -6,16 +6,25 @@
 <br/>Ever wished you could mute profanities or skip objectionable scenes that distract during movies? We hope to finally give you control of what you watch.
 Offering personalized playback of amazon/amazon prime/youtube videos, and more!  
 <br/>
-The best part? Play It My Way is currently free! We intend to stay free for edited youtubes forever. For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" or "buy a specific movie's edit for $1" but during Beta, use it all you want free, we'd love your feedback and support!<br/>
+Play It My Way is currently free while in Beta! We intend to stay free for edited youtubes forever. For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" but during Beta, use it all you want free, we'd love your feedback and support!<br/>
 <h2>How it works:</h2>
 Basically, watch your movie on your computer, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to get started!
 
 <h1>Our Movie List</h1>
-See also our <a href=/movie_index>new movie list</a>.
+Please see <a href=/movie_index>here for our movie list</a>, currently offering <%= Url.count %> edited shows!
 <br/>
-These are movies/shows/youtubes that we currently have in our system.  Don't see one you want? <a href=/instructions_create_new_url>Add it</a> and help us out by tagging it and adding it to the system! (Note that eventually this will become a pay offering, but we'd love your help! Youtube will always be free!)
-<br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for a movie to be the next one on our queue to be edited.
-<br/>Your playback is going to differ from the original content (we're required by law to say that :) )
+Here is a random movie from our system:
+<br/>
+<% url = Url.random %>
+<a href="/movie_index">
+  <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
+  <%= url.name_with_episode %>
+</a>
+<br/>
+<%= url.details.truncate_with_ellipses %>
+<br/>
+See this and the rest of our movies <a href=/movie_index>here</a>!
+
 
 <table class="table table-striped">
   <thead>
@@ -63,11 +72,6 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 
   </tbody>
 </table>
-
-&#10133; Anybody can add new films and new edits to our system!  We'd love your help!
-<br/>Add another (not yet present) video to our edited system by <a href=/instructions_create_new_url>clicking here!</a>
-<br/>
-<br/>
 
 
 <h2> Facebook </h2>

@@ -59,7 +59,9 @@
         <% end %>
       </ul>
       <% if logged_in?(env) %>
-        <p class="navbar-text navbar-right">Signed in as <a href="/logout" class="navbar-link"><%= logged_in_user(env).name %></a></p>
+        <p class="navbar-text navbar-right">Logged in as <a href="/logout" class="navbar-link"><%= logged_in_user(env).name %></a></p>
+      <% else %>
+        <p class="navbar-text navbar-right">Please <a href="/login" class="navbar-link">login.</a></p>
       <% end %>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
