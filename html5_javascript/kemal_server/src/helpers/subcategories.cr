@@ -41,6 +41,7 @@ def subcategory_map
     "visible blood" => "violence -- visible blood of wound",
     "open wounds" => "violence -- gore/open wound",
     "light fight" => "violence -- light fighting (single punch/kick/hit/push)",
+    "comedic fight" => "violence -- comedic/slapstick fighting",
     "sustained fight" => "violence -- sustained punching/fighting",
     "killing" => "violence -- killing on screen (ex: bullet shot)",
     "killing offscreen" => "violence -- killing off screen",
