@@ -25,63 +25,12 @@ Here is a random movie from our system:
 <br/>
 See this and the rest of our movies <a href=/movie_index>here</a>!
 
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Movie</th>
-      <th></th> <!-- host -->
-      <th>Tags</th>
-      <th>Details</th>
-      <th>Wholesome<br/>uplifting level / 10</th>
-      <th>Movie rating / 10</th>
-      <th>Our local review</th>
-      <th>Editing status</th>
-      <th>Editing notes</th>
-      <th>Wholesome review</th>
-      <th>Original MPAA Rating</th>
-      <th>Cost</th>
-      <th>Movie info</th>
-    </tr>
-  </thead>
-  <tbody>
-
-<% urls.each{ |url|  %>
-    <tr>
-       <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
-             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
-             <%= url.name_with_episode %>
-           </a>
-       </td>
-       <td><%= url.human_readable_company %></td>
-       <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
-       <td><%= url.details.truncate_with_ellipses %></td>
-       <td><%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
-       <td><%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
-       <td><%= url.review.truncate_with_ellipses %></td>
-       <td><%= url.editing_status %> </td>
-       <td><%= url.editing_notes %> </td>
-       <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
-       <td><%= url.original_rating %> </td>
-       <td><%= url.cost_string %></td>
-       <td>
-	    <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
-       </td>
-   </tr>
-<% } %>
-
-  </tbody>
-</table>
-
-
 <h2> Facebook </h2>
 <a name=facebook_groups/></a>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
 <br/>
 Thanks for stopping by!
 <hr/>
 You too can get a free website subdomain under inet2.org see <a href=http://inet2.org>here</a>.
-<br/>
-Running latest code version: <%= `git log -1 --format=%cd`[0..14] %>
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {

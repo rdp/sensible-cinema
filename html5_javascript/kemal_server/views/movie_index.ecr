@@ -29,8 +29,8 @@
   <% host_urls.each{ |url|  %>
        <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: 229px; margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin-->
          <div style="height: 378px; overflow:scroll;"> <!-- don't show freaky text at bottom -->
-           <a href="<%= url.url %>" target="_blank" onclick="">
-             <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>" %>
+         <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
+            <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>" %>
             <%= url.name_with_episode %>
           </a>
           <br/>
@@ -57,3 +57,54 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 <br/>Add another (not yet present) video to our edited system by <a href=/instructions_create_new_url>clicking here!</a>
 <br/>
 <br/>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th></th> <!-- host -->
+      <th>Tags</th>
+      <th>Details</th>
+      <th>Wholesome<br/>uplifting level / 10</th>
+      <th>Movie rating / 10</th>
+      <th>Our local review</th>
+      <th>Editing status</th>
+      <th>Editing notes</th>
+      <th>Wholesome review</th>
+      <th>Original MPAA Rating</th>
+      <th>Cost</th>
+      <th>Movie info</th>
+    </tr>
+  </thead>
+  <tbody>
+
+<% urls.each{ |url|  %>
+    <tr>
+       <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
+             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
+             <%= url.name_with_episode %>
+           </a>
+       </td>
+       <td><%= url.human_readable_company %></td>
+       <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
+       <td><%= url.details.truncate_with_ellipses %></td>
+       <td><%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
+       <td><%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
+       <td><%= url.review.truncate_with_ellipses %></td>
+       <td><%= url.editing_status %> </td>
+       <td><%= url.editing_notes %> </td>
+       <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
+       <td><%= url.original_rating %> </td>
+       <td><%= url.cost_string %></td>
+       <td>
+            <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
+       </td>
+   </tr>
+<% } %>
+
+  </tbody>
+</table>
+
+<%= render "views/_installed_js.ecr" %>
