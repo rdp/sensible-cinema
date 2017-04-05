@@ -71,7 +71,8 @@ def subcategory_map
     "substance-abuse other" => "substance-abuse -- other",
 
     "frightening/startling scene/event" => "suspense -- frightening/startling scene/event",
-    "suspenseful fight \"will they win?\"" => "suspense -- suspenseful fight \"will they win?\""
+    "suspenseful fight \"will they win?\"" => "suspense -- suspenseful fight \"will they win?\"",
+    "suspense other" => "suspense -- other",
     })
   end
   Subcats

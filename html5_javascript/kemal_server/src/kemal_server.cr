@@ -19,12 +19,11 @@ end
 
 class CustomHandler < Kemal::Handler
   def call(env)
-    if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
-      add_to_flash env, "login required before you can do that..." # TODO remember where they came from to get here :|
+    if (env.request.path =~ /delete|nuke/ || env.request.method == "POST") && !logged_in?(env) && !File.exists?("./this_is_development")
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
-        puts "saving #{env.session.string("redirect_to_after_login")}"
       end # else too hard
+      add_to_flash env, "Please login before modifying things on the site:"
       env.redirect "/login" 
     else
       call_next env
@@ -223,7 +222,7 @@ post "/save_tag/:url_id" do |env|
   raise "got negative?" if tag.start < 0 || tag.endy < 0
   tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
   tag.category = resanitize_html params["category"]
-  if !params["subcategory"]?
+  if !params["subcategory"].present?
     raise "no subcategory selected, please hit back arrow in your browser and select subcategory for tag, if nothing fits then select '... -- other'"
   end
   tag.subcategory = resanitize_html params["subcategory"]
@@ -269,9 +268,9 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
   user = AmazonUser.from_json(info)  # or JSON.parse info
   env.session.object("user", user)
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
-  if env.session.string?("redirect_to_after_login") && env.session.string("redirect_to_after_login").present?
-    env.redirect  env.session.string("redirect_to_after_login")
-    env.session.string("redirect_to_after_login", "")  # no delete :|
+  if env.session.string?("redirect_to_after_login") 
+    env.redirect env.session.string("redirect_to_after_login")
+    env.session.delete_string("redirect_to_after_login")
   else
     env.redirect "/"
   end
