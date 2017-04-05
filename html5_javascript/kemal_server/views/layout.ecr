@@ -34,7 +34,6 @@
 		</p>
   <% end %>
   
-  
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -51,7 +50,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <% known_actions = {"" => "Home", "movie_index" => "Movie List"} %>
+        <% known_actions = {"" => "Home", "movie_index" => "Movie List", "faq" => "FAQ"} %>
         <% known_actions.each{ |action2, name| %>
         <li class="<%= "active" if action2 == action %>"><a href="/<%= action2 %>"><%= name %><span class="sr-only"><%= "(current)" if action2 == action %></span></a></li>
         <% } %>
@@ -62,14 +61,12 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-  
-  <hr/> 
   <%= content %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </div>
-  <% if env.session.object?("user"); user = env.session.object("user").as(AmazonUser) %>
+  <% if logged_in?(env) %>
     <div class="alert alert-success">
-      Currently logged in as <%= user.name %> <a href=/logout>logout</a>
+      Currently logged in as <%= logged_in_user(env).name %> <a href=/logout>logout</a>
     </div>
   <% end %>
 </body>
