@@ -426,6 +426,10 @@ get "/movie_index" do |env|
   render "views/movie_index.ecr", "views/layout.ecr"
 end
 
+get "/getting_started" do |env|
+  render "views/getting_started.ecr", "views/layout.ecr"
+end
+
 get "/privacy" do |env|
   render "views/privacy.ecr", "views/layout.ecr"
 end
