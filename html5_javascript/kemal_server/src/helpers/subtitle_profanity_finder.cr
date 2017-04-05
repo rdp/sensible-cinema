@@ -56,7 +56,7 @@ module SubtitleProfanityFinder
     all_profanity_combinations = [] of {Regex, String, String} # category, replace_with
     profanity_tuples.each{ |profanity_tuple|
       category = profanity_tuple[:category]
-      raise "unknown cat #{category} option!" unless subcategory_map.has_key?(category) # these should match up :|
+      raise "unknown cat [#{category}] option! available are #{subcategory_map.keys}" unless subcategory_map.has_key?(category) # these should match up :|
       profanity = profanity_tuple[:bad_word]
       sanitized = profanity_tuple[:sanitized]
       
