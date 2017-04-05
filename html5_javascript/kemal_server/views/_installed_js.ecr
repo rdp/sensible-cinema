@@ -28,10 +28,9 @@ function markAsGoodChromeExtension() {
 
 function checkIfChromeExtensionInstalled() {
 
-var allIds = [editorExtensionId, editorExtensionIdDev];
+  var allIds = [editorExtensionId, editorExtensionIdDev];
 
-for (var i = 0; i < allIds.length; i++) {
-
+  for (var i = 0; i < allIds.length; i++) {
   chrome.runtime.sendMessage(allIds[i], { version_request: "please" },
     function (reply) {
         if (reply) {
@@ -47,6 +46,8 @@ for (var i = 0; i < allIds.length; i++) {
            } else { console.log("no reply.version?"); }
        }  else {  console.log("no reply, probably means extension not installed");  }
   });
+
+  }
 
 }
 
