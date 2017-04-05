@@ -35,7 +35,7 @@ Total content tags in our system for this movie:
     <% # else its a bit downheartening "not" community contrib LOL
       end %>
     <%= table_row_or_nothing("Editing notes", url.editing_notes) %>
-    <%= table_row_or_nothing("Price to purchase/rent", url.cost_string) %>
+    <%= table_row_or_nothing("Price to rent/purchase", url.cost_string) %>
     <% if url.total_time > 0 %>
       <%= table_row_or_nothing("Total movie time", seconds_to_human url.total_time) %>
     <% end %>
