@@ -57,14 +57,15 @@
       "dieu" => ["deity", "deity foreign language"],
       "chri" +
       "st"=> ["___", "deity exclamation harsh"],
-      "cock" => ["....", "bodily part reference harsh"]
+      "cock" => ["....", "bodily part reference harsh"],
+      "jove" => ["jove", "deity greek"]
     }
 
     Bad_partial_profanities_with_sanitized_and_category =
       { "g" +
       111.chr + 
       100.chr +
-      "s" => ["deitys", "deity exclamation mild"],
+      "s" => ["deitys", "deity greek"],
       "g" +
       111.chr + 
       100.chr => ["___", "deity exclamation harsh"],

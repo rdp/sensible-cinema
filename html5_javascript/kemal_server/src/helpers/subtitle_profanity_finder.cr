@@ -10,7 +10,6 @@ module SubtitleProfanityFinder
 
    # splits into NamedTuple
    def self.split_to_entries(subtitles_raw_text)
-     p subtitles_raw_text.valid_encoding?
      # also crystal length => size hint plz
      all = subtitles_raw_text.gsub("\r\n", "\n").scan(/^\d+\n\d\d:\d\d:\d\d.*?^$/m) # gsub line endings first so that it parses right when linux reads a windows file [maybe?]
      all = all.map{ |glop|
@@ -48,7 +47,7 @@ module SubtitleProfanityFinder
      while all[-1][:text] =~ reg
       all.pop
      end
-     puts "parsed size=#{all.size}"
+     puts "parsed srt to entries=#{all.size}"
      all
    end
 
