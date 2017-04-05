@@ -65,9 +65,11 @@ def subcategory_map
     "explicit sex" => "physical -- explicit sex",
     "physical (other)" => "physical -- other",
 
-    "drugs" => "substance-abuse -- drug use",
     "alcohol" => "substance-abuse -- alcohol drinking",
-    "smoking" => "substance-abuse -- smoking",
+    "smoking" => "substance-abuse -- smoking legal stuff (cigar, cigarette)",
+    "smoking illegal" => "substance-abuse -- smoking illegal drugs",
+    "drugs" => "substance-abuse -- illegal drug use",
+    "drug injection" => "substance-abuse -- drug use injection",
     "substance-abuse other" => "substance-abuse -- other",
 
     "frightening/startling scene/event" => "suspense -- frightening/startling scene/event",

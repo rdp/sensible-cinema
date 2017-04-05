@@ -19,7 +19,7 @@ end
 
 class CustomHandler < Kemal::Handler
   def call(env)
-    if (env.request.path =~ /delete|nuke/ || env.request.method == "POST") && !logged_in?(env) && !File.exists?("./this_is_development")
+    if (env.request.path =~ /delete|nuke/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
@@ -222,12 +222,15 @@ post "/save_tag/:url_id" do |env|
   raise "got negative?" if tag.start < 0 || tag.endy < 0
   tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
   tag.category = resanitize_html params["category"]
-  if !params["subcategory"].present?
+  if !params["subcategory"].present? # the default [meaning none] is an empty string
     raise "no subcategory selected, please hit back arrow in your browser and select subcategory for tag, if nothing fits then select '... -- other'"
   end
   tag.subcategory = resanitize_html params["subcategory"]
   tag.details = resanitize_html params["details"]
-  tag.age_maybe_ok = params["age_maybe_ok"].to_i
+  tag.age_maybe_ok = params["age_maybe_ok"].to_i # default is 0
+  if tag.category.in?(["violence", "suspense"]) && tag.age_maybe_ok == 0
+    raise "for violence or suspense tags, please also select a value in the age_maybe_ok dropdown, use your browser back button to try again"
+  end
   tag.save
   if (tag2 = tag.overlaps_any? url.tags)
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
@@ -252,12 +255,18 @@ get "/view_url/:url_id" do |env|
   show_tag_details =  env.params.query["show_tag_details"]?
   render "views/view_url.ecr", "views/layout.ecr"
 end
+
 class AmazonUser
   JSON.mapping({
     user_id: String,
     name: String,
     email: String
   })
+  def initialize # for test
+    @user_id = "test_user_id"
+    @name = "test_user_name"
+    @email = "test_user@test.com"
+  end
   include Session::StorableObject
 end
 
@@ -483,19 +492,31 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
       File.open("edit_descriptors/log.txt", "a") do |f|
-        f.puts log_message + " " + env.session.object("user").name[0..4] + "... " + db_url.name_with_episode
+        f.puts log_message + " " + logged_in_user(env).name[0..4] + "... " + db_url.name_with_episode
       end
       as_json = json_for(db_url, env)
       escaped_url_no_slashes = URI.escape url
       File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
    }
   }
-  if !File.exists?("./this_is_development")
+  if !is_dev?
     spawn do
       system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"something was modified\" && git push origin master") # backup :|
     end
   end
 end
+
+def is_dev?
+  File.exists?("./this_is_development")
+end
+
+def logged_in_user(env)
+  if is_dev?
+    AmazonUser.new
+  else
+   env.session.object("user") 
+  end
+end 
 
 def resanitize_html(string)
   outy = HTML.unescape(string)
