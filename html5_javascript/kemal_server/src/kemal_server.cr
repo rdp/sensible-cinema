@@ -13,19 +13,19 @@ Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
-def setup_flash
+def setup_flash(env)
   env.session.string("flash", "") unless env.session.string?("flash") # set a default as empty string since we can't delete today :|
 end
 
 before_all do |env|
   env.response.headers.add "Access-Control-Allow-Origin", "*" # apparently has to have this for "amazon.com" to request something from my site. Weird browsers...
-  setup_flash
+  setup_flash(env)
 end
 
 class CustomHandler < Kemal::Handler
   def call(env)
     if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
-      setup_flash # :|
+      setup_flash(env) # :| this is called before the before_all can set it up
       add_to_flash env, "login required before you can do that..." # TODO remember where they came from to get here :|
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
