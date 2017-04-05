@@ -174,17 +174,9 @@ end
 get "/new_empty_tag/:url_id" do |env|
   url = get_url_from_url_id(env)
   tag = Tag.new url
-  last_tag = url.last_tag_or_nil
-  if last_tag
-    # just make it slightly past the last 
-    last_end = last_tag.endy
-    tag.start = last_end + 1
-    tag.endy = last_end + 2
-  else
-    # non zero anyway :|
-    tag.start = 1.0
-    tag.endy = 2.0
-  end
+  # non zero anyway :|
+  tag.start = 1.0
+  tag.endy = url.total_time
   add_to_flash env, "tag is not yet saved, hit the save button when you are done"
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
@@ -444,7 +436,7 @@ end
 
 get "/new_tag_edit_list/:url_id" do |env|
   tag_edit_list = TagEditList.new env.params.url["url_id"].to_i
-	render "views/list_edit_tag_list.ecr", "views/layout.ecr"
+  render "views/list_edit_tag_list.ecr", "views/layout.ecr"
 end
 
 get "/delete_tag_edit_list/:tag_id" do |env|

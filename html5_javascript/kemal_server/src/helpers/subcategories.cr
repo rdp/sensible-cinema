@@ -51,7 +51,8 @@ def subcategory_map
     "violence (other)" => "violence -- other",
 
     "art nudity" => "physical -- art based nudity",
-    "revealing clothing" => "physical -- revealing clothing (cleavage, scantily clad)",
+    "revealing clothing" => "physical -- revealing clothing (scantily clad)",
+    "revealing cleavage" => "physical -- revealing clothing (cleavage)",
     "nudity posterior male" => "physical -- nudity (posterior) male",
     "nudity posterior female" => "physical -- nudity (posterior) female",
     "nudity anterior male" => "physical -- nudity (anterior) male",
