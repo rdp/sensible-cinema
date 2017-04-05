@@ -483,7 +483,7 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
       File.open("edit_descriptors/log.txt", "a") do |f|
-        f.puts log_message + " " + db_url.name_with_episode
+        f.puts log_message + " " + env.session.object("user").name + " " + db_url.name_with_episode
       end
       as_json = json_for(db_url, env)
       escaped_url_no_slashes = URI.escape url
