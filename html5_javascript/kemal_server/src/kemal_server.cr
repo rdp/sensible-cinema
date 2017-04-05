@@ -199,7 +199,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.default_action = resanitize_html(query["default_action"])
   # immediate save so that I can rely on repolling this from the UI to get the ID's etc. in a few seconds after submitting it :|
   tag.category = "unknown"
-  tag.subcategory = "unknown"
+  tag.subcategory = ""
   tag.save
   add_to_flash env, "content tag saved, please fill in details about it..."
   spawn do
@@ -226,6 +226,9 @@ post "/save_tag/:url_id" do |env|
   raise "got negative?" if tag.start < 0 || tag.endy < 0
   tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
   tag.category = resanitize_html params["category"]
+  if !params["subcategory"]?
+    raise "no subcategory selected, please hit back arrow in your browser and select subcategory for tag, if nothing fits then select '... -- other'"
+  end
   tag.subcategory = resanitize_html params["subcategory"]
   tag.details = resanitize_html params["details"]
   tag.age_maybe_ok = params["age_maybe_ok"].to_i

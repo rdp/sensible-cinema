@@ -27,7 +27,7 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 
 <div id="category_div_id">
 category:
-<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = 'unknown'; // reset in case changed from other">
+<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = ''; // reset subcat in case cat changed " >
   <option value="unknown">unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
   <option value="violence">violence/blood etc.</option>
@@ -45,7 +45,7 @@ document.getElementById('category_select').value = '<%= tag.category %>';
 <div id="subcategory_div_id" style="display:none;">
 sub category
 <select name="subcategory" id='subcategory_select'>
-    <option value="unknown">unknown -- subcategory</option>
+    <option value="">unknown -- please select subcategory</option>
     <% subcategory_map().each{|k, v| %>
       <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
     <% } %>
