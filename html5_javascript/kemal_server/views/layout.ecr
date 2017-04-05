@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= "DEV |" if File.exists?("this_is_development") %> <%= action = env.request.path.split("/")[1].gsub("_", " "); "#{action} |" if action.present? %> Play it My Way Edited Streaming Movies</title>
+    <title><%= "DEV |" if File.exists?("this_is_development") %> <%= action = env.request.path.split("/")[1]; english_action = action.gsub("_", " "); "#{action} |" if action.present? %> Play it My Way Edited Streaming Movies</title>
     <!-- bootstrap stuff -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--[if lt IE 9]>
@@ -39,46 +39,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img alt="Play it My Way" src="/camera.32.png"></a>
-      <a class="navbar-brand" href="#">Play It My Way Beta.</a>
+      <a class="navbar-brand" href="/"><img alt="Play it My Way" src="/camera.32.png"></a>
+      <a class="navbar-brand" href="/">Play It My Way Beta.</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
+        <% known_actions = {"" => "Home", "movie_index" => "Movie List"} %>
+        <% known_actions.each{ |action2, name| %>
+        <li class="<%= "active" if action2 == action %>"><a href="/<%= action2 %>"><%= name %><span class="sr-only"><%= "(current)" if action2 == action %></span></a></li>
+        <% } %>
+        <% puts action; if !known_actions.has_key?(action) %>
+          <li><a href="#" class="active disabled" ><%= english_action %></a></li>
+        <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
