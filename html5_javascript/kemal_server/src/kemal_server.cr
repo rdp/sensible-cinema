@@ -13,24 +13,18 @@ Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
-def setup_flash(env)
-  env.session.string("flash", "") unless env.session.string?("flash") # set a default as empty string since we can't delete today :|
-end
-
 before_all do |env|
   env.response.headers.add "Access-Control-Allow-Origin", "*" # apparently has to have this for "amazon.com" to request something from my site. Weird browsers...
-  setup_flash(env)
 end
 
 class CustomHandler < Kemal::Handler
   def call(env)
     if env.request.path =~ /delete|nuke/ && !logged_in?(env) && !File.exists?("./this_is_development")
-      setup_flash(env) # :| this is called before the before_all can set it up
       add_to_flash env, "login required before you can do that..." # TODO remember where they came from to get here :|
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
         puts "saving #{env.session.string("redirect_to_after_login")}"
-      end
+      end # else too hard
       env.redirect "/login" 
     else
       call_next env
@@ -221,6 +215,11 @@ post "/save_tag/:url_id" do |env|
   tag.endy = url.human_to_seconds endy
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   raise "tag is more than 15 minutes long? This should not typically be expected?" if tag.endy - tag.start > 60*15
+  if url.total_time > 0
+    if tag.duration > url.total_time - 1
+      raise "attempted to save a tag that is the entire length of the movie'ish? that should not be expected?"
+    end
+  end
   raise "got negative?" if tag.start < 0 || tag.endy < 0
   tag.default_action = resanitize_html(params["default_action"]) # TODO restrict more various somehow :|
   tag.category = resanitize_html params["category"]
@@ -235,9 +234,6 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
   end
   save_local_javascript [url], tag.inspect, env
-  if tag.duration > 10*60
-    add_to_flash(env, "warning, duration is > 10 minutes of tag just saved??")
-  end
   add_to_flash(env, "saved tag's details, you can close this window now, hit reload in your browser...")
   env.redirect "/edit_tag/#{tag.id}"
 end
@@ -286,9 +282,9 @@ get "/logout" do |env|
 end
 
 get "/logout_session" do |env| # j.s. sends us here...
-  env.session.destroy # :| can't set flash after if I do this kemal-session #34 :|
-  # add_to_flash(env, "You have been logged out.") # no personalized message for now :|
-  "logged you out, click <a href=/login>here to login</a>" # amazon says to "show login page" after wait whaat?
+  add_to_flash(env, "You have been logged out.") # no personalized message for now :|
+  env.session.delete_object("user") # whether there or not :)
+  "logged you out, click <a href=/login>here to login</a>" # amazon says to "show login page" after logout :|
 end
 
 def download(raw_url, headers = nil)
@@ -620,7 +616,7 @@ end
 ####### view methods :)
 
 def add_to_flash(env, string)
-  if env.session.string("flash").size > 0
+  if env.session.string?("flash")
     env.session.string("flash", env.session.string("flash") + "<br/>" + string)
   else
     env.session.string("flash", string)
