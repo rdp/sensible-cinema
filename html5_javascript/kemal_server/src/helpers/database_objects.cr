@@ -172,19 +172,6 @@ class Url
     end
   end
 
-  def last_tag_or_nil
-    all = with_db do |conn|
-      conn.query("select * from tags where url_id=? order by endy desc limit 1", id) do |rs|
-        Tag.from_rs(rs)
-      end
-    end
-    if all.size == 1
-      return all[0]
-    else
-      return nil
-    end
-  end
-
   def destroy_no_cascade
     with_db do |conn|
       conn.exec("delete from urls where id = ?", id)
