@@ -233,8 +233,8 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
   end
   save_local_javascript [url], tag.inspect, env
-  add_to_flash(env, "Success! saved tag's details, you can close this window now, hit reload in your browser...")
-  env.redirect "/edit_tag/#{tag.id}"
+  add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, you can close this window now, hit reload in your browser...")
+  env.redirect "/edit_url/#{url.id}"
 end
 
 get "/edit_url/:url_id" do |env|
