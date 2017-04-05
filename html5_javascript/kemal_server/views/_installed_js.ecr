@@ -1,6 +1,6 @@
 <script>
 var isInstalled = false;
-//var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb"; // dev shouldn't need this ever again tho...
+var editorExtensionIdDev = "ogneemgeahimaaefffhfkeeakkjajenb";
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
 console.log("sending version request...");
 
@@ -28,7 +28,11 @@ function markAsGoodChromeExtension() {
 
 function checkIfChromeExtensionInstalled() {
 
-chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
+var allIds = [editorExtensionId, editorExtensionIdDev];
+
+for (var i = 0; i < allIds.length; i++) {
+
+  chrome.runtime.sendMessage(allIds[i], { version_request: "please" },
     function (reply) {
         if (reply) {
             if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
@@ -42,20 +46,14 @@ chrome.runtime.sendMessage(editorExtensionId, { version_request: "please" },
                }
            } else { console.log("no reply.version?"); }
        }  else {  console.log("no reply, probably means extension not installed");  }
-});
+  });
 
 }
 
 if (isChrome()) {
-checkIfChromeExtensionInstalled();
-timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
+  checkIfChromeExtensionInstalled();
+  timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
 } // else don't call those and get an undefined blow up
-
-
-<% if File.exists? "this_is_development" %>
-  markAsGoodChromeExtension(); // fake it out LOL
-<% end %>
-
 
 function alertIfNoExtension() {
   if (!isInstalled) {
