@@ -54,7 +54,7 @@
     Bad_full_word_profanities_with_sanitized_and_category = 
     {
       Arse => ["a..", "a word"],
-      "dieu" => ["deity", "deity exclamation harsh"],
+      "dieu" => ["deity", "deity foreign language"],
       "chri" +
       "st"=> ["___", "deity exclamation harsh"],
       "cock" => ["....", "bodily part reference harsh"]
@@ -68,7 +68,7 @@
       "g" +
       111.chr + 
       100.chr => ["___", "deity exclamation harsh"],
-      "meu deus" => ["___", "deity exclamation harsh"],
+      "meu deus" => ["___", "deity foreign language"],
       "lo" + 
       "rd" => ["l...", "deity exclamation mild"], # there are things like "fire lord" that aren't harsh...
       "da" +
@@ -77,7 +77,7 @@
       117.chr +
       99.chr +
       107.chr => ["____", "f word"], 
-      "allah" => ["all..", "deity exclamation harsh"],
+      "allah" => ["all..", "deity foreign language"],
       "bi" +
       "tc" + 104.chr => ["b....", "personal insult harsh"],
       "bas" +

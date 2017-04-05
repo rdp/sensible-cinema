@@ -1,5 +1,5 @@
 Subcats = {} of String => String
-
+# if you change anything in this file be careful that any auto scan subs need to match it [you can tell by doing a single upload]
 def subcategory_map
    # I guess this is like "end consumer friendly" and "creator instructions" the double dash is needed
    
