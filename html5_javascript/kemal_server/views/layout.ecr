@@ -2,7 +2,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= "DEV |" if File.exists?("this_is_development") %> <%= action = env.request.path.split("/")[1]; english_action = action.gsub("_", " "); "#{action} |" if action.present? %> Play it My Way Edited Streaming Movies</title>
+    <% action = env.request.path.split("/")[1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
+    <title>
+      <%= " DEV |" if is_dev? %>
+      <%= " #{action} |" if action.present? %>
+       Play it My Way Edited Streaming Movies
+    </title>
     <!-- bootstrap stuff -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--[if lt IE 9]>
@@ -51,7 +56,7 @@
         <li class="<%= "active" if action2 == action %>"><a href="/<%= action2 %>"><%= name %><span class="sr-only"><%= "(current)" if action2 == action %></span></a></li>
         <% } %>
         <% puts action; if !known_actions.has_key?(action) %>
-          <li><a href="#" class="active disabled" ><%= english_action %></a></li>
+          <li class="active"><a href="#"><%= english_action %> <span class="sr-only">(current)</span></a></li>
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
