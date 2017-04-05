@@ -7,30 +7,14 @@
 Offering personalized playback of amazon/amazon prime/youtube videos, and more!  
 <br/>
 Play It My Way is currently free while in Beta! We intend to stay free for edited youtubes forever. For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" but during Beta, use it all you want free, we'd love your feedback and support!<br/>
+
 <h2>How it works:</h2>
 Basically, watch your movie on your computer, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to get started!
-
-<h1>Our Movie List</h1>
-Please see <a href=/movie_index>here for our movie list</a>, currently offering <%= Url.count %> edited shows!
-<br/>
-Here is a random movie from our system:
-<br/>
-<% url = Url.random %>
-<a href="/movie_index">
-  <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
-  <%= url.name_with_episode %>
-</a>
-<br/>
-<%= url.details.truncate_with_ellipses %>
-<br/>
-See this and the rest of our movies <a href=/movie_index>here</a>!
 
 <h2> Facebook </h2>
 <a name=facebook_groups/></a>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
 <br/>
 Thanks for stopping by!
-<hr/>
-You too can get a free website subdomain under inet2.org see <a href=http://inet2.org>here</a>.
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -41,4 +25,97 @@ You too can get a free website subdomain under inet2.org see <a href=http://inet
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+
+<h1>Our Movie List</h1>
+<% host_to_urls = urls.group_by &.human_readable_company %>
+<% host_to_urls.each{ |host, host_urls|  %>
+  <div>
+  <hr/>
+  <h3><%= host.capitalize %>:</h3>
+  <br/>
+  <% host_urls.each{ |url|  %>
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: 229px; margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin-->
+         <div style="height: 378px; overflow:scroll;"> <!-- don't show freaky text at bottom -->
+         <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
+            <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>" %>
+            <%= url.name_with_episode %>
+          </a>
+          <br/>
+          <%= if_present_with_break url.details, "" %>
+          <a href="/view_url/<%= url.id %>">View info (<%= url.tags.size %> tags)</a><br/>
+          <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
+          <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
+          <%= if_present_with_break url.editing_status, "Editing status:" %>
+          <%= if_present_with_break url.editing_notes, "Editing notes:" %>
+          <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
+          <%= if_present_with_break url.original_rating, "Original rating:" %>
+          <%= if_present_with_break url.cost_string, "Price:" %>
+         </div>
+       </div>
+  <% } %>
+  </div>
+  <div style="clear: both;"></div>
+<% } %>
+
+These are movies/shows/youtubes that we currently have in our system.  Don't see one you want? <a hrefinstructions_create_new_url>Add it</a> and help us out by tagging it and adding it to the system! (Note that eventually this will become a pay offering, but we'd love your help! Youtube will always be free!)
+<br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for a movie to be the next one on our queue to be edited.
+<br>
+&#10133; Anybody can add new films and new edits to our system!  We'd love your help!
+<br/>Add another (not yet present) video to our edited system by <a href=/instructions_create_new_url>clicking here!</a>
+<br/>
+<br/>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Movie</th>
+      <th></th> <!-- host -->
+      <th>Tags</th>
+      <th>Details</th>
+      <th>Wholesome<br/>uplifting level / 10</th>
+      <th>Movie rating / 10</th>
+      <th>Our local review</th>
+      <th>Editing status</th>
+      <th>Editing notes</th>
+      <th>Wholesome review</th>
+      <th>Original MPAA Rating</th>
+      <th>Cost</th>
+      <th>Movie info</th>
+    </tr>
+  </thead>
+  <tbody>
+
+<% urls.each{ |url|  %>
+    <tr>
+       <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
+             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
+             <%= url.name_with_episode %>
+           </a>
+       </td>
+       <td><%= url.human_readable_company %></td>
+       <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
+       <td><%= url.details.truncate_with_ellipses %></td>
+       <td><%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
+       <td><%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
+       <td><%= url.review.truncate_with_ellipses %></td>
+       <td><%= url.editing_status %> </td>
+       <td><%= url.editing_notes %> </td>
+       <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
+       <td><%= url.original_rating %> </td>
+       <td><%= url.cost_string %></td>
+       <td>
+            <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
+       </td>
+   </tr>
+<% } %>
+
+  </tbody>
+</table>
+
+<%= render "views/_installed_js.ecr" %>
+
+<hr/>
+You too can get a free website subdomain under inet2.org see <a href=http://inet2.org>here</a>.
 

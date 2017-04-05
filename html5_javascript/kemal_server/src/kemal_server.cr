@@ -421,11 +421,6 @@ get "/" do |env| # index
   render "views/home.ecr", "views/layout.ecr"
 end
 
-get "/movie_index" do |env|
-  urls = get_all_urls
-  render "views/movie_index.ecr", "views/layout.ecr"
-end
-
 get "/getting_started" do |env|
   render "views/getting_started.ecr", "views/layout.ecr"
 end
