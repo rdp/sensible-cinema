@@ -58,15 +58,13 @@
           <li class="active"><a href="#"><%= english_action %> <span class="sr-only">(current)</span></a></li>
         <% end %>
       </ul>
+      <% if logged_in?(env) %>
+        <p class="navbar-text navbar-right">Signed in as <a href="/logout" class="navbar-link"><%= logged_in_user(env).name %></a></p>
+      <% end %>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
   <%= content %>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </div>
-  <% if logged_in?(env) %>
-    <div class="alert alert-success">
-      Currently logged in as <%= logged_in_user(env).name %> <a href=/logout>logout</a>
-    </div>
-  <% end %>
 </body>

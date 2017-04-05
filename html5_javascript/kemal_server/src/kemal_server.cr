@@ -149,7 +149,7 @@ def hard_nuke_url_or_nil(url, env)
 end
 
 def logged_in?(env)
-  env.session.object?("user")
+  env.session.object?("user") || is_dev?
 end
 
 get "/delete_tag/:tag_id" do |env|
