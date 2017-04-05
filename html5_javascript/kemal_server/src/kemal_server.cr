@@ -151,7 +151,6 @@ def logged_in?(env)
   env.session.object?("user")
 end
 
-
 get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
   tag = Tag.get_only_by_id(id)
