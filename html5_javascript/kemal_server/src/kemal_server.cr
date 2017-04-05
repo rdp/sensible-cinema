@@ -75,7 +75,6 @@ def standardize_url(unescaped)
   unescaped = unescaped.split("&")[0] # strip off cruft https://www.youtube.com/watch?v=FzT9MS3n83U&list=PL7326EF82122776A9&ndex=21 :|
   unescaped = unescaped.gsub("smile.amazon", "www.amazon") # standardize to always www
   unescaped = unescaped.split("#")[0] # trailing #, die!
-  puts "standardized as #{unescaped} from #{original}"
   unescaped
 end
 
@@ -210,7 +209,6 @@ end
 
 post "/save_tag/:url_id" do |env|
   params = env.params.body
-  puts "got params=#{params}"
   if params["id"]?
     tag = Tag.get_only_by_id(params["id"])
   else
@@ -315,7 +313,7 @@ def get_title_and_sanitized_standardized_canonical_url(real_url)
     # https://smile.amazon.com/gp/product/B001J6Y03C did canonical to https://smile.amazon.com/Avatar-Last-Airbender-Season-3/dp/B0190R77GS
     # however https://smile.amazon.com/gp/product/B001J6GZXK -> /dp/B001J6GZXK gah!
     # but still some improvement FWIW :|
-    puts "using canonical #{$1}"
+    puts "using canonical from url #{$1}"
     real_url = $1
   end
   if real_url.includes?("amazon.com") && real_url.includes?("/gp/") # gp is old, dp is new, we only want dp ever 
@@ -369,7 +367,6 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     # a new one
     # cleanup various title crufts
     title = HTML.unescape(title) # &amp => & and there are some :|
-    puts "title started as #{title}" 
     title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies & TV on Google Play", "")
@@ -385,7 +382,6 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     if sanitized_url.includes?("amazon.com") && title.includes?(":")
       title = title.split(":")[0].strip # begone actors
     end
-    puts "title ended as #{title}"
     already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint :|
     if already_by_name
       return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this message to us, we'll fix it"
@@ -529,7 +525,6 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
-  puts "params=#{params}"
   if params.has_key? "id"
     # these day
     db_url = Url.get_only_by_id(params["id"])
