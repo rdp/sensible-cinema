@@ -19,7 +19,7 @@ class Url
     review: String,
     wholesome_review: String,
     count_downloads: Int32,
-    amazon_prime_free_type: String, # "prime" "HBO"
+    amazon_prime_free_type: String, # "prime" 
     rental_cost: Float64,
     purchase_cost: Float64, # XXX actually Decimal [?]
     total_time: Float64,
@@ -237,6 +237,9 @@ class Url
       out += "free (#{amazon_prime_free_type})"
     end
     if rental_cost > 0 || purchase_cost > 0
+       if amazon_prime_free_type != ""
+         out += ", or "
+       end
        out += " $%.2f/$%.2f" % [rental_cost, purchase_cost]
     elsif human_readable_company == "youtube" # 0 is OK here :)
        out = "free (youtube)"
