@@ -24,7 +24,7 @@
 <% host_to_urls.each{ |host, host_urls|  %>
   <div>
   <hr/>
-  <h3><%= host %>:</h3>
+  <h3><%= host.capitalize %>:</h3>
   <br/>
   <% host_urls.each{ |url|  %>
        <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; height: 400px; width: 224px; margin-right: 10px; margin-bottom: 20px; overflow:scroll;" > <!-- 224 is 200 image max + 10*2 padding  + 2*2 margin-->
