@@ -23,7 +23,7 @@ class CustomHandler < Kemal::Handler
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
-      add_to_flash env, "Please login before modifying things on the site:"
+      add_to_flash env, "Thanks for contributing to our site! To discourage vandalism, we require a login. Please login first, here:"
       env.redirect "/login" 
     else
       call_next env
@@ -178,7 +178,7 @@ get "/new_empty_tag/:url_id" do |env|
   # non zero anyway :|
   tag.start = 1.0
   tag.endy = url.total_time
-  add_to_flash env, "tag is not yet saved, hit the save button when you are done"
+  add_to_flash env, "this tag is not yet saved, hit the save button when you are done"
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
@@ -193,7 +193,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.category = "unknown"
   tag.subcategory = ""
   tag.save
-  add_to_flash env, "content tag saved, please fill in details about it..."
+  add_to_flash env, "success! content tag created, please fill in details about it..."
   spawn do
     save_local_javascript [url], tag.inspect, env
   end
@@ -233,7 +233,7 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
   end
   save_local_javascript [url], tag.inspect, env
-  add_to_flash(env, "saved tag's details, you can close this window now, hit reload in your browser...")
+  add_to_flash(env, "Success! saved tag's details, you can close this window now, hit reload in your browser...")
   env.redirect "/edit_tag/#{tag.id}"
 end
 
@@ -474,7 +474,7 @@ post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff h
   }
 
   tag_edit_list.create_or_refresh(tag_ids, actions)
-  add_to_flash(env, "successfully saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
+  add_to_flash(env, "Success! saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
   save_local_javascript [tag_edit_list.url], tag_edit_list.inspect, env
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end
@@ -567,7 +567,7 @@ post "/save_url" do |env|
 
   save_local_javascript [db_url], db_url.inspect, env
 	
-  add_to_flash(env, "successfully saved #{db_url.name_with_episode}")
+  add_to_flash(env, "Success! saved #{db_url.name_with_episode}")
   env.redirect "/view_url/" + db_url.id.to_s
 end
 

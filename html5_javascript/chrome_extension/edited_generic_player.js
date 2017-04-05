@@ -567,8 +567,8 @@ function loadFailed(status) {
 		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
   }
   else {
-    alert("appears the play it my way server is currently down, please alert us! Edits disabled for now..." + request_host);
-		document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Play it my way Server down, try again later...";
+    // alert too scawah for end users
+		document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Play it my way Server down, please alert us and try again later...";
   }
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
