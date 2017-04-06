@@ -110,10 +110,6 @@ def json_for(db_url, env)
   render "views/html5_edited.just_settings.json.ecr"
 end
 
-get "/instructions_other_browsers" do |env|
-  render "views/instructions_other_browsers.ecr", "views/layout.ecr"
-end
-
 get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
