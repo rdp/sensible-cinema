@@ -5,7 +5,7 @@
     <% action = env.request.path.split("/")[1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
     <title>
       <%= " DEV |" if is_dev? %>
-      <%= " #{action} |" if action.present? %>
+      <%= " #{english_action} |" if action.present? %>
        Play it My Way Edited Streaming Movies
     </title>
     <!-- bootstrap stuff -->
@@ -50,7 +50,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <% known_actions = {"" => "Home", "movie_index" => "Movie List", "getting_started" => "Installation", "faq" => "FAQ"} %>
+        <% known_actions = {"" => "Home", "getting_started" => "Installation", "faq" => "FAQ"} %>
         <% known_actions.each{ |action2, name| %>
         <li class="<%= "active" if action2 == action %>"><a href="/<%= action2 %>"><%= name %><span class="sr-only"><%= "(current)" if action2 == action %></span></a></li>
         <% } %>

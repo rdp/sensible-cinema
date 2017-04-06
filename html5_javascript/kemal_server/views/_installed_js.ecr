@@ -1,54 +1,59 @@
 <script>
+
 var isInstalled = false;
 var editorExtensionIdDev = "ogneemgeahimaaefffhfkeeakkjajenb";
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
-console.log("sending version request...");
 
 function markAsGoodChromeExtension() {
   isInstalled = true;
   document.getElementById('install_chrome_extension_message_id').style.display = 'none';
   document.getElementById('success_chrome_extension_id').style.display = 'block';
 }
-    function isChrome() {
-      var isChromium = window.chrome,
-        winNav = window.navigator,
-        vendorName = winNav.vendor,
-        isOpera = winNav.userAgent.indexOf("OPR") > -1,
-        isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-        isIOSChrome = winNav.userAgent.match("CriOS");
 
-      if(isIOSChrome){
-        return true;
-      } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+function isChrome() {
+  var isChromium = window.chrome,
+    winNav = window.navigator,
+    vendorName = winNav.vendor,
+    isOpera = winNav.userAgent.indexOf("OPR") > -1,
+    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+    isIOSChrome = winNav.userAgent.match("CriOS");
+
+  if(isIOSChrome){
+    return true;
+  } else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function checkIfChromeExtensionInstalled() {
+  console.log("sending liveness request...");
 
   var allIds = [editorExtensionId, editorExtensionIdDev];
 
   for (var i = 0; i < allIds.length; i++) {
-  chrome.runtime.sendMessage(allIds[i], { version_request: "please" },
-    function (reply) {
-        if (reply) {
-            if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
-                var requiredVersion = 0.00;
-                if (reply.version >= requiredVersion) {
-                    console.log("got back good chrome version installed " + reply.version);
-                    markAsGoodChromeExtension();
-                    clearInterval(timer);
-                }
-                else { alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
-               }
-           } else { console.log("no reply.version?"); }
-       }  else {  console.log("no reply, probably means extension not installed");  }
-  });
-
+    chrome.runtime.sendMessage(allIds[i], { version_request: "please" },
+      function (reply) {
+          if (reply) {
+              if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
+                  var requiredVersion = 0.00;
+                  if (reply.version >= requiredVersion) {
+                      console.log("got back chrome plugin installed " + reply.version);
+                      markAsGoodChromeExtension();
+                      clearInterval(timer);
+                  }
+                  else { 
+                    alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
+                 }
+             } else { 
+               console.log("no reply.version???"); 
+             }
+         } else {  
+           console.log("no reply, probably means extension not installed");  
+         }
+    });
   }
-
 }
 
 if (isChrome()) {
@@ -56,14 +61,14 @@ if (isChrome()) {
   timer = setInterval(checkIfChromeExtensionInstalled, 1000); // catch when they do install it, and elsewise, really no loss :}
 } // else don't call those and get an undefined blow up
 
-function alertIfNoExtension() {
-  if (!isInstalled) {
-          alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
-  }
+function pluginFullyInstalled() {
+  return isInstalled;
 }
 
-if (!isChrome()) {
-   document.getElementById('switch_to_chrome').style.display = 'block';
+function alertIfNoExtension() {
+  if (!fullyInstalled()) {
+    alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
+  }
 }
 
 </script>
