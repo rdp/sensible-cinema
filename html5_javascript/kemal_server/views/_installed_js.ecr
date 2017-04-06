@@ -3,11 +3,10 @@
 var isInstalled = false;
 var editorExtensionIdDev = "ogneemgeahimaaefffhfkeeakkjajenb";
 var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; // prod
+var timer; // ping timer
 
-function markAsGoodChromeExtension() {
+function markAsGoodChromeExtension() { // I guess override if you need it :|
   isInstalled = true;
-  document.getElementById('install_chrome_extension_message_id').style.display = 'none';
-  document.getElementById('success_chrome_extension_id').style.display = 'block';
 }
 
 function isChrome() {
@@ -38,8 +37,8 @@ function checkIfChromeExtensionInstalled() {
           if (reply) {
               if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
                   var requiredVersion = 0.00;
-                  if (reply.version >= requiredVersion) {
-                      console.log("got back chrome plugin installed " + reply.version);
+                  console.log("got back chrome plugin installed " + reply.version);
+                  if (reply.version /* >= requiredVersion */) {
                       markAsGoodChromeExtension();
                       clearInterval(timer);
                   }

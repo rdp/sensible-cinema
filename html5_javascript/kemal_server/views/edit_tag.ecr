@@ -56,8 +56,9 @@ If there are any categories missing let us know!
 <br/>
 
 age_maybe_ok (if it needs more granularity than subcategory, "level of blood", etc.): 
+<br/>
 <select name="age_maybe_ok" id="age_maybe_ok_id">
-  <option value="0">not applicable</option>
+  <option value="0">not applicable/needed</option>
   <% [3,6,9,12,15].each{|n| %>
     <option value="<%= n %>">not OK age <%= n %> and under</option>
   <% } %>

@@ -1,5 +1,5 @@
 update_icon = function(request, sender, sendResponse) {
-	console.log("got request to background" + request);
+	console.log("got request in background " + request);
   var active_tab_id = sender.tab.id; // sender
   if (request.text) {
     console.log("changing " + request.text + " color:" + request.color + " details:" + request.details);
@@ -8,7 +8,9 @@ update_icon = function(request, sender, sendResponse) {
     chrome.browserAction.setTitle({title: request.details, tabId: active_tab_id});
   }
   if (request.version_request) {
-    sendResponse({version: 0.00}); // :|
+    var manifest = chrome.runtime.getManifest();
+    sendResponse({version: manifest.version});
+    console.log("sent response" + {version: manifest.version});
    }
 };
 

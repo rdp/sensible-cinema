@@ -88,14 +88,15 @@ function addEditUi() {
   <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
   <br/>
   <br/>
+  <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
   <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+  <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
+  <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
   <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
   <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> <!-- ditto -->
   <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
   <span id='playback_rate'>1.00x</span>
   <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-  <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
-  <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
   <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
   <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
 	<br/>

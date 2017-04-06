@@ -36,6 +36,7 @@ def subcategory_map
     "f word sex connotation" => "profanity -- f-bomb sexual connotation",
     "profanity (other)" => "profanity -- other",
 		
+    "crudeness" => "violence -- crude humor, grossness, vulgar, etc.",
     "stabbing/shooting no blood" => "violence -- stabbing/shooting no blood",
     "stabbing/shooting with blood" => "violence -- stabbing/shooting yes blood",
     "visible blood" => "violence -- visible blood of wound",

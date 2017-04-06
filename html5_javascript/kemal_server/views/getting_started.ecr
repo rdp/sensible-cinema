@@ -31,4 +31,10 @@ if (!isChrome()) {
    document.getElementById('switch_to_chrome').style.display = 'block';
 }
 
+function markAsGoodChromeExtension() { // override
+  isInstalled = true;
+  document.getElementById('install_chrome_extension_message_id').style.display = 'none';
+  document.getElementById('success_chrome_extension_id').style.display = 'block';
+}
+
 </script>
