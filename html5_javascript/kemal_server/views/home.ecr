@@ -8,7 +8,7 @@ Offering personalized playback of amazon/amazon prime/youtube videos, and more!
 <br/>
 Play It My Way is currently free while in Beta! We intend to stay free for edited youtubes forever. For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" but during Beta, use it all you want free, we'd love your feedback and support!<br/>
 
-<h2>How it works:</h2>
+<h3>How it works:</h3>
 Basically, watch your movie on your computer from some online source like Amazon, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to get going!
 
 <div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green">
@@ -16,10 +16,10 @@ Basically, watch your movie on your computer from some online source like Amazon
   <br/>Your playback is going to differ from the original content (we're required by law to say that :) ) </font>
 </div>
 
-<h2>Is it legal?</h2>
+<h3>Is it legal?</h3>
 We believe so.  Because you are just editing legally streamed content, and no new copies are created, we believe it's legal, woot!  See the <a href="/faq">FAQ</a> for further explanation.
 
-<h2>Contact</h2>
+<h3>Contact</h3>
 <a name=facebook_groups/></a>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
 <br/>
 
@@ -33,14 +33,14 @@ We believe so.  Because you are just editing legally streamed content, and no ne
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 
-<h1>Our Movie List</h1>
-<% host_to_urls = urls.group_by &.human_readable_company %>
-<% host_to_urls.each{ |host, host_urls|  %>
+<h1>Edited Movie List</h1>
+<% host_to_urls = all_urls_except_just_started.group_by &.human_readable_company %>
+<% host_to_urls.each{ |host, urls_for_host|  %>
   <div>
   <hr/>
   <h3><%= host.capitalize %>:</h3>
   <br/>
-  <% host_urls.each{ |url|  %>
+  <% urls_for_host.each{ |url|  %>
        <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: 249px; margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin...but then needed to bump to 249 for chrome on windows -->
          <div style="height: 378px; overflow:scroll;"> <!-- don't show freaky text at bottom -->
          <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
@@ -73,7 +73,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 <br/>
 <br/>
 
-
+<h1>Movie Index (including those we're working on but may not be completely tagged yet)</h1>
 
 <table class="table table-striped">
   <thead>
@@ -95,7 +95,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
   </thead>
   <tbody>
 
-<% urls.each{ |url|  %>
+<% all_urls.each{ |url|  %>
     <tr>
        <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
              <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>

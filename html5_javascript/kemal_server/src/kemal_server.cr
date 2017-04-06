@@ -404,16 +404,26 @@ def sanitize_html(name)
   HTML.escape name
 end
 
+def get_all_urls_except_just_started
+  urls = Url.all_except_just_started
+  put_test_last(urls)
+end
+
 def get_all_urls
   urls = Url.all
+  put_test_last(urls)
+end
+
+def put_test_last(urls)
   if urls[0].human_readable_company == "inet2"
     urls.push urls.shift # put it last :|
   end
   urls
 end
 
-get "/" do |env| # index
-  urls = get_all_urls
+get "/" do |env| # index home
+  all_urls = get_all_urls
+  all_urls_except_just_started = get_all_urls_except_just_started
   render "views/home.ecr", "views/layout.ecr"
 end
 
