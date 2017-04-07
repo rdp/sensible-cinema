@@ -13,7 +13,7 @@ Basically, watch your movie on your computer from some online source like Amazon
 
 <div id="success_chrome_extension_id" style="display: none;">
   <font face="verdana" color="green">
-    Chrome plugin is installed, nice work!
+    Chrome plugin is installed, nice work!  Your playback is going to differ from the original content (we're required by law to say that :) )
   </font>
 </div>
 
@@ -41,7 +41,11 @@ We believe so.  Because you are just editing legally streamed content, and no ne
   <hr/>
   <h3><%= host.capitalize %>:</h3>
   <br/>
-  <% urls_for_host.each{ |url|  %>
+  <% urls_for_host.each_with_index{ |url, idx|  %>
+       <% if idx > 0 && url.episode_number > 0 && urls_for_host[idx - 1].episode_number == 0 %>
+         <div style="clear: both;"></div>
+       <% end %>
+       
        <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: 249px; margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin...but then needed to bump to 249 for chrome on windows -->
          <div style="height: 378px; overflow:scroll;"> <!-- don't show freaky text at bottom -->
          <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
