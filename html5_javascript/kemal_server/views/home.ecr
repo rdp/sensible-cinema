@@ -53,7 +53,10 @@ We believe so.  Because you are just editing legally streamed content, and no ne
   <% if series.size > 0 %>
     <div style="clear: both;"></div>
     <h4>Series</h4>
-    <% movies.each_with_index{ |url, idx|  %>
+    <% series.each_with_index{ |url, idx|  %>
+       <% if idx > 0 && (url.episode_number > 0 && urls_for_host[idx - 1].episode_number == 0) || (url.episode_number == 0 && urls_for_host[idx - 1].episode_number > 0) %>
+         <div style="clear: both;"></div>
+       <% end %>
       <%= render "views/_song_box.ecr" %>
     <% } %>
   <% end %>
