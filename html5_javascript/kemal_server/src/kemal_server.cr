@@ -423,8 +423,8 @@ end
 
 get "/" do |env| # index home
   all_urls = get_all_urls
-  all_urls_except_just_started = get_all_urls.select{|url| url.editing_status != "Just started, tags might not be fully complete yet"}
-  all_urls_just_started = get_all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
+  all_urls_except_just_started = all_urls.reject{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
+  all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
   render "views/home.ecr", "views/layout.ecr"
 end
 
