@@ -62,22 +62,202 @@ function addEditUi() {
     	  Create a new tag by entering the timestamp, testing it, then saving it: 
     		<br/>current time=<span id="top_line_current_time" />
     	</div>
-    	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-      <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
-      <br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-      <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
-      <br/>
-      action:
-      <select name='default_action' id='new_action'>
-        <option value='mute'>mute</option>
-        <option value='skip'>skip</option>
-        <option value='yes_audio_no_video'>yes_audio_no_video</option>
-        <option value='do_nothing'>do_nothing</option>
-      </select>
-    	<br/>
-      <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
-      <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
+      <form action="/save_new_tag_from_plugin" method="POST">
+      	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
+        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+        <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
+        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+        <br/>
+        action:
+        
+
+<select name="default_action" id='action_sel' onchange="">
+  <option value="mute">mute</option>
+  <option value="skip">skip</option>
+  <option value="yes_audio_no_video">yes_audio_no_video</option>
+  <option value="do_nothing">do_nothing (ex: movie content)</option>
+</select>
+<br/>
+
+
+<div id="category_div_id">
+category:
+<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
+  <option value="unknown">unknown -- please select category</option>
+  <option value="profanity">profanity (verbal attacks, anything spoken)</option>
+  <option value="violence">violence/blood etc.</option>
+  <option value="physical">sex/nudity/lewd acts etc.</option>
+  <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
+  <option value="movie-content">movie content (credits, etc.)</option>
+  <option value="substance-abuse">substance use</option>
+</select>
+<br/>
+</div>
+
+<div id="subcategory_div_id">
+sub category
+<select name="subcategory" id='subcategory_select_id'>
+    <option value="">unknown -- please select subcategory</option>
+    
+      <option value="initial theme song">movie-content -- initial theme song/credits</option>    
+    
+      <option value="closing credits">movie-content -- closing credits/songs</option>    
+    
+      <option value="joke edit">movie-content -- joke edit -- edits that make it funny when applied</option>    
+    
+      <option value="movie content morally questionable choice">movie-content -- morally questionable choice</option>    
+    
+      <option value="movie content other">movie-content -- other</option>    
+    
+      <option value="loud noise">profanity -- loud noise/screaming</option>    
+    
+      <option value="personal insult mild">profanity -- insult &#40;&quot;moron&quot;, &quot;idiot&quot; etc.&#41;</option>    
+    
+      <option value="personal insult harsh">profanity -- insult harsh &#40;b.... etc.&#41;</option>    
+    
+      <option value="personal attack mild">profanity -- attack command &#40;&quot;shut up&quot; etc.&#41;</option>    
+    
+      <option value="being mean">profanity -- being mean/cruel to another</option>    
+    
+      <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
+    
+      <option value="bodily part reference mild">profanity -- bodily part reference mild &#40;butt, bumm...&#41;</option>    
+    
+      <option value="bodily part reference harsh">profanity -- bodily part reference harsh</option>    
+    
+      <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
+    
+      <option value="euphemized profanities">profanity -- euphemized worser profanities &#40;ex: crap, dang, gosh&#41;</option>    
+    
+      <option value="lesser expletive">profanity -- other lesser expletive ex &quot;bloomin&#39;&quot; etc.</option>    
+    
+      <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
+    
+      <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...,</option>    
+    
+      <option value="deity greek">profanity -- deity greek &#40;Zeus, etc.&#41;</option>    
+    
+      <option value="deity foreign language">profanity -- deity different language, like Allah or French equivalents, etc</option>    
+    
+      <option value="deity exclamation harsh">profanity -- deity exclamation harsh, name of the Lord &#40;omg, etc.&#41;</option>    
+    
+      <option value="deity expletive">profanity -- deity expletive &#40;es: goll durn, the real words&#41;</option>    
+    
+      <option value="a word">profanity -- a.. &#40;and/or followed by anything&#41;</option>    
+    
+      <option value="d word">profanity -- d word</option>    
+    
+      <option value="h word">profanity -- h word</option>    
+    
+      <option value="s word">profanity -- s word</option>    
+    
+      <option value="f word">profanity -- f-bomb expletive</option>    
+    
+      <option value="f word sex connotation">profanity -- f-bomb sexual connotation</option>    
+    
+      <option value="profanity &#40;other&#41;">profanity -- other</option>    
+    
+      <option value="crudeness">violence -- crude humor, grossness, vulgar, etc.</option>    
+    
+      <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
+    
+      <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
+    
+      <option value="visible blood">violence -- visible blood of wound</option>    
+    
+      <option value="open wounds">violence -- gore/open wound</option>    
+    
+      <option value="light fight">violence -- light fighting &#40;single punch/kick/hit/push&#41;</option>    
+    
+      <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
+    
+      <option value="sustained fight">violence -- sustained punching/fighting</option>    
+    
+      <option value="killing">violence -- killing on screen &#40;ex: bullet shot&#41;</option>    
+    
+      <option value="killing offscreen">violence -- killing off screen</option>    
+    
+      <option value="circumstantial death">violence -- death non-killing, like falling</option>    
+    
+      <option value="threatening actions">violence -- threatening actions</option>    
+    
+      <option value="rape">violence -- rape</option>    
+    
+      <option value="violence &#40;other&#41;">violence -- other</option>    
+    
+      <option value="art nudity">physical -- art based nudity</option>    
+    
+      <option value="revealing clothing">physical -- revealing clothing &#40;scantily clad&#41;</option>    
+    
+      <option value="revealing cleavage">physical -- revealing clothing &#40;cleavage&#41;</option>    
+    
+      <option value="nudity posterior male">physical -- nudity &#40;posterior&#41; male</option>    
+    
+      <option value="nudity posterior female">physical -- nudity &#40;posterior&#41; female</option>    
+    
+      <option value="nudity anterior male">physical -- nudity &#40;anterior&#41; male</option>    
+    
+      <option value="nudity anterior female">physical -- nudity &#40;anterior&#41; female</option>    
+    
+      <option value="nudity breast">physical -- nudity &#40;breast&#41;</option>    
+    
+      <option value="kissing peck">physical -- kiss &#40;peck&#41;</option>    
+    
+      <option value="kissing passionate">physical -- kiss &#40;passionate&#41;</option>    
+    
+      <option value="sex foreplay">physical -- sex foreplay</option>    
+    
+      <option value="implied sex">physical -- implied sex</option>    
+    
+      <option value="explicit sex">physical -- explicit sex</option>    
+    
+      <option value="physical &#40;other&#41;">physical -- other</option>    
+    
+      <option value="alcohol">substance-abuse -- alcohol drinking</option>    
+    
+      <option value="smoking">substance-abuse -- smoking legal stuff &#40;cigar, cigarette&#41;</option>    
+    
+      <option value="smoking illegal">substance-abuse -- smoking illegal drugs</option>    
+    
+      <option value="drugs">substance-abuse -- illegal drug use</option>    
+    
+      <option value="drug injection">substance-abuse -- drug use injection</option>    
+    
+      <option value="substance-abuse other">substance-abuse -- other</option>    
+    
+      <option value="frightening/startling scene/event">suspense -- frightening/startling scene/event</option>    
+    
+      <option value="suspenseful fight &quot;will they win?&quot;">suspense -- suspenseful fight &quot;will they win?&quot;</option>    
+    
+      <option value="suspense other">suspense -- other</option>    
+    
+</select>
+</div>
+<br/>
+
+age_maybe_ok
+<br/>
+<select name="age_maybe_ok" id="age_maybe_ok_id">
+  <option value="0">not applicable/needed</option>
+  
+    <option value="3">not OK age 3 and under</option>
+  
+    <option value="6">not OK age 6 and under</option>
+  
+    <option value="9">not OK age 9 and under</option>
+  
+    <option value="12">not OK age 12 and under</option>
+  
+    <option value="15">not OK age 15 and under</option>
+  
+  <option value="-1">no age OK</option>
+</select>
+ <!-- render -->
+        <br/>
+        <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
+        <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
+      </form>
       <br/>
       <br/>
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
@@ -420,9 +600,9 @@ function saveEditButton() {
             "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   window.open(url, '_blank');
 	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-	// too disconcerting to see it all cleared :| document.getElementById('endy').value = '0m 0.00s';
-  setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server now
-  //  setTimeout(reloadForCurrentUrl, 20000); // and get details :) but we don't use them today really :|
+	// too disconcerting to see it all cleared :| 
+  // document.getElementById('endy').value = '0m 0.00s';
+  setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
 function showMoviePage() {
@@ -954,6 +1134,22 @@ function removeFromArray(arr) {
         }
     }
     return arr;
+}
+
+function showSubCatWithRightOptionsAvailable() { // shared :|
+  var type = document.getElementById("category_select").value; // category like "profanity"
+  var subcategory_select = document.getElementById("subcategory_select_id");
+  for (var i=0; i<subcategory_select.length; i++){
+    var option = subcategory_select.options[i];
+    var cat_from_subcat = option.text.split(" ")[0]; // profanity
+    console.log("comparing " + cat_from_subcat + " " + type);
+		if (cat_from_subcat != type && option.text.includes(" -- ")) {
+		  option.style.display = "none";
+		}
+		else {
+		  option.style.display = "block";
+		}
+	}
 }
 
 // no jquery load here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load times :| ]

@@ -1,5 +1,7 @@
 require "ecr/macros"
 require "io/memory"
+require "../kemal_server/src/helpers/subcategories.cr" 
+require "html"
 
 # name = "World"
 

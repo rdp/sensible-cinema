@@ -14,67 +14,21 @@ to: <input type="text" name="endy" size="25" id="endy" value="<%= url.seconds_to
 <br/>
 
 default action to take if user selects to "edit all offensive content out" (to the "3 year old" level):
-<select name="default_action" id='action_sel' onchange="default_action_changed();">
-  <option value="mute">mute</option>
-  <option value="skip">skip</option>
-  <option value="yes_audio_no_video">yes_audio_no_video</option>
-  <option value="do_nothing">do_nothing (ex: movie content)</option>
-</select>
-<script>
-document.getElementById('action_sel').value = '<%= tag.default_action %>';
-</script>
-<br/>
 
-<div id="category_div_id">
-category:
-<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); $('#subcategory_select')[0].value = ''; // reset subcat in case cat changed " >
-  <option value="unknown">unknown -- please select category</option>
-  <option value="profanity">profanity (verbal attacks, anything spoken)</option>
-  <option value="violence">violence/blood etc.</option>
-  <option value="physical">sex/nudity/lewd acts etc.</option>
-  <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
-  <option value="movie-content">movie content (credits, etc.)</option>
-  <option value="substance-abuse">substance use</option>
-</select>
-<script>
-document.getElementById('category_select').value = '<%= tag.category %>';
-</script>
-<br/>
-</div>
 
-<div id="subcategory_div_id" style="display:none;">
-sub category
-<select name="subcategory" id='subcategory_select'>
-    <option value="">unknown -- please select subcategory</option>
-    <% subcategory_map().each{|k, v| %>
-      <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
-    <% } %>
-</select>
-</div>
-If there are any categories missing let us know!
-<br/>
-<br/>
 
-age_maybe_ok (if it needs more granularity than subcategory, "level of blood", etc.): 
-<br/>
-<select name="age_maybe_ok" id="age_maybe_ok_id">
-  <option value="0">not applicable/needed</option>
-  <% [3,6,9,12,15].each{|n| %>
-    <option value="<%= n %>">not OK age <%= n %> and under</option>
-  <% } %>
-  <option value="-1">no age OK</option>
-</select>
-<script>
-document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
-</script>
+<%= render "views/_tag_shared.ecr" %>
+
 
 <br/>
 internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers are OK:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
 <br/>
-<input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
+<input type="submit" value="Save" onclick='' >
 </form>
+If there are any categories missing let us know!
+<br/>
 <% if tag.id != 0 %>
   <a href=/delete_tag/<%= tag.id %> onclick="return confirm('Are you sure? This removes this tag entirely, you may want to shorten it or fix it instead...');">delete this tag entirely from system &#10006; </a>
 <% end %>
@@ -83,8 +37,12 @@ internal details (ex: "sally said .... OK?" (dots instead of real profanity, or 
 
 
 <script>
-select = document.getElementById('subcategory_select');
+document.getElementById('category_select').value = '<%= tag.category %>';
 
+document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
+document.getElementById('action_sel').value = '<%= tag.default_action %>';
+
+select = document.getElementById('subcategory_select_id');
 
 function htmlDecode(input)
 {
@@ -112,19 +70,20 @@ select.addEventListener(
      false
 );
 	
-function showSubCatWithRightOptionsAvailable() {
-  $('#subcategory_div_id').fadeIn();
-  var type = document.getElementById("category_select").value; // like "profanity"
-  $('#subcategory_div_id option').each(function () {
-		var cat_from_subcat = this.text.split(" ")[0]; // profanity
+
+function showSubCatWithRightOptionsAvailable() { // shared :|
+  var type = document.getElementById("category_select").value; // category like "profanity"
+  var subcategory_select = document.getElementById("subcategory_select_id");
+  for (var i=0; i<subcategory_select.length; i++){
+    var option = subcategory_select.options[i];
+    var cat_from_subcat = option.text.split(" ")[0]; // profanity
     console.log("comparing " + cat_from_subcat + " " + type);
-		if (cat_from_subcat != type && this.text.includes(" -- ")) {
-		  this.style.display = "none";
+		if (cat_from_subcat != type && option.text.includes(" -- ")) {
+		  option.style.display = "none";
 		}
 		else {
-		  this.style.display = "block";
+		  option.style.display = "block";
 		}
-	});
+	}
 }
-
 </script>

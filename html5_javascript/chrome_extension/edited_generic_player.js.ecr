@@ -62,22 +62,19 @@ function addEditUi() {
     	  Create a new tag by entering the timestamp, testing it, then saving it: 
     		<br/>current time=<span id="top_line_current_time" />
     	</div>
-    	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-      <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
-      <br/>
-      &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-      <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
-      <br/>
-      action:
-      <select name='default_action' id='new_action'>
-        <option value='mute'>mute</option>
-        <option value='skip'>skip</option>
-        <option value='yes_audio_no_video'>yes_audio_no_video</option>
-        <option value='do_nothing'>do_nothing</option>
-      </select>
-    	<br/>
-      <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
-      <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
+      <form action="/save_new_tag_from_plugin" method="POST">
+      	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
+        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+        <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
+        <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+        <br/>
+        action:
+        <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render -->
+        <br/>
+        <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
+        <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
+      </form>
       <br/>
       <br/>
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
@@ -420,9 +417,9 @@ function saveEditButton() {
             "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
   window.open(url, '_blank');
 	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-	// too disconcerting to see it all cleared :| document.getElementById('endy').value = '0m 0.00s';
-  setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server now
-  //  setTimeout(reloadForCurrentUrl, 20000); // and get details :) but we don't use them today really :|
+	// too disconcerting to see it all cleared :| 
+  // document.getElementById('endy').value = '0m 0.00s';
+  setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
 function showMoviePage() {
@@ -954,6 +951,22 @@ function removeFromArray(arr) {
         }
     }
     return arr;
+}
+
+function showSubCatWithRightOptionsAvailable() { // shared :|
+  var type = document.getElementById("category_select").value; // category like "profanity"
+  var subcategory_select = document.getElementById("subcategory_select_id");
+  for (var i=0; i<subcategory_select.length; i++){
+    var option = subcategory_select.options[i];
+    var cat_from_subcat = option.text.split(" ")[0]; // profanity
+    console.log("comparing " + cat_from_subcat + " " + type);
+		if (cat_from_subcat != type && option.text.includes(" -- ")) {
+		  option.style.display = "none";
+		}
+		else {
+		  option.style.display = "block";
+		}
+	}
 }
 
 // no jquery load here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load times :| ]

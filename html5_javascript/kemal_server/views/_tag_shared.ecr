@@ -1,0 +1,45 @@
+
+
+<select name="default_action" id='action_sel' onchange="">
+  <option value="mute">mute</option>
+  <option value="skip">skip</option>
+  <option value="yes_audio_no_video">yes_audio_no_video</option>
+  <option value="do_nothing">do_nothing (ex: movie content)</option>
+</select>
+<br/>
+
+
+<div id="category_div_id">
+category:
+<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
+  <option value="unknown">unknown -- please select category</option>
+  <option value="profanity">profanity (verbal attacks, anything spoken)</option>
+  <option value="violence">violence/blood etc.</option>
+  <option value="physical">sex/nudity/lewd acts etc.</option>
+  <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
+  <option value="movie-content">movie content (credits, etc.)</option>
+  <option value="substance-abuse">substance use</option>
+</select>
+<br/>
+</div>
+
+<div id="subcategory_div_id">
+sub category
+<select name="subcategory" id='subcategory_select_id'>
+    <option value="">unknown -- please select subcategory</option>
+    <% subcategory_map().each{|k, v| %>
+      <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
+    <% } %>
+</select>
+</div>
+<br/>
+
+age_maybe_ok
+<br/>
+<select name="age_maybe_ok" id="age_maybe_ok_id">
+  <option value="0">not applicable/needed</option>
+  <% [3,6,9,12,15].each{|n| %>
+    <option value="<%= n %>">not OK age <%= n %> and under</option>
+  <% } %>
+  <option value="-1">no age OK</option>
+</select>
