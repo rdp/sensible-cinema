@@ -9,16 +9,21 @@ Offering personalized playback of amazon/amazon prime/youtube videos, and more!
 Play It My Way is currently free while in Beta! We intend to stay free for edited youtubes forever. For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" but during Beta, use it all you want free, we'd love your feedback and support!<br/>
 
 <h3>How it works:</h3>
-Basically, watch your movie on your computer from some online source like Amazon, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to install it!
+<div id=how_it_works >
+Basically, watch your movie on your computer from some webpage (ex: Amazon), our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to install it!
+<br/>
+Plus if you notice something that should be tagged, you can tag it in our system and everybody, including yourself, will benefit!
+</a>
+</div>
 
 <div id="success_chrome_extension_id" style="display: none;">
   <font face="verdana" color="green">
-    Chrome plugin is installed, nice work!  Your playback is going to differ from the original content (we're required by law to say that :) )
+    Chrome plugin is <a href=/getting_started>installed</a>, nice work!  You can watch the below movies now. Your playback is going to differ from the original content (we're required by law to say that :) )
   </font>
 </div>
 
 <h3>Is it legal?</h3>
-We believe so.  Because you are just editing legally streamed content, and no new copies are created, we believe it's legal, woot!  See the <a href="/faq">FAQ</a> for further explanation.
+We believe so.  Because you are just editing playback of legally streamed content, we believe it's legit.  See the <a href="/faq">FAQ</a> for further explanation.
 
 <h3>Contact</h3>
 <a name=facebook_groups/></a>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
@@ -71,7 +76,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 <br/>
 <br/>
 
-<h1>Movie Index of those that aren't completely tagged yet that we're working on)</h1>
+<h1>Movie Index of those that aren't completely tagged yet (we're working on it!)</h1>
 
 <table class="table table-striped">
   <thead>
@@ -95,7 +100,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 
 <% all_urls_just_started.each{ |url|  %>
     <tr>
-       <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
+       <td><a href="<%= url.url %>" target="_blank" onclick="return alertIfNoExtension();">
              <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
              <%= url.name_with_episode %>
            </a>
@@ -120,15 +125,32 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
   </tbody>
 </table>
 
+
+<h2>Your help</h2>
+We know a lot of you are passionate about this and would love to help more.  And we'd love any support you can give.  
+The best way to help us is to join our <a href=https://www.facebook.com/groups/1241049372650953/>facebook group</a>.  We hope to launch a Kickstarter soon and we'd love to have you involved!
+Other ways you can help: help us tag some youtube or movie content, everybody can contribute!  Post on facebook that you found us! (the easiest way is to go to our <a href=https://www.facebook.com/groups/1241049372650953/>facebook groups</a> and re-share a post), to help us get the word out! :)  If you'd like us to add a donate button, we can do that too.
+
 <br/>
 Thanks for stopping by!
 <hr/>
 You too can get a free website subdomain under inet2.org see <a href=http://inet2.org>here</a>.
 
 <%= render "views/_installed_js.ecr" %>
+
 <script>
 function markAsGoodChromeExtension() { // an override
   isInstalled = true;
   document.getElementById('success_chrome_extension_id').style.display = 'block';
+  document.getElementById('how_it_works').style.display = 'none';
+}
+
+function alertIfNoExtension() {
+  if (!pluginFullyInstalled()) {
+    alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
+    window.open("/getting_started");
+    return false;
+  }
+  return true;
 }
 </script>
