@@ -42,7 +42,7 @@ We believe so.  Because you are just editing legally streamed content, and no ne
   <h3><%= host.capitalize %>:</h3>
   <br/>
   <% urls_for_host.each_with_index{ |url, idx|  %>
-       <% if idx > 0 && url.episode_number > 0 && urls_for_host[idx - 1].episode_number == 0 %>
+       <% if idx > 0 && (url.episode_number > 0 && urls_for_host[idx - 1].episode_number == 0) || (url.episode_number == 0 && urls_for_host[idx - 1].episode_number > 0) %>
          <div style="clear: both;"></div>
        <% end %>
        
