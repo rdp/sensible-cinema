@@ -19,7 +19,7 @@ Other ways you can help: help us tag some youtube or movie content, everybody ca
 </div>
 
 <div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green">
-  <br/>You successfully installed the chrome extension, now get watching! Start playing it your way!
+  <br/>You successfully installed the <a href=https://chrome.google.com/webstore/detail/play-it-my-way/ionkpaepibbmmhcijkhmamakpeclkdml target="_blank">chrome extension</a>, now get watching! Start playing it your way!
   <br/>Your playback is going to differ from the original content (we're required by law to say that :) ) </font>
 </div>
 
@@ -31,7 +31,7 @@ if (!isChrome()) {
    document.getElementById('switch_to_chrome').style.display = 'block';
 }
 
-function markAsGoodChromeExtension() { // override
+function markAsGoodChromeExtension() { // an override
   isInstalled = true;
   document.getElementById('install_chrome_extension_message_id').style.display = 'none';
   document.getElementById('success_chrome_extension_id').style.display = 'block';

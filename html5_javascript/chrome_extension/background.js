@@ -9,8 +9,8 @@ update_icon = function(request, sender, sendResponse) {
   }
   if (request.version_request) {
     var manifest = chrome.runtime.getManifest();
+    console.log("sent version response" + manifest.version);
     sendResponse({version: manifest.version});
-    console.log("sent response" + {version: manifest.version});
    }
 };
 

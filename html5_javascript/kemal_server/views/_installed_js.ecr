@@ -26,6 +26,8 @@ function isChrome() {
   }
 }
 
+var alert_once;
+
 function checkIfChromeExtensionInstalled() {
   console.log("sending liveness request...");
 
@@ -43,7 +45,7 @@ function checkIfChromeExtensionInstalled() {
                       clearInterval(timer);
                   }
                   else { 
-                    alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion);
+                    alert_once = alert_once || (alert("warning, your chrome extension is out of date at version " + reply.version + ", please update it to " + requiredVersion) || true);
                  }
              } else { 
                console.log("no reply.version???"); 

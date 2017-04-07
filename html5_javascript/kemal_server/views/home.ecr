@@ -9,11 +9,12 @@ Offering personalized playback of amazon/amazon prime/youtube videos, and more!
 Play It My Way is currently free while in Beta! We intend to stay free for edited youtubes forever. For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" but during Beta, use it all you want free, we'd love your feedback and support!<br/>
 
 <h3>How it works:</h3>
-Basically, watch your movie on your computer from some online source like Amazon, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to get going!
+Basically, watch your movie on your computer from some online source like Amazon, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to install it!
 
-<div id="success_chrome_extension_id" style="display: none;"><font face="verdana" color="green">
-  <br/>You successfully installed the chrome extension, now get watching! Start playing it your way!
-  <br/>Your playback is going to differ from the original content (we're required by law to say that :) ) </font>
+<div id="success_chrome_extension_id" style="display: none;">
+  <font face="verdana" color="green">
+    Chrome plugin is installed, nice work!
+  </font>
 </div>
 
 <h3>Is it legal?</h3>
@@ -128,3 +129,9 @@ Thanks for stopping by!
 You too can get a free website subdomain under inet2.org see <a href=http://inet2.org>here</a>.
 
 <%= render "views/_installed_js.ecr" %>
+<script>
+function markAsGoodChromeExtension() { // an override
+  isInstalled = true;
+  document.getElementById('success_chrome_extension_id').style.display = 'block';
+}
+</script>
