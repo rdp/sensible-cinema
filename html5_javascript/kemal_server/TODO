@@ -5,7 +5,7 @@ Amazon: popular prime, new releases, then netflix ??
 == todo ==
 
 youtube for how to create...just follow tutorial
-  modify tutorial as I go
+  modify tutorial as I go [first pass]
   ask others to review tutorial for me
 
 edit a few on my own (PG auto subs that melissa fine tunes for the deity?) :)
@@ -21,12 +21,15 @@ a way to "turn it off on this video I want it uncut" useful for reviewing...
 
 == pre launch ==
 
+unedited -> show link to create edited [also say PIMW]
+
 renew cert
 
 add your emails to our system, not just session
   it remembers who you are in our DB ... 
-  change logs to just say user ID...no handle needed?
-  I like handle though... :| just a link to adjust it :|
+  facebook auth ...
+  handle...
+  change logs to just say handle
 
 more personlized edit lists, everybody wants to be able to edit their own private...yeah...
   checkboxes/select all 
