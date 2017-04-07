@@ -63,16 +63,6 @@ class Url
       conn.scalar "select count(*) from urls"
     end
   end
-
-   def self.all_except_just_started
-    with_db do |conn|
-      # sort by host, amazon type, name for series together
-      # TODO only reviewed here :|
-      conn.query("SELECT * from urls where editing_status != 'Just started, tags might not be fully complete yet' order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type desc, name") do |rs|
-         Url.from_rs(rs);
-      end
-    end
-  end
   
   def self.all
     with_db do |conn|

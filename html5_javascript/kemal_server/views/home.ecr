@@ -47,12 +47,12 @@ We believe so.  Because you are just editing legally streamed content, and no ne
   %>
   
   <% movies.each_with_index{ |url, idx|  %>
-       <%= render "views/_song_box.ecr" %>
+    <%= render "views/_song_box.ecr" %>
   <% } %>
   </div>
   <% if series.size > 0 %>
     <div style="clear: both;"></div>
-    <h4>Series</h4>
+    <h4>Series's</h4>
     <% series.each_with_index{ |url, idx|  %>
        <% if idx > 0 && (url.name != series[idx - 1].name) %>
          <div style="clear: both;"></div>
@@ -71,7 +71,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 <br/>
 <br/>
 
-<h1>Movie Index (including those we're working on but may not be completely tagged yet)</h1>
+<h1>Movie Index of those that aren't completely tagged yet that we're working on)</h1>
 
 <table class="table table-striped">
   <thead>
@@ -93,7 +93,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
   </thead>
   <tbody>
 
-<% all_urls.each{ |url|  %>
+<% all_urls_except_just_started.each{ |url|  %>
     <tr>
        <td><a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();">
              <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
