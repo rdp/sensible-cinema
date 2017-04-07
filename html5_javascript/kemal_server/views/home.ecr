@@ -147,7 +147,7 @@ function markAsGoodChromeExtension() { // an override
 
 function alertIfNoExtension() {
   if (!pluginFullyInstalled()) {
-    alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
+    alert("You need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video.  Continuing unedited...");
     window.open("/getting_started");
     return true; // let them go through anyway, felt too restrictive :|
   }
