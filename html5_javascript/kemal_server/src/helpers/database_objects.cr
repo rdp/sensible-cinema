@@ -274,8 +274,16 @@ class Url
       name
     end
   end
+ 
+  def delete_local_image_if_present_no_save
+    if image_local_filename.present?
+      File.delete "./public/movie_images/#{image_local_filename}"
+      image_local_filename = nil
+    end
+  end
 	
 	def download_image_url_and_save(full_url)
+          delete_local_image_if_present_no_save
 	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
 	  outgoing_filename = "#{id}_#{image_name}"
 	  @image_local_filename = outgoing_filename

@@ -131,15 +131,13 @@ end
 
 def hard_nuke_url_or_nil(url, env)
   if url
-    save_local_javascript [url], "nuking...", env
+    save_local_javascript [url], "about to nuke...", env
     url.tag_edit_lists.each{|tag_edit_list|
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
     }
     url.tags.each &.destroy_no_cascade # already nuked its edit lists bindings
-    if url.image_local_filename.present?
-      File.delete "./public/movie_images/#{url.image_local_filename}"
-    end
+    url.delete_local_image_if_present_no_save
     url.destroy_no_cascade
     "nuked testmovie #{HTML.escape url.inspect} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
   else
