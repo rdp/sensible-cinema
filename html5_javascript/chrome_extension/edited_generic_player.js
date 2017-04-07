@@ -20,8 +20,8 @@ var mutes, skips, yes_audio_no_videos, do_nothings;
 
 function addEditUi() {
 	
-	allEditStuffDiv = document.createElement('div');
-	allEditStuffDiv.id = "all_edit_stuff_id";
+	var allEditStuffDiv = document.createElement('div');
+	allEditStuffDiv.id = "all_pimw_stuff_id";
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
   allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
@@ -35,8 +35,8 @@ function addEditUi() {
 	allEditStuffDiv.innerHTML = `
    <!-- our own styles # is id -->
   <style>
-    #all_edit_stuff_id a:link    { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-  	#all_edit_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+    #all_pimw_stuff_id a:link    { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+  	#all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
   </style>
   
   <!-- no loading message here since...not really useful anyway and ... we don't start the watcher thread until after the first fail or success to give us the right coords -->
@@ -54,7 +54,7 @@ function addEditUi() {
   	<div id="currently_playing_it_your_way_id">
   	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set this up -->
     	<br/>
-      <a href=# onclick="revealAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
+      <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
     	<span id=add_edit_span_id_for_extra_message><!-- play it my way is currently: muting --></span>
@@ -240,7 +240,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")"; // TODO next and previous edit starts as well :|
+	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")";
   var next_tag = getNextTagAfterCurrentPos();
   if (next_tag) {
     document.getElementById('top_line_current_time').innerHTML += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
@@ -333,23 +333,10 @@ function addForNewVideo() {
 	}  
 }
 
-function revealAddNewTagStuff() {
-  displayDiv(document.getElementById("tag_details_div_id"));
+function toggleAddNewTagStuff() {
+  toggleDiv(document.getElementById("tag_details_div_id"));
 }
 
-function inAddMode() {
-	return document.getElementById("add_edit_link_id").innerHTML == "" ;
-}
-
-function displayAddTagStuffIfInAddMode() {
-  if (inAddMode()){
-    displayDiv(document.getElementById("load_succeeded_div_id"));
-	}
-}
-
-function hideAddTagStuff() {
-  hideDiv(document.getElementById("load_succeeded_div_id"));
-}
 
 function collapseAddTagStuff() {
   hideDiv(document.getElementById("tag_details_div_id"));
@@ -362,8 +349,9 @@ function setEditedControlsToTopLeft() {
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
 	}
-  allEditStuffDiv.style.left = left + "px";
-  allEditStuffDiv.style.top = top + "px";
+  var allPimwStuff = document.getElementById("all_pimw_stuff_id")
+  allPimwStuff.style.left = left + "px";
+  allPimwStuff.style.top = top + "px";
 }
 
 function currentTestAction() {
@@ -518,7 +506,6 @@ function loadFailed(status) {
   name = liveFullNameEpisode();
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
-	collapseAddTagStuff();
 	hideDiv(document.getElementById("load_succeeded_div_id"));
 	displayDiv(document.getElementById("load_failed_div_id"));
 	
@@ -681,26 +668,25 @@ function coordsWithinElement(cursorX, cursorY, element) {
 function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
-  var all_edit_stuff = document.getElementById("all_edit_stuff_id");
+  var all_pimw_stuff = document.getElementById("all_pimw_stuff_id");
   var mouse_within_video = coordsWithinElement(cursorX, cursorY, video_element);
-  var mouse_within_all_edit_stuff_id = coordsWithinElement(cursorX, cursorY, all_edit_stuff_id);
+  var mouse_within_all_pimw_stuff = coordsWithinElement(cursorX, cursorY, all_pimw_stuff_id);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
-  	displayDiv(all_edit_stuff_id);
-  	displayAddTagStuffIfInAddMode();
+  	displayDiv(all_pimw_stuff);
     clearTimeout(mouse_move_timer); // in case previously set
-    if (!mouse_within_all_edit_stuff_id) {
-      mouse_move_timer = setTimeout(hideAllEditStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
+    if (!mouse_within_all_pimw_stuff) {
+      mouse_move_timer = setTimeout(hideAllPimwStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
     }
   }
   else if (!mouse_within_video) {
-    // mimic youtube :|
-    hideAllEditStuff();
+    // mimic youtube remove immediately if mouse ever leaves video
+    hideAllPimwStuff();
     clearTimeout(mouse_move_timer);
   }
 }
 
-function hideAllEditStuff() {
-  hideDiv(document.getElementById("all_edit_stuff_id")); 
+function hideAllPimwStuff() {
+  hideDiv(document.getElementById("all_pimw_stuff_id")); 
 }
 
 function addMouseAnythingListener(func) {
@@ -830,6 +816,15 @@ function decodeHTMLEntities(text) {
 
 function displayDiv(div) {
 	div.style.display = "block";
+}
+
+function toggleDiv(div) {
+  if (div.style.display == "block") {
+    hideDiv(div);
+  }
+  else {
+    displayDiv(div);
+  }
 }
 
 function hideDiv(div) {
