@@ -15,8 +15,7 @@ var extra_message = "";
 var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings;
-
+var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
 
 function addEditUi() {
 	
@@ -30,16 +29,16 @@ function addEditUi() {
   allEditStuffDiv.style.zIndex = "99999999";
   allEditStuffDiv.style.width = "600px";
   allEditStuffDiv.style.position = 'absolute';
-  url_id = 0; // reset
+  url_id = 0; // init
   
 	allEditStuffDiv.innerHTML = `
-   <!-- our own styles # is id -->
+   <!-- our own styles, # is id -->
   <style>
     #all_pimw_stuff_id a:link    { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
   	#all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
   </style>
   
-  <!-- no loading message here since...not really useful anyway and ... we don't start the watcher thread until after the first fail or success to give us the right coords -->
+  <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
     
   <div id=load_failed_div_id style='display: none;' style='font-size: 14px;'>
     <a href=# onclick="displayDiv(document.getElementById('click_to_add_to_system_div_id')); return false;">
@@ -592,8 +591,8 @@ function getEditsFromCurrentTagList() {
 	alert("unable to select " + dropdown.value); // shouldn't get here ever LOL.
 }
 
-// http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
-function getRequest (url, success, error) {  
+function getRequest(url, success, error) {  
+  // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
   console.log("starting attempt GET download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
@@ -705,7 +704,7 @@ function addMouseAnythingListener(func) {
   addListener(document, 'mousedown', func);
 }
 
-function onReady(yourMethod) {
+function onReady(yourMethod) { // from SO :)
   if (document.readyState === 'complete') {
     setTimeout(yourMethod, 1); // schedule to run immediately
   }
@@ -721,11 +720,11 @@ function onReady(yourMethod) {
 
 
 function inIframe() {
-    try {
-        return window.self !== window.top;
-    } catch (e) {
-        return true;
-    }
+  try {
+      return window.self !== window.top;
+  } catch (e) {
+      return true;
+  }
 }
 
 function isGoogleIframe() {
@@ -774,7 +773,7 @@ function seekToTime(ts, callback) {
     ts = 0;
   }
 	callback = callback || function() {}
-  // try and avoid pauses after seeking
+  // try and avoid freezes after seeking...
 	console.log("seeking to " + ts);
   video_element.pause();
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
@@ -803,14 +802,14 @@ var addEvent = function(object, type, callback) {
 };
 
 function decodeHTMLEntities(text) {
-   	// I guess there's an HTML way to do this, but this way looked funner! :)
-    var entities = [
-        ['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']
-    ];
-    for (var i = 0, max = entities.length; i < max; ++i) {
-        text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
-    }
-    return text;
+ 	// I guess there's an HTML way to do this, but this way looked funner! :)
+  var entities = [
+      ['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']
+  ];
+  for (var i = 0, max = entities.length; i < max; ++i) {
+      text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
+  }
+  return text;
 }
 
 
@@ -895,16 +894,6 @@ function liveFullNameEpisode() {
   return liveTitleNoEpisode() + liveEpisodeString(); 
 }
 
-// unused?
-function alertEditorWorkingAfterTimeout(message) {
-	setTimeout(function() {
-    alert("Play it my way:\n" + decodeHTMLEntities("SUCCESS: Editing playback successfully enabled for\n"  + name + " " + episode_name + "\n" + message + 
-	      "\n\nskips=" + skips.length + "\nmutes=" + mutes.length +"\nyes_audio_no_videos=" + yes_audio_no_videos.length +
-		    "\n" + liveFullNameEpisode()));
-			}, 100);
-}
-
-
 function removeAllOptions(selectbox)
 {
   for(var i = selectbox.options.length - 1 ; i >= 0 ; i--) {
@@ -967,7 +956,7 @@ function removeFromArray(arr) {
     return arr;
 }
 
+// no jquery load here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load times :| ]
 
-// no jquery since this page might already have it loaded, so don't load/use it to avoid any conflict.  [plus speedup load times :| ]
 // on ready just in case here LOL
 onReady(start);
