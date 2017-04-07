@@ -198,6 +198,7 @@ end
 
 post "/save_tag/:url_id" do |env|
   params = env.params.body
+  puts "save tag params #{params}" # to see image url etc.
   if params["id"]?
     tag = Tag.get_only_by_id(params["id"])
   else

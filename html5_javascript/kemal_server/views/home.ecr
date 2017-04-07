@@ -93,6 +93,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
       <th>Wholesome review</th>
       <th>Original MPAA Rating</th>
       <th>Cost</th>
+      <th>Genre</th>
       <th>Movie info</th>
     </tr>
   </thead>
@@ -116,6 +117,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
        <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
        <td><%= url.original_rating %> </td>
        <td><%= url.cost_string %></td>
+       <td><%= url.genre %></td>
        <td>
             <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
        </td>
