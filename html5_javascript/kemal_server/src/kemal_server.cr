@@ -25,6 +25,9 @@ class CustomHandler < Kemal::Handler
       end # else too hard
       add_to_flash env, "Thanks for contributing to our site! To discourage vandalism, we require a login. Please login first, here:"
       env.redirect "/login" 
+    elsif env.request.host !~ /localhost|playitmyway/
+      # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
+      raise "wrong host" 
     else
       call_next env
     end
