@@ -60,7 +60,7 @@ We believe so.  Because you are just editing playback of legally streamed conten
     <h4>Series's</h4>
     <% series.each_with_index{ |url, idx|  %>
        <% if idx > 0 && (url.name != series[idx - 1].name) %>
-         <div style="clear: both;"></div>
+         <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
        <% end %>
       <%= render "views/_song_box.ecr" %>
     <% } %>
@@ -149,7 +149,7 @@ function alertIfNoExtension() {
   if (!pluginFullyInstalled()) {
     alert("you need to install the chrome extension to watch the video edited, which it appears you have not done yet, please do that then watch the video");
     window.open("/getting_started");
-    return false;
+    return true; // let them go through anyway, felt too restrictive :|
   }
   return true;
 }
