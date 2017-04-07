@@ -2,10 +2,6 @@
 // for non chrome browser: copy and paste all of this text (including this line) into the "developer tools javascript console" ">" prompt, and hit enter:
 // if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
 
-
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
-
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
@@ -16,6 +12,8 @@ var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
+var request_host="localhost:3000"; // dev
+var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	
@@ -62,7 +60,7 @@ function addEditUi() {
     	  Create a new tag by entering the timestamp, testing it, then saving it: 
     		<br/>current time=<span id="top_line_current_time" />
     	</div>
-      <form action="/save_new_tag_from_plugin" method="POST">
+      <form target="_blank" action="filled_in_later" method="POST" id="create_new_tag_form_id">
       	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
         <br/>
@@ -254,6 +252,8 @@ age_maybe_ok
   <option value="-1">no age OK</option>
 </select>
  <!-- render -->
+        <br/>
+        details: <input type="text" name="details" size="50" value=""/>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
         <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
@@ -534,7 +534,7 @@ function setEditedControlsToTopLeft() {
 }
 
 function currentTestAction() {
-  return document.getElementById('new_action').value;
+  return document.getElementById('action_sel').value;
 }
 
 function testCurrentFromUi() {
@@ -596,11 +596,11 @@ function getCurrentVideoTimestampHuman() {
 }
 
 function saveEditButton() {
-  var url = "https://" + request_host + "/add_tag_from_plugin/" + url_id + '?start=' + document.getElementById('start').value + 
-            "&endy=" + document.getElementById('endy').value + "&default_action=" + currentTestAction();
-  window.open(url, '_blank');
+  document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
+  document.getElementById('create_new_tag_form_id').submit();
+
 	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-	// too disconcerting to see it all cleared :| 
+	// too disconcerting to see it all cleared??
   // document.getElementById('endy').value = '0m 0.00s';
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
