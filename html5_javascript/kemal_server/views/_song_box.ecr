@@ -3,9 +3,8 @@
          <div style="height: 378px; overflow:scroll;"> <!-- don't show freaky text at bottom -->
          <a href="<%= url.url %>" target="_blank" onclick="return alertIfNoExtension();">
             <%= url.image_tag "style='max-height: 300px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>" %>
-            <%= url.name_with_episode %>
+            <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
-          <br/>
           <%= if_present_with_break url.details, "" %>
           <a href="/view_url/<%= url.id %>">View info (<%= url.tags.size %> tags)</a><br/>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
