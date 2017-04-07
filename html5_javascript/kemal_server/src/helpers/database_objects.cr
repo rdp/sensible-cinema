@@ -194,7 +194,7 @@ class Url
   end
 
   def url_lookup_params
-    "url=#{URI.escape url}&episode_number=#{episode_number}" # URI.escape == escapeComponent
+    "url=#{url}&episode_number=#{episode_number}" # URI.escape?
   end
 
   def human_readable_company
