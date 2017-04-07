@@ -40,7 +40,7 @@ function checkIfChromeExtensionInstalled() {
               if (reply.version != null) { // can't do if (reply.version) here in case it comes in as 0.0 :|
                   var requiredVersion = 0.00;
                   console.log("got back chrome plugin installed " + reply.version);
-                  if (reply.version /* >= requiredVersion */) {
+                  if (reply.version /* >= requiredVersion it's a string so compare is wonky... */) {
                       markAsGoodChromeExtension();
                       clearInterval(timer);
                   }

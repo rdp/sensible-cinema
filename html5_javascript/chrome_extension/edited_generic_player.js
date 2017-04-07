@@ -21,96 +21,91 @@ var mutes, skips, yes_audio_no_videos, do_nothings;
 function addEditUi() {
 	
 	allEditStuffDiv = document.createElement('div');
-	allEditStuffDiv.id = "all_edit_stuff";
-	allEditStuffDiv.innerHTML = `
-	<style>
-	  #all_edit_stuff a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;} 
-		#all_edit_stuff a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-	</style>;
-	<div id='color_oval_div_id' style='display: none; z-index: 99999999; position: absolute; background: yellow; border-radius: 50% / 50%;'></div> <!-- can't have inline terminate ? -->
-	<div id='color_square_div_id' style='display: none; z-index: 99999999; position: absolute; background: black;'></div>
-	`;
+	allEditStuffDiv.id = "all_edit_stuff_id";
   allEditStuffDiv.style.color = "white";
   allEditStuffDiv.style.background = '#000000';
   allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
   allEditStuffDiv.style.fontSize = "15px";
   allEditStuffDiv.style.textShadow="2px 1px 1px black";
-  document.body.appendChild(allEditStuffDiv);
-	
-  currentlyEditingDiv = document.createElement('div');
-  currentlyEditingDiv.style.position = 'absolute';
-  currentlyEditingDiv.style.height = '30px';
-  currentlyEditingDiv.style.zIndex = "99999999"; // doesn't inherit? gah
-	currentlyEditingDiv.id = "top_left";
-  currentlyEditingDiv.innerHTML = 
-	` <div id=currently_filtering_id style='display: none;'>
-	    Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select>
-	  </div>
-	  <div id=loading_div_id>Loading...</div>
-	  <span id=add_edit_span_id_for_extra_message></span><!-- purposefully left blank, filled in later with 'muted'-->
-	  <br/><a href=# onclick="addForNewEditToScreen(); return false;" id="add_edit_or_add_movie_link_id"><!-- will be filled in --></a>`;
-  // and stay visible
-  allEditStuffDiv.appendChild(currentlyEditingDiv);
-
-  tagLayer = document.createElement('div');
-	tagLayer.id = "tagLayer";
-  tagLayer.style.position = 'absolute';
-  tagLayer.style.width = '600px';
-  tagLayer.style.height = '30px';
-  tagLayer.style.display = 'none';
-  tagLayer.style.zIndex = "99999999";
-		
-  allEditStuffDiv.appendChild(tagLayer);
+  allEditStuffDiv.style.zIndex = "99999999";
+  allEditStuffDiv.style.width = "600px";
+  allEditStuffDiv.style.position = 'absolute';
+  url_id = 0; // reset
   
-  tagLayer.innerHTML = `
-  <div class="moccasin" id="moccasin_id">
-	<div id='tag_layer_top_right'><!-- filled in later mutes=2 skips=... --></div>
-	<br/>
-	<div id='tag_layer_top_line'>
-	  Create a new tag by entering the timestamp, testing it, then saving it: 
-		<br/>current time=<span id="top_line_current_time" />
-	</div>
-	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
-  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
-  <br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
-  <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
-  <br/>
-  action:
-  <select name='default_action' id='new_action'>
-    <option value='mute'>mute</option>
-    <option value='skip'>skip</option>
-    <option value='yes_audio_no_video'>yes_audio_no_video</option>
-    <option value='do_nothing'>do_nothing</option>
-  </select>
-	<br/>
-  <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
-  <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
-  <br/>
-  <br/>
-  <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
-  <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
-  <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
-  <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
-  <span id='playback_rate'>1.00x</span>
-  <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-  <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
-  <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
-  <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> <!-- ditto -->
-  <br/>
-  <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
-  <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
-  <input type='button' onclick="closeEditor(); return false;" value='✕ Hide editor'/>
-	<br/>
-	<br/>
-  <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
-	<br/>
-  <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
-	<br/>
-  <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
-  <br/>
-  <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a>
+	allEditStuffDiv.innerHTML = `
+   <!-- our own styles # is id -->
+  <style>
+    #all_edit_stuff_id a:link    { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+  	#all_edit_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+  </style>
+  
+  <!-- no loading message here since...not really useful anyway and ... we don't start the watcher thread until after the first fail or success to give us the right coords -->
+    
+  <div id=load_failed_div_id style='display: none;' style='font-size: 14px;'>
+    <a href=# onclick="displayDiv(document.getElementById('click_to_add_to_system_div_id')); return false;">
+      Unedited...
+    </a>
+    <div id=click_to_add_to_system_div_id style='display: none;'>
+      <a href=# onclick="addForNewVideo(); return false;">Play it My Way: Click here to add to the system...</a>
+    </div>
+  </div>    
+  
+  <div id="load_succeeded_div_id" style='display: none;'>
+  	<div id="currently_playing_it_your_way_id">
+  	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set this up -->
+    	<br/>
+      <a href=# onclick="revealAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
+  	</div>
+    <div id="tag_details_div_id"  style='display: none;'>
+    	<span id=add_edit_span_id_for_extra_message><!-- play it my way is currently: muting --></span>
+    	<br/>
+    	<div id='tag_layer_top_line'>
+    	  Create a new tag by entering the timestamp, testing it, then saving it: 
+    		<br/>current time=<span id="top_line_current_time" />
+    	</div>
+    	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
+      <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
+      <br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
+      <input id='clickMe' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
+      <br/>
+      action:
+      <select name='default_action' id='new_action'>
+        <option value='mute'>mute</option>
+        <option value='skip'>skip</option>
+        <option value='yes_audio_no_video'>yes_audio_no_video</option>
+        <option value='do_nothing'>do_nothing</option>
+      </select>
+    	<br/>
+      <input type='submit' value='Test edit once' onclick="testCurrentFromUi();">
+      <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo();">
+      <br/>
+      <br/>
+      <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
+      <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+      <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
+      <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
+      <span id='playback_rate'>1.00x</span>
+      <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
+      <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
+      <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> <!-- ditto -->
+      <br/>
+      <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
+      <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
+      <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
+    	<br/>
+    	<br/>
+      <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
+    	<br/>
+      <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
+    	<br/>
+      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
+      <br/>
+      <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a>
+    </div>
   </div>`;
+  document.body.appendChild(allEditStuffDiv);
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
@@ -259,20 +254,6 @@ function checkIfShouldDoActionAndUpdateUI() {
 	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
 }
 
-function move_div_to_position(coords, div_to_adjust) {
-	[topy, _, left, _, height, _, width, _, color] = coords.split(/%(,|:|)/);
-	topy = parseInt(topy) / 100.0;
-	left = parseInt(left) / 100.0;
-	height = parseInt(height) / 100.0;
-	width = parseInt(width) / 100.0;
-	var video_position = getLocationOfElement(video_element);
-	div_to_adjust.style.top = video_position.top + (topy * video_position.height);
-	div_to_adjust.style.left = video_position.left + (left * video_position.width);
-	div_to_adjust.style.height = video_position.height * height; 
-	div_to_adjust.style.width = video_position.width * width;
-	div_to_adjust.style.backgroundColor = color;
-}
-
 function checkStatus() {
 	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (url_id != 0) {
@@ -337,61 +318,52 @@ function getNextTagAfterCurrentPos() {
   return null;
 }
 
-function addForNewEditToScreen() {
-  if (url_id == 0) {
-		// case "unedited click to add..."
-		if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
-			alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
-			// XXXX more generic here somehow possible???
-			// TPDP don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
-		}
-		else {
-	    window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
-			      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
-			setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
-      // once took longer than 2000 :|
-			pauseVideo();
-		}
-  }
-	else {
-		// case "Add new content tag" XXX this is screwy but...but...LOL
-    document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "";
-		displayAddTagStuffIfInAddMode();
+function addForNewVideo() {
+	if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
+		alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
+		// XXXX more generic here somehow possible???
+		// TPDP don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
 	}
+	else {
+    window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
+		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
+		setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
+    // once took longer than 2000 :|
+		pauseVideo();
+	}  
+}
+
+function revealAddNewTagStuff() {
+  displayDiv(document.getElementById("tag_details_div_id"));
 }
 
 function inAddMode() {
-	return document.getElementById("add_edit_or_add_movie_link_id").innerHTML == "" ;
+	return document.getElementById("add_edit_link_id").innerHTML == "" ;
 }
 
 function displayAddTagStuffIfInAddMode() {
   if (inAddMode()){
-    displayDiv(tagLayer);
+    displayDiv(document.getElementById("load_succeeded_div_id"));
 	}
 }
 
 function hideAddTagStuff() {
-  hideDiv(tagLayer);
+  hideDiv(document.getElementById("load_succeeded_div_id"));
 }
-var addString = "Add a new content tag if we missed something!";
-function closeEditor() {
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString;
-	hideAddTagStuff();
+
+function collapseAddTagStuff() {
+  hideDiv(document.getElementById("tag_details_div_id"));
 }
 
 function setEditedControlsToTopLeft() {
-  // discover where the "currently viewed" top left actually is (not always 0,0 apparently, it seems)
   var left = getLocationOfElement(video_element).left; 
   var top = getLocationOfElement(video_element).top;
   top += 85; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
 	}
-  currentlyEditingDiv.style.left = left + "px";
-  currentlyEditingDiv.style.top = top + "px";
-	top += 55; // put rest below the currentlyEditingDiv line
-  tagLayer.style.left = left + "px";
-  tagLayer.style.top = top + "px";
+  allEditStuffDiv.style.left = left + "px";
+  allEditStuffDiv.style.top = top + "px";
 }
 
 function currentTestAction() {
@@ -508,68 +480,59 @@ function lookupUrl() {
 }
 
 function loadForNewUrl() {
-  getRequest(lookupUrl(), parseSuccessfulJsonNewUrl, loadFailed);
+  getRequest(lookupUrl(), loadSucceeded, loadFailed);
 }
 
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
 		console.log("reloading...");
-    getRequest(lookupUrl(), parseSuccessfulJsonReload, function() { console.log("huh wuh edits disappeared but used to be there??");  }); 
+    getRequest(lookupUrl(), loadSucceeded, loadFailed);
   }
 	else {
-		console.log("not reloading...?");
+		alert("not reloading, possibly never loaded or in middle of a test edit [hit browser reload button if the latter]");
 	}
 }
 
-function parseSuccessfulJsonReload(json_string) {
+function loadSucceeded(json_string) {
   parseSuccessfulJson(json_string);
 	getEditsFromCurrentTagList();
-}
-
-function parseSuccessfulJsonNewUrl(json_string) {
-  parseSuccessfulJson(json_string);
-	getEditsFromCurrentTagList(); // used to alert was useful on amazon, but annoying when you create new movie [?]
-  startWatcherTimerOnce();
+  startWatcherTimerOnce(); // don't know what to display before this...so leave everything hidden
   if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
      // there can be false alerts like yours has a # or something so don't alert :|
   }
   old_current_url = getStandardizedCurrentUrl();
+  old_episode = liveEpisodeNumber();
   if (liveEpisodeNumber() != expected_episode_number) {
     alert("play it my way\ndanger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
-  old_episode = liveEpisodeNumber();
-	displayDiv(document.getElementById("currently_filtering_id"));
-	hideDiv(document.getElementById("loading_div_id"));
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = addString; // in case it said unedited... before
-	sendMessageToPlugin({text: "YES", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
+  displayDiv(document.getElementById("load_succeeded_div_id"));
+  hideDiv(document.getElementById("load_failed_div_id"));
+  
+	sendMessageToPlugin({text: "EDIT", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 }
 
 function loadFailed(status) {
   mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
-  // plus if they paste it in it gets here, so...basically load the no-op :|
-  if (current_json != null) {
-    current_json.tags = [];
-  }
+  current_json = null;
+  url_id = 0; // reset
   name = liveFullNameEpisode();
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
-  url_id = 0; // reset
-	closeEditor();
-  document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "<span style='font-size: 18px;'>Unedited...</span>";
-	hideDiv(document.getElementById("currently_filtering_id"));
-	hideDiv(document.getElementById("loading_div_id"));
+	collapseAddTagStuff();
+	hideDiv(document.getElementById("load_succeeded_div_id"));
+	displayDiv(document.getElementById("load_failed_div_id"));
 	
-	removeAllOptions(document.getElementById("tag_edit_list_dropdown"));
+	removeAllOptions(document.getElementById("tag_edit_list_dropdown")); // clean up...in case it matters...
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
   if (status > 0) {
-		// too annoying/frequent :|
-		// setTimeout(alertHaveNoneClickOverThereToAddOne, 500); // do later so UI can update and not show behind this prompt as if loaded :|
+		// alert here "we don't have one" is too annoying
   }
   else {
-    // alert too scawah for end users
-		document.getElementById("add_edit_or_add_movie_link_id").innerHTML = "Play it my way Server down, please alert us and try again later...";
+    // alert here is too scawah for end users
+  	showDiv(document.getElementById("initial_loading_before_know_if_have_movie_div_id"));
+		document.getElementById("initial_loading_before_know_if_have_movie_div_id").innerHTML = "Play it my way Server down, please alert us and try again later...";
   }
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
@@ -623,7 +586,6 @@ function setTheseTagsAsTheOnesToUse(tags) {
 		}
 		push_to_array.push(tag);
 	}
-	document.getElementById('tag_layer_top_right').innerHTML = ""; // it was...just...so...ugly... XXX put next/prev here?
 }
 
 function getEditsFromCurrentTagList() {
@@ -680,10 +642,6 @@ function checkIfEpisodeChanged() {
   }
 }
 
-function alertHaveNoneClickOverThereToAddOne() {
-  alert(decodeHTMLEntities("Play it my way:\nWe don't appear to have tags for\n\n" + liveFullNameEpisode() + "\n\n yet, you can add this movie to the system by clicking the 'Unedited, click to enable edited' link to the left"));
-}
-
 var clean_stream_timer;
 
 function startWatcherTimerOnce() {
@@ -723,16 +681,14 @@ function coordsWithinElement(cursorX, cursorY, element) {
 function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
-  var top_left = document.getElementById("top_left");
-  var moccasin = document.getElementById("moccasin_id");
+  var all_edit_stuff = document.getElementById("all_edit_stuff_id");
   var mouse_within_video = coordsWithinElement(cursorX, cursorY, video_element);
-  var mouse_within_add = coordsWithinElement(cursorX, cursorY, moccasin); // only the "add tag" window FWIW
-  var mouse_within_top_left = coordsWithinElement(cursorX, cursorY, top_left);
+  var mouse_within_all_edit_stuff_id = coordsWithinElement(cursorX, cursorY, all_edit_stuff_id);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
-  	displayDiv(top_left);
+  	displayDiv(all_edit_stuff_id);
   	displayAddTagStuffIfInAddMode();
     clearTimeout(mouse_move_timer); // in case previously set
-    if (!mouse_within_add && !mouse_within_top_left) {
+    if (!mouse_within_all_edit_stuff_id) {
       mouse_move_timer = setTimeout(hideAllEditStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
     }
   }
@@ -744,8 +700,7 @@ function mouseJustMoved(event) {
 }
 
 function hideAllEditStuff() {
-  hideDiv(document.getElementById("top_left")); 
-  hideAddTagStuff();
+  hideDiv(document.getElementById("all_edit_stuff_id")); 
 }
 
 function addMouseAnythingListener(func) {
