@@ -289,6 +289,7 @@ class Url
 	
 	def download_image_url_and_save(full_url)
 	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
+          image_name = HTML.escape(image_name) # remove ('s etc.
           if image_name !~ /\.(jpg|png|jpeg|svg)$/i
             raise "download url appears to not be an image url like http://host/image.jpg please try another one... #{full_url}"
           end
