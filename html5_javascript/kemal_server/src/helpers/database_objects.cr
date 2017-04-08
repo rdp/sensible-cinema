@@ -288,12 +288,15 @@ class Url
   end
 	
 	def download_image_url_and_save(full_url)
-          delete_local_image_if_present_no_save
 	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
+          if image_name !~ /\.(jpg|png|jpeg|svg)$/i
+            raise "download url appears to not be an image url like http://host/image.jpg please try another one... #{full_url}"
+          end
 	  outgoing_filename = "#{id}_#{image_name}"
-	  @image_local_filename = outgoing_filename
 	  File.write("public/movie_images/#{outgoing_filename}", download(full_url)) # guess this is OK non windows :|
-          save # save our new filename
+          delete_local_image_if_present_no_save # delete old now that we've downloaded new and have assured successful replacement :|
+	  @image_local_filename = outgoing_filename
+          save
 	end
 	
 	def image_tag(size, postpend_html = "")
