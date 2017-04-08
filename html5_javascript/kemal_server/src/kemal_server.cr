@@ -27,7 +27,7 @@ class CustomHandler < Kemal::Handler
       env.redirect "/login" 
     elsif env.request.host !~ /localhost|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
-      raise "wrong host" 
+      raise "wrong host #{env.request.host}" 
     else
       call_next env
     end
@@ -550,6 +550,7 @@ end
 
 post "/save_url" do |env|
   params = env.params.body # POST params
+  puts "got save_url params=#{params}"
   if params.has_key? "id"
     # these day
     db_url = Url.get_only_by_id(params["id"])

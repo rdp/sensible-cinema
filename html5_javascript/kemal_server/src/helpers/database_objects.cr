@@ -154,7 +154,6 @@ class Url
   end
 
   def tags
-    puts "searching for tags for url=#{id}"
     with_db do |conn|
       conn.query("select * from tags where url_id=? order by start asc", id) do |rs|
         Tag.from_rs rs
