@@ -85,7 +85,7 @@ get "/sync_web_server" do |env|
     sleep 0.1 # faux quiesce LOL
     system("~/sync.sh") # kills this process XXXX even more graceful restart...hrm...
   end
-  "restarting it" 
+  "from server: restarting it in 0.1..." 
 end
 
 get "/all_tags" do |env|
@@ -201,7 +201,8 @@ end
 post "/save_tag/:url_id" do |env|
   params = env.params.body
   puts "save tag params #{params}" # to see image url etc.
-  if params["id"]?
+  is_update = params["id"]?
+  if is_update
     tag = Tag.get_only_by_id(params["id"])
   else
     tag = Tag.new(get_url_from_url_id(env))
@@ -235,7 +236,11 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
   end
   save_local_javascript [url], tag.inspect, env
-  add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, you can close this window now, if this was a modification, reload in your browser...")
+  if is_update
+    add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, recommend doing a reload in your browser...")
+  else
+    add_to_flash(env, "Success! created tag at #{seconds_to_human tag.start}, you can tweak details and/or close this window now.")
+end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end
 
