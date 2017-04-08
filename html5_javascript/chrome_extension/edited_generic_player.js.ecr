@@ -12,8 +12,9 @@ var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
-var request_host="localhost:3000"; // dev
-//var request_host="playitmyway.inet2.org";  // prod
+
+//var request_host="localhost:3000"; // dev
+var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	

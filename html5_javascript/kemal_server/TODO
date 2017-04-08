@@ -16,9 +16,6 @@ pay people for corpus (its list)
 
 a way to "turn it off on this video I want it uncut" useful for reviewing...
 
-"unknown" is still possible if they don't re-save :(
-  move cats/requirements inline, it's my only hope...
-
 == pre launch ==
 
 renew cert
@@ -27,7 +24,7 @@ add your emails to our system, not just session
   it remembers who you are in our DB ... 
   facebook auth ...
   handle...
-  change logs to just say handle
+  change logs to just say handle or id
 
 more personlized edit lists, everybody wants to be able to edit their own private...yeah...
   checkboxes/select all 
@@ -43,9 +40,11 @@ glean anybody's email address that uses it :| ??
   allow facebook auth
   don't actually *need* this at launch...but maybe close...
 
-some preliminary facebook ads
+some preliminary facebook ads [?]
 
-== launch ==
+== pre launch ==
+
+analytics to see where ppl coming from
 
 Some videos for kickstarter
   Try and go everywhere with ads [?]
@@ -77,16 +76,15 @@ more pay me donation options/amazon reseller account...
 
 the "give a free one away to get a credit" promo
 
-facebook feeds on front page [?]
-analytics to see where ppl coming from
+promo: "free for a year if you win this contest, re-share!" LOL
 
-advertise? facebook? flds?
+facebook feeds on front page [?]
+
+advertise? facebook? flds? faux seo?
 
 seasons have their own page, really [so one link]
 
-easier/some kind of "contact us" ...
-
-better thumbnail images :|
+better thumbnail images, current are so large they can take forever to load :|
 
 == todo never LOL ==
 
