@@ -97,7 +97,7 @@ category:
 <div id="subcategory_div_id">
 sub category
 <br/>
-<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.75);">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);">
     <option value="">unknown -- please select subcategory</option>
     
       <option value="initial theme song">movie-content -- initial theme song/credits</option>    
@@ -253,7 +253,7 @@ age specifier:
 </select>
  <!-- render -->
         <br/>
-        tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.75);"/>
+        tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
         <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
@@ -603,9 +603,10 @@ function saveEditButton() {
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
   document.getElementById('create_new_tag_form_id').submit();
 
-// don't clear these, otherwise if save fails (ex: "didn't select subcat") then there's no easy retry option!
+// don't clear these, otherwise if save fails (ex: "didn't select age") then there's no easy retry option! :|
 //	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
 //  document.getElementById('endy').value = '0m 0.00s';
+// do clear some, the easy stuff :)
   document.getElementById('tag_detaild_input_id').value = "";
   document.getElementById('subcategory_select_id').value = "";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
