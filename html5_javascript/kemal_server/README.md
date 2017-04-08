@@ -1,8 +1,9 @@
 Edited movie player server source
-See playitmyway.inet2.org for details on using it.
+See playitmyway.inet2.org 
 
 ## Installation of server:
 
-git clean
+requires imagemagick
+
 shards install
 ./goXX
