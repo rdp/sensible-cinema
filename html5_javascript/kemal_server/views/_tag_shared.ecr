@@ -25,7 +25,7 @@ category:
 
 <div id="subcategory_div_id">
 sub category
-<select name="subcategory" id='subcategory_select_id'>
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.5);">
     <option value="">unknown -- please select subcategory</option>
     <% subcategory_map().each{|k, v| %>
       <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
@@ -34,8 +34,7 @@ sub category
 </div>
 <br/>
 
-age_maybe_ok
-<br/>
+age_maybe_ok:
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
   <% [3,6,9,12,15].each{|n| %>

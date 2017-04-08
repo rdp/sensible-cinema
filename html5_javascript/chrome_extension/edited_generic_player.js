@@ -95,7 +95,7 @@ category:
 
 <div id="subcategory_div_id">
 sub category
-<select name="subcategory" id='subcategory_select_id'>
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.5);">
     <option value="">unknown -- please select subcategory</option>
     
       <option value="initial theme song">movie-content -- initial theme song/credits</option>    
@@ -234,8 +234,7 @@ sub category
 </div>
 <br/>
 
-age_maybe_ok
-<br/>
+age_maybe_ok:
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
   
@@ -253,13 +252,11 @@ age_maybe_ok
 </select>
  <!-- render -->
         <br/>
-        details: <input type="text" name="details" size="50" value=""/>
+        details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.5);"/>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
         <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
       </form>
-      <br/>
-      <br/>
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
@@ -600,8 +597,9 @@ function saveEditButton() {
   document.getElementById('create_new_tag_form_id').submit();
 
 	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-	// too disconcerting to see it all cleared??
-  // document.getElementById('endy').value = '0m 0.00s';
+  
+  document.getElementById('endy').value = '0m 0.00s';
+  document.getElementById('tag_detaild_input_id').value = "";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
