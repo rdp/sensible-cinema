@@ -13,7 +13,7 @@ var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
 var request_host="localhost:3000"; // dev
-var request_host="playitmyway.inet2.org";  // prod
+//var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	
@@ -95,7 +95,7 @@ category:
 
 <div id="subcategory_div_id">
 sub category
-<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.5);">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.75);">
     <option value="">unknown -- please select subcategory</option>
     
       <option value="initial theme song">movie-content -- initial theme song/credits</option>    
@@ -232,9 +232,8 @@ sub category
     
 </select>
 </div>
-<br/>
 
-age_maybe_ok:
+age specifier:
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
   
@@ -252,7 +251,7 @@ age_maybe_ok:
 </select>
  <!-- render -->
         <br/>
-        details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.5);"/>
+        tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.75);"/>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
         <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
@@ -261,14 +260,14 @@ age_maybe_ok:
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
-      <span id='playback_rate'>1.00x</span>
+      <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> <!-- ditto -->
-      <br/>
-      <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
       <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
+      <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
+      <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     	<br/>
     	<br/>
@@ -416,7 +415,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	document.getElementById('top_line_current_time').innerHTML = timeStampToEuropean(cur_time) + " (" + timeStampToHuman(cur_time) + ")";
+	document.getElementById('top_line_current_time').innerHTML = timeStampToHuman(cur_time);
   var next_tag = getNextTagAfterCurrentPos();
   if (next_tag) {
     document.getElementById('top_line_current_time').innerHTML += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
@@ -545,7 +544,8 @@ function testCurrentFromUi() {
 	}
 	var faux_tag = {
 		start: humanToTimeStamp(document.getElementById('start').value),
-		endy: humanToTimeStamp(document.getElementById('endy').value)
+		endy: humanToTimeStamp(document.getElementById('endy').value),
+    default_action: currentTestAction()
 	}
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before your start, please fix this, then try again!");
@@ -596,9 +596,9 @@ function saveEditButton() {
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
   document.getElementById('create_new_tag_form_id').submit();
 
-	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-  
-  document.getElementById('endy').value = '0m 0.00s';
+// don't clear these, otherwise if they "don't select subcat" then it loses the timestamps huh?
+//	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
+//  document.getElementById('endy').value = '0m 0.00s';
   document.getElementById('tag_detaild_input_id').value = "";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }

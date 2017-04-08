@@ -254,7 +254,12 @@ class Url
        if amazon_prime_free_type != ""
          out += ", or "
        end
-       out += " $%.2f/$%.2f" % [rental_cost, purchase_cost]
+       if rental_cost > 0
+         out += " $%.2f (rent)" % rental_cost
+       end
+       if purchase_cost > 0
+         out += " $%.2f (buy)" % purchase_cost
+       end
     elsif human_readable_company == "youtube" # 0 is OK here :)
        out = "free (youtube)"
     else 
