@@ -79,6 +79,11 @@ def db_style_from_query_url(env)
   sanitize_html standardize_url(real_url)
 end
 
+get "/redo_all_thumbnails" do |env|
+  Url.all.each &.create_thumbnail
+  "did 'em"
+end
+
 get "/sync_web_server" do |env|
   Kemal.stop # AFAICT only stops accepting new...
   spawn do

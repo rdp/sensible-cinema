@@ -282,6 +282,7 @@ class Url
   def delete_local_image_if_present_no_save
     if image_local_filename.present?
       File.delete "./public/movie_images/#{image_local_filename}"
+      File.delete "./public/movie_images/small_#{image_local_filename}"
       image_local_filename = nil
     end
   end
@@ -292,15 +293,29 @@ class Url
             raise "download url appears to not be an image url like http://host/image.jpg please try another one... #{full_url}"
           end
 	  outgoing_filename = "#{id}_#{image_name}"
-	  File.write("public/movie_images/#{outgoing_filename}", download(full_url)) # guess this is OK non windows :|
+	  local_full = "public/movie_images/#{outgoing_filename}"
+	  File.write(local_full, download(full_url)) # guess this is OK non windows :|
           delete_local_image_if_present_no_save # delete old now that we've downloaded new and have assured successful replacement :|
 	  @image_local_filename = outgoing_filename
+          create_thumbnail
           save
 	end
+
+        def create_thumbnail
+          if image_local_filename.present?
+            local_small = "public/movie_images/small_#{image_local_filename}"
+	    command = "convert public/movie_images/#{image_local_filename}  -resize 600x600\\> #{local_small}" # this will be either 600x400 or 400x600, both what we want :)
+	    raise "unable to thumnailify? #{id} #{command}" unless system(command)
+          end
+        end
 	
-	def image_tag(size, postpend_html = "")
+	def image_tag(size, postpend_html = "", want_small = true)
 	  if image_local_filename.present?
-		  "<img src='/movie_images/#{image_local_filename}' #{size}/>#{postpend_html}"
+                  name = image_local_filename
+                  if want_small
+                     name = "small_#{name}"
+                  end
+		  "<img src='/movie_images/#{name}' #{size}/>#{postpend_html}"
 		else
 		  ""
 		end

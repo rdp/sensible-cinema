@@ -21,3 +21,8 @@ chrome.runtime.onMessageExternal.addListener(update_icon); // from real page [th
 // startup, I think only run once for the "backup html page" singleton
 // not sure what this means since it only affects one tab once what?
 // update_icon( { color: "#808080", text: ".." } );
+
+chrome.runtime.onUpdateAvailable.addListener(new function(details) {
+  chrome.runtime.reload(); // hope this wurks...otherwise no update-ydatey :()
+});
+
