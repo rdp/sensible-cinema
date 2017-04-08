@@ -413,13 +413,19 @@ function getCurrentVideoTimestampHuman() {
 }
 
 function saveEditButton() {
+  if (document.getElementById('subcategory_select_id').value == "") {
+    alert("please select subcategory first");
+    return;
+  }
+
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
   document.getElementById('create_new_tag_form_id').submit();
 
-// don't clear these, otherwise if they "don't select subcat" then it loses the timestamps huh?
+// don't clear these, otherwise if save fails (ex: "didn't select subcat") then there's no easy retry option!
 //	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
 //  document.getElementById('endy').value = '0m 0.00s';
   document.getElementById('tag_detaild_input_id').value = "";
+  document.getElementById('subcategory_select_id').value = "";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
