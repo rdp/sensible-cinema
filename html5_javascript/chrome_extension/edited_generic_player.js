@@ -83,7 +83,7 @@ function addEditUi() {
 <div id="category_div_id">
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
-  <option value="unknown">unknown -- please select category</option>
+  <option value="" disabled selected>unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
   <option value="violence">violence/blood etc.</option>
   <option value="physical">sex/nudity/lewd acts etc.</option>
@@ -256,8 +256,10 @@ age specifier:
         tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
-        <input type='submit' value='save edit' onclick="saveEditButton(); pauseVideo(); return false;">
+        <input type='submit' value='Save Edit' onclick="saveEditButton(); return false;">
       </form>
+      
+      
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
@@ -275,8 +277,8 @@ age specifier:
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
     	<br/>
       <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
-      <br/>
-      <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a>
+      <!--br/>
+      <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a-->
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
@@ -594,20 +596,51 @@ function getCurrentVideoTimestampHuman() {
 }
 
 function saveEditButton() {
+  var category = document.getElementById('category_select').value;
+  if (category == "") {
+    alert("please select category first");
+    return;
+  }
+  var age = document.getElementById('age_maybe_ok_id').value;
+  
   if (document.getElementById('subcategory_select_id').value == "") {
     alert("please select subcategory first");
+    return;
+  }
+  if ((category == "violence" || category == "suspense") && age == "0") {
+    alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
+    return;
+  }
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  var endy = humanToTimeStamp(document.getElementById('endy').value);
+  if (start == 0) {
+    alert("Can't start at zero, please select 0.1s if you want one that starts near the beginning");
+    return;  
+  }
+  if (start >= endy) {
+    alert("end is not after the start, double check your timestamps");
+    return;  
+  }
+  if (endy - start > 60*15) {
+    alert("tag is more than 15 minutes long? This should not typically be expected?");
+    return;  
+  }
+  if (endy > video_element.duration) {
+    alert("tag goes past end of movie?");
     return;
   }
 
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
   document.getElementById('create_new_tag_form_id').submit();
+  pauseVideo();
 
-// don't clear these, otherwise if save fails (ex: "didn't select age") then there's no easy retry option! :|
-//	document.getElementById('start').value = '0m 0.00s'; // reset so people don't think they can hit "test edit" again now :|
-//  document.getElementById('endy').value = '0m 0.00s';
-// do clear some, the easy stuff :)
+  // reset so people don't think they can tweak and resave...
+	document.getElementById('start').value = timeStampToHuman(0);
+  document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('tag_detaild_input_id').value = "";
+  // don't reset category since I'm not sure if the javascript handles going back to ""
   document.getElementById('subcategory_select_id').value = "";
+  document.getElementById('age_maybe_ok_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
@@ -1143,6 +1176,7 @@ function removeFromArray(arr) {
 }
 
 function showSubCatWithRightOptionsAvailable() { // shared :|
+  // theoretically they can never select unknown...
   var type = document.getElementById("category_select").value; // category like "profanity"
   var subcategory_select = document.getElementById("subcategory_select_id");
   for (var i=0; i<subcategory_select.length; i++){

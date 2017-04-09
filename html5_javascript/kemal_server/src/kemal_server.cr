@@ -217,12 +217,17 @@ post "/save_tag/:url_id" do |env|
   endy = params["endy"].strip
   tag.start = url.human_to_seconds start
   tag.endy = url.human_to_seconds endy
+  # somewhat duplicated in javascript :|
+  raise "start can't be zero, use 0.1s if you want something start at the beginning" if tag.start == 0
   raise "start is after or equal to end? please use browser back button to correct..." if (tag.start >= tag.endy) # before_save filter LOL
   raise "tag is more than 15 minutes long? This should not typically be expected?" if tag.endy - tag.start > 60*15
   if url.total_time > 0
     if tag.duration > url.total_time - 1
       raise "attempted to save a tag that is the entire length of the movie'ish? that should not be expected?"
     end
+  end
+  if tag.endy > url.total_time
+    raise "tag goes past end of movie?"
   end
   raise "got some timestamp negative?" if tag.start < 0 || tag.endy < 0 # should be impossible :|
   tag.default_action = resanitize_html(params["default_action"])
@@ -238,7 +243,7 @@ post "/save_tag/:url_id" do |env|
   end
   tag.save
   if (tag2 = tag.overlaps_any? url.tags)
-    add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} please make sure this is expected.")
+    add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")
   end
   save_local_javascript [url], tag.inspect, env
   if is_update

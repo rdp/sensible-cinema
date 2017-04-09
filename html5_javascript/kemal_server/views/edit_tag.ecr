@@ -72,6 +72,7 @@ select.addEventListener(
 	
 
 function showSubCatWithRightOptionsAvailable() { // shared :|
+  // theoretically they can never select unknown...
   var type = document.getElementById("category_select").value; // category like "profanity"
   var subcategory_select = document.getElementById("subcategory_select_id");
   for (var i=0; i<subcategory_select.length; i++){
