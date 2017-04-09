@@ -318,6 +318,7 @@ class Url
         end
 	
 	def image_tag(size, postpend_html = "", want_small = true, want_very_small = false)
+           puts "image request want_small=#{want_small} vsmall=#{want_very_small}"
 	  if image_local_filename.present?
                   name = image_local_filename # full :)
                   if want_small
