@@ -11,6 +11,8 @@ so 600x600 maxes for now ok :)
   convert dragon.gif    -resize 64x64\>  shrink_dragon.gif
   convert dragon.gif    -resize 600x600\>  shrink_dragon.gif
 
+from 7.1M to 2.6M to 1.9M :)
+
 == advertise ==
 
 LDS living
