@@ -29,15 +29,16 @@ We believe so.  Because you are just editing playback of legally streamed conten
 <a name=facebook_groups/></a>Like our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a> (for announcements) and/or join the discussion at our <a href=https://www.facebook.com/groups/1241049372650953/>facebook user's group</a> (good place to give us feedback).  
 <br/>
 
-<div id="fb-root" style="width: 450px; height: 60px;"></div>
+<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=16593771297";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true" style="min-width: 450px; min-height: 60px;"></div>
 
 <h1>Edited Movie List</h1>
 <% host_to_urls = all_urls_except_just_started.group_by &.human_readable_company %>
