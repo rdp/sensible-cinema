@@ -319,7 +319,7 @@ class Url
 	
 	def image_tag(size, postpend_html = "", want_small = true, want_very_small = false)
 	  if image_local_filename.present?
-                  name = image_local_filename
+                  name = image_local_filename # full :)
                   if want_small
                      name = "small_#{name}"
                   elsif want_very_small
