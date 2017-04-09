@@ -1,6 +1,7 @@
 require "http/client"
 require "mysql"
 require "json"
+require "file_utils"
 
 class Url
 	
@@ -281,9 +282,9 @@ class Url
  
   def delete_local_image_if_present_no_save
     if image_local_filename.present?
-      File.delete "./public/movie_images/#{image_local_filename}"
-      File.delete "./public/movie_images/small_#{image_local_filename}"
-      File.delete "./public/movie_images/very_small_#{image_local_filename}"
+      FileUtils.rm_r "./public/movie_images/#{image_local_filename}" # not just straight delete in case convert failed or junk...
+      FileUtils.rm_r "./public/movie_images/small_#{image_local_filename}"
+      FileUtils.rm_r "./public/movie_images/very_small_#{image_local_filename}"
       image_local_filename = nil
     end
   end
