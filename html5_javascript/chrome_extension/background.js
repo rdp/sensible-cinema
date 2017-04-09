@@ -22,9 +22,8 @@ chrome.runtime.onMessageExternal.addListener(update_icon); // from real page [th
 // not sure what this means since it only affects one tab once what?
 // update_icon( { color: "#808080", text: ".." } );
 
-chrome.runtime.onUpdateAvailable.addListener(new function(details) {
+chrome.runtime.onUpdateAvailable.addListener(function(status, details) {
+  console.log(status);
   console.log(details);
-  setTimeout(function() {
-    chrome.runtime.reload(); // hope this wurks...otherwise no update-ydatey :()
-  }, 10000);
+  chrome.runtime.reload(); // hope this wurks...otherwise no update-ydatey
 });
