@@ -301,7 +301,9 @@ class Url
 	  outgoing_filename = "#{id}_#{image_name}"
 	  local_full = "public/movie_images/#{outgoing_filename}"
 	  File.write(local_full, download(full_url)) # guess this is OK non windows :|
-          puts "downloaded to #{local_full} #{full_url}"
+          if !File.exists? local_full
+            raise "unable to download that image file, please try a different one..."
+          end
           delete_local_image_if_present_no_save # delete old now that we've downloaded new and have assured successful replacement :|
 	  @image_local_filename = outgoing_filename
           create_thumbnail
