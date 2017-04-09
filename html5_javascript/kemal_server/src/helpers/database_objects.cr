@@ -310,7 +310,7 @@ class Url
             { local_small => "600x600", local_very_small => "300x300"}.each { |filename, resolution|
               command = "convert public/movie_images/#{image_local_filename}  -resize #{resolution}\\> #{filename}" # this will be either 600x400 or 400x600, both what we want :)
               if image_local_filename =~ /\.jpg$/
-                command = command.sub("convert", "convert -strip -interlace Plane -sampling-factor 4:2:0 -quality 85%")
+                command = command.sub("convert", "convert -strip -sampling-factor 4:2:0 -quality 85%") # attempt max compression
               end
 	      raise "unable to thumnailify? #{id} #{command}" unless system(command)
             }
