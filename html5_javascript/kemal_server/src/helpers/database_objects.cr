@@ -306,6 +306,9 @@ class Url
           if image_local_filename.present?
             local_small = "public/movie_images/small_#{image_local_filename}"
 	    command = "convert public/movie_images/#{image_local_filename}  -resize 600x600\\> #{local_small}" # this will be either 600x400 or 400x600, both what we want :)
+            if image_local_filename =~ /\.jpg$/
+              command = command.sub("convert", "convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85%")
+            end
 	    raise "unable to thumnailify? #{id} #{command}" unless system(command)
           end
         end
