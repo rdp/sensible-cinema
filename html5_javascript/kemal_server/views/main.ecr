@@ -102,7 +102,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 <% all_urls_just_started.each{ |url|  %>
     <tr>
        <td><a href="<%= url.url %>" target="_blank" onclick="return alertIfNoExtension();">
-             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>" %>
+             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>", want_very_small: is_mobile(env) %>
              <%= url.name_with_episode %>
            </a>
        </td>

@@ -305,19 +305,24 @@ class Url
         def create_thumbnail
           if image_local_filename.present?
             local_small = "public/movie_images/small_#{image_local_filename}"
-	    command = "convert public/movie_images/#{image_local_filename}  -resize 600x600\\> #{local_small}" # this will be either 600x400 or 400x600, both what we want :)
-            if image_local_filename =~ /\.jpg$/
-              command = command.sub("convert", "convert -strip -interlace Plane -sampling-factor 4:2:0 -quality 85%")
-            end
-	    raise "unable to thumnailify? #{id} #{command}" unless system(command)
+            local_very_small = "public/movie_images/very_small_#{image_local_filename}"
+            { local_small => "600x600", local_very_small => "300x300"}.each { |filename, resolution|
+              command = "convert public/movie_images/#{image_local_filename}  -resize #{resolution}\\> #{filename}" # this will be either 600x400 or 400x600, both what we want :)
+              if image_local_filename =~ /\.jpg$/
+                command = command.sub("convert", "convert -strip -interlace Plane -sampling-factor 4:2:0 -quality 85%")
+              end
+	      raise "unable to thumnailify? #{id} #{command}" unless system(command)
+            }
           end
         end
 	
-	def image_tag(size, postpend_html = "", want_small = true)
+	def image_tag(size, postpend_html = "", want_small = true, want_very_small = false)
 	  if image_local_filename.present?
                   name = image_local_filename
                   if want_small
                      name = "small_#{name}"
+                  elsif want_very_small
+                     name = "very_small_#{name}"
                   end
 		  "<img src='/movie_images/#{name}' #{size}/>#{postpend_html}"
 		else

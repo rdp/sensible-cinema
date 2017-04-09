@@ -438,7 +438,7 @@ get "/" do |env| # index home
   all_urls = get_all_urls
   all_urls_except_just_started = all_urls.reject{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
   all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
-  render "views/home.ecr", "views/layout.ecr"
+  render "views/main.ecr", "views/layout.ecr"
 end
 
 get "/getting_started" do |env|
@@ -681,6 +681,11 @@ def google_search_string(url)
      google_search += URI.escape(" " + url.episode_number.to_s + " " + url.episode_name, true)
    end
 	 google_search
+end
+
+def is_mobile(env)
+  env.request.headers["User-Agent"] =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/
+
 end
 
 Kemal.run
