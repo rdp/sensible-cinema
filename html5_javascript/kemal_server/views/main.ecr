@@ -79,55 +79,9 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 
 <h1>Movie Index of those that aren't completely tagged yet (we're working on them!)</h1>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Movie</th>
-      <th></th> <!-- host -->
-      <th>Tags</th>
-      <th>Details</th>
-      <th>Wholesome<br/>uplifting level / 10</th>
-      <th>Movie rating / 10</th>
-      <th>Our local review</th>
-      <th>Editing status</th>
-      <th>Editing notes</th>
-      <th>Wholesome review</th>
-      <th>Original MPAA Rating</th>
-      <th>Cost</th>
-      <th>Genre</th>
-      <th>Movie info</th>
-    </tr>
-  </thead>
-  <tbody>
-
 <% all_urls_just_started.each{ |url|  %>
-    <tr>
-       <td><a href="<%= url.url %>" target="_blank" onclick="return alertIfNoExtension();">
-             <%= url.image_tag "style='max-height: 420px; max-width: 200px; filter: drop-shadow(5px 5px 5px #222); padding: 5px;'", "<br/>", want_very_small: is_mobile(env), want_small: !is_mobile(env) %>
-             <%= url.name_with_episode %>
-           </a>
-       </td>
-       <td><%= url.human_readable_company %></td>
-       <td><a href="/view_url/<%= url.id %>">view/edit our tags (<%= url.tags.size %>)</a></td>
-       <td><%= url.details.truncate_with_ellipses %></td>
-       <td><%= url.wholesome_uplifting_level if url.wholesome_uplifting_level > 0 %> </td>
-       <td><%= url.good_movie_rating if url.good_movie_rating > 0 %></td>
-       <td><%= url.review.truncate_with_ellipses %></td>
-       <td><%= url.editing_status %> </td>
-       <td><%= url.editing_notes %> </td>
-       <td><%= url.wholesome_review.truncate_with_ellipses %> </td>
-       <td><%= url.original_rating %> </td>
-       <td><%= url.cost_string %></td>
-       <td><%= url.genre %></td>
-       <td>
-            <a href=https://www.google.com/search?&q=<%= google_search_string(url) %> target="_blank">search</a>
-       </td>
-   </tr>
+      <%= render "views/_song_box.ecr" %>
 <% } %>
-
-  </tbody>
-</table>
-
 
 <h2>Your help</h2>
 We know a lot of you are passionate about this and would love to help more.  And we'd love any support you can give.  
