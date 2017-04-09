@@ -269,9 +269,6 @@ age specifier:
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> <!-- ditto -->
       <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
-      <br/>
-      <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
-    	<br/>
     	<br/>
       <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
     	<br/>
@@ -280,6 +277,8 @@ age specifier:
       <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
       <br/>
       <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a>
+      <br/>
+      <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
   document.body.appendChild(allEditStuffDiv);

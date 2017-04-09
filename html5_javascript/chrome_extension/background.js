@@ -23,6 +23,8 @@ chrome.runtime.onMessageExternal.addListener(update_icon); // from real page [th
 // update_icon( { color: "#808080", text: ".." } );
 
 chrome.runtime.onUpdateAvailable.addListener(new function(details) {
-  chrome.runtime.reload(); // hope this wurks...otherwise no update-ydatey :()
+  console.log(details);
+  setTimeout(function() {
+    chrome.runtime.reload(); // hope this wurks...otherwise no update-ydatey :()
+  }, 10000);
 });
-
