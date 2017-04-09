@@ -3,7 +3,7 @@
          <div style="height: 378px; overflow:scroll;"> 
          <a href="<%= url.url %>" target="_blank" onclick="return alertIfNoExtension();">
             <% if url.episode_number > 0; width = 300; height = 200; else width=200; height = 300; end %>
-            <%= url.image_tag "style='max-height: #{height}px; max-width: #{width}px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>" %>
+            <%= url.image_tag "style='max-height: #{height}px; max-width: #{width}px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>", want_small: false %>
             <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
           <%= if_present_with_break url.details, "" %>
