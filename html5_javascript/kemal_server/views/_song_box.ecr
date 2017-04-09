@@ -1,9 +1,8 @@
 
-       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: <%= url.episode_number > 0 ? "300px;" : "249px;" %> margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin...but then needed to bump to 249 for chrome on windows, then needed wide for series, experimental LOL -->
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: <%= url.episode_number > 0 ? "250px;" : "249px;" %> margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin...but then needed to bump to 249 for chrome on windows, then needed wide for series, experimental LOL -->
          <div style="height: 378px; overflow:scroll;"> 
          <a href="<%= url.url %>" target="_blank" onclick="return alertIfNoExtension();">
-            <% if url.episode_number > 0; width = 250; height = 200; else width=200; height = 300; end %>
-            <%= url.image_tag "style='max-height: #{height}px; max-width: #{width}px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>",  want_very_small: is_mobile(env), want_small: !is_mobile(env) %>
+            <%= url.image_tag "style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>",  want_very_small: is_mobile(env), want_small: !is_mobile(env) %>
             <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
           <%= if_present_with_break url.details, "" %>
