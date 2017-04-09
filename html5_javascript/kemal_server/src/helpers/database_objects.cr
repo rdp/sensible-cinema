@@ -283,6 +283,7 @@ class Url
     if image_local_filename.present?
       File.delete "./public/movie_images/#{image_local_filename}"
       File.delete "./public/movie_images/small_#{image_local_filename}"
+      File.delete "./public/movie_images/very_small_#{image_local_filename}"
       image_local_filename = nil
     end
   end
