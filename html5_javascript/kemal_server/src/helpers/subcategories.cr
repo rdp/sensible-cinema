@@ -7,7 +7,7 @@ def subcategory_map
    Subcats.merge!({
     "initial theme song" => "movie-content -- initial theme song/credits",
     "closing credits" => "movie-content -- closing credits/songs",
-    "closing credits" => "movie-content -- closing subscription plea",
+    "subscription plea" => "movie-content -- closing subscription plea",
     "joke edit" => "movie-content -- joke edit -- edits that make video funny when applied",
     "movie content morally questionable choice" => "movie-content -- morally questionable choice",
     "movie content other" => "movie-content -- other",
