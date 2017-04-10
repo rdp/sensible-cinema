@@ -14,9 +14,9 @@
 </script>
 
 
-In order to keep your credentials secure, we don't even track your login password, but rely on a third party (amazon) which allows you to login.
+In order to keep your credentials secure, we don't even track your login password, but rely on third parties (amazon or facebook) which allow you to login.
 <br/>
-Login with them here:
+Login with amazon here:
 <br/>
 <a href="#" id="LoginWithAmazon">
   <img border="0" alt="Login with Amazon"
@@ -34,3 +34,22 @@ Login with them here:
 
 </script>
 
+<br/>
+Or facebook here:
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=187254001787158";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="logged_in();" scope="public_profile,email" ></div>
+
+<script>
+function logged_in() {
+  var infos = FB.getLoginStatus();
+  var x = 3;
+}
+
+</script>

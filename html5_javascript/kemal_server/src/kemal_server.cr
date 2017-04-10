@@ -285,6 +285,15 @@ class AmazonUser
   include Session::StorableObject
 end
 
+get "/login_from_facebook" do |env|
+
+
+endA
+
+get "/logout_from_amazon" do |env|
+# TODO ?
+end
+
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
   out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{env.params.query["access_token"]}")
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
