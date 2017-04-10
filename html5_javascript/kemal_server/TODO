@@ -8,6 +8,8 @@ youtube for how to create...just follow tutorial
   modify tutorial as I go [first pass]
   ask others to review/do my tutorial for me
 
+youtube for advanced of tute
+
 edit a few on my own (PG auto subs that melissa fine tunes for the deity?) :)
   just my "owned" PG ones first
   moana
@@ -20,6 +22,8 @@ a way to "turn it off on this video I want it uncut" useful for reviewing...
   youtube it :|
 
 == pre launch ==
+
+didn't open right on mobile without it installed :|
 
 renew cert
 
@@ -54,6 +58,8 @@ get people to review fauxstarter before launch...
 
 soft launch (not publicized...)
   easy preliminary links, why not?
+
+add SD prices :|
 
 == post kickstarter started ==
 
@@ -91,7 +97,7 @@ seasons have their own page, really [so one link]
 
 == todo never LOL ==
 
-does not every tag want that age param?? maybe OK for now
+youtubes "embed option" woot LOL
 
 add year with dropdown [?]
   low prior for now let's hope mclintock was a freak...
@@ -99,48 +105,36 @@ add year with dropdown [?]
   yeah prefer dropdown...  low priority
 
 do we need more things people can enter in, like what common sense media has 3 different things?
-add SD price (if anybody else requests it)
-new icon for the chrome plugin [various?]
-some way to prevent vandalism? history...
 test roku stream from desktop? LOL :|
 shut down server more gracefully for restarts than hard kill :|
 it "auto gets" the series name wrong for Star Trek TNG season 1
 allow multiple genres per movie
-Amazon add-on prime appears wrong in index
 even more profanity scanning list files somewhere?
 series -> their own page [so you can just review that instead...]
 "auto get" amazon second url, prime type for series' 
 
 private list of edits are shareable...or does that only make sense in the other model?
-prettier url's than https://playitmyway.inet2.org/view_url/97
 during adds show "nothing" somehow...or less...youtube 15.'s but it's not enough...
 resurrect "fake" netflix playback :|
-youtube for .srt [also make it its own page whoa] it is waaaay complicated today :|
-  but just for volunteers so lower-ish priority :)
-some way to disable it on youtube...or not track things? disable verywhere?
+some way to disable it "just on youtube"...or not track things? disable verywhere?
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
 can filter previews/trailers *based on duration* woot
 can upload file for image
 
-somehow better subtitle thinger, his doesn't work awesome? :(
+somehow better subtitle syncer, his doesn't work awesome? :(
 
-better logout [?]
 an option "never show me r, or horror" :|
 
 edited facebook vids LOL
 
 missing any database indexes? check my queries uh guess...
+  once/if/when it gets slow...
 
 international subtitle support somehow-er-other LOL
   ooh edited too LOL
 
 auto get more images from the page if non youtube :|
 ask those one people to link to me
-facebook promote more...
-kickstarter
-"original author" for edit lists...[?]
-
-real facebook or amazon login oauth etc. etc...
 
 "remember" which ones they chose last [?] for their kids to default to a good one...
 
@@ -158,10 +152,10 @@ they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
   they can "change" movies from google play index
 
-more plugins for edge, safari...if anybody cares...
+more plugins for edge, safari, [firefox mobile?]...if anybody cares...
 
 ask netflix etc. 4 real (permission, or change ToS, or let's really partner LOL) :|
-  "I would love to support you, 30000 users" etc. LOL
+  "I would love to support you, 30000 users" etc. LOL have them spam him
 
 == random notes ==
 
