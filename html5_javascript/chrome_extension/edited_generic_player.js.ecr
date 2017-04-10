@@ -77,16 +77,18 @@ function addEditUi() {
         <input type='submit' value='Save Edit' onclick="saveEditButton(); return false;">
       </form>
       
-      
+      <!-- no method for seek forward since it'll at worst seek too far forward --> 
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
+      <input type='button' onclick="seekToBeforeEdit(-1); return false;" value='-1s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 1); return false;" value='+1s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
+      <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-      <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> <!-- at worst this one seeks forward, so ok -->
-      <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> <!-- ditto -->
       <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
     	<br/>
@@ -810,7 +812,7 @@ function seekToTime(ts, callback) {
     ts = 0;
   }
 	callback = callback || function() {}
-  // try and avoid freezes after seeking...
+  // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + ts);
   video_element.pause();
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.

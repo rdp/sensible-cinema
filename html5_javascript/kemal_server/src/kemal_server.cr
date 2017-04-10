@@ -248,9 +248,9 @@ post "/save_tag/:url_id" do |env|
   end
   save_local_javascript [url], tag.inspect, env
   if is_update
-    add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, recommend doing a reload in your browser...")
+    add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, recommend clicking reload tags or doing a browser refresh...")
   else
-    add_to_flash(env, "Success! created tag at #{seconds_to_human tag.start}, you can tweak details and/or close this window now.")
+    add_to_flash(env, "Success! created tag at #{seconds_to_human tag.start}, you can tweak details and/or close this browser tab now.")
 end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end

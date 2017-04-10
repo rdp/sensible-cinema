@@ -32,7 +32,7 @@ episode_name (if any)
 <br/>
 <br/>
 
-<div style="<%= "display: none;" unless url.url =~ /amazon.com/ %>">
+<div style="<%= "display: none;" unless (url.url =~ /amazon.com/ || url.url =~ /inet2.org/) %>">
   amazon second url:
   <br/>This is kind of a weird one.  Amazon in their system "sometimes" has  two different URL's that can lead to the same movie or series.
   <br/>For series', you might find its different second url by clicking the "series" dropdown to select the series you're watching, versus finding it through normal amazon search.
