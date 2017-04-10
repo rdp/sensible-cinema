@@ -1,6 +1,5 @@
-
-       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 450px; width: <%= url.episode_number > 0 ? "250px;" : "249px;" %> margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin...but then needed to bump to 249 for chrome on windows, then needed wide for series, experimental LOL -->
-         <div style="height: 428px; overflow-x: hidden; overflow-y: scroll;"> 
+       <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 5px; height: 410; width: 250px; margin-right: 10px; margin-bottom: 20px;" > <!-- just experiment for right width LOL -->
+         <div style="height: 390px; overflow-x: hidden; overflow-y: auto;"> <!-- scroll here so not too ugly in windows, auto means scroll if you need it -->
          <a href="<%= url.url %>" 
              <% if !is_mobile(env) # in mobile chrome, both links didn't open, so try this instead :|
               %>
