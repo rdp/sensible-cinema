@@ -29,6 +29,7 @@ class CustomHandler < Kemal::Handler
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
       raise "wrong host #{env.request.host}" 
     else
+      puts "starting request #{env.request.path}" # try and debug why sometimes the server seems to start slow :|
       call_next env
     end
   end

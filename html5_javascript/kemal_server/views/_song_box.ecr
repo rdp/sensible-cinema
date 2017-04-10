@@ -1,7 +1,12 @@
 
        <div style="border-radius: 25px; box-shadow: #B3B3B3 40px 40px 40px; border: 2px solid #000; float: left; padding: 10px; padding-right: 15px; height: 400px; width: <%= url.episode_number > 0 ? "250px;" : "249px;" %> margin-right: 10px; margin-bottom: 20px;" > <!-- 224 is 200 image max + 10 + 15 padding  + 2*2 margin...but then needed to bump to 249 for chrome on windows, then needed wide for series, experimental LOL -->
          <div style="height: 378px; overflow:scroll;"> 
-         <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
+         <a href="<%= url.url %>" 
+             <% if !is_mobile(env) # in mobile chrome, both links didn't open, so try this instead
+              %>
+               target="_blank" 
+             <% end %>
+             onclick="alertIfNoExtension();
                <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
                  alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
