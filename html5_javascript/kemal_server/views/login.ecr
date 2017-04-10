@@ -65,7 +65,7 @@ Or facebook here:
   }
 
 function testAPI() {
-    FB.api('/me', function(response) {
+    FB.api('/me?scope=email', function(response) {
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
