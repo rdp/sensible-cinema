@@ -63,8 +63,15 @@ Or facebook here:
       // document.getElementById('status').innerHTML = 'Please log into this app.';
     }
   }
+
+function testAPI() {
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+}
 function logged_in() {
-  var infos = FB.getLoginStatus();
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
