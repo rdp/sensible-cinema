@@ -82,10 +82,11 @@ function addEditUi() {
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-1); return false;" value='-1s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 1); return false;" value='+1s'/>
+      <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
+      <br/>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
@@ -96,7 +97,7 @@ function addEditUi() {
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
     	<br/>
-      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
+      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Synchronize tags from website</a>
       <!--br/>
       <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a-->
       <br/>
@@ -452,7 +453,8 @@ function saveEditButton() {
 
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
   document.getElementById('create_new_tag_form_id').submit();
-  pauseVideo();
+  // feels like we don't need to anymore
+  //  pauseVideo();
 
   // reset so people don't think they can tweak and resave...
 	document.getElementById('start').value = timeStampToHuman(0);

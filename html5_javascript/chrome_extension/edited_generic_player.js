@@ -85,18 +85,17 @@ category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
   <option value="" disabled selected>unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
-  <option value="violence">violence/blood etc.</option>
+  <option value="violence">violence/blood/crude etc.</option>
   <option value="physical">sex/nudity/lewd acts etc.</option>
   <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
   <option value="movie-content">movie content (credits, etc.)</option>
   <option value="substance-abuse">substance use</option>
 </select>
-<br/>
 </div>
+<br/>
 
 <div id="subcategory_div_id">
 sub category
-<br/>
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);">
     <option value="">unknown -- please select subcategory</option>
     
@@ -264,10 +263,11 @@ age specifier:
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-1); return false;" value='-1s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 1); return false;" value='+1s'/>
+      <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
+      <br/>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
@@ -278,7 +278,7 @@ age specifier:
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
     	<br/>
-      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
+      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Synchronize tags from website</a>
       <!--br/>
       <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a-->
       <br/>
@@ -634,7 +634,8 @@ function saveEditButton() {
 
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
   document.getElementById('create_new_tag_form_id').submit();
-  pauseVideo();
+  // feels like we don't need to anymore
+  //  pauseVideo();
 
   // reset so people don't think they can tweak and resave...
 	document.getElementById('start').value = timeStampToHuman(0);
