@@ -24,7 +24,7 @@
           <%= if_present_with_break url.original_rating, "Original rating:" %>
           <%= if_present_with_break url.genre, "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
-          <%= if url.total_time > 0 %>
+          <% if url.total_time > 0 %>
             <%= timestamp_to_human(url.total_time) %> <br/>
           <% end %>
           <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
