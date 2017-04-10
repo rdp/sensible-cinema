@@ -24,6 +24,7 @@
           <%= if_present_with_break url.original_rating, "Original rating:" %>
           <%= if_present_with_break url.genre, "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
+          <%= if_present_with_break url.total_time, "Runtime:" %>
           <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
                <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
                  alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
