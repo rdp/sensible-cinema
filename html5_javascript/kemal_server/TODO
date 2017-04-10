@@ -17,8 +17,9 @@ a way to "turn it off on this video I want it uncut" useful for reviewing...
 
 cleanup front page "free if you have prime..." "prime series'" ... "prime 30 day free"
 
-== pre launch ==
+it "auto gets" the series name wrong for Star Trek TNG season 1 :|
 
+== pre launch ==
 
 business license
 
@@ -34,16 +35,17 @@ more personalized edit lists, everybody wants to be able to edit their own priva
   we have a link for it, so should take care of this [plus better link]
   just "one per user" for now? [force login :]
   an option to see all details?
+  do_nothing -> disabled?
 
 all pages groom, main page persuasive/beautiful/catchy [nik?] 
   some people installing it for feedback
-  a bit ugly on horizontal mobile chrome :| or was that only after a switch? but still...dat ain't good...
   sell "community" part more?  "as a member of our community, you can add your own personalized edits, and even add movies to our system yourself, if you don't want to wait"
 
 == pre kickstarer ==
+
 research kickstarters...ai ai...
 
-decide if want to force login for kickstarter
+decide if want to force login during kickstarter
   add your emails to our system, not just session
   it remembers who you are in our DB ... 
   facebook auth ...
@@ -82,6 +84,7 @@ some way to get rid of the "currently playing it my way" message for duration of
 "sort by uplifting level" somehow, ASK for uplifting on facebook, do more
 
 google+ button :|
+  facebook "like" this edited movie page...
 
 amazon third url...ai ai...adaline...
 
@@ -102,10 +105,12 @@ facebook feeds on front page [?]
 advertise? facebook? flds? faux seo?
 
 seasons have their own page, really [so one link]
+  or at least their own div or something LOL
 
 youtube for advanced behaviors/tutorial :)
 
 == todo never LOL ==
+a bit ugly on horizontal mobile chrome :| or was that only after a switch? but still...dat ain't good...
 
 youtubes "embed option" woot LOL
 
@@ -117,7 +122,6 @@ add year with dropdown [?]
 do we need more things people can enter in, like what common sense media has 3 different things?
 test roku stream from desktop? LOL :|
 shut down server more gracefully for restarts than hard kill :|
-it "auto gets" the series name wrong for Star Trek TNG season 1
 allow multiple genres per movie
 even more profanity scanning list files somewhere?
 series -> their own page [so you can just review that instead...]
