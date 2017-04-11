@@ -286,7 +286,11 @@ class AmazonUser
 end
 
 get "/login_from_facebook" do |env|
-
+  access_token = env.params.query["access_token"]
+  output = download("https://graph.facebook.com/me?fields=id&access_token=#{access_token}")
+  a = "got back output=#{output}"
+  puts a
+  a
 end
 
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
