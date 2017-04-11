@@ -25,15 +25,22 @@ document.getElementById('Logout').onclick = function() {
 };
 
 function logout_facebook() {
-  FB.logout(function(response) {
-    console.log("facebook logout ended fwiw...");
-    window.location.href = "/logout_session"; // redir
+  FB.getLoginStatus(function(response) {
+    if (response.status == 'connected') {
+      FB.logout(function(response) {
+        console.log("facebook logout ended fwiw...");
+        window.location.href = "/logout_session"; // redir
+      });
+    } else {
+      alert("not logged in to facebook?");
+    }
   });
-}
+};
 
 </script>
 
-<script>(function(d, s, id) {
+<script>
+(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
@@ -42,6 +49,7 @@ function logout_facebook() {
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <br/>
-Logged in with facebook? click <a href=# onclick="logout_facebook()i; return false;">here</a>. <!-- it does a redir on success -->
 <br/>
-
+Logged in with facebook? click here to <a href=# onclick="logout_facebook(); return false;">Logout</a> of our site via facebook. <!-- it does a redir on success logout -->
+<!-- doesn't remove permissions though...ok that is weird...but I guess if they're logged out then I can't *use* their permissions...until they log in again...ok what? -->
+<br/>

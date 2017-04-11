@@ -50,23 +50,16 @@ Or facebook here:
   function statusChangeCallback(response) {
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      window.location.href = "/login_from_facebook?accessToken=?" + response.authResponse.accessToken; // short lived token, but that's all we kind of really care about :|
-      testAPI();
+      window.location.href = "/login_from_facebook?access_token=" + response.authResponse.accessToken; // short lived token, but that's all we kind of really need today
     } else {
       // They disdained the login popup...
     }
   }
 
-function testAPI() {
-    FB.api('/me?fields=email', function(response) {
-      console.log('Successful login for: ' + response.name); // also has ID hrm...
-    });
-}
 function logged_in() {
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
   });
-  var x = 3;
 }
 
 </script>
