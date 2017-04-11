@@ -277,25 +277,30 @@ class AmazonUser
     name: String,
     email: String
   })
-  def initialize # for test
+  def initialize # for test, though json gives us a constructor for a String :|
     @user_id = "test_user_id"
     @name = "test_user_name"
     @email = "test_user@test.com"
   end
+
+  def initialize( @user_id, @name, @email)
+  end
+
   include Session::StorableObject
 end
 
 get "/login_from_facebook" do |env|
   access_token = env.params.query["access_token"]
-  # see if it belonged to our app
-  app_login = JSON.parse download("https://graph.facebook.com/oauth/access_token?client_id=187254001787158&client_secret=#{File.read("facebook_app_secret").strip}&grant_type=client_credentials")
+  # get app token
+  app_login = JSON.parse download("https://graph.facebook.com/v2.8/oauth/access_token?client_id=187254001787158&client_secret=#{File.read("facebook_app_secret").strip}&grant_type=client_credentials")
   app_token = app_login["access_token"]
-  token_valid = JSON.parse download("https://graph.facebook.com/debug_token?input_token=#{access_token}&access_token=#{app_token}")
-  raise "token not for this app?" unless token_valid["data"]["app_id"] == "187254001787158" # shouldn't be necessary since the download should have failed with a 400...
-  # we trust it now...
-  details = JSON.parse download("https://graph.facebook.com/me?fields=email&access_token=#{access_token}")
-  puts details
-  details.to_s
+  token_info = JSON.parse download("https://graph.facebook.com/v2.8/debug_token?input_token=#{access_token}&access_token=#{app_token}")
+  raise "token not for this app?" unless token_info["data"]["app_id"] == "187254001787158" # shouldn't be necessary since the download should have failed with a 400 already, but just in case...
+  # we can trust it...
+  details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
+  # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
+  user = AmazonUser.new(details["id"], details["name"], details["email"])
+  setup_user(user, env)
 end
 
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
@@ -303,6 +308,10 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
   info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   user = AmazonUser.from_json(info)  # or JSON.parse info
+  setup_user(user, env)
+end
+
+def setup_user(user, env)
   env.session.object("user", user)
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
