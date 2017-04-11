@@ -13,13 +13,35 @@
 
 </script>
 
+Logged in with amazon?
+<br/>
 Click here to <a id="Logout">Logout</a> of our site via amazon login.
 <script type="text/javascript">
-  document.getElementById('Logout').onclick = function() {
-  amazon.Login.logout(); ; // then what?
-  console.log("amazon logout ended fwiw...");
-  window.location.href = "/logout_session"; // redir
-  console.log("send us to /logout_session");
+
+document.getElementById('Logout').onclick = function() {
+    amazon.Login.logout();
+    console.log("amazon logout hopefully successfull fwiw..."); // XXXX
+    window.location.href = "/logout_session"; // redir
 };
+
+function logout_facebook() {
+  FB.logout(function(response) {
+    console.log("facebook logout ended fwiw...");
+    window.location.href = "/logout_session"; // redir
+  });
+}
+
 </script>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=187254001787158";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<br/>
+Logged in with facebook? click <a href=# onclick="logout_facebook()i; return false;">here</a>. <!-- it does a redir on success -->
+<br/>
 

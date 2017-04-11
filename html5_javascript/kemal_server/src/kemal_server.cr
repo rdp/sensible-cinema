@@ -287,7 +287,6 @@ end
 
 get "/login_from_facebook" do |env|
 
-
 end
 
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
