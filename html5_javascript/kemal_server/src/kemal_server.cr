@@ -288,14 +288,12 @@ end
 get "/login_from_facebook" do |env|
   access_token = env.params.query["access_token"]
   # see if it belonged to our app
-  app_login = JSON.parse download("https://graph.facebook.com/oauth/access_token?client_id=187254001787158&client_secret=#{File.read "facebook_app_secret"}&grant_type=client_credentials")
+  app_login = JSON.parse download("https://graph.facebook.com/oauth/access_token?client_id=187254001787158&client_secret=#{File.read("facebook_app_secret").strip}&grant_type=client_credentials")
   app_token = app_login["access_token"]
-  puts app_login, app_token
   token_valid = JSON.parse download("https://graph.facebook.com/debug_token?input_token=#{access_token}&access_token=#{app_token}")
-  puts token_valid
   raise "token not for this app?" unless token_valid["data"]["app_id"] == "187254001787158" # shouldn't be necessary since the download should have failed with a 400...
   # we trust it now...
-  details = JSON.parse download("https://graph.facebook.com/me?fields=email&access_token=USER_ACCESS_TOKEN")
+  details = JSON.parse download("https://graph.facebook.com/me?fields=email&access_token=#{access_token}")
   puts details
   details.to_s
 end
