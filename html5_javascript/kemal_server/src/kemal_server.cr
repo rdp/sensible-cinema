@@ -299,7 +299,7 @@ get "/login_from_facebook" do |env|
   # we can trust it...
   details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
   # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
-  user = AmazonUser.new(details["id"], details["name"], details["email"])
+  user = AmazonUser.new(details["id"].to_s, details["name"].to_s, details["email"].to_s)
   setup_user(user, env)
 end
 
