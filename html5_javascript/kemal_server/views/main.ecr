@@ -53,7 +53,7 @@ We believe so.  Because you are just editing playback of legally streamed conten
   %>
   
   <% movies.each_with_index{ |url, idx|  %>
-    <%= render "views/_song_box.ecr" %>
+    <%= render "views/_box_movie.ecr" %>
   <% } %>
   </div>
   <% if series.size > 0 %>
@@ -63,7 +63,7 @@ We believe so.  Because you are just editing playback of legally streamed conten
        <% if idx > 0 && (url.name != series[idx - 1].name) %>
          <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
        <% end %>
-      <%= render "views/_song_box.ecr" %>
+      <%= render "views/_box_movie.ecr" %>
     <% } %>
   <% end %>
   <div style="clear: both;"></div>
@@ -80,7 +80,7 @@ These are movies/shows/youtubes that we currently have in our system.  Don't see
 <h1>Movie Index of those that aren't completely tagged yet (we're working on them!)</h1>
 
 <% all_urls_just_started.each{ |url|  %>
-      <%= render "views/_song_box.ecr" %>
+      <%= render "views/_box_movie.ecr" %>
 <% } %>
 <div style="clear: both;"></div>
 
