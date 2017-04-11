@@ -323,13 +323,13 @@ def setup_user(user, env)
 end
 
 get "/logout" do |env|
-  render "views/logout.ecr", "views/layout.ecr" # TODO just logout immediately j.s. here, but still it will then send us to logout_session
+  render "views/logout.ecr", "views/layout.ecr" 
 end
 
 get "/logout_session" do |env| # j.s. sends us here...
-  add_to_flash(env, "You have been logged out.") # no personalized message for now :|
+  add_to_flash(env, "You have been logged out, thanks!")
   env.session.delete_object("user") # whether there or not :)
-  "logged you out, click <a href=/login>here to login</a>" # amazon says to "show login page" after logout :|
+  env.redirect "/login" # amazon says to show login page after
 end
 
 def download(raw_url, headers = nil)
