@@ -3,6 +3,7 @@ drop table if exists tag_edit_list_to_tag;
 drop table if exists tag_edit_list;
 drop table if exists tags;
 drop table if exists urls;
+drop table if exists users;
 
 CREATE TABLE urls (
    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -125,11 +126,12 @@ alter table urls add column community_contrib BOOL DEFAULT true; -- actually 0 o
 CREATE TABLE users (
    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
    name       VARCHAR(2048) NOT NULL, 
-   email    VARCHAR(1024) NOT NULL, 
-   user_id        VARCHAR(1024) NOT NULL, 
+   email    VARCHAR(512) NOT NULL, 
+   user_id        VARCHAR(128) NOT NULL, 
    type  VARCHAR(1024) NOT NULL
 );
 ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email, user_id);
+insert into users values (0, "test_user_name", "test@test.com", "test_user_id", "facebook");
 
 -- and output to screen to show success...
 select * from urls;
