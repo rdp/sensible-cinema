@@ -271,6 +271,11 @@ get "/mass_upload_from_subtitle_file/:url_id" do |env|
   render "views/mass_upload_from_subtitle_file.ecr", "views/layout.ecr"
 end
 
+get "/add_new_tag/:url_id" do |env|
+  url = get_url_from_url_id(env)
+  render "views/add_new_tag.ecr", "views/layout.ecr"
+end
+
 get "/view_url/:url_id" do |env|
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
