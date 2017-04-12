@@ -483,7 +483,7 @@ function getSubtitleLink() {
   for (var i = arr.length - 1; i >= 0; --i) {
     console.log("name=" + arr[i].name);
     if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
-      alert("this appears to be a subtitles file: " + arr[i].name);
+      var response = prompt("this appears to be a subtitles url, copy this:", arr[i].name); // has a cancel prompt, but we don't care which button they use
       return;
     }
   }
