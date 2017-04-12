@@ -6,7 +6,7 @@
                target="_blank" 
              <% end %>
              onclick="alertIfNoExtension();
-               <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
+               <% if url.episode_number != 0  && url.amazon? %>
                  alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
             ">
@@ -28,7 +28,7 @@
             <%= seconds_to_human(url.total_time) %> <br/>
           <% end %>
           <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
-               <% if url.episode_number != 0  && url.url =~ /amazon.com/ %>
+               <% if url.episode_number != 0  && url.amazon? %>
                  alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
             ">
