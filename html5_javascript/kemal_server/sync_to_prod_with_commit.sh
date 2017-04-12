@@ -4,3 +4,4 @@ until $(curl --output /dev/null --silent --head --fail https://playitmyway.inet2
     printf '.'
     sleep 1
 done
+echo

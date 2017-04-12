@@ -2,6 +2,7 @@ require "http/client"
 require "mysql"
 require "json"
 require "file_utils"
+require "kemal-session"
 
 class Url
 	
@@ -215,11 +216,15 @@ class Url
         host += " prime with add-on subscription"
       end
     else
-      if host == "amazon"
+      if amazon? # but non prime
         host += " (rent/buy)"
       end
     end
     host
+  end
+
+  def amazon?
+    url =~ /amazon.com/
   end
 
   def seconds_to_human(ts)
@@ -566,3 +571,37 @@ class TagEditList
 
 end
 
+
+class User
+
+  JSON.mapping({
+    id: Int32,
+    user_id: String,
+    name: String,
+    email: String,
+    type: String
+  })
+  DB.mapping({
+    id: Int32,
+    user_id: String,
+    name: String,
+    email: String,
+    type: String
+  })
+
+  def initialize(@user_id, @name, @email, @type) # no id
+    @id = 0
+  end
+
+  def save_or_update
+    with_db do |conn|
+      if @id == 0
+        @id = conn.exec("insert into users (user_id, name, email, type) values (?, ?, ?, ?)", user_id, name, email, type).last_insert_id.to_i32
+      else
+       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ? where id = ?", user_id, name, email, type, id
+      end
+    end
+  end
+
+  include Session::StorableObject # store the whole thing in the local session? why not... :)
+end

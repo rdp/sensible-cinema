@@ -271,24 +271,6 @@ get "/view_url/:url_id" do |env|
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
-class AmazonUser
-  JSON.mapping({
-    user_id: String,
-    name: String,
-    email: String
-  })
-  def initialize # for test, though json gives us a constructor for a String :|
-    @user_id = "test_user_id"
-    @name = "test_user_name"
-    @email = "test_user@test.com"
-  end
-
-  def initialize( @user_id, @name, @email)
-  end
-
-  include Session::StorableObject
-end
-
 get "/login_from_facebook" do |env|
   access_token = env.params.query["access_token"]
   # get app token
@@ -299,7 +281,7 @@ get "/login_from_facebook" do |env|
   # we can trust it...
   details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
   # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
-  user = AmazonUser.new(details["id"].to_s, details["name"].to_s, details["email"].to_s)
+  user = User.new(details["id"].to_s, details["name"].to_s, details["email"].to_s, "facebook")
   setup_user(user, env)
 end
 
@@ -307,11 +289,14 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
   out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{env.params.query["access_token"]}")
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
   info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
-  user = AmazonUser.from_json(info)  # or JSON.parse info
+  puts info
+  user = User.from_json(info)  # or JSON.parse info
+  user.type = "amazon"
   setup_user(user, env)
 end
 
 def setup_user(user, env)
+  user.save_or_update # update should be a no-op but OK :)
   env.session.object("user", user)
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
@@ -559,7 +544,7 @@ end
 
 def logged_in_user(env)
   if is_dev?
-    AmazonUser.new
+    User.new "test_user_id", "test_user_name", "test@test.com", "facebook"
   else
    env.session.object("user") 
   end

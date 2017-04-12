@@ -116,12 +116,21 @@ alter table tags add column age_maybe_ok INT NOT NULL DEFAULT 0;
 alter table urls add column wholesome_review TEXT; -- said my row was too big otherwise :|
 update urls set wholesome_review = ''; -- default for existing :|
 alter table urls add column count_downloads INT NOT NULL DEFAULT 0;
--- done prod
 alter table tags drop column oval_percentage_coords;
 alter table urls add column editing_notes TEXT;
 update urls set editing_notes = ''; -- default for existing :|
 alter table urls add column community_contrib BOOL DEFAULT true; -- actually 0 or 1 apparently
+-- done prod
+
+CREATE TABLE users (
+   id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   name       VARCHAR(2048) NOT NULL, 
+   email    VARCHAR(1024) NOT NULL, 
+   user_id        VARCHAR(1024) NOT NULL, 
+   type  VARCHAR(1024) NOT NULL
+);
 
 -- and output to screen to show success...
 select * from urls;
 select * from tags;
+
