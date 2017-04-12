@@ -241,7 +241,7 @@ post "/save_tag/:url_id" do |env|
   tag.details = resanitize_html params["details"]
   tag.age_maybe_ok = params["age_maybe_ok"].to_i # default is 0
   if tag.category.in?(["violence", "suspense"]) && tag.age_maybe_ok == 0
-    raise "for violence or suspense tags, please also select a value in the age_maybe_ok dropdown, use your browser back button to try again"
+    raise "for violence or suspense tags, please also select a value in the age_maybe_ok dropdown, use your browser back button (hit it several times) to try submitting again"
   end
   tag.save
   if (tag2 = tag.overlaps_any? url.tags)
@@ -301,7 +301,7 @@ def setup_user_and_session(user_id, name, email, type, env)
     env.redirect env.session.string("redirect_to_after_login")
     env.session.delete_string("redirect_to_after_login")
   else
-    add_to_flash(env, "Please use your browser's back button to repost the information you attempted to enter earlier");
+    add_to_flash(env, "Please use your browser's back button (hit it several times) to repost the information you attempted to enter earlier");
     env.redirect "/"
   end
 end
