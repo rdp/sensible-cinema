@@ -13,11 +13,11 @@
             <%= url.image_tag "style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>",  want_very_small: is_mobile(env), want_small: !is_mobile(env) %>
             <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
-          <%= if_present_with_break url.details, "" %>
+          <%= if_present_with_break url.details %>
           <a href="/view_url/<%= url.id %>">Our info (<%= url.tags.size %> edit tags)</a><br/>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
           <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
-          <%= if_present_with_break url.review, "" %>
+          <%= if_present_with_break url.review %>
           <%= if_present_with_break url.editing_status, "Editing status:" %>
           <%= if_present_with_break url.editing_notes, "Editing notes:" %>
           <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
