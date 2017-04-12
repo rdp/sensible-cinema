@@ -106,48 +106,14 @@ Content tags are basically timestamps and descriptions of content that exists in
 none yet, add one now!<br/><br/>
 <% end %>
 
-<br/>If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
+<a href=/add_new_tag/<%= url.id %>>Add additional content tags for this movie &#10133;<!-- thick plus --> </a>
 <br/>
-
-<!-- actually a fold down -->
-<a href=# onclick="document.getElementById('new_content_tag_instructions').style.display = 'block'; return false;">
-Add additional content tags for this movie &#10133;<!-- thick plus --> </a>
-
-<div id="new_content_tag_instructions" style="display: none;">
-The best way to create a new content tag is to go back to your movie, and start it playing, then click the "add new tag" link in the upper left.
+If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
 <br/>
-<img src=/add_tag_example.png width=300; />
-<br/>
-After that it will give you a prompt and you enter the start time, the end time, and the action, then click "test" to try it out and "save" to automatically save it to our database.
-
-<br/>
-<br/>
-If you want to create a new tag manually, the old way, click <a href=/new_empty_tag/<%= url.id %>>here<!-- thick plus --> </a> (not recommended)!
-<br/>
-You can also add "lots" of mute content tags automatically by giving PlayItMyWay a subtitle file this movie, and it will scan it for profanities, see <a href=/mass_upload_from_subtitle_file/<%= url.id %>>here</a> for instructions.
-<br/>
-</div>
 
 <hr/>
-<h3>Custom Edit Lists</h3>
-You can optionally create or use an existing "personalized" edit list for this movie, which is a way for you to choose which content tags are edited out of your movie.
-</br>
-These are all "community edited" currently, wikipedia-style, feel free and please do contribute your own if useful, so everyone can benefit!
-<br/>
-<br/>
-<% if url.tag_edit_lists.size == 0 %>
-  No custom edit lists for this movie yet, add one you can!
-<% else %>
-  Already Existing custom edit lists, click to view list:
-  <br/>
-  <% url.tag_edit_lists.each{ |tag_edit_list| %>
-	  <a href=/list_edit_tag_list/<%= tag_edit_list.id %> > <%= tag_edit_list.description %></a>.
-          <br/>
-  <% } %>
-<% end %>
-<br/>
-<a href=/new_tag_edit_list/<%= url.id %>>Create new customized edit list &#10133;</a>.
-
+<h3>Personalize your playback!</h3>
+You can tweak or change which of these content tags gets edited out, to your liking, click <a href=/personalized_edit_list/<%= url.url %>here</a>.
 
 <br/>
 <br/>
