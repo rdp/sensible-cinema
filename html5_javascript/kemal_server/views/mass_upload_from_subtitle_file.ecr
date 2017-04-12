@@ -14,7 +14,7 @@ First, start playing your video and turn on subtitles.  Then click the "subtitle
 <br/>
 Then copy that (long, ugly) URL and then paste it here:
 <input type="text" name="amazon_subtitle_url" size="100" placeholder="https://cloudfont.../...dfxp" />
-And you're done.
+And you're done, the timings should be perfectly synchronized, though worth watching through and double checking.  Note again that this mutes "whole phrases" so you probably want to go back and "tighten" up all the mutes it creates so they are more precise.
 <br/>
 <% else %>
 <br/>Download a subtitle file for your movie from an online site, ex: <a href=http://www.english-subtitles.club/ target=_blank>here</a> and search for your movie name.
@@ -23,14 +23,15 @@ And you're done.
 <br/> <input type="file" name="srt_upload" id="srt_upload_id"/>
 <% end %>
 <br/>
-If your file is still not quite synchronized , you can add extra time to beginning of each mute, here:
+If you need to tweak how it parses input file, you can add extra time to beginning of each mute, here:
 <input type="text" name="add_to_beginning" size="10" value="0.0"/>
-<br/>
 <br/>
 Add extra time to end of each:
 <input type="text" name="add_to_end" size="10" value="0.0"/>
 <br/>
-If you want to "revert" a subtitle upload, manually delete each tag one by one that it uploaded, then upload a new, synchronized subtitle file.
+Note again that this mutes "whole phrases" so you probably want to go back and "tighten" up all the mutes it creates so they are more precise.
+<br/>
+If you want to "revert" a subtitle upload, manually delete each tag one by one that it created (there is a "show details" link on the movie info page that makes this a little easier), then upload a new, differentsubtitle file.
 <br/>
 <br/>
 <input type="submit" value="Create mutes from subtitle file" class="btn btn-primary" class_means="blue" />
