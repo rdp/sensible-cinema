@@ -199,9 +199,16 @@ class Url
   end
 
   def human_duration
+    if total_time == 0
+      return ""
+    end
     hours = (total_time / 3600).to_i
     minutes = ((total_time - (hours * 3600)) / 60).to_i
-    "%dhr %dm" % [hours, minutes]
+    if hours > 0
+      "%dhr %dm" % [hours, minutes]
+    else
+      "%dm" % [minutes]
+    end
   end
 
   def human_readable_company
