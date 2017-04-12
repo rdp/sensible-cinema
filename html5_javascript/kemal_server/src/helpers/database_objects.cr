@@ -603,10 +603,10 @@ class User
     end
   end
 
-  def rom_or_new_db(user_id, name, email, type)
+  def self.from_or_new_db(user_id, name, email, type)
     existing = with_db do |conn|
-      conn.query("SELECT * from users where email = ?", email, user_id) do |rs| # not distinguish facebook from amazon for now...
-        Url.from_rs(rs);
+      conn.query("SELECT * from users where email = ? and user_id = ?", email, user_id) do |rs| # distinguish facebook from amazon for now...too confusing not too since we store the user_id :|
+        User.from_rs(rs);
       end
     end
     raise "huh" if existing.size > 1

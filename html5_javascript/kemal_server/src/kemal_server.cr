@@ -281,23 +281,20 @@ get "/login_from_facebook" do |env|
   # we can trust it...
   details = JSON.parse download("https://graph.facebook.com/v2.8/me?fields=email,name&access_token=#{access_token}") # public_profile, user_friends also available, though not through /me [?]
   # {"email" => "rogerpack2005@gmail.com", "name" => "Roger Pack", "id" => "10155234916333140"}
-  user = User.new(details["id"].to_s, details["name"].to_s, details["email"].to_s, "facebook")
-  setup_user(user, env)
+  setup_user_and_session(details["id"].as_s, details["name"].as_s, details["email"].as_s, "facebook", env)
 end
 
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
   out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{env.params.query["access_token"]}")
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
-  info = download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
-  puts info
-  user = User.from_json(info)  # or JSON.parse info
-  user.type = "amazon"
-  setup_user(user, env)
+  info = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
+  # {"user_id":"amzn1.account.cwYYXX","name":"Roger Pack","email":"rogerpack2005@gmail.com"}
+#  setup_user_and_session(, env)
 end
 
-def setup_user(user, env)
-  user.save_or_update # update should be a no-op but OK :)
-  env.session.object("user", user)
+def setup_user_and_session(user_id, name, email, type, env)
+  user = User.from_or_new_db(user_id, name, email, type)
+  env.session.object("user", user) # not sure if saving it to the session is better or worse than looking it up from the DB every request...
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
     env.redirect env.session.string("redirect_to_after_login")
