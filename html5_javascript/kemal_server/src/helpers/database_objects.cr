@@ -4,6 +4,26 @@ require "json"
 require "file_utils"
 require "kemal-session"
 
+class MyDb
+  @@db : DB::Database | Nil
+  def self.setup # has to be in a method or weird error thrown https://github.com/crystal-lang/crystal-mysql/issues/22
+    @@db ||= DB.open File.read("db/connection_string_local_box_no_commit.txt").strip
+    # pool'ish...share it for now despite that feeling odd per request, as it pulls per #query one from the pool, but until they fix that *other* bug...
+    # https://github.com/crystal-lang/crystal-db/issues/13 https://github.com/crystal-lang/crystal-db/issues/39
+    @@db.not_nil!
+  end
+end
+
+def with_db
+  yield MyDb.setup
+end
+
+def query(*args)
+  with_db {|conn|
+    yield conn.query *args
+  }
+end
+
 class Url
 	
   DB.mapping({
@@ -67,12 +87,10 @@ class Url
   end
   
   def self.all
-    with_db do |conn|
       # sort by host, amazon type, name for series together
-      conn.query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type desc, name, episode_number") do |rs|
+      query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type desc, name, episode_number") do |rs|
          Url.from_rs(rs);
       end
-    end
   end
 
   def self.latest
@@ -632,5 +650,5 @@ class User
     end
   end
 
-  include Session::StorableObject # store the whole thing in the local session? why not... :)
+  include Session::StorableObject # store the whole thing in the local session? ugly but hey...
 end

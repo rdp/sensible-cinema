@@ -50,20 +50,6 @@ spawn do
   end
 end
 
-class MyDb
-  @@db : DB::Database | Nil
-  def self.setup # has to be in a method or weird error thrown https://github.com/crystal-lang/crystal-mysql/issues/22
-    @@db ||= DB.open File.read("db/connection_string_local_box_no_commit.txt").strip
-    # pool'ish...share it for now despite that feeling odd per request, as it pulls per #query one from the pool, but until they fix that *other* bug...
-    # https://github.com/crystal-lang/crystal-db/issues/13 https://github.com/crystal-lang/crystal-db/issues/39 
-    @@db.not_nil!
-  end
-end
-
-def with_db
-  yield MyDb.setup 
-end
- 
 def standardize_url(unescaped)
   original = unescaped
   # basically do it all here, except canonicalize, which we do in javascript...
@@ -79,6 +65,10 @@ end
 def db_style_from_query_url(env)
   real_url = env.params.query["url"] # already unescaped it on its way in, kind of them..
   sanitize_html standardize_url(real_url)
+end
+
+get "/ping" do |env|
+  "yes"
 end
 
 get "/redo_all_thumbnails" do |env|
