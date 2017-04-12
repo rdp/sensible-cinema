@@ -124,6 +124,10 @@ get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
+get "/delete_all_tags/:url_id" do |env|
+  hard_nuke_url_or_nil(get_url_from_url_id(env), env, just_delete_tags: true)
+end
+
 get "/nuke_url/:url_id" do |env| # nb: never link to this to avoid crawlers accidental nukage :|
   hard_nuke_url_or_nil(get_url_from_url_id(env), env)
 end
@@ -136,14 +140,15 @@ get "/nuke_test_by_url" do |env|
   hard_nuke_url_or_nil(url, env)
 end
 
-def hard_nuke_url_or_nil(url, env)
+def hard_nuke_url_or_nil(url, env, just_delete_tags = false)
   if url
-    save_local_javascript [url], "about to nuke...", env
+    save_local_javascript [url], "about to nuke somehow...", env
     url.tag_edit_lists.each{|tag_edit_list|
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
     }
     url.tags.each &.destroy_no_cascade # already nuked its edit lists bindings
+    return "deleted tags" if just_delete_tags
     url.delete_local_image_if_present_no_save
     url.destroy_no_cascade
     "nuked testmovie #{HTML.escape url.inspect} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
