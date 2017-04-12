@@ -287,9 +287,9 @@ end
 get "/login_from_amazon" do |env| # amazon changes the url to this with some GET params after successful auth
   out = JSON.parse download("https://api.amazon.com/auth/o2/tokeninfo?access_token=#{env.params.query["access_token"]}")
   raise "access token does not belong to us?" unless out["aud"] == "amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6"
-  info = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
+  details = JSON.parse download("https://api.amazon.com/user/profile", HTTP::Headers{"Authorization" => "bearer " + env.params.query["access_token"]})
   # {"user_id":"amzn1.account.cwYYXX","name":"Roger Pack","email":"rogerpack2005@gmail.com"}
-#  setup_user_and_session(, env)
+  setup_user_and_session(details["user_id"].as_s, details["name"].as_s, details["email"].as_s, "amazon", env) # XX don't even need to specify amazon since the user id's are different and we use that today...FWIW.
 end
 
 def setup_user_and_session(user_id, name, email, type, env)
