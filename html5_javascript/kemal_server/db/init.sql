@@ -129,6 +129,7 @@ CREATE TABLE users (
    user_id        VARCHAR(1024) NOT NULL, 
    type  VARCHAR(1024) NOT NULL
 );
+ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email, user_id);
 
 -- and output to screen to show success...
 select * from urls;

@@ -603,5 +603,21 @@ class User
     end
   end
 
+  def rom_or_new_db(user_id, name, email, type)
+    existing = with_db do |conn|
+      conn.query("SELECT * from users where email = ?", email, user_id) do |rs| # not distinguish facebook from amazon for now...
+        Url.from_rs(rs);
+      end
+    end
+    raise "huh" if existing.size > 1
+    if existing.size == 1
+      existing[0]
+    else
+      out = User.new(user_id, name, email, type)
+      out.save_or_update
+      out
+    end
+  end
+
   include Session::StorableObject # store the whole thing in the local session? why not... :)
 end
