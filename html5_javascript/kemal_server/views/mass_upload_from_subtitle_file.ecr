@@ -4,12 +4,9 @@
 Want to upload a subtitle file and *automatically* detect where profanities are, so you don't have to enter them?  We do that!  Unfortunately it yields "imprecise" mutes that also mute some of the surrounding sentence, but it's still useful.
 
 <br/>
-<br/>Download a subtitle file for your movie from an online site, ex: <a href=http://www.english-subtitles.club/ target=_blank>here</a> and search for your movie name.
-<br/>Next, synchronize your file (otherwise mutes will be off by several seconds).  Unzip any .zip file, upload .srt file to <a href=http://subsyncer.appspot.com/step1 target=_blank>in this synchronization tool</a>, then watch your video with CC's on and pause it right when some text appears on the screen.  Enter that current playback time into the synchronization tool.  We recommend entering several "synchronization points", one at the very beginning, one 3/4 of the way through).  If you're editing a youtube, you can download some (sometimes inaccurate pre-synchronized) subtitles <a href="http://www.yousubtitles.com/"/>here</a>.
-<br/>This will download a new "synchronized" .srt file for you.  Then upload synchronized .srt file here:
-<br/> <input type="file" name="srt_upload" id="srt_upload_id"/>
 <br/>
-If it's amazon, you can get a perfectly synchronized subtitle file "for free."
+<% if url.amazon? %>
+since it's amazon, you can get a perfectly synchronized subtitle file "for free."
 <br/>
 First, start playing your video and turn on subtitles.  Then click the "subtitle" link:
 <br>
@@ -18,6 +15,13 @@ First, start playing your video and turn on subtitles.  Then click the "subtitle
 Then copy that (long, ugly) URL and then paste it here:
 <input type="text" name="amazon_subtitle_url" size="100" placeholder="https://cloudfont.../...dfxp" />
 And you're done.
+<br/>
+<% else %>
+<br/>Download a subtitle file for your movie from an online site, ex: <a href=http://www.english-subtitles.club/ target=_blank>here</a> and search for your movie name.
+<br/>Next, synchronize your file (otherwise mutes will be off by several seconds).  Unzip any .zip file, upload .srt file to <a href=http://subsyncer.appspot.com/step1 target=_blank>in this synchronization tool</a>, then watch your video with CC's on and pause it right when some text appears on the screen.  Enter that current playback time into the synchronization tool.  We recommend entering several "synchronization points", one at the very beginning, one 3/4 of the way through).  If you're editing a youtube, you can download some (sometimes inaccurate pre-synchronized) subtitles <a href="http://www.yousubtitles.com/"/>here</a>.
+<br/>This will download a new "synchronized" .srt file for you.  Then upload synchronized .srt file here:
+<br/> <input type="file" name="srt_upload" id="srt_upload_id"/>
+<% end %>
 <br/>
 If your file is still not quite synchronized , you can add extra time to beginning of each mute, here:
 <input type="text" name="add_to_beginning" size="10" value="0.0"/>

@@ -198,6 +198,12 @@ class Url
     "url=#{url}&episode_number=#{episode_number}" # URI.escape?
   end
 
+  def human_duration
+    hours = (total_time / 3600).to_i
+    minutes = ((total_time - (hours * 3600)) / 60).to_i
+    "%dhr %dm" % [hours, minutes]
+  end
+
   def human_readable_company
     # get from url...
     check =  /\/\/([^\/]+\.[^\/]+).*/ #  //(.*)/ with a dot in it so splittable
@@ -249,7 +255,7 @@ class Url
 
   def cost_string
     if human_readable_company.in? ["netflix", "hulu"]
-      return "subscription"
+      return "free with subscription"
     end
     out = ""
     if amazon_prime_free_type != ""
