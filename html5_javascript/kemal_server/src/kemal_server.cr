@@ -541,7 +541,7 @@ end
 
 def logged_in_user(env)
   if is_dev?
-    User.new "test_user_id", "test_user_name", "test@test.com", "facebook"
+    User.new "test_user_id", "test_user_name", "test@test.com", "facebook" # and id 0
   else
    env.session.object("user") 
   end
