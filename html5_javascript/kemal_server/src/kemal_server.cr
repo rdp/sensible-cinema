@@ -36,6 +36,10 @@ class CustomHandler < Kemal::Handler
   end
 end
 
+after_all do |env|
+  puts "ending request #{env.request.path}"
+end
+
 add_handler CustomHandler.new
 
 after_all do |env|
@@ -447,9 +451,11 @@ def put_test_last(urls)
 end
 
 get "/" do |env| # index home
+  start = Time.now
   all_urls = get_all_urls
   all_urls_except_just_started = all_urls.reject{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
   all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
+  puts "pre render took #{Time.now - start}"
   render "views/main.ecr", "views/layout.ecr"
 end
 
