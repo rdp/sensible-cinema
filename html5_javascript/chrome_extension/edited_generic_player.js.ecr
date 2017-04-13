@@ -13,8 +13,8 @@ var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.inet2.org";  // prod
+var request_host="localhost:3000"; // dev
+// var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	
@@ -56,7 +56,7 @@ function addEditUi() {
   	<div id="currently_playing_it_your_way_id">
   	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set up this select --> 
     	<br/>
-      <a href=# onclick="createNewEditList(); return false">Personalize edits</a>
+      <a href=# onclick="createNewEditList(); return false">Personalize edited playback</a>
       <br/>
       <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
   	</div>
@@ -584,13 +584,11 @@ function parseSuccessfulJson(json_string) {
 	removeAllOptions(dropdown); // out with any old...	
   
 	var option = document.createElement("option");
-	option.text = "Default (all tags) (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
+	option.text = "Default (all tags) (" + current_json.tags.length + ")";
 	option.value = "-1"; // special case :|
+  // I think this will start as selected...
   list_length = current_json.tag_edit_lists.length;
-  if (list_length == 0) {
-    option.setAttribute('selected', true); // it needs this to know this to know which tags to use :)
-  }
-  else if (list_length > 1) {
+  if (list_length > 1) {
     // wait what? should be 1:1 today...
     console.log("list size greater than 1???" + current_json.tag_edit_lists);
   }
@@ -604,8 +602,14 @@ function parseSuccessfulJson(json_string) {
 		option.text = tag_edit_list.description + "(" + tags.length + ")"; // XXX this is wrong since some of those tags might be "do_nothing"
 		option.value = tag_edit_list.id;
 		dropdown.add(option);
-    option.setAttribute('selected', true); // hope this overrides, we want it to be the default uh guess...
+    option.setAttribute('selected', true); // hope this overrides, we want it to be the default for now uh guess...
 	}  
+  
+	option = document.createElement("option");
+	option.text = "Disabled (no tags) (0)";
+	option.value = "-2"; // special case :|
+	dropdown.add(option);
+  
 	console.log("finished parsing response successful JSON");
 }
 
@@ -633,6 +637,11 @@ function setTheseTagsAsTheOnesToUse(tags) {
 function getEditsFromCurrentTagList() {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	var selected_edit_list_id = dropdown.value;
+	if (selected_edit_list_id == "-2") {
+		setTheseTagsAsTheOnesToUse([]); // the non-tags LOl
+		return;
+	}
+  
 	if (selected_edit_list_id == "-1") {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
 		return;
