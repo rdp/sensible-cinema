@@ -13,7 +13,7 @@ var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
 
-//var request_host="localhost:3000"; // dev
+// var request_host="localhost:3000"; // dev
 var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
@@ -46,12 +46,18 @@ function addEditUi() {
     <div id=click_to_add_to_system_div_id style='display: none;'>
       <a href=# onclick="addForNewVideo(); return false;">Play it My Way: Click here to add to the system...</a>
     </div>
-  </div>    
+  </div>
+
+  <div id=server_down_div_id style='display: none;' style='font-size: 14px;'>
+    Play it my way Server down, please alert us and try again later...
+  </div>
   
   <div id="load_succeeded_div_id" style='display: none;'>
   	<div id="currently_playing_it_your_way_id">
-  	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set this up -->
+  	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set up this select --> 
     	<br/>
+      <a href=# onclick="createNewEditList(); return false">Personalize edits</a>
+      <br/>
       <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
@@ -281,8 +287,6 @@ age specifier:
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
     	<br/>
       <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Synchronize tags from website</a>
-      <!--br/>
-      <a href=# onclick="createNewEditList(); return false">Create personalized playback list</a-->
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
@@ -304,7 +308,7 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
 }
 
 function createNewEditList() {
-  window.open("https://" + request_host + "/new_tag_edit_list/" + current_json.url.id);
+  window.open("https://" + request_host + "/personalized_edit_list/" + current_json.url.id);
 }
 
 function liveEpisodeName() {
@@ -666,7 +670,7 @@ function getSubtitleLink() {
   for (var i = arr.length - 1; i >= 0; --i) {
     console.log("name=" + arr[i].name);
     if (arr[i].name.endsWith(".dfxp")) { // ex: https://dmqdd6hw24ucf.cloudfront.net/341f/e367/03b5/4dce-9c0e-511e3b71d331/15e8386e-0cb0-477f-b2e4-b21dfa06f1f7.dfxp apparently
-      var response = prompt("this appears to be a subtitles url, copy this value:", arr[i].name); // has a cancel prompt, but we don't care which button they use
+      var response = prompt("this appears to be a subtitles url, copy this:", arr[i].name); // has a cancel prompt, but we don't care which button they use
       return;
     }
   }
@@ -740,9 +744,10 @@ function loadFailed(status) {
 		// alert here "we don't have one" is too annoying
   }
   else {
-    // alert here is too scawah for end users
-  	showDiv(document.getElementById("initial_loading_before_know_if_have_movie_div_id"));
-		document.getElementById("initial_loading_before_know_if_have_movie_div_id").innerHTML = "Play it my way Server down, please alert us and try again later...";
+    // alert here seems too scawah for end users
+    displayDiv(document.getElementById("server_down_div_id"));
+    // I guess still start watcher thread so if they shift movies it tries again [?] but kinda weird...though should be setup "as if we don't have it in our system" hrm...
+    // leave "unedited..." displayed since...it is unedited FWIW :|
   }
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
@@ -761,20 +766,30 @@ function parseSuccessfulJson(json_string) {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	removeAllOptions(dropdown); // out with any old...	
   
-	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
-		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
-		var option = document.createElement("option");
-		option.text = tag_edit_list_and_tags[0].description + "(" + tag_edit_list_and_tags[1].length + ")"; // TODO this is wrong since some of those tags are "do_nothing"
-		option.value = tag_edit_list_and_tags[0].id;
-		dropdown.add(option, dropdown[0]); // put it at the top XX
-	}
 	var option = document.createElement("option");
 	option.text = "Default (all tags) (" + current_json.tags.length + ")"; // so they can go back to "all" if wanted :|
 	option.value = "-1"; // special case :|
-  option.setAttribute('selected', true); // default is selected :| XXXX I bet if we add an edit we lose the selected
-	dropdown.add(option, dropdown[0]);
+  list_length = current_json.tag_edit_lists.length;
+  if (list_length == 0) {
+    option.setAttribute('selected', true); // it needs this to know this to know which tags to use :)
+  }
+  else if (list_length > 1) {
+    // wait what? should be 1:1 today...
+    console.log("list size greater than 1???" + current_json.tag_edit_lists);
+  }
+	dropdown.add(option);
   
-	console.log("finished parsing response JSON");
+	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
+		var tag_edit_list_and_its_tags = current_json.tag_edit_lists[i];
+    var tag_edit_list = tag_edit_list_and_its_tags[0];
+    var tags = tag_edit_list_and_its_tags[1];
+		var option = document.createElement("option");
+		option.text = tag_edit_list.description + "(" + tags.length + ")"; // XXX this is wrong since some of those tags might be "do_nothing"
+		option.value = tag_edit_list.id;
+		dropdown.add(option);
+    option.setAttribute('selected', true); // hope this overrides, we want it to be the default uh guess...
+	}  
+	console.log("finished parsing response successful JSON");
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
@@ -806,9 +821,9 @@ function getEditsFromCurrentTagList() {
 		return;
 	}
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
-		var tag_edit_list_and_tags = current_json.tag_edit_lists[i];
-		if (tag_edit_list_and_tags[0].id == selected_edit_list_id) {
-			setTheseTagsAsTheOnesToUse(tag_edit_list_and_tags[1]);
+		var tag_edit_list_and_its_tags = current_json.tag_edit_lists[i];
+		if (tag_edit_list_and_its_tags[0].id == selected_edit_list_id) {
+			setTheseTagsAsTheOnesToUse(tag_edit_list_and_its_tags[1]);
 			return;
 		}		
 	}

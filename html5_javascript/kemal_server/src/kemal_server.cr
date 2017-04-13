@@ -20,7 +20,7 @@ end
 
 class CustomHandler < Kemal::Handler
   def call(env)
-    if (env.request.path =~ /delete|nuke/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
+    if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
@@ -137,7 +137,7 @@ end
 def hard_nuke_url_or_nil(url, env, just_delete_tags = false)
   if url
     save_local_javascript [url], "about to nuke somehow...", env
-    url.tag_edit_lists.each{|tag_edit_list|
+    url.tag_edit_lists_all_users.each{|tag_edit_list|
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
     }
@@ -480,47 +480,51 @@ get "/login" do |env|
   end
 end
 
-get "/new_tag_edit_list/:url_id" do |env|
-  tag_edit_list = TagEditList.new env.params.url["url_id"].to_i
-  render "views/list_edit_tag_list.ecr", "views/layout.ecr"
-end
-
-get "/delete_tag_edit_list/:tag_id" do |env|
-  tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
+get "/delete_tag_edit_list/:url_id" do |env|
+  url_id = env.params.url["url_id"].to_i
+  tag_edit_list = TagEditList.get_existing_by_url_id url_id, user_id(env)
   tag_edit_list.destroy_tag_edit_list_to_tags
   tag_edit_list.destroy_no_cascade
   add_to_flash env, "deleted one tag edit list"
-  env.redirect "/view_url/#{tag_edit_list.url.id}"
+  env.redirect "/view_url/#{url_id}"
 end
 
-get "/list_edit_tag_list/:tag_id" do |env|
-  tag_edit_list = TagEditList.get_only_by_id env.params.url["tag_id"].to_i
+def user_id(env)
+  logged_in_user(env).id # could use user_id here but...that's somebody else's ID dunno...weird'ish...
+end
+
+get "/personalized_edit_list/:url_id" do |env|
+  url_id = env.params.url["url_id"].to_i
+  tag_edit_list = TagEditList.get_only_by_url_id_or_nil url_id, user_id(env)
+  tag_edit_list ||= TagEditList.new url_id, user_id(env)
+    # and not save yet :|
   render "views/list_edit_tag_list.ecr", "views/layout.ecr"
 end
 
-post "/save_tag_edit_list" do |env| # XXXX couldn't figure out the named stuff here whaat?
+post "/save_tag_edit_list" do |env|
   params = env.params.body # POST params
+  url_id = params["url_id"].to_i
   if params["id"]?
-    tag_edit_list = TagEditList.get_only_by_id params["id"]
+    tag_edit_list = TagEditList.get_existing_by_url_id url_id, user_id(env)
+    raise "wrong id? you gave #{params["id"]} expected #{tag_edit_list.id}" unless params["id"].to_i == tag_edit_list.id
   else
-    tag_edit_list = TagEditList.new params["url_id"].to_i
+    tag_edit_list = TagEditList.new url_id, user_id(env)
   end
 
   tag_edit_list.description = resanitize_html params["description"]
-  raise "must have name" unless tag_edit_list.description.present?
+  raise "must have name" unless tag_edit_list.description.present? # TODO rename db column :|
   tag_edit_list.status_notes = resanitize_html params["status_notes"]
   tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   tag_ids = [] of Int32
   actions = [] of String
-  env.params.body.each{|name, value|
-  if name =~ /tag_select_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :|
-     tag_ids << $1.to_i
-    actions << value
+  env.params.body.each{ |name, value|
+    if name =~ /tag_select_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :| [?]
+      tag_ids << $1.to_i
+      actions << value
     end
   }
-
   tag_edit_list.create_or_refresh(tag_ids, actions)
-  add_to_flash(env, "Success! saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser window please refresh")
+  add_to_flash(env, "Success! saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser tab please refresh that browser tab")
   save_local_javascript [tag_edit_list.url], tag_edit_list.inspect, env
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end

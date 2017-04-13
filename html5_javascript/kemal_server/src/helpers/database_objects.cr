@@ -26,7 +26,7 @@ def query(*args)
 end
 
 class Url
-	
+  
   DB.mapping({
     id: Int32,
     url:  String, # actually "HTML" encoded, along with everything else :)
@@ -46,8 +46,8 @@ class Url
     rental_cost: Float64,
     purchase_cost: Float64, # XXX actually Decimal [?]
     total_time: Float64,
-		create_timestamp: Time,
-		subtitles: String,
+    create_timestamp: Time,
+    subtitles: String,
     genre: String,
     original_rating: String,
     editing_notes: String,
@@ -73,7 +73,7 @@ class Url
     rental_cost: Float64,
     purchase_cost: Float64,
     total_time: Float64,
-		create_timestamp: Time,
+    create_timestamp: Time,
     subtitles: String,
     genre: String,
     original_rating: String,
@@ -96,13 +96,13 @@ class Url
 
   def self.latest
     query("SELECT * from urls ORDER BY create_timestamp desc limit 1") do |rs|
-      Url.from_rs(rs)[0]; # is there no easy "get one" option?
+      only_one!(Url.from_rs(rs))
     end
   end
 
   def self.random
     query("SELECT * from urls ORDER BY rand() limit 1") do |rs| # lame, I know
-      Url.from_rs(rs)[0]; # is there no easy "get one" option?
+      only_one!(Url.from_rs(rs))
     end
   end
 
@@ -110,29 +110,21 @@ class Url
     urls = query("SELECT * FROM urls WHERE name = ? and episode_number = ?", name, episode_number) do |rs|
       Url.from_rs(rs);
     end
-    if urls.size == 1
-      return urls[0]
-    else
-      return nil
-    end
+    first_or_nil(urls)
   end
   
   def self.get_only_or_nil_by_url_and_episode_number(url, episode_number)
     urls = query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND episode_number = ?", url, url, episode_number) do |rs|
        Url.from_rs(rs);
     end
-    if urls.size == 1
-      return urls[0]
-    else
-      return nil
-    end
+    first_or_nil(urls)
   end
   
   def save
     with_db do |conn|
       if @id == 0
        @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, editing_notes, community_contrib) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, editing_notes, community_contrib).last_insert_id.to_i32
-			 # get create_timestamp for free by its default crystal value
+       # get create_timestamp for free by its default crystal value
       else
        conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, community_contrib = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, editing_notes, community_contrib,  id
       end
@@ -177,30 +169,32 @@ class Url
       Tag.from_rs rs
     end
   end
-	
-  def tag_edit_lists
-    with_db do |conn|
-      conn.query("select * from tag_edit_list where url_id=?", id) do |rs|
-        TagEditList.from_rs rs
-      end
+  
+  def tag_edit_lists(env)
+    query("select * from tag_edit_list where url_id=? and user_id = ?", id, user_id(env)) do |rs|
+      TagEditList.from_rs rs
     end
   end
-	
-	private def timestamps_of_type_for_video(conn, db_url, type) 
-	  tags = conn.query("select * from tags where url_id=? and default_action = ?", db_url.id, type) do |rs|
-	    Tag.from_rs rs
-	  end
-	  tags.map{|tag| [tag.start, tag.endy]}
-	end
+
+  def tag_edit_lists_all_users
+    query("select * from tag_edit_list where url_id=?", id) do |rs|
+      TagEditList.from_rs rs
+    end
+  end
+  
+  private def timestamps_of_type_for_video(type) 
+    tags = query("select * from tags where url_id=? and default_action = ?", id, type) do |rs|
+      Tag.from_rs rs
+    end
+    tags.map{|tag| [tag.start, tag.endy]}
+  end
   
   def tags_by_type
-    with_db do |conn|
-      yes_audio_no_videos = timestamps_of_type_for_video conn, self, "yes_audio_no_video"
-      skips = timestamps_of_type_for_video conn, self, "skip"
-      mutes = timestamps_of_type_for_video conn, self, "mute"
-      do_nothings = timestamps_of_type_for_video conn, self, "do_nothing"
-      {yes_audio_no_videos: yes_audio_no_videos, skips: skips, mutes: mutes, do_nothings: do_nothings}  # named tuple :)
-    end
+    yes_audio_no_videos = timestamps_of_type_for_video "yes_audio_no_video"
+    skips = timestamps_of_type_for_video "skip"
+    mutes = timestamps_of_type_for_video "mute"
+    do_nothings = timestamps_of_type_for_video "do_nothing"
+    {yes_audio_no_videos: yes_audio_no_videos, skips: skips, mutes: mutes, do_nothings: do_nothings}  # named tuple :)
   end
 
   def destroy_no_cascade
@@ -324,25 +318,25 @@ class Url
       image_local_filename = nil
     end
   end
-	
-	def download_image_url_and_save(full_url)
-	  image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
+  
+  def download_image_url_and_save(full_url)
+    image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
           image_name = HTML.escape(image_name) # remove ('s etc.
           image_name = image_name.gsub("%", "_") # it's either this or carefully save the filename as Sing(2016) or unescape the name in the request or something phreaky...
           if image_name !~ /\.(jpg|png|jpeg|svg)$/i
             raise "download url appears to not be an image url like http://host/image.jpg please try another one... #{full_url}"
           end
-	  outgoing_filename = "#{id}_#{image_name}"
-	  local_full = "public/movie_images/#{outgoing_filename}"
-	  File.write(local_full, download(full_url)) # guess this is OK non windows :|
+    outgoing_filename = "#{id}_#{image_name}"
+    local_full = "public/movie_images/#{outgoing_filename}"
+    File.write(local_full, download(full_url)) # guess this is OK non windows :|
           if !File.exists? local_full
             raise "unable to download that image file, please try a different one..."
           end
           delete_local_image_if_present_no_save # delete old now that we've downloaded new and have assured successful replacement :|
-	  @image_local_filename = outgoing_filename
+    @image_local_filename = outgoing_filename
           create_thumbnail
           save
-	end
+  end
 
         def create_thumbnail
           if image_local_filename.present?
@@ -353,35 +347,28 @@ class Url
               if image_local_filename =~ /\.jpg$/
                 command = command.sub("convert", "convert -strip -sampling-factor 4:2:0 -quality 85%") # attempt max compression
               end
-	      raise "unable to thumnailify? #{id} #{command}" unless system(command)
+        raise "unable to thumnailify? #{id} #{command}" unless system(command)
             }
           end
         end
-	
-	def image_tag(size, postpend_html = "", want_small = true, want_very_small = false) # XXX use an enum or somefin
-	  if image_local_filename.present?
+  
+  def image_tag(size, postpend_html = "", want_small = true, want_very_small = false) # XXX use an enum or somefin
+    if image_local_filename.present?
                   name = image_local_filename # full :)
                   if want_small
                      name = "small_#{name}"
                   elsif want_very_small
                      name = "very_small_#{name}"
                   end
-		  "<img src='/movie_images/#{name}' #{size}/>#{postpend_html}"
-		else
-		  ""
-		end
-	end
+      "<img src='/movie_images/#{name}' #{size}/>#{postpend_html}"
+    else
+      ""
+    end
+  end
 
   def self.get_only_by_id(id)
-    with_db do |conn|
-      conn.query("SELECT * from urls where id = ?", id) do |rs|
-         all = Url.from_rs(rs) # Index OOB if not there :|
-         if all.size == 1
-           return all[0]
-         else
-           raise "unable to find url with id #{id} size=#{all.size}"
-         end
-      end
+    query("SELECT * from urls where id = ?", id) do |rs|
+      only_one!(Url.from_rs(rs))
     end
   end
 end
@@ -423,7 +410,7 @@ class Tag
   def self.get_only_by_id(id)
     with_db do |conn|
       conn.query("SELECT * from tags where id = ?", id) do |rs|
-         Tag.from_rs(rs)[0] # Index OOB if not there :|
+         only_one!(Tag.from_rs(rs))
       end
     end
   end
@@ -447,7 +434,7 @@ class Tag
   def url
     with_db do |conn|
       conn.query("select * from urls where id=?", url_id) do |rs|
-        Url.from_rs(rs)[0]
+        only_one!(Url.from_rs(rs))
       end
     end
   end
@@ -512,9 +499,9 @@ def human_to_seconds(ts_human)
 end
 
 class TagEditList
-
   JSON.mapping({
     id: Int32,
+    user_id: Int32,
     url_id: Int32,
     description: {type: String},       
     status_notes: {type: String},       
@@ -522,80 +509,92 @@ class TagEditList
   })
   DB.mapping({
     id: Int32,
+    user_id: Int32,
     url_id: Int32,
     description: {type: String},       
     status_notes: {type: String},       
     age_recommendation_after_edited: Int32
   })
-	
-	def initialize(@url_id)
+  
+  def initialize(@url_id, @user_id)
     @id = 0
-		@description = ""
-		@status_notes = ""
-		@age_recommendation_after_edited = 0
- 	end
+    @description = ""
+    @status_notes = ""
+    @age_recommendation_after_edited = 0
+   end
 
-	def create_or_refresh(tag_ids, actions)
+  def create_or_refresh(tag_ids, actions)
     with_db do |conn|
-		  # TODO conn.exec("START TRANSACTION"); once they support it LOL
-		  if (@id == 0)
-			   @id = conn.exec("insert into tag_edit_list (url_id, description, status_notes, age_recommendation_after_edited) VALUES (?, ?, ?, ?)", url_id, description, status_notes, age_recommendation_after_edited).last_insert_id.to_i32
-			else
-			  conn.exec("update tag_edit_list set url_id = ?, description = ?, status_notes = ?, age_recommendation_after_edited = ? where id = ?", url_id, description, status_notes, age_recommendation_after_edited, id)
-			end
-      conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id) # just nuke, transaction's got our back
-			tag_ids.each_with_index{|tag_id, idx|
-			  tag = Tag.get_only_by_id(tag_id)
-				raise "tag movie mismatch #{tag_id}??" unless tag.url_id == self.url_id
-			  conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, action) values (?, ?, ?)", self.id, tag_id, actions[idx])
-			}
-	  end	
-	end
-	
-	def url
-	  Url.get_only_by_id(url_id)
-	end
-	
-	def tags_with_selected_or_not
-	  all_tags = url.tags # not sure how to do this without double somethin' ... :|
-    with_db do |conn|
-		  all_tags.map{|tag|
-			  count = conn.scalar("select count(*) from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id)
-				if count == 1
-				  action = conn.query_one("select action from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
-				  {tag, action}
-				elsif count == 0
-				  if self.id == 0
-  				  {tag, tag.default_action}
-					else
-  				  {tag, "do_nothing"} # they already decided against this at some point...
-					end					
-				else
-				  raise "double tag? #{tag}"
-				end
-			}
-		end
-	end
-	
-  def self.get_only_by_id(id)
-    with_db do |conn|
-      conn.query("SELECT * from tag_edit_list where id = ?", id) do |rs|
-         TagEditList.from_rs(rs)[0] # Index OOB if not there :|
+      conn.transaction do
+        if (@id == 0)
+          @id = conn.exec("insert into tag_edit_list (url_id, user_id, description, status_notes, age_recommendation_after_edited) VALUES (?, ?, ?, ?, ?)", url_id, user_id, description, status_notes, age_recommendation_after_edited).last_insert_id.to_i32
+        else
+          conn.exec("update tag_edit_list set url_id = ?, user_id = ?,description = ?, status_notes = ?, age_recommendation_after_edited = ? where id = ?", url_id, user_id, description, status_notes, age_recommendation_after_edited, id)
+        end
+        conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id) 
+        tag_ids.each_with_index{|tag_id, idx|
+          tag = Tag.get_only_by_id(tag_id)
+          raise "tag movie mismatch #{tag_id}??" unless tag.url_id == self.url_id # sanity check
+          conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, action) values (?, ?, ?)", self.id, tag_id, actions[idx])
+        }
       end
+    end  
+  end
+  
+  def url
+    Url.get_only_by_id(url_id)
+  end
+  
+  def tags_with_selected_or_not
+    all_tags = url.tags # not sure how to do this without double somethin' ... :|
+    with_db do |conn|
+      all_tags.map{|tag|
+        count = conn.scalar("select count(*) from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id)
+        if count == 1
+          action = conn.query_one("select action from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
+          {tag, action}
+        elsif count == 0
+          if self.id == 0
+            {tag, tag.default_action}
+          else
+            {tag, "do_nothing"} # they already decided against this at some point...
+          end          
+        else
+          raise "double tag? #{tag}"
+        end
+      }
     end
   end
-	
+
+  def self.get_only_by_url_id_or_nil(url_id, user_id)
+    query("SELECT * from tag_edit_list where url_id = ? and user_id = ?", url_id, user_id) do |rs|
+       first_or_nil(TagEditList.from_rs(rs))
+    end
+  end
+
+  def self.get_existing_by_url_id(url_id, user_id)
+    query("SELECT * from tag_edit_list where url_id = ? and user_id = ?", url_id, user_id) do |rs|
+       only_one!(TagEditList.from_rs(rs))
+    end
+  end
+  
+  def self.get_existing_by_id(id)
+    query("SELECT * from tag_edit_list where id = ?", id) do |rs|
+       only_one!(TagEditList.from_rs(rs))
+    end
+  end
+  
   def destroy_no_cascade
     with_db do |conn|
       conn.exec("delete from tag_edit_list where id = ?", id)
     end
   end
-	
-	def destroy_tag_edit_list_to_tags
+  
+  def destroy_tag_edit_list_to_tags
     with_db do |conn|
       conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id)
-    end	
-	end
+    end  
+  end
 
 end
 
@@ -632,10 +631,8 @@ class User
   end
 
   def self.from_or_new_db(user_id, name, email, type)
-    existing = with_db do |conn|
-      conn.query("SELECT * from users where email = ? and user_id = ?", email, user_id) do |rs| # distinguish facebook from amazon for now...too confusing not too since we store the user_id :|
-        User.from_rs(rs);
-      end
+    existing = query("SELECT * from users where email = ? and user_id = ?", email, user_id) do |rs| # distinguish facebook from amazon for now...too confusing not too since we store the user_id :|
+      User.from_rs(rs);
     end
     raise "huh" if existing.size > 1
     if existing.size == 1
@@ -648,4 +645,22 @@ class User
   end
 
   include Session::StorableObject # store the whole thing in the local session? ugly but hey...
+end
+
+def first_or_nil(list)
+  if list.size == 1
+    list[0]
+  elsif list.size == 0
+    nil
+  else
+    raise "too many? size#{list.size}"
+  end
+end
+
+def only_one!(list)
+  if list.size == 1
+    list[0]
+  else
+    raise "did not find one, size=#{list.size}"
+  end
 end

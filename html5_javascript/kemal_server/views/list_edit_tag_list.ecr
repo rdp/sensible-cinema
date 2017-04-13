@@ -8,21 +8,21 @@
   <input type="hidden" name="id" value="<%= tag_edit_list.id %>">
 <% end %>
 
-  <input type="hidden" name="url_id" value="<%= tag_edit_list.url_id %>">
+<input type="hidden" name="url_id" value="<%= tag_edit_list.url_id %>"> <!-- in case not saved yet -->
 
-description of overall goal of this edit list:
+Your name for this list of edits:
 <textarea name="description" rows="1" cols="150" ><%= tag_edit_list.description %></textarea>
 <br/>
 <br/>
 
-status_notes
+status_notes (ex: "for kids")
 <textarea name="status_notes" rows="1" cols="150" ><%= tag_edit_list.status_notes %></textarea>
 <br/>
 <br/>
 
 <% if tag_edit_list.tags_with_selected_or_not.size == 0 %>
   There are no content tags for this custom edit list to personalize yet, please go add some first then come back here.
-	<br/>
+<br/>
 <% end %>
 
 <table class="table table-striped">
@@ -62,5 +62,6 @@ age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for n
 
 </form>
 
+<a href=/delete_edit_tag_list/<%= tag_edit_list.url.id %>>Delete this whole edit list</a>.
 
-<a href =/view_url/<%= tag_edit_list.url_id %>><< Back to movie (cancel edits) </a>.
+<a href =/view_url/<%= tag_edit_list.url.id %>><< Back to movie (cancel edits) </a>.
