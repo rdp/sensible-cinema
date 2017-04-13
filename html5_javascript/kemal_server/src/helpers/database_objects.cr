@@ -6,7 +6,7 @@ require "kemal-session"
 
 class MyDb
   @@db : DB::Database | Nil
-  def self.setup # has to be in a method or weird error thrown https://github.com/crystal-lang/crystal-mysql/issues/22
+  def self.create # has to be in a method or weird error thrown https://github.com/crystal-lang/crystal-mysql/issues/22
     @@db ||= DB.open File.read("db/connection_string_local_box_no_commit.txt").strip
     # pool'ish...share it for now despite that feeling odd per request, as it pulls per #query one from the pool, but until they fix that *other* bug...
     # https://github.com/crystal-lang/crystal-db/issues/13 https://github.com/crystal-lang/crystal-db/issues/39
@@ -15,13 +15,14 @@ class MyDb
 end
 
 def with_db
-  yield MyDb.setup
+  yield MyDb.create
 end
 
 def query(*args)
-  with_db {|conn|
-    yield conn.query *args
-  }
+  start = Time.now
+  out = yield MyDb.create.query *args # this auto closes I think
+  puts "query #{args} took #{Time.now - start}"
+  out
 end
 
 class Url
@@ -94,44 +95,36 @@ class Url
   end
 
   def self.latest
-    with_db do |conn|
-      conn.query("SELECT * from urls ORDER BY create_timestamp desc limit 1") do |rs|
-        Url.from_rs(rs)[0]; # is there no easy "get one" option?
-      end
+    query("SELECT * from urls ORDER BY create_timestamp desc limit 1") do |rs|
+      Url.from_rs(rs)[0]; # is there no easy "get one" option?
     end
   end
 
   def self.random
-    with_db do |conn|
-      conn.query("SELECT * from urls ORDER BY rand() limit 1") do |rs| # lame, I know
-        Url.from_rs(rs)[0]; # is there no easy "get one" option?
-      end
+    query("SELECT * from urls ORDER BY rand() limit 1") do |rs| # lame, I know
+      Url.from_rs(rs)[0]; # is there no easy "get one" option?
     end
   end
 
   def self.get_only_or_nil_by_name_and_episode_number(name, episode_number)
-    with_db do |conn|
-      urls = conn.query("SELECT * FROM urls WHERE name = ? and episode_number = ?", name, episode_number) do |rs|
-        Url.from_rs(rs);
-      end
-      if urls.size == 1
-        return urls[0]
-      else
-        return nil
-      end
+    urls = query("SELECT * FROM urls WHERE name = ? and episode_number = ?", name, episode_number) do |rs|
+      Url.from_rs(rs);
+    end
+    if urls.size == 1
+      return urls[0]
+    else
+      return nil
     end
   end
   
   def self.get_only_or_nil_by_url_and_episode_number(url, episode_number)
-    with_db do |conn|
-      urls = conn.query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND episode_number = ?", url, url, episode_number) do |rs|
-         Url.from_rs(rs);
-      end
-      if urls.size == 1
-        return urls[0]
-      else
-        return nil
-      end
+    urls = query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND episode_number = ?", url, url, episode_number) do |rs|
+       Url.from_rs(rs);
+    end
+    if urls.size == 1
+      return urls[0]
+    else
+      return nil
     end
   end
   
@@ -165,8 +158,8 @@ class Url
     @rental_cost = 0.0
     @purchase_cost = 0.0
     @total_time = 0.0
-		@create_timestamp = Time.now
-		@subtitles = ""
+    @create_timestamp = Time.now
+    @subtitles = ""
     @genre = ""
     @original_rating = ""
     @editing_notes = ""
@@ -174,20 +167,18 @@ class Url
   end
 
   def tags
-    with_db do |conn|
-      conn.query("select * from tags where url_id=? order by start asc", id) do |rs|
-        Tag.from_rs rs
-      end
+    query("select * from tags where url_id=? order by start asc", id) do |rs|
+      Tag.from_rs rs
     end
   end
 	
-	def tag_edit_lists
+  def tag_edit_lists
     with_db do |conn|
       conn.query("select * from tag_edit_list where url_id=?", id) do |rs|
         TagEditList.from_rs rs
       end
     end
-	end
+  end
 	
 	private def timestamps_of_type_for_video(conn, db_url, type) 
 	  tags = conn.query("select * from tags where url_id=? and default_action = ?", db_url.id, type) do |rs|
