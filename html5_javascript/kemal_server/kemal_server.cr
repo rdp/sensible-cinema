@@ -1,10 +1,10 @@
-require "./helpers/*"  
+require "./src/helpers/*"  
 
 require "kemal"
 require "kemal-session"
 require "http/client"
 require "mysql"
-require "./view_helpers" # make accessible to all views
+require "./src/view_helpers" # make accessible to all views
 
 Session.config do |config|
   config.secret = File.read("./db/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > local_cookie_secret
@@ -119,11 +119,11 @@ get "/instructions_create_new_url" do | env|
 end
 
 get "/delete_all_tags/:url_id" do |env|
-  hard_nuke_url_or_nil(get_url_from_url_id(env), env, just_delete_tags: true)
+  hard_nuke_url_or_nil(env, just_delete_tags: true)
 end
 
-get "/nuke_url/:url_id" do |env| # nb: never link to this to avoid crawlers accidental nukage :|
-  hard_nuke_url_or_nil(get_url_from_url_id(env), env)
+get "/nuke_url/:url_id" do |env| # nb: never link to this to let normal users use it [?]
+  hard_nuke_url_or_nil(env)
 end
 
 get "/nuke_test_by_url" do |env|
@@ -131,10 +131,11 @@ get "/nuke_test_by_url" do |env|
   raise("cannot nuke non test movies, please ask us if you want to delete a different movie") unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
   url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
-  hard_nuke_url_or_nil(url, env)
+  hard_nuke_url_or_nil(env)
 end
 
-def hard_nuke_url_or_nil(url, env, just_delete_tags = false)
+def hard_nuke_url_or_nil(env, just_delete_tags = false)
+  url = get_url_from_url_id(env)
   if url
     save_local_javascript [url], "about to nuke somehow...", env
     url.tag_edit_lists_all_users.each{|tag_edit_list|
@@ -147,7 +148,7 @@ def hard_nuke_url_or_nil(url, env, just_delete_tags = false)
     url.destroy_no_cascade
     "nuked testmovie #{HTML.escape url.inspect} from db, you can start over and re-add it now, to do some more test editing on a blank/clean slate"
   else
-   raise "not found to nuke?"
+   raise "not found to nuke? #{url}"
   end
 end
 
@@ -489,9 +490,6 @@ get "/delete_tag_edit_list/:url_id" do |env|
   env.redirect "/view_url/#{url_id}"
 end
 
-def user_id(env)
-  logged_in_user(env).id # could use user_id here but...that's somebody else's ID dunno...weird'ish...
-end
 
 get "/personalized_edit_list/:url_id" do |env|
   url_id = env.params.url["url_id"].to_i
@@ -533,7 +531,7 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
   db_urls.each { |db_url|
     [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
       File.open("edit_descriptors/log.txt", "a") do |f|
-        f.puts log_message + " " + logged_in_user(env).name[0..4] + "... " + db_url.name_with_episode
+        f.puts log_message + " user:#{user_id(env)} ... " + db_url.name_with_episode
       end
       as_json = json_for(db_url, env)
       escaped_url_no_slashes = URI.escape url
@@ -542,13 +540,17 @@ def save_local_javascript(db_urls, log_message, env) # actually just json these 
   }
   if !is_dev?
     spawn do
-      system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"something was modified\" && git push origin master") # backup :|
+      system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"#{log_message}\" && git push origin master") # backup :| I control log_message
     end
   end
 end
 
 def is_dev?
   File.exists?("./this_is_development")
+end
+
+def user_id(env)
+  logged_in_user(env).id # could use user_id here but...that's somebody else's ID dunno...weird'ish...
 end
 
 def logged_in_user(env)

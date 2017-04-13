@@ -1,6 +1,4 @@
-// (c) 2016 Roger Pack released under LGPL
-// for non chrome browser: copy and paste all of this text (including this line) into the "developer tools javascript console" ">" prompt, and hit enter:
-// if you have the chrome plugin, it automatically should do all this for you, you should not need to do anything here...just install the plugin.
+// (c) 2016, 2017 Roger Pack released under LGPL
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -13,8 +11,8 @@ var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
 
-var request_host="localhost:3000"; // dev
-// var request_host="playitmyway.inet2.org";  // prod
+// var request_host="localhost:3000"; // dev
+var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	
@@ -56,7 +54,7 @@ function addEditUi() {
   	<div id="currently_playing_it_your_way_id">
   	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set up this select --> 
     	<br/>
-      <a href=# onclick="createNewEditList(); return false">Personalize edited playback</a>
+      <a href=# onclick="createNewEditList(); return false">Personalize which parts it edits out</a>
       <br/>
       <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
   	</div>
