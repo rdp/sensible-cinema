@@ -18,7 +18,7 @@ before_all do |env|
   env.response.headers.add "Access-Control-Allow-Origin", "*" # apparently has to have this for "amazon.com" to request something from my site. Weird browsers...
 end
 
-class CustomHandler < Kemal::Handler
+class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
       if env.request.method == "GET"
@@ -30,21 +30,12 @@ class CustomHandler < Kemal::Handler
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
       raise "wrong host #{env.request.host}" 
     else
-      puts "starting request #{env.request.path} #{Time.now}" # try and debug why sometimes the server seems to start slow :|
       call_next env
     end
   end
 end
 
-after_all do |env|
-  puts "ending request #{env.request.path} #{Time.now}"
-end
-
 add_handler CustomHandler.new
-
-after_all do |env|
-  env.session.string("keep alive", "") # force mtime adjust until https://github.com/kemalcr/kemal-session/issues/27 fixed
-end
 
 # https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? 
 spawn do
@@ -452,12 +443,13 @@ def put_test_last(urls)
 end
 
 get "/" do |env| # index home
-  start = Time.now
   all_urls = get_all_urls
   all_urls_except_just_started = all_urls.reject{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
   all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
-  puts "pre render took #{Time.now - start}" # 60ms
-  render "views/main.ecr", "views/layout.ecr"
+  start = Time.now
+  out = render "views/main.ecr", "views/layout.ecr"
+  puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
+  out
 end
 
 get "/getting_started" do |env|
