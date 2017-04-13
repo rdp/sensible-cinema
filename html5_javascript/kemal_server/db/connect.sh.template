@@ -1,2 +1,2 @@
-cat connection_string_local_box_no_commit.txt
+cat ./db/connection_string_local_box_no_commit.txt
 mysql -u user -p db_name # will prompt for pass..
