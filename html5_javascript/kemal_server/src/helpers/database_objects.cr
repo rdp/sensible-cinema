@@ -546,21 +546,23 @@ class TagEditList
   end
   
   def tags_with_selected_or_not
-    all_tags = url.tags # not sure how to do this without double somethin' ... :|
+    all_tags_this_movie = url.tags
     with_db do |conn|
-      all_tags.map{|tag|
+      all_tags_this_movie.map{|tag|
         count = conn.scalar("select count(*) from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id)
         if count == 1
           action = conn.query_one("select action from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
           {tag, action}
         elsif count == 0
-          if self.id == 0
+          if self.id == 0 
+            # we're not even saved yet, just show default
             {tag, tag.default_action}
           else
-            {tag, "do_nothing"} # they already decided against this at some point...
+            # they haven't "bound" to this tag yet, so assume it was created after they created their list, and they now want the default (better safe than sorry, eh?, what if somebody does an 'add tag' in the middle of a movie they want it to show up...)
+            {tag, tag.default_action}
           end          
         else
-          raise "double tag? #{tag}"
+          raise "double tag_edit_list_to_tag?? #{tag}"
         end
       }
     end
