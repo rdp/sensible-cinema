@@ -14,7 +14,7 @@
             <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
           <%= if_present_with_break url.details %>
-          <a href="/view_url/<%= url.id %>">Our info (<%= url.tags.size %> edit tags)</a><br/>
+          <a href="/view_url/<%= url.id %>">Our info (<%= url.tag_count %> edit tags)</a><br/>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
           <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
           <%= if_present_with_break url.review %>
