@@ -168,7 +168,7 @@ class Url
 
   def tag_count
     with_db do |conn|
-      conn.scalar("select count(*) from tags where url_id = ?", id)"
+      conn.scalar("select count(*) from tags where url_id = ?", id)
     end
   end
 
