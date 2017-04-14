@@ -474,7 +474,7 @@ function showMoviePage() {
 
 function getSubtitleLink() {
   if (isYoutube()) {
-    window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // got git 'em
+    window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // go git 'em
     return;
   }
   if (!isAmazon()) {
@@ -632,7 +632,7 @@ function countDoSomethingTags(tags) {
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
-	mutes = []; // it gets filled in this method :)
+	mutes = []; // it gets re-filled in this method :)
 	skips = [];
 	yes_audio_no_videos = [];
 	do_nothings = []; // :|
