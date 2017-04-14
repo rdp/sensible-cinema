@@ -14,9 +14,6 @@ Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
-before_all do |env|
-end
-
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
@@ -29,6 +26,8 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
       raise "wrong host #{env.request.host}" 
     else
+      # success/normal
+      puts env.session.id
       call_next env
     end
   end
@@ -84,7 +83,6 @@ get "/all_tags" do |env|
 end
 
 get "/for_current_just_settings_json" do |env|
-  puts env.session.id
 
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
