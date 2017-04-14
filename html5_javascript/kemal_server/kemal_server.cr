@@ -15,14 +15,6 @@ Session.config do |config|
 end
 
 before_all do |env|
-  # can't use env.request.host here, it's *our host* not the calling host :|
-  # env.request.headers["HTTP_ORIGIN"]
-  if host = env.params.query["cors_host"]?
-    env.response.headers.add "Access-Control-Allow-Origin", host # apparently has to be exactly instead of "*" for it to reuse your normal cookies. Yeesh.
-  else
-    env.response.headers.add "Access-Control-Allow-Origin", "*"
-  end
-  puts env.session.id
 end
 
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
@@ -92,6 +84,8 @@ get "/all_tags" do |env|
 end
 
 get "/for_current_just_settings_json" do |env|
+  puts env.session.id
+
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   # this one looks up by URL and episode number
@@ -103,7 +97,17 @@ get "/for_current_just_settings_json" do |env|
     url = url_or_nil.as(Url)
     env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
     url.count_downloads += 1
-    url.save # :| XXX too slow?
+    url.save # :|
+    if page = env.request.headers["Origin"]? # XHR hmm...
+      # appears if I want to be able to detect logged in or not, it has to be exact match for Allow-Origin :|
+      urlish = page.split("/")[0..2].join("/") # https://amazon.com
+      raise "wrong site?" unless url.url.starts_with?(urlish)
+      env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
+      env.response.headers.add "Access-Control-Allow-Credentials", "true"
+    else
+      raise "this should typically always be from other sites right?" # guess local hosting of big buck bunny is no longer awesome :|
+    end
+  end
     json_for(url, env)
   end
 end
