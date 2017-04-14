@@ -851,6 +851,7 @@ function getRequest(url, success, error) {
   console.log("starting attempt GET download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
+  xhr.withCredentials = true;
   xhr.onreadystatechange = function(){ 
     if ( xhr.readyState == 4 ) { 
       if ( xhr.status == 200 ) { 

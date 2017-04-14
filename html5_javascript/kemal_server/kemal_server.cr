@@ -101,7 +101,7 @@ get "/for_current_just_settings_json" do |env|
     if page = env.request.headers["Origin"]? # XHR hmm...
       # appears if I want to be able to detect logged in or not, it has to be exact match for Allow-Origin :|
       urlish = page.split("/")[0..2].join("/") # https://amazon.com
-      raise "wrong site?" unless url.url.starts_with?(urlish)
+      raise "wrong site? #{url.url} did not start with #{urlish}" unless url.url.starts_with?(urlish)
       env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
       env.response.headers.add "Access-Control-Allow-Credentials", "true"
     else
