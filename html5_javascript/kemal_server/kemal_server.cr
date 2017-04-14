@@ -160,8 +160,8 @@ get "/delete_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(id)
   tag.destroy_in_tag_edit_lists
   tag.destroy_no_cascade
-  save_local_javascript [tag.url], "removed tag, env
-  add_to_flash env, "deleted one tag"
+  save_local_javascript [tag.url], "removed tag", env
+  add_to_flash [tag.url], env, "deleted #{tag.inspect}"
   env.redirect "/view_url/#{tag.url.id}"
 end
 
