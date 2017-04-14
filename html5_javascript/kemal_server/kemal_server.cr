@@ -160,7 +160,7 @@ get "/delete_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(id)
   tag.destroy_in_tag_edit_lists
   tag.destroy_no_cascade
-  save_local_javascript [tag.url], "removed #{tag.inspect}", env
+  save_local_javascript [tag.url], "removed tag, env
   add_to_flash env, "deleted one tag"
   env.redirect "/view_url/#{tag.url.id}"
 end
@@ -198,9 +198,7 @@ get "/add_tag_from_plugin/:url_id" do |env|
   tag.subcategory = ""
   tag.save
   add_to_flash env, "success! content tag created, please fill in details about it..."
-  spawn do
-    save_local_javascript [url], tag.inspect, env
-  end
+  save_local_javascript [url], "created tag", env
   env.redirect "/edit_tag/#{tag.id}"
 end
 
@@ -246,7 +244,7 @@ post "/save_tag/:url_id" do |env|
   if (tag2 = tag.overlaps_any? url.tags)
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")
   end
-  save_local_javascript [url], tag.inspect, env
+  save_local_javascript [url], "updated tag", env
   if is_update
     add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, recommend clicking reload tags or doing a browser refresh...")
   else
@@ -523,7 +521,7 @@ post "/save_tag_edit_list" do |env|
   }
   tag_edit_list.create_or_refresh(tag_ids, actions)
   add_to_flash(env, "Success! saved tag edit list #{tag_edit_list.description} if you are watching the movie in another browser tab please refresh that browser tab")
-  save_local_javascript [tag_edit_list.url], tag_edit_list.inspect, env
+  save_local_javascript [tag_edit_list.url], "saved new tag edit list", env # will save it with a user's id but hopefully that's opaque enough...
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end
 
@@ -630,7 +628,7 @@ post "/save_url" do |env|
     download_youtube_image_if_none db_url
   end
 
-  save_local_javascript [db_url], db_url.inspect, env
+  save_local_javascript [db_url], "updated movie info", env
 	
   add_to_flash(env, "Success! saved #{db_url.name_with_episode}")
   env.redirect "/view_url/" + db_url.id.to_s
