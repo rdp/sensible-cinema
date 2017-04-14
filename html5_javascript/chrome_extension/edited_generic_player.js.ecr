@@ -555,15 +555,24 @@ function loadFailed(status) {
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
-  if (status > 0) {
-		// alert here "we don't have one" is too annoying
+  if (status == 412) {
+    // not in our system yet
+		// alert here is annoying
   }
-  else {
-    // alert here seems too scawah for end users
+  else if (status == 0) {
+    // the server responded with nothing [i.e. down]
     displayDiv(document.getElementById("server_down_div_id"));
     // I guess still start watcher thread so if they shift movies it tries again [?] but kinda weird...though should be setup "as if we don't have it in our system" hrm...
-    // leave "unedited..." displayed since...it is unedited FWIW :|
+    // leave "unedited..." displayed too since...it is unedited FWIW :|
   }
+  else if (status == 500) {
+    // system is broken LOL
+    displayDiv(document.getElementById("server_down_div_id"));
+  }
+  else {
+    // just say unedited :|
+  }
+  
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
 }
 

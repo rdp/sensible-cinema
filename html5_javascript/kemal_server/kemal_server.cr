@@ -15,7 +15,14 @@ Session.config do |config|
 end
 
 before_all do |env|
-  env.response.headers.add "Access-Control-Allow-Origin", "*" # apparently has to have this for "amazon.com" to request something from my site. Weird browsers...
+  # can't use env.request.host here, it's *our host* not the calling host :|
+  # env.request.headers["HTTP_ORIGIN"]
+  if host = env.params.query["cors_host"]?
+    env.response.headers.add "Access-Control-Allow-Origin", host # apparently has to be exactly instead of "*" for it to reuse your normal cookies. Yeesh.
+  else
+    env.response.headers.add "Access-Control-Allow-Origin", "*"
+  end
+  puts env.session.id
 end
 
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
@@ -382,7 +389,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
-    add_to_flash(env, "a movie with that description already exists, editing that instead...")
+    add_to_flash(env, "a movie with that url/episode already exists, editing that instead...")
     env.redirect "/edit_url/#{url_or_nil.id}"
   else
     # a new one

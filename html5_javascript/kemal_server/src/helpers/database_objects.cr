@@ -171,9 +171,13 @@ class Url
   end
   
   def tag_edit_lists(env)
-    query("select * from tag_edit_list where url_id=? and user_id = ?", id, user_id(env)) do |rs|
-      TagEditList.from_rs rs
-    end
+    if logged_in?(env)
+      query("select * from tag_edit_list where url_id=? and user_id = ?", id, user_id(env)) do |rs|
+        TagEditList.from_rs rs
+      end
+    else
+      [] of TagEditList
+     end
   end
 
   def tag_edit_lists_all_users
