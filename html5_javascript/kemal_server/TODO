@@ -120,9 +120,15 @@ youtube for advanced behaviors/tutorial :)
 
 == todo never LOL ==
 
-on amazon indexes list which ones are "editable" and also on its main page list "editable/which episodes editable" whoa!
+crystal: can compare Bool's
+  double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
+  slam it with wrk, everything barfs all over the place :(
+  stack traces come out ugly?
+  100% hang? <sniff>
+  better JSON docs??
+  fix kemal to not have arrays or strings yikes!
 
-slam it with wrk, everything barfs all over the place :(
+on amazon indexes list which ones are "editable" and also on its main page list "editable/which episodes editable" whoa!
 
 a bit ugly on horizontal mobile chrome :| or was that only after a switch? but still...dat ain't good...
 
