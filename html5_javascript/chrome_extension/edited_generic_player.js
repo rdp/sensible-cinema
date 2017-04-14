@@ -506,7 +506,7 @@ function addForNewVideo() {
 	if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
 		alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
 		// XXXX more generic here somehow possible???
-		// TPDP don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
+		// TODO don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
 	}
 	else {
     window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
@@ -529,7 +529,7 @@ function collapseAddTagStuff() {
 function setEditedControlsToTopLeft() {
   var left = getLocationOfElement(video_element).left; 
   var top = getLocationOfElement(video_element).top;
-  top += 85; // couldn't see it when at the very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
+  top += 85; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
 		top += 35; // allow them to expand x-ray to disable it
 	}
@@ -693,13 +693,13 @@ function lookupUrl() {
 }
 
 function loadForNewUrl() {
-  getRequest(lookupUrl(), loadSucceeded, loadFailed);
+  getRequest(loadSucceeded, loadFailed);
 }
 
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
 		console.log("reloading...");
-    getRequest(lookupUrl(), loadSucceeded, loadFailed);
+    getRequest(loadSucceeded, loadFailed);
   }
 	else {
 		alert("not reloading, possibly never loaded or in middle of a test edit [hit browser reload button if the latter]");
@@ -774,7 +774,7 @@ function parseSuccessfulJson(json_string) {
 	removeAllOptions(dropdown); // out with any old...	
   
 	var option = document.createElement("option");
-	option.text = "Default (all tags) (" + current_json.tags.length + ")";
+	option.text = "Default (all tags) (" + countDoSomethingTags(current_json.tags) + ")";
 	option.value = "-1"; // special case :|
   // I think this will start as selected...
   list_length = current_json.tag_edit_lists.length;
@@ -789,18 +789,29 @@ function parseSuccessfulJson(json_string) {
     var tag_edit_list = tag_edit_list_and_its_tags[0];
     var tags = tag_edit_list_and_its_tags[1];
 		var option = document.createElement("option");
-		option.text = tag_edit_list.description + "(" + tags.length + ")"; // XXX this is wrong since some of those tags might be "do_nothing"
+
+		option.text = tag_edit_list.description + " (" + countDoSomethingTags(tags) + ")";
 		option.value = tag_edit_list.id;
 		dropdown.add(option);
     option.setAttribute('selected', true); // hope this overrides, we want it to be the default for now uh guess...
 	}  
   
 	option = document.createElement("option");
-	option.text = "Disabled (no tags) (0)";
+	option.text = "Disable edits (no tags) (0)";
 	option.value = "-2"; // special case :|
 	dropdown.add(option);
   
 	console.log("finished parsing response successful JSON");
+}
+
+function countDoSomethingTags(tags) {
+  var count = 0;
+	for (var i = 0; i < tags.length; i++) {
+    if (tags[i].default_action != "do_nothing") {
+      count++;
+    }
+  }
+  return count;
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
@@ -846,12 +857,12 @@ function getEditsFromCurrentTagList() {
 	alert("unable to select " + dropdown.value); // shouldn't get here ever LOL.
 }
 
-function getRequest(url, success, error) {  
-  // http://stackoverflow.com/questions/1442425/detect-xhr-error-is-really-due-to-browser-stop-or-click-to-new-page
+function getRequest(success, error) {  
+  var url = lookupUrl();
   console.log("starting attempt GET download " + url);
   var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"); 
   xhr.open("GET", url); 
-  xhr.withCredentials = true;
+  xhr.withCredentials = true; // the only request we do is the json one which should work secured...
   xhr.onreadystatechange = function(){ 
     if ( xhr.readyState == 4 ) { 
       if ( xhr.status == 200 ) { 
