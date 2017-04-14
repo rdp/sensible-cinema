@@ -107,7 +107,6 @@ get "/for_current_just_settings_json" do |env|
     else
       raise "this should typically always be from other sites right?" # guess local hosting of big buck bunny is no longer awesome :|
     end
-  end
     json_for(url, env)
   end
 end
