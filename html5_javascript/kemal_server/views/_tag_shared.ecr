@@ -21,7 +21,6 @@ category:
   <option value="substance-abuse">substance use</option>
 </select>
 </div>
-<br/>
 
 <div id="subcategory_div_id">
 sub category
@@ -41,3 +40,12 @@ age specifier:
   <% } %>
   <option value="-1">no age OK</option>
 </select>
+<br/>
+
+Impact to Movie:
+  <select name="impact_to_movie" id="impact_to_movie_id">
+    <option value="0">not set yet</option>
+    <% (1..10).each{|n| %>
+      <option value="<%= n %>"><%= n %>/10</option>
+    <% } %>
+  </select>

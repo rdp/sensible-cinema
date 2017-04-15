@@ -388,7 +388,8 @@ class Tag
     details: {type: String},     
     default_action: {type: String},
     age_maybe_ok: {type: Int32},
-    url_id: Int32
+    url_id: Int32,
+    impact_to_movie: Int32
   })
   DB.mapping({
     id: Int32,
@@ -399,7 +400,8 @@ class Tag
     details: {type: String},     
     default_action: {type: String},
     age_maybe_ok: {type: Int32},
-    url_id: Int32
+    url_id: Int32,
+    impact_to_movie: Int32
   })
 
   def self.all
@@ -453,14 +455,15 @@ class Tag
     @default_action = "mute"
     @age_maybe_ok = 0
     @url_id = url.id
+    @impact_to_movie = 0
   end
   
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id) values (?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie) values (?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, impact_to_movie).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, id
       end
     end
   end

@@ -1,5 +1,8 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
+// var request_host="localhost:3000"; // dev
+var request_host="playitmyway.inet2.org";  // prod
+
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
@@ -10,9 +13,6 @@ var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
-
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	
@@ -430,6 +430,11 @@ function saveEditButton() {
     alert("please select subcategory first");
     return;
   }
+  var impact = document.getElementById('impact_to_movie_id').value;
+  if (impact == "0") {
+    alert("please specify impact to movie");
+    return;
+  }
   if ((category == "violence" || category == "suspense") && age == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     return;
@@ -465,6 +470,7 @@ function saveEditButton() {
   // don't reset category since I'm not sure if the javascript handles going back to ""
   document.getElementById('subcategory_select_id').value = "";
   document.getElementById('age_maybe_ok_id').value = "0";
+  document.getElementById('impact_to_movie_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 

@@ -1,5 +1,8 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
+// var request_host="localhost:3000"; // dev
+var request_host="playitmyway.inet2.org";  // prod
+
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
   throw "dont know how to load it twice"; // in case they click a plugin button twice, or load it twice (too hard to reload, doesn't work that way anymore)
@@ -10,9 +13,6 @@ var inMiddleOfTestingEdit = false;
 var current_json;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
-
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.inet2.org";  // prod
 
 function addEditUi() {
 	
@@ -96,7 +96,6 @@ category:
   <option value="substance-abuse">substance use</option>
 </select>
 </div>
-<br/>
 
 <div id="subcategory_div_id">
 sub category
@@ -256,6 +255,33 @@ age specifier:
   
   <option value="-1">no age OK</option>
 </select>
+<br/>
+
+Impact to Movie:
+  <select name="impact_to_movie" id="impact_to_movie_id">
+    <option value="0">not set yet</option>
+    
+      <option value="1">1/10</option>
+    
+      <option value="2">2/10</option>
+    
+      <option value="3">3/10</option>
+    
+      <option value="4">4/10</option>
+    
+      <option value="5">5/10</option>
+    
+      <option value="6">6/10</option>
+    
+      <option value="7">7/10</option>
+    
+      <option value="8">8/10</option>
+    
+      <option value="9">9/10</option>
+    
+      <option value="10">10/10</option>
+    
+  </select>
  <!-- render -->
         <br/>
         tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
@@ -613,6 +639,11 @@ function saveEditButton() {
     alert("please select subcategory first");
     return;
   }
+  var impact = document.getElementById('impact_to_movie_id').value;
+  if (impact == "0") {
+    alert("please specify impact to movie");
+    return;
+  }
   if ((category == "violence" || category == "suspense") && age == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     return;
@@ -648,6 +679,7 @@ function saveEditButton() {
   // don't reset category since I'm not sure if the javascript handles going back to ""
   document.getElementById('subcategory_select_id').value = "";
   document.getElementById('age_maybe_ok_id').value = "0";
+  document.getElementById('impact_to_movie_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 

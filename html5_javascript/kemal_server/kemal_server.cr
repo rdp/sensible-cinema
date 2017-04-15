@@ -233,6 +233,10 @@ post "/save_tag/:url_id" do |env|
   raise "got some timestamp negative?" if tag.start < 0 || tag.endy < 0 # should be impossible :|
   tag.default_action = resanitize_html(params["default_action"])
   tag.category = resanitize_html params["category"]
+  tag.impact_to_movie = get_int(params, "impact_to_movie")
+  if tag.impact_to_movie == 0
+    raise "need to select impact to movie, if it's nothing then select 1"
+  end
   if !params["subcategory"].present? # the default [meaning none] is an empty string
     raise "no subcategory selected, please hit back arrow in your browser and select subcategory for tag, if nothing fits then select '... -- other'"
   end
@@ -243,7 +247,7 @@ post "/save_tag/:url_id" do |env|
     raise "for violence or suspense tags, please also select a value in the age_maybe_ok dropdown, use your browser back button (hit it several times) to try submitting again"
   end
   tag.save
-  if (tag2 = tag.overlaps_any? url.tags)
+  if tag2 = tag.overlaps_any? url.tags
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")
   end
   save_local_javascript [url], "updated tag", env

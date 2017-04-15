@@ -134,6 +134,7 @@ ALTER TABLE users ADD CONSTRAINT unique_email_user_id UNIQUE (email, user_id);
 insert into users values (0, "test_user_name", "test@test.com", "test_user_id", "facebook");
 
 alter table tag_edit_list add column user_id INT NOT NULL DEFAULT 0;
+alter table tags add column impact_to_movie INT NOT NULL DEFAULT 0; -- assume 1 means "some" :)
 
 -- and output to screen to show success...
 select * from urls;
