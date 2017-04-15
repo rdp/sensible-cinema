@@ -1,10 +1,11 @@
 <img src=/camera.128.png width="100px;" style="float:left;"/>
 <h1>Play It My Way! <span style="text-shadow: 0 0 1em green, 0 0 0.2em blue; ">Beta.</span></h1>
 <div style="clear: both;"></div>
-<h1>Streaming Edited Movie playback for you and your family.</h1>
+<h1>Streaming Edited Movie playback for you or your family.</h1>
 <br/>Take back control over what is viewed in your house! We believe you should have the ability to  watch shows "your way" if in the privacy of your home, and we're here to help.
 <br/>Ever wished you could mute profanities or skip objectionable scenes that distract during movies? We hope to finally give you control of what you watch.
-Offering personalized playback of amazon/amazon prime/youtube videos, and more!  
+<br/>
+We don't actually stream the movies, but let you control/script your playback of amazon/amazon prime/youtube videos, and more, so that you can selectively choose which parts to watch.
 <br/>
 Play It My Way is currently free while in Beta! For movies, we eventually might make it into a "subscribe for $2/month for all the edits you want" (first month free, if you can't afford it, you can get as many months as you want free), but during Beta, it's free for everyone.  We'd love your feedback and support, and enjoy some awesome movies!!<br/>
 
@@ -46,6 +47,9 @@ We believe so.  Because you are just editing playback of legally streamed conten
   <div>
   <hr/>
   <h3><%= host.capitalize %>:</h3>
+  <% if host == "Amazon prime" %>
+    Free to watch (and free to watch edited while we're in Beta) if you have prime, otherwise you can rent for a night for around $3, or get a prime video free "first month trial."
+  <% end %>
   <br/>
   <% 
     series = urls_for_host.select{|url| url.episode_number > 0 }
@@ -58,7 +62,7 @@ We believe so.  Because you are just editing playback of legally streamed conten
   </div>
   <% if series.size > 0 %>
     <div style="clear: both;"></div>
-    <h4>Edited Series's:</h4>
+    <h4><%= host.capitalize %> Edited Series's:</h4>
     <% series.each_with_index{ |url, idx|  %>
        <% if idx > 0 && (url.name != series[idx - 1].name) %>
          <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
