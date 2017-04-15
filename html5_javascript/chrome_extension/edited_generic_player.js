@@ -127,13 +127,13 @@ sub category
     
       <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
     
-      <option value="bodily part reference mild">profanity -- bodily part reference mild &#40;butt, bumm...&#41;</option>    
+      <option value="bodily part reference mild">profanity -- bodily part reference mild &#40;butt, bumm, suck...&#41;</option>    
     
       <option value="bodily part reference harsh">profanity -- bodily part reference harsh</option>    
     
       <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
     
-      <option value="euphemized profanities">profanity -- euphemized worser profanities &#40;ex: crap, dang, gosh&#41;</option>    
+      <option value="euphemized profanities">profanity -- euphemized profanities &#40;ex: crap, dang, gosh dang&#41;</option>    
     
       <option value="lesser expletive">profanity -- other lesser expletive ex &quot;bloomin&#39;&quot; etc.</option>    
     
@@ -657,7 +657,7 @@ function showMoviePage() {
 
 function getSubtitleLink() {
   if (isYoutube()) {
-    window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // got git 'em
+    window.open("http://www.yousubtitles.com/load/?url=" + currentUrlNotIframe()); // go git 'em
     return;
   }
   if (!isAmazon()) {
@@ -738,6 +738,7 @@ function loadFailed(status) {
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  console.log("got status=" + status);
   if (status == 412) {
     // not in our system yet
 		// alert here is annoying
@@ -815,7 +816,7 @@ function countDoSomethingTags(tags) {
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
-	mutes = []; // it gets filled in this method :)
+	mutes = []; // it gets re-filled in this method :)
 	skips = [];
 	yes_audio_no_videos = [];
 	do_nothings = []; // :|

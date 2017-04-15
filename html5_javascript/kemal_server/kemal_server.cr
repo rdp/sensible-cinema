@@ -86,18 +86,19 @@ get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
+  urlish = page.split("/")[0..2].join("/") # https://amazon.com
+  env.response.headers.add "Access-Control-Allow-Credentials", "true" # they all need this
   if !url_or_nil
     env.response.status_code = 412 # avoid kemal default 404 handler which doesn't do strings :| 412 => precondition failed LOL
     "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
+     env.response.headers.add "Access-Control-Allow-Origin", urlish # allow the 412 through :|
   else
     url = url_or_nil.as(Url)
     env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
     url.count_downloads += 1
     url.save # :|
-    env.response.headers.add "Access-Control-Allow-Credentials", "true"
     if page = env.request.headers["Origin"]? # XHR hmm...
       # appears if I want to be able to detect logged in or not, it has to be exact match for Allow-Origin :|
-      urlish = page.split("/")[0..2].join("/") # https://amazon.com
       raise "wrong site? #{HTML.unescape url.url} did not start with #{urlish}" unless HTML.unescape(url.url).starts_with?(standardize_url urlish) # standardize so smile.amazon is allowed
       env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
     else

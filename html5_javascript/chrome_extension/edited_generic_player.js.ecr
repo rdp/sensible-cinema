@@ -555,6 +555,7 @@ function loadFailed(status) {
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
+  console.log("got status=" + status);
   if (status == 412) {
     // not in our system yet
 		// alert here is annoying
