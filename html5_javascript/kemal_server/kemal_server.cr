@@ -409,7 +409,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = title.strip
     title = sanitize_html title
     if sanitized_url.includes?("amazon.com") && title.includes?(":")
-      title = title.split(":")[0].strip # begone actors
+      title = title.split(":")[0..-2].join(":").strip # begone actors but keep star trek: the next gen
     end
     already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint :|
     if already_by_name
