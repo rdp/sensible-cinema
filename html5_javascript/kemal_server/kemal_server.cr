@@ -86,7 +86,12 @@ get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
   url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
-  urlish = page.split("/")[0..2].join("/") # https://amazon.com
+  if page = env.request.headers["Origin"]? # XHR hmm...
+    urlish = page.split("/")[0..2].join("/") # https://amazon.com
+  else
+    # assume it's big buck bunny on inet2
+    urlish = "https://playitmyway.inet2.org"
+  end
   env.response.headers.add "Access-Control-Allow-Credentials", "true" # they all need this
   if !url_or_nil
     env.response.status_code = 412 # avoid kemal default 404 handler which doesn't do strings :| 412 => precondition failed LOL
@@ -97,14 +102,9 @@ get "/for_current_just_settings_json" do |env|
     env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
     url.count_downloads += 1
     url.save # :|
-    if page = env.request.headers["Origin"]? # XHR hmm...
-      # appears if I want to be able to detect logged in or not, it has to be exact match for Allow-Origin :|
-      raise "wrong site? #{HTML.unescape url.url} did not start with #{urlish}" unless HTML.unescape(url.url).starts_with?(standardize_url urlish) # standardize so smile.amazon is allowed
-      env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
-    else
-      # assume it's big buck bunny on inet2
-      env.response.headers.add "Access-Control-Allow-Origin", "https://playitmyway.inet2.org" 
-    end
+    # appears if I want to be able to detect logged in or not, it has to be exact match for Allow-Origin :|
+    raise "wrong site? #{HTML.unescape url.url} did not start with #{urlish}" unless HTML.unescape(url.url).starts_with?(standardize_url urlish) # standardize so smile.amazon is allowed
+    env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
     out = json_for(url, env)
     puts "sending #{out}"
     out
