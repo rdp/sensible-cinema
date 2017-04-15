@@ -437,11 +437,6 @@ def sanitize_html(name)
   HTML.escape name
 end
 
-def get_all_urls_except_just_started
-  urls = Url.all_except_just_started
-  put_test_last(urls)
-end
-
 def get_all_urls
   urls = Url.all
   put_test_last(urls)
@@ -456,7 +451,8 @@ end
 
 get "/" do |env| # index home
   all_urls = get_all_urls
-  all_urls_except_just_started = all_urls.reject{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
+  all_urls_half_way = all_urls.select{|url| url.editing_status == "Done with first pass tagging, could use second review" }
+  all_urls_done = all_urls.select{|url| url.editing_status == "Done with second review, tags viewed as complete"}
   all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
   start = Time.now
   out = render "views/main.ecr", "views/layout.ecr"

@@ -41,9 +41,12 @@ We believe so.  Because you are just editing playback of legally streamed conten
 </script>
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true" style="min-width: 450px; min-height: 60px;"></div>
 
-<h1>Edited Movie List</h1>
-<% host_to_urls = all_urls_except_just_started.group_by &.human_readable_company %>
-<% host_to_urls.each{ |host, urls_for_host|  %>
+<% {all_urls_done => "Edited Movie List", all_urls_half_way => "Movie list that have been edited but not double checked yet", all_urls_just_started => "Movie List of those that we are going to do in the future (we're working on it!)"}.each{ |urls, title| %>
+
+<h1><%= title %></h1>
+
+<% host_to_urls = urls.group_by &.human_readable_company %>
+ <% host_to_urls.each{ |host, urls_for_host|  %>
   <div>
   <hr/>
   <h3><%= host.capitalize %>:</h3>
@@ -71,22 +74,13 @@ We believe so.  Because you are just editing playback of legally streamed conten
     <% } %>
   <% end %>
   <div style="clear: both;"></div>
+ <% } %>
 <% } %>
 
-These are movies/shows/youtubes that we currently have in our system.  Don't see one you want? <a hrefinstructions_create_new_url>Add it</a> and help us out by tagging it and adding it to the system! (Note that eventually this will become a pay offering, but we'd love your help! Youtube will always be free!)
+These are movies/shows/youtubes that we currently have in our system.  Don't see one you want? <a href=instructions_create_new_url>Add it</a> and help us out by adding it to the system! (Note that eventually this will become a pay offering, but we'd love your help! Youtube will always be free!)
 <br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for a movie to be the next one on our queue to be edited.
 <br>
-&#10133; Anybody can add new films and new edits to our system!  We'd love your help!
-<br/>Add another (not yet present) video to our edited system by <a href=/instructions_create_new_url>clicking here!</a>
 <br/>
-<br/>
-
-<h1>Movie Index of those that aren't completely tagged yet (we're working on them!)</h1>
-
-<% all_urls_just_started.each{ |url|  %>
-      <%= render "views/_box_movie.ecr" %>
-<% } %>
-<div style="clear: both;"></div>
 
 <h2>Your help</h2>
 We know a lot of you are passionate about this and would love to help more.  And we'd love any support you can give.  
