@@ -49,6 +49,7 @@ insert into edits (start, endy, category, subcategory, details, default_action, 
 
 alter table urls ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
 alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
+update urls set editing_status = 'Done with second review, tags viewed as complete';
 
 --
 
@@ -135,6 +136,13 @@ insert into users values (0, "test_user_name", "test@test.com", "test_user_id", 
 
 alter table tag_edit_list add column user_id INT NOT NULL DEFAULT 0;
 alter table tags add column impact_to_movie INT NOT NULL DEFAULT 0; -- assume 1 means "some" :)
+
+alter table urls add rental_cost_sd DECIMAL(10, 2) NOT NULL DEFAULT 0;
+alter table urls add purchase_cost_sd DECIMAL(10, 2) NOT NULL DEFAULT 0;
+
+alter table urls modify rental_cost DECIMAL(10, 2); -- turns out DECIMAL by default is truncated :|
+alter table urls modify purchase_cost DECIMAL(10, 2);
+
 
 -- and output to screen to show success...
 select * from urls;

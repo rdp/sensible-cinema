@@ -334,7 +334,9 @@ end
 
 def get_title_and_sanitized_standardized_canonical_url(real_url)
   real_url = standardize_url(real_url) # put after so the error message is friendlier :)
-  downloaded = download(real_url)
+  if real_url !~ /localhost:3000/
+    downloaded = download(real_url)
+  end
   if downloaded =~ /<title[^>]*>(.*)<\/title>/i
     title = $1.strip
   else
@@ -613,6 +615,8 @@ post "/save_url" do |env|
   db_url.review = resanitize_html(params["review"])
   db_url.wholesome_review = resanitize_html(params["wholesome_review"])
   db_url.amazon_prime_free_type = resanitize_html(params["amazon_prime_free_type"])
+  db_url.rental_cost_sd = get_float(params, "rental_cost_sd")
+  db_url.purchase_cost_sd = get_float(params, "purchase_cost_sd")
   db_url.rental_cost = get_float(params, "rental_cost")
   db_url.purchase_cost = get_float(params, "purchase_cost")
   db_url.total_time = human_to_seconds params["total_time"]

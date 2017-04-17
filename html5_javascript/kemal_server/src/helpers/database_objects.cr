@@ -44,7 +44,9 @@ class Url
     count_downloads: Int32,
     amazon_prime_free_type: String, # "prime" 
     rental_cost: Float64,
-    purchase_cost: Float64, # XXX actually Decimal [?]
+    rental_cost_sd: Float64,
+    purchase_cost: Float64,
+    purchase_cost_sd: Float64,
     total_time: Float64,
     create_timestamp: Time,
     subtitles: String,
@@ -71,7 +73,9 @@ class Url
     count_downloads: Int32,
     amazon_prime_free_type: String,
     rental_cost: Float64,
+    rental_cost_sd: Float64,
     purchase_cost: Float64,
+    purchase_cost_sd: Float64,
     total_time: Float64,
     create_timestamp: Time,
     subtitles: String,
@@ -123,10 +127,10 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, editing_notes, community_contrib) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, editing_notes, community_contrib).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, community_contrib) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, community_contrib).last_insert_id.to_i32
        # get create_timestamp for free by its default crystal value
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, purchase_cost = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, community_contrib = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, purchase_cost, total_time, subtitles, genre, original_rating, editing_notes, community_contrib,  id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, community_contrib = ? where id = ?", name, url, amazon_second_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, community_contrib,  id
       end
     end
   end
@@ -147,6 +151,8 @@ class Url
     @wholesome_review = ""
     @count_downloads = 0
     @amazon_prime_free_type = ""
+    @rental_cost_sd = 0.0
+    @purchase_cost_sd = 0.0
     @rental_cost = 0.0
     @purchase_cost = 0.0
     @total_time = 0.0
@@ -279,17 +285,23 @@ class Url
     end
     out = ""
     if amazon_prime_free_type != ""
-      out += "free (#{amazon_prime_free_type})"
+      out += "free (with #{amazon_prime_free_type})"
     end
-    if rental_cost > 0 || purchase_cost > 0
+    if rental_cost > 0 || rental_cost_sd > 0 || purchase_cost > 0 || purchase_cost_sd > 0
        if amazon_prime_free_type != ""
          out += ", or "
        end
        if rental_cost > 0
          out += " $%.2f (rent)" % rental_cost
        end
+       if rental_cost_sd > 0
+         out += " $%.2f (rent SD)" % rental_cost_sd
+       end
        if purchase_cost > 0
          out += " $%.2f (buy)" % purchase_cost
+       end
+       if purchase_cost_sd > 0
+         out += " $%.2f (buy SD)" % purchase_cost_sd
        end
     elsif human_readable_company == "youtube" # 0 is OK here :)
        out = "free (youtube)"

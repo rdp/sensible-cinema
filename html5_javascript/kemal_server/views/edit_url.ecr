@@ -112,8 +112,18 @@ rental cost (HD rental for 1 to 30 days, ex "2.00") (enter 0 if no rental option
 <br/>
 <br/>
 
+rental cost (SD)
+<input type="text" name="rental_cost_sd" size="5" value="<%= url.rental_cost_sd if url.rental_cost_sd %>"/>$
+<br/>
+<br/>
+
 purchase cost (ex: full purchase this episode HD, assuming no discounts, see above)
 <input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost if url.purchase_cost %>"/>$
+<br/>
+<br/>
+
+purchase cost (SD)
+<input type="text" name="purchase_cost_sd" size="5" value="<%= url.purchase_cost_sd if url.purchase_cost_sd %>"/>$
 <br/>
 <br/>
 
