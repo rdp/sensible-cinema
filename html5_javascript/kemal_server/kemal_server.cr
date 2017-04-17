@@ -209,7 +209,7 @@ post "/save_tag/:url_id" do |env|
       raise "attempted to save a tag that is the entire length of the movie'ish? that should not be expected?"
     end
   end
-  if tag.endy > url.total_time
+  if url.total_time && (tag.endy > url.total_time)
     raise "tag goes past end of movie?"
   end
   raise "got some timestamp negative?" if tag.start < 0 || tag.endy < 0 # should be impossible :|

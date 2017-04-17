@@ -86,15 +86,13 @@ Content tags are basically timestamps and descriptions of content that exists in
   <td><%= seconds_to_human tag.duration %></td>
   <td><%= tag.default_action %></td>
   <td><%= tag.category %></td>
-  <td>
-    <%= tag.subcategory %>
-  </td>
+  <td><%= tag.subcategory %></td>
   <td>
     <% if tag.age_maybe_ok > 0 %>
       not OK age <%= tag.age_maybe_ok %> and under
     <% end %>
   </td>
-  <td><%= tag.impact_to_movie if tag.impact_to_movie%></td>
+  <td><%= tag.impact_to_movie if tag.impact_to_movie != 0 %></td>
   <td><a href=/edit_tag/<%= tag.id %>>modify tag</a></td>
   <% if show_tag_details %>
     <td><%= tag.details %></td>
