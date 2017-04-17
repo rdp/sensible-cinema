@@ -106,7 +106,6 @@ get "/for_current_just_settings_json" do |env|
     raise "wrong site? #{HTML.unescape url.url} did not start with #{urlish}" unless HTML.unescape(url.url).starts_with?(standardize_url urlish) # standardize so smile.amazon is allowed
     env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
     out = json_for(url, env)
-    puts "sending #{out}"
     out
   end
 end
@@ -207,7 +206,7 @@ end
 post "/save_tag/:url_id" do |env|
   params = env.params.body
   puts "save tag params #{params}" # to see image url etc.
-  is_update = params["id"]?
+  is_update = params["id"] != "0"
   if is_update
     tag = Tag.get_only_by_id(params["id"])
   else
@@ -252,9 +251,9 @@ post "/save_tag/:url_id" do |env|
   end
   save_local_javascript [url], "updated tag", env
   if is_update
-    add_to_flash(env, "Success! saved tag at #{seconds_to_human tag.start}, recommend clicking reload tags or doing a browser refresh...")
+    add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, recommend clicking reload tags or doing a browser refresh...")
   else
-    add_to_flash(env, "Success! created tag at #{seconds_to_human tag.start}, you can tweak details and/or close this browser tab now.")
+    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}, you can tweak details and close this page now.")
 end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end

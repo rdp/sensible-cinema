@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.inet2.org";  // prod
+var request_host="localhost:3000"; // dev
+// var request_host="playitmyway.inet2.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -259,7 +259,7 @@ age specifier:
 
 Impact to Movie:
   <select name="impact_to_movie" id="impact_to_movie_id">
-    <option value="0">not set yet</option>
+    <option value="0">please select impact</option>
     
       <option value="1">1/10</option>
     
@@ -282,12 +282,14 @@ Impact to Movie:
       <option value="10">10/10</option>
     
   </select>
- <!-- render -->
-        <br/>
+ <!-- render inline cuz uses macro -->
+        <input type="hidden" name="id" id="tag_hidden_id" value="0"> 
+        <br/>        
         tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
-        <input type='submit' value='Save Edit' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Update Existing Tag' id='update_tag_button_id' onclick="updateTagButton(); return false;">
       </form>
       
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
@@ -450,18 +452,30 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	document.getElementById('top_line_current_time').innerHTML = timeStampToHuman(cur_time);
-  var next_tag = getNextTagAfterCurrentPos();
+	var new_top_line = timeStampToHuman(cur_time);
+  var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);  
   if (next_tag) {
-    document.getElementById('top_line_current_time').innerHTML += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
+    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
   }
+  updateHTML(document.getElementById('top_line_current_time'), new_top_line);
   var message = "";
   if (extra_message != "") {
-    message = "play it my way is currently:" + extra_message;
+    message = "play it my way is currently:" + extra_message; // prefix
   }
-  document.getElementById("add_edit_span_id_for_extra_message").innerHTML = message;
-  
-	document.getElementById("playback_rate").innerHTML = video_element.playbackRate.toFixed(2) + "x";
+  updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
+  updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
+  if (getTagEnveloped()) {
+    document.getElementById("update_tag_button_id").style.visibility = "visible";
+  }
+  else {
+    document.getElementById("update_tag_button_id").style.visibility = "hidden";
+  }
+}
+
+function updateHTML(div, new_value) {
+  if (div.innerHTML != new_value) {
+    div.innerHTML = new_value;
+  }
 }
 
 function checkStatus() {
@@ -510,12 +524,26 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
-function getNextTagAfterCurrentPos() {
-  var cur_time = video_element.currentTime;
-  // or current_json.tags; // sorted :|
+function getTagEnveloped() {
+  var endy = humanToTimeStamp(document.getElementById('endy').value);
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  
+  return getTagThatEnvelopes(endy) || getTagThatEnvelopes(start);
+}
+
+function getTagThatEnvelopes(time) {
+  var nexter = getNextTagAfterOrWithinCurrentPos(time);
+  if (nexter && time <= nexter.endy && time >= nexter.start) {
+    return nexter;
+  }
+  return null;
+}
+
+function getNextTagAfterOrWithinCurrentPos(cur_time) {
   var all = mutes.concat(skips);
   all = all.concat(yes_audio_no_videos);
-  // don't include do_nothings [?]
+  // or current_json.tags; // sorted :|
+  // this way doesn't include do_nothings on purpose...
   all.sort(compareTagStarts);
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
@@ -627,6 +655,18 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(video_element.currentTime);
 }
 
+function updateTagButton() {
+  var enveloper = getTagEnveloped();
+  if (enveloper) {
+    document.getElementById('tag_hidden_id').value = enveloper.id;
+  }
+  else
+  {
+    alert("didn't find a tag the current times seem to match??"); // should be impossible... [?]
+  }
+  saveEditButton();
+}
+
 function saveEditButton() {
   var category = document.getElementById('category_select').value;
   if (category == "") {
@@ -641,7 +681,7 @@ function saveEditButton() {
   }
   var impact = document.getElementById('impact_to_movie_id').value;
   if (impact == "0") {
-    alert("please specify impact to movie");
+    alert("please select impact to movie");
     return;
   }
   if ((category == "violence" || category == "suspense") && age == "0") {
@@ -680,6 +720,7 @@ function saveEditButton() {
   document.getElementById('subcategory_select_id').value = "";
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
+  document.getElementById('tag_hidden_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
@@ -770,7 +811,7 @@ function loadFailed(status) {
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber(); 
   sendMessageToPlugin({color: "#A00000", text: "none", details: "No edited settings found for movie, not playing edited"}); // red
-  console.log("got status=" + status);
+  console.log("got failure HTML status=" + status);
   if (status == 412) {
     // not in our system yet
 		// alert here is annoying
@@ -780,6 +821,7 @@ function loadFailed(status) {
     displayDiv(document.getElementById("server_down_div_id"));
     // I guess still start watcher thread so if they shift movies it tries again [?] but kinda weird...though should be setup "as if we don't have it in our system" hrm...
     // leave "unedited..." displayed too since...it is unedited FWIW :|
+    // repoll???
   }
   else if (status == 500) {
     // system is broken LOL
