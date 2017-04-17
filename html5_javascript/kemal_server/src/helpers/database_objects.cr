@@ -446,7 +446,7 @@ class Tag
   end
 
   def duration
-    "%.02f" % (endy - start)
+    ("%.02f" % (endy - start)).to_f # rounding, lazy decimal LOL
   end
   
   def url
