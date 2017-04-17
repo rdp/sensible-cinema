@@ -310,7 +310,7 @@ Impact to Movie:
       </form>
       
     	<br/>
-      <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
+      <input type='submit' value='Done with movie' onclick="showMoviePage(); return false;">
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
     	<br/>

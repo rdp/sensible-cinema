@@ -274,6 +274,9 @@ get "/add_new_tag/:url_id" do |env|
 end
 
 get "/view_url/:url_id" do |env|
+  if env.params.query["status"]? # == done
+    add_to_flash(env, "Nice, please fill in the rest of details and reviews about the movie, and set its prime type etc...")
+  end
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   render "views/view_url.ecr", "views/layout.ecr"
