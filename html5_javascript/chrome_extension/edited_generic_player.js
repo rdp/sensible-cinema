@@ -310,7 +310,7 @@ Impact to Movie:
       </form>
       
     	<br/>
-      <input type='submit' value='Done with movie' onclick="showMoviePage(); return false;">
+      <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get subtitles</a>
     	<br/>
@@ -726,8 +726,8 @@ function saveEditButton() {
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
-function showMoviePage() {
-  window.open("https://" + request_host + "/view_url/" + current_json.url.id);
+function doneMoviePage() {
+  window.open("https://" + request_host + "/view_url/" + current_json.url.id + "?status=done");
 }
 
 function getSubtitleLink() {

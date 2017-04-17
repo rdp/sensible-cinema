@@ -186,23 +186,6 @@ get "/new_empty_tag/:url_id" do |env|
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
-# leave in until all installed extensions updated...whenever that is?
-get "/add_tag_from_plugin/:url_id" do |env|
-  url = get_url_from_url_id(env)
-  tag = Tag.new url
-  query = env.params.query
-  tag.start = url.human_to_seconds query["start"]
-  tag.endy = url.human_to_seconds query["endy"]
-  tag.default_action = resanitize_html(query["default_action"])
-  # immediate save so that I can rely on repolling this from the UI to get the ID's etc. in a few seconds after submitting it :|
-  tag.category = "unknown"
-  tag.subcategory = ""
-  tag.save
-  add_to_flash env, "success! content tag created, please fill in details about it..."
-  save_local_javascript [url], "created tag", env
-  env.redirect "/edit_tag/#{tag.id}"
-end
-
 post "/save_tag/:url_id" do |env|
   params = env.params.body
   puts "save tag params #{params}" # to see image url etc.
@@ -275,7 +258,7 @@ end
 
 get "/view_url/:url_id" do |env|
   if env.params.query["status"]? # == done
-    add_to_flash(env, "Nice, please fill in the rest of details and reviews about the movie, and set its prime type etc...")
+    add_to_flash(env, "Thanks, you rock! Please fill in the rest of details and your review about the movie, set its prime type, etc...then email us!")
   end
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?

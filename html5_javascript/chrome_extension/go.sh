@@ -1,1 +1,1 @@
-crystal ./generate_it.cr && echo "done!"
+crystal ./generate_it.cr && echo "regenerated plugin"
