@@ -446,7 +446,7 @@ class Tag
   end
 
   def duration
-    endy - start
+    "%.02f" % (endy - start)
   end
   
   def url

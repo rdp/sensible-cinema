@@ -236,7 +236,7 @@ post "/save_tag/:url_id" do |env|
   if is_update
     add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, recommend clicking reload tags or doing a browser refresh...")
   else
-    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}, you can tweak details and close this page now.")
+    add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s, you can tweak details and close this page now.")
 end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
 end
