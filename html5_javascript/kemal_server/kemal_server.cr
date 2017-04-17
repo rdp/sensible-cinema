@@ -673,9 +673,11 @@ post "/upload_from_subtitles_post/:url_id" do |env|
   middle_sub = clean_subs[clean_subs.size / 2]
   puts "clean_subs = euphsize=#{all_euphemized.size} clean_size=#{clean_subs.size} idx=#{clean_subs.size / 2} middle_sub = #{middle_sub}"
   add_to_flash(env, "successfully uploaded subtitle file, created #{profs.size} mute tags from subtitle file. Please review them if you desire.")
-  add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
+  if !db_url.amazon?
+    add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
+  end
   save_local_javascript [db_url], "added subs", env
-  env.redirect "/view_url/" + db_url.id.to_s
+  env.redirect "/view_url/#{db_url.id}?show_tag_details=true"
 end
 
 def add_to_flash(env, string)
