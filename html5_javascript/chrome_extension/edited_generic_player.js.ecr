@@ -72,6 +72,23 @@ function addEditUi() {
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
         <br/>
+      <!-- no method for seek forward since it'll at worst seek too far forward --> 
+      <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
+      <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
+      <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
+      <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
+      <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
+
+      <br/>
+      <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
+      <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
+      <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
+      <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
+      <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
+<br/>
         action:
         <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro -->
         <input type="hidden" name="id" id="tag_hidden_id" value="0"> 
@@ -83,21 +100,6 @@ function addEditUi() {
         <input type='submit' value='Update Existing Tag' id='update_tag_button_id' onclick="updateTagButton(); return false;">
       </form>
       
-      <!-- no method for seek forward since it'll at worst seek too far forward --> 
-      <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
-      <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
-      <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
-      <br/>
-      <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
-      <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
-      <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-      <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
-      <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
     	<br/>
       <a href=% onclick="showMoviePage(); return false;" </a>Movie's page</a>
     	<br/>
@@ -584,7 +586,7 @@ function loadSucceeded(json_string) {
   }
   displayDiv(document.getElementById("load_succeeded_div_id"));
   hideDiv(document.getElementById("load_failed_div_id"));
-  
+  hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
 	sendMessageToPlugin({text: "EDIT", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
 }
 
@@ -597,6 +599,7 @@ function loadFailed(status) {
   expected_episode_number = liveEpisodeNumber();
 	hideDiv(document.getElementById("load_succeeded_div_id"));
 	displayDiv(document.getElementById("load_failed_div_id"));
+  hideDiv(document.getElementById("server_down_div_id"));
 	
 	removeAllOptions(document.getElementById("tag_edit_list_dropdown")); // clean up...in case it matters...
   old_current_url = getStandardizedCurrentUrl();
@@ -611,15 +614,16 @@ function loadFailed(status) {
     // the server responded with nothing [i.e. down]
     displayDiv(document.getElementById("server_down_div_id"));
     // I guess still start watcher thread so if they shift movies it tries again [?] but kinda weird...though should be setup "as if we don't have it in our system" hrm...
-    // leave "unedited..." displayed too since...it is unedited FWIW :|
-    // repoll???
+    hideDiv(document.getElementById("load_failed_div_id")); // it's not use to click on unedited... so don't show it
+    // repoll :|
+    setTimeout(loadForNewUrl, 10000);// refire once...
   }
   else if (status == 500) {
     // system is broken LOL
     displayDiv(document.getElementById("server_down_div_id"));
   }
   else {
-    // just say unedited :|
+    // just let it stay saying unedited :|
   }
   
   startWatcherTimerOnce(); // so it can check if episode changes to one we like magically LOL [amazon...]
