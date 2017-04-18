@@ -14,6 +14,8 @@ Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
+title = "" # TODO! :)
+
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
@@ -65,6 +67,7 @@ get "/ping" do |env|
 end
 
 get "/redo_all_thumbnails" do |env|
+  raise "should not need often"
   Url.all.each &.create_thumbnail
   "did 'em"
 end
@@ -112,6 +115,11 @@ end
 
 def json_for(db_url, env)
   render "views/html5_edited.just_settings.json.ecr"
+end
+
+get "/movie_info/:url_id" do | env|
+  url = get_url_from_url_id(env)
+  render "views/movie_info.ecr", "views/layout.ecr"
 end
 
 get "/instructions_create_new_url" do | env|
@@ -173,7 +181,10 @@ get "/edit_tag/:tag_id" do |env|
 end
 
 def get_url_from_url_id(env)
-  Url.get_only_by_id(env.params.url["url_id"])
+  out = Url.get_only_by_id(env.params.url["url_id"])
+  title = out.name_with_episode
+  puts "set title #{title}"
+  out
 end
 
 get "/new_empty_tag/:url_id" do |env|

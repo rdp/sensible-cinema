@@ -1,0 +1,20 @@
+       <div style="text-align: center;">
+         <a href="<%= url.url %>"
+             <% if !is_mobile(env) # in mobile chrome, both links didn't open, so try this instead for now :|
+              %>
+               target="_blank"
+             <% end %>
+             onclick="alertIfNoExtension();
+               <% if url.episode_number != 0  && url.amazon? %>
+                 alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
+              <% end %>
+            ">
+            <%= url.image_tag "style='max-height: 600px; max-width: 600px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block;'", "<br/>",  want_very_small: false, want_small: true %>
+            <h2><%= url.name_with_episode %></h2>
+            <h2>Watch movie edited</h2>
+          </a>
+          <br/>
+          <%= render "views/_box_internals.ecr" %>
+      </div>
+
+<%= render "views/_installed_js.ecr" %>

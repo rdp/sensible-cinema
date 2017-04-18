@@ -54,7 +54,7 @@ function addEditUi() {
   	<div id="currently_playing_it_your_way_id">
   	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set up this select --> 
     	<br/>
-      <a href=# onclick="createNewEditList(); return false">Personalize which parts it edits out</a>
+      <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
       <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
   	</div>
@@ -667,7 +667,7 @@ function parseSuccessfulJson(json_string) {
 	}  
   
 	option = document.createElement("option");
-	option.text = "Disable edits (no tags) (0)";
+	option.text = "Watch unedited (0 tags)";
 	option.value = "-2"; // special case :|
 	dropdown.add(option);
   
