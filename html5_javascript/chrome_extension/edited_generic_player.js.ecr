@@ -65,7 +65,7 @@ function addEditUi() {
     	  Create a new tag by entering the timestamp, testing it, then saving it: 
     		<br/>current time=<span id="top_line_current_time" />
     	</div>
-      <form target="_blank" action="filled_in_later" method="POST" id="create_new_tag_form_id">
+      <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
       	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('start').value = getCurrentVideoTimestampHuman();" />
         <br/>
@@ -77,6 +77,8 @@ function addEditUi() {
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
+      <input type='button' onclick="seekToBeforeEdit(-10); return false;" value='-10s'/>
+      <input type='button' onclick="seekToTime(video_element.currentTime + 10); return false;" value='+10s'/> 
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
       <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
@@ -102,7 +104,7 @@ function addEditUi() {
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
         <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Update Existing Tag' id='update_tag_button_id' onclick="updateTagButton(); return false;">
+        <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
     	<br/>
@@ -110,7 +112,7 @@ function addEditUi() {
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
     	<br/>
-      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tag updates</a>
+      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
@@ -259,9 +261,13 @@ function checkIfShouldDoActionAndUpdateUI() {
 	}
 
 	var new_top_line = timeStampToHuman(cur_time);
-  var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);  
+  var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);
   if (next_tag) {
-    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " to " + timeStampToHuman(next_tag.endy);
+    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
+    document.getElementById("open_next_tag_id").style.visibility = "visible";
+  }
+  else {
+    document.getElementById("open_next_tag_id").style.visibility = "hidden";
   }
   updateHTML(document.getElementById('top_line_current_time'), new_top_line);
   var message = "";
@@ -270,12 +276,6 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
-  if (getTagEnveloped()) {
-    document.getElementById("update_tag_button_id").style.visibility = "visible";
-  }
-  else {
-    document.getElementById("update_tag_button_id").style.visibility = "hidden";
-  }
 }
 
 function updateHTML(div, new_value) {
@@ -328,21 +328,6 @@ function compareTagStarts(tag1, tag2) {
     return 1;
   }
   return 0;
-}
-
-function getTagEnveloped() {
-  var endy = humanToTimeStamp(document.getElementById('endy').value);
-  var start = humanToTimeStamp(document.getElementById('start').value);
-  
-  return getTagThatEnvelopes(endy) || getTagThatEnvelopes(start);
-}
-
-function getTagThatEnvelopes(time) {
-  var nexter = getNextTagAfterOrWithinCurrentPos(time);
-  if (nexter && time <= nexter.endy && time >= nexter.start && !nexter.is_test_tag) {
-    return nexter;
-  }
-  return null;
 }
 
 function getNextTagAfterOrWithinCurrentPos(cur_time) {
@@ -462,16 +447,14 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(video_element.currentTime);
 }
 
-function updateTagButton() {
-  var enveloper = getTagEnveloped();
-  if (enveloper) {
-    document.getElementById('tag_hidden_id').value = enveloper.id;
+function openNextTagButton() {
+  var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);
+  if (next_tag) {
+    window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
   }
-  else
-  {
-    alert("didn't find a tag the current times seem to match??"); // should be impossible... [?]
+  else {
+    alert("didn't find a tag the current times seem to match??"); // this should be impossible...
   }
-  saveEditButton();
 }
 
 function saveEditButton() {
