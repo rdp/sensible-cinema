@@ -319,7 +319,7 @@ Impact to Movie:
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
     	<br/>
-      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload changes from website</a>
+      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tag updates</a>
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
@@ -470,7 +470,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var new_top_line = timeStampToHuman(cur_time);
   var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);  
   if (next_tag) {
-    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " " + timeStampToHuman(next_tag.endy - next_tag.start);
+    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " " + next_tag.default_action + " to " + timeStampToHuman(next_tag.endy);
   }
   updateHTML(document.getElementById('top_line_current_time'), new_top_line);
   var message = "";
