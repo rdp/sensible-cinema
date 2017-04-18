@@ -115,11 +115,6 @@ def json_for(db_url, env)
   render "views/html5_edited.just_settings.json.ecr"
 end
 
-get "/movie_info/:url_id" do | env|
-  url = get_url_from_url_id(env)
-  render "views/movie_info.ecr", "views/layout.ecr"
-end
-
 get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
