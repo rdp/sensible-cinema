@@ -97,7 +97,8 @@ function expandBox(id) {
   var height_wanted = inside_box.scrollHeight - parseInt(inside_box.style.height, 10);
   $(box).animate({ width: "+=20", height: "+=" + height_wanted });
   $(inside_box).animate({ width: "+=20", height: "+=" + height_wanted });
-  $(image).animate({ maxWidth: "+=20", maxHeight: "+=20" }); // wurks for max and for img too, or could set maxHeight etc :|
+  // $(image).animate({ maxWidth: "+=20", maxHeight: "+=20" }); // wurks for max and for img too, or could set maxHeight etc :|
+  // if we do this then height_wanted isn't enough for McLintock hrm...
 }
 
 </script>
