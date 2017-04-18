@@ -27,7 +27,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       raise "wrong host #{env.request.host}" 
     else
       # success/normal
-      puts env.session.id
+      puts "mobile? #{is_mobile(env)} env.request.headers["User-Agent"]?"
       call_next env
     end
   end
