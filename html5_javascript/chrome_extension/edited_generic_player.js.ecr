@@ -72,6 +72,8 @@ function addEditUi() {
         &nbsp;&nbsp;&nbsp;&nbsp;to:<input type='text' name='endy' style='width: 150px; font-size: 12pt; height: 20px;' id='endy' value='0m 0.00s'/>
         <input id='' type='button' value='<--set to current time' onclick="document.getElementById('endy').value = getCurrentVideoTimestampHuman();" />
         <br/>
+        
+        
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
@@ -81,14 +83,17 @@ function addEditUi() {
       <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
-
       <br/>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
-      <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span>
+      <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
       <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
-      <input type='button' onclick="video_element.play(); return false;" value='&#9654;'>
-<br/>
+      <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
+      <input type='button' onclick="playButtonClicked(); video_element.playbackRate = 0.5; return false;" value='...'>
+      
+      
+      
+       <br/>
         action:
         <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro -->
         <input type="hidden" name="id" id="tag_hidden_id" value="0"> 
@@ -114,6 +119,14 @@ function addEditUi() {
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
+}
+
+function playButtonClicked() {
+  if (video_element.paused) {
+    video_element.play();
+  } else if (video_element.playbackRate != 1) {
+    video_element.playbackRate = 1; // back to normal :)
+  }
 }
 
 function getStandardizedCurrentUrl() { // duplicated with other .js
@@ -326,7 +339,7 @@ function getTagEnveloped() {
 
 function getTagThatEnvelopes(time) {
   var nexter = getNextTagAfterOrWithinCurrentPos(time);
-  if (nexter && time <= nexter.endy && time >= nexter.start) {
+  if (nexter && time <= nexter.endy && time >= nexter.start && !nexter.is_test_tag) {
     return nexter;
   }
   return null;
@@ -401,7 +414,8 @@ function testCurrentFromUi() {
 	var faux_tag = {
 		start: humanToTimeStamp(document.getElementById('start').value),
 		endy: humanToTimeStamp(document.getElementById('endy').value),
-    default_action: currentTestAction()
+    default_action: currentTestAction(),
+    is_test_tag: true
 	}
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before your start, please fix this, then try again!");
