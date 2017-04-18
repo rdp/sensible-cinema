@@ -45,41 +45,21 @@ We believe so.  Because you are just editing playback of legally streamed conten
 </script>
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true" style="min-width: 450px; min-height: 60px;"></div>
 
-<% {all_urls_done => "Fully Edited Movie List", all_urls_half_way => "Movie list that have been edited but not double checked yet", all_urls_just_started => "Movie List of those that we are going to do in the future (we're working on it!)"}.each{ |urls, title| %>
+<% settings = [{title: "Fully Edited Movie List", urls: all_urls_done}, {urls: all_urls_half_way, title: "Movie list that have been edited but not double checked yet"}, {urls: all_urls_just_started, title: "Movie List of those that we are going to do in the future (we're working on it!)"}] %>
 
-<h1><%= title %></h1>
-
-<% host_to_urls = urls.group_by &.human_readable_company %>
- <% host_to_urls.each{ |host, urls_for_host|  %>
-  <div>
-  <hr/>
-  <h3><%= host.capitalize %>:</h3>
-  <% if host == "amazon prime" %>
-    Free to watch (and free to watch edited while we're in Beta) if you have prime, otherwise you can rent for around $3, or get a prime subscription 30 day trial.
-  <% end %>
-  <br/>
-  <% 
-    series = urls_for_host.select{|url| url.episode_number > 0 }
-    movies = urls_for_host.select{|url| url.episode_number == 0 }
-  %>
-  
-  <% movies.each_with_index{ |url, idx|  %>
-    <%= render "views/_box_movie.ecr" %>
-  <% } %>
-  </div>
-  <% if series.size > 0 %>
-    <div style="clear: both;"></div>
-    <h4><%= host.capitalize %> series episodes:</h4>
-    <% series.each_with_index{ |url, idx|  %>
-       <% if idx > 0 && (url.name != series[idx - 1].name) %>
-         <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
-       <% end %>
-      <%= render "views/_box_movie.ecr" %>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <% settings.each_with_index{|setting, idx| %>
+      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab"><%= setting[:title] %></a></li>
     <% } %>
-  <% end %>
-  <div style="clear: both;"></div>
- <% } %>
-<% } %>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <% settings.each_with_index{|setting, idx| %>
+      <div role="tabpanel" class="tab-pane <%= "active" if idx == 0 %>" id="tab_<%= idx %>"><%= urls = setting[:urls]; title = setting[:title]; render "views/_list_movies.ecr" %></div>
+    <% } %>
+  </div>
 
 These are movies/shows/youtubes that we currently have in our system.  Don't see one you want? <a href=instructions_create_new_url>Add it</a> and help us out by adding it to the system! (Note that eventually this will become a pay offering, but we'd love your help! Youtube will always be free!)
 <br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for a movie to be the next one on our queue to be edited.
