@@ -93,6 +93,10 @@ function markAsGoodChromeExtension() { // an override
 function expandBox(id) {
   var box = document.getElementById(id);
   $(box).animate({ margin: -10, width: "+=20", height: "+=200" });
+  box = document.getElementById(id + "_inside");
+  $(box).animate({ margin: -10, width: "+=20", height: "+=200" });
+  box = document.getElementById(id + "_image");
+  box.style.maxWidth="100%"; // animate only does hard coded sizes not maxes like it uses today hrm...
 }
 
 </script>
