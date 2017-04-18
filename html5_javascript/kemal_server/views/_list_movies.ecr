@@ -1,4 +1,9 @@
 <h1><%= title %></h1>
+Each film has two costs associated with it.  The streaming cost and the cost to access our edits so you can watch it edited.  Sometimes you have to pay for both, sometimes you don't.  While we're in beta, the cost to access our edits is nothing!
+
+<% if urls.size == 0 %>
+  No movies in this category!
+<% end %>
 
 <% host_to_urls = urls.group_by &.human_readable_company %>
  <% host_to_urls.each{ |host, urls_for_host|  %>
