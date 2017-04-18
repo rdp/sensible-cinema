@@ -92,7 +92,7 @@ function markAsGoodChromeExtension() { // an override
 
 function expandBox(id) {
   var box = document.getElementById(id);
-  $(box).animate({ margin: -10, width: "+=20", height: "+=200" });
+  $(box).animate({ width: "+=20", height: "+=200" });
   box = document.getElementById(id + "_inside");
   $(box).animate({ margin: -10, width: "+=20", height: "+=200" });
   box = document.getElementById(id + "_image");
