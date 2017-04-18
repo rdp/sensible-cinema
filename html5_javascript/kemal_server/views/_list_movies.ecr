@@ -7,9 +7,9 @@
   <h3><%= host.capitalize %>:</h3>
     Edits cost: free while we're in Beta.
   <% if host == "amazon prime" %>
-    Streaming cost: free (if you have prime), otherwise a rental or puchase cost to Amazon (or you can get a free prime 30 day trial).
+    Streaming cost: free (if you have prime), otherwise a rental or puchase cost to Amazon ($2-$20, or use a prime streaming free 30 day trial).
   <% elsif host == "amazon (rent/buy)" %>
-    Streaming cost: rental or purchase cost to Amazon.
+    Streaming cost: rental or purchase cost to Amazon ($2-$20).
   <% end %>
   <br/>
   <% 
@@ -17,7 +17,6 @@
     movies = urls_for_host.select{|url| url.episode_number == 0 }
   %>
  
-  <h3><%= host.capitalize %> Movies:</h3>
   <br/> 
   <% movies.each_with_index{ |url, idx|  %>
     <%= render "views/_box_movie.ecr" %>
@@ -25,7 +24,6 @@
   </div>
   <% if series.size > 0 %>
     <div style="clear: both;"></div>
-    <h3><%= host.capitalize %> series episodes</h3>    
     <% series.each_with_index{ |url, idx|  %>
        <% if idx > 0 && (url.name != series[idx - 1].name) %>
          <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
