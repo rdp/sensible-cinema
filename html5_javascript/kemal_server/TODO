@@ -122,6 +122,8 @@ youtube for advanced behaviors/tutorial :)
 
 == todo never LOL ==
 
+groom the chrome plugin page...and get people to vote for it?
+
 crystal: can compare Bool's
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
