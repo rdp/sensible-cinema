@@ -15,7 +15,7 @@ Your name for this list of edits:
 <br/>
 <br/>
 
-status_notes (ex: "for kids")
+personal notes (ex: "for kids")
 <textarea name="status_notes" rows="1" cols="150" ><%= tag_edit_list.status_notes %></textarea>
 <br/>
 <br/>
@@ -31,10 +31,11 @@ status_notes (ex: "for kids")
 <tr>
   <td><%= seconds_to_human tag.start %></td>
   <td><%= seconds_to_human tag.endy %></td>
-  <td><%= tag.default_action %></td>
+  <td>global default action:<%= tag.default_action %></td>
   <td><%= tag.category %></td>
   <td><%= tag.subcategory %></td>
   <td><%= tag.details %></td>
+  <td>impact to movie: <%= tag.impact_to_movie %></td>
   <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
   <td>
 		action to take for this personalized list:
