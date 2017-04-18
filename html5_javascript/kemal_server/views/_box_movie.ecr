@@ -5,7 +5,14 @@
               <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
           <%= if_present_with_break url.details %>
-          <a href="/view_url/<%= url.id %>">Our info (<%= url.tag_count %> content edits)</a><br/>
+          <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
+               <% if url.episode_number != 0  && url.amazon? %>
+                 alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
+              <% end %>
+            ">
+            Watch edited now!
+            <br/>
+          </a>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
           <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
           <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
@@ -15,12 +22,6 @@
           <%= if_present_with_break url.genre, "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
           <%= if_present_with_break url.human_duration %>
-          <a href="<%= url.url %>" target="_blank" onclick="alertIfNoExtension();
-               <% if url.episode_number != 0  && url.amazon? %>
-                 alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
-              <% end %>
-            ">
-            Watch edited now!</a>
-
+          <a href="/view_url/<%= url.id %>">View our info (<%= url.tag_count %> content edits)</a><br/>
          </div>
        </div>
