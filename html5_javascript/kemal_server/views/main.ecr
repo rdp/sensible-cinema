@@ -97,6 +97,7 @@ function expandBox(id) {
   $(box).animate({ margin: -10, width: "+=20", height: "+=200" });
   box = document.getElementById(id + "_image");
   box.style.maxWidth="100%"; // animate only does hard coded sizes not maxes like it uses today hrm...
+  box.style.maxHeight="100%";
 }
 
 </script>
