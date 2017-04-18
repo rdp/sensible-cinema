@@ -1,3 +1,5 @@
 #!/usr/bin/env fish
 echo "attempting to load server to https://localhost:3000"
+# dev keys: openssl req -x509 -newkey rsa:4096 -keyout _key.pem -out cert.pem -days 365 -nodes
+
 crystal run ./kemal_server.cr -- --ssl --ssl-key-file _key.pem --ssl-cert-file cert.pem or exit 1

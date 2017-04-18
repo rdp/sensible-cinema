@@ -3,7 +3,6 @@ sudo echo "root successfully enabled...we'll need that in a sec..."
 
 # run certbot-auto to get certs it seems... then 
 # sudo crontab =>  30 2 * * 1 /home/rdp/certbot-auto renew --quiet --no-self-upgrade && killall kemal_server
-# dev keys: openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
 
 # no --release here since it just takes forever on DO, also doesn't give as good of backtraces or some odd 
 git pull
