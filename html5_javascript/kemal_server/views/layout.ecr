@@ -6,7 +6,7 @@
     <title>
       <%= " DEV |" if is_dev? %>
       <%= " #{english_action} |" if action.present? %>
-      <%= title %>
+      <%= "#{env.response.title} | " if env.response.title.present? %>
        Play it My Way Edited Streaming Movies
     </title>
     <!-- bootstrap stuff -->

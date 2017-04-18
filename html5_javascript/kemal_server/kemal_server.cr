@@ -14,8 +14,6 @@ Session.config do |config|
   config.secure = true # send "secure only" cookies
 end
 
-title = "" # TODO! :)
-
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
@@ -180,10 +178,15 @@ get "/edit_tag/:tag_id" do |env|
   render "views/edit_tag.ecr", "views/layout.ecr"
 end
 
+class HTTP::Server::Response
+  @title = ""
+  setter title : String
+  getter title
+end
+
 def get_url_from_url_id(env)
   out = Url.get_only_by_id(env.params.url["url_id"])
-  title = out.name_with_episode
-  puts "set title #{title}"
+  env.response.title = out.name_with_episode
   out
 end
 
