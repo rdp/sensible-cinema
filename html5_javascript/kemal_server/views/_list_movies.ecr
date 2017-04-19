@@ -8,17 +8,17 @@
   <hr/>
   <h3>
     <% if host == "amazon prime" %>
-      Amazon (rent or buy or free with prime):
+      Amazon (rent/ buy or free with prime):
     <% elsif host == "amazon" %>
-      Amazon (rent or buy):
+      Amazon (rent/buy):
     <% else %>
       <%= host.capitalize %>:
     <% end %>
   </h3>
   <% if host == "amazon prime" %>
-    Streaming cost: free (if you have prime), otherwise a rental or puchase cost to Amazon ($2-$20, or use a prime streaming free 30 day trial).
+    Streaming cost: free (if you have prime), otherwise rent/buy ($2-$20, or get a prime streaming 30 day trial).
   <% elsif host == "amazon" %>
-    Streaming cost: rental or buy ($2-$20).
+    Streaming cost: rent/buy ($2-$20).
   <% end %>
   <br/>
   <% 
