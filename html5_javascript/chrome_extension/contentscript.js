@@ -50,7 +50,7 @@ window.addEventListener("message", function(event) {
     return;
 
   if (event.data.type && (event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT")) {
-	// only way to update the tab icon I think anyway...
+  	// only way to update the tab icon I think anyway...
     chrome.runtime.sendMessage(event.data.payload); // send to rest of extension
   }
 }, false);

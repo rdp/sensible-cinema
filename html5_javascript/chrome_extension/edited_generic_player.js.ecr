@@ -52,7 +52,7 @@ function addEditUi() {
   
   <div id="load_succeeded_div_id" style='display: none;'>
   	<div id="currently_playing_it_your_way_id">
-  	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='getEditsFromCurrentTagList();'></select> <!-- javascript will set up this select --> 
+  	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
     	<br/>
       <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
@@ -667,6 +667,11 @@ function parseSuccessfulJson(json_string) {
 	option.text = "Watch unedited (0 tags)";
 	option.value = "-2"; // special case :|
 	dropdown.add(option);
+
+	option = document.createElement("option");
+	option.text = "Personalize what gets edited";
+	option.value = "-3"; // special case :|
+	dropdown.add(option);
   
 	console.log("finished parsing response successful JSON");
 }
@@ -702,11 +707,15 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	}
 }
 
+function editListChanged() {
+  getEditsFromCurrentTagList();
+}
+
 function getEditsFromCurrentTagList() {
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	var selected_edit_list_id = dropdown.value;
 	if (selected_edit_list_id == "-2") {
-		setTheseTagsAsTheOnesToUse([]); // the non-tags LOl
+		setTheseTagsAsTheOnesToUse([]); // i.e. no-tags LOl
 		return;
 	}
   
@@ -714,6 +723,12 @@ function getEditsFromCurrentTagList() {
 		setTheseTagsAsTheOnesToUse(current_json.tags);
 		return;
 	}
+
+	if (selected_edit_list_id == "-3") {
+  	sendMessageToPlugin({do_url: "/personalized_edit_list/" + url_id});
+		return;
+	}  
+  
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_its_tags = current_json.tag_edit_lists[i];
 		if (tag_edit_list_and_its_tags[0].id == selected_edit_list_id) {

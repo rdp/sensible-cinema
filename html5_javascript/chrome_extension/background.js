@@ -12,6 +12,13 @@ update_icon = function(request, sender, sendResponse) {
     console.log("sent version response" + manifest.version);
     sendResponse({version: manifest.version});
    }
+   
+   if (request.do_url) {
+     // can only do tabs from b/g not contentscript apparently :|
+     chrome.tabs.create({url: "https://playitmyway.inet2.org" + request.do_url}); // opens and sets active
+     return;
+   }
+   
 };
 
 chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js 
