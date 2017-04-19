@@ -118,7 +118,7 @@ get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
-get "/halfway_movies" do |env|
+get "/movies_needing_review" do |env|
   render "views/half_way_movies.ecr", "views/layout.ecr"
 end
 
