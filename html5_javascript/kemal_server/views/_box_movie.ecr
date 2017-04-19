@@ -6,7 +6,7 @@
           </a>
           <a href="<%= url.url %>" id="box_movie_<%= url.id %>_open" target="_blank" onclick="if (!alertIfNoExtension()) return false;
                <% if url.episode_number != 0  && url.amazon? %>
-                 alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
+                 alert('after opening the series, select episode <%= url.episode_number %>');
               <% end %>
             ">
             <div style="text-align: center;">Watch edited now!</div>
@@ -15,7 +15,6 @@
             <% elsif url.editing_status != "Done with second review, tags viewed as complete" %>
               (work in progress)
             <% end %>
-            <br/>
           </a>
           <%= if_present_with_break url.details %>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
