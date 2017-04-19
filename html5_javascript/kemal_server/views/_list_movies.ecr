@@ -15,15 +15,16 @@
       <%= host.capitalize %>:
     <% end %>
   </h3>
+  <b>Streaming cost:</b>
   <% if host == "amazon prime" %>
-    Streaming cost: rent/buy ($2-$20), free with prime, or a prime 30 day trial.
+    rent/buy ($2-$20), or free with prime.
   <% elsif host == "amazon" %>
-    Streaming cost: rent/buy ($2-$20).
+    rent/buy ($2-$20).
   <% elsif host == "youtube" %>
-    Streaming cost: free.
+    free.
   <% end %>
   <br/>
-  Filtering cost: free while we're in Beta.
+  Cost to add filter to streaming: free while we're in Beta.
   <% 
     series = urls_for_host.select{|url| url.episode_number > 0 }
     movies = urls_for_host.select{|url| url.episode_number == 0 }
