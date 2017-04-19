@@ -52,7 +52,7 @@ We believe so.  Because you are just editing playback of legally streamed conten
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{|setting, idx| %>
-      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab"><%= setting[:title] %> (<%= setting[:urls].size %>)</a></li>
+      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab"><span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a></li>
     <% } %>
   </ul>
 
