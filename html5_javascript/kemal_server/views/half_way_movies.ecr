@@ -1,8 +1,0 @@
-<%  all_urls_half_way = Url.all.select{|url| url.editing_status == "Done with first pass tagging, could use second review" }
-
-urls = all_urls_half_way
-title = "Needing review"
-%>
-
-<%= render "views/_list_movies.ecr" %>
-

@@ -118,10 +118,6 @@ get "/instructions_create_new_url" do | env|
   render "views/instructions_create_new_url.ecr", "views/layout.ecr"
 end
 
-get "/movies_needing_review" do |env|
-  render "views/half_way_movies.ecr", "views/layout.ecr"
-end
-
 get "/delete_all_tags/:url_id" do |env|
   hard_nuke_url_or_nil(env, just_delete_tags: true)
 end
