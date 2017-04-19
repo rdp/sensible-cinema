@@ -75,7 +75,7 @@ get "/sync_web_server" do |env|
     sleep 0.1 # faux quiesce LOL
     system("~/sync.sh") # kills this process XXXX even more graceful restart...hrm...
   end
-  "from server: restarting it in 0.1..." 
+  "from server: killing it in 0.1..." 
 end
 
 get "/all_tags" do |env|
