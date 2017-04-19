@@ -9,9 +9,15 @@
 <div id="demo" class="collapse">
   We provide you the ability to edit your movie when you stream it from amazon or youtube, so you can choose which parts you watch.  So we don't actually stream the movies, per se, we just edit them.
   <div id=how_it_works >
-    Basically, watch your movie like normal on your computer, our plugin will edit out the parts you don't want, see <a href=/getting_started>Getting Started</a> to install it!
+    Basically, watch your movie like normal on your computer, our plugin will edit out the parts you don't want.
     <br/>
     Plus if you notice something that should be tagged, you can tag it in our system and everybody, including yourself, will benefit!
+    <% if is_mobile(env) %>
+      Today you can only play edited on your computer/laptop.  Check out our collection in the meantime and see you tonight to stream some awesome edited movies!
+    <% else %>
+       <br/>
+      <span style="font-size: larger;">Go to <a href=/getting_started>Getting Started</a> to install it!</span>
+    <% end %>
   </div>
 </div>
 
@@ -51,7 +57,7 @@ Other ways you can help: tag some youtube or movie content for us, everybody can
 
 </a>Like and share our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478777/#!>facebook page</a>!
 <br/>
-We hope to launch a Kickstarter soon and we'd love your help so we can add a lot more movies!<br/>
+We hope to launch a Kickstarter soon and we'd love your help while we get going!  We have a lot of movies we plan on adding :)<br/>
 
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
