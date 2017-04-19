@@ -1,6 +1,3 @@
-<h1><%= title %></h1>
-During beta, the only thing you have to pay for is the streaming cost.
-
 <% if urls.size == 0 %>
   No movies in this category!
 <% end %>
@@ -10,7 +7,6 @@ During beta, the only thing you have to pay for is the streaming cost.
   <div>
   <hr/>
   <h3><%= host.capitalize %>:</h3>
-    Edits cost: free while we're in Beta.
   <% if host == "amazon prime" %>
     Streaming cost: free (if you have prime), otherwise a rental or puchase cost to Amazon ($2-$20, or use a prime streaming free 30 day trial).
   <% elsif host == "amazon (rent/buy)" %>
