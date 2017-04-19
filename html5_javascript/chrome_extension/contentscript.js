@@ -44,12 +44,13 @@ chrome.runtime.onMessage.addListener(
          };
 });
 
-// capture messages from the page and re-broadcast them: http://stackoverflow.com/a/41836393/32453
+// capture messages from the page and re-broadcast them to background.js: http://stackoverflow.com/a/41836393/32453
 window.addEventListener("message", function(event) {
   if (event.source != window)
     return;
 
   if (event.data.type && (event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT")) {
+	// only way to update the tab icon I think anyway...
     chrome.runtime.sendMessage(event.data.payload); // send to rest of extension
   }
 }, false);

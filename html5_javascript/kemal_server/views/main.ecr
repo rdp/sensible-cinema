@@ -104,7 +104,16 @@ function markAsGoodChromeExtension() { // an override
   document.getElementById('how_it_works').style.display = 'none';
 }
 
-function expandBox(id) {
+var last_clicked;
+
+function expandBoxOrOpen(id) {
+  if (last_clicked == id) {
+    document.getElementById(id + "_open").click();
+	return;
+  }
+  else {
+    last_clicked = id;
+  }
   var box = document.getElementById(id);
   var inside_box = document.getElementById(id + "_inside");
   var image = document.getElementById(id + "_image");

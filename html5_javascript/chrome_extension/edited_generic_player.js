@@ -793,7 +793,7 @@ function loadSucceeded(json_string) {
   displayDiv(document.getElementById("load_succeeded_div_id"));
   hideDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
-	sendMessageToPlugin({text: ":)", color: "#008000", details: "Edited playback is enabled and fully operational"}); // green
+	sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
 }
 
 function loadFailed(status) {
