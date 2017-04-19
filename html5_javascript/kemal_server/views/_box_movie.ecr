@@ -27,16 +27,14 @@
           <%= if_present_with_break url.cost_string, "Price:" %>
           <%= if_present_with_break url.human_duration %>
           <div style="text-align: center;">		  
-		  
-          <a href="/view_url/<%= url.id %>">View our info (<%= url.tag_count %> content edits)</a><br/>
-          <a href="<%= url.url %>" target="_blank" onclick="if (!alertIfNoExtension()) return false;
+            <a href="/view_url/<%= url.id %>">View our info (<%= url.tag_count %> content edits)</a><br/>
+            <a href="<%= url.url %>" target="_blank" onclick="if (!alertIfNoExtension()) return false;
                <% if url.episode_number != 0  && url.amazon? %>
                  alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
-            ">
-            <h4>Watch edited now!</h4>
-            <br/>
-          </a>
-		  </div>
+              ">
+              <h4>Watch edited now!</h4>
+            </a>
+	  </div>
          </div>
        </div>
