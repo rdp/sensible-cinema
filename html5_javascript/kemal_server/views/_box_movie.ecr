@@ -9,6 +9,7 @@
                  alert('after opening the series, select episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
             ">
+            <div style="text-align: center;">Watch edited now!</div>
             <% if url.editing_status == "Done with first pass tagging, could use second review" %>
               (done, waiting for review)
             <% elsif url.editing_status != "Done with second review, tags viewed as complete" %>
