@@ -6,11 +6,19 @@
  <% host_to_urls.each{ |host, urls_for_host|  %>
   <div>
   <hr/>
-  <h3><%= host.capitalize %>:</h3>
+  <h3>
+    <% if host == "amazon prime" %>
+      Amazon (rent or buy or free with prime):
+    <% elsif host == "amazon" %>
+      Amazon (rent or buy):
+    <% else %>
+      <%= host.capitalize %>:
+    <% end %>
+  </h3>
   <% if host == "amazon prime" %>
     Streaming cost: free (if you have prime), otherwise a rental or puchase cost to Amazon ($2-$20, or use a prime streaming free 30 day trial).
-  <% elsif host == "amazon (rent/buy)" %>
-    Streaming cost: rental or purchase cost to Amazon ($2-$20).
+  <% elsif host == "amazon" %>
+    Streaming cost: rental or buy ($2-$20).
   <% end %>
   <br/>
   <% 

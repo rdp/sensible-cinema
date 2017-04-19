@@ -248,9 +248,6 @@ class Url
         host += " prime with add-on subscription"
       end
     else
-      if amazon? # but non prime
-        host += " (rent/buy)"
-      end
     end
     host
   end
