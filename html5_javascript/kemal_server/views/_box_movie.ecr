@@ -10,6 +10,9 @@
               <% end %>
             ">
             Watch edited now!
+            <% if url.editing_status != "Done with second review, tags viewed as complete" %>
+              (edits may be incomplete)
+            <% end %>
             <br/>
           </a>
           <%= if_present_with_break url.details %>
