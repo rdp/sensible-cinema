@@ -769,7 +769,7 @@ function getSubtitleLink() {
 }
 
 function stepFrameBack() {
-  seekToTime(video_element.currentTime - 2/30, function () { // go back 2 frames, 1 seems hard...
+  seekToTime(video_element.currentTime - 1/10, function () { // go back 2 frames, 1 seems hard...
     video_element.pause();
   });
 }
@@ -778,7 +778,7 @@ function stepFrame() {
   video_element.play();
   setTimeout(function() {
     video_element.pause(); 
-  }, 1/100*1000); // audio needs some pretty high granularity :|
+  }, 1/10*1000); // audio needs some pretty high granularity :|
 }
 
 function lookupUrl() {
