@@ -120,7 +120,7 @@ function expandBoxOrOpen(id) {
   inside_box.style.overflowY = "hidden";
   
   var height_to_add = inside_box.scrollHeight - parseInt(inside_box.style.height, 10);
-  $(box).animate({ width: "+=0", height: "+=" + height_to_add });
+  $(box).animate({ width: "+=0", height: "+=" + height_to_add, paddingTop: "+=5" });
   $(inside_box).animate({ width: "+=0", height: "+=" + height_to_add });
   // $(image).animate({ maxWidth: "+=20", maxHeight: "+=20" }); // wurks for max and for img too, or could set maxHeight ?? only makes sense if we're adjusting width which we're not
   // also if we do the image bigger then height_wanted isn't enough for McLintock hrm...
