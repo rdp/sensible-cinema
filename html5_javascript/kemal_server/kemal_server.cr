@@ -25,6 +25,8 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
     elsif env.request.host !~ /localhost|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
       raise "wrong host #{env.request.host}" 
+    elsif env.request.host == "playitmyway.inet2.org"
+      env.redirect "https://playitmyway.org/#{env.request.path}?#{env.request.query}" 
     else
       # success/normal
       call_next env
