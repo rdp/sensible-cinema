@@ -16,7 +16,8 @@ end
 
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
-    if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
+    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
+      puts "host=#{env.request.host}"
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
