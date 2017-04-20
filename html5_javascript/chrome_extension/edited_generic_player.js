@@ -41,7 +41,7 @@ function addEditUi() {
 
     #currently_playing_it_your_way_id text{
       fill: none;
-      stroke: grey;
+      stroke: white;
       stroke-width: 0.5px;
       // stroke-dasharray: 2,2;
       stroke-linejoin: round;
@@ -102,13 +102,14 @@ function addEditUi() {
       <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
+
       <br/>
+      <input type='button' onclick="playButtonClicked(); video_element.playbackRate = 0.5; return false;" value='0.5x'>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
       <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
-      <input type='button' onclick="playButtonClicked(); video_element.playbackRate = 0.5; return false;" value='...'>
       
       
       
@@ -330,7 +331,7 @@ Impact to Movie:
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
         <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
     	<br/>
@@ -557,9 +558,10 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getNextTagAfterOrWithinCurrentPos(cur_time) {
+  // or current_json.tags; // sorted :|
   var all = mutes.concat(skips);
   all = all.concat(yes_audio_no_videos);
-  // or current_json.tags; // sorted :|
+  all = all.concat(mutes);
   // this way doesn't include do_nothings on purpose...
   all.sort(compareTagStarts);
   for (var i = 0; i < all.length; i++) {
@@ -776,7 +778,7 @@ function stepFrame() {
   video_element.play();
   setTimeout(function() {
     video_element.pause(); 
-  }, 1/30*1000); // theoretically about an NTSC frame worth :)
+  }, 1/100*1000); // audio needs some pretty high granularity :|
 }
 
 function lookupUrl() {
