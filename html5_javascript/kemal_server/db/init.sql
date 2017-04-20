@@ -65,12 +65,13 @@ alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
 CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
 
 create unique index url_title_episode ON urls(name(256), amazon_episode_number); -- try to avoid accidental dupes
-ALTER TABLE urls DROP INDEX url_title_episode; CREATE UNIQUE INDEX unique_name_with_episode ON urls(name(256), amazon_episode_number); -- rename same index
+ALTER TABLE urls DROP INDEX url_title_episode; 
+CREATE UNIQUE INDEX unique_name_with_episode ON urls(name(256), amazon_episode_number); -- rename same index
 
 ALTER TABLE urls CHANGE amazon_episode_name episode_name VARCHAR(1024);
 ALTER TABLE urls CHANGE amazon_episode_number episode_number INTEGER;
 
-alter table urls add column amazon_prime_free_type VARCHAR(2014) NOT NULL DEFAULT '';;
+alter table urls add column amazon_prime_free_type VARCHAR(2014) NOT NULL DEFAULT '';
 update urls set amazon_prime_free_type = 'Prime' where is_amazon_prime = 1;
 alter table urls drop column is_amazon_prime;
 
@@ -143,6 +144,9 @@ alter table urls add purchase_cost_sd DECIMAL(10, 2) NOT NULL DEFAULT 0;
 alter table urls modify rental_cost DECIMAL(10, 2); -- turns out DECIMAL by default is truncated :|
 alter table urls modify purchase_cost DECIMAL(10, 2);
 
+ALTER TABLE users DROP INDEX unique_email_user_id;
+-- just pretend that once an email is in there, you're stuck with it...so I can combine them later if people login'ish up front [?]
+ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
 
 -- and output to screen to show success...
 select * from urls;

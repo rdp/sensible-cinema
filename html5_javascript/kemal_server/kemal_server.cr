@@ -229,7 +229,7 @@ post "/save_tag/:url_id" do |env|
   tag.category = resanitize_html params["category"]
   tag.impact_to_movie = get_int(params, "impact_to_movie")
   if tag.impact_to_movie == 0
-    raise "need to select impact to movie, if it's nothing then select 1"
+    raise "need to select impact to story, if it's nothing then select 1/10"
   end
   if !params["subcategory"].present? # the default [meaning none] is an empty string
     raise "no subcategory selected, please hit back arrow in your browser and select subcategory for tag, if nothing fits then select '... -- other'"

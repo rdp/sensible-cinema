@@ -8,6 +8,12 @@ Currently, Play It My Way works as an extension of the chrome desktop web browse
 
 <% if is_mobile(env) %>
   <h2>Our chrome extension currently is only supported on the desktop chrome web browser (i.e. on a computer, or laptop or chromebook).  So grab one of them and come on back here :)</h2>
+ Enter your email address here to send yourself an email with a link to it you can use later: (or just remember to browse to "playitmyway.org")
+  <form action=/send_me_mail method=POST >
+    <input type="text" name="email_to_send_to" size="100" placeholder="name@name.com" />
+    <input type="submit" value="Submit">
+  </form>
+ 
 <% end %>
 
 <div id="switch_to_chrome" style="display: none;">
