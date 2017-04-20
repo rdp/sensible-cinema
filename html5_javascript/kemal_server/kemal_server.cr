@@ -455,8 +455,8 @@ get "/" do |env| # index home
   out
 end
 
-get "/getting_started" do |env|
-  render "views/getting_started.ecr", "views/layout.ecr"
+get "/installation" do |env|
+  render "views/installation.ecr", "views/layout.ecr"
 end
 
 get "/privacy" do |env|
