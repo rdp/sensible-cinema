@@ -94,8 +94,6 @@ function addEditUi() {
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
       <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-10); return false;" value='-10s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 10); return false;" value='+10s'/> 
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
       <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
@@ -894,7 +892,7 @@ function parseSuccessfulJson(json_string) {
 	}  
   
 	option = document.createElement("option");
-	option.text = "Watch unedited (0 tags)";
+	option.text = "Unedited (0 tags)";
 	option.value = "-2"; // special case :|
 	dropdown.add(option);
 
