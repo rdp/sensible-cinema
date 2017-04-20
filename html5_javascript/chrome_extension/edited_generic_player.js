@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
 // var request_host="localhost:3000"; // dev
-var request_host="playitmyway.inet2.org";  // prod
+var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -624,6 +624,8 @@ function testCurrentFromUi() {
     start = 0; // allow edits to start at or near 0
   }
   seekToTime(start, function() {
+    // not sure :| 
+    // video_element.playbackRate = 1; // back to normal speed
 	  length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)

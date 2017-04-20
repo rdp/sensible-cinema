@@ -3,7 +3,7 @@
 // we mostly use this to bootstrap the real player...
 
 // var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.inet2.org";  // prod
+var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.org";  // prod
 
 function loadScript(url, callback)
 {
@@ -108,7 +108,7 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server [yet is it though?]
     return;
   }
-  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("youtube.com") || url.includes("playitmyway.inet2.org")) {
+  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("youtube.com") || url.includes("playitmyway.org")) {
     if (inIframe()) { 
       // avoid google iframes popup after it says YES and reset it back even though it is playing OK
       console.log("not setting to ... from an iframe");

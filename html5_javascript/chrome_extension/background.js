@@ -15,7 +15,7 @@ update_icon = function(request, sender, sendResponse) {
    
    if (request.do_url) {
      // can only do tabs from b/g not contentscript apparently :|
-     chrome.tabs.create({url: "https://playitmyway.inet2.org" + request.do_url}); // opens and sets active
+     chrome.tabs.create({url: "https://playitmyway.org" + request.do_url}); // opens and sets active
      return;
    }
    

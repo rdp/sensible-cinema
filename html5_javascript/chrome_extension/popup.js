@@ -18,7 +18,7 @@ function loadEditedPlayback() {
 
 function openIndex() {
   // this is how you have to do any links from the popup box [yikeserz]
-  chrome.tabs.create({active: true, url: "https://playitmyway.inet2.org"});
+  chrome.tabs.create({active: true, url: "https://playitmyway.org"});
 }
 
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
