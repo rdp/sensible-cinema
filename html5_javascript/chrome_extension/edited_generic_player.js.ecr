@@ -415,6 +415,8 @@ function testCurrentFromUi() {
     start = 0; // allow edits to start at or near 0
   }
   seekToTime(start, function() {
+    // not sure :| 
+    // video_element.playbackRate = 1; // back to normal speed
 	  length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
