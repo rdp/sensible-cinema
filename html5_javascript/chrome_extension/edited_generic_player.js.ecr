@@ -33,6 +33,19 @@ function addEditUi() {
   <style>
     #all_pimw_stuff_id a:link    { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
   	#all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+    #currently_playing_it_your_way_id svg{
+      font: bold 50px 'Arial';
+      width: 50%;.
+      height: 50px;
+    }
+
+    #currently_playing_it_your_way_id text{
+      fill: none;
+      stroke: grey;
+      stroke-width: 0.5px;
+      // stroke-dasharray: 2,2;
+      stroke-linejoin: round;
+    }
   </style>
   
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
@@ -52,7 +65,11 @@ function addEditUi() {
   
   <div id="load_succeeded_div_id" style='display: none;'>
   	<div id="currently_playing_it_your_way_id">
-  	  Currently Playing it your way: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
+      <svg viewBox="0 0 350 50">
+        <text y="40">Edited</text>
+      </svg>
+       <br/>
+  	  Currently Editing: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
     	<br/>
       <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
