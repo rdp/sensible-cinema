@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-
+ulimit -S -n 2048 
 while true
   ./kill_next & # failure here can mean you are on production!
   ./dev_go_ssl or; sleep 2
