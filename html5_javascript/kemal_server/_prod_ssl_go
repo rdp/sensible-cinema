@@ -1,4 +1,4 @@
-echo "use like https://playitmyway.inet2.org"
+echo "use like https://playitmyway.org"
 sudo echo "root successfully enabled...we'll need that in a sec..."
 
 # run certbot-auto to get certs it seems... then 

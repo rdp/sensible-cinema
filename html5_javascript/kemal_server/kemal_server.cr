@@ -16,7 +16,8 @@ end
 
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
-    if (env.request.path =~ /delete|nuke|personalized/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
+    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
+      puts "host=#{env.request.host}"
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
@@ -25,6 +26,8 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
     elsif env.request.host !~ /localhost|playitmyway/
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
       raise "wrong host #{env.request.host}" 
+    elsif env.request.host == "playitmyway.inet2.org"
+      env.redirect "https://playitmyway.org/#{env.request.path}?#{env.request.query}" 
     else
       # success/normal
       call_next env
@@ -89,8 +92,8 @@ get "/for_current_just_settings_json" do |env|
   if page = env.request.headers["Origin"]? # XHR hmm...
     urlish = page.split("/")[0..2].join("/") # https://amazon.com
   else
-    # assume it's big buck bunny on inet2
-    urlish = "https://playitmyway.inet2.org"
+    # assume it's big buck bunny on pimw
+    urlish = "https://playitmyway.org"
   end
   env.response.headers.add "Access-Control-Allow-Credentials", "true" # they all need this
   if !url_or_nil
@@ -438,7 +441,7 @@ def get_all_urls
 end
 
 def put_test_last(urls)
-  if urls[0].human_readable_company == "inet2"
+  if urls[0].human_readable_company == "playitmyway"
     urls.push urls.shift # put it last :|
   end
   urls

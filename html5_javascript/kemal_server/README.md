@@ -1,5 +1,4 @@
-Edited movie player server source
-See playitmyway.inet2.org 
+Edited movie player server source playitmyway.org 
 
 ## Installation of server:
 
