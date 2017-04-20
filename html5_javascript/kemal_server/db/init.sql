@@ -40,7 +40,7 @@ insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episod
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
    values ("https://localhost:3000/test_movie_for_practicing_edits.html", 'big buck bunny localhost', "not done yet", 0, "", 10, 8, 4, "review");
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
-   values ("https://playitmyway.inet2.org/test_movie_for_practicing_edits.html", 'big buck bunny inet2', "not done yet", 0, "", 10, 8, 4, "review");
+   values ("https://playitmyway.org/test_movie_for_practicing_edits.html", 'big buck bunny pimw', "not done yet", 0, "", 10, 8, 4, "review");
 
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
       (2.0, 7.0, "a category", "a subcat", "details", "skip", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");

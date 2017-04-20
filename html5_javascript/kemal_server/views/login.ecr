@@ -28,7 +28,7 @@ Login with amazon here:
 
   document.getElementById('LoginWithAmazon').onclick = function() {
     options = { scope : 'profile', popup: true }; // popup doesn't work in...nativve iOS apps [LOL] but if set to false, you have to do extra hoops yikes!
-    amazon.Login.authorize(options, 'https://playitmyway.inet2.org/login_from_amazon');
+    amazon.Login.authorize(options, 'https://playitmyway.org/login_from_amazon');
     return false;
   };
 

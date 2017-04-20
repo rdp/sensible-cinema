@@ -1,4 +1,4 @@
-echo "use like https://playitmyway.inet2.org"
+echo "use like https://playitmyway.org"
 sudo echo "root successfully enabled...we'll need that in a sec..."
 
 # run certbot-auto to get certs it seems... then 
@@ -6,4 +6,4 @@ sudo echo "root successfully enabled...we'll need that in a sec..."
 
 # no --release here since it just takes forever on DO, also doesn't give as good of backtraces or some odd 
 git pull
-sudo -u rdp crystal build --debug ./kemal_server.cr && sudo setcap cap_net_bind_service=+ep ./kemal_server && sudo -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.inet2.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.inet2.org/fullchain.pem -p 443
+sudo -u rdp crystal build --debug ./kemal_server.cr && sudo setcap cap_net_bind_service=+ep ./kemal_server && sudo -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.org/fullchain.pem -p 443

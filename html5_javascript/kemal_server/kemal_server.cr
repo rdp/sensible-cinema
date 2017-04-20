@@ -89,8 +89,8 @@ get "/for_current_just_settings_json" do |env|
   if page = env.request.headers["Origin"]? # XHR hmm...
     urlish = page.split("/")[0..2].join("/") # https://amazon.com
   else
-    # assume it's big buck bunny on inet2
-    urlish = "https://playitmyway.inet2.org"
+    # assume it's big buck bunny on pimw
+    urlish = "https://playitmyway.org"
   end
   env.response.headers.add "Access-Control-Allow-Credentials", "true" # they all need this
   if !url_or_nil
@@ -438,7 +438,7 @@ def get_all_urls
 end
 
 def put_test_last(urls)
-  if urls[0].human_readable_company == "inet2"
+  if urls[0].human_readable_company == "playitmyway"
     urls.push urls.shift # put it last :|
   end
   urls
