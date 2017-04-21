@@ -31,9 +31,8 @@ function addEditUi() {
 	allEditStuffDiv.innerHTML = `
    <!-- our own styles, # is id -->
   <style>
-    #all_pimw_stuff_id a:link    { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+    #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
   	#all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
-
   </style>
   
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
@@ -52,21 +51,21 @@ function addEditUi() {
   </div>
   
   <div id="load_succeeded_div_id" style='display: none;'>
-  	<div id="currently_playing_it_your_way_id">
+  	<div id="currently_playing_it_your_way_id" style="color: rgb(168, 168, 168);">
       <svg style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
         <text  style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40">Edited!</text>
       </svg>
        <br/>
-  	  <span style="color: rgb(168, 168, 168)">Currently Editing out:</span> <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
+  	  Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
     	<br/>
       <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Did we miss anything? Let us know!</a>
+      Did we miss anything? <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Let us know!</a>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
-      Report a problem <a href=# onclick="reportProblem(); return false">here</a>, or add a tag yourself, below:
-      <br/>
-    	<span id=add_edit_span_id_for_extra_message><!-- play it my way is currently: muting --></span>
+      Report a problem <a href=# onclick="reportProblem(); return false">here</a>
+      <br/>or add a tag yourself, here:
+    	<span id=add_edit_span_id_for_extra_message><!-- currently: muting --></span>
     	<br/>
     	<div id='tag_layer_top_line'>
     	  Create a new tag by entering the timestamp, testing it, then saving it: 
@@ -501,7 +500,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById('top_line_current_time'), new_top_line);
   var message = "";
   if (extra_message != "") {
-    message = "play it my way is currently:" + extra_message; // prefix
+    message = "Currently:" + extra_message; // prefix
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
