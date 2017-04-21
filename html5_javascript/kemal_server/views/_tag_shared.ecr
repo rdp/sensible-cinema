@@ -1,12 +1,5 @@
 
 
-<select name="default_action" id='action_sel' onchange="">
-  <option value="mute">mute</option>
-  <option value="skip">skip</option>
-  <option value="yes_audio_no_video">yes_audio_no_video</option>
-  <option value="do_nothing">do_nothing (ex: movie content)</option>
-</select>
-<br/>
 
 
 <div id="category_div_id">
@@ -24,13 +17,17 @@ category:
 
 <div id="subcategory_div_id">
 sub category
-<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     <% subcategory_map().each{|k, v| %>
       <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
     <% } %>
 </select>
 </div>
+
+<select id="hidden_select" style="display : none;">
+ <option id="hidden_select_option"></option>
+</select>
 
 age specifier:
 <select name="age_maybe_ok" id="age_maybe_ok_id">
@@ -49,3 +46,6 @@ Impact to Story:
       <option value="<%= n %>"><%= n %>/10</option>
     <% } %>
   </select>
+
+
+<!-- can't put javascript since don't know how to inject it quite right, though I could use a separate render... -->

@@ -58,7 +58,11 @@
       "chri" +
       "st"=> ["___", "deity exclamation harsh"],
       "cock" => ["....", "bodily part reference harsh"],
-      "jove" => ["jove", "deity greek"]
+      "jove" => ["jove", "deity greek"],
+      "beaner" => ["beaner", "derogatory slur"],
+      "homo" => ["homo", "derogatory slur"],
+      "prick" => ["prick", "being mean"],
+      "faggot" => ["faggot", "derogatory slur"]
     }
 
     Bad_partial_profanities_with_sanitized_and_category =

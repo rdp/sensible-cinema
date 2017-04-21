@@ -1,7 +1,7 @@
 Subcats = {} of String => String
 # if you change anything in this file be careful that any auto scan subs need to match it [you can tell by doing a single upload]
 def subcategory_map
-   # I guess this is like "end consumer friendly" and "creator instructions" the double dash is needed
+   # "end consumer friendly" => "creator instructions" (and the double dash is needed...)
    
    if (Subcats.size == 0)  # I couldn't resist though probably unneeded LOL
    Subcats.merge!({
@@ -14,9 +14,10 @@ def subcategory_map
 
     "loud noise" => "profanity -- loud noise/screaming",
     "personal insult mild" => "profanity -- insult (\"moron\", \"idiot\" etc.)",
-    "personal insult harsh" => "profanity -- insult harsh (b.... etc.)",
+    "personal insult harsh" => "profanity -- insult harsh (son of a ..... etc.)",
     "personal attack mild" => "profanity -- attack command (\"shut up\" etc.)",
     "being mean" => "profanity -- being mean/cruel to another",
+    "derogatory slur" => "profanity -- categorizing derogatory slur",
     "crude humor" => "profanity -- crude humor, like poop, bathroom, gross, etc.",
     "bodily part reference mild" => "profanity -- bodily part reference mild (butt, bumm, suck...)",
     "bodily part reference harsh" => "profanity -- bodily part reference harsh",

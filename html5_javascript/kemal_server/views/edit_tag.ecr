@@ -14,12 +14,24 @@ to: <input type="text" name="endy" size="25" id="endy" value="<%= url.seconds_to
 default action to take if user selects to "edit all offensive content out" (to the "3 year old" level):
 <br/>
 
+      
+      
+       <br/>
+        action:
+        <select name="default_action" id='action_sel' onchange="">
+          <option value="mute">mute</option>
+          <option value="skip">skip</option>
+          <option value="yes_audio_no_video">yes_audio_no_video</option>
+          <option value="do_nothing">do_nothing (ex: movie content)</option>
+        </select>
+        <br/>
+        
 
 <%= render "views/_tag_shared.ecr" %>
 
 
 <br/>
-internal details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers are OK:<br/>
+internal tag details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers are OK:<br/>
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
 <br/>
@@ -69,21 +81,6 @@ select.addEventListener(
      false
 );
 	
-
-function showSubCatWithRightOptionsAvailable() { // shared :|
-  // theoretically they can never select unknown...
-  var type = document.getElementById("category_select").value; // category like "profanity"
-  var subcategory_select = document.getElementById("subcategory_select_id");
-  for (var i=0; i<subcategory_select.length; i++){
-    var option = subcategory_select.options[i];
-    var cat_from_subcat = option.text.split(" ")[0]; // profanity
-    console.log("comparing " + cat_from_subcat + " " + type);
-		if (cat_from_subcat != type && option.text.includes(" -- ")) {
-		  option.style.display = "none";
-		}
-		else {
-		  option.style.display = "block";
-		}
-	}
-}
+  <%= render "views/_tag_shared_js.ecr" %>
+  
 </script>

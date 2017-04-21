@@ -101,15 +101,18 @@ function addEditUi() {
       
        <br/>
         action:
+        <select name="default_action" id='action_sel' onchange="">
+          <option value="mute">mute</option>
+          <option value="skip">skip</option>
+          <option value="yes_audio_no_video">yes_audio_no_video</option>
+          <option value="do_nothing">do_nothing (ex: movie content)</option>
+        </select>
+        <br/>
+        <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
+        <br/>
+        
         
 
-<select name="default_action" id='action_sel' onchange="">
-  <option value="mute">mute</option>
-  <option value="skip">skip</option>
-  <option value="yes_audio_no_video">yes_audio_no_video</option>
-  <option value="do_nothing">do_nothing (ex: movie content)</option>
-</select>
-<br/>
 
 
 <div id="category_div_id">
@@ -117,8 +120,8 @@ category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
   <option value="" disabled selected>unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
-  <option value="violence">violence/blood/crude etc.</option>
-  <option value="physical">sex/nudity/lewd acts etc.</option>
+  <option value="violence">violence/blood/crude action etc.</option>
+  <option value="physical">sex/nudity/lewd etc.</option>
   <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
   <option value="movie-content">movie content (credits, etc.)</option>
   <option value="substance-abuse">substance use</option>
@@ -127,7 +130,7 @@ category:
 
 <div id="subcategory_div_id">
 sub category
-<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);">
+<select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     
       <option value="initial theme song">movie-content -- initial theme song/credits</option>    
@@ -146,11 +149,13 @@ sub category
     
       <option value="personal insult mild">profanity -- insult &#40;&quot;moron&quot;, &quot;idiot&quot; etc.&#41;</option>    
     
-      <option value="personal insult harsh">profanity -- insult harsh &#40;b.... etc.&#41;</option>    
+      <option value="personal insult harsh">profanity -- insult harsh &#40;son of a ..... etc.&#41;</option>    
     
       <option value="personal attack mild">profanity -- attack command &#40;&quot;shut up&quot; etc.&#41;</option>    
     
       <option value="being mean">profanity -- being mean/cruel to another</option>    
+    
+      <option value="derogatory slur">profanity -- categorizing derogatory slur</option>    
     
       <option value="crude humor">profanity -- crude humor, like poop, bathroom, gross, etc.</option>    
     
@@ -191,6 +196,8 @@ sub category
       <option value="profanity &#40;other&#41;">profanity -- other</option>    
     
       <option value="crudeness">violence -- crude humor, grossness, vulgar, etc.</option>    
+    
+      <option value="hand gesture">violence -- hand gesture</option>    
     
       <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
     
@@ -267,6 +274,10 @@ sub category
 </select>
 </div>
 
+<select id="hidden_select" style="display : none;">
+ <option id="hidden_select_option"></option>
+</select>
+
 age specifier:
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
@@ -310,12 +321,13 @@ Impact to Story:
       <option value="10">10/10</option>
     
   </select>
- <!-- render inline cuz uses macro -->
+
+
+<!-- can't put javascript since don't know how to inject it quite right, though I could use a separate render... --> <!-- render inline cuz uses macro -->
         <input type="hidden" name="id" id="tag_hidden_id" value="0"> 
         <br/>        
-        tag details: <input type="text" name="details" size="50" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
-        <br/>
-        <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
+        tag details: <input type="text" name="details" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
+        <br/> 
         <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
@@ -476,7 +488,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var new_top_line = timeStampToHuman(cur_time);
   var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);
   if (next_tag) {
-    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
+    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " for " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
     document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
   else {
@@ -1137,17 +1149,22 @@ function seekToTime(ts, callback) {
     console.log("not seeking to before 0 " + ts);
     ts = 0;
   }
+  var current_state = video_element.paused;
 	callback = callback || function() {}
   // try and avoid freezes after seeking...if it was playing first...
-	console.log("seeking to " + ts);
+	console.log("seeking to " + timeStampToHuman(ts));
   video_element.pause();
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around...
 	var timer = setInterval(function() {
 		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
-			console.log("appears it sought successfully to " + ts + " " + timeStampToHuman(ts));
-			video_element.play();
+			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts));
+      if (!current_state) {
+  			video_element.play();
+      } else {
+        // stay paused
+      }
 			clearInterval(timer);
 			callback();
 		}		
@@ -1321,24 +1338,36 @@ function removeFromArray(arr) {
     return arr;
 }
 
-function showSubCatWithRightOptionsAvailable() { // shared :|
+
+function showSubCatWithRightOptionsAvailable() {
   // theoretically they can never select unknown...
   var type = document.getElementById("category_select").value; // category like "profanity"
   var subcategory_select = document.getElementById("subcategory_select_id");
-  for (var i=0; i<subcategory_select.length; i++){
+  var width_needed = 0;
+  for (var i=0; i < subcategory_select.length; i++){
     var option = subcategory_select.options[i];
     var cat_from_subcat = option.text.split(" ")[0]; // profanity
-    console.log("comparing " + cat_from_subcat + " " + type);
 		if (cat_from_subcat != type && option.text.includes(" -- ")) {
 		  option.style.display = "none";
 		}
 		else {
 		  option.style.display = "block";
+      width_needed = Math.max(width_needed, option.offsetWidth);
 		}
 	}
+  resizeToCurrentSize(subcategory_select); // it probably reset to the top option of a new category [so new size]  
 }
 
-// no jquery load here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load times :| ]
+function resizeToCurrentSize(resize) { // requires hidden select also in doc for now :|
+       var hidden_opt = document.getElementById("hidden_select_option");
+       hidden_opt.innerHTML = resize.options[resize.selectedIndex].textContent;
+       var hidden_sel = document.getElementById("hidden_select");
+       hidden_sel.style.display = "unset"; // reset
+       resize.style.width = hidden_sel.clientWidth + "px";
+       hidden_sel.style.display = "none";
+} <!-- render inline cuz uses macro -->
+
+// no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load time]
 
 // on ready just in case here LOL
 onReady(start);
