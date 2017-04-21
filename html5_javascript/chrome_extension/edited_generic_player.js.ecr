@@ -121,7 +121,6 @@ function addEditUi() {
         <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
-    	<br/>
       <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
     	<br/>
       <a href=% onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
@@ -556,7 +555,7 @@ function loadForNewUrl() {
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
 		console.log("reloading...");
-    getRequest(loadSucceeded, loadFailed);
+    getRequest(function(json_string) {loadSucceeded(json_string); alert("reloaded 'em!");}, loadFailed);
   }
 	else {
 		alert("not reloading, possibly never loaded or in middle of a test edit [hit browser reload button if the latter]");
