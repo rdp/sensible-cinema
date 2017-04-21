@@ -134,6 +134,7 @@ function addEditUi() {
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
+  tagsCreated(); // from shared javascript
 }
 
 function playButtonClicked() {
@@ -526,6 +527,7 @@ function saveEditButton() {
   document.getElementById('subcategory_select_id').value = "";
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
+  setImpactIfMute(); // or set it to 1
   document.getElementById('tag_hidden_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }

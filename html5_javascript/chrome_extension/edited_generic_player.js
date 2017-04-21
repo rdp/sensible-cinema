@@ -112,9 +112,6 @@ function addEditUi() {
         <br/>
         
         
-
-
-
 <div id="category_div_id">
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
@@ -274,8 +271,8 @@ sub category
 </select>
 </div>
 
-<select id="hidden_select" style="display : none;">
- <option id="hidden_select_option"></option>
+<select id="hidden_select_id" style="display : none;"> <!-- needed/re-used for resizing subcats :| -->
+ <option id="hidden_select_option_id"></option>
 </select>
 
 age specifier:
@@ -346,6 +343,7 @@ Impact to Story:
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
+  tagsCreated(); // from shared javascript
 }
 
 function playButtonClicked() {
@@ -738,6 +736,7 @@ function saveEditButton() {
   document.getElementById('subcategory_select_id').value = "";
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
+  setImpactIfMute(); // or set it to 1
   document.getElementById('tag_hidden_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
@@ -1358,13 +1357,32 @@ function showSubCatWithRightOptionsAvailable() {
   resizeToCurrentSize(subcategory_select); // it probably reset to the top option of a new category [so new size]  
 }
 
-function resizeToCurrentSize(resize) { // requires hidden select also in doc for now :|
-       var hidden_opt = document.getElementById("hidden_select_option");
-       hidden_opt.innerHTML = resize.options[resize.selectedIndex].textContent;
-       var hidden_sel = document.getElementById("hidden_select");
-       hidden_sel.style.display = "unset"; // reset
-       resize.style.width = hidden_sel.clientWidth + "px";
+function resizeToCurrentSize(to_resize) { // requires hidden select also in doc for now :|
+       var hidden_opt = document.getElementById("hidden_select_option_id");
+       hidden_opt.innerHTML = to_resize.options[to_resize.selectedIndex].textContent;
+       var hidden_sel = document.getElementById("hidden_select_id");
+       hidden_sel.style.display = ""; // show it
+       to_resize.style.width = hidden_sel.clientWidth + "px";
        hidden_sel.style.display = "none";
+}
+
+function setImpactIfMute() {
+       var action_sel = document.getElementById("action_sel");
+       var selected = action_sel.options[action_sel.selectedIndex].textContent;
+       if (selected == "mute") {
+         document.getElementById("impact_to_movie_id").options.selectedIndex = 1; // == "1/10"
+       }
+}
+
+function tagsCreated() {
+  // they call this when we're ready to setup shtuff, somehow needed it...
+  
+  document.getElementById('action_sel').addEventListener(
+     'change',
+     setImpactIfMute,
+     false
+  );
+  resizeToCurrentSize(document.getElementById("subcategory_select_id"));
 } <!-- render inline cuz uses macro -->
 
 // no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load time]
