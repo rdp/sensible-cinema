@@ -9,12 +9,13 @@
                  alert('after opening the series, click play button for episode <%= url.episode_number %>');
               <% end %>
             ">
-            <div style="text-align: center;">Watch edited now!</div>
-            <% if url.editing_status == "Done with first pass tagging, could use second review" %>
-              (done, waiting for review)
-            <% elsif url.editing_status != "Done with second review, tags viewed as complete" %>
-              (work in progress)
-            <% end %>
+            <div style="text-align: center;">Watch edited now!
+              <% if url.editing_status == "Done with first pass tagging, could use second review" %>
+                (done, waiting for review)
+              <% elsif url.editing_status != "Done with second review, tags viewed as complete" %>
+                (work in progress)
+              <% end %>
+            </div>
           </a>
           <%= if_present_with_break url.details %>
           <%= if_present_with_break url.wholesome_uplifting_level, "Wholesome level:" %>
