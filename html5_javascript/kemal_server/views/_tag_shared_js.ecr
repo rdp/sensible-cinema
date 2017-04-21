@@ -1,0 +1,47 @@
+
+function showSubCatWithRightOptionsAvailable() {
+  // theoretically they can never select unknown...
+  var type = document.getElementById("category_select").value; // category like "profanity"
+  var subcategory_select = document.getElementById("subcategory_select_id");
+  var width_needed = 0;
+  for (var i=0; i < subcategory_select.length; i++){
+    var option = subcategory_select.options[i];
+    var cat_from_subcat = option.text.split(" ")[0]; // profanity
+		if (cat_from_subcat != type && option.text.includes(" -- ")) {
+		  option.style.display = "none";
+		}
+		else {
+		  option.style.display = "block";
+      width_needed = Math.max(width_needed, option.offsetWidth);
+		}
+	}
+  resizeToCurrentSize(subcategory_select); // it probably reset to the top option of a new category [so new size]  
+}
+
+function resizeToCurrentSize(to_resize) { // requires hidden select also in doc for now :|
+       var hidden_opt = document.getElementById("hidden_select_option_id");
+       hidden_opt.innerHTML = to_resize.options[to_resize.selectedIndex].textContent;
+       var hidden_sel = document.getElementById("hidden_select_id");
+       hidden_sel.style.display = ""; // show it
+       to_resize.style.width = hidden_sel.clientWidth + "px";
+       hidden_sel.style.display = "none";
+}
+
+function setImpactIfMute() {
+       var action_sel = document.getElementById("action_sel");
+       var selected = action_sel.options[action_sel.selectedIndex].textContent;
+       if (selected == "mute") {
+         document.getElementById("impact_to_movie_id").options.selectedIndex = 1; // == "1/10"
+       }
+}
+
+function tagsCreated() {
+  // they call this when we're ready to setup shtuff, somehow needed it...
+  
+  document.getElementById('action_sel').addEventListener(
+     'change',
+     setImpactIfMute,
+     false
+  );
+  resizeToCurrentSize(document.getElementById("subcategory_select_id"));
+}
