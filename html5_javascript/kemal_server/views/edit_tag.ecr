@@ -1,7 +1,7 @@
 <h1>Add details for content tag</h1> for 
 <%= url.name_with_episode %> 
 
-<form action="/save_tag/<%= url.id %>" method="POST">
+<form action="/save_tag/<%= url.id %>" method="POST" >
 
 <input type="hidden" name="id" value="<%= tag.id %>"> <!-- 0 is ok here -->
 
@@ -35,7 +35,7 @@ internal tag details (ex: "sally said .... OK?" (dots instead of real profanity,
 <input type="text" name="details" size="50" value="<%= tag.details %>"/>
 
 <br/>
-<input type="submit" value="Save" onclick='' >
+<input type="submit" value="Save" onclick="return doubleCheckValues();">
 </form>
 If there are any categories missing let us know!
 <br/>
@@ -68,18 +68,6 @@ $(document).ready(function() {
     showSubCatWithRightOptionsAvailable(); // show it, prune it :)
   }
 });
-
-
-select.addEventListener(
-     'change',
-     function() {
-       if (select.options[select.selectedIndex].value == "joke edit") {
-         alert("for joking edits please select do_nothing as the default, then create your own custom edit list where you modify it to get a mute or skip, that way for default playback it isn't edited out");
-         document.getElementById('action_sel').value = 'do_nothing';
-       }
-      },
-     false
-);
 	
   <%= render "views/_tag_shared_js.ecr" %>
   tagsCreated(); // we're live already here :)

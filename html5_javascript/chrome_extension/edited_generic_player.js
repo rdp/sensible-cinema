@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.org";  // prod
+var request_host="localhost:3000"; // dev
+// var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -275,7 +275,7 @@ sub category
  <option id="hidden_select_option_id"></option>
 </select>
 
-age specifier:
+age specifier (optional):
 <select name="age_maybe_ok" id="age_maybe_ok_id">
   <option value="0">not applicable/needed</option>
   
@@ -684,40 +684,11 @@ function openNextTagButton() {
 }
 
 function saveEditButton() {
-  var category = document.getElementById('category_select').value;
-  if (category == "") {
-    alert("please select category first");
+  if (!doubleCheckValues()) {
     return;
   }
-  var age = document.getElementById('age_maybe_ok_id').value;
-  
-  if (document.getElementById('subcategory_select_id').value == "") {
-    alert("please select subcategory first");
-    return;
-  }
-  var impact = document.getElementById('impact_to_movie_id').value;
-  if (impact == "0") {
-    alert("please select impact to story");
-    return;
-  }
-  if ((category == "violence" || category == "suspense") && age == "0") {
-    alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
-    return;
-  }
-  var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
-  if (start == 0) {
-    alert("Can't start at zero, please select 0.1s if you want one that starts near the beginning");
-    return;  
-  }
-  if (start >= endy) {
-    alert("end is not after the start, double check your timestamps");
-    return;  
-  }
-  if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected?");
-    return;  
-  }
+  
   if (endy > video_element.duration) {
     alert("tag goes past end of movie?");
     return;
@@ -1374,15 +1345,65 @@ function setImpactIfMute() {
        }
 }
 
+function doubleCheckValues() {
+  var category = document.getElementById('category_select').value;
+  if (category == "") {
+    alert("please select category first");
+    return false;
+  }
+  var age = document.getElementById('age_maybe_ok_id').value;
+  
+  if (document.getElementById('subcategory_select_id').value == "") {
+    alert("please select subcategory first");
+    return false;
+  }
+  var impact = document.getElementById('impact_to_movie_id').value;
+  if (impact == "0") {
+    alert("please select impact to story");
+    return false;
+  }
+  if ((category == "violence" || category == "suspense") && age == "0") {
+    alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
+    return false;
+  }
+  var start = humanToTimeStamp(document.getElementById('start').value);
+  var endy = humanToTimeStamp(document.getElementById('endy').value);
+  if (start == 0) {
+    alert("Can't start at zero, please select 0.1s if you want one that starts near the beginning");
+    return false;
+  }
+  if (start >= endy) {
+    alert("end is not after the start, double check your timestamps");
+    return false;
+  }
+  if (endy - start > 60*15) {
+    alert("tag is more than 15 minutes long? This should not typically be expected?");
+    return false;
+  }
+  return true;
+}
+
 function tagsCreated() {
-  // they call this when we're ready to setup shtuff, somehow needed it...
+  // they call this when we're ready to setup shtuff, somehow needed...
   
   document.getElementById('action_sel').addEventListener(
      'change',
      setImpactIfMute,
      false
   );
-  resizeToCurrentSize(document.getElementById("subcategory_select_id"));
+  setImpactIfMute(); // the default is mute so set it up as we'd anticipate :|
+  var subcat_select = document.getElementById("subcategory_select_id");
+  resizeToCurrentSize(subcat_select);
+  subcat_select.addEventListener(
+       'change',
+       function() {
+         if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit") {
+           alert("for joking edits please save do_nothing as the action, then create your own personalized edit list where you modify it to get a mute or skip, that way for default playback it isn't edited out");
+           document.getElementById('action_sel').value = 'do_nothing';
+         }
+        },
+       false
+  ); 
 } <!-- render inline cuz uses macro -->
 
 // no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load time]
