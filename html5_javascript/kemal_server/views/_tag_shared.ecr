@@ -1,7 +1,4 @@
 
-
-
-
 <div id="category_div_id">
 category:
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
@@ -25,7 +22,7 @@ sub category
 </select>
 </div>
 
-<select id="hidden_select" style="display : none;">
+<select id="hidden_select" style="display : none;"> <!-- needed/re-used for resizing subcats :|
  <option id="hidden_select_option"></option>
 </select>
 
