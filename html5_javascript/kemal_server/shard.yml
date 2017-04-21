@@ -18,4 +18,5 @@ dependencies:
   mysql:
     github: crystal-lang/crystal-mysql
     branch: master
-
+  smtp:
+    github: raydf/smtp.cr
