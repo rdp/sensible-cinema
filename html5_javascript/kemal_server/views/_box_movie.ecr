@@ -9,11 +9,13 @@
                  alert('after opening the series, click play button for episode <%= url.episode_number %>');
               <% end %>
             ">
-            <div style="text-align: center;">Watch edited now!
+            <div style="text-align: center;">
               <% if url.editing_status == "Done with first pass tagging, could use second review" %>
-                (done, waiting for review)
+                (done with first pass, waiting for review)
               <% elsif url.editing_status != "Done with second review, tags viewed as complete" %>
-                (work in progress)
+                (edits incomplete, work in progress)
+              <% else %>
+                Watch edited now!
               <% end %>
             </div>
           </a>
@@ -34,7 +36,7 @@
                  alert('after opening the series, click play button for episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
               ">
-              <% if url.editing_status != "Done with second review, tags viewed as complete" %>
+              <% if url.editing_status == "Done with second review, tags viewed as complete" %>
                 <h4>Watch edited now!</h4>
               <% end %>
             </a>
