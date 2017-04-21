@@ -2,24 +2,18 @@
 <h1>Play It My Way! <span style="text-shadow: 0 0 1em green, 0 0 0.2em blue; ">Beta.</span></h1>
 <div style="clear: both;"></div>
 <h1>Edit the movies you stream.</h1>
-Ever wished you could watch movies without worrying about what might be in them? Now you can watch movies "your way" -- without the stuff you don't want.
+Ever wished you could watch movies without worrying about what might be in them? Now you can watch movies "your way" -- without the stuff you don't want!
+
+<br/>
+<a href="#demo" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How does it work?</a>
+<div id="demo" class="collapse">
+  We tag the negative content in movies: profanity, sex, violence.  From our list, you can choose what you want to see or not.
+  Then, when you stream your movie, our plugin will edit out the parts you chose.
+</div>
+
 <a href="#awesome" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">What makes it awesome?</a>
 <div id="awesome" class="collapse">
 A few things we offer that you won't find anywhere else: If you have Amazon prime (or get a 30 day trial) then many of our edited movies are "free streaming." If you don't have prime don't worry, we also support a large number of "rent/buy" movies as well.  It opens up the possibility of more movies you or your family can watch, another "entertainment option" as it were.  You can watch movies without worrying about what might accidentally be in them.  Sit back and relax!  Want to watch a movie and tailor it for the youngest in the room so the whole family can watch together? Now you can!  Find something that bothers you in a movie? You can tag it and edit it out for just yourself. Find an a movie not yet in our system? You can vote for it, or even add it to our system yourself.  See a youtube you wish you could share with family without its one profanity? We do that!  We are giving you full control over how you watch online movies. We are changing the viewing paradigm and hope you'll join us!
-</div>
-<a href="#demo" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How does it work?</a>
-<div id="demo" class="collapse">
-  We provide you the ability to edit your movie when you stream it from amazon or youtube, so you can choose which parts you watch.  So we don't actually stream the movies, per se, we just edit them.
-  <div id=how_it_works >
-    Basically, watch your movie on a computer, our plugin will edit out the parts you don't want.
-    <br/>
-    <% if is_mobile(env) %>
-      Today you can only play edited on your computer/laptop.  Check out our collection in the meantime and come back on your computer tonight to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can come back more easily.
-    <% else %>
-      <br/>
-      <span style="font-size: larger;">Go to <a href=/installation>Installation</a> to install Play It My Way!</span>
-    <% end %>
-  </div>
 </div>
 
 <a href="#cost" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How much does it cost?</a>
@@ -33,6 +27,16 @@ Edited youtube's are "community driven" and will always be free, you can even ta
 We will be holding a Kickstarter soon, like our facebook page so you can get notifications of it!
 <br/>
 Why do we charge, you ask? It's so that we can add more movies, as well as develop a higher quality product.
+</div>
+
+<a href="#how_install" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">How do I install it?</a>
+<div id="how_install" class="collapse">
+ <% if is_mobile(env) %>
+   First, grab your computer or laptop.  Check out our collection in the meantime, and come back on your computer to try it out and stream some awesome edited movies!  Click <a href=/installation>here</a> to email yourself a link so you can find us more easily.
+    <% else %>
+      <br/>
+      <span style="font-size: larger;">Install Play It My Way by <a href=/installation>clicking here</a>!  Installation is free!</span>
+    <% end %>
 </div>
 
 <a href="#faq" class="btn btn-info" data-toggle="collapse" style="margin-bottom: 5px;">More questions?</a>
@@ -92,7 +96,6 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
 function markAsGoodChromeExtension() { // an override
   isInstalled = true;
   document.getElementById('success_chrome_extension_id').style.display = 'block';
-  document.getElementById('how_it_works').style.display = 'none';
 }
 
 var last_clicked;
