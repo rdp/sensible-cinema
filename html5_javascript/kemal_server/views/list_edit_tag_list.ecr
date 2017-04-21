@@ -6,6 +6,8 @@
 
 <% if tag_edit_list.id != 0 %>
   <input type="hidden" name="id" value="<%= tag_edit_list.id %>">
+<% else %>
+  This is a new list and hasn't been saved yet!
 <% end %>
 
 <input type="hidden" name="url_id" value="<%= tag_edit_list.url_id %>"> <!-- in case not saved yet -->
@@ -31,14 +33,14 @@ personal notes (ex: "for kids")
 <tr>
   <td><%= seconds_to_human tag.start %></td>
   <td><%= seconds_to_human tag.endy %></td>
-  <td>global default action:<%= tag.default_action %></td>
+  <td>typically: <%= tag.default_action %></td>
   <td><%= tag.category %></td>
   <td><%= tag.subcategory %></td>
   <td><%= tag.details %></td>
   <td>impact to story: <%= tag.impact_to_movie %></td>
   <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
   <td>
-		action to take for this personalized list:
+		your action:
 		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>'>
 		  <option value="mute">mute</option>
 		  <option value="skip">skip</option>

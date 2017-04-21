@@ -24,24 +24,31 @@ demo for the mobile...youtube embed FTW :)
   email :|
 
 he didn't install it...skipped over the install directions...
-  straight to movies is OK...
+  straight to movies is OK...we want to convince first :|
 
 "have not done yet" -> "have not installed yet"
+  check
   should have taken him straight to the installation page for extension
+    we do that now :|
 
 Watch Now -> Watch Now (edited)?
+  check
 
 Initial message "it's working" was gone almost immediately LOL...
   he wanted an "edited" icon bottom right...
   "edited on vs. edited off" ("default" doesn't actually say that LOL)
+    check'ish
 
 "action to take for this personalized" -> "your action" ?? :|
   "not saved yet?"
+    all check'ish...
 
 second tab "have been partially edited" instead of not double checked
   "fully partially and in progress"
+    check'ish
 
 legal concerns? what questions would people have?
+  check'ish'er
 
 ideal?
   new releases or old stuff...
@@ -49,16 +56,20 @@ ideal?
 redbox? list all we want to support later LOL
 
 did make it look like you have to have prime
+  check'ish
  
 wasn't clear on what is non-prime either... 
   maybe pull the word amazon???
-  sub tabs???
+  sub tabs?
+    check'ish startlingly
 
 are there any actually free on amazon/somewhere/anywhere?
   youtubes "they're free!"??
   some free would be great demo...
+    unclear...
 
 require login for edit_url :|
+  check
 
 == dpi ==
 
@@ -213,12 +224,20 @@ amazon prime normal
 pure pureflix LOL
 
 vudu has "free with adz" movies [!]
+  poor terms of use :|
+
+tubi.tv
+  free shtuff
+  poor'ish terms of use :|
 
 CBS has a subscription thing
 
 more: crackle, showtime anywhere, mgo, youtube movies
 
-which ones do people *care about* or *actually use* though? LOL
+crackle: some free
+  poor Terms of Use??
+
+which streaming sites do people *care about* or *actually use* though? LOL
 
 == which movies to screen'ish ==
 
@@ -243,68 +262,6 @@ one free per month, otherwise choose your donation-level?
 or "skew you, I'm going to pay through the nose for this thing"
   "if you want to donate to support, please do so by clicking here"
   I actually like this way too :)
-
-== kemal notes ==
-database with kemal:
-
-https://github.com/sdogruyol/kemal-pg-sample/blob/master/src/app.cr (raw postgres...)
-
-https://gist.github.com/rdp/f099508e26934d20938c4ffe37ee3298
-connection pool, mysql...
-
-it's actually using the pool right which is good...
-
-other pool: https://github.com/crystal-lang/crystal-db/blob/master/src/db/pool.cr
-
-crystal-db only works with sqlite, mysql
-
-I can use pools later, just open and close them for now [?] 
-  what the...
-   
- 
-I think "DB" is the main central DB fella...
-  this is terrifying...I mean it feels like you'll have threading issues immediately and *everywhere* LOL
-
-
-auth: filter
-before_all do |env|
- raise "Unauthorized" unless authorized?(env)
-end
-
-
-
-before_all "/" do |env|
-  puts "Setting response content type"
-  env.response.content_type = "application/json"
-end
-
-db = ConnectionPool.new(capacity: 25, timeout: 0.01) do # its either this or open it raw yourself each method :|
-  DB.open(ENV["DATABASE_URL"]) # only strings :|
-end
-
-before_get "/" do |env|
-  env.set "is_kemal_cool", true
-end
-
-it needs some kind of session object store so you can store more than just strings in the env :|
-
-
-
-== web server framework==
-
-kemal or amethyst 
-
-amethyst 2015?? assume dead :|
-
-kemal is the only maintained one? LOL
-
-kemal replaces moonshine
-
-frost (too old/toast/unmaintained'ish ? )
-
-toro == kemal but created 2016
-  one of them [?]
-  sooo confusing :|
 
 == db ==
 
@@ -365,51 +322,6 @@ add a skip near minute 1, pretend it's somebody getting hit with a peanut in the
 add a yes_audio_no_video right after that
 watch one studio c crayon song edited
 
-== streamerz ==
-amazon cinemark add-on [etc.]
-
-netflix of course
-
-hbo something...
-
-hulu also has some movies, seemingly none free LOL
-
-amazon prime normal
-
-pure [?]
-
-vudu has "free with adz" movies [!]
-
-CBS has a subscription offering
-
-more: crackle, showtime anywhere, mgo, youtube movies
-
-which ones do people *care about* or *actually use* though? LOL
-
-== which movies to screen'ish ==
-
-2750 amazon reviews or 10K  + LOL
-50K imdb? 75K :|
-
-== random ==
-
-firefox mobile + agent adjuster for...tablet playback? Except what I really want is Roku...so maybe...HTPC that can run chrome [linux?] hrm...
-
-== business ==
-
-"dp" is newer for amazon vs. gp hmm...
-
-one free per month, otherwise choose your donation-level?
-     offer money if they find/want to do new one LOL. $2 $5 ? yeah simpler on my head LOL
-        $1 to check one/refine/tweak?
-  definitely liking the free month
-    so basically paywall this thing <waaah>
-  TODO business survey :|
-
-or "skew you, I'm going to pay through the nose for this thing"
-  "if you want to donate to support, please do so by clicking here"
-  I actually like this way too :)
-
 == kemal notes ==
 database with kemal:
 
@@ -454,8 +366,6 @@ end
 
 it needs some kind of session object store so you can store more than just strings in the env :|
 
-
-
 == web server framework==
 
 kemal or amethyst 
@@ -471,52 +381,4 @@ frost (too old/toast/unmaintained'ish ? )
 toro == kemal but created 2016
   one of them [?]
   sooo confusing :|
-
-== db ==
-
-https://github.com/waterlink/active_record.cr
-
-https://github.com/juanedi/micrate db migration :|
-
-== netflix javascript ==
-
-they call "setState" or some odd :| on something...hrm...
-
-widevine?
-
-error code m7375
-
-fail windows 10 FF, IE, Chrome [html5]
-
-ubuntu: normal FF silverlight
-
-video_element has height
-
- playback klayer-ns playback-wrapper is above it...
-
- scrubber head klayer-ns surface  
- is the little dragger :|
- or scrubber target
-
-so maybe coudl fake a seek there...I mean maybe LOL.
-
-netflix remotes around???
-
-https://www.stephanboyer.com/post/105/netflix-party-synchronize-netflix-video-playback
-
-
-netflix remote app... [?]
-netflix windows app? ... [?]
-
-hack firefox so that one can enumerate over all objects in the whole land somehow???
-
-window.netflix.cadmium.UiEvents.fireEvent ?? :|
-
-smart phone/tablets/android etc: I think chrome is the only thing with widevine [that NFI needs?]
-   so...I mean there was a link somewhere once about it but...
-   either hope for plugins or...hack their binary [yikes?]
-    or ask for them to support it natively [already did'ish...]
-    or playon.tv/cast'ing it [?]
-  probaly just provide a custom "rent a box" application for it (VPS) and RDP into it...
-
 

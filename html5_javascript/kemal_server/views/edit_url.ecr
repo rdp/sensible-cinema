@@ -107,7 +107,7 @@ Ex: "A little dark", "a good question to discuss as a family afterward would be.
 <br/>
 <br/>
 
-rental cost (HD rental for 1 to 30 days, ex "2.00") (enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube), for amazon, enter cost for rental this episode assuming non-prime)
+rental cost (HD rental, ex "2.00") (enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube), for amazon, enter cost for rental just this episode, assuming non-prime, if it's free on a normally "pay" site then enter -1)
 <input type="text" name="rental_cost" size="5" value="<%= url.rental_cost if url.rental_cost %>"/>$
 <br/>
 <br/>
@@ -117,7 +117,7 @@ rental cost (SD)
 <br/>
 <br/>
 
-purchase cost (ex: full purchase this episode HD, assuming no discounts, see above)
+purchase cost (ex: full purchase this episode HD, assuming no discounts, see above). 
 <input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost if url.purchase_cost %>"/>$
 <br/>
 <br/>
