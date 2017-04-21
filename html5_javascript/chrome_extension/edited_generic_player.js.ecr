@@ -61,9 +61,11 @@ function addEditUi() {
     	<br/>
       <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Add a new content tag if we missed something!</a>
+      <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Did we miss anything? Let us know!</a>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
+      Report a problem <a href=# onclick="reportProblem(); return false">here</a>, or add a tag yourself, below:
+      <br/>
     	<span id=add_edit_span_id_for_extra_message><!-- play it my way is currently: muting --></span>
     	<br/>
     	<div id='tag_layer_top_line'>
@@ -157,6 +159,10 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
 
 function createNewEditList() {
   window.open("https://" + request_host + "/personalized_edit_list/" + current_json.url.id);
+}
+
+function reportProblem() {
+  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl() + "\nProblem report near " + timeStampToHuman(video_element.currentTime)));
 }
 
 function liveEpisodeName() {
@@ -653,16 +659,16 @@ function parseSuccessfulJson(json_string) {
 	}  
   
 	option = document.createElement("option");
-	option.text = "Unedited (0 tags)";
-	option.value = "-2"; // special case :|
-	dropdown.add(option);
-
-	option = document.createElement("option");
 	option.text = "Personalize what gets edited";
 	option.value = "-3"; // special case :|
 	dropdown.add(option);
-  
-	console.log("finished parsing response successful JSON");
+    
+	option = document.createElement("option");
+	option.text = "Watch Unedited (0 tags)";
+	option.value = "-2"; // special case :|
+	dropdown.add(option);
+	
+  console.log("finished parsing response successful JSON");
 }
 
 function countDoSomethingTags(tags) {
