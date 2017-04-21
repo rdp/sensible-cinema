@@ -33,7 +33,9 @@
                  alert('after opening the series, click play button for episode <%= url.episode_number %> to watch that episode edited');
               <% end %>
               ">
-              <h4>Watch edited now!</h4>
+              <% if url.editing_status != "Done with second review, tags viewed as complete" %>
+                <h4>Watch edited now!</h4>
+              <% end %>
             </a>
 	  </div>
          </div>
