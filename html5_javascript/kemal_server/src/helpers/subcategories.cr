@@ -38,6 +38,7 @@ def subcategory_map
     "profanity (other)" => "profanity -- other",
 		
     "crudeness" => "violence -- crude humor, grossness, vulgar, etc.",
+    "hand gesture" => "violence -- hand gesture",
     "stabbing/shooting no blood" => "violence -- stabbing/shooting no blood",
     "stabbing/shooting with blood" => "violence -- stabbing/shooting yes blood",
     "visible blood" => "violence -- visible blood of wound",
