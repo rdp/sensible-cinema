@@ -57,6 +57,7 @@ alter table urls ADD COLUMN image_url VARCHAR(2014) NOT NULL DEFAULT '';
 update urls set image_url = 'https://upload.wikimedia.org/wikipedia/en/b/ba/Airbender-CompleteBook3.jpg' where id = 1; -- test data :)
 alter table urls ADD COLUMN is_amazon_prime INT NOT NULL DEFAULT 0; -- probably should be TINYINT(1) but crystal mysql adapter no support it [?]
 alter table urls ADD COLUMN rental_cost DECIMAL NOT NULL DEFAULT 0.0; -- too scared to use floats
+update urls set rental_cost = -1 where id = 1; -- freebie
 alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
 
 alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
