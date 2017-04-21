@@ -285,7 +285,7 @@ age specifier:
 </select>
 <br/>
 
-Impact to Movie:
+Impact to Story:
   <select name="impact_to_movie" id="impact_to_movie_id">
     <option value="0">please select impact</option>
     
@@ -687,7 +687,7 @@ function saveEditButton() {
   }
   var impact = document.getElementById('impact_to_movie_id').value;
   if (impact == "0") {
-    alert("please select impact to movie");
+    alert("please select impact to story");
     return;
   }
   if ((category == "violence" || category == "suspense") && age == "0") {
