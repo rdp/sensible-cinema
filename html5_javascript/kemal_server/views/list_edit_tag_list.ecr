@@ -1,4 +1,7 @@
 <h1>Modify personalized edits</h1> for <%= tag_edit_list.url.name_with_episode %>
+<br/>
+
+Want to see all the (sometimes gruesome) details of each tag? click <a href=/personalized_edit_list/<%= tag_edit_list.url_id %>?show_tag_details=true %>here</a>.
 
 <br/>
 <br/>
@@ -43,7 +46,7 @@ personal notes (ex: "for kids")
   <tr>
     <td>
       <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" unless personal_action == "do_nothing" %>
-        onchange='updateSelect(<%= tag.id %>, "<%= tag.default_action %>");'
+        onchange='updateSelect(<%= tag.id %>, "<%= personal_action %>");'
       >
       <%= seconds_to_human tag.start %>
     </td>
@@ -51,7 +54,9 @@ personal notes (ex: "for kids")
     <td>typically: <%= tag.default_action %></td>
     <td><%= tag.category %></td>
     <td><%= tag.subcategory %></td>
-    <td><%= tag.details %></td>
+    <% if show_tag_details %>
+      <td><%= tag.details %></td>
+    <% end %>
     <td>
       <% if tag.impact_to_movie > 0 %>
         impact to story: <%= tag.impact_to_movie %>

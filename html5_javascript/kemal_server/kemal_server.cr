@@ -495,6 +495,8 @@ get "/personalized_edit_list/:url_id" do |env|
   tag_edit_list = TagEditList.get_only_by_url_id_or_nil url_id, user_id(env)
   tag_edit_list ||= TagEditList.new url_id, user_id(env)
     # and not save yet :|
+  show_tag_details =  env.params.query["show_tag_details"]?
+    
   render "views/list_edit_tag_list.ecr", "views/layout.ecr"
 end
 

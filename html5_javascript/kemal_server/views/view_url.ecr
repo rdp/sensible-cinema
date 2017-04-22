@@ -54,6 +54,14 @@ Total content tags in our system for this movie:
 <br/>Anybody can contribute, kind of like wikipedia!
 
 <hr/>
+<h3>Personalize your playback!</h3>
+You can tweak or change which of these content tags gets edited out, to your liking, click <a href=/personalized_edit_list/<%= url.id %>>here</a>.
+
+<% if url.tag_edit_lists(env).size > 0 %>
+  Appears you have a personalized list for this movie!
+<% end %>
+
+<hr/>
 <br/>
 <h3>Content tags for this movie</h3><a  name="tags"></a>
 Content tags are basically timestamps and descriptions of content that exists in a movie.  You can add new ones yourself if you run into something that should be tagged but isn't in our system yet.  Or edit existing ones to make them more precise, wikipedia-style.  
@@ -114,10 +122,6 @@ none yet, add one now!<br/><br/>
 <br/>
 If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
 <br/>
-
-<hr/>
-<h3>Personalize your playback!</h3>
-You can tweak or change which of these content tags gets edited out, to your liking, click <a href=/personalized_edit_list/<%= url.id %>>here</a>.
 
 <br/>
 <br/>
