@@ -50,7 +50,7 @@ personal notes (ex: "for kids")
       >
       <%= seconds_to_human tag.start %>
     </td>
-    <td><%= seconds_to_human tag.endy %></td>
+    <td><%= seconds_to_human tag.duration %></td>
     <td>typically: <%= tag.default_action %></td>
     <td><%= tag.category %></td>
     <td><%= tag.subcategory %></td>
@@ -60,6 +60,11 @@ personal notes (ex: "for kids")
     <td>
       <% if tag.impact_to_movie > 0 %>
         impact to story: <%= tag.impact_to_movie %>
+      <% end %>
+    </td>
+    <td>
+      <% if tag.age_maybe_ok > 0 %>
+        not OK age <%= tag.age_maybe_ok %> and under
       <% end %>
     </td>
     <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
