@@ -1,4 +1,4 @@
-<h1>Modify custom edit list</h1> for <%= tag_edit_list.url.name_with_episode %>
+<h1>Modify personalized edits</h1> for <%= tag_edit_list.url.name_with_episode %>
 
 <br/>
 <br/>
@@ -17,49 +17,61 @@ Your name for this list of edits:
 <br/>
 <br/>
 
+<div  style="display : none;">
 personal notes (ex: "for kids")
 <textarea name="status_notes" rows="1" cols="150" ><%= tag_edit_list.status_notes %></textarea>
+</div>
 <br/>
 <br/>
 
-<% if tag_edit_list.tags_with_selected_or_not.size == 0 %>
-  There are no content tags for this custom edit list to personalize yet, please go add some first then come back here.
+<% if tag_edit_list.tags_with_personalized_action.size == 0 %>
+  There are no content tags for this movie yet, please go add some first then come back here.
 <br/>
 <% end %>
 
-<table class="table table-striped">
-<% tag_edit_list.tags_with_selected_or_not.each{ |tag, action| %>
+<% all_types = tag_edit_list.tags_with_personalized_action.group_by{|tag, action| tag.category} %>
 
-<tr>
-  <td><%= seconds_to_human tag.start %></td>
-  <td><%= seconds_to_human tag.endy %></td>
-  <td>typically: <%= tag.default_action %></td>
-  <td><%= tag.category %></td>
-  <td><%= tag.subcategory %></td>
-  <td><%= tag.details %></td>
-  <td>impact to story: <%= tag.impact_to_movie %></td>
-  <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
-  <td>
-		your action:
-		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>'>
-		  <option value="mute">mute</option>
-		  <option value="skip">skip</option>
-		  <option value="yes_audio_no_video">yes_audio_no_video</option>
-		  <option value="do_nothing">do_nothing</option>
-		</select>
-		<script>
-	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= action %>';
-		</script>
-  </td>
-</tr>
+<% all_types.each{|category, tags_and_personalized_actions| %>
+  <h2><%= category %></h2>
+
+  <table class="table table-striped">
+  <% tags_and_personalized_actions.each{ |tag, action| %>
+
+  <tr>
+    <td><%= seconds_to_human tag.start %></td>
+    <td><%= seconds_to_human tag.endy %></td>
+    <td>typically: <%= tag.default_action %></td>
+    <td><%= tag.category %></td>
+    <td><%= tag.subcategory %></td>
+    <td><%= tag.details %></td>
+    <td>impact to story: <%= tag.impact_to_movie %></td>
+    <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
+    <td>
+  		your action:
+  		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>'>
+  		  <option value="mute">mute</option>
+  		  <option value="skip">skip</option>
+  		  <option value="yes_audio_no_video">yes_audio_no_video</option>
+  		  <option value="do_nothing">do_nothing</option>
+  		</select>
+  		<script>
+  	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= action %>';
+  		</script>
+    </td>
+  </tr>
   
+  <% } %>
+  </table>
+
 <% } %>
-</table>
+
+<div  style="display : none;">
 
 age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for none)
 <input type="text" name="age_recommendation_after_edited" size="5" value="<%= tag_edit_list.age_recommendation_after_edited %>"/>
 <br/>
 <br/>
+</div>
 
 <input type="submit" value="Save" onclick='document.getElementById("category_select").disabled = false; //so it'll post' >
 

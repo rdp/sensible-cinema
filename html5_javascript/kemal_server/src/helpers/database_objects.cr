@@ -561,7 +561,7 @@ class TagEditList
     Url.get_only_by_id(url_id)
   end
   
-  def tags_with_selected_or_not
+  def tags_with_personalized_action
     all_tags_this_movie = url.tags
     with_db do |conn|
       all_tags_this_movie.map{|tag|
