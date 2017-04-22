@@ -37,7 +37,10 @@ function addEditUi() {
   
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
     
-  <div id=load_failed_div_id style='display: none;' style='font-size: 14px;'>
+  <div id=load_failed_div_id style='display: none; a:link {font-size: 10px;}'>
+  <style>
+    #load_failed_div_id a:link { font-size: 10px; }
+  </style>
     <a href=# onclick="displayDiv(document.getElementById('click_to_add_to_system_div_id')); return false;">
       Unedited...
     </a>
@@ -764,7 +767,7 @@ function loadForNewUrl() {
 function reloadForCurrentUrl() {
   if (url_id != 0 && !inMiddleOfTestingEdit) {
 		console.log("reloading...");
-    getRequest(function(json_string) {loadSucceeded(json_string); alert("reloaded 'em");}, loadFailed);
+    getRequest(function(json_string) {loadSucceeded(json_string); alert("reloaded 'em!");}, loadFailed);
   }
 	else {
 		alert("not reloading, possibly never loaded or in middle of a test edit [hit browser reload button if the latter]");
@@ -990,9 +993,10 @@ function start() {
   video_element = findFirstVideoTagOrNull();
 
   if (video_element == null) {
-    // this one's pretty serious, just let it die...
+    // this one's pretty serious, yet could mean they're on youtube.com, there *was* a video playing but now it's just gone...hrm...
     // maybe could get here if they raw load the javascript?
-    alert("play it my way:\nfailure: unable to find a video playing, not loading edited playback...possibly need to reload then hit a play button before loading edited playback?");
+    console.log("play it my way:\nfailure: unable to find a video playing, not loading edited playback...possibly need to reload then hit a play button before loading edited playback?");
+    setTimeout(start, 1000); // just retry forever :|
     return;
   }
 
