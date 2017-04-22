@@ -9,10 +9,10 @@ if (typeof clean_stream_timer !== 'undefined') {
 }
 
 var extra_message = "";
-var inMiddleOfTestingEdit = false;
-var current_json;
+var inMiddleOfTestingTimer;
+var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, url_id;
+var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos;
 
 function addEditUi() {
 	
@@ -26,7 +26,6 @@ function addEditUi() {
   allEditStuffDiv.style.zIndex = "99999999";
   allEditStuffDiv.style.width = "600px";
   allEditStuffDiv.style.position = 'absolute';
-  url_id = 0; // init
   
 	allEditStuffDiv.innerHTML = `
    <!-- our own styles, # is id -->
@@ -109,7 +108,8 @@ function addEditUi() {
           <option value="mute">mute</option>
           <option value="skip">skip</option>
           <option value="yes_audio_no_video">yes_audio_no_video</option>
-          <option value="do_nothing">do_nothing (ex: movie content)</option>
+          <option value="mute_audio_no_video">mute_audio_no_video</option>
+          <option value="do_nothing">do_nothing (just tag)</option>
         </select>
         <br/>
         <input type='submit' value='Test edit once' onclick="testCurrentFromUi(); return false">
@@ -448,6 +448,7 @@ var i_muted_it = false; // attempt to let them still control their mute button :
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
 	var tag = areWeWithin(mutes, cur_time);
+  tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 	if (tag) {
 	  if (!video_element.muted) {
 	    video_element.muted = true;
@@ -474,8 +475,9 @@ function checkIfShouldDoActionAndUpdateUI() {
 	} // no else
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
+  tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 	if (tag) {
-		// use style.visibility here so it retains the space it would have otherwise used
+		// use style.visibility here so it retains the space on screen it would have otherwise used
 	  if (video_element.style.visibility != "hidden") {
 	    timestamp_log("hiding video leaving audio ", cur_time, tag);
 	    extra_message = "doing a no video yes audio";
@@ -515,7 +517,7 @@ function updateHTML(div, new_value) {
 }
 
 function isWatchingAdd() {
-  if (url_id != 0) {
+  if (url != null) {
 		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
 			console.log("watching add?");
       return true;
@@ -532,7 +534,7 @@ function isWatchingAdd() {
 
 function checkStatus() {
 	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
-  if (url_id != 0) {
+  if (url != null) {
 		if (isWatchingAdd()) {
 			console.log("watching add?");
 			// and do no mutes etc...
@@ -554,8 +556,7 @@ function timestamp_log(message, cur_time, tag) {
 
 function seekToBeforeEdit(delta) {
   var desired_time = video_element.currentTime + delta;
-  var all = mutes.concat(skips);
-  all = all.concat(yes_audio_no_videos);
+  var all = mutes.concat(skips).concat(yes_audio_no_videos).concat(mute_audio_no_videos);
 	var tag = areWeWithin(all, desired_time);  
   if (tag) {
     console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
@@ -634,14 +635,38 @@ function currentTestAction() {
   return document.getElementById('action_sel').value;
 }
 
+// callable timeout's ...
+var timeouts = {};  // hold the data
+function makeTimeout (func, interval) {
+
+    var run = function(){
+        timeouts[id] = undefined;
+        func();
+    }
+
+    var id = window.setTimeout(run, interval);
+    timeouts[id] = func
+
+    return id;
+}
+function removeTimeout (id) {
+    window.clearTimeout(id);
+    timeouts[id]=undefined;
+}
+
+function doTimeoutEarly (id) {
+  func = timeouts[id];
+  removeTimeout(id);
+  func();
+}
+
 function testCurrentFromUi() {
   if (currentTestAction() == 'do_nothing') {
     alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, before hitting save button');
     return; // abort
   }
-	if (inMiddleOfTestingEdit) {
-		alert('cant test two edits simultaneously, please wait for the first to finish first'); // otherwise I'm not sure what is going to happen to those arrays with their temp add-on at the end 
-		return; // abort
+	if (inMiddleOfTestingTimer) {
+    doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
 	}
 	var faux_tag = {
 		start: humanToTimeStamp(document.getElementById('start').value),
@@ -653,26 +678,28 @@ function testCurrentFromUi() {
     alert("appears your end is before your start, please fix this, then try again!");
     return; // abort!
   } 
-  currentEditArray().push(faux_tag);
+  var temp_array = currentEditArray();
+  temp_array.push(faux_tag);
   
-  inMiddleOfTestingEdit = true;
   var rewindSeconds = 2;
   var start = faux_tag.start - rewindSeconds;
   if (start < 0) {
-    start = 0; // allow edits to start at or near 0
+    start = 0; // allow test edits to start at or near 0 without messing up the "done" timing...
   }
   seekToTime(start, function() {
-    // not sure :| 
+    // slight race cond hrm...
     // video_element.playbackRate = 1; // back to normal speed
 	  length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000; 
-	  setTimeout(function() {
+	  inMiddleOfTestingTimer = makeTimeout(function() {
 			console.log("assuming done with edit...");
-	    currentEditArray().pop();
-	    inMiddleOfTestingEdit = false;
+	    temp_array.pop();
+      console.log("popping from " + currentEditArray());      
+	    removeTimeout(inMiddleOfTestingTimer);
+      inMiddleOfTestingTimer = null;
 	  }, wait_time_millis);
 	});
 }
@@ -687,8 +714,10 @@ function currentEditArray() {
       return yes_audio_no_videos;
     case 'do_nothing':
       return do_nothings;
+    case 'mute_audio_no_video':
+      return mute_audio_no_videos;
     default:
-      alert('internal error 1...'); // hopefully never see this
+      alert('internal error 1...' + currentTestAction()); // hopefully never get here...
   }
 }
 
@@ -717,7 +746,7 @@ function saveEditButton() {
     return;
   }
 
-  document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url_id;
+  document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url.id;
   document.getElementById('create_new_tag_form_id').submit();
   // feels like we don't need to anymore
   //  pauseVideo();
@@ -781,12 +810,12 @@ function loadForNewUrl() {
 }
 
 function reloadForCurrentUrl() {
-  if (url_id != 0 && !inMiddleOfTestingEdit) {
+  if (url != null && !inMiddleOfTestingTimer) {
 		console.log("reloading...");
     getRequest(function(json_string) {loadSucceeded(json_string); alert("reloaded 'em!");}, loadFailed);
   }
 	else {
-		alert("not reloading, possibly never loaded or in middle of a test edit [hit browser reload button if the latter]");
+		alert("not reloading, possibly none loaded or in middle of a test edit [hit browser reload button if the latter]");
 	}
 }
 
@@ -809,9 +838,9 @@ function loadSucceeded(json_string) {
 }
 
 function loadFailed(status) {
-  mutes = skips = yes_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
+  mutes = skips = yes_audio_no_videos = mute_audio_no_videos = []; // reset so it doesn't re-use last episode's edits for the current episode!
   current_json = null;
-  url_id = 0; // reset
+  url = null; // reset
   name = liveFullNameEpisode();
   episode_name = liveEpisodeString();
   expected_episode_number = liveEpisodeNumber();
@@ -850,13 +879,12 @@ function loadFailed(status) {
 
 function parseSuccessfulJson(json_string) {
   current_json = JSON.parse(json_string);
-  var url = current_json.url;
+  url = current_json.url;
   name = url.name;
   episode_name = url.episode_name;
   expected_current_url = current_json.expected_url_unescaped;
   amazon_second_url = current_json.url;
   expected_episode_number = url.episode_number;
-  url_id = url.id;
 	
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
 	removeAllOptions(dropdown); // out with any old...	
@@ -914,10 +942,11 @@ function countDoSomethingTags(tags) {
 }
 
 function setTheseTagsAsTheOnesToUse(tags) {
-	mutes = []; // it gets re-filled in this method :)
+	mutes = []; // all get re-filled in this method :)
 	skips = [];
 	yes_audio_no_videos = [];
-	do_nothings = []; // :|
+	do_nothings = [];
+  mute_audio_no_videos = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -927,6 +956,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
       push_to_array = skips;
 		} else if (tag.default_action == 'yes_audio_no_video') {
       push_to_array = yes_audio_no_videos;
+		} else if (tag.default_action == 'mute_audio_no_video') {
+      push_to_array = mute_audio_no_video;      
 		} else {
       push_to_array = do_nothings;
 		}
@@ -952,7 +983,7 @@ function getEditsFromCurrentTagList() {
 	}
 
 	if (selected_edit_list_id == "-3") {
-  	sendMessageToPlugin({do_url: "/personalized_edit_list/" + url_id});
+  	sendMessageToPlugin({do_url: "/personalized_edit_list/" + url.id});
 		return;
 	}  
   
