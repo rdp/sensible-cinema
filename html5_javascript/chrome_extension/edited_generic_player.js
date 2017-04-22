@@ -957,7 +957,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 		} else if (tag.default_action == 'yes_audio_no_video') {
       push_to_array = yes_audio_no_videos;
 		} else if (tag.default_action == 'mute_audio_no_video') {
-      push_to_array = mute_audio_no_video;      
+      push_to_array = mute_audio_no_videos;
 		} else {
       push_to_array = do_nothings;
 		}
