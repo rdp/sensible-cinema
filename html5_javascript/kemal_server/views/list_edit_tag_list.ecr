@@ -33,6 +33,9 @@ personal notes (ex: "for kids")
 
 <% all_types.each{|category, tags_and_personalized_actions| %>
   <h2><%= category %></h2>
+  <input id="" type="checkbox" checked 
+    onchange='updateSelectAll(<%= all_types[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
+  > Select all
 
   <table class="table table-striped">
   <% tags_and_personalized_actions.each{ |tag, personal_action| %>
@@ -110,6 +113,14 @@ function updateCheck(id, value) {
     checkbox.checked = false;
   } else {
     checkbox.checked = true;
+  }
+}
+
+function updateSelectAll(list, checked) {
+  for(var i=0, len=list.length; i < len; i++){
+    var checkbox = document.getElementById("checkbox_" + list[i]);
+    checkbox.checked = checked;
+    $(checkbox).triggerHandler('click');
   }
 }
 </script>
