@@ -32,7 +32,7 @@
     free while we're in Beta.
   <% end %>
   <% 
-    series = urls_for_host.select{|url| url.episode_number > 0 }
+    episodes = urls_for_host.select{|url| url.episode_number > 0 }
     movies = urls_for_host.select{|url| url.episode_number == 0 }
     freebies = urls_for_host.select{|url| url.rental_cost == -1 }
   %>
@@ -43,11 +43,12 @@
   <% } %>
 
   <br/> 
-  <% if series.size > 0 %>
+  <% if episodes.size > 0 %>
     <div style="clear: both;"></div>
-    <!-- no title today -->
-    <% series.each_with_index{ |url, idx|  %>
-       <% if idx > 0 && (url.name != series[idx - 1].name) %>
+    We can edit TV series episodes, too!
+    <div style="clear: both;"></div>
+    <% episodes.each_with_index{ |url, idx|  %>
+       <% if idx > 0 && (url.name != episodes[idx - 1].name) %>
          <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
        <% end %>
       <%= render "views/_box_movie.ecr" %>
