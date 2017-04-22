@@ -54,7 +54,7 @@ function addEditUi() {
   </div>
   
   <div id="load_succeeded_div_id" style='display: none;'>
-  	<div id="currently_playing_it_your_way_id" style="color: rgb(168, 168, 168);">
+  	<div id="currently_playing_it_your_way_id" style="color: rgb(188, 188, 188);">
       <svg style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
         <text  style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" id="big_edited_text_id">Edited!</text>
       </svg>
