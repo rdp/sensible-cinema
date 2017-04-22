@@ -35,27 +35,36 @@ personal notes (ex: "for kids")
   <h2><%= category %></h2>
 
   <table class="table table-striped">
-  <% tags_and_personalized_actions.each{ |tag, action| %>
+  <% tags_and_personalized_actions.each{ |tag, personal_action| %>
 
   <tr>
-    <td><%= seconds_to_human tag.start %></td>
+    <td>
+      <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" unless personal_action == "do_nothing" %>
+        onchange='updateSelect(<%= tag.id %>, "<%= tag.default_action %>");'
+      >
+      <%= seconds_to_human tag.start %>
+    </td>
     <td><%= seconds_to_human tag.endy %></td>
     <td>typically: <%= tag.default_action %></td>
     <td><%= tag.category %></td>
     <td><%= tag.subcategory %></td>
     <td><%= tag.details %></td>
-    <td>impact to story: <%= tag.impact_to_movie %></td>
+    <td>
+      <% if tag.impact_to_movie > 0 %>
+        impact to story: <%= tag.impact_to_movie %>
+      <% end %>
+    </td>
     <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
     <td>
   		your action:
-  		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>'>
+  		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
   		  <option value="mute">mute</option>
   		  <option value="skip">skip</option>
   		  <option value="yes_audio_no_video">yes_audio_no_video</option>
   		  <option value="do_nothing">do_nothing</option>
   		</select>
   		<script>
-  	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= action %>';
+  	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= personal_action %>';
   		</script>
     </td>
   </tr>
@@ -80,3 +89,27 @@ age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for n
 <a href=/delete_edit_tag_list/<%= tag_edit_list.url.id %>>Delete this whole edit list</a>.
 
 <a href =/view_url/<%= tag_edit_list.url.id %>><< Back to movie (cancel edits) </a>.
+
+<script>
+
+function updateSelect(id, default2) {
+  var select = document.getElementById("tag_select_" + id);
+  var checkbox = document.getElementById("checkbox_" + id);
+  if (checkbox.checked) {
+    // they just checked it...hmm...probably back to default
+    select.value = default2;
+  } else {
+    // they just unchecked it...
+    select.value = "do_nothing";
+  }
+}
+
+function updateCheck(id, value) {
+  var checkbox = document.getElementById("checkbox_" + id);
+  if (value == "do_nothing") {
+    checkbox.checked = false;
+  } else {
+    checkbox.checked = true;
+  }
+}
+</script>
