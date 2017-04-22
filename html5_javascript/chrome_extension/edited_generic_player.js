@@ -56,7 +56,7 @@ function addEditUi() {
   <div id="load_succeeded_div_id" style='display: none;'>
   	<div id="currently_playing_it_your_way_id" style="color: rgb(168, 168, 168);">
       <svg style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
-        <text  style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40">Edited!</text>
+        <text  style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" id="big_edited_text_id">Edited!</text>
       </svg>
        <br/>
   	  Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
@@ -514,12 +514,25 @@ function updateHTML(div, new_value) {
   }
 }
 
-function checkStatus() {
-	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
+function isWatchingAdd() {
   if (url_id != 0) {
 		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
 			console.log("watching add?");
+      return true;
 			// and do nothing
+		}
+    else {
+      return false;
+    }
+  }
+}
+
+function checkStatus() {
+	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
+  if (url_id != 0) {
+		if (isWatchingAdd()) {
+			console.log("watching add?");
+			// and do no mutes etc...
 		}
 		else {
       checkIfShouldDoActionAndUpdateUI();
@@ -877,6 +890,12 @@ function parseSuccessfulJson(json_string) {
 	option.text = "Watch Unedited (0 tags)";
 	option.value = "-2"; // special case :|
 	dropdown.add(option);
+  
+  if (url.editing_status == 'Done with second review, tags viewed as complete') {
+    document.getElementById("big_edited_text_id").innerHTML = "Edited!";
+  } else {
+    document.getElementById("big_edited_text_id").innerHTML = "Partially edited...";
+  }
 	
   console.log("finished parsing response successful JSON");
 }
@@ -1020,6 +1039,10 @@ function coordsWithinElement(cursorX, cursorY, element) {
 }
 
 function mouseJustMoved(event) {
+  if (isWatchingAdd()) {
+    console.log("not showing UI since in add...");
+    return; // don't show "Edited!..."
+  }
   var cursorX = event.pageX;
   var cursorY = event.pageY;
   var all_pimw_stuff = document.getElementById("all_pimw_stuff_id");
