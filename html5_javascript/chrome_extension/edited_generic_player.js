@@ -346,7 +346,7 @@ Impact to Story:
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
-  tagsCreated(); // from shared javascript
+  tagsCreated(); // from shared javascript, means "the HTML elements are in there"
 }
 
 function playButtonClicked() {
@@ -524,7 +524,10 @@ function isWatchingAdd() {
     else {
       return false;
     }
+  } else {
+    return false; // ??
   }
+  
 }
 
 function checkStatus() {
@@ -1039,10 +1042,6 @@ function coordsWithinElement(cursorX, cursorY, element) {
 }
 
 function mouseJustMoved(event) {
-  if (isWatchingAdd()) {
-    console.log("not showing UI since in add...");
-    return; // don't show "Edited!..."
-  }
   var cursorX = event.pageX;
   var cursorY = event.pageY;
   var all_pimw_stuff = document.getElementById("all_pimw_stuff_id");
@@ -1050,6 +1049,7 @@ function mouseJustMoved(event) {
   var mouse_within_all_pimw_stuff = coordsWithinElement(cursorX, cursorY, all_pimw_stuff_id);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
   	displayDiv(all_pimw_stuff);
+  
     clearTimeout(mouse_move_timer); // in case previously set
     if (!mouse_within_all_pimw_stuff) {
       mouse_move_timer = setTimeout(hideAllPimwStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
@@ -1059,6 +1059,10 @@ function mouseJustMoved(event) {
     // mimic youtube remove immediately if mouse ever leaves video
     hideAllPimwStuff();
     clearTimeout(mouse_move_timer);
+  }
+  if (isWatchingAdd()) {
+    console.log("not showing UI since in add...");
+    hideAllPimwStuff();
   }
 }
 
