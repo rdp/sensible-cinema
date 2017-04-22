@@ -69,7 +69,7 @@ personal notes (ex: "for kids")
     </td>
     <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
     <td>
-  		your action:
+  		your personalized action:
   		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
   		  <option value="mute">mute</option>
   		  <option value="skip">skip</option>
@@ -101,6 +101,7 @@ age_recommendation_after_edited (for this personalized list) (ex: 10, or 0 for n
 
 <a href=/delete_edit_tag_list/<%= tag_edit_list.url.id %>>Delete this whole edit list</a>.
 
+<br/>
 <a href =/view_url/<%= tag_edit_list.url.id %>><< Back to movie (cancel edits) </a>.
 
 <script>
@@ -130,7 +131,7 @@ function updateSelectAll(list, checked) {
   for(var i=0, len=list.length; i < len; i++){
     var checkbox = document.getElementById("checkbox_" + list[i]);
     checkbox.checked = checked;
-    $(checkbox).triggerHandler('click');
+    $(checkbox).triggerHandler('change');
   }
 }
 </script>
