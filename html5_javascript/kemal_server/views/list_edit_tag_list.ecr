@@ -41,7 +41,7 @@ personal notes (ex: "for kids")
   > Select all
 
   <table class="table table-striped">
-  <% tags_and_personalized_actions.each{ |tag, personal_action| %>
+  <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.each{ |tag, personal_action| %>
 
   <tr>
     <td>
@@ -52,7 +52,6 @@ personal notes (ex: "for kids")
     </td>
     <td><%= seconds_to_human tag.duration %></td>
     <td>typically: <%= tag.default_action %></td>
-    <td><%= tag.category %></td>
     <td><%= tag.subcategory %></td>
     <% if show_tag_details %>
       <td><%= tag.details %></td>
