@@ -11,11 +11,12 @@ Want to see all the (sometimes gruesome) details of each tag? click <a href=/per
   <input type="hidden" name="id" value="<%= tag_edit_list.id %>">
 <% else %>
   This is a new list and hasn't been saved yet!
+  <br/>
 <% end %>
 
 <input type="hidden" name="url_id" value="<%= tag_edit_list.url_id %>"> <!-- in case not saved yet -->
 
-Your name for this list of edits:
+Enter a name for this personalized edit:
 <textarea name="description" rows="1" cols="150" ><%= tag_edit_list.description %></textarea>
 <br/>
 <br/>
@@ -35,7 +36,7 @@ personal notes (ex: "for kids")
 <% all_types = tag_edit_list.tags_with_personalized_action.group_by{|tag, action| tag.category} %>
 
 <% all_types.each{|category, tags_and_personalized_actions| %>
-  <h2><%= category %></h2>
+  <h2><%= category.capitalize %></h2>
   <input id="" type="checkbox" checked 
     onchange='updateSelectAll(<%= all_types[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Select all
