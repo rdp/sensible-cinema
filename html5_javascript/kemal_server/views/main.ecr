@@ -94,6 +94,26 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
     <% } %>
   </div>
 
+<script>
+
+loaded = false;
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  var target = $(e.target).attr("href") // activated tab string like "#tab_1"
+  if (target == "#tab_1" && !loaded) {
+    loaded = true;
+    $("#tab_1").html('Loading...'); //
+    $.ajax({
+        url : '/get_in_works',
+        type: 'GET',
+        success: function(data){
+            $('#tab_1').html(data);
+        }
+    }); 
+  }
+});
+
+</script>
+
 <br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for a movie to be the next one on our queue to be edited.
 <br>
 <br/>
