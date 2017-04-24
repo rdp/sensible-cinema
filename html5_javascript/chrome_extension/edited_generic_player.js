@@ -335,9 +335,9 @@ Impact to Story:
       
       <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
     	<br/>
-      <a href=% onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
+      <a href=# onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
     	<br/>
-      <a href=% onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
+      <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
@@ -812,7 +812,13 @@ function loadForNewUrl() {
 function reloadForCurrentUrl() {
   if (url != null && !inMiddleOfTestingTimer) {
 		console.log("reloading...");
-    getRequest(function(json_string) {loadSucceeded(json_string); alert("reloaded 'em!");}, loadFailed);
+    var link = document.getElementById('reload_tags_a_id');
+    link.innerHTML = "Reloading...";
+    getRequest(function(json_string) {
+      loadSucceeded(json_string);     
+      link.innerHTML = "Reloaded!";
+      setTimeout(function() {link.innerHTML = "Reload tags";}, 3000);
+    }, loadFailed);
   }
 	else {
 		alert("not reloading, possibly none loaded or in middle of a test edit [hit browser reload button if the latter]");
