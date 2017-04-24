@@ -2,7 +2,7 @@ version: 1.0
 shards:
   db:
     github: crystal-lang/crystal-db
-    version: 0.4.1
+    version: 0.4.2
 
   kemal:
     github: sdogruyol/kemal
@@ -23,8 +23,4 @@ shards:
   radix:
     github: luislavena/radix
     version: 0.3.8
-
-  smtp:
-    github: raydf/smtp.cr
-    commit: 1301f244fd1e251244b0a9fb7f8bc817da9c8854
 
