@@ -66,11 +66,11 @@ function addEditUi() {
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
       Report a problem <a href=# onclick="reportProblem(); return false">here</a>
-      <br/>or add a tag yourself, here:
+      <br/>or add a tag yourself, to create a new tag:
     	<span id=add_edit_span_id_for_extra_message><!-- currently: muting --></span>
     	<br/>
     	<div id='tag_layer_top_line'>
-    	  Create a new tag by entering the timestamp, testing it, then saving it: 
+    	  Tag the timestamp, test it, then save it: 
     		<br/>current time=<span id="top_line_current_time" />
     	</div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
@@ -620,7 +620,7 @@ function collapseAddTagStuff() {
 }
 
 function setEditedControlsToTopLeft() {
-  var left = getLocationOfElement(video_element).left; 
+  var left = getLocationOfElement(video_element).right - 450; // amazon x-ray :| 
   var top = getLocationOfElement(video_element).top;
   top += 85; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
 	if (isAmazon()) {
@@ -1271,7 +1271,9 @@ function getLocationOfElement(el) {
     left: el.left + window.scrollX,
     top: el.top + window.scrollY,
 		width: el.width,
-		height: el.height
+		height: el.height,
+    right: el.left + window.scrollX + el.width,
+    bottom: el.top + window.scrollY + el.height
   }
 }
 
