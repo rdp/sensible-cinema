@@ -90,7 +90,13 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
   <!-- Tab panes -->
   <div class="tab-content">
     <% settings.each_with_index{|setting, idx| %>
-      <div role="tabpanel" class="tab-pane <%= "active" if idx == 0 %>" id="tab_<%= idx %>"><%= render "views/_list_movies.ecr" %></div>
+      <div role="tabpanel" class="tab-pane <%= "active" if idx == 0 %>" id="tab_<%= idx %>">
+         <% if idx == 0 %>
+           <%= render "views/_list_movies.ecr" %>
+         <% else %>
+           Loading list for you...
+         <% end %>
+      </div>
     <% } %>
   </div>
 
@@ -101,7 +107,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
   var target = $(e.target).attr("href") // activated tab string like "#tab_1"
   if (target == "#tab_1" && !loaded) {
     loaded = true;
-    $("#tab_1").html('Loading...'); //
+    // $("#tab_1").html('Loading...'); //
     $.ajax({
         url : '/get_in_works',
         type: 'GET',
