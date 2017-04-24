@@ -100,18 +100,20 @@ get "/for_current_just_settings_json" do |env|
   if !url_or_nil
     env.response.status_code = 412 # avoid kemal default 404 handler which doesn't do strings :| 412 => precondition failed LOL
     "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
-     env.response.headers.add "Access-Control-Allow-Origin", urlish # allow the 412 through still :|
+    env.response.headers.add "Access-Control-Allow-Origin", urlish # allow the 412 through still, and to everywhere
   else
     url = url_or_nil.as(Url)
     env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
-    url.count_downloads += 1
-    url.save # :|
     # appears if I want to be able to detect logged in or not, it has to be exact match for Allow-Origin :|
     if HTML.unescape(url.url).starts_with?(standardize_url urlish) # standardize so smile.amazon still works :|
-      env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (really any cookies at all). Yikes.
+      env.response.headers.add "Access-Control-Allow-Origin", urlish # apparently has to be exactly instead of "*" for it to reuse your normal cookies (or is it any at all?)
     else
-      # allow them to be seen just "for viewing" on playitmyway.org...
+      # allow them to be seen just "for normal viewing" ex: on playitmyway.org...
     end
+    start = Time.now
+    url.count_downloads += 1
+    url.save # we shouldn't hit this tooo often...XXX does this slow us down?
+    puts "inc count tok #{Time.now - start}"
     json_for(url, env)
   end
 end
