@@ -3,6 +3,9 @@
 
   window.onAmazonLoginReady = function() {
     amazon.Login.setClientId('amzn1.application-oa2-client.faf94452d819408f83ce8a93e4f46ec6');
+  <% if logged_in_user(env).type == "amazon" %>
+    document.getElementById('logout_amazon').click();
+  <% end %>
   };
   (function(d) {
     var a = d.createElement('script'); a.type = 'text/javascript';
@@ -55,12 +58,11 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
 <br/>
 
 <script>
+<% if logged_in_user(env).type == "facebook" %>
   window.fbAsyncInit = function() {
-<% if logged_in_user(env).type == "amazon" %>
-  document.getElementById('logout_amazon').click();
-<% else %>
-  document.getElementById('logout_facebook').click();
+    document.getElementById('logout_facebook').click();
+    // guess amazon might not be loaded yet here
+  };
 <% end %>
-};
 
 </script>
