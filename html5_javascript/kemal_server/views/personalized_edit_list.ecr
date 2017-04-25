@@ -33,17 +33,19 @@ personal notes (ex: "for kids")
 <br/>
 <% end %>
 
-<% all_types = tag_edit_list.tags_with_personalized_action.group_by{|tag, action| tag.category} %>
+<% tags_by_category = tag_edit_list.tags_with_personalized_action.group_by{|tag, action| tag.category} %>
 
-<% all_types.each{|category, tags_and_personalized_actions| %>
+<% tags_by_category.each{|category, tags_and_personalized_actions| %>
   <h2><%= category.capitalize %></h2>
   <input id="" type="checkbox" checked 
-    onchange='updateSelectAll(<%= all_types[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
+    onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Select all
 
-  <table class="table table-striped">
-  <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.each{ |tag, personal_action| %>
+  <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.group_by{|tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_personal_actions| %>
 
+  <%= subcategory %>
+  <table class="table table-striped">
+  <% subcategory_tags_and_personal_actions.each{|tag, personal_action| %>
   <tr>
     <td>
       <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" unless personal_action == "do_nothing" %>
@@ -81,10 +83,11 @@ personal notes (ex: "for kids")
     </td>
   </tr>
   
-  <% } %>
+  <% } %> <!-- end tag -->
   </table>
+  <% } %> <!-- end subcat -->
 
-<% } %>
+<% } %> <!-- end cat -->
 
 <div  style="display : none;">
 
