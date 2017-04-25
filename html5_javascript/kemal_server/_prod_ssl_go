@@ -1,10 +1,5 @@
-echo "use like https://playitmyway.org"
-sudo echo "root successfully enabled...we'll need that in a sec..."
-
 # run certbot-auto to get certs it seems... then 
 # sudo crontab =>  30 2 * * 1 /home/rdp/certbot-auto renew --quiet --no-self-upgrade && killall kemal_server
 
 # no --release here since it just takes forever on DO
-git pull
-echo "re-compiling..."
-sudo -u rdp crystal build --debug ./kemal_server.cr && sudo setcap cap_net_bind_service=+ep ./kemal_server && sudo -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.org/fullchain.pem -p 443
+sudo setcap cap_net_bind_service=+ep ./kemal_server && sudo -u rdp ./kemal_server --ssl --ssl-key-file /etc/letsencrypt/live/playitmyway.org/privkey.pem --ssl-cert-file /etc/letsencrypt/live/playitmyway.org/fullchain.pem -p 443

@@ -74,12 +74,15 @@ get "/redo_all_thumbnails" do |env|
 end
 
 get "/sync_web_server" do |env|
-  Kemal.stop # AFAICT only stops accepting new...
   spawn do
-    sleep 0.1 # faux quiesce LOL
-    system("~/sync.sh") # kills this process XXXX even more graceful restart...hrm...
+    system("git pull")
+    if system("crystal build --debug ./kemal_server.cr")
+      Kemal.stop # should allow this process to die as well...
+      puts "should be dying..." # have to let it die so the bash script can sudo set permissions :|
+    else
+      puts "not restarting, it didn't build, batman!" 
+    end
   end
-  "from server: killing it in 0.1..." 
 end
 
 get "/all_tags" do |env|
@@ -713,4 +716,3 @@ def add_to_flash(env, string)
 end
 
 Kemal.run
-sleep # needed for my cruddy restart after sync stuff?? :|
