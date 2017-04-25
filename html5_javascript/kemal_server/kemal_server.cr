@@ -77,7 +77,7 @@ get "/sync_web_server" do |env|
   system("git pull")
   if system("crystal build --debug ./kemal_server.cr")
     Kemal.stop # should allow this process to die as well...
-    "should be dying..." # have to let it die so the bash script can sudo set permissions :|
+    "should be quick restarting..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
   else
     "not restarting, it didn't build, batman!" 
   end
