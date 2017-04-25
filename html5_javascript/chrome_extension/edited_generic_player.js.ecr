@@ -24,7 +24,7 @@ function addEditUi() {
   allEditStuffDiv.style.fontSize = "15px";
   allEditStuffDiv.style.textShadow="2px 1px 1px black";
   allEditStuffDiv.style.zIndex = "99999999";
-  allEditStuffDiv.style.width = "600px";
+  allEditStuffDiv.style.width = "450px";
   allEditStuffDiv.style.position = 'absolute';
   
 	allEditStuffDiv.innerHTML = `
@@ -32,6 +32,7 @@ function addEditUi() {
   <style>
     #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
   	#all_pimw_stuff_id a:visited { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
+  	#all_pimw_stuff_id { text-align: right;}  
   </style>
   
   <!-- no pre-load message here since...we don't start the watcher thread until after the first fail or success to give us the right coords, and possibly annoying... -->
@@ -65,13 +66,12 @@ function addEditUi() {
       Did we miss anything? <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Let us know!</a>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
-      Report a problem <a href=# onclick="reportProblem(); return false">here</a>
-      <br/>or add a tag yourself, to create a new tag:
+      Report a problem to us <a href=# onclick="reportProblem(); return false">here</a>
+      <br/>Or create a tag timestamp yourself: enter time, test, then save it:
     	<span id=add_edit_span_id_for_extra_message><!-- currently: muting --></span>
     	<br/>
     	<div id='tag_layer_top_line'>
-    	  Tag the timestamp, test it, then save it: 
-    		<br/>current time=<span id="top_line_current_time" />
+    		<span id="top_line_current_time" />
     	</div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
       	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -278,7 +278,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	else {
 	  if (video_element.style.visibility != "") {
 	    video_element.style.visibility=""; // non hidden :)
-	    console.log("unhiding video with left audio" + cur_time);
+	    console.log("unhiding video with left audio " + cur_time);
 	    extra_message = "";
 	  }
 	}
@@ -286,7 +286,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var new_top_line = timeStampToHuman(cur_time);
   var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);
   if (next_tag) {
-    new_top_line += " next tag: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " for " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
+    new_top_line += " next: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " for " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
     document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
   else {
@@ -411,12 +411,13 @@ function collapseAddTagStuff() {
 }
 
 function setEditedControlsToTopLeft() {
-  var left = getLocationOfElement(video_element).right - 450; // amazon x-ray :| 
+  var left = getLocationOfElement(video_element).right - 450; // amazon x-ray :|
   var top = getLocationOfElement(video_element).top;
-  top += 85; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
-	if (isAmazon()) {
-		top += 35; // allow them to expand x-ray to disable it
-	}
+  if (isYoutube()) {
+    top += 85; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
+  } else {
+    top += 85; // top amazon stuff
+  }
   var allPimwStuff = document.getElementById("all_pimw_stuff_id")
   allPimwStuff.style.left = left + "px";
   allPimwStuff.style.top = top + "px";

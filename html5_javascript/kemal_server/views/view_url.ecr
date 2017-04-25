@@ -73,7 +73,7 @@ Here's what we have so far:
 <table class="table table-striped" style="width: auto;">
   <thead>
     <tr>
-      <th>start</th>
+      <th>start - end</th>
       <th>duration</th>
       <th>default action</th>
       <th>category</th>
@@ -90,7 +90,8 @@ Here's what we have so far:
 <% tags = url.tags; url.tags.each do |tag|  %>
   <tr>
   <td>
-    <%= seconds_to_human tag.start %>
+    <%= seconds_to_human tag.start %> - 
+    <%= seconds_to_human tag.end %>
     <% if tag2 = tag.overlaps_any?(tags) %>
       (overlaps with tag starting at <%= seconds_to_human tag2.start %>)
     <% end %>
