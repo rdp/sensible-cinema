@@ -55,10 +55,13 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
 <br/>
 
 <script>
+  window.fbAsyncInit = function() {
 <% if logged_in_user(env).type == "amazon" %>
   document.getElementById('logout_amazon').click();
 <% else %>
+};
   document.getElementById('logout_facebook').click();
 <% end %>
+};
 
 </script>
