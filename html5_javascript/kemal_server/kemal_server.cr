@@ -524,7 +524,7 @@ post "/send_me_mail" do |env|
   email = env.params.body["email_to_send_to"]
   # https://askubuntu.com/a/13118/20972
   # TODO use a better email addy once it works/can work??
-  system("sendemail -f freeldssheetmusic@gmail.com -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org see you soon!' -s smtp.gmail.com -o tls=yes -xu freeldssheetmusic@gmail.com -xp #{File.read("email_pass").strip} -s smtp.gmail.com:587")
+  system("sendemail -f freeldssheetmusic@gmail.com -t #{email} -u 'Link to the edited movie site' -m 'Here is the link! https://playitmyway.org see you soon! Want to get email updates? Create an account here: https://playitmyway.org/login ' -s smtp.gmail.com -o tls=yes -xu freeldssheetmusic@gmail.com -xp #{File.read("email_pass").strip} -s smtp.gmail.com:587")
   add_to_flash env, "Success, send an invitation email to #{email}, you should see an email in your inbox now!"
   env.redirect "/"
 end
