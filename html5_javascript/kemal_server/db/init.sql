@@ -148,6 +148,7 @@ alter table urls modify purchase_cost DECIMAL(10, 2);
 ALTER TABLE users DROP INDEX unique_email_user_id;
 -- just pretend that once an email is in there, you're stuck with it...so I can combine them later if people login'ish up front [?]
 ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
+alter table user add column email_subscribe BOOL DEFAULT false; -- actually 0 or 1 apparently
 
 -- and output to screen to show success...
 select * from urls;
