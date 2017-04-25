@@ -15,10 +15,10 @@
 
 Logged in with amazon?
 <br/>
-Click here to <a id="Logout">Logout</a> of our site via amazon login.
+Click here to <a id="logout_amazon">Logout</a> of our site via amazon login.
 <script type="text/javascript">
 
-document.getElementById('Logout').onclick = function() {
+document.getElementById('logout_amazon').onclick = function() {
     amazon.Login.logout();
     console.log("amazon logout hopefully successfull fwiw..."); // XXXX
     window.location.href = "/logout_session"; // redir
@@ -50,6 +50,15 @@ function logout_facebook() {
 
 <br/>
 <br/>
-Logged in with facebook? click here to <a href=# onclick="logout_facebook(); return false;">Logout</a> of our site via facebook. <!-- it does a redir on success logout -->
+Logged in with facebook? click here to <a href=# id=logout_facebook onclick="logout_facebook(); return false;">Logout</a> of our site via facebook. <!-- it does a redir on success logout -->
 <!-- doesn't remove permissions though...ok that is weird...but I guess if they're logged out then I can't *use* their permissions...until they log in again...ok what? -->
 <br/>
+
+<script>
+<%= if user_id(env).starts_wit? "amzn" %>
+  document.getElementById('logout_amazon').click();
+<% else %>
+  document.getElementById('logout_facebook').click();
+<% end %>
+
+</script>

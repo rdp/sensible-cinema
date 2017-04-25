@@ -317,7 +317,12 @@ def setup_user_and_session(user_id, name, email, type, env)
 end
 
 get "/logout" do |env|
-  render "views/logout.ecr", "views/layout.ecr" 
+  if !logged_in?(env)
+    add_to_flash(env, "already logged out")
+    env.redirect "/"
+  else
+    render "views/logout.ecr", "views/layout.ecr" 
+  end
 end
 
 get "/logout_session" do |env| # j.s. sends us here...
