@@ -304,7 +304,8 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
 end
 
 def setup_user_and_session(user_id, name, email, type, env)
-  user = User.from_or_new_db(user_id, name, email, type)
+  email_contrib = false # TODO
+  user = User.from_or_new_db(user_id, name, email, type, email_contrib)
   env.session.object("user", user) # not sure if saving it to the session is better or worse than looking it up from the DB every request...
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
