@@ -28,7 +28,7 @@ Login with amazon here:
 
   document.getElementById('LoginWithAmazon').onclick = function() {
     options = { scope : 'profile', popup: true }; // popup doesn't work in...nativve iOS apps [LOL] but if set to false, you have to do extra hoops yikes!
-    amazon.Login.authorize(options, 'https://playitmyway.org/login_from_amazon');
+    amazon.Login.authorize(options, 'https://playitmyway.org/login_from_amazon?email_subscribe=' + isEmail());
     return false;
   };
 
@@ -46,11 +46,14 @@ Or login with facebook here:
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="logged_in();" scope="public_profile,email,user_friends" ></div> <!-- get gender for free somehow --> <!-- user_birthday too complicated, add later, force relogin... -->
 
+<input id="checkbox_subscribe" type="checkbox" "checked">
+Subscribe to monthly announcement newsletter (list of new movies, etc.).
+
 <script>
   function statusChangeCallback(response) {
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      window.location.href = "/login_from_facebook?access_token=" + response.authResponse.accessToken; // short lived token, but that's all we kind of really need today
+      window.location.href = "/login_from_facebook?access_token=" + response.authResponse.accessToken + "&email_subscribe=" + isEmail(); // short lived token, but that's all we kind of really need today
     } else {
       // They disdained the login popup...
     }
