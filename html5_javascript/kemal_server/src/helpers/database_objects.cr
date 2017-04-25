@@ -624,31 +624,33 @@ class User
     user_id: String,
     name: String,
     email: String,
-    type: String
+    type: String,
+    email_subscribe: Bool
   })
   DB.mapping({
     id: Int32,
     user_id: String,
     name: String,
     email: String,
-    type: String
+    type: String,
+    email_subscribe: Bool
   })
 
-  def initialize(@user_id, @name, @email, @type) # no id
+  def initialize(@user_id, @name, @email, @type, @email_subscribe) # no id
     @id = 0
   end
 
   def save_or_update
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into users (user_id, name, email, type) values (?, ?, ?, ?)", user_id, name, email, type).last_insert_id.to_i32
+        @id = conn.exec("insert into users (user_id, name, email, type, email_subscribe) values (?, ?, ?, ?, ?)", user_id, name, email, type, email_subscribe).last_insert_id.to_i32
       else
-       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ? where id = ?", user_id, name, email, type, id
+       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ? where id = ?", user_id, name, email, type, email_subscribe, id
       end
     end
   end
 
-  def self.from_or_new_db(user_id, name, email, type)
+  def self.from_or_new_db(user_id, name, email, type, email_subscribe)
     existing = query("SELECT * from users where email = ? and user_id = ?", email, user_id) do |rs| # distinguish facebook from amazon for now...too confusing not too since we store the user_id :|
       User.from_rs(rs);
     end
@@ -656,7 +658,7 @@ class User
     if existing.size == 1
       existing[0]
     else
-      out = User.new(user_id, name, email, type)
+      out = User.new(user_id, name, email, type, email_subscribe)
       out.save_or_update
       out
     end
