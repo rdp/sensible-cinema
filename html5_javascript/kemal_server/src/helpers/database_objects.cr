@@ -650,16 +650,21 @@ class User
     end
   end
 
-  def self.from_or_new_db(user_id, name, email, type, email_subscribe)
+  def self.from_update_or_new_db(user_id, name, email, type, email_subscribe)
     existing = query("SELECT * from users where email = ? and user_id = ?", email, user_id) do |rs| # distinguish facebook from amazon for now...too confusing not too since we store the user_id :|
       User.from_rs(rs);
     end
     raise "huh" if existing.size > 1
     if existing.size == 1
-      existing[0]
+      out = existing[0]
+      out.name = name
+      raise "huh wuh" unless out.type == type
+      out.email_subscribe = email_subscribe
+      out.save_or_update # update
+      out
     else
       out = User.new(user_id, name, email, type, email_subscribe)
-      out.save_or_update
+      out.save_or_update # save
       out
     end
   end
