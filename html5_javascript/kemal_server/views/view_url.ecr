@@ -91,7 +91,7 @@ Here's what we have so far:
   <tr>
   <td>
     <%= seconds_to_human tag.start %> - 
-    <%= seconds_to_human tag.end %>
+    <%= seconds_to_human tag.endy %>
     <% if tag2 = tag.overlaps_any?(tags) %>
       (overlaps with tag starting at <%= seconds_to_human tag2.start %>)
     <% end %>
