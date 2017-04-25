@@ -74,14 +74,12 @@ get "/redo_all_thumbnails" do |env|
 end
 
 get "/sync_web_server" do |env|
-  spawn do
-    system("git pull")
-    if system("crystal build --debug ./kemal_server.cr")
-      Kemal.stop # should allow this process to die as well...
-      puts "should be dying..." # have to let it die so the bash script can sudo set permissions :|
-    else
-      puts "not restarting, it didn't build, batman!" 
-    end
+  system("git pull")
+  if system("crystal build --debug ./kemal_server.cr")
+    Kemal.stop # should allow this process to die as well...
+    "should be dying..." # have to let it die so the bash script can sudo set permissions :|
+  else
+    "not restarting, it didn't build, batman!" 
   end
 end
 
