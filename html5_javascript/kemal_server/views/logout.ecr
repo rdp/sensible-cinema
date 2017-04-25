@@ -55,7 +55,7 @@ Logged in with facebook? click here to <a href=# id=logout_facebook onclick="log
 <br/>
 
 <script>
-<%= if user_id(env).starts_wit? "amzn" %>
+<%= if user_id(env).starts_with? "amzn" %>
   document.getElementById('logout_amazon').click();
 <% else %>
   document.getElementById('logout_facebook').click();
