@@ -56,7 +56,7 @@ function addEditUi() {
   <div id="load_succeeded_div_id" style='display: none;'>
   	<div id="currently_playing_it_your_way_id" style="color: rgb(188, 188, 188);">
       <svg style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
-        <text  style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" id="big_edited_text_id">Edited!</text>
+        <text  style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited!</text>
       </svg>
        <br/>
   	  Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
@@ -87,8 +87,6 @@ function addEditUi() {
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
       <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-2); return false;" value='-2s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 2); return false;" value='+2s'/>
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
 
@@ -487,7 +485,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	else {
 	  if (video_element.style.visibility != "") {
 	    video_element.style.visibility=""; // non hidden :)
-	    console.log("unhiding video with left audio" + cur_time);
+	    console.log("unhiding video with left audio " + cur_time);
 	    extra_message = "";
 	  }
 	}
@@ -620,7 +618,7 @@ function collapseAddTagStuff() {
 }
 
 function setEditedControlsToTopLeft() {
-  var left = getLocationOfElement(video_element).right - 450; // amazon x-ray :| 
+  var left = getLocationOfElement(video_element).right - 450; // amazon x-ray :|
   var top = getLocationOfElement(video_element).top;
   if (isYoutube()) {
     top += 85; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL

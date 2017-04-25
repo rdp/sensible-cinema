@@ -533,7 +533,9 @@ post "/save_tag_edit_list" do |env|
   end
 
   tag_edit_list.description = resanitize_html params["description"]
-  raise "must have name" unless tag_edit_list.description.present? # TODO rename db column :|
+  if !tag_edit_list.description.present? # TODO rename db column :|
+    tag_edit_list.description = "Edits for " +  logged_in_user(env).name
+  end
   tag_edit_list.status_notes = resanitize_html params["status_notes"]
   tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   tag_ids = [] of Int32
