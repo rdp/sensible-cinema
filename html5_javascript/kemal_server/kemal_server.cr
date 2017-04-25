@@ -311,7 +311,7 @@ def setup_user_and_session(user_id, name, email, type, env)
     env.redirect env.session.string("redirect_to_after_login")
     env.session.delete_string("redirect_to_after_login")
   else
-    add_to_flash(env, "Please use your browser's back button (hit it several times) to repost the information you attempted to enter earlier");
+    add_to_flash(env, "If you were entering information, please use your browser's back button (hit it several times) to resend it");
     env.redirect "/"
   end
 end
