@@ -76,7 +76,7 @@ end
 get "/sync_web_server" do |env|
   system("git pull") || raise "unable to git pull"
   puts "doing rebuild..."
-  if system("crystal build --debug --release ./kemal_server.cr")
+  if system("crystal build --debug ./kemal_server.cr")
     Kemal.stop # should allow this process to die as well...
     "should be quick restarting..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
   else
@@ -305,8 +305,8 @@ get "/login_from_amazon" do |env| # amazon changes the url to this with some GET
 end
 
 def setup_user_and_session(user_id, name, email, type, env)
-  email_contrib = false # TODO
-  user = User.from_or_new_db(user_id, name, email, type, email_contrib)
+  email_subscribe = env.params.query["email_subscribe"] == "true"
+  user = User.from_or_new_db(user_id, name, email, type, email_subscribe)
   env.session.object("user", user) # not sure if saving it to the session is better or worse than looking it up from the DB every request...
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 

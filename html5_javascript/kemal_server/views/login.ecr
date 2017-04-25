@@ -46,7 +46,9 @@ Or login with facebook here:
 }(document, 'script', 'facebook-jssdk'));</script>
 <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" onlogin="logged_in();" scope="public_profile,email,user_friends" ></div> <!-- get gender for free somehow --> <!-- user_birthday too complicated, add later, force relogin... -->
 
-<input id="checkbox_subscribe" type="checkbox" "checked">
+<br/>
+<br/>
+<input id="checkbox_subscribe" type="checkbox" checked>
 Subscribe to monthly announcement newsletter (list of new movies, etc.).
 
 <script>
@@ -70,7 +72,7 @@ function logged_in() {
 <script>
 
 function isEmail() {
-  return document.getElementById("email_subscribe").clicked;
+  return document.getElementById("checkbox_subscribe").checked;
 }
 
 </script>

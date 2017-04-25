@@ -7,7 +7,7 @@ else
   echo "root successfully enabled...we'll need that in a sec..."
   echo "use like https://playitmyway.org"
 fi 
-sudo -u rdp crystal build --debug --release ./kemal_server.cr || exit 1 # prime the pump :)
+sudo -u rdp crystal build --debug ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
   ./_prod_ssl_go # wait for it to get killed by cron etc.
 done
