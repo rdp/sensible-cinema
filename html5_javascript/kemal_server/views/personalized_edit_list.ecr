@@ -39,7 +39,8 @@ personal notes (ex: "for kids")
   <h2><%= category.capitalize %></h2>
   <input id="" type="checkbox" checked 
     onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
-  > Select all
+  > Select all <%= category %>
+  <br/>
 
   <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.group_by{|tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_personal_actions| %>
 
