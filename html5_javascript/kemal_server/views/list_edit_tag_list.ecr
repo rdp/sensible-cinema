@@ -59,7 +59,7 @@ personal notes (ex: "for kids")
     <% end %>
     <td>
       <% if tag.impact_to_movie > 0 %>
-        impact to story: <%= tag.impact_to_movie %>
+        impact to story if edited out: <%= tag.impact_to_movie %>
       <% end %>
     </td>
     <td>
@@ -69,7 +69,7 @@ personal notes (ex: "for kids")
     </td>
     <td><a href=/edit_tag/<%= tag.id %>>modify</a></td>
     <td>
-  		your personalized action:
+  		your action:
   		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
   		  <option value="mute">mute</option>
   		  <option value="skip">skip</option>
