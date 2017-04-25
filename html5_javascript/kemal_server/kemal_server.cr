@@ -74,7 +74,7 @@ get "/redo_all_thumbnails" do |env|
 end
 
 get "/sync_web_server" do |env|
-  system("git pull")
+  system("git pull") || raise "unable to git pull"
   if system("crystal build --debug -release ./kemal_server.cr")
     Kemal.stop # should allow this process to die as well...
     "should be quick restarting..." # have to let it die so the bash script can set permissions :| this should be fast enough, right? I mean seriously...
