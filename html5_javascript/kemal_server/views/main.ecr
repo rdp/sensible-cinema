@@ -78,26 +78,24 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
 
 <br/>
 <h2 style="font-family: 'Patua One', cursive;">Edited Movie List</h2>
-<% non_done = all_urls_half_way + all_urls_just_started; settings = [{title: "Movies Ready To Go", urls: all_urls_done, extra_text: "We have #{non_done.size} more movies in the works!"}, {urls: non_done, title: "Movies in the works (please support us!)", extra_text: ""}] %>
+<% non_done = all_urls_half_way + all_urls_just_started; settings = [{title: "Movies Ready To Go", urls: all_urls_done}, {urls: non_done, title: "Movies in the works (please support us!)"}] %>
 
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{|setting, idx| %>
-      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab"><span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a></li>
+      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab"><span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a></li>
     <% } %>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <% settings.each_with_index{|setting, idx| %>
-      <div role="tabpanel" class="tab-pane <%= "active" if idx == 0 %>" id="tab_<%= idx %>">
-         <% if idx == 0 %>
-           <%= render "views/_list_movies.ecr" %>
-         <% else %>
-           <div style="height: 1000px;">Loading movies in the works...</div> <!-- gets fully replaced... -->
-         <% end %>
+      <div role="tabpanel" class="tab-pane active" id="tab_0">
+           <%= urls=all_urls_done; render "views/_list_movies.ecr" %>
+           We have <a href=/get_in_works> <%= non_done.size %> more movies</a> in the works!
       </div>
-    <% } %>
+      <div role="tabpanel" class="tab-pane fade" id="tab_1">
+         <div style="height: 1000px;">Loading movies in the works...</div> <!-- gets fully replaced... -->
+      </div>
   </div>
 
 <script>
