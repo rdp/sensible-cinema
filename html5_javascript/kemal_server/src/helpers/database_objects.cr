@@ -192,19 +192,8 @@ class Url
     end
   end
   
-  private def timestamps_of_type_for_video(type) 
-    tags = query("select * from tags where url_id=? and default_action = ?", id, type) do |rs|
-      Tag.from_rs rs
-    end
-    tags.map{|tag| [tag.start, tag.endy]}
-  end
-  
   def tags_by_type
-    yes_audio_no_videos = timestamps_of_type_for_video "yes_audio_no_video"
-    skips = timestamps_of_type_for_video "skip"
-    mutes = timestamps_of_type_for_video "mute"
-    do_nothings = timestamps_of_type_for_video "do_nothing"
-    {yes_audio_no_videos: yes_audio_no_videos, skips: skips, mutes: mutes, do_nothings: do_nothings}  # named tuple :)
+    tags.group_by{|t| t.default_action}
   end
 
   def destroy_no_cascade

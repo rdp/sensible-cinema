@@ -1,4 +1,3 @@
-<% edits = db_url.tags_by_type %>
 {
 "url": <%= db_url.to_json %>,
 "expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescape or stably escape in javascript :? %>

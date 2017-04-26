@@ -101,8 +101,8 @@ get "/for_current_just_settings_json" do |env|
   env.response.headers.add "Access-Control-Allow-Credentials", "true" # they all need this
   if !url_or_nil
     env.response.status_code = 412 # avoid kemal default 404 handler which doesn't do strings :| 412 => precondition failed LOL
-    "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
     env.response.headers.add "Access-Control-Allow-Origin", urlish # allow the 412 through still, and to everywhere
+    "none for this movie yet #{sanitized_url} #{episode_number}" # not sure if json or javascript LOL
   else
     url = url_or_nil.as(Url)
     env.response.content_type = "application/javascript" # not that this matters nor is useful since no SSL yet :|
@@ -115,7 +115,7 @@ get "/for_current_just_settings_json" do |env|
     start = Time.now
     url.count_downloads += 1
     url.save # we shouldn't hit this tooo often...XXX does this slow us down?
-    puts "inc count tok #{Time.now - start}"
+    puts "inc count took #{Time.now - start}"
     json_for(url, env)
   end
 end
