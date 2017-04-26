@@ -5,9 +5,15 @@
     <% action = env.request.path.split("/")[1]; english_action = action.gsub("_", " ").split.map{|word| word.capitalize}.join(" ") %>
     <title>
       <%= " DEV |" if is_dev? %>
-      <%= " #{english_action} |" if action.present? %>
-      <%= "#{env.response.title} | " if env.response.title.present? %>
-       Play it My Way Edited Streaming Movies
+      <% if env.response.title.present? %>
+        <%= env.response.title %>
+        (Play it My Way)
+      <% elsif action.present? %>
+        <%= " #{english_action} |" %>
+        (Play it My Way)
+      <% else %>
+        Play it My Way Edited Streaming Movies
+      <% end %>
     </title>
     <!-- bootstrap stuff -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
