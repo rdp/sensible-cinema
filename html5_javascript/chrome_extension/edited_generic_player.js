@@ -928,7 +928,7 @@ function parseSuccessfulJson(json_string) {
   
   var big_edited = document.getElementById("big_edited_text_id");
   if (url.editing_status == 'Done with second review, tags viewed as complete') {
-    big_edited.innerHTML = "Edited!";
+    big_edited.innerHTML = "Edited";
   } else {
     big_edited.innerHTML = "Partially edited...";
     big_edited.setAttribute("x", "0");
