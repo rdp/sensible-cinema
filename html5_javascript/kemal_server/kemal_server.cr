@@ -112,10 +112,8 @@ get "/for_current_just_settings_json" do |env|
     else
       # allow them to be seen just "for normal viewing" ex: on playitmyway.org...
     end
-    start = Time.now
     url.count_downloads += 1
-    url.save # we shouldn't hit this tooo often...XXX does this slow us down?
-    puts "inc count took #{Time.now - start}"
+    url.save # we shouldn't hit this tooo often...take 0.003...ok...
     json_for(url, env)
   end
 end
