@@ -1,3 +1,6 @@
+<% content_for "header" do %>
+  <meta property="og:image" content="<%= url.sized_relative_url(ImageSize::Small) %>" />
+<% end %>
 <h1>Our editing details for <br/>[<%= url.name_with_episode %>]</h1>
 
 <br/>
@@ -6,7 +9,6 @@
 <a href="/">&lt;&lt; back to list of all movies</a>
 <br/>
 <%= url.image_tag "style='max-width: 300px;'", "<br/>" %>
-<meta property="og:image" content="<%= url.sized_relative_url(ImageSize::Small) %>" />
 <h4>Details</h4>
 <br/>
 Total content tags in our system for this movie:
