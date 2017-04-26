@@ -1,3 +1,11 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=16593771297";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk')); </script> <!-- early to load faster ?? they recommended it anyway... -->
 <img src=/camera.128.png width="75px;" style="float:left;"/>
 <h1 style="font-family: 'Patua One', cursive;">Play It My Way! <span style="text-shadow: 0 0 1em green, 0 0 0.2em blue; ">Beta.</span>
 <br/><% if !is_mobile(env) %>&nbsp;&nbsp;&nbsp;<% end %>Edit the movies you stream.
@@ -66,15 +74,6 @@ Like and share our <a href=https://www.facebook.com/Play-it-My-Way-1812282865478
 <br/>
 We hope to launch a Kickstarter soon and we'd love your help while we get going!  We have a lot of movies we plan on adding :)<br/>
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=16593771297";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
 <div class="fb-like" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true" style="min-width: 450px; min-height: 56px;"></div>
 
 <br/>
@@ -122,9 +121,14 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
 </script>
 
-<br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for a movie to be the next one on our queue to be edited.
+<br> You can also <a href=https://rdp.uservoice.com/forums/244075-general >vote</a> for an absent movie to be the next one on our queue to edit.
 <br>
 <br/>
+
+Latest from our facebook page:
+<br/>
+<div class="fb-page" data-href="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Play-it-My-Way-1812282865478777/#!" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Play-it-My-Way-1812282865478777/">Play it My Way</a></blockquote></div>
+
 
 <%= render "views/_installed_js.ecr" %>
 
