@@ -38,6 +38,10 @@ end
 
 add_handler CustomHandler.new
 
+before_all do |env|
+  env.response.title = "" # reset :|
+end
+
 # https://github.com/crystal-lang/crystal/issues/3997 crystal doesn't effectively call GC full whaat? 
 spawn do
   loop do
@@ -181,6 +185,7 @@ get "/edit_tag/:tag_id" do |env|
 end
 
 class HTTP::Server::Response
+  # be careful, these seem to be pooled and reused :|
   @title = ""
   setter title : String
   getter title
