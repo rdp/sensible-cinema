@@ -56,18 +56,17 @@ function addEditUi() {
   <div id="load_succeeded_div_id" style='display: none;'>
   	<div id="currently_playing_it_your_way_id" style="color: rgb(188, 188, 188);">
       <svg style="font: 50px 'Arial'; height: 50px;" viewBox="0 0 350 50">
-        <text style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited!</text>
+        <text style="fill: none; stroke: white; stroke-width: 0.5px; stroke-linejoin: round;" y="40" x="175" id="big_edited_text_id">Edited</text>
       </svg>
        <br/>
   	  Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
     	<br/>
       <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      Did we miss anything? <a href=# onclick="toggleAddNewTagStuff(); return false;" id="add_edit_link_id">Let us know!</a>
+      Did we miss anything? <a href=# onclick="reportProblem(); return false;" id="add_edit_link_id">Let us know!</a> or <a href=# onclick="toggleAddNewTagStuff(); return false;">add a tag</a>.
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
-      Report a problem to us <a href=# onclick="reportProblem(); return false">here</a>
-      <br/>Or create a tag timestamp yourself: enter time, test, then save it:
+      <br/>To tag something: enter time, test it, then save it:
     	<span id=add_edit_span_id_for_extra_message><!-- currently: muting --></span>
     	<br/>
     	<div id='tag_layer_top_line'>
