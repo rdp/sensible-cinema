@@ -281,6 +281,7 @@ get "/view_url/:url_id" do |env|
   end
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
+  env.response.title = out.name_with_episode + " Edited"
   render "views/view_url.ecr", "views/layout.ecr"
 end
 
