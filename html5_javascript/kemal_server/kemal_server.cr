@@ -250,10 +250,11 @@ post "/save_tag/:url_id" do |env|
   if tag2 = tag.overlaps_any? url.tags
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")
   end
-  save_local_javascript [url], "updated tag", env
   if is_update
+    save_local_javascript [url], "updated tag", env
     add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, recommend clicking reload tags or doing a browser refresh...")
   else
+    save_local_javascript [url], "created tag", env
     add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s, you can tweak details and close this page now.")
 end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
