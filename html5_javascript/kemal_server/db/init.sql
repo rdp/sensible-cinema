@@ -105,7 +105,7 @@ alter table tag_edit_list change notes status_notes VARCHAR(1024)    NOT NULL DE
 alter table urls add column create_timestamp TIMESTAMP not null DEFAULT NOW();
 
 ALTER TABLE `urls` CHANGE COLUMN `image_url` `image_local_filename` VARCHAR(2014) NOT NULL DEFAULT '';
-update urls set image_local_filename = '1_960.jpg' where id = 1; -- test data :)
+update urls set image_local_filename = '1_maxresdefault.jpg' where id = 1; -- test data :)
 update urls set details = 'Aang escapes a killer while the bad guys camp at the beach' where id = 1; -- test data :)
 
 alter table tags add column oval_percentage_coords VARCHAR(24)    NOT NULL DEFAULT '';

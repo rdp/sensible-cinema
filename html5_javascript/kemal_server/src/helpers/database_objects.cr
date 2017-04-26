@@ -368,20 +368,23 @@ class Url
 
   def image_tag(display_size, postpend_html = "", size = ImageSize::Small)
     if image_local_filename.present? # we have one at all
-                  case size
-                  when ImageSize::Small
-                    name = "small_#{image_local_filename}"
-                  when ImageSize::Large
-                    name = image_local_filename # full :)
-                  when ImageSize::VerySmall
-                     name = "very_small_#{image_local_filename}"
-                  else
-                     raise "what type system crystal!!"
-                  end
-      "<img src='/movie_images/" + name + "' #{display_size}/>#{postpend_html}"
+      "<img src='" + sized_relative_url(size) + "' #{display_size}/>#{postpend_html}"
     else
       ""
     end
+  end
+
+  def sized_relative_url(size)
+    "/movie_images/" + case size
+    when ImageSize::Small
+      "small_#{image_local_filename}"
+    when ImageSize::Large
+      image_local_filename # full :)
+    when ImageSize::VerySmall
+      "very_small_#{image_local_filename}"
+    else
+     raise "what type system crystal!!" # shouldn't be needed, so crystal can auto-get it by knowing it's safe. Also warn if not all [?] also imports yikes!
+   end
   end
 
   def self.get_only_by_id(id)
