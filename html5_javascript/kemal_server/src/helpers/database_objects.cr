@@ -366,9 +366,9 @@ class Url
         end
 
 
-  def image_tag(display_size, postpend_html = "", size = ImageSize::Small)
+  def image_tag(style, postpend_html = "", size = ImageSize::Small)
     if image_local_filename.present? # we have one at all
-      "<img src='" + sized_relative_url(size) + "' #{display_size}/>#{postpend_html}"
+      "<img src='" + sized_relative_url(size) + "' #{style}/>#{postpend_html}"
     else
       ""
     end
