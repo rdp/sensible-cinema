@@ -6,6 +6,7 @@
 <a href="/">&lt;&lt; back to list of all movies</a>
 <br/>
 <%= url.image_tag "style='max-width: 300px;'", "<br/>" %>
+<meta property="og:image" content="your_image_url_here" />
 <h4>Details</h4>
 <br/>
 Total content tags in our system for this movie:
@@ -19,8 +20,6 @@ Total content tags in our system for this movie:
 
 <table class="table table-striped" style="width: auto;">
   <thead>
-    <tr></tr>
-    <tr></tr>
   </thead>
   <tbody>
     <%= table_row_or_nothing("URL", url.url) %>

@@ -364,16 +364,21 @@ class Url
             }
           end
         end
-  
-  def image_tag(size, postpend_html = "", want_small = true, want_very_small = false) # XXX use an enum or somefin
-    if image_local_filename.present?
-                  name = image_local_filename # full :)
-                  if want_small
-                     name = "small_#{name}"
-                  elsif want_very_small
-                     name = "very_small_#{name}"
+
+
+  def image_tag(display_size, postpend_html = "", size = ImageSize::Small)
+    if image_local_filename.present? # we have one at all
+                  case size
+                  when ImageSize::Small
+                    name = "small_#{image_local_filename}"
+                  when ImageSize::Large
+                    name = image_local_filename # full :)
+                  when ImageSize::VerySmall
+                     name = "very_small_#{image_local_filename}"
+                  else
+                     raise "what type system crystal!!"
                   end
-      "<img src='/movie_images/#{name}' #{size}/>#{postpend_html}"
+      "<img src='/movie_images/" + name + "' #{display_size}/>#{postpend_html}"
     else
       ""
     end
@@ -384,6 +389,10 @@ class Url
       only_one!(Url.from_rs(rs))
     end
   end
+end
+
+enum ImageSize
+  Large; Small; VerySmall
 end
 
 class Tag
