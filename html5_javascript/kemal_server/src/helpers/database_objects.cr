@@ -366,7 +366,7 @@ class Url
         end
 
 
-  def image_tag(style, postpend_html = "", size = ImageSize::Small)
+  def image_tag(style, size : ImageSize = ImageSize::Medium, postpend_html = "")
     if image_local_filename.present? # we have one at all
       "<img src='" + sized_relative_url(size) + "' #{style}/>#{postpend_html}"
     else
@@ -381,11 +381,11 @@ class Url
   end
 
   def sized_relative_url(size)
-    "/movie_images/" + case size
-    when ImageSize::Small
+    "/movie_images/" + case(size)
+    when ImageSize::Medium
       "small_#{image_local_filename}"
-    when ImageSize::Large
-      image_local_filename # full :)
+    when ImageSize::Original
+      image_local_filename
     when ImageSize::VerySmall
       "very_small_#{image_local_filename}"
     else
@@ -401,7 +401,7 @@ class Url
 end
 
 enum ImageSize
-  Large; Small; VerySmall
+  Original; Medium; VerySmall
 end
 
 class Tag

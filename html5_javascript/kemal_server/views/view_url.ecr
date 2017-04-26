@@ -1,7 +1,6 @@
 <% content_for "header" do %>
-  <meta property="og:image" content="https://playitmyway.org/<%= url.sized_relative_url(ImageSize::Small) %>" />
-  <meta property="og:image:secure_url" content="https://playitmyway.org/<%= url.sized_relative_url(ImageSize::Small) %>" /> 
-  <% specs = url.image_specs(ImageSize::Small) %>
+  <meta property="og:image" content="https://playitmyway.org<%= url.sized_relative_url(ImageSize::Medium) %>" />
+  <% specs = url.image_specs(ImageSize::Medium) %>
   <meta property="og:image:width" content="<%= specs[:width] %>"/>
   <meta property="og:image:height" content="<%= specs[:height] %>"/>
 <% end %>
@@ -12,7 +11,7 @@
 <br/>
 <a href="/">&lt;&lt; back to list of all movies</a>
 <br/>
-<%= url.image_tag "style='max-width: 300px;'", "<br/>" %>
+<%= url.image_tag style: "", postpend_html: "<br/>" %>
 <h4>Details</h4>
 <br/>
 Total content tags in our system for this movie:
