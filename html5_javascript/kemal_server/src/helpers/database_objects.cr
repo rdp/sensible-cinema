@@ -374,6 +374,12 @@ class Url
     end
   end
 
+  def image_specs(size)
+    out = `jhead ./public/#{sized_relative_url(size)}`
+    out =~ /Resolution   : (\d+) x (\d+)/ # width x height
+    {width: $1, height: $2}
+  end
+
   def sized_relative_url(size)
     "/movie_images/" + case size
     when ImageSize::Small
