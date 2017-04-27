@@ -275,7 +275,7 @@ class Url
     end
     if rental_cost > 0 || rental_cost_sd > 0 || purchase_cost > 0 || purchase_cost_sd > 0
        if amazon_prime_free_type != ""
-         out += ", or "
+         out += ", "
        end
        if rental_cost > 0
          out += " $%.2f (rent HD)" % rental_cost
