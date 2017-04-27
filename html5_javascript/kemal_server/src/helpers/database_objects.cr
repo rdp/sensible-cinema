@@ -323,6 +323,9 @@ class Url
   
   def download_image_url_and_save(full_url)
     image_name = File.basename(full_url).split("?")[0] # attempt get normal name :|
+    if (image_name !~ /\.(jpg|png|jpeg|svg)$/i) && (full_url =~ /\/([^\/]+\.jpg)\//) # ../2e/Apollo_meets_Carolyn.jpg/revision/
+      image_name = $1
+    end
           image_name = HTML.escape(image_name) # remove ('s etc.
           image_name = image_name.gsub("%", "_") # it's either this or carefully save the filename as Sing(2016) or unescape the name in the request or something phreaky...
           if image_name !~ /\.(jpg|png|jpeg|svg)$/i
