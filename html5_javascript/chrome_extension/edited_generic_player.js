@@ -190,6 +190,8 @@ sub category
     
       <option value="f word sex connotation">profanity -- f-bomb sexual connotation</option>    
     
+      <option value="profanity foreign language">profanity -- any other profanity different language, French, etc</option>    
+    
       <option value="profanity &#40;other&#41;">profanity -- other</option>    
     
       <option value="crudeness">violence -- crude humor, grossness, vulgar, etc.</option>    

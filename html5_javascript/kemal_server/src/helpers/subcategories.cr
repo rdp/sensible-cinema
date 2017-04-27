@@ -36,6 +36,7 @@ def subcategory_map
     "s word" => "profanity -- s word",
     "f word" => "profanity -- f-bomb expletive",
     "f word sex connotation" => "profanity -- f-bomb sexual connotation",
+    "profanity foreign language" => "profanity -- any other profanity different language, French, etc",
     "profanity (other)" => "profanity -- other",
 		
     "crudeness" => "violence -- crude humor, grossness, vulgar, etc.",
