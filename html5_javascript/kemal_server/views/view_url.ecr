@@ -1,8 +1,10 @@
 <% content_for "header" do %>
-  <meta property="og:image" content="https://playitmyway.org<%= url.sized_relative_url(ImageSize::Medium) %>" />
   <% specs = url.image_specs(ImageSize::Medium) %>
-  <meta property="og:image:width" content="<%= specs[:width] %>"/>
-  <meta property="og:image:height" content="<%= specs[:height] %>"/>
+  <% if specs %> <!-- TODO accomodate png here :| -->
+    <meta property="og:image" content="https://playitmyway.org<%= url.sized_relative_url(ImageSize::Medium) %>" />
+    <meta property="og:image:width" content="<%= specs[:width] %>"/>
+    <meta property="og:image:height" content="<%= specs[:height] %>"/>
+  <% end %>
 <% end %>
 <h1>Our editing details for <br/>[<%= url.name_with_episode %>]</h1>
 
