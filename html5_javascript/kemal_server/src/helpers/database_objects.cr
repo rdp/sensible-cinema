@@ -278,13 +278,13 @@ class Url
          out += ", or "
        end
        if rental_cost > 0
-         out += " $%.2f (rent)" % rental_cost
+         out += " $%.2f (rent HD)" % rental_cost
        end
        if rental_cost_sd > 0
          out += " $%.2f (rent SD)" % rental_cost_sd
        end
        if purchase_cost > 0
-         out += " $%.2f (buy)" % purchase_cost
+         out += " $%.2f (buy HD)" % purchase_cost
        end
        if purchase_cost_sd > 0
          out += " $%.2f (buy SD)" % purchase_cost_sd
