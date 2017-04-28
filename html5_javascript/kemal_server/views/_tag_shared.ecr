@@ -1,19 +1,19 @@
 
 <div id="category_div_id">
-category:
-<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed " >
+<select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
+style="background-color: rgba(255, 255, 255, 0.85);" >
   <option value="" disabled selected>unknown -- please select category</option>
   <option value="profanity">profanity (verbal attacks, anything spoken)</option>
   <option value="violence">violence/blood/crude action etc.</option>
   <option value="physical">sex/nudity/lewd etc.</option>
   <option value="suspense">suspense (frightening, scary fighting, surprise)</option>
-  <option value="movie-content">movie content (credits, etc.)</option>
   <option value="substance-abuse">substance use</option>
+  <option value="movie-content">movie content (credits, etc.)</option>
 </select>
 </div>
 
 <div id="subcategory_div_id">
-sub category
+sub category_select
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     <% subcategory_map().each{|k, v| %>

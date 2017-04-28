@@ -149,7 +149,7 @@ end
 def hard_nuke_url_or_nil(env, just_delete_tags = false)
   url = get_url_from_url_id(env)
   if url
-    save_local_javascript [url], "about to nuke somehow...", env
+    save_local_javascript url, "about to nuke somehow...", env
     url.tag_edit_lists_all_users.each{|tag_edit_list|
       tag_edit_list.destroy_tag_edit_list_to_tags
       tag_edit_list.destroy_no_cascade
@@ -173,7 +173,7 @@ get "/delete_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(id)
   tag.destroy_in_tag_edit_lists
   tag.destroy_no_cascade
-  save_local_javascript [tag.url], "removed tag", env
+  save_local_javascript tag.url, "removed tag", env
   add_to_flash env, "deleted #{tag.inspect}"
   env.redirect "/view_url/#{tag.url.id}"
 end
@@ -254,10 +254,10 @@ post "/save_tag/:url_id" do |env|
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")
   end
   if is_update
-    save_local_javascript [url], "updated tag", env
+    save_local_javascript url, "updated tag", env
     add_to_flash(env, "Success! updated tag at #{seconds_to_human tag.start} duration #{tag.duration}s, recommend clicking reload tags or doing a browser refresh...")
   else
-    save_local_javascript [url], "created tag", env
+    save_local_javascript url, "created tag", env
     add_to_flash(env, "Success! created new tag at #{seconds_to_human tag.start} duration #{tag.duration}s, you can tweak details and close this page now.")
 end
   env.redirect "/edit_tag/#{tag.id}" # so they can add details...
@@ -560,21 +560,17 @@ post "/save_tag_edit_list" do |env|
   }
   tag_edit_list.create_or_refresh(tag_ids, actions)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description} if you are watching the movie in another  tab please refresh that browser tab")
-  save_local_javascript [tag_edit_list.url], "saved new tag edit list", env # will save it with a user's id but hopefully that's opaque enough...
+  save_local_javascript tag_edit_list.url, "saved new tag edit list", env # will save it with a user's id but hopefully that's opaque enough...
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end
 
-def save_local_javascript(db_urls, log_message, env) # actually just json these days...
-  db_urls.each { |db_url|
-    [db_url.url, db_url.amazon_second_url].reject(&.empty?).each{ |url|
-      File.open("edit_descriptors/log.txt", "a") do |f|
-        f.puts log_message + " user:#{user_id(env)} ... " + db_url.name_with_episode
-      end
-      as_json = json_for(db_url, env)
-      escaped_url_no_slashes = URI.escape url
-      File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
-   }
-  }
+def save_local_javascript(db_url, log_message, env) # actually just json these days...
+  File.open("edit_descriptors/log.txt", "a") do |f|
+    f.puts log_message + " user:#{user_id(env)} ... " + db_url.name_with_episode
+  end
+  as_json = json_for(db_url, env)
+  escaped_url_no_slashes = URI.escape db_url.url
+  File.write("edit_descriptors/#{escaped_url_no_slashes}.ep#{db_url.episode_number}" + ".html5_edited.just_settings.json.rendered.js", "" + as_json) 
   if !is_dev?
     spawn do
       system("cd edit_descriptors && git checkout master && git pull && git add . && git cam \"#{log_message}\" && git push origin master") # backup :| I control log_message
@@ -669,7 +665,7 @@ post "/save_url" do |env|
     download_youtube_image_if_none db_url
   end
 
-  save_local_javascript [db_url], "updated movie info", env
+  save_local_javascript db_url, "updated movie info #{db_url.name}", env
 	
   add_to_flash(env, "Success! saved #{db_url.name_with_episode}")
   env.redirect "/view_url/" + db_url.id.to_s
@@ -715,7 +711,7 @@ post "/upload_from_subtitles_post/:url_id" do |env|
   if !db_url.amazon?
     add_to_flash(env, "You should see [#{middle_sub[:details]}] at #{seconds_to_human middle_sub[:start]} if the subtitle file timing is right, please double check it using the \"frame\" button!")
   end
-  save_local_javascript [db_url], "added subs", env
+  save_local_javascript db_url, "added subs", env
   env.redirect "/view_url/#{db_url.id}?show_tag_details=true"
 end
 

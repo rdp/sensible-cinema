@@ -116,9 +116,9 @@ function addEditUi() {
         <br/>        
         tag details: <input type="text" name="details" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
-        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
         <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
+        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
@@ -440,7 +440,7 @@ function makeTimeout (func, interval) {
 }
 function removeTimeout (id) {
     window.clearTimeout(id);
-    timeouts[id]=undefined;
+    timeouts[id]=undefined; // is this enough tho??
 }
 
 function doTimeoutEarly (id) {
@@ -476,17 +476,17 @@ function testCurrentFromUi() {
     start = 0; // allow test edits to start at or near 0 without messing up the "done" timing...
   }
   seekToTime(start, function() {
-    // slight race cond hrm...
     // video_element.playbackRate = 1; // back to normal speed
 	  length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
-	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000; 
-	  inMiddleOfTestingTimer = makeTimeout(function() {
+	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
+    video_element.play(); // seems like we want this, plus otherwise mess up the test timing [?]
+	  inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
 			console.log("assuming done with edit...");
 	    temp_array.pop();
-      console.log("popping from " + currentEditArray());      
+      console.log("popping from " + currentEditArray());
 	    removeTimeout(inMiddleOfTestingTimer);
       inMiddleOfTestingTimer = null;
 	  }, wait_time_millis);
@@ -981,7 +981,7 @@ function seekToTime(ts, callback) {
   if (ts < 0) {
     console.log("not seeking to before 0 " + ts);
     ts = 0;
-  }
+  }  
   var current_state = video_element.paused;
 	callback = callback || function() {}
   // try and avoid freezes after seeking...if it was playing first...
@@ -990,7 +990,7 @@ function seekToTime(ts, callback) {
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around...
-	var timer = setInterval(function() {
+	var seek_timer = setInterval(function() {
 		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
 			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts));
       if (!current_state) {
@@ -998,7 +998,7 @@ function seekToTime(ts, callback) {
       } else {
         // stay paused
       }
-			clearInterval(timer);
+			clearInterval(seek_timer);
 			callback();
 		}		
 	}, 50);
