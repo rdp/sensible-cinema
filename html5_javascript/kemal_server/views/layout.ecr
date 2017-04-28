@@ -68,7 +68,15 @@
         <% end %>
       </ul>
       <% if logged_in?(env) %>
-        <p class="navbar-text navbar-right"><%= logged_in_user(env).name %><a href="/logout" class="navbar-link"> (Logout)</a></p>
+         <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= logged_in_user(env).name %><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/logout">logout</a></li>
+              <li><a href="/profile">Profile</a></li>
+            </ul>
+          </li>
+        </ul>
       <% else %>
         <p class="navbar-text navbar-right"><a href="/login" class="navbar-link">Login</a></p>
       <% end %>
