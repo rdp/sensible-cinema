@@ -117,7 +117,7 @@ class Url
     first_or_nil(urls)
   end
   
-  def self.get_only_or_nil_by_url_and_episode_number(url, episode_number)
+  def self.get_only_or_nil_by_urls_and_episode_number(url, episode_number)
     urls = query("SELECT * FROM urls WHERE (url = ? or amazon_second_url = ?) AND episode_number = ?", url, url, episode_number) do |rs|
        Url.from_rs(rs);
     end

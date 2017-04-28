@@ -95,7 +95,7 @@ end
 get "/for_current_just_settings_json" do |env|
   sanitized_url = db_style_from_query_url(env)
   episode_number = env.params.query["episode_number"].to_i # should always be present :)
-  url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
+  url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
   if page = env.request.headers["Origin"]? # XHR hmm...
     urlish = page.split("/")[0..2].join("/") # https://amazon.com
   else
@@ -142,7 +142,7 @@ get "/nuke_test_by_url" do |env|
   real_url = env.params.query["url"]
   raise("cannot nuke non test movies, please ask us if you want to delete a different movie") unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
-  url = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, 0)
+  url = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, 0)
   hard_nuke_url_or_nil(env)
 end
 
@@ -379,7 +379,7 @@ class String
   end
 end
 
-get "/new_url_from_plugin" do |env| # add_url add_new
+get "/new_url_from_plugin" do |env| # add_url add_new it does call this
   real_url = env.params.query["url"]
   incoming = env.params.query
   episode_number = incoming["episode_number"].to_i
@@ -408,12 +408,12 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = title_incoming
   end
   puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
-  url_or_nil = Url.get_only_or_nil_by_url_and_episode_number(sanitized_url, episode_number)
+  url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
   if url_or_nil
-    add_to_flash(env, "a movie with that url/episode already exists, editing that instead...")
+    add_to_flash(env, "a movie with that url/episode already exists, editing that instead...") # not sure if we could ever get here anymore but shouldn't hurt...
     env.redirect "/edit_url/#{url_or_nil.id}"
   else
-    # a new one
+    # a brand new movie
     # cleanup various title crufts
     title = HTML.unescape(title) # &amp => & and there are some :|
     title = title.gsub("&nbsp;", " ") # HTML.unescape doesn't :|
@@ -431,17 +431,30 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     if sanitized_url.includes?("amazon.com") && title.includes?(":")
       title = title.split(":")[0..-2].join(":").strip # begone actors but keep star trek: the next gen
     end
-    already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint :|
+    already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint if from a non listed second url :|
     if already_by_name
-      return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this message to us, we'll fix it"
+      return "appears we already have a movie by that title in our database, go to <a href=/view_url/#{already_by_name.id}>here</a> and if it's an exact match, add url #{sanitized_url} as its 'second' amazon url, or report this occurrence to us, we'll fix it"
     end
     url = Url.new
-    url.name = title
+    url.name = title # or series name
     url.url = sanitized_url
     url.episode_name = episode_name
     url.episode_number = episode_number
     url.editing_status = "Just started, tags might not be fully complete yet"
     url.total_time = duration
+    if episode_number > 0
+      Url.all.select{|url2| url2.name == title}.first(1).each{ |url2| # shouldn't include self yet...
+        # glean as much as possible ...
+        url.purchase_cost = url2.purchase_cost
+        url.purchase_cost_sd = url2.purchase_cost_sd
+        url.rental_cost = url2.rental_cost
+        url.rental_cost_sd = url2.rental_cost_sd
+        url.amazon_second_url = url2.amazon_second_url
+        url.amazon_prime_free_type = url2.amazon_prime_free_type
+        url.genre = url2.genre
+        url.original_rating = url2.original_rating
+      }
+    end
     url.save 
     add_to_flash(env, "Successfully added #{url.name} to our system! Please add some details, then go back and add some content tags for it!")
     download_youtube_image_if_none url
