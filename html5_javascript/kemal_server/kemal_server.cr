@@ -144,7 +144,13 @@ end
 
 get "/admin" do |env|
   if logged_in_user(env).admin # XXX more security? :|
-    User.all.map{|user| "<a href=/promote_user?email=#{user.email}>promote #{user.name}<a><br/>"}.join
+    User.all.map{|user| 
+      if !user.editor
+        "<a href=/promote_user?email=#{user.email}>promote #{user.name}<a>"
+      else
+        "#{user.name} is editor"
+      end
+    }.join("<br/>")
   else
     raise "non admin sorry"
   end
