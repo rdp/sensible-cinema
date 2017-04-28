@@ -639,7 +639,8 @@ class User
     name: String,
     email: String,
     type: String,
-    email_subscribe: Bool
+    email_subscribe: Bool,
+    editor: Bool
   })
   DB.mapping({
     id: Int32,
@@ -647,19 +648,20 @@ class User
     name: String,
     email: String,
     type: String,
-    email_subscribe: Bool
+    email_subscribe: Bool,
+    editor: Bool
   })
 
-  def initialize(@user_id, @name, @email, @type, @email_subscribe) # no id
+  def initialize(@user_id, @name, @email, @type, @email_subscribe, @editor) # no id
     @id = 0
   end
 
   def save_or_update
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into users (user_id, name, email, type, email_subscribe) values (?, ?, ?, ?, ?)", user_id, name, email, type, email_subscribe).last_insert_id.to_i32
+        @id = conn.exec("insert into users (user_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?)", user_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
       else
-       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ? where id = ?", user_id, name, email, type, email_subscribe, id
+       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", user_id, name, email, type, email_subscribe, id
       end
     end
   end
@@ -677,7 +679,8 @@ class User
       out.save_or_update # update
       out
     else
-      out = User.new(user_id, name, email, type, email_subscribe)
+      editor = false
+      out = User.new(user_id, name, email, type, email_subscribe, editor)
       out.save_or_update # save
       out
     end

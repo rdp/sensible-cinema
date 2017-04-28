@@ -134,6 +134,12 @@ get "/delete_all_tags/:url_id" do |env|
   hard_nuke_url_or_nil(env, just_delete_tags: true)
 end
 
+get "/promote" do |env|
+  user = logged_in_user(env)
+  user.editor = true
+  user.save
+end
+
 get "/nuke_url/:url_id" do |env| # nb: never link to this to let normal users use it [?]
   hard_nuke_url_or_nil(env)
 end
