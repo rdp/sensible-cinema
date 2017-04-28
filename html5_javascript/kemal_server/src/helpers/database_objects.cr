@@ -679,7 +679,7 @@ class User
       out.save_or_update # update
       out
     else
-      editor = false
+      editor = true # for now :|
       out = User.new(user_id, name, email, type, email_subscribe, editor)
       out.save_or_update # save
       out
@@ -687,6 +687,7 @@ class User
   end
 
   include Session::StorableObject # store the whole thing in the local session? ugly but hey...
+
 end
 
 def first_or_nil(list)
