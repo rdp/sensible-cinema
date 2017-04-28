@@ -150,6 +150,7 @@ ALTER TABLE users DROP INDEX unique_email_user_id;
 ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
 alter table users add column email_subscribe BOOL DEFAULT false; -- actually 0 or 1 apparently
 alter table users add column editor BOOL DEFAULT false; -- actually 0 or 1 apparently
+alter table users add column admin BOOL DEFAULT false; -- actually 0 or 1 apparently
 
 -- and output to screen to show success...
 select * from urls;

@@ -134,12 +134,20 @@ get "/delete_all_tags/:url_id" do |env|
   hard_nuke_url_or_nil(env, just_delete_tags: true)
 end
 
-get "/promote" do |env|
-  user = logged_in_user(env)
+get "/promote_user" do |env|
+  user = User.only_by_email(env.params.query["email"])
   user.editor = true
   user.create_or_update
-  add_to_flash env, "You're an editor now!"
+  add_to_flash env, "Made #{user.name} an editor"
   env.redirect "/"
+end
+
+get "/admin" do |env|
+  if logged_in_user(env).admin # XXX more security? :|
+    User.all.map{|user| "<a href=/promote_user?email=#{user.email}>promote #{user.name}<a><br/>"}.join
+  else
+    raise "non admin sorry"
+  end
 end
 
 get "/nuke_url/:url_id" do |env| # nb: never link to this to let normal users use it [?]
@@ -334,6 +342,7 @@ end
 get "/logout" do |env|
   if is_dev?
     logout_session(env)
+    env.redirect "/" # not redir to login which auto logs back in :|
   elsif !logged_in?(env)
     add_to_flash(env, "already logged out")
     env.redirect "/"
@@ -344,12 +353,12 @@ end
 
 get "/logout_session" do |env| # j.s. sends us here...
   logout_session(env)
+  env.redirect "/login" # amazon says to show login page after
 end
 
 def logout_session(env)
   add_to_flash(env, "You have been logged out, thanks!")
   env.session.delete_object("user") # whether there or not :)
-  env.redirect "/login" # amazon says to show login page after
 end
 
 def download(raw_url, headers = nil)

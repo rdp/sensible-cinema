@@ -632,7 +632,6 @@ end
 
 
 class User
-
   JSON.mapping({
     id: Int32,
     user_id: String,
@@ -640,7 +639,8 @@ class User
     email: String,
     type: String,
     email_subscribe: Bool,
-    editor: Bool
+    editor: Bool,
+    admin: Bool
   })
   DB.mapping({
     id: Int32,
@@ -649,20 +649,34 @@ class User
     email: String,
     type: String,
     email_subscribe: Bool,
-    editor: Bool
+    editor: Bool,
+    admin: Bool
   })
 
-  def initialize(@user_id, @name, @email, @type, @email_subscribe, @editor) # no id
+  def initialize(@user_id, @name, @email, @type, @email_subscribe, @editor, @admin) # no id
     @id = 0
   end
 
   def create_or_update
+    # don't save admin, that's just manual on purpose :|
     with_db do |conn|
       if @id == 0
         @id = conn.exec("insert into users (user_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?)", user_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
       else
        conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", user_id, name, email, type, email_subscribe, editor, id
       end
+    end
+  end
+
+  def self.only_by_email(email)
+    only_one!(query("SELECT * from users where email = ?", email) do |rs|
+      User.from_rs(rs);
+    end)
+  end
+
+  def self.all
+    query("SELECT * from users") do |rs|
+      User.from_rs(rs);
     end
   end
 
@@ -680,7 +694,8 @@ class User
       out
     else
       editor = true # for now :|
-      out = User.new(user_id, name, email, type, email_subscribe, editor)
+      admin = false
+      out = User.new(user_id, name, email, type, email_subscribe, editor, admin)
       out.create_or_update # create
       out
     end
