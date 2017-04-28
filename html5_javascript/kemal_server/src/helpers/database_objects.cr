@@ -656,12 +656,12 @@ class User
     @id = 0
   end
 
-  def save_or_update
+  def create_or_update
     with_db do |conn|
       if @id == 0
         @id = conn.exec("insert into users (user_id, name, email, type, email_subscribe, editor) values (?, ?, ?, ?, ?, ?)", user_id, name, email, type, email_subscribe, editor).last_insert_id.to_i32
       else
-       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", user_id, name, email, type, email_subscribe, id
+       conn.exec "update users set user_id = ?, name = ?, email = ?, type = ?, email_subscribe = ?, editor = ? where id = ?", user_id, name, email, type, email_subscribe, editor, id
       end
     end
   end
@@ -674,14 +674,14 @@ class User
     if existing.size == 1
       out = existing[0]
       out.name = name
-      raise "huh wuh" unless out.type == type
+      raise "auth mismatch?" unless out.type == type
       out.email_subscribe = email_subscribe
-      out.save_or_update # update
+      out.create_or_update # update
       out
     else
       editor = true # for now :|
       out = User.new(user_id, name, email, type, email_subscribe, editor)
-      out.save_or_update # save
+      out.create_or_update # create
       out
     end
   end

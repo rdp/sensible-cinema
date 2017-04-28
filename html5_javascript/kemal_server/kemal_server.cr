@@ -137,7 +137,9 @@ end
 get "/promote" do |env|
   user = logged_in_user(env)
   user.editor = true
-  user.save
+  user.create_or_update
+  add_to_flash env, "You're an editor now!"
+  env.redirect "/"
 end
 
 get "/nuke_url/:url_id" do |env| # nb: never link to this to let normal users use it [?]
@@ -171,7 +173,7 @@ def hard_nuke_url_or_nil(env, just_delete_tags = false)
 end
 
 def logged_in?(env)
-  env.session.object?("user") || is_dev?
+  env.session.object?("user")
 end
 
 get "/delete_tag/:tag_id" do |env|
@@ -330,7 +332,9 @@ def setup_user_and_session(user_id, name, email, type, env)
 end
 
 get "/logout" do |env|
-  if !logged_in?(env)
+  if is_dev?
+    logout_session(env)
+  elsif !logged_in?(env)
     add_to_flash(env, "already logged out")
     env.redirect "/"
   else
@@ -339,6 +343,10 @@ get "/logout" do |env|
 end
 
 get "/logout_session" do |env| # j.s. sends us here...
+  logout_session(env)
+end
+
+def logout_session(env)
   add_to_flash(env, "You have been logged out, thanks!")
   env.session.delete_object("user") # whether there or not :)
   env.redirect "/login" # amazon says to show login page after
@@ -516,7 +524,11 @@ get "/faq" do |env|
 end
 
 get "/login" do |env|
-  if logged_in?(env)
+  if is_dev?
+    env.params.query["email_subscribe"] = "false"
+    add_to_flash env, "logged in test user"
+    setup_user_and_session("test_user_id", "test user name", "testuseremail@test.com", "testauth", env)
+  elsif logged_in?(env)
     add_to_flash env, "already logged in!"
     env.redirect "/"
   else
@@ -606,11 +618,7 @@ def user_id(env)
 end
 
 def logged_in_user(env)
-  if is_dev?
-    User.new "test_user_id", "test_user_name", "test@test.com", "facebook", true # and id 0
-  else
-   env.session.object("user") 
-  end
+ env.session.object("user") 
 end 
 
 def resanitize_html(string)
