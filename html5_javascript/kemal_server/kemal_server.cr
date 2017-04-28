@@ -633,7 +633,11 @@ def user_id(env)
 end
 
 def logged_in_user(env)
- env.session.object("user") 
+ if user = env.session.object?("user")
+   user
+ else
+   raise "not logged in?"
+ end
 end 
 
 def resanitize_html(string)
