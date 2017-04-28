@@ -668,7 +668,6 @@ post "/save_url" do |env|
   db_url.genre = resanitize_html(params["genre"])
   db_url.original_rating = resanitize_html(params["original_rating"])
   db_url.editing_notes = resanitize_html(params["editing_notes"])
-  db_url.community_contrib = params["community_contrib"] == "true" # the string
   db_url.save
   
   image_url = params["image_url"]

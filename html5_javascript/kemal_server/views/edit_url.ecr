@@ -72,17 +72,6 @@ editing_notes (if not fully edited, ex: "got to minute 45", "only did the mutes 
 <br/>
 <br/>
 
-community contrib? (set to false if you are being paid for this)
-<select name="community_contrib" id="community_contrib"> <!-- check boxes have caveats to avoid for now -->
-  <option value="true">true</option>
-  <option value="false">false</option>
-</select>
-<script>
-  document.getElementById('community_contrib').value = '<%= url.community_contrib %>';
-</script>
-<br/>
-<br/>
-
 good_movie_rating (out of 10, kind of like "out of 10 stars" on IMDB)
 <input type="text" name="good_movie_rating" size="5" value="<%= url.good_movie_rating if url.good_movie_rating > 0 %>"/>
 <br/>
