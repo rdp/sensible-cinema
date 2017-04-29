@@ -618,9 +618,6 @@ function loadSucceeded(json_string) {
   parseSuccessfulJson(json_string);
 	getEditsFromCurrentTagList();
   startWatcherTimerOnce(); // don't know what to display before this...so leave everything hidden
-  if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-     // there can be false alerts like yours has a # or something so don't alert :|
-  }
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber();
   if (liveEpisodeNumber() != expected_episode_number) {
@@ -677,8 +674,6 @@ function parseSuccessfulJson(json_string) {
   url = current_json.url;
   name = url.name;
   episode_name = url.episode_name;
-  expected_current_url = current_json.expected_url_unescaped;
-  amazon_second_url = current_json.url;
   expected_episode_number = url.episode_number;
 	
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
