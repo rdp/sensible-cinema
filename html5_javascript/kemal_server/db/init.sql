@@ -36,16 +36,16 @@ CREATE TABLE edits (
 );
 
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
-   values ("https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK", 'ALTA season 3', "this does not have real edits", 5, "Beach test", 10, 8, 4, "review");
+   values ("https:&#x2F;&#x2F;www.amazon.com&#x2F;Avatar-Last-Airbender-Season-3&#x2F;dp&#x2F;B001J6GZXK", 'ALTA season 3', "this does not have real edits", 5, "Beach test", 10, 8, 4, "review");
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
    values ("https://localhost:3000/test_movie_for_practicing_edits.html", 'big buck bunny localhost', "not done yet", 0, "", 10, 8, 4, "review");
 insert into urls (url, name, editing_notes, amazon_episode_number, amazon_episode_name, age_recommendation_after_edited, wholesome_uplifting_level, good_movie_rating, review) 
    values ("https://playitmyway.org/test_movie_for_practicing_edits.html", 'big buck bunny pimw', "not done yet", 0, "", 10, 8, 4, "review");
 
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
-      (2.0, 7.0, "a category", "a subcat", "details", "skip", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
+      (2.0, 7.0, "a category", "a subcat", "details", "skip", (select id from urls where url='https:&#x2F;&#x2F;www.amazon.com&#x2F;Avatar-Last-Airbender-Season-3&#x2F;dp&#x2F;B001J6GZXK'), "");
 insert into edits (start, endy, category, subcategory, details, default_action, url_id, more_details) values
-      (10.0, 20.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https://www.amazon.com/Avatar-Last-Airbender-Season-3/dp/B001J6GZXK'), "");
+      (10.0, 20.0, "a category", "a subcat", "details", "mute", (select id from urls where url='https:&#x2F;&#x2F;www.amazon.com&#x2F;Avatar-Last-Airbender-Season-3&#x2F;dp&#x2F;B001J6GZXK'), "");
 
 alter table urls ADD COLUMN details VARCHAR(1024) NOT NULL DEFAULT '';
 alter table urls CHANGE editing_notes editing_status VARCHAR(1024);
