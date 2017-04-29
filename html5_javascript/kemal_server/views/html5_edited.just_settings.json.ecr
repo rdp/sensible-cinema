@@ -1,8 +1,9 @@
 {
 "url": <%= db_url.to_json %>,
-"expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescape or stably escape in javascript :? %>
+"expected_url_unescaped": <%= HTML.unescape(db_url.url).to_json %>, <% # no way to unescape or stably escape in javascript TODO remove unused now remove 4/30. :? %>
 "tags":
   [<%= db_url.tags.map(&.to_json).join(",\n") %>],
 "tag_edit_lists":
-  <%= db_url.tag_edit_lists(env).map{|tag_edit_list| [tag_edit_list, tag_edit_list.tags_with_personalized_action.map{|tag, action| tag.default_action = action; tag}]}.to_json %>
+  <%= db_url.tag_edit_lists(env).map{|tag_edit_list| [tag_edit_list, tag_edit_list.tags_with_personalized_action.map{|tag, action| tag.default_action = action; tag}]}.to_json %>,
+  "editor": <%= logged_in_user(env).editor.to_json %>
 }

@@ -606,7 +606,7 @@ post "/save_tag_edit_list" do |env|
   }
   tag_edit_list.create_or_refresh(tag_ids, actions)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description} if you are watching the movie in another  tab please refresh that browser tab")
-  save_local_javascript tag_edit_list.url, "saved new tag edit list", env # will save it with a user's id but hopefully that's opaque enough...
+  save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
 end
 
