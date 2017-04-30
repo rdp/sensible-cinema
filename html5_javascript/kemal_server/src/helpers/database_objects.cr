@@ -674,6 +674,12 @@ class User
     end)
   end
 
+  def self.only_by_id(id)
+    only_one!(query("SELECT * from users where id = ?", id) do |rs|
+      User.from_rs(rs);
+    end)
+  end
+
   def self.all
     query("SELECT * from users") do |rs|
       User.from_rs(rs);

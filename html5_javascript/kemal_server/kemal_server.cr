@@ -139,7 +139,7 @@ get "/promote_user" do |env|
   user = User.only_by_email(env.params.query["email"])
   user.editor = true
   user.create_or_update
-  Session.destroy_all # :|
+  Session.destroy_all # :| doesn't clear current cached one though so ironically we're OK to continue LOL
   add_to_flash env, "Made #{user.name} an editor"
   env.redirect "/"
 end
@@ -333,7 +333,7 @@ end
 def setup_user_and_session(user_id, name, email, type, env)
   email_subscribe = env.params.query["email_subscribe"] == "true"
   user = User.from_update_or_new_db(user_id, name, email, type, email_subscribe)
-  env.session.object("user", user) # not sure if saving it to the session is better or worse than looking it up from the DB every request...
+  env.session.int("user_id", user.id) # if save whole session, we can *never* get updates from admin session to theirs :|
   add_to_flash(env, "Successfully logged in, welcome #{user.name}!")
   if env.session.string?("redirect_to_after_login") 
     env.redirect env.session.string("redirect_to_after_login")
@@ -345,7 +345,7 @@ def setup_user_and_session(user_id, name, email, type, env)
 end
 
 def logged_in?(env)
-  env.session.object?("user") ? true : false
+  env.session.int?("user_id") ? true : false
 end
 
 get "/logout" do |env|
@@ -367,7 +367,7 @@ end
 
 def logout_session(env)
   add_to_flash(env, "You have been logged out, thanks!")
-  env.session.delete_object("user") # whether there or not :)
+  env.session.delete_int("user_id") # whether there or not :)
 end
 
 def download(raw_url, headers = nil)
@@ -636,8 +636,8 @@ def user_id(env)
 end
 
 def logged_in_user(env)
- if user = env.session.object?("user")
-   user
+ if user_id = env.session.int?("user_id")
+   User.only_by_id(user_id)
  else
    raise "not logged in?"
  end
