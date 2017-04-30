@@ -146,7 +146,7 @@ get "/admin" do |env|
   if logged_in_user(env).admin # XXX more security? :|
     User.all.map{|user| 
       if !user.editor
-        "<a href=/promote_user?email=#{user.email}>promote #{user.name}<a>"
+        "promote <a href=/promote_user?email=#{user.email}>#{user.name} to editor<a>" # XXX there is some wackiness with the internal cacheing of users here tho hrm...
       else
         "#{user.name} is editor"
       end
