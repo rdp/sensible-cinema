@@ -11,7 +11,11 @@
             ">
             <div style="text-align: center;">
               <% if url.editing_status == "Done with second review, tags viewed as complete" %>
-                Watch edited now!
+                <% if url.amazon_prime_free_type == "" %>
+                  Rent to watch edited now!
+                <% else %>
+                  Watch edited now!
+                <% end %>
               <% elsif url.editing_status == "Done with first pass tagging, could use second review" %>
                 (watch edited: done with first pass, waiting for review)
               <% elsif url.tag_count == 0 %>
