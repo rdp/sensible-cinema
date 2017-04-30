@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-var request_host="localhost:3000"; // dev
-//var request_host="playitmyway.org";  // prod
+// var request_host="localhost:3000"; // dev
+var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|

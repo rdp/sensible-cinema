@@ -138,7 +138,7 @@ get "/promote_user" do |env|
   raise "admin only" unless logged_in_user(env).admin
   user = User.only_by_email(env.params.query["email"])
   user.editor = true
-  user.create_or_update 
+  user.create_or_update
   add_to_flash env, "Made #{user.name} an editor"
   env.redirect "/"
 end
