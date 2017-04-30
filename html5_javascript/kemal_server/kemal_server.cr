@@ -138,8 +138,7 @@ get "/promote_user" do |env|
   raise "admin only" unless logged_in_user(env).admin
   user = User.only_by_email(env.params.query["email"])
   user.editor = true
-  user.create_or_update
-  Session.destroy_all # :| doesn't clear current cached one though so ironically we're OK to continue LOL
+  user.create_or_update 
   add_to_flash env, "Made #{user.name} an editor"
   env.redirect "/"
 end
@@ -148,7 +147,7 @@ get "/admin" do |env|
   if logged_in_user(env).admin # XXX more security? :|
     User.all.map{|user| 
       if !user.editor
-        "promote <a href=/promote_user?email=#{user.email}>#{user.name} to editor<a>" # XXX there is some wackiness with the internal cacheing of users here tho hrm...
+        "promote <a href=/promote_user?email=#{user.email}>#{user.name}</a> to editor"
       else
         "#{user.name} is editor"
       end
