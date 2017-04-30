@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.org";  // prod
+var request_host="localhost:3000"; // dev
+//var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -63,7 +63,9 @@ function addEditUi() {
     	<br/>
       <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      Did we miss anything? <a href=# onclick="reportProblem(); return false;" id="add_edit_link_id">Let us know!</a> or <a href=# onclick="toggleAddNewTagStuff(); return false;">add a tag</a>.
+      <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
+        Did we miss anything? <a href=# onclick="reportProblem(); return false;" id="add_edit_link_id">Let us know!</a> or <a href=# onclick="toggleAddNewTagStuff(); return false;">add a tag</a>.
+      </div>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
       To tag something: enter time, test it, then save it:
@@ -830,15 +832,15 @@ function loadSucceeded(json_string) {
   parseSuccessfulJson(json_string);
 	getEditsFromCurrentTagList();
   startWatcherTimerOnce(); // don't know what to display before this...so leave everything hidden
-  if (getStandardizedCurrentUrl() != expected_current_url && getStandardizedCurrentUrl() != amazon_second_url) {
-     // there can be false alerts like yours has a # or something so don't alert :|
-  }
   old_current_url = getStandardizedCurrentUrl();
   old_episode = liveEpisodeNumber();
   if (liveEpisodeNumber() != expected_episode_number) {
     alert("play it my way\ndanger: may have gotten wrong episode expected=" + expected_episode_number + " got=" + liveEpisodeNumber());
   }
   displayDiv(document.getElementById("load_succeeded_div_id"));
+  if (current_json.editor) {
+    displayDiv(document.getElementById("editor_top_line_div_id"));
+  }
   hideDiv(document.getElementById("load_failed_div_id"));
   hideDiv(document.getElementById("server_down_div_id")); // in case it's a recovery
 	sendMessageToPlugin({text: "☺", color: "#008000", details: "Edited playback is enabled and fully operational for current video being played"}); // green
@@ -889,8 +891,6 @@ function parseSuccessfulJson(json_string) {
   url = current_json.url;
   name = url.name;
   episode_name = url.episode_name;
-  expected_current_url = current_json.expected_url_unescaped;
-  amazon_second_url = current_json.url;
   expected_episode_number = url.episode_number;
 	
 	var dropdown = document.getElementById("tag_edit_list_dropdown");
