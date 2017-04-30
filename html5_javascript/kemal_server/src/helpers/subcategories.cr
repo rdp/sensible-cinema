@@ -22,6 +22,7 @@ def subcategory_map
     "bodily part reference mild" => "profanity -- bodily part reference mild (butt, bumm, suck...)",
     "bodily part reference harsh" => "profanity -- bodily part reference harsh",
     "sexual reference" => "profanity -- sexual innuendo/reference",
+    "sexual reference" => "profanity -- violence reference",
     "euphemized profanities" => "profanity -- euphemized profanities (ex: crap, dang, gosh dang)",
     "lesser expletive" => "profanity -- other lesser expletive ex \"bloomin'\" etc.",
     "deity religious context" => "profanity -- deity use in religious context like \"the l... is good\"",
