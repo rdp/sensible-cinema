@@ -135,9 +135,11 @@ get "/delete_all_tags/:url_id" do |env|
 end
 
 get "/promote_user" do |env|
+  raise "admin only" unless logged_in_user(env).admin
   user = User.only_by_email(env.params.query["email"])
   user.editor = true
   user.create_or_update
+  Session.destroy_all # :|
   add_to_flash env, "Made #{user.name} an editor"
   env.redirect "/"
 end
@@ -186,9 +188,6 @@ def hard_nuke_url_or_nil(env, just_delete_tags = false)
   end
 end
 
-def logged_in?(env)
-  env.session.object?("user") ? true : false
-end
 
 get "/delete_tag/:tag_id" do |env|
   id = env.params.url["tag_id"]
@@ -343,6 +342,10 @@ def setup_user_and_session(user_id, name, email, type, env)
     add_to_flash(env, "If you were entering information, please use your browser's back button (hit it several times) to resend it");
     env.redirect "/"
   end
+end
+
+def logged_in?(env)
+  env.session.object?("user") ? true : false
 end
 
 get "/logout" do |env|
