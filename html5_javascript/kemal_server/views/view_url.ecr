@@ -52,8 +52,9 @@ Total content tags in our system for this movie:
   </tbody>
 </table>
 <br/>
-<a href=/edit_url/<%= url.id %>>modify these movie details</a>
-<br/>Anybody can contribute, kind of like wikipedia!
+<% if logged_in?(env) %>
+  <a href=/edit_url/<%= url.id %>>modify these movie details</a>
+<% end %>
 
 <hr/>
 <h3>Personalize your playback!</h3>
