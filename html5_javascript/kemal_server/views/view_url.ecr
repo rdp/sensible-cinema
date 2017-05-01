@@ -52,7 +52,7 @@ Total content tags in our system for this movie:
   </tbody>
 </table>
 <br/>
-<% if logged_in?(env) %>
+<% if editor?(env) %>
   <a href=/edit_url/<%= url.id %>>modify these movie details</a>
 <% end %>
 
@@ -122,9 +122,10 @@ Here's what we have so far:
 none yet, add one now!<br/><br/>
 <% end %>
 
-<% if logged_in?(env) %>
+<% if editor?(env) %>
   <a href=/add_new_tag/<%= url.id %>>Add additional content tags for this movie &#10133;<!-- thick plus --> </a>
 <% end %>
+  Feedback on edits for this movie click <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "feedback for:" + url.name_with_episode" %> target="_blank">here</a>.
 <br/>
 If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
 <br/>
