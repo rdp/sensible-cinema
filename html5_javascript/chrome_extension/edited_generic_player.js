@@ -328,7 +328,6 @@ Impact to Story if edited:
 
 <!-- can't put javascript since don't know how to inject it quite right, though I could use a separate render... -->
  <!-- render inline cuz uses macro -->
-        <input type="hidden" name="id" id="tag_hidden_id" value="0"> 
         <br/>        
         tag details: <input type="text" name="details" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
@@ -760,12 +759,11 @@ function saveEditButton() {
 	document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('tag_detaild_input_id').value = "";
-  // don't reset category since I'm not sure if the javascript handles going back to ""
-  document.getElementById('subcategory_select_id').value = "";
+  // don't reset category since I'm not sure if the javascript handles its going back to ""
+  showSubCatWithRightOptionsAvailable(); // reset subcat
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // or set it to 1
-  document.getElementById('tag_hidden_id').value = "0";
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 

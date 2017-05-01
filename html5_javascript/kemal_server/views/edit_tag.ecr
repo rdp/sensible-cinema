@@ -3,7 +3,9 @@
 
 <form action="/save_tag/<%= url.id %>" method="POST" >
 
-<input type="hidden" name="id" value="<%= tag.id %>"> <!-- 0 is ok here -->
+<% if tag.id != 0 %>
+  <input type="hidden" name="id" value="<%= tag.id %>"> <!-- 0 is ok but weird -->
+<% end %>  
 
 from:<input type="text" name="start"  size="25" value="<%= url.seconds_to_human tag.start %>"/>
 <br/>
