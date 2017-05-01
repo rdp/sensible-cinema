@@ -83,7 +83,9 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
   <!-- Nav tabs -->
   <ul class="nav nav-pills" role="tablist">
     <% settings.each_with_index{|setting, idx| %>
-      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab"><span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a></li>
+      <li role="presentation" <%= "class='active'" if idx == 0 %>><a href="#tab_<%= idx %>" id="tab_link_id_<%= idx %>" aria-controls="home" role="tab" data-toggle="tab" style="border: dotted 1px;">
+        <span style="font-size:larger;"><%= setting[:title] %> (<%= setting[:urls].size %>)</span></a>
+      </li>
     <% } %>
   </ul>
 
