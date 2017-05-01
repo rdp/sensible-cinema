@@ -544,7 +544,11 @@ get "/faq" do |env|
   render "views/faq.ecr", "views/layout.ecr"
 end
 
-get "/support" do |env|
+get "/add_movie" do |env|
+  render "views/add_movie.ecr", "views/layout.ecr"
+end
+
+get "/support" do |env| # contact
   render "views/support.ecr", "views/layout.ecr"
 end
 
