@@ -16,11 +16,10 @@
 <%= url.image_tag style: "", postpend_html: "<br/>" %>
 <h4>Details</h4>
 <br/>
-Total content tags in our system for this movie:
-<% url.tags_by_type.each{ |name, value| %>
-  <% if value.size > 0 %>
-		<br/>
-    <%= name %>: <%= value.size %>
+Content tags in our system for this movie:
+<br/>
+<% url.tags.group_by{|tag| tag.category}.each{|category, tags| %>
+    <%= category %>: <%= tags.size %>
   <% end %>
 <% } %> 
 <hr/>
