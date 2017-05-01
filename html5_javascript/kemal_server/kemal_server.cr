@@ -544,6 +544,10 @@ get "/faq" do |env|
   render "views/faq.ecr", "views/layout.ecr"
 end
 
+get "/support" do |env|
+  render "views/support.ecr", "views/layout.ecr"
+end
+
 get "/login" do |env|
   if is_dev?
     env.params.query["email_subscribe"] = "false"
