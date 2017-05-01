@@ -649,7 +649,9 @@ end
 
 def logged_in_user(env)
  if user_id = env.session.int?("user_id")
-   User.only_by_id(user_id)
+   out = User.only_by_id(user_id)
+   puts "you are #{out.inspect}"
+   out
  else
    raise "not logged in?"
  end
