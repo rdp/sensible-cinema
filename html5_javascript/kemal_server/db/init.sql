@@ -63,7 +63,7 @@ alter table urls ADD COLUMN purchase_cost DECIMAL NOT NULL DEFAULT 0.0;
 alter table urls ADD COLUMN total_time REAL NOT NULL default 0.0;
 
 alter table urls ADD COLUMN amazon_second_url VARCHAR(2014) NOT NULL DEFAULT '';
-CREATE INDEX url_amazon_second_url_episode_idx  ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
+CREATE INDEX url_amazon_second_url_episode_idx ON urls(amazon_second_url(256), amazon_episode_number); -- non unique on purpose XXX do queries use this?
 
 create unique index url_title_episode ON urls(name(256), amazon_episode_number); -- try to avoid accidental dupes
 ALTER TABLE urls DROP INDEX url_title_episode; 
@@ -151,6 +151,9 @@ ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
 alter table users add column email_subscribe BOOL DEFAULT false; -- actually 0 or 1 apparently
 alter table users add column editor BOOL DEFAULT false; -- actually 0 or 1 apparently
 alter table users add column admin BOOL DEFAULT false; -- actually 0 or 1 apparently
+
+alter table urls ADD COLUMN amazon_third_url VARCHAR(2014) NOT NULL DEFAULT '';
+CREATE INDEX url_amazon_third_url_episode_idx  ON urls(amazon_third_url(256), episode_number); -- non unique on purpose XXX do queries use this?
 
 -- and output to screen to show success...
 select * from urls;
