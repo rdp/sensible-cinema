@@ -144,7 +144,7 @@ get "/promote_user" do |env|
 end
 
 get "/admin" do |env|
-  if logged_in_user(env).admin # XXX more security? :|
+  if logged_in_user(env).admin # XXX more?
     User.all.map{|user| 
       if !user.editor
         "promote <a href=/promote_user?email=#{user.email}>#{user.name}</a> to editor"
