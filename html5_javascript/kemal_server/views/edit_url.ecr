@@ -97,20 +97,17 @@ Ex: "A little dark", "a good question to discuss as a family afterward would be.
 <br/>
 <br/>
 
-rental cost (HD rental, ex "2.00") (enter 0 if no rental option, ex: part of subscription site that doesn't charge per video (youtube).
-<br/>For amazon, enter cost for rental just this episode, assuming non-prime, if it's free (amazon) but with ads enter -1.
-<input type="text" name="rental_cost" size="5" value="<%= url.rental_cost if url.rental_cost %>"/>$
+streaming costs (ex: "2.00"), enter 0 if no option available (ex: part of subscription site that doesn't charge per video (youtube)).  This is cost *without* having amazon prime.  If it's "free with ads" enter -1 for rental cost.
 <br/>
+rental cost (HD): <input type="text" name="rental_cost" size="5" value="<%= url.rental_cost if url.rental_cost %>"/>$
 <br/>
 
 rental cost (SD)
 <input type="text" name="rental_cost_sd" size="5" value="<%= url.rental_cost_sd if url.rental_cost_sd %>"/>$
 <br/>
-<br/>
 
-purchase cost (ex: full purchase this episode HD, assuming no discounts, see above). 
+purchase cost (HD)
 <input type="text" name="purchase_cost" size="5" value="<%= url.purchase_cost if url.purchase_cost %>"/>$
-<br/>
 <br/>
 
 purchase cost (SD)
