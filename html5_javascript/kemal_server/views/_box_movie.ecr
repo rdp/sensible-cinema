@@ -42,13 +42,14 @@
             <a href="/view_url/<%= url.id %>">View our info (<%= url.tag_count %> content edits)</a><br/>
             <a href="<%= url.url %>" target="_blank" onclick="if (!alertIfNoExtension()) return false;
                <% if url.episode_number != 0  && url.amazon? %>
-                 alert('after opening the series, click play button for episode <%= url.episode_number %> to watch that episode edited');
+                 alert('after opening the series, click play button for episode <%= url.episode_number %> (<%= url.episode_name %>) to watch edited');
               <% end %>
               ">
               <% if url.editing_status == "Done with second review, tags viewed as complete" %>
                 <h4>Watch edited now!</h4>
               <% end %>
             </a>
+            Play it <a href=/personalized_edit_list/<%=url.id%>>your way!</a>
 	  </div>
          </div>
        </div>
