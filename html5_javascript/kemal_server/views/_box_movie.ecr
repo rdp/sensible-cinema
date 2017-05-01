@@ -12,7 +12,9 @@
             <div style="text-align: center;">
               <% if url.editing_status == "Done with second review, tags viewed as complete" %>
                 <% if url.amazon_prime_free_type == "" && url.rental_cost > 0 %>
-                  Rent to watch edited now!
+                  Rent and watch edited now!
+                <% elsif url.amazon_prime_free_type == "" && url.purchase_cost > 0 %>
+                  Purchase and watch edited now!
                 <% else %>
                   Watch edited now!
                 <% end %>
