@@ -16,10 +16,13 @@
                 <% else %>
                   Watch edited now!
                 <% end %>
-              <% elsif url.editing_status == "Done with first pass tagging, could use second review" %>
-                (watch edited: done with first pass, waiting for review)
               <% elsif url.tag_count == 0 %>
                 (not started, click here to watch unedited anyway)
+              <% elsif url.editing_status == "Done with first pass tagging, could use second review" %>
+                  (watch edited: done with first pass, but not finalized)
+                <% if logged_in?(env) %>
+                  <%= url.editing_status %> <!-- the word review oooh -->
+                <% end %>
               <% else %>
                 (edits incomplete, work in progress, click here to watch anyway)
               <% end %>
