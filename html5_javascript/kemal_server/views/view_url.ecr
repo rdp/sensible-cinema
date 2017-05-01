@@ -19,8 +19,7 @@
 Content tags in our system for this movie:
 <br/>
 <% url.tags.group_by{|tag| tag.category}.each{|category, tags| %>
-    <%= category %>: <%= tags.size %>
-  <% end %>
+  <%= category %>: <%= tags.size %>
 <% } %> 
 <hr/>
 
