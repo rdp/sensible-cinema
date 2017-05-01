@@ -284,6 +284,9 @@ end
 end
 
 get "/edit_url/:url_id" do |env|
+  if env.params.query["status"]? # == done
+    add_to_flash(env, "Thanks, you rock! Please fill in the rest of details and your review about the movie, set everything...then email us, and feel free to move on to the next!")
+  end
   url = get_url_from_url_id(env)
   render "views/edit_url.ecr", "views/layout.ecr"
 end
@@ -299,9 +302,6 @@ get "/add_new_tag/:url_id" do |env|
 end
 
 get "/view_url/:url_id" do |env|
-  if env.params.query["status"]? # == done
-    add_to_flash(env, "Thanks, you rock! Please fill in the rest of details and your review about the movie, set its prime type, etc...then email us!")
-  end
   url = get_url_from_url_id(env)
   show_tag_details =  env.params.query["show_tag_details"]?
   env.response.title = url.name_with_episode + " Edited"
