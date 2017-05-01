@@ -110,7 +110,7 @@ function addEditUi() {
           <option value="mute_audio_no_video">mute_audio_no_video</option>
           <option value="do_nothing">do_nothing (just tag)</option>
         </select>
-        <input type='submit' value='Test edit here' onclick="testCurrentFromUi(); return false">
+        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         
         
@@ -163,6 +163,8 @@ sub category_select
       <option value="bodily part reference harsh">profanity -- bodily part reference harsh</option>    
     
       <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
+    
+      <option value="violence reference">profanity -- violence reference</option>    
     
       <option value="euphemized profanities">profanity -- euphemized profanities &#40;ex: crap, dang, gosh dang&#41;</option>    
     
@@ -297,7 +299,7 @@ age specifier (optional):
 </select>
 <br/>
 
-Impact to Story:
+Impact to Story if edited:
   <select name="impact_to_movie" id="impact_to_movie_id">
     <option value="0">please select impact</option>
     
@@ -330,14 +332,14 @@ Impact to Story:
         <br/>        
         tag details: <input type="text" name="details" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
-        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
-        <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
-        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Save Tag As New' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Re-Open Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <a href=# onclick="getSubtitleLink(); return false;" </a>Get movie subtitles</a>
+        <input type='submit' value='Done with movie' onclick="doneMoviePage(); return false;">
       <br/>
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
