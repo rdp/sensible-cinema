@@ -525,7 +525,11 @@ get "/get_in_works" do |env|
   all_urls_half_way = all_urls.select{|url| url.editing_status == "Done with first pass tagging, could use second review" }
   all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
   urls = all_urls_half_way + all_urls_just_started
-  render "views/_list_movies.ecr" # and no layout
+  if env.params.query["by_self"]?
+    render "views/_list_movies.ecr"
+  else
+    render "views/_list_movies.ecr", "views/layout.ecr"
+  end
 end
 
 get "/installation" do |env|

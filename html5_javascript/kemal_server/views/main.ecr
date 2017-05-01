@@ -91,7 +91,8 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
   <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="tab_0">
            <%= urls=all_urls_done; render "views/_list_movies.ecr" %>
-           We have <a href=# onclick="activateSecondTabe(); return false;"> <%= non_done.size %> more movies</a> in the works!
+           <br/>
+           We also have <a href=/get_in_works> <%= non_done.size %> more movies</a> in the works!
       </div>
       <div role="tabpanel" class="tab-pane fade" id="tab_1">
          <div style="height: 1000px;">Loading movies in the works...</div> <!-- gets fully replaced... -->
@@ -110,7 +111,7 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     loaded = true;
     // $("#tab_1").html('Loading...'); //
     $.ajax({
-        url : '/get_in_works',
+        url : '/get_in_works?by_self=true',
         type: 'GET',
         success: function(data){
             $('#tab_1').html(data);
