@@ -695,7 +695,7 @@ post "/save_url" do |env|
   if amazon_second_url.present?
     _ , amazon_second_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(amazon_second_url)
   end
-  amazon_third_url = resanitize_html(params["amazon_third_Url"])
+  amazon_third_url = resanitize_html(params["amazon_third_url"])
   if amazon_third_url.present?
     _ , amazon_third_url = get_title_and_sanitized_standardized_canonical_url HTML.unescape(amazon_third_url)
   end
