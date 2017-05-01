@@ -123,7 +123,8 @@ none yet, add one now!<br/><br/>
 <% end %>
 
 <% if editor?(env) %>
-  <a href=/add_new_tag/<%= url.id %>>Add additional content tags for this movie &#10133;<!-- thick plus --> </a>
+  You're an editor: <a href=/add_new_tag/<%= url.id %>>Add additional content tags for this movie &#10133;<!-- thick plus --> </a>
+  <br/>
 <% end %>
   Feedback on edits for this movie click <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "feedback for:" + url.name_with_episode %> target="_blank">here</a>.
 <br/>
