@@ -23,11 +23,16 @@ def is_mobile(env)
   env.request.headers["User-Agent"]? =~ /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/
 end
 
-
 def editor?(env)
   if logged_in?(env)
     logged_in_user(env).editor
   else
     false
   end
+end
+
+def tags_by_category(url)
+  url.tags.group_by{|tag| tag.category}.map{|category, tags| 
+    "#{category}: #{tags.size}"
+  }.join(",")
 end
