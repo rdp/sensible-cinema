@@ -60,7 +60,14 @@ personal notes (ex: "for kids")
         impact to story if edited out: <%= tag.impact_to_movie %>
       <% end %>
     </td>
-    <td>typically: <%= tag.default_action %></td>
+    <td>typically:
+    <% if editor?(env) %>
+      <a href=/edit_tag/<%= tag.id %>><%= tag.default_action %></a>
+    <% else %>
+     <%= tag.default_action %>
+    <% end %>
+
+    </td>
     <% if show_tag_details %>
       <td><%= tag.details %></td>
     <% end %>
@@ -81,9 +88,6 @@ personal notes (ex: "for kids")
   	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= personal_action %>';
   		</script>
     </td>
-    <% if editor?(env) %>
-      <td><a href=/edit_tag/<%= tag.id %>>modify tag</a></td>
-    <% end %>
   </tr>
   
   <% } %> <!-- end tag -->
