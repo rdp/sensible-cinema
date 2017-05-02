@@ -35,6 +35,7 @@ def tags_by_category(url)
   url.tags.group_by{|tag| tag.category}.select{|category, tags| tags.size > 2}.map{|category, tags| 
     category = "nudity/sex" if category == "physical"
     category = "language" if category == "profanity"
+    category = "substance use" if category == "substance abuse"
     "#{category}: #{tags.size}"
   }.join(", ")
 end
