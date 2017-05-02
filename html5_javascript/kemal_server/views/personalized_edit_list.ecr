@@ -81,6 +81,9 @@ personal notes (ex: "for kids")
   	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= personal_action %>';
   		</script>
     </td>
+    <% if editor?(env) %>
+      <td><a href=/edit_tag/<%= tag.id %>>modify tag</a></td>
+    <% end %>
   </tr>
   
   <% } %> <!-- end tag -->
