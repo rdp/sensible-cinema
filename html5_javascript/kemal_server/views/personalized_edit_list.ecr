@@ -58,9 +58,9 @@ personal notes (ex: "for kids")
         impact to story if edited out: <%= tag.impact_to_movie %>
       <% end %>
     </td>
-    <td>typically: <%= tag.default_action %></td>
     <td><%= seconds_to_human tag.start %></td>
     <td><%= seconds_to_human tag.duration %></td>
+    <td>typically: <%= tag.default_action %></td>
     <% if show_tag_details %>
       <td><%= tag.details %></td>
     <% end %>
