@@ -37,7 +37,7 @@
           <%= if_present_with_break "#{url.genre} #{url.human_duration}".strip, "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
           <a href="/view_url/<%= url.id %>">Our info</a> 
-          <% if url.tag_count != 0 %>
+          <% if url.tag_count > 0 %>
             (<%= tags_by_category(url) %>)
           <% end %>
           <br/>
