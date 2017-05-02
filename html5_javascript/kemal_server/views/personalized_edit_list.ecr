@@ -39,7 +39,7 @@ personal notes (ex: "for kids")
   <h2><%= category.capitalize %></h2>
   <input id="" type="checkbox" checked 
     onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
-  > Select all
+  > Toggle all <%= category %>
   <br/>
   <br/>
 
