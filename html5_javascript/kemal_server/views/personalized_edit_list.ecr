@@ -54,6 +54,7 @@ personal notes (ex: "for kids")
       >
     <%= seconds_to_human tag.start %> (for <%= seconds_to_human tag.duration %>)
     </td>
+    <td>last <%= seconds_to_human tag.duration %></td>
     <td>
       <% if tag.impact_to_movie > 0 %>
         impact to story if edited out: <%= tag.impact_to_movie %>
@@ -69,7 +70,7 @@ personal notes (ex: "for kids")
       <% end %>
     </td>
     <td>
-  		personalize your action:
+  		or personalize your action:
   		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
   		  <option value="mute">mute</option>
   		  <option value="skip">skip</option>
