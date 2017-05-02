@@ -17,7 +17,7 @@ sub cat:
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     <% subcategory_map().each{|k, v| %>
-      <option value="<%= HTML.escape(k) %>"><%= HTML.escape(v) %></option>    
+      <option value="<%= HTML.escape(k.to_s) %>"><%= HTML.escape(v) %></option>    
     <% } %>
 </select>
 </div>
