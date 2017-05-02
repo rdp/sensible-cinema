@@ -330,7 +330,7 @@ Impact to Story if edited:
         <br/>        
         tag details: <input type="text" name="details" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
-        <input type='submit' value='Save Tag As New' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Open Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
