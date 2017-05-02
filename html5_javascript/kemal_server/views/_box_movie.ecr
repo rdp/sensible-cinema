@@ -34,9 +34,8 @@
           <%= if_present_with_break url.review, "Good movie review:" %>
           <%= if_present_with_break url.editing_notes, "Editing notes:" %>
           <%= if_present_with_break url.original_rating, "Original rating:" %>
-          <%= if_present_with_break url.genre, "Genre:" %>
+          <%= if_present_with_break "#{url.genre} #{url.human_dation}".strip, "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
-          <%= if_present_with_break url.human_duration %>
           <a href="/view_url/<%= url.id %>">Our info</a> (<%= tags_by_category(url) %>)<br/>
           <div style="text-align: center;">		  
             <a href="<%= url.url %>" target="_blank" onclick="if (!alertIfNoExtension()) return false;
