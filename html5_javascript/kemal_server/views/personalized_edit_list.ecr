@@ -44,9 +44,7 @@ personal notes (ex: "for kids")
   <br/>
 
   <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.group_by{|tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_personal_actions| %>
-  <% if subcategory_tags_and_personal_actions.size > 1 %>
-    <%= subcategory %>
-  <% end %>
+  <%= subcategory %>
   <table class="table table-striped">
   <% subcategory_tags_and_personal_actions.each{|tag, personal_action| %>
   <tr>
@@ -54,7 +52,6 @@ personal notes (ex: "for kids")
       <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" unless personal_action == "do_nothing" %>
         onchange='updateSelect(<%= tag.id %>, "<%= personal_action %>");'
       >
-      <%= tag.subcategory %>
     </td>
     <td>
       <% if tag.impact_to_movie > 0 %>
