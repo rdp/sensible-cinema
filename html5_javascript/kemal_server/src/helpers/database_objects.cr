@@ -89,7 +89,7 @@ class Url
 
   def self.count
     with_db do |conn|
-      conn.scalar("select count(*) from urls").as(Int32)
+      conn.scalar("select count(*) from urls").as(Int64)
     end
   end
   
@@ -169,7 +169,7 @@ class Url
 
   def tag_count
     with_db do |conn|
-      conn.scalar("select count(*) from tags where url_id = ?", id).as(Int32)
+      conn.scalar("select count(*) from tags where url_id = ?", id).as(Int64)
     end
   end
 
