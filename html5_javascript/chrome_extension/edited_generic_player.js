@@ -100,7 +100,6 @@ function addEditUi() {
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
       
       
-      
        <br/>
         action:
         <select name="default_action" id='action_sel' onchange="">
@@ -128,7 +127,7 @@ style="background-color: rgba(255, 255, 255, 0.85);" >
 </div>
 
 <div id="subcategory_div_id">
-sub category_select
+sub cat:
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     
@@ -760,7 +759,8 @@ function saveEditButton() {
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('tag_detaild_input_id').value = "";
   // don't reset category since I'm not sure if the javascript handles its going back to ""
-  showSubCatWithRightOptionsAvailable(); // reset subcat
+  document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
+  showSubCatWithRightOptionsAvailable(); // resize it back
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // or set it to 1
