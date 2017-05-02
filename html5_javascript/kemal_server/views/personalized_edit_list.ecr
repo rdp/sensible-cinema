@@ -44,8 +44,9 @@ personal notes (ex: "for kids")
   <br/>
 
   <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.group_by{|tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_personal_actions| %>
-
-  <%= subcategory %>
+  <% if subcategory_tags_and_personal_actions.size > 1 %>
+    <%= subcategory %>
+  <% end %>
   <table class="table table-striped">
   <% subcategory_tags_and_personal_actions.each{|tag, personal_action| %>
   <tr>
@@ -53,26 +54,26 @@ personal notes (ex: "for kids")
       <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" unless personal_action == "do_nothing" %>
         onchange='updateSelect(<%= tag.id %>, "<%= personal_action %>");'
       >
-      <%= seconds_to_human tag.start %>
+      <%= tag.subcategory %>
     </td>
-    <td><%= seconds_to_human tag.duration %></td>
-    <td>typically: <%= tag.default_action %></td>
-    <td><%= tag.subcategory %></td>
-    <% if show_tag_details %>
-      <td><%= tag.details %></td>
-    <% end %>
     <td>
       <% if tag.impact_to_movie > 0 %>
         impact to story if edited out: <%= tag.impact_to_movie %>
       <% end %>
     </td>
+    <td>typically: <%= tag.default_action %></td>
+    <td><%= seconds_to_human tag.start %></td>
+    <td><%= seconds_to_human tag.duration %></td>
+    <% if show_tag_details %>
+      <td><%= tag.details %></td>
+    <% end %>
     <td>
       <% if tag.age_maybe_ok > 0 %>
         not OK age <%= tag.age_maybe_ok %> and under
       <% end %>
     </td>
     <td>
-  		your action:
+  		personalize your action:
   		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
   		  <option value="mute">mute</option>
   		  <option value="skip">skip</option>
