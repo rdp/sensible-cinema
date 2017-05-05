@@ -61,7 +61,7 @@ function addEditUi() {
        <br/>
   	  Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
     	<br/>
-      <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
+      <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
       <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
         Did we miss anything? <a href=# onclick="reportProblem(); return false;" id="add_edit_link_id">Let us know!</a> or <a href=# onclick="toggleAddNewTagStuff(); return false;">add a tag</a>.
@@ -153,8 +153,9 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
   return current_url;
 }
 
-function createNewEditList() {
+function openPersonalizedEditList() {
   window.open("https://" + request_host + "/personalized_edit_list/" + current_json.url.id);
+	pauseVideo();
 }
 
 function reportProblem() {
