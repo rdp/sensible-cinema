@@ -52,6 +52,11 @@ function doubleCheckValues() {
     alert("please select impact to story");
     return false;
   }
+  var details = document.getElementById('details_input_id').value;
+  if (details == "") {
+    alert("please enter details");
+    return false;
+  }
   if ((category == "violence" || category == "suspense") && age == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     return false;

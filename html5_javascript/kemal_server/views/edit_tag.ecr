@@ -34,8 +34,8 @@ default action to take if user selects to "edit all offensive content out" (to t
 
 
 <br/>
-internal tag details (ex: "sally said .... OK?" (dots instead of real profanity, or "main character dies a horrible death", "butterfly is smashed by rock")) optional, will only be seen by editors, so spoilers are OK:<br/>
-<input type="text" name="details" size="50" value="<%= tag.details %>"/>
+internal tag details (ex: "sally said [d...] OK?" (dots instead of real profanity, brackets around muted part) or "protagonist dies a horrible death", "butterfly is smashed by rock")).  Will only be seen by editors, so spoilers are OK.<br/>
+<input type="text" name="details" id="details_input_id" size="50" value="<%= tag.details %>"/>
 
 <br/>
 <input type="submit" value="Save" onclick="return doubleCheckValues();">

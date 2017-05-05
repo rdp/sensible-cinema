@@ -114,7 +114,7 @@ function addEditUi() {
         
         <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro -->
         <br/>        
-        tag details: <input type="text" name="details" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
+        tag details: <input type="text" name="details" id="details_input_id" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
         <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Open Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
@@ -235,20 +235,20 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
 	var tag = areWeWithin(mutes, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
+  extra_message = "";
 	if (tag) {
 	  if (!video_element.muted) {
 	    video_element.muted = true;
       i_muted_it = true;
 	    timestamp_log("muting", cur_time, tag);
-	    extra_message = "muting";
 	  }
+   extra_message += "muting";
 	}
 	else {
 	  if (video_element.muted) {
       if (i_muted_it) {
   	    video_element.muted = false;
   	    console.log("unmuted at=" + cur_time);
-  	    extra_message = "";
         i_muted_it = false;      
       }
 	  }
@@ -266,15 +266,14 @@ function checkIfShouldDoActionAndUpdateUI() {
 		// use style.visibility here so it retains the space on screen it would have otherwise used
 	  if (video_element.style.visibility != "hidden") {
 	    timestamp_log("hiding video leaving audio ", cur_time, tag);
-	    extra_message = "doing a no video yes audio";
 	    video_element.style.visibility="hidden";
 	  }
+    extra_message += "doing a no video yes audio";
 	}
 	else {
 	  if (video_element.style.visibility != "") {
 	    video_element.style.visibility=""; // non hidden :)
 	    console.log("unhiding video with left audio " + cur_time);
-	    extra_message = "";
 	  }
 	}
 
