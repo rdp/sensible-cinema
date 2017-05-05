@@ -12,7 +12,6 @@ edit a few on my own
 
 reviewer youtube how to ... :|
 
-
 == pre soft launch ==
 
 watch edited on view_url didn't warn :|
@@ -31,8 +30,10 @@ soft launch looks like: easy links...ycombinator (youtube?) probably not even tw
 LLC/business :|
 
 == pre kickstarer ==
+don't use access tokens as GET params, barely wonky...
+
 chat with Greg pre soft launch :|
-  rip out youtube, plus its unedited
+  rip out youtube, plus its unedited button :|
 
 sort by most recent, for me LOL
 
@@ -131,6 +132,8 @@ seasons have their own page, really [so one link]
 double check everything has "amazon second urls" and fully groomed as well... :|
 
 == todo never LOL ==
+
+tell youtube API "you can seek to better than keyframes, come on, you can do better than that..."
 
 youtube for advanced behaviors/tutorial :)
 
