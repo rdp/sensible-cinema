@@ -108,7 +108,7 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server [yet is it though?]
     return;
   }
-  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("youtube.com") || url.includes("playitmyway.org")) {
+  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("playitmyway.org")) {
     if (inIframe()) { 
       // avoid google iframes popup after it says YES and reset it back even though it is playing OK
       console.log("not setting to ... from an iframe");
