@@ -45,6 +45,10 @@ personal notes (ex: "for kids")
 
   <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.group_by{|tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_personal_actions| %>
   <h4><%= subcategory %></h4>
+  <input id="" type="checkbox" checked 
+    onchange='updateSelectAll(<%= subcategory_tags_and_personal_actions.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
+  > Toggle all <%= subcategory %>
+  <br/>
   <table class="table table-striped">
   <% subcategory_tags_and_personal_actions.each{|tag, personal_action| %>
   <tr>
