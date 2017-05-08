@@ -63,8 +63,11 @@ function addEditUi() {
     	<br/>
       <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
-      <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
-        Did we miss anything? <a href=# onclick="reportProblem(); return false;" id="add_edit_link_id">Let us know!</a> or <a href=# onclick="toggleAddNewTagStuff(); return false;">add a tag</a>.
+      Feedback? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
+      <div style="display: inline-block"> <!-- prevent line feed before this div -->
+        <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
+           Or <a href=# onclick="toggleAddNewTagStuff(); return false;">add tag [editor]</a>
+        </div>
       </div>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
@@ -159,7 +162,7 @@ function openPersonalizedEditList() {
 }
 
 function reportProblem() {
-  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl() + "\nProblem report near " + timeStampToHuman(video_element.currentTime)));
+  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl()));
 }
 
 function liveEpisodeName() {
