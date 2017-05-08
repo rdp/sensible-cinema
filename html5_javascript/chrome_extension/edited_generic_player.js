@@ -87,9 +87,9 @@ function addEditUi() {
         
         
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
-      <input type='button' onclick="seekToBeforeEdit(-30); return false;" value='-30s'/>
+      <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
-      <input type='button' onclick="seekToBeforeEdit(-5); return false;" value='-5s'/>
+      <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
       <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
@@ -561,13 +561,12 @@ function timestamp_log(message, cur_time, tag) {
 }
 
 
-function seekToBeforeEdit(delta) {
+function seekToBeforeSkip(delta) {
   var desired_time = video_element.currentTime + delta;
-  var all = mutes.concat(skips).concat(yes_audio_no_videos).concat(mute_audio_no_videos);
-	var tag = areWeWithin(all, desired_time);  
+	var tag = areWeWithin(skips, desired_time);  
   if (tag) {
     console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
-    seekToBeforeEdit(tag.start - (video_element.currentTime + 1));
+    seekToBeforeSkip(tag.start - (video_element.currentTime + 1));
   }
   else {
     seekToTime(desired_time);
@@ -761,6 +760,7 @@ function saveEditButton() {
 	document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
   document.getElementById('tag_details_div_id').value = "";
+  document.getElementById('details_input_id').value = "";
   // don't reset category since I'm not sure if the javascript handles its going back to ""
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
   showSubCatWithRightOptionsAvailable(); // resize it back

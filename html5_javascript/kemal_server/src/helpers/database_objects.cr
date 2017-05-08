@@ -370,7 +370,7 @@ class Url
   end
 
   def image_specs(size)
-    if image_local_filename.present?
+    if image_local_filename.present? && image_local_filename =~ /\.(jpg|jpeg)/i
       out = `jhead ./public/#{sized_relative_url(size)}`
       out =~ /Resolution   : (\d+) x (\d+)/ # width x height
       {width: $1, height: $2}
