@@ -162,10 +162,10 @@ get "/nuke_url/:url_id" do |env| # nb: never link to this to let normal users us
 end
 
 get "/nuke_test_by_url" do |env|
-  real_url = env.params.query["url"]
-  raise("cannot nuke non test movies, please ask us if you want to delete a different movie") unless real_url.includes?("test_movie") # LOL
   sanitized_url = db_style_from_query_url(env)
-  url = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, 0)
+  raise("cannot nuke non test movies, please ask us if you want to delete a different movie") unless sanitized_url.includes?("playitmyway.org")
+  url = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, 0).not_nil!
+  env.params.url["url_id"] = url.id.to_s
   hard_nuke_url_or_nil(env)
 end
 
