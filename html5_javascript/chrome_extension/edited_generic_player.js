@@ -61,7 +61,7 @@ function addEditUi() {
        <br/>
   	  Currently Editing out: <select id='tag_edit_list_dropdown' onChange='editListChanged();'></select> <!-- javascript will set up this select --> 
     	<br/>
-      <a href=# onclick="createNewEditList(); return false">Personalize which parts you edit out</a>
+      <a href=# onclick="openPersonalizedEditList(); return false">Personalize which parts you edit out</a>
       <br/>
       <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
         Did we miss anything? <a href=# onclick="reportProblem(); return false;" id="add_edit_link_id">Let us know!</a> or <a href=# onclick="toggleAddNewTagStuff(); return false;">add a tag</a>.
@@ -369,8 +369,9 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
   return current_url;
 }
 
-function createNewEditList() {
+function openPersonalizedEditList() {
   window.open("https://" + request_host + "/personalized_edit_list/" + current_json.url.id);
+	pauseVideo();
 }
 
 function reportProblem() {
@@ -752,13 +753,11 @@ function saveEditButton() {
 
   document.getElementById('create_new_tag_form_id').action = "https://" + request_host + "/save_tag/" + url.id;
   document.getElementById('create_new_tag_form_id').submit();
-  // feels like we don't need to anymore
-  //  pauseVideo();
 
   // reset so people don't think they can tweak and resave...
 	document.getElementById('start').value = timeStampToHuman(0);
   document.getElementById('endy').value = timeStampToHuman(0);
-  document.getElementById('tag_detaild_input_id').value = "";
+  document.getElementById('tag_details_div_id').value = "";
   // don't reset category since I'm not sure if the javascript handles its going back to ""
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
   showSubCatWithRightOptionsAvailable(); // resize it back
@@ -1442,7 +1441,7 @@ function doubleCheckValues() {
   }
   var details = document.getElementById('details_input_id').value;
   if (details == "") {
-    alert("please enter details");
+    alert("please enter tag details");
     return false;
   }
   if ((category == "violence" || category == "suspense") && age == "0") {
@@ -1452,15 +1451,15 @@ function doubleCheckValues() {
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   if (start == 0) {
-    alert("Can't start at zero, please select 0.1s if you want one that starts near the beginning");
+    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
     return false;
   }
   if (start >= endy) {
-    alert("end is not after the start, double check your timestamps");
+    alert("end is not after the start, double check timestamps...");
     return false;
   }
   if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected?");
+    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
     return false;
   }
   return true;

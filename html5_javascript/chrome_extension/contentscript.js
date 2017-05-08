@@ -105,7 +105,7 @@ function inIframe () {
 function autoStartIfShould() {
   var url = currentUrlNotIframe();
   if (url.includes("www.facebook.com")) {
-    chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server [yet is it though?]
+    chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server, not compat... [?]
     return;
   }
   if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("playitmyway.org")) {
@@ -134,19 +134,8 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "netflix/hulu the edited plugin player is disabled."});
   }
   else {
-    // non big 3, just poll, if we find a video *and* filter do something about it...
-    if (!inIframe()) {
-      chrome.runtime.sendMessage({text: "look", color: "#808080", 
-			         details: "edited playback does not auto start on this website because it is not google play/amazon, but will auto start if it finds a video for which we have edits"});
-    } // don't send for iframes since they might override the "real" iframe as it were, which told it "none"
-    var interval = setInterval(function() {
-      var local_video_tag;
-      if ((local_video_tag = findFirstVideoTagOrNull()) != null) {
-        console.log("detected video element on this page, checking if we have edits..." + local_video_tag.src);
-        loadIfCurrentHasOne(); 
-        clearInterval(interval);
-      }
-    }, 1000); // hopefully doesn't burden unrelated web pages too much :)
+    console.log("doing nothing non known OK :|"); // youtube is *out* now...
+    chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "non google play/amazon disabled :("});
   }
 }
 

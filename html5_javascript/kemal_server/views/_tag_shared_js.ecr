@@ -54,7 +54,7 @@ function doubleCheckValues() {
   }
   var details = document.getElementById('details_input_id').value;
   if (details == "") {
-    alert("please enter details");
+    alert("please enter tag details");
     return false;
   }
   if ((category == "violence" || category == "suspense") && age == "0") {
@@ -64,15 +64,15 @@ function doubleCheckValues() {
   var start = humanToTimeStamp(document.getElementById('start').value);
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   if (start == 0) {
-    alert("Can't start at zero, please select 0.1s if you want one that starts near the beginning");
+    alert("Can't start at zero, please select 0.01s if you want one that starts near the beginning");
     return false;
   }
   if (start >= endy) {
-    alert("end is not after the start, double check your timestamps");
+    alert("end is not after the start, double check timestamps...");
     return false;
   }
   if (endy - start > 60*15) {
-    alert("tag is more than 15 minutes long? This should not typically be expected?");
+    alert("tag is more than 15 minutes long? This should not typically be expected? check timestamps, if you do need it this long, let us know...");
     return false;
   }
   return true;

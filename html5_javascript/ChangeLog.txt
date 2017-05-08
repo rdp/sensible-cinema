@@ -1,5 +1,0 @@
-0.0.24: Fix so website can tell/know it's updated again [heh]
-0.0.23: fix the "preview" button, it was broken.
-0.0.22: you can blank out specific portion to a color you desire.
-0.0.21: you can now "blank out" just a specific portion of the screen, like a square or oval [other shapes obviously possible], even multiple at the same time.,
-0.0.20: everything else it already had, and already released, check the github log :)
