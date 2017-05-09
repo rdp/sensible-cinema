@@ -53,6 +53,7 @@ def subcategory_map
     "killing offscreen": "violence -- killing off screen (ex: shooting off screen)",
     "circumstantial death": "violence -- death non-killing, like falling",
     "threatening actions": "violence -- threatening actions",
+    "explosion": "violence -- explosion no death",
     "rape": "violence -- rape",
     "dead body": "violence -- dead body visible",
     "violence (other)": "violence -- other",
