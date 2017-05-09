@@ -639,8 +639,8 @@ function setEditedControlsToTopLeft() {
   var top = getLocationOfElement(video_element).top;
   if (isYoutube()) {
     top += 0; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
-  } else {
-    top += 85; // top amazon stuff
+  } else { // isAmazon :|
+    top += 225; // top amazon stuff, plus ability to select subs
   }
   var allPimwStuff = document.getElementById("all_pimw_stuff_id")
   allPimwStuff.style.left = left + "px";
@@ -651,10 +651,9 @@ function currentTestAction() {
   return document.getElementById('action_sel').value;
 }
 
-// callable timeout's ...
+// early callable timeout's ... :)
 var timeouts = {};  // hold the data
 function makeTimeout (func, interval) {
-
     var run = function(){
         timeouts[id] = undefined;
         func();
@@ -948,11 +947,6 @@ function parseSuccessfulJson(json_string) {
 	}  
   
 	option = document.createElement("option");
-	option.text = "Personalize what gets edited";
-	option.value = "-3"; // special case :|
-	dropdown.add(option);
-    
-	option = document.createElement("option");
 	option.text = "Watch Unedited (0 tags)";
 	option.value = "-2"; // special case :|
 	dropdown.add(option);
@@ -1019,11 +1013,6 @@ function getEditsFromCurrentTagList() {
 		return;
 	}
 
-	if (selected_edit_list_id == "-3") {
-  	sendMessageToPlugin({do_url: "/personalized_edit_list/" + url.id});
-		return;
-	}  
-  
 	for (var i = 0; i < current_json.tag_edit_lists.length; i++) {
 		var tag_edit_list_and_its_tags = current_json.tag_edit_lists[i];
 		if (tag_edit_list_and_its_tags[0].id == selected_edit_list_id) {
