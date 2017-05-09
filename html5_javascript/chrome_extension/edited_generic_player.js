@@ -210,25 +210,31 @@ sub cat:
     
       <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
     
-      <option value="visible blood">violence -- visible blood of wound</option>    
+      <option value="visible blood">violence -- visible blood &#40;ex: wound&#41;</option>    
     
-      <option value="open wounds">violence -- gore/open wound</option>    
+      <option value="open wounds">violence -- visible gore &#40;ex: open wound&#41;</option>    
     
       <option value="light fight">violence -- light fighting &#40;single punch/kick/hit/push&#41;</option>    
     
-      <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
-    
       <option value="sustained fight">violence -- sustained punching/fighting</option>    
     
-      <option value="killing">violence -- killing on screen &#40;ex: bullet shot&#41;</option>    
+      <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
     
-      <option value="killing offscreen">violence -- killing off screen</option>    
+      <option value="shooting miss">violence -- shooting miss</option>    
+    
+      <option value="shooting hit non death">violence -- shooting hit non death</option>    
+    
+      <option value="killing">violence -- killing on screen &#40;ex: shooting death&#41;</option>    
+    
+      <option value="killing offscreen">violence -- killing off screen &#40;ex: shooting off screen&#41;</option>    
     
       <option value="circumstantial death">violence -- death non-killing, like falling</option>    
     
       <option value="threatening actions">violence -- threatening actions</option>    
     
       <option value="rape">violence -- rape</option>    
+    
+      <option value="dead body">violence -- dead body visible</option>    
     
       <option value="violence &#40;other&#41;">violence -- other</option>    
     
@@ -336,7 +342,8 @@ Impact to Story if edited:
         tag details: <input type="text" name="details" id="details_input_id" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
         <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Re-Open Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Re-Edit Prev Tag' id='open_next_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
@@ -498,7 +505,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	}
 
 	var new_top_line = timeStampToHuman(cur_time);
-  var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);
+  var next_tag = getNextTagAfterOrWithin(video_element.currentTime);
   if (next_tag) {
     new_top_line += " next: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " for " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
     document.getElementById("open_next_tag_id").style.visibility = "visible";
@@ -583,7 +590,7 @@ function compareTagStarts(tag1, tag2) {
   return 0;
 }
 
-function getNextTagAfterOrWithinCurrentPos(cur_time) {
+function getNextTagAfterOrWithin(cur_time) {
   // or current_json.tags; // sorted :|
   var all = mutes.concat(skips);
   all = all.concat(yes_audio_no_videos);
@@ -732,8 +739,23 @@ function getCurrentVideoTimestampHuman() {
   return timeStampToHuman(video_element.currentTime);
 }
 
+function openPreviousTagButton() {
+  var timeSearch = video_element.currentTime;
+  while (timeSearch > 0) {
+    var next_tag = getNextTagAfterOrWithin(timeSearch);
+    if (next_tag.endy < video_element.currentTime) {
+      window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
+      return;
+    }
+    else {
+      timeSearch -= 1; // OK OK this is lame I know...
+    }
+  }
+  alert("none found before current playback position");
+}
+
 function openNextTagButton() {
-  var next_tag = getNextTagAfterOrWithinCurrentPos(video_element.currentTime);
+  var next_tag = getNextTagAfterOrWithin(video_element.currentTime);
   if (next_tag) {
     window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
   }
