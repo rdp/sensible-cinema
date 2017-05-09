@@ -991,13 +991,14 @@ function seekToTime(ts, callback) {
 	callback = callback || function() {}
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
+  var start_time = video_element.currentTime;
   video_element.pause();
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around...
 	var seek_timer = setInterval(function() {
 		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
-			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts));
+			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time));
       if (!current_state) {
   			video_element.play();
       } else {
