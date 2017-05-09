@@ -24,7 +24,7 @@ function addEditUi() {
   allEditStuffDiv.style.fontSize = "15px";
   allEditStuffDiv.style.textShadow="2px 1px 1px black";
   allEditStuffDiv.style.zIndex = "99999999";
-  allEditStuffDiv.style.width = "450px";
+  allEditStuffDiv.style.width = "475px";
   allEditStuffDiv.style.position = 'absolute';
   
 	allEditStuffDiv.innerHTML = `
@@ -626,7 +626,7 @@ function collapseAddTagStuff() {
 }
 
 function setEditedControlsToTopLeft() {
-  var left = getLocationOfElement(video_element).right - 450 - 10; // avoid amazon x-ray so go to right
+  var left = getLocationOfElement(video_element).right - 475 - 10; // avoid amazon x-ray so go to right
   var top = getLocationOfElement(video_element).top;
   if (isYoutube()) {
     top += 0; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
@@ -767,6 +767,7 @@ function saveEditButton() {
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // or set it to 1
+  setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }
 
