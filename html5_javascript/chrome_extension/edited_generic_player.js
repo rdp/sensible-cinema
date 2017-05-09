@@ -232,6 +232,8 @@ sub cat:
     
       <option value="threatening actions">violence -- threatening actions</option>    
     
+      <option value="explosion">violence -- explosion no death</option>    
+    
       <option value="rape">violence -- rape</option>    
     
       <option value="dead body">violence -- dead body visible</option>    
