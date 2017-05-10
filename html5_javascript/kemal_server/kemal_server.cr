@@ -164,9 +164,13 @@ end
 get "/nuke_test_by_url" do |env|
   sanitized_url = db_style_from_query_url(env)
   raise("cannot nuke non test movies, please ask us if you want to delete a different movie") unless sanitized_url.includes?("playitmyway.org")
-  url = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, 0).not_nil!
-  env.params.url["url_id"] = url.id.to_s
-  hard_nuke_url_or_nil(env)
+  url = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, 0)
+  if !url
+    "already been cleaned from the system"
+  else
+    env.params.url["url_id"] = url.id.to_s
+    hard_nuke_url_or_nil(env)
+  end
 end
 
 def hard_nuke_url_or_nil(env, just_delete_tags = false)
