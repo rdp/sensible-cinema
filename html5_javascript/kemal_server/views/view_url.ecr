@@ -67,7 +67,8 @@ Content tags are basically timestamps and descriptions of content that exists in
 <br>
 You can also <a href=/personalized_edit_list/<%=url.id%>>personalize</a> which parts you edit out.
 <br/>
-Here's what we have so far:
+If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
+<br/>
 
 <table class="table table-striped" style="width: auto;">
   <thead>
@@ -123,8 +124,6 @@ none yet, add one now!<br/><br/>
   <br/>
 <% end %>
   Feedback on edits for this movie click <a href=http://freeldssheetmusic.org/questions/ask?pre_fill=<%= URI.escape "feedback for:" + url.name_with_episode %> target="_blank">here</a>.
-<br/>
-If you'd like to see the internal details of all tags, click <a href=/view_url/<%= url.id %>?show_tag_details=true#tags>here</a>.
 <br/>
 
 <br/>
