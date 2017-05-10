@@ -155,7 +155,7 @@ alter table users add column admin BOOL DEFAULT false; -- actually 0 or 1 appare
 alter table urls ADD COLUMN amazon_third_url VARCHAR(2014) NOT NULL DEFAULT '';
 CREATE INDEX url_amazon_third_url_episode_idx  ON urls(amazon_third_url(256), episode_number); -- non unique on purpose XXX do queries use this?
 
-alter table users drop constraint unique_email; -- too confusing to people to get this failure wait what? so just allow until we need more :|
+alter table users drop index unique_email; -- too confusing to people to get this failure wait what? so just allow until we need more :|
 
 -- and output to screen to show success...
 select * from urls;
