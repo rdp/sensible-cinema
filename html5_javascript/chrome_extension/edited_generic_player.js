@@ -164,7 +164,7 @@ sub cat:
     
       <option value="bodily part reference mild">profanity -- bodily part reference mild &#40;butt, bumm, suck...&#41;</option>    
     
-      <option value="bodily part reference harsh">profanity -- bodily part reference harsh</option>    
+      <option value="bodily part reference harsh">profanity -- bodily part reference harsh &#40;balls, etc.&#41;</option>    
     
       <option value="sexual reference">profanity -- sexual innuendo/reference</option>    
     
@@ -175,6 +175,8 @@ sub cat:
       <option value="lesser expletive">profanity -- other lesser expletive ex &quot;bloomin&#39;&quot; etc.</option>    
     
       <option value="deity religious context">profanity -- deity use in religious context like &quot;the l... is good&quot;</option>    
+    
+      <option value="deity reference">profanity -- deity use appropriate but non religious context like &quot;in this game you are G...&quot;</option>    
     
       <option value="deity exclamation mild">profanity -- deity exclamation mild like Good L...,</option>    
     
