@@ -34,7 +34,7 @@ episode_name (if any)
 
 <div style="<%= "display: none;" unless (url.amazon? || url.url =~ /playitmyway.org/) %>">
   amazon second url:
-  <% !if url.amazon_second_url.present? %>
+  <% if !url.amazon_second_url.present? %>
     <br/>This is kind of a weird one.  Amazon in their system "sometimes" has  two different URL's that can lead to the same movie or series.
     <br/>For series', you might find its different second url by clicking the "series" dropdown to select the series you're watching (i.e. if you're on season 1, go to season 2, then back to season 1), versus finding it through normal amazon search.
     <br/>For movies, it will have one url if you click to play it from "Your video library" or "your watch list" and possibly another different url if you search for the movie in the amazon search bar.
