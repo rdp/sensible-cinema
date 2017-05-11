@@ -346,7 +346,7 @@ Impact to Story if edited:
         tag details: <input type="text" name="details" id="details_input_id" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
         <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Re-Edit Prev Tag' id='open_next_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
@@ -685,7 +685,7 @@ function testCurrentFromUi() {
 	if (inMiddleOfTestingTimer) {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
 	}
-  if (document.getElementById('endy').value == '') {
+  if (humanToTimeStamp(document.getElementById('endy').value) == 0) {
     document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now"
   }
 	var faux_tag = {
@@ -749,7 +749,7 @@ function openPreviousTagButton() {
   var timeSearch = video_element.currentTime;
   while (timeSearch > 0) {
     var next_tag = getNextTagAfterOrWithin(timeSearch);
-    if (next_tag.endy < video_element.currentTime) {
+    if (next_tag && (next_tag.endy < video_element.currentTime)) {
       window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
       return;
     }
