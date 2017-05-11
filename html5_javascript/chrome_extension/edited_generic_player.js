@@ -685,6 +685,9 @@ function testCurrentFromUi() {
 	if (inMiddleOfTestingTimer) {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
 	}
+  if (document.getElementById('endy').value == '') {
+    document.getElementById('endy').value = getCurrentVideoTimestampHuman(); // assume they wanted to test till "right now"
+  }
 	var faux_tag = {
 		start: humanToTimeStamp(document.getElementById('start').value),
 		endy: humanToTimeStamp(document.getElementById('endy').value),
