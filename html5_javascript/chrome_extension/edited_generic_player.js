@@ -1115,8 +1115,8 @@ function mouseJustMoved(event) {
   
     clearTimeout(mouse_move_timer); // in case previously set
     if (mouse_within_all_pimw_stuff) {
-      mouse_move_timer = setTimeout(hideAllPimwStuff, 5000); // sometimes the mouse gets "stuck" "left" in that corner and
-      // there really is no notification after that but it's gone, so still hide it eventually...
+      mouse_move_timer = setTimeout(hideAllPimwStuff, 10000); // sometimes the mouse gets "stuck" "left" in that corner and
+      // there really is no notification after that but it's gone, so hide it eventually...
     } else {
       mouse_move_timer = setTimeout(hideAllPimwStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
     }
