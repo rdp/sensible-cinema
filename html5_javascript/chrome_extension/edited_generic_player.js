@@ -361,7 +361,7 @@ Impact to Story if edited:
   document.body.appendChild(allEditStuffDiv);
   
   addMouseAnythingListener(mouseJustMoved);
-  mouseJustMoved({pageX: 0, pageY: 0}); // start its timer prime it :|
+  mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
   tagsCreated(); // from shared javascript, means "the HTML elements are in there"
 }
 
@@ -1107,18 +1107,22 @@ function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
   var all_pimw_stuff = document.getElementById("all_pimw_stuff_id");
+  var mouse_within_all_pimw_stuff = coordsWithinElement(cursorX, cursorY, all_pimw_stuff);
+  console.log("mouse moved to " + cursorX + " " + cursorY + " in_pimw=" + mouse_within_all_pimw_stuff);
   var mouse_within_video = coordsWithinElement(cursorX, cursorY, video_element);
-  var mouse_within_all_pimw_stuff = coordsWithinElement(cursorX, cursorY, all_pimw_stuff_id);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
   	displayDiv(all_pimw_stuff);
   
     clearTimeout(mouse_move_timer); // in case previously set
-    if (!mouse_within_all_pimw_stuff) {
+    if (mouse_within_all_pimw_stuff) {
+      mouse_move_timer = setTimeout(hideAllPimwStuff, 5000); // sometimes the mouse gets "stuck" "left" in that corner and
+      // there really is no notification after that but it's gone, so still hide it eventually...
+    } else {
       mouse_move_timer = setTimeout(hideAllPimwStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
     }
   }
   else if (!mouse_within_video) {
-    // mimic youtube remove immediately if mouse ever leaves video
+    // mimic youtube which removes immediately if mouse ever leaves video
     hideAllPimwStuff();
     clearTimeout(mouse_move_timer);
   }
