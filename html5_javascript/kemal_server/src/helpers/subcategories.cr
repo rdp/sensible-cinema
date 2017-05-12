@@ -67,6 +67,7 @@ def subcategory_map
     "nudity anterior male": "physical -- nudity (anterior) male",
     "nudity anterior female": "physical -- nudity (anterior) female",
     "nudity breast": "physical -- nudity (breast)",
+    "shirtless male": "physical -- shirtless male (non sexual)",
     "kissing peck": "physical -- kiss (peck)",
     "kissing passionate": "physical -- kiss (passionate)",
     "sex foreplay": "physical -- sex foreplay",
