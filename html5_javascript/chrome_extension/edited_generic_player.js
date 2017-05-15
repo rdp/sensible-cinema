@@ -258,6 +258,8 @@ sub cat:
     
       <option value="nudity breast">physical -- nudity &#40;breast&#41;</option>    
     
+      <option value="shirtless male">physical -- shirtless male &#40;non sexual&#41;</option>    
+    
       <option value="kissing peck">physical -- kiss &#40;peck&#41;</option>    
     
       <option value="kissing passionate">physical -- kiss &#40;passionate&#41;</option>    
