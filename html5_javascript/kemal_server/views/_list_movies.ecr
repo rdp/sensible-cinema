@@ -48,7 +48,7 @@
     <div style="clear: both;"></div>
     <% episodes.each_with_index{ |url, idx|  %>
        <% if idx > 0 && (url.name != episodes[idx - 1].name) %>
-         <!--div style="clear: both;"></div--> <!-- too much white space as of yet :| -->
+         <div style="clear: both;"></div>
        <% end %>
       <%= render "views/_box_movie.ecr" %>
     <% } %>
