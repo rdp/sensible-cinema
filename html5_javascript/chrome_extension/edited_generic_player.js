@@ -204,9 +204,7 @@ sub cat:
     
       <option value="profanity &#40;other&#41;">profanity -- other</option>    
     
-      <option value="crudeness">violence -- crude humor, grossness, vulgar, etc.</option>    
-    
-      <option value="hand gesture">violence -- hand gesture</option>    
+      <option value="light fight">violence -- light fighting &#40;single punch/kick/hit/push&#41;</option>    
     
       <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
     
@@ -216,7 +214,9 @@ sub cat:
     
       <option value="open wounds">violence -- visible gore &#40;ex: open wound&#41;</option>    
     
-      <option value="light fight">violence -- light fighting &#40;single punch/kick/hit/push&#41;</option>    
+      <option value="crudeness">violence -- crude actions, grossness, etc.</option>    
+    
+      <option value="collision">violence -- collision/crash</option>    
     
       <option value="sustained fight">violence -- sustained punching/fighting</option>    
     
@@ -224,15 +224,17 @@ sub cat:
     
       <option value="shooting miss">violence -- shooting miss</option>    
     
-      <option value="shooting hit non death">violence -- shooting hit non death</option>    
+      <option value="shooting hit non death">violence -- shooting hits but non fatal</option>    
     
-      <option value="killing">violence -- killing on screen &#40;ex: shooting death&#41;</option>    
+      <option value="killing">violence -- killing on screen &#40;ex: shooting death fatal&#41;</option>    
     
-      <option value="killing offscreen">violence -- killing off screen &#40;ex: shooting off screen&#41;</option>    
+      <option value="killing offscreen">violence -- killing off screen &#40;ex: shooting death off screen&#41;</option>    
     
       <option value="circumstantial death">violence -- death non-killing, like falling</option>    
     
       <option value="threatening actions">violence -- threatening actions</option>    
+    
+      <option value="hand gesture">violence -- hand gesture</option>    
     
       <option value="explosion">violence -- explosion no death</option>    
     
