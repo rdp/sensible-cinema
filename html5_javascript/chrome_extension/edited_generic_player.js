@@ -1,3 +1,4 @@
+//auto-generated file
 // (c) 2016, 2017 Roger Pack released under LGPL
 
 // var request_host="localhost:3000"; // dev
@@ -237,6 +238,8 @@ sub cat:
       <option value="hand gesture">violence -- hand gesture</option>    
     
       <option value="explosion">violence -- explosion no death</option>    
+    
+      <option value="sports violence">violence -- sports violence in-game</option>    
     
       <option value="rape">violence -- rape</option>    
     
@@ -638,6 +641,10 @@ function toggleAddNewTagStuff() {
 
 function collapseAddTagStuff() {
   hideDiv(document.getElementById("tag_details_div_id"));
+}
+
+function isAddtagStuffVisible() {
+	return document.getElementById("tag_details_div_id").style.display != "none";
 }
 
 function setEditedControlsToTopLeft() {
@@ -1119,8 +1126,10 @@ function mouseJustMoved(event) {
   
     clearTimeout(mouse_move_timer); // in case previously set
     if (mouse_within_all_pimw_stuff) {
-      mouse_move_timer = setTimeout(hideAllPimwStuff, 10000); // sometimes the mouse gets "stuck" "left" in that corner and
-      // there really is no notification after that but it's gone, so hide it eventually...
+      if (!isAddtagStuffVisible()) {
+        mouse_move_timer = setTimeout(hideAllPimwStuff, 10000); // sometimes the mouse gets "stuck" "left" in that corner and
+        // there really is no mouse notification after that but it's gone, so hide it eventually...
+      } // else they might be hovering there to adjust stuff, so don't tick off editors :)
     } else {
       mouse_move_timer = setTimeout(hideAllPimwStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
     }
@@ -1270,7 +1279,6 @@ function decodeHTMLEntities(text) {
   return text;
 }
 
-
 function displayDiv(div) {
 	div.style.display = "block";
 }
@@ -1287,7 +1295,6 @@ function toggleDiv(div) {
 function hideDiv(div) {
 	div.style.display = "none";
 }
-
 
 function pauseVideo() {
 	video_element.pause();
