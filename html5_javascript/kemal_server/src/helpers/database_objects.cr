@@ -496,7 +496,7 @@ class Tag
 
   def overlaps_any?(all_tags)
     all_tags.reject{|tag2| tag2.id == id}.each{|tag2|
-      if (tag2.start >= start && tag2.start <= endy) || (tag2.endy >= start && tag2.endy <= endy)
+      if (tag2.start..tag2.endy).covers?(start) || (tag2.start..tag2.endy).covers?(endy) # should cover all the bases :)
         return tag2
       end
     }
