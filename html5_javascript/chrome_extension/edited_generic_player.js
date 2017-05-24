@@ -469,10 +469,25 @@ function areWeWithin(thisTagArray, cur_time) {
 }
 
 var i_muted_it = false; // attempt to let them still control their mute button :|
+var last_timestamp = 0;
 
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
-	var tag = areWeWithin(mutes, cur_time);
+  var tag;
+  if (last_timestamp != 0 && !withinDelta(cur_time, last_timestamp, 1)) {
+    console.log("I think we just seeked somewhere from their UI " + cur_time);
+  	tag = areWeWithin(skips, cur_time);
+    if (tag) {
+      console.log("they just seeked to a bad spot");
+      seekToBeforeSkip(0);
+      return;
+    } else {
+      console.log("they just seeked to an OK spot");
+    }    
+  }
+  last_timestamp = cur_time;
+  
+	tag = areWeWithin(mutes, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
   extra_message = "";
 	if (tag) {
@@ -570,37 +585,14 @@ function checkStatus() {
 		}
 	}
   checkIfEpisodeChanged();
-  video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null :|
-  
-  if (last_seek_video_guy != video_element) {
-    video_element.addEventListener("seeked", function() { // no return value...hrm...
-      if (!seek_timer) {
-        console.log("detected some skip or other from their UI " + video_element.currentTime);
-        // the goal here is if they hit "-10" it can actually take them *somewhere* backward..
-      	var tag = areWeWithin(skips, video_element.currentTime);  
-        if (tag) {
-          console.log("skip from their UI into bad part...");
-          seekToBeforeSkip(0);
-        } else {
-          console.log("skip from their UI into OK part...");
-        }
-      } else {
-        console.log("detected skip from our own system");
-      }
-    });
-    last_seek_video_guy = video_element;
-  }
-  
+  video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips :|
 	setEditedControlsToTopLeft(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
 }
-
-var last_seek_video_guy;
 
 function timestamp_log(message, cur_time, tag) {
   local_message = message + " at " + cur_time + " start:" + tag.start + " will_end:" + tag.endy + " in " + (tag.endy - cur_time)+ "s";;
   console.log(local_message);
 }
-
 
 function seekToBeforeSkip(delta) {
   var desired_time = video_element.currentTime + delta;
