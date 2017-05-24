@@ -485,7 +485,6 @@ function testCurrentFromUi() {
     start = 0; // allow test edits to start at or near 0 without messing up the "done" timing...
   }
   seekToTime(start, function() {
-    // video_element.playbackRate = 1; // back to normal speed
 	  length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
@@ -886,7 +885,7 @@ function mouseJustMoved(event) {
   var cursorY = event.pageY;
   var all_pimw_stuff = document.getElementById("all_pimw_stuff_id");
   var mouse_within_all_pimw_stuff = coordsWithinElement(cursorX, cursorY, all_pimw_stuff);
-  console.log("mouse moved to " + cursorX + " " + cursorY + " in_pimw=" + mouse_within_all_pimw_stuff);
+  //  console.log("mouse moved to " + cursorX + " " + cursorY + " in_pimw=" + mouse_within_all_pimw_stuff);
   var mouse_within_video = coordsWithinElement(cursorX, cursorY, video_element);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
   	displayDiv(all_pimw_stuff);
@@ -994,14 +993,18 @@ function findFirstVideoTagOrNull() {
   return null;
 }
 
+var seek_timer;
 
 function seekToTime(ts, callback) {
+  if (seek_timer) {
+    console.log("still seeking from previous, not trying that again...");
+    return;
+  }
   if (ts < 0) {
-    console.log("not seeking to before 0 " + ts);
+    console.log("not seeking to before 0, seeking to 0 instead " + ts);
     ts = 0;
   }  
   var current_state = video_element.paused;
-	callback = callback || function() {}
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
   var start_time = video_element.currentTime;
@@ -1009,16 +1012,27 @@ function seekToTime(ts, callback) {
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around...
-	var seek_timer = setInterval(function() {
+	seek_timer = setInterval(function() {
 		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
-			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time));
-      if (!current_state) {
-  			video_element.play();
-      } else {
-        // stay paused
+      var amount_buffered = 0;
+      if (video_element.buffered.length == 1) {
+        amount_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0));
       }
-			clearInterval(seek_timer);
-			callback();
+      if (amount_buffered > 2) { // usually 4 or 6...
+  			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time) + " buffered=" + amount_buffered);
+        if (!current_state) {
+    			video_element.play();
+        } else {
+          // stay paused
+        }
+  			clearInterval(seek_timer);
+  			if (callback) {
+          callback();
+        }
+        seek_timer = null;
+      } else {
+        console.log("waiting for it to finish buffering..." + amount_buffered);
+      }
 		}		
 	}, 50);
 }
