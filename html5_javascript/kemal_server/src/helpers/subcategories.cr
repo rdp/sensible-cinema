@@ -56,6 +56,7 @@ def subcategory_map
     "threatening actions": "violence -- threatening actions",
     "hand gesture": "violence -- hand gesture",
     "explosion": "violence -- explosion no death",
+    "sports violence": "violence -- sports violence in-game",
     "rape": "violence -- rape",
     "dead body": "violence -- dead body visible",
     "violence (other)": "violence -- other",
