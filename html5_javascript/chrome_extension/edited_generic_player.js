@@ -474,15 +474,16 @@ var last_timestamp = 0;
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = video_element.currentTime;
   var tag;
-  if (last_timestamp != 0 && !withinDelta(cur_time, last_timestamp, 1)) {
-    console.log("I think we just seeked somewhere from their UI " + cur_time);
-  	tag = areWeWithin(skips, cur_time);
+  if (cur_time < last_timestamp) {
+    console.log("Something just seeked backwards to=" + cur_time);
+  	tag = areWeWithin(skips, cur_time); 
     if (tag) {
+      // was the seek to a bad spot? Since this was a "rewind" let's actually go to *before* the bad spot, so -10 button can work from UI
       console.log("they just seeked to a bad spot");
       seekToBeforeSkip(0);
       return;
     } else {
-      console.log("they just seeked to an OK spot");
+      console.log("backward seek to an OK spot");
     }    
   }
   last_timestamp = cur_time;
@@ -599,7 +600,7 @@ function seekToBeforeSkip(delta) {
 	var tag = areWeWithin(skips, desired_time);  
   if (tag) {
     console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
-    seekToBeforeSkip(tag.start - (video_element.currentTime + 1)); // in case we run into another'un
+    seekToBeforeSkip(tag.start - (video_element.currentTime) - 2); // method, in case we run into another'un right there ... :|
   }
   else {
     seekToTime(desired_time);
