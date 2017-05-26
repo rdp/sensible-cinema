@@ -270,6 +270,8 @@ sub cat:
     
       <option value="kissing passionate">physical -- kiss &#40;passionate&#41;</option>    
     
+      <option value="sexually charged scene">physical -- sexually charged scene</option>    
+    
       <option value="sex foreplay">physical -- sex foreplay</option>    
     
       <option value="implied sex">physical -- implied sex</option>    
@@ -483,7 +485,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       seekToBeforeSkip(0);
       return;
     } else {
-      console.log("backward seek to an OK spot");
+      console.log("an OK spot");
     }    
   }
   last_timestamp = cur_time;

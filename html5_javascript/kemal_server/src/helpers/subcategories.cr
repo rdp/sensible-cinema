@@ -72,6 +72,7 @@ def subcategory_map
     "shirtless male": "physical -- shirtless male (non sexual)",
     "kissing peck": "physical -- kiss (peck)",
     "kissing passionate": "physical -- kiss (passionate)",
+    "sexually charged scene": "physical -- sexually charged scene",
     "sex foreplay": "physical -- sex foreplay",
     "implied sex": "physical -- implied sex",
     "explicit sex": "physical -- explicit sex",
