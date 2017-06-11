@@ -17,6 +17,7 @@ end
 class CustomHandler < Kemal::Handler # don't know how to interrupt it from a before_all :|
   def call(env)
     puts "start #{env.request.path} #{Time.now}"
+    query = env.request.query
     if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
@@ -27,7 +28,6 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird, attempt redirect for SEO
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
     elsif env.request.host == "playitmyway.inet2.org"
-      query = env.request.query
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
     else
       # success/normal
