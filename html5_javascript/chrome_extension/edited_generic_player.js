@@ -154,8 +154,6 @@ sub cat:
     
       <option value="personal insult mild">profanity -- insult &#40;&quot;moron&quot;, &quot;idiot&quot; etc.&#41;</option>    
     
-      <option value="personal insult harsh">profanity -- insult harsh &#40;son of a ..... etc.&#41;</option>    
-    
       <option value="personal attack mild">profanity -- attack command &#40;&quot;shut up&quot; etc.&#41;</option>    
     
       <option value="being mean">profanity -- being mean/cruel to another</option>    
@@ -189,6 +187,8 @@ sub cat:
       <option value="deity exclamation harsh">profanity -- deity exclamation harsh, name of the Lord &#40;omg, etc.&#41;</option>    
     
       <option value="deity expletive">profanity -- deity expletive &#40;es: goll durn, the real words&#41;</option>    
+    
+      <option value="personal insult harsh">profanity -- insult harsh &#40;son of a ..... etc.&#41;</option>    
     
       <option value="a word">profanity -- a.. &#40;and/or followed by anything&#41;</option>    
     

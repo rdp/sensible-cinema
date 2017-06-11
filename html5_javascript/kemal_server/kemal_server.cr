@@ -24,8 +24,8 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
       add_to_flash env, "Thanks for contributing to our site! Please login to unleash its full awesomeness, first, here:"
       env.redirect "/login" 
     elsif env.request.host !~ /localhost|playitmyway/
-      # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird
-      raise "wrong host #{env.request.host}" 
+      # sometimes some crawlers were calling https://freeldssheetmusic.org as if it were this, weird, attempt redirect for SEO
+      env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
     elsif env.request.host == "playitmyway.inet2.org"
       query = env.request.query
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 

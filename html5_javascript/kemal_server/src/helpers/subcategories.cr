@@ -12,7 +12,6 @@ def subcategory_map
 
     "loud noise": "profanity -- loud noise/screaming",
     "personal insult mild": "profanity -- insult (\"moron\", \"idiot\" etc.)",
-    "personal insult harsh": "profanity -- insult harsh (son of a ..... etc.)",
     "personal attack mild": "profanity -- attack command (\"shut up\" etc.)",
     "being mean": "profanity -- being mean/cruel to another",
     "derogatory slur": "profanity -- categorizing derogatory slur",
@@ -30,6 +29,7 @@ def subcategory_map
     "deity foreign language": "profanity -- deity different language, like Allah or French equivalents, etc",
     "deity exclamation harsh": "profanity -- deity exclamation harsh, name of the Lord (omg, etc.)",
     "deity expletive": "profanity -- deity expletive (es: goll durn, the real words)",
+    "personal insult harsh": "profanity -- insult harsh (son of a ..... etc.)",
     "a word": "profanity -- a.. (and/or followed by anything)",
     "d word": "profanity -- d word",
     "h word": "profanity -- h word",
