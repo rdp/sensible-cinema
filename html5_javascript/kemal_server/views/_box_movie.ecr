@@ -32,11 +32,11 @@
           <%= if_present_with_break url.wholesome_review, "Wholesome review:" %>
           <%= if_present_with_break url.good_movie_rating, "Good movie level:" %>
           <%= if_present_with_break url.review, "Good movie review:" %>
-          <%= if_present_with_break url.editing_notes, "Editing notes:" %>
           <%= if_present_with_break url.original_rating, "Original rating:" %>
           <%= if_present_with_break "#{url.genre} (#{url.human_duration})", "Genre:" %>
           <%= if_present_with_break url.cost_string, "Price:" %>
-          <a href="/view_url/<%= url.id %>">Our info</a> 
+          <%= if_present_with_break url.editing_notes, "" %>
+          <a href="/view_url/<%= url.id %>">Our tags</a> 
           <% if url.tag_count > 0 %>
             (<%= tags_by_category(url) %>) <!-- if this screws up its a tag with unknown category -->
           <% end %>
