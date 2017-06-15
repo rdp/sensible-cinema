@@ -78,6 +78,8 @@ personal notes (ex: "for kids")
     <td>
       <% if tag.age_maybe_ok > 0 %>
         not OK age <%= tag.age_maybe_ok %> and under
+      <% else %>
+        &nbsp; <!-- take up some space ... -->
       <% end %>
     </td>
     <td style="display: none;"> <!-- too confusing XXX remove it with javascript -->
