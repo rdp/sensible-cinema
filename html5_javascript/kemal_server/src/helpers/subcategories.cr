@@ -63,7 +63,7 @@ def subcategory_map
 
     "art nudity": "physical -- art based nudity",
     "revealing clothing": "physical -- revealing clothing (scantily clad)",
-    "revealing cleavage": "physical -- revealing cleavage),
+    "revealing cleavage": "physical -- revealing cleavage",
     "partial nudity": "physical -- partial nudity (ex: excessive cleavage)",
     "nudity posterior male": "physical -- nudity (posterior) male",
     "nudity posterior female": "physical -- nudity (posterior) female",
