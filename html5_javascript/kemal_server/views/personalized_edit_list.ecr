@@ -76,11 +76,9 @@ personal notes (ex: "for kids")
       <td><%= tag.details %></td>
     <% end %>
     <td>
-      <% if tag.age_maybe_ok > 0 %>
+      <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>> <!-- keep same size for tables to match up -->
         not OK age <%= tag.age_maybe_ok %> and under
-      <% else %>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- take up some space ... otherwise formatting is off between tables and it hurts -->
-      <% end %>
+      </div>
     </td>
     <td style="display: none;"> <!-- too confusing XXX remove it with javascript -->
   		or personalize your action:
