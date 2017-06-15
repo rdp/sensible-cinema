@@ -76,7 +76,7 @@ personal notes (ex: "for kids")
       <td><%= tag.details %></td>
     <% end %>
     <td>
-      <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>> <!-- keep same size for tables to match up -->
+      <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>;"> <!-- keep same size for tables to match up -->
         not OK age <%= tag.age_maybe_ok %> and under
       </div>
     </td>
