@@ -48,7 +48,7 @@
               <% end %>
               ">
                 <h4>Watch 
-                  <% if url.editing_status == "Done with second review, tags viewed as complete" %>
+                  <% if url.editing_status != "Done with second review, tags viewed as complete" %>
                     partially
                   <% end %>
                   edited now!</h4></a>
