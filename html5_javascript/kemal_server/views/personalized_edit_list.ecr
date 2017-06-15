@@ -64,7 +64,7 @@ personal notes (ex: "for kids")
         impact to story if edited out: <%= tag.impact_to_movie %>
       <% end %>
     </td>
-    <td>typically:
+    <td>
     <% if editor?(env) %>
       <a href=/edit_tag/<%= tag.id %>><%= tag.default_action %></a>
     <% else %>
@@ -80,12 +80,13 @@ personal notes (ex: "for kids")
         not OK age <%= tag.age_maybe_ok %> and under
       <% end %>
     </td>
-    <td>
+    <td style="display: none;"> <!-- too confusing XXX remove it with javascript -->
   		or personalize your action:
   		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
   		  <option value="mute">mute</option>
   		  <option value="skip">skip</option>
   		  <option value="yes_audio_no_video">yes_audio_no_video</option>
+  		  <option value="no_audio_no_video">no_audio_no_video</option>
   		  <option value="do_nothing">do_nothing</option>
   		</select>
   		<script>
