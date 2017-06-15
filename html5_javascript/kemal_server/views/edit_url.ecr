@@ -16,26 +16,20 @@ url:
 <br/>
 <br/>
 
-details (brief synopsis [non-spoilers], etc.) try to make up your own here instead of copy-pasting:
+details (brief synopsis [no spoilers], etc.) try to make up your own here instead of copy-pasting from other websites:
 <br/>
 <textarea name="details" rows="2" cols="150" ><%= url.details %></textarea>
 <br/>
 <br/>
 
-episode_number (if any)
-<input type="text" name="episode_number" size="5" value="<%= url.episode_number if url.episode_number != 0 %>"/>
-<br/>
-<br/>
-
-episode_name (if any)
-<input type="text" name="episode_name" size="50" value="<%= url.episode_name %>"/>
+episode_number (if any):<input type="text" name="episode_number" size="5" value="<%= url.episode_number if url.episode_number != 0 %>"/> episode_name (if any):<input type="text" name="episode_name" size="50" value="<%= url.episode_name %>"/>
 <br/>
 <br/>
 
 <div style="<%= "display: none;" unless (url.amazon? || url.url =~ /playitmyway.org/) %>">
   amazon second url:
   <% if !url.amazon_second_url.present? %>
-    <br/>This is kind of a weird one.  Amazon in their system "sometimes" has  two different URL's that can lead to the same movie or series.
+    This is kind of a weird one.  Amazon in their system "sometimes" has  two different URL's that can lead to the same movie or series.
     <br/>For series', you might find its different second url by clicking the "series" dropdown to select the series you're watching (i.e. if you're on season 1, go to season 2, then back to season 1), versus finding it through normal amazon search.
     <br/>For movies, it will have one url if you click to play it from "Your video library" or "your watch list" and possibly another different url if you search for the movie in the amazon search bar.
     <br/>See <a href=/amazon_second_url.png target=_blank >here</a> for an example.
@@ -80,7 +74,7 @@ good_movie_rating (out of 10, kind of like "out of 10 stars" on IMDB)
 <br/>
 <br/>
 
-Our local review of this movie (no spoilers...)<br/>
+Our local review of this movie (no spoilers, explain the good movie rating)<br/>
 Ex: "This movie is part of a series that is...Keanu Reeves does a good job, but plot is lacking."
 <br/>
 <textarea name="review" rows="2" cols="150" ><%= url.review %></textarea>
@@ -92,7 +86,7 @@ wholesome_uplifting_level (out of 10)
 <br/>
 <br/>
 
-wholesome review (explain wholesome/uplifting level)<br/>
+Our wholesome review (explain wholesome/uplifting level)<br/>
 Ex: "A little dark", "a good question to discuss as a family afterward would be..." "even edited, probably OK only for age 13 because of theme" "even edited, still shows some bare midriffs"
 <br/>
 <textarea name="wholesome_review" rows="2" cols="150" ><%= url.wholesome_review %></textarea>
