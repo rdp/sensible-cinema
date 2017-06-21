@@ -252,7 +252,9 @@ sub cat:
     
       <option value="revealing clothing">physical -- revealing clothing &#40;scantily clad&#41;</option>    
     
-      <option value="revealing cleavage">physical -- revealing clothing &#40;cleavage&#41;</option>    
+      <option value="revealing cleavage">physical -- revealing cleavage</option>    
+    
+      <option value="partial nudity">physical -- partial nudity &#40;ex: excessive cleavage&#41;</option>    
     
       <option value="nudity posterior male">physical -- nudity &#40;posterior&#41; male</option>    
     
