@@ -6,7 +6,7 @@ if [[ $EUID -ne 0 ]]; then
 else
   echo "root successfully enabled...we'll need that in a sec..."
   echo "use like https://playitmyway.org"
-if
+fi
 # no release since super slow plus crashes out of RAM :|
 sudo -u rdp crystal build --debug ./kemal_server.cr || exit 1 # prime the pump :)
 while true; do
