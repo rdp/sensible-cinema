@@ -95,7 +95,7 @@ class Url
   
   def self.all
       # sort by host, amazon type, name for series together
-      query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type desc, created_at desc, name, episode_number") do |rs|
+      query("SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type desc, create_timestamp desc, name, episode_number") do |rs|
          Url.from_rs(rs);
       end
   end
