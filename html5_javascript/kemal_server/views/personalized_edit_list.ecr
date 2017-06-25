@@ -39,7 +39,7 @@ personal notes (ex: "for kids")
   <h2><%= category.capitalize %></h2>
   <input id="" type="checkbox" checked 
     onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
-  > Allow all <%= category %>
+  > Edit out all <%= category %>
   <br/>
   <br/>
 
@@ -47,7 +47,7 @@ personal notes (ex: "for kids")
   <h4><%= subcategory %></h4>
   <input id="" type="checkbox" checked 
     onchange='updateSelectAll(<%= subcategory_tags_and_personal_actions.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
-  > Allow all <%= subcategory %>
+  > Edit out all <%= subcategory %>
   <br/>
   <table class="table table-striped">
   <% subcategory_tags_and_personal_actions.each{|tag, personal_action| %>
