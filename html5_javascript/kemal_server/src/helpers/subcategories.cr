@@ -1,4 +1,8 @@
-# if you change anything in this file be careful that any auto scan subs need to match it [you can tell by doing a single upload]
+def all_genres # obviously DB must sync here
+  ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military and war", "comedy", "family and kids", "music[al]", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery and thriller", "faith and spirituality"].sort
+end
+
+# if you change anything in this method be careful that any auto scan subs need to match it [you can tell by doing a single upload]
 def subcategory_map
    # "end consumer friendly": "creator instructions" (and the double dash is needed...)
    

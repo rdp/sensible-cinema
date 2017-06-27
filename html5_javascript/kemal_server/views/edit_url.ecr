@@ -108,8 +108,8 @@ purchase cost (HD) <input type="text" name="purchase_cost" size="5" value="<%= u
 main genre:
   <select name="genre" id='genre'>
     <option value="">unknown</option>
-    <% ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "adventure", "action", "western", "military and war", "comedy", "family and kids", "music[al]", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery and thriller", "faith and spirituality"].sort.each{| name| %>
-      <option value="<%= HTML.escape(name) %>"><%= HTML.escape name %></option>
+    <% all_genres.each{| genre | %>
+      <option value="<%= HTML.escape(genre) %>"><%= HTML.escape genre %></option>
     <% } %>
    </select> 
    <script>
