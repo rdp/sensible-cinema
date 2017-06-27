@@ -1,5 +1,5 @@
 def all_genres # obviously DB must sync here
-  ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military and war", "comedy", "family and kids", "music[al]", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery and thriller", "faith and spirituality"].sort
+  ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military/war", "comedy", "family/kids", "music/musical", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery/thriller", "faith/spirituality"].sort
 end
 
 # if you change anything in this method be careful that any auto scan subs need to match it [you can tell by doing a single upload]
