@@ -81,6 +81,7 @@ def subcategory_map
     "sex foreplay": "physical -- sex foreplay",
     "implied sex": "physical -- implied sex",
     "explicit sex": "physical -- explicit sex",
+    "homosexual behavior": "physical -- homosexual behavior like kissing, holding hands",
     "physical (other)": "physical -- other",
 
     "alcohol": "substance-abuse -- alcohol drinking",
