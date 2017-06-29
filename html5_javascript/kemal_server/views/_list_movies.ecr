@@ -2,7 +2,7 @@
   No movies in this category!
 <% end %>
 
-<% host_to_urls = urls.group_by &.human_readable_company %>
+<% host_to_urls = urls.group_by &.human_readable_company %> <!-- they're already sorted by prime vs. not from SQL query :| -->
  <% host_to_urls.each{ |host, urls_for_host|  %>
   <div>
   <hr/>
