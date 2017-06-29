@@ -67,6 +67,7 @@
           <li class="active"><a href="#"><%= english_action %> <span class="sr-only">(current)</span></a></li>
         <% end %>
       </ul>
+      <p class="navbar-text navbar-right"><a href="https://cse.google.com/cse/publicurl?cx=015859990949117252167:xlxpdlcfham" class="navbar-link">Search</a></p>
       <% if logged_in?(env) %>
          <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
@@ -79,6 +80,7 @@
       <% else %>
         <p class="navbar-text navbar-right"><a href="/login" class="navbar-link">Login</a></p>
       <% end %>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
