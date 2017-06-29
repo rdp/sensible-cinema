@@ -280,6 +280,8 @@ sub cat:
     
       <option value="explicit sex">physical -- explicit sex</option>    
     
+      <option value="homosexual behavior">physical -- homosexual behavior like kissing, holding hands</option>    
+    
       <option value="physical &#40;other&#41;">physical -- other</option>    
     
       <option value="alcohol">substance-abuse -- alcohol drinking</option>    
