@@ -212,13 +212,17 @@ sub cat:
     
       <option value="stabbing/shooting with blood">violence -- stabbing/shooting yes blood</option>    
     
-      <option value="visible blood">violence -- visible blood &#40;ex: wound&#41;</option>    
+      <option value="visible blood">violence -- visible blood &#40;ex: blood from wound&#41;</option>    
     
       <option value="open wounds">violence -- visible gore &#40;ex: open wound&#41;</option>    
     
       <option value="crudeness">violence -- crude actions, grossness, etc.</option>    
     
-      <option value="collision">violence -- collision/crash</option>    
+      <option value="threatening actions">violence -- threatening actions</option>    
+    
+      <option value="collision">violence -- collision/crash &#40;no explicit human death&#41;</option>    
+    
+      <option value="explosion">violence -- explosion &#40;no explicit human death&#41;</option>    
     
       <option value="sustained fight">violence -- sustained punching/fighting</option>    
     
@@ -226,25 +230,21 @@ sub cat:
     
       <option value="shooting miss">violence -- shooting miss</option>    
     
-      <option value="shooting hit non death">violence -- shooting hits but non fatal</option>    
+      <option value="shooting hit non death">violence -- shooting hits person but non fatal</option>    
     
       <option value="killing">violence -- killing on screen &#40;ex: shooting death fatal&#41;</option>    
     
       <option value="killing offscreen">violence -- killing off screen &#40;ex: shooting death off screen&#41;</option>    
     
-      <option value="circumstantial death">violence -- death non-killing, like falling</option>    
-    
-      <option value="threatening actions">violence -- threatening actions</option>    
+      <option value="circumstantial death">violence -- death non-killing, ex: accidental falling</option>    
     
       <option value="hand gesture">violence -- hand gesture</option>    
     
-      <option value="explosion">violence -- explosion no death</option>    
-    
-      <option value="sports violence">violence -- sports violence in-game</option>    
+      <option value="sports violence">violence -- sports violence part of game</option>    
     
       <option value="rape">violence -- rape</option>    
     
-      <option value="dead body">violence -- dead body visible</option>    
+      <option value="dead body">violence -- dead body visible lifeless</option>    
     
       <option value="violence &#40;other&#41;">violence -- other</option>    
     
@@ -280,7 +280,7 @@ sub cat:
     
       <option value="explicit sex">physical -- explicit sex</option>    
     
-      <option value="homosexual behavior">physical -- homosexual behavior like kissing, holding hands</option>    
+      <option value="homosexual behavior">physical -- homosexual behavior &#40;kissing, holding hands, light stuff&#41;</option>    
     
       <option value="physical &#40;other&#41;">physical -- other</option>    
     
