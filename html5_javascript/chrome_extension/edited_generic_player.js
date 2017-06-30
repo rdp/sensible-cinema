@@ -220,19 +220,25 @@ sub cat:
     
       <option value="threatening actions">violence -- threatening actions</option>    
     
-      <option value="collision">violence -- collision/crash &#40;no explicit human death&#41;</option>    
+      <option value="collision">violence -- collision/crash &#40;no implied death&#41;</option>    
     
-      <option value="explosion">violence -- explosion &#40;no explicit human death&#41;</option>    
+      <option value="collision death">violence -- collision/crash &#40;implied death&#41;</option>    
+    
+      <option value="explosion">violence -- explosion &#40;no implied death&#41;</option>    
+    
+      <option value="explosion death">violence -- explosion &#40;implied death&#41;</option>    
     
       <option value="sustained fight">violence -- sustained punching/fighting</option>    
     
       <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
     
-      <option value="shooting miss">violence -- shooting miss</option>    
+      <option value="shooting miss">violence -- shooting miss or ambiguous</option>    
     
-      <option value="shooting hit non death">violence -- shooting hits person but non fatal</option>    
+      <option value="shooting hit non death">violence -- shooting hits person or thing but non fatal</option>    
     
       <option value="killing">violence -- killing on screen &#40;ex: shooting death fatal&#41;</option>    
+    
+      <option value="non human killing">violence -- non human killing/death on screen &#40;ex: animal, or robot&#41;</option>    
     
       <option value="killing offscreen">violence -- killing off screen &#40;ex: shooting death off screen&#41;</option>    
     
