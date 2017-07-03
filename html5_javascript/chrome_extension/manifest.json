@@ -3,7 +3,7 @@
 
   "name": "Play it my way",
   "description": "Enables the playback of online videos edited",
-  "version": "0.0.87",
+  "version": "0.0.88",
 
   "browser_action": {
     "default_icon": "camera.128.png",
@@ -23,5 +23,5 @@
   "background": { "scripts": ["background.js"] },
    "externally_connectable": {
     "matches": ["*://playitmyway.org/*", "https://localhost:3000/*"]
-	}
+   }
 }
