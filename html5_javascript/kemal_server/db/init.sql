@@ -157,6 +157,8 @@ CREATE INDEX url_amazon_third_url_episode_idx  ON urls(amazon_third_url(256), ep
 
 alter table users drop index unique_email; -- too confusing to people to get this failure wait what? so just allow until we need more :|
 
+alter table tags add column popup_text_after VARCHAR(1024) NOT NULL DEFAULT '';
+
 -- and output to screen to show success...
 select * from urls;
 select * from tags;

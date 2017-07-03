@@ -260,6 +260,9 @@ post "/save_tag/:url_id" do |env|
   tag.default_action = resanitize_html(params["default_action"])
   tag.category = resanitize_html params["category"]
   tag.impact_to_movie = get_int(params, "impact_to_movie")
+  if params["popup_text_after"]?
+    tag.popup_text_after = params["popup_text_after"] # only secondary edit screen has it :|
+  end
   if tag.impact_to_movie == 0
     raise "need to select impact to story, if it's nothing then select 1/10"
   end

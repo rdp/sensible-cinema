@@ -38,6 +38,10 @@ internal tag details (ex: "sally said [d...] OK?" (dots instead of real profanit
 <input type="text" name="details" id="details_input_id" size="50" value="<%= tag.details %>"/>
 
 <br/>
+popup_text_after (only use if it causes a huge plot hole if this tag is used, ex "Jeff falls from a cliff so the town gives up fishing"):
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="50" value="<%= tag.popup_text_after %>"/>
+
+<br/>
 <input type="submit" value="Save" onclick="return doubleCheckValues();">
 </form>
 If there are any categories missing let us know!

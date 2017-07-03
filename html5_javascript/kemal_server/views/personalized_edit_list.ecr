@@ -74,6 +74,7 @@ personal notes (ex: "for kids")
     </td>
     <% if show_tag_details %>
       <td><%= tag.details %></td>
+      <td><%= tag.popup_text_after %></td>
     <% end %>
     <td>
       <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>;"> <!-- keep same size for tables to match up -->

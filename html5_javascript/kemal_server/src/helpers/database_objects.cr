@@ -415,7 +415,8 @@ class Tag
     default_action: {type: String},
     age_maybe_ok: {type: Int32},
     url_id: Int32,
-    impact_to_movie: Int32
+    impact_to_movie: Int32,
+    popup_text_after: String
   })
   DB.mapping({
     id: Int32,
@@ -427,7 +428,8 @@ class Tag
     default_action: {type: String},
     age_maybe_ok: {type: Int32},
     url_id: Int32,
-    impact_to_movie: Int32
+    impact_to_movie: Int32,
+    popup_text_after: String
   })
 
   def self.all
@@ -482,14 +484,15 @@ class Tag
     @age_maybe_ok = 0
     @url_id = url.id
     @impact_to_movie = 0
+    @popup_text_after = ""
   end
   
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie) values (?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, impact_to_movie).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after) values (?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, id
       end
     end
   end
@@ -702,7 +705,7 @@ class User
       out.create_or_update # update
       out
     else
-      editor = true # for now :|
+      editor = false # must manually promote them these days
       admin = false
       out = User.new(user_id, name, email, type, email_subscribe, editor, admin)
       out.create_or_update # create
