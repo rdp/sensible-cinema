@@ -116,7 +116,7 @@ function addEditUi() {
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         
-        <%= io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro -->
+        <%= pre_details = "tag details"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro -->
         <br/>        
         tag details: <input type="text" name="details" id="details_input_id" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
         <br/>
