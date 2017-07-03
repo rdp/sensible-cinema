@@ -12,23 +12,20 @@ the "popup thing"
 3rd passes--at least some normal human :|
 
 == somewhat random list ==
-easier chrome install
-a save's reload should cancel outstanding tests...so in essence reload is OK if test, just cancel first??
+extension: a save's reload should cancel outstanding tests...so in essence reload is OK if test, just cancel first??
+extension: episode to episdoe was saying "watching ad?" amazon broken here :|
+easier chrome install (if they're on chrome I guess)
 faq: mention wireless mouse,
-avatar season 1 aren't coming right somehow?? gah...
 add: "family friendly for all ages" review or ranking...??
 ability to "auto add just the mutes" for anything they run into? :)
 some kind of "most recent" option, in general cleanup UI [?]
   updated_at...
 make "updated" count not inc. if you're an editor...
 better search'ish :|
-edit my "owned" PG's...all 3 LOL...and G's, from both accounts
 try out wireless mouse + extension :)
 list for "watch later" for them :)
 
-big "edited" -> that or name or unedited, based on playlist currently selected
-
-episode to episdoe was saying "watching ad?" amazon broken here :|
+name if unedited, based on playlist currently selected
 
 only show the age dropdown if "required" for that tag type?
 
@@ -38,9 +35,9 @@ some way "signup for news as we get more"?
 soft launch looks like: easy links...ycombinator (youtube?) probably not even tweak it :| ...
 
 == pre kickstarer ==
+avatar season 1 aren't coming right somehow still?? gah...
 simplify the series' somehow they are super confusing today...
 the in_the_works doesn't work javascript in mobile :|
-add "family friendly" level?
 auto detect when shtuff goes off prime somehow?
 link from personalized to watch edited? groom that flow more anyway...
 saner url's :| more human
@@ -48,9 +45,10 @@ better main page title
 
 Price: free (with Prime), $2.00 (rent SD) $3.00 (rent HD) $8.00 (buy SD) $10.00 (buy HD) remove the .00, also round from 1.99 [?]
 
-a "sell it to them edited" option per video?
+groom the "sell it to them edited" options :|
+  split it out into its own column?
 
-@TODO: on edit_tag "next tag and previous" buttons :)
+on edit_tag "next tag and previous" buttons :)
 
 overlaps with tag starting -> violence tag starting
 
@@ -118,9 +116,16 @@ Try and go everywhere with ads/pub...
 
 == post kickstarter meh but yes, someday, unordered ==
 
+add real tags "new releases" "enjoyable by whole family"
+add an "edited" moniker underneath each image?
+make R rated a check box opt in?
+
 break questions out to their own thing, we want to be pro-family don't we?? :)
 
 make the "main" page faster, once it gets more movies so it needs it LOL.
+  like it takes 200ms today...come on...yet might be hard...hrm...
+
+use the spiffier way to do high-res, and it might be more efficient for desktop users right? :)
 
 "celebrate our grand opening like this post for a free month!"
 
@@ -130,20 +135,17 @@ impact to story finish rename
   purchase_cost -> hd
   something on the personalized list :|
 
-some easier "report a problem to us" or some odd
-
 youtube embed...
   youtube "awesome sharing" and also for organic growth
 
 Unedited needs to start but then go away unless that mouse is super close :|
-  add a "dismiss" button for *edited* as well..
-
-some way to get rid of the "currently playing it my way" message for duration of a video [?]
+  add a "dismiss" button for *edited* as well..?
 
 google+ button :|
   facebook "like" this edited movie page...
 
 add youtube preview ID's :|
+  and inline previews :|
 
 on amazon previews it says "success!..." LOL
 
@@ -163,6 +165,9 @@ seasons have their own page, really [so one link]
 double check everything has "amazon second urls" and fully groomed as well... :|
 
 == todo never LOL ==
+extension: always edit everything inline somehow?
+
+edit amazon previews
 
 allow tags to be tagged with multiple "it's an opening scene and it's x" [?]
 
