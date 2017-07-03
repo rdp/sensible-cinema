@@ -245,12 +245,10 @@ function checkIfShouldDoActionAndUpdateUI() {
     console.log("Something just seeked backwards to=" + cur_time);
   	tag = areWeWithin(skips, cur_time); 
     if (tag) {
-      // was the seek to a bad spot? Since this was a "rewind" let's actually go to *before* the bad spot, so -10 button can work from UI
-      console.log("they just seeked to a bad spot");
+      // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the -10 button can work from UI
+      console.log("they just seeked to a bad spot, rewinding more...");
       seekToBeforeSkip(0);
       return;
-    } else {
-      console.log("an OK spot");
     }    
   }
   last_timestamp = cur_time;
@@ -279,8 +277,13 @@ function checkIfShouldDoActionAndUpdateUI() {
 	tag = areWeWithin(skips, cur_time);
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
-	  seekToTime(tag.endy);
-	} // no else
+    seek_tag = tag; // we re-assign tag below this so it's gone by the time the function is called :|
+	  seekToTime(tag.endy, function() {
+        if (seek_tag.popup_text_after.length > 0) {
+          alert("skipped:" + seek_tag.popup_text_after); // hope they only need/use this for skips for now [?]
+      }
+      });
+	} // no else on purpose
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
@@ -1016,7 +1019,7 @@ function seekToTime(ts, callback) {
   }
   
   if (ts < 0) {
-    console.log("not seeking to before 0, seeking to 0 instead " + ts);
+    console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
   }  
   var current_state = video_element.paused;
