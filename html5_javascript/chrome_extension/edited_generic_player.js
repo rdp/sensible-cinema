@@ -366,7 +366,7 @@ tag details
 
 <br/>
 popup text
-<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="a" />
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="use with caution" />
 
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
