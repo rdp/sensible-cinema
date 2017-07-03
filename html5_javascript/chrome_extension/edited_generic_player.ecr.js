@@ -14,21 +14,22 @@ var current_json, url;
 var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos;
 var seek_timer;
+var all_pimw_stuff;
 
 function addEditUi() {
 	
-	var allEditStuffDiv = document.createElement('div');
-	allEditStuffDiv.id = "all_pimw_stuff_id";
-  allEditStuffDiv.style.color = "white";
-  allEditStuffDiv.style.background = '#000000';
-  allEditStuffDiv.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
-  allEditStuffDiv.style.fontSize = "15px";
-  allEditStuffDiv.style.textShadow="2px 1px 1px black";
-  allEditStuffDiv.style.zIndex = "99999999";
-  allEditStuffDiv.style.width = "475px";
-  allEditStuffDiv.style.position = 'absolute';
+	all_pimw_stuff = document.createElement('div');
+	all_pimw_stuff.id = "all_pimw_stuff_id";
+  all_pimw_stuff.style.color = "white";
+  all_pimw_stuff.style.background = '#000000';
+  all_pimw_stuff.style.backgroundColor = "rgba(0,0,0,0)"; // still see the video, but also see the text :)
+  all_pimw_stuff.style.fontSize = "15px";
+  all_pimw_stuff.style.textShadow="2px 1px 1px black";
+  all_pimw_stuff.style.zIndex = "99999999";
+  all_pimw_stuff.style.width = "475px";
+  all_pimw_stuff.style.position = 'absolute';
   
-	allEditStuffDiv.innerHTML = `
+	all_pimw_stuff.innerHTML = `
    <!-- our own styles, # is id -->
   <style>
     #all_pimw_stuff_id a:link { color: rgb(255,228,181); text-shadow: 0px 0px 5px black;}
@@ -131,7 +132,7 @@ function addEditUi() {
       <input type='button' onclick="collapseAddTagStuff(); return false;" value='✕ Hide editor'/>
     </div>
   </div>`;
-  document.body.appendChild(allEditStuffDiv);
+  document.body.appendChild(all_pimw_stuff);
   
   addMouseAnythingListener(mouseJustMoved);
   mouseJustMoved({pageX: 0, pageY: 0}); // start its timer, prime it :|
@@ -355,7 +356,7 @@ function checkStatus() {
 	}
   checkIfEpisodeChanged();
   video_element = findFirstVideoTagOrNull() || video_element; // refresh it in case changed, but don't switch to null between clips :|
-	setEditedControlsToTopLeft(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
+	setEditedControlsToMovieRight(); // in case something changed [i.e. amazon moved their video element into "on screen" :| ]
 }
 
 function timestamp_log(message, cur_time, tag) {
@@ -431,17 +432,22 @@ function isAddtagStuffVisible() {
 	return document.getElementById("tag_details_div_id").style.display != "none";
 }
 
-function setEditedControlsToTopLeft() {
-  var left = getLocationOfElement(video_element).right - 475 - 10; // avoid amazon x-ray so go to right
-  var top = getLocationOfElement(video_element).top;
-  if (isYoutube()) {
-    top += 0; // couldn't see it when at the very very top youtube [XXXX why?] but just in case others are the same fix it this way LOL
-  } else { // isAmazon :|
-    top += 225; // top amazon stuff, plus ability to select subs
+function setEditedControlsToMovieRight() {
+  var desired_left = getLocationOfElement(video_element).right - 475 - 10; // avoid amazon x-ray so go to right
+  var desired_top = getLocationOfElement(video_element).top;
+  if (isAmazon()) {
+    desired_top += 225; // top amazon stuff, plus ability to select subs
   }
-  var allPimwStuff = document.getElementById("all_pimw_stuff_id")
-  allPimwStuff.style.left = left + "px";
-  allPimwStuff.style.top = top + "px";
+    
+  all_pimw_stuff.style.left = desired_left + "px";
+  all_pimw_stuff.style.top = desired_top + "px";
+  
+  var pimw_bottom = getLocationOfElement(all_pimw_stuff).bottom;
+  if (pimw_bottom > getLocationOfElement(video_element).bottom) {
+    // video is too small to fit it all, so just punt on the top spacing :|
+    desired_top = getLocationOfElement(video_element).top;
+    all_pimw_stuff.style.top = desired_top + "px";
+  }
 }
 
 function currentTestAction() {
@@ -893,7 +899,7 @@ function start() {
   loadForNewUrl();
 }
 
-function coordsWithinElement(cursorX, cursorY, element) {
+function pointWithinElement(cursorX, cursorY, element) {
   var coords = getLocationOfElement(element);
   return (cursorX < coords.left + coords.width && cursorX > coords.left && cursorY < coords.top + coords.height && cursorY > coords.top);
 }
@@ -901,10 +907,8 @@ function coordsWithinElement(cursorX, cursorY, element) {
 function mouseJustMoved(event) {
   var cursorX = event.pageX;
   var cursorY = event.pageY;
-  var all_pimw_stuff = document.getElementById("all_pimw_stuff_id");
-  var mouse_within_all_pimw_stuff = coordsWithinElement(cursorX, cursorY, all_pimw_stuff);
-  //  console.log("mouse moved to " + cursorX + " " + cursorY + " in_pimw=" + mouse_within_all_pimw_stuff);
-  var mouse_within_video = coordsWithinElement(cursorX, cursorY, video_element);
+  var mouse_within_all_pimw_stuff = pointWithinElement(cursorX, cursorY, all_pimw_stuff);
+  var mouse_within_video = pointWithinElement(cursorX, cursorY, video_element);
   if (!mouse_move_timer || (mouse_within_video && document.hasFocus())) {
   	displayDiv(all_pimw_stuff);
   
@@ -918,7 +922,7 @@ function mouseJustMoved(event) {
       mouse_move_timer = setTimeout(hideAllPimwStuff, 1500); // in add mode we ex: use the dropdown and it doesn't trigger this mousemove thing so when it comes off it it disappears and scares you, so 5000 here...
     }
   }
-  else if (!mouse_within_video) {
+  else if(!mouse_within_video && !mouse_within_all_pimw_stuff) {
     // mimic youtube which removes immediately if mouse ever leaves video
     hideAllPimwStuff();
     clearTimeout(mouse_move_timer);
@@ -930,7 +934,7 @@ function mouseJustMoved(event) {
 }
 
 function hideAllPimwStuff() {
-  hideDiv(document.getElementById("all_pimw_stuff_id")); 
+  hideDiv(all_pimw_stuff); 
 }
 
 function addMouseAnythingListener(func) {
