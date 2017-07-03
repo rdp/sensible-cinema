@@ -33,12 +33,10 @@ default action to take if user selects to "edit all offensive content out" (to t
 <%= 
 pre_details = %{internal tag details (ex: "sally said [d...] OK?" (dots instead of real profanity, brackets around muted part) or "protagonist dies a horrible death", "butterfly is smashed by rock")).  Will only be seen by editors, so spoilers are OK.<br/>}
 
+pre_popup = %{popup_text_after (only use if the edit causes a huge plot hole, that confuses the rest of the movie if absent, spoilers are OK, end users will see this, euphemized, ex: "Jeff falls from a cliff so the town gives up fishing", "Steve is killed by Lex" use editor discretion, we don't want to use this often since it interrupts movie playback):}
+
 render "views/_tag_shared.ecr" %>
 
-<br/>
-popup_text_after (only use if the edit causes a huge plot hole, that confuses the rest of the movie if absent, spoilers are OK, end users will see this, euphemized, ex: "Jeff falls from a cliff so the town gives up fishing", "Steve is killed by Lex" use editor discretion, we don't want to use this often since it interrupts movie playback):
-<br/>
-<input type="text" name="popup_text_after" id="popup_text_after_id" size="50" value="<%= tag.popup_text_after %>"/>
 
 <br/>
 <input type="submit" value="Save" onclick="return doubleCheckValues();">
@@ -51,13 +49,13 @@ If there are any categories missing let us know!
 <br/>
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 
-
 <script>
 document.getElementById('category_select').value = '<%= tag.category %>';
-
 document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
 document.getElementById('impact_to_movie_id').value = '<%= tag.impact_to_movie %>';
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
+document.getElementById('details_input_id').value = '<%= tag.details %>';
+document.getElementById('popup_text_after_id').value = '<%= tag.popup_text_after %>';
 
 select = document.getElementById('subcategory_select_id');
 

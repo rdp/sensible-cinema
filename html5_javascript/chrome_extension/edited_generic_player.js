@@ -116,7 +116,7 @@ function addEditUi() {
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
-        
+        <br/>        
         
 <div id="category_div_id">
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
@@ -206,7 +206,9 @@ sub cat:
     
       <option value="profanity &#40;other&#41;">profanity -- other</option>    
     
-      <option value="light fight">violence -- light fighting &#40;single punch/kick/hit/push&#41;</option>    
+      <option value="light fight">violence -- short fighting &#40;single punch/kick/hit/push&#41;</option>    
+    
+      <option value="threatening actions">violence -- threatening actions</option>    
     
       <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
     
@@ -217,8 +219,6 @@ sub cat:
       <option value="open wounds">violence -- visible gore &#40;ex: open wound&#41;</option>    
     
       <option value="crudeness">violence -- crude actions, grossness, etc.</option>    
-    
-      <option value="threatening actions">violence -- threatening actions</option>    
     
       <option value="collision">violence -- collision/crash &#40;no implied death&#41;</option>    
     
@@ -359,13 +359,19 @@ Impact to Story if edited:
     
   </select>
 
+<br/>
+tag details
+<input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
 
-<!-- can't put javascript since don't know how to inject it quite right, though I could use a separate render... -->
- <!-- render inline cuz uses macro -->
-        <br/>        
-        tag details: <input type="text" name="details" id="details_input_id" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
+<br/>
+popup text
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="a" />
+
+
+<!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
+ <!-- render here cuz needs/uses macro -->
         <br/>
-        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
@@ -1549,7 +1555,7 @@ function doubleCheckValues() {
 }
 
 function tagsCreated() {
-  // they call this when we're ready to setup shtuff, somehow needed...
+  // they call this when we're ready to setup shtuff, somehow necessary :|
   
   document.getElementById('action_sel').addEventListener(
      'change',

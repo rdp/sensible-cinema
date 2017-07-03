@@ -46,7 +46,11 @@ Impact to Story if edited:
 
 <br/>
 <%= pre_details %>
-<input type="text" name="details" id="details_input_id" size="50" value="<%= tag.details %>"/>
+<input type="text" name="details" id="details_input_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);"/>
+
+<br/>
+<%= pre_popup %>
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="a" />
 
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->

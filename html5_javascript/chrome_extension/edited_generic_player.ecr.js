@@ -115,12 +115,10 @@ function addEditUi() {
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
-        
-        <%= pre_details = "tag details"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render inline cuz uses macro -->
         <br/>        
-        tag details: <input type="text" name="details" id="details_input_id" size="30" value="" id="tag_detaild_input_id" style="background-color: rgba(255, 255, 255, 0.85);"/>
+        <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render here cuz needs/uses macro -->
         <br/>
-        <input type='submit' value='Save New Tag' onclick="saveEditButton(); return false;">
+        <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
