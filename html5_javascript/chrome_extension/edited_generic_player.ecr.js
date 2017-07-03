@@ -277,7 +277,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	tag = areWeWithin(skips, cur_time);
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
-    seek_tag = tag; // we re-assign tag below this so it's gone by the time the function is called :|
+    var seek_tag = tag; // we re-assign "tag" below this so it's gone by the time the function is called :|
 	  seekToTime(tag.endy, function() {
         if (seek_tag.popup_text_after.length > 0) {
           alert("skipped:" + seek_tag.popup_text_after); // hope they only need/use this for skips for now [?]
@@ -489,10 +489,11 @@ function testCurrentFromUi() {
 		start: humanToTimeStamp(document.getElementById('start').value),
 		endy: humanToTimeStamp(document.getElementById('endy').value),
     default_action: currentTestAction(),
-    is_test_tag: true
+    is_test_tag: true,
+    popup_text_after: "" // having to match syntax is getting annoying somehow :|
 	}
   if (faux_tag.endy <= faux_tag.start) {
-    alert("appears your end is before your start, please fix this, then try again!");
+    alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
     return; // abort!
   } 
   var temp_array = currentEditArray();
