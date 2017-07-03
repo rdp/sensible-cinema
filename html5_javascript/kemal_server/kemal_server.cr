@@ -68,7 +68,7 @@ def db_style_from_query_url(env)
 end
 
 get "/ping" do |env|
-  "yes"
+  "I'm alive"
 end
 
 get "/redo_all_thumbnails" do |env|
@@ -116,8 +116,10 @@ get "/for_current_just_settings_json" do |env|
     else
       # allow them to be seen just "for normal viewing" ex: on playitmyway.org...
     end
-    url.count_downloads += 1
-    url.save # we shouldn't hit this tooo often...take 0.003...ok...
+    if !editor?(env)
+      url.count_downloads += 1
+      url.save # we shouldn't hit this tooo often...take 0.003...ok...
+    end
     json_for(url, env)
   end
 end
