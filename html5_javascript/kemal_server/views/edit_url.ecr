@@ -141,7 +141,7 @@ original MPAA/TV rating, if any:
 Url for an image/picture for this movie:
 <br/>
 <% if url.image_local_filename.present? %>
-  <br/>This will override its current image: <%= url.image_tag "style='max-height: 210px; max-width: 100px;'"%>
+  <br/>This will override its current image: <%= url.image_tag "style='max-height: 210px; max-width: 100px;'", ImageSize::Medium %>
 <br/>
 <% end %>
 You can <a href=https://www.google.com/search?tbm=isch&q=<%= google_search_string(url) %> target="_blank">search</a>

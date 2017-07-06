@@ -73,7 +73,7 @@ end
 
 get "/redo_all_thumbnails" do |env|
   raise "should not need often"
-  Url.all.each &.create_thumbnail
+  Url.all.each &.create_thumbnail_if_has_image
   "did 'em"
 end
 

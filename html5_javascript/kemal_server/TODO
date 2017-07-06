@@ -124,6 +124,9 @@ break questions out to their own thing, we want to be pro-family don't we?? :)
 make the "main" page faster, once it gets more movies so it needs it LOL.
   like it takes 200ms today...come on...yet might be hard...hrm...
 
+figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
+  takes 0.06 in crystal and 0.01 in mysql console :|
+
 use the spiffier way to do high-res, and it might be more efficient for desktop users right? :)
 
 "celebrate our grand opening like this post for a free month!"

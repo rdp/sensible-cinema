@@ -314,11 +314,11 @@ class Url
  
   def delete_local_image_if_present_no_save
     if image_local_filename.present?
-      [ "./public/movie_images/#{image_local_filename}", "./public/movie_images/small_#{image_local_filename}", "./public/movie_images/very_small_#{image_local_filename}" ].each{|file|
-        if File.exists? file
-          puts "Deleting #{file}"
-          File.delete file # FileUtils.rm_r is broken :|
-        end
+      original = "movie_images/#{image_local_filename}"
+      ([original] + ImageSize.values.map{|size| sized_relative_url(size)}).each{ |file|
+        file = "public/" + file
+        puts "Deleting #{file}"
+        FileUtils.rm_rf file
       }
       image_local_filename = nil
     end
@@ -342,27 +342,29 @@ class Url
           end
           delete_local_image_if_present_no_save # delete old now that we've downloaded new and have assured successful replacement :|
     @image_local_filename = outgoing_filename
-          create_thumbnail
+          create_thumbnail_if_has_image
           save
   end
 
-        def create_thumbnail
+        def create_thumbnail_if_has_image
           if image_local_filename.present?
-            local_small = "public/movie_images/small_#{image_local_filename}"
-            local_very_small = "public/movie_images/very_small_#{image_local_filename}"
-            { local_small => "600x600", local_very_small => "300x300"}.each { |filename, resolution|
-              command = "convert public/movie_images/#{image_local_filename}  -resize #{resolution}\\> #{filename}" # this will be either 600x400 or 400x600, both what we want :)
-              if image_local_filename =~ /\.jpg$/
-                command = command.sub("convert", "convert -strip -sampling-factor 4:2:0 -quality 85%") # attempt max compression
+            sizes = [{ImageSize::Medium, "450x450"}, {ImageSize::VerySmall, "300x300"}]
+            sizes.each{ |size, resolution|
+              filename = "public/" + sized_relative_url(size)
+              original_location = "public/movie_images/#{image_local_filename}"
+              command = "convert #{original_location} -resize #{resolution}\\> #{filename}" # this should end up either 600x400 or 400x600, as well as never resizing up, I think what we want :)
+              if image_local_filename =~ /\.jpg$/i
+                command = command.sub("convert", "convert -strip -sampling-factor 4:2:0 -quality 85%") # attempt max compression :|
+                # XXX all to jpg :|
               end
-        raise "unable to thumnailify? #{id} #{command}" unless system(command)
+              raise "unable to thumnailify? #{id} #{command}" unless system(command)
+              puts "thumbnail success #{command}"
             }
           end
         end
 
-
-  def image_tag(style, size : ImageSize = ImageSize::Medium, postpend_html = "")
-    if image_local_filename.present? # we have one at all
+  def image_tag(style : String, size : ImageSize, postpend_html = "")
+    if image_local_filename.present? # we have one at all :)
       "<img src='" + sized_relative_url(size) + "' #{style}/>#{postpend_html}"
     else
       ""
@@ -382,13 +384,11 @@ class Url
   def sized_relative_url(size)
     "/movie_images/" + case(size)
     when ImageSize::Medium
-      "small_#{image_local_filename}"
-    when ImageSize::Original
-      image_local_filename
+      "small_#{image_local_filename}.jpg"
     when ImageSize::VerySmall
-      "very_small_#{image_local_filename}"
+      "very_small_#{image_local_filename}.jpg"
     else
-     raise "what type system crystal!!" # shouldn't be needed, so crystal can auto-get it by knowing it's safe. Also warn if not all [?] also imports yikes!
+      raise "what type system crystal!!" # shouldn't be needed, so crystal can auto-get it by knowing it's safe. Also warn if not all [?] also imports yikes!
    end
   end
 
@@ -400,7 +400,7 @@ class Url
 end
 
 enum ImageSize
-  Original; Medium; VerySmall
+   Medium; VerySmall # no Large for copyright, since I'm supposed to be a shining example :| no Original so I don't accidentally use it
 end
 
 class Tag
