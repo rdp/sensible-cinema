@@ -88,6 +88,10 @@ get "/sync_web_server" do |env|
   end
 end
 
+get "/getting_started" do |env|
+  env.redirect "/"
+end
+
 get "/all_tags" do |env|
   Tag.all.inspect
 end
