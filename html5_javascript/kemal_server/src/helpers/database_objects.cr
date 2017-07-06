@@ -361,8 +361,13 @@ class Url
         end
 
   def image_tag(style : String, size : ImageSize, postpend_html = "")
-    if image_local_filename.present? # we have one at all :)
-      "<img src='" + sized_relative_url(size) + "' #{style}/>#{postpend_html}"
+    if image_local_filename.present? 
+      # we have one at all :)
+      srcset = ""
+      if size == ImageSize::VerySmall
+        srcset = "srcset=\"#{sized_relative_url(ImageSize::Medium)} 1.5x\"" # let them decide if they want to use highdef or not
+      end
+      "<img src='" + sized_relative_url(size) + "' #{srcset} #{style}/>#{postpend_html}"
     else
       ""
     end
