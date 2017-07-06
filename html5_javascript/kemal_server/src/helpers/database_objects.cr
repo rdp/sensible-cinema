@@ -350,13 +350,10 @@ class Url
           if image_local_filename.present?
             sizes = [{ImageSize::Medium, "450x450"}, {ImageSize::VerySmall, "300x300"}]
             sizes.each{ |size, resolution|
-              filename = "public/" + sized_relative_url(size)
+              filename = "public/" + sized_relative_url(size) # already ends with extra .jpg
               original_location = "public/movie_images/#{image_local_filename}"
               command = "convert #{original_location} -resize #{resolution}\\> #{filename}" # this should end up either 600x400 or 400x600, as well as never resizing up, I think what we want :)
-              if image_local_filename =~ /\.jpg$/i
-                command = command.sub("convert", "convert -strip -sampling-factor 4:2:0 -quality 85%") # attempt max compression :|
-                # XXX all to jpg :|
-              end
+              command = command.sub("convert", "convert -strip -sampling-factor 4:2:0 -quality 85%") # attempt max compression :|
               raise "unable to thumnailify? #{id} #{command}" unless system(command)
               puts "thumbnail success #{command}"
             }
@@ -382,14 +379,18 @@ class Url
   end
 
   def sized_relative_url(size)
-    "/movie_images/" + case(size)
+    filename = case(size)
     when ImageSize::Medium
-      "small_#{image_local_filename}.jpg"
+      "small_#{image_local_filename}"
     when ImageSize::VerySmall
-      "very_small_#{image_local_filename}.jpg"
+      "very_small_#{image_local_filename}"
     else
       raise "what type system crystal!!" # shouldn't be needed, so crystal can auto-get it by knowing it's safe. Also warn if not all [?] also imports yikes!
    end
+   if filename !~ /\.jpg$/
+     filename += ".jpg" # all -> .jpg
+   end
+   "/movie_images/" + filename
   end
 
   def self.get_only_by_id(id)

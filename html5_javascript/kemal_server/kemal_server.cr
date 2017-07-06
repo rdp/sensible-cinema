@@ -569,7 +569,7 @@ end
 get "/login" do |env|
   if is_dev?
     env.params.query["email_subscribe"] = "false"
-    add_to_flash env, "logged in test user"
+    add_to_flash env, "logged in special as test user"
     setup_user_and_session("test_user_id", "test user name", "testuseremail@test.com", "testauth", env)
   elsif logged_in?(env)
     add_to_flash env, "already logged in!"
