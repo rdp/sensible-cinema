@@ -72,9 +72,9 @@ get "/ping" do |env|
 end
 
 get "/redo_all_thumbnails" do |env|
-  raise "should not need often"
+  #raise "should not need often"
   Url.all.each &.create_thumbnail_if_has_image
-  "did 'em"
+  "did 'em #{Url.all.size}"
 end
 
 get "/sync_web_server" do |env|
