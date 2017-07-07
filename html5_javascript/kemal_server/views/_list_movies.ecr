@@ -37,10 +37,6 @@
   %>
   </div>
 
-  <style>
-    .auto_scroll { overflow-y:hidden; }
-    .auto_scroll:hover { overflow-y:scroll; }
-  </style>
   <% movies.each_with_index{ |url, idx|  %>
     <%= render "views/_box_movie.ecr" %>
   <% } %>
