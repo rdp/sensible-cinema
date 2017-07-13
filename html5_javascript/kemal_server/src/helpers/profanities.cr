@@ -94,7 +94,7 @@
       Arse + "w" +
       "ipe" => ["a..w...", "a word"],
       "jes" +
-      "u" + "s" => ["___", "deity exclamation mild"],
+      "u" + "s" => ["___", "deity exclamation harsh"],
       "sh" +
        "i" + "t" => ["s...", "s word"],
       "cu" +

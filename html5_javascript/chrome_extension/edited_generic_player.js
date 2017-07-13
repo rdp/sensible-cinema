@@ -217,6 +217,8 @@ sub cat:
     
       <option value="visible blood">violence -- visible blood &#40;ex: blood from wound&#41;</option>    
     
+      <option value="visible wound">violence -- visible wound &#40;no gore, light gore&#41;</option>    
+    
       <option value="open wounds">violence -- visible gore &#40;ex: open wound&#41;</option>    
     
       <option value="crudeness">violence -- crude actions, grossness, etc.</option>    

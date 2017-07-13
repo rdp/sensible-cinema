@@ -48,6 +48,7 @@ def subcategory_map
     "stabbing/shooting no blood": "violence -- stabbing/shooting no blood",
     "stabbing/shooting with blood": "violence -- stabbing/shooting yes blood",
     "visible blood": "violence -- visible blood (ex: blood from wound)",
+    "visible wound": "violence -- visible wound (no gore, light gore)",
     "open wounds": "violence -- visible gore (ex: open wound)",
     "crudeness": "violence -- crude actions, grossness, etc.",
     "collision": "violence -- collision/crash (no implied death)",
