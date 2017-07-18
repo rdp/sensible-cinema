@@ -1,24 +1,25 @@
 update_icon = function(request, sender, sendResponse) {
-	console.log("got request in background " + request);
+	console.log("got request in background " + JSON.stringify(request));
   var active_tab_id = sender.tab.id; // sender
   if (request.text) {
     console.log("changing " + request.text + " color:" + request.color + " details:" + request.details);
     chrome.browserAction.setBadgeText({ text: request.text, tabId: active_tab_id });
     chrome.browserAction.setBadgeBackgroundColor({ color: request.color, tabId: active_tab_id });
     chrome.browserAction.setTitle({title: request.details, tabId: active_tab_id});
-  }
-  if (request.version_request) {
+  } else if (request.version_request) {
     var manifest = chrome.runtime.getManifest();
     console.log("sent version response" + manifest.version);
     sendResponse({version: manifest.version});
-   }
-   
-   if (request.do_url) {
+   } else if (request.do_url) {
      // can only do tabs from b/g not contentscript apparently :|
      chrome.tabs.create({url: "https://playitmyway.org" + request.do_url}); // opens and sets active
-     return;
+   } else if (request.notification_desired) {
+     console.log("got it in background.js");
+     var to_notify = request.notification_desired;
+     // empty string for body works well too, and possibly should be preferred hmmmm...
+     var notification = new Notification(to_notify.title, {body: to_notify.body}); // auto shows it
+     notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
    }
-   
 };
 
 chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js 

@@ -534,8 +534,8 @@ function checkIfShouldDoActionAndUpdateUI() {
     var seek_tag = tag; // we re-assign "tag" below this so it's gone by the time the function is called :|
 	  seekToTime(tag.endy, function() {
         if (seek_tag.popup_text_after.length > 0) {
-          alert("skipped:" + seek_tag.popup_text_after); // hope they only need/use this for skips for now [?]
-          sendMessageToPlugin({notification_desired: {title: "hello", body: seek_tag.popup_text_after}});
+          // TODO do this for more than skips!!!
+          sendMessageToPlugin({notification_desired: {title: "skipped " + seek_tag.popup_text_after, body: ""}});
         }
       });
 	} // no else on purpose

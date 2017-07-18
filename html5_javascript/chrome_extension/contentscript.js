@@ -44,19 +44,15 @@ chrome.runtime.onMessage.addListener(
          };
 });
 
-// capture messages from the page and re-broadcast them to background.js: http://stackoverflow.com/a/41836393/32453
+// capture messages from the page and optionally re-broadcast them to background.js: http://stackoverflow.com/a/41836393/32453
 window.addEventListener("message", function(event) {
   if (event.source != window)
     return;
 
   if (event.data.type && (event.data.type == "FROM_PAGE_TO_CONTENT_SCRIPT")) {
-    if (event.data.payload.notification_desired) {
-      var to_notify = event.data.payload.notification_desired;
-      var notification = new Notification(to_notify.title, {body: to_notify.body}); // auto shows it
-    } else {
-    	// only way to update the tab icon I think anyway...is from the background.js
-      chrome.runtime.sendMessage(event.data.payload); // send to rest of extension
-    }
+  	// only way to update the tab icon I think anyway...is from the background.js
+    // also want that for permissions weirdness in amazon
+    chrome.runtime.sendMessage(event.data.payload); // rebroadcast to rest of extension
   }
 }, false);
 
