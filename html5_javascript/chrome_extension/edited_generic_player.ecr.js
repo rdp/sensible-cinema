@@ -280,7 +280,8 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  seekToTime(tag.endy, function() {
         if (seek_tag.popup_text_after.length > 0) {
           alert("skipped:" + seek_tag.popup_text_after); // hope they only need/use this for skips for now [?]
-      }
+          sendMessageToPlugin({notification_desired: {title: "hello", body: seek_tag.popup_text_after}});
+        }
       });
 	} // no else on purpose
 	
@@ -578,7 +579,7 @@ function saveEditButton() {
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   
   if (endy > video_element.duration) {
-    alert("tag goes past end of movie?");
+    alert("tag goes past end of movie? aborting...");
     return;
   }
 
@@ -610,7 +611,7 @@ function getSubtitleLink() {
     return;
   }
   if (!isAmazon()) {
-    alert("not supported except on amazon/youtube today");
+    alert("subtitles not supported except on amazon/youtube today");
     return;
   }
   var arr = window.performance.getEntriesByType("resource");
@@ -1102,11 +1103,10 @@ function pauseVideo() {
 	video_element.pause();
 }
 
-function sendMessageToPlugin(message) {
-	window.postMessage({ type: "FROM_PAGE_TO_CONTENT_SCRIPT", payload: message }, "*");
-  console.log("sent message from page to content script " + JSON.stringify(message));
+function sendMessageToPlugin(message_obj) {
+	window.postMessage({ type: "FROM_PAGE_TO_CONTENT_SCRIPT", payload: message_obj }, "*");
+  console.log("sent message from page to content script " + JSON.stringify(message_obj));
 }
-
 
 function getLocationOfElement(el) {
   el = el.getBoundingClientRect();

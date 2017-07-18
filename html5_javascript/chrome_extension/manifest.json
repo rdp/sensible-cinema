@@ -3,7 +3,7 @@
 
   "name": "Play it my way",
   "description": "Enables the playback of online videos edited",
-  "version": "0.0.89",
+  "version": "0.0.90",
 
   "browser_action": {
     "default_icon": "camera.128.png",
@@ -11,7 +11,7 @@
     "default_title": "Play it my way" 
   },
   "permissions": [
-    "<all_urls>", "tabs" 
+    "<all_urls>", "tabs", "notifications"
   ],
   "content_scripts": [{
       "all_frames": true,
