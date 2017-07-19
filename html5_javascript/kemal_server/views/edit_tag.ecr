@@ -50,12 +50,18 @@ If there are any categories missing let us know!
 <a href=/view_url/<%= url.id %>><< back to movie edit page</a> (changes made here will be lost)
 
 <script>
+function htmlDecode(input) // I guess typically we inject "inline" which works fine <sigh> but not value = ... I did DB wrong
+{
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
+
 document.getElementById('category_select').value = '<%= tag.category %>';
 document.getElementById('age_maybe_ok_id').value = '<%= tag.age_maybe_ok %>';
 document.getElementById('impact_to_movie_id').value = '<%= tag.impact_to_movie %>';
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
-document.getElementById('details_input_id').value = unescape('<%= tag.details %>');
-document.getElementById('popup_text_after_id').value = '<%= HTML.escape tag.popup_text_after %>';
+document.getElementById('details_input_id').value = htmlDecode('<%= tag.details %>');
+document.getElementById('popup_text_after_id').value = htmlDecode('<%= tag.popup_text_after %>');
 
 select = document.getElementById('subcategory_select_id');
 
