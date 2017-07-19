@@ -27,7 +27,7 @@ function addEditUi() {
   all_pimw_stuff.style.fontSize = "15px";
   all_pimw_stuff.style.textShadow="2px 1px 1px black";
   all_pimw_stuff.style.zIndex = "99999999";
-  all_pimw_stuff.style.width = "475px";
+  all_pimw_stuff.style.width = "400px";
   all_pimw_stuff.style.position = 'absolute';
   
 	all_pimw_stuff.innerHTML = `
@@ -535,6 +535,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  seekToTime(tag.endy, function() {
         if (seek_tag.popup_text_after.length > 0) {
           // TODO do this for more than skips!!!
+          // TODO split it in half too :|
           sendMessageToPlugin({notification_desired: {title: "skipped " + seek_tag.popup_text_after, body: ""}});
         }
       });
@@ -689,7 +690,8 @@ function isAddtagStuffVisible() {
 }
 
 function setEditedControlsToMovieRight() {
-  var desired_left = getLocationOfElement(video_element).right - 475 - 10; // avoid amazon x-ray so go to right
+  var width = parseInt(all_pimw_stuff.style.width, 10);
+  var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
   var desired_top = getLocationOfElement(video_element).top;
   if (isAmazon()) {
     desired_top += 225; // top amazon stuff, plus ability to select subs
@@ -1325,17 +1327,6 @@ var addEvent = function(object, type, callback) {
         object["on"+type] = callback;
     }
 };
-
-function decodeHTMLEntities(text) {
- 	// I guess there's an HTML way to do this, but this way looked funner! :)
-  var entities = [
-      ['amp', '&'], ['apos', '\''], ['#x27', '\''], ['#x2F', '/'], ['#39', '\''], ['#47', '/'], ['lt', '<'], ['gt', '>'], ['nbsp', ' '], ['quot', '"']
-  ];
-  for (var i = 0, max = entities.length; i < max; ++i) {
-      text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
-  }
-  return text;
-}
 
 function displayDiv(div) {
 	div.style.display = "block";

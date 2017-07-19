@@ -26,7 +26,7 @@ function addEditUi() {
   all_pimw_stuff.style.fontSize = "15px";
   all_pimw_stuff.style.textShadow="2px 1px 1px black";
   all_pimw_stuff.style.zIndex = "99999999";
-  all_pimw_stuff.style.width = "475px";
+  all_pimw_stuff.style.width = "400px";
   all_pimw_stuff.style.position = 'absolute';
   
 	all_pimw_stuff.innerHTML = `
@@ -435,7 +435,8 @@ function isAddtagStuffVisible() {
 }
 
 function setEditedControlsToMovieRight() {
-  var desired_left = getLocationOfElement(video_element).right - 475 - 10; // avoid amazon x-ray so go to right
+  var width = parseInt(all_pimw_stuff.style.width, 10);
+  var desired_left = getLocationOfElement(video_element).right - width - 10; // avoid amazon x-ray so go to right
   var desired_top = getLocationOfElement(video_element).top;
   if (isAmazon()) {
     desired_top += 225; // top amazon stuff, plus ability to select subs
