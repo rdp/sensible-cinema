@@ -16,6 +16,7 @@ var mouse_move_timer;
 var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos;
 var seek_timer;
 var all_pimw_stuff;
+var currently_in_process_tags = new Map();
 
 function addEditUi() {
 	
@@ -500,10 +501,10 @@ function checkIfShouldDoActionAndUpdateUI() {
   	tag = areWeWithin(skips, cur_time); 
     if (tag) {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the -10 button can work from UI
-      console.log("they just seeked to a bad spot, rewinding more...");
+      console.log("they just seeked backward to within a skip, rewinding more...");
       seekToBeforeSkip(0);
       return;
-    }    
+    }
   }
   last_timestamp = cur_time;
   
@@ -517,6 +518,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    timestamp_log("muting", cur_time, tag);
 	  }
    extra_message += "muting";
+   notify_if_new(tag);
 	}
 	else {
 	  if (video_element.muted) {
@@ -531,7 +533,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	tag = areWeWithin(skips, cur_time);
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
-    show_notification(tag); // show it now so it can display while it seeks :)
+    optionally_show_notification(tag); // show it now so it can notify while it seeks :)
 	  seekToTime(tag.endy);
 	}
 	
@@ -544,6 +546,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    video_element.style.visibility="hidden";
 	  }
     extra_message += "doing a no video yes audio";
+    notify_if_new(tag);
 	}
 	else {
 	  if (video_element.style.visibility != "") {
@@ -553,9 +556,9 @@ function checkIfShouldDoActionAndUpdateUI() {
 	}
 
 	var new_top_line = timeStampToHuman(cur_time);
-  var next_tag = getNextTagAfterOrWithin(video_element.currentTime);
-  if (next_tag) {
-    new_top_line += " next: " + timeStampToHuman(next_tag.start) + " (" + next_tag.default_action + " for " + (next_tag.endy - next_tag.start).toFixed(2) + "s)";
+  var next_future_tag = getNextTagAfterOrWithin(video_element.currentTime);
+  if (next_future_tag) {
+    tag_layer_top_line += " next: " + timeStampToHuman(next_future_tag.start) + " (" + next_future_tag.default_action + " for " + (next_future_tag.endy - next_future_tag.start).toFixed(2) + "s)";
     document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
   else {
@@ -570,18 +573,40 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
+  purgeOldNotifyTags(cur_time); // if we "just got past them"
 }
 
-function show_notification(seek_tag) {
-  if (seek_tag.popup_text_after.length > 0) {          
+function purgeOldNotifyTags(cur_time) {
+  for (var tag of currently_in_process_tags.keys()) {
+    if (!areWeWithin([tag], cur_time)) {
+      console.log("removing done notify " + JSON.stringify(tag));
+      currently_in_process_tags.delete(tag);
+    }
+  }
+}
+
+function notify_if_new(tag) {
+  if (currently_in_process_tags.get(tag)) {
+    // already in there, do nothing
+  } else {
+    currently_in_process_tags.set(tag, true);
+    console.log("optional notify");
+    optionally_show_notification(tag);
+  }
+}
+
+function optionally_show_notification(seek_tag) {
+  var popup = seek_tag.popup_text_after;
+  if (popup.length > 0) {
+    console.log("notifying " + popup);
     // TODO do this for more than skip...
     var maxTitleSize = 45; // max 45 for title OS X 49 for body
     // search backward for first space to split on...
     for (var i = maxTitleSize; i > 0; i--) {
-      var char = seek_tag.popup_text_after.charAt(i);
+      var char = popup.charAt(i);
       if (char == " " || char == "") { // "" means "past end" for shorter ones...
-        var title = seek_tag.popup_text_after.substring(0, i);
-        var body = seek_tag.popup_text_after.substring(i); 
+        var title = popup.substring(0, i);
+        var body = popup.substring(i); 
         // XXXX if body too large still split to second notification? have to wait for previous to close?
         break;
       }
@@ -764,7 +789,7 @@ function testCurrentFromUi() {
 		endy: humanToTimeStamp(document.getElementById('endy').value),
     default_action: currentTestAction(),
     is_test_tag: true,
-    popup_text_after: "" // having to match syntax is getting annoying somehow :|
+    popup_text_after: document.getElementById('popup_text_after_id').value
 	}
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
@@ -786,9 +811,8 @@ function testCurrentFromUi() {
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
     video_element.play(); // seems like we want this, plus otherwise mess up the test timing [?]
 	  inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
-			console.log("assuming done with edit...");
+      console.log("popping " + JSON.stringify(faux_tag));
 	    temp_array.pop();
-      console.log("popping from " + currentEditArray());
 	    removeTimeout(inMiddleOfTestingTimer);
       inMiddleOfTestingTimer = null;
 	  }, wait_time_millis);
