@@ -374,7 +374,7 @@ class Url
   end
 
   def image_specs(size)
-    if image_local_filename.present? && image_local_filename =~ /\.(jpg|jpeg)/i
+    if image_local_filename.present? && image_local_filename =~ /\.(jpg|jpeg)/i && File.exists?("./public/#{sized_relative_url(size)}") # last part is for dev with files that get deleted
       out = `jhead ./public/#{sized_relative_url(size)}`
       out =~ /Resolution   : (\d+) x (\d+)/ # width x height
       {width: $1, height: $2}
@@ -422,7 +422,8 @@ class Tag
     age_maybe_ok: {type: Int32},
     url_id: Int32,
     impact_to_movie: Int32,
-    popup_text_after: String
+    popup_text_after: String,
+    default_enabled: Bool
   })
   DB.mapping({
     id: Int32,
@@ -435,7 +436,8 @@ class Tag
     age_maybe_ok: {type: Int32},
     url_id: Int32,
     impact_to_movie: Int32,
-    popup_text_after: String
+    popup_text_after: String,
+    default_enabled: Bool
   })
 
   def self.all
@@ -491,14 +493,15 @@ class Tag
     @url_id = url.id
     @impact_to_movie = 0
     @popup_text_after = ""
+    @default_enabled = true
   end
   
   def save
     with_db do |conn|
       if @id == 0
-        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after) values (?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after).last_insert_id.to_i32
+        @id = conn.exec("insert into tags (start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled) values (?,?,?,?,?,?,?,?,?,?,?)", @start, @endy, @category, @subcategory, @details,  @default_action, @age_maybe_ok, @url_id, @impact_to_movie, @popup_text_after, @default_enabled).last_insert_id.to_i32
       else
-        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, id
+        conn.exec "update tags set start = ?, endy = ?, category = ?, subcategory = ?, details = ?, default_action = ?, age_maybe_ok = ?, url_id = ?, impact_to_movie = ?, popup_text_after = ?, default_enabled = ? where id = ?", start, endy, category, subcategory, details, default_action, age_maybe_ok, url_id, impact_to_movie, popup_text_after, default_enabled, id
       end
     end
   end

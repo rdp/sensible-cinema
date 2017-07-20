@@ -149,6 +149,7 @@ ALTER TABLE users DROP INDEX unique_email_user_id;
 ALTER TABLE users ADD CONSTRAINT unique_email UNIQUE (email);
 alter table users add column email_subscribe BOOL DEFAULT false; -- actually 0 or 1 apparently
 alter table users add column editor BOOL DEFAULT false; -- actually 0 or 1 apparently
+update users set editor=1; -- we're all editors in test :)
 alter table users add column admin BOOL DEFAULT false; -- actually 0 or 1 apparently
 
 alter table urls ADD COLUMN amazon_third_url VARCHAR(2014) NOT NULL DEFAULT '';

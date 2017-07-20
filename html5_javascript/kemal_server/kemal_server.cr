@@ -18,7 +18,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
   def call(env)
     puts "start #{env.request.path} #{Time.now}"
     query = env.request.query
-    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !is_dev?
+    if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env)
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
@@ -570,7 +570,7 @@ get "/login" do |env|
   if is_dev?
     env.params.query["email_subscribe"] = "false"
     add_to_flash env, "logged in special as test user"
-    setup_user_and_session("test_user_id", "test user name", "testuseremail@test.com", "testauth", env)
+    setup_user_and_session("test_user_id", "test_user_name", "test@test.com", "facebook", env) # match row from test db.init.sql
   elsif logged_in?(env)
     add_to_flash env, "already logged in!"
     env.redirect "/"
