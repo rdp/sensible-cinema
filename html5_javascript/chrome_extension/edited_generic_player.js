@@ -533,13 +533,24 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  timestamp_log("seeking", cur_time, tag);
     var seek_tag = tag; // we re-assign "tag" below this so it's gone by the time the function is called :|
 	  seekToTime(tag.endy, function() {
-        if (seek_tag.popup_text_after.length > 0) {
+        if (seek_tag.popup_text_after.length > 0) {          
           // TODO do this for more than skips!!!
-          // TODO split it in half too :|
-          sendMessageToPlugin({notification_desired: {title: "skipped " + seek_tag.popup_text_after, body: ""}});
+          // XXXX show *before* split so they can read while it seeks :|
+          var maxTitleSize = 45; // max 45 for title OS X 49 for body
+          // search backward for first space to split on...
+          for (i = maxTitleSize; i > 0; i--) {
+            var char = seek_tag.popup_text_after.charAt(i);
+            if (char == " " || char == "") { // "" means "past end" for shorter ones...
+              var title = seek_tag.popup_text_after.substring(0, i);
+              var body = seek_tag.popup_text_after.substring(i); 
+              // XXXX if body too large still split to second notification? have to wait for previous to close first huh?
+              break;
+            }
+          }          
+          sendMessageToPlugin({notification_desired: {title: title, body: body}});
         }
       });
-	} // no else on purpose
+	}
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
