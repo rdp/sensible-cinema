@@ -117,7 +117,8 @@ function addEditUi() {
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         <br/>        
-        
+        <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
+
 <div id="category_div_id">
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
 style="background-color: rgba(255, 255, 255, 0.85);" >

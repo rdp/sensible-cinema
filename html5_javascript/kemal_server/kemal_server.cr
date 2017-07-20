@@ -122,7 +122,7 @@ get "/for_current_just_settings_json" do |env|
     end
     if !editor?(env)
       url.count_downloads += 1
-      url.save # we shouldn't hit this tooo often...take 0.003...ok...
+      url.save # we shouldn't hit this tooo often...takes 0.003...
     end
     json_for(url, env)
   end
@@ -239,7 +239,7 @@ end
 
 post "/save_tag/:url_id" do |env|
   params = env.params.body
-  is_update = params["id"]? && params["id"] != "0" # TODO remove may 2
+  is_update = params["id"]? && params["id"] != "0" # can remove first check  july 27 17
   if is_update
     tag = Tag.get_only_by_id(params["id"])
   else

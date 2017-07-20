@@ -3,10 +3,6 @@
 
 <form action="/save_tag/<%= url.id %>" method="POST" >
 
-<% if tag.id != 0 %>
-  <input type="hidden" name="id" value="<%= tag.id %>"> <!-- 0 is ok but weird -->
-<% end %>  
-
 from:<input type="text" name="start"  size="25" value="<%= url.seconds_to_human tag.start %>"/>
 <br/>
 
@@ -37,7 +33,6 @@ pre_popup = %{popup_text_after (only use if the edit causes a huge plot hole, th
 
 render "views/_tag_shared.ecr" %>
 
-
 <br/>
 <input type="submit" value="Save" onclick="return doubleCheckValues();">
 </form>
@@ -62,6 +57,7 @@ document.getElementById('impact_to_movie_id').value = '<%= tag.impact_to_movie %
 document.getElementById('action_sel').value = '<%= tag.default_action %>';
 document.getElementById('details_input_id').value = htmlDecode('<%= tag.details %>');
 document.getElementById('popup_text_after_id').value = htmlDecode('<%= tag.popup_text_after %>');
+document.getElementById('tag_hidden_id').value = '<%= tag.id %>'; // 0 is OK :)
 
 select = document.getElementById('subcategory_select_id');
 
