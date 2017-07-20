@@ -58,6 +58,7 @@ document.getElementById('action_sel').value = '<%= tag.default_action %>';
 document.getElementById('details_input_id').value = htmlDecode('<%= tag.details %>');
 document.getElementById('popup_text_after_id').value = htmlDecode('<%= tag.popup_text_after %>');
 document.getElementById('tag_hidden_id').value = '<%= tag.id %>'; // 0 is OK :)
+document.getElementById('default_enabled_id').value = '<%= tag.default_enabled %>';
 
 select = document.getElementById('subcategory_select_id');
 

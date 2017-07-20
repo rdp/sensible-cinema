@@ -282,6 +282,7 @@ post "/save_tag/:url_id" do |env|
     raise "for violence or suspense tags, please also select a value in the age_maybe_ok dropdown, use your browser back button (hit it several times) to try submitting again"
   end
   raise "needs details" unless tag.details.present?
+  tag.default_enabled = (params["default_enabled"] == "true") # the string :|
   tag.save
   if tag2 = tag.overlaps_any? url.tags
     add_to_flash(env, "appears this tag might accidentally have an overlap with a different tag that starts at #{seconds_to_human tag2.start} and ends at #{seconds_to_human tag2.endy} please make sure this is expected.")

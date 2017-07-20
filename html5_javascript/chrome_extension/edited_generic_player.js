@@ -1,8 +1,8 @@
 //auto-generated file
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.org";  // prod
+var request_host="localhost:3000"; // dev
+// var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -70,7 +70,7 @@ function addEditUi() {
       Feedback? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
-           Or <a href=# onclick="toggleAddNewTagStuff(); return false;">[editor add tag]</a>
+           <a href=# onclick="toggleAddNewTagStuff(); return false;">[add tag]</a>
         </div>
       </div>
   	</div>
@@ -116,8 +116,14 @@ function addEditUi() {
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
-        <br/>        
         <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
+
+default enabled?
+<select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
+  <option value="true">Y</option>
+  <option value="false">N</option>
+</select>
+<br/>
 
 <div id="category_div_id">
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
@@ -372,7 +378,7 @@ popup text
 
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
- <!-- render here cuz needs/uses macro -->
+ <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
@@ -885,10 +891,12 @@ function saveEditButton() {
   document.getElementById('details_input_id').value = "";
   // don't reset category since I'm not sure if the javascript handles its going back to ""
   document.getElementById('subcategory_select_id').selectedIndex = 0; // use a present value so size doesn't go to *0*
-  showSubCatWithRightOptionsAvailable(); // resize it back
+  showSubCatWithRightOptionsAvailable(); // resize it back to none, not sure how to auto-trigger this
   document.getElementById('age_maybe_ok_id').value = "0";
   document.getElementById('impact_to_movie_id').value = "0";
-  setImpactIfMute(); // or set it to 1
+  setImpactIfMute(); // reset if mute :|
+  document.getElementById('tag_hidden_id').value = '0'; // reset
+  
   setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
 }

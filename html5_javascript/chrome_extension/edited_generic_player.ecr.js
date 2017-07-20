@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.org";  // prod
+var request_host="localhost:3000"; // dev
+// var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -69,7 +69,7 @@ function addEditUi() {
       Feedback? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
-           Or <a href=# onclick="toggleAddNewTagStuff(); return false;">[editor add tag]</a>
+           <a href=# onclick="toggleAddNewTagStuff(); return false;">[add tag]</a>
         </div>
       </div>
   	</div>
@@ -115,8 +115,7 @@ function addEditUi() {
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
-        <br/>        
-        <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render here cuz needs/uses macro -->
+        <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">

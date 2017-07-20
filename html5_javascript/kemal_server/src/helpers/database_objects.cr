@@ -54,7 +54,6 @@ class Url
     genre: String,
     original_rating: String,
     editing_notes: String,
-    community_contrib: Bool
   })
 
   JSON.mapping({
@@ -84,7 +83,6 @@ class Url
     genre: String,
     original_rating: String,
     editing_notes: String,
-    community_contrib: Bool
   })
 
   def self.count
@@ -129,10 +127,10 @@ class Url
   def save
     with_db do |conn|
       if @id == 0
-       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, community_contrib) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, community_contrib).last_insert_id.to_i32
+       @id = conn.exec("insert into urls (name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes).last_insert_id.to_i32
        # get create_timestamp for free by its default crystal value
       else
-       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?, community_contrib = ? where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, community_contrib,  id
+       conn.exec "update urls set name = ?, url = ?, amazon_second_url = ?, amazon_third_url = ?, details = ?, episode_number = ?, episode_name = ?, editing_status = ?, wholesome_uplifting_level = ?, good_movie_rating = ?, image_local_filename = ?, review = ?, wholesome_review = ?, count_downloads = ?, amazon_prime_free_type = ?, rental_cost = ?, rental_cost_sd = ?, purchase_cost = ?, purchase_cost_sd = ?, total_time = ?, subtitles = ?, genre = ?, original_rating = ?, editing_notes = ?  where id = ?", name, url, amazon_second_url, amazon_third_url, details, episode_number, episode_name, editing_status, wholesome_uplifting_level, good_movie_rating, image_local_filename, review, wholesome_review, count_downloads, amazon_prime_free_type, rental_cost, rental_cost_sd, purchase_cost, purchase_cost_sd, total_time, subtitles, genre, original_rating, editing_notes, id
       end
     end
   end
@@ -164,7 +162,6 @@ class Url
     @genre = ""
     @original_rating = ""
     @editing_notes = ""
-    @community_contrib = true
   end
 
   def tag_count

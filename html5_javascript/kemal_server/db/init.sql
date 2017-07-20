@@ -160,6 +160,7 @@ alter table users drop index unique_email; -- too confusing to people to get thi
 alter table tags add column popup_text_after VARCHAR(1024) NOT NULL DEFAULT '';
 
 alter table tags add column default_enabled BOOL DEFAULT true; -- actually 0 or 1 apparently...
+alter table urls drop column community_contrib;
 
 -- and output to screen to show success...
 select * from urls;
