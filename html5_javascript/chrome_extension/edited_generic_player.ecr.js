@@ -69,14 +69,12 @@ function addEditUi() {
       Feedback? <a href=# onclick="reportProblem(); return false;">Let us know!</a>
       <div style="display: inline-block"> <!-- prevent line feed before this div -->
         <div id="editor_top_line_div_id" style="display: none;"> <!-- we enable if flagged as editor -->
-           Or <a href=# onclick="toggleAddNewTagStuff(); return false;">add tag [editor]</a>
+           Or <a href=# onclick="toggleAddNewTagStuff(); return false;">[editor add tag]</a>
         </div>
       </div>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
-      To tag something: enter time, test it, then save it:
-      <br/>
-    	<span id=add_edit_span_id_for_extra_message><!-- currently: muting --></span>
+    	<span id=add_edit_span_id_for_extra_message><!-- currently: muting [or a <br/>] --></span>
     	<div id='tag_layer_top_line'>
     		<span id="top_line_current_time" />
     	</div>
@@ -314,7 +312,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (extra_message != "") {
     message = "Currently:" + extra_message; // prefix
   } else {
-    message = "<br/>";
+    message = "<br>"; // can't use <br/> since it gets sanitized out so can't detect changes right FWIW :|
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
