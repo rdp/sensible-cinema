@@ -124,7 +124,6 @@ alter table tags drop column oval_percentage_coords;
 alter table urls add column editing_notes TEXT;
 update urls set editing_notes = ''; -- default for existing :|
 alter table urls add column community_contrib BOOL DEFAULT true; -- actually 0 or 1 apparently
--- done prod
 
 CREATE TABLE users (
    id             INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -158,6 +157,8 @@ CREATE INDEX url_amazon_third_url_episode_idx  ON urls(amazon_third_url(256), ep
 alter table users drop index unique_email; -- too confusing to people to get this failure wait what? so just allow until we need more :|
 
 alter table tags add column popup_text_after VARCHAR(1024) NOT NULL DEFAULT '';
+
+alter table tags add column default_enabled BOOL DEFAULT true; -- actually 0 or 1 apparently...
 
 -- and output to screen to show success...
 select * from urls;
