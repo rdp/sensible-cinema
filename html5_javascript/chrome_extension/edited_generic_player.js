@@ -531,31 +531,14 @@ function checkIfShouldDoActionAndUpdateUI() {
 	tag = areWeWithin(skips, cur_time);
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
-    var seek_tag = tag; // we re-assign "tag" below this so it's gone by the time the function is called :|
-	  seekToTime(tag.endy, function() {
-        if (seek_tag.popup_text_after.length > 0) {          
-          // TODO do this for more than skips!!!
-          // XXXX show *before* split so they can read while it seeks :|
-          var maxTitleSize = 45; // max 45 for title OS X 49 for body
-          // search backward for first space to split on...
-          for (i = maxTitleSize; i > 0; i--) {
-            var char = seek_tag.popup_text_after.charAt(i);
-            if (char == " " || char == "") { // "" means "past end" for shorter ones...
-              var title = seek_tag.popup_text_after.substring(0, i);
-              var body = seek_tag.popup_text_after.substring(i); 
-              // XXXX if body too large still split to second notification? have to wait for previous to close first huh?
-              break;
-            }
-          }          
-          sendMessageToPlugin({notification_desired: {title: title, body: body}});
-        }
-      });
+    show_notification(tag); // show it now so it can display while it seeks :)
+	  seekToTime(tag.endy);
 	}
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
 	if (tag) {
-		// use style.visibility here so it retains the space on screen it would have otherwise used
+		// use style.visibility here so it retains the space on screen it would have otherwise used...
 	  if (video_element.style.visibility != "hidden") {
 	    timestamp_log("hiding video leaving audio ", cur_time, tag);
 	    video_element.style.visibility="hidden";
@@ -587,6 +570,24 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
+}
+
+function show_notification(seek_tag) {
+  if (seek_tag.popup_text_after.length > 0) {          
+    // TODO do this for more than skip...
+    var maxTitleSize = 45; // max 45 for title OS X 49 for body
+    // search backward for first space to split on...
+    for (var i = maxTitleSize; i > 0; i--) {
+      var char = seek_tag.popup_text_after.charAt(i);
+      if (char == " " || char == "") { // "" means "past end" for shorter ones...
+        var title = seek_tag.popup_text_after.substring(0, i);
+        var body = seek_tag.popup_text_after.substring(i); 
+        // XXXX if body too large still split to second notification? have to wait for previous to close?
+        break;
+      }
+    }          
+    sendMessageToPlugin({notification_desired: {title: title, body: body}});
+  }
 }
 
 function updateHTML(div, new_value) {
