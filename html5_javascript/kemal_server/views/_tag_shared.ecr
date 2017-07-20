@@ -1,12 +1,5 @@
 <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
 
-default enabled?
-<select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
-  <option value="true">Y</option>
-  <option value="false">N</option>
-</select>
-<br/>
-
 <div id="category_div_id">
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
 style="background-color: rgba(255, 255, 255, 0.85);" >
@@ -58,7 +51,13 @@ Impact to Story if edited:
 
 <br/>
 <%= pre_popup %>
-<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="use with caution" />
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="use on occasion" />
+<br/>
 
+default enabled?
+<select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
+  <option value="true">Y</option>
+  <option value="false">N</option>
+</select>
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->

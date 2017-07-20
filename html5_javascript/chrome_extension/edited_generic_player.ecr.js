@@ -111,15 +111,14 @@ function addEditUi() {
           <option value="skip">skip</option>
           <option value="yes_audio_no_video">yes_audio_no_video</option>
           <option value="mute_audio_no_video">mute_audio_no_video</option>
-          <option value="do_nothing">do_nothing (just tag)</option>
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
-        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Re-Edit Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Re-Edit Next or current Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
@@ -423,11 +422,12 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getNextTagAfterOrWithin(cur_time) {
-  // or current_json.tags; // sorted :|
+  // or current_json.tags; // already sorted :|
   var all = mutes.concat(skips);
   all = all.concat(yes_audio_no_videos);
   all = all.concat(mutes);
-  // this way doesn't include do_nothings on purpose...
+  all = all.concat(do_nothings);
+  // re sort LOL
   all.sort(compareTagStarts);
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
@@ -516,10 +516,6 @@ function doTimeoutEarly (id) {
 }
 
 function testCurrentFromUi() {
-  if (currentTestAction() == 'do_nothing') {
-    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, before hitting save button');
-    return; // abort
-  }
 	if (inMiddleOfTestingTimer) {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
 	}
@@ -569,8 +565,6 @@ function currentEditArray() {
       return skips;
     case 'yes_audio_no_video':
       return yes_audio_no_videos;
-    case 'do_nothing':
-      return do_nothings;
     case 'mute_audio_no_video':
       return mute_audio_no_videos;
     default:
@@ -809,7 +803,7 @@ function parseSuccessfulJson(json_string) {
 function countDoSomethingTags(tags) {
   var count = 0;
 	for (var i = 0; i < tags.length; i++) {
-    if (tags[i].default_action != "do_nothing") {
+    if (tags[i].default_enabled) {
       count++;
     }
   }
@@ -825,15 +819,17 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
-		if (tag.default_action == 'mute') {
-      push_to_array = mutes;
-		} else if (tag.default_action == 'skip') {
-      push_to_array = skips;
-		} else if (tag.default_action == 'yes_audio_no_video') {
-      push_to_array = yes_audio_no_videos;
-		} else if (tag.default_action == 'mute_audio_no_video') {
-      push_to_array = mute_audio_no_videos;
-		} else {
+    if (tag.default_enabled) {
+  		if (tag.default_action == 'mute') {
+        push_to_array = mutes;
+  		} else if (tag.default_action == 'skip') {
+        push_to_array = skips;
+  		} else if (tag.default_action == 'yes_audio_no_video') {
+        push_to_array = yes_audio_no_videos;
+  		} else if (tag.default_action == 'mute_audio_no_video') {
+        push_to_array = mute_audio_no_videos;
+      } else { alert("please report failure 1"); }
+    } else {
       push_to_array = do_nothings;
 		}
 		push_to_array.push(tag);

@@ -112,18 +112,10 @@ function addEditUi() {
           <option value="skip">skip</option>
           <option value="yes_audio_no_video">yes_audio_no_video</option>
           <option value="mute_audio_no_video">mute_audio_no_video</option>
-          <option value="do_nothing">do_nothing (just tag)</option>
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
-
-default enabled?
-<select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
-  <option value="true">Y</option>
-  <option value="false">N</option>
-</select>
-<br/>
 
 <div id="category_div_id">
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
@@ -374,15 +366,21 @@ tag details
 
 <br/>
 popup text
-<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="use with caution" />
+<input type="text" name="popup_text_after" id="popup_text_after_id" size="30" value="" style="background-color: rgba(255, 255, 255, 0.85);" placeholder="use on occasion" />
+<br/>
 
+default enabled?
+<select name="default_enabled" id="default_enabled_id"> <!-- check boxes have caveats avoid for now -->
+  <option value="true">Y</option>
+  <option value="false">N</option>
+</select>
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
-        <input type='submit' value='Re-Edit Next Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Re-Edit Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Re-Edit Next or current Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
@@ -686,11 +684,12 @@ function compareTagStarts(tag1, tag2) {
 }
 
 function getNextTagAfterOrWithin(cur_time) {
-  // or current_json.tags; // sorted :|
+  // or current_json.tags; // already sorted :|
   var all = mutes.concat(skips);
   all = all.concat(yes_audio_no_videos);
   all = all.concat(mutes);
-  // this way doesn't include do_nothings on purpose...
+  all = all.concat(do_nothings);
+  // re sort LOL
   all.sort(compareTagStarts);
   for (var i = 0; i < all.length; i++) {
     var tag = all[i];
@@ -779,10 +778,6 @@ function doTimeoutEarly (id) {
 }
 
 function testCurrentFromUi() {
-  if (currentTestAction() == 'do_nothing') {
-    alert('testing a do nothing is hard, please set it to yes_audio_no_video, test it, then set it back to do_nothing, before hitting save button');
-    return; // abort
-  }
 	if (inMiddleOfTestingTimer) {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
 	}
@@ -832,8 +827,6 @@ function currentEditArray() {
       return skips;
     case 'yes_audio_no_video':
       return yes_audio_no_videos;
-    case 'do_nothing':
-      return do_nothings;
     case 'mute_audio_no_video':
       return mute_audio_no_videos;
     default:
@@ -1072,7 +1065,7 @@ function parseSuccessfulJson(json_string) {
 function countDoSomethingTags(tags) {
   var count = 0;
 	for (var i = 0; i < tags.length; i++) {
-    if (tags[i].default_action != "do_nothing") {
+    if (tags[i].default_enabled) {
       count++;
     }
   }
@@ -1088,15 +1081,17 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
-		if (tag.default_action == 'mute') {
-      push_to_array = mutes;
-		} else if (tag.default_action == 'skip') {
-      push_to_array = skips;
-		} else if (tag.default_action == 'yes_audio_no_video') {
-      push_to_array = yes_audio_no_videos;
-		} else if (tag.default_action == 'mute_audio_no_video') {
-      push_to_array = mute_audio_no_videos;
-		} else {
+    if (tag.default_enabled) {
+  		if (tag.default_action == 'mute') {
+        push_to_array = mutes;
+  		} else if (tag.default_action == 'skip') {
+        push_to_array = skips;
+  		} else if (tag.default_action == 'yes_audio_no_video') {
+        push_to_array = yes_audio_no_videos;
+  		} else if (tag.default_action == 'mute_audio_no_video') {
+        push_to_array = mute_audio_no_videos;
+      } else { alert("please report failure 1"); }
+    } else {
       push_to_array = do_nothings;
 		}
 		push_to_array.push(tag);
@@ -1609,13 +1604,14 @@ function tagsCreated() {
        'change',
        function() {
          if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit") {
-           alert("for joking edits please save do_nothing as the action, then create your own personalized edit list where you modify it to get a mute or skip, that way for default playback it isn't edited out");
-           document.getElementById('action_sel').value = 'do_nothing';
+           alert("for joking edits please set default_enabled as False, then you can create your own personalized edit list where you modify it to get a mute or skip, that way for default user playback it isn't edited out");
+           document.getElementById('default_enabled_id').value = 'false';
          }
         },
        false
   ); 
-} <!-- render inline cuz uses macro -->
+}
+ <!-- render inline cuz uses macro -->
 
 // no jquery setup here since this page might already have its own jQuery loaded, so don't load/use it to avoid any conflict.  [plus speedup load time]
 

@@ -524,10 +524,8 @@ def seconds_to_human(ts_total)
   
   if (hours > 0 || ts_total == 0) # 0 is default so show everything so they can edit it more easily
     "%01dh% 02dm %05.2fs" % [hours, minutes, ts_seconds]
-  elsif minutes > 0  
+  else # always display minutes, otherwise somewhat confusing :|
     "%01dm %05.2fs" % [minutes, ts_seconds]
-  else
-    "%04.2fs" % [ts_seconds]
   end
 end
 

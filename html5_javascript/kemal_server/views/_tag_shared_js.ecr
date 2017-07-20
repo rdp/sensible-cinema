@@ -93,8 +93,8 @@ function tagsCreated() {
        'change',
        function() {
          if (subcat_select.options[subcat_select.selectedIndex].value == "joke edit") {
-           alert("for joking edits please save do_nothing as the action, then create your own personalized edit list where you modify it to get a mute or skip, that way for default playback it isn't edited out");
-           document.getElementById('action_sel').value = 'do_nothing';
+           alert("for joking edits please set default_enabled as False, then you can create your own personalized edit list where you modify it to get a mute or skip, that way for default user playback it isn't edited out");
+           document.getElementById('default_enabled_id').value = 'false';
          }
         },
        false
