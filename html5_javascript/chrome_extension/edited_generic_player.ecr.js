@@ -1,7 +1,7 @@
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-var request_host="localhost:3000"; // dev
-// var request_host="playitmyway.org";  // prod
+// var request_host="localhost:3000"; // dev
+var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -74,8 +74,8 @@ function addEditUi() {
       </div>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
-    	<span id=add_edit_span_id_for_extra_message><!-- currently: muting [or a <br/>] --></span>
     	<div id='tag_layer_top_line'>
+    	<span id=add_edit_span_id_for_extra_message><!-- currently: muting [or a <br/>] --></span>
     		<span id="top_line_current_time" />
     	</div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
@@ -299,7 +299,11 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var new_top_line = timeStampToHuman(cur_time);
   var next_future_tag = getNextTagAfterOrWithin(video_element.currentTime);
   if (next_future_tag) {
-    tag_layer_top_line += " next: " + timeStampToHuman(next_future_tag.start) + " (" + next_future_tag.default_action + " for " + (next_future_tag.endy - next_future_tag.start).toFixed(2) + "s)";
+    new_top_line += "<br/>next: " + timeStampToHuman(next_future_tag.start) + 
+           " (" + next_future_tag.default_action + " for " + (next_future_tag.endy - next_future_tag.start).toFixed(2) + "s)";
+    if (!next_future_tag.default_enabled) {
+      new_top_line += "(disabled)";
+    }
     document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
   else {
@@ -310,7 +314,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (extra_message != "") {
     message = "Currently:" + extra_message; // prefix
   } else {
-    message = "<br>"; // can't use <br/> since it gets sanitized out so can't detect changes right FWIW :|
+    message = ""; //can't use <br/> since it gets sanitized out so can't detect changes right FWIW :|
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
