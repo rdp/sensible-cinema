@@ -201,8 +201,6 @@ genre with scroll right
 
 double check all meta like prices etc. ... :| add youtubes...
 
-say "just skipped" somehow ...
-
 some "signup for our mailing list" option?
   a checkbox to the login page :|
   kinder low prio...
@@ -232,7 +230,7 @@ try to negotiate with various sites [vudu etc.] that have junky ToS ... maybe we
 
 groom the chrome plugin page...and get people to vote for it?
 
-crystal: can compare Bool's
+crystal: can sort compare Bool's
   double check, sockets should have some ping/timeout thing so I don't get stuck with old connections...at least that...
   slam it with wrk, everything barfs all over the place :(
   stack traces come out ugly?
@@ -276,14 +274,11 @@ edited facebook vids LOL
 missing any database indexes? check my queries uh guess...
   once/if/when it gets slow...
 
-auto get more images from the page if non youtube :|
 ask those one people to link to me
 
 personalized uneditable content lists?
 
 more market research...maybe?
-
-add iterm2 style paypal donate (link at least :)
 
 they can "at least playback" movies from google play index
   jQuery(".playing-title").text() => "Ice Age: Dawn of the Dinosaurs"
