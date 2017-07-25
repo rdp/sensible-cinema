@@ -343,7 +343,7 @@ function optionally_show_notification(seek_tag) {
   if (popup.length > 0) {
     console.log("notifying " + popup);
     // TODO do this for more than skip...
-    var maxTitleSize = 45; // max 45 for title OS X 49 for body
+    var maxTitleSize = 40; // max 45 for title OS X 49 for body, 40 for being able to add ellipsis
     // search backward for first space to split on...
     for (var i = maxTitleSize; i > 0; i--) {
       var char = popup.charAt(i);
@@ -354,7 +354,11 @@ function optionally_show_notification(seek_tag) {
         break;
       }
     }          
-    sendMessageToPlugin({notification_desired: {title: title, body: body}});
+    if (popup.length > maxTitleSize) {
+      title += " ...";
+      body = "... " + body;
+    }
+    sendMessageToPlugin({notification_desired: {title: htmlDecode(title), body: htmlDecode(body)}});
   }
 }
 
