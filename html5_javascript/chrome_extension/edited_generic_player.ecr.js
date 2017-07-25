@@ -48,7 +48,7 @@ function addEditUi() {
       Unedited...
     </a>
     <div id=click_to_add_to_system_div_id style='display: none;'>
-      <a href=# onclick="addForNewVideo(); return false;">Play it My Way: Click here to add to the system...</a>
+      <a href=# onclick="addForNewVideo(); return false;">Play it My Way: Click here to add to the system...</a> <!-- TODO disallow -->
     </div>
   </div>
 
@@ -318,13 +318,12 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
-  purgeOldNotifyTags(cur_time); // if we "just got past them"
+  removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
-function purgeOldNotifyTags(cur_time) {
+function removeIfNotifyEditsHaveEnded(cur_time) {
   for (var tag of currently_in_process_tags.keys()) {
     if (!areWeWithin([tag], cur_time)) {
-      console.log("removing done notify " + JSON.stringify(tag));
       currently_in_process_tags.delete(tag);
     }
   }
@@ -335,7 +334,6 @@ function notify_if_new(tag) {
     // already in there, do nothing
   } else {
     currently_in_process_tags.set(tag, true);
-    console.log("optional notify");
     optionally_show_notification(tag);
   }
 }
