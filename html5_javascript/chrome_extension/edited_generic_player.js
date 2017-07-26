@@ -75,9 +75,9 @@ function addEditUi() {
       </div>
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
-    	<div id='tag_layer_top_line'>
-    	<span id=add_edit_span_id_for_extra_message><!-- currently: muting [or a <br/>] --></span>
-    		<span id="top_line_current_time" />
+    	<div id='tag_layer_top_section'>
+      	<span id="tag_details_top_line"> <!-- currently: muting --></span>
+    		<span id="tag_details_second_line" /> <!-- next will be x, 0m32s -->
     	</div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
       	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -379,8 +379,8 @@ default enabled?
  <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
-        <input type='submit' value='Re-Edit Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
-        <input type='submit' value='Re-Edit Next or current Tag' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
+        <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
+        <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
       
       <a id=reload_tags_a_id href=# onclick="reloadForCurrentUrl(); return false;" </a>Reload tags</a>
@@ -558,27 +558,31 @@ function checkIfShouldDoActionAndUpdateUI() {
 	  }
 	}
 
-	var new_top_line = timeStampToHuman(cur_time);
+  
+  var top_line = "";
+  if (extra_message != "") {
+    top_line = "Currently:" + extra_message; // prefix
+  } else {
+    top_line = ""; //NB can't use <br/> since trailing slash gets sanitized out so can't detect changes right FWIW :|
+  }
+  updateHTML(document.getElementById("tag_details_top_line"), top_line + " " + timeStampToHuman(cur_time) + "<br>");
+  
+	var second_line = "";
   var next_future_tag = getNextTagAfterOrWithin(video_element.currentTime);
   if (next_future_tag) {
-    new_top_line += "<br/>next: " + timeStampToHuman(next_future_tag.start) + 
+    second_line += "next: " + timeStampToHuman(next_future_tag.start) + 
            " (" + next_future_tag.default_action + " for " + (next_future_tag.endy - next_future_tag.start).toFixed(2) + "s)";
     if (!next_future_tag.default_enabled) {
-      new_top_line += "(disabled)";
+      second_line += "(disabled)";
     }
     document.getElementById("open_next_tag_id").style.visibility = "visible";
   }
   else {
     document.getElementById("open_next_tag_id").style.visibility = "hidden";
+    second_line = "<br>";
   }
-  updateHTML(document.getElementById('top_line_current_time'), new_top_line);
-  var message = "";
-  if (extra_message != "") {
-    message = "Currently:" + extra_message; // prefix
-  } else {
-    message = ""; //can't use <br/> since it gets sanitized out so can't detect changes right FWIW :|
-  }
-  updateHTML(document.getElementById("add_edit_span_id_for_extra_message"), message);
+  updateHTML(document.getElementById('tag_details_second_line'), second_line);
+  
   updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
