@@ -76,8 +76,8 @@ function addEditUi() {
   	</div>
     <div id="tag_details_div_id"  style='display: none;'>
     	<div id='tag_layer_top_section'>
-      	<span id="tag_details_top_line"> <!-- currently: muting --></span>
-    		<span id="tag_details_second_line" /> <!-- next will be x, 0m32s -->
+      	<span id="tag_details_top_line"> <!-- currently: muting, 0m32s --></span>
+    		<span id="tag_details_second_line" /> <!-- next will be at x for y -->
     	</div>
       <form target="_blank" action="filled_in_later_if_you_see_this_it_may_mean_an_onclick_method_threw" method="POST" id="create_new_tag_form_id">
       	from:<input type="text" name='start' style='width: 150px; height: 20px; font-size: 12pt;' id='start' value='0m 0.00s'/>
@@ -379,6 +379,7 @@ default enabled?
  <!-- render full filename cuz macro -->
         <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
+        <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
         <input type='submit' value='Re-Edit Next Tag (or current)' id='open_next_tag_id' onclick="openNextTagButton(); return false;">
       </form>
