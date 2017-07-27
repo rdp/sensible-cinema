@@ -115,7 +115,6 @@ function addEditUi() {
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
-        <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
@@ -538,7 +537,8 @@ function testCurrentFromUi() {
 		endy: humanToTimeStamp(document.getElementById('endy').value),
     default_action: currentTestAction(),
     is_test_tag: true,
-    popup_text_after: document.getElementById('popup_text_after_id').value
+    popup_text_after: document.getElementById('popup_text_after_id').value,
+    default_enabled: true
 	}
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");

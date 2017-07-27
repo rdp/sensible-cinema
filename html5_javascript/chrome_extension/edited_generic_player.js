@@ -145,11 +145,11 @@ sub cat:
     
       <option value="movie content morally questionable choice">movie-content -- morally questionable choice</option>    
     
-      <option value="raucous music">movie-content -- raucous music</option>    
-    
       <option value="movie content other">movie-content -- other</option>    
     
       <option value="loud noise">profanity -- loud noise/screaming</option>    
+    
+      <option value="raucous music">profanity -- raucous music</option>    
     
       <option value="personal insult mild">profanity -- insult &#40;&quot;moron&quot;, &quot;idiot&quot; etc.&#41;</option>    
     
@@ -377,7 +377,6 @@ default enabled?
 
 <!-- can't put javascript since don't know how to inject it quite right in plugin, though I could use a separate render... -->
  <!-- render full filename cuz macro -->
-        <br/>
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <br/>
         <input type='submit' value='Re-Edit Prev Tag' id='open_prev_tag_id' onclick="openPreviousTagButton(); return false;">
@@ -800,7 +799,8 @@ function testCurrentFromUi() {
 		endy: humanToTimeStamp(document.getElementById('endy').value),
     default_action: currentTestAction(),
     is_test_tag: true,
-    popup_text_after: document.getElementById('popup_text_after_id').value
+    popup_text_after: document.getElementById('popup_text_after_id').value,
+    default_enabled: true
 	}
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
