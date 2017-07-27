@@ -145,6 +145,8 @@ sub cat:
     
       <option value="movie content morally questionable choice">movie-content -- morally questionable choice</option>    
     
+      <option value="movie note for viewer">movie-content -- movie note/message for viewer</option>    
+    
       <option value="movie content other">movie-content -- other</option>    
     
       <option value="loud noise">profanity -- loud noise/screaming</option>    
