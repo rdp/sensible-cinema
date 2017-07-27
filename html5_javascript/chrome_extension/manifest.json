@@ -3,7 +3,7 @@
 
   "name": "Play it my way",
   "description": "Enables the playback of online videos edited",
-  "version": "0.0.92",
+  "version": "0.0.93",
 
   "browser_action": {
     "default_icon": "camera.128.png",
