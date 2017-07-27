@@ -372,10 +372,18 @@ function updateHTML(div, new_value) {
   }
 }
 
+var last_log = "";
+function logOnce(to_log) {
+  if (last_log != to_log) {
+    console.log(to_log);
+    last_log = to_log;
+  } // else don't log :|
+}
+
 function isWatchingAdd() {
   if (url != null) {
 		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
-			console.log("watching add?");
+			logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + video_element.duration); // we get NaN for video_element.duration
       return true;
 			// and do nothing
 		}
@@ -392,8 +400,7 @@ function checkStatus() {
 	// avoid unmuting videos playing that we don't even control [like youtube main page] with this if...
   if (url != null) {
 		if (isWatchingAdd()) {
-			console.log("watching add?");
-			// and do no mutes etc...
+			// and do no mutes etc...since it's an add, or amazon unloaded :|
 		}
 		else {
       checkIfShouldDoActionAndUpdateUI();
