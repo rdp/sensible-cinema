@@ -11,7 +11,6 @@ def subcategory_map
     "subscription plea": "movie-content -- closing subscription plea",
     "joke edit": "movie-content -- joke edit -- edits that make video funny when applied",
     "movie content morally questionable choice": "movie-content -- morally questionable choice",
-    "raucous music": "movie-content -- raucous music",
     "movie content other": "movie-content -- other",
 
     "loud noise": "profanity -- loud noise/screaming",
