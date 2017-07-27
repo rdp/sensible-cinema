@@ -60,6 +60,7 @@ def subcategory_map
     "shooting miss": "violence -- shooting miss or ambiguous",
     "shooting hit non death": "violence -- shooting hits person or thing but non fatal",
     "killing": "violence -- killing on screen (ex: shooting death fatal)",
+    "attempted killing": "violence -- attempted killing on screen (ex: laser zap)",
     "non human killing": "violence -- non human killing/death on screen (ex: animal, or robot)",
     "killing offscreen": "violence -- killing off screen (ex: shooting death off screen)",
     "circumstantial death": "violence -- death non-killing, ex: accidental falling",
