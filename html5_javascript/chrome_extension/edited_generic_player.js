@@ -239,6 +239,8 @@ sub cat:
     
       <option value="killing">violence -- killing on screen &#40;ex: shooting death fatal&#41;</option>    
     
+      <option value="attempted killing">violence -- attempted killing on screen &#40;ex: laser zap&#41;</option>    
+    
       <option value="non human killing">violence -- non human killing/death on screen &#40;ex: animal, or robot&#41;</option>    
     
       <option value="killing offscreen">violence -- killing off screen &#40;ex: shooting death off screen&#41;</option>    
