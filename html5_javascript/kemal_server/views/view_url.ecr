@@ -97,7 +97,9 @@ If you'd like to see the internal details of all tags, click <a href=/view_url/<
     <% end %>
   </td>
   <td><%= seconds_to_human tag.duration %></td>
-  <td><%= tag.default_action %></td>
+  <td><%= tag.default_action %>
+    <%= "(disabled)" unless tag.default_enabled %>
+  </td>
   <td><%= tag.category %></td>
   <td><%= tag.subcategory %></td>
   <td>
@@ -108,7 +110,11 @@ If you'd like to see the internal details of all tags, click <a href=/view_url/<
   <td><%= tag.impact_to_movie if tag.impact_to_movie != 0 %></td>
   <td><a href=/edit_tag/<%= tag.id %>>modify tag</a></td>
   <% if show_tag_details %>
-    <td><%= tag.details %></td>
+    <td><%= tag.details %>
+      <% if tag.popup_text_after.length > 0 %>
+         Popup: <%= tag.popup_text_after %>
+      <% end %>
+    </td>
     <td><a href=/delete_tag/<%= tag.id %> target=_blank>delete</a></td>
   <% end %>
   </tr>
