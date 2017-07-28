@@ -71,6 +71,10 @@ get "/ping" do |env|
   "I'm alive"
 end
 
+get "/never_return" do |env|
+  sleep 1000
+end
+
 get "/redo_all_thumbnails" do |env|
   #raise "should not need often"
   Url.all.each &.create_thumbnail_if_has_image
