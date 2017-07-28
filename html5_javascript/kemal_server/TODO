@@ -2,16 +2,19 @@
 
 LLC
 kickstarter
-  movie, etc.
+  movie, tweak,
   fire!
 
 == todo list (me personally) ==
 
-fix personalize (at least from broken)
+fix personalize from broken
+
 youtube embed
+
 LLC
+
 better tabs for the main page, it's not mobile friendly :|
-  at least space them waaaah
+  at least space them waaaah, probably want new tabs :|
   decide if want to "specialize" based on whether they have prime or not? Or maybe I can get that with tabs??
 
 me edit princess bride?
@@ -21,16 +24,16 @@ fix seek out of yes_audio_no_video
 
 make the edits just stay on that page, for easier editing et al :|
 
-== somewhat random list ==
-
-when you click on a notification it goes somewhere woot
-
 humanize personalize more
+  at least make the individual ones button expandable :|
+
+== somewhat random list ==
 
 finish very high series'
 
+very high youtubes :|
+
 decide if want to force logins during kickstarter, if yes...
-  "get a free month, login..."?
   for the demo? that seems pretty tame...
   just to glean emails??? that's the only thing I can think of...
 
@@ -48,17 +51,28 @@ some preliminary facebook ads [?]
 
 kickstarter
   movie
-  decide on prizes [get name on an movie?]
+  decide on prizes
   get people to review fauxstarter before launch...
   Add some persuasive text for "non primers" as it were :|
     more market research non primers :|
   research how to do kickstarters...ai ai...
+  double check still on prime
 
-reorder some :|
+reorder some main page :|
 
-some subcats are non comprehensible by humans...and yet...hmm...some are though...
+when you click on a notification it goes somewhere woot
 
 3rd passes--at least some normal human :| pay someone!!
+
+the in_the_works doesn't work javascript in mobile :|
+
+the easier chrome install :)
+  more neighbors etc. feedback
+    people installing it for feedback
+
+== meh sometime ==
+
+some subcats are non comprehensible by humans...and yet...hmm...some are though...
 
 us: edit ben-hur, maybe others on our list/owned (lego movie, incredibles [m. prof's?])
   finish 3rd pass charly
@@ -78,7 +92,6 @@ soft launch looks like: easy links...ycombinator...reddit [? more?]
 extension: episode to episode was saying "watching ad?" amazon broken here :|
 easier chrome install (if they're on chrome I guess LOL)
 faq: mention wireless mouse,
-ability to "auto add just the mutes" for anything they run into? :)
 some kind of "most recent" option, in general cleanup UI [?]
   updated_at...
 better search'ish :|
@@ -90,11 +103,9 @@ extension: name based on playlist currently selected
 
 only show the age dropdown if "required" for that tag type? or flash it red if the right type...
 
-
 add: "family friendly for all ages" review or tag
 avatar season 1 aren't coming right somehow still?? gah...
 simplify the series' somehow they are super confusing today...
-the in_the_works doesn't work javascript in mobile :|
 auto detect when shtuff goes off prime somehow?
 link from personalized to watch edited? groom that flow more anyway...
 saner url's :| more human
@@ -114,12 +125,7 @@ add an "edited" tag underneath images :|
 re-finish greg's
 watch edited on view_url doesn't warn if wrong :|
 
-
 don't use access tokens as GET params, barely wonky...
-
-easier install :)
-  more neighbors etc. feedback
-    people installing it for feedback
 
 personalized page:
   better "see all details" somehow...
@@ -127,21 +133,17 @@ personalized page:
 all pages groom, main page persuasive/beautiful/catchy [nik?] 
   more "family" somehow...text, also image
 
-
 == post kickstarter started ==
 Try and go everywhere with ads/pub...
 
 == post kickstarter meh but yes, someday, unordered ==
-extension: a save's reload should cancel outstanding tests...so in essence reload is OK if test, just cancel first??
+extension: a save's reload should cancel outstanding tests...so in essence if they click save, cancel outstanding tests right then :|
 
 add multiple tags "new releases" "enjoyable by whole family"
 add an "edited" moniker underneath each image?
 make R rated a check box opt in?
 
 break questions out to their own thing, we want to be pro-family don't we?? :)
-
-make the "main" page faster, once it gets more movies so it needs it LOL.
-  like it takes 200ms today...come on...yet might be hard...hrm...
 
 figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(url, '&#x2F;', 3), ':&#x2F;&#x2F;', -1), '&#x2F;', 1), '?', 1), amazon_prime_free_type asc, create_timestamp desc, name, episode_number"} took 00:00:00.0634933
   takes 0.06 in crystal and 0.01 in mysql console :|
@@ -189,34 +191,25 @@ make it look finer-er on mobile
 
 == todo never LOL ==
 
-request real permission to use movie posters, use them :|
-
-personzlie "all to mute" or what not...why not? :)
-
-snap their facebook profile image somehow?
+personalize "all to mute" or what not...why not? :)
 
 profile javascript is something in there expensive?
 
 extension: always edit everything inline somehow?
 
-edit amazon previews
+edited amazon previews
+
+edited amazon precursor ads :|
 
 allow tags to be tagged with multiple "it's an opening scene and it's x" [?]
-
-this "froze" during the makeout scene, even though it should have been all "yes audio no video" up through and including the seek:
-  https://playitmyway.org/edit_tag/3734
 
 if you're on firefox, it should say "click here to be redirected to chrome" and it does but not clearly enough yet...
 
 tell youtube API "you can seek to better than keyframes, come on, you can do better than that..."
 
-youtube for advanced behaviors/tutorial :)
+genre with scroll rights
 
-make it always automagically reload any changes if you've ever once been in edit mode muhaha
-
-genre with scroll right
-
-double check all meta like prices etc. ... :| add youtubes...
+double check all meta like prices etc. ... :|
 
 some "signup for our mailing list" option?
   a checkbox to the login page :|
@@ -224,6 +217,7 @@ some "signup for our mailing list" option?
 
 get facebook gender
   and birthday LOL
+  and profile pic
 
 select by genre/original rating :|
   maybe just a search, flds style? :)
@@ -259,8 +253,6 @@ on amazon indexes list which ones are "editable" and also on its main page list 
 
 a bit ugly on horizontal mobile chrome :| or was that only after a switch? but still...dat ain't good...
 
-youtubes "embed option" woot LOL
-
 add year with dropdown [?]
   low prior for now let's hope mclintock was a freak...
   year is still barely kind of useful to people though...
@@ -270,14 +262,12 @@ do we need more things people can enter in, like what common sense media has 3 d
 test roku stream from desktop? LOL :|
 shut down server more gracefully for restarts than hard kill :|
 allow multiple genres per movie
-even more profanity scanning list files somewhere?
 series -> their own page [so you can just review that instead...]
 "auto get" amazon second url, prime type for series' 
 
 private list of edits are shareable...or does that only make sense in the other model?
 during adds show "nothing" somehow...or less...youtube 15.'s but it's not enough...
 resurrect "fake" netflix playback :|
-some way to disable it "just on youtube"...or not track things? disable verywhere?
 logout say something like "successfully logged out, click here if you'd like to disable one click login"
 can filter previews/trailers *based on duration* woot
 can upload file for image
