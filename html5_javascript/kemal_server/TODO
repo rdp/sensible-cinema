@@ -24,7 +24,7 @@ fix seek out of yes_audio_no_video
 
 make the edits just stay on that page, for easier editing et al :|
 
-humanize personalize more
+humanize/easify personalize more
   at least make the individual ones button expandable :|
 
 == somewhat random list ==
@@ -125,9 +125,6 @@ watch edited on view_url doesn't warn if wrong :|
 
 don't use access tokens as GET params, barely wonky...
 
-personalized page:
-  better "see all details" somehow...
-
 all pages groom, main page persuasive/beautiful/catchy [nik?] 
   more "family" somehow...text, also image
 
@@ -151,8 +148,9 @@ figure out why query {"SELECT * from urls order by SUBSTRING_INDEX(SUBSTRING_IND
 allow them to pay us [finally] LOL
 
 impact to story finish rename
-  purchase_cost -> purchae_cost_hd
+  purchase_cost -> purchase_cost_hd
   something on the personalized list :|
+  default_action => action
 
 Unedited needs to start but then go away unless that mouse is super close :|
   add a "dismiss" button for *edited* as well..?
@@ -188,8 +186,6 @@ make it look finer-er on mobile
   also it's too wide there??
 
 == todo never LOL ==
-
-personalize "all to mute" or what not...why not? :)
 
 profile javascript is something in there expensive?
 
@@ -280,8 +276,6 @@ missing any database indexes? check my queries uh guess...
   once/if/when it gets slow...
 
 ask those one people to link to me
-
-personalized uneditable content lists?
 
 more market research...maybe?
 
