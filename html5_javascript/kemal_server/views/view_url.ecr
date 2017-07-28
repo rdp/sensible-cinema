@@ -111,7 +111,7 @@ If you'd like to see the internal details of all tags, click <a href=/view_url/<
   <td><a href=/edit_tag/<%= tag.id %>>modify tag</a></td>
   <% if show_tag_details %>
     <td><%= tag.details %>
-      <% if tag.popup_text_after.length > 0 %>
+      <% if tag.popup_text_after.size > 0 %>
          Popup: <%= tag.popup_text_after %>
       <% end %>
     </td>
