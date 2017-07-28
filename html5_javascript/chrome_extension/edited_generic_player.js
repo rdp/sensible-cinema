@@ -813,6 +813,10 @@ function testCurrentFromUi() {
     popup_text_after: document.getElementById('popup_text_after_id').value,
     default_enabled: true
 	}
+  if (faux_tag.start == 0) {
+    alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.1s");
+    return;
+  }
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
     return; // abort!
@@ -911,6 +915,7 @@ function saveEditButton() {
   document.getElementById('impact_to_movie_id').value = "0";
   setImpactIfMute(); // reset if mute :|
   document.getElementById('tag_hidden_id').value = '0'; // reset
+  document.getElementById('default_enabled_id').value = 'true';
   
   setTimeout(reloadForCurrentUrl, 1000); // reload to get it "back" from the server after saved...
   setTimeout(reloadForCurrentUrl, 5000); // reload to get it "back" from the server after saved...
@@ -1112,7 +1117,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
         push_to_array = yes_audio_no_videos;
   		} else if (tag.default_action == 'mute_audio_no_video') {
         push_to_array = mute_audio_no_videos;
-      } else { alert("please report failure 1"); }
+      } else { alert("please report failure 1 " + tag.default_action); }
     } else {
       push_to_array = do_nothings;
 		}
