@@ -208,6 +208,11 @@ get "/delete_tag/:tag_id" do |env|
   env.redirect "/view_url/#{tag.url.id}"
 end
 
+get "/view_tag/:tag_id" do |env|
+  tag = Tag.get_only_by_id(env.params.url["tag_id"])
+  "<h1>Details: #{tag.details} #{tag.popup_text_after}</h1>"
+end
+
 get "/edit_tag/:tag_id" do |env|
   tag = Tag.get_only_by_id(env.params.url["tag_id"])
   url = tag.url

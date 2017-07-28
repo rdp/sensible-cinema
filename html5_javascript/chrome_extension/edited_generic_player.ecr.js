@@ -361,7 +361,7 @@ function optionally_show_notification(seek_tag) {
       title += " ...";
       // body = "... " + body;
     }
-    sendMessageToPlugin({notification_desired: {title: htmlDecode(title), body: htmlDecode(body)}});
+    sendMessageToPlugin({notification_desired: {title: htmlDecode(title), body: htmlDecode(body), tag: seek_tag}});
   }
 }
 

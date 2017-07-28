@@ -19,6 +19,10 @@ update_icon = function(request, sender, sendResponse) {
      // empty string for body works well too, and possibly should be preferred hmmmm...
      var notification = new Notification(to_notify.title, {body: to_notify.body}); // auto shows it
      notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
+     notification.onclick = function(event) {
+       event.preventDefault(); // prevent the browser from focusing the Notification's tab
+       window.open('https://playitmyway.org/view_tag/' + to_notify.tag.id, '_blank'); // also opens and sets active
+     }
    }
 };
 
