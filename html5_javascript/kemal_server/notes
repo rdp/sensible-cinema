@@ -1,3 +1,22 @@
+== android ==
+
+I may be able to inject some javascript I need...oh except...I still don't have the user-agent I need/want :|
+  onPageFinished + desktop mode? LOL
+  Help me, firefox, you're my only hope...
+    probably just an extension to firefox mobile--easy to comprehend :| ?
+
+
+chrome "desktop mode"?
+
+https://stackoverflow.com/questions/6596243/problem-to-load-flv-video-in-webview/6855609#6855609
+https://stackoverflow.com/questions/14688030/setting-webview-to-view-desktop-site-and-not-mobile-site
+
+https://stackoverflow.com/questions/27059494/source-code-of-google-chrome-android-app
+https://stackoverflow.com/questions/21552912/android-web-view-inject-local-javascript-file-to-remote-webpage/21612566#21612566
+or build your own browser (that will inject appropriately) and distribute that as your app
+
+can I just create the "awesome-o" javascript bootmark and then run it in mobile?
+
 == roku ==
 
 my own intel compute stick???
