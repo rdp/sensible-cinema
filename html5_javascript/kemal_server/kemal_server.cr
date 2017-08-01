@@ -71,6 +71,10 @@ get "/ping" do |env|
   "I'm alive"
 end
 
+get "/youtube_edited/:youtube_id" do |env|
+  render "views/youtube_edited.ecr", "views/layout.ecr"
+end
+
 get "/redo_all_thumbnails" do |env|
   #raise "should not need often"
   Url.all.each &.create_thumbnail_if_has_image
@@ -668,9 +672,7 @@ end
 
 def logged_in_user(env)
  if user_id = env.session.int?("user_id")
-   out = User.only_by_id(user_id)
-   puts "you are logged in as #{out.inspect} from user_id=#{user_id}"
-   out
+   User.only_by_id(user_id)
  else
    raise "not logged in?"
  end
