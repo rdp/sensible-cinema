@@ -97,11 +97,12 @@ get "/getting_started" do |env| # google like this once I think LOL
 end
 
 get "/look_for_outdated_primes" do
-  all = Url.all
+  all = Url.all[0..19]
   all_with_curl = all.map{ |url| 
    curl = download(HTML.unescape url.url)
    currently_prime = curl =~ /0.00 with a Prime membership/
    {url, curl, currently_prime}
+   sleep 1
   }
   bad_primes = all_with_curl.select{ |url, curl, now_prime| url.human_readable_company == "amazon prime" && !now_prime}
   now_primes = all_with_curl.select{ |url, curl, now_prime| url.human_readable_company != "amazon prime" && now_prime}
