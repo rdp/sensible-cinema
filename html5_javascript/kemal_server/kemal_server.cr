@@ -92,12 +92,16 @@ get "/sync_web_server" do |env|
   end
 end
 
-get "/getting_started" do |env|
-  env.redirect "/"
+get "/getting_started" do |env| # google like this once I think LOL
+  env.redirect "/installation"
 end
 
-get "/all_tags" do |env|
-  Tag.all.inspect
+get "/look_for_outdated_primes" do
+  all = Url.all
+  primes, non_primes = all.partition{ |url| url.human_readable_company == "amazon prime" }
+  bad_primes = primes.select{ |url| download(url.url) !~ /0.00 with a Prime membership/}
+  now_prime  = non_primes.select{ |url| download(url.url) =~ /0.00 with a Prime membership/}
+  "bad primes=#{bad_primes.map &.name} <br/> now_prime=#{now_prime.map &.name}"
 end
 
 get "/for_current_just_settings_json" do |env|

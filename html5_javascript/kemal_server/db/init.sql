@@ -162,6 +162,10 @@ alter table tags add column popup_text_after VARCHAR(1024) NOT NULL DEFAULT '';
 alter table tags add column default_enabled BOOL DEFAULT true; -- actually 0 or 1 apparently...
 alter table urls drop column community_contrib;
 
+alter table tag_edit_list_to_tag add column enabled BOOL DEFAULT true;
+update tag_edit_list_to_tag set enabled = false where action = 'do_nothing';
+alter table tag_edit_list_to_tag drop column action; -- hope nobody had any custom actions!
+
 -- and output to screen to show success...
 select * from urls;
 select * from tags;
