@@ -97,12 +97,13 @@ get "/getting_started" do |env| # google like this once I think LOL
 end
 
 get "/look_for_outdated_primes" do
-  all = Url.all[0..10] # TODO just phase 2
+  all = Url.all # TODO real api?
+  all.select!{|url| url.editing_status == editing_phases[:done_second_pass]}
   all_with_curl = all.map{ |url| 
    curl = download(HTML.unescape url.url)
    currently_prime = (curl =~ /0.00 with a Prime membership/ || curl =~ /0.00 with Prime Video/)
-   {url, curl, currently_prime}
    sleep 5
+   {url, curl, currently_prime}
   }
   bad_primes = all_with_curl.select{ |url, curl, now_prime| url.human_readable_company == "amazon prime" && !now_prime}
   now_primes = all_with_curl.select{ |url, curl, now_prime| url.human_readable_company != "amazon prime" && now_prime}
@@ -504,7 +505,8 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     url.url = sanitized_url
     url.episode_name = episode_name
     url.episode_number = episode_number
-    url.editing_status = "Just started, tags might not be fully complete yet"
+    url.editing_status = editing_phases[:just_started]
+    raise "unknown status #{url.editing_status}" unless editing_phases.values.includes?(url.editing_status)
     url.total_time = duration
     if episode_number > 0
       Url.all.select{|url2| url2.name == title}.first(1).each{ |url2| # shouldn't include self yet...
@@ -545,9 +547,9 @@ end
 
 get "/" do |env| # index home
   all_urls = get_all_urls
-  all_urls_half_way = all_urls.select{|url| url.editing_status == "Done with first pass tagging, could use second review" }
-  all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
-  all_urls_done = all_urls.select{|url| url.editing_status == "Done with second review, tags viewed as complete"}
+  all_urls_half_way = all_urls.select{|url| url.editing_status == editing_phases[:done_first_pass] }
+  all_urls_just_started = all_urls.select{|url| url.editing_status == editing_phases[:just_started] }
+  all_urls_done = all_urls.select{|url| url.editing_status == editing_phases[:done_second_pass] }
   start = Time.now
   out = render "views/main.ecr", "views/layout.ecr"
   puts "view took #{Time.now - start}"  # pre view takes as long as first query :|
@@ -555,10 +557,7 @@ get "/" do |env| # index home
 end
 
 get "/movies_in_works" do |env|
-  all_urls = get_all_urls
-  all_urls_half_way = all_urls.select{|url| url.editing_status == "Done with first pass tagging, could use second review" }
-  all_urls_just_started = all_urls.select{|url| url.editing_status == "Just started, tags might not be fully complete yet"}
-  urls = all_urls_half_way + all_urls_just_started
+  urls = get_all_urls.reject{|url| url.editing_status == editing_phases[:done_second_pass] }
   if env.params.query["by_self"]?
     render "views/_list_movies.ecr"
   else

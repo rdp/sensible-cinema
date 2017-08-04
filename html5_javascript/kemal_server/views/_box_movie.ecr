@@ -10,7 +10,7 @@
               <% end %>
             ">
             <div style="text-align: center;">
-              <% if url.editing_status == "Done with second review, tags viewed as complete" %>
+              <% if url.editing_status == editing_phases[:done_first_pass] %>
                 <% if url.amazon_prime_free_type == "" && url.rental_cost > 0 %>
                   <% if url.purchase_cost == 0 %>
                     Rent to watch edited now!
@@ -24,7 +24,7 @@
                 <% end %>
               <% elsif url.tag_count == 0 %>
                 (not started, click here to watch unedited anyway)
-              <% elsif url.editing_status == "Done with first pass tagging, could use second review" %>
+              <% elsif url.editing_status == editing_phases[:done_first_pass] %>
                   (watch edited: done with first pass, but not finalized)
               <% else %>
                 (edits incomplete, work in progress, click here to watch anyway)
@@ -52,7 +52,7 @@
               <% end %>
               ">
                 <h4>Watch 
-                  <% if url.editing_status != "Done with second review, tags viewed as complete" %>
+                  <% if url.editing_status != editing_phases[:done_second_pass] %>
                     partially
                   <% end %>
                   edited now!</h4></a>

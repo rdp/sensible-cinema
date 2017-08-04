@@ -1,5 +1,9 @@
-def all_genres # obviously DB must sync here
+def all_genres # obviously DB must sync here :|
   ["romance/chick flick", "romantic comedy", "animation/cartoon", "documentary", "horror", "action/adventure", "western", "military/war", "comedy", "music/musical", "drama", "sports", "holiday", "fantasy", "sci-fi", "mystery/thriller", "faith/spirituality"].sort
+end
+
+def editing_phases # DB sync necessary
+ {just_started: "Just started, tags might not be fully complete yet", done_first_pass: "Done with first pass tagging, could use second review", done_second_pass: "Done with second review, tags viewed as complete"}
 end
 
 # if you change anything in this method be careful that any auto scan subs need to match it [you can tell by doing a single upload]

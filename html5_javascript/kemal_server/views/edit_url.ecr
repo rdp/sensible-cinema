@@ -52,8 +52,8 @@ episode_number (if any):<input type="text" name="episode_number" size="5" value=
 </div>
 
 editing status:
-<select name="editing_status" id="editing_status"> <!-- if you change this also change kemal -->
-  <% ["Just started, tags might not be fully complete yet", "Done with first pass tagging, could use second review", "Done with second review, tags viewed as complete"].each {|option| %>
+<select name="editing_status" id="editing_status"> 
+  <% editing_phases.values.each {|option| %>
    <option value="<%= option %>"><%= option %></option>
   <% } %>
 </select>
