@@ -101,7 +101,7 @@ get "/look_for_outdated_primes" do
   primes, non_primes = all.partition{ |url| url.human_readable_company == "amazon prime" }
   bad_primes = primes.select{ |url| download(HTML.unescape(url.url)) !~ /0.00 with a Prime membership/}
   now_prime  = non_primes.select{ |url| download(HTML.unescape(url.url)) =~ /0.00 with a Prime membership/}
-  "bad primes=#{bad_primes.map &.name} <br/> now_prime=#{now_prime.map &.name}"
+  "bad primes=#{bad_primes.map(&.name).join("<br>")} <br/><br/><br/> now_prime=#{now_prime.map &.name}"
 end
 
 get "/for_current_just_settings_json" do |env|
