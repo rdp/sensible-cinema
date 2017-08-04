@@ -100,7 +100,7 @@ get "/look_for_outdated_primes" do
   all = Url.all[0..19]
   all_with_curl = all.map{ |url| 
    curl = download(HTML.unescape url.url)
-   currently_prime = curl =~ /0.00 with a Prime membership/
+   currently_prime = (curl =~ /0.00 with a Prime membership/ || curl =~ /0.00 with Prime Video/)
    {url, curl, currently_prime}
    sleep 1
   }
