@@ -17,12 +17,12 @@ Want to see all the (sometimes gruesome) details of each tag? click <a href=/per
 
 <input type="hidden" name="url_id" value="<%= tag_edit_list.url_id %>"> <!-- in case not saved yet -->
 
-<% if !tag_edit_list.description.empty? %>
+<div style="display : none;"> <!-- too confusing -->
  name for this personalized edit:
 <textarea name="description" rows="1" cols="150" ><%= tag_edit_list.description %></textarea>
 <br/>
 <br/>
-<% end %>
+</div>
 
 <div  style="display : none;">
 personal notes (ex: "for kids")
