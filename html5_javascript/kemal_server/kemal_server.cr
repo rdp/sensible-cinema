@@ -638,20 +638,20 @@ post "/save_tag_edit_list" do |env|
   end
 
   tag_edit_list.description = resanitize_html params["description"]
-  if !tag_edit_list.description.present? # TODO rename db column :|
+  if !tag_edit_list.description.present? 
     tag_edit_list.description = "Personalized Edits for " +  logged_in_user(env).name
   end
   tag_edit_list.status_notes = resanitize_html params["status_notes"]
   tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
   tag_ids = [] of Int32
-  actions = [] of String
+  enableds = [] of Bool
   env.params.body.each{ |name, value|
-    if name =~ /tag_select_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :| [?]
+    if name =~ /checkbox_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :| [?]
       tag_ids << $1.to_i
-      actions << value
+      enableds << (value == "true")
     end
   }
-  tag_edit_list.create_or_refresh(tag_ids, actions)
+  tag_edit_list.create_or_refresh(tag_ids, enableds)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description} if you are watching the movie in another  tab please refresh that browser tab")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
   env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...

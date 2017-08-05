@@ -1,5 +1,6 @@
 <h1>Modify personalized edits</h1> for <%= tag_edit_list.url.name_with_episode %>
 <br/>
+<br/>
 
 Want to see all the (sometimes gruesome) details of each tag? click <a href=/personalized_edit_list/<%= tag_edit_list.url_id %>?show_tag_details=true %>here</a>.
 
@@ -16,10 +17,12 @@ Want to see all the (sometimes gruesome) details of each tag? click <a href=/per
 
 <input type="hidden" name="url_id" value="<%= tag_edit_list.url_id %>"> <!-- in case not saved yet -->
 
-Enter a name for this personalized edit:
+<% if !tag_edit_list.description.empty? %>
+ name for this personalized edit:
 <textarea name="description" rows="1" cols="150" ><%= tag_edit_list.description %></textarea>
 <br/>
 <br/>
+<% end %>
 
 <div  style="display : none;">
 personal notes (ex: "for kids")
@@ -28,34 +31,32 @@ personal notes (ex: "for kids")
 <br/>
 <br/>
 
-<% if tag_edit_list.tags_with_personalized_action.size == 0 %>
+<% if tag_edit_list.tags_with_personalized_enabled.size == 0 %>
   There are no content tags for this movie yet, please go add some first then come back here.
 <br/>
 <% end %>
 
-<% tags_by_category = tag_edit_list.tags_with_personalized_action.group_by{|tag, action| tag.category} %>
+<% tags_by_category = tag_edit_list.tags_with_personalized_enabled.group_by{|tag, enabled| tag.category} %>
 
-<% tags_by_category.each{|category, tags_and_personalized_actions| %>
+<% tags_by_category.each{ |category, tags_and_enableds| %>
   <h2><%= category.capitalize %></h2>
-  <input id="" type="checkbox" checked 
-    onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
+  <input id="unused" type="checkbox" checked onchange='updateSelectAll(<%= tags_by_category[category].map{|tag, enabled| tag.id }.pretty_inspect %>, this.checked);'
   > Edit out all <%= category %>
   <br/>
   <br/>
 
-  <% tags_and_personalized_actions.sort_by{|tag, personal_action| tag.subcategory}.group_by{|tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_personal_actions| %>
+  <% tags_and_enableds.sort_by{|tag, personal_action| tag.subcategory}.group_by{ |tag, personal_action| tag.subcategory}.each{ |subcategory, subcategory_tags_and_enableds| %>
   <h4><%= subcategory %></h4>
-  <input id="" type="checkbox" checked 
-    onchange='updateSelectAll(<%= subcategory_tags_and_personal_actions.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
+  <input id="unused" type="checkbox" checked 
+    onchange='updateSelectAll(<%= subcategory_tags_and_enableds.map{|tag, action| tag.id}.pretty_inspect %>, this.checked);'
   > Edit out all <%= subcategory %>
   <br/>
   <table class="table table-striped">
-  <% subcategory_tags_and_personal_actions.each{|tag, personal_action| %>
+  <% subcategory_tags_and_enableds.each{|tag, enabled| %>
   <tr>
     <td>
-      <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" unless personal_action == "do_nothing" %>
-        onchange='updateSelect(<%= tag.id %>, "<%= personal_action %>");'
-      >
+      <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" if enabled %>
+        onchange='' >
     <%= seconds_to_human tag.start %> 
     </td>
     <td>lasts <%= seconds_to_human tag.duration %></td>
@@ -80,19 +81,6 @@ personal notes (ex: "for kids")
       <div style="visibility: <%= tag.age_maybe_ok > 0 ? "visible" : "hidden" %>;"> <!-- keep same size for tables to match up -->
         not OK age <%= tag.age_maybe_ok %> and under
       </div>
-    </td>
-    <td style="display: none;"> <!-- too confusing XXX remove it with javascript -->
-  		or personalize your action:
-  		<select name="tag_select_<%= tag.id %>" id='tag_select_<%= tag.id %>' onchange="updateCheck(<%= tag.id %>, this.value);">
-  		  <option value="mute">mute</option>
-  		  <option value="skip">skip</option>
-  		  <option value="yes_audio_no_video">yes_audio_no_video</option>
-  		  <option value="no_audio_no_video">no_audio_no_video</option>
-  		  <option value="do_nothing">do_nothing</option>
-  		</select>
-  		<script>
-  	  	document.getElementById('tag_select_<%= tag.id %>').value = '<%= personal_action %>';
-  		</script>
     </td>
   </tr>
   
@@ -120,18 +108,6 @@ Want to see all the (sometimes gruesome) details of each tag? click <a href=/per
 <a href =/view_url/<%= tag_edit_list.url.id %>><< Back to movie (cancel edits) </a>.
 
 <script>
-
-function updateSelect(id, default2) {
-  var select = document.getElementById("tag_select_" + id);
-  var checkbox = document.getElementById("checkbox_" + id);
-  if (checkbox.checked) {
-    // they just checked it...hmm...probably back to default
-    select.value = default2;
-  } else {
-    // they just unchecked it...
-    select.value = "do_nothing";
-  }
-}
 
 function updateCheck(id, value) {
   var checkbox = document.getElementById("checkbox_" + id);

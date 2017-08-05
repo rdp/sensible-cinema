@@ -547,6 +547,7 @@ class TagEditList
     status_notes: {type: String},       
     age_recommendation_after_edited: Int32
   })
+
   DB.mapping({
     id: Int32,
     user_id: Int32,
@@ -563,7 +564,7 @@ class TagEditList
     @age_recommendation_after_edited = 0
    end
 
-  def create_or_refresh(tag_ids, actions)
+  def create_or_refresh(tag_ids, enableds)
     with_db do |conn|
       conn.transaction do
         if (@id == 0)
@@ -575,7 +576,7 @@ class TagEditList
         tag_ids.each_with_index{|tag_id, idx|
           tag = Tag.get_only_by_id(tag_id)
           raise "tag movie mismatch #{tag_id}??" unless tag.url_id == self.url_id # sanity check
-          conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, action) values (?, ?, ?)", self.id, tag_id, actions[idx])
+          conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, enabled) values (?, ?, ?)", self.id, tag_id, enableds[idx])
         }
       end
     end  
@@ -585,24 +586,24 @@ class TagEditList
     Url.get_only_by_id(url_id)
   end
   
-  def tags_with_personalized_action
+  def tags_with_personalized_enabled
     all_tags_this_movie = url.tags
     with_db do |conn|
       all_tags_this_movie.map{|tag|
         count = conn.scalar("select count(*) from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id)
         if count == 1
-          action = conn.query_one("select action from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {String})
-          {tag, action}
+          enabled = conn.query_one("select enabled from tag_edit_list_to_tag where tag_edit_list_id = ? and tag_id = ?", id, tag.id, as: {Bool})
+          {tag, enabled}
         elsif count == 0
           if self.id == 0 
-            # we're not even saved yet, just show default
-            {tag, tag.default_action}
+            # edit list not even saved yet, just do default
+            {tag, tag.default_enabled }
           else
             # they haven't "bound" to this tag yet, so assume it was created after they created their list, and they now want the default (better safe than sorry, eh?, what if somebody does an 'add tag' in the middle of a movie they want it to show up...)
-            {tag, tag.default_action}
+            {tag, tag.default_enabled }
           end          
         else
-          raise "double tag_edit_list_to_tag?? #{tag}"
+          raise "double tag_edit_list_to_tag?? #{tag} please report..."
         end
       }
     end

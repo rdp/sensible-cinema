@@ -3,6 +3,6 @@
 "tags":
   [<%= db_url.tags.map(&.to_json).join(",\n") %>],
 "tag_edit_lists":
-  <%= db_url.tag_edit_lists(env).map{|tag_edit_list| [tag_edit_list, tag_edit_list.tags_with_personalized_action.map{|tag, action| tag.default_action = action; tag}]}.to_json %>,
+  <%= db_url.tag_edit_lists(env).map{|tag_edit_list| [tag_edit_list, tag_edit_list.tags_with_personalized_enabled.map{ |tag, enabled| tag.default_enabled = enabled; tag}]}.to_json %>,
   "editor": <%= editor?(env).to_json %>
 }
