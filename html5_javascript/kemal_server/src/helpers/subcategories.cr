@@ -10,7 +10,9 @@ end
 def subcategory_map
    # "end consumer friendly": "creator instructions" (and the double dash is needed...)
    
-    { "initial theme song": "movie-content -- initial theme song/credits",
+    { 
+    "initial theme song": "movie-content -- initial theme song",
+    "initial credits": "movie-content -- initial company credits before intro/before songs",
     "closing credits": "movie-content -- closing credits/songs",
     "subscription plea": "movie-content -- closing subscription plea",
     "joke edit": "movie-content -- joke edit -- edits that make video funny when applied",
