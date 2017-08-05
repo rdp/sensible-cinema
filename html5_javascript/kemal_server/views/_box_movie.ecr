@@ -10,7 +10,7 @@
               <% end %>
             ">
             <div style="text-align: center;">
-              <% if url.editing_status == editing_phases[:done_first_pass] %>
+              <% if url.editing_status == editing_phases[:done_second_pass] %>
                 <% if url.amazon_prime_free_type == "" && url.rental_cost > 0 %>
                   <% if url.purchase_cost == 0 %>
                     Rent to watch edited now!
