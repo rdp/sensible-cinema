@@ -55,7 +55,7 @@ personal notes (ex: "for kids")
   <% subcategory_tags_and_enableds.each{|tag, enabled| %>
   <tr>
     <td>
-      <input id="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" if enabled %>
+      <input id="checkbox_<%= tag.id %>" name="checkbox_<%= tag.id %>" type="checkbox" <%= "checked" if enabled %>
         onchange='' >
     <%= seconds_to_human tag.start %> 
     </td>

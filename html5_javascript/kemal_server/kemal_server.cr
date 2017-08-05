@@ -630,6 +630,7 @@ end
 post "/save_tag_edit_list" do |env|
   params = env.params.body # POST params
   url_id = params["url_id"].to_i
+  url = Url.get_only_by_id(url_id) # little weird here...
   if params["id"]?
     tag_edit_list = TagEditList.get_existing_by_url_id url_id, user_id(env)
     raise "wrong id? you gave #{params["id"]} expected #{tag_edit_list.id}" unless params["id"].to_i == tag_edit_list.id
@@ -643,18 +644,20 @@ post "/save_tag_edit_list" do |env|
   end
   tag_edit_list.status_notes = resanitize_html params["status_notes"]
   tag_edit_list.age_recommendation_after_edited = params["age_recommendation_after_edited"].to_i
-  tag_ids = [] of Int32
-  enableds = [] of Bool
+  tag_ids = {} of Int32 => Bool
+  puts "got #{env.params.body.inspect}"
   env.params.body.each{ |name, value|
     if name =~ /checkbox_(\d+)/ # hacky but you have to go down hacky either in name or value since it maps there too :| [?]
-      tag_ids << $1.to_i
-      enableds << (value == "true")
+      tag_ids[$1.to_i] = true # implied on
     end
   }
-  tag_edit_list.create_or_refresh(tag_ids, enableds)
+  url.tags.each{|tag| tag_ids[tag.id] = false unless tag_ids.has_key?(tag.id) }
+  
+  tag_edit_list.create_or_refresh(tag_ids)
   add_to_flash(env, "Success! saved personalized edits #{tag_edit_list.description} if you are watching the movie in another  tab please refresh that browser tab")
   save_local_javascript tag_edit_list.url, "serialize user's tag edit list", env # will save it with a user's id noted but hopefully that's opaque enough...though will also cause some churn but then again...will save it... :|
-  env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
+  #env.redirect "/view_url/#{tag_edit_list.url_id}" # back to the movie page...
+  "ok"
 end
 
 def save_local_javascript(db_url, log_message, env) # actually just json these days...

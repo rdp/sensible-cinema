@@ -564,7 +564,7 @@ class TagEditList
     @age_recommendation_after_edited = 0
    end
 
-  def create_or_refresh(tag_ids, enableds)
+  def create_or_refresh(tag_ids)
     with_db do |conn|
       conn.transaction do
         if (@id == 0)
@@ -573,10 +573,10 @@ class TagEditList
           conn.exec("update tag_edit_list set url_id = ?, user_id = ?,description = ?, status_notes = ?, age_recommendation_after_edited = ? where id = ?", url_id, user_id, description, status_notes, age_recommendation_after_edited, id)
         end
         conn.exec("delete from tag_edit_list_to_tag where tag_edit_list_id = ?", id) 
-        tag_ids.each_with_index{|tag_id, idx|
+        tag_ids.each{ |tag_id, enabled|
           tag = Tag.get_only_by_id(tag_id)
           raise "tag movie mismatch #{tag_id}??" unless tag.url_id == self.url_id # sanity check
-          conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, enabled) values (?, ?, ?)", self.id, tag_id, enableds[idx])
+          conn.exec("insert into tag_edit_list_to_tag (tag_edit_list_id, tag_id, enabled) values (?, ?, ?)", self.id, tag_id, enabled)
         }
       end
     end  
