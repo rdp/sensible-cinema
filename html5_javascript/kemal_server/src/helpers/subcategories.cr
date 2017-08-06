@@ -51,6 +51,7 @@ def subcategory_map
     "profanity (other)": "profanity -- other",
 		
     "light fight": "violence -- short fighting (single punch/kick/hit/push)",
+    "sustained fight": "violence -- sustained punching/fighting",
     "threatening actions": "violence -- threatening actions",
     "stabbing/shooting no blood": "violence -- stabbing/shooting no blood",
     "stabbing/shooting with blood": "violence -- stabbing/shooting yes blood",
@@ -62,7 +63,6 @@ def subcategory_map
     "collision death": "violence -- collision/crash (implied death)",
     "explosion": "violence -- explosion (no implied death)",
     "explosion death": "violence -- explosion (implied death)",
-    "sustained fight": "violence -- sustained punching/fighting",
     "comedic fight": "violence -- comedic/slapstick fighting",
     "shooting miss": "violence -- shooting miss or ambiguous",
     "shooting hit non death": "violence -- shooting hits person or thing but non fatal",
