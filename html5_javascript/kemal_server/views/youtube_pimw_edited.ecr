@@ -8,18 +8,21 @@ NOT YET IN SYSTEM
 <div id="ytplayer_div"></div>
 <br/>
 
-<!-- match amazon font colors :| -->
+<!-- match amazon coloring :| -->
 <style>
 input,select {
   color: black;
 }
 </style>
 
-<div style="height: 760px; width: 620px;   background: black;" id="show_your_instructions_here_id">
+<div style="height: 1360px; width: 620px; background: black;" id="show_your_instructions_here_id"> <!-- plugin binds here -->
 </div>
 
-<br/>
-Want to add a new another youtube? click <a href=/instructions_create_new_url>here</a>.
+<h3>Create new other (youtube)</h3>
+Enter url of movie here:
+<form action="/new_manual_url" method="GET">Your Movie's url: <input type="text" name="url"/>
+  <input type="submit" value="Submit">
+</form>
 
 <script>
   // Load the IFrame Player API code asynchronously.
