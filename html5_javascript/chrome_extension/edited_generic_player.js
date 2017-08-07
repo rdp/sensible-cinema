@@ -101,7 +101,7 @@ function addEditUi() {
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
-      <input type='button' onclick="pauseVideo(); return false;" value='&#9612;&#9612;'/>
+      <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
       
       
@@ -405,7 +405,7 @@ default enabled?
 }
 
 function playButtonClicked() {
-  if (video_element.paused) {
+  if (isPaused()) {
     doPlay();
   } else if (getPlaybackRate() != 1) {
     video_element.playbackRate = 1; // back to normal :)
@@ -424,7 +424,7 @@ function getStandardizedCurrentUrl() { // duplicated with other .js
 
 function openPersonalizedEditList() {
   window.open("https://" + request_host + "/personalized_edit_list/" + current_json.url.id);
-	pauseVideo();
+	doPause();
 }
 
 function reportProblem() {
@@ -743,7 +743,7 @@ function addForNewVideo() {
 		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + videoDuration(), "_blank");
 	setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
   // once took longer than 2000 :|
-	pauseVideo();
+	doPause();
 }
 
 function toggleAddNewTagStuff() {
@@ -853,9 +853,18 @@ function testCurrentFromUi() {
 	});
 }
 
+
+function isPaused() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.getPlayerState() == 2; // magic value for paused
+  } else {
+    return video_element.paused;
+  }
+}
+
 function doPlay() {
   if (isYoutubePimw()) {
-    youtube_pimw_player.playVideo()
+    youtube_pimw_player.playVideo();
   } else {
     video_element.play();
   }
@@ -971,14 +980,14 @@ function getSubtitleLink() {
 
 function stepFrameBack() {
   seekToTime(getCurrentTime() - 1/10, function () { // go back 2 frames, 1 seems hard...
-    video_element.pause();
+    doPause();
   });
 }
 
 function stepFrame() {
   doPlay();
   setTimeout(function() {
-    video_element.pause(); 
+    doPause(); 
   }, 1/10*1000); // audio needs some pretty high granularity :|
 }
 
@@ -1384,6 +1393,14 @@ function getCurrentTime() {
   }
 }
 
+function doPause() {
+  if (isYoutubePimw()) {
+    youtube_pimw_player.pauseVideo();
+  } else {
+    video_element.pause();
+  }
+}
+
 function seekToTime(ts, callback) {
   if (seek_timer) {
     console.log("still seeking from previous, not trying that again...");
@@ -1394,16 +1411,16 @@ function seekToTime(ts, callback) {
     console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
   }  
-  var current_state = video_element.paused;
+  var current_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
   var start_time = getCurrentTime();
-  video_element.pause();
+  doPause();
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around...
 	seek_timer = setInterval(function() {
-		if (video_element.paused && video_element.readyState == 4 || !video_element.paused) {
+		if ((isPaused() && video_element.readyState == 4) || !isPaused()) {
       var amount_buffered = 0;
       if (video_element.buffered.length == 1) {
         amount_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0));
@@ -1454,10 +1471,6 @@ function toggleDiv(div) {
 
 function hideDiv(div) {
 	div.style.display = "none";
-}
-
-function pauseVideo() {
-	video_element.pause();
 }
 
 function sendMessageToPlugin(message_obj) {
