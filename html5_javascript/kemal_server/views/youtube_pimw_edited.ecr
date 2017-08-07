@@ -5,14 +5,16 @@ NOT YET IN SYSTEM
 <br/-->
 <% end %>
 
-<div id="ytplayer_div"></div>
-<br/>
+<div id="player_with_controls">
+  <div id="ytplayer_div"></div>
+  <br/>
 
-<h3>
-<a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
-<a href='' onclick="doFullScreen(); return false">fullscreen</a>
+  <h3>
+  <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+  <a href='' onclick="doFullScreen(); return false">fullscreen</a>
 
-</h3>
+  </h3>
+</div>
 
 
 
@@ -33,6 +35,7 @@ Enter url of movie here:
 </form>
 
 <script>
+// speed, quality (don't care), and a timer
 
     function SetVolume(val)
     {
@@ -40,7 +43,7 @@ Enter url of movie here:
     }
     
     function doFullScreen() {
-      var iframe = youtube_pimw_player.getIframe();
+      var iframe = document.getElementById("player_with_controls"); //youtube_pimw_player.getIframe();
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
         requestFullScreen.bind(iframe)();
