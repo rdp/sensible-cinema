@@ -15,7 +15,7 @@ NOT YET IN SYSTEM
   volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 300px;"></input>
   <br/>
   <div id="current_time_id"></div>
-  <!--a href='' onclick="doFullScreen(); return false">fullscreen</a-->
+  <a href='' onclick="toggleFullScreen(); return false">fs</a>
 
   </h3>
 </div>
@@ -65,14 +65,17 @@ Enter url of movie here:
     }
     setInterval(updateTime, 1000/30);
     
-    function doFullScreen() {
+    function toggleFullScreen() {
+      if (document.fullscreenElement) {
+       document.exitFullscreen();
+       return;
+      }
       // var iframe = document.getElementById("player_with_controls"); //youtube_pimw_player.getIframe(); // TODO :|
       var iframe = youtube_pimw_player.getIframe();
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
         requestFullScreen.bind(iframe)();
       }
-      //  exitFullscreen(); ??
     }
 
   // Load the IFrame Player API code asynchronously.
@@ -96,6 +99,7 @@ Enter url of movie here:
       }
     });
   }
+  // a.height "100%" youtube_pimw_player.getIframe()
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
