@@ -15,7 +15,7 @@ could shrink to 200px by 200px (the video that size that is)
   might actually be legal "14.use a video player smaller than the minimum video player size set forth in the YouTube API documentation and specifications."
   it's "smallish" hmm...
   doesn't work in full screen :|
-    can't control full screen :|
+    can't resize full screen, or trivially come out of it? :|
 
 can mute
 

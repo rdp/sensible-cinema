@@ -10,6 +10,7 @@ NOT YET IN SYSTEM
 
 <h3>
 <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+<a href='' onclick="doFullScreen(); return false">fullscreen</a>
 
 </h3>
 
@@ -36,6 +37,15 @@ Enter url of movie here:
     function SetVolume(val)
     {
         youtube_pimw_player.setVolume(val);
+    }
+    
+    function doFullScreen() {
+      var iframe = youtube_pimw_player.getIframe();
+      var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
+      if (requestFullScreen) {
+        requestFullScreen.bind(iframe)();
+      }
+      //  exitFullscreen(); ??
     }
 
   // Load the IFrame Player API code asynchronously.
