@@ -253,8 +253,8 @@ function checkIfShouldDoActionAndUpdateUI() {
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
   extra_message = "";
 	if (tag) {
-	  if (!video_element.muted) {
-	    video_element.muted = true;
+	  if (!isMuted()) {
+	    setMute(true);
       i_muted_it = true;
 	    timestamp_log("muting", cur_time, tag);
 	  }
@@ -262,9 +262,9 @@ function checkIfShouldDoActionAndUpdateUI() {
    notify_if_new(tag);
 	}
 	else {
-	  if (video_element.muted) {
+	  if (isMuted()) {
       if (i_muted_it) {
-  	    video_element.muted = false;
+  	    setMute(false);
   	    console.log("unmuted at=" + cur_time);
         i_muted_it = false;      
       }
@@ -461,6 +461,26 @@ function videoDuration() {
     return youtube_pimw_player.getDuration();
   } else {
     return video_element.duration;
+  }
+}
+
+function isMuted() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.isMuted();
+  } else {
+    return video_element.muted;
+  }
+}
+
+function setMute(yesMute) {
+  if (isYoutubePimw()) {
+    if (yesMute) {
+      youtube_pimw_player.mute();
+    } else {
+      youtube_pimw_player.unMute();
+    }
+  } else {
+    video_element.muted = yesMute;
   }
 }
 
