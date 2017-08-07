@@ -46,8 +46,22 @@ Enter url of movie here:
         youtube_pimw_player.setVolume(val);
     }
     
+    function timeStampToHuman(timestamp) {
+      var hours = Math.floor(timestamp / 3600);
+      timestamp -= hours * 3600;
+      var minutes  = Math.floor(timestamp / 60);
+      timestamp -= minutes * 60;
+      var seconds = timestamp.toFixed(2); //  -> "12.31" or "2.3"
+      // padding is "hard" apparently in javascript LOL
+      if (hours > 0)
+        return hours + "h " + minutes + "m " + seconds + "s";
+      else
+        return minutes + "m " + seconds + "s";
+    }
+    
+    
     function updateTime() {
-      current_time_id.innerHTML=youtube_pimw_player.getCurrentTime() + " /" + youtube_pimw_player.getDuration();
+      current_time_id.innerHTML=timeStampToHuman(youtube_pimw_player.getCurrentTime()) + " /" + timeStampToHuman(youtube_pimw_player.getDuration());
     }
     setInterval(updateTime, 1000/30);
     
