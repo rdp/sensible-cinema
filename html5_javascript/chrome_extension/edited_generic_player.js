@@ -506,7 +506,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = getCurrentTime();
   var tag;
   if (cur_time < last_timestamp) {
-    console.log("Something just seeked backwards to=" + cur_time);
+    console.log("Something (possibly pimw) just backwards to=" + cur_time + " from=" + last_timestamp);
   	tag = areWeWithin(skips, cur_time); 
     if (tag) {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the -10 button can work from UI
@@ -515,6 +515,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       return;
     }
   }
+  console.log("cur_time=" + cur_time);
   last_timestamp = cur_time;
   
 	tag = areWeWithin(mutes, cur_time);
@@ -543,7 +544,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
     optionally_show_notification(tag); // show it now so it can notify while it seeks :)
-	  seekToTime(tag.endy);
+    waitTillBufferedThenSeek(cur_time, tag.endy);
 	}
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
@@ -592,6 +593,59 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("playback_rate"), getPlaybackRate().toFixed(2) + "x");
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
+
+var wait_for_buffering; // only start one buffering...this is insanity...
+
+function waitTillBufferedThenSeek(cur_time, desired_time) {
+  var diff = desired_time - cur_time;
+  if (isYoutubePimw() && getSecondsBufferedAhead() < diff) { // could do this for amazon too???
+    // this is terrifying ...
+    // accuracy is worth it, right???!    
+    // wait if it's > 50s though...then what? arrr matey!
+    // hope this doesn't screw up editing :|
+    var current_pause_state = isPaused();
+    doPause(); // let it buffer
+    var seek_to_time = desired_time;
+    var sum = 0;
+    var start_buffering = getSecondsBufferedAhead();
+    if (wait_for_buffering) {
+      console.log("not re-wait for buffering, should have just paused it");
+    } else {
+      wait_for_buffering = setInterval(function() {
+        console.log("waitTillBufferedThenSeek interval");
+        var done = false;
+        if (getSecondsBufferedAhead() < diff) {
+          console.log("doing accurate seek after buffered phew ms=" + sum);
+          done = true;
+        }
+        if (sum > 5000) {
+          console.log("doing inaccurate extra seek forward after full 5s, gah!"); // this defaults  to seeking "before" so...sniff...
+          done = true;
+          seek_to_time += 2.5; // they say "at worst 2 seconds" so fear the worst :|
+        }
+        if (sum == 1000 && getSecondsBufferedAhead() == start_buffering) {
+          console.log("doing inaccurate extra seek forward after it feels like not loading 1s :|");
+          done = true;
+          seek_to_time += 2.5; // they say "at worst 2 seconds" so fear the worst :|
+        }
+        if (done) {
+          clearInterval(wait_for_buffering);
+      	  seekToTime(seek_to_time, function() {
+            if (!current_pause_state) {
+              doPlay(); // we have to track our own here, basically :|
+            }
+            wait_for_buffering = null;
+          });
+        }
+        sum += 10;
+       }, 10);
+     }
+   } else {
+     console.log("doing straight seek, enough buffered ahead already");
+     seekToTime(desired_time); // just seek (works fine in amazon :| )
+   }
+}
+
 
 function removeIfNotifyEditsHaveEnded(cur_time) {
   for (var tag of currently_in_process_tags.keys()) {
@@ -743,6 +797,7 @@ function isPaused() {
 }
 
 function doPlay() {
+  console.log("doing doPlay()");
   if (isYoutubePimw()) {
     youtube_pimw_player.playVideo();
   } else {
@@ -918,7 +973,9 @@ function testCurrentFromUi() {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
-    doPlay(); // seems like we want this, plus otherwise mess up the test timing [?]
+    if (isPaused()) {
+      doPlay(); // seems like we want this...
+    }
 	  inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
       console.log("popping " + JSON.stringify(faux_tag));
 	    temp_array.pop();
@@ -1407,7 +1464,6 @@ function withinDelta(first, second, delta) {
 }
 
 function findFirstVideoTagOrNull() {
-  
   var url = currentUrlNotIframe();
   var is_pimw_youtube = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_pimw_edited");
   if (is_pimw_youtube && youtube_pimw_player) { // assume returning video_element implies "I'm alive"
@@ -1461,6 +1517,15 @@ function rawSeekToTime(ts) {
   }
 }
 
+function getSecondsBufferedAhead() {
+  if (isYoutubePimw()) {
+    seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction() - getCurrentTime();
+  } else if (video_element.buffered.length == 1) { // the normal case I think...
+    seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0)); // wait is this end guaranteed to be after our current???
+  }
+  return seconds_buffered;
+}
+
 function seekToTime(ts, callback) {
   if (seek_timer) {
     console.log("still seeking from previous, not trying that again...");
@@ -1471,16 +1536,19 @@ function seekToTime(ts, callback) {
     console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
   }  
-  var current_state = isPaused();
+  var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
   var start_time = getCurrentTime();
   // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
 	// some shenanigans to pretend to work around this...
-  doPause();
+  if (!isYoutubePimw()) {
+    doPause();
+  } // youtube seems to retain it grrate
   rawSeekToTime(ts); 
 	seek_timer = setInterval(function() {
+      console.log("seek_timer interval");
       if (isYoutubePimw()) {
         // it stays always as "paused"
         // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
@@ -1490,28 +1558,26 @@ function seekToTime(ts, callback) {
         var done_buffering = (video_element.readyState == HAVE_ENOUGH_DATA_HTML5);
       }
       if ((isPaused() && done_buffering) || !isPaused()) {
-      var seconds_buffered = 0;
-      if (isYoutubePimw()) {
-        seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction();
-      } else if (video_element.buffered.length == 1) { // the normal case I think...
-        seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0));
-      }
-      if (seconds_buffered > 2) { // usually 4 or 6...
-  			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time) + " buffered=" + seconds_buffered);
-        if (!current_state) {
-    			doPlay();
+        var seconds_buffered = getSecondsBufferedAhead();
+
+        if (seconds_buffered > 2) { // usually 4 or 6...
+  			  console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " ts=" + ts + " length=" + (ts - start_time) + " buffered_ahead=" + seconds_buffered);
+          if (!isYoutubePimw()) {
+            if (!current_pause_state) { // youtube loses 0.05 with these shenanigans so attempt avoid :|
+      			  doPlay();
+            } else {
+              console.log("staying paused [internal seek]");
+            }
+          }
+  			  clearInterval(seek_timer);
+  			  if (callback) {
+            callback();
+          }
+          seek_timer = null;
         } else {
-          // stay paused
+          console.log("waiting for it to finish buffering after seek seconds_buffered=" + seconds_buffered);
         }
-  			clearInterval(seek_timer);
-  			if (callback) {
-          callback();
-        }
-        seek_timer = null;
-      } else {
-        console.log("waiting for it to finish buffering..." + seconds_buffered);
-      }
-		}		
+		  }		
 	}, 50);
 }
 
