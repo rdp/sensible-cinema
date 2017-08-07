@@ -97,9 +97,9 @@ function addEditUi() {
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
 
       <br/>
-      <input type='button' onclick="playButtonClicked(); video_element.playbackRate = 0.5; return false;" value='0.5x'>
+      <input type='button' onclick="playButtonClicked(); setPlaybackRate(0.5); return false;" value='0.5x'>
       <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
-      <span ><a id='playback_rate' href=# onclick="video_element.playbackRate = 1; return false">1.00x</a></span> <!--XX remove link -->
+      <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
@@ -408,7 +408,7 @@ function playButtonClicked() {
   if (isPaused()) {
     doPlay();
   } else if (getPlaybackRate() != 1) {
-    video_element.playbackRate = 1; // back to normal :)
+    setPlaybackRate(1.0); // back to normal :)
   }
 }
 
@@ -521,8 +521,8 @@ function checkIfShouldDoActionAndUpdateUI() {
   tag = tag || areWeWithin(mute_audio_no_videos, cur_time);
   extra_message = "";
 	if (tag) {
-	  if (!video_element.muted) {
-	    video_element.muted = true;
+	  if (!isMuted()) {
+	    setMute(true);
       i_muted_it = true;
 	    timestamp_log("muting", cur_time, tag);
 	  }
@@ -530,9 +530,9 @@ function checkIfShouldDoActionAndUpdateUI() {
    notify_if_new(tag);
 	}
 	else {
-	  if (video_element.muted) {
+	  if (isMuted()) {
       if (i_muted_it) {
-  	    video_element.muted = false;
+  	    setMute(false);
   	    console.log("unmuted at=" + cur_time);
         i_muted_it = false;      
       }
@@ -732,6 +732,34 @@ function videoDuration() {
   }
 }
 
+function setPlaybackRate(toExactlyThis) {
+  if (isYoutubePimw()) {
+    youtube_pimw_player.setPlaybackRate(toExactlyThis);
+  } else {
+    video_element.playbackRate = toExactlyThis;
+  }
+}
+
+function isMuted() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.isMuted();
+  } else {
+    return video_element.muted;
+  }
+}
+
+function setMute(yesMute) {
+  if (isYoutubePimw()) {
+    if (yesMute) {
+      youtube_pimw_player.mute();
+    } else {
+      youtube_pimw_player.unMute();
+    }
+  } else {
+    video_element.muted = yesMute;
+  }
+}
+
 function addForNewVideo() {
 	if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
 		alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
@@ -856,7 +884,8 @@ function testCurrentFromUi() {
 
 function isPaused() {
   if (isYoutubePimw()) {
-    return youtube_pimw_player.getPlayerState() == 2; // magic value for paused
+    var paused = 2;
+    return youtube_pimw_player.getPlayerState() == paused;
   } else {
     return video_element.paused;
   }
@@ -1401,6 +1430,15 @@ function doPause() {
   }
 }
 
+function rawSeekToTime(ts) {
+  if (isYoutubePimw()) {
+    var allowSeekAhead = true;
+    youtube_pimw_player.seekTo(ts, allowSeekAhead); // no callback option
+  } else {
+    video_element.currentTime = ts;
+  }
+}
+
 function seekToTime(ts, callback) {
   if (seek_timer) {
     console.log("still seeking from previous, not trying that again...");
@@ -1415,18 +1453,29 @@ function seekToTime(ts, callback) {
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
   var start_time = getCurrentTime();
-  doPause();
-  video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
+  // [amazon] if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
-	// some shenanigans to pretend to work around...
+	// some shenanigans to pretend to work around this...
+  doPause();
+  rawSeekToTime(ts); 
 	seek_timer = setInterval(function() {
-		if ((isPaused() && video_element.readyState == 4) || !isPaused()) {
-      var amount_buffered = 0;
-      if (video_element.buffered.length == 1) {
-        amount_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0));
+      if (isYoutubePimw()) {
+        // it stays always as "paused"
+        // var done_buffering = (youtube_pimw_player.getPlayerState() == YT.PlayerState.CUED);
+        var done_buffering = true; // ???
+      } else {
+        var HAVE_ENOUGH_DATA_HTML5 = 4;
+        var done_buffering = (video_element.readyState == HAVE_ENOUGH_DATA_HTML5);
       }
-      if (amount_buffered > 2) { // usually 4 or 6...
-  			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time) + " buffered=" + amount_buffered);
+      if ((isPaused() && done_buffering) || !isPaused()) {
+      var seconds_buffered = 0;
+      if (isYoutubePimw()) {
+        seconds_buffered = youtube_pimw_player.getDuration() * youtube_pimw_player.getVideoLoadedFraction();
+      } else if (video_element.buffered.length == 1) { // the normal case I think...
+        seconds_buffered = (video_element.buffered.end(0) - video_element.buffered.start(0));
+      }
+      if (seconds_buffered > 2) { // usually 4 or 6...
+  			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time) + " buffered=" + seconds_buffered);
         if (!current_state) {
     			doPlay();
         } else {
@@ -1438,7 +1487,7 @@ function seekToTime(ts, callback) {
         }
         seek_timer = null;
       } else {
-        console.log("waiting for it to finish buffering..." + amount_buffered);
+        console.log("waiting for it to finish buffering..." + seconds_buffered);
       }
 		}		
 	}, 50);
