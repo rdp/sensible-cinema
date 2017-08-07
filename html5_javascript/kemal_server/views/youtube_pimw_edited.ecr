@@ -10,7 +10,11 @@ NOT YET IN SYSTEM
   <br/>
 
   <h3>
-  <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+  <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
+  <br/>
+  volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 300px;"></input>
+  <br/>
+  <div id="current_time_id"></div>
   <!--a href='' onclick="doFullScreen(); return false">fullscreen</a-->
 
   </h3>
@@ -41,6 +45,11 @@ Enter url of movie here:
     {
         youtube_pimw_player.setVolume(val);
     }
+    
+    function updateTime() {
+      current_time_id.innerHTML=youtube_pimw_player.getCurrentTime() + " /" + youtube_pimw_player.getDuration();
+    }
+    setInterval(updateTime, 1000/30);
     
     function doFullScreen() {
       // var iframe = document.getElementById("player_with_controls"); //youtube_pimw_player.getIframe(); // TODO :|
