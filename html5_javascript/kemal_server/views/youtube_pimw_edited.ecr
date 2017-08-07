@@ -9,7 +9,7 @@ NOT YET IN SYSTEM
 <br/>
 
 <h3>
-<a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+<a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
 
 </h3>
 
@@ -35,9 +35,7 @@ Enter url of movie here:
 
     function SetVolume(val)
     {
-        console.log('Before: ' + youtube_pimw_player.getVolume());
         youtube_pimw_player.setVolume(val);
-        console.log('After: ' + youtube_pimw_player.getVolume());
     }
 
   // Load the IFrame Player API code asynchronously.
@@ -66,6 +64,7 @@ function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   //event.target.setVolume(100);
   event.target.playVideo();
+  document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
 }
 
 </script>
