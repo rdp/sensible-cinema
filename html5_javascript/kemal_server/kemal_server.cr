@@ -477,7 +477,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
   if real_url =~ /youtube.com/ # probably from manual ... but want to change it after download info :|
     raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=") # reject https://www.youtube.com/user/paulsoaresjr etc. which are screwy today :| though js does this too...
     youtube_id = real_url.split("?v=")[-1]
-    title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url "https://www.youtube.com/watch?v=#{$1}" # The Crayon Song Gets Ruined - YouTube
+    title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url real_url # The Crayon Song Gets Ruined - YouTube
     sanitized_url = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id
   else
     title_from_download_url, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
