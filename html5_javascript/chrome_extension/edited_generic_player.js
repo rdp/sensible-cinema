@@ -1,8 +1,8 @@
 //auto-generated file
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-var request_host="localhost:3000"; // dev
-// var request_host="playitmyway.org";  // prod
+// var request_host="localhost:3000"; // dev
+var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -543,7 +543,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
     optionally_show_notification(tag); // show it now so it can notify while it seeks :)
-    seekToTime(desired_time); // just seek (works fine in amazon, and seems to even work ok these days in utube...
+    seekToTime(desired_time); // just seek (works fine in amazon, and seems to even work ok these days in utube...s
 	}
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);

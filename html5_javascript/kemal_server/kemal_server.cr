@@ -71,10 +71,16 @@ get "/ping" do |env|
   "It's alive!"
 end
 
+# create is: they fill out something at the bottom, which sends them...here...
+# yeah I want our view to be able to have an "add" button...hmm...
+
 get "/youtube_pimw_edited/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
-  in_system = "https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=" + youtube_id
+  in_system = "https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=" + youtube_id # hacky way to be able to look it up to display stuff about it
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
+  if (!url) {
+    create_new_and_redir(HTML.unescape(in_system), episode_number, episode_name, title, duration, env)
+  }
   # raise "not in system yet? #{in_system}" unless url
   render "views/youtube_pimw_edited.ecr", "views/layout.ecr"
 end
@@ -779,9 +785,9 @@ post "/save_url" do |env|
 end
 
 def download_youtube_image_if_none(db_url)
-  if !db_url.image_local_filename.present? && db_url.url =~ /youtube.com/
+  if !db_url.image_local_filename.present? && db_url.url =~ /youtube_pimw_edited/
     # we can get an image fer free! :) The default ratio they seem to offer "wide horizon" unfortunately, though we might be able to do better XXXX
-    youtube_id = db_url.url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
+    youtube_id = db_url.url.split("/")[-1]
     db_url.download_image_url_and_save "http://img.youtube.com/vi/#{youtube_id}/0.jpg"
   end
 end
