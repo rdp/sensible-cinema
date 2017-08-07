@@ -247,7 +247,6 @@ function checkIfShouldDoActionAndUpdateUI() {
       return;
     }
   }
-  console.log("cur_time=" + cur_time);
   last_timestamp = cur_time;
   
 	tag = areWeWithin(mutes, cur_time);
@@ -276,7 +275,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
     optionally_show_notification(tag); // show it now so it can notify while it seeks :)
-    waitTillBufferedThenSeek(cur_time, tag.endy);
+    seekToTime(desired_time); // just seek (works fine in amazon, and seems to even work ok these days in utube...
 	}
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
@@ -325,59 +324,6 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("playback_rate"), getPlaybackRate().toFixed(2) + "x");
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
-
-var wait_for_buffering; // only start one buffering...this is insanity...
-
-function waitTillBufferedThenSeek(cur_time, desired_time) {
-  var diff = desired_time - cur_time;
-  if (isYoutubePimw() && getSecondsBufferedAhead() < diff) { // could do this for amazon too???
-    // this is terrifying ...
-    // accuracy is worth it, right???!    
-    // wait if it's > 50s though...then what? arrr matey!
-    // hope this doesn't screw up editing :|
-    var current_pause_state = isPaused();
-    doPause(); // let it buffer
-    var seek_to_time = desired_time;
-    var sum = 0;
-    var start_buffering = getSecondsBufferedAhead();
-    if (wait_for_buffering) {
-      console.log("not re-wait for buffering, should have just paused it");
-    } else {
-      wait_for_buffering = setInterval(function() {
-        console.log("waitTillBufferedThenSeek interval");
-        var done = false;
-        if (getSecondsBufferedAhead() < diff) {
-          console.log("doing accurate seek after buffered phew ms=" + sum);
-          done = true;
-        }
-        if (sum > 5000) {
-          console.log("doing inaccurate extra seek forward after full 5s, gah!"); // this defaults  to seeking "before" so...sniff...
-          done = true;
-          seek_to_time += 2.5; // they say "at worst 2 seconds" so fear the worst :|
-        }
-        if (sum == 1000 && getSecondsBufferedAhead() == start_buffering) {
-          console.log("doing inaccurate extra seek forward after it feels like not loading 1s :|");
-          done = true;
-          seek_to_time += 2.5; // they say "at worst 2 seconds" so fear the worst :|
-        }
-        if (done) {
-          clearInterval(wait_for_buffering);
-      	  seekToTime(seek_to_time, function() {
-            if (!current_pause_state) {
-              doPlay(); // we have to track our own here, basically :|
-            }
-            wait_for_buffering = null;
-          });
-        }
-        sum += 10;
-       }, 10);
-     }
-   } else {
-     console.log("doing straight seek, enough buffered ahead already");
-     seekToTime(desired_time); // just seek (works fine in amazon :| )
-   }
-}
-
 
 function removeIfNotifyEditsHaveEnded(cur_time) {
   for (var tag of currently_in_process_tags.keys()) {
