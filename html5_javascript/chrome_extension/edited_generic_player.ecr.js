@@ -493,7 +493,7 @@ function getPlaybackRate() {
 function decreasePlaybackRate() {
   if (isYoutubePimw()) {
     var options = youtube_pimw_player.getAvailablePlaybackRates();
-    var nextLower = youtube_pimw_player.options[options.indexOf(1) - 1];
+    var nextLower = options[options.indexOf(getPlaybackRate()) - 1];
     youtube_pimw_player.setPlaybackRate(nextLower);
   } else {
     video_element.playbackRate -= 0.1;

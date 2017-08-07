@@ -98,7 +98,7 @@ function addEditUi() {
 
       <br/>
       <input type='button' onclick="playButtonClicked(); setPlaybackRate(0.5); return false;" value='0.5x'>
-      <input type='button' onclick="video_element.playbackRate -= 0.1; return false;" value='&lt;&lt;'/>
+      <input type='button' onclick="decreasePlaybackRate();; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
       <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
@@ -732,6 +732,42 @@ function videoDuration() {
   }
 }
 
+
+function isPaused() {
+  if (isYoutubePimw()) {
+    var paused = 2;
+    return youtube_pimw_player.getPlayerState() == paused;
+  } else {
+    return video_element.paused;
+  }
+}
+
+function doPlay() {
+  if (isYoutubePimw()) {
+    youtube_pimw_player.playVideo();
+  } else {
+    video_element.play();
+  }
+}
+
+function getPlaybackRate() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.getPlaybackRate();
+  } else {
+    return video_element.playbackRate;
+  }
+}
+
+function decreasePlaybackRate() {
+  if (isYoutubePimw()) {
+    var options = youtube_pimw_player.getAvailablePlaybackRates();
+    var nextLower = options[options.indexOf(getPlaybackRate()) - 1];
+    youtube_pimw_player.setPlaybackRate(nextLower);
+  } else {
+    video_element.playbackRate -= 0.1;
+  }
+}
+
 function setPlaybackRate(toExactlyThis) {
   if (isYoutubePimw()) {
     youtube_pimw_player.setPlaybackRate(toExactlyThis);
@@ -881,31 +917,6 @@ function testCurrentFromUi() {
 	});
 }
 
-
-function isPaused() {
-  if (isYoutubePimw()) {
-    var paused = 2;
-    return youtube_pimw_player.getPlayerState() == paused;
-  } else {
-    return video_element.paused;
-  }
-}
-
-function doPlay() {
-  if (isYoutubePimw()) {
-    youtube_pimw_player.playVideo();
-  } else {
-    video_element.play();
-  }
-}
-
-function getPlaybackRate() {
-  if (isYoutubePimw()) {
-    return youtube_pimw_player.getPlaybackRate();
-  } else {
-    return video_element.playbackRate;
-  }
-}
 
 function currentEditArray() {
   switch (currentTestAction()) {
