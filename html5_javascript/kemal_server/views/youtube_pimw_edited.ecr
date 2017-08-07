@@ -40,9 +40,7 @@ Enter url of movie here:
       width: '640',
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
-      fs: false,
-      controls: false,
-      allowfullscreen: false,
+      playerVars: { 'fs': 0, 'controls': 0 },      
       events: {
         'onReady': onPlayerReady
       }
