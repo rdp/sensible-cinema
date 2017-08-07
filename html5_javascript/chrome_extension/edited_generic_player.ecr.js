@@ -106,13 +106,6 @@ function addEditUi() {
       
        <br/>
         action:
-        <select name="default_action" id='action_sel' onchange="">
-          <option value="mute">mute</option>
-          <option value="skip">skip</option>
-          <option value="yes_audio_no_video">yes_audio_no_video</option>
-          <option value="mute_audio_no_video">mute_audio_no_video</option>
-          <option value="mute_audio_no_video">make_video_smaller</option>
-        </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->

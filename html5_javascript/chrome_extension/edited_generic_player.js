@@ -107,15 +107,20 @@ function addEditUi() {
       
        <br/>
         action:
+        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
+        <br/>
+        <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
+
+
         <select name="default_action" id='action_sel' onchange="">
           <option value="mute">mute</option>
           <option value="skip">skip</option>
           <option value="yes_audio_no_video">yes_audio_no_video</option>
           <option value="mute_audio_no_video">mute_audio_no_video</option>
+          <option value="make_video_smaller">make_video_smaller</option>
+          <option value="make_video_faster">make_video_faster</option>
         </select>
-        <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
-        <br/>
-        <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
+
 
 <div id="category_div_id">
 <select name="category" id='category_select' onchange="showSubCatWithRightOptionsAvailable(); document.getElementById('subcategory_select_id').value = ''; // reset subcat in case cat changed "
