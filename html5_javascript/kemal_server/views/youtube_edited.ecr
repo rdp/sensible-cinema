@@ -19,7 +19,7 @@ NOT YET IN SYSTEM
   var youtube_player;
   function onYouTubePlayerAPIReady() {
     youtube_player = new YT.Player('ytplayer_div', {
-      height: '360', // TODO allow full screen, and on flds :|
+      height: '360', 
       width: '640',
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
@@ -29,9 +29,8 @@ NOT YET IN SYSTEM
     });
   }
 
-
 function onPlayerReady(event) {
-  alert("youtube_player ready player=" + youtube_player);
+  console.log("youtube_player ready and setup! auto playing...");
   event.target.setVolume(100);
   event.target.playVideo();
 }

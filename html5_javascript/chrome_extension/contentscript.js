@@ -2,8 +2,8 @@
 // content script runs on every page...and once again on each embedded iframe...
 // we mostly use this to bootstrap the real player...
 
-// var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
-var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.org";  // prod
+var editorExtensionId = "ogneemgeahimaaefffhfkeeakkjajenb";  var request_host="localhost:3000"; // dev
+// var editorExtensionId = "ionkpaepibbmmhcijkhmamakpeclkdml"; var request_host="playitmyway.org";  // prod
 
 function loadScript(url, callback)
 {
@@ -109,22 +109,26 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server, not compat... [?]
     return;
   }
-  if (url.includes("play.google.com") || url.includes("amazon.com") || url.includes("playitmyway.org")) {
+  var pimw_youtube_maybe_iframe = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_edited");
+  
+  if (url.includes("play.google.com") || url.includes("amazon.com") || pimw_youtube_maybe_iframe) {
     if (inIframe()) { 
-      // avoid google iframes popup after it says YES and reset it back even though it is playing OK
-      console.log("not setting to ... from an iframe");
+      // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
+      console.log("not setting plugin text to ... from an iframe");
+      if (pimw_youtube_maybe_iframe) {
+        return; // don't inject it here...
+      }
     }
     else {
       chrome.runtime.sendMessage({text: "look", color: "#808080", 
 			      details: "edited playback and waiting for a video to appear present, then will try to see if edits exist for it so can playback edited"}); 
     }
     // iframe wants to load it though, for google play
-    console.log("big 3 polling for video tag...");
+    console.log("big 3/pimw polling for video tag...");
     var interval = setInterval(function(){
 			var video_element = findFirstVideoTagOrNull();
-			// check for paused so it doesn't prompt you before you're watching on amazon series, slightly annoying
-      if (video_element != null && !video_element.src.endsWith(".mp4") && !video_element.paused) { // amazon.com main page used mp4's, avoid prompt edited :|				
-				console.log("big 3 found video...");
+      if (video_element != null || pimw_youtube_maybe_iframe) {
+				console.log("big 3 found video tag [or pimw auto], injecting...");
         injectEditedPlayerOnce();
         clearInterval(interval);
       }
