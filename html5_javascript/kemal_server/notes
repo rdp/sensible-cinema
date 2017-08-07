@@ -1,3 +1,15 @@
+== Game of thrones timing :| ==
+
+
+       // game of thrones ep. 10 ours says 3623.34 their says 3157.333?? (our by 466.0 ? 7.7m??)
+      // or 
+      // 5 second hbo thing at the beginning
+      // 3 second clip at the end [?]
+      // ep. 1 ours 4016.4700000000003 theirs 3697.045333 (same on FF phew)
+      // closing credits (purchased) start close to 3633.690995, in FF 3633.458853
+      // ep. 2 with purchase, credits start just before: 3252.954666
+      // ep. 2 with sub. 3359.948218
+
 == android ==
 
 I may be able to inject some javascript I need...oh except...I still don't have the user-agent I need/want :|

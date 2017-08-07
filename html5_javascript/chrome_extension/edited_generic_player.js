@@ -135,7 +135,9 @@ sub cat:
 <select name="subcategory" id='subcategory_select_id' style="background-color: rgba(255, 255, 255, 0.85);" onchange="resizeToCurrentSize(this);">
     <option value="">unknown -- please select subcategory</option>
     
-      <option value="initial theme song">movie-content -- initial theme song/credits</option>    
+      <option value="initial theme song">movie-content -- initial theme song</option>    
+    
+      <option value="initial credits">movie-content -- initial company credits before intro/before songs</option>    
     
       <option value="closing credits">movie-content -- closing credits/songs</option>    
     
@@ -209,6 +211,8 @@ sub cat:
     
       <option value="light fight">violence -- short fighting &#40;single punch/kick/hit/push&#41;</option>    
     
+      <option value="sustained fight">violence -- sustained punching/fighting</option>    
+    
       <option value="threatening actions">violence -- threatening actions</option>    
     
       <option value="stabbing/shooting no blood">violence -- stabbing/shooting no blood</option>    
@@ -230,8 +234,6 @@ sub cat:
       <option value="explosion">violence -- explosion &#40;no implied death&#41;</option>    
     
       <option value="explosion death">violence -- explosion &#40;implied death&#41;</option>    
-    
-      <option value="sustained fight">violence -- sustained punching/fighting</option>    
     
       <option value="comedic fight">violence -- comedic/slapstick fighting</option>    
     

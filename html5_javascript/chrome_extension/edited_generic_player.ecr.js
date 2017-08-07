@@ -1053,7 +1053,7 @@ function withinDelta(first, second, delta) {
 	return diff < delta;
 }
 
-function findFirstVideoTagOrNull() {
+function findFirstVideoTagOrNull() { //= or       document.querySelector("video"); LOL
   var all = document.getElementsByTagName("video");
   // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
   // it hopefully won't hurt anything tho...since with the plugin way and most pages "can't access child iframes" the content script injected into all iframes will take care of business instead.
