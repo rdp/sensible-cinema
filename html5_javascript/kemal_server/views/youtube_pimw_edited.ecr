@@ -8,7 +8,10 @@ NOT YET IN SYSTEM
 <div id="ytplayer_div"></div>
 <br/>
 
-<h3><a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a><a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
+<h3>
+<a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a><input id="vol-control" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)"></input>
+
+</h3>
 
 
 
@@ -29,6 +32,19 @@ Enter url of movie here:
 </form>
 
 <script>
+
+
+
+<script>
+    function SetVolume(val)
+    {
+        console.log('Before: ' + youtube_pimw_player.getVolume());
+        youtube_pimw_player.setVolume(val);
+        console.log('After: ' + youtube_pimw_player.getVolume();
+    }
+</script>
+
+
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
