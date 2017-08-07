@@ -455,14 +455,8 @@ get "/new_url_from_plugin" do |env| # add_url add_new it does call this
   episode_name = incoming["episode_name"]
   title = incoming["title"]
   duration = incoming["duration"].to_f
-  if real_url =~ /youtube.com/ && !real_url.includes?("?v=")
-    raise "youtube nonstandard url detected, please report #{real_url}" # reject https://www.youtube.com/user/paulsoaresjr etc. which are screwy today :| though js does this too...
-  end
   
-  if real_url =~ /youtube_pimw_edited\/(.*)$/ # :|
-    title, _ = get_title_and_sanitized_standardized_canonical_url "https://www.youtube.com/watch?v=#{$1}" # The Crayon Song Gets Ruined - YouTube
-  end
-  
+
   create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
 end
 
@@ -473,18 +467,24 @@ get "/new_manual_url" do |env|
   else
     episode_number = 0
   end
-  if real_url =~ /youtube.com/
-    raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=")
-    youtube_id = real_url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
-    real_url = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id
-  end
   create_new_and_redir(real_url, episode_number, "", "", 0.0, env)
 end
 
 def create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
-  title_incoming, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
+  if real_url =~ /youtu.be/
+    raise "use non shortened youtube. url's please"
+  end
+  if real_url =~ /youtube.com/ # probably from manual ... but want to change it after download info :|
+    raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.includes?("?v=") # reject https://www.youtube.com/user/paulsoaresjr etc. which are screwy today :| though js does this too...
+    youtube_id = real_url.split("?v=")[-1]
+    title_from_download_url, _ = get_title_and_sanitized_standardized_canonical_url "https://www.youtube.com/watch?v=#{$1}" # The Crayon Song Gets Ruined - YouTube
+    sanitized_url = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id
+  else
+    title_from_download_url, sanitized_url = get_title_and_sanitized_standardized_canonical_url real_url
+  end
+
   if title == ""
-    title = title_incoming
+    title = title_from_download_url # only use if not provided via manual
   end
   puts "using sanitized_url=#{sanitized_url} real_url=#{real_url}"
   url_or_nil = Url.get_only_or_nil_by_urls_and_episode_number(sanitized_url, episode_number)
