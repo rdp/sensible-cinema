@@ -35,12 +35,12 @@ Enter url of movie here:
   // YouTube player after the API code downloads.
   var youtube_pimw_player;
   function onYouTubePlayerAPIReady() {
-    youtube_pimw_player = new YT.Player('ytplayer_div', {
+    new YT.Player('ytplayer_div', {
       height: '360', 
       width: '640',
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
-      playerVars: { 'fs': 0, 'controls': 0 },      
+      playerVars: { 'fs': 0, 'controls': 1 },      
       events: {
         'onReady': onPlayerReady
       }
@@ -49,7 +49,8 @@ Enter url of movie here:
 
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
-  event.target.setVolume(100);
+  youtube_pimw_player = event.target; // late setup, just for fun...
+  //event.target.setVolume(100);
   event.target.playVideo();
 }
 
