@@ -1138,7 +1138,7 @@ function withinDelta(first, second, delta) {
 function findFirstVideoTagOrNull() {
   var url = currentUrlNotIframe();
   var is_pimw_youtube = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_pimw_edited");
-  if (is_pimw_youtube && youtube_pimw_player) { // assume returning video_element implies "I'm alive"
+  if (is_pimw_youtube && typeof youtube_pimw_player !== 'undefined') { // assume returning video_element implies "I'm alive"
     return document.getElementById("show_your_instructions_here_id");
   }
   
