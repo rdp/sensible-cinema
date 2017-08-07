@@ -73,7 +73,7 @@ end
 
 get "/youtube_pimw_edited/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
-  in_system = "https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=" + youtube_id # hacky way to be able to look it up to display stuff about it
+  in_system = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id # hacky way to be able to look it up to display stuff about it
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
   raise "fill out link at the bottom of existing youtube to add new youtube in_system=" + in_system unless url
   render "views/youtube_pimw_edited.ecr", "views/layout.ecr"
