@@ -1,6 +1,11 @@
 <h2>Youtube edited</h2>
+<% unless url %>
+<br/>
+NOT YET IN SYSTEM
+<br/>
+<% end %>
 
-<div id="ytplayer"></div>
+<div id="ytplayer_div"></div>
 
 <script>
   // Load the IFrame Player API code asynchronously.
@@ -11,12 +16,12 @@
 
   // Replace the 'ytplayer' element with an <iframe> and
   // YouTube player after the API code downloads.
-  var player;
+  var youtube_player;
   function onYouTubePlayerAPIReady() {
-    player = new YT.Player('ytplayer', {
-      height: '360',
+    youtube_player = new YT.Player('ytplayer_div', {
+      height: '360', // TODO allow full screen, and on flds :|
       width: '640',
-      videoId: 'M7lc1UVf-VE',
+      videoId: '<%= youtube_id %>',
       enablejsapi: true,
       events: {
         'onReady': onPlayerReady
@@ -26,8 +31,9 @@
 
 
 function onPlayerReady(event) {
-  alert("p ready");
+  alert("youtube_player ready player=" + youtube_player);
   event.target.setVolume(100);
   event.target.playVideo();
 }
+
 </script>

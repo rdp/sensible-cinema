@@ -68,10 +68,14 @@ def db_style_from_query_url(env)
 end
 
 get "/ping" do |env|
-  "I'm alive"
+  "It's alive!"
 end
 
 get "/youtube_edited/:youtube_id" do |env|
+  youtube_id = env.params.url["youtube_id"]
+  in_system = "https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=" + youtube_id
+  url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
+  # raise "not in system yet? #{in_system}" unless url
   render "views/youtube_edited.ecr", "views/layout.ecr"
 end
 
