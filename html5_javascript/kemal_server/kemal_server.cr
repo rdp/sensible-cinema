@@ -473,6 +473,11 @@ get "/new_manual_url" do |env|
   else
     episode_number = 0
   end
+  if real_url =~ /youtube.com/
+    raise "expected normal youtube url like https://www.youtube.com/watch?v=9VH8lvZ-Z1g" unless real_url.contains?("?v=")
+    youtube_id = real_url.split("?v=")[-1] # https://www.youtube.com/watch?v=9VH8lvZ-Z1g :|
+    real_url = "https://playitmyway.org/youtube_pimw_edited/" + youtube_id
+  end
   create_new_and_redir(real_url, episode_number, "", "", 0.0, env)
 end
 
