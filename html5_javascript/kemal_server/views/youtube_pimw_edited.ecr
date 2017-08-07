@@ -1,11 +1,15 @@
 <h2>Youtube edited</h2>
 <% unless url %>
-<br/>
+<!--br/> TODO :|
 NOT YET IN SYSTEM
-<br/>
+<br/-->
 <% end %>
 
 <div id="ytplayer_div"></div>
+<br/>
+
+<div style="height: 1360px; width: 620px;   background: black;" id="show_your_instructions_here_id">
+</div>
 
 <script>
   // Load the IFrame Player API code asynchronously.
@@ -14,11 +18,11 @@ NOT YET IN SYSTEM
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  // Replace the 'ytplayer' element with an <iframe> and
+  // Replaces the 'ytplayer' element with an <iframe> and
   // YouTube player after the API code downloads.
-  var youtube_player;
+  var youtube_pimw_player;
   function onYouTubePlayerAPIReady() {
-    youtube_player = new YT.Player('ytplayer_div', {
+    youtube_pimw_player = new YT.Player('ytplayer_div', {
       height: '360', 
       width: '640',
       videoId: '<%= youtube_id %>',

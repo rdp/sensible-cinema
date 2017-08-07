@@ -109,7 +109,7 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server, not compat... [?]
     return;
   }
-  var pimw_youtube_maybe_iframe = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_edited");
+  var pimw_youtube_maybe_iframe = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_pimw_edited");
   
   if (url.includes("play.google.com") || url.includes("amazon.com") || pimw_youtube_maybe_iframe) {
     if (inIframe()) { 
@@ -144,7 +144,7 @@ function autoStartIfShould() {
   }
 }
 
-function currentUrlNotIframe() {
+function currentUrlNotIframe() { // duplicated with other .js
   return (window.location != window.parent.location) ? document.referrer : document.location.href;
 }
 

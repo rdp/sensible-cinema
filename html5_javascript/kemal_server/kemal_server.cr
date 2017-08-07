@@ -71,12 +71,12 @@ get "/ping" do |env|
   "It's alive!"
 end
 
-get "/youtube_edited/:youtube_id" do |env|
+get "/youtube_pimw_edited/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
   in_system = "https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=" + youtube_id
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
   # raise "not in system yet? #{in_system}" unless url
-  render "views/youtube_edited.ecr", "views/layout.ecr"
+  render "views/youtube_pimw_edited.ecr", "views/layout.ecr"
 end
 
 get "/redo_all_thumbnails" do |env|
@@ -101,7 +101,7 @@ get "/getting_started" do |env| # google like this once I think LOL
 end
 
 get "/look_for_outdated_primes" do
-  all = Url.all # TODO real api?
+  all = Url.all # TODO real api instead?
   all.select!{|url| url.editing_status == editing_phases[:done_second_pass]}
   all_with_curl = all.map{ |url| 
    curl = download(HTML.unescape url.url)
@@ -458,6 +458,11 @@ get "/new_url_from_plugin" do |env| # add_url add_new it does call this
   if real_url =~ /youtube.com/ && !real_url.includes?("?v=")
     raise "youtube nonstandard url detected, please report #{real_url}" # reject https://www.youtube.com/user/paulsoaresjr etc. which are screwy today :| though js does this too...
   end
+  
+  if real_url =~ /youtube_pimw_edited\/(.*)$/ # :|
+    title, _ = get_title_and_sanitized_standardized_canonical_url "https://www.youtube.com/watch?v=#{$1}" # The Crayon Song Gets Ruined - YouTube
+  end
+  
   create_new_and_redir(real_url, episode_number, episode_name, title, duration, env)
 end
 

@@ -1,8 +1,8 @@
 //auto-generated file
 // (c) 2016, 2017 Roger Pack released under LGPL
 
-// var request_host="localhost:3000"; // dev
-var request_host="playitmyway.org";  // prod
+var request_host="localhost:3000"; // dev
+// var request_host="playitmyway.org";  // prod
 
 if (typeof clean_stream_timer !== 'undefined') {
   alert("play it my way: already loaded...not loading it again...please use the on screen links for it"); // hope we never get here :|
@@ -90,9 +90,9 @@ function addEditUi() {
         
       <!-- no method for seek forward since it'll at worst seek too far forward --> 
       <input type='button' onclick="seekToBeforeSkip(-30); return false;" value='-30s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 30); return false;" value='+30s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() + 30); return false;" value='+30s'/> 
       <input type='button' onclick="seekToBeforeSkip(-5); return false;" value='-5s'/>
-      <input type='button' onclick="seekToTime(video_element.currentTime + 5); return false;" value='+5s'/> 
+      <input type='button' onclick="seekToTime(getCurrentTime() + 5); return false;" value='+5s'/> 
       <input type='button' onclick="stepFrameBack(); return false;" value='frame-'/>
       <input type='button' onclick="stepFrame(); return false;" value='frame+'/>
 
@@ -406,8 +406,8 @@ default enabled?
 
 function playButtonClicked() {
   if (video_element.paused) {
-    video_element.play();
-  } else if (video_element.playbackRate != 1) {
+    doPlay();
+  } else if (getPlaybackRate() != 1) {
     video_element.playbackRate = 1; // back to normal :)
   }
 }
@@ -503,7 +503,7 @@ var i_muted_it = false; // attempt to let them still control their mute button :
 var last_timestamp = 0;
 
 function checkIfShouldDoActionAndUpdateUI() {
-	var cur_time = video_element.currentTime;
+	var cur_time = getCurrentTime();
   var tag;
   if (cur_time < last_timestamp) {
     console.log("Something just seeked backwards to=" + cur_time);
@@ -574,7 +574,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   updateHTML(document.getElementById("tag_details_top_line"), top_line + " " + timeStampToHuman(cur_time) + "<br>");
   
 	var second_line = "";
-  var next_future_tag = getNextTagAfterOrWithin(video_element.currentTime);
+  var next_future_tag = getNextTagAfterOrWithin(getCurrentTime());
   if (next_future_tag) {
     second_line += "next: " + timeStampToHuman(next_future_tag.start) + 
            " (" + next_future_tag.default_action + " for " + (next_future_tag.endy - next_future_tag.start).toFixed(2) + "s)";
@@ -589,7 +589,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   updateHTML(document.getElementById('tag_details_second_line'), second_line);
   
-  updateHTML(document.getElementById("playback_rate"), video_element.playbackRate.toFixed(2) + "x");
+  updateHTML(document.getElementById("playback_rate"), getPlaybackRate().toFixed(2) + "x");
   removeIfNotifyEditsHaveEnded(cur_time); // gotta clean this up sometime, and also support "rewind and renotify" so just notify once on init...
 }
 
@@ -649,8 +649,8 @@ function logOnce(to_log) {
 
 function isWatchingAdd() {
   if (url != null) {
-		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, video_element.duration, 2)) {
-			logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + video_element.duration); // we get NaN for video_element.duration
+		if (current_json.url.total_time > 0 && !withinDelta(current_json.url.total_time, videoDuration(), 2)) {
+			logOnce("watching add? Or possibly hit X after starting movie amazon expected=" + current_json.url.total_time + " got_duration=" + videoDuration()); // we get NaN for video_element.duration after it closes [?]
       return true;
 			// and do nothing
 		}
@@ -684,11 +684,11 @@ function timestamp_log(message, cur_time, tag) {
 }
 
 function seekToBeforeSkip(delta) {
-  var desired_time = video_element.currentTime + delta;
+  var desired_time = getCurrentTime() + delta;
 	var tag = areWeWithin(skips, desired_time);  
   if (tag) {
     console.log("would have sought to middle of " + JSON.stringify(tag) + " going back further instead");
-    seekToBeforeSkip(tag.start - (video_element.currentTime) - 2); // method, in case we run into another'un right there ... :|
+    seekToBeforeSkip(tag.start - (getCurrentTime()) - 2); // method, in case we run into another'un right there ... :|
   }
   else {
     seekToTime(desired_time);
@@ -724,19 +724,26 @@ function getNextTagAfterOrWithin(cur_time) {
   return null;
 }
 
+function videoDuration() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.getDuration();
+  } else {
+    return video_element.duration;
+  }
+}
+
 function addForNewVideo() {
 	if (getStandardizedCurrentUrl().includes("youtube.com/user/")) {
 		alert("this is a youtube user page, we don't support those yet, click through to a particular video first");
 		// XXXX more generic here somehow possible???
 		// TODO don't even offer to edit it for them on that page [?] and other pages where it's impossible today [facebook]?
+    return;
 	}
-	else {
-    window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
-		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + video_element.duration, "_blank");
-		setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
-    // once took longer than 2000 :|
-		pauseVideo();
-	}  
+  window.open("https://" + request_host + "/new_url_from_plugin?url=" + encodeURIComponent(getStandardizedCurrentUrl()) + "&episode_number=" + liveEpisodeNumber() + "&episode_name="  +
+		      encodeURIComponent(liveEpisodeName()) + "&title=" + encodeURIComponent(liveTitleNoEpisode()) + "&duration=" + videoDuration(), "_blank");
+	setTimeout(loadForNewUrl, 4000); // it should auto save so we should be live within 2s I hope...if not they'll get the same prompt [?] :|					
+  // once took longer than 2000 :|
+	pauseVideo();
 }
 
 function toggleAddNewTagStuff() {
@@ -836,7 +843,7 @@ function testCurrentFromUi() {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
-    video_element.play(); // seems like we want this, plus otherwise mess up the test timing [?]
+    doPlay(); // seems like we want this, plus otherwise mess up the test timing [?]
 	  inMiddleOfTestingTimer = makeTimeout(function() { // we call this early to cancel if they hit it a second time...
       console.log("popping " + JSON.stringify(faux_tag));
 	    temp_array.pop();
@@ -844,6 +851,22 @@ function testCurrentFromUi() {
       inMiddleOfTestingTimer = null;
 	  }, wait_time_millis);
 	});
+}
+
+function doPlay() {
+  if (isYoutubePimw()) {
+    youtube_pimw_player.playVideo()
+  } else {
+    video_element.play();
+  }
+}
+
+function getPlaybackRate() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.getPlaybackRate();
+  } else {
+    return video_element.playbackRate;
+  }
 }
 
 function currentEditArray() {
@@ -862,14 +885,14 @@ function currentEditArray() {
 }
 
 function getCurrentVideoTimestampHuman() {
-  return timeStampToHuman(video_element.currentTime);
+  return timeStampToHuman(getCurrentTime());
 }
 
 function openPreviousTagButton() {
-  var timeSearch = video_element.currentTime;
+  var timeSearch = getCurrentTime();
   while (timeSearch > 0) {
     var next_tag = getNextTagAfterOrWithin(timeSearch);
-    if (next_tag && (next_tag.endy < video_element.currentTime)) {
+    if (next_tag && (next_tag.endy < getCurrentTime())) {
       window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
       return;
     }
@@ -881,7 +904,7 @@ function openPreviousTagButton() {
 }
 
 function openNextTagButton() {
-  var next_tag = getNextTagAfterOrWithin(video_element.currentTime);
+  var next_tag = getNextTagAfterOrWithin(getCurrentTime());
   if (next_tag) {
     window.open("https://" + request_host + "/edit_tag/" + next_tag.id);
   }
@@ -896,7 +919,7 @@ function saveEditButton() {
   }
   var endy = humanToTimeStamp(document.getElementById('endy').value);
   
-  if (endy > video_element.duration) {
+  if (endy > videoDuration()) {
     alert("tag goes past end of movie? aborting...");
     return;
   }
@@ -947,13 +970,13 @@ function getSubtitleLink() {
 }
 
 function stepFrameBack() {
-  seekToTime(video_element.currentTime - 1/10, function () { // go back 2 frames, 1 seems hard...
+  seekToTime(getCurrentTime() - 1/10, function () { // go back 2 frames, 1 seems hard...
     video_element.pause();
   });
 }
 
 function stepFrame() {
-  video_element.play();
+  doPlay();
   setTimeout(function() {
     video_element.pause(); 
   }, 1/10*1000); // audio needs some pretty high granularity :|
@@ -1198,14 +1221,13 @@ function startWatcherTimerOnce() {
   // guess we just never turn it off on purpose :)
 }
 
-function start() {
+function start() { // only called once :|
   video_element = findFirstVideoTagOrNull();
 
   if (video_element == null) {
-    // this one's pretty serious, yet could mean they're on youtube.com, there *was* a video playing but now it's just gone...hrm...
     // maybe could get here if they raw load the javascript?
-    console.log("play it my way:\nfailure: unable to find a video playing, not loading edited playback...possibly need to reload then hit a play button before loading edited playback?");
-    setTimeout(start, 1000); // just retry forever :|
+    console.log("play it my way:\nfailure: unable to find a video playing, not loading edited playback...need to reload then hit a play button before loading edited playback?");
+    setTimeout(start, 500); // just retry forever :| [seems to work OK in pimw_youtube, never retries...]
     return;
   }
 
@@ -1219,6 +1241,7 @@ function start() {
 
   // ready to try and load the editor LOL
 	console.log("adding edit UI, looking for URL");
+
   addEditUi(); // and only do once...
   loadForNewUrl();
 }
@@ -1258,7 +1281,9 @@ function mouseJustMoved(event) {
 }
 
 function hideAllPimwStuff() {
-  hideDiv(all_pimw_stuff); 
+  if (!isYoutubePimw()) {
+    hideDiv(all_pimw_stuff);
+  }
 }
 
 function addMouseAnythingListener(func) {
@@ -1321,7 +1346,14 @@ function withinDelta(first, second, delta) {
 	return diff < delta;
 }
 
-function findFirstVideoTagOrNull() { //= or       document.querySelector("video"); LOL
+function findFirstVideoTagOrNull() {
+  
+  var url = currentUrlNotIframe();
+  var is_pimw_youtube = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_pimw_edited");
+  if (is_pimw_youtube && youtube_pimw_player) { // assume returning video_element implies "I'm alive"
+    return document.getElementById("show_your_instructions_here_id");
+  }
+  
   var all = document.getElementsByTagName("video");
   // search iframes in case people try to load it manually, non plugin, and we happen to have access to iframes, which will be about never
   // it hopefully won't hurt anything tho...since with the plugin way and most pages "can't access child iframes" the content script injected into all iframes will take care of business instead.
@@ -1337,6 +1369,19 @@ function findFirstVideoTagOrNull() { //= or       document.querySelector("video"
     }
   }
   return null;
+  // or document.querySelector("video");
+}
+
+function isYoutubePimw() {
+  return (typeof youtube_pimw_player !== 'undefined');
+}
+
+function getCurrentTime() {
+  if (isYoutubePimw()) {
+    return youtube_pimw_player.getCurrentTime();
+  } else {
+    return video_element.currentTime;
+  }
 }
 
 function seekToTime(ts, callback) {
@@ -1352,7 +1397,7 @@ function seekToTime(ts, callback) {
   var current_state = video_element.paused;
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
-  var start_time = video_element.currentTime;
+  var start_time = getCurrentTime();
   video_element.pause();
   video_element.currentTime = ts; // if this is far enough away from current, it also implies a "play" call...oddly. I mean seriously that is bizarre.
 	// however if it close enough, then we need to call play
@@ -1366,7 +1411,7 @@ function seekToTime(ts, callback) {
       if (amount_buffered > 2) { // usually 4 or 6...
   			console.log("appears it just finished seeking successfully to " + timeStampToHuman(ts) + " length=" + (ts - start_time) + " buffered=" + amount_buffered);
         if (!current_state) {
-    			video_element.play();
+    			doPlay();
         } else {
           // stay paused
         }
