@@ -111,6 +111,7 @@ function addEditUi() {
           <option value="skip">skip</option>
           <option value="yes_audio_no_video">yes_audio_no_video</option>
           <option value="mute_audio_no_video">mute_audio_no_video</option>
+          <option value="mute_audio_no_video">make_video_smaller</option>
         </select>
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>

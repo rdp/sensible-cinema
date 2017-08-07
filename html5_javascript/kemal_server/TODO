@@ -7,8 +7,6 @@ kickstarter
 
 == todo list (me personally) ==
 
-youtube embed
-
 LLC
 
 better tabs for the main page, it's not mobile friendly :|
@@ -31,7 +29,7 @@ some series' are out of order?
 
 finish very high series'
 
-very high youtubes :|
+edit very high youtubes :|
 
 decide if want to force logins during kickstarter, if yes...
   for the demo? that seems pretty tame...
@@ -200,8 +198,6 @@ edited amazon precursor ads :|
 allow tags to be tagged with multiple "it's an opening scene and it's x" [?]
 
 if you're on firefox, it should say "click here to be redirected to chrome" and it does but not clearly enough yet...
-
-tell youtube API "you can seek to better than keyframes, come on, you can do better than that..."
 
 genre with scroll rights
 

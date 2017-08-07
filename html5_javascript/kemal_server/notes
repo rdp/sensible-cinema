@@ -1,3 +1,32 @@
+== youtube api terms of us ==
+
+youtube
+
+modify, build upon, or block any portion or functionality of a YouTube player;
+  so overlay is out
+  
+basically, the player needs to "just sit there"
+ and I can control it with the embed API
+ and that's it.
+
+so what does the embed API give me...hmm...
+
+could shrink to 200px by 200px (the video that size that is)
+  might actually be legal "14.use a video player smaller than the minimum video player size set forth in the YouTube API documentation and specifications."
+  it's "smallish" hmm...
+  doesn't work in full screen :|
+    can't control full screen :|
+
+can mute
+
+I *think* I can reliably seek...hmm...
+  and phew
+  
+I could speed things up but...but...just for youtube?  it's baaack LOL
+  speed up and mute?
+
+move the screen down then back up?
+
 == Game of thrones timing :| ==
 
 
@@ -92,9 +121,6 @@ maybe tease them with movies before tell them that getting started doesn't work 
 wishes for ipad (always has phone...)
   mentioned it
 
-demo for the mobile...youtube embed FTW :)
-  added a TODO For it do we still need it?
-
 "where do I find it?"
   email :|
 
@@ -130,15 +156,6 @@ wasn't clear on what is non-prime either...
   maybe pull the word amazon???
   sub tabs?
     check'ish startlingly
-
-are there any actually free on amazon/somewhere/anywhere?
-  youtubes "they're free!"??
-  some free would be great demo...
-    unclear...
-    and check whoa LOL
-
-require login for edit_url :|
-  check
 
 == dpi ==
 
