@@ -70,8 +70,8 @@ Enter url of movie here:
        document.exitFullscreen();
        return;
       }
-      // var iframe = document.getElementById("player_with_controls"); //youtube_pimw_player.getIframe(); // TODO :|
-      var iframe = youtube_pimw_player.getIframe();
+      var iframe = document.getElementById("player_with_controls");
+      // var iframe = youtube_pimw_player.getIframe();
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
         requestFullScreen.bind(iframe)();
