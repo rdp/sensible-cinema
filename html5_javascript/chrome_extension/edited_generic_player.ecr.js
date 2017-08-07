@@ -99,7 +99,7 @@ function addEditUi() {
       <input type='button' onclick="playButtonClicked(); setPlaybackRate(0.5); return false;" value='0.5x'>
       <input type='button' onclick="decreasePlaybackRate();; return false;" value='&lt;&lt;'/>
       <span ><a id='playback_rate' href=# onclick="setPlaybackRate(1.0); return false">1.00x</a></span> <!--XX remove link -->
-      <input type='button' onclick="video_element.playbackRate += 0.1; return false;" value='&gt;&gt;'/>
+      <input type='button' onclick="increasePlaybackRate(); return false;" value='&gt;&gt;'/>
       <input type='button' onclick="doPause(); return false;" value='&#9612;&#9612;'/>
       <input type='button' onclick="playButtonClicked(); return false;" value='&#9654;'>
       
@@ -490,13 +490,24 @@ function getPlaybackRate() {
   }
 }
 
+function relativeRateIndex(diff) {
+  var options = youtube_pimw_player.getAvailablePlaybackRates();
+  return options[options.indexOf(getPlaybackRate()) + diff];
+}
+
 function decreasePlaybackRate() {
   if (isYoutubePimw()) {
-    var options = youtube_pimw_player.getAvailablePlaybackRates();
-    var nextLower = options[options.indexOf(getPlaybackRate()) - 1];
-    youtube_pimw_player.setPlaybackRate(nextLower);
+    youtube_pimw_player.setPlaybackRate(relativeRateIndex(-1));
   } else {
     video_element.playbackRate -= 0.1;
+  }
+}
+
+function increasePlaybackRate() {
+  if (isYoutubePimw()) {
+    youtube_pimw_player.setPlaybackRate(relativeRateIndex(+1));
+  } else {
+    video_element.playbackRate += 0.1;
   }
 }
 
