@@ -1,0 +1,1 @@
+../../../chrome_extension/edited_generic_player.js
