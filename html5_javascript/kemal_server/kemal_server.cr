@@ -19,6 +19,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
     puts "start #{env.request.path} #{Time.now}"
     query = env.request.query
     if (env.request.path =~ /delete|nuke|personalized|edit/ || env.request.method == "POST") && !logged_in?(env) && !env.request.path.starts_with?("youtube_pimw_edited")
+      puts "require login #{env.request.path}"
       if env.request.method == "GET"
         env.session.string("redirect_to_after_login", "#{env.request.path}?#{env.request.query}") 
       end # else too hard
@@ -30,7 +31,7 @@ class CustomHandler < Kemal::Handler # don't know how to interrupt it from a bef
     elsif env.request.host == "playitmyway.inet2.org"
       env.redirect "https://playitmyway.org#{env.request.path}#{"?" + query if query}" 
     else
-      # success/normal
+      # success or no login required
       call_next env
     end
   end
