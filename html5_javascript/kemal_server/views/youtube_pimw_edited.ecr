@@ -15,7 +15,7 @@ NOT YET IN SYSTEM
   <br/>
   <div id="current_time_id" style="display: inline;"></div>
   <!--a href='' onclick="toggleFullScreen(); return false">fs still wasn't quiiiite right yet...</a-->
-  <input id="seek-control-id" type="range" min="0" max="100" step="1" onmouseup="seekTo(this.value)" style="max-width: 150px; display:inline;"></input>
+  <input id="seek-control-id" type="range" min="0" max="100" step="1" oninput="seekTo(this.value)" style="max-width: 150px; display:inline;"></input>
 
   </h3>
 </div>
@@ -113,7 +113,7 @@ function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   event.target.playVideo();
   document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume(); // init isn't 100
-  setInterval(updateTime, 1000/10);
+  setInterval(updateTime, 1000/30);
 }
 
 </script>
