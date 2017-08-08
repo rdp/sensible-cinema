@@ -46,6 +46,7 @@ Enter url of movie here:
     
     function seekTo(val) {
       var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * val;
+      console.log("seeking to " + desired_time_seconds);
       youtube_pimw_player.seekTo(desired_time_seconds);
     }
     
