@@ -26,6 +26,14 @@ I could speed things up but...but...just for youtube?  it's baaack LOL
   speed up and mute?
 
 move the screen down then back up?
+  it is barely barely iffy unfortunately...they want it visible I guess... [?]
+
+Embedded players must have a viewport that is at least 200px by 200px. If the player displays controls, it must be large enough to fully display the controls without shrinking the viewport below the minimum size. We recommend 16:9 players be at least 480 pixels wide and 270 pixels tall.
+
+youtubes "are" 16x9
+  so smallest: 200 height, 356 wide
+   youtube_pimw_player.setSize(355, 200)
+  but if I have my own controls....apparently they can't deny me 200x200 muhaha
 
 just do the easy for fun
 

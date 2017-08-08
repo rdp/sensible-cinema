@@ -12,7 +12,7 @@ var extra_message = "";
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos;
+var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, make_video_fasters;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
@@ -289,7 +289,26 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    console.log("unhiding video with left audio " + cur_time);
 	  }
 	}
-
+  
+	tag = areWeWithin(make_video_smallers, cur_time);
+  if (tag) {
+    // assume youtube :|
+    var iframe = youtube_pimw_player.getIframe();
+    if (iframe.height == "100%") {
+	    timestamp_log("making small", cur_time, tag);
+      youtube_pimw_player.setSize(200, 200); // smallest they permit :|
+    }
+  } else {
+    if (isYoutubePimw()) {
+      var iframe = youtube_pimw_player.getIframe();
+      if (iframe.height == "200") {
+        iframe.height = "100%";
+        iframe.width = "100%";
+      }      
+    }
+  }
+  
+	tag = areWeWithin(make_video_fasters, cur_time);
   
   var top_line = "";
   if (extra_message != "") {
@@ -657,7 +676,6 @@ function testCurrentFromUi() {
 	});
 }
 
-
 function currentEditArray() {
   switch (currentTestAction()) {
     case 'mute':
@@ -668,6 +686,10 @@ function currentEditArray() {
       return yes_audio_no_videos;
     case 'mute_audio_no_video':
       return mute_audio_no_videos;
+    case 'make_video_smaller':
+      return make_video_smallers;
+    case 'make_video_faster':
+      return make_video_fasters;
     default:
       alert('internal error 1...' + currentTestAction()); // hopefully never get here...
   }
@@ -918,6 +940,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	yes_audio_no_videos = [];
 	do_nothings = [];
   mute_audio_no_videos = [];
+  make_video_smallers = [];
+  make_video_fasters = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -929,7 +953,11 @@ function setTheseTagsAsTheOnesToUse(tags) {
   		} else if (tag.default_action == 'yes_audio_no_video') {
         push_to_array = yes_audio_no_videos;
   		} else if (tag.default_action == 'mute_audio_no_video') {
-        push_to_array = mute_audio_no_videos;
+        push_to_array = mute_audio_no_videos;  		
+      } else if (tag.default_action == 'make_video_smaller') {
+        push_to_array = make_video_smallers;
+      } else if (tag.default_action == 'make_video_faster') {
+        push_to_array = make_video_fasters;
       } else { alert("please report failure 1 " + tag.default_action); }
     } else {
       push_to_array = do_nothings;
