@@ -54,7 +54,7 @@ Enter url of movie here:
       youtube_pimw_player.setVolume(val);
     }
     
-    function timeStampToHuman(timestamp) {
+    function timeStampToHumanHere(timestamp) {
       var hours = Math.floor(timestamp / 3600);
       timestamp -= hours * 3600;
       var minutes  = Math.floor(timestamp / 60);
@@ -69,7 +69,7 @@ Enter url of movie here:
     
     
     function updateTime() {
-      current_time_id.innerHTML=timeStampToHuman(youtube_pimw_player.getCurrentTime()) + "/" + timeStampToHuman(youtube_pimw_player.getDuration());
+      current_time_id.innerHTML=timeStampToHumanHere(youtube_pimw_player.getCurrentTime()) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration());
       document.getElementById('seek-control-id').value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
     }
     
