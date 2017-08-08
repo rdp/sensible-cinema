@@ -113,7 +113,7 @@ function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   event.target.playVideo();
   document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume(); // init isn't 100
-  setInterval(updateTime, 1000/30);
+  setInterval(updateTime, 1000/10);
 }
 
 </script>
