@@ -15,7 +15,7 @@ NOT YET IN SYSTEM
   <br/>
   <div id="current_time_id"></div>
   <!--a href='' onclick="toggleFullScreen(); return false">fs still wasn't quiiiite right yet...</a-->
-  time:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 150px; display:inline;"></input>
+  time:<input id="seek-control-id" type="range" min="0" max="100" step="1" oninput="seekTo(this.value)" onchange="seekTo(this.value)" style="max-width: 150px; display:inline;"></input>
 
   </h3>
 </div>
@@ -44,9 +44,13 @@ Enter url of movie here:
       youtube_pimw_player.setVolume(val);
     }
     
+    function seekTo(val) {
+      var desired_time_seconds = youtube_pimw_player.getDuration() / 100.0 * val;
+      youtube_pimw_player.seekTo(desired_time_seconds);
+    }
+    
     function setTime(val) {
       youtube_pimw_player.setVolume(val);
-    
     }
     
     function timeStampToHuman(timestamp) {
@@ -65,11 +69,12 @@ Enter url of movie here:
     
     function updateTime() {
       current_time_id.innerHTML=timeStampToHuman(youtube_pimw_player.getCurrentTime()) + "/" + timeStampToHuman(youtube_pimw_player.getDuration());
+      document.getElementById('seek-control-id').value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
     }
     
     function toggleFullScreen() {
       if (document.fullscreenElement) {
-       document.exitFullscreen();
+       document.exitFullscreen(); // or webkit???
        return;
       }
       var iframe = document.getElementById("player_with_controls");
@@ -106,7 +111,7 @@ Enter url of movie here:
 function onPlayerReady(event) {
   console.log("youtube_player ready and setup! auto playing...");
   event.target.playVideo();
-  document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume();
+  document.getElementById('vol-control-id').value = youtube_pimw_player.getVolume(); // init isn't 100
   setInterval(updateTime, 1000/30);
 }
 

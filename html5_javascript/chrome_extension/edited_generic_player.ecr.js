@@ -269,7 +269,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	if (tag) {
 	  timestamp_log("seeking", cur_time, tag);
     optionally_show_notification(tag); // show it now so it can notify while it seeks :)
-    seekToTime(desired_time); // just seek (works fine in amazon, and seems to even work ok these days in utube...s
+    seekToTime(tag.endy); // just seek (works fine in amazon, and seems to even work ok these days in youtube...
 	}
 	
 	tag = areWeWithin(yes_audio_no_videos, cur_time);
