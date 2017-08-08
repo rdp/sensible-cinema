@@ -297,11 +297,13 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (iframe.height == "100%") {
 	    timestamp_log("making small", cur_time, tag);
       youtube_pimw_player.setSize(200, 200); // smallest they permit :|
+      exitFullScreen(); // unfortunately seems necessary...TODO make it tiny within its full screen element? whoa!
     }
   } else {
     if (isYoutubePimw()) {
       var iframe = youtube_pimw_player.getIframe();
       if (iframe.height == "200") {
+        console.log("back to normal size cur_time=" + cur_time);
         iframe.height = "100%";
         iframe.width = "100%";
       }      
@@ -309,6 +311,19 @@ function checkIfShouldDoActionAndUpdateUI() {
   }
   
 	tag = areWeWithin(make_video_fasters, cur_time);
+  if (tag) {
+    // maaaaaybe could work with amazon too???
+    if (getPlaybackRate() == 1) {
+	    timestamp_log("making faster", cur_time, tag);
+      setPlaybackRate(2);
+    }
+  } else {
+    if (isYoutubePimw() && getPlaybackRate() == 2) {
+      // assume we set it for now :|
+      console.log("back to normal size cur_time=" + cur_time);
+      setPlaybackRate(1);
+    }
+  }
   
   var top_line = "";
   if (extra_message != "") {
@@ -504,24 +519,24 @@ function getPlaybackRate() {
   }
 }
 
-function relativeRateIndex(diff) {
+function relativeRateIndex(diff) { // youtube only
   var options = youtube_pimw_player.getAvailablePlaybackRates();
   return options[options.indexOf(getPlaybackRate()) + diff];
 }
 
 function decreasePlaybackRate() {
   if (isYoutubePimw()) {
-    youtube_pimw_player.setPlaybackRate(relativeRateIndex(-1));
+    setPlaybackRate(relativeRateIndex(-1));
   } else {
-    video_element.playbackRate -= 0.1;
+    setPlaybackRate(video_element.playbackRate - 0.1);
   }
 }
 
 function increasePlaybackRate() {
   if (isYoutubePimw()) {
-    youtube_pimw_player.setPlaybackRate(relativeRateIndex(+1));
+    setPlaybackRate(relativeRateIndex(+1));
   } else {
-    video_element.playbackRate += 0.1;
+    setPlaybackRate(video_element.playbackRate + 0.1);
   }
 }
 
@@ -649,7 +664,12 @@ function testCurrentFromUi() {
   if (faux_tag.endy <= faux_tag.start) {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
     return; // abort!
-  } 
+  }
+  make_video_smallers, make_video_fasters;
+  if ((currentTestAction() == "make_video_smaller" || currentTestAction() == "make_video_faster") && !isYoutubePimw()) {
+    alert("we only do that for youtube, ping us if you want more");
+    return;
+  }
   var temp_array = currentEditArray();
   temp_array.push(faux_tag);
   

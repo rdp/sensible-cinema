@@ -74,15 +74,29 @@ Enter url of movie here:
     }
     
     function toggleFullScreen() {
-      if (document.fullscreenElement) {
-       document.exitFullscreen(); // or webkit???
-       return;
+      var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+    
+      if (fullscreenElement) {
+        exitFullScreen();
+        return;
       }
       var iframe = document.getElementById("player_with_controls");
       // var iframe = youtube_pimw_player.getIframe();
       var requestFullScreen = iframe.requestFullScreen || iframe.mozRequestFullScreen || iframe.webkitRequestFullScreen;
       if (requestFullScreen) {
         requestFullScreen.bind(iframe)();
+      }
+    }
+    
+    function exitFullScreen() { // called in other .js too
+      if (document.exitFullscreen) {
+          document.exitFullscreen(); // Standard
+      } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen(); // Blink
+      } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen(); // Gecko
+      } else if (document.msExitFullscreen) {
+          document.msExitFullscreen(); // Old IE
       }
     }
 
