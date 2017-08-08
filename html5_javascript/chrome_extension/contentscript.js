@@ -109,15 +109,10 @@ function autoStartIfShould() {
     chrome.runtime.sendMessage({text: "dis", color: "#808080", details: "facebook we don't handle yet"}); // don't auto load for now, too chatty on the server, not compat... [?]
     return;
   }
-  var pimw_youtube_maybe_iframe = (url.includes("playitmyway.org") || url.includes(request_host)) && url.includes("youtube_pimw_edited");
-  
-  if (url.includes("play.google.com") || url.includes("amazon.com") || pimw_youtube_maybe_iframe) {
+  if (url.includes("play.google.com") || url.includes("amazon.com")) {
     if (inIframe()) { 
       // avoid google iframes popup after it says <smiley> and reset it back even though it is playing OK
       console.log("not setting plugin text to ... from an iframe");
-      if (pimw_youtube_maybe_iframe) {
-        return; // don't inject it here...
-      }
     }
     else {
       chrome.runtime.sendMessage({text: "look", color: "#808080", 
@@ -127,7 +122,7 @@ function autoStartIfShould() {
     console.log("big 3/pimw polling for video tag...");
     var interval = setInterval(function(){
 			var video_element = findFirstVideoTagOrNull();
-      if (video_element != null || pimw_youtube_maybe_iframe) {
+      if (video_element != null) {
 				console.log("big 3 found video tag [or pimw auto], injecting...");
         injectEditedPlayerOnce();
         clearInterval(interval);
