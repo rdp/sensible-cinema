@@ -577,6 +577,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	    timestamp_log("making small", cur_time, tag);
       youtube_pimw_player.setSize(200, 200); // smallest they permit :|
       exitFullScreen(); // unfortunately seems necessary...TODO make it tiny within its full screen element? whoa!
+      // TODO re full screen it? why not?
     }
   } else {
     if (isYoutubePimw()) {
