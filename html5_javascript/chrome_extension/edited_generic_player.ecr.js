@@ -154,7 +154,7 @@ function openPersonalizedEditList() {
 }
 
 function reportProblem() {
-  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl()));
+  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl() + " time=" + timeStampToHuman(getCurrentTime())));
 }
 
 function liveEpisodeName() {
