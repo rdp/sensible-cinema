@@ -105,9 +105,9 @@ function addEditUi() {
       
       
        <br/>
-        action:
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
+       action:
         <%= pre_details = "tag details"; pre_popup = "popup text"; io2 = IO::Memory.new; ECR.embed "../kemal_server/views/_tag_shared.ecr", io2; io2.to_s %> <!-- render full filename cuz macro -->
         <input type='submit' value='Save This Tag' onclick="saveEditButton(); return false;">
         <br/>
@@ -1173,6 +1173,7 @@ function getCurrentTime() {
 }
 
 function doPause() {
+  console.log("doing doPause()");
   if (isYoutubePimw()) {
     youtube_pimw_player.pauseVideo();
   } else {
@@ -1207,7 +1208,7 @@ function seekToTime(ts, callback) {
   if (ts < 0) {
     console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
-  }  
+  }
   var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));

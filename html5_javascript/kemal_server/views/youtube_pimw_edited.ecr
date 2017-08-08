@@ -11,8 +11,7 @@ NOT YET IN SYSTEM
 
   <h3>
   <a href='' onclick="youtube_pimw_player.playVideo(); return false">&#9654;</a>&nbsp;&nbsp;<a href='' onclick="youtube_pimw_player.pauseVideo(); return false">&#9612;&#9612;</a>
-  <br/>
-  volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 300px;"></input>
+  volume:<input id="vol-control-id" type="range" min="0" max="100" step="1" oninput="SetVolume(this.value)" onchange="SetVolume(this.value)" style="max-width: 300px; display:inline;"></input>
   <br/>
   <div id="current_time_id"></div>
   <!--a href='' onclick="toggleFullScreen(); return false">fs still wasn't quiiiite right yet...</a-->
@@ -49,7 +48,7 @@ Enter url of movie here:
       timestamp -= hours * 3600;
       var minutes  = Math.floor(timestamp / 60);
       timestamp -= minutes * 60;
-      var seconds = timestamp.toFixed(2); //  -> "12.31" or "2.3"
+      var seconds = timestamp.toFixed(1); //  -> "12.31" or "2.3"
       // padding is "hard" apparently in javascript LOL
       if (hours > 0)
         return hours + "h " + minutes + "m " + seconds + "s";

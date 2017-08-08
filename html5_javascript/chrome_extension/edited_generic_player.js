@@ -106,9 +106,9 @@ function addEditUi() {
       
       
        <br/>
-        action:
         <input type='submit' value='Test edit locally' onclick="testCurrentFromUi(); return false">
         <br/>
+       action:
         <input type="hidden" id="tag_hidden_id" name="id" value="0"> <!-- 0 means new...I think... -->
 
 
@@ -1452,6 +1452,7 @@ function getCurrentTime() {
 }
 
 function doPause() {
+  console.log("doing doPause()");
   if (isYoutubePimw()) {
     youtube_pimw_player.pauseVideo();
   } else {
@@ -1486,7 +1487,7 @@ function seekToTime(ts, callback) {
   if (ts < 0) {
     console.log("not seeking to before 0, seeking to 0 instead, seeking to negative doesn't work well " + ts);
     ts = 0;
-  }  
+  }
   var current_pause_state = isPaused();
   // try and avoid freezes after seeking...if it was playing first...
 	console.log("seeking to " + timeStampToHuman(ts));
