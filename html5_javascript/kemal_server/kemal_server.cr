@@ -499,7 +499,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = title.gsub(" | Netflix", "");
     title = title.gsub(" - Movies & TV on Google Play", "")
     title = title.gsub(": Amazon   Digital Services LLC", "")
-    title = title.gsub("Amazon.com: ", "")
+    title = title.gsub("Amazon.com: ", "") # Amazon.com: Star Trek: TNG Season 1: Patrick Stewart, XX: Amazon Digital Services
     title = title.gsub(" - YouTube", "")
     if sanitized_url =~ /disneymoviesanywhere/
       title = title.gsub(/^Watch /, "") # prefix :|
@@ -508,7 +508,7 @@ def create_new_and_redir(real_url, episode_number, episode_name, title, duration
     title = title.strip
     title = sanitize_html title
     if sanitized_url.includes?("amazon.com") && title.includes?(":")
-      title = title.split(":")[0..-2].join(":").strip # begone actors but keep star trek: the next gen
+      title = title.split(":")[0..-2].join(":").strip # begone actors but keep star trek: the next gen XXXX seems unsteady, does it work with avatar season 1?
     end
     already_by_name = Url.get_only_or_nil_by_name_and_episode_number(title, episode_number) # don't just blow up on DB constraint if from a non listed second url :|
     if already_by_name
