@@ -58,7 +58,7 @@ Enter url of movie here:
       timestamp -= hours * 3600;
       var minutes  = Math.floor(timestamp / 60);
       timestamp -= minutes * 60;
-      var seconds = timestamp.toFixed(1); //  -> "12.31" or "2.3"
+      var seconds = timestamp.toFixed(1); //  -> "12.3" or "2.3"
       // padding is "hard" apparently in javascript LOL
       if (hours > 0)
         return hours + "h " + minutes + "m " + seconds + "s";
