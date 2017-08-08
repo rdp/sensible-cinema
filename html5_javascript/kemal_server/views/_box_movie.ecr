@@ -4,7 +4,12 @@
              <%= url.image_tag "id='box_movie_#{url.id}_image' style='max-height: 300px; max-width: 300px; filter: drop-shadow(5px 5px 5px #222); padding: 5px; margin-left: auto; margin-right: auto; display: block; margin-bottom: 5px;'", ImageSize::VerySmall %>
               <div style="text-align: center;"><%= url.name_with_episode %></div>
           </a>
-          <a href="<%= url.url %>" id="box_movie_<%= url.id %>_open" target="_blank" onclick="if (!alertIfNoExtension()) return false;
+          <a href="<%= url.url %>" id="box_movie_<%= url.id %>_open" target="_blank"
+               <% if !url.url =~ /youtube_pimw_edited/ %>
+                 onclick="if (!alertIfNoExtension()) return false;
+              <% else %>
+                <!-- let firefox through here -->
+              <% end %>
                <% if url.episode_number != 0  && url.amazon? %>
                  alert('after opening the series, click play button for episode <%= url.episode_number %> (<%= url.episode_name %>)');
               <% end %>
