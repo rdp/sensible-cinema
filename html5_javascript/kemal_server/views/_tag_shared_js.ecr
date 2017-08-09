@@ -40,7 +40,7 @@ function getEndSpeed(value) {
   var match = re.exec(value);
   if (match) {
     if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().includes(parseFloat(match[1]))) {    
-      return match[1];
+      return parseFloat(match[1]);
     }
   }
   // some failure

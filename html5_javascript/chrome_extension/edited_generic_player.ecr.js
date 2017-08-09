@@ -687,10 +687,14 @@ function testCurrentFromUi() {
     start = 0; // allow test edits to start at or near 0 without messing up the "done" timing...
   }
   seekToTime(start, function() {
-	  length = faux_tag.endy - start;
+	  var length = faux_tag.endy - start;
 	  if (currentTestAction() == 'skip') {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
+    if (currentTestAction() == "change_speed") {
+      length /= getEndSpeed(faux_tag.details)); // XXXX remove entirely at some point :|
+    }
+    
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
     if (isPaused()) {
       doPlay(); // seems like we want this...
