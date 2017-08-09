@@ -226,6 +226,7 @@ function areWeWithin(thisTagArray, cur_time) {
 }
 
 var i_muted_it = false; // attempt to let them still control their mute button :|
+var i_changed_its_speed = false;
 var last_timestamp = 0;
 
 function checkIfShouldDoActionAndUpdateUI() {
@@ -313,18 +314,17 @@ function checkIfShouldDoActionAndUpdateUI() {
   
 	tag = areWeWithin(change_speeds, cur_time);
   if (tag) {
-    if (getPlaybackRate() == 1) {
-      var desired_speed = getEndSpeed(tag.details);
-      if (desired_speed) {
-  	    timestamp_log("making speed=" + desired_speed, cur_time, tag);      
+    var desired_speed = getEndSpeed(tag.details);
+    if (desired_speed) {
+      if (getPlaybackRate() != desired_speed) {
+  	    timestamp_log("setting speed=" + desired_speed, cur_time, tag);      
         setPlaybackRate(desired_speed);
-      } else {
-        alert("got messed up tag?" + tag.details);
+        i_changed_its_speed = true;        
       }
     }
   } else {
-    if (isYoutubePimw() && getPlaybackRate() == 2) {
-      // assume we set it for now :|
+    if (i_changed_its_speed && getPlaybackRate() != 1) {
+      i_changed_its_speed = false;
       console.log("back to normal size cur_time=" + cur_time);
       setPlaybackRate(1);
     }
@@ -647,23 +647,6 @@ function doTimeoutEarly (id) {
   func();
 }
 
-function getEndSpeed(value) {
-  var re = /(\d\.\d)x$/;
-  var match = re.exec(value);
-  if (match) {
-    if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().contains(match[1])) {    
-      return match[1];
-    }
-  }
-  // some failure
-  if (isYoutubePimw()) {
-      alert("you need to enter the speed you want in the details like 'my_details 2.0x or my_details 0.5x (options" +  youtube_pimw_player.getAvailablePlaybackRates() + ")");
-  } else {
-      alert("you need to enter the speed you want in the details like 'my_details 2.0x or my_details 0.5x (goes up to 4.0x, down to 0.5x with audio)");
-  }
-  return null;
-}
-
 function testCurrentFromUi() {
 	if (inMiddleOfTestingTimer) {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
@@ -688,7 +671,6 @@ function testCurrentFromUi() {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
     return; // abort!
   }
-  // make_video_smallers, change_speeds;
   if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
     alert("we only do that for youtube, ping us if you want more");
     return;

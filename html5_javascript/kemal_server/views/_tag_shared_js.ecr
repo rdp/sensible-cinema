@@ -35,6 +35,23 @@ function setImpactIfMute() {
        }
 }
 
+function getEndSpeed(value) {
+  var re = /(\d\.\d)x$/;
+  var match = re.exec(value);
+  if (match) {
+    if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().contains(match[1])) {    
+      return match[1];
+    }
+  }
+  // some failure
+  if (isYoutubePimw()) {
+      alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (options" +  youtube_pimw_player.getAvailablePlaybackRates() + ")");
+  } else {
+      alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (goes up to 4.0x, down to 0.5x with audio)");
+  }
+  return null;
+}
+
 function doubleCheckValues() {
   var category = document.getElementById('category_select').value;
   if (category == "") {
@@ -57,6 +74,10 @@ function doubleCheckValues() {
     alert("please enter tag details");
     return false;
   }
+  if (document.getElementById('action_sel').value == "change_speed" && !getEndSpeed(details)) {
+    return false;
+  }
+  
   if ((category == "violence" || category == "suspense") && age == "0") {
     alert("for violence or suspense tags, please also select a value in the age specifier dropdown");
     return false;
