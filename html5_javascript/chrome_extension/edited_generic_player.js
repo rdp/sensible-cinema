@@ -1778,7 +1778,7 @@ function setImpactIfMute() {
 }
 
 function getEndSpeed(value) {
-  var re = /(\d\.\d)x$/;
+  var re = /(\d\.\d+)x$/;
   var match = re.exec(value);
   if (match) {
     if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().contains(match[1])) {    
