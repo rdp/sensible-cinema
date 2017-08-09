@@ -228,6 +228,7 @@ function areWeWithin(thisTagArray, cur_time) {
 var i_muted_it = false; // attempt to let them still control their mute button :|
 var i_changed_its_speed = false;
 var last_timestamp = 0;
+var i_unfullscreened_it_element = null;
 
 function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = getCurrentTime();
@@ -298,8 +299,11 @@ function checkIfShouldDoActionAndUpdateUI() {
     if (iframe.height == "100%") {
 	    timestamp_log("making small", cur_time, tag);
       youtube_pimw_player.setSize(200, 200); // smallest they permit :|
-      exitFullScreen(); // unfortunately seems necessary...TODO make it tiny within its full screen element? whoa!
-      // TODO re full screen it? why not?
+      var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+      if (fullscreenElement) {
+        exitFullScreen();
+        i_unfullscreened_it_element = fullscreenElement;
+      }
     }
   } else {
     if (isYoutubePimw()) {
@@ -308,6 +312,12 @@ function checkIfShouldDoActionAndUpdateUI() {
         console.log("back to normal size cur_time=" + cur_time);
         iframe.height = "100%";
         iframe.width = "100%";
+        if (i_unfullscreened_it_element) {
+          var requestFullScreen = i_unfullscreened_it_element.requestFullScreen || i_unfullscreened_it_element.mozRequestFullScreen || i_unfullscreened_it_element.webkitRequestFullScreen;
+          if (requestFullScreen) {
+            requestFullScreen.bind(i_unfullscreened_it_element)(); // re-full-screen
+          }
+        }
       }      
     }
   }
@@ -672,7 +682,7 @@ function testCurrentFromUi() {
     return; // abort!
   }
   if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
-    alert("we only do that for youtube, ping us if you want more");
+    alert("we only do that for youtube today, ping us if you want more");
     return;
   }
   if (currentTestAction() == "change_speed" && !getEndSpeed(faux_tag.details)) {
