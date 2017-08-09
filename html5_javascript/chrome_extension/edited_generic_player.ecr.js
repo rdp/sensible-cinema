@@ -12,7 +12,7 @@ var extra_message = "";
 var inMiddleOfTestingTimer;
 var current_json, url;
 var mouse_move_timer;
-var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, make_video_fasters;
+var mutes, skips, yes_audio_no_videos, do_nothings, mute_audio_no_videos, make_video_smallers, change_speeds;
 var seek_timer;
 var all_pimw_stuff;
 var currently_in_process_tags = new Map();
@@ -311,11 +311,16 @@ function checkIfShouldDoActionAndUpdateUI() {
     }
   }
   
-	tag = areWeWithin(make_video_fasters, cur_time);
+	tag = areWeWithin(change_speeds, cur_time);
   if (tag) {
     if (getPlaybackRate() == 1) {
-	    timestamp_log("making faster", cur_time, tag);
-      setPlaybackRate(2);
+      var desired_speed = getEndSpeed(tag.details);
+      if (desired_speed) {
+  	    timestamp_log("making speed=" + desired_speed, cur_time, tag);      
+        setPlaybackRate(desired_speed);
+      } else {
+        alert("got messed up tag?" + tag.details);
+      }
     }
   } else {
     if (isYoutubePimw() && getPlaybackRate() == 2) {
@@ -642,6 +647,23 @@ function doTimeoutEarly (id) {
   func();
 }
 
+function getEndSpeed(value) {
+  var re = /(\d\.\d)x$/;
+  var match = re.exec(value);
+  if (match) {
+    if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().contains(match[1])) {    
+      return match[1];
+    }
+  }
+  // some failure
+  if (isYoutubePimw()) {
+      alert("you need to enter the speed you want in the details like 'my_details 2.0x or my_details 0.5x (options" +  youtube_pimw_player.getAvailablePlaybackRates() + ")");
+  } else {
+      alert("you need to enter the speed you want in the details like 'my_details 2.0x or my_details 0.5x (goes up to 4.0x, down to 0.5x with audio)");
+  }
+  return null;
+}
+
 function testCurrentFromUi() {
 	if (inMiddleOfTestingTimer) {
     doTimeoutEarly(inMiddleOfTestingTimer); // nulls it out for us
@@ -666,9 +688,12 @@ function testCurrentFromUi() {
     alert("appears your end is before or equal to your start, please adjust timestamps, then try again!");
     return; // abort!
   }
-  make_video_smallers, make_video_fasters;
+  // make_video_smallers, change_speeds;
   if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
     alert("we only do that for youtube, ping us if you want more");
+    return;
+  }
+  if (currentTestAction() == "change_speed" && !getEndSpeed(faux_tag.details)) {
     return;
   }
   var temp_array = currentEditArray();
@@ -709,8 +734,8 @@ function currentEditArray() {
       return mute_audio_no_videos;
     case 'make_video_smaller':
       return make_video_smallers;
-    case 'make_video_faster':
-      return make_video_fasters;
+    case 'change_speed':
+      return change_speeds;
     default:
       alert('internal error 1...' + currentTestAction()); // hopefully never get here...
   }
@@ -962,7 +987,7 @@ function setTheseTagsAsTheOnesToUse(tags) {
 	do_nothings = [];
   mute_audio_no_videos = [];
   make_video_smallers = [];
-  make_video_fasters = [];
+  change_speeds = [];
 	for (var i = 0; i < tags.length; i++) {
 		var tag = tags[i];
 		var push_to_array;
@@ -977,8 +1002,8 @@ function setTheseTagsAsTheOnesToUse(tags) {
         push_to_array = mute_audio_no_videos;  		
       } else if (tag.default_action == 'make_video_smaller') {
         push_to_array = make_video_smallers;
-      } else if (tag.default_action == 'make_video_faster') {
-        push_to_array = make_video_fasters;
+      } else if (tag.default_action == 'change_speed') {
+        push_to_array = change_speeds;
       } else { alert("please report failure 1 " + tag.default_action); }
     } else {
       push_to_array = do_nothings;
