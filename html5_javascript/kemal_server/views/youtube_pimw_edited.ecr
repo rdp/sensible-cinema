@@ -106,7 +106,7 @@ Enter url of movie here:
   var youtube_pimw_player;
   function onYouTubePlayerAPIReady() {
     youtube_pimw_player = new YT.Player('ytplayer_div', { // might as well new it up here so it can start polling it more aggressively than "when its ready with 500ms polling" plus some setup logic gets confused without it already setup :|
-      height: '100%', // default 360?
+      height: '70%', // default 360 ;|
       width: '100%',
       videoId: '<%= youtube_id %>',
       enablejsapi: true,
