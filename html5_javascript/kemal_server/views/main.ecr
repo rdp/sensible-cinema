@@ -92,7 +92,6 @@ We hope to launch a Kickstarter soon and we'd love your help while we get going!
   <!-- Tab panes -->
   <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="tab_0">
-           <% env.response.flush %>
            <%= urls=all_urls_done; render "views/_list_movies.ecr" %>
            <br/>
            <h4>We also have <a href=/movies_in_works> <%= non_done.size %> more videos</a> in the works, and even more planned after that!</h4> Click <a href=/movies_in_works>here to see the list</a> of movies we'd like to add, please support us so we can add these and more!  You can even <a href=/add_movie>vote</a> for the ones you'd like to see next!
