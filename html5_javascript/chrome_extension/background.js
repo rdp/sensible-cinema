@@ -11,20 +11,24 @@ update_icon = function(request, sender, sendResponse) {
     console.log("sent version response" + manifest.version);
     sendResponse({version: manifest.version});
    } else if (request.do_url) {
-     // can only do tabs from b/g not contentscript apparently :|
+     // can only create tabs from b/g not contentscript apparently :|
      chrome.tabs.create({url: "https://playitmyway.org" + request.do_url}); // opens and sets active
    } else if (request.notification_desired) {
      console.log("got it in background.js");
-     var to_notify = request.notification_desired;
+     var notification_desired = request.notification_desired;
      // empty string for body works well too, and possibly should be preferred hmmmm...
-     var notification = new Notification(to_notify.title, {body: to_notify.body}); // auto shows it
-     notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
-     notification.onclick = function(event) {
-       event.preventDefault(); // prevent the browser from focusing the Notification's tab
-       window.open('https://playitmyway.org/view_tag/' + to_notify.tag.id, '_blank'); // also opens and sets active
-     }
+     createNotification(notification_desired);
    }
 };
+
+function createNotification(notification_desired) { // shared with plugin.js
+  var notification = new Notification(notification_desired.title, {body: notification_desired.body}); // auto shows it
+  notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
+  notification.onclick = function(event) {
+    event.preventDefault(); // prevent the browser from focusing the Notification's tab
+    window.open('https://playitmyway.org/view_tag/' + notification_desired.tag.id, '_blank'); // also opens and sets active
+  }
+}
 
 chrome.runtime.onMessage.addListener(update_icon); // from contentscripts.js 
 

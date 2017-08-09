@@ -72,7 +72,7 @@ Enter url of movie here:
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
     
       if (fullscreenElement) {
-        exitFullScreen();
+        exitFullScreen(); // from plugin
         return;
       }
       // var iframe = document.getElementById("player_with_controls");
@@ -83,17 +83,6 @@ Enter url of movie here:
       }
     }
     
-    function exitFullScreen() { // called in other .js too
-      if (document.exitFullscreen) {
-          document.exitFullscreen(); // Standard
-      } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen(); // Blink
-      } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen(); // Gecko
-      } else if (document.msExitFullscreen) {
-          document.msExitFullscreen(); // Old IE
-      }
-    }
 
   // Load the IFrame Player API code asynchronously.
   var tag = document.createElement('script');

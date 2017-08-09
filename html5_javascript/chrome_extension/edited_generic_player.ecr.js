@@ -380,10 +380,25 @@ function notify_if_new(tag) {
   }
 }
 
+function exitFullScreen() { // called in other .js too
+  if (document.exitFullscreen) {
+      document.exitFullscreen(); // Standard
+  } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen(); // Blink
+  } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen(); // Gecko
+  } else if (document.msExitFullscreen) {
+      document.msExitFullscreen(); // Old IE
+  }
+}
+
 function optionally_show_notification(seek_tag) {
   var popup = seek_tag.popup_text_after;
   if (popup.length > 0) {
     console.log("notifying " + popup);
+    if (window.navigator.userAgent.indexOf("Windows")!= -1) {
+      exitFullScreen(); // not sure what else to do here so they can see it TODO test etc :|
+    }
     var maxTitleSize = 40; // max 45 for title OS X (49 for body), 40 for being able to add ellipsis
     // search backward for first space to split on...
     for (var i = maxTitleSize; i > 0; i--) {
@@ -399,7 +414,47 @@ function optionally_show_notification(seek_tag) {
       title += " ...";
       // body = "... " + body;
     }
-    sendMessageToPlugin({notification_desired: {title: htmlDecode(title), body: htmlDecode(body), tag: seek_tag}});
+    sendNotification({title: htmlDecode(title), body: htmlDecode(body), tag: seek_tag});
+  }
+}
+
+function sendNotification(notification_desired) {
+  if (isYoutubePimw()) {
+      // can't rely on background.js :|
+      // just send it here...
+
+      if (!("Notification" in window)) {
+        console.log("This browser does not support desktop notification");
+        return; // oh well
+      }
+
+      // Let's check whether notification permissions have already been granted
+      else if (Notification.permission === "granted") {
+        createNotification(notification_desired);
+      }
+
+      // Otherwise, we need to ask the user for permission
+      else if (Notification.permission !== "denied") {
+        Notification.requestPermission(function (permission) {
+          // If the user accepts, let's create a notification
+          if (permission === "granted") {
+            createNotification(notification_desired);
+          }
+        });
+      }
+      // At last, if the user has denied notifications, and you 
+      // want to be respectful there is no need to bother them any more.
+  } else {
+    sendMessageToPlugin({notification_desired : notification_desired});
+  }
+}
+
+function createNotification(notification_desired) { // shared with background.js
+  var notification = new Notification(notification_desired.title, {body: notification_desired.body}); // auto shows it
+  notification.onclose = function() { console.log("closed?!?");}; // doesn't work "well" OS X (only when they really choose close, not auto disappear :| ) requireInteraction doesn't help either?? TODO report to chrome, when fixed update my SO answer :)
+  notification.onclick = function(event) {
+    event.preventDefault(); // prevent the browser from focusing the Notification's tab
+    window.open('https://playitmyway.org/view_tag/' + notification_desired.tag.id, '_blank'); // also opens and sets active
   }
 }
 
