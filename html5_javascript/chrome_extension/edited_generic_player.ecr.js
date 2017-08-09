@@ -325,7 +325,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   } else {
     if (i_changed_its_speed && getPlaybackRate() != 1) {
       i_changed_its_speed = false;
-      console.log("back to normal size cur_time=" + cur_time);
+      console.log("back to normal speed 1 cur_time=" + cur_time);
       setPlaybackRate(1);
     }
   }
