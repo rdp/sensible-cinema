@@ -512,7 +512,7 @@ function checkIfShouldDoActionAndUpdateUI() {
 	var cur_time = getCurrentTime();
   var tag;
   if (cur_time < last_timestamp) {
-    console.log("Something (possibly pimw) just backwards to=" + cur_time + " from=" + last_timestamp);
+    console.log("Something (possibly pimw) just sought backwards to=" + cur_time + " from=" + last_timestamp);
   	tag = areWeWithin(skips, cur_time); 
     if (tag) {
       // was the seek to within an edit? Since this was a "rewind" let's actually go to *before* the bad spot, so the -10 button can work from UI
@@ -723,7 +723,7 @@ function checkStatus() {
 }
 
 function timestamp_log(message, cur_time, tag) {
-  local_message = message + " at " + cur_time + " start:" + tag.start + " will_end:" + tag.endy + " in " + (tag.endy - cur_time)+ "s";;
+  local_message = message + " at " + cur_time.toFixed(2) + " start:" + tag.start + " will_end:" + tag.endy + " in " + (tag.endy - cur_time).toFixed(2) + "s";;
   console.log(local_message);
 }
 
