@@ -312,7 +312,6 @@ function checkIfShouldDoActionAndUpdateUI() {
         iframe.height = "70%";
         iframe.width = "100%";
         // can't refullscreen it "programmatically" at least in chrome, so punt!
-        // TODO move it to the top, etc. etc. [?]
       }
     }
   }
