@@ -75,11 +75,7 @@ get "/youtube_pimw_edited/:youtube_id" do |env|
   youtube_id = env.params.url["youtube_id"]
   in_system = "https:&#x2F;&#x2F;playitmyway.org&#x2F;youtube_pimw_edited&#x2F;" + youtube_id # hacky way to be able to look it up to display stuff about it
   url = Url.get_only_or_nil_by_urls_and_episode_number(in_system, 0)
-  if url
-    env.response.title = url.name + " (youtube edited)"
-  else
-    env.response.title = "youtube not yet edited"
-  end
+  raise "for now just enter the url at the bottom of an existing edited youtube to add" unless url # though lacks duration <sigh>
   render "views/youtube_pimw_edited.ecr", "views/layout.ecr"
 end
 
