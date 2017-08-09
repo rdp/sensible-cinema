@@ -301,8 +301,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       youtube_pimw_player.setSize(200, 200); // smallest they permit :|
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
       if (fullscreenElement) {
-        exitFullScreen();
-        i_unfullscreened_it_element = fullscreenElement;
+        exitFullScreen(); // :|
       }
     }
   } else {
@@ -312,13 +311,9 @@ function checkIfShouldDoActionAndUpdateUI() {
         console.log("back to normal size cur_time=" + cur_time);
         iframe.height = "100%";
         iframe.width = "100%";
-        if (i_unfullscreened_it_element) {
-          var requestFullScreen = i_unfullscreened_it_element.requestFullScreen || i_unfullscreened_it_element.mozRequestFullScreen || i_unfullscreened_it_element.webkitRequestFullScreen;
-          if (requestFullScreen) {
-            requestFullScreen.bind(i_unfullscreened_it_element)(); // re-full-screen
-          }
-        }
-      }      
+        // can't refullscreen it "programmatically" at least in chrome, so punt!
+        // TODO move it to the top, etc. etc. [?]
+      }
     }
   }
   
