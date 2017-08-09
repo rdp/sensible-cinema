@@ -1781,7 +1781,7 @@ function getEndSpeed(value) {
   var re = /(\d\.\d+)x$/;
   var match = re.exec(value);
   if (match) {
-    if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().includes(match[1])) {    
+    if (!isYoutubePimw() || youtube_pimw_player.getAvailablePlaybackRates().includes(parseFloat(match[1]))) {    
       return match[1];
     }
   }
