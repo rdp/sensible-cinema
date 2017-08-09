@@ -296,7 +296,7 @@ function checkIfShouldDoActionAndUpdateUI() {
   if (tag) {
     // assume youtube :|
     var iframe = youtube_pimw_player.getIframe();
-    if (iframe.height == "100%") {
+    if (iframe.width == "100%") {
 	    timestamp_log("making small", cur_time, tag);
       youtube_pimw_player.setSize(200, 200); // smallest they permit :|
       var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
@@ -309,7 +309,7 @@ function checkIfShouldDoActionAndUpdateUI() {
       var iframe = youtube_pimw_player.getIframe();
       if (iframe.height == "200") {
         console.log("back to normal size cur_time=" + cur_time);
-        iframe.height = "100%";
+        iframe.height = "70%";
         iframe.width = "100%";
         // can't refullscreen it "programmatically" at least in chrome, so punt!
         // TODO move it to the top, etc. etc. [?]
