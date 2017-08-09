@@ -971,7 +971,7 @@ function testCurrentFromUi() {
 	    length = 0; // it skips it, so the amount of time before being done is less :)
 		}
     if (currentTestAction() == "change_speed") {
-      length /= getEndSpeed(faux_tag.details)); // XXXX remove entirely at some point :|
+      length /= getEndSpeed(faux_tag.details); // XXXX this is wrong somehow (too long). Also remove entirely at some point :|
     }
     
 	  wait_time_millis = (length + rewindSeconds + 0.5) * 1000;
