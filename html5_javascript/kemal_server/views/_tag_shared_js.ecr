@@ -45,7 +45,12 @@ function getEndSpeed(value) {
   }
   // some failure
   if (isYoutubePimw()) {
-      alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (options:" +  youtube_pimw_player.getAvailablePlaybackRates() + " x )");
+      var out = "you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (options:";
+      var rates = youtube_pimw_player.getAvailablePlaybackRates();
+      for (var i = 0; i < rates.length; i++) {
+        out += rates[i].toFixed(2) + "x,";
+      }
+      alert(out + ")");
   } else {
       alert("you need to enter the speed you want in the details like 'my_details 2.0x' or 'my_details 0.5x' (goes up to 4.0x, down to 0.5x with audio)");
   }
