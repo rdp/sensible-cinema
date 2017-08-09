@@ -11,6 +11,7 @@
   <div id="current_time_id" style="display: inline;"></div>
   seek:<input id="seek-control-id" type="range" min="0" max="100" step="1" oninput="seekTo(this.value)" style="max-width: 150px; display:inline;"></input><!-- not sure how to not super seek here on drag :| -->
   <a href='' onclick="toggleFullScreen(); return false">fullscreen</a> <!-- what about mobile to get out of this? -->
+  <div id="quality_div_id" style="display: inline;"></div>
   </h3>
   
 </div>
@@ -66,6 +67,7 @@ Enter url of movie here:
     function updateTime() {
       current_time_id.innerHTML=timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 1);
       document.getElementById('seek-control-id').value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
+      document.getElementById('quality_div_id').value = youtube_pimw_player.getPlaybackQuality();
     }
     
     function toggleFullScreen() {
