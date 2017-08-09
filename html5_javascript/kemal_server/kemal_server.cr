@@ -1,4 +1,4 @@
- equire "./src/helpers/*"   
+require "./src/helpers/*"   
 
 require "kemal"
 require "kemal-session"
