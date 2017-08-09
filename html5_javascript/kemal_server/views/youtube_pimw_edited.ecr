@@ -49,12 +49,12 @@ Enter url of movie here:
       youtube_pimw_player.setVolume(val);
     }
     
-    function timeStampToHumanHere(timestamp) {
+    function timeStampToHumanHere(timestamp, tenth_digits) {
       var hours = Math.floor(timestamp / 3600);
       timestamp -= hours * 3600;
       var minutes  = Math.floor(timestamp / 60);
       timestamp -= minutes * 60;
-      var seconds = timestamp.toFixed(1); //  -> "12.3" or "2.3"
+      var seconds = timestamp.toFixed(tenth_digits); //  -> "12.3" or "2.3"
       // padding is "hard" apparently in javascript LOL
       if (hours > 0)
         return hours + "h " + minutes + "m " + seconds + "s";
@@ -64,7 +64,7 @@ Enter url of movie here:
     
     
     function updateTime() {
-      current_time_id.innerHTML=timeStampToHumanHere(youtube_pimw_player.getCurrentTime()) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration());
+      current_time_id.innerHTML=timeStampToHumanHere(youtube_pimw_player.getCurrentTime(), 0) + "/" + timeStampToHumanHere(youtube_pimw_player.getDuration(), 1);
       document.getElementById('seek-control-id').value = youtube_pimw_player.getCurrentTime() / youtube_pimw_player.getDuration() * 100; 
     }
     
