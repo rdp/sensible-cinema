@@ -433,7 +433,7 @@ function openPersonalizedEditList() {
 }
 
 function reportProblem() {
-  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl()));
+  window.open("http://freeldssheetmusic.org/questions/ask?pre_fill=" + encodeURIComponent("url=" + getStandardizedCurrentUrl() + " time=" + timeStampToHuman(getCurrentTime())));
 }
 
 function liveEpisodeName() {
@@ -592,7 +592,6 @@ function checkIfShouldDoActionAndUpdateUI() {
   
 	tag = areWeWithin(make_video_fasters, cur_time);
   if (tag) {
-    // maaaaaybe could work with amazon too???
     if (getPlaybackRate() == 1) {
 	    timestamp_log("making faster", cur_time, tag);
       setPlaybackRate(2);
@@ -946,7 +945,7 @@ function testCurrentFromUi() {
     return; // abort!
   }
   make_video_smallers, make_video_fasters;
-  if ((currentTestAction() == "make_video_smaller" || currentTestAction() == "make_video_faster") && !isYoutubePimw()) {
+  if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
     alert("we only do that for youtube, ping us if you want more");
     return;
   }

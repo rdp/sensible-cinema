@@ -313,7 +313,6 @@ function checkIfShouldDoActionAndUpdateUI() {
   
 	tag = areWeWithin(make_video_fasters, cur_time);
   if (tag) {
-    // maaaaaybe could work with amazon too???
     if (getPlaybackRate() == 1) {
 	    timestamp_log("making faster", cur_time, tag);
       setPlaybackRate(2);
@@ -656,7 +655,8 @@ function testCurrentFromUi() {
     default_action: currentTestAction(),
     is_test_tag: true,
     popup_text_after: document.getElementById('popup_text_after_id').value,
-    default_enabled: true
+    default_enabled: true,
+    details: document.getElementById('details_input_id').value
 	}
   if (faux_tag.start == 0) {
     alert("appears your start time is zero, which is not allowed, if you want one that starts near the beginning enter 0.1s");
@@ -667,7 +667,7 @@ function testCurrentFromUi() {
     return; // abort!
   }
   make_video_smallers, make_video_fasters;
-  if ((currentTestAction() == "make_video_smaller" || currentTestAction() == "make_video_faster") && !isYoutubePimw()) {
+  if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
     alert("we only do that for youtube, ping us if you want more");
     return;
   }
