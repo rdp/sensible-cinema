@@ -731,7 +731,7 @@ function testCurrentFromUi() {
     return; // abort!
   }
   if ((currentTestAction() == "make_video_smaller") && !isYoutubePimw()) {
-    alert("we only do that for youtube today, ping us if you want more");
+    alert("we only do that for youtube today, ping us if you want it added elsewhere");
     return;
   }
   if (currentTestAction() == "change_speed" && !getEndSpeed(faux_tag.details)) {
