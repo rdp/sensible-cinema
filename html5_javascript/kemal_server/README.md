@@ -5,14 +5,16 @@ though there was a lot of pre-existing art (including edited youtube API/google,
 
 ## Installation of server:
 
-# ubuntu
-apt install jhead imagemagick # etc...
+# Ubuntu
+apt install crystal build-essential jhead imagemagick # etc...
 
-# os x
+# OS X
 brew install crystal-lang kqwait mysql imagemagick pidof
-  brew services start mysql
+brew services start mysql
 
-./db/init
+touch this_is_development
+
+./db/nuke*
 
 shards install
 ./goXX
