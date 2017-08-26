@@ -5,6 +5,15 @@ ssd winbas
 
 vbox ssd
   11.6 11.8 
+
+vultr $5
+  clone 3.1
+  5.7 5.63 5.56
+
+linode
+  clone 3.9
+  5.9 5.9
+
 == youtube api terms of us ==
 
 0.06558707820129328
