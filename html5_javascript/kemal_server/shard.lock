@@ -6,19 +6,19 @@ shards:
 
   kemal:
     github: sdogruyol/kemal
-    commit: d0e04918c39f956e40ba334c0cf46ba7daa8ccdf
+    commit: 79e324efafbfa1dab241c6a6671e4708cb95800c
 
   kemal-session:
     github: kemalcr/kemal-session
-    commit: bbef25f36fe6505d3221de9952f94a1023225b85
+    commit: 5cb3b5b207db92852651a7b7ec4f95d6478f8580
 
   kilt:
     github: jeromegn/kilt
-    version: 0.3.3
+    version: 0.4.0
 
   mysql:
     github: crystal-lang/crystal-mysql
-    commit: 379fd5353fdac4e20530187cb2efac48ed3b267e
+    commit: 783578623fd87223fa39c1bc29af0db1c76a984a
 
   radix:
     github: luislavena/radix

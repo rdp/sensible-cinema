@@ -6,7 +6,9 @@ though there was a lot of pre-existing art (including edited youtube API/google,
 ## Installation of server:
 
 # Ubuntu
-apt install crystal build-essential jhead imagemagick # etc...
+sudo apt install crystal build-essential libssl-dev jhead imagemagick fish # need cookie key, sessions dir, ssl dev key
+sudo apt install mysql-server # create db/connectionXX file
+sudo /etc/init.d/mysql start
 
 # OS X
 brew install crystal-lang kqwait mysql imagemagick pidof
@@ -17,4 +19,5 @@ touch this_is_development
 ./db/nuke*
 
 shards install
+
 ./goXX

@@ -718,7 +718,7 @@ class User
     end
   end
 
-  include Session::StorableObject # store the whole thing in the local session? ugly but hey...
+  include Kemal::Session::StorableObject # store the whole thing in the local session? ugly but hey...
 
 end
 
