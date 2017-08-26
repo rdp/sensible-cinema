@@ -14,6 +14,10 @@ linode
   clone 3.9
   5.9 5.9
 
+DO
+  clone 7.1
+  10.2 9.1 8.2 8.2 8.4 (first 2 under load)
+
 == youtube api terms of us ==
 
 0.06558707820129328

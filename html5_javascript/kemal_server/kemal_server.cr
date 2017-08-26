@@ -7,7 +7,7 @@ require "mysql"
 require "./src/view_helpers" # make accessible to all views
 
 Kemal::Session.config do |config|
-  config.secret = File.read("./db/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > local_cookie_secret
+  config.secret = File.read("./db/local_cookie_secret") # generate like crystal eval 'require "secure_random"; puts SecureRandom.hex(64)' > db/local_cookie_secret
   config.gc_interval = 1.days
   config.timeout = Time::Span.new(days: 30, hours: 0, minutes: 0, seconds: 0)
   config.engine = Kemal::Session::FileEngine.new({:sessions_dir => "./sessions/"}) # file based to survive restarts, mainly :|
