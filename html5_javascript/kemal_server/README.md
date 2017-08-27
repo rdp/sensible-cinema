@@ -6,16 +6,18 @@ though there was a lot of pre-existing art (including edited youtube API/google,
 ## Installation of server:
 
 # Ubuntu
-curl https://dist.crystal-lang.org/apt/setup.sh | sudo bash # enable crystal
-sudo apt install crystal build-essential libssl-dev jhead imagemagick fish -y # need cookie key, sessions dir, ssl dev key
-shards install
- # add swap, need 1.5G anyway...
-sudo apt install mysql-server -y # create db/connectionXX file
-sudo /etc/init.d/mysql start
+
+ curl https://dist.crystal-lang.org/apt/setup.sh | sudo bash # enable crystal  
+ sudo apt install crystal build-essential libssl-dev jhead imagemagick fish -y # need cookie key, sessions dir, ssl dev key  
+ shards install  
+ # add swap, need 1.5G anyway...  
+ sudo apt install mysql-server -y # create db/connectionXX file  
+ sudo /etc/init.d/mysql start  
 
 # OS X
-brew install crystal-lang kqwait mysql imagemagick pidof
-brew services start mysql
+
+brew install crystal-lang kqwait mysql imagemagick pidof   
+brew services start mysql  
 
 touch this_is_development
 
