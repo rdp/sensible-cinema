@@ -10,7 +10,7 @@ though there was a lot of pre-existing art (including edited youtube API/google,
  curl https://dist.crystal-lang.org/apt/setup.sh | sudo bash # enable crystal  
  sudo apt install crystal build-essential libssl-dev jhead imagemagick fish -y # need cookie key, sessions dir, ssl dev key  
  shards install  
- # add swap, need 1.5G anyway...  
+ \# add swap, need 1.5G anyway...  
  sudo apt install mysql-server -y # create db/connectionXX file  
  sudo /etc/init.d/mysql start  
 
