@@ -7,38 +7,46 @@ kickstarter
 
 == todo list (me personally) ==
 
-require them to approve youtube consent (cookie?)
+require them to approve youtube consent (cookie?) login??
 
 LLC
-  maybe a real one won't be that hard? sniff...
+  real one, learn the hard way :|
+  after, move to its own linode server :|
 
 some IP
-  youtube: smaller, change speed to arbitrary, work on any browser, come out of fullscreen,
+  youtube: smaller, change speed to arbitrary, work on any browser, come out of fullscreen (screen record what it does already)
+  youtube: 5% audio (arbitrary), disable mute, add "wait"
 
-GoT failure
+decide and/or do personalized edits but publically usable :| woot
+  
+GoT failure!
 
-better tabs for the main page, it's not mobile friendly :|
+better tabs for the main page, it's not mobile friendly, or really anything friendly :|
   at least space them waaaah, probably want new tabs :|
   decide if want to "specialize" based on whether they have prime or not? Or maybe I can get that with tabs??
 
 fix seek out of yes_audio_no_video
   and seeks into them
 
-make the edits just stay on that page, for easier editing et al :|
+make the edits just stay always on the page, for easier editing et al :|
 
 humanize/easify the personalize page more
   at least make the individual ones button expandable??
 
-make movies "expand down" sane-r :|
-
 == somewhat random list ==
+
+make movies "expand down" sane-r (the boxes)/speed up home page :|
+  yet it functions'ish without this...
+  
+integrate with "real" amazon API so I can get the rental numbers right :|
 
 hbo tab?
 
 boss baby: 26m 8 couldn't "edit previous" to find right tag
 
-youtube: redirect to edited option somehow :|
-  show list of other youtubes below it?
+youtube: redirect to edited somehow :|
+  show list of other youtubes below it? At least link...
+  ask forum if I can mute?
 
 better "updated at" option et al for sorting :|
 some series' are out of order? Does it get avatar name right even?
@@ -50,8 +58,6 @@ edit very high youtubes :|
 some way "signup for news as we get more"? some call to action
   why not? get a monthly newsletter! :)
   listen to greg's'...
-
-finish very high movies (if any)
 
 add high's and mediums to the "in the works" they are in the works after all, and it's just the ones we plan on getting to :)
   add all pictures in

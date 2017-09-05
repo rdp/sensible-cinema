@@ -80,7 +80,7 @@ get "/youtube_pimw_edited/:youtube_id" do |env|
 end
 
 get "/redo_all_thumbnails" do |env|
-  #raise "should not need often"
+  raise "should not need often" # comment out if thumbnails change somehow...
   Url.all.each &.create_thumbnail_if_has_image
   "did 'em #{Url.all.size}"
 end
